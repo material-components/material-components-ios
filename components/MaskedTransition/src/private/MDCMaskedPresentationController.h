@@ -18,7 +18,7 @@
 
 @protocol MDMTransitionContext;
 
-FOUNDATION_EXPORT UIView *createScrimView(id<MDMTransitionContext> context);
+FOUNDATION_EXPORT UIView *CreateScrimView(id<MDMTransitionContext> context);
 
 @interface MDCMaskedPresentationController : UIPresentationController
 

@@ -21,7 +21,7 @@
 
 #import "MDCMaskedTransitionMotionForContext.h"
 
-UIView *createScrimView(id<MDMTransitionContext> context) {
+UIView *CreateScrimView(id<MDMTransitionContext> context) {
   UIView *scrimView = [[UIView alloc] initWithFrame:context.containerView.bounds];
   scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
   [context.containerView addSubview:scrimView];
@@ -92,7 +92,7 @@ UIView *createScrimView(id<MDMTransitionContext> context) {
   MDCMaskedTransitionMotionTiming motion = (context.direction == MDMTransitionDirectionForward) ? spec.expansion : spec.collapse;
 
   if (!self.scrimView) {
-    self.scrimView = createScrimView(context);
+    self.scrimView = CreateScrimView(context);
   }
 
   [animator animateWithTiming:motion.scrimFade

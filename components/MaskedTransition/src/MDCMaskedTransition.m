@@ -24,22 +24,22 @@
 
 // Math utilities
 
-static CGPoint centerOfFrame(CGRect frame) {
+static inline CGPoint CenterOfFrame(CGRect frame) {
   return CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
 }
 
-static CGPoint anchorPointFromPosition(CGPoint position, CGRect bounds) {
+static inline CGPoint AnchorPointFromPosition(CGPoint position, CGRect bounds) {
   return CGPointMake(position.x / bounds.size.width, position.y / bounds.size.height);
 }
 
-static CGRect frameCenteredAround(CGPoint position, CGSize size) {
+static inline CGRect FrameCenteredAround(CGPoint position, CGSize size) {
   return CGRectMake(position.x - size.width / 2,
                     position.y - size.height / 2,
                     size.width,
                     size.height);
 }
 
-static CGFloat lengthOfVector(CGVector vector) {
+static inline CGFloat LengthOfVector(CGVector vector) {
   return (CGFloat)sqrt(vector.dx * vector.dx + vector.dy * vector.dy);
 }
 
@@ -89,8 +89,7 @@ static CGFloat lengthOfVector(CGVector vector) {
   MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
   animator.shouldReverseValues = context.direction == MDMTransitionDirectionBackward;
 
-  // # Caching original state
-
+  // Cache original state.
   // We're going to reparent the fore view, so keep this information for later.
   UIView *originalSuperview = context.foreViewController.view.superview;
   const CGRect originalFrame = context.foreViewController.view.frame;
@@ -98,11 +97,9 @@ static CGFloat lengthOfVector(CGVector vector) {
   const CGRect originalSourceFrame = _sourceView.frame;
   UIColor *originalSourceBackgroundColor = _sourceView.backgroundColor;
 
-  // # Scrim and presentation controller configuration
-
   UIView *scrimView;
   if (!_presentationController) {
-    scrimView = createScrimView(context);
+    scrimView = CreateScrimView(context);
 
   } else {
     scrimView = _presentationController.scrimView;
@@ -112,8 +109,7 @@ static CGFloat lengthOfVector(CGVector vector) {
   // again.
   _presentationController.sourceView = _sourceView;
 
-  // # Reparent the fore view into a masked view
-
+  // Reparent the fore view into a masked view.
   UIView *maskedView = [[UIView alloc] initWithFrame:context.foreViewController.view.frame];
   {
     CGRect reparentedFrame = context.foreViewController.view.frame;
@@ -125,8 +121,6 @@ static CGFloat lengthOfVector(CGVector vector) {
   }
   [context.containerView addSubview:maskedView];
 
-  // # Flood fill view
-
   UIView *floodFillView = [[UIView alloc] initWithFrame:context.foreViewController.view.bounds];
   floodFillView.backgroundColor = _sourceView.backgroundColor;
 
@@ -135,18 +129,15 @@ static CGFloat lengthOfVector(CGVector vector) {
   [maskedView addSubview:floodFillView];
   [maskedView addSubview:context.foreViewController.view];
 
-  // # Frame calculations
-
   // All frames are assumed to be relative to the container view unless named otherwise.
-
   const CGRect initialSourceFrame = [_sourceView convertRect:_sourceView.bounds
                                                       toView:context.containerView];
   const CGRect finalMaskedFrame = originalFrame;
   CGRect initialMaskedFrame;
   CGPoint corner;
-  const CGPoint initialSourceCenter = centerOfFrame(initialSourceFrame);
+  const CGPoint initialSourceCenter = CenterOfFrame(initialSourceFrame);
   if (spec.isCentered) {
-    initialMaskedFrame = frameCenteredAround(initialSourceCenter, originalFrame.size);
+    initialMaskedFrame = FrameCenteredAround(initialSourceCenter, originalFrame.size);
     // Bottom right
     corner = CGPointMake(CGRectGetMaxX(initialMaskedFrame), CGRectGetMaxY(initialMaskedFrame));
 
@@ -168,19 +159,15 @@ static CGFloat lengthOfVector(CGVector vector) {
   const CGRect initialSourceFrameInMask = [maskedView convertRect:initialSourceFrame
                                                          fromView:context.containerView];
 
-  // # Scale calculations
-
   const CGFloat initialRadius = _sourceView.bounds.size.width / 2;
-  const CGFloat finalRadius = lengthOfVector(CGVectorMake(initialSourceCenter.x - corner.x,
+  const CGFloat finalRadius = LengthOfVector(CGVectorMake(initialSourceCenter.x - corner.x,
                                                           initialSourceCenter.y - corner.y));
   const CGFloat finalScale = finalRadius / initialRadius;
-
-  // # Preparing the mask
 
   CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
   {
     // Ensures that we transform from the center of the source view's frame.
-    shapeLayer.anchorPoint = anchorPointFromPosition(centerOfFrame(initialSourceFrameInMask),
+    shapeLayer.anchorPoint = AnchorPointFromPosition(CenterOfFrame(initialSourceFrameInMask),
                                                      maskedView.layer.bounds);
     shapeLayer.frame = maskedView.layer.bounds;
     shapeLayer.path = [[UIBezierPath bezierPathWithOvalInRect:initialSourceFrameInMask] CGPath];
@@ -190,8 +177,6 @@ static CGFloat lengthOfVector(CGVector vector) {
   _sourceView.frame = initialSourceFrameInMask;
   _sourceView.backgroundColor = nil;
   [maskedView addSubview:_sourceView];
-
-  // # Begin adding animations.
 
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
@@ -224,9 +209,8 @@ static CGFloat lengthOfVector(CGVector vector) {
                    withValues:@[ @0, @1 ]
                       keyPath:@"opacity"];
 
-  // TODO: Support shadow + elevation changes. May need companion transition for this?
+  // TODO(featherless): Support shadow + elevation changes. May need companion transition for this?
 
-  // Color transformation
   {
     UIColor *initialColor = floodFillView.backgroundColor;
     if (!initialColor) {
@@ -242,7 +226,6 @@ static CGFloat lengthOfVector(CGVector vector) {
                         keyPath:@"backgroundColor"];
   }
 
-  // Mask transformation
   {
     void (^completion)() = nil;
     if (context.direction == MDMTransitionDirectionForward) {
