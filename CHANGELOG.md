@@ -1,3 +1,7 @@
+# 24.0.1
+
+Hotfix: Added missing dependencies in our podspec from ColorThemer subspecs to Component subspecs.
+
 # 24.0.0
 
 ## API diffs
