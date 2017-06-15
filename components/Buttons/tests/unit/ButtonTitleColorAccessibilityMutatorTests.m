@@ -16,7 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtonTitleColorAccessibilityMutator.h"
+#import "MDCButtonTitleColorAccessibilityMutator.h"
 #import "MaterialButtons.h"
 
 // A value greater than the largest value created by combining normal values of UIControlState.
