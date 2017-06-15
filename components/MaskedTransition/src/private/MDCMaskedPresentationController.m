@@ -41,7 +41,7 @@ UIView *CreateScrimView(id<MDMTransitionContext> context) {
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
-    _calculateFrameOfPresentedView = calculateFrameOfPresentedView;
+    _calculateFrameOfPresentedView = [calculateFrameOfPresentedView copy];
   }
   return self;
 }
