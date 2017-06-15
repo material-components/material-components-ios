@@ -47,9 +47,10 @@ pod install
 
 ## Overview
 
-A masked transition is a UIViewController transition using the
-[Transitioning](https://github.com/material-motion/transitioning-objc) library. It assumes that you
-are transitioning from a circular source view.
+A masked transition is a UIViewController transition that can be used to present a contextual
+expansion from a circular source view. This transition follows the motion timing defined by the
+section on [Radial transformations](https://material.io/guidelines/motion/transforming-material.html#transforming-material-radial-transformation)
+in the Material Design guidelines.
 
 - - -
 
