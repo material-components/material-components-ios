@@ -584,6 +584,29 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
+- (CGFloat)largestUnderlineLabelLineHeight:(BOOL)isContentAware {
+  CGFloat largerLineHeight = 0;
+
+//  if (isContentAware) {
+//    CGFloat leadingHeight;
+//    CGFloat trailingHeight;
+//    self.heightConstraint.constant =
+//    insets.top +  // Labels and padding
+//    MDCRint(MAX(self.textInput.font.lineHeight,
+//                self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
+//    insets.bottom;                                                   // Padding or labels
+//
+//  } else {
+//    largerLineHeight = MAX(self.textInput.leadingUnderlineLabel.font.lineHeight,
+//                           self.textInput.trailingUnderlineLabel.font.lineHeight);
+//
+//  }
+//
+//  largerLineHeight = MDCCeil(largerLineHeight * 2.f) / 2.f;
+//
+  return largerLineHeight;
+}
+
 #pragma mark - Properties Implementation
 
 - (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
@@ -859,9 +882,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   } else {
     // .floatingPlaceholder and .default
 
-    CGFloat leadingLineHeight =
-        MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-    CGFloat underlineOffsetY = -1 * (leadingLineHeight + MDCTextInputVerticalHalfPadding);
+    CGFloat underlineOffsetY = -1 * ([self textContainerInset:UIEdgeInsetsZero].bottom + MDCTextInputVerticalHalfPadding);
     if (!self.underlineY) {
       self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
                                                      attribute:NSLayoutAttributeCenterY
@@ -925,9 +946,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
  The vertical layout is, at most complex, this form:
  MDCTextInputVerticalPadding +                                        // Top padding
- MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +  // Placeholder when up
+ MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +   // Placeholder when up
  MDCTextInputVerticalHalfPadding +                                    // Small padding
- MDCRint(MAX(self.textInput.font.lineHeight,                         // Text field or placeholder
+ MDCRint(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
               self.textInput.placeholderLabel.font.lineHeight)) +
  MDCTextInputVerticalHalfPadding +                                    // Small padding
  --Underline-- (height not counted)                                   // Underline (height ignored)
@@ -954,11 +975,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       // MDCTextInputVerticalHalfPadding
       CGFloat underlineLabelsOffset = 0;
       if (self.textInput.leadingUnderlineLabel.text.length) {
-        underlineLabelsOffset = MDCRint(self.textInput.leadingUnderlineLabel.font.lineHeight);
+        underlineLabelsOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
       }
       if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
         underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                    MDCRint(self.textInput.trailingUnderlineLabel.font.lineHeight));
+                                    MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
       }
       CGFloat underlineOffset = MDCTextInputVerticalHalfPadding + underlineLabelsOffset;
 
@@ -1026,6 +1047,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   return editingRect;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
+  CGSize newSize = defaultSize;
+  newSize.height = (self.presentationStyle != MDCTextInputPresentationStyleDefault || !self.heightConstraint)  ? self.heightConstraint.constant : defaultSize.height;
+
+  return newSize;
 }
 
 #pragma mark - UITextField & UITextView Notification Observation

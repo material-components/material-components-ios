@@ -382,6 +382,16 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return boundingSize;
 }
 
+- (CGSize)sizeThatFits:(CGSize)size {
+  CGSize sizeThatFits = [self intrinsicContentSize];
+  sizeThatFits.width = size.width;
+
+  if ([self.positioningDelegate respondsToSelector:@selector(sizeThatFits:defaultSize:)]) {
+    sizeThatFits = [self.positioningDelegate sizeThatFits:size defaultSize:sizeThatFits];
+  }
+  return sizeThatFits;
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
