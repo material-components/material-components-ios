@@ -7,7 +7,6 @@ PODS:
     - MaterialComponents/AppBar (= 24.0.2)
     - MaterialComponents/ButtonBar (= 24.0.2)
     - MaterialComponents/Buttons (= 24.0.2)
-    - MaterialComponents/ButtonTitleColorAccessibilityMutator (= 24.0.2)
     - MaterialComponents/CollectionCells (= 24.0.2)
     - MaterialComponents/CollectionLayoutAttributes (= 24.0.2)
     - MaterialComponents/Collections (= 24.0.2)
@@ -90,9 +89,6 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-    - MDFTextAccessibility
-  - MaterialComponents/ButtonTitleColorAccessibilityMutator (24.0.2):
-    - MaterialComponents/Buttons
     - MDFTextAccessibility
   - MaterialComponents/CollectionCells (24.0.2):
     - MaterialComponents/CollectionLayoutAttributes
@@ -308,7 +304,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: c3a5319de04250a7cd4649127fcfca5fe3322a43
   EarlGrey: b78a93bd5fddba9a79a8e5ec5ae8a7718453ca40
-  MaterialComponents: 47314f6ba2daad5f8d4d7abe0003e0c5c51b5ec5
+  MaterialComponents: d11c352af3289b4e6522c018ee5472b1221a4033
   MaterialComponentsCatalog: 0efa6cde728c32562e4a2b24cba543bc337f29ad
   MaterialComponentsEarlGreyTests: 3eeaeace9785f31eaf3883393e2d866b59bedbaa
   MaterialComponentsUnitTests: d058a4c9ce52c3dcb4694cfa0377765eea46a82c

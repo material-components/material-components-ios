@@ -103,15 +103,6 @@ Pod::Spec.new do |s|
     end
   end
 
-  s.subspec "ButtonTitleColorAccessibilityMutator" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.dependency 'MDFTextAccessibility'
-    ss.dependency "MaterialComponents/Buttons"
-  end
-
   s.subspec "ButtonBar" do |ss|
     ss.subspec "Component" do |sss|
       sss.ios.deployment_target = '8.0'

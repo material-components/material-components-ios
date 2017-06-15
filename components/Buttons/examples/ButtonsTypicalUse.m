@@ -18,7 +18,6 @@
 
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
-#import "MDCButtonTitleColorAccessibilityMutator.h"
 
 @interface ButtonsTypicalUseViewController ()
 
@@ -31,8 +30,6 @@
   self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
   UIColor *buttonBackground = [UIColor colorWithWhite:0.1 alpha:1.0];
   UIColor *titleColor = [UIColor whiteColor];
-  MDCButtonTitleColorAccessibilityMutator *buttonMutator =
-      [[MDCButtonTitleColorAccessibilityMutator alloc] init];
   
   // Raised button
 
@@ -46,7 +43,6 @@
          forControlEvents:UIControlEventTouchUpInside];
   raisedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:raisedButton];
-  [buttonMutator mutate:raisedButton];
 
   // Disabled raised button
 
@@ -61,7 +57,6 @@
   [disabledRaisedButton setEnabled:NO];
   disabledRaisedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:disabledRaisedButton];
-  [buttonMutator mutate:disabledRaisedButton];
 
   
   // Flat button
@@ -75,7 +70,6 @@
        forControlEvents:UIControlEventTouchUpInside];
   flatButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:flatButton];
-  [buttonMutator mutate:flatButton];
 
   // Disabled flat
 
@@ -89,7 +83,6 @@
   [disabledFlatButton setEnabled:NO];
   disabledFlatButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:disabledFlatButton];
-  [buttonMutator mutate:disabledFlatButton];
 
   // Floating action button
 
@@ -105,7 +98,6 @@
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   [floatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.view addSubview:floatingButton];
-  [buttonMutator mutate:floatingButton];
 
   NSDictionary *views = @{
     @"raised" : raisedButton,
