@@ -215,6 +215,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Default background colors.
   [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
                                     forState:UIControlStateNormal];
+  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCRaisedButtonDisabledBackgroundColor)
+                                    forState:UIControlStateDisabled];
+  [[MDCButton appearance] setTitleColor:MDCColorFromRGB(MDCRaisedButtonDisabledTitleColor)
+                               forState:UIControlStateDisabled];
 }
 
 - (void)commonMDCButtonInit {
@@ -256,14 +260,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
-
-  // Default background colors.
-  [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
-                  forState:UIControlStateNormal];
-  [self setBackgroundColor:MDCColorFromRGB(MDCRaisedButtonDisabledBackgroundColor)
-                  forState:UIControlStateDisabled];
-  [self setTitleColor:MDCColorFromRGB(MDCRaisedButtonDisabledTitleColor)
-             forState:UIControlStateDisabled];
 
   self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
