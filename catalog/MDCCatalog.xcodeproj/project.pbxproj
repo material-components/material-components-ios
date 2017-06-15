@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */; };
+		0B50E1A81D91B63800DED250 /* EarlGrey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0BE1D27E1DD276D000F8544B /* MDCCatalogTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1D27D1DD276D000F8544B /* MDCCatalogTiles.m */; };
 		360D6F7F1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */; };
 		36C870B81E8AD6A20032EA7D /* RobotoMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */; };
 		404564F21E007C5E004C9D0A /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */; };
 		4097C8B59D0DD1F00845D250 /* Pods_MDCActionExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
+		5D2B1DB2BD8D444E630A80AC /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		64307B3C1DF74FEF004AE4AC /* MDCActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64307B3B1DF74FEF004AE4AC /* MDCActionViewController.m */; };
 		64307B3F1DF74FEF004AE4AC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64307B3D1DF74FEF004AE4AC /* MainInterface.storyboard */; };
 		64307B431DF74FEF004AE4AC /* MDCActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -26,9 +28,9 @@
 		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
+		969D020D9A1B2C31BE3F3446 /* EarlGrey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2D572CABD1DA9B82F98172 /* EarlGrey.swift */; };
 		AB6F8002250EF87B42EC0B65 /* Pods_MDCEarlGreyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
-		DEB4D65DB2D73B73E5B20544 /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 		DFA0CDB05E436A49344E2810 /* EarlGrey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; };
 /* End PBXBuildFile section */
@@ -51,13 +53,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0FF4E7632D51CB4C033454AE /* EarlGrey Copy Files */ = {
+		0B50E1A31D91B33400DED250 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(TEST_HOST)/..";
+			dstSubfolderSpec = 0;
+			files = (
+				0B50E1A81D91B63800DED250 /* EarlGrey.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2803A5C8087DD84ECDB4148E /* EarlGrey Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(TEST_HOST)/../";
 			dstSubfolderSpec = 0;
 			files = (
-				DEB4D65DB2D73B73E5B20544 /* EarlGrey.framework in EarlGrey Copy Files */,
+				5D2B1DB2BD8D444E630A80AC /* EarlGrey.framework in EarlGrey Copy Files */,
 			);
 			name = "EarlGrey Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,6 +90,7 @@
 /* Begin PBXFileReference section */
 		0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
 		0B50E1991D91B0BD00DED250 /* MDCEarlGreyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCEarlGreyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B50E19D1D91B0BD00DED250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BE1D27D1DD276D000F8544B /* MDCCatalogTiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTiles.m; sourceTree = "<group>"; };
 		0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCEarlGreyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1259AD212C335B693CDA9EEA /* Pods-MDCActionExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCActionExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCActionExtension/Pods-MDCActionExtension.release.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +157,7 @@
 		93314CA227FB65FEC87098C3 /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = Pods/EarlGrey/EarlGrey/EarlGrey.framework; sourceTree = SOURCE_ROOT; };
 		BB1A0ED4DB4091C5905AE474 /* Pods-MDCEarlGreyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCEarlGreyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests.release.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
+		CA2D572CABD1DA9B82F98172 /* EarlGrey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarlGrey.swift; sourceTree = "<group>"; };
 		DE1944851CBD9E40009E0321 /* MDCCatalogTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTiles.h; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
 		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -179,6 +193,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B50E19A1D91B0BD00DED250 /* MDCEarlGreyTests */ = {
+			isa = PBXGroup;
+			children = (
+				0B50E19D1D91B0BD00DED250 /* Info.plist */,
+				CA2D572CABD1DA9B82F98172 /* EarlGrey.swift */,
+			);
+			path = MDCEarlGreyTests;
+			sourceTree = "<group>";
+		};
 		5D090E331C9AEB8C0061344A /* Localizable */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				664524B51C6BA62A001ADBF8 /* MDCCatalog */,
+				0B50E19A1D91B0BD00DED250 /* MDCEarlGreyTests */,
 				64307B391DF74FEF004AE4AC /* MDCActionExtension */,
 				664524B41C6BA62A001ADBF8 /* Products */,
 				E165A9868676B4998575E09A /* Pods */,
@@ -301,7 +325,8 @@
 				0B50E1971D91B0BD00DED250 /* Resources */,
 				518980600242B56A76B32094 /* [CP] Embed Pods Frameworks */,
 				A7D47BD9A3C62120038127E5 /* [CP] Copy Pods Resources */,
-				0FF4E7632D51CB4C033454AE /* EarlGrey Copy Files */,
+				0B50E1A31D91B33400DED250 /* CopyFiles */,
+				2803A5C8087DD84ECDB4148E /* EarlGrey Copy Files */,
 			);
 			buildRules = (
 			);
@@ -595,6 +620,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				969D020D9A1B2C31BE3F3446 /* EarlGrey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
