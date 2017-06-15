@@ -118,15 +118,15 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/Buttons/Component"
       sss.dependency "MaterialComponents/Themes"
     end
-  end
+    ss.subspec "TitleColorAccessibilityMutator" do |sss|
+      sss.ios.deployment_target = '8.0'
+      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
+      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}", "components/#{ss.base_name}/src/#{sss.base_name}/private/*.{h,m}"
 
-  s.subspec "ButtonTitleColorAccessibilityMutator" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+      sss.dependency 'MDFTextAccessibility'
+      sss.dependency "MaterialComponents/Buttons/Component"
+    end
 
-    ss.dependency 'MDFTextAccessibility'
-    ss.dependency "MaterialComponents/Buttons"
   end
 
   s.subspec "ButtonBar" do |ss|
