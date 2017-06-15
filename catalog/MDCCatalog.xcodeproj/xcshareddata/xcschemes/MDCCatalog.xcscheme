@@ -43,7 +43,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0B50E1981D91B0BD00DED250"
+               BlueprintIdentifier = "36683DBD1EF3212B002EF2E6"
                BuildableName = "MDCEarlGreyTests.xctest"
                BlueprintName = "MDCEarlGreyTests"
                ReferencedContainer = "container:MDCCatalog.xcodeproj">
