@@ -211,6 +211,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
 }
 
++ (void)initialize {
+  // Default background colors.
+  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
+                                    forState:UIControlStateNormal];
+}
+
 - (void)commonMDCButtonInit {
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
@@ -485,6 +491,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 #pragma mark - BackgroundColor
+
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor {
+  // Turns out swift ignores NS_UNAVAILABLE
+  [self setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+}
 
 - (UIColor *)backgroundColorForState:(UIControlState)state {
   return _backgroundColors[@(state)];
