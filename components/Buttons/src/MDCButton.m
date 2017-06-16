@@ -110,14 +110,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return [MDCShadowLayer class];
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self commonMDCButtonInit];
-  }
-  return self;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
