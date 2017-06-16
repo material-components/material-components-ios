@@ -1,1 +1,0 @@
-../../../MaterialComponents/components/Tabs/src/MDCTabBarAlignment.h
