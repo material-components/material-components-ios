@@ -111,7 +111,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
 @property(nonatomic, copy) NSString *previousLeadingText;
 @property(nonatomic, strong) UIColor *previousPlaceholderColor;
-@property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
 
@@ -827,8 +826,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                         constant:-1 * MDCTextInputFullWidthHorizontalPadding];
     }
 
-    self.underlineY.active = NO;
-
     // Multi Line Only
     // .fullWidth
     if ([self.textInput isKindOfClass:[UITextView class]]) {
@@ -881,22 +878,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                           forAxis:UILayoutConstraintAxisVertical];
   } else {
     // .floatingPlaceholder and .default
-
-    CGFloat underlineOffsetY = -1 * ([self textContainerInset:UIEdgeInsetsZero].bottom + MDCTextInputVerticalHalfPadding);
-    if (!self.underlineY) {
-      self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.textInput
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:1
-                                                      constant:underlineOffsetY];
-    } else {
-      self.underlineY.constant = underlineOffsetY;
-    }
-
-    // If we are being presented with manual layout, we need to help the underline get to its Y
-    self.underlineY.active = self.textInput.translatesAutoresizingMaskIntoConstraints;
 
     // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
     self.characterCountTrailing.active = NO;

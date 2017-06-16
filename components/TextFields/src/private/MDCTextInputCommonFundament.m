@@ -424,13 +424,16 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                               multiplier:1
                                 constant:0]
       .active = YES;
+
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
   _underlineY = [NSLayoutConstraint constraintWithItem:_underline
                                              attribute:NSLayoutAttributeCenterY
                                              relatedBy:NSLayoutRelationEqual
                                                 toItem:_relativeSuperview
-                                             attribute:NSLayoutAttributeBottom
+                                             attribute:NSLayoutAttributeTop
                                             multiplier:1
-                                              constant:-1 * MDCTextInputHalfPadding];
+                                              constant:[self textContainerInset].top + estimatedTextHeight +
+                 MDCTextInputHalfPadding];
   _underlineY.priority = UILayoutPriorityDefaultLow;
   _underlineY.active = YES;
 }
@@ -589,17 +592,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Underline View Implementation
 
 - (CGFloat)underlineYConstant {
-  // Usually the underline is halfway between the text and the bottom of the view. But if there are
-  // underline labels, we need to be above them.
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
 
-  CGFloat underlineYConstant = MDCTextInputHalfPadding;
-
-  CGFloat underlineLabelsHeight = MAX(MDCRint(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
-                                      MDCRint(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
-  underlineYConstant += underlineLabelsHeight;
-  underlineYConstant *= -1;
-
-  return underlineYConstant;
+  return [self textContainerInset].top + estimatedTextHeight + MDCTextInputHalfPadding;
 }
 
 - (BOOL)needsUpdateUnderlinePosition {
