@@ -51,8 +51,7 @@
  @param backgroundColor The background color.
  @param state The state.
  */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
-UI_APPEARANCE_SELECTOR;
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
 
 /** The ink style of the button. */
 @property(nonatomic, assign) MDCInkStyle inkStyle;
