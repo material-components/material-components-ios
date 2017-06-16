@@ -2,10 +2,6 @@
 
 ## API diffs
 
-### Buttons
-
-* Added UI_APPEARANCE_SELECTOR to setBackgroundColor:forState: in MDCButton
-
 ### FeatureHighlight
 
 * Added properties 'bodyColor' and 'titleColor' in MDCFeatureHighlightView
@@ -24,8 +20,6 @@
 ### Buttons
 
 #### Changes
-
-* [mdcbutton Using UIAppearance to set the default background color for the normal state.](https://github.com/material-components/material-components-ios/commit/6670e7409f8fc3ecadbcc18a12de781f16569798) (Randall Li)
 
 * [Button appearance (#1502)](https://github.com/material-components/material-components-ios/commit/b18aaff93e62ab853e0930867c90da3339cfb2d8) (Randall Li)
 * [Revert "Button appearance (#1502)" (#1504)](https://github.com/material-components/material-components-ios/commit/9db80b68b05969f5ab7fdeeab8806fc34f57a2a1) (Randall Li)
