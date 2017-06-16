@@ -10,10 +10,10 @@
 
 ### Palettes
 
-* Removed 'redPalette','pinkPalette','purplePalette','deepPurplePalette','indigoPalette','bluePalette',
+* Remove 'redPalette','pinkPalette','purplePalette','deepPurplePalette','indigoPalette','bluePalette',
     'lightBluePalette','cyanPalette','tealPalette','greenPalette','lightGreenPalette','limePalette',
     'yellowPalette','amberPalette','orangePalette','deepOrangePalette','brownPalette','greyPalette',
-    'blueGreyPalette' class methods from MDCPalette
+    'blueGreyPalette' class methods from MDCPalette in favor of class properties
 
 ## Component changes
 
