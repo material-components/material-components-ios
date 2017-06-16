@@ -94,6 +94,13 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @property(nonatomic, nullable, strong) UIColor *errorColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The text being displayed in the leading underline label when in an error state.
+ 
+ NOTE: To set this value, you must use setErrorText:errorAccessibilityValue:.
+ */
+@property(nonatomic, nullable, copy, readonly) NSString *errorText;
+
+/**
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color.
 

@@ -96,7 +96,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) UIFont *customLeadingFont;
 @property(nonatomic, strong) UIFont *customPlaceholderFont;
 @property(nonatomic, strong) UIFont *customTrailingFont;
-@property(nonatomic, copy) NSString *errorText;
+@property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
