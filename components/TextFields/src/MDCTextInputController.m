@@ -583,29 +583,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
-- (CGFloat)largestUnderlineLabelLineHeight:(BOOL)isContentAware {
-  CGFloat largerLineHeight = 0;
-
-//  if (isContentAware) {
-//    CGFloat leadingHeight;
-//    CGFloat trailingHeight;
-//    self.heightConstraint.constant =
-//    insets.top +  // Labels and padding
-//    MDCRint(MAX(self.textInput.font.lineHeight,
-//                self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
-//    insets.bottom;                                                   // Padding or labels
-//
-//  } else {
-//    largerLineHeight = MAX(self.textInput.leadingUnderlineLabel.font.lineHeight,
-//                           self.textInput.trailingUnderlineLabel.font.lineHeight);
-//
-//  }
-//
-//  largerLineHeight = MDCCeil(largerLineHeight * 2.f) / 2.f;
-//
-  return largerLineHeight;
-}
-
 #pragma mark - Properties Implementation
 
 - (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
