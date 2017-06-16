@@ -44,11 +44,6 @@
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  [self performSelector:@selector(test) withObject:nil afterDelay:2];
-//  [self.textFieldControllerFloating.textInput sizeToFit];
-}
-
-- (void)test {
   [self.textFieldControllerFloating.textInput sizeToFit];
 }
 
