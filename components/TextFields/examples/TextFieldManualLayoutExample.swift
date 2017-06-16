@@ -21,13 +21,13 @@ import MaterialComponents.MaterialTextFields
 final class TextFieldManualLayoutSwiftExample: UIViewController {
 
   private enum LayoutConstants {
-    static let largeMargin: CGFloat = 16.0
-    static let smallMargin: CGFloat = 8.0
+    static let largeMargin: CGFloat = 16
+    static let smallMargin: CGFloat = 8
 
-    static let floatingHeight: CGFloat = 70.0
-    static let defaultHeight: CGFloat = 62.0
+    static let floatingHeight: CGFloat = 84
+    static let defaultHeight: CGFloat = 62
 
-    static let stateWidth: CGFloat = 80.0
+    static let stateWidth: CGFloat = 80
   }
 
   let scrollView = UIScrollView()
