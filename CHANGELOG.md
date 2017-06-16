@@ -17,15 +17,6 @@
 
 ## Component changes
 
-### Buttons
-
-#### Changes
-
-* [Button appearance (#1502)](https://github.com/material-components/material-components-ios/commit/b18aaff93e62ab853e0930867c90da3339cfb2d8) (Randall Li)
-* [Revert "Button appearance (#1502)" (#1504)](https://github.com/material-components/material-components-ios/commit/9db80b68b05969f5ab7fdeeab8806fc34f57a2a1) (Randall Li)
-* [Reverted MDCButton changes from Component Themer change: (#1490)](https://github.com/material-components/material-components-ios/commit/4128a44538e25c2ba19f627b9a96cffe568f1cad) (Randall Li)
-* [[Button] Calling commonMDCButtonInit from init. (#1501)](https://github.com/material-components/material-components-ios/commit/6217edab9e7eba9d5da5fee531211e09f2a2bda2) (Randall Li)
-
 ### FeatureHighlight
 
 #### Changes
