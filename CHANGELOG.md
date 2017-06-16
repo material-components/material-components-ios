@@ -1,3 +1,34 @@
+# 25.0.0 
+
+## API diffs
+
+### FeatureHighlight
+
+* Added properties 'bodyColor' and 'titleColor' in MDCFeatureHighlightView
+* Added 'nullable' nullability specifiers to 'innerHighlightColor', 'outerHighlightColor'
+* Added properties 'bodyCOlor' and 'titleColor' in MDCFeatureHighlightViewController
+
+### Palettes
+
+* Remove 'redPalette','pinkPalette','purplePalette','deepPurplePalette','indigoPalette','bluePalette',
+    'lightBluePalette','cyanPalette','tealPalette','greenPalette','lightGreenPalette','limePalette',
+    'yellowPalette','amberPalette','orangePalette','deepOrangePalette','brownPalette','greyPalette',
+    'blueGreyPalette' class methods from MDCPalette in favor of class properties
+
+## Component changes
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Feature Highlight] Expose title and body color properties (#1496)](https://github.com/material-components/material-components-ios/commit/a43472d2497836d12b70782b65b17788cf05efd0) (Sam Morrison)
+
+### Palettes
+
+#### Changes
+
+* [Removing palette (#1500)](https://github.com/material-components/material-components-ios/commit/f71cd14b5b3ec3cf123e327bba875faf8ebf8f56) (Martin Petrov)
+
 # 24.0.2
 
 Hotfix: Fixed missing bump of version numbers.
