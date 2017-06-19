@@ -131,6 +131,9 @@ class TextFieldControllerTests: XCTestCase {
     controller.presentationStyle = .floatingPlaceholder
     XCTAssertEqual(controller.presentationStyle, .floatingPlaceholder)
 
+    textField.sizeToFit()
+    XCTAssertEqual(textField.frame.height, 70)
+
     controller.characterCountViewMode = .never
     XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)
     controller.characterCountViewMode = .always
