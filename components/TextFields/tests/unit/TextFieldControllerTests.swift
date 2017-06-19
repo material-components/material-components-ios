@@ -141,4 +141,36 @@ class TextFieldControllerTests: XCTestCase {
     controller.underlineViewMode = .always
     XCTAssertEqual(MDCPalette.indigo.tint500, textField.underline?.color)
   }
+
+  func testSerialization() {
+    let textField = MDCTextField()
+
+    let controller = MDCTextInputController(textInput: textField)
+    controller.characterCountMax = 25
+    controller.characterCountViewMode = .always
+    controller.floatingPlaceholderColor = .purple
+    controller.floatingPlaceholderScale = 0.1
+    controller.helperText = "Helper"
+    controller.inlinePlaceholderColor = .green
+    controller.presentationStyle = .floatingPlaceholder
+    controller.underlineViewMode = .always
+
+    let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
+    XCTAssertNotNil(serializedController)
+
+    let unserializedController =
+      NSKeyedUnarchiver.unarchiveObject(with: serializedController) as?
+    MDCTextInputController
+    XCTAssertNotNil(unserializedController)
+
+    unserializedController?.textInput = textField
+    XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
+    XCTAssertEqual(controller.characterCountViewMode, unserializedController?.characterCountViewMode)
+    XCTAssertEqual(controller.floatingPlaceholderColor, unserializedController?.floatingPlaceholderColor)
+    XCTAssertEqual(controller.floatingPlaceholderScale, unserializedController?.floatingPlaceholderScale)
+    XCTAssertEqual(controller.helperText, unserializedController?.helperText)
+    XCTAssertEqual(controller.inlinePlaceholderColor, unserializedController?.inlinePlaceholderColor)
+    XCTAssertEqual(controller.presentationStyle, unserializedController?.presentationStyle)
+    XCTAssertEqual(controller.underlineViewMode, unserializedController?.underlineViewMode)
+  }
 }
