@@ -375,7 +375,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   if (self.isPlaceholderUp) {
     self.textInput.placeholderLabel.textColor =
-      self.isDisplayingErrorText ? self.errorColor : self.floatingPlaceholderColor;
+      (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor : self.floatingPlaceholderColor;
   } else {
     self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
   }
@@ -431,7 +431,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       self.textInput.placeholderLabel.transform = floatingPlaceholderScaleTransform;
 
       self.textInput.placeholderLabel.textColor =
-      self.isDisplayingErrorText ? self.errorColor : self.floatingPlaceholderColor;
+      (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor : self.floatingPlaceholderColor;
       [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
     };
   } else {
@@ -597,7 +597,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)setErrorColor:(UIColor *)errorColor {
   if (![_errorColor isEqual:errorColor]) {
     _errorColor = errorColor;
-    if (self.isDisplayingErrorText) {
+    if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
       [self updateLeadingUnderlineLabel];
       [self updatePlaceholder];
       [self updateTrailingUnderlineLabel];
