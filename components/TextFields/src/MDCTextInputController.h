@@ -97,9 +97,9 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color.
 
- Default is black with Material Design hint text opacity.
+ Default is black with Material Design hint text opacity (textInput's tint).
  */
-@property(nonatomic, nullable, strong)
+@property(nonatomic, null_resettable, strong)
     UIColor *floatingPlaceholderColor UI_APPEARANCE_SELECTOR;
 
 /**
@@ -124,7 +124,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is black with Material Design hint text opacity.
  */
-@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColor UI_APPEARANCE_SELECTOR;
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s

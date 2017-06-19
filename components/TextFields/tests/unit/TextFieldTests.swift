@@ -131,18 +131,6 @@ class TextFieldTests: XCTestCase {
 
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
     XCTAssertEqual(textField.trailingUnderlineLabel.text, unserializedInput?.trailingUnderlineLabel.text)
-
-    let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
-    XCTAssertNotNil(serializedController)
-
-    let unserializedController =
-      NSKeyedUnarchiver.unarchiveObject(with: serializedController) as?
-    MDCTextInputController
-    XCTAssertNotNil(unserializedController)
-
-    unserializedController?.textInput = unserializedInput
-    XCTAssertEqual(controller.helperText, unserializedController?.helperText)
-    XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
   }
 
   func testUnderlineSetters() {

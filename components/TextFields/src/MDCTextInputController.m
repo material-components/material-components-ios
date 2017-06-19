@@ -84,6 +84,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 @interface MDCTextInputController () {
+  UIColor *_floatingPlaceholderColor;
+  UIColor *_inlinePlaceholderColor;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
@@ -370,6 +372,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (!self.customPlaceholderFont) {
     self.textInput.placeholderLabel.font = [[self class] placeholderFont];
   }
+
+  if (self.isPlaceholderUp) {
+    self.textInput.placeholderLabel.textColor =
+      self.isDisplayingErrorText ? self.errorColor : self.floatingPlaceholderColor;
+  } else {
+    self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
+  }
 }
 
 - (BOOL)isPlaceholderUp {
@@ -421,15 +430,16 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = floatingPlaceholderScaleTransform;
 
-      self.textInput.placeholderLabel.textColor = self.textInput.tintColor;
+      self.textInput.placeholderLabel.textColor =
+      self.isDisplayingErrorText ? self.errorColor : self.floatingPlaceholderColor;
       [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
     };
   } else {
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
 
-      self.textInput.placeholderLabel.textColor =
-          self.previousPlaceholderColor ?: self.textInput.placeholderLabel.textColor;
+      self.textInput.placeholderLabel.textColor = self.previousPlaceholderColor ?: self.inlinePlaceholderColor;
+
       [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
     };
   }
@@ -589,6 +599,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _errorColor = errorColor;
     if (self.isDisplayingErrorText) {
       [self updateLeadingUnderlineLabel];
+      [self updatePlaceholder];
       [self updateTrailingUnderlineLabel];
       [self updateUnderline];
     }
@@ -604,6 +615,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _floatingPlaceholderColor = floatingPlaceholderColor;
     [self updatePlaceholder];
   }
+}
+
+- (UIColor *)floatingPlaceholderColor {
+  return _floatingPlaceholderColor ?: self.textInput.tintColor;
 }
 
 - (void)setFloatingPlaceholderScale:(NSNumber *)floatingPlaceholderScale {
@@ -637,6 +652,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _inlinePlaceholderColor = inlinePlaceholderColor;
     [self updatePlaceholder];
   }
+}
+
+- (UIColor *)inlinePlaceholderColor {
+  return _inlinePlaceholderColor ?: MDCTextInputInlinePlaceholderTextColor();
 }
 
 - (BOOL)isDisplayingCharacterCountError {
@@ -1111,6 +1130,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                    : @"";
 
     self.textInput.leadingUnderlineLabel.text = errorText;
+
+    [self updatePlaceholder];
   }
 
   // Change error:
