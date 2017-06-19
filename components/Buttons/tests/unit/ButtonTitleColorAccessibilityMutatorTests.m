@@ -42,7 +42,7 @@ static NSArray<UIColor *> *testColors(){
     for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
       // Given
       MDCButtonTitleColorAccessibilityMutator *mutator =
-      [[MDCButtonTitleColorAccessibilityMutator alloc] init];
+          [[MDCButtonTitleColorAccessibilityMutator alloc] init];
       MDCButton *button = [[MDCButton alloc] init];
       // Making the background color the same as the title color.
       [button setBackgroundColor:color forState:(UIControlState)controlState];
