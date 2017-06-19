@@ -47,6 +47,12 @@ extension TextFieldKitchenSinkSwiftExample {
                                            object: nil)
   }
 
+  func setupButton() -> MDCButton {
+    let button = MDCButton()
+    button.customTitleColor = .white
+    return button
+  }
+  
   func setupControls() -> [UIView] {
     let container = UIView()
     container.translatesAutoresizingMaskIntoConstraints = false
