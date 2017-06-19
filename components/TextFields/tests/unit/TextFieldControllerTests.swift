@@ -164,7 +164,6 @@ class TextFieldControllerTests: XCTestCase {
     XCTAssertNotNil(unserializedController)
 
     unserializedController?.textInput = textField
-    XCTAssertTrue(controller.characterCounter === unserializedController?.characterCounter)
     XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
     XCTAssertEqual(controller.characterCountViewMode, unserializedController?.characterCountViewMode)
     XCTAssertEqual(controller.floatingPlaceholderColor, unserializedController?.floatingPlaceholderColor)
