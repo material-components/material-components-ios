@@ -21,7 +21,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCOverlayImplementor.h"
-#import "MDCOverlayTransitioning.h"
+#import "MaterialOverlay.h"
 #import "private/MDCOverlayAnimationObserver.h"
 #import "private/MDCOverlayObserverOverlay.h"
 #import "private/MDCOverlayObserverTransition.h"
