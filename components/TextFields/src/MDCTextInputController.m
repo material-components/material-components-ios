@@ -375,7 +375,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   if (self.isPlaceholderUp) {
     self.textInput.placeholderLabel.textColor =
-      (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor : self.floatingPlaceholderColor;
+        (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
+            ? self.errorColor
+            : self.floatingPlaceholderColor;
   } else {
     self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
   }
@@ -431,14 +433,17 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       self.textInput.placeholderLabel.transform = floatingPlaceholderScaleTransform;
 
       self.textInput.placeholderLabel.textColor =
-      (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor : self.floatingPlaceholderColor;
+          (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
+              ? self.errorColor
+              : self.floatingPlaceholderColor;
       [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
     };
   } else {
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
 
-      self.textInput.placeholderLabel.textColor = self.previousPlaceholderColor ?: self.inlinePlaceholderColor;
+      self.textInput.placeholderLabel.textColor =
+          self.previousPlaceholderColor ?: self.inlinePlaceholderColor;
 
       [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
     };
@@ -467,8 +472,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       self.textInput.placeholderLabel.font.lineHeight * (1 - [self effectiveFloatingScale]) * .5f;
 
   CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text
-      boundingRectWithSize:CGSizeMake(CGFLOAT_MAX,
-                                      self.textInput.placeholderLabel.font.lineHeight)
+      boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.textInput.placeholderLabel.font.lineHeight)
                    options:0
                 attributes:@{
                   NSFontAttributeName : self.textInput.font
@@ -1174,10 +1178,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       valueString = [self.textInput.text copy];
     }
     if (self.textInput.placeholder.length > 0) {
-      valueString =
-          [NSString stringWithFormat:@"%@. %@", valueString, self.textInput.placeholder];
+      valueString = [NSString stringWithFormat:@"%@. %@", valueString, self.textInput.placeholder];
     }
-    valueString  = [valueString stringByAppendingString:@"."];
+    valueString = [valueString stringByAppendingString:@"."];
 
     self.textInput.accessibilityValue = valueString;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString

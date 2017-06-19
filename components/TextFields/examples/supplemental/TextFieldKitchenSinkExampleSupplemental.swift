@@ -52,7 +52,7 @@ extension TextFieldKitchenSinkSwiftExample {
     button.customTitleColor = .white
     return button
   }
-  
+
   func setupControls() -> [UIView] {
     let container = UIView()
     container.translatesAutoresizingMaskIntoConstraints = false
