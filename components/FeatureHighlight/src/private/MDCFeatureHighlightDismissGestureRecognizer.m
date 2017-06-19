@@ -14,9 +14,6 @@
  limitations under the License.
  */
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-variable"
-
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
 #import "MDCFeatureHighlightDismissGestureRecognizer.h"
@@ -53,7 +50,6 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
 
 @implementation MDCFeatureHighlightDismissGestureRecognizer {
   CGFloat _startProgress;
-
   CGFloat _previousProgress;
   NSTimeInterval _eventTimeStamp;
   NSTimeInterval _previousEventTimeStamp;
@@ -91,7 +87,10 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
   _previousEventTimeStamp = _eventTimeStamp;
   _eventTimeStamp = event.timestamp;
 
-  _velocity = (_progress - _previousProgress) / (_eventTimeStamp - _previousEventTimeStamp);
+  NSTimeInterval deltaTime = _eventTimeStamp - _previousEventTimeStamp;
+  if (deltaTime > 0) {
+    _velocity = (_progress - _previousProgress) / deltaTime;
+  }
 
   [self updateState:touches];
 }
@@ -99,7 +98,8 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
 
-  if (self.state == UIGestureRecognizerStateBegan || self.state == UIGestureRecognizerStateChanged) {
+  if (self.state == UIGestureRecognizerStateBegan
+      || self.state == UIGestureRecognizerStateChanged) {
     self.state = UIGestureRecognizerStateEnded;
   }
 }
@@ -185,5 +185,3 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
 }
 
 @end
-
-#pragma clang diagnostic pop
