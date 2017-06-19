@@ -13,14 +13,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-#import "MDCTextInput.h"
+#import "MaterialTextFields.h"
 
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputArt.h"
-#import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputCommonFundament.h"
-#import "MDCTextInputUnderlineView.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"

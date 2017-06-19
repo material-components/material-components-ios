@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCFeatureHighlightView.h"
+#import "MaterialFeatureHighlight.h"
 
 typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
