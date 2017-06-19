@@ -23,7 +23,7 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlays.h"
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 

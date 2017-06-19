@@ -15,7 +15,7 @@
  */
 
 #import "MDCKeyboardWatcher.h"
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
 NSString *const MDCKeyboardWatcherKeyboardWillShowNotification =
     @"MDCKeyboardWatcherKeyboardWillShowNotification";
