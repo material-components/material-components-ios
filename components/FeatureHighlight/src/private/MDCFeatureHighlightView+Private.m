@@ -22,7 +22,12 @@
 
 #import "MaterialFeatureHighlightStrings.h"
 #import "MaterialFeatureHighlightStrings_table.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
+
+static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
+  return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
+}
 
 // The Bundle for string resources.
 static NSString *const kMaterialFeatureHighlightBundle = @"MaterialFeatureHighlight.bundle";
@@ -288,12 +293,17 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
   CGPoint pos = [tapGestureRecognizer locationInView:self];
-  CGFloat dist =
-  (float)(sqrt(pow(pos.x - _highlightPoint.x, 2) + pow(pos.y - _highlightPoint.y, 2)));
-  BOOL accepted = dist <= _innerRadius;
+  CGFloat pointDist = CGPointDistanceToPoint(_highlightPoint, pos);
+  CGFloat centerDist = CGPointDistanceToPoint(_highlightCenter, pos);
 
   if (self.interactionBlock) {
-    self.interactionBlock(accepted);
+    if (centerDist > _outerRadius * _outerRadiusScale) {
+      // For taps outside the outer highlight, dismiss as not accepted
+      self.interactionBlock(NO);
+    } else if (pointDist < _innerRadius) {
+      // For taps inside the inner highlight, dismiss as accepted
+      self.interactionBlock(YES);
+    }
   }
 }
 
