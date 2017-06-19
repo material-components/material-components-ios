@@ -631,7 +631,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
-  void (^animations)() = ^{
+  void (^animations)(void) = ^{
     self.alpha = self.enabled ? 1.0f : _disabledAlpha;
     [self updateBackgroundColor];
   };

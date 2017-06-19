@@ -347,7 +347,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                  animated:(BOOL)animated
     animateThumbAfterMove:(BOOL)animateThumbAfterMove
             userGenerated:(BOOL)userGenerated
-               completion:(void (^)())completion {
+               completion:(void (^)(void))completion {
   CGFloat previousValue = _value;
   CGFloat newValue = MAX(_minimumValue, MIN(value, _maximumValue));
   newValue = [self closestValueToTargetValue:newValue];
@@ -462,7 +462,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)updateThumbTrackAnimated:(BOOL)animated
            animateThumbAfterMove:(BOOL)animateThumbAfterMove
                    previousValue:(CGFloat)previousValue
-                      completion:(void (^)())completion {
+                      completion:(void (^)(void))completion {
   [self updateViewsNoAnimation];
 
   UIViewAnimationOptions baseAnimationOptions =
@@ -540,7 +540,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)updateThumbAfterMoveAnimated:(BOOL)animated
                              options:(UIViewAnimationOptions)animationOptions
-                          completion:(void (^)())completion {
+                          completion:(void (^)(void))completion {
   if (animated) {
     [UIView animateWithDuration:kThumbChangeAnimationDuration
         delay:0.0f
