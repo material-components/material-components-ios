@@ -24,14 +24,6 @@
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
-}
-
 @interface FlexibleHeaderPageControlExample () <UIScrollViewDelegate>
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
