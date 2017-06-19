@@ -14,9 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputCharacterCounter.h"
-
-#import "MDCTextInput.h"
+#import "MaterialTextFields.h"
 
 @implementation MDCTextInputAllCharactersCounter
 
