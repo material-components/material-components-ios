@@ -275,7 +275,6 @@ extension TextFieldKitchenSinkSwiftExample {
     guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
       return
     }
-    print(scrollView)
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
                                            left: 0.0,
                                            bottom: frame.height,
