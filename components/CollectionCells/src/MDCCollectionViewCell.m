@@ -131,7 +131,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
   [self updateInterfaceForEditing];
   [self layoutForegroundSubviews];
 
-  void (^editingViewLayout)() = ^() {
+  void (^editingViewLayout)(void) = ^() {
     CGFloat txReorderTransform;
     CGFloat txSelectorTransform;
     switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
