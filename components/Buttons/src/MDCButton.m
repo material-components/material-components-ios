@@ -603,21 +603,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return UIEdgeInsetsMake(8, 16, 8, 16);
 }
 
-- (BOOL)shouldHaveOpaqueBackground {
-  BOOL isFlatButton = MDCCGFloatIsExactlyZero([self elevationForState:UIControlStateNormal]);
-  return !isFlatButton;
-}
-
 - (void)updateBackgroundColor {
-  //  UIColor *color = nil;
-  //  if ([self shouldHaveOpaqueBackground]) {
-  //    if (self.enabled) {
-  ////      color = self.enabledBackgroundColor;
-  //    } else {
-  //      color = [self isDarkColor:_underlyingColorHint] ? _disabledBackgroundColorLight
-  //                                                  : _disabledBackgroundColorDark;
-  //    }
-  //  }
   super.backgroundColor = self.currentBackgroundColor;
 }
 

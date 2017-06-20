@@ -23,9 +23,6 @@
 /** Access to the ink view layer. Mainly used for subclasses to override ink properties. */
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
-/** Whether the background color should be opaque. */
-- (BOOL)shouldHaveOpaqueBackground;
-
 /** Updates the background color based on the button's current configuration. */
 - (void)updateBackgroundColor;
 

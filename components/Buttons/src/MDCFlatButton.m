@@ -80,8 +80,4 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
   [self updateBackgroundColor];
 }
 
-- (BOOL)shouldHaveOpaqueBackground {
-  return [super shouldHaveOpaqueBackground] || self.hasOpaqueBackground;
-}
-
 @end
