@@ -89,6 +89,7 @@ static const CGFloat kSingleCycleRotation =
   BOOL _cycleInProgress;
   CGFloat _currentProgress;
   CGFloat _lastProgress;
+  NSArray<UIColor *> *_cycleColors;
 }
 
 #pragma mark - Init
@@ -110,12 +111,7 @@ static const CGFloat kSingleCycleRotation =
 }
 
 + (void)initialize {
-  NSArray<UIColor *> *defaultColors =
-      @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-         [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-         [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-         [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
-  [MDCActivityIndicator appearance].cycleColors = defaultColors;
+  [MDCActivityIndicator appearance].cycleColors = [MDCActivityIndicator defaultCycleColors];
 }
 
 - (void)dealloc {
@@ -136,6 +132,19 @@ static const CGFloat kSingleCycleRotation =
 
     [self updateStrokePath];
   }];
+}
+
++ (NSArray<UIColor *> *)defaultCycleColors {
+  static NSArray<UIColor *> *s_defaultCycleColors;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    s_defaultCycleColors =
+        @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
+           [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
+           [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
+           [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
+  });
+  return s_defaultCycleColors;
 }
 
 - (void)commonMDCActivityIndicatorInit {
@@ -383,11 +392,39 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)setCycleColors:(NSArray<UIColor *> *)cycleColors {
-  _cycleColors = [cycleColors copy];
-  NSAssert(cycleColors.count > 0, @"Cycle colors array cannot be empty.");
-  if (cycleColors.count > 0) {
-    [self setStrokeColor:cycleColors[0]];
+  if (cycleColors.count) {
+    _cycleColors = [cycleColors copy];
+  } else {
+    // Use NSNull to track "explicit" nil versus implicit nil (uninitialized value)
+    _cycleColors = (NSArray<UIColor *> *)[NSNull null];
   }
+
+  if (self.cycleColors.count) {
+    [self setStrokeColor:self.cycleColors[0]];
+  }
+}
+
+/*
+ The custom getter is needed for two main reasons:
+   - As a nonnull property proxied by UIAppearance, it can return nil before the ActivityIndicator 
+     is added to the view hierarchy. Setting the ivar would make it hard to distinguish between
+     the property being set externally versus the implicit default value.
+   - If the user explicitly sets the value with an empty array, we treat that as a special case of
+     reverting back to the default values. NSNull also makes it easier to distinguish between
+     implicit and explicit nil values during (de)serialization.
+ */
+- (NSArray<UIColor *> *)cycleColors {
+  NSArray<UIColor *> *cycleColors = _cycleColors;
+  // Use NSNull to track "explicit" nil versus implicit nil (uninitialized value)
+  if (cycleColors == (NSArray<UIColor *> *)[NSNull null]) {
+    return [MDCActivityIndicator defaultCycleColors];
+  }
+  if (cycleColors) {
+    return cycleColors;
+  }
+
+  NSArray<UIColor *> *proxyColors = [MDCActivityIndicator appearance].cycleColors;
+  return proxyColors.count ? proxyColors : [MDCActivityIndicator defaultCycleColors];
 }
 
 - (void)updateStrokePath {
@@ -404,13 +441,13 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)updateStrokeColor {
-  if (_cycleColors.count > 0) {
-    [self setStrokeColor:_cycleColors[_currentColorCount]];
-  }
-  // TODO(https://github.com/material-components/material-components-ios/issues/1508): REMOVE HACK
-  // BELOW THAT PROTECTS AGAINST EMPTY cycleColors ARRAY
-  else {
-    [self setStrokeColor:[[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1]];
+  NSArray<UIColor *> *cycleColors = self.cycleColors;
+  NSUInteger currentColorCount = _currentColorCount;
+  if (cycleColors.count > 0 && cycleColors.count > currentColorCount) {
+    [self setStrokeColor:cycleColors[currentColorCount]];
+  } else {
+    NSAssert(NO, @"nonnull cycleColors property incorrectly returned nil.");
+    [self setStrokeColor:[[MDCActivityIndicator defaultCycleColors] firstObject]];
   }
 }
 
@@ -691,8 +728,9 @@ static const CGFloat kSingleCycleRotation =
     return;
   }
   if (state == MDCActivityIndicatorStateIndeterminate) {
-    if (_cycleColors.count > 0) {
-      _currentColorCount = (_currentColorCount + 1) % _cycleColors.count;
+    NSUInteger cycleColorsCount = self.cycleColors.count;
+    if (cycleColorsCount > 0) {
+      _currentColorCount = (_currentColorCount + 1) % cycleColorsCount;
       [self updateStrokeColor];
     }
     _cycleCount = (_cycleCount + 1) % kMDCActivityIndicatorTotalDetentCount;

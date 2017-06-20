@@ -97,8 +97,8 @@ IB_DESIGNABLE
 
 /**
  The array of colors that are cycled through when animating the spinner. Populated with default
- colors of blue, red, yellow and green on initialization. An empty array results in a blue spinner
- with no color cycling.
+ colors of blue, red, yellow and green on initialization. Passing an empty array will cause the
+ default values to be returned.
  */
 @property(nonatomic, copy, nonnull) NSArray<UIColor *> *cycleColors UI_APPEARANCE_SELECTOR;
 
