@@ -1,3 +1,7 @@
+# 25.0.1
+
+Hotfix: Added implementation for accessibilityElementForItem: for MDCTabBar
+
 # 25.0.0 
 
 ## API diffs
