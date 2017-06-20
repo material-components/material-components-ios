@@ -29,7 +29,7 @@ static inline CGPoint CenterOfFrame(CGRect frame) {
 }
 
 static inline CGPoint AnchorPointFromPosition(CGPoint position, CGRect bounds) {
-  return CGPointMake(position.x / bounds.size.width, position.y / bounds.size.height);
+  return CGPointMake(position.x / CGRectGetWidth(bounds), position.y / CGRectGetHeight(bounds));
 }
 
 static inline CGRect FrameCenteredAround(CGPoint position, CGSize size) {
@@ -134,10 +134,10 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     corner = CGPointMake(CGRectGetMaxX(initialMaskedFrame), CGRectGetMaxY(initialMaskedFrame));
 
   } else {
-    initialMaskedFrame = CGRectMake(context.containerView.bounds.origin.x,
-                                    initialSourceFrame.origin.y - 20,
-                                    originalFrame.size.width,
-                                    originalFrame.size.height);
+    initialMaskedFrame = CGRectMake(CGRectGetMinX(context.containerView.bounds),
+                                    CGRectGetMinY(initialSourceFrame) - 20,
+                                    CGRectGetWidth(originalFrame),
+                                    CGRectGetHeight(originalFrame));
     if (CGRectGetMidX(initialSourceFrame) < CGRectGetMidX(initialMaskedFrame)) {
       // Middle-right
       corner = CGPointMake(CGRectGetMaxX(initialMaskedFrame), CGRectGetMidY(initialMaskedFrame));
@@ -151,7 +151,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   const CGRect initialSourceFrameInMask = [maskedView convertRect:initialSourceFrame
                                                          fromView:context.containerView];
 
-  const CGFloat initialRadius = _sourceView.bounds.size.width / 2;
+  const CGFloat initialRadius = CGRectGetWidth(_sourceView.bounds) / 2;
   const CGFloat finalRadius = LengthOfVector(CGVectorMake(initialSourceCenter.x - corner.x,
                                                           initialSourceCenter.y - corner.y));
   const CGFloat finalScale = finalRadius / initialRadius;

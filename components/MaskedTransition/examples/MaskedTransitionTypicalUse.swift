@@ -92,18 +92,6 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
   }
 
-  open override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-
-    print("Will disappear")
-  }
-
-  open override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(animated)
-
-    print("Did disappear")
-  }
-
   func didTapFab(fab: UIView) {
     let target = targets[tableView.indexPathForSelectedRow!.row]
     let vc = target.viewControllerType.init()
