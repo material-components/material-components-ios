@@ -16,7 +16,7 @@
 
 #import "MaterialBottomSheet.h"
 
-#import "MDCMath.h"
+#import "MaterialMath.h"
 #import "private/MDCSheetContainerView.h"
 
 static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) {

@@ -16,8 +16,8 @@
 
 #import "MDCSheetContainerView.h"
 
+#import "MaterialKeyboardWatcher.h"
 #import "MDCDraggableView.h"
-#import "MDCKeyboardWatcher.h"
 #import "MDCSheetBehavior.h"
 
 // KVO key for monitoring the content size for the content view if it is a scrollview.
