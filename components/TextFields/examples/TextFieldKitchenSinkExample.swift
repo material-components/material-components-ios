@@ -239,6 +239,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldControllerDefaultCustomFontFloating.presentationStyle = .floatingPlaceholder
     textFieldControllerDefaultCustomFontFloating.characterCountMax = 40
     textFieldControllerDefaultCustomFontFloating.helperText = "Custom Font"
+    textFieldControllerDefaultCustomFontFloating.underlineColorActive = .green
+    textFieldControllerDefaultCustomFontFloating.underlineColorNormal = .purple
     textFieldCustomFontFloating.leadingUnderlineLabel.font =
       UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFontFloating.placeholderLabel.font =

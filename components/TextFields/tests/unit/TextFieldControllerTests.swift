@@ -23,9 +23,27 @@ class TextFieldControllerTests: XCTestCase {
 
     let controller = MDCTextInputController(textInput: textField)
     controller.characterCountMax = 49
+    controller.characterCountViewMode = .always
+    controller.floatingPlaceholderColor = .purple
+    controller.floatingPlaceholderScale = 0.1
+    controller.helperText = "Helper"
+    controller.inlinePlaceholderColor = .green
+    controller.presentationStyle = .floatingPlaceholder
+    controller.underlineColorActive = .blue
+    controller.underlineColorNormal = .white
+    controller.underlineViewMode = .always
 
     if let controllerCopy = controller.copy() as? MDCTextInputController {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
+      XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
+      XCTAssertEqual(controller.floatingPlaceholderColor, controllerCopy.floatingPlaceholderColor)
+      XCTAssertEqual(controller.floatingPlaceholderScale, controllerCopy.floatingPlaceholderScale)
+      XCTAssertEqual(controller.helperText, controllerCopy.helperText)
+      XCTAssertEqual(controller.inlinePlaceholderColor, controllerCopy.inlinePlaceholderColor)
+      XCTAssertEqual(controller.presentationStyle, controllerCopy.presentationStyle)
+      XCTAssertEqual(controller.underlineColorActive, controllerCopy.underlineColorActive)
+      XCTAssertEqual(controller.underlineColorNormal, controllerCopy.underlineColorNormal)
+      XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -162,6 +180,8 @@ class TextFieldControllerTests: XCTestCase {
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
     controller.presentationStyle = .floatingPlaceholder
+    controller.underlineColorActive = .blue
+    controller.underlineColorNormal = .white
     controller.underlineViewMode = .always
 
     let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
@@ -180,6 +200,8 @@ class TextFieldControllerTests: XCTestCase {
     XCTAssertEqual(controller.helperText, unserializedController?.helperText)
     XCTAssertEqual(controller.inlinePlaceholderColor, unserializedController?.inlinePlaceholderColor)
     XCTAssertEqual(controller.presentationStyle, unserializedController?.presentationStyle)
+    XCTAssertEqual(controller.underlineColorActive, unserializedController?.underlineColorActive)
+    XCTAssertEqual(controller.underlineColorNormal, unserializedController?.underlineColorNormal)
     XCTAssertEqual(controller.underlineViewMode, unserializedController?.underlineViewMode)
   }
 }
