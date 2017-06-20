@@ -144,17 +144,6 @@ static UIColor *randomColor() {
   }
 }
 
-- (void)testDefaultElevationsForState {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-
-  // Then
-  XCTAssertEqual([button elevationForState:UIControlStateNormal], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], 1);
-  XCTAssertEqual([button elevationForState:UIControlStateDisabled], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], 0);
-}
-
 - (void)testElevationNormal {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
@@ -165,6 +154,9 @@ static UIColor *randomColor() {
 
   // Then
   XCTAssertEqual([button elevationForState:UIControlStateNormal], normalElevation);
+  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], normalElevation);
+  XCTAssertEqual([button elevationForState:UIControlStateDisabled], normalElevation);
+  XCTAssertEqual([button elevationForState:UIControlStateSelected], normalElevation);
 }
 
 - (void)testElevationNormalZeroElevation {
