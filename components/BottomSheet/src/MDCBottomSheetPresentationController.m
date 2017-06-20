@@ -65,8 +65,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     // presentedView taking the preferred height in to account.
     CGFloat width = preferredSize.width;
     CGFloat leftPad = (containerSize.width - width) / 2;
-    CGFloat height = preferredSize.height > 0 ? preferredSize.height : containerSize.height;
-    return CGRectMake(leftPad, containerSize.height - height, width, height);
+    return CGRectMake(leftPad, 0, width, containerSize.height);
   } else {
     return [super frameOfPresentedViewInContainerView];
   }

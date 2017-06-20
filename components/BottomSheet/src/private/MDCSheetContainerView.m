@@ -184,12 +184,15 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
   // Adjust the anchor point so all positions relate to the top edge rather than the actual center.
   // This makes -targetPoint calculations simpler and based on the desired sheet height.
-  self.sheet.layer.anchorPoint =
-  CGPointMake(0.5f, 0.f);
-
+  self.sheet.layer.anchorPoint = CGPointMake(0.5f, 0.f);
 
   CGRect contentFrame = self.sheet.bounds;
   contentFrame.size.height -= kSheetBounceBuffer;
+  if (!self.sheet.scrollView) {
+    // If the content doesn't scroll then we have to set its frame to the size we are making
+    // visible. This ensures content using autolayout lays out correctly.
+    contentFrame.size.height = [self truncatedPreferredSheetHeight];
+  }
   self.contentView.frame = contentFrame;
 }
 
