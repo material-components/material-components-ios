@@ -16,8 +16,7 @@
 
 #import "MaterialBottomSheet.h"
 
-@interface MDCBottomSheetController ()
-    <MDCBottomSheetPresentationControllerDelegate, UIViewControllerTransitioningDelegate>
+@interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
 @end
 
 @implementation MDCBottomSheetController {
@@ -28,8 +27,10 @@
     (nonnull UIViewController *)contentViewController {
   if (self = [super initWithNibName:nil bundle:nil]) {
     _contentViewController = contentViewController;
+    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
+    _transitionController.presentationControllerDelegate = self;
 
-    super.transitioningDelegate = self;
+    super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
@@ -80,29 +81,6 @@
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
   NSAssert(NO, @"MDCBottomSheetController.modalPresentationStyle cannot be changed.");
   return;
-}
-
-- (UIPresentationController *)
-    presentationControllerForPresentedViewController:(UIViewController *)presented
-                            presentingViewController:(UIViewController *)presenting
-                                sourceViewController:(UIViewController *)source {
-  MDCBottomSheetPresentationController *presentationController =
-      [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                           presentingViewController:presenting];
-  presentationController.delegate = self;
-  return presentationController;
-}
-
-- (nullable id <UIViewControllerAnimatedTransitioning>)
-    animationControllerForPresentedController:(UIViewController *)presented
-                         presentingController:(UIViewController *)presenting
-                             sourceController:(UIViewController *)source {
-  return _transitionController;
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)
-    animationControllerForDismissedController:(UIViewController *)dismissed {
-  return _transitionController;
 }
 
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:

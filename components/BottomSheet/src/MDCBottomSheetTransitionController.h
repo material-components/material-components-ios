@@ -16,6 +16,30 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCBottomSheetTransitionController : NSObject <UIViewControllerAnimatedTransitioning>
+#import "MDCBottomSheetPresentationController.h"
+
+/**
+ MDCBottomSheetTransitionController is be used to setup a custom transition and animationed
+ presentation and dismissal for material-styled bottom-sheet presentation.
+
+ This class provides a basic implementation of UIViewControllerAnimatedTransitioning and
+ UIViewControllerTransitioningDelegate.
+
+ In order to use a custom modal transition, the UIViewController to be presented must set two
+ properties. The UIViewControllers transitioningDelegate should be set to an instance of this class.
+ myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
+ myDialogViewController.transitioningDelegate = bottomSheetTransitionController;
+
+ The presenting UIViewController then calls presentViewController:animated:completion:
+ [rootViewController presentViewController:myDialogViewController animated:YES completion:...];
+ */
+@interface MDCBottomSheetTransitionController
+    : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+
+/**
+ The delegate to be set on the MDCBottomSheetPresentationController created at presentation time.
+ */
+@property(nonatomic, weak) id<MDCBottomSheetPresentationControllerDelegate>
+    presentationControllerDelegate;
 
 @end

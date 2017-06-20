@@ -14,11 +14,38 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetTransitionController.h"
+#import "MaterialBottomSheet.h"
 
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
 @implementation MDCBottomSheetTransitionController
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (UIPresentationController *)
+    presentationControllerForPresentedViewController:(UIViewController *)presented
+                            presentingViewController:(UIViewController *)presenting
+                                sourceViewController:(UIViewController *)source {
+  MDCBottomSheetPresentationController *presentationController =
+      [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
+                                                           presentingViewController:presenting];
+  presentationController.delegate = self.presentationControllerDelegate;
+  return presentationController;
+}
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)
+    animationControllerForPresentedController:(UIViewController *)presented
+                         presentingController:(UIViewController *)presenting
+                             sourceController:(UIViewController *)source {
+  return self;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)
+    animationControllerForDismissedController:(UIViewController *)dismissed {
+  return self;
+}
+
+#pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
   return MDCBottomSheetTransitionDuration;
