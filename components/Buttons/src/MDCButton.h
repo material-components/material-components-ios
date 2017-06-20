@@ -120,7 +120,7 @@ UI_APPEARANCE_SELECTOR;
  @param elevation The elevation to set.
  @param state The state to set.
  */
-- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state;
+- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Indicates whether the button should automatically update its font when the device’s

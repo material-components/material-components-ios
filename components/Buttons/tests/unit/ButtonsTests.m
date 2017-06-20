@@ -150,12 +150,12 @@ static UIColor *randomColor() {
 
   // Then
   XCTAssertEqual([button elevationForState:UIControlStateNormal], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], 0);
+  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], 1);
   XCTAssertEqual([button elevationForState:UIControlStateDisabled], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], 1);
+  XCTAssertEqual([button elevationForState:UIControlStateSelected], 0);
 }
 
-- (void)testDefaultElevationRelationships {
+- (void)testElevationNormal {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
   CGFloat normalElevation = randomNumberNotEqualTo(0);
@@ -165,12 +165,9 @@ static UIColor *randomColor() {
 
   // Then
   XCTAssertEqual([button elevationForState:UIControlStateNormal], normalElevation);
-  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], normalElevation);
-  XCTAssertEqual([button elevationForState:UIControlStateDisabled], normalElevation);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], 2 * normalElevation);
 }
 
-- (void)testDefaultElevationRelationshipsZeroElevation {
+- (void)testElevationNormalZeroElevation {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
 
@@ -179,9 +176,6 @@ static UIColor *randomColor() {
 
   // Then
   XCTAssertEqual([button elevationForState:UIControlStateNormal], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateDisabled], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], 1);
 }
 
 - (void)testBackgroundColorForState {

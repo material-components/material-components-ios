@@ -219,6 +219,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                                     forState:UIControlStateDisabled];
   [[MDCButton appearance] setTitleColor:MDCColorFromRGB(MDCRaisedButtonDisabledTitleColor)
                                forState:UIControlStateDisabled];
+  
+  [[MDCButton appearance] setElevation:MDCShadowElevationRaisedButtonResting forState:UIControlStateNormal];
+  [[MDCButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed forState:UIControlStateHighlighted];
 }
 
 - (void)commonMDCButtonInit {

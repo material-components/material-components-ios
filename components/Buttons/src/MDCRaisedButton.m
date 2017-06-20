@@ -23,13 +23,11 @@
 
 #pragma mark - Subclassing
 
-- (CGFloat)defaultElevationForState:(UIControlState)state {
-  if (state & UIControlStateDisabled) {
-    return MDCShadowElevationNone;
-  }
-  return (((state & UIControlStateHighlighted) == UIControlStateHighlighted)
-              ? MDCShadowElevationRaisedButtonPressed
-              : MDCShadowElevationRaisedButtonResting);
++ (void)initialize {
+  [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonResting
+                              forState:UIControlStateNormal];
+  [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed
+                              forState:UIControlStateHighlighted];
 }
 
 @end
