@@ -77,12 +77,14 @@ class TextFieldControllerTests: XCTestCase {
     textField.leadingUnderlineLabel.textColor = .green
     XCTAssertEqual(.green, textField.leadingUnderlineLabel.textColor)
     XCTAssertEqual(altLeading, textField.leadingUnderlineLabel.text)
+    XCTAssertNil(controller.errorText)
 
     // Setting error text should change the color and content of the leading underline label
     let error = "Error Test"
     controller.setErrorText(error, errorAccessibilityValue: nil)
     XCTAssertNotEqual(altLeading, textField.leadingUnderlineLabel.text)
     XCTAssertEqual(error, textField.leadingUnderlineLabel.text)
+    XCTAssertEqual(error, controller.errorText)
 
     // Setting an error should change the leading label's text color.
     XCTAssertNotEqual(.green, textField.leadingUnderlineLabel.textColor)
@@ -130,6 +132,13 @@ class TextFieldControllerTests: XCTestCase {
     XCTAssertNotEqual(controller.presentationStyle, .floatingPlaceholder)
     controller.presentationStyle = .floatingPlaceholder
     XCTAssertEqual(controller.presentationStyle, .floatingPlaceholder)
+
+    textField.sizeToFit()
+    XCTAssertEqual(textField.frame.height, 70)
+
+    controller.helperText = "Helper"
+    textField.sizeToFit()
+    XCTAssertEqual(textField.frame.height, 84.5)
 
     controller.characterCountViewMode = .never
     XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)

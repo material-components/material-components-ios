@@ -133,6 +133,17 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.trailingUnderlineLabel.text, unserializedInput?.trailingUnderlineLabel.text)
   }
 
+  func testSizing() {
+    let textField = MDCTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 0))
+    XCTAssertEqual(textField.frame.height, 0)
+
+    textField.frame = CGRect(x: 0, y: 0, width: 300, height: 40)
+    XCTAssertEqual(textField.frame.height, 40)
+
+    textField.sizeToFit()
+    XCTAssertEqual(textField.frame.height, 66)
+  }
+
   func testUnderlineSetters() {
     let textField = MDCTextField()
 

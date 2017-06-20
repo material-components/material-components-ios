@@ -96,7 +96,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) UIFont *customLeadingFont;
 @property(nonatomic, strong) UIFont *customPlaceholderFont;
 @property(nonatomic, strong) UIFont *customTrailingFont;
-@property(nonatomic, copy) NSString *errorText;
+@property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
@@ -111,7 +111,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
 @property(nonatomic, copy) NSString *previousLeadingText;
 @property(nonatomic, strong) UIColor *previousPlaceholderColor;
-@property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
 
@@ -804,8 +803,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                         constant:-1 * MDCTextInputFullWidthHorizontalPadding];
     }
 
-    self.underlineY.active = NO;
-
     // Multi Line Only
     // .fullWidth
     if ([self.textInput isKindOfClass:[UITextView class]]) {
@@ -859,24 +856,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   } else {
     // .floatingPlaceholder and .default
 
-    CGFloat leadingLineHeight =
-        MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-    CGFloat underlineOffsetY = -1 * (leadingLineHeight + MDCTextInputVerticalHalfPadding);
-    if (!self.underlineY) {
-      self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.textInput
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:1
-                                                      constant:underlineOffsetY];
-    } else {
-      self.underlineY.constant = underlineOffsetY;
-    }
-
-    // If we are being presented with manual layout, we need to help the underline get to its Y
-    self.underlineY.active = self.textInput.translatesAutoresizingMaskIntoConstraints;
-
     // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
     self.characterCountTrailing.active = NO;
     self.characterCountY.active = NO;
@@ -925,9 +904,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
  The vertical layout is, at most complex, this form:
  MDCTextInputVerticalPadding +                                        // Top padding
- MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +  // Placeholder when up
+ MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +   // Placeholder when up
  MDCTextInputVerticalHalfPadding +                                    // Small padding
- MDCRint(MAX(self.textInput.font.lineHeight,                         // Text field or placeholder
+ MDCRint(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
               self.textInput.placeholderLabel.font.lineHeight)) +
  MDCTextInputVerticalHalfPadding +                                    // Small padding
  --Underline-- (height not counted)                                   // Underline (height ignored)
@@ -954,11 +933,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       // MDCTextInputVerticalHalfPadding
       CGFloat underlineLabelsOffset = 0;
       if (self.textInput.leadingUnderlineLabel.text.length) {
-        underlineLabelsOffset = MDCRint(self.textInput.leadingUnderlineLabel.font.lineHeight);
+        underlineLabelsOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
       }
       if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
         underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                    MDCRint(self.textInput.trailingUnderlineLabel.font.lineHeight));
+                                    MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
       }
       CGFloat underlineOffset = MDCTextInputVerticalHalfPadding + underlineLabelsOffset;
 
@@ -1026,6 +1005,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   return editingRect;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
+  CGSize newSize = defaultSize;
+  newSize.height = (self.presentationStyle != MDCTextInputPresentationStyleDefault || !self.heightConstraint)  ? self.heightConstraint.constant : defaultSize.height;
+
+  return newSize;
 }
 
 #pragma mark - UITextField & UITextView Notification Observation

@@ -18,16 +18,16 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldManualLayoutExample: UIViewController {
+final class TextFieldManualLayoutSwiftExample: UIViewController {
 
   private enum LayoutConstants {
-    static let largeMargin: CGFloat = 16.0
-    static let smallMargin: CGFloat = 8.0
+    static let largeMargin: CGFloat = 16
+    static let smallMargin: CGFloat = 8
 
-    static let floatingHeight: CGFloat = 82.0
-    static let defaultHeight: CGFloat = 62.0
+    static let floatingHeight: CGFloat = 84
+    static let defaultHeight: CGFloat = 62
 
-    static let stateWidth: CGFloat = 80.0
+    static let stateWidth: CGFloat = 80
   }
 
   let scrollView = UIScrollView()
@@ -236,7 +236,7 @@ final class TextFieldManualLayoutExample: UIViewController {
   }
 }
 
-extension TextFieldManualLayoutExample: UITextFieldDelegate {
+extension TextFieldManualLayoutSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -281,7 +281,7 @@ extension TextFieldManualLayoutExample: UITextFieldDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldManualLayoutExample {
+extension TextFieldManualLayoutSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -313,13 +313,13 @@ extension TextFieldManualLayoutExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldManualLayoutExample {
+extension TextFieldManualLayoutSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldManualLayoutExample {
+extension TextFieldManualLayoutSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Manual Layout"]
   }
