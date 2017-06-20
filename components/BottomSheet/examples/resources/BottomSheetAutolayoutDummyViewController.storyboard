@@ -60,7 +60,6 @@
                             <constraint firstItem="HDl-Ut-EPL" firstAttribute="top" secondItem="xok-FS-AFe" secondAttribute="bottom" constant="8" symbolic="YES" id="sT8-Oj-2i3"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="240" height="240"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                 </viewController>
