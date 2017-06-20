@@ -11,6 +11,7 @@
 		0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */; };
 		0BE1D27E1DD276D000F8544B /* MDCCatalogTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1D27D1DD276D000F8544B /* MDCCatalogTiles.m */; };
 		360D6F7F1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */; };
+		36683DCA1EF3262F002EF2E6 /* MDCEarlGreyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36683DC91EF3262F002EF2E6 /* MDCEarlGreyTests.swift */; };
 		36C870B81E8AD6A20032EA7D /* RobotoMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */; };
 		404564F21E007C5E004C9D0A /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */; };
 		4097C8B59D0DD1F00845D250 /* Pods_MDCActionExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */; };
@@ -27,7 +28,7 @@
 		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
-		D5F7966AB21319CC2FFE8ED9 /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7D6BB3DC630E39F27A3BA3F6 /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -50,13 +51,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0F4CA72C2378BADC52A8C1D1 /* EarlGrey Copy Files */ = {
+		407C29631E6FBB73E98AD257 /* EarlGrey Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(TEST_HOST)/../";
 			dstSubfolderSpec = 0;
 			files = (
-				D5F7966AB21319CC2FFE8ED9 /* EarlGrey.framework in EarlGrey Copy Files */,
+				7D6BB3DC630E39F27A3BA3F6 /* EarlGrey.framework in EarlGrey Copy Files */,
 			);
 			name = "EarlGrey Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +85,8 @@
 		34BE42412FB69BDDF92EA27E /* Pods-MDCEarlGreyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCEarlGreyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		36683DBE1EF3212B002EF2E6 /* MDCEarlGreyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCEarlGreyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		36683DC21EF3212B002EF2E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36683DC91EF3262F002EF2E6 /* MDCEarlGreyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCEarlGreyTests.swift; sourceTree = "<group>"; };
 		36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Medium.ttf"; sourceTree = "<group>"; };
 		404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		5D090E351C9AEB8C0061344A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 		36683DBF1EF3212B002EF2E6 /* MDCEarlGreyTests */ = {
 			isa = PBXGroup;
 			children = (
+				36683DC91EF3262F002EF2E6 /* MDCEarlGreyTests.swift */,
+				36683DC21EF3212B002EF2E6 /* Info.plist */,
 			);
 			path = MDCEarlGreyTests;
 			sourceTree = "<group>";
@@ -307,7 +312,7 @@
 				36683DBC1EF3212B002EF2E6 /* Resources */,
 				560A1413D58190AAFD66FEB1 /* [CP] Embed Pods Frameworks */,
 				FA64586AA468175485DF56D6 /* [CP] Copy Pods Resources */,
-				0F4CA72C2378BADC52A8C1D1 /* EarlGrey Copy Files */,
+				407C29631E6FBB73E98AD257 /* EarlGrey Copy Files */,
 			);
 			buildRules = (
 			);
@@ -601,6 +606,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36683DCA1EF3262F002EF2E6 /* MDCEarlGreyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
