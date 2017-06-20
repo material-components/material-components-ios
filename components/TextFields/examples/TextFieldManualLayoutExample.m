@@ -39,7 +39,7 @@
   self.nameController = [[MDCTextInputController alloc] initWithTextInput:textFieldName];
 
   self.nameController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-  self.nameController.textInput.frame = CGRectMake(10, 40, CGRectGetWidth(self.view.bounds)-20, 0);
+  textFieldName.frame = CGRectMake(10, 40, CGRectGetWidth(self.view.bounds)-20, 0);
 
   MDCTextField *textFieldPhone = [[MDCTextField alloc] init];
   [self.view addSubview:textFieldPhone];
@@ -51,7 +51,7 @@
   self.phoneController = [[MDCTextInputController alloc] initWithTextInput:textFieldPhone];
 
   self.phoneController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-  self.phoneController.textInput.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20, CGRectGetWidth(self.view.bounds)-20, 0);
+  textFieldPhone.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20, CGRectGetWidth(self.view.bounds)-20, 0);
 
   self.phoneController.helperText = @"XXX-XXX-XXXX";
 }
