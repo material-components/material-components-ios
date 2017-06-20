@@ -16,10 +16,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialPalettes.h"
+
 /**
- * A menu option displayed in a XYZActionMenuViewController.
+ * A menu option displayed in a MDCActionMenuViewController.
  */
-@interface XYZActionMenuOption : NSObject
+@interface MDCActionMenuOption : NSObject
 
 /**
  * Label displayed adjoining the floating action button.
@@ -39,9 +41,9 @@
 @property(nonatomic, copy) NSString *accessibilityIdentifier;
 
 /**
- * Color group for the floating action button.
+ * Color palette for the floating action button.
  */
-@property(nonatomic, readonly) XYZColorGroup *colorGroup;
+@property(nonatomic, readonly) MDCPalette *palette;
 
 /**
  * Image for the floating action button.
@@ -65,16 +67,16 @@
 @property(nonatomic, readonly) SEL action;
 
 /**
- * Designated initializer for creating a XYZActionMenuOption.
+ * Designated initializer for creating a MDCActionMenuOption.
  *
- * @param colorGroup Color group for the floating action button.
- * @param image      Image for the floating action button.
- * @param target     Target for the action to be performed on if the option is selected.
- * @param action     Action for the target to be performed on if the option is selected.
+ * @param palette Color palette for the floating action button.
+ * @param image   Image for the floating action button.
+ * @param target  Target for the action to be performed on if the option is selected.
+ * @param action  Action for the target to be performed on if the option is selected.
  *
- * @return A XYZActionMenuOption to display in a XYZActionMenuViewController.
+ * @return A MDCActionMenuOption to display in a MDCActionMenuViewController.
  */
-- (instancetype)initWithColorGroup:(XYZColorGroup *)colorGroup
+- (instancetype)initWithPalette:(MDCPalette *)palette
                              image:(UIImage *)image
                             target:(id)target
                             action:(SEL)action NS_DESIGNATED_INITIALIZER;

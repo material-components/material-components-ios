@@ -14,51 +14,51 @@
  limitations under the License.
  */
 
-const NSTimeInterval kXYZActionMenuFastAnimationDuration = 0.20;
-const NSTimeInterval kXYZActionMenuSuperFastAnimationDuration = 0.15;
+#import "MaterialPalettes.h"
+
+#import "MaterialAnimationTiming.h"
+#import "MaterialTypography.h"
+
+#import "MDCActionMenuOption.h"
+#import "MDCActionMenuOptionView.h"
+
+const NSTimeInterval kMDCActionMenuFastAnimationDuration = 0.20;
+const NSTimeInterval kMDCActionMenuSuperFastAnimationDuration = 0.15;
 
 static const CGFloat kLabelPadding = 8.0f;
 static const CGFloat kLabelMargin = 16.0f;
-static NSString *const kBackgroundImage = @"xyz_action_menu_label_background";
+static NSString *const kBackgroundImage = @"mdc_action_menu_label_background";
 
 static const CGFloat kActionMenuOptionPadding = 16.0f;
 static const CGFloat kActionMenuOptionCollapseScale = 0.1f;
 
-static const CGFloat kActionMenuFontSize = 16;
-static const CGFloat kActionMenuIconMargin = 12;
-static const CGFloat kActionMenuIconSize = 24;
-static const CGFloat kActionMenuIconTitleSpace = 32;
-static const CGFloat kActionMenuInkAlpha = 0.06f;
-static const CGFloat kActionMenuTextColorAlpha = 0.54f;
+//static const CGFloat kActionMenuFontSize = 16;
+//static const CGFloat kActionMenuIconMargin = 12;
+//static const CGFloat kActionMenuIconSize = 24;
+//static const CGFloat kActionMenuIconTitleSpace = 32;
+//static const CGFloat kActionMenuInkAlpha = 0.06f;
+//static const CGFloat kActionMenuTextColorAlpha = 0.54f;
 
-@implementation XYZActionMenuOptionView {
-  // Views for speeddial style.
+@implementation MDCActionMenuOptionView {
   UILabel *_label;
   UIImageView *_labelBackground;
   UIView *_labelContainer;
-
-  // Views for sheet style.
-  BOOL _isTouchDraggingOutsideCell;
+  
   UIImageView *_icon;
-  UILabel *_title;
-  XYZInkTouchController *_touchController;
-  // Use to ensure item action and menu dismissal occur after
-  // ink animation has finished for sheet style.
-  BOOL _isInkSpreadInFlight;
-  BOOL _shouldPerformDelayedAction;
+  
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _style = kXYZActionMenuStyleDefaultToDefault;
-    _labelPosition = kXYZActionMenuLabelPositionLeft;
+    _style = kMDCActionMenuStyleDefaultToDefault;
+    _labelPosition = kMDCActionMenuLabelPositionLeft;
     _index = 0;
 
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
     UIFont *font = [MDCTypography buttonFont];
     _label.font = font;
-    _label.textColor = [[XYZColorGroup whiteColors] bodyTextColorOnRegularColorWithFont:font];
+    _label.textColor = [UIColor blackColor]; // TODO: Make this configurable
 
     _labelBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kBackgroundImage]];
     _labelContainer = [[UIView alloc] initWithFrame:CGRectZero];
@@ -68,47 +68,18 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
 
     [self addSubview:_labelContainer];
 
-    _isTouchDraggingOutsideCell = NO;
-
-    _icon = [[UIImageView alloc] initWithImage:nil];
-    _icon.contentMode = UIViewContentModeCenter;
-    [self addSubview:_icon];
-
-    _title = [[UILabel alloc] initWithFrame:CGRectZero];
-    _title.font = [[MDCTypography fontLoader] regularFontOfSize:kActionMenuFontSize];
-    _title.textColor = [[UIColor blackColor] colorWithAlphaComponent:kActionMenuTextColorAlpha];
-    [self addSubview:_title];
-
-    // Set up ink view.
-    UIColor *inkColor = [UIColor colorWithWhite:0 alpha:kActionMenuInkAlpha];
-    _touchController = [[MDCInkTouchController alloc] initWithView:self];
-    _touchController.defaultInkView.inkColor = inkColor;
-    _touchController.delegate = self;
-    [_touchController addInkView];
-
     self.isAccessibilityElement = YES;
     self.accessibilityTraits = UIAccessibilityTraitButton;
   }
   return self;
 }
 
-- (void)setOption:(XYZActionMenuOption *)option {
+- (void)setOption:(MDCActionMenuOption *)option {
   if (_option == option) {
     return;
   }
   _option = option;
 
-  if (self.style == kXYZActionMenuStyleSheet) {
-    _icon.hidden = NO;
-    _title.hidden = NO;
-    _floatingActionButton.hidden = YES;
-    _labelContainer.hidden = YES;
-
-    _icon.image = self.option.image;
-    _title.text = self.option.label;
-  } else {
-    _icon.hidden = YES;
-    _title.hidden = YES;
     _floatingActionButton.hidden = NO;
     _labelContainer.hidden = NO;
 
@@ -122,9 +93,10 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
       return;
     }
 
-    _floatingActionButton =
-        [XYZButton floatingButtonWithColorGroup:self.option.colorGroup miniSize:[self isMini]];
-    [self.floatingActionButton setImage:self.option.image forState:UIControlStateNormal];
+  _floatingActionButton = [MDCFloatingButton floatingButtonWithShape:([self isMini] ? MDCFloatingButtonShapeMini : MDCFloatingButtonShapeDefault)];
+  [_floatingActionButton setBackgroundColor:self.option.palette.tint500 forState:UIControlStateNormal];
+  [_floatingActionButton setImage:self.option.image forState:UIControlStateNormal];
+  
     if (!self.option.insetImage) {
       self.floatingActionButton.contentEdgeInsets = UIEdgeInsetsZero;
     }
@@ -137,7 +109,6 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
     // Rasterize to improve animation performance (toggled on and off before and after animation)
     self.floatingActionButton.layer.shouldRasterize = YES;
     self.floatingActionButton.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-  }
 
   self.accessibilityLabel = self.option.label;
   if (self.option.accessibilityLabel) {
@@ -158,20 +129,9 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
 
 #pragma mark - UIView
 
-- (void)layoutSheetStyle {
-  CGRect contentBounds = self.bounds;
-  CGRect contentRect = CGRectInset(contentBounds, kActionMenuOptionPadding, 0);
-  CGRect iconFrame;
-  CGRect titleFrame;
+- (void)layoutSubviews {
+  [super layoutSubviews];
 
-  CGRectDivide(contentRect, &iconFrame, &contentRect, kActionMenuIconSize, CGRectMinXEdge);
-  CGRectDivide(contentRect, &(CGRect){}, &titleFrame, kActionMenuIconTitleSpace, CGRectMinXEdge);
-
-  _icon.frame = iconFrame;
-  _title.frame = titleFrame;
-}
-
-- (void)layoutSpeeddial {
   CGRect fabFrame = self.floatingActionButton.frame;
   CGFloat primaryFABWidth = [self primaryFloatingButtonWidth];
   CGFloat maxLabelWidth =
@@ -180,10 +140,10 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
   CGRect labelRect = [_label textRectForBounds:maxLabelRect limitedToNumberOfLines:1];
   CGSize containerSize = CGSizeMake(labelRect.size.width + (2 * kLabelPadding),
                                     labelRect.size.height + (2 * kLabelPadding));
-
+  
   CGFloat containerX = 0;
-  if (self.labelPosition == kXYZActionMenuLabelPositionRight) {
-    if (self.style == kXYZActionMenuStyleDefaultToMini && self.index != 0) {
+  if (self.labelPosition == kMDCActionMenuLabelPositionRight) {
+    if (self.style == kMDCActionMenuStyleDefaultToMini && self.index != 0) {
       containerX = primaryFABWidth + kLabelMargin / 2;
     } else {
       containerX = primaryFABWidth + kLabelMargin;
@@ -195,15 +155,15 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
   _labelBackground.frame = _labelContainer.bounds;
   _label.frame =
   CGRectMake(kLabelPadding, kLabelPadding, labelRect.size.width, labelRect.size.height);
-
+  
   // If the position is left, the button needs to be moved.
-  if (self.labelPosition == kXYZActionMenuLabelPositionLeft) {
+  if (self.labelPosition == kMDCActionMenuLabelPositionLeft) {
     CGFloat fabX =
     containerSize.width + kLabelMargin + ((primaryFABWidth - fabFrame.size.width) / 2);
     self.floatingActionButton.frame =
     CGRectMake(fabX, 0, fabFrame.size.width, fabFrame.size.height);
   }
-
+  
   if (self.index == 0) {
     // We rely on the controllers floating action button for the first item in order to not
     // overlay two buttons (and shadows) on top of each other.
@@ -211,20 +171,9 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
   }
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  self.style == kXYZActionMenuStyleSheet ? [self layoutSheetStyle] : [self layoutSpeeddial];
-}
-
 - (CGSize)sizeThatFits:(CGSize)size {
-  if (self.style == kXYZActionMenuStyleSheet) {
-    CGFloat height = kActionMenuIconSize + 2 * kActionMenuIconMargin;
-    return CGSizeMake(size.width, height);
-  }
-
-  CGFloat dimension = [self isMini] ? [XYZButton floatingButtonMiniDimension]
-                                    : [XYZButton floatingButtonDefaultDimension];
+  CGFloat dimension = [self isMini] ? [MDCFloatingButton miniDimension]
+                                    : [MDCFloatingButton defaultDimension];
 
   CGFloat primaryFABWidth = [self primaryFloatingButtonWidth];
   CGFloat maxLabelWidth = size.width - primaryFABWidth - kLabelMargin - (2 * kLabelPadding);
@@ -234,23 +183,16 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
   return CGSizeMake(width, dimension);
 }
 
-#pragma mark - XYZInkTouchControllerDelegate
-
-- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
-    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
-  return self.style == kXYZActionMenuStyleSheet;
-}
-
 #pragma mark - Private
 
 - (BOOL)isMini {
-  return (self.style == kXYZActionMenuStyleMiniToMini) ||
-         (self.style == kXYZActionMenuStyleDefaultToMini && self.index != 0);
+  return (self.style == kMDCActionMenuStyleMiniToMini) ||
+         (self.style == kMDCActionMenuStyleDefaultToMini && self.index != 0);
 }
 
 - (CGFloat)primaryFloatingButtonWidth {
-  return self.style == kXYZActionMenuStyleMiniToMini ? [XYZButton floatingButtonMiniDimension]
-                                                     : [XYZButton floatingButtonDefaultDimension];
+  return self.style == kMDCActionMenuStyleMiniToMini ? [MDCFloatingButton miniDimension]
+                                                     : [MDCFloatingButton defaultDimension];
 }
 
 - (void)resetCollapsed {
@@ -272,41 +214,43 @@ static const CGFloat kActionMenuTextColorAlpha = 0.54f;
     [self resetCollapsed];
     return;
   }
-  [UIView qtm_animateWithDuration:animated ? kXYZActionMenuSuperFastAnimationDuration : 0
-      delay:delay
-      curve:kXYZAnimationTimingCurveQuantumEaseIn
-      options:0
-      animations:^{
-        self.alpha = 0;
-      }
-      completion:^(BOOL finished) {
-        [self resetCollapsed];
-      }];
+  [UIView mdc_animateWithTimingFunction:[CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]
+                               duration:animated ? kMDCActionMenuSuperFastAnimationDuration : 0
+                                  delay:delay
+                                options:0
+                             animations:^{
+     self.alpha = 0;
+   } completion:^(BOOL finished) {
+     [self resetCollapsed];
+   }];
 }
 
 - (void)expand:(BOOL)animated delay:(NSTimeInterval)delay {
   self.floatingActionButton.layer.shouldRasterize = YES;
-  [UIView qtm_animateWithDuration:animated ? kXYZActionMenuFastAnimationDuration : 0
-      delay:delay
-      curve:kXYZAnimationTimingCurveQuantumEaseOut
-      options:0
-      animations:^{
-        self.alpha = 1;
-        self.floatingActionButton.transform = CGAffineTransformIdentity;
-        _labelContainer.transform = CGAffineTransformIdentity;
-      }
-      completion:^(BOOL finished) {
-        self.floatingActionButton.layer.shouldRasterize = NO;
-      }];
-
-  [UIView qtm_animateWithDuration:animated ? (kXYZActionMenuFastAnimationDuration * 0.75) : 0
-                            delay:delay + (kXYZActionMenuFastAnimationDuration / 4)
-                            curve:kXYZAnimationTimingCurveQuantumEaseOut
-                          options:0
-                       animations:^{
-                         _labelContainer.alpha = 1;
-                       }
-                       completion:nil];
+  
+  CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseOut];
+  
+  [UIView mdc_animateWithTimingFunction:timingFunction
+                               duration:animated ? kMDCActionMenuFastAnimationDuration : 0
+                                  delay:delay
+                                options:0
+                             animations:^{
+                               self.alpha = 1;
+                               self.floatingActionButton.transform = CGAffineTransformIdentity;
+                               _labelContainer.transform = CGAffineTransformIdentity;
+                                } completion:^(BOOL finished) {
+                                  self.floatingActionButton.layer.shouldRasterize = NO;
+                                }];
+  
+//  [UIView mdc_animateWithTimingFunction:timingFunction
+//                               duration:(kMDCActionMenuFastAnimationDuration * 0.75) : 0
+//                                  delay:delay + (kMDCActionMenuFastAnimationDuration / 4)
+//                                options:0
+//                             animations:^{
+//                               _labelContainer.alpha = 1;
+//                             } completion:^(BOOL finished) {
+//                               // do nothing
+//                             }];
 }
 
 - (CGPoint)getTouchPoint:(NSSet *)touches {

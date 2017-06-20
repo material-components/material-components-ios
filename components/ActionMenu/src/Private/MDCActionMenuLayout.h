@@ -16,23 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class XYZActionMenuOption;
+#import "MDCActionMenuViewController.h"
 
 /**
- * A UICollectionViewCell to display a XYZActionMenuOptionView for an Action Menu collection view.
+ * Layout for the Action Menu.
  */
-@interface XYZActionMenuCell : UICollectionViewCell
-
-/**
- * The XYZActionMenuOptionView displayed by the cell.
- */
-@property(nonatomic, readonly) XYZActionMenuOptionView *optionView;
-
-/**
- * Positions the |optionView| relative to the provided frame.
- *
- * @param frame The frame to position relatively to (usually the primary floating action button's).
- */
-- (void)positionRelativeToFrame:(CGRect)frame;
+@interface MDCActionMenuLayout : UICollectionViewFlowLayout
 
 @end

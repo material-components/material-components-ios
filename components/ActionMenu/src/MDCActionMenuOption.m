@@ -14,28 +14,28 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "MDCActionMenuOption.h"
 
-/**
- * Layout for the Action Menu.
- */
-@interface XYZActionMenuLayout : UICollectionViewFlowLayout
+@implementation MDCActionMenuOption
 
-/**
- * Designated initializer for create a XYZActionMenuLayout.
- *
- * @param menuStyle The XYZActionMenuStyle to initialize with.
- */
-- (instancetype)initWithMenuStyle:(XYZActionMenuStyle)menuStyle NS_DESIGNATED_INITIALIZER;
+- (instancetype)init {
+  [self doesNotRecognizeSelector:_cmd];
+  return nil;
+}
 
-/**
- * @deprecated Please use initWithMenuStyle:.
- */
-- (instancetype)init NS_UNAVAILABLE;
-
-/**
- * @deprecated Please use initWithMenuStyle:.
- */
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithPalette:(MDCPalette *)palette
+                             image:(UIImage *)image
+                            target:(id)target
+                            action:(SEL)action {
+  self = [super init];
+  if (self) {
+    _palette = palette;
+    _image = image;
+    _target = target;
+    _action = action;
+    _insetImage = YES;
+  }
+  return self;
+}
 
 @end

@@ -16,23 +16,26 @@
 
 #import <UIKit/UIKit.h>
 
-extern const NSTimeInterval kXYZActionMenuFastAnimationDuration;
-extern const NSTimeInterval kXYZActionMenuSuperFastAnimationDuration;
+#import "MaterialButtons.h"
+#import "MDCActionMenuViewController.h"
+
+extern const NSTimeInterval kMDCActionMenuFastAnimationDuration;
+extern const NSTimeInterval kMDCActionMenuSuperFastAnimationDuration;
 
 /**
  * The action menu view.
  */
-@interface XYZActionMenuOptionView : UIView <XYZInkTouchControllerDelegate>
+@interface MDCActionMenuOptionView : UIView
 
 /**
- * Expansion style set on the XYZActionMenuViewController.
+ * Expansion style set on the MDCActionMenuViewController.
  */
-@property(nonatomic) XYZActionMenuStyle style;
+@property(nonatomic) MDCActionMenuStyle style;
 
 /**
- * Position for the label set on the XYZActionMenuViewController.
+ * Position for the label set on the MDCActionMenuViewController.
  */
-@property(nonatomic) XYZActionMenuLabelPosition labelPosition;
+@property(nonatomic) MDCActionMenuLabelPosition labelPosition;
 
 /**
  * Index for the item.
@@ -42,12 +45,12 @@ extern const NSTimeInterval kXYZActionMenuSuperFastAnimationDuration;
 /**
  * Option displayed by this view.
  */
-@property(nonatomic) XYZActionMenuOption *option;
+@property(nonatomic) MDCActionMenuOption *option;
 
 /**
  * Floating action button displayed by the item.
  */
-@property(nonatomic, readonly) XYZButton *floatingActionButton;
+@property(nonatomic, readonly) MDCButton *floatingActionButton;
 
 /**
  * Set and update the activated state of the cell.

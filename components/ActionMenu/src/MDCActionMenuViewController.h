@@ -16,50 +16,45 @@
 
 #import <UIKit/UIKit.h>
 
-@class XYZActionMenuOption;
+@class MDCActionMenuOption;
 
 /**
  * Floating action button size expansion style for the Action Menu.
  */
-typedef NS_ENUM(NSInteger, XYZActionMenuStyle) {
+typedef NS_ENUM(NSInteger, MDCActionMenuStyle) {
   /**
    * Menu expands from default sized primary button to default sized options.
    */
-  kXYZActionMenuStyleDefaultToDefault,
+  kMDCActionMenuStyleDefaultToDefault,
   /**
    * Menu expands from default sized primary button to mini sized options.
    */
-  kXYZActionMenuStyleDefaultToMini,
+  kMDCActionMenuStyleDefaultToMini,
   /**
    * Menu expands from mini sized primary button to mini sized options.
    */
-  kXYZActionMenuStyleMiniToMini,
-  /**
-   * Menu expands into sheet style.
-   * Note: The floating action button will take the colorGroup the first XYZActionMenuOption.
-   */
-  kXYZActionMenuStyleSheet
+  kMDCActionMenuStyleMiniToMini
 };
 
 /**
  * Position for the Action Menu option label.
  */
-typedef NS_ENUM(NSInteger, XYZActionMenuLabelPosition) {
+typedef NS_ENUM(NSInteger, MDCActionMenuLabelPosition) {
   /**
    * Label displays to the left of the floating action button.
    */
-  kXYZActionMenuLabelPositionLeft,
+  kMDCActionMenuLabelPositionLeft,
   /**
    * Label displays to the right of the floating action button.
    */
-  kXYZActionMenuLabelPositionRight
+  kMDCActionMenuLabelPositionRight
 };
 
 /**
  * A view controller that when a user touches the floating action button, activates, animates and
  * displays the Action Menu with all of its options.
  *
- * To use the XYZActionMenuViewController, simply create the controller and add the options. Add
+ * To use the MDCActionMenuViewController, simply create the controller and add the options. Add
  * the controller as a child view controller to the parent in which you want to display this
  * component, add the controller's view to the view you want to display it in, setting a frame and
  * autoresize mask.
@@ -69,17 +64,17 @@ typedef NS_ENUM(NSInteger, XYZActionMenuLabelPosition) {
  *
  * @ingroup GoogleKitActionMenu
  */
-@interface XYZActionMenuViewController : UIViewController
+@interface MDCActionMenuViewController : UIViewController
 
 /**
  * Expansion style for Action Menu.
  */
-@property(nonatomic, readonly) XYZActionMenuStyle style;
+@property(nonatomic, readonly) MDCActionMenuStyle style;
 
 /**
- * Position for the label. Default is kXYZActionMenuLabelPositionLeft.
+ * Position for the label. Default is kMDCActionMenuLabelPositionLeft.
  */
-@property(nonatomic) XYZActionMenuLabelPosition labelPosition;
+@property(nonatomic) MDCActionMenuLabelPosition labelPosition;
 
 /**
  * Elevation in points set on the floating action buttons. Default is MDCShadowElevationFABResting.
@@ -109,14 +104,14 @@ typedef NS_ENUM(NSInteger, XYZActionMenuLabelPosition) {
 @property(nonatomic, strong) UIColor *backgroundColor;
 
 /**
- * Designated initializer for the XYZActionMenuViewController.
+ * Designated initializer for the MDCActionMenuViewController.
  *
  * @param style         Expansion style for the menu.
  * @param image         Image for the primary floating action button prior to activation.
  *
- * @return A fully configured XYZActionMenuViewController.
+ * @return A fully configured MDCActionMenuViewController.
  */
-- (instancetype)initWithStyle:(XYZActionMenuStyle)style
+- (instancetype)initWithStyle:(MDCActionMenuStyle)style
                         image:(UIImage *)image NS_DESIGNATED_INITIALIZER;
 
 /**
@@ -138,7 +133,7 @@ typedef NS_ENUM(NSInteger, XYZActionMenuLabelPosition) {
 /**
  * Add an option to the menu.
  */
-- (void)addOption:(XYZActionMenuOption *)option;
+- (void)addOption:(MDCActionMenuOption *)option;
 
 /**
  * Clear the action menu options.

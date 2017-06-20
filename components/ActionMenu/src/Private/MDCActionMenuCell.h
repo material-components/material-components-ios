@@ -14,12 +14,28 @@
  limitations under the License.
  */
 
-#import <Availability.h>
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-#if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-#error "This component only supports iOS 8.0 and above."
-#endif
-
-#import "MDCActionMenuOption.h"
+#import "MDCActionMenuOptionView.h"
 #import "MDCActionMenuViewController.h"
+
+@class MDCActionMenuOption;
+
+/**
+ * A UICollectionViewCell to display a MDCActionMenuOptionView for an Action Menu collection view.
+ */
+@interface MDCActionMenuCell : UICollectionViewCell
+
+/**
+ * The MDCActionMenuOptionView displayed by the cell.
+ */
+@property(nonatomic, readonly) MDCActionMenuOptionView *optionView;
+
+/**
+ * Positions the |optionView| relative to the provided frame.
+ *
+ * @param frame The frame to position relatively to (usually the primary floating action button's).
+ */
+- (void)positionRelativeToFrame:(CGRect)frame;
+
+@end

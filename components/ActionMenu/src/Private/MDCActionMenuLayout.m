@@ -14,27 +14,9 @@
  limitations under the License.
  */
 
-@implementation XYZActionMenuLayout
+#import "MDCActionMenuLayout.h"
 
-- (instancetype)initWithMenuStyle:(XYZActionMenuStyle)menuStyle {
-  self = [super init];
-  if (self) {
-    if (menuStyle == kXYZActionMenuStyleSheet) {
-      self.minimumLineSpacing = 0;
-    }
-  }
-  return self;
-}
-
-- (instancetype)init {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
+@implementation MDCActionMenuLayout
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
   UICollectionViewLayoutAttributes *attribute =

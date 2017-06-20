@@ -14,22 +14,30 @@
  limitations under the License.
  */
 
+#import "MDCActionMenuViewController.h"
+
+#import "MaterialAnimationTiming.h"
+#import "MaterialButtons.h"
+#import "MaterialShadowElevations.h"
+
+#import "MDCActionMenuCell.h"
+#import "MDCActionMenuOption.h"
+#import "MDCActionMenuLayout.h"
+
 static const NSTimeInterval kDefaultNormalAnimationDuration = 0.30;
 static const NSTimeInterval kCellStaggerDelayDuration = 0.02;
 
 static const CGFloat kIconRotationRadians = (CGFloat)(0.375f * 2.0 * M_PI);
 static const CGFloat kPreToggleShrinkScaleX = 0.7f;
 static const CGFloat kPreToggleShrinkScaleY = 0.0f;
-static const CGFloat kSheetStyleCellHeight = 48.0f;
-static const CGFloat kSheetStyleCellWidth = 224.0f;
 
-@interface XYZActionMenuCollectionViewController : UICollectionViewController
+@interface MDCActionMenuCollectionViewController : UICollectionViewController
 
 @property(nonatomic) UIStatusBarStyle statusBarStyle;
 
 @end
 
-@implementation XYZActionMenuCollectionViewController
+@implementation MDCActionMenuCollectionViewController
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return self.statusBarStyle;
@@ -42,11 +50,11 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 
 @end
 
-@interface XYZActionMenuCollectionView : UICollectionView
+@interface MDCActionMenuCollectionView : UICollectionView
 
 - (instancetype)initWithFrame:(CGRect)frame
          collectionViewLayout:(UICollectionViewLayout *)layout
-     actionMenuViewController:(XYZActionMenuViewController *)actionMenuViewController
+     actionMenuViewController:(MDCActionMenuViewController *)actionMenuViewController
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -57,8 +65,8 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 
 @end
 
-@implementation XYZActionMenuCollectionView {
-  __weak XYZActionMenuViewController *_actionMenuViewController;
+@implementation MDCActionMenuCollectionView {
+  __weak MDCActionMenuViewController *_actionMenuViewController;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -73,7 +81,7 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 
 - (instancetype)initWithFrame:(CGRect)frame
          collectionViewLayout:(UICollectionViewLayout *)layout
-     actionMenuViewController:(XYZActionMenuViewController *)actionMenuViewController {
+     actionMenuViewController:(MDCActionMenuViewController *)actionMenuViewController {
   self = [super initWithFrame:frame collectionViewLayout:layout];
   if (self) {
     _actionMenuViewController = actionMenuViewController;
@@ -88,11 +96,10 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 
 @end
 
-@interface XYZActionMenuViewController () <UICollectionViewDataSource,
+@interface MDCActionMenuViewController () <UICollectionViewDataSource,
                                            UICollectionViewDelegate,
                                            UIViewControllerAnimatedTransitioning,
-                                           UIViewControllerTransitioningDelegate,
-                                           XYZPopoverViewControllerDelegate>
+                                           UIViewControllerTransitioningDelegate>
 
 /**
  * Whether there is an animation in progress collapsing the action menu options and dismissing the
@@ -102,13 +109,13 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 
 @end
 
-@implementation XYZActionMenuViewController {
+@implementation MDCActionMenuViewController {
   BOOL _activated;
   BOOL _optionSelected;
   UIImage *_image;
   NSMutableArray *_options;
-  XYZButton *_floatingActionButton;
-  XYZActionMenuCollectionViewController *_collectionVC;
+  MDCFloatingButton *_floatingActionButton;
+  MDCActionMenuCollectionViewController *_collectionVC;
   UIView *_preToggleAnimationContainer;
   UIImageView *_preToggleView;
   UIImageView *_postToggleView;
@@ -124,7 +131,7 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   return nil;
 }
 
-- (instancetype)initWithStyle:(XYZActionMenuStyle)style image:(UIImage *)image {
+- (instancetype)initWithStyle:(MDCActionMenuStyle)style image:(UIImage *)image {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _style = style;
@@ -132,13 +139,13 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 
     _elevation = MDCShadowElevationFABResting;
 
-    _labelPosition = kXYZActionMenuLabelPositionLeft;
+    _labelPosition = kMDCActionMenuLabelPositionLeft;
     _autoDismissOnSelection = YES;
 
     _options = [NSMutableArray array];
 
     _floatingActionButton =
-        [XYZButton floatingButtonMiniSize:(_style == kXYZActionMenuStyleMiniToMini)];
+    [MDCFloatingButton floatingButtonWithShape:(_style == kMDCActionMenuStyleMiniToMini) ? MDCFloatingButtonShapeMini : MDCFloatingButtonShapeDefault];
     [_floatingActionButton setElevation:_elevation forState:UIControlStateNormal];
 
     _backgroundColor = [UIColor clearColor];
@@ -164,9 +171,9 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
                             action:@selector(touchFloatingActionButton)
                   forControlEvents:UIControlEventTouchUpInside];
 
-  XYZActionMenuLayout *layout = [[XYZActionMenuLayout alloc] initWithMenuStyle:self.style];
+  MDCActionMenuLayout *layout = [[MDCActionMenuLayout alloc] init];
   _collectionVC =
-      [[XYZActionMenuCollectionViewController alloc] initWithCollectionViewLayout:layout];
+      [[MDCActionMenuCollectionViewController alloc] initWithCollectionViewLayout:layout];
   _collectionVC.view.autoresizingMask = autoresizingMask;
 
   // To support iOS 7 and present the collection view controller full screen modally with a
@@ -175,7 +182,7 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   _collectionVC.modalPresentationStyle = UIModalPresentationCustom;
   _collectionVC.transitioningDelegate = self;
 
-  UICollectionView *collectionView = [[XYZActionMenuCollectionView alloc] initWithFrame:CGRectZero
+  UICollectionView *collectionView = [[MDCActionMenuCollectionView alloc] initWithFrame:CGRectZero
                                                                    collectionViewLayout:layout
                                                                actionMenuViewController:self];
   collectionView.autoresizingMask = autoresizingMask;
@@ -187,11 +194,10 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   collectionView.delegate = self;
   collectionView.scrollEnabled = NO;
 
-  Class actionMenuCellClass = [XYZActionMenuCell class];
+  Class actionMenuCellClass = [MDCActionMenuCell class];
   [collectionView registerClass:actionMenuCellClass
       forCellWithReuseIdentifier:NSStringFromClass(actionMenuCellClass)];
 
-  if (self.style != kXYZActionMenuStyleSheet) {
     // Create floating action button animation containers.
     _preToggleAnimationContainer = [[UIView alloc] initWithFrame:_floatingActionButton.bounds];
     _preToggleAnimationContainer.autoresizingMask = autoresizingMask;
@@ -230,11 +236,6 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
         UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
     [collectionView addGestureRecognizer:verticalSwipeGesture];
 
-    _collectionVC.collectionView = collectionView;
-  } else {
-    [_floatingActionButton setImage:_image forState:UIControlStateNormal];
-  }
-
   _collectionVC.collectionView = collectionView;
 
   [self updateBackgroundColor];
@@ -243,12 +244,6 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 
 - (void)setElevation:(CGFloat)elevation {
   _elevation = elevation;
-  [_floatingActionButton setElevation:_elevation forState:UIControlStateNormal];
-}
-
-- (void)setZIndex:(NSInteger)zIndex {
-  _zIndex = zIndex;
-  _elevation = (float)pow(2.f, zIndex);
   [_floatingActionButton setElevation:_elevation forState:UIControlStateNormal];
 }
 
@@ -265,10 +260,6 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 }
 
 - (void)updateBackgroundColor {
-  if (self.style == kXYZActionMenuStyleSheet) {
-    _collectionVC.collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
-    return;
-  }
   _collectionVC.collectionView.backgroundView.backgroundColor = _backgroundColor;;
 
   // TODO: Replace with MDFTextAccessibility
@@ -281,7 +272,7 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   [_collectionVC setNeedsStatusBarAppearanceUpdate];
 }
 
-- (void)addOption:(XYZActionMenuOption *)option {
+- (void)addOption:(MDCActionMenuOption *)option {
   [_options addObject:option];
   [self updateAccessibilityLabel];
   [self refresh];
@@ -311,11 +302,7 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   };
 
   if (willActivate) {
-    if (self.style == kXYZActionMenuStyleSheet) {
-      [self setSheetStyleActivated:YES animated:YES completion:nil];
-    } else {
       [self setSpeeddialActivated:YES animated:YES completion:nil];
-    }
   } else {
     asyncCompletion();
   }
@@ -331,11 +318,7 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
     });
   };
 
-  if (self.style == kXYZActionMenuStyleSheet) {
-    [self setSheetStyleActivated:NO animated:YES completion:asyncCompletion];
-  } else {
-    [self setSpeeddialActivated:NO animated:YES completion:asyncCompletion];
-  }
+  [self setSpeeddialActivated:NO animated:YES completion:asyncCompletion];
 }
 
 - (void)dismiss {
@@ -355,11 +338,14 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSString *identifier = NSStringFromClass([XYZActionMenuCell class]);
-  XYZActionMenuCell *cell =
+  NSString *identifier = NSStringFromClass([MDCActionMenuCell class]);
+  
+  
+  
+  MDCActionMenuCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
 
-  XYZActionMenuOptionView *optionView = cell.optionView;
+  MDCActionMenuOptionView *optionView = cell.optionView;
 
   optionView.style = self.style;
   optionView.labelPosition = self.labelPosition;
@@ -441,21 +427,12 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   return self;
 }
 
-#pragma mark - XYZPopoverViewControllerDelegate
-
-- (void)popoverViewControllerDidCancel:(XYZPopoverViewController *)controller {
-  _floatingActionButton.hidden = NO;
-  [self dismissViewControllerAnimated:YES completion:^{
-    _activated = NO;
-  }];
-}
-
 #pragma mark - Private
 
 - (void)updateAccessibilityLabel {
   NSString *accessibilityLabel = self.accessibilityLabel;
   if (_options.count == 1) {
-    XYZActionMenuOption *option = (XYZActionMenuOption *)_options[0];
+    MDCActionMenuOption *option = (MDCActionMenuOption *)_options[0];
     if (option.accessibilityLabel) {
       accessibilityLabel = option.accessibilityLabel;
     }
@@ -464,13 +441,10 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 }
 
 - (CGFloat)heightForOptionAtIndex:(NSUInteger)index {
-  if (self.style == kXYZActionMenuStyleSheet) {
-    return kSheetStyleCellHeight;
-  }
-  BOOL isMini = (self.style == kXYZActionMenuStyleMiniToMini) ||
-                (self.style == kXYZActionMenuStyleDefaultToMini && index != 0);
-  return isMini ? [XYZButton floatingButtonMiniDimension]
-                : [XYZButton floatingButtonDefaultDimension];
+  BOOL isMini = (self.style == kMDCActionMenuStyleMiniToMini) ||
+                (self.style == kMDCActionMenuStyleDefaultToMini && index != 0);
+  return isMini ? [MDCFloatingButton miniDimension]
+                : [MDCFloatingButton defaultDimension];
 }
 
 - (void)tapGesture:(UITapGestureRecognizer *)tapGesture {
@@ -495,44 +469,9 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 - (void)refresh {
   if (_options.count > 0) {
     // The first item is always what the floating action button "morphs" into.
-    XYZActionMenuOption *firstOption = _options[0];
-    _floatingActionButton.colorGroup = firstOption.colorGroup;
+    MDCActionMenuOption *firstOption = _options[0];
+    [_floatingActionButton setBackgroundColor:firstOption.palette.tint500 forState:UIControlStateNormal];
     _postToggleView.image = firstOption.image;
-  }
-
-  if (self.style != kXYZActionMenuStyleSheet) {
-    [_collectionVC.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-    [self updateModalViewLayout];
-    [self setSpeeddialActivated:_activated animated:NO completion:nil];
-  }
-}
-
-- (void)setSheetStyleActivated:(BOOL)activated animated:(BOOL)animated
-                    completion:(void (^)(void))completion {
-  BOOL isPresentingViewController = self.presentedViewController &&
-      !self.presentedViewController.isBeingDismissed;
-  if (!isPresentingViewController && activated && _options.count > 0) {
-    _activated = YES;
-
-    _collectionVC.preferredContentSize =
-    CGSizeMake(kSheetStyleCellWidth, kSheetStyleCellHeight * _options.count);
-
-    XYZPopoverViewController *popVC =
-    [[XYZPopoverViewController alloc] initWithContentViewController:_collectionVC];
-    popVC.delegate = self;
-    popVC.menuAnchor = XYZPopoverMenuAnchorAny;
-    popVC.sourceView = _floatingActionButton;
-    [self presentViewController:popVC animated:YES completion:^{
-      _floatingActionButton.hidden = YES;
-    }];
-  } else {
-    _activated = NO;
-    if (self.presentedViewController) {
-      _floatingActionButton.hidden = NO;
-      [self dismissViewControllerAnimated:YES completion:^{
-        completion();
-      }];
-    }
   }
 }
 
@@ -569,8 +508,8 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
 }
 
 - (void)updateModalViewLayout {
-  // Update the layout only if not sheet style and the menu is activated.
-  if (self.style == kXYZActionMenuStyleSheet || !_activated) {
+  // Update the layout only if the menu is activated.
+  if (!_activated) {
     return;
   }
   // Determine the origin of the view in the collection view that is displayed modally.
@@ -585,11 +524,11 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   CGRect cellFABFrame = CGRectMake(viewOriginInModalView.x, 0, fabSize.width, fabSize.height);
 
   UIEdgeInsets insets = UIEdgeInsetsZero;
-  XYZActionMenuLayout *layout = (XYZActionMenuLayout *)_collectionVC.collectionViewLayout;
+  MDCActionMenuLayout *layout = (MDCActionMenuLayout *)_collectionVC.collectionViewLayout;
   CGFloat contentHeight = -layout.minimumLineSpacing;
 
   for (NSUInteger index = 0; index < _options.count; index++) {
-    XYZActionMenuCell *cell = (XYZActionMenuCell *)[_collectionVC.collectionView
+    MDCActionMenuCell *cell = (MDCActionMenuCell *)[_collectionVC.collectionView
         cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
     // Update the cell based on the relative position of the floating action button.
     [cell positionRelativeToFrame:cellFABFrame];
@@ -601,13 +540,13 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   _collectionVC.collectionView.contentInset = insets;
 }
 
-- (void)handleSelectionOnOption:(XYZActionMenuOption *)option {
+- (void)handleSelectionOnOption:(MDCActionMenuOption *)option {
   if (_optionSelected) {
     return;
   }
   _optionSelected = YES;
   if (self.autoDismissOnSelection) {
-    __weak XYZActionMenuViewController *weakSelf = self;
+    __weak MDCActionMenuViewController *weakSelf = self;
     [self dismissWithCompletion:^{
       [weakSelf performActionOnTargetForOption:option];
     }];
@@ -616,11 +555,11 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   }
 }
 
-- (void)performActionOnTargetForOption:(XYZActionMenuOption *)option {
+- (void)performActionOnTargetForOption:(MDCActionMenuOption *)option {
   if (option && option.target && option.action &&
       [option.target respondsToSelector:option.action]) {
     IMP imp = [option.target methodForSelector:option.action];
-    void (*func)(id, SEL, XYZActionMenuOption *) = (void *)imp;
+    void (*func)(id, SEL, MDCActionMenuOption *) = (void *)imp;
     func(option.target, option.action, option);
   }
   _optionSelected = NO;
@@ -695,18 +634,21 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
     // CATransaction to facilitate single, final completion callback.
     [CATransaction begin];
     {
-      __weak XYZActionMenuViewController *weakSelf = self;
+      __weak MDCActionMenuViewController *weakSelf = self;
       [CATransaction setCompletionBlock:^{
         weakSelf.collapseAnimationInProgress = NO;
         if (completion) {
           completion();
         }
       }];
-      [UIView qtm_animateWithDuration:kDefaultNormalAnimationDuration
-                                curve:kXYZAnimationTimingCurveQuantumEaseInOut
-                           animations:^{
-                             [self toggleFloatingActionButton];
-                           }];
+      [UIView mdc_animateWithTimingFunction:[CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]
+                                   duration:kDefaultNormalAnimationDuration
+                                      delay:0
+                                    options:0
+                                 animations:^{
+                                   [self toggleFloatingActionButton];
+                                 } completion:^(BOOL finished) {
+                                 }];
       [self updateLayoutAnimated:YES];
     }
     [CATransaction commit];
@@ -719,22 +661,25 @@ static const CGFloat kSheetStyleCellWidth = 224.0f;
   }
 
   NSTimeInterval duration =
-      _activated ? kXYZActionMenuFastAnimationDuration : kXYZActionMenuSuperFastAnimationDuration;
-  NSUInteger curve =
-      _activated ? kXYZAnimationTimingCurveQuantumEaseOut : kXYZAnimationTimingCurveQuantumEaseIn;
-  [UIView qtm_animateWithDuration:animated ? duration : 0
-                            curve:curve
-                       animations:^{
-                         _collectionVC.collectionView.backgroundView.alpha = _activated ? 1 : 0;
-                       }];
+      _activated ? kMDCActionMenuFastAnimationDuration : kMDCActionMenuSuperFastAnimationDuration;
+  NSUInteger curve = _activated ? MDCAnimationTimingFunctionEaseOut : MDCAnimationTimingFunctionEaseIn;
+  
+  [UIView mdc_animateWithTimingFunction:[CAMediaTimingFunction mdc_functionWithType:curve]
+                               duration:duration
+                                  delay:0
+                                options:0
+                             animations:^{
+                               _collectionVC.collectionView.backgroundView.alpha = _activated ? 1 : 0;
+                             } completion:^(BOOL finished) {
+                             }];
 }
 
 - (void)updateLayoutAnimated:(BOOL)animated {
   // Stagger each of the cells to give an expansion effect.
   for (NSUInteger index = 0; index < _options.count; index++) {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    XYZActionMenuCell *cell =
-        (XYZActionMenuCell *)[_collectionVC.collectionView cellForItemAtIndexPath:indexPath];
+    MDCActionMenuCell *cell =
+        (MDCActionMenuCell *)[_collectionVC.collectionView cellForItemAtIndexPath:indexPath];
     NSTimeInterval staggerDelay = (animated && _activated) ? index * kCellStaggerDelayDuration : 0;
     [cell.optionView setActivatedState:_activated animated:animated withStaggerDelay:staggerDelay];
   }

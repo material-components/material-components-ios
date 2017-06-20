@@ -14,12 +14,15 @@
  limitations under the License.
  */
 
-@implementation XYZActionMenuCell
+#import "MDCActionMenuCell.h"
+#import "MaterialButtons.h"
+
+@implementation MDCActionMenuCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _optionView = [[XYZActionMenuOptionView alloc] initWithFrame:frame];
+    _optionView = [[MDCActionMenuOptionView alloc] initWithFrame:frame];
     [self.contentView addSubview:_optionView];
   }
   return self;
