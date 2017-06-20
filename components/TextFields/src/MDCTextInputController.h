@@ -160,6 +160,12 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  */
 @property(nonatomic, assign) UITextFieldViewMode underlineViewMode UI_APPEARANCE_SELECTOR;
 
+/** Color the underline changes to when the input is editing. */
+@property(nonatomic, null_resettable, strong) UIColor *underlineColorActive UI_APPEARANCE_SELECTOR;
+
+/** Color of the underline when the input is not editing but still enabled. */
+@property(nonatomic, null_resettable, strong) UIColor *underlineColorNormal UI_APPEARANCE_SELECTOR;
+
 /**
  Convenience init. Never fails.
 
