@@ -19,7 +19,7 @@
 @implementation BottomSheetAutolayoutExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom Sheet", @"Content using autolayout" ];
+  return @[ @"Bottom Sheet", @"Autolayout Content" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -31,7 +31,7 @@
 @implementation BottomSheetShortCollectionExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom Sheet", @"Short collection view" ];
+  return @[ @"Bottom Sheet", @"Collection View (Short)" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -43,7 +43,7 @@
 @implementation BottomSheetSimpleExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom Sheet", @"Static content" ];
+  return @[ @"Bottom Sheet", @"Static Content" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -55,7 +55,7 @@
 @implementation BottomSheetTallExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom Sheet", @"Custom size static content" ];
+  return @[ @"Bottom Sheet", @"Preferred Content Size" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {

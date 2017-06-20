@@ -30,8 +30,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This view controller has a preferredContentSize which is observed by our presentation controller. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDl-Ut-EPL">
-                                <rect key="frame" x="20" y="71" width="335" height="61"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This view controller is laid out using Autolayout. You can also set preferredContentSize to customize the size." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDl-Ut-EPL">
+                                <rect key="frame" x="20" y="71" width="335" height="550"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -53,6 +53,7 @@
                             <constraint firstItem="HDl-Ut-EPL" firstAttribute="leading" secondItem="s1z-8Q-7ud" secondAttribute="leading" constant="20" symbolic="YES" id="EvP-rT-UaV"/>
                             <constraint firstAttribute="trailing" secondItem="4gI-VF-J2B" secondAttribute="trailing" constant="20" symbolic="YES" id="GKI-bh-IsU"/>
                             <constraint firstItem="xok-FS-AFe" firstAttribute="leading" secondItem="s1z-8Q-7ud" secondAttribute="leading" id="Jrd-ld-uU7"/>
+                            <constraint firstItem="4gI-VF-J2B" firstAttribute="top" secondItem="HDl-Ut-EPL" secondAttribute="bottom" constant="8" symbolic="YES" id="Ror-hV-6Xl"/>
                             <constraint firstItem="SYu-ku-JWw" firstAttribute="top" secondItem="4gI-VF-J2B" secondAttribute="bottom" constant="8" symbolic="YES" id="Xzm-gY-kWO"/>
                             <constraint firstItem="xok-FS-AFe" firstAttribute="top" secondItem="4IK-NX-Sr4" secondAttribute="bottom" constant="8" symbolic="YES" id="bPa-Vk-aAM"/>
                             <constraint firstAttribute="trailing" secondItem="HDl-Ut-EPL" secondAttribute="trailing" constant="20" symbolic="YES" id="hgx-uA-eWj"/>
