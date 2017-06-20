@@ -32,20 +32,19 @@ static NSString *const kBackgroundImage = @"mdc_action_menu_label_background";
 static const CGFloat kActionMenuOptionPadding = 16.0f;
 static const CGFloat kActionMenuOptionCollapseScale = 0.1f;
 
-//static const CGFloat kActionMenuFontSize = 16;
-//static const CGFloat kActionMenuIconMargin = 12;
-//static const CGFloat kActionMenuIconSize = 24;
-//static const CGFloat kActionMenuIconTitleSpace = 32;
-//static const CGFloat kActionMenuInkAlpha = 0.06f;
-//static const CGFloat kActionMenuTextColorAlpha = 0.54f;
+// static const CGFloat kActionMenuFontSize = 16;
+// static const CGFloat kActionMenuIconMargin = 12;
+// static const CGFloat kActionMenuIconSize = 24;
+// static const CGFloat kActionMenuIconTitleSpace = 32;
+// static const CGFloat kActionMenuInkAlpha = 0.06f;
+// static const CGFloat kActionMenuTextColorAlpha = 0.54f;
 
 @implementation MDCActionMenuOptionView {
   UILabel *_label;
   UIImageView *_labelBackground;
   UIView *_labelContainer;
-  
+
   UIImageView *_icon;
-  
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -58,7 +57,7 @@ static const CGFloat kActionMenuOptionCollapseScale = 0.1f;
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
     UIFont *font = [MDCTypography buttonFont];
     _label.font = font;
-    _label.textColor = [UIColor blackColor]; // TODO: Make this configurable
+    _label.textColor = [UIColor blackColor];  // TODO: Make this configurable
 
     _labelBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kBackgroundImage]];
     _labelContainer = [[UIView alloc] initWithFrame:CGRectZero];
@@ -80,35 +79,38 @@ static const CGFloat kActionMenuOptionCollapseScale = 0.1f;
   }
   _option = option;
 
-    _floatingActionButton.hidden = NO;
-    _labelContainer.hidden = NO;
+  _floatingActionButton.hidden = NO;
+  _labelContainer.hidden = NO;
 
-    if (self.floatingActionButton) {
-      [self.floatingActionButton removeFromSuperview];
-    }
+  if (self.floatingActionButton) {
+    [self.floatingActionButton removeFromSuperview];
+  }
 
-    if (!self.option) {
-      _floatingActionButton = nil;
-      _label.text = nil;
-      return;
-    }
+  if (!self.option) {
+    _floatingActionButton = nil;
+    _label.text = nil;
+    return;
+  }
 
-  _floatingActionButton = [MDCFloatingButton floatingButtonWithShape:([self isMini] ? MDCFloatingButtonShapeMini : MDCFloatingButtonShapeDefault)];
-  [_floatingActionButton setBackgroundColor:self.option.palette.tint500 forState:UIControlStateNormal];
+  _floatingActionButton =
+      [MDCFloatingButton floatingButtonWithShape:([self isMini] ? MDCFloatingButtonShapeMini
+                                                                : MDCFloatingButtonShapeDefault)];
+  [_floatingActionButton setBackgroundColor:self.option.palette.tint500
+                                   forState:UIControlStateNormal];
   [_floatingActionButton setImage:self.option.image forState:UIControlStateNormal];
-  
-    if (!self.option.insetImage) {
-      self.floatingActionButton.contentEdgeInsets = UIEdgeInsetsZero;
-    }
-    [self addSubview:self.floatingActionButton];
-    [self.floatingActionButton sizeToFit];
 
-    _label.text = self.option.label;
-    _labelContainer.hidden = (self.option.label.length == 0);
+  if (!self.option.insetImage) {
+    self.floatingActionButton.contentEdgeInsets = UIEdgeInsetsZero;
+  }
+  [self addSubview:self.floatingActionButton];
+  [self.floatingActionButton sizeToFit];
 
-    // Rasterize to improve animation performance (toggled on and off before and after animation)
-    self.floatingActionButton.layer.shouldRasterize = YES;
-    self.floatingActionButton.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+  _label.text = self.option.label;
+  _labelContainer.hidden = (self.option.label.length == 0);
+
+  // Rasterize to improve animation performance (toggled on and off before and after animation)
+  self.floatingActionButton.layer.shouldRasterize = YES;
+  self.floatingActionButton.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 
   self.accessibilityLabel = self.option.label;
   if (self.option.accessibilityLabel) {
@@ -135,12 +137,12 @@ static const CGFloat kActionMenuOptionCollapseScale = 0.1f;
   CGRect fabFrame = self.floatingActionButton.frame;
   CGFloat primaryFABWidth = [self primaryFloatingButtonWidth];
   CGFloat maxLabelWidth =
-  self.bounds.size.width - primaryFABWidth - kLabelMargin - (2 * kLabelPadding);
+      self.bounds.size.width - primaryFABWidth - kLabelMargin - (2 * kLabelPadding);
   CGRect maxLabelRect = CGRectMake(0, 0, maxLabelWidth, fabFrame.size.height);
   CGRect labelRect = [_label textRectForBounds:maxLabelRect limitedToNumberOfLines:1];
   CGSize containerSize = CGSizeMake(labelRect.size.width + (2 * kLabelPadding),
                                     labelRect.size.height + (2 * kLabelPadding));
-  
+
   CGFloat containerX = 0;
   if (self.labelPosition == kMDCActionMenuLabelPositionRight) {
     if (self.style == kMDCActionMenuStyleDefaultToMini && self.index != 0) {
@@ -151,19 +153,19 @@ static const CGFloat kActionMenuOptionCollapseScale = 0.1f;
   }
   CGFloat containerY = (fabFrame.size.height - containerSize.height) / 2;
   _labelContainer.frame =
-  CGRectMake(containerX, containerY, containerSize.width, containerSize.height);
+      CGRectMake(containerX, containerY, containerSize.width, containerSize.height);
   _labelBackground.frame = _labelContainer.bounds;
   _label.frame =
-  CGRectMake(kLabelPadding, kLabelPadding, labelRect.size.width, labelRect.size.height);
-  
+      CGRectMake(kLabelPadding, kLabelPadding, labelRect.size.width, labelRect.size.height);
+
   // If the position is left, the button needs to be moved.
   if (self.labelPosition == kMDCActionMenuLabelPositionLeft) {
     CGFloat fabX =
-    containerSize.width + kLabelMargin + ((primaryFABWidth - fabFrame.size.width) / 2);
+        containerSize.width + kLabelMargin + ((primaryFABWidth - fabFrame.size.width) / 2);
     self.floatingActionButton.frame =
-    CGRectMake(fabX, 0, fabFrame.size.width, fabFrame.size.height);
+        CGRectMake(fabX, 0, fabFrame.size.width, fabFrame.size.height);
   }
-  
+
   if (self.index == 0) {
     // We rely on the controllers floating action button for the first item in order to not
     // overlay two buttons (and shadows) on top of each other.
@@ -172,8 +174,8 @@ static const CGFloat kActionMenuOptionCollapseScale = 0.1f;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat dimension = [self isMini] ? [MDCFloatingButton miniDimension]
-                                    : [MDCFloatingButton defaultDimension];
+  CGFloat dimension =
+      [self isMini] ? [MDCFloatingButton miniDimension] : [MDCFloatingButton defaultDimension];
 
   CGFloat primaryFABWidth = [self primaryFloatingButtonWidth];
   CGFloat maxLabelWidth = size.width - primaryFABWidth - kLabelMargin - (2 * kLabelPadding);
@@ -214,43 +216,48 @@ static const CGFloat kActionMenuOptionCollapseScale = 0.1f;
     [self resetCollapsed];
     return;
   }
-  [UIView mdc_animateWithTimingFunction:[CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]
-                               duration:animated ? kMDCActionMenuSuperFastAnimationDuration : 0
-                                  delay:delay
-                                options:0
-                             animations:^{
-     self.alpha = 0;
-   } completion:^(BOOL finished) {
-     [self resetCollapsed];
-   }];
+  [UIView
+      mdc_animateWithTimingFunction:[CAMediaTimingFunction
+                                        mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]
+      duration:animated ? kMDCActionMenuSuperFastAnimationDuration : 0
+      delay:delay
+      options:0
+      animations:^{
+        self.alpha = 0;
+      }
+      completion:^(BOOL finished) {
+        [self resetCollapsed];
+      }];
 }
 
 - (void)expand:(BOOL)animated delay:(NSTimeInterval)delay {
   self.floatingActionButton.layer.shouldRasterize = YES;
-  
-  CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseOut];
-  
+
+  CAMediaTimingFunction *timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseOut];
+
   [UIView mdc_animateWithTimingFunction:timingFunction
-                               duration:animated ? kMDCActionMenuFastAnimationDuration : 0
-                                  delay:delay
-                                options:0
-                             animations:^{
-                               self.alpha = 1;
-                               self.floatingActionButton.transform = CGAffineTransformIdentity;
-                               _labelContainer.transform = CGAffineTransformIdentity;
-                                } completion:^(BOOL finished) {
-                                  self.floatingActionButton.layer.shouldRasterize = NO;
-                                }];
-  
-//  [UIView mdc_animateWithTimingFunction:timingFunction
-//                               duration:(kMDCActionMenuFastAnimationDuration * 0.75) : 0
-//                                  delay:delay + (kMDCActionMenuFastAnimationDuration / 4)
-//                                options:0
-//                             animations:^{
-//                               _labelContainer.alpha = 1;
-//                             } completion:^(BOOL finished) {
-//                               // do nothing
-//                             }];
+      duration:animated ? kMDCActionMenuFastAnimationDuration : 0
+      delay:delay
+      options:0
+      animations:^{
+        self.alpha = 1;
+        self.floatingActionButton.transform = CGAffineTransformIdentity;
+        _labelContainer.transform = CGAffineTransformIdentity;
+      }
+      completion:^(BOOL finished) {
+        self.floatingActionButton.layer.shouldRasterize = NO;
+      }];
+
+  //  [UIView mdc_animateWithTimingFunction:timingFunction
+  //                               duration:(kMDCActionMenuFastAnimationDuration * 0.75) : 0
+  //                                  delay:delay + (kMDCActionMenuFastAnimationDuration / 4)
+  //                                options:0
+  //                             animations:^{
+  //                               _labelContainer.alpha = 1;
+  //                             } completion:^(BOOL finished) {
+  //                               // do nothing
+  //                             }];
 }
 
 - (CGPoint)getTouchPoint:(NSSet *)touches {

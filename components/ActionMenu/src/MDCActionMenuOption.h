@@ -77,9 +77,9 @@
  * @return A MDCActionMenuOption to display in a MDCActionMenuViewController.
  */
 - (instancetype)initWithPalette:(MDCPalette *)palette
-                             image:(UIImage *)image
-                            target:(id)target
-                            action:(SEL)action NS_DESIGNATED_INITIALIZER;
+                          image:(UIImage *)image
+                         target:(id)target
+                         action:(SEL)action NS_DESIGNATED_INITIALIZER;
 
 /**
  * @deprecated Please use initWithColorGroup:image:target:action:.

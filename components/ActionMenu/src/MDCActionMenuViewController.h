@@ -149,7 +149,7 @@ typedef NS_ENUM(NSInteger, MDCActionMenuLabelPosition) {
  * Programmatically activate the action menu (if it has multiple options).
  *
  * @param animated    Whether the activation should be animated.
- * @param completion  A block to invoke once the activation is finished, or has failed. May be nil. 
+ * @param completion  A block to invoke once the activation is finished, or has failed. May be nil.
  *                    The block will be called asynchronously on the main queue. The block takes a
  *                    single BOOL didActivate parameter, which will be YES if this method call
  *                    causes the menu to activate.

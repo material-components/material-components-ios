@@ -21,8 +21,8 @@
 #import "MaterialShadowElevations.h"
 
 #import "MDCActionMenuCell.h"
-#import "MDCActionMenuOption.h"
 #import "MDCActionMenuLayout.h"
+#import "MDCActionMenuOption.h"
 
 static const NSTimeInterval kDefaultNormalAnimationDuration = 0.30;
 static const NSTimeInterval kCellStaggerDelayDuration = 0.02;
@@ -145,7 +145,9 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
     _options = [NSMutableArray array];
 
     _floatingActionButton =
-    [MDCFloatingButton floatingButtonWithShape:(_style == kMDCActionMenuStyleMiniToMini) ? MDCFloatingButtonShapeMini : MDCFloatingButtonShapeDefault];
+        [MDCFloatingButton floatingButtonWithShape:(_style == kMDCActionMenuStyleMiniToMini)
+                                                       ? MDCFloatingButtonShapeMini
+                                                       : MDCFloatingButtonShapeDefault];
     [_floatingActionButton setElevation:_elevation forState:UIControlStateNormal];
 
     _backgroundColor = [UIColor clearColor];
@@ -198,43 +200,42 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
   [collectionView registerClass:actionMenuCellClass
       forCellWithReuseIdentifier:NSStringFromClass(actionMenuCellClass)];
 
-    // Create floating action button animation containers.
-    _preToggleAnimationContainer = [[UIView alloc] initWithFrame:_floatingActionButton.bounds];
-    _preToggleAnimationContainer.autoresizingMask = autoresizingMask;
-    _preToggleAnimationContainer.userInteractionEnabled = NO;
-    [_floatingActionButton addSubview:_preToggleAnimationContainer];
+  // Create floating action button animation containers.
+  _preToggleAnimationContainer = [[UIView alloc] initWithFrame:_floatingActionButton.bounds];
+  _preToggleAnimationContainer.autoresizingMask = autoresizingMask;
+  _preToggleAnimationContainer.userInteractionEnabled = NO;
+  [_floatingActionButton addSubview:_preToggleAnimationContainer];
 
+  _preToggleView = [[UIImageView alloc] initWithFrame:_floatingActionButton.bounds];
+  _preToggleView.autoresizingMask = autoresizingMask;
+  _preToggleView.image = _image;
+  _preToggleView.contentMode = UIViewContentModeCenter;
+  [_preToggleAnimationContainer addSubview:_preToggleView];
 
-    _preToggleView = [[UIImageView alloc] initWithFrame:_floatingActionButton.bounds];
-    _preToggleView.autoresizingMask = autoresizingMask;
-    _preToggleView.image = _image;
-    _preToggleView.contentMode = UIViewContentModeCenter;
-    [_preToggleAnimationContainer addSubview:_preToggleView];
+  _postToggleView = [[UIImageView alloc] initWithFrame:_floatingActionButton.bounds];
+  _postToggleView.autoresizingMask = autoresizingMask;
+  _postToggleView.contentMode = UIViewContentModeCenter;
+  [_floatingActionButton addSubview:_postToggleView];
 
-    _postToggleView = [[UIImageView alloc] initWithFrame:_floatingActionButton.bounds];
-    _postToggleView.autoresizingMask = autoresizingMask;
-    _postToggleView.contentMode = UIViewContentModeCenter;
-    [_floatingActionButton addSubview:_postToggleView];
+  // Setup gestures for tap and swipe, used to dismiss the menu.
+  UITapGestureRecognizer *tapGesture =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)];
+  tapGesture.cancelsTouchesInView = NO;
+  [collectionView addGestureRecognizer:tapGesture];
 
-    // Setup gestures for tap and swipe, used to dismiss the menu.
-    UITapGestureRecognizer *tapGesture =
-        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)];
-    tapGesture.cancelsTouchesInView = NO;
-    [collectionView addGestureRecognizer:tapGesture];
+  UISwipeGestureRecognizer *horizontalSwipeGesture =
+      [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
+  horizontalSwipeGesture.cancelsTouchesInView = NO;
+  horizontalSwipeGesture.direction =
+      UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
+  [collectionView addGestureRecognizer:horizontalSwipeGesture];
 
-    UISwipeGestureRecognizer *horizontalSwipeGesture =
-        [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
-    horizontalSwipeGesture.cancelsTouchesInView = NO;
-    horizontalSwipeGesture.direction =
-        UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
-    [collectionView addGestureRecognizer:horizontalSwipeGesture];
-
-    UISwipeGestureRecognizer *verticalSwipeGesture =
-        [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
-    verticalSwipeGesture.cancelsTouchesInView = NO;
-    verticalSwipeGesture.direction =
-        UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
-    [collectionView addGestureRecognizer:verticalSwipeGesture];
+  UISwipeGestureRecognizer *verticalSwipeGesture =
+      [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
+  verticalSwipeGesture.cancelsTouchesInView = NO;
+  verticalSwipeGesture.direction =
+      UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
+  [collectionView addGestureRecognizer:verticalSwipeGesture];
 
   _collectionVC.collectionView = collectionView;
 
@@ -260,7 +261,8 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
 }
 
 - (void)updateBackgroundColor {
-  _collectionVC.collectionView.backgroundView.backgroundColor = _backgroundColor;;
+  _collectionVC.collectionView.backgroundView.backgroundColor = _backgroundColor;
+  ;
 
   // TODO: Replace with MDFTextAccessibility
   CGFloat r, g, b;
@@ -302,7 +304,7 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
   };
 
   if (willActivate) {
-      [self setSpeeddialActivated:YES animated:YES completion:nil];
+    [self setSpeeddialActivated:YES animated:YES completion:nil];
   } else {
     asyncCompletion();
   }
@@ -339,9 +341,7 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSString *identifier = NSStringFromClass([MDCActionMenuCell class]);
-  
-  
-  
+
   MDCActionMenuCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
 
@@ -372,8 +372,8 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   return CGSizeMake(collectionView.bounds.size.width, [self heightForOptionAtIndex:indexPath.item]);
 }
 
@@ -443,8 +443,7 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
 - (CGFloat)heightForOptionAtIndex:(NSUInteger)index {
   BOOL isMini = (self.style == kMDCActionMenuStyleMiniToMini) ||
                 (self.style == kMDCActionMenuStyleDefaultToMini && index != 0);
-  return isMini ? [MDCFloatingButton miniDimension]
-                : [MDCFloatingButton defaultDimension];
+  return isMini ? [MDCFloatingButton miniDimension] : [MDCFloatingButton defaultDimension];
 }
 
 - (void)tapGesture:(UITapGestureRecognizer *)tapGesture {
@@ -470,12 +469,14 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
   if (_options.count > 0) {
     // The first item is always what the floating action button "morphs" into.
     MDCActionMenuOption *firstOption = _options[0];
-    [_floatingActionButton setBackgroundColor:firstOption.palette.tint500 forState:UIControlStateNormal];
+    [_floatingActionButton setBackgroundColor:firstOption.palette.tint500
+                                     forState:UIControlStateNormal];
     _postToggleView.image = firstOption.image;
   }
 }
 
-- (void)setSpeeddialActivated:(BOOL)activated animated:(BOOL)animated
+- (void)setSpeeddialActivated:(BOOL)activated
+                     animated:(BOOL)animated
                    completion:(void (^)(void))completion {
   void (^innerCompletion)(void) = ^{
     [self updateFinalStateWithCompletion:completion];
@@ -483,8 +484,8 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
 
   _activated = activated;
   if (_activated) {
-    BOOL isPresentingViewController = self.presentedViewController &&
-        !self.presentedViewController.isBeingDismissed;
+    BOOL isPresentingViewController =
+        self.presentedViewController && !self.presentedViewController.isBeingDismissed;
     if (!isPresentingViewController) {
       [self presentViewController:_collectionVC
                          animated:YES
@@ -641,13 +642,15 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
           completion();
         }
       }];
-      [UIView mdc_animateWithTimingFunction:[CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]
+      [UIView mdc_animateWithTimingFunction:
+                  [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]
                                    duration:kDefaultNormalAnimationDuration
                                       delay:0
                                     options:0
                                  animations:^{
                                    [self toggleFloatingActionButton];
-                                 } completion:^(BOOL finished) {
+                                 }
+                                 completion:^(BOOL finished){
                                  }];
       [self updateLayoutAnimated:YES];
     }
@@ -662,15 +665,18 @@ static const CGFloat kPreToggleShrinkScaleY = 0.0f;
 
   NSTimeInterval duration =
       _activated ? kMDCActionMenuFastAnimationDuration : kMDCActionMenuSuperFastAnimationDuration;
-  NSUInteger curve = _activated ? MDCAnimationTimingFunctionEaseOut : MDCAnimationTimingFunctionEaseIn;
-  
+  NSUInteger curve =
+      _activated ? MDCAnimationTimingFunctionEaseOut : MDCAnimationTimingFunctionEaseIn;
+
   [UIView mdc_animateWithTimingFunction:[CAMediaTimingFunction mdc_functionWithType:curve]
                                duration:duration
                                   delay:0
                                 options:0
                              animations:^{
-                               _collectionVC.collectionView.backgroundView.alpha = _activated ? 1 : 0;
-                             } completion:^(BOOL finished) {
+                               _collectionVC.collectionView.backgroundView.alpha =
+                                   _activated ? 1 : 0;
+                             }
+                             completion:^(BOOL finished){
                              }];
 }
 

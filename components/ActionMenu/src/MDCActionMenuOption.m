@@ -24,9 +24,9 @@
 }
 
 - (instancetype)initWithPalette:(MDCPalette *)palette
-                             image:(UIImage *)image
-                            target:(id)target
-                            action:(SEL)action {
+                          image:(UIImage *)image
+                         target:(id)target
+                         action:(SEL)action {
   self = [super init];
   if (self) {
     _palette = palette;

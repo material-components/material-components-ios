@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
 #import "MDCActionMenuViewController.h"
+#import "MaterialButtons.h"
 
 extern const NSTimeInterval kMDCActionMenuFastAnimationDuration;
 extern const NSTimeInterval kMDCActionMenuSuperFastAnimationDuration;
