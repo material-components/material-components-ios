@@ -97,14 +97,6 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   const CGRect originalSourceFrame = _sourceView.frame;
   UIColor *originalSourceBackgroundColor = _sourceView.backgroundColor;
 
-  UIView *scrimView;
-  if (!_presentationController) {
-    scrimView = CreateScrimView(context);
-
-  } else {
-    scrimView = _presentationController.scrimView;
-  }
-
   // The presentation controller, if available, will decide when to make the source view visible
   // again.
   _presentationController.sourceView = _sourceView;
@@ -189,11 +181,6 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 
     [maskedView removeFromSuperview];
 
-    // No presentation controller means we need to undo any changes we made to the view hierarchy.
-    if (!_presentationController) {
-      [scrimView removeFromSuperview];
-    }
-
     [context transitionDidEnd]; // Hand off back to UIKit
   }];
 
@@ -255,13 +242,6 @@ static inline CGFloat LengthOfVector(CGVector vector) {
                    withValues:@[ @(CGRectGetMidY(initialMaskedFrame)),
                                  @(CGRectGetMidY(finalMaskedFrame)) ]
                       keyPath:@"position.y"];
-
-  if (!_presentationController) {
-    [animator animateWithTiming:motion.scrimFade
-                        toLayer:scrimView.layer
-                     withValues:@[ @0, @1 ]
-                        keyPath:@"opacity"];
-  }
 
   [CATransaction commit];
 }

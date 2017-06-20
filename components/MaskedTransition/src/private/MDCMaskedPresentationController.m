@@ -21,13 +21,6 @@
 
 #import "MDCMaskedTransitionMotionForContext.h"
 
-UIView *CreateScrimView(id<MDMTransitionContext> context) {
-  UIView *scrimView = [[UIView alloc] initWithFrame:context.containerView.bounds];
-  scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
-  [context.containerView addSubview:scrimView];
-  return scrimView;
-}
-
 @interface MDCMaskedPresentationController () <MDMTransition>
 @end
 
@@ -55,7 +48,14 @@ UIView *CreateScrimView(id<MDMTransitionContext> context) {
 }
 
 - (BOOL)shouldRemovePresentersView {
+  // We don't have access to the container view when this method is called, so we can only guess as
+  // to whether we'll be presenting full screen by checking for the presence of a frame calculation
+  // block.
   BOOL definitelyFullscreen = _calculateFrameOfPresentedView == nil;
+
+  // Returning true here will cause UIKit to invoke viewWillDisappear and viewDidDisappear on the
+  // presenting view controller, and the presenting view controller's view will be removed on
+  // completion of the transition.
   return definitelyFullscreen;
 }
 
@@ -92,7 +92,9 @@ UIView *CreateScrimView(id<MDMTransitionContext> context) {
   MDCMaskedTransitionMotionTiming motion = (context.direction == MDMTransitionDirectionForward) ? spec.expansion : spec.collapse;
 
   if (!self.scrimView) {
-    self.scrimView = CreateScrimView(context);
+    self.scrimView = [[UIView alloc] initWithFrame:context.containerView.bounds];
+    self.scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    [context.containerView addSubview:self.scrimView];
   }
 
   [animator animateWithTiming:motion.scrimFade
