@@ -20,25 +20,15 @@
 #import "BottomSheetSupplemental.h"
 #import "MaterialBottomSheet.h"
 
-@implementation BottomSheetSimpleExample
+@implementation BottomSheetAutolayoutExample
 
 - (void)presentBottomSheet {
-  BottomSheetDummyStaticViewController *viewController =
-      [[BottomSheetDummyStaticViewController alloc] init];
-
-  MDCBottomSheetController *bottomSheet =
-      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
-  [self presentViewController:bottomSheet animated:YES completion:nil];
-}
-
-@end
-
-@implementation BottomSheetTallExample
-
-- (void)presentBottomSheet {
-  BottomSheetDummyStaticViewController *viewController =
-      [[BottomSheetDummyStaticViewController alloc] init];
-  viewController.preferredContentSize = CGSizeMake(0, self.view.frame.size.height * 0.75);
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  UIStoryboard *storyboard =
+      [UIStoryboard storyboardWithName:@"BottomSheetAutolayoutDummyViewController" bundle:bundle];
+  NSString *identifier = @"BottomSheetAutolayoutID";
+  UIViewController *viewController =
+      [storyboard instantiateViewControllerWithIdentifier:identifier];
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];

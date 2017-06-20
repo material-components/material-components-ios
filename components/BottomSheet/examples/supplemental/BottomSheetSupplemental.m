@@ -16,6 +16,18 @@
 
 #import "BottomSheetSupplemental.h"
 
+@implementation BottomSheetAutolayoutExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Bottom Sheet", @"Content using autolayout" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+@end
+
 @implementation BottomSheetShortCollectionExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {

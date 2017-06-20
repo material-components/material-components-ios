@@ -14,19 +14,12 @@
  limitations under the License.
  */
 
-#import "BottomSheetPresenterViewController.h"
+#import "BottomSheetAutolayoutDummyViewController.h"
 
-@interface BottomSheetAutolayoutExample : BottomSheetPresenterViewController
-@end
+@implementation BottomSheetAutolayoutDummyViewController
 
-@interface BottomSheetShortCollectionExample : BottomSheetPresenterViewController
-@end
+- (IBAction)dismissButtonPressed:(id)sender {
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+}
 
-@interface BottomSheetSimpleExample : BottomSheetPresenterViewController
-@end
-
-@interface BottomSheetTallExample : BottomSheetPresenterViewController
-@end
-
-@interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
 @end

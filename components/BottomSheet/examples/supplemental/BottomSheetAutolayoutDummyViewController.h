@@ -14,19 +14,8 @@
  limitations under the License.
  */
 
-#import "BottomSheetPresenterViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface BottomSheetAutolayoutExample : BottomSheetPresenterViewController
-@end
+@interface BottomSheetAutolayoutDummyViewController : UIViewController
 
-@interface BottomSheetShortCollectionExample : BottomSheetPresenterViewController
-@end
-
-@interface BottomSheetSimpleExample : BottomSheetPresenterViewController
-@end
-
-@interface BottomSheetTallExample : BottomSheetPresenterViewController
-@end
-
-@interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
 @end
