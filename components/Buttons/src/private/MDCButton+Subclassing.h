@@ -45,7 +45,4 @@
 /** The default content edge insets of the button. They are set at initialization time. */
 - (UIEdgeInsets)defaultContentEdgeInsets;
 
-/** The default elevation for a particular button state (if not set by the calling code). */
-- (CGFloat)defaultElevationForState:(UIControlState)state;
-
 @end

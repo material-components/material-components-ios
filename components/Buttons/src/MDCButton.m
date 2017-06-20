@@ -509,7 +509,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _userElevations[@(state)];
-  return elevation ? (CGFloat)[elevation doubleValue] : [self defaultElevationForState:state];
+  CGFloat normalElevation = 0;
+  if (state != UIControlStateNormal) {
+    normalElevation = [self elevationForState:UIControlStateNormal];
+  }
+  return elevation ? (CGFloat)[elevation doubleValue] : normalElevation;
 }
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
@@ -597,20 +601,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
   return UIEdgeInsetsMake(8, 16, 8, 16);
-}
-
-- (CGFloat)defaultElevationForState:(UIControlState)state {
-  if (state == UIControlStateNormal) {
-    return 0;
-  }
-
-  // Highlighted is the state we actually want to watch for.
-  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
-    CGFloat normalElevation = [self elevationForState:UIControlStateNormal];
-    return normalElevation > 0 ? 2 * normalElevation : 1;
-  }
-
-  return [self elevationForState:UIControlStateNormal];
 }
 
 - (BOOL)shouldHaveOpaqueBackground {
