@@ -16,6 +16,149 @@
 * Added properties 'disabledUnderline', 'underline', 'color', 'lineHeight', 'enabled' in MDCTextInputUnderlineView
 * Added 'sizeThatFIts:defaultSize:' method to MDCTextFieldPositioningDelegate
 
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### AppBar
+
+#### Changes
+
+* [[Themers] Add app bar color themer (#1503)](https://github.com/material-components/material-components-ios/commit/cda52f4e6b29f0ed72a4de47974c603970bfe142) (Junius Gunaratne)
+
+### ButtonBar
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [[Themers] Add app bar color themer (#1503)](https://github.com/material-components/material-components-ios/commit/cda52f4e6b29f0ed72a4de47974c603970bfe142) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [Make sure that MDCButton has the proper init methods. (#1542)](https://github.com/material-components/material-components-ios/commit/ee2880881ae374e2fbde39002e4323dabea8420a) (Randall Li)
+* [[mdcbutton] Using UIAppearance to set the default background color for the normal state.](https://github.com/material-components/material-components-ios/commit/6670e7409f8fc3ecadbcc18a12de781f16569798) (randallli)
+* [Button appearance (#1502)](https://github.com/material-components/material-components-ios/commit/b18aaff93e62ab853e0930867c90da3339cfb2d8) (Randall Li)
+* [Revert "Button appearance (#1502)" (#1504)](https://github.com/material-components/material-components-ios/commit/9db80b68b05969f5ab7fdeeab8806fc34f57a2a1) (Randall Li)
+* [Reverted MDCButton changes from Component Themer change: (#1490)](https://github.com/material-components/material-components-ios/commit/4128a44538e25c2ba19f627b9a96cffe568f1cad) (Randall Li)
+* [[Button] Calling commonMDCButtonInit from init. (#1501)](https://github.com/material-components/material-components-ios/commit/6217edab9e7eba9d5da5fee531211e09f2a2bda2) (Randall Li)
+
+
+### CollectionCells
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Collections
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Dialogs
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [[Feature Highlight] Rotation fixes and animation improvement (#1505)](https://github.com/material-components/material-components-ios/commit/0a102db99bddceefadb0f7bce9474be6180ae0cd) (Sam Morrison)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [Remove unused function from example. (#1527)](https://github.com/material-components/material-components-ios/commit/3cba5ed8b39e88d88d6d21bf0dd11bf6de123ec8) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Ink
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### NavigationBar
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### OverlayWindow
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### PageControl
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### ProgressView
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Slider
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Snackbar
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Tabs
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Added implementation for accessibilityElementForItem:](https://github.com/material-components/material-components-ios/commit/f78fd30242241fa051c882077791b340cb113a6b) (brianjmoore)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### TextFields
+
+#### Changes
+
+* [Adding missing implementations of properties (#1528)](https://github.com/material-components/material-components-ios/commit/448153d7154dc829f1287a7e19d0fb8fdd54f16a) (Will Larche)
+* [Corrections to height and frame and better manual layout support (#1525)](https://github.com/material-components/material-components-ios/commit/484a82cd8dbfcdcf490f0aee1c1c12c2dd348dcd) (Will Larche)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [Underline color customization (#1537)](https://github.com/material-components/material-components-ios/commit/d085183658a5d88c8e57567ca6a7b8034599c26c) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
 # 25.0.1
 
 Hotfix: Added implementation for accessibilityElementForItem: for MDCTabBar
