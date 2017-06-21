@@ -39,6 +39,6 @@
  @param textInputController A MDCTextInputController instance to apply a color scheme.
  */
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-   toTextInputController:(MDCTextInputController *)textInputController;
+    toTextInputController:(MDCTextInputController *)textInputController;
 
 @end
