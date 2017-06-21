@@ -21,10 +21,6 @@
 
 #import "MaterialMath.h"
 
-static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
-  return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
-}
-
 static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizerState state) {
   switch (state) {
     case UIGestureRecognizerStatePossible:
@@ -164,15 +160,6 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
   if (touches.count == 0) {
     return 0.0;
   }
-
-  // the circle of the outer highlight
-  CGFloat radius = self.view.highlightRadius;
-  CGPoint center = self.view.highlightCenter;
-
-  // the highlighted point
-  CGPoint point = self.view.highlightPoint;
-
-  CGFloat pointCenterDist = CGPointDistanceToPoint(point, center);
 
   CGFloat dismissSum = 0;
   for (UITouch *touch in touches) {
