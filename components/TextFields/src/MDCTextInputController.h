@@ -20,7 +20,6 @@
 
 @protocol MDCTextInput;
 @protocol MDCTextInputCharacterCounter;
-
 /**
  Presentation styles for a text input. The style determines specific aspects of the text
  input such as sizing, placeholder placement and behavior, layout, etc.
@@ -44,12 +43,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
   MDCTextInputPresentationStyleFullWidth,
 };
 
-/**
- Material Design compliant states for textInputs. The logic for 'automagic' error states changes:
- underline color, underline text color.
- https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
- */
-@interface MDCTextInputController : NSObject <MDCTextInputPositioningDelegate, NSCoding, NSCopying>
+/** Controllers that manipulate styling and animation of text inputs. */
+@protocol MDCTextInputController <NSObject, NSCoding, NSCopying, MDCTextInputPositioningDelegate>
 
 /**
  The character counter. Override to use a custom character counter.
@@ -95,7 +90,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
 /**
  The text being displayed in the leading underline label when in an error state.
- 
+
  NOTE: To set this value, you must use setErrorText:errorAccessibilityValue:.
  */
 @property(nonatomic, nullable, copy, readonly) NSString *errorText;

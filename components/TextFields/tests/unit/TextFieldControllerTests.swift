@@ -21,7 +21,7 @@ class TextFieldControllerTests: XCTestCase {
   func testCopying() {
     let textField = MDCTextField()
 
-    let controller = MDCTextInputController(textInput: textField)
+    let controller = MDCDefaultTextInputController(textInput: textField)
     controller.characterCountMax = 49
     controller.characterCountViewMode = .always
     controller.floatingPlaceholderColor = .purple
@@ -33,7 +33,7 @@ class TextFieldControllerTests: XCTestCase {
     controller.underlineColorNormal = .white
     controller.underlineViewMode = .always
 
-    if let controllerCopy = controller.copy() as? MDCTextInputController {
+    if let controllerCopy = controller.copy() as? MDCDefaultTextInputController {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
       XCTAssertEqual(controller.floatingPlaceholderColor, controllerCopy.floatingPlaceholderColor)
@@ -56,7 +56,7 @@ class TextFieldControllerTests: XCTestCase {
     textField.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
 
-    let controller = MDCTextInputController(textInput: textField)
+    let controller = MDCDefaultTextInputController(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
     controller.mdc_adjustsFontForContentSizeCategory = true
@@ -68,7 +68,7 @@ class TextFieldControllerTests: XCTestCase {
 
   func testCharacterMax() {
     let textField = MDCTextField()
-    let controller = MDCTextInputController(textInput: textField)
+    let controller = MDCDefaultTextInputController(textInput: textField)
 
     let altLeading = "Alternative Helper Test"
     controller.helperText = altLeading
@@ -86,7 +86,7 @@ class TextFieldControllerTests: XCTestCase {
 
   func testErrors() {
     let textField = MDCTextField()
-    let controller = MDCTextInputController(textInput: textField)
+    let controller = MDCDefaultTextInputController(textInput: textField)
 
     // Helper text is shown on the leading underline label. Make sure the color and content are as 
     // expected.
@@ -145,7 +145,7 @@ class TextFieldControllerTests: XCTestCase {
 
   func testPresentation() {
     let textField = MDCTextField()
-    let controller = MDCTextInputController(textInput: textField)
+    let controller = MDCDefaultTextInputController(textInput: textField)
 
     XCTAssertNotEqual(controller.presentationStyle, .floatingPlaceholder)
     controller.presentationStyle = .floatingPlaceholder
@@ -172,7 +172,7 @@ class TextFieldControllerTests: XCTestCase {
   func testSerialization() {
     let textField = MDCTextField()
 
-    let controller = MDCTextInputController(textInput: textField)
+    let controller = MDCDefaultTextInputController(textInput: textField)
     controller.characterCountMax = 25
     controller.characterCountViewMode = .always
     controller.floatingPlaceholderColor = .purple
@@ -189,7 +189,7 @@ class TextFieldControllerTests: XCTestCase {
 
     let unserializedController =
       NSKeyedUnarchiver.unarchiveObject(with: serializedController) as?
-    MDCTextInputController
+    MDCDefaultTextInputController
     XCTAssertNotNil(unserializedController)
 
     unserializedController?.textInput = textField

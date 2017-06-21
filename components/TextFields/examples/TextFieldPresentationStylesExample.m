@@ -21,9 +21,9 @@
 @interface TextFieldPresentationStylesExample ()
 
 // Be sure to keep your controllers in memory somewhere like a property:
-@property(nonatomic, strong) MDCTextInputController *textFieldControllerDefaultCharMax;
-@property(nonatomic, strong) MDCTextInputController *textFieldControllerFloating;
-@property(nonatomic, strong) MDCTextInputController *textFieldControllerFullWidth;
+@property(nonatomic, strong) MDCDefaultTextInputController *textFieldControllerDefaultCharMax;
+@property(nonatomic, strong) MDCDefaultTextInputController *textFieldControllerFloating;
+@property(nonatomic, strong) MDCDefaultTextInputController *textFieldControllerFullWidth;
 
 @end
 
@@ -56,7 +56,7 @@
 
   // Second the controller is created to manage the text field
   self.textFieldControllerDefaultCharMax =
-      [[MDCTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
+      [[MDCDefaultTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
   self.textFieldControllerDefaultCharMax.characterCountMax = defaultMax;
   [self.textFieldControllerDefaultCharMax mdc_setAdjustsFontForContentSizeCategory:YES];
 
@@ -77,7 +77,7 @@
   }
 
   self.textFieldControllerFloating =
-      [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
+      [[MDCDefaultTextInputController alloc] initWithTextInput:textFieldFloating];
 
   self.textFieldControllerFloating.presentationStyle =
       MDCTextInputPresentationStyleFloatingPlaceholder;
@@ -121,7 +121,7 @@
   textFieldFullWidth.backgroundColor = [UIColor whiteColor];
 
   self.textFieldControllerFullWidth =
-      [[MDCTextInputController alloc] initWithTextInput:textFieldFullWidth];
+      [[MDCDefaultTextInputController alloc] initWithTextInput:textFieldFullWidth];
 
   self.textFieldControllerFullWidth.presentationStyle = MDCTextInputPresentationStyleFullWidth;
   [self.textFieldControllerFullWidth mdc_setAdjustsFontForContentSizeCategory:YES];

@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputController.h"
+#import "MDCDefaultTextInputController.h"
 
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
@@ -42,34 +42,38 @@ static const CGFloat MDCTextInputVerticalPadding = 16.f;
 static const NSTimeInterval MDCTextInputFloatingPlaceholderDownAnimationDuration = 0.266666f;
 static const NSTimeInterval MDCTextInputFloatingPlaceholderUpAnimationDuration = 0.3f;
 
-static NSString *const MDCTextInputControllerCharacterCounterKey =
-    @"MDCTextInputControllerCharacterCounterKey";
-static NSString *const MDCTextInputControllerCharacterCountViewModeKey =
-    @"MDCTextInputControllerCharacterCountViewModeKey";
-static NSString *const MDCTextInputControllerCharacterCountMaxKey =
-    @"MDCTextInputControllerCharacterCountMaxKey";
-static NSString *const MDCTextInputControllerErrorAccessibilityValueKey =
-    @"MDCTextInputControllerErrorAccessibilityValueKey";
-static NSString *const MDCTextInputControllerErrorColorKey = @"MDCTextInputControllerErrorColorKey";
-static NSString *const MDCTextInputControllerErrorTextKey = @"MDCTextInputControllerErrorTextKey";
-static NSString *const MDCTextInputControllerFloatingPlaceholderColorKey =
-    @"MDCTextInputControllerFloatingPlaceholderColorKey";
-static NSString *const MDCTextInputControllerFloatingPlaceholderScaleKey =
-    @"MDCTextInputControllerFloatingPlaceholderScaleKey";
-static NSString *const MDCTextInputControllerHelperTextKey = @"MDCTextInputControllerHelperTextKey";
-static NSString *const MDCTextInputControllerInlinePlaceholderColorKey =
-    @"MDCTextInputControllerInlinePlaceholderColorKey";
-static NSString *const MDCTextInputControllerPresentationStyleKey =
-    @"MDCTextInputControllerPresentationStyleKey";
-static NSString *const MDCTextInputControllerTextInputKey = @"MDCTextInputControllerTextInputKey";
-static NSString *const MDCTextInputControllerUnderlineColorActiveKey =
-    @"MDCTextInputControllerUnderlineColorActiveKey";
-static NSString *const MDCTextInputControllerUnderlineColorNormalKey =
-    @"MDCTextInputControllerUnderlineColorNormalKey";
-static NSString *const MDCTextInputControllerUnderlineViewModeKey =
-    @"MDCTextInputControllerUnderlineViewModeKey";
+static NSString *const MDCDefaultTextInputControllerCharacterCounterKey =
+    @"MDCDefaultTextInputControllerCharacterCounterKey";
+static NSString *const MDCDefaultTextInputControllerCharacterCountViewModeKey =
+    @"MDCDefaultTextInputControllerCharacterCountViewModeKey";
+static NSString *const MDCDefaultTextInputControllerCharacterCountMaxKey =
+    @"MDCDefaultTextInputControllerCharacterCountMaxKey";
+static NSString *const MDCDefaultTextInputControllerErrorAccessibilityValueKey =
+    @"MDCDefaultTextInputControllerErrorAccessibilityValueKey";
+static NSString *const MDCDefaultTextInputControllerErrorColorKey =
+    @"MDCDefaultTextInputControllerErrorColorKey";
+static NSString *const MDCDefaultTextInputControllerErrorTextKey =
+    @"MDCDefaultTextInputControllerErrorTextKey";
+static NSString *const MDCDefaultTextInputControllerFloatingPlaceholderColorKey =
+    @"MDCDefaultTextInputControllerFloatingPlaceholderColorKey";
+static NSString *const MDCDefaultTextInputControllerFloatingPlaceholderScaleKey =
+    @"MDCDefaultTextInputControllerFloatingPlaceholderScaleKey";
+static NSString *const MDCDefaultTextInputControllerHelperTextKey =
+    @"MDCDefaultTextInputControllerHelperTextKey";
+static NSString *const MDCDefaultTextInputControllerInlinePlaceholderColorKey =
+    @"MDCDefaultTextInputControllerInlinePlaceholderColorKey";
+static NSString *const MDCDefaultTextInputControllerPresentationStyleKey =
+    @"MDCDefaultTextInputControllerPresentationStyleKey";
+static NSString *const MDCDefaultTextInputControllerTextInputKey =
+    @"MDCDefaultTextInputControllerTextInputKey";
+static NSString *const MDCDefaultTextInputControllerUnderlineColorActiveKey =
+    @"MDCDefaultTextInputControllerUnderlineColorActiveKey";
+static NSString *const MDCDefaultTextInputControllerUnderlineColorNormalKey =
+    @"MDCDefaultTextInputControllerUnderlineColorNormalKey";
+static NSString *const MDCDefaultTextInputControllerUnderlineViewModeKey =
+    @"MDCDefaultTextInputControllerUnderlineViewModeKey";
 
-static NSString *const MDCTextInputControllerKVOKeyFont = @"font";
+static NSString *const MDCDefaultTextInputControllerKVOKeyFont = @"font";
 
 static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
@@ -87,7 +91,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return [MDCPalette redPalette].tint500;
 }
 
-@interface MDCTextInputController () {
+@interface MDCDefaultTextInputController () {
   UIColor *_floatingPlaceholderColor;
   UIColor *_inlinePlaceholderColor;
   BOOL _mdc_adjustsFontForContentSizeCategory;
@@ -120,18 +124,23 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 @end
 
-@implementation MDCTextInputController
+@implementation MDCDefaultTextInputController
 
 @synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
+@synthesize characterCountViewMode = _characterCountViewMode;
+@synthesize errorColor = _errorColor;
+@synthesize floatingPlaceholderScale = _floatingPlaceholderScale;
 @synthesize presentationStyle = _presentationStyle;
+@synthesize textInput = _textInput;
+@synthesize underlineViewMode = _underlineViewMode;
 
 // TODO: (larche): Support in-line auto complete.
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonMDCTextInputControllerInitialization];
+    [self commonMDCDefaultTextInputControllerInitialization];
   }
 
   return self;
@@ -140,26 +149,30 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
   if (self) {
-    [self commonMDCTextInputControllerInitialization];
+    [self commonMDCDefaultTextInputControllerInitialization];
 
-    _characterCounter = [aDecoder decodeObjectForKey:MDCTextInputControllerCharacterCounterKey];
-    _characterCountMax = [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountMaxKey];
+    _characterCounter =
+        [aDecoder decodeObjectForKey:MDCDefaultTextInputControllerCharacterCounterKey];
+    _characterCountMax =
+        [aDecoder decodeIntegerForKey:MDCDefaultTextInputControllerCharacterCountMaxKey];
     _characterCountViewMode =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountViewModeKey];
-    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerErrorColorKey];
+        [aDecoder decodeIntegerForKey:MDCDefaultTextInputControllerCharacterCountViewModeKey];
+    _errorColor = [aDecoder decodeObjectForKey:MDCDefaultTextInputControllerErrorColorKey];
     _floatingPlaceholderColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFloatingPlaceholderColorKey];
+        [aDecoder decodeObjectForKey:MDCDefaultTextInputControllerFloatingPlaceholderColorKey];
     _floatingPlaceholderScale =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFloatingPlaceholderScaleKey];
+        [aDecoder decodeObjectForKey:MDCDefaultTextInputControllerFloatingPlaceholderScaleKey];
     _inlinePlaceholderColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerInlinePlaceholderColorKey];
+        [aDecoder decodeObjectForKey:MDCDefaultTextInputControllerInlinePlaceholderColorKey];
     _presentationStyle = (MDCTextInputPresentationStyle)
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerPresentationStyleKey];
-    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerTextInputKey];
-    _underlineColorActive = [aDecoder decodeObjectForKey:MDCTextInputControllerUnderlineColorActiveKey];
-    _underlineColorNormal = [aDecoder decodeObjectForKey:MDCTextInputControllerUnderlineColorNormalKey];
+        [aDecoder decodeIntegerForKey:MDCDefaultTextInputControllerPresentationStyleKey];
+    _textInput = [aDecoder decodeObjectForKey:MDCDefaultTextInputControllerTextInputKey];
+    _underlineColorActive =
+        [aDecoder decodeObjectForKey:MDCDefaultTextInputControllerUnderlineColorActiveKey];
+    _underlineColorNormal =
+        [aDecoder decodeObjectForKey:MDCDefaultTextInputControllerUnderlineColorNormalKey];
     _underlineViewMode = (UITextFieldViewMode)
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerUnderlineViewModeKey];
+        [aDecoder decodeIntegerForKey:MDCDefaultTextInputControllerUnderlineViewModeKey];
   }
   return self;
 }
@@ -176,31 +189,37 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   if ([self.characterCounter conformsToProtocol:@protocol(NSCoding)]) {
-    [aCoder encodeObject:self.characterCounter forKey:MDCTextInputControllerCharacterCounterKey];
+    [aCoder encodeObject:self.characterCounter
+                  forKey:MDCDefaultTextInputControllerCharacterCounterKey];
   }
-  [aCoder encodeInteger:self.characterCountMax forKey:MDCTextInputControllerCharacterCountMaxKey];
+  [aCoder encodeInteger:self.characterCountMax
+                 forKey:MDCDefaultTextInputControllerCharacterCountMaxKey];
   [aCoder encodeInteger:self.characterCountViewMode
-                 forKey:MDCTextInputControllerCharacterCountViewModeKey];
+                 forKey:MDCDefaultTextInputControllerCharacterCountViewModeKey];
   [aCoder encodeObject:self.errorAccessibilityValue
-                forKey:MDCTextInputControllerErrorAccessibilityValueKey];
-  [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerErrorColorKey];
-  [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerErrorTextKey];
+                forKey:MDCDefaultTextInputControllerErrorAccessibilityValueKey];
+  [aCoder encodeObject:self.errorColor forKey:MDCDefaultTextInputControllerErrorColorKey];
+  [aCoder encodeObject:self.errorText forKey:MDCDefaultTextInputControllerErrorTextKey];
   [aCoder encodeObject:self.floatingPlaceholderColor
-                forKey:MDCTextInputControllerFloatingPlaceholderColorKey];
+                forKey:MDCDefaultTextInputControllerFloatingPlaceholderColorKey];
   [aCoder encodeObject:self.floatingPlaceholderScale
-                forKey:MDCTextInputControllerFloatingPlaceholderScaleKey];
-  [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerHelperTextKey];
+                forKey:MDCDefaultTextInputControllerFloatingPlaceholderScaleKey];
+  [aCoder encodeObject:self.helperText forKey:MDCDefaultTextInputControllerHelperTextKey];
   [aCoder encodeObject:self.inlinePlaceholderColor
-                forKey:MDCTextInputControllerInlinePlaceholderColorKey];
-  [aCoder encodeInteger:self.presentationStyle forKey:MDCTextInputControllerPresentationStyleKey];
-  [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerTextInputKey];
-  [aCoder encodeObject:self.underlineColorActive forKey:MDCTextInputControllerUnderlineColorActiveKey];
-  [aCoder encodeObject:self.underlineColorNormal forKey:MDCTextInputControllerUnderlineColorNormalKey];
-  [aCoder encodeInteger:self.underlineViewMode forKey:MDCTextInputControllerUnderlineViewModeKey];
+                forKey:MDCDefaultTextInputControllerInlinePlaceholderColorKey];
+  [aCoder encodeInteger:self.presentationStyle
+                 forKey:MDCDefaultTextInputControllerPresentationStyleKey];
+  [aCoder encodeConditionalObject:self.textInput forKey:MDCDefaultTextInputControllerTextInputKey];
+  [aCoder encodeObject:self.underlineColorActive
+                forKey:MDCDefaultTextInputControllerUnderlineColorActiveKey];
+  [aCoder encodeObject:self.underlineColorNormal
+                forKey:MDCDefaultTextInputControllerUnderlineColorNormalKey];
+  [aCoder encodeInteger:self.underlineViewMode
+                 forKey:MDCDefaultTextInputControllerUnderlineViewModeKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCTextInputController *copy = [[[self class] alloc] init];
+  MDCDefaultTextInputController *copy = [[[self class] alloc] init];
 
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
@@ -228,7 +247,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   [self unsubscribeFromKVO];
 }
 
-- (void)commonMDCTextInputControllerInitialization {
+- (void)commonMDCDefaultTextInputControllerInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
   _errorColor = MDCTextInputTextErrorColor();
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
@@ -302,15 +321,15 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return;
   }
   [_textInput.leadingUnderlineLabel addObserver:self
-                                     forKeyPath:MDCTextInputControllerKVOKeyFont
+                                     forKeyPath:MDCDefaultTextInputControllerKVOKeyFont
                                         options:0
                                         context:nil];
   [_textInput.placeholderLabel addObserver:self
-                                forKeyPath:MDCTextInputControllerKVOKeyFont
+                                forKeyPath:MDCDefaultTextInputControllerKVOKeyFont
                                    options:0
                                    context:nil];
   [_textInput.trailingUnderlineLabel addObserver:self
-                                      forKeyPath:MDCTextInputControllerKVOKeyFont
+                                      forKeyPath:MDCDefaultTextInputControllerKVOKeyFont
                                          options:0
                                          context:nil];
   _isRegisteredForKVO = YES;
@@ -322,11 +341,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
   @try {
     [self.textInput.leadingUnderlineLabel removeObserver:self
-                                              forKeyPath:MDCTextInputControllerKVOKeyFont];
+                                              forKeyPath:MDCDefaultTextInputControllerKVOKeyFont];
     [self.textInput.placeholderLabel removeObserver:self
-                                         forKeyPath:MDCTextInputControllerKVOKeyFont];
+                                         forKeyPath:MDCDefaultTextInputControllerKVOKeyFont];
     [self.textInput.trailingUnderlineLabel removeObserver:self
-                                               forKeyPath:MDCTextInputControllerKVOKeyFont];
+                                               forKeyPath:MDCDefaultTextInputControllerKVOKeyFont];
   } @catch (NSException *exception) {
   }
   _isRegisteredForKVO = NO;
@@ -560,12 +579,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         underlineHeight = MDCTextInputUnderlineActiveHeight;
         break;
       case UITextFieldViewModeWhileEditing:
-        underlineColor = self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
+        underlineColor =
+            self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
         underlineHeight = self.textInput.isEditing ? MDCTextInputUnderlineActiveHeight
                                                    : MDCTextInputUnderlineNormalHeight;
         break;
       case UITextFieldViewModeUnlessEditing:
-        underlineColor = !self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
+        underlineColor =
+            !self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
         underlineHeight = !self.textInput.isEditing ? MDCTextInputUnderlineActiveHeight
                                                     : MDCTextInputUnderlineNormalHeight;
         break;
@@ -965,11 +986,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       // MDCTextInputVerticalHalfPadding
       CGFloat underlineLabelsOffset = 0;
       if (self.textInput.leadingUnderlineLabel.text.length) {
-        underlineLabelsOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+        underlineLabelsOffset =
+            MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
       }
       if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-        underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                    MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+        underlineLabelsOffset =
+            MAX(underlineLabelsOffset,
+                MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
       }
       CGFloat underlineOffset = MDCTextInputVerticalHalfPadding + underlineLabelsOffset;
 
@@ -1041,7 +1064,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
   CGSize newSize = defaultSize;
-  newSize.height = (self.presentationStyle != MDCTextInputPresentationStyleDefault || !self.heightConstraint)  ? self.heightConstraint.constant : defaultSize.height;
+  newSize.height =
+      (self.presentationStyle != MDCTextInputPresentationStyleDefault || !self.heightConstraint)
+          ? self.heightConstraint.constant
+          : defaultSize.height;
 
   return newSize;
 }
@@ -1117,7 +1143,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
   // Listening to outside setting of custom fonts.
-  if (![keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
+  if (![keyPath isEqualToString:MDCDefaultTextInputControllerKVOKeyFont]) {
     return;
   }
 

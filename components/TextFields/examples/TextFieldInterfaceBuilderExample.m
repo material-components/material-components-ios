@@ -23,13 +23,13 @@
 @interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTextField *firstTextField;
-@property(nonatomic, strong) MDCTextInputController *firstController;
+@property(nonatomic, strong) MDCDefaultTextInputController *firstController;
 @property(weak, nonatomic) IBOutlet MDCTextField *lastTextField;
-@property(nonatomic, strong) MDCTextInputController *lastController;
+@property(nonatomic, strong) MDCDefaultTextInputController *lastController;
 @property(weak, nonatomic) IBOutlet MDCTextField *address1TextField;
-@property(nonatomic, strong) MDCTextInputController *address1Controller;
+@property(nonatomic, strong) MDCDefaultTextInputController *address1Controller;
 @property(weak, nonatomic) IBOutlet MDCTextField *address2TextField;
-@property(nonatomic, strong) MDCTextInputController *address2Controller;
+@property(nonatomic, strong) MDCDefaultTextInputController *address2Controller;
 
 @end
 
@@ -42,15 +42,17 @@
 
   [self setupExampleViews];
 
-  self.firstController = [[MDCTextInputController alloc] initWithTextInput:self.firstTextField];
+  self.firstController =
+      [[MDCDefaultTextInputController alloc] initWithTextInput:self.firstTextField];
   self.firstController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-  self.lastController = [[MDCTextInputController alloc] initWithTextInput:self.lastTextField];
+  self.lastController =
+      [[MDCDefaultTextInputController alloc] initWithTextInput:self.lastTextField];
   self.lastController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   self.address1Controller =
-      [[MDCTextInputController alloc] initWithTextInput:self.address1TextField];
+      [[MDCDefaultTextInputController alloc] initWithTextInput:self.address1TextField];
   self.address1Controller.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   self.address2Controller =
-      [[MDCTextInputController alloc] initWithTextInput:self.address2TextField];
+      [[MDCDefaultTextInputController alloc] initWithTextInput:self.address2TextField];
   self.address2Controller.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
 }
 
