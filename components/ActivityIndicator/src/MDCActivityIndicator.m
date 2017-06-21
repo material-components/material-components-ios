@@ -89,7 +89,6 @@ static const CGFloat kSingleCycleRotation =
   BOOL _cycleInProgress;
   CGFloat _currentProgress;
   CGFloat _lastProgress;
-  NSArray<UIColor *> *_cycleColors;
 }
 
 #pragma mark - Init
@@ -106,6 +105,8 @@ static const CGFloat kSingleCycleRotation =
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCActivityIndicatorInit];
+    // TODO: Overwrite cycleColors if the value is present in the coder
+    // https://github.com/material-components/material-components-ios/issues/1530
   }
   return self;
 }
@@ -134,19 +135,6 @@ static const CGFloat kSingleCycleRotation =
   }];
 }
 
-+ (NSArray<UIColor *> *)defaultCycleColors {
-  static NSArray<UIColor *> *s_defaultCycleColors;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    s_defaultCycleColors =
-        @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-           [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-           [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-           [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
-  });
-  return s_defaultCycleColors;
-}
-
 - (void)commonMDCActivityIndicatorInit {
   // Register notifications for foreground and background if needed.
   [self registerForegroundAndBackgroundNotificationObserversIfNeeded];
@@ -164,6 +152,7 @@ static const CGFloat kSingleCycleRotation =
 
   // Colors.
   _currentColorCount = 0;
+  _cycleColors = [MDCActivityIndicator defaultCycleColors];
 
   // Track layer.
   _trackLayer = [CAShapeLayer layer];
@@ -395,36 +384,12 @@ static const CGFloat kSingleCycleRotation =
   if (cycleColors.count) {
     _cycleColors = [cycleColors copy];
   } else {
-    // Use NSNull to track "explicit" nil versus implicit nil (uninitialized value)
-    _cycleColors = (NSArray<UIColor *> *)[NSNull null];
+    _cycleColors = [MDCActivityIndicator defaultCycleColors];
   }
 
   if (self.cycleColors.count) {
     [self setStrokeColor:self.cycleColors[0]];
   }
-}
-
-/*
- The custom getter is needed for two main reasons:
-   - As a nonnull property proxied by UIAppearance, it can return nil before the ActivityIndicator 
-     is added to the view hierarchy. Setting the ivar would make it hard to distinguish between
-     the property being set externally versus the implicit default value.
-   - If the user explicitly sets the value with an empty array, we treat that as a special case of
-     reverting back to the default values. NSNull also makes it easier to distinguish between
-     implicit and explicit nil values during (de)serialization.
- */
-- (NSArray<UIColor *> *)cycleColors {
-  NSArray<UIColor *> *cycleColors = _cycleColors;
-  // Use NSNull to track "explicit" nil versus implicit nil (uninitialized value)
-  if (cycleColors == (NSArray<UIColor *> *)[NSNull null]) {
-    return [MDCActivityIndicator defaultCycleColors];
-  }
-  if (cycleColors) {
-    return cycleColors;
-  }
-
-  NSArray<UIColor *> *proxyColors = [MDCActivityIndicator appearance].cycleColors;
-  return proxyColors.count ? proxyColors : [MDCActivityIndicator defaultCycleColors];
 }
 
 - (void)updateStrokePath {
@@ -816,6 +781,19 @@ static const CGFloat kSingleCycleRotation =
 
 + (CGFloat)defaultHeight {
   return kSpinnerRadius * 2.f;
+}
+
++ (NSArray<UIColor *> *)defaultCycleColors {
+  static NSArray<UIColor *> *s_defaultCycleColors;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    s_defaultCycleColors =
+    @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
+       [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
+       [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
+       [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
+  });
+  return s_defaultCycleColors;
 }
 
 - (void)applyPropertiesWithoutAnimation:(void (^)(void))setPropBlock {

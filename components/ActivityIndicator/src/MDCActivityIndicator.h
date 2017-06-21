@@ -96,9 +96,11 @@ IB_DESIGNABLE
 @property(nonatomic, assign) IBInspectable float progress;
 
 /**
- The array of colors that are cycled through when animating the spinner. Populated with default
- colors of blue, red, yellow and green on initialization. Passing an empty array will cause the
- default values to be returned.
+ The array of colors that are cycled through when animating the spinner. Populated with a set of
+ default colors. 
+ 
+ @note If an empty array is provided to this property's setter, then the provided array will be 
+ discarded and an array consisting of the default color values will be assigned instead.
  */
 @property(nonatomic, copy, nonnull) NSArray<UIColor *> *cycleColors UI_APPEARANCE_SELECTOR;
 
