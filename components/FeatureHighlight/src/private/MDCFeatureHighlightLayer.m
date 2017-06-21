@@ -16,6 +16,8 @@
 
 #import "MDCFeatureHighlightLayer.h"
 
+#import <UIKit/UIKit.h>
+
 @implementation MDCFeatureHighlightLayer {
   CGFloat _radius;
 }
