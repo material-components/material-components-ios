@@ -1,3 +1,5 @@
+# release-candidate TODO: Replace me with version number. 
+
 # 25.0.1
 
 Hotfix: Added implementation for accessibilityElementForItem: for MDCTabBar
