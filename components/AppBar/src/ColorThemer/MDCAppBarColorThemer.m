@@ -20,7 +20,7 @@
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                 toAppBar:(MDCAppBar *)appBar {
-  appBar.navigationBar.backgroundColor = colorScheme.primaryColor;
+  appBar.headerViewController.headerView.backgroundColor = colorScheme.primaryColor;
 }
 
 @end
