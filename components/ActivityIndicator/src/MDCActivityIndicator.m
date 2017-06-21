@@ -46,10 +46,11 @@ static const CGFloat kSingleCycleRotation =
 @property(nonatomic, assign, readonly) CGFloat minStrokeDifference;
 
 /**
- The current color count for the spinner. Subclasses can change this value to start the spinner at
- a different color.
+ The index of the current stroke color in the @c cycleColors array.
+
+ @note Subclasses can change this value to start the spinner at a different color.
  */
-@property(nonatomic, assign) NSUInteger currentColorCount;
+@property(nonatomic, assign) NSUInteger cycleColorsIndex;
 
 /**
  The current cycle count.
@@ -151,7 +152,7 @@ static const CGFloat kSingleCycleRotation =
   _strokeWidth = 2.0f;
 
   // Colors.
-  _currentColorCount = 0;
+  _cycleColorsIndex = 0;
   _cycleColors = [MDCActivityIndicator defaultCycleColors];
 
   // Track layer.
@@ -234,7 +235,7 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)resetStrokeColor {
-  _currentColorCount = 0;
+  _cycleColorsIndex = 0;
 
   [self updateStrokeColor];
 }
@@ -406,12 +407,10 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)updateStrokeColor {
-  NSArray<UIColor *> *cycleColors = self.cycleColors;
-  NSUInteger currentColorCount = _currentColorCount;
-  if (cycleColors.count > 0 && cycleColors.count > currentColorCount) {
-    [self setStrokeColor:cycleColors[currentColorCount]];
+  if (self.cycleColors.count > 0 && self.cycleColors.count > self.cycleColorsIndex) {
+    [self setStrokeColor:self.cycleColors[self.cycleColorsIndex]];
   } else {
-    NSAssert(NO, @"nonnull cycleColors property incorrectly returned nil.");
+    NSAssert(NO, @"cycleColorsIndex is outside the bounds of cycleColors.");
     [self setStrokeColor:[[MDCActivityIndicator defaultCycleColors] firstObject]];
   }
 }
@@ -693,9 +692,8 @@ static const CGFloat kSingleCycleRotation =
     return;
   }
   if (state == MDCActivityIndicatorStateIndeterminate) {
-    NSUInteger cycleColorsCount = self.cycleColors.count;
-    if (cycleColorsCount > 0) {
-      _currentColorCount = (_currentColorCount + 1) % cycleColorsCount;
+    if (self.cycleColors.count > 0) {
+      self.cycleColorsIndex = (self.cycleColorsIndex + 1) % self.cycleColors.count;
       [self updateStrokeColor];
     }
     _cycleCount = (_cycleCount + 1) % kMDCActivityIndicatorTotalDetentCount;
