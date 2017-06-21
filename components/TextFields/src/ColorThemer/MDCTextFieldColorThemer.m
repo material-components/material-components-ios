@@ -21,12 +21,7 @@
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
              toTextField:(MDCTextField *)textField {
   textField.underline.color = colorScheme.primaryColor;
-}
-
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-    toTextInputController:(MDCTextInputController *)textInputController {
-  textInputController.textInput.underline.color = colorScheme.primaryColor;
-  textInputController.floatingPlaceholderColor = colorScheme.primaryColor;
+  textField.placeholderLabel.textColor = colorScheme.primaryColor;
 }
 
 @end

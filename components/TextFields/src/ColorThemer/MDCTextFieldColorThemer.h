@@ -32,13 +32,4 @@
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
              toTextField:(MDCTextField *)textField;
 
-/**
- Applies a color scheme to theme a MDCTextInputController.
- 
- @param colorScheme The color scheme to apply to MDCTextInputController.
- @param textInputController A MDCTextInputController instance to apply a color scheme.
- */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-    toTextInputController:(MDCTextInputController *)textInputController;
-
 @end
