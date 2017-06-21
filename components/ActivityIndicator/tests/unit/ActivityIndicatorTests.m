@@ -71,7 +71,7 @@ static CGFloat randomNumber() {
 
   // Then
   XCTAssertGreaterThan(indicator.cycleColors.count, 0,
-                        @"The default value for |cycleCount| should be a non-empty array.");
+                        @"The default value for |cycleColors| should be a non-empty array.");
 }
 
 - (void)testSetCycleColorsEmptyReturnsDefault {
@@ -83,21 +83,8 @@ static CGFloat randomNumber() {
 
   // Then
   XCTAssertGreaterThan(indicator.cycleColors.count, 0,
-                        @"Assigning an empty array for |cycleCount| should result in a default"
+                        @"Assigning an empty array for |cycleColors| should result in a default"
                         " value being used instead.");
-}
-
-- (void)testSetAppearanceProxyCycleColorEmptyReturnsDefault {
-  // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-
-  // When
-  [MDCActivityIndicator appearance].cycleColors = @[];
-
-  // Then
-  XCTAssertGreaterThan(indicator.cycleColors.count, 0,
-                       @"Assigning an empty array for |cycleCount| to both the instance and the"
-                       " UIAppearance proxy should result in a default value being used instead.");
 }
 
 - (void)testSetCycleColorNonEmpty {
