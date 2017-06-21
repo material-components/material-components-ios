@@ -1,5 +1,21 @@
 # release-candidate TODO: Replace me with version number. 
 
+#### Changes
+
+## API diffs
+
+### Buttons
+
+* Added 'init' method in MDCFloatingButton
+
+### TextFields
+
+* Added properties 'underlineColorNormal', 'underlineColorActive','errorText' properties in MDCTextInputController
+* Changed nullabilitity attributes on 'floatingPlaceholdColor' & 'inlinePlaceholderColor' from nullable to null_resettable
+* Added class 'MDCTextInputUnderlineView'
+* Added properties 'disabledUnderline', 'underline', 'color', 'lineHeight', 'enabled' in MDCTextInputUnderlineView
+* Added 'sizeThatFIts:defaultSize:' method to MDCTextFieldPositioningDelegate
+
 # 25.0.1
 
 Hotfix: Added implementation for accessibilityElementForItem: for MDCTabBar
