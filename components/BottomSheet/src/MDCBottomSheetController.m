@@ -28,7 +28,6 @@
   if (self = [super initWithNibName:nil bundle:nil]) {
     _contentViewController = contentViewController;
     _transitionController = [[MDCBottomSheetTransitionController alloc] init];
-    _transitionController.presentationControllerDelegate = self;
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
@@ -50,6 +49,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+
+  self.mdc_bottomSheetPresentationController.delegate = self;
 
   [self.contentViewController.view layoutIfNeeded];
 }

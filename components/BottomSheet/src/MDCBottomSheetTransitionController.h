@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBottomSheetPresentationController.h"
-
 /**
  MDCBottomSheetTransitionController is be used to setup a custom transition and animationed
  presentation and dismissal for material-styled bottom-sheet presentation.
@@ -35,11 +33,4 @@
  */
 @interface MDCBottomSheetTransitionController
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
-
-/**
- The delegate to be set on the MDCBottomSheetPresentationController created at presentation time.
- */
-@property(nonatomic, weak) id<MDCBottomSheetPresentationControllerDelegate>
-    presentationControllerDelegate;
-
 @end

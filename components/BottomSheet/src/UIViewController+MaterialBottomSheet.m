@@ -14,7 +14,19 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetController.h"
-#import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetTransitionController.h"
 #import "UIViewController+MaterialBottomSheet.h"
+
+#import "MDCBottomSheetPresentationController.h"
+
+@implementation UIViewController (MaterialBottomSheet)
+
+- (MDCBottomSheetPresentationController *)mdc_bottomSheetPresentationController {
+  id presentationController = self.presentationController;
+  if ([presentationController isKindOfClass:[MDCBottomSheetPresentationController class]]) {
+    return (MDCBottomSheetPresentationController *)presentationController;
+  }
+
+  return nil;
+}
+
+@end

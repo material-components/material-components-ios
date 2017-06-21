@@ -14,7 +14,22 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetController.h"
-#import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetTransitionController.h"
-#import "UIViewController+MaterialBottomSheet.h"
+#import <UIKit/UIKit.h>
+
+@class MDCBottomSheetPresentationController;
+
+/**
+ Material Dialog UIViewController Category
+ */
+@interface UIViewController (MaterialBottomSheet)
+
+/**
+ The Material bottom sheet presentation controller that is managing the current view controller.
+
+ @return nil if the view controller is not managed by a Material bottom sheet presentation
+ controller.
+ */
+@property(nonatomic, readonly)
+    MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController;
+
+@end
