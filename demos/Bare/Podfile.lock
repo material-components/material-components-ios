@@ -42,6 +42,12 @@ PODS:
     - MaterialComponents/private/RTL
   - MaterialComponents/AnimationTiming (25.0.1)
   - MaterialComponents/AppBar (25.0.1):
+    - MaterialComponents/AppBar/ColorThemer (= 25.0.1)
+    - MaterialComponents/AppBar/Component (= 25.0.1)
+  - MaterialComponents/AppBar/ColorThemer (25.0.1):
+    - MaterialComponents/AppBar/Component
+    - MaterialComponents/Themes
+  - MaterialComponents/AppBar/Component (25.0.1):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -277,12 +283,12 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../../
+    :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 0d7b73247ca502e4e2753d48b1a7aa54fda05471
+  MaterialComponents: 809d0f8a6870fe2f749a7c6b92ce58c9894152d2
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1

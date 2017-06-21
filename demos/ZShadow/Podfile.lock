@@ -8,11 +8,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../../
+    :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 0d7b73247ca502e4e2753d48b1a7aa54fda05471
+  MaterialComponents: 809d0f8a6870fe2f749a7c6b92ce58c9894152d2
 
 PODFILE CHECKSUM: 238ed9ba58d5e4a3638e6cea92b00109641989f8
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1

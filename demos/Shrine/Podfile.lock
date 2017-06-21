@@ -1,5 +1,11 @@
 PODS:
   - MaterialComponents/AppBar (25.0.1):
+    - MaterialComponents/AppBar/ColorThemer (= 25.0.1)
+    - MaterialComponents/AppBar/Component (= 25.0.1)
+  - MaterialComponents/AppBar/ColorThemer (25.0.1):
+    - MaterialComponents/AppBar/Component
+    - MaterialComponents/Themes
+  - MaterialComponents/AppBar/Component (25.0.1):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -113,15 +119,15 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../../
+    :path: "../../"
   RemoteImageServiceForMDCDemos:
-    :path: ../supplemental
+    :path: "../supplemental"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 0d7b73247ca502e4e2753d48b1a7aa54fda05471
+  MaterialComponents: 809d0f8a6870fe2f749a7c6b92ce58c9894152d2
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   RemoteImageServiceForMDCDemos: 80c231effa03787014883866c1fa5d4f8f379255
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1
