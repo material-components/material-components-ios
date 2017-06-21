@@ -29,6 +29,8 @@
 }
 
 - (void)viewDidLoad {
+  [super viewDidLoad];
+
   self.view.backgroundColor = [UIColor redColor];
 
   _overflowView = [[UIView alloc] initWithFrame:CGRectZero];

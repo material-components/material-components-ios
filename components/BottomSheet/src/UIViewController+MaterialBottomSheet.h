@@ -29,7 +29,7 @@
  @return nil if the view controller is not managed by a Material bottom sheet presentation
  controller.
  */
-@property(nonatomic, readonly)
+@property(nonatomic, nullable, readonly)
     MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController;
 
 @end
