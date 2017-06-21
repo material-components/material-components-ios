@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "24.0.0"
+  s.version      = "25.0.1"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -49,6 +49,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/ActivityIndicator/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -105,6 +106,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}", "components/#{ss.base_name}/src/#{sss.base_name}/private/*.{h,m}"
+      sss.dependency "MaterialComponents/Buttons/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -122,6 +124,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/ButtonBar/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -185,6 +188,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/Dialogs/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -202,6 +206,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/FeatureHighlight/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -218,6 +223,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/FlexibleHeader/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -232,6 +238,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/HeaderStackView/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -246,6 +253,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/Ink/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -269,6 +277,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/NavigationBar/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -292,6 +301,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/PageControl/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -315,6 +325,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/ProgressView/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -343,6 +354,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/Slider/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -377,6 +389,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/Tabs/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end

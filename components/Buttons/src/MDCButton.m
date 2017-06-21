@@ -110,6 +110,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return [MDCShadowLayer class];
 }
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCButtonInit];
+  }
+  return self;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -215,6 +223,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
 }
 
++ (void)initialize {
+  // Default background colors.
+  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
+                                    forState:UIControlStateNormal];
+}
+
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
@@ -256,9 +270,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  // Default background colors.
-  [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
-                  forState:UIControlStateNormal];
 
   self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
@@ -496,6 +507,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - BackgroundColor
 
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor {
+  // Turns out swift ignores NS_UNAVAILABLE
+  [self setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+}
+
 - (UIColor *)backgroundColorForState:(UIControlState)state {
   return _backgroundColors[@(state)];
 }
@@ -623,7 +639,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
-  void (^animations)() = ^{
+  void (^animations)(void) = ^{
     self.alpha = self.enabled ? 1.0f : _disabledAlpha;
     [self updateBackgroundColor];
   };

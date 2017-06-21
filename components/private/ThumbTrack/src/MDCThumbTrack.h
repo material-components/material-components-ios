@@ -202,7 +202,7 @@
                  animated:(BOOL)animated
     animateThumbAfterMove:(BOOL)animateThumbAfterMove
             userGenerated:(BOOL)userGenerated
-               completion:(nullable void (^)())completion;
+               completion:(nullable void (^)(void))completion;
 
 /** Set the @c icon shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;
