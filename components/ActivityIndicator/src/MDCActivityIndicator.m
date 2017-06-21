@@ -113,7 +113,10 @@ static const CGFloat kSingleCycleRotation =
 }
 
 + (void)initialize {
-  [MDCActivityIndicator appearance].cycleColors = [MDCActivityIndicator defaultCycleColors];
+  // Ensure we do not set the UIAppearance proxy if subclasses are initialized
+  if (self == [MDCActivityIndicator class]) {
+    [MDCActivityIndicator appearance].cycleColors = [MDCActivityIndicator defaultCycleColors];
+  }
 }
 
 - (void)dealloc {
