@@ -309,17 +309,29 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (void)didGestureDismiss:(MDCFeatureHighlightDismissGestureRecognizer *)dismissRecognizer {
   CGFloat progress = dismissRecognizer.progress;
+  switch (dismissRecognizer.state) {
+    case UIGestureRecognizerStateChanged:
+      [self layoutInProgressDismissal:progress];
+      break;
 
-  if (dismissRecognizer.state == UIGestureRecognizerStateChanged) {
-    [self layoutInProgressDismissal:progress];
-  } else if (dismissRecognizer.state == UIGestureRecognizerStateEnded) {
-    if (progress > 0.6) {
-      [self animateDismissalCancelled];
-    } else {
-      if (self.interactionBlock) {
-        self.interactionBlock(NO);
+    case UIGestureRecognizerStateEnded:
+      if (progress > 0.6) {
+        [self animateDismissalCancelled];
+      } else {
+        if (self.interactionBlock) {
+          self.interactionBlock(NO);
+        }
       }
-    }
+      break;
+
+    case UIGestureRecognizerStateCancelled:
+    case UIGestureRecognizerStateFailed:
+      [self animateDismissalCancelled];
+      break;
+
+    case UIGestureRecognizerStateBegan:
+    case UIGestureRecognizerStatePossible:
+      break;
   }
 }
 
