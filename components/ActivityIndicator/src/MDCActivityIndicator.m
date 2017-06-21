@@ -17,7 +17,7 @@
 #import "MDCActivityIndicator.h"
 
 #import "MaterialRTL.h"
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 #import "private/MDCActivityIndicator+Private.h"
 
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
@@ -406,6 +406,11 @@ static const CGFloat kSingleCycleRotation =
 - (void)updateStrokeColor {
   if (_cycleColors.count > 0) {
     [self setStrokeColor:_cycleColors[_currentColorCount]];
+  }
+  // TODO(https://github.com/material-components/material-components-ios/issues/1508): REMOVE HACK
+  // BELOW THAT PROTECTS AGAINST EMPTY cycleColors ARRAY
+  else {
+    [self setStrokeColor:[[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1]];
   }
 }
 

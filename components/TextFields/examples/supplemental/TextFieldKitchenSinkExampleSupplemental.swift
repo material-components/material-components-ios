@@ -47,6 +47,12 @@ extension TextFieldKitchenSinkSwiftExample {
                                            object: nil)
   }
 
+  func setupButton() -> MDCButton {
+    let button = MDCButton()
+    button.customTitleColor = .white
+    return button
+  }
+
   func setupControls() -> [UIView] {
     let container = UIView()
     container.translatesAutoresizingMaskIntoConstraints = false
@@ -275,7 +281,6 @@ extension TextFieldKitchenSinkSwiftExample {
     guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
       return
     }
-    print(scrollView)
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
                                            left: 0.0,
                                            bottom: frame.height,

@@ -13,14 +13,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-#import "MDCTextInput.h"
+#import "MaterialTextFields.h"
 
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputArt.h"
-#import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputCommonFundament.h"
-#import "MDCTextInputUnderlineView.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
@@ -36,7 +32,8 @@ static NSString *const MDCTextInputFundamentClearButtonImageKey =
     @"MDCTextInputFundamentClearButtonImageKey";
 static NSString *const MDCTextInputFundamentHidesPlaceholderKey =
     @"MDCTextInputFundamentHidesPlaceholderKey";
-static NSString *const MDCTextInputFundamentLeadingLabelKey = @"MDCTextInputFundamentLeadingLabelKey";
+static NSString *const MDCTextInputFundamentLeadingLabelKey =
+    @"MDCTextInputFundamentLeadingLabelKey";
 static NSString *const MDCTextInputFundamentMDCAdjustsFontsKey =
     @"MDCTextInputFundamentMDCAdjustsFontsKey";
 static NSString *const MDCTextInputPositioningDelegateKey = @"MDCTextInputPositioningDelegateKey";
@@ -146,8 +143,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
     _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonColorKey];
-    _hidesPlaceholderOnInput =
-        [aDecoder decodeBoolForKey:MDCTextInputFundamentHidesPlaceholderKey];
+    _hidesPlaceholderOnInput = [aDecoder decodeBoolForKey:MDCTextInputFundamentHidesPlaceholderKey];
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentLeadingLabelKey];
     _mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCTextInputFundamentMDCAdjustsFontsKey];
@@ -168,8 +164,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
   [aCoder encodeObject:self.clearButtonImage forKey:MDCTextInputFundamentClearButtonImageKey];
-  [aCoder encodeBool:self.hidesPlaceholderOnInput
-              forKey:MDCTextInputFundamentHidesPlaceholderKey];
+  [aCoder encodeBool:self.hidesPlaceholderOnInput forKey:MDCTextInputFundamentHidesPlaceholderKey];
   [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputFundamentLeadingLabelKey];
   [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory
               forKey:MDCTextInputFundamentMDCAdjustsFontsKey];
@@ -429,13 +424,16 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                               multiplier:1
                                 constant:0]
       .active = YES;
+
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
   _underlineY = [NSLayoutConstraint constraintWithItem:_underline
                                              attribute:NSLayoutAttributeCenterY
                                              relatedBy:NSLayoutRelationEqual
                                                 toItem:_relativeSuperview
-                                             attribute:NSLayoutAttributeBottom
+                                             attribute:NSLayoutAttributeTop
                                             multiplier:1
-                                              constant:-1 * MDCTextInputHalfPadding];
+                                              constant:[self textContainerInset].top + estimatedTextHeight +
+                 MDCTextInputHalfPadding];
   _underlineY.priority = UILayoutPriorityDefaultLow;
   _underlineY.active = YES;
 }
@@ -566,14 +564,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
-  NSAssert1(
-      size.width >= 0,
-      @"drawnClearButtonImage was passed a size with a width less than 0 %@",
-      NSStringFromCGSize(size));
-  NSAssert1(
-      size.height >= 0,
-      @"drawnClearButtonImage was passed a size with a height less than 0 %@",
-      NSStringFromCGSize(size));
+  NSAssert1(size.width >= 0, @"drawnClearButtonImage was passed a size with a width less than 0 %@",
+            NSStringFromCGSize(size));
+  NSAssert1(size.height >= 0,
+            @"drawnClearButtonImage was passed a size with a height less than 0 %@",
+            NSStringFromCGSize(size));
 
   if (CGSizeEqualToSize(size, CGSizeZero)) {
     size = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
@@ -597,18 +592,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Underline View Implementation
 
 - (CGFloat)underlineYConstant {
-  // Usually the underline is halfway between the text and the bottom of the view. But if there are
-  // underline labels, we need to be above them.
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
 
-  CGFloat underlineYConstant = MDCTextInputHalfPadding;
-
-  CGFloat underlineLabelsHeight =
-      MAX(MDCRint(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
-          MDCRint(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
-  underlineYConstant += underlineLabelsHeight;
-  underlineYConstant *= -1;
-
-  return underlineYConstant;
+  return [self textContainerInset].top + estimatedTextHeight + MDCTextInputHalfPadding;
 }
 
 - (BOOL)needsUpdateUnderlinePosition {

@@ -14,27 +14,16 @@
  limitations under the License.
  */
 
-#import "MDCDialogShadowedView.h"
+import XCTest
 
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
-
-@implementation MDCDialogShadowedView
-
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
+class MDCEarlGreyTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+    }
+    
 }
-
-- (MDCShadowLayer *)shadowLayer {
-  return (MDCShadowLayer *)self.layer;
-}
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [[self shadowLayer] setElevation:MDCShadowElevationDialog];
-  }
-  return self;
-}
-
-@end

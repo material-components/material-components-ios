@@ -75,9 +75,9 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   let unstyledTextField = MDCTextField()
 
-  let characterModeButton = MDCButton()
-  let clearModeButton = MDCButton()
-  let underlineButton = MDCButton()
+  lazy var characterModeButton: MDCButton = self.setupButton()
+  lazy var clearModeButton: MDCButton = self.setupButton()
+  lazy var underlineButton: MDCButton = self.setupButton()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -239,6 +239,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldControllerDefaultCustomFontFloating.presentationStyle = .floatingPlaceholder
     textFieldControllerDefaultCustomFontFloating.characterCountMax = 40
     textFieldControllerDefaultCustomFontFloating.helperText = "Custom Font"
+    textFieldControllerDefaultCustomFontFloating.underlineColorActive = .green
+    textFieldControllerDefaultCustomFontFloating.underlineColorNormal = .purple
     textFieldCustomFontFloating.leadingUnderlineLabel.font =
       UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFontFloating.placeholderLabel.font =

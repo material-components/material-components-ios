@@ -62,6 +62,10 @@ static NSString *const MDCTextInputControllerInlinePlaceholderColorKey =
 static NSString *const MDCTextInputControllerPresentationStyleKey =
     @"MDCTextInputControllerPresentationStyleKey";
 static NSString *const MDCTextInputControllerTextInputKey = @"MDCTextInputControllerTextInputKey";
+static NSString *const MDCTextInputControllerUnderlineColorActiveKey =
+    @"MDCTextInputControllerUnderlineColorActiveKey";
+static NSString *const MDCTextInputControllerUnderlineColorNormalKey =
+    @"MDCTextInputControllerUnderlineColorNormalKey";
 static NSString *const MDCTextInputControllerUnderlineViewModeKey =
     @"MDCTextInputControllerUnderlineViewModeKey";
 
@@ -84,7 +88,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 @interface MDCTextInputController () {
+  UIColor *_floatingPlaceholderColor;
+  UIColor *_inlinePlaceholderColor;
   BOOL _mdc_adjustsFontForContentSizeCategory;
+  UIColor *_underlineColorActive;
+  UIColor *_underlineColorNormal;
 }
 
 @property(nonatomic, strong) NSLayoutConstraint *characterCountY;
@@ -94,7 +102,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) UIFont *customLeadingFont;
 @property(nonatomic, strong) UIFont *customPlaceholderFont;
 @property(nonatomic, strong) UIFont *customTrailingFont;
-@property(nonatomic, copy) NSString *errorText;
+@property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
@@ -109,7 +117,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
 @property(nonatomic, copy) NSString *previousLeadingText;
 @property(nonatomic, strong) UIColor *previousPlaceholderColor;
-@property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
 
@@ -149,6 +156,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _presentationStyle = (MDCTextInputPresentationStyle)
         [aDecoder decodeIntegerForKey:MDCTextInputControllerPresentationStyleKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerTextInputKey];
+    _underlineColorActive = [aDecoder decodeObjectForKey:MDCTextInputControllerUnderlineColorActiveKey];
+    _underlineColorNormal = [aDecoder decodeObjectForKey:MDCTextInputControllerUnderlineColorNormalKey];
     _underlineViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCTextInputControllerUnderlineViewModeKey];
   }
@@ -185,6 +194,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                 forKey:MDCTextInputControllerInlinePlaceholderColorKey];
   [aCoder encodeInteger:self.presentationStyle forKey:MDCTextInputControllerPresentationStyleKey];
   [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerTextInputKey];
+  [aCoder encodeObject:self.underlineColorActive forKey:MDCTextInputControllerUnderlineColorActiveKey];
+  [aCoder encodeObject:self.underlineColorNormal forKey:MDCTextInputControllerUnderlineColorNormalKey];
   [aCoder encodeInteger:self.underlineViewMode forKey:MDCTextInputControllerUnderlineViewModeKey];
 }
 
@@ -205,6 +216,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   copy.previousLeadingText = [self.previousLeadingText copy];
   copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy
+  copy.underlineColorActive = self.underlineColorActive;
+  copy.underlineColorNormal = self.underlineColorNormal;
   copy.underlineViewMode = self.underlineViewMode;
 
   return copy;
@@ -370,6 +383,15 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (!self.customPlaceholderFont) {
     self.textInput.placeholderLabel.font = [[self class] placeholderFont];
   }
+
+  if (self.isPlaceholderUp) {
+    self.textInput.placeholderLabel.textColor =
+        (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
+            ? self.errorColor
+            : self.floatingPlaceholderColor;
+  } else {
+    self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
+  }
 }
 
 - (BOOL)isPlaceholderUp {
@@ -421,7 +443,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = floatingPlaceholderScaleTransform;
 
-      self.textInput.placeholderLabel.textColor = self.textInput.tintColor;
+      self.textInput.placeholderLabel.textColor =
+          (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
+              ? self.errorColor
+              : self.floatingPlaceholderColor;
       [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
     };
   } else {
@@ -429,7 +454,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
 
       self.textInput.placeholderLabel.textColor =
-          self.previousPlaceholderColor ?: self.textInput.placeholderLabel.textColor;
+          self.previousPlaceholderColor ?: self.inlinePlaceholderColor;
+
       [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
     };
   }
@@ -457,8 +483,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       self.textInput.placeholderLabel.font.lineHeight * (1 - [self effectiveFloatingScale]) * .5f;
 
   CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text
-      boundingRectWithSize:CGSizeMake(CGFLOAT_MAX,
-                                      self.textInput.placeholderLabel.font.lineHeight)
+      boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.textInput.placeholderLabel.font.lineHeight)
                    options:0
                 attributes:@{
                   NSFontAttributeName : self.textInput.font
@@ -526,29 +551,27 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     self.textInput.underline.color = [UIColor clearColor];
   } else {
     UIColor *underlineColor;
-    UIColor *activeColor = MDCTextInputActiveUnderlineColor();
-    UIColor *normalColor = MDCTextInputNormalUnderlineColor();
 
     CGFloat underlineHeight;
 
     switch (self.underlineViewMode) {
       case UITextFieldViewModeAlways:
-        underlineColor = activeColor;
+        underlineColor = self.underlineColorActive;
         underlineHeight = MDCTextInputUnderlineActiveHeight;
         break;
       case UITextFieldViewModeWhileEditing:
-        underlineColor = self.textInput.isEditing ? activeColor : normalColor;
+        underlineColor = self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
         underlineHeight = self.textInput.isEditing ? MDCTextInputUnderlineActiveHeight
                                                    : MDCTextInputUnderlineNormalHeight;
         break;
       case UITextFieldViewModeUnlessEditing:
-        underlineColor = !self.textInput.isEditing ? activeColor : normalColor;
+        underlineColor = !self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
         underlineHeight = !self.textInput.isEditing ? MDCTextInputUnderlineActiveHeight
                                                     : MDCTextInputUnderlineNormalHeight;
         break;
       case UITextFieldViewModeNever:
       default:
-        underlineColor = normalColor;
+        underlineColor = self.underlineColorNormal;
         underlineHeight = MDCTextInputUnderlineNormalHeight;
         break;
     }
@@ -587,8 +610,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)setErrorColor:(UIColor *)errorColor {
   if (![_errorColor isEqual:errorColor]) {
     _errorColor = errorColor;
-    if (self.isDisplayingErrorText) {
+    if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
       [self updateLeadingUnderlineLabel];
+      [self updatePlaceholder];
       [self updateTrailingUnderlineLabel];
       [self updateUnderline];
     }
@@ -604,6 +628,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _floatingPlaceholderColor = floatingPlaceholderColor;
     [self updatePlaceholder];
   }
+}
+
+- (UIColor *)floatingPlaceholderColor {
+  return _floatingPlaceholderColor ?: self.textInput.tintColor;
 }
 
 - (void)setFloatingPlaceholderScale:(NSNumber *)floatingPlaceholderScale {
@@ -637,6 +665,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _inlinePlaceholderColor = inlinePlaceholderColor;
     [self updatePlaceholder];
   }
+}
+
+- (UIColor *)inlinePlaceholderColor {
+  return _inlinePlaceholderColor ?: MDCTextInputInlinePlaceholderTextColor();
 }
 
 - (BOOL)isDisplayingCharacterCountError {
@@ -685,6 +717,28 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _textInput = textInput;
     [self setupInput];
   }
+}
+
+- (void)setUnderlineColorActive:(UIColor *)underlineColorActive {
+  if (![_underlineColorActive isEqual:underlineColorActive]) {
+    _underlineColorActive = underlineColorActive;
+    [self updateUnderline];
+  }
+}
+
+- (UIColor *)underlineColorActive {
+  return _underlineColorActive ?: MDCTextInputActiveUnderlineColor();
+}
+
+- (void)setUnderlineColorNormal:(UIColor *)underlineColorNormal {
+  if (![_underlineColorNormal isEqual:underlineColorNormal]) {
+    _underlineColorNormal = underlineColorNormal;
+    [self updateUnderline];
+  }
+}
+
+- (UIColor *)underlineColorNormal {
+  return _underlineColorNormal ?: MDCTextInputNormalUnderlineColor();
 }
 
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
@@ -781,8 +835,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                         constant:-1 * MDCTextInputFullWidthHorizontalPadding];
     }
 
-    self.underlineY.active = NO;
-
     // Multi Line Only
     // .fullWidth
     if ([self.textInput isKindOfClass:[UITextView class]]) {
@@ -836,24 +888,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   } else {
     // .floatingPlaceholder and .default
 
-    CGFloat leadingLineHeight =
-        MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-    CGFloat underlineOffsetY = -1 * (leadingLineHeight + MDCTextInputVerticalHalfPadding);
-    if (!self.underlineY) {
-      self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.textInput
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:1
-                                                      constant:underlineOffsetY];
-    } else {
-      self.underlineY.constant = underlineOffsetY;
-    }
-
-    // If we are being presented with manual layout, we need to help the underline get to its Y
-    self.underlineY.active = self.textInput.translatesAutoresizingMaskIntoConstraints;
-
     // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
     self.characterCountTrailing.active = NO;
     self.characterCountY.active = NO;
@@ -902,9 +936,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
  The vertical layout is, at most complex, this form:
  MDCTextInputVerticalPadding +                                        // Top padding
- MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +  // Placeholder when up
+ MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +   // Placeholder when up
  MDCTextInputVerticalHalfPadding +                                    // Small padding
- MDCRint(MAX(self.textInput.font.lineHeight,                         // Text field or placeholder
+ MDCRint(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
               self.textInput.placeholderLabel.font.lineHeight)) +
  MDCTextInputVerticalHalfPadding +                                    // Small padding
  --Underline-- (height not counted)                                   // Underline (height ignored)
@@ -931,11 +965,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       // MDCTextInputVerticalHalfPadding
       CGFloat underlineLabelsOffset = 0;
       if (self.textInput.leadingUnderlineLabel.text.length) {
-        underlineLabelsOffset = MDCRint(self.textInput.leadingUnderlineLabel.font.lineHeight);
+        underlineLabelsOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
       }
       if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
         underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                    MDCRint(self.textInput.trailingUnderlineLabel.font.lineHeight));
+                                    MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
       }
       CGFloat underlineOffset = MDCTextInputVerticalHalfPadding + underlineLabelsOffset;
 
@@ -1003,6 +1037,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   return editingRect;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
+  CGSize newSize = defaultSize;
+  newSize.height = (self.presentationStyle != MDCTextInputPresentationStyleDefault || !self.heightConstraint)  ? self.heightConstraint.constant : defaultSize.height;
+
+  return newSize;
 }
 
 #pragma mark - UITextField & UITextView Notification Observation
@@ -1111,6 +1152,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                    : @"";
 
     self.textInput.leadingUnderlineLabel.text = errorText;
+
+    [self updatePlaceholder];
   }
 
   // Change error:
@@ -1153,10 +1196,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       valueString = [self.textInput.text copy];
     }
     if (self.textInput.placeholder.length > 0) {
-      valueString =
-          [NSString stringWithFormat:@"%@. %@", valueString, self.textInput.placeholder];
+      valueString = [NSString stringWithFormat:@"%@. %@", valueString, self.textInput.placeholder];
     }
-    valueString  = [valueString stringByAppendingString:@"."];
+    valueString = [valueString stringByAppendingString:@"."];
 
     self.textInput.accessibilityValue = valueString;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString

@@ -80,7 +80,7 @@
  @param completionBlock Block called after the completion of the animation.
  @param point Point at which the ink spreads from.
  */
-- (void)spreadFromPoint:(CGPoint)point completion:(void (^)())completionBlock;
+- (void)spreadFromPoint:(CGPoint)point completion:(void (^)(void))completionBlock;
 
 /**
  Dissipate ink blast, should be called on touch up.
@@ -89,7 +89,7 @@
 
  @param completionBlock Block called after the completion of the evaporation.
  */
-- (void)evaporateWithCompletion:(void (^)())completionBlock;
+- (void)evaporateWithCompletion:(void (^)(void))completionBlock;
 
 /**
  Dissipates the ink blast, but condenses to a point. Used for touch exit or cancel.
@@ -99,6 +99,6 @@
  @param point Evaporate the ink towards the point.
  @param completionBlock Block called after the completion of the evaporation.
  */
-- (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock;
+- (void)evaporateToPoint:(CGPoint)point completion:(void (^)(void))completionBlock;
 
 @end

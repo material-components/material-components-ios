@@ -506,6 +506,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - BackgroundColor
 
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor {
+  // Turns out swift ignores NS_UNAVAILABLE
+  [self setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+}
+
 - (UIColor *)backgroundColorForState:(UIControlState)state {
   return _backgroundColors[@(state)];
 }
@@ -633,7 +638,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
-  void (^animations)() = ^{
+  void (^animations)(void) = ^{
     self.alpha = self.enabled ? 1.0f : _disabledAlpha;
     [self updateBackgroundColor];
   };

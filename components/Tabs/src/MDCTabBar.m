@@ -229,6 +229,12 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
 }
 
+#pragma mark - MDCAccessibility
+
+- (id)accessibilityElementForItem:(UITabBarItem *)item {
+  return [_itemBar accessibilityElementForItem:item];
+}
+
 #pragma mark - MDCItemBarDelegate
 
 - (void)itemBar:(MDCItemBar *)itemBar didSelectItem:(UITabBarItem *)item {

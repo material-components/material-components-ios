@@ -163,7 +163,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
     // Remove track and reveal hidden indicators staggered towards current page indicator. Reveal
     // indicators in reverse if scrolling to left.
-    void (^completionBlock)() = ^{
+    void (^completionBlock)(void) = ^{
       // We are using the delay to increase the time between the end of the extension of the track
       // ahead of the dots movement and the contraction of the track under the dot at the
       // destination.
