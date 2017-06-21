@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCDefaultTextInputController.h"
+#import "MDCTextInputControllerDefault.h"
 
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
@@ -91,7 +91,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return [MDCPalette redPalette].tint500;
 }
 
-@interface MDCDefaultTextInputController () {
+@interface MDCTextInputControllerDefault () {
   UIColor *_floatingPlaceholderColor;
   UIColor *_inlinePlaceholderColor;
   BOOL _mdc_adjustsFontForContentSizeCategory;
@@ -124,7 +124,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 @end
 
-@implementation MDCDefaultTextInputController
+@implementation MDCTextInputControllerDefault
 
 @synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
@@ -219,7 +219,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCDefaultTextInputController *copy = [[[self class] alloc] init];
+  MDCTextInputControllerDefault *copy = [[[self class] alloc] init];
 
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;

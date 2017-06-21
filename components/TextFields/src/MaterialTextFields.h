@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCDefaultTextInputController.h"
+#import "MDCTextInputControllerDefault.h"
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInput.h"

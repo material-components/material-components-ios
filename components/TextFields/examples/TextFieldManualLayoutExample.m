@@ -18,8 +18,8 @@
 
 @interface TextFieldManualLayoutExample : UIViewController <UITextFieldDelegate>
 
-@property(nonatomic) MDCDefaultTextInputController *nameController;
-@property(nonatomic) MDCDefaultTextInputController *phoneController;
+@property(nonatomic) MDCTextInputControllerDefault *nameController;
+@property(nonatomic) MDCTextInputControllerDefault *phoneController;
 
 @end
 
@@ -36,7 +36,7 @@
   textFieldName.delegate = self;
   textFieldName.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  self.nameController = [[MDCDefaultTextInputController alloc] initWithTextInput:textFieldName];
+  self.nameController = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldName];
 
   self.nameController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   textFieldName.frame = CGRectMake(10, 40, CGRectGetWidth(self.view.bounds) - 20, 0);
@@ -48,7 +48,7 @@
   textFieldPhone.delegate = self;
   textFieldPhone.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  self.phoneController = [[MDCDefaultTextInputController alloc] initWithTextInput:textFieldPhone];
+  self.phoneController = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldPhone];
 
   self.phoneController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   textFieldPhone.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20,

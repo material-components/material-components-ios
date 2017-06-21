@@ -21,6 +21,6 @@
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
-@interface MDCDefaultTextInputController : NSObject <MDCTextInputController>
+@interface MDCTextInputControllerDefault : NSObject <MDCTextInputController>
 
 @end
