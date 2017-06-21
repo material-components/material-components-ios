@@ -84,6 +84,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}", "components/#{ss.base_name}/src/#{sss.base_name}/private/*.{h,m}"
+      sss.dependency "MaterialComponents/AppBar/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
