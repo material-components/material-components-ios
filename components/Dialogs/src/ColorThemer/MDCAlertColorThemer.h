@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialDialogs.h"
-#import "MDCColorScheme.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme to MDCAlertController alert dialogs.

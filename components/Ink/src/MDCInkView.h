@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /** Completion block signature for all ink animations. */
-typedef void (^MDCInkCompletionBlock)();
+typedef void (^MDCInkCompletionBlock)(void);
 
 /** Ink styles. */
 typedef NS_ENUM(NSInteger, MDCInkStyle) {

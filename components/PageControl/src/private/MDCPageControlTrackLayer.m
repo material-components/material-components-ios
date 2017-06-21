@@ -98,7 +98,7 @@ static NSString *const kPageControlAnimationKeyDraw = @"drawTrack";
 
 - (void)drawAndExtendTrackFromStartPoint:(CGPoint)startPoint
                               toEndPoint:(CGPoint)endPoint
-                              completion:(void (^)())completion {
+                              completion:(void (^)(void))completion {
   _trackHidden = NO;
   if ([self isPointZero:_startPoint]) {
     // If no previous start point, first set frame without animation.
@@ -126,7 +126,7 @@ static NSString *const kPageControlAnimationKeyDraw = @"drawTrack";
   }
 }
 
-- (void)updateTrackFrameWithAnimation:(BOOL)animated completion:(void (^)())completion {
+- (void)updateTrackFrameWithAnimation:(BOOL)animated completion:(void (^)(void))completion {
   // Set track frame without implicit animation.
   [self resetHidden:NO];
   [CATransaction begin];
@@ -159,7 +159,7 @@ static NSString *const kPageControlAnimationKeyDraw = @"drawTrack";
 
 #pragma mark - Remove Track
 
-- (void)removeTrackTowardsPoint:(CGPoint)point completion:(void (^)())completion {
+- (void)removeTrackTowardsPoint:(CGPoint)point completion:(void (^)(void))completion {
   // Animate the track removal towards a single point.
   _startPoint = point;
   _endPoint = point;

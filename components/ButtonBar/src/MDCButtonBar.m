@@ -15,8 +15,8 @@
  */
 
 #import "MDCButtonBar.h"
-#import "MDCButton.h"
 
+#import "MaterialButtons.h"
 #import "MaterialRTL.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 

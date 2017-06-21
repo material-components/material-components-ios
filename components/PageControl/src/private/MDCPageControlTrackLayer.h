@@ -67,7 +67,7 @@
  */
 - (void)drawAndExtendTrackFromStartPoint:(CGPoint)startPoint
                               toEndPoint:(CGPoint)endPoint
-                              completion:(void (^)())completion;
+                              completion:(void (^)(void))completion;
 
 /**
  Removes the track with animation towards the designated point.
@@ -75,7 +75,7 @@
  @param point The point the track should animate towards.
  @param completion A block to execute when the presentation is finished.
  */
-- (void)removeTrackTowardsPoint:(CGPoint)point completion:(void (^)())completion;
+- (void)removeTrackTowardsPoint:(CGPoint)point completion:(void (^)(void))completion;
 
 /**
  Resets the track with animation to the designated point.

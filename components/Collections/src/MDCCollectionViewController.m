@@ -542,7 +542,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (void)deleteIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
   if ([self respondsToSelector:@selector(collectionView:willDeleteItemsAtIndexPaths:)]) {
-    void (^batchUpdates)() = ^{
+    void (^batchUpdates)(void) = ^{
       // Notify delegate to delete data.
       [self collectionView:self.collectionView willDeleteItemsAtIndexPaths:indexPaths];
 
@@ -565,7 +565,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (void)deleteSections:(NSIndexSet *)sections {
   if ([self respondsToSelector:@selector(collectionView:willDeleteSections:)]) {
-    void (^batchUpdates)() = ^{
+    void (^batchUpdates)(void) = ^{
       // Notify delegate to delete data.
       [self collectionView:self.collectionView willDeleteSections:sections];
 
