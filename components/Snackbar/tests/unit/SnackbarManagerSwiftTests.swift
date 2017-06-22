@@ -36,7 +36,7 @@ class SnackbarManagerSwiftTests: XCTestCase {
       XCTAssertNil(token, "Ensuring that the compiler knows we're reading this variable")
     }
 
-    self.wait(for: [expectation], timeout: 1.0)
+    self.waitForExpectations(timeout: 1.0, handler: nil)
   }
 
 }
