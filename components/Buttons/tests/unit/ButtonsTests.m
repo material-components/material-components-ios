@@ -186,20 +186,59 @@ static UIColor *randomColor() {
   }
 }
 
-- (void)testCurrentBackgroundColor {
+- (void)testCurrentBackgroundColorNormal {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalColor = [UIColor redColor];
+  [button setBackgroundColor:normalColor forState:UIControlStateNormal];
+  
+  // Then
+  XCTAssertEqualObjects([button backgroundColor], normalColor);
+}
 
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    // And given
-    UIColor *color = randomColor();
+- (void)testCurrentBackgroundColorHighlighted {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalColor = [UIColor redColor];
+  UIColor *color = [UIColor orangeColor];
+  [button setBackgroundColor:normalColor forState:UIControlStateNormal];
+  [button setBackgroundColor:color forState:UIControlStateHighlighted];
+  
+  // When
+  button.highlighted = YES;
+  
+  // Then
+  XCTAssertEqualObjects([button backgroundColor], color);
+}
 
-    // When
-    [button setBackgroundColor:color forState:controlState];
+- (void)testCurrentBackgroundColorDisabled {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalColor = [UIColor redColor];
+  UIColor *color = [UIColor orangeColor];
+  [button setBackgroundColor:normalColor forState:UIControlStateNormal];
+  [button setBackgroundColor:color forState:UIControlStateDisabled];
+  
+  // When
+  button.enabled = NO;
+  
+  // Then
+  XCTAssertEqualObjects([button backgroundColor], color);
+}
 
-    // Then
-    XCTAssertEqualObjects([button backgroundColorForState:controlState], color);
-  }
+- (void)testCurrentBackgroundColorSelected {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalColor = [UIColor redColor];
+  UIColor *color = [UIColor orangeColor];
+  [button setBackgroundColor:normalColor forState:UIControlStateNormal];
+  [button setBackgroundColor:color forState:UIControlStateSelected];
+  
+  // When
+  button.selected = YES;
+  
+  // Then
+  XCTAssertEqualObjects([button backgroundColor], color);
 }
 
 - (void)testInkColors {

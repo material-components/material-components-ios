@@ -352,6 +352,16 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self animateButtonToHeightForState:self.state];
 }
 
+- (void)setHighlighted:(BOOL)highlighted {
+  [super setHighlighted:highlighted];
+  [self updateBackgroundColor];
+}
+
+- (void)setSelected:(BOOL)selected {
+  [super setSelected:selected];
+  [self updateBackgroundColor];
+}
+
 #pragma mark - Title Uppercasing
 
 - (void)setUppercaseTitle:(BOOL)uppercaseTitle {
