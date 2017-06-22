@@ -24,6 +24,7 @@
 @implementation SnackbarManagerTests
 
 - (void)testMessagesResumedWhenTokenIsDeallocated {
+  // Given
   MDCSnackbarMessage *suspendedMessage = [MDCSnackbarMessage messageWithText:@"foo1"];
   suspendedMessage.duration = 0.05;
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
@@ -35,8 +36,12 @@
   @autoreleasepool {
     id<MDCSnackbarSuspensionToken> token = [MDCSnackbarManager suspendAllMessages];
     [MDCSnackbarManager showMessage:suspendedMessage];
+
+  // When
     token = nil;
   }
+
+  // Then
   [self waitForExpectations:@[expectation] timeout:1];
 }
 

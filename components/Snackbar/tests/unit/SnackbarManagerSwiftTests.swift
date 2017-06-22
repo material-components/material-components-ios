@@ -20,6 +20,7 @@ import MaterialComponents
 class SnackbarManagerSwiftTests: XCTestCase {
 
   func testMessagesResumedWhenTokenIsDeallocated() {
+    // Given
     let expectation = self.expectation(description: "completion")
 
     guard let suspendedMessage = MDCSnackbarMessage(text: "") else { XCTAssert(false); return }
@@ -33,9 +34,12 @@ class SnackbarManagerSwiftTests: XCTestCase {
       var token = MDCSnackbarManager.suspendAllMessages()
       MDCSnackbarManager.show(suspendedMessage)
       token = nil
+
+    // When
       XCTAssertNil(token, "Ensuring that the compiler knows we're reading this variable")
     }
 
+    // Then
     self.waitForExpectations(timeout: 1.0, handler: nil)
   }
 
