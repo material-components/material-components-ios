@@ -149,8 +149,9 @@ class TextFieldControllerDefaultTests: XCTestCase {
 
     XCTAssertEqual(controller.isFloatingEnabled, true)
     controller.isFloatingEnabled = false
-    XCTAssertNotEqual(controller.isFloatingEnabled, false)
+    XCTAssertEqual(controller.isFloatingEnabled, false)
 
+    controller.isFloatingEnabled = true
     textField.sizeToFit()
     XCTAssertEqual(textField.frame.height, 70)
 

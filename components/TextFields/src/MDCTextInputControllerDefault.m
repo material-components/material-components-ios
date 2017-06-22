@@ -872,8 +872,8 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 - (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
   CGSize newSize = defaultSize;
   newSize.height =
-      (self.isFloatingEnabled || !self.heightConstraint) ? self.heightConstraint.constant
-          : defaultSize.height;
+      (!self.isFloatingEnabled || !self.heightConstraint) ? defaultSize.height
+          : self.heightConstraint.constant;
 
   return newSize;
 }
