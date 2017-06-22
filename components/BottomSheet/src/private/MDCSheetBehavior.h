@@ -14,22 +14,26 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
-#import "MaterialButtonBar.h"
+#import <UIKit/UIKit.h>
+
+@interface MDCSheetBehavior : UIDynamicBehavior
 
 /**
- Used to apply a color scheme to theme MDCButtonBar.
+ * The final center-point for the item to arrive at.
  */
-@interface MDCButtonBarColorThemer : NSObject
+@property(nonatomic) CGPoint targetPoint;
 
 /**
- Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButtonBar.
-
- @param colorScheme The color scheme to apply to MDCButtonBar.
- @param buttonBar A MDCButtonBar instance to apply a color scheme.
+ * The initial velocity for the behavior.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar;
+@property(nonatomic) CGPoint velocity;
+
+/**
+ * Initializes a @c MDCSheetBehavior.
+ * @param item The dynamic item (a view) to apply the sheet behavior to.
+ */
+- (nonnull instancetype)initWithItem:(nonnull id <UIDynamicItem>)item NS_DESIGNATED_INITIALIZER;
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end

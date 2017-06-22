@@ -14,22 +14,21 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
-#import "MaterialButtonBar.h"
+#import <UIKit/UIKit.h>
 
-/**
- Used to apply a color scheme to theme MDCButtonBar.
- */
-@interface MDCButtonBarColorThemer : NSObject
+#import "BottomSheetDummyCollectionViewController.h"
+#import "BottomSheetSupplemental.h"
+#import "MaterialBottomSheet.h"
 
-/**
- Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButtonBar.
+@implementation BottomSheetShortCollectionExample
 
- @param colorScheme The color scheme to apply to MDCButtonBar.
- @param buttonBar A MDCButtonBar instance to apply a color scheme.
- */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar;
+- (void)presentBottomSheet {
+  BottomSheetDummyCollectionViewController *viewController =
+      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:6];
+
+  MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+  [self presentViewController:bottomSheet animated:YES completion:nil];
+}
 
 @end

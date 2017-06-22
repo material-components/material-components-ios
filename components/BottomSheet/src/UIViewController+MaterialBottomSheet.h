@@ -14,22 +14,22 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
-#import "MaterialButtonBar.h"
+#import <UIKit/UIKit.h>
+
+@class MDCBottomSheetPresentationController;
 
 /**
- Used to apply a color scheme to theme MDCButtonBar.
+ Material Dialog UIViewController Category
  */
-@interface MDCButtonBarColorThemer : NSObject
+@interface UIViewController (MaterialBottomSheet)
 
 /**
- Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButtonBar.
+ The Material bottom sheet presentation controller that is managing the current view controller.
 
- @param colorScheme The color scheme to apply to MDCButtonBar.
- @param buttonBar A MDCButtonBar instance to apply a color scheme.
+ @return nil if the view controller is not managed by a Material bottom sheet presentation
+ controller.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar;
+@property(nonatomic, nullable, readonly)
+    MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController;
 
 @end

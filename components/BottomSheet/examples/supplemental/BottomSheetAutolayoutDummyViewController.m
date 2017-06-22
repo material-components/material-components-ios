@@ -14,22 +14,12 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
-#import "MaterialButtonBar.h"
+#import "BottomSheetAutolayoutDummyViewController.h"
 
-/**
- Used to apply a color scheme to theme MDCButtonBar.
- */
-@interface MDCButtonBarColorThemer : NSObject
+@implementation BottomSheetAutolayoutDummyViewController
 
-/**
- Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButtonBar.
-
- @param colorScheme The color scheme to apply to MDCButtonBar.
- @param buttonBar A MDCButtonBar instance to apply a color scheme.
- */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar;
+- (IBAction)dismissButtonPressed:(id)sender {
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+}
 
 @end

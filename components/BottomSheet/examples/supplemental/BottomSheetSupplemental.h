@@ -14,22 +14,19 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
-#import "MaterialButtonBar.h"
+#import "BottomSheetPresenterViewController.h"
 
-/**
- Used to apply a color scheme to theme MDCButtonBar.
- */
-@interface MDCButtonBarColorThemer : NSObject
+@interface BottomSheetAutolayoutExample : BottomSheetPresenterViewController
+@end
 
-/**
- Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButtonBar.
+@interface BottomSheetShortCollectionExample : BottomSheetPresenterViewController
+@end
 
- @param colorScheme The color scheme to apply to MDCButtonBar.
- @param buttonBar A MDCButtonBar instance to apply a color scheme.
- */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar;
+@interface BottomSheetSimpleExample : BottomSheetPresenterViewController
+@end
 
+@interface BottomSheetTallExample : BottomSheetPresenterViewController
+@end
+
+@interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
 @end
