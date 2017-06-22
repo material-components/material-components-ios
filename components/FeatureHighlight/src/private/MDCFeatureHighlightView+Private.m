@@ -69,6 +69,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   MDCFeatureHighlightLayer *_pulseLayer;
   MDCFeatureHighlightLayer *_innerLayer;
   MDCFeatureHighlightLayer *_displayMaskLayer;
+
+  // This view is a hack to work around UIKit calling our animation completion blocks immediately if
+  // there is no UIKit content being animated. Since our appearance and disappearance animations are
+  // mostly CAAnimations, we need to guarantee there will be a UIKit animation occuring in order to
+  // ensure we always see the full CAAnimations before the completion blocks are called.
+  UIView *_dummyAnimatedView;
 }
 
 @synthesize highlightRadius = _outerRadius;
@@ -76,6 +82,10 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
     self.backgroundColor = [UIColor clearColor];
+
+    _dummyAnimatedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    _dummyAnimatedView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_dummyAnimatedView];
 
     _outerLayer = [[MDCFeatureHighlightLayer alloc] init];
     [self.layer addSublayer:_outerLayer];
@@ -173,11 +183,17 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   // TODO: Mask the labels during the presentation and dismissal animations.
   _titleLabel.alpha = 1;
   _bodyLabel.alpha = 1;
+
+  // Guarantee something changes in case the label alphas are already 1.0
+  _dummyAnimatedView.frame = CGRectOffset(_dummyAnimatedView.frame, 1, 0);
 }
 
 - (void)layoutDisappearing {
   _titleLabel.alpha = 0;
   _bodyLabel.alpha = 0;
+
+  // Guarantee something changes in case the label alphas are already 0.0
+  _dummyAnimatedView.frame = CGRectOffset(_dummyAnimatedView.frame, 1, 0);
 }
 
 - (void)setDisplayedView:(UIView *)displayedView {
@@ -329,8 +345,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       [self animateDismissalCancelled];
       break;
 
-    case UIGestureRecognizerStateBegan:
     case UIGestureRecognizerStatePossible:
+      break;
+
+    case UIGestureRecognizerStateBegan:
+      [UIView animateWithDuration:0.2 animations:^{
+        _titleLabel.alpha = 0.0;
+        _bodyLabel.alpha = 0.0;
+      }];
       break;
   }
 }
@@ -349,6 +371,11 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)animateDismissalCancelled {
+  [UIView animateWithDuration:0.2 animations:^{
+    _titleLabel.alpha = 1.0;
+    _bodyLabel.alpha = 1.0;
+  }];
+
   _outerRadiusScale = 1;
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
