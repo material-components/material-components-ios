@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
+#import "MaterialThemes.h"
 #import "MaterialButtonBar.h"
 
 /**
- Used to apply a color scheme to theme MDCSlider.
+ Used to apply a color scheme to theme MDCButtonBar.
  */
 @interface MDCButtonBarColorThemer : NSObject
 

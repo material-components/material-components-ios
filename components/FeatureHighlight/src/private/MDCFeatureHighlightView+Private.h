@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCFeatureHighlightView.h"
+#import "MaterialFeatureHighlight.h"
 
 typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
@@ -34,6 +34,7 @@ typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
 - (void)layoutAppearing;
 - (void)layoutDisappearing;
+- (void)updateOuterHighlight;
 
 - (void)animateDiscover:(NSTimeInterval)duration;
 - (void)animateAccepted:(NSTimeInterval)duration;

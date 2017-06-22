@@ -94,12 +94,19 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @property(nonatomic, nullable, strong) UIColor *errorColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The text being displayed in the leading underline label when in an error state.
+ 
+ NOTE: To set this value, you must use setErrorText:errorAccessibilityValue:.
+ */
+@property(nonatomic, nullable, copy, readonly) NSString *errorText;
+
+/**
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color.
 
- Default is black with Material Design hint text opacity.
+ Default is black with Material Design hint text opacity (textInput's tint).
  */
-@property(nonatomic, nullable, strong)
+@property(nonatomic, null_resettable, strong)
     UIColor *floatingPlaceholderColor UI_APPEARANCE_SELECTOR;
 
 /**
@@ -108,8 +115,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is 0.75.
  */
-@property(nonatomic, nullable, strong)
-    NSNumber *floatingPlaceholderScale UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, strong) NSNumber *floatingPlaceholderScale UI_APPEARANCE_SELECTOR;
 
 /**
  Text displayed in the leading underline label.
@@ -124,7 +130,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is black with Material Design hint text opacity.
  */
-@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, null_resettable, strong)
+    UIColor *inlinePlaceholderColor UI_APPEARANCE_SELECTOR;
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
@@ -139,8 +146,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /** The behavioral style applied to the text input. */
-@property(nonatomic, assign)
-    MDCTextInputPresentationStyle presentationStyle;
+@property(nonatomic, assign) MDCTextInputPresentationStyle presentationStyle;
 
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
@@ -153,6 +159,12 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  Default is UITextFieldViewModeAlways.
  */
 @property(nonatomic, assign) UITextFieldViewMode underlineViewMode UI_APPEARANCE_SELECTOR;
+
+/** Color the underline changes to when the input is editing. */
+@property(nonatomic, null_resettable, strong) UIColor *underlineColorActive UI_APPEARANCE_SELECTOR;
+
+/** Color of the underline when the input is not editing but still enabled. */
+@property(nonatomic, null_resettable, strong) UIColor *underlineColorNormal UI_APPEARANCE_SELECTOR;
 
 /**
  Convenience init. Never fails.

@@ -16,7 +16,7 @@
 
 #import "MDCStatusBarShifter.h"
 
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
 static CGFloat kStatusBarExpectedHeight = 20;
 static NSTimeInterval kStatusBarBecomesInvalidAnimationDuration = 0.2;

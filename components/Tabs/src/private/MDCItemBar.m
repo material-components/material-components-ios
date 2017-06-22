@@ -562,7 +562,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)updateFlowLayoutMetricsAnimated:(BOOL)animate {
-  void (^animationBlock)() = ^{
+  void (^animationBlock)(void) = ^{
     [self updateFlowLayoutMetrics];
   };
 

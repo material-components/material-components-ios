@@ -977,7 +977,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (!_sharedWithManyScrollViews || !_trackingInfo) {
     [self fhv_addInsetsToScrollView:_trackingScrollView];
   }
-  void (^animate)() = ^{
+  void (^animate)(void) = ^{
     [self fhv_updateLayout];
   };
   void (^completion)(BOOL) = ^(BOOL finished) {
