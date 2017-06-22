@@ -642,6 +642,21 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - Deprecations
 
+- (void)setCustomTitleColor:(UIColor *)customTitleColor {
+  [self setTitleColor:customTitleColor forState:UIControlStateNormal];
+}
+
+- (UIColor *)customTitleColor {
+  return [self titleColorForState:UIControlStateNormal];
+}
+
+- (void)setDisabledAlpha:(CGFloat)disabledAlpha {
+  _disabledAlpha = disabledAlpha;
+  UIColor *color =
+  [[self backgroundColorForState:UIControlStateNormal] colorWithAlphaComponent:_disabledAlpha];
+  [self setBackgroundColor:color forState:UIControlStateDisabled];
+}
+
 - (BOOL)shouldCapitalizeTitle {
   return [self isUppercaseTitle];
 }
