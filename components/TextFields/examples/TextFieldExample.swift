@@ -42,7 +42,7 @@ final class TextFieldSwiftExample: UIViewController {
     city.translatesAutoresizingMaskIntoConstraints = false
     return city
   }()
-  let cityController: MDCTextInputController
+  let cityController: MDCTextInputControllerDefault
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -57,7 +57,7 @@ final class TextFieldSwiftExample: UIViewController {
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputController
+  let zipController: MDCTextInputControllerDefault
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -66,11 +66,11 @@ final class TextFieldSwiftExample: UIViewController {
     return phone
   }()
 
-  var allTextFieldControllers = [MDCTextInputController]()
+  var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputController(textInput: city)
-    zipController = MDCTextInputController(textInput: zip)
+    cityController = MDCTextInputControllerDefault(textInput: city)
+    zipController = MDCTextInputControllerDefault(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -99,19 +99,16 @@ final class TextFieldSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputController(textInput: name)
-    nameController.presentationStyle = .floatingPlaceholder
+    let nameController = MDCTextInputControllerDefault(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputController(textInput: address)
-    addressController.presentationStyle = .floatingPlaceholder
+    let addressController = MDCTextInputControllerDefault(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
     scrollView.addSubview(city)
-    cityController.presentationStyle = .floatingPlaceholder
     city.delegate = self
     allTextFieldControllers.append(cityController)
 
@@ -122,19 +119,16 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(stateZip)
 
     stateZip.addSubview(state)
-    let stateController = MDCTextInputController(textInput: state)
-    stateController.presentationStyle = .floatingPlaceholder
+    let stateController = MDCTextInputControllerDefault(textInput: state)
     state.delegate = self
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
-    zipController.presentationStyle = .floatingPlaceholder
     zip.delegate = self
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputController(textInput: phone)
-    phoneController.presentationStyle = .floatingPlaceholder
+    let phoneController = MDCTextInputControllerDefault(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
@@ -220,18 +214,18 @@ final class TextFieldSwiftExample: UIViewController {
   }
 
   func buttonDidTouch(sender: Any) {
-    let alert = UIAlertController(title: "Presentation Style",
+    let alert = UIAlertController(title: "Floating Enabled",
                                   message: nil,
                                   preferredStyle: .actionSheet)
-    let defaultAction = UIAlertAction(title: "Default", style: .default) { _ in
+    let defaultAction = UIAlertAction(title: "Default (Yes)", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
-        controller.presentationStyle = .default
+        controller.isFloatingEnabled = true
       })
     }
     alert.addAction(defaultAction)
-    let floatingAction = UIAlertAction(title: "Floating", style: .default) { _ in
+    let floatingAction = UIAlertAction(title: "No", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
-        controller.presentationStyle = .floatingPlaceholder
+        controller.isFloatingEnabled = false
       })
     }
     alert.addAction(floatingAction)
