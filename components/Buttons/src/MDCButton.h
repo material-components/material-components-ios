@@ -104,6 +104,13 @@ UI_APPEARANCE_SELECTOR;
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
 
 /**
+ Returns the elevation of the button which dictates the appearance of the shadow.
+ 
+ @return The elevation of the button.
+ */
+@property(nonatomic, readonly) CGFloat elevation;
+
+/**
  Returns the elevation for a particular control state.
 
  The default values depend on the kind of button, for example, flat buttons in the

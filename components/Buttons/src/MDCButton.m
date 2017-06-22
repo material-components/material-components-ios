@@ -326,11 +326,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   CGPoint location = [self locationFromTouches:touches];
   [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
-
-  BOOL inside = CGRectContainsPoint(self.bounds, location);
-  if (inside && _shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:self.state];
-  }
 }
 
 // Note - in some cases, event may be nil (e.g. view removed from window).
@@ -355,11 +350,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
   [self updateBackgroundColor];
+  if (_shouldRaiseOnTouch) {
+    [self animateButtonToHeightForState:self.state];
+  }
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
   [self updateBackgroundColor];
+  [self animateButtonToHeightForState:self.state];
 }
 
 #pragma mark - Title Uppercasing
@@ -517,13 +516,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - Elevations
 
+- (CGFloat)elevation {
+  return [self shadowLayer].elevation;
+}
+
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _userElevations[@(state)];
-  CGFloat normalElevation = 0;
-  if (state != UIControlStateNormal) {
-    normalElevation = [self elevationForState:UIControlStateNormal];
+  if (state == UIControlStateNormal && !elevation) {
+    return 0;
   }
-  return elevation ? (CGFloat)[elevation doubleValue] : normalElevation;
+  return elevation ? (CGFloat)[elevation doubleValue]
+      : [self elevationForState:UIControlStateNormal];
 }
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
@@ -584,9 +587,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)handleBeginTouches:(NSSet *)touches {
   [_inkView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
-  if (_shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:self.state];
-  }
 }
 
 - (CGPoint)locationFromTouches:(NSSet *)touches {
@@ -596,9 +596,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)evaporateInkToPoint:(CGPoint)toPoint {
   [_inkView startTouchEndedAnimationAtPoint:toPoint completion:nil];
-  if (_shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:self.state];
-  }
 }
 
 - (UIBezierPath *)boundingPath {

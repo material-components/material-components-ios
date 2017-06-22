@@ -241,6 +241,61 @@ static UIColor *randomColor() {
   XCTAssertEqualObjects([button backgroundColor], color);
 }
 
+- (void)testCurrentElevationNormal {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = 10;
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+  
+  // Then
+  XCTAssertEqualWithAccuracy(button.elevation, normalElevation, kEpsilonAccuracy);
+}
+
+- (void)testCurrentElevationHighlighted {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = 10;
+  CGFloat elevation = 40;
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+  [button setElevation:elevation forState:UIControlStateHighlighted];;
+  
+  // When
+  button.highlighted = YES;
+  
+  // Then
+  XCTAssertEqualWithAccuracy(button.elevation, elevation, kEpsilonAccuracy);
+}
+
+- (void)testCurrentElevationDisabled {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = 10;
+  CGFloat elevation = 40;
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+  [button setElevation:elevation forState:UIControlStateDisabled];;
+  
+  // When
+  button.enabled = NO;
+  
+  // Then
+  XCTAssertEqualWithAccuracy(button.elevation, elevation, kEpsilonAccuracy);
+}
+
+- (void)testCurrentElevationSelected {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = 10;
+  CGFloat elevation = 40;
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+  [button setElevation:elevation forState:UIControlStateSelected];;
+  
+  // When
+  button.selected = YES;
+  
+  // Then
+  XCTAssertEqualWithAccuracy(button.elevation, elevation, kEpsilonAccuracy);
+}
+
 - (void)testInkColors {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
