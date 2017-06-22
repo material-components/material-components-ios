@@ -174,7 +174,6 @@ UI_APPEARANCE_SELECTOR;
 @property(nonatomic) CGFloat disabledAlpha
     __deprecated_msg("Use setBackgroundColor:forState: instead");
 
-
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
         ;
