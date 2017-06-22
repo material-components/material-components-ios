@@ -30,7 +30,7 @@
   self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
   UIColor *buttonBackground = [UIColor colorWithWhite:0.1 alpha:1.0];
   UIColor *titleColor = [UIColor whiteColor];
-  
+
   // Raised button
 
   MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
@@ -58,7 +58,6 @@
   disabledRaisedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:disabledRaisedButton];
 
-  
   // Flat button
 
   MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];

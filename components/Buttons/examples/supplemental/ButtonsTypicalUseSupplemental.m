@@ -47,7 +47,6 @@
 @implementation ButtonsTypicalUseViewController (Supplemental)
 
 - (void)addLabels {
-  
   UILabel *raisedButtonLabel = [[UILabel alloc] init];
   raisedButtonLabel.text = @"Raised";
   raisedButtonLabel.font = [MDCTypography captionFont];
@@ -63,7 +62,6 @@
   [disabledRaisedButtonLabel sizeToFit];
   disabledRaisedButtonLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:disabledRaisedButtonLabel];
-  
 
   UILabel *flatButtonLabel = [[UILabel alloc] init];
   flatButtonLabel.text = @"Flat";
