@@ -17,18 +17,18 @@
 import XCTest
 import MaterialComponents.MaterialTextFields
 
-class TextFieldControllerTests: XCTestCase {
+class TextFieldControllerDefaultTests: XCTestCase {
   func testCopying() {
     let textField = MDCTextField()
 
     let controller = MDCTextInputControllerDefault(textInput: textField)
     controller.characterCountMax = 49
     controller.characterCountViewMode = .always
+    controller.isFloatingEnabled = false
     controller.floatingPlaceholderColor = .purple
     controller.floatingPlaceholderScale = 0.1
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
-    controller.presentationStyle = .floatingPlaceholder
     controller.underlineColorActive = .blue
     controller.underlineColorNormal = .white
     controller.underlineViewMode = .always
@@ -36,11 +36,11 @@ class TextFieldControllerTests: XCTestCase {
     if let controllerCopy = controller.copy() as? MDCTextInputControllerDefault {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
+      XCTAssertEqual(controller.isFloatingEnabled, controllerCopy.isFloatingEnabled)
       XCTAssertEqual(controller.floatingPlaceholderColor, controllerCopy.floatingPlaceholderColor)
       XCTAssertEqual(controller.floatingPlaceholderScale, controllerCopy.floatingPlaceholderScale)
       XCTAssertEqual(controller.helperText, controllerCopy.helperText)
       XCTAssertEqual(controller.inlinePlaceholderColor, controllerCopy.inlinePlaceholderColor)
-      XCTAssertEqual(controller.presentationStyle, controllerCopy.presentationStyle)
       XCTAssertEqual(controller.underlineColorActive, controllerCopy.underlineColorActive)
       XCTAssertEqual(controller.underlineColorNormal, controllerCopy.underlineColorNormal)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
@@ -147,9 +147,9 @@ class TextFieldControllerTests: XCTestCase {
     let textField = MDCTextField()
     let controller = MDCTextInputControllerDefault(textInput: textField)
 
-    XCTAssertNotEqual(controller.presentationStyle, .floatingPlaceholder)
-    controller.presentationStyle = .floatingPlaceholder
-    XCTAssertEqual(controller.presentationStyle, .floatingPlaceholder)
+    XCTAssertEqual(controller.isFloatingEnabled, true)
+    controller.isFloatingEnabled = false
+    XCTAssertNotEqual(controller.isFloatingEnabled, false)
 
     textField.sizeToFit()
     XCTAssertEqual(textField.frame.height, 70)
@@ -175,11 +175,11 @@ class TextFieldControllerTests: XCTestCase {
     let controller = MDCTextInputControllerDefault(textInput: textField)
     controller.characterCountMax = 25
     controller.characterCountViewMode = .always
+    controller.isFloatingEnabled = false
     controller.floatingPlaceholderColor = .purple
     controller.floatingPlaceholderScale = 0.1
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
-    controller.presentationStyle = .floatingPlaceholder
     controller.underlineColorActive = .blue
     controller.underlineColorNormal = .white
     controller.underlineViewMode = .always
@@ -195,11 +195,11 @@ class TextFieldControllerTests: XCTestCase {
     unserializedController?.textInput = textField
     XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
     XCTAssertEqual(controller.characterCountViewMode, unserializedController?.characterCountViewMode)
+    XCTAssertEqual(controller.isFloatingEnabled, unserializedController?.isFloatingEnabled)
     XCTAssertEqual(controller.floatingPlaceholderColor, unserializedController?.floatingPlaceholderColor)
     XCTAssertEqual(controller.floatingPlaceholderScale, unserializedController?.floatingPlaceholderScale)
     XCTAssertEqual(controller.helperText, unserializedController?.helperText)
     XCTAssertEqual(controller.inlinePlaceholderColor, unserializedController?.inlinePlaceholderColor)
-    XCTAssertEqual(controller.presentationStyle, unserializedController?.presentationStyle)
     XCTAssertEqual(controller.underlineColorActive, unserializedController?.underlineColorActive)
     XCTAssertEqual(controller.underlineColorNormal, unserializedController?.underlineColorNormal)
     XCTAssertEqual(controller.underlineViewMode, unserializedController?.underlineViewMode)

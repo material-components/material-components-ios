@@ -51,6 +51,8 @@ static NSString *const MDCTextInputControllerDefaultErrorColorKey =
     @"MDCTextInputControllerDefaultErrorColorKey";
 static NSString *const MDCTextInputControllerDefaultErrorTextKey =
     @"MDCTextInputControllerDefaultErrorTextKey";
+static NSString *const MDCTextInputControllerDefaultFloatingEnabledKey =
+    @"MDCTextInputControllerDefaultFloatingEnabledKey";
 static NSString *const MDCTextInputControllerDefaultFloatingPlaceholderColorKey =
     @"MDCTextInputControllerDefaultFloatingPlaceholderColorKey";
 static NSString *const MDCTextInputControllerDefaultFloatingPlaceholderScaleKey =
@@ -154,6 +156,8 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
     _characterCountViewMode =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultErrorColorKey];
+    _floatingEnabled =
+        [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultFloatingEnabledKey];
     _floatingPlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultFloatingPlaceholderColorKey];
     _floatingPlaceholderScale =
@@ -194,6 +198,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
                 forKey:MDCTextInputControllerDefaultErrorAccessibilityValueKey];
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerDefaultErrorColorKey];
   [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerDefaultErrorTextKey];
+  [aCoder encodeBool:self.isFloatingEnabled forKey:MDCTextInputControllerDefaultFloatingEnabledKey];
   [aCoder encodeObject:self.floatingPlaceholderColor
                 forKey:MDCTextInputControllerDefaultFloatingPlaceholderColorKey];
   [aCoder encodeObject:self.floatingPlaceholderScale
@@ -219,6 +224,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   copy.errorAccessibilityValue = [self.errorAccessibilityValue copy];
   copy.errorColor = self.errorColor;
   copy.errorText = [self.errorText copy];
+  copy.floatingEnabled = self.isFloatingEnabled;
   copy.floatingPlaceholderColor = self.floatingPlaceholderColor;
   copy.floatingPlaceholderScale = self.floatingPlaceholderScale;
   copy.helperText = [self.helperText copy];
@@ -241,8 +247,10 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 - (void)commonMDCTextInputControllerDefaultInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
   _errorColor = MDCTextInputDefaultTextErrorColor();
+  _floatingEnabled = YES;
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
   _underlineViewMode = UITextFieldViewModeWhileEditing;
+  _textInput.hidesPlaceholderOnInput = NO;
 }
 
 - (void)setupInput {
@@ -254,6 +262,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
+  _textInput.hidesPlaceholderOnInput = !self.isFloatingEnabled;
 
   [self subscribeForNotifications];
   [self subscribeForKVO];
@@ -680,6 +689,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 }
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
   if (_floatingEnabled != floatingEnabled) {
+    _floatingEnabled = floatingEnabled;
     BOOL isDirectionToUp = NO;
     if (floatingEnabled) {
       isDirectionToUp = self.textInput.text.length > 1 || self.textInput.isEditing;

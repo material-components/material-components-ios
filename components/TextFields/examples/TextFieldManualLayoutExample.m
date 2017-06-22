@@ -38,7 +38,6 @@
 
   self.nameController = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldName];
 
-  self.nameController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   textFieldName.frame = CGRectMake(10, 40, CGRectGetWidth(self.view.bounds) - 20, 0);
 
   MDCTextField *textFieldPhone = [[MDCTextField alloc] init];
@@ -50,7 +49,6 @@
 
   self.phoneController = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldPhone];
 
-  self.phoneController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   textFieldPhone.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20,
                                     CGRectGetWidth(self.view.bounds) - 20, 0);
 

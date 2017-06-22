@@ -15,6 +15,7 @@
  */
 
 #import "MDCTextInputControllerDefault.h"
+#import "MDCTextInputControllerFullWidth.h"
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInput.h"

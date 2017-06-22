@@ -44,16 +44,12 @@
 
   self.firstController =
       [[MDCTextInputControllerDefault alloc] initWithTextInput:self.firstTextField];
-  self.firstController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   self.lastController =
       [[MDCTextInputControllerDefault alloc] initWithTextInput:self.lastTextField];
-  self.lastController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   self.address1Controller =
       [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address1TextField];
-  self.address1Controller.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   self.address2Controller =
       [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address2TextField];
-  self.address2Controller.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
 }
 
 @end

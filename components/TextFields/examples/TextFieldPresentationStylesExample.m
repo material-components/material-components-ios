@@ -23,7 +23,7 @@
 // Be sure to keep your controllers in memory somewhere like a property:
 @property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
 @property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFloating;
-@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFullWidth;
+@property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldControllerFullWidth;
 
 @end
 
@@ -59,6 +59,7 @@
       [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldDefaultCharMax];
   self.textFieldControllerDefaultCharMax.characterCountMax = defaultMax;
   [self.textFieldControllerDefaultCharMax mdc_setAdjustsFontForContentSizeCategory:YES];
+  self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
   MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
   [self.scrollView addSubview:textFieldFloating];
@@ -79,8 +80,6 @@
   self.textFieldControllerFloating =
       [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
 
-  self.textFieldControllerFloating.presentationStyle =
-      MDCTextInputPresentationStyleFloatingPlaceholder;
   [self.textFieldControllerFloating mdc_setAdjustsFontForContentSizeCategory:YES];
 
   [NSLayoutConstraint
@@ -121,9 +120,8 @@
   textFieldFullWidth.backgroundColor = [UIColor whiteColor];
 
   self.textFieldControllerFullWidth =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFullWidth];
+      [[MDCTextInputControllerFullWidth alloc] initWithTextInput:textFieldFullWidth];
 
-  self.textFieldControllerFullWidth.presentationStyle = MDCTextInputPresentationStyleFullWidth;
   [self.textFieldControllerFullWidth mdc_setAdjustsFontForContentSizeCategory:YES];
 
   [NSLayoutConstraint constraintWithItem:textFieldFullWidth

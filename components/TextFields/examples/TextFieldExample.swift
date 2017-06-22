@@ -100,18 +100,15 @@ final class TextFieldSwiftExample: UIViewController {
   func setupTextFields() {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerDefault(textInput: name)
-    nameController.presentationStyle = .floatingPlaceholder
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
     let addressController = MDCTextInputControllerDefault(textInput: address)
-    addressController.presentationStyle = .floatingPlaceholder
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
     scrollView.addSubview(city)
-    cityController.presentationStyle = .floatingPlaceholder
     city.delegate = self
     allTextFieldControllers.append(cityController)
 
@@ -123,18 +120,15 @@ final class TextFieldSwiftExample: UIViewController {
 
     stateZip.addSubview(state)
     let stateController = MDCTextInputControllerDefault(textInput: state)
-    stateController.presentationStyle = .floatingPlaceholder
     state.delegate = self
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
-    zipController.presentationStyle = .floatingPlaceholder
     zip.delegate = self
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
     let phoneController = MDCTextInputControllerDefault(textInput: phone)
-    phoneController.presentationStyle = .floatingPlaceholder
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
@@ -220,18 +214,18 @@ final class TextFieldSwiftExample: UIViewController {
   }
 
   func buttonDidTouch(sender: Any) {
-    let alert = UIAlertController(title: "Presentation Style",
+    let alert = UIAlertController(title: "Floating Enabled",
                                   message: nil,
                                   preferredStyle: .actionSheet)
-    let defaultAction = UIAlertAction(title: "Default", style: .default) { _ in
+    let defaultAction = UIAlertAction(title: "Default (Yes)", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
-        controller.presentationStyle = .default
+        controller.isFloatingEnabled = true
       })
     }
     alert.addAction(defaultAction)
-    let floatingAction = UIAlertAction(title: "Floating", style: .default) { _ in
+    let floatingAction = UIAlertAction(title: "No", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
-        controller.presentationStyle = .floatingPlaceholder
+        controller.isFloatingEnabled = false
       })
     }
     alert.addAction(floatingAction)
