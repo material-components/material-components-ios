@@ -156,8 +156,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
     _characterCountViewMode =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultErrorColorKey];
-    _floatingEnabled =
-        [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultFloatingEnabledKey];
+    _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultFloatingEnabledKey];
     _floatingPlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultFloatingPlaceholderColorKey];
     _floatingPlaceholderScale =
@@ -560,36 +559,36 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 #pragma mark - Underline Customization
 
 - (void)updateUnderline {
-    UIColor *underlineColor;
-    CGFloat underlineHeight;
+  UIColor *underlineColor;
+  CGFloat underlineHeight;
 
-    switch (self.underlineViewMode) {
-      case UITextFieldViewModeAlways:
-        underlineColor = self.underlineColorActive;
-        underlineHeight = MDCTextInputDefaultUnderlineActiveHeight;
-        break;
-      case UITextFieldViewModeWhileEditing:
-        underlineColor =
-            self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
-        underlineHeight = self.textInput.isEditing ? MDCTextInputDefaultUnderlineActiveHeight
-                                                   : MDCTextInputDefaultUnderlineNormalHeight;
-        break;
-      case UITextFieldViewModeUnlessEditing:
-        underlineColor =
-            !self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
-        underlineHeight = !self.textInput.isEditing ? MDCTextInputDefaultUnderlineActiveHeight
-                                                    : MDCTextInputDefaultUnderlineNormalHeight;
-        break;
-      case UITextFieldViewModeNever:
-      default:
-        underlineColor = self.underlineColorNormal;
-        underlineHeight = MDCTextInputDefaultUnderlineNormalHeight;
-        break;
-    }
-    self.textInput.underline.color =
-        (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
-                                                                             : underlineColor;
-    self.textInput.underline.lineHeight = underlineHeight;
+  switch (self.underlineViewMode) {
+    case UITextFieldViewModeAlways:
+      underlineColor = self.underlineColorActive;
+      underlineHeight = MDCTextInputDefaultUnderlineActiveHeight;
+      break;
+    case UITextFieldViewModeWhileEditing:
+      underlineColor =
+          self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
+      underlineHeight = self.textInput.isEditing ? MDCTextInputDefaultUnderlineActiveHeight
+                                                 : MDCTextInputDefaultUnderlineNormalHeight;
+      break;
+    case UITextFieldViewModeUnlessEditing:
+      underlineColor =
+          !self.textInput.isEditing ? self.underlineColorActive : self.underlineColorNormal;
+      underlineHeight = !self.textInput.isEditing ? MDCTextInputDefaultUnderlineActiveHeight
+                                                  : MDCTextInputDefaultUnderlineNormalHeight;
+      break;
+    case UITextFieldViewModeNever:
+    default:
+      underlineColor = self.underlineColorNormal;
+      underlineHeight = MDCTextInputDefaultUnderlineNormalHeight;
+      break;
+  }
+  self.textInput.underline.color =
+      (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
+                                                                           : underlineColor;
+  self.textInput.underline.lineHeight = underlineHeight;
 }
 
 #pragma mark - Underline Labels Fonts
@@ -780,31 +779,30 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
                                                           constant:0];
   }
 
-    // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
-    self.characterCountTrailing.active = NO;
-    self.characterCountY.active = NO;
-    self.clearButtonY.active = NO;
-    self.clearButtonTrailingCharacterCountLeading.active = NO;
-    self.placeholderLeading.active = NO;
-    self.placeholderTrailingCharacterCountLeading.active = NO;
-    self.placeholderTrailingSuperviewTrailing.active = NO;
+  // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
+  self.characterCountTrailing.active = NO;
+  self.characterCountY.active = NO;
+  self.clearButtonY.active = NO;
+  self.clearButtonTrailingCharacterCountLeading.active = NO;
+  self.placeholderLeading.active = NO;
+  self.placeholderTrailingCharacterCountLeading.active = NO;
+  self.placeholderTrailingSuperviewTrailing.active = NO;
 
-    UIEdgeInsets insets = [self textContainerInset:UIEdgeInsetsZero];
+  UIEdgeInsets insets = [self textContainerInset:UIEdgeInsetsZero];
 
-    if (self.isFloatingEnabled) {
-      self.heightConstraint.constant =
-          insets.top +  // Labels and padding
-          MDCRint(MAX(self.textInput.font.lineHeight,
-                      self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
-          insets.bottom;                                                   // Padding or labels
+  if (self.isFloatingEnabled) {
+    self.heightConstraint.constant =
+        insets.top +  // Labels and padding
+        MDCRint(MAX(self.textInput.font.lineHeight,
+                    self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
+        insets.bottom;                                                   // Padding or labels
 
-    }  // else is .default which needs no heightConstraint.
-
+  }  // else is .default which needs no heightConstraint.
 
   // Default just uses the built in intrinsic content size but floating placeholder needs more
   // height and full width needs less. (Constants set above.)
-  self.heightConstraint.active = (self.floatingEnabled &&
-                                  !self.textInput.translatesAutoresizingMaskIntoConstraints);
+  self.heightConstraint.active =
+      (self.floatingEnabled && !self.textInput.translatesAutoresizingMaskIntoConstraints);
 }
 
 - (void)updateFontsForDynamicType {
@@ -843,37 +841,37 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
   UIEdgeInsets textContainerInset = defaultInsets;
 
-      CGFloat scale = [self effectiveFloatingScale];
-      textContainerInset.top = MDCTextInputDefaultVerticalPadding +
-                               MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +
-                               MDCTextInputDefaultVerticalHalfPadding;
+  CGFloat scale = [self effectiveFloatingScale];
+  textContainerInset.top = MDCTextInputDefaultVerticalPadding +
+                           MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +
+                           MDCTextInputDefaultVerticalHalfPadding;
 
-      // The amount of space underneath the underline is variable. It could just be
-      // MDCTextInputDefaultVerticalPadding or the biggest estimated underlineLabel height +
-      // MDCTextInputDefaultVerticalHalfPadding
-      CGFloat underlineLabelsOffset = 0;
-      if (self.textInput.leadingUnderlineLabel.text.length) {
-        underlineLabelsOffset =
-            MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-      }
-      if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-        underlineLabelsOffset =
-            MAX(underlineLabelsOffset,
-                MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-      }
-      CGFloat underlineOffset = MDCTextInputDefaultVerticalHalfPadding + underlineLabelsOffset;
+  // The amount of space underneath the underline is variable. It could just be
+  // MDCTextInputDefaultVerticalPadding or the biggest estimated underlineLabel height +
+  // MDCTextInputDefaultVerticalHalfPadding
+  CGFloat underlineLabelsOffset = 0;
+  if (self.textInput.leadingUnderlineLabel.text.length) {
+    underlineLabelsOffset =
+        MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  }
+  if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
+    underlineLabelsOffset =
+        MAX(underlineLabelsOffset,
+            MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+  }
+  CGFloat underlineOffset = MDCTextInputDefaultVerticalHalfPadding + underlineLabelsOffset;
 
-      // .bottom = underlineOffset + the half padding above the line but below the text field
-      textContainerInset.bottom = underlineOffset + MDCTextInputDefaultVerticalHalfPadding;
+  // .bottom = underlineOffset + the half padding above the line but below the text field
+  textContainerInset.bottom = underlineOffset + MDCTextInputDefaultVerticalHalfPadding;
 
   return textContainerInset;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
   CGSize newSize = defaultSize;
-  newSize.height =
-      (!self.isFloatingEnabled || !self.heightConstraint) ? defaultSize.height
-          : self.heightConstraint.constant;
+  newSize.height = (!self.isFloatingEnabled || !self.heightConstraint)
+                       ? defaultSize.height
+                       : self.heightConstraint.constant;
 
   return newSize;
 }

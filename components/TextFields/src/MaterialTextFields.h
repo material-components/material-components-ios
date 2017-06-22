@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerDefault.h"
-#import "MDCTextInputControllerFullWidth.h"
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
+#import "MDCTextInputControllerDefault.h"
+#import "MDCTextInputControllerFullWidth.h"
 #import "MDCTextInputUnderlineView.h"

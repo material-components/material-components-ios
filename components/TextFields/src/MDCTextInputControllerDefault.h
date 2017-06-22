@@ -22,7 +22,7 @@
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
 
  The placeholder text is laid out inline. If floating is enabled, it will float above the field when
- there is content or the field is being edited. The character count is below text. The Material 
+ there is content or the field is being edited. The character count is below text. The Material
  Design guidelines call this 'Floating inline labels.'
  https://material.io/guidelines/components/text-fields.html#text-fields-labels
 */
@@ -35,7 +35,7 @@
  Default is black with Material Design hint text opacity (textInput's tint).
  */
 @property(nonatomic, null_resettable, strong)
-UIColor *floatingPlaceholderColor UI_APPEARANCE_SELECTOR;
+    UIColor *floatingPlaceholderColor UI_APPEARANCE_SELECTOR;
 
 /**
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
