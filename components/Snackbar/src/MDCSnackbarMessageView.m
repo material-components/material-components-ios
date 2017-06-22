@@ -388,6 +388,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
       // Set up the button's accessibility values.
       button.accessibilityIdentifier = message.action.accessibilityIdentifier;
+      button.accessibilityHint = message.action.accessibilityHint;
+
       [button setAttributedTitle:buttonText forState:UIControlStateNormal];
       [button setAttributedTitle:buttonHighlightedText forState:UIControlStateHighlighted];
 

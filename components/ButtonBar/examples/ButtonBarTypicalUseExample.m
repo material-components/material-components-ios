@@ -64,7 +64,7 @@
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
 }
 
 #pragma mark - User actions
@@ -76,7 +76,7 @@
 #pragma mark - Visual configuration
 
 - (UIColor *)buttonBarBackgroundColor {
-  return [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
+  return [UIColor colorWithWhite:0.8 alpha:1.0];
 }
 
 - (NSDictionary *)itemTitleTextAttributes {

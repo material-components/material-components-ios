@@ -63,6 +63,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
   func populateView(_ componentName: String) {
     label.text = componentName
     tile.componentName = componentName
+    accessibilityIdentifier = componentName
   }
 
 }

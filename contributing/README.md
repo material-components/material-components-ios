@@ -1,7 +1,8 @@
 <!--docs:
-title:  "Contributing"
+title: "Contributing"
 layout: landing
-section: contributing
+section: docs
+path: /docs/contributing/
 -->
 
 # General Contributing Guidelines
@@ -29,9 +30,9 @@ There is a [great script](../scripts/check_components) that checks for _some_ of
 Start the title with `[ComponentName]` to identify which component a change affects. Use
 `[ComponentName|OtherComponentName]` for commits affecting multiple components, which should be rare.
 
-~~~
+```
 [FooBar] Removes the deprecated fooWithBar:(Bar*)bar method.
-~~~
+```
 
 #### Using assignee to indicate who should action on a PR
 
@@ -67,4 +68,4 @@ Contributions made by corporations are covered by a different agreement than the
 - [Demo Apps](../demos/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
-- [Material Design Guidelines](https://material.google.com) (external site)
+- [Material Design Guidelines](https://material.io/guidelines) (external site)

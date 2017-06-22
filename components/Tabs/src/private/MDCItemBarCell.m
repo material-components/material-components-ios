@@ -93,7 +93,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 #pragma mark - Public
 
 + (UIEdgeInsets)edgeInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
-  // Padding from spec: https://www.google.com/design/spec/components/tabs.html
+  // Padding from spec: https://material.io/guidelines/components/tabs.html
   CGFloat outerPadding = (sizeClass == UIUserInterfaceSizeClassRegular) ? 24.0f : 12.0f;
   return UIEdgeInsetsMake(0.0, outerPadding, 0.0, outerPadding);
 }

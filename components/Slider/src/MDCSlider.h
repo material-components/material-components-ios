@@ -21,7 +21,7 @@
 /**
  A Material slider.
 
- @see https://www.google.com/design/spec/components/sliders.html for full details.
+ @see https://material.io/guidelines/components/sliders.html for full details.
 
  Differences between UISlider and MDCSlider:
    Does not have api to

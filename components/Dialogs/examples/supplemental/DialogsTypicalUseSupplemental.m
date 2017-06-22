@@ -25,8 +25,35 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
+#import "MaterialCollections.h"
 
 #pragma mark - DialogsTypicalUseViewController
+
+static NSString * const kReusableIdentifierItem = @"cell";
+
+
+@implementation DialogsTypicalUseViewController (Supplemental)
+
+- (void)loadCollectionView:(nullable NSArray *)modes {
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
+  self.modes = modes;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+  return self.modes.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                            forIndexPath:indexPath];
+  cell.textLabel.text = self.modes[indexPath.row];
+  return cell;
+}
+
+@end
 
 @implementation DialogsTypicalUseViewController (CatalogByConvention)
 
@@ -43,15 +70,11 @@
   return YES;
 }
 
-+ (NSString *)catalogStoryboardName {
-  return @"DialogsTypicalUseViewController";
-}
-
 @end
 
 @interface ProgrammaticViewController ()
 
-@property(nonatomic, strong) MDCRaisedButton *dismissButton;
+@property(nonatomic, strong) MDCFlatButton *dismissButton;
 
 @end
 
@@ -62,11 +85,12 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  _dismissButton = [[MDCRaisedButton alloc] init];
-  _dismissButton.autoresizingMask =
-      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
-      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+  _dismissButton = [[MDCFlatButton alloc] init];
   [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  _dismissButton.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
   [_dismissButton sizeToFit];
   [_dismissButton addTarget:self
                      action:@selector(dismiss:)

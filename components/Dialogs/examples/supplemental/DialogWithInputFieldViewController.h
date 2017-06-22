@@ -21,6 +21,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DialogWithInputFieldViewController : UIViewController
+@class button;
 
+@interface DialogWithInputFieldViewController : UIViewController
 @end

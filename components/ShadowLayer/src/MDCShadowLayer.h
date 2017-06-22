@@ -43,7 +43,7 @@
  The Material shadow effect.
 
  @see
- https://www.google.com/design/spec/what-is-material/elevation-shadows.html#elevation-shadows-shadows
+ https://material.io/guidelines/what-is-material/elevation-shadows.html#elevation-shadows-shadows
 
  Consider rasterizing your MDCShadowLayer if your view will not generally be animating or
  changing size. If you need to animate a rasterized MDCShadowLayer, disable rasterization first.

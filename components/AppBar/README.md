@@ -1,31 +1,29 @@
 <!--docs:
-title:  "App Bar"
+title: "App Bars"
 layout: detail
 section: components
 excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
+iconId: toolbar
+path: /catalog/app-bars/
+api_doc_root: true
 -->
 
-# App Bar
+# App Bars
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/app_bar.png" alt="App Bar" width="320">
+  <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/app_bar.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar Structure</a></li>
-  <li class="icon-spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar Structure</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">API: MDCAppBar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">API: MDCAppBarContainerViewController</a></li>
 </ul>
 
 - - -
@@ -41,15 +39,16 @@ navigation experience.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/AppBar'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -91,15 +90,15 @@ Before using App Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialAppBar.h"
-~~~
+```
 <!--</div>-->
 
 ### Add the App Bar to a view controller
@@ -122,7 +121,7 @@ You must also add the `headerViewController` as a child view controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let appBar = MDCAppBar()
 
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -130,11 +129,11 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 
   self.addChildViewController(appBar.headerViewController)
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 @interface ObjcViewController ()
 @property(nonatomic, strong, nonnull) MDCAppBar *appBar;
 @end
@@ -152,7 +151,7 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 }
 
 @end
-~~~
+```
 <!--</div>-->
 
 Step 2: **Inform the App Bar that your view controller's view has loaded**.
@@ -162,17 +161,17 @@ ensure that the App Bar's Flexible Header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
   // After all other views have been registered.
   appBar.addSubviewsToParent()
 }
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -181,7 +180,7 @@ override func viewDidLoad() {
   // After all other views have been registered.
   [self.appBar addSubviewsToParent];
 }
-~~~
+```
 <!--</div>-->
 
 ### Tracking a scroll view

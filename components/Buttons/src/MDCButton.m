@@ -18,6 +18,7 @@
 
 #import "MDFTextAccessibility.h"
 #import "MaterialInk.h"
+#import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -50,16 +51,11 @@ static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilit
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
-// http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
+// https://material.io/guidelines/components/buttons.html#buttons-main-buttons
 static const CGFloat MDCButtonDisabledAlpha = 0.1f;
 
-// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
+// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x2196F3;
-
-// Checks whether the provided floating point number is exactly zero.
-static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
-  return (value == 0.f);
-}
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
@@ -112,6 +108,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 + (Class)layerClass {
   return [MDCShadowLayer class];
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCButtonInit];
+  }
+  return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -219,6 +223,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
 }
 
++ (void)initialize {
+  // Default background colors.
+  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
+                                    forState:UIControlStateNormal];
+}
+
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
@@ -260,9 +270,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  // Default background colors.
-  [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
-                  forState:UIControlStateNormal];
 
   self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
@@ -500,6 +507,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - BackgroundColor
 
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor {
+  // Turns out swift ignores NS_UNAVAILABLE
+  [self setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+}
+
 - (UIColor *)backgroundColorForState:(UIControlState)state {
   return _backgroundColors[@(state)];
 }
@@ -622,12 +634,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (BOOL)shouldHaveOpaqueBackground {
-  BOOL isFlatButton = MDCButtonFloatIsExactlyZero([self elevationForState:UIControlStateNormal]);
+  BOOL isFlatButton = MDCCGFloatIsExactlyZero([self elevationForState:UIControlStateNormal]);
   return !isFlatButton;
 }
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
-  void (^animations)() = ^{
+  void (^animations)(void) = ^{
     self.alpha = self.enabled ? 1.0f : _disabledAlpha;
     [self updateBackgroundColor];
   };

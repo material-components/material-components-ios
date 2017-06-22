@@ -26,7 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldUseLaunchSchemeArgsEnv = "NO"
       codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
@@ -43,9 +43,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0B50E1981D91B0BD00DED250"
-               BuildableName = "MDCInteractionTests.xctest"
-               BlueprintName = "MDCInteractionTests"
+               BlueprintIdentifier = "36683DBD1EF3212B002EF2E6"
+               BuildableName = "MDCEarlGreyTests.xctest"
+               BlueprintName = "MDCEarlGreyTests"
                ReferencedContainer = "container:MDCCatalog.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -59,6 +59,13 @@
             ReferencedContainer = "container:MDCCatalog.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "DYLD_INSERT_LIBRARIES"
+            value = "@executable_path/EarlGrey.framework/EarlGrey"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

@@ -107,6 +107,22 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 @property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;
 
 /**
+ Sets the color to be used for the title text. If nil upon presentation, a color of sufficient
+ contrast to the |outerHighlightColor| will be automatically chosen.
+
+ Defaults to nil.
+ */
+@property(nonatomic, strong, nullable) UIColor *titleColor;
+
+/**
+ Sets the color to be used for the body text. If nil upon presentation, a color of sufficient
+ contrast to the |outerHighlightColor| will be automatically chosen upon presentation.
+
+ Defaults to nil.
+ */
+@property(nonatomic, strong, nullable) UIColor *bodyColor;
+
+/**
  Dismisses the feature highlight using the 'accept' style dismissal animation and triggers the
  completion block with accepted set to YES.
 

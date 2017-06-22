@@ -292,6 +292,7 @@ and delete the release branch:
 
 ## Publish to Cocoapods
 
+    git checkout stable
     pod trunk push MaterialComponents.podspec
 
 ## Reply to the original release email message

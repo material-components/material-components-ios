@@ -13,37 +13,55 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_29pt@2x.png",
+      "filename" : "logo_components_ios_color_1x_ios_23in29dp.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "logo_components_ios_color_2x_ios_23in29dp.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_29pt@3x.png",
+      "filename" : "logo_components_ios_color_3x_ios_23in29dp.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_40pt@2x.png",
+      "filename" : "logo_components_ios_color_2x_ios_32in40dp.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_40pt@3x.png",
+      "filename" : "logo_components_ios_color_3x_ios_32in40dp.png",
       "scale" : "3x"
     },
     {
-      "size" : "60x60",
+      "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_40pt@3x.png",
+      "filename" : "logo_components_ios_color_1x_ios_46in57dp.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "57x57",
+      "idiom" : "iphone",
+      "filename" : "logo_components_ios_color_2x_ios_46in57dp.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_60pt@3x.png",
+      "filename" : "logo_components_ios_color_2x_ios_48in60dp.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "logo_components_ios_color_3x_ios_48in60dp.png",
       "scale" : "3x"
     },
     {
@@ -59,43 +77,74 @@
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_29pt.png",
+      "filename" : "logo_components_ios_color_1x_ios_23in29dp.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_29pt@2x.png",
+      "filename" : "logo_components_ios_color_2x_ios_23in29dp.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_40pt.png",
+      "filename" : "logo_components_ios_color_1x_ios_32in40dp.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_40pt@2x.png",
+      "filename" : "logo_components_ios_color_2x_ios_32in40dp.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "50x50",
+      "idiom" : "ipad",
+      "filename" : "logo_components_ios_color_1x_ios_41in50dp.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "50x50",
+      "idiom" : "ipad",
+      "filename" : "logo_components_ios_color_2x_ios_41in50dp.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "72x72",
+      "idiom" : "ipad",
+      "filename" : "logo_components_ios_color_1x_ios_58in72dp.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "72x72",
+      "idiom" : "ipad",
+      "filename" : "logo_components_ios_color_2x_ios_58in72dp.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_76pt.png",
+      "filename" : "logo_components_ios_color_1x_ios_61in76dp.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_76pt@2x.png",
+      "filename" : "logo_components_ios_color_2x_ios_61in76dp.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_83_5pt@2x.png",
+      "filename" : "logo_components_ios_color_1x_ios_133in167dp.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "72x72",
+      "idiom" : "ipad",
+      "filename" : "logo_components_ios_color_2x_ios_58in72dp.png",
+      "unassigned" : true,
       "scale" : "2x"
     }
   ],

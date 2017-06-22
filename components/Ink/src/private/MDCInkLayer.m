@@ -215,7 +215,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   [super setupRipple];
 }
 
-- (void)enterWithCompletion:(void (^)())completionBlock {
+- (void)enterWithCompletion:(void (^)(void))completionBlock {
   [super enter];
 
   if (self.bounded) {
@@ -273,7 +273,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   [self exit:animated completion:nil];
 }
 
-- (void)exit:(BOOL)animated completion:(void (^)())completionBlock {
+- (void)exit:(BOOL)animated completion:(void (^)(void))completionBlock {
   [super exit];
 
   if (!animated) {
@@ -442,7 +442,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
  @param animated Enables the ink ripple fade out animation.
  @param completionBlock Block called after the completion of the animation.
  */
-- (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock;
+- (void)resetBottomInk:(BOOL)animated completion:(void (^)(void))completionBlock;
 
 /**
  Reset the bottom-most ink applied to the layer with a completion handler to be called on completion
@@ -452,7 +452,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
  @param point Evaporate the ink towards the point.
  @param completionBlock Block called after the completion of the animation.
  */
-- (void)resetBottomInk:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)())completionBlock;
+- (void)resetBottomInk:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)(void))completionBlock;
 
 @property(nonatomic, strong) CAShapeLayer *compositeRipple;
 @property(nonatomic, strong) NSMutableArray<MDCInkLayerForegroundRipple *> *foregroundRipples;
@@ -501,7 +501,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 }
 
-- (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock {
+- (void)resetBottomInk:(BOOL)animated completion:(void (^)(void))completionBlock {
   if (self.foregroundRipples.count > 0) {
     [[self.foregroundRipples objectAtIndex:(self.foregroundRipples.count - 1)]
               exit:animated
@@ -514,7 +514,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 - (void)resetBottomInk:(BOOL)animated
                toPoint:(CGPoint)point
-            completion:(void (^)())completionBlock {
+            completion:(void (^)(void))completionBlock {
   if (self.foregroundRipples.count > 0) {
     MDCInkLayerForegroundRipple *foregroundRipple =
         [self.foregroundRipples objectAtIndex:(self.foregroundRipples.count - 1)];
@@ -528,7 +528,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 #pragma mark - Properties
 
-- (void)spreadFromPoint:(CGPoint)point completion:(void (^)())completionBlock {
+- (void)spreadFromPoint:(CGPoint)point completion:(void (^)(void))completionBlock {
   // Create a mask layer before drawing the ink using the superlayer's shadowPath
   // if it exists. This helps the FAB when it is not rectangular.
   if (self.masksToBounds && self.superlayer.shadowPath) {
@@ -571,11 +571,11 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self.foregroundRipples addObject:foregroundRipple];
 }
 
-- (void)evaporateWithCompletion:(void (^)())completionBlock {
+- (void)evaporateWithCompletion:(void (^)(void))completionBlock {
   [self resetBottomInk:YES completion:completionBlock];
 }
 
-- (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock {
+- (void)evaporateToPoint:(CGPoint)point completion:(void (^)(void))completionBlock {
   [self resetBottomInk:YES toPoint:point completion:completionBlock];
 }
 

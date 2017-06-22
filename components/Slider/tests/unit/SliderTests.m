@@ -16,13 +16,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCThumbTrack.h"
+#import "MaterialThumbTrack.h"
 #import "MaterialSlider.h"
 
 static const NSUInteger kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
-// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
+// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCBlueColor = 0x2196F3;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.

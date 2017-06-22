@@ -1,27 +1,28 @@
 <!--docs:
-title:  "Page Control"
+title: "Page Control"
 layout: detail
 section: components
 excerpt: "Page Control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
+path: /catalog/page-controls/
+api_doc_root: true
 -->
 
 # Page Control
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/page_control.png" alt="Page Control" width="320">
+  <img src="docs/assets/page_control.png" alt="Page Control" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/page_control.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
 influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
-<!--{: .article__intro }-->
+
+## Design & API Documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/page-controls/api-docs/Classes/MDCPageControl.html">API: MDCPageControl</a></li>
+</ul>
 
 - - -
 
@@ -36,15 +37,16 @@ desired animation of the control.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/PageControl'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -65,22 +67,17 @@ final position of the new page.
 #### Example Screenshots
 
 
-![screenshot-1](docs/assets/MDCPageControl_screenshot-1.png)
+<img src="docs/assets/MDCPageControl_screenshot-1.png" alt="screenshot-1" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->
 Page control showing current page in resting state.
-<!--{: .clear-after }-->
 
-
-![screenshot-2](docs/assets/MDCPageControl_screenshot-2.png)
+<img src="docs/assets/MDCPageControl_screenshot-2.png" alt="screenshot-2" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->
 Page control showing animated track with current page indicator positioned along the track.
-<!--{: .clear-after }-->
 
-
-![screenshot-3](docs/assets/MDCPageControl_screenshot-3.png)
+<img src="docs/assets/MDCPageControl_screenshot-3.png" alt="screenshot-3" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->
 Page control showing new current page.
-<!--{: .clear-after }-->
 
 
 - - -
@@ -93,15 +90,15 @@ Before using Page Control, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialPageControl
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialPageControl.h"
-~~~
+```
 <!--</div>-->
 
 Integrating the page control requires two steps. First, add a page control with companion scroll
@@ -117,7 +114,7 @@ notified of page changes.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let pageControl = MDCPageControl()
 let scrollView = UIScrollView()
 let pages = NSMutableArray()
@@ -143,11 +140,11 @@ func didChangePage(sender: MDCPageControl){
   offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width;
   scrollView.setContentOffset(offset, animated: true)
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -170,7 +167,7 @@ func didChangePage(sender: MDCPageControl){
   offset.x = (CGFloat)sender.currentPage * self.scrollView.bounds.size.width;
   [self.scrollView setContentOffset:offset animated: true];
 }
-~~~
+```
 <!--</div>-->
 
 ### Step 2: Forwarding the required scroll view delegate methods
@@ -184,7 +181,7 @@ scrolling movement of the designated scroll view.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 func scrollViewDidScroll(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidScroll(scrollView)
 }
@@ -196,11 +193,11 @@ func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidEndScrollingAnimation(scrollView)
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   [self.pageControl scrollViewDidScroll:scrollView];
 }
@@ -212,5 +209,5 @@ func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   [self.pageControl scrollViewDidEndScrollingAnimation:scrollView];
 }
-~~~
+```
 <!--</div>-->

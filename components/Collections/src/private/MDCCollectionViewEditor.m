@@ -16,7 +16,7 @@
 
 #import "MDCCollectionViewEditor.h"
 
-#import "MDCCollectionViewEditingDelegate.h"
+#import "MaterialCollections.h"
 #import "MaterialShadowLayer.h"
 
 #import <tgmath.h>
@@ -344,11 +344,18 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
        shouldReceiveTouch:(UITouch *)touch {
-  if (self.isEditing) {
-    return YES;
-  } else {
-    return NO;
+  BOOL allowsSwipeToDismissItem = NO;
+  if ([_delegate respondsToSelector:@selector(collectionViewAllowsSwipeToDismissItem:)]) {
+    allowsSwipeToDismissItem = [_delegate collectionViewAllowsSwipeToDismissItem:_collectionView];
   }
+
+  BOOL allowsSwipeToDismissSection = NO;
+  if ([_delegate respondsToSelector:@selector(collectionViewAllowsSwipeToDismissSection:)]) {
+    allowsSwipeToDismissSection =
+        [_delegate collectionViewAllowsSwipeToDismissSection:_collectionView];
+  }
+
+  return (self.isEditing || allowsSwipeToDismissItem || allowsSwipeToDismissSection);
 }
 
 #pragma mark - LongPress Gesture Handling

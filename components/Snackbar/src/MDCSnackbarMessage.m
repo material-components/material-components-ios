@@ -158,6 +158,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
   copy.title = self.title;
   copy.handler = self.handler;  // See the comment on @c completionHandler above.
   copy.accessibilityIdentifier = self.accessibilityIdentifier;
+  copy.accessibilityHint = self.accessibilityHint;
 
   return copy;
 }

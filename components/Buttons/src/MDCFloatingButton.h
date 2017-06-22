@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
  their own background color, and also raise briefly when touched. Floating action buttons should
  only be used rarely, for the main action of a screen.
 
- @see http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
+ @see https://material.io/guidelines/components/buttons.html#buttons-main-buttons
  */
 @interface MDCFloatingButton : MDCButton
 
@@ -76,6 +76,13 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
  @return Button with MDCFloatingButtonShapeDefault shape.
  */
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
+
+/**
+ Initializes self to a button with the MDCFloatingButtonShapeDefault shape.
+
+ @return Button with MDCFloatingButtonShapeDefault shape.
+ */
+- (nonnull instancetype)init;
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 

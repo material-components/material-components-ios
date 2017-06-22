@@ -16,14 +16,15 @@
 
 #import "MDCFeatureHighlightViewController.h"
 
+#import "MaterialTypography.h"
+#import "MDFTextAccessibility.h"
 #import "private/MDCFeatureHighlightAnimationController.h"
-#import "private/MDCFeatureHighlightView.h"
-
-const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
+#import "private/MDCFeatureHighlightView+Private.h"
 
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
+
 @end
 
 @implementation MDCFeatureHighlightViewController {
@@ -45,13 +46,10 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     _animationController = [[MDCFeatureHighlightAnimationController alloc] init];
     _animationController.presenting = YES;
 
-    [_highlightedView addObserver:self
-                       forKeyPath:@"frame"
-                          options:NSKeyValueObservingOptionNew
-                          context:nil];
-
     super.transitioningDelegate = self;
     super.modalPresentationStyle = UIModalPresentationCustom;
+
+    [self commonMDCFeatureHighlightViewControllerInit];
   }
   return self;
 }
@@ -70,33 +68,46 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                      completion:(nullable MDCFeatureHighlightCompletion)completion {
+  UIView *snapshotView = [highlightedView snapshotViewAfterScreenUpdates:YES];
+  // We have to wrap the snapshoted view because _UIReplicantViews can't be accessibility elements.
+  UIView *displayedView = [[UIView alloc] initWithFrame:snapshotView.bounds];
+  [displayedView addSubview:snapshotView];
+
+  // Copy the accessibility values from the view being highlighted.
+  displayedView.isAccessibilityElement = YES;
+  displayedView.accessibilityTraits = UIAccessibilityTraitButton;
+  displayedView.accessibilityLabel = highlightedView.accessibilityLabel;
+  displayedView.accessibilityValue = highlightedView.accessibilityValue;
+  displayedView.accessibilityHint = highlightedView.accessibilityHint;
+
   return [self initWithHighlightedView:highlightedView
-                           andShowView:[highlightedView snapshotViewAfterScreenUpdates:YES]
+                           andShowView:displayedView
                             completion:completion];
 }
 
-- (void)dealloc {
-  [_pulseTimer invalidate];
-  [_highlightedView removeObserver:self forKeyPath:@"frame"];
-}
+- (void)commonMDCFeatureHighlightViewControllerInit {
+  _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
 
-- (void)loadView {
   _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   _featureHighlightView.displayedView = _displayedView;
-  _featureHighlightView.titleLabel.text = self.titleText;
-  _featureHighlightView.bodyLabel.text = self.bodyText;
   _featureHighlightView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
-  _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
 
   __weak __typeof__(self) weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
     __typeof__(self) strongSelf = weakSelf;
     [strongSelf dismiss:accepted];
   };
-
   self.view = _featureHighlightView;
+}
+
+- (void)viewWillLayoutSubviews {
+  _featureHighlightView.titleLabel.text = self.titleText;
+  _featureHighlightView.bodyLabel.text = self.bodyText;
+}
+
+- (void)dealloc {
+  [_pulseTimer invalidate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,6 +116,34 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
                                          toCoordinateSpace:_featureHighlightView];
   _featureHighlightView.highlightPoint = point;
+
+  if (!self.bodyColor) {
+    MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+    if ([MDFTextAccessibility isLargeForContrastRatios:_featureHighlightView.bodyLabel.font]) {
+      options |= MDFTextAccessibilityOptionsLargeFont;
+    }
+
+    UIColor *outerColor = [self.outerHighlightColor colorWithAlphaComponent:1.0];
+    self.bodyColor =
+        [MDFTextAccessibility textColorOnBackgroundColor:outerColor
+                                         targetTextAlpha:[MDCTypography captionFontOpacity]
+                                                 options:options];
+  }
+
+  if (!self.titleColor) {
+    MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+    if ([MDFTextAccessibility isLargeForContrastRatios:_featureHighlightView.titleLabel.font]) {
+      options |= MDFTextAccessibilityOptionsLargeFont;
+    }
+    UIColor *outerColor = [self.outerHighlightColor colorWithAlphaComponent:1.0];
+    // Since MDFTextAccessibility can return either a dark value or light value color we want to
+    // guarantee that the title and body have the same value.
+    CGFloat titleAlpha = [MDFTextAccessibility minAlphaOfTextColor:self.bodyColor
+                                                 onBackgroundColor:outerColor
+                                                           options:options];
+    titleAlpha = MAX([MDCTypography titleFontOpacity], titleAlpha);
+    self.titleColor = [self.bodyColor colorWithAlphaComponent:titleAlpha];
+  }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -123,18 +162,50 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   [_pulseTimer invalidate];
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  [coordinator animateAlongsideTransition:
+   ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+     CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
+                                                       toView:_featureHighlightView];
+
+     _featureHighlightView.highlightPoint = point;
+     [_featureHighlightView layoutIfNeeded];
+     [_featureHighlightView updateOuterHighlight];
+   } completion:nil];
+}
+
 - (UIColor *)outerHighlightColor {
-  if (!_outerHighlightColor) {
-    return [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
-  }
-  return _outerHighlightColor;
+  return _featureHighlightView.outerHighlightColor;
+}
+
+- (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
+  _featureHighlightView.outerHighlightColor = outerHighlightColor;
 }
 
 - (UIColor *)innerHighlightColor {
-  if (!_innerHighlightColor) {
-    return [UIColor whiteColor];
-  }
-  return _innerHighlightColor;
+  return _featureHighlightView.innerHighlightColor;
+}
+
+- (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
+  _featureHighlightView.innerHighlightColor = innerHighlightColor;
+}
+
+- (UIColor *)titleColor {
+  return _featureHighlightView.titleColor;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+  _featureHighlightView.titleColor = titleColor;
+}
+
+- (UIColor *)bodyColor {
+  return _featureHighlightView.bodyColor;
+}
+
+- (void)setBodyColor:(UIColor *)bodyColor {
+  _featureHighlightView.bodyColor = bodyColor;
 }
 
 - (void)acceptFeature {
@@ -158,18 +229,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                                self->_completion(accepted);
                              }
                            }];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSString *, id> *)change
-                       context:(void *)context {
-  if (object == _highlightedView && [keyPath isEqualToString:@"frame"]) {
-    CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                                      toView:_featureHighlightView];
-    _featureHighlightView.highlightPoint = point;
-    [_featureHighlightView layoutIfNeeded];
-  }
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate

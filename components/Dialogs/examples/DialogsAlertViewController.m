@@ -21,9 +21,32 @@
 
 @implementation DialogsAlertViewController
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self loadCollectionView:
+    @[ @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Dynamic Alert"]];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+  switch (indexPath.row) {
+    case 0:
+      [self didTapShowAlert:nil];
+      break;
+    case 1:
+      [self didTapShowLongAlert:nil];
+      break;
+    case 2:
+      [self didTapNondismissingAlert:nil];
+      break;
+    case 3:
+    default:
+      [self didTapDynamicAlert:nil];
+      break;
+  }
+}
+
 - (IBAction)didTapShowAlert:(id)sender {
-  [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
-      setCustomTitleColor:[UIColor purpleColor]];
 
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
@@ -49,6 +72,31 @@
 - (IBAction)didTapShowLongAlert:(id)sender {
   NSString *messageString =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
        "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
        "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
        "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "

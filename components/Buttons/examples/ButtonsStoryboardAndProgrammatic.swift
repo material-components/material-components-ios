@@ -113,20 +113,26 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
                          constant: 0)
     ])
 
-    raisedButton.setTitle("Programmatic", for: UIControlState())
+    let titleColor = UIColor.white
+    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+
+    raisedButton.setTitle("Programmatic", for: .normal)
+    raisedButton.setTitleColor(titleColor, for: .normal)
+    raisedButton.backgroundColor = backgroundColor
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
     raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(raisedButton)
 
     flatButton.customTitleColor = UIColor.gray
-    flatButton.setTitle("Programmatic", for: UIControlState())
+    flatButton.setTitle("Programmatic", for: .normal)
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(flatButton)
 
     floatingButton.sizeToFit()
+    floatingButton.backgroundColor = backgroundColor
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
 

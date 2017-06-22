@@ -170,12 +170,25 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     [self stopObservingItems];
 
     _items = [items copy];
+    // Update the path to the selected item.
+    if (_lastSelectedIndexPath) {
+      if (_selectedItem) {
+        NSUInteger index = [_items indexOfObject:_selectedItem];
+        if (NSNotFound != index) {
+          _lastSelectedIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
+        } else {
+          _lastSelectedIndexPath = nil;
+        }
+      } else {
+        _lastSelectedIndexPath = nil;
+      }
+    }
 
     [self reload];
 
-    // Reset selection to a valid item.
+    // Reset selection to the unselected state.
     if (![_items containsObject:_selectedItem]) {
-      self.selectedItem = [_items firstObject];
+      self.selectedItem = nil;
     }
 
     // Start observing new items for changes.
@@ -201,13 +214,15 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 - (void)setSelectedItem:(nullable UITabBarItem *)selectedItem animated:(BOOL)animated {
   if (_selectedItem != selectedItem) {
-    NSInteger itemIndex = [_items indexOfObject:selectedItem];
-    if (itemIndex == NSNotFound) {
-      [[NSException exceptionWithName:NSInvalidArgumentException
-                               reason:@"Invalid item"
-                             userInfo:nil] raise];
+    NSUInteger itemIndex = NSNotFound;
+    if (selectedItem) {
+      itemIndex = [_items indexOfObject:selectedItem];
+      if (itemIndex == NSNotFound) {
+        [[NSException exceptionWithName:NSInvalidArgumentException
+                                 reason:@"Invalid item"
+                               userInfo:nil] raise];
+      }
     }
-
     _selectedItem = selectedItem;
     [self selectItemAtIndex:itemIndex animated:animated];
   }
@@ -314,12 +329,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   if (_collectionView == collectionView) {
-    UITabBarItem *item = [self itemAtIndexPath:indexPath];
-
     // Notify delegate of impending selection.
     id<MDCItemBarDelegate> delegate = self.delegate;
-    if ([delegate respondsToSelector:@selector(itemBar:willSelectItem:)]) {
-      [delegate itemBar:self willSelectItem:item];
+    if ([delegate respondsToSelector:@selector(itemBar:shouldSelectItem:)]) {
+      UITabBarItem *item = [self itemAtIndexPath:indexPath];
+      return [delegate itemBar:self shouldSelectItem:item];
     }
   }
   return YES;
@@ -410,13 +424,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 + (NSArray *)observableItemKeys {
   static dispatch_once_t onceToken;
   static NSArray *s_keys = nil;
+  // clang-format off
   dispatch_once(&onceToken, ^{
     s_keys = @[
-      NSStringFromSelector(@selector(title)), NSStringFromSelector(@selector(image)),
+      NSStringFromSelector(@selector(title)),
+      NSStringFromSelector(@selector(image)),
       NSStringFromSelector(@selector(badgeValue)),
       NSStringFromSelector(@selector(accessibilityIdentifier))
     ];
   });
+  // clang-format on
   return s_keys;
 }
 
@@ -451,13 +468,22 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   return isPad ? UIUserInterfaceSizeClassRegular : UIUserInterfaceSizeClassCompact;
 }
 
-- (void)selectItemAtIndex:(NSInteger)index animated:(BOOL)animated {
-  NSParameterAssert(index >= 0 && index < (NSInteger)[_items count]);
+- (void)selectItemAtIndex:(NSUInteger)index animated:(BOOL)animated {
+  NSIndexPath *indexPath = nil;
+  if (index != NSNotFound) {
+    NSParameterAssert(index < [_items count]);
 
-  NSIndexPath *indexPath = [self indexPathForItemAtIndex:index];
-  [_collectionView selectItemAtIndexPath:indexPath
-                                animated:animated
-                          scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+    indexPath = [self indexPathForItemAtIndex:index];
+    [_collectionView selectItemAtIndexPath:indexPath
+                                  animated:animated
+                            scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+  } else {
+    for (NSIndexPath *path in [_collectionView indexPathsForSelectedItems]) {
+      [_collectionView deselectItemAtIndexPath:path animated:NO];
+    }
+    _selectionIndicator.bounds = CGRectZero;
+    _lastSelectedIndexPath = nil;
+  }
   [self didSelectItemAtIndexPath:indexPath animateTransition:animated];
 }
 
@@ -536,7 +562,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)updateFlowLayoutMetricsAnimated:(BOOL)animate {
-  void (^animationBlock)() = ^{
+  void (^animationBlock)(void) = ^{
     [self updateFlowLayoutMetrics];
   };
 

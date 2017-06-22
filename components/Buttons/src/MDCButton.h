@@ -31,7 +31,7 @@
  All buttons set the exclusiveTouch property to YES by default, which prevents users from
  simultaneously interacting with a button and other UI elements.
 
- @see http://www.google.com/design/spec/components/buttons.html
+ @see https://material.io/guidelines/components/buttons.html
  */
 @interface MDCButton : UIButton
 
@@ -51,7 +51,8 @@
  @param backgroundColor The background color.
  @param state The state.
  */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
+UI_APPEARANCE_SELECTOR;
 
 /** The ink style of the button. */
 @property(nonatomic, assign) MDCInkStyle inkStyle;

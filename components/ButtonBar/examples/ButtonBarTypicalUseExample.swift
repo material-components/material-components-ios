@@ -62,7 +62,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     self.view.addSubview(buttonBar)
 
     // Ensure that the controller's view isn't transparent.
-    self.view.backgroundColor = UIColor.white
+    view.backgroundColor = UIColor(white: 0.9, alpha:1.0)
   }
 
   func didTapActionButton(_ sender: Any) {
@@ -92,11 +92,11 @@ extension ButtonBarTypicalUseSwiftExample {
 
 extension ButtonBarTypicalUseSwiftExample {
   func buttonBarBackgroundColor() -> UIColor {
-    return UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2)
+    return UIColor(white: 0.1, alpha: 1.0)
   }
 
   func itemTitleTextAttributes () -> [String: Any] {
-    let textColor = UIColor(white: 0, alpha: 0.8)
+    let textColor = UIColor(white: 1, alpha: 0.8)
     return [NSForegroundColorAttributeName: textColor]
   }
 }

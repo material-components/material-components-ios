@@ -24,7 +24,7 @@
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the
  Material spec.
 
- https://material.google.com/components/dialogs.html
+ https://material.io/guidelines/components/dialogs.html
 
  MDCDialogPresentationController should not be used to present full-screen dialogs.
 

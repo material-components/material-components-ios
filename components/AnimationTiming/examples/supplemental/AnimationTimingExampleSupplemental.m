@@ -19,6 +19,7 @@
 #import "AnimationTimingExampleSupplemental.h"
 #import "MaterialTypography.h"
 
+const CGFloat kTopMargin = 16.f;
 const CGFloat kLeftGutter = 16.f;
 const CGFloat kTextOffset = 24.f;
 
@@ -45,7 +46,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 @implementation AnimationTimingExample (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
   self.title = @"Animation Timing";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -59,11 +60,11 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   CGFloat lineSpace = (self.view.frame.size.height - 50.f) / 4.f;
   UILabel *linearLabel = [AnimationTimingExample curveLabelWithTitle:@"Linear"];
   linearLabel.frame =
-      CGRectMake(kLeftGutter, 0, linearLabel.frame.size.width, linearLabel.frame.size.height);
+      CGRectMake(kLeftGutter, kTopMargin, linearLabel.frame.size.width, linearLabel.frame.size.height);
   [self.scrollView addSubview:linearLabel];
 
   CGRect linearViewFrame =
-      CGRectMake(kLeftGutter, kTextOffset, kAnimationCircleSize.width, kAnimationCircleSize.height);
+      CGRectMake(kLeftGutter, kTextOffset + kTopMargin, kAnimationCircleSize.width, kAnimationCircleSize.height);
   self.linearView = [[UIView alloc] initWithFrame:linearViewFrame];
   self.linearView.backgroundColor = [AnimationTimingExample defaultColors][0];
   self.linearView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
@@ -129,10 +130,10 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     defaultColors = @[
-      [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-      [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-      [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-      [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1]
+      [UIColor colorWithWhite:0.1 alpha:1.0],
+      [UIColor colorWithWhite:0.2 alpha:1.0],
+      [UIColor colorWithWhite:0.3 alpha:1.0],
+      [UIColor colorWithWhite:0.4 alpha:1.0]
     ];
   });
   return defaultColors;

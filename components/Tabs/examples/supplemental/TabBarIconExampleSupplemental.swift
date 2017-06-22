@@ -55,7 +55,7 @@ extension TabBarIconSwiftExample {
     self.addChildViewController(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = UIColor.white
     appBar.headerViewController.headerView.minimumHeight = 76 + 72
-    appBar.headerViewController.headerView.tintColor = MDCPalette.blue().tint500
+    appBar.headerViewController.headerView.tintColor = MDCPalette.blue.tint500
 
     appBar.headerStackView.bottomBar = self.tabBar
     appBar.headerStackView.setNeedsLayout()
@@ -110,7 +110,7 @@ extension TabBarIconSwiftExample {
 
     let infoPage = UIView(frame: CGRect())
     infoPage.translatesAutoresizingMaskIntoConstraints = false
-    infoPage.backgroundColor = MDCPalette.lightBlue().tint300
+    infoPage.backgroundColor = MDCPalette.lightBlue.tint300
     scrollView.addSubview(infoPage)
 
     let infoLabel = UILabel(frame: CGRect())
@@ -184,7 +184,7 @@ extension TabBarIconSwiftExample {
   func setupStarPage() -> UIView {
     let starPage = UIView(frame: CGRect())
     starPage.translatesAutoresizingMaskIntoConstraints = false
-    starPage.backgroundColor = MDCPalette.lightBlue().tint200
+    starPage.backgroundColor = MDCPalette.lightBlue.tint200
     self.scrollView.addSubview(starPage)
 
     return starPage

@@ -18,21 +18,11 @@
 
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "MaterialCollections.h"
 
-@interface SnackbarExample : UIViewController
-
-@property(nonatomic) MDCRaisedButton *snackbarButton;
-
-- (void)setupExampleViews;
-
-@end
-
-@interface SnackbarActionExample : SnackbarExample
-
-@end
-
-@interface SnackbarBoldExample : SnackbarExample
-
+@interface SnackbarExample : MDCCollectionViewController
+@property(nonatomic) NSArray *choices;
+- (void)setupExampleViews:(NSArray *)choices;
 @end
 
 @interface SnackbarOverlayViewExample : SnackbarExample
@@ -43,24 +33,10 @@
 @end
 
 @interface SnackbarSimpleExample : SnackbarExample
-- (void)handleShowSnackbarButtonTapped:(id)sender;
 @end
 
 @interface SnackbarSuspensionExample : SnackbarExample
 
-@property(nonatomic) MDCRaisedButton *groupAButton;
-@property(nonatomic) MDCRaisedButton *groupBButton;
-@property(nonatomic) MDCRaisedButton *allMessagesButton;
-
-@property(nonatomic) UISwitch *groupASwitch;
-@property(nonatomic) UISwitch *groupBSwitch;
-@property(nonatomic) UISwitch *allMessagesSwitch;
-
-@property(nonatomic) UILabel *groupALabel;
-@property(nonatomic) UILabel *groupBLabel;
-@property(nonatomic) UILabel *allLabel;
-
-- (void)handleShowTapped:(id)sender;
 - (void)handleSuspendStateChanged:(UISwitch *)sender;
 
 @end

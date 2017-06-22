@@ -28,12 +28,15 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [self loadCollectionView];
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
 }
 
-- (IBAction)didTapPresent:(id)sender {
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIStoryboard *storyboard =

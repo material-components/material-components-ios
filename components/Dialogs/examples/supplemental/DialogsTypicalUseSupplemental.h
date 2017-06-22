@@ -21,9 +21,16 @@
 
 #import <UIKit/UIKit.h>
 
+@import MaterialComponents.MaterialCollections;
+
 //@class DialogsTypicalUseViewController;
 
-@interface DialogsTypicalUseViewController : UIViewController
+@interface DialogsTypicalUseViewController : MDCCollectionViewController
+@property(nonatomic, strong, nullable) NSArray *modes;
+@end
+
+@interface DialogsTypicalUseViewController (Supplemental)
+- (void)loadCollectionView:(nullable NSArray *)modes;
 @end
 
 @interface ProgrammaticViewController : UIViewController

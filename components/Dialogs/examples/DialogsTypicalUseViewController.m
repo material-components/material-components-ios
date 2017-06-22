@@ -29,9 +29,21 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [self loadCollectionView:@[@"Programmatic", @"Storyboard", @"Modal"]];
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+  if (indexPath.row == 0) {
+    [self didTapProgrammatic:nil];
+  } else if (indexPath.row == 1) {
+    [self didTapStoryboard:nil];
+  } else if (indexPath.row == 2) {
+    [self didTapModalProgrammatic:nil];
+  }
 }
 
 - (IBAction)didTapProgrammatic:(id)sender {

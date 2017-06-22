@@ -19,18 +19,21 @@
 
 #import <UIKit/UIKit.h>
 
+@import MaterialComponents.MaterialCollections;
+
+@class MDCAppBar;
 @class MDCTabBar;
-@class MDCRaisedButton;
 
-@interface TabBarTextOnlyExample : UIViewController
 
-@property MDCTabBar *_Nullable tabBar;
-@property MDCRaisedButton *_Nullable alignmentButton;
+@interface TabBarTextOnlyExample : MDCCollectionViewController
 
+@property(nullable) MDCAppBar *appBar;
+@property(nullable) MDCTabBar *tabBar;
+@property(nullable) NSArray *choices;
 @end
 
 @interface TabBarTextOnlyExample (Supplemental)
 
-- (void)setupExampleViews;
+- (void)setupExampleViews:(nullable NSArray *)choices;
 
 @end

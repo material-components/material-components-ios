@@ -16,19 +16,28 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialAppBar.h"
 #import "MaterialButtons.h"
+#import "MaterialCollections.h"
 #import "MaterialTabs.h"
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
+
 @implementation TabBarTextOnlyExample
+
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+  self = [super initWithCollectionViewLayout:layout];
+  if (self) {
+    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case"]];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  [self setupExampleViews];
-
   [self loadTabBar];
+  self.appBar.headerStackView.bottomBar = self.tabBar;
 }
 
 #pragma mark - Action
@@ -45,7 +54,6 @@
   // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
   self.tabBar =
       [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
-  self.tabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 250);
   self.tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
@@ -55,16 +63,15 @@
   ];
 
   // Give it a white appearance to show dark text and customize the unselected title color.
-  self.tabBar.selectedItemTintColor = [UIColor blackColor];
+  self.tabBar.selectedItemTintColor = [UIColor whiteColor];
   self.tabBar.unselectedItemTintColor = [UIColor grayColor];
-  self.tabBar.tintColor = [UIColor redColor];
-  self.tabBar.barTintColor = [UIColor whiteColor];
-  self.tabBar.inkColor = [UIColor colorWithWhite:0.0 alpha:0.1];
+  self.tabBar.tintColor = [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1];
+  self.tabBar.barTintColor = [UIColor colorWithWhite:0.1 alpha:1];
+  self.tabBar.inkColor = [UIColor colorWithWhite:1 alpha:0.1];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.tabBar sizeToFit];
-  [self.view addSubview:self.tabBar];
 }
 
 - (void)changeAlignment:(id)sender {
@@ -97,6 +104,18 @@
 
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
   [self.tabBar setAlignment:alignment animated:YES];
+}
+
+#pragma mark - Options in Collection View
+
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+  if (indexPath.row == 0) {
+    [self changeAlignment:collectionView];
+  } else {
+    [self toggleCase:collectionView];
+  }
 }
 
 @end

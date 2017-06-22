@@ -1,29 +1,28 @@
 <!--docs:
-title:  "Activity Indicator"
+title: "Activity Indicators"
 layout: detail
 section: components
 excerpt: "Progress and activity indicators are visual indications of an app loading content."
+iconId: progress_activity
+path: /catalog/progress-indicators/activity-indicators/
+api_doc_root: true
 -->
 
-# Activity Indicator
+# Activity Indicators
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/activity_indicator.png" alt="Activity Indicator" width="320">
+  <img src="docs/assets/activity_indicator.png" alt="Activity Indicator" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/activity_indicator.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/progress-activity.html">Material Design guidelines: Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html">API: MDCActivityIndicator</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Enums/MDCActivityIndicatorMode.html">API: MDCActivityIndicatorMode</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Protocols/MDCActivityIndicatorDelegate.html">API: MDCActivityIndicatorDelegate</a></li>
 </ul>
 
 - - -
@@ -49,15 +48,16 @@ When indicators are determinate they indicate how long an operation will take wh
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/ActivityIndicator'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -75,15 +75,15 @@ Before using Activity Indicator, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialActivityIndicator.h"
-~~~
+```
 <!--</div>-->
 
 ### Indeterminate indicators
@@ -103,7 +103,7 @@ When indicators are indeterminate they request that the user wait while somethin
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let activityIndicator = MDCActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
 view.addSubview(activityIndicator)
 
@@ -112,11 +112,11 @@ activityIndicator.startAnimating()
 ...
 // Stop animation
 activityIndicator.stopAnimating()
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCActivityIndicator *activityIndicator =
     [[MDCActivityIndicator alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
 [view addSubview:activityIndicator];
@@ -126,7 +126,7 @@ MDCActivityIndicator *activityIndicator =
 ...
 // Stop animation
 [activityIndicator stopAnimating];
-~~~
+```
 <!--</div>-->
 
 ### Determinate indicators
@@ -134,7 +134,7 @@ When indicators are determinate they indicate how long an operation will take wh
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let activityIndicator = MDCActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
 activityIndicator.indicatorMode = .determinate
 activityIndicator.progress = 0.5
@@ -145,11 +145,11 @@ activityIndicator.startAnimating()
 ...
 // Stop animation
 activityIndicator.stopAnimating()
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCActivityIndicator *activityIndicator =
     [[MDCActivityIndicator alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
 activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
@@ -161,5 +161,13 @@ activityIndicator.progress = 0.5;
 ...
 // Stop animation
 [activityIndicator stopAnimating];
-~~~
+```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../ProgressView">Progress Views</a></li>
+</ul>

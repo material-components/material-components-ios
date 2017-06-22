@@ -310,7 +310,10 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   [super addSubview:_contentView];
 
-  self.backgroundColor = [UIColor lightGrayColor];
+  if (![MDCFlexibleHeaderView appearance].backgroundColor) {
+    self.backgroundColor = [UIColor lightGrayColor];
+  }
+
   _defaultShadowLayer.backgroundColor = self.backgroundColor.CGColor;
 
   self.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -367,15 +370,14 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [super layoutSubviews];
 
   [self fhv_updateShadowPath];
+  [CATransaction begin];
   BOOL disableActions = [CATransaction disableActions];
   [CATransaction setDisableActions:YES];
   _defaultShadowLayer.frame = self.bounds;
   _customShadowLayer.frame = self.bounds;
   _shadowLayer.frame = self.bounds;
-  [_defaultShadowLayer layoutIfNeeded];
-  [_customShadowLayer layoutIfNeeded];
-  [_shadowLayer layoutIfNeeded];
   [CATransaction setDisableActions:disableActions];
+  [CATransaction commit];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -975,7 +977,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (!_sharedWithManyScrollViews || !_trackingInfo) {
     [self fhv_addInsetsToScrollView:_trackingScrollView];
   }
-  void (^animate)() = ^{
+  void (^animate)(void) = ^{
     [self fhv_updateLayout];
   };
   void (^completion)(BOOL) = ^(BOOL finished) {

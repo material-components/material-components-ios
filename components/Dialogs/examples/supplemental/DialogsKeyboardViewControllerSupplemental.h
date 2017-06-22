@@ -21,5 +21,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DialogsKeyboardViewController : UIViewController
+@import MaterialComponents.MaterialCollections;
+
+@interface DialogsKeyboardViewController : MDCCollectionViewController
+- (void)loadCollectionView;
 @end

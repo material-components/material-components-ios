@@ -50,7 +50,9 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];
-  [self.button setTitle:@"GO!" forState:UIControlStateNormal];
+  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1]];
+  [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [self.button setTitle:@"Action" forState:UIControlStateNormal];
   [self.button sizeToFit];
   [self.button addTarget:self
                   action:@selector(didTapButton:)
@@ -102,16 +104,16 @@ static NSString *const reuseIdentifier = @"Cell";
           forCellWithReuseIdentifier:reuseIdentifier];
 
   self.colors = @[
-    [MDCPalette redPalette].tint500,        [MDCPalette pinkPalette].tint500,
-    [MDCPalette purplePalette].tint500,     [MDCPalette deepPurplePalette].tint500,
-    [MDCPalette indigoPalette].tint500,     [MDCPalette bluePalette].tint500,
-    [MDCPalette lightBluePalette].tint500,  [MDCPalette cyanPalette].tint500,
-    [MDCPalette tealPalette].tint500,       [MDCPalette greenPalette].tint500,
-    [MDCPalette lightGreenPalette].tint500, [MDCPalette limePalette].tint500,
-    [MDCPalette yellowPalette].tint500,     [MDCPalette amberPalette].tint500,
-    [MDCPalette orangePalette].tint500,     [MDCPalette deepOrangePalette].tint500,
-    [MDCPalette brownPalette].tint500,      [MDCPalette greyPalette].tint500,
-    [MDCPalette blueGreyPalette].tint500,
+    MDCPalette.redPalette.tint500,        MDCPalette.pinkPalette.tint500,
+    MDCPalette.purplePalette.tint500,     MDCPalette.deepPurplePalette.tint500,
+    MDCPalette.indigoPalette.tint500,     MDCPalette.bluePalette.tint500,
+    MDCPalette.lightBluePalette.tint500,  MDCPalette.cyanPalette.tint500,
+    MDCPalette.tealPalette.tint500,       MDCPalette.greenPalette.tint500,
+    MDCPalette.lightGreenPalette.tint500, MDCPalette.limePalette.tint500,
+    MDCPalette.yellowPalette.tint500,     MDCPalette.amberPalette.tint500,
+    MDCPalette.orangePalette.tint500,     MDCPalette.deepOrangePalette.tint500,
+    MDCPalette.brownPalette.tint500,      MDCPalette.greyPalette.tint500,
+    MDCPalette.blueGreyPalette.tint500,
   ];
 }
 

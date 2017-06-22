@@ -48,13 +48,13 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_2x_ios_60dp.png",
+      "filename" : "logo_components_ios_color_2x_ios_48in60dp.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_3x_ios_60dp.png",
+      "filename" : "logo_components_ios_color_3x_ios_48in60dp.png",
       "scale" : "3x"
     },
     {

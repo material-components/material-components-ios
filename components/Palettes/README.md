@@ -1,19 +1,26 @@
 <!--docs:
-title:  "Palettes"
+title: "Palettes"
 layout: detail
 section: components
 excerpt: "The Palettes component provides Material color palettes."
+iconId: color
+path: /catalog/palette/
+api_doc_root: true
 -->
 
 # Palettes
 
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/palettes.png" alt="Palettes" width="375">
+</div>
+
 The Palettes component provides Material colors organized into similar palettes.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="http://www.google.com/design/spec/style/color.html#color-color-palette">Color palettes</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/style/color.html#color-color-palette">Material Design guidelines: Color palettes</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/palette/api-docs/Classes/MDCPalette.html">API: MDCPalette</a></li>
 </ul>
 
 - - -
@@ -29,15 +36,16 @@ The Palettes component provides Material colors organized into similar palettes.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/Palettes'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -50,15 +58,15 @@ Before using Palettes, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialPalettes
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialPalettes.h"
-~~~
+```
 <!--</div>-->
 
 ### Using palettes
@@ -76,13 +84,13 @@ scheme.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
-view.backgroundColor = MDCPalette.green().tint500;
-~~~
+``` swift
+view.backgroundColor = MDCPalette.green.tint500
+```
 
 #### Objective-C
 
-~~~ objc
-self.view.backgroundColor = [MDCPalette greenPalette].tint500;
-~~~
+``` objc
+self.view.backgroundColor = MDCPalette.greenPalette.tint500;
+```
 <!--</div>-->

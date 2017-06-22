@@ -18,7 +18,7 @@
 
 #import <objc/runtime.h>
 
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
 /**
  A container view for overlay views.

@@ -1,4 +1,6 @@
 target 'Bare' do
+  platform :ios, '8.0'
+  project 'Bare.xcodeproj'
   pod 'MaterialComponents', :path => '../../'
 end
 

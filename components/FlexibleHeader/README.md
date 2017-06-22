@@ -1,30 +1,31 @@
 <!--docs:
-title:  "Flexible Header"
+title: "Flexible Headers"
 layout: detail
 section: components
 excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
+iconId: header
+path: /catalog/flexible-headers/
+api_doc_root: true
 -->
 
 # Flexible Header
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/flexible_header.png" alt="Flexible Header" width="320">
+  <img src="docs/assets/flexible_header.png" alt="Flexible Header" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/flexible_header.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The Flexible Header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">API: MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">API: MDCFlexibleHeaderView</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">API: MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">API: MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">API: MDCFlexibleHeaderViewLayoutDelegate</a></li>
 </ul>
 
 - - -
@@ -40,15 +41,16 @@ UIScrollViewDelegate events.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/FlexibleHeader'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -94,15 +96,15 @@ Before using Flexible Header, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialFlexibleHeader
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialFlexibleHeader.h"
-~~~
+```
 <!--</div>-->
 
 ### Add the Flexible Header to a view controller
@@ -124,7 +126,7 @@ controller to a MDCFlexibleHeaderView instance.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let headerViewController = MDCFlexibleHeaderViewController()
 
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -138,11 +140,11 @@ required init?(coder aDecoder: NSCoder) {
 
   addChildViewController(headerViewController)
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 @property(nonatomic) MDCFlexibleHeaderViewController *headerViewController;
 ...
 
@@ -154,7 +156,7 @@ required init?(coder aDecoder: NSCoder) {
   }
   return self;
 }
-~~~
+```
 <!--</div>-->
 
 Step 2: **Add the MDCFlexibleHeaderViewController's view to your view controller's view**.
@@ -164,7 +166,7 @@ ensure that the Flexible Header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -172,11 +174,11 @@ override func viewDidLoad() {
   view.addSubview(headerViewController.view)
   headerViewController.didMove(toParentViewController: self)
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -184,7 +186,7 @@ override func viewDidLoad() {
   [self.view addSubview:_headerViewController.view];
   [_headerViewController didMoveToParentViewController:self];
 }
-~~~
+```
 <!--</div>-->
 
 ### Tracking a scroll view
@@ -203,15 +205,15 @@ In your viewDidLoad, set the `trackingScrollView` property on the header view:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 headerViewController.headerView.trackingScrollView = scrollView
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 self.headerViewController.headerView.trackingScrollView = scrollView;
-~~~
+```
 <!--</div>-->
 
 `scrollView` might be a table view, collection view, or a plain UIScrollView.
@@ -226,15 +228,15 @@ instance as the scroll view's delegate.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 scrollView.delegate = headerViewController
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 scrollView.delegate = self.headerViewController;
-~~~
+```
 <!--</div>-->
 
 Option 2: implement the required UIScrollViewDelegate methods and forward them to the
@@ -243,7 +245,7 @@ UIScrollView subclass.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 // MARK: UIScrollViewDelegate
 
 override func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -271,11 +273,11 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
     headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
   }
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -304,7 +306,7 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
                                                                     targetContentOffset:targetContentOffset];
   }
 }
-~~~
+```
 <!--</div>-->
 
 ### Shifting a Flexible Header off-screen
@@ -315,14 +317,14 @@ by changing the Flexible Header's behavior.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
-headerViewController.headerView.behavior = .Enabled
-~~~
+``` swift
+headerViewController.headerView.shiftBehavior = .Enabled
+```
 
 #### Objective-C
-~~~ objc
-headerViewController.headerView.behavior = MDCFlexibleHeaderShiftBehaviorEnabled;
-~~~
+``` objc
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+```
 <!--</div>-->
 
 > Important: when a Flexible Header shifts off-screen it **will not hide the content views**. Your
@@ -336,22 +338,22 @@ behavior by setting the `EnabledWithStatusBar` behavior and implementing
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
-headerViewController.headerView.behavior = .EnabledWithStatusBar
+``` swift
+headerViewController.headerView.shiftBehavior = .EnabledWithStatusBar
 
 override func childViewControllerForStatusBarHidden() -> UIViewController? {
   return headerViewController
 }
-~~~
+```
 
 #### Objective-C
-~~~ objc
-headerViewController.headerView.behavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+``` objc
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return _headerViewController;
 }
-~~~
+```
 <!--</div>-->
 
 ### Reacting to frame changes
@@ -361,7 +363,7 @@ MDCFlexibleHeaderViewController instance's `layoutDelegate`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 class MyViewController: UIViewController, MDCFlexibleHeaderViewLayoutDelegate {
 
   // MARK: MDCFlexibleHeaderViewLayoutDelegate
@@ -370,10 +372,10 @@ class MyViewController: UIViewController, MDCFlexibleHeaderViewLayoutDelegate {
     // Called whenever the frame changes.
   }
 }
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 // Conform to MDCFlexibleHeaderViewLayoutDelegate
 @interface MyViewController () <MDCFlexibleHeaderViewLayoutDelegate>
 @end
@@ -387,7 +389,7 @@ headerViewController.layoutDelegate = self;
     flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)flexibleHeaderView {
   // Called whenever the frame changes.
 }
-~~~
+```
 <!--</div>-->
 
 ### Utilizing Top Layout Guide on Parent View Controller
@@ -401,21 +403,21 @@ viewWillLayoutSubviews method.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 override func viewWillLayoutSubviews() {
     super.viewDidLayoutSubviews()
     headerViewController.updateTopLayoutGuide()
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self.headerViewController updateLayoutGuide];
 }
-~~~
+```
 <!--</div>-->
 
 ### Take care when subclassing
@@ -426,15 +428,15 @@ take the z-index into account:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 view.insertSubview(myCustomView, belowSubview: headerViewController.headerView)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 [self.view insertSubview:myCustomView belowSubview:self.headerViewController.headerView];
-~~~
+```
 <!--</div>-->
 
 ### Interacting with UINavigationController
@@ -454,44 +456,44 @@ animating in/out in a reasonable manner.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 override func viewWillAppear(animated: Bool) {
   super.viewWillAppear(animated)
 
   navigationController?.setNavigationBarHidden(true, animated: animated)
 }
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
-~~~
+```
 <!--</div>-->
 
 Add the following to view controllers that don't have an app bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 override func viewWillAppear(animated: Bool) {
   super.viewWillAppear(animated)
 
   navigationController?.setNavigationBarHidden(false, animated: animated)
 }
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
   [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
-~~~
+```
 <!--</div>-->
 
 If all of your view controllers use the App Bar in a given UINavigationController then you can
@@ -500,15 +502,15 @@ at app restoration time!**
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 navigationController.setNavigationBarHidden(false, animated: false)
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 UINavigationController *navigationController = ...;
 [navigationController setNavigationBarHidden:NO animated:NO];
-~~~
+```
 <!--</div>-->
 
 ### Enabling Swipe to Go Back With Hidden NavigationBar
@@ -526,7 +528,7 @@ interactivePopGestureRecognizer's delegate to the held pointer in the `viewWillD
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 // Create pointer to hold active interactivePopGestureRecognizer delegate
 var existingInteractivePopGestureRecognizerDelegate : UIGestureRecognizerDelegate?
 
@@ -555,10 +557,10 @@ override func viewWillDisappear(animated: Bool) {
       navigationController?.interactivePopGestureRecognizer?.delegate = existingInteractivePopGestureRecognizerDelegate!
   }
 }
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 @interface MyViewController ()
 
 // Create pointer to hold active interactivePopGestureRecognizer delegate
@@ -598,7 +600,7 @@ override func viewWillDisappear(animated: Bool) {
 
 @end
 
-~~~
+```
 
 <!--</div>-->
 
@@ -611,18 +613,18 @@ controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
-override func childViewControllerForStatusBarStyle() -> UIViewController? {
+``` swift
+override var childViewControllerForStatusBarStyle: UIViewController? {
   return headerViewController
 }
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.headerViewController;
 }
-~~~
+```
 <!--</div>-->
 
 ### Background images
@@ -633,7 +635,7 @@ You can create and add a UIImageView subview to the Flexible Header view's conte
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let headerView = headerViewController!.headerView
 
 let imageView = ...
@@ -643,10 +645,10 @@ headerView.contentView.insertSubview(imageView, atIndex: 0)
 
 imageView.contentMode = .ScaleAspectFill
 imageView.clipsToBounds = true
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 UIImageView *imageView = ...;
 imageView.frame = self.headerViewController.headerView.bounds;
 imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -654,7 +656,7 @@ imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizin
 
 imageView.contentMode = UIViewContentModeScaleAspectFill;
 imageView.clipsToBounds = YES;
-~~~
+```
 <!--</div>-->
 
 Notes:
@@ -677,14 +679,14 @@ To start touch forwarding you must call `forwardTouchEventsForView:` with each v
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 headerView.forwardTouchEventsForView(someContentView)
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 [headerView forwardTouchEventsForView:someContentView];
-~~~
+```
 <!--</div>-->
 
 #### Stopping touch forwarding
@@ -693,14 +695,14 @@ To stop touch forwarding you must call `forwardTouchEventsForView:` with each vi
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 headerView.stopForwardingTouchEventsForView(someContentView)
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 [headerView stopForwardingTouchEventsForView:someContentView];
-~~~
+```
 <!--</div>-->
 
 ### When trackingScrollView is the parent view
@@ -717,3 +719,12 @@ the Flexible Header staying fixed in place, even though the underlying scroll vi
 
 In these situations the Flexible Header also ensures that it is always the front-most view. This is
 to combat the UITableView displaying its divider lines in front of the Flexible Header.
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../HeaderStackView">Header Stack Views</a></li>
+  <li class="icon-list-item icon-list-item--components"><a href="../NavigationBar">Navigation Bar</a></li>
+</ul>

@@ -49,7 +49,7 @@ overview of the directory structure for mdc:
 - _sass: the style of the document site
 
     - base.scss: the basic style of the default html tags. Most of the styles respect [material
-      design guideline](https://www.google.com/design/spec/)
+      design guideline](https://material.io/guidelines/)
 
     - _globals.scss: the variables and responsive grid definitions.
 

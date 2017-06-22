@@ -21,10 +21,6 @@
 @interface PageControlAnimationBlockExample : UIViewController <UIScrollViewDelegate>
 @end
 
-#define RGBCOLOR(r, g, b) \
-  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
-#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
-
 @implementation PageControlAnimationBlockExample {
   UIScrollView *_scrollView;
   MDCPageControl *_pageControl;
@@ -44,8 +40,11 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-    HEXCOLOR(0x55C4f5), HEXCOLOR(0x35B7F3), HEXCOLOR(0x1EAAF1), HEXCOLOR(0x35B7F3),
-    HEXCOLOR(0x1EAAF1)
+    [UIColor colorWithWhite:0.2 alpha:1.0],
+    [UIColor colorWithWhite:0.3 alpha:1.0],
+    [UIColor colorWithWhite:0.4 alpha:1.0],
+    [UIColor colorWithWhite:0.5 alpha:1.0],
+    [UIColor colorWithWhite:0.6 alpha:1.0],
   ];
 
   // Scroll view configuration
@@ -64,8 +63,8 @@
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
-    page.font = [UIFont systemFontOfSize:50];
-    page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
+    page.font = [UIFont systemFontOfSize:24];
+    page.textColor = [UIColor colorWithWhite:1 alpha:0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask =
@@ -168,7 +167,7 @@
       MIN(MAX(0, _pageControl.currentPage + incrementAmount), _pageControl.numberOfPages - 1);
   CGPoint offset = _scrollView.contentOffset;
   offset.x = nextPage * CGRectGetWidth(_scrollView.frame);
-  [UIView animateWithDuration:2
+  [UIView animateWithDuration:0.2
                         delay:0
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
