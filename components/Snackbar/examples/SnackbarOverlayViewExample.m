@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialOverlay.h"
+#import "MaterialOverlays.h"
 #import "MaterialSnackbar.h"
 #import "SnackbarExampleSupplemental.h"
 

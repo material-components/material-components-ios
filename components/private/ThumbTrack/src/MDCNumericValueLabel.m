@@ -16,7 +16,7 @@
 
 #import "MDCNumericValueLabel.h"
 
-#import "MaterialTypography.h"
+#import "MDCTypography.h"
 
 static const CGFloat kAnchorPointY = 1.15f;
 static const CGFloat kBezierSmoothingFactor = 0.0625f;

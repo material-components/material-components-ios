@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialOverlay.h"
+#import "MDCOverlayTransitioning.h"
 
 /**
  Object representing a single overlay being displayed on screen.

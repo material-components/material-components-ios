@@ -17,7 +17,7 @@
 #import "MDCActivityIndicator.h"
 
 #import "MaterialRTL.h"
-#import "MaterialApplication.h"
+#import "UIApplication+AppExtensions.h"
 #import "private/MDCActivityIndicator+Private.h"
 
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;

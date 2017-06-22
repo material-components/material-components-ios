@@ -15,4 +15,3 @@
  */
 
 #import "MDCIcons.h"
-#import "MDCIcons+BundleLoader.h"

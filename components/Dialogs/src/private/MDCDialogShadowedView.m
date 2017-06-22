@@ -16,8 +16,8 @@
 
 #import "MDCDialogShadowedView.h"
 
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
+#import "MDCShadowElevations.h"
+#import "MDCShadowLayer.h"
 
 @implementation MDCDialogShadowedView
 

@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
+#import "MDCColorScheme.h"
 #import "MaterialTabs.h"
 
 /**

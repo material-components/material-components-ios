@@ -15,8 +15,8 @@
  */
 
 #import "MDCSlider.h"
-
 #import "private/MDCSlider_Subclassable.h"
+
 #import "MaterialThumbTrack.h"
 
 static const CGFloat kSliderDefaultWidth = 100.0f;

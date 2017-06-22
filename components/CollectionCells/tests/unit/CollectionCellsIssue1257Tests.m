@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialCollectionCells.h"
-#import "MaterialCollectionLayoutAttributes.h"
+#import "MDCCollectionViewCell.h"
+#import "MDCCollectionViewLayoutAttributes.h"
 
 // Expose internal helper method.
 @interface MDCCollectionViewCell (Private)

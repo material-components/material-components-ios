@@ -18,12 +18,12 @@
 
 #import "MDCSnackbarOverlayView.h"
 
-#import "MaterialSnackbar.h"
+#import "MDCSnackbarMessageView.h"
 #import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialKeyboardWatcher.h"
-#import "MaterialOverlay.h"
-#import "MaterialApplication.h"
+#import "MaterialOverlays.h"
+#import "UIApplication+AppExtensions.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 

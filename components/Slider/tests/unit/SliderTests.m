@@ -16,7 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialThumbTrack.h"
+#import "MDCThumbTrack.h"
 #import "MaterialSlider.h"
 
 static const NSUInteger kNumberOfRepeats = 20;
