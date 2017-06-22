@@ -152,10 +152,10 @@ UI_APPEARANCE_SELECTOR;
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
-#pragma mark - Deprecated
-
 /** Use setBackgroundColor:forState: instead. */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor NS_UNAVAILABLE;
+
+#pragma mark - Deprecated
 
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
