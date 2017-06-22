@@ -373,11 +373,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
 
-  CGFloat height =
-      MDCTextInputFullPadding + estimatedTextHeight + MDCTextInputHalfPadding * 2.f;
+  CGFloat height = MDCTextInputFullPadding + estimatedTextHeight + MDCTextInputHalfPadding * 2.f;
 
-  CGFloat underlineLabelsHeight = MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f,
-                                      MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+  CGFloat underlineLabelsHeight =
+      MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f,
+          MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
   height += underlineLabelsHeight;
   boundingSize.height = height;
 

@@ -21,35 +21,8 @@
 @protocol MDCTextInput;
 @protocol MDCTextInputCharacterCounter;
 
-/**
- Presentation styles for a text input. The style determines specific aspects of the text
- input such as sizing, placeholder placement and behavior, layout, etc.
- */
-typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
-  /**
-   Default style with an inline placeholder (that disappears when text is entered) and character
-   count / max below text.
-   */
-  MDCTextInputPresentationStyleDefault = 0,
-
-  /**
-   The placeholder text is laid out inline but will float above the field when there is content or
-   the field is being edited. The character count is below text. The Material Design guidelines
-   call this 'Floating inline labels.'
-   https://material.io/guidelines/components/text-fields.html#text-fields-labels
-   */
-  MDCTextInputPresentationStyleFloatingPlaceholder,
-
-  /** The placeholder is laid out inline and the character count is also inline to the right. */
-  MDCTextInputPresentationStyleFullWidth,
-};
-
-/**
- Material Design compliant states for textInputs. The logic for 'automagic' error states changes:
- underline color, underline text color.
- https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
- */
-@interface MDCTextInputController : NSObject <MDCTextInputPositioningDelegate, NSCoding, NSCopying>
+/** Controllers that manipulate styling and animation of text inputs. */
+@protocol MDCTextInputController <NSObject, NSCoding, NSCopying, MDCTextInputPositioningDelegate>
 
 /**
  The character counter. Override to use a custom character counter.
@@ -95,27 +68,10 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
 /**
  The text being displayed in the leading underline label when in an error state.
- 
+
  NOTE: To set this value, you must use setErrorText:errorAccessibilityValue:.
  */
 @property(nonatomic, nullable, copy, readonly) NSString *errorText;
-
-/**
- The color applied to the placeholder when floating. However, when in error state, it will be
- colored with the error color.
-
- Default is black with Material Design hint text opacity (textInput's tint).
- */
-@property(nonatomic, null_resettable, strong)
-    UIColor *floatingPlaceholderColor UI_APPEARANCE_SELECTOR;
-
-/**
- The scale of the the floating placeholder label in comparison to the inline placeholder specified
- as a value from 0.0 to 1.0.
-
- Default is 0.75.
- */
-@property(nonatomic, nullable, strong) NSNumber *floatingPlaceholderScale UI_APPEARANCE_SELECTOR;
 
 /**
  Text displayed in the leading underline label.
@@ -144,9 +100,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  */
 @property(nonatomic, assign, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
-/** The behavioral style applied to the text input. */
-@property(nonatomic, assign) MDCTextInputPresentationStyle presentationStyle;
 
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;

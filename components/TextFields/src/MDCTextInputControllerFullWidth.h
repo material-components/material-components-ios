@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,11 +14,15 @@
  limitations under the License.
  */
 
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInput.h"
-#import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
-#import "MDCTextInputControllerDefault.h"
-#import "MDCTextInputControllerFullWidth.h"
-#import "MDCTextInputUnderlineView.h"
+
+/**
+ Material Design compliant text field. The logic for 'automagic' error states changes:
+ underline color, underline text color.
+ https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
+
+ The placeholder is laid out inline and the character count is also inline to the right.
+ */
+@interface MDCTextInputControllerFullWidth : NSObject <MDCTextInputController>
+
+@end
