@@ -15,7 +15,7 @@
 
 /** Protocol implemented by a text field controlled by a |MDCTextFieldController|. */
 
-#import "MDCTextField.h"
+#import "MaterialTextFields.h"
 
 extern const CGFloat MDCTextInputFullPadding;
 extern const CGFloat MDCTextInputHalfPadding;

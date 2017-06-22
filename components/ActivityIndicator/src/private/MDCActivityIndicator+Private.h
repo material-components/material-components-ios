@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCActivityIndicator.h"
+#import "MaterialActivityIndicator.h"
 
 /*
  States for the internal state machine. The states represent the last animation completed.
