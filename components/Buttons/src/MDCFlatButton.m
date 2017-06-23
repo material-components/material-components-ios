@@ -23,11 +23,7 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
 @implementation MDCFlatButton
 
 - (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self commonMDCFlatButtonInit];
-  }
-  return self;
+  return [self initWithFrame:CGRectZero];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
