@@ -82,6 +82,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     // Set up ink controller to splash ink on taps.
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
+    [self sendSubviewToBack:_inkTouchController.defaultInkView];
 
     [self updateInk];
     [self updateColors];
