@@ -25,7 +25,6 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - pod --version
-  - swiftlint
   - scripts/prep_all
   - travis_wait scripts/build_all
   - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
