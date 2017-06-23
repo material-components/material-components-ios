@@ -48,7 +48,6 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 
 @implementation MDCMaskedTransition {
   UIView *_sourceView;
-  MDCMaskedPresentationController *_presentationController;
   BOOL _shouldSlideWhenCollapsed;
 }
 
@@ -73,11 +72,12 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 - (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented
                                                       presentingViewController:(UIViewController *)presenting
                                                           sourceViewController:(UIViewController *)source {
-  _presentationController =
+  MDCMaskedPresentationController *presentationController =
       [[MDCMaskedPresentationController alloc] initWithPresentedViewController:presented
                                                       presentingViewController:presenting
                                                  calculateFrameOfPresentedView:_calculateFrameOfPresentedView];
-  return _presentationController;
+  presentationController.sourceView = _sourceView;
+  return presentationController;
 }
 
 - (void)startWithContext:(NSObject<MDMTransitionContext> *)context {
@@ -96,10 +96,6 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   UIView *originalSourceSuperview = _sourceView.superview;
   const CGRect originalSourceFrame = _sourceView.frame;
   UIColor *originalSourceBackgroundColor = _sourceView.backgroundColor;
-
-  // The presentation controller, if available, will decide when to make the source view visible
-  // again.
-  _presentationController.sourceView = _sourceView;
 
   // Reparent the fore view into a masked view.
   UIView *maskedView = [[UIView alloc] initWithFrame:context.foreViewController.view.frame];
