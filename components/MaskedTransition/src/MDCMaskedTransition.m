@@ -40,7 +40,7 @@ static inline CGRect FrameCenteredAround(CGPoint position, CGSize size) {
 }
 
 static inline CGFloat LengthOfVector(CGVector vector) {
-  return (CGFloat)sqrt(vector.dx * vector.dx + vector.dy * vector.dy);
+  return (CGFloat)hypot(vector.dx, vector.dy);
 }
 
 @interface MDCMaskedTransition () <MDMTransitionWithPresentation, MDMTransitionWithFallback>
