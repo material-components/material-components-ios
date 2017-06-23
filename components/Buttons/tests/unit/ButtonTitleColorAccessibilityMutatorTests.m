@@ -47,6 +47,12 @@ static NSArray<UIColor *> *testColors(){
       // Making the background color the same as the title color.
       [button setBackgroundColor:color forState:(UIControlState)controlState];
       [button setTitleColor:color forState:(UIControlState)controlState];
+      UIControlState disabledHighlighed = UIControlStateHighlighted | UIControlStateDisabled;
+      if (controlState == disabledHighlighed) {
+        // Skip disabled highlighted state because UIButton ignores setTitleColor:forState: when
+        // passed that state. See `UIButton strangeness` in ButtonTests.m
+        continue;
+      }
       
       // When
       [mutator mutate:button];
