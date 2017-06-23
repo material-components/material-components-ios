@@ -23,9 +23,6 @@
 /** Access to the ink view layer. Mainly used for subclasses to override ink properties. */
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
-/** Whether the background color should be opaque. */
-- (BOOL)shouldHaveOpaqueBackground;
-
 /** Updates the background color based on the button's current configuration. */
 - (void)updateBackgroundColor;
 
@@ -44,8 +41,5 @@
 
 /** The default content edge insets of the button. They are set at initialization time. */
 - (UIEdgeInsets)defaultContentEdgeInsets;
-
-/** The default elevation for a particular button state (if not set by the calling code). */
-- (CGFloat)defaultElevationForState:(UIControlState)state;
 
 @end

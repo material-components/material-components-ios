@@ -17,6 +17,7 @@
 #import "MDCFlatButton.h"
 
 #import "private/MDCButton+Subclassing.h"
+#import "MaterialShadowElevations.h"
 
 static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaqueBackground";
 
@@ -53,6 +54,10 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
   // Default background colors.
   [[MDCFlatButton appearance] setBackgroundColor:[UIColor clearColor]
                                     forState:UIControlStateNormal];
+  
+  [[MDCFlatButton appearance] setElevation:MDCShadowElevationNone forState:UIControlStateNormal];
+  [[MDCFlatButton appearance] setElevation:MDCShadowElevationNone
+                                  forState:UIControlStateHighlighted];
 }
 
 - (void)commonMDCFlatButtonInit {
@@ -73,10 +78,6 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
 - (void)setHasOpaqueBackground:(BOOL)hasOpaqueBackground {
   _hasOpaqueBackground = hasOpaqueBackground;
   [self updateBackgroundColor];
-}
-
-- (BOOL)shouldHaveOpaqueBackground {
-  return [super shouldHaveOpaqueBackground] || self.hasOpaqueBackground;
 }
 
 @end

@@ -67,22 +67,6 @@
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius;
 
 /**
- A custom title color for the non-disabled states. The default is nil, which means that the button
- chooses its title color automatically based on @c underlyingColor, whether the button is opaque,
- its current background color, etc.
-
- Setting this to a non-nil color overrides that logic, and the caller is responsible for ensuring
- that the title color/background color combination meets the accessibility requirements.
- */
-@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR;
-
-/**
- The alpha value that will be applied when the button is disabled. Most clients can leave this as
- the default value to get a semi-transparent button automatically.
- */
-@property(nonatomic) CGFloat disabledAlpha;
-
-/**
  If true, converts the button title to uppercase. Changing this property to NO will not update the
  current title string.
 
@@ -120,6 +104,13 @@
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
 
 /**
+ Returns the elevation of the button which dictates the appearance of the shadow.
+ 
+ @return The elevation of the button.
+ */
+@property(nonatomic, readonly) CGFloat elevation;
+
+/**
  Returns the elevation for a particular control state.
 
  The default values depend on the kind of button, for example, flat buttons in the
@@ -133,19 +124,10 @@
 /**
  Sets the elevation for a particular control state.
 
- Use resetElevationForState: to reset the button's behavior to the default for a particular state.
-
  @param elevation The elevation to set.
  @param state The state to set.
  */
-- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state;
-
-/**
- Resets the elevation for a particular control state back to the button's default behavior.
-
- @param state The control state to reset the elevation.
- */
-- (void)resetElevationForState:(UIControlState)state;
+- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Indicates whether the button should automatically update its font when the device’s
@@ -170,10 +152,27 @@
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
-#pragma mark - Deprecated
-
 /** Use setBackgroundColor:forState: instead. */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor NS_UNAVAILABLE;
+
+#pragma mark - Deprecated
+
+/**
+ A custom title color for the non-disabled states. The default is nil, which means that the button
+ chooses its title color automatically based on @c underlyingColor, whether the button is opaque,
+ its current background color, etc.
+ 
+ Setting this to a non-nil color overrides that logic, and the caller is responsible for ensuring
+ that the title color/background color combination meets the accessibility requirements.
+ */
+@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR __deprecated_msg("Use setTitleColor:forState:UIControlStateNormal instead.");
+
+/**
+ The alpha value that will be applied when the button is disabled. Most clients can leave this as
+ the default value to get a semi-transparent button automatically.
+ */
+@property(nonatomic) CGFloat disabledAlpha
+    __deprecated_msg("Use setBackgroundColor:forState: instead");
 
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")

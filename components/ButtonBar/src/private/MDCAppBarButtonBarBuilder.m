@@ -99,7 +99,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
   MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
-  button.disabledAlpha = kDisabledButtonAlpha;
+  UIColor *disabledColor = [[button titleColorForState:UIControlStateNormal] colorWithAlphaComponent:kDisabledButtonAlpha];
+  [button setBackgroundColor:disabledColor forState:UIControlStateDisabled];
 
   button.exclusiveTouch = YES;
   if (buttonItem.title != nil) {
@@ -107,6 +108,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   }
   if (buttonItem.image != nil) {
     [button setImage:buttonItem.image forState:UIControlStateNormal];
+//  TOOD(randallli): make image with alpha.
+//    [button setImage:[buttonItem.image imageWithAlpha:disabledColor] forState:UIControlStateDisabled];
   }
   if (buttonItem.tintColor != nil) {
     button.tintColor = buttonItem.tintColor;
@@ -120,7 +123,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
   button.tag = buttonItem.tag;
 
-  button.customTitleColor = self.buttonTitleColor;
+  [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
   [button setUnderlyingColorHint:self.buttonUnderlyingColor];
 
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];

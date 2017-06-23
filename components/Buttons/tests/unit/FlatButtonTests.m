@@ -14,14 +14,25 @@
  limitations under the License.
  */
 
-#import "MDCAlertColorThemer.h"
+#import <XCTest/XCTest.h>
+
 #import "MaterialButtons.h"
+#import "MaterialShadowElevations.h"
 
-@implementation MDCAlertColorThemer
+@interface FlatButtonsTests : XCTestCase
+@end
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
-  [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
-      setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
+@implementation FlatButtonsTests
+
+- (void)testDefaultElevationsForState {
+  // Given
+  MDCFlatButton *button = [MDCFlatButton appearance];
+  
+  // Then
+  XCTAssertEqual([button elevationForState:UIControlStateNormal], MDCShadowElevationNone);
+  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], MDCShadowElevationNone);
+  XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
+  XCTAssertEqual([button elevationForState:UIControlStateSelected], MDCShadowElevationNone);
 }
 
 @end

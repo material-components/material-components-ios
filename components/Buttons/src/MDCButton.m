@@ -42,7 +42,6 @@ static NSString *const MDCButtonUppercaseTitleKey = @"MDCButtonShouldCapitalizeT
 // Previous value kept for backwards compatibility.
 static NSString *const MDCButtonUnderlyingColorHintKey = @"MDCButtonUnderlyingColorKey";
 static NSString *const MDCButtonDisableAlphaKey = @"MDCButtonDisableAlphaKey";
-static NSString *const MDCButtonCustomTitleColorKey = @"MDCButtonCustomTitleColorKey";
 static NSString *const MDCButtonAreaInsetKey = @"MDCButtonAreaInsetKey";
 
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
@@ -50,9 +49,6 @@ static NSString *const MDCButtonBackgroundColorsKey = @"MDCButtonBackgroundColor
 static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilityLabelsKey";
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
-
-// https://material.io/guidelines/components/buttons.html#buttons-main-buttons
-static const CGFloat MDCButtonDisabledAlpha = 0.1f;
 
 // Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x2196F3;
@@ -64,6 +60,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                           blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
                          alpha:1];
 }
+
+// https://material.io/guidelines/components/buttons.html#buttons-raised-buttons
+static const uint32_t MDCRaisedButtonDisabledBackgroundColor = 0xDFDFDF;
+static const uint32_t MDCRaisedButtonDisabledTitleColor = 0xAFAfAf;
 
 static NSAttributedString *uppercaseAttributedString(NSAttributedString *string) {
   // Store the attributes.
@@ -172,14 +172,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       self.underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
     }
 
-    if ([aDecoder containsValueForKey:MDCButtonCustomTitleColorKey]) {
-      self.customTitleColor = [aDecoder decodeObjectForKey:MDCButtonCustomTitleColorKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
-      self.disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
-    }
-
     if ([aDecoder containsValueForKey:MDCButtonAreaInsetKey]) {
       self.hitAreaInsets = [aDecoder decodeUIEdgeInsetsForKey:MDCButtonAreaInsetKey];
     }
@@ -213,10 +205,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (_underlyingColorHint) {
     [aCoder encodeObject:_underlyingColorHint forKey:MDCButtonUnderlyingColorHintKey];
   }
-  [aCoder encodeDouble:self.disabledAlpha forKey:MDCButtonDisableAlphaKey];
-  if (self.customTitleColor) {
-    [aCoder encodeObject:self.customTitleColor forKey:MDCButtonCustomTitleColorKey];
-  }
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
@@ -227,10 +215,16 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Default background colors.
   [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
                                     forState:UIControlStateNormal];
+  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCRaisedButtonDisabledBackgroundColor)
+                                    forState:UIControlStateDisabled];
+  [[MDCButton appearance] setTitleColor:MDCColorFromRGB(MDCRaisedButtonDisabledTitleColor)
+                               forState:UIControlStateDisabled];
+  
+  [[MDCButton appearance] setElevation:MDCShadowElevationRaisedButtonResting forState:UIControlStateNormal];
+  [[MDCButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed forState:UIControlStateHighlighted];
 }
 
 - (void)commonMDCButtonInit {
-  _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
@@ -243,7 +237,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Set up title label attributes.
   self.titleLabel.font = [MDCTypography buttonFont];
-  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self updateBackgroundColor];
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
@@ -286,19 +280,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                                                 object:nil];
 }
 
-- (void)setCustomTitleColor:(UIColor *)customTitleColor {
-  _customTitleColor = customTitleColor;
-  [self updateTitleColor];
-}
-
 - (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {
   _underlyingColorHint = underlyingColorHint;
-  [self updateAlphaAndBackgroundColorAnimated:NO];
-}
-
-- (void)setDisabledAlpha:(CGFloat)disabledAlpha {
-  _disabledAlpha = disabledAlpha;
-  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self updateBackgroundColor];
 }
 
 #pragma mark - UIView
@@ -342,11 +326,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   CGPoint location = [self locationFromTouches:touches];
   [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
-
-  BOOL inside = CGRectContainsPoint(self.bounds, location);
-  if (inside && _shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateNormal];
-  }
 }
 
 // Note - in some cases, event may be nil (e.g. view removed from window).
@@ -364,7 +343,22 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated {
   [super setEnabled:enabled];
-  [self updateAlphaAndBackgroundColorAnimated:animated];
+  [self updateBackgroundColor];
+  [self animateButtonToHeightForState:self.state];
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+  [super setHighlighted:highlighted];
+  [self updateBackgroundColor];
+  if (_shouldRaiseOnTouch) {
+    [self animateButtonToHeightForState:self.state];
+  }
+}
+
+- (void)setSelected:(BOOL)selected {
+  [super setSelected:selected];
+  [self updateBackgroundColor];
+  [self animateButtonToHeightForState:self.state];
 }
 
 #pragma mark - Title Uppercasing
@@ -517,14 +511,22 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
   _backgroundColors[@(state)] = backgroundColor;
-  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self updateBackgroundColor];
 }
 
 #pragma mark - Elevations
 
+- (CGFloat)elevation {
+  return [self shadowLayer].elevation;
+}
+
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _userElevations[@(state)];
-  return elevation ? (CGFloat)[elevation doubleValue] : [self defaultElevationForState:state];
+  if (state == UIControlStateNormal && !elevation) {
+    return 0;
+  }
+  return elevation ? (CGFloat)[elevation doubleValue]
+      : [self elevationForState:UIControlStateNormal];
 }
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
@@ -535,13 +537,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // have different background color requirements than raised buttons.
   // TODO(ajsecord): Move to MDCFlatButton and update this comment.
   if (state == UIControlStateNormal) {
-    [self updateAlphaAndBackgroundColorAnimated:NO];
+    [self updateBackgroundColor];
   }
-}
-
-- (void)resetElevationForState:(UIControlState)state {
-  [_userElevations removeObjectForKey:@(state)];
-  [self shadowLayer].elevation = [self elevationForState:self.state];
 }
 
 #pragma mark - Private methods
@@ -590,9 +587,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)handleBeginTouches:(NSSet *)touches {
   [_inkView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
-  if (_shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateSelected];
-  }
 }
 
 - (CGPoint)locationFromTouches:(NSSet *)touches {
@@ -602,9 +596,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)evaporateInkToPoint:(CGPoint)toPoint {
   [_inkView startTouchEndedAnimationAtPoint:toPoint completion:nil];
-  if (_shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateNormal];
-  }
 }
 
 - (UIBezierPath *)boundingPath {
@@ -619,78 +610,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return UIEdgeInsetsMake(8, 16, 8, 16);
 }
 
-- (CGFloat)defaultElevationForState:(UIControlState)state {
-  if (state == UIControlStateNormal) {
-    return 0;
-  }
-
-  if ((state & UIControlStateSelected) == UIControlStateSelected) {
-    CGFloat normalElevation = [self elevationForState:UIControlStateNormal];
-    return normalElevation > 0 ? 2 * normalElevation : 1;
-  }
-
-  return [self elevationForState:UIControlStateNormal];
-}
-
-- (BOOL)shouldHaveOpaqueBackground {
-  BOOL isFlatButton = MDCCGFloatIsExactlyZero([self elevationForState:UIControlStateNormal]);
-  return !isFlatButton;
-}
-
-- (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
-  void (^animations)(void) = ^{
-    self.alpha = self.enabled ? 1.0f : _disabledAlpha;
-    [self updateBackgroundColor];
-  };
-
-  if (animated) {
-    [UIView animateWithDuration:MDCButtonAnimationDuration animations:animations];
-  } else {
-    animations();
-  }
-}
-
 - (void)updateBackgroundColor {
-  //  UIColor *color = nil;
-  //  if ([self shouldHaveOpaqueBackground]) {
-  //    if (self.enabled) {
-  ////      color = self.enabledBackgroundColor;
-  //    } else {
-  //      color = [self isDarkColor:_underlyingColorHint] ? _disabledBackgroundColorLight
-  //                                                  : _disabledBackgroundColorDark;
-  //    }
-  //  }
-  [self updateTitleColor];
-  [self updateDisabledTitleColor];
   super.backgroundColor = self.currentBackgroundColor;
-}
-
-- (void)updateDisabledTitleColor {
-  // Disabled buttons have very low opacity, so we full-opacity text color here to make the text
-  // readable. Also, even for non-flat buttons with opaque backgrounds, the correct background color
-  // to examine is the underlying color, since disabled buttons are so transparent.
-  BOOL darkBackground = [self isDarkColor:[self underlyingColorHint]];
-  [self setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
-             forState:UIControlStateDisabled];
-}
-
-- (void)updateTitleColor {
-  if (_customTitleColor) {
-    [self setTitleColor:_customTitleColor forState:UIControlStateNormal];
-    return;
-  }
-
-  if (![self isTransparentColor:[self effectiveBackgroundColor]]) {
-    MDFTextAccessibilityOptions options = 0;
-    if ([MDFTextAccessibility isLargeForContrastRatios:self.titleLabel.font]) {
-      options = MDFTextAccessibilityOptionsLargeFont;
-    }
-    UIColor *color =
-        [MDFTextAccessibility textColorOnBackgroundColor:[self effectiveBackgroundColor]
-                                         targetTextAlpha:[MDCTypography buttonFontOpacity]
-                                                 options:options];
-    [self setTitleColor:color forState:UIControlStateNormal];
-  }
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
@@ -720,6 +641,21 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 #pragma mark - Deprecations
+
+- (void)setCustomTitleColor:(UIColor *)customTitleColor {
+  [self setTitleColor:customTitleColor forState:UIControlStateNormal];
+}
+
+- (UIColor *)customTitleColor {
+  return [self titleColorForState:UIControlStateNormal];
+}
+
+- (void)setDisabledAlpha:(CGFloat)disabledAlpha {
+  _disabledAlpha = disabledAlpha;
+  UIColor *color =
+  [[self backgroundColorForState:UIControlStateNormal] colorWithAlphaComponent:_disabledAlpha];
+  [self setBackgroundColor:color forState:UIControlStateDisabled];
+}
 
 - (BOOL)shouldCapitalizeTitle {
   return [self isUppercaseTitle];

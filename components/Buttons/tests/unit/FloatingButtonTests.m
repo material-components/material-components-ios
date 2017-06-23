@@ -14,14 +14,26 @@
  limitations under the License.
  */
 
-#import "MDCAlertColorThemer.h"
+#import <XCTest/XCTest.h>
+
 #import "MaterialButtons.h"
+#import "MaterialShadowElevations.h"
 
-@implementation MDCAlertColorThemer
+@interface FloatingButtonsTests : XCTestCase
+@end
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
-  [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
-      setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
+@implementation FloatingButtonsTests
+
+- (void)testDefaultElevationsForState {
+  // Given
+  MDCFloatingButton *button = [MDCFloatingButton appearance];
+  
+  // Then
+  XCTAssertEqual([button elevationForState:UIControlStateNormal], MDCShadowElevationFABResting);
+  XCTAssertEqual([button elevationForState:UIControlStateHighlighted],
+                 MDCShadowElevationFABPressed);
+  XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
 }
+
 
 @end
