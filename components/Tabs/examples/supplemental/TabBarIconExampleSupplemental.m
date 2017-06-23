@@ -73,7 +73,6 @@
   [self addChildViewController:self.appBar.headerViewController];
 
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
 
   self.appBar.navigationBar.titleTextAttributes = @{
