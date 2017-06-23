@@ -572,4 +572,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   return self;
 }
 
+- (void)dealloc {
+  [MDCSnackbarManager resumeMessagesWithToken:self];
+}
+
 @end
