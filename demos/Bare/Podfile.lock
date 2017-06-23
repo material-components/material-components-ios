@@ -3,6 +3,7 @@ PODS:
     - MaterialComponents/ActivityIndicator (= 25.1.0)
     - MaterialComponents/AnimationTiming (= 25.1.0)
     - MaterialComponents/AppBar (= 25.1.0)
+    - MaterialComponents/BottomSheet (= 25.1.0)
     - MaterialComponents/ButtonBar (= 25.1.0)
     - MaterialComponents/Buttons (= 25.1.0)
     - MaterialComponents/CollectionCells (= 25.1.0)
@@ -56,6 +57,8 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+  - MaterialComponents/BottomSheet (25.1.0):
+    - MaterialComponents/private/Math
   - MaterialComponents/ButtonBar (25.1.0):
     - MaterialComponents/ButtonBar/ColorThemer (= 25.1.0)
     - MaterialComponents/ButtonBar/Component (= 25.1.0)
@@ -286,7 +289,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 18ef3524558622476f3edd7c1579efbca431c5dd
+  MaterialComponents: 7dff252e00a3a4a6007b0cc505748819e7ab4aea
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
