@@ -53,10 +53,6 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 /// Duration of selection animations in applicable content styles.
 static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
-@interface MDCItemBarCell () <MDCInkTouchControllerDelegate>
-
-@end
-
 @implementation MDCItemBarCell {
   UILabel *_titleLabel;
   UIImageView *_imageView;
@@ -85,8 +81,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
     // Set up ink controller to splash ink on taps.
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    _inkTouchController.delegate = self;
     [_inkTouchController addInkView];
+    [self sendSubviewToBack:_inkTouchController.defaultInkView];
 
     [self updateInk];
     [self updateColors];
@@ -366,14 +362,6 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Speak components with a pause in between.
   return [labelComponents componentsJoinedByString:@", "];
-}
-
-#pragma mark - Ink
-
-- (void)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-             insertInkView:(nonnull UIView *)inkView
-                  intoView:(nonnull UIView *)view {
-  [self.contentView insertSubview:inkView belowSubview:_titleLabel];
 }
 
 #pragma mark - Private
