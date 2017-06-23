@@ -42,7 +42,7 @@
   }
 
   // Then
-  [self waitForExpectations:@[expectation] timeout:1];
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
 @end
