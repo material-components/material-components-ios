@@ -27,7 +27,7 @@ script:
   - pod --version
   - swiftlint
   - scripts/prep_all
-  - travis_wait scripts/build_all
+  - travis_wait scripts/build_all --verbose
   - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
 after_success:
   - bash <(curl -s https://codecov.io/bash)
