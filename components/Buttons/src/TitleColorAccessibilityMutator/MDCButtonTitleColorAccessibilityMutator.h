@@ -18,8 +18,16 @@
 
 @class MDCButton;
 
+/**
+ A Mutator that will change an instance of MDCButton to have a high enough contrast text between
+ its background.
+ */
 @interface MDCButtonTitleColorAccessibilityMutator : NSObject
 
+/**
+ This method will change the title color for each state of the button to ensure a high accessiblity
+ contrast with its background.
+ */
 + (void)changeTitleColorOfButton:(MDCButton *)button;
 
 @end
