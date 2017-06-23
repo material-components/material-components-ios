@@ -120,7 +120,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
   button.tag = buttonItem.tag;
 
-  button.customTitleColor = self.buttonTitleColor;
+  [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
   [button setUnderlyingColorHint:self.buttonUnderlyingColor];
 
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];
