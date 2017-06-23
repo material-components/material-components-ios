@@ -20,6 +20,6 @@
 
 @interface MDCButtonTitleColorAccessibilityMutator : NSObject
 
-- (void)mutate:(MDCButton *)button;
++ (void)changeTitleColorOfButton:(MDCButton *)button;
 
 @end

@@ -41,8 +41,6 @@ static NSArray<UIColor *> *testColors(){
   for (UIColor *color in testColors()) {
     for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
       // Given
-      MDCButtonTitleColorAccessibilityMutator *mutator =
-          [[MDCButtonTitleColorAccessibilityMutator alloc] init];
       MDCButton *button = [[MDCButton alloc] init];
       // Making the background color the same as the title color.
       [button setBackgroundColor:color forState:(UIControlState)controlState];
@@ -55,7 +53,7 @@ static NSArray<UIColor *> *testColors(){
       }
       
       // When
-      [mutator mutate:button];
+      [MDCButtonTitleColorAccessibilityMutator changeTitleColorOfButton:button];
       
       // Then
       XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
@@ -74,8 +72,6 @@ static NSArray<UIColor *> *testColors(){
         continue;
       }
       // Given
-      MDCButtonTitleColorAccessibilityMutator *mutator =
-      [[MDCButtonTitleColorAccessibilityMutator alloc] init];
       MDCButton *button = [[MDCButton alloc] init];
       UIColor *backgroundColor = colors[color];
       UIColor *titleColor = color;
@@ -84,7 +80,7 @@ static NSArray<UIColor *> *testColors(){
       [button setTitleColor:titleColor forState:(UIControlState)controlState];
       
       // When
-      [mutator mutate:button];
+      [MDCButtonTitleColorAccessibilityMutator changeTitleColorOfButton:button];
       
       // Then
       XCTAssertEqualObjects([button titleColorForState:controlState], titleColor,
@@ -98,15 +94,13 @@ static NSArray<UIColor *> *testColors(){
     for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
       // Given
       NSUInteger controlState = 0;
-      MDCButtonTitleColorAccessibilityMutator *mutator =
-      [[MDCButtonTitleColorAccessibilityMutator alloc] init];
       MDCButton *button = [[MDCButton alloc] init];
       button.underlyingColorHint = color;
       [button setBackgroundColor:[UIColor clearColor] forState:controlState];
       [button setTitleColor:color forState:(UIControlState)controlState];
       
       // When
-      [mutator mutate:button];
+      [MDCButtonTitleColorAccessibilityMutator changeTitleColorOfButton:button];
       
       // Then
       XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
