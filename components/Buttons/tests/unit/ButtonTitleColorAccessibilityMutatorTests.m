@@ -115,7 +115,7 @@ static NSString *controlStateDescription(UIControlState controlState);
 
 static NSString *controlStateDescription(UIControlState controlState) {
   if (controlState == UIControlStateNormal) {
-    return @".Normal";
+    return @"Normal";
   }
   NSMutableString *string = [NSMutableString string];
   if ((UIControlStateHighlighted & controlState) == UIControlStateHighlighted) {
