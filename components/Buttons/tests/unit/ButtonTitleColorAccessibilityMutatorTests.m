@@ -32,6 +32,8 @@ static NSArray<UIColor *> *testColors(){
            [UIColor greenColor], [UIColor blueColor], [UIColor grayColor]];
 }
 
+static NSString *controlStateDescription(UIControlState controlState);
+
 @interface ButtonTitleColorAccessibilityMutatorTests : XCTestCase
 @end
 
@@ -57,7 +59,7 @@ static NSArray<UIColor *> *testColors(){
       
       // Then
       XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
-                               @"for control state:%@ ", [self controlState:controlState]);
+                               @"for control state:%@ ", controlStateDescription(controlState));
     }
   }
 }
@@ -84,7 +86,7 @@ static NSArray<UIColor *> *testColors(){
       
       // Then
       XCTAssertEqualObjects([button titleColorForState:controlState], titleColor,
-                            @"for control state:%@ ", [self controlState:controlState]);
+                            @"for control state:%@ ", controlStateDescription(controlState));
     }
   }
 }
@@ -104,26 +106,26 @@ static NSArray<UIColor *> *testColors(){
       
       // Then
       XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
-                               @"for control state:%@ ", [self controlState:controlState]);
+                               @"for control state:%@ ", controlStateDescription(controlState));
     }
   }
 }
 
-- (NSString*)controlState:(UIControlState)controlState {
-  NSMutableString *string = [NSMutableString string];
-  if (UIControlStateNormal) {
+@end
+
+static NSString *controlStateDescription(UIControlState controlState) {
+  if (controlState == UIControlStateNormal) {
     return @".Normal";
   }
-  if (controlState & UIControlStateHighlighted) {
+  NSMutableString *string = [NSMutableString string];
+  if ((UIControlStateHighlighted & controlState) == UIControlStateHighlighted) {
     [string appendString:@"Highlighted "];
   }
-  if (controlState & UIControlStateDisabled) {
+  if ((UIControlStateDisabled & controlState) == UIControlStateDisabled) {
     [string appendString:@"Disabled "];
   }
-  if (controlState & UIControlStateSelected) {
+  if ((UIControlStateSelected & controlState) == UIControlStateSelected) {
     [string appendString:@"Selected "];
   }
   return [string copy];
 }
-
-@end
