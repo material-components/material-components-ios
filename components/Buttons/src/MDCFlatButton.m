@@ -16,11 +16,22 @@
 
 #import "MDCFlatButton.h"
 
+#import "MaterialShadowElevations.h"
 #import "private/MDCButton+Subclassing.h"
 
 static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaqueBackground";
 
 @implementation MDCFlatButton
+
++ (void)initialize {
+  // Default background colors.
+  [[MDCFlatButton appearance] setBackgroundColor:[UIColor clearColor]
+                                        forState:UIControlStateNormal];
+  [[MDCFlatButton appearance] setElevation:MDCShadowElevationNone
+                                  forState:UIControlStateNormal];
+  [[MDCFlatButton appearance] setElevation:MDCShadowElevationNone
+                                  forState:UIControlStateHighlighted];
+}
 
 - (instancetype)init {
   return [self initWithFrame:CGRectZero];
@@ -43,12 +54,6 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
     [self commonMDCFlatButtonInit];
   }
   return self;
-}
-
-+ (void)initialize {
-  // Default background colors.
-  [[MDCFlatButton appearance] setBackgroundColor:[UIColor clearColor]
-                                    forState:UIControlStateNormal];
 }
 
 - (void)commonMDCFlatButtonInit {

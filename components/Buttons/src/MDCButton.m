@@ -106,6 +106,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 @implementation MDCButton
 
++ (void)initialize {
+  // Default background colors.
+  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
+                                    forState:UIControlStateNormal];
+
+  [[MDCButton appearance] setElevation:MDCShadowElevationRaisedButtonResting
+                              forState:UIControlStateNormal];
+  [[MDCButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed
+                              forState:UIControlStateHighlighted];
+}
+
 + (Class)layerClass {
   return [MDCShadowLayer class];
 }
@@ -219,12 +230,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
 }
 
-+ (void)initialize {
-  // Default background colors.
-  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
-                                    forState:UIControlStateNormal];
-}
-
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
@@ -328,11 +333,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   CGPoint location = [self locationFromTouches:touches];
   [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
-
-  BOOL inside = CGRectContainsPoint(self.bounds, location);
-  if (inside && _shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateNormal];
-  }
 }
 
 // Note - in some cases, event may be nil (e.g. view removed from window).
@@ -342,7 +342,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self evaporateInkToPoint:[self locationFromTouches:touches]];
 }
 
-#pragma mark - UIButton methods
+#pragma mark - UIControl methods
 
 - (void)setEnabled:(BOOL)enabled {
   [self setEnabled:enabled animated:NO];
@@ -350,7 +350,23 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated {
   [super setEnabled:enabled];
+
   [self updateAlphaAndBackgroundColorAnimated:animated];
+  [self animateButtonToHeightForState:self.state];
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+  [super setHighlighted:highlighted];
+
+  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self animateButtonToHeightForState:self.state];
+}
+
+- (void)setSelected:(BOOL)selected {
+  [super setSelected:selected];
+
+  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self animateButtonToHeightForState:self.state];
 }
 
 #pragma mark - Title Uppercasing
@@ -510,7 +526,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _userElevations[@(state)];
-  return elevation ? (CGFloat)[elevation doubleValue] : [self defaultElevationForState:state];
+  if (state != UIControlStateNormal && !elevation) {
+    elevation = _userElevations[@(UIControlStateNormal)];
+  }
+  if (elevation) {
+    return (CGFloat)[elevation doubleValue];
+  }
+  return 0;
 }
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
@@ -571,9 +593,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)handleBeginTouches:(NSSet *)touches {
   [_inkView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
-  if (_shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateSelected];
-  }
 }
 
 - (CGPoint)locationFromTouches:(NSSet *)touches {
@@ -583,9 +602,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)evaporateInkToPoint:(CGPoint)toPoint {
   [_inkView startTouchEndedAnimationAtPoint:toPoint completion:nil];
-  if (_shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateNormal];
-  }
 }
 
 - (UIBezierPath *)boundingPath {
@@ -598,19 +614,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
   return UIEdgeInsetsMake(8, 16, 8, 16);
-}
-
-- (CGFloat)defaultElevationForState:(UIControlState)state {
-  if (state == UIControlStateNormal) {
-    return 0;
-  }
-
-  if ((state & UIControlStateSelected) == UIControlStateSelected) {
-    CGFloat normalElevation = [self elevationForState:UIControlStateNormal];
-    return normalElevation > 0 ? 2 * normalElevation : 1;
-  }
-
-  return [self elevationForState:UIControlStateNormal];
 }
 
 - (BOOL)shouldHaveOpaqueBackground {
