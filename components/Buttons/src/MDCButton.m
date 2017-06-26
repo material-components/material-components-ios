@@ -287,11 +287,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                                                 object:nil];
 }
 
-- (void)setCustomTitleColor:(UIColor *)customTitleColor {
-  _customTitleColor = customTitleColor;
-  [self updateTitleColor];
-}
-
 - (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {
   _underlyingColorHint = underlyingColorHint;
   [self updateAlphaAndBackgroundColorAnimated:NO];
@@ -634,16 +629,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateBackgroundColor {
-  //  UIColor *color = nil;
-  //  if ([self shouldHaveOpaqueBackground]) {
-  //    if (self.enabled) {
-  ////      color = self.enabledBackgroundColor;
-  //    } else {
-  //      color = [self isDarkColor:_underlyingColorHint] ? _disabledBackgroundColorLight
-  //                                                  : _disabledBackgroundColorDark;
-  //    }
-  //  }
-  [self updateTitleColor];
   [self updateDisabledTitleColor];
   super.backgroundColor = self.currentBackgroundColor;
 }
@@ -655,25 +640,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   BOOL darkBackground = [self isDarkColor:[self underlyingColorHint]];
   [self setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
              forState:UIControlStateDisabled];
-}
-
-- (void)updateTitleColor {
-  if (_customTitleColor) {
-    [self setTitleColor:_customTitleColor forState:UIControlStateNormal];
-    return;
-  }
-
-  if (![self isTransparentColor:[self effectiveBackgroundColor]]) {
-    MDFTextAccessibilityOptions options = 0;
-    if ([MDFTextAccessibility isLargeForContrastRatios:self.titleLabel.font]) {
-      options = MDFTextAccessibilityOptionsLargeFont;
-    }
-    UIColor *color =
-        [MDFTextAccessibility textColorOnBackgroundColor:[self effectiveBackgroundColor]
-                                         targetTextAlpha:[MDCTypography buttonFontOpacity]
-                                                 options:options];
-    [self setTitleColor:color forState:UIControlStateNormal];
-  }
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
@@ -703,6 +669,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 #pragma mark - Deprecations
+
+- (void)setCustomTitleColor:(UIColor *)customTitleColor {
+  [self setTitleColor:customTitleColor forState:UIControlStateNormal];
+}
+
+- (UIColor *)customTitleColor {
+  return [self titleColorForState:UIControlStateNormal];
+}
 
 - (BOOL)shouldCapitalizeTitle {
   return [self isUppercaseTitle];
