@@ -1,11 +1,30 @@
-# App Bar
+<!--docs:
+title: "App Bars"
+layout: detail
+section: components
+excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
+iconId: toolbar
+path: /catalog/app-bars/
+api_doc_root: true
+-->
 
-<!--{% if site.link_to_site == "true" %}-->
-[![App Bar](docs/assets/app_bar.png)](docs/assets/app_bar.mp4)
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/app_bar.mp4" autoplay loop></video></div>{% endif %}-->
+# App Bars
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
+</div>
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.
+
+## Design & API Documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar Structure</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">API: MDCAppBar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">API: MDCAppBarContainerViewController</a></li>
+</ul>
 
 - - -
 

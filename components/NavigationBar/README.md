@@ -19,6 +19,13 @@ label or a custom title view.
 
 Consistent with iOS design guidelines, the title in the navigation bar is centered by default. However, certain use cases may warrant use of a left aligned title such as: when there is a strong relationship between the title and additional content appearing in the navigation bar, or where centering the title causes ambiguity.
 
+## Design & API Documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Classes/MDCNavigationBar.html">API: MDCNavigationBar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Protocols/MDCUINavigationItemObservables.html">API: MDCUINavigationItemObservables</a></li>
+</ul>
+
 - - -
 
 ## Installation

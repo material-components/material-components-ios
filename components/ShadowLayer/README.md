@@ -48,12 +48,6 @@ This is enabled by default and the internal portion of the layer is cut out.
 of two distinct layers. The overlay of these two layers generates a single Material Design
 shadow that adheres to defined height and light source principles.
 
-### Design Specifications
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
-</ul>
-
 - - -
 
 ## Installation
