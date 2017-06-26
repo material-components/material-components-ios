@@ -102,9 +102,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 @property(nonatomic, strong) MDCInkView *inkView;
+@property(nonatomic, readonly, strong) MDCShadowLayer *layer;
 @end
 
 @implementation MDCButton
+
+@dynamic layer;
 
 + (void)initialize {
   // Default background colors.
@@ -249,7 +252,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
 
-  MDCShadowLayer *shadowLayer = [self shadowLayer];
+  MDCShadowLayer *shadowLayer = self.layer;
   shadowLayer.shadowPath = [self boundingPath].CGPath;
   shadowLayer.shadowColor = [UIColor blackColor].CGColor;
   shadowLayer.elevation = [self elevationForState:self.state];
@@ -495,14 +498,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - Shadows
 
-- (MDCShadowLayer *)shadowLayer {
-  return (MDCShadowLayer *)self.layer;
-}
-
 - (void)animateButtonToHeightForState:(UIControlState)state {
+  CGFloat newElevation = [self elevationForState:state];
+  if (self.layer.elevation == newElevation) {
+    return;
+  }
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCButtonAnimationDuration];
-  [self shadowLayer].elevation = [self elevationForState:state];
+  self.layer.elevation = newElevation;
   [CATransaction commit];
 }
 
@@ -537,7 +540,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
   _userElevations[@(state)] = @(elevation);
-  [self shadowLayer].elevation = [self elevationForState:self.state];
+  self.layer.elevation = [self elevationForState:self.state];
 
   // The elevation of the normal state controls whether this button is flat or not, and flat buttons
   // have different background color requirements than raised buttons.
