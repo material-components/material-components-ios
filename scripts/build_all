@@ -14,6 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Build all Xcode schemes in all Xcode projects.
+#
+# If --verbose (-v) is specified, print the progress of each build.
+#
+# If xcpretty is installed (https://github.com/supermarin/xcpretty) then it will
+# be used in verbose mode.
+
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$SCRIPTS_DIR/.."
 
@@ -25,12 +32,28 @@ function is_expected_failure() {
   grep --quiet "is not configured for Running" "$1" 
 }
 
+# Test if the xcpretty command is available.
+#
+# Returns exit status zero if available and non-zero if not.
+function is_xcpretty_available() {
+  xcpretty > /dev/null 2>&1
+  # Exit code 127 is the standard "command not found" exit code.
+  if [ $? -eq 127 ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
 # Parse command-line arguments.
-verbose=0
+#
+# Note that we're following the command-line exit status convention of zero
+# to mean "success".
+verbose=1
 for i in "$@"; do
   case $i in
     -v|--verbose)
-      verbose=1
+      verbose=0
       shift
       ;;
     *)
@@ -44,6 +67,10 @@ done
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
 readonly SIGNING_OPTIONS="CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO"
 
+# Check for xcpretty once and cache the result.
+is_xcpretty_available
+readonly IS_XCPRETTY_AVAILABLE=$?
+
 all_builds_ok=1
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)
@@ -52,15 +79,19 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   echo "xcodebuild $COMMAND $scheme in $workspace."
   log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
   options="-workspace $workspace -scheme $scheme $SIGNING_OPTIONS"
+  build_command="xcodebuild $options build"
 
-  # If verbose, pipe the output to standard output (/dev/fd/1).
-  if [ "$verbose" -eq 1 ]; then
-    final_output=/dev/fd/1
+  # We need to have the output in a log file in all cases so we can check for
+  # expected failures.
+  if [ "$verbose" -eq 0 ]; then
+    if [ "$IS_XCPRETTY_AVAILABLE" -eq 0 ]; then
+      $build_command 2>&1 | tee "$log_file" | xcpretty
+    else
+      $build_command 2>&1 | tee "$log_file"
+    fi
   else
-    final_output=/dev/null
+    $build_command >"$log_file" 2>&1 
   fi
-
-  xcodebuild $options build 2>&1 | tee "$log_file" > $final_output
 
   if [ ${PIPESTATUS[0]} -eq 0 ] || is_expected_failure "$log_file"; then
     rm "$log_file"
