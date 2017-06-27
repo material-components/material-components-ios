@@ -28,7 +28,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white: 0.9, alpha: 1.0);
+    view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
     //let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
@@ -50,7 +50,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     view.addSubview(flatButton)
 
     let floatingButton = MDCFloatingButton()
-    floatingButton.backgroundColor = backgroundColor;
+    floatingButton.backgroundColor = backgroundColor
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
