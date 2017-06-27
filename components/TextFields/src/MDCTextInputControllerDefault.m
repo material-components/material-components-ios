@@ -250,6 +250,8 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
   _underlineViewMode = UITextFieldViewModeWhileEditing;
   _textInput.hidesPlaceholderOnInput = NO;
+
+  [self updatePlaceholderY];
 }
 
 - (void)setupInput {
@@ -266,7 +268,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   [self subscribeForNotifications];
   [self subscribeForKVO];
   _textInput.underline.color = MDCTextInputDefaultNormalUnderlineColor();
-  [self updateLayout];
+  [self updatePlaceholderY];
 }
 
 - (void)subscribeForNotifications {
@@ -405,6 +407,25 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   } else {
     self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
   }
+}
+
+// Sometimes the text field is showing the correct layout for its values (like when it's created
+// with .text already entered) so we make sure it's in the right place always.
+- (void)updatePlaceholderY {
+  BOOL isDirectionToUp = NO;
+  if (self.floatingEnabled) {
+    isDirectionToUp = self.textInput.text.length > 1 || self.textInput.isEditing;
+  }
+
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
+  [self movePlaceholderToUp:isDirectionToUp];
+  [CATransaction commit];
+
+  [self updateLayout];
+
+  self.textInput.hidesPlaceholderOnInput = !self.floatingEnabled;
+  [self.textInput layoutIfNeeded];
 }
 
 - (BOOL)isPlaceholderUp {
