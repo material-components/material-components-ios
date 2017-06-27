@@ -130,7 +130,8 @@ class TextFieldTests: XCTestCase {
                    unserializedInput?.leadingUnderlineLabel.text)
 
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
-    XCTAssertEqual(textField.trailingUnderlineLabel.text, unserializedInput?.trailingUnderlineLabel.text)
+    XCTAssertEqual(textField.trailingUnderlineLabel.text,
+                   unserializedInput?.trailingUnderlineLabel.text)
   }
 
   func testSizing() {

@@ -67,7 +67,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
-  
+
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(self.colorThemeChanged),

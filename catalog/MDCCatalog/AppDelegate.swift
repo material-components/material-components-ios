@@ -63,8 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
 
     // Apply color scheme to UIKit components.
-    UISlider.appearance().tintColor = colorScheme?.primaryColor;
-    UISwitch.appearance().tintColor = colorScheme?.primaryColor;
+    UISlider.appearance().tintColor = colorScheme?.primaryColor
+    UISwitch.appearance().tintColor = colorScheme?.primaryColor
 
     return true
   }

@@ -14,13 +14,14 @@
  limitations under the License.
  */
 
+// swiftlint:disable function_body_length
+// swiftlint:disable line_length
+
 import UIKit
 
 import MaterialComponents.MaterialButtons
 
 extension TabBarIconSwiftExample {
-
-  // MARK: Methods
 
   func setupAlignmentButton() -> MDCRaisedButton {
     let alignmentButton = MDCRaisedButton()

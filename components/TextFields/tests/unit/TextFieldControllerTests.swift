@@ -14,6 +14,9 @@
  limitations under the License.
  */
 
+// swiftlint:disable function_body_length
+// swiftlint:disable type_body_length
+
 import XCTest
 import MaterialComponents.MaterialTextFields
 
@@ -281,12 +284,16 @@ class TextFieldControllerDefaultTests: XCTestCase {
 
     unserializedController?.textInput = textField
     XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
-    XCTAssertEqual(controller.characterCountViewMode, unserializedController?.characterCountViewMode)
+    XCTAssertEqual(controller.characterCountViewMode,
+                   unserializedController?.characterCountViewMode)
     XCTAssertEqual(controller.isFloatingEnabled, unserializedController?.isFloatingEnabled)
-    XCTAssertEqual(controller.floatingPlaceholderColor, unserializedController?.floatingPlaceholderColor)
-    XCTAssertEqual(controller.floatingPlaceholderScale, unserializedController?.floatingPlaceholderScale)
+    XCTAssertEqual(controller.floatingPlaceholderColor,
+                   unserializedController?.floatingPlaceholderColor)
+    XCTAssertEqual(controller.floatingPlaceholderScale,
+                   unserializedController?.floatingPlaceholderScale)
     XCTAssertEqual(controller.helperText, unserializedController?.helperText)
-    XCTAssertEqual(controller.inlinePlaceholderColor, unserializedController?.inlinePlaceholderColor)
+    XCTAssertEqual(controller.inlinePlaceholderColor,
+                   unserializedController?.inlinePlaceholderColor)
     XCTAssertEqual(controller.underlineColorActive, unserializedController?.underlineColorActive)
     XCTAssertEqual(controller.underlineColorNormal, unserializedController?.underlineColorNormal)
     XCTAssertEqual(controller.underlineViewMode, unserializedController?.underlineViewMode)
@@ -311,10 +318,12 @@ class TextFieldControllerDefaultTests: XCTestCase {
 
     unserializedController?.textInput = textField
     XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
-    XCTAssertEqual(controller.characterCountViewMode, unserializedController?.characterCountViewMode)
+    XCTAssertEqual(controller.characterCountViewMode,
+                   unserializedController?.characterCountViewMode)
     XCTAssertEqual(controller.errorColor, unserializedController?.errorColor)
     XCTAssertEqual(controller.helperText, unserializedController?.helperText)
-    XCTAssertEqual(controller.inlinePlaceholderColor, unserializedController?.inlinePlaceholderColor)
+    XCTAssertEqual(controller.inlinePlaceholderColor,
+                   unserializedController?.inlinePlaceholderColor)
   }
 
 }

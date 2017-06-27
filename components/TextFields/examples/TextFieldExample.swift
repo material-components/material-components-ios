@@ -246,16 +246,19 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
     if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         fullString[range].characters.count > 0 {
-        zipController.setErrorText("Error: Zip can only contain numbers", errorAccessibilityValue: nil)
+        zipController.setErrorText("Error: Zip can only contain numbers",
+                                   errorAccessibilityValue: nil)
       } else if fullString.characters.count > 5 {
-        zipController.setErrorText("Error: Zip can only contain five digits", errorAccessibilityValue: nil)
+        zipController.setErrorText("Error: Zip can only contain five digits",
+                                   errorAccessibilityValue: nil)
       } else {
         zipController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
         fullString[range].characters.count > 0 {
-        cityController.setErrorText("Error: City can only contain letters", errorAccessibilityValue: nil)
+        cityController.setErrorText("Error: City can only contain letters",
+                                    errorAccessibilityValue: nil)
       } else {
         cityController.setErrorText(nil, errorAccessibilityValue: nil)
       }

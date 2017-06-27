@@ -44,4 +44,3 @@ class SnackbarManagerSwiftTests: XCTestCase {
   }
 
 }
-
