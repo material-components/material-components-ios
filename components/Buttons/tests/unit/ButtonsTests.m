@@ -65,6 +65,23 @@ static UIColor *randomColor() {
   }
 }
 
+static NSString *controlStateDescription(UIControlState controlState) {
+  if (controlState == UIControlStateNormal) {
+    return @"Normal";
+  }
+  NSMutableString *string = [NSMutableString string];
+  if ((UIControlStateHighlighted & controlState) == UIControlStateHighlighted) {
+    [string appendString:@"Highlighted "];
+  }
+  if ((UIControlStateDisabled & controlState) == UIControlStateDisabled) {
+    [string appendString:@"Disabled "];
+  }
+  if ((UIControlStateSelected & controlState) == UIControlStateSelected) {
+    [string appendString:@"Selected "];
+  }
+  return [string copy];
+}
+
 @interface ButtonsTests : XCTestCase
 @end
 
@@ -382,7 +399,7 @@ static UIColor *randomColor() {
 
     // Then
     XCTAssertEqualObjects([button titleColorForState:controlState], color,
-                          @"for control state:%@ ", [self controlState:controlState]);
+                          @"for control state:%@ ", controlStateDescription(controlState));
   }
 }
 - (void)testTitleColorForStateDisabledHighlight {
@@ -401,9 +418,9 @@ static UIColor *randomColor() {
 
   // Then
   XCTAssertEqualObjects([button titleColorForState:controlState], normalColor,
-                        @"for control state:%@ ", [self controlState:controlState]);
+                        @"for control state:%@ ", controlStateDescription(controlState));
   XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
-                        @"for control state:%@ ", [self controlState:controlState]);
+                        @"for control state:%@ ", controlStateDescription(controlState));
 }
 
 #pragma mark - UIButton state changes
@@ -530,25 +547,6 @@ static UIColor *randomColor() {
   XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize, preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
-}
-
-#pragma mark utilities
-
-- (NSString*)controlState:(UIControlState)controlState {
-  NSMutableString *string = [NSMutableString string];
-  if (UIControlStateNormal) {
-    return @".Normal";
-  }
-  if (controlState & UIControlStateHighlighted) {
-    [string appendString:@"Highlighted "];
-  }
-  if (controlState & UIControlStateDisabled) {
-    [string appendString:@"Disabled "];
-  }
-  if (controlState & UIControlStateSelected) {
-    [string appendString:@"Selected "];
-  }
-  return [string copy];
 }
 
 @end
