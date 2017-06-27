@@ -109,17 +109,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 @dynamic layer;
 
-+ (void)initialize {
-  // Default background colors.
-  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
-                                    forState:UIControlStateNormal];
-
-  [[MDCButton appearance] setElevation:MDCShadowElevationRaisedButtonResting
-                              forState:UIControlStateNormal];
-  [[MDCButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed
-                              forState:UIControlStateHighlighted];
-}
-
 + (Class)layerClass {
   return [MDCShadowLayer class];
 }
@@ -240,6 +229,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _userElevations = [NSMutableDictionary dictionary];
   _backgroundColors = [NSMutableDictionary dictionary];
   _accessibilityLabelForState = [NSMutableDictionary dictionary];
+
+  _backgroundColors[@(UIControlStateNormal)] = MDCColorFromRGB(MDCButtonDefaultBackgroundColor);
+  _userElevations[@(UIControlStateNormal)] = @(MDCShadowElevationRaisedButtonResting);
+  _userElevations[@(UIControlStateHighlighted)] = @(MDCShadowElevationRaisedButtonPressed);
 
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
