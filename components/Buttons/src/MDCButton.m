@@ -231,8 +231,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _accessibilityLabelForState = [NSMutableDictionary dictionary];
 
   _backgroundColors[@(UIControlStateNormal)] = MDCColorFromRGB(MDCButtonDefaultBackgroundColor);
-  _userElevations[@(UIControlStateNormal)] = @(MDCShadowElevationRaisedButtonResting);
-  _userElevations[@(UIControlStateHighlighted)] = @(MDCShadowElevationRaisedButtonPressed);
 
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
