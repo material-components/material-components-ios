@@ -149,8 +149,9 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     view.addSubview(scrollView)
     scrollView.frame = view.bounds
 
-    scrollView.contentSize = CGSize(width: scrollView.bounds.width - 2 * LayoutConstants.largeMargin,
-                                    height: 372.0)
+    scrollView.contentSize =
+      CGSize(width: scrollView.bounds.width - 2 * LayoutConstants.largeMargin,
+             height: 372.0)
   }
 
   func addGestureRecognizer() {
@@ -163,7 +164,8 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     let commonWidth = view.bounds.width - 2 * LayoutConstants.largeMargin
     var height = LayoutConstants.floatingHeight
     if let controller = allTextFieldControllers.first {
-      height = controller.isFloatingEnabled ? LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
+      height = controller.isFloatingEnabled ?
+        LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
     }
 
     name.frame = CGRect(x: LayoutConstants.largeMargin,
@@ -193,7 +195,8 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
 
     zip.frame = CGRect(x: LayoutConstants.stateWidth + LayoutConstants.smallMargin,
                        y: 0,
-                       width: stateZip.bounds.width - LayoutConstants.stateWidth - LayoutConstants.smallMargin,
+                       width: stateZip.bounds.width - LayoutConstants.stateWidth -
+                        LayoutConstants.smallMargin,
                        height: height)
 
     phone.frame = CGRect(x: LayoutConstants.largeMargin,
@@ -243,16 +246,19 @@ extension TextFieldManualLayoutSwiftExample: UITextFieldDelegate {
     if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         fullString[range].characters.count > 0 {
-        zipController.setErrorText("Error: Zip can only contain numbers", errorAccessibilityValue: nil)
+        zipController.setErrorText("Error: Zip can only contain numbers",
+                                   errorAccessibilityValue: nil)
       } else if fullString.characters.count > 5 {
-        zipController.setErrorText("Error: Zip can only contain five digits", errorAccessibilityValue: nil)
+        zipController.setErrorText("Error: Zip can only contain five digits",
+                                   errorAccessibilityValue: nil)
       } else {
         zipController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
         fullString[range].characters.count > 0 {
-        cityController.setErrorText("Error: City can only contain letters", errorAccessibilityValue: nil)
+        cityController.setErrorText("Error: City can only contain letters",
+                                    errorAccessibilityValue: nil)
       } else {
         cityController.setErrorText(nil, errorAccessibilityValue: nil)
       }

@@ -119,7 +119,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldDefaultCharMax.delegate = self
     textFieldDefaultCharMax.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultCharMax = MDCTextInputControllerDefault(textInput: textFieldDefaultCharMax)
+    let textFieldControllerDefaultCharMax =
+      MDCTextInputControllerDefault(textInput: textFieldDefaultCharMax)
     textFieldControllerDefaultCharMax.characterCountMax = 50
     textFieldControllerDefaultCharMax.isFloatingEnabled = false
 
@@ -138,7 +139,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldFullWidth.clearButtonMode = .whileEditing
     textFieldFullWidth.backgroundColor = .white
 
-    let textFieldControllerFullWidth = MDCTextInputControllerFullWidth(textInput: textFieldFullWidth)
+    let textFieldControllerFullWidth =
+      MDCTextInputControllerFullWidth(textInput: textFieldFullWidth)
 
     let textFieldFullWidthPlaceholder = MDCTextField()
     scrollView.addSubview(textFieldFullWidthPlaceholder)
@@ -189,7 +191,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldFloatingCharMax.delegate = self
     textFieldFloatingCharMax.clearButtonMode = .whileEditing
 
-    let textFieldControllerFloatingCharMax = MDCTextInputControllerDefault(textInput: textFieldFloatingCharMax)
+    let textFieldControllerFloatingCharMax =
+      MDCTextInputControllerDefault(textInput: textFieldFloatingCharMax)
     textFieldControllerFloatingCharMax.characterCountMax = 50
 
     controllersWithCharacterCount.append(textFieldControllerFloatingCharMax)
@@ -206,7 +209,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldDisabled.delegate = self
     textFieldDisabled.isEnabled = false
 
-    let textFieldControllerDefaultDisabled = MDCTextInputControllerDefault(textInput: textFieldDisabled)
+    let textFieldControllerDefaultDisabled =
+      MDCTextInputControllerDefault(textInput: textFieldDisabled)
 
     let textFieldCustomFont = MDCTextField()
     scrollView.addSubview(textFieldCustomFont)
@@ -217,7 +221,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldCustomFont.delegate = self
     textFieldCustomFont.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultCustomFont = MDCTextInputControllerDefault(textInput: textFieldCustomFont)
+    let textFieldControllerDefaultCustomFont =
+      MDCTextInputControllerDefault(textInput: textFieldCustomFont)
     textFieldCustomFont.placeholderLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     textFieldControllerDefaultCustomFont.isFloatingEnabled = false
 
@@ -259,7 +264,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldLeftView.delegate = self
     textFieldLeftView.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultLeftView = MDCTextInputControllerDefault(textInput: textFieldLeftView)
+    let textFieldControllerDefaultLeftView =
+      MDCTextInputControllerDefault(textInput: textFieldLeftView)
     textFieldControllerDefaultLeftView.isFloatingEnabled = false
 
     let textFieldLeftViewFloating = MDCTextField()
@@ -290,7 +296,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldRightView.delegate = self
     textFieldRightView.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultRightView = MDCTextInputControllerDefault(textInput: textFieldRightView)
+    let textFieldControllerDefaultRightView =
+      MDCTextInputControllerDefault(textInput: textFieldRightView)
     textFieldControllerDefaultRightView.isFloatingEnabled = false
 
     let textFieldRightViewFloating = MDCTextField()
