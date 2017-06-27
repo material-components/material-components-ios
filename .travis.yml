@@ -20,6 +20,7 @@ env:
   - LANG=en_US.UTF-8
   matrix:
     - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2" SDK="iphonesimulator10.2"
+    - DESTINATION="platform=iOS Simulator,name=iPhone 5s,OS=8.1" SDK="iphonesimulator8.1"
 
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
