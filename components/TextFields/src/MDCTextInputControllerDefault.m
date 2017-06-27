@@ -918,7 +918,12 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 }
 
 - (void)textInputDidChange:(NSNotification *)note {
-  [self updateLayout];
+  if ([note.name isEqualToString:MDCTextFieldTextDidSetTextNotification]) {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:0];
+    [self updatePlaceholderY];
+    [CATransaction commit];
+  }
 
   // Accessibility
   if (self.textInput.isEditing && self.characterCountMax > 0) {

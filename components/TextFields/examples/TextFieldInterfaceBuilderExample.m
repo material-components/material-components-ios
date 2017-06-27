@@ -52,4 +52,9 @@
       [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address2TextField];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  self.address2TextField.text = @"Apt 3F";
+}
+
 @end
