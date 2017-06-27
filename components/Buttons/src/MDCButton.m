@@ -111,11 +111,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self commonMDCButtonInit];
-  }
-  return self;
+  return [self initWithFrame:CGRectZero];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {

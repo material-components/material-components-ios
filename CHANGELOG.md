@@ -1,3 +1,15 @@
+# 25.1.1
+
+Hotfix: Cherry picked: [[Buttons] Call designated initializer in init methods](https://github.com/material-components/material-components-ios/pull/1553)
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Call designated initializer in init methods (#1553)](https://github.com/material-components/material-components-ios/commit/6f2709de8c8cfd2874934abf293cb7e9b2864368) (ianegordon)
+
 # 25.1.0
 
 #### Changes
