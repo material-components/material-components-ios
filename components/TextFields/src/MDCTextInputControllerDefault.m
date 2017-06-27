@@ -663,6 +663,13 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   return _floatingPlaceholderColor ?: self.textInput.tintColor;
 }
 
+- (void)setFloatingEnabled:(BOOL)floatingEnabled {
+  if (_floatingEnabled != floatingEnabled) {
+    _floatingEnabled = floatingEnabled;
+    [self updatePlaceholderY];
+  }
+}
+
 - (void)setFloatingPlaceholderScale:(NSNumber *)floatingPlaceholderScale {
   if (![_floatingPlaceholderScale isEqualToNumber:floatingPlaceholderScale]) {
     _floatingPlaceholderScale = floatingPlaceholderScale;
@@ -706,25 +713,6 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 
 - (BOOL)isDisplayingErrorText {
   return self.errorText != nil;
-}
-- (void)setFloatingEnabled:(BOOL)floatingEnabled {
-  if (_floatingEnabled != floatingEnabled) {
-    _floatingEnabled = floatingEnabled;
-    BOOL isDirectionToUp = NO;
-    if (floatingEnabled) {
-      isDirectionToUp = self.textInput.text.length > 1 || self.textInput.isEditing;
-    }
-
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [self movePlaceholderToUp:isDirectionToUp];
-    [CATransaction commit];
-
-    [self updateLayout];
-
-    self.textInput.hidesPlaceholderOnInput = !floatingEnabled;
-    [self.textInput layoutIfNeeded];
-  }
 }
 
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {
