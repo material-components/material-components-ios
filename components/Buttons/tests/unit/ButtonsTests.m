@@ -26,6 +26,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 // This assumes that UIControlState is actually a set of bitfields and ignores application-specific
 // values.
 static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1;
+static const UIControlState kUIControlStateDisabledHighlighted =
+    UIControlStateHighlighted | UIControlStateDisabled;
 
 static CGFloat randomNumber() {
   return arc4random_uniform(100) / (CGFloat)10;
@@ -142,35 +144,7 @@ static UIColor *randomColor() {
   }
 }
 
-- (void)testResetElevationForState {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    // And given
-    CGFloat defaultValue = [button elevationForState:controlState];
-
-    // When
-    [button setElevation:randomNumberNotEqualTo(defaultValue) forState:controlState];
-    [button resetElevationForState:controlState];
-
-    // Then
-    XCTAssertEqual([button elevationForState:controlState], defaultValue);
-  }
-}
-
-- (void)testDefaultElevationsForState {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-
-  // Then
-  XCTAssertEqual([button elevationForState:UIControlStateNormal], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateDisabled], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], 1);
-}
-
-- (void)testDefaultElevationRelationships {
+- (void)testElevationNormal {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
   CGFloat normalElevation = randomNumberNotEqualTo(0);
@@ -182,10 +156,10 @@ static UIColor *randomColor() {
   XCTAssertEqual([button elevationForState:UIControlStateNormal], normalElevation);
   XCTAssertEqual([button elevationForState:UIControlStateHighlighted], normalElevation);
   XCTAssertEqual([button elevationForState:UIControlStateDisabled], normalElevation);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], 2 * normalElevation);
+  XCTAssertEqual([button elevationForState:UIControlStateSelected], normalElevation);
 }
 
-- (void)testDefaultElevationRelationshipsZeroElevation {
+- (void)testElevationNormalZeroElevation {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
 
@@ -194,9 +168,6 @@ static UIColor *randomColor() {
 
   // Then
   XCTAssertEqual([button elevationForState:UIControlStateNormal], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateDisabled], 0);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], 1);
 }
 
 - (void)testBackgroundColorForState {
@@ -215,20 +186,122 @@ static UIColor *randomColor() {
   }
 }
 
-- (void)testCurrentBackgroundColor {
+- (void)testCurrentBackgroundColorNormal {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalColor = [UIColor redColor];
+  [button setBackgroundColor:normalColor forState:UIControlStateNormal];
 
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    // And given
-    UIColor *color = randomColor();
+  // Then
+  XCTAssertEqualObjects([button backgroundColor], normalColor);
+}
 
-    // When
-    [button setBackgroundColor:color forState:controlState];
+- (void)testCurrentBackgroundColorHighlighted {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalColor = [UIColor redColor];
+  UIColor *color = [UIColor orangeColor];
+  [button setBackgroundColor:normalColor forState:UIControlStateNormal];
+  [button setBackgroundColor:color forState:UIControlStateHighlighted];
 
-    // Then
-    XCTAssertEqualObjects([button backgroundColorForState:controlState], color);
-  }
+  // When
+  button.highlighted = YES;
+
+  // Then
+  XCTAssertEqualObjects([button backgroundColor], color);
+}
+
+- (void)testCurrentBackgroundColorDisabled {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalColor = [UIColor redColor];
+  UIColor *color = [UIColor orangeColor];
+  [button setBackgroundColor:normalColor forState:UIControlStateNormal];
+  [button setBackgroundColor:color forState:UIControlStateDisabled];
+
+  // When
+  button.enabled = NO;
+
+  // Then
+  XCTAssertEqualObjects([button backgroundColor], color);
+}
+
+- (void)testCurrentBackgroundColorSelected {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalColor = [UIColor redColor];
+  UIColor *color = [UIColor orangeColor];
+  [button setBackgroundColor:normalColor forState:UIControlStateNormal];
+  [button setBackgroundColor:color forState:UIControlStateSelected];
+
+  // When
+  button.selected = YES;
+
+  // Then
+  XCTAssertEqualObjects([button backgroundColor], color);
+}
+
+- (void)testCurrentElevationNormal {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = 10;
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
+                             normalElevation,
+                             kEpsilonAccuracy);
+}
+
+- (void)testCurrentElevationHighlighted {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = 10;
+  CGFloat elevation = 40;
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+  [button setElevation:elevation forState:UIControlStateHighlighted];;
+
+  // When
+  button.highlighted = YES;
+
+  // Then
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
+                             elevation,
+                             kEpsilonAccuracy);
+}
+
+- (void)testCurrentElevationDisabled {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = 10;
+  CGFloat elevation = 40;
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+  [button setElevation:elevation forState:UIControlStateDisabled];;
+
+  // When
+  button.enabled = NO;
+
+  // Then
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
+                             elevation,
+                             kEpsilonAccuracy);
+}
+
+- (void)testCurrentElevationSelected {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = 10;
+  CGFloat elevation = 40;
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+  [button setElevation:elevation forState:UIControlStateSelected];;
+
+  // When
+  button.selected = YES;
+
+  // Then
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
+                             elevation,
+                             kEpsilonAccuracy);
 }
 
 - (void)testInkColors {
@@ -256,10 +329,8 @@ static UIColor *randomColor() {
   MDCButton *button = [[MDCButton alloc] init];
   button.inkStyle = arc4random_uniform(2) ? MDCInkStyleBounded : MDCInkStyleUnbounded;
   button.inkMaxRippleRadius = randomNumber();
-  button.disabledAlpha = randomNumber();
   button.uppercaseTitle = arc4random_uniform(2) ? YES : NO;
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-  button.customTitleColor = randomColor();
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
@@ -277,8 +348,6 @@ static UIColor *randomColor() {
   XCTAssertEqual(button.inkStyle, unarchivedButton.inkStyle);
   XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius, unarchivedButton.inkMaxRippleRadius,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, unarchivedButton.disabledAlpha,
-                             kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom, unarchivedButton.hitAreaInsets.bottom,
                              kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(button.hitAreaInsets.top, unarchivedButton.hitAreaInsets.top,
@@ -287,7 +356,6 @@ static UIColor *randomColor() {
                              kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(button.hitAreaInsets.left, unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
-  XCTAssertEqual(button.customTitleColor, unarchivedButton.customTitleColor);
   XCTAssertEqual(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button elevationForState:controlState],
@@ -295,6 +363,47 @@ static UIColor *randomColor() {
     XCTAssertEqual([button backgroundColorForState:controlState],
                    [unarchivedButton backgroundColorForState:controlState]);
   }
+}
+
+#pragma mark - UIButton strangeness
+
+- (void)testTitleColorForState {
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    if (controlState & kUIControlStateDisabledHighlighted) {
+      // We skip the Disabled Highlighted state because UIButton titleColorForState ignores it.
+      continue;
+    }
+    // Given
+    MDCButton *button = [[MDCButton alloc] init];
+    UIColor *color = [UIColor blueColor];
+
+    // When
+    [button setTitleColor:color forState:controlState];
+
+    // Then
+    XCTAssertEqualObjects([button titleColorForState:controlState], color,
+                          @"for control state:%@ ", [self controlState:controlState]);
+  }
+}
+- (void)testTitleColorForStateDisabledHighlight {
+  // This is strange that setting the color for a state does not return the value of that state.
+  // It turns out that it returns the value set to the normal state.
+
+  // Given
+  UIControlState controlState = kUIControlStateDisabledHighlighted;
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *color = [UIColor blueColor];
+  UIColor *normalColor = [UIColor greenColor];
+  [button setTitleColor:normalColor forState:UIControlStateNormal];
+
+  // When
+  [button setTitleColor:color forState:controlState];
+
+  // Then
+  XCTAssertEqualObjects([button titleColorForState:controlState], normalColor,
+                        @"for control state:%@ ", [self controlState:controlState]);
+  XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
+                        @"for control state:%@ ", [self controlState:controlState]);
 }
 
 #pragma mark - UIButton state changes
@@ -421,6 +530,25 @@ static UIColor *randomColor() {
   XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize, preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
+}
+
+#pragma mark utilities
+
+- (NSString*)controlState:(UIControlState)controlState {
+  NSMutableString *string = [NSMutableString string];
+  if (UIControlStateNormal) {
+    return @".Normal";
+  }
+  if (controlState & UIControlStateHighlighted) {
+    [string appendString:@"Highlighted "];
+  }
+  if (controlState & UIControlStateDisabled) {
+    [string appendString:@"Disabled "];
+  }
+  if (controlState & UIControlStateSelected) {
+    [string appendString:@"Selected "];
+  }
+  return [string copy];
 }
 
 @end
