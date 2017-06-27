@@ -841,6 +841,10 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
   UIEdgeInsets textContainerInset = defaultInsets;
 
+  if (!self.isFloatingEnabled) {
+    return defaultInsets;
+  }
+  
   CGFloat scale = [self effectiveFloatingScale];
   textContainerInset.top = MDCTextInputDefaultVerticalPadding +
                            MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +
