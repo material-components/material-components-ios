@@ -16,6 +16,8 @@
 
 #import "MDCActivityIndicator.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "MaterialRTL.h"
 #import "MaterialApplication.h"
 #import "private/MDCActivityIndicator+Private.h"
