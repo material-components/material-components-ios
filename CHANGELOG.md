@@ -1,5 +1,32 @@
 # release-candidate TODO: Replace me with version number. 
 
+## API diffs
+
+### ActivityIndicator
+
+# Setting 'cycleColors' to an empty array now sets 'cycleColors' to the default cycle colors.
+
+### BottomSheet
+
+* New component for presenting a view controller as a bottom sheet.
+
+### Buttons
+
+* New subcomponent MDCButtonTitleColorAccessibilityMutator for enforcing title/background color contrast.
+
+### Dialogs
+
+* 'UIViewController+MaterialDialogs' property 'mdc_dialogPresentationController' now has the nullability annotation of nullable.
+
+### TextFields
+
+* 'MDCTextInputController' renamed to 'MDCTextInputControllerDefault'
+* Added 'MDCTextInputController' protocol
+* Removed 'presentationStyle' property from MDCTextInputController
+* Added 'MDCTextInputControllerFullWidth'
+
+## Component changes
+
 # 25.1.1
 
 Hotfix: Cherry picked: [[Buttons] Call designated initializer in init methods](https://github.com/material-components/material-components-ios/pull/1553)
