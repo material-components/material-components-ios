@@ -250,6 +250,8 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
   _underlineViewMode = UITextFieldViewModeWhileEditing;
   _textInput.hidesPlaceholderOnInput = NO;
+
+  [self updatePlaceholderY];
 }
 
 - (void)setupInput {
@@ -266,7 +268,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   [self subscribeForNotifications];
   [self subscribeForKVO];
   _textInput.underline.color = MDCTextInputDefaultNormalUnderlineColor();
-  [self updateLayout];
+  [self updatePlaceholderY];
 }
 
 - (void)subscribeForNotifications {
@@ -405,6 +407,25 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   } else {
     self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
   }
+}
+
+// Sometimes the text field is showing the correct layout for its values (like when it's created
+// with .text already entered) so we make sure it's in the right place always.
+- (void)updatePlaceholderY {
+  BOOL isDirectionToUp = NO;
+  if (self.floatingEnabled) {
+    isDirectionToUp = self.textInput.text.length > 1 || self.textInput.isEditing;
+  }
+
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
+  [self movePlaceholderToUp:isDirectionToUp];
+  [CATransaction commit];
+
+  [self updateLayout];
+
+  self.textInput.hidesPlaceholderOnInput = !self.floatingEnabled;
+  [self.textInput layoutIfNeeded];
 }
 
 - (BOOL)isPlaceholderUp {
@@ -642,6 +663,13 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   return _floatingPlaceholderColor ?: self.textInput.tintColor;
 }
 
+- (void)setFloatingEnabled:(BOOL)floatingEnabled {
+  if (_floatingEnabled != floatingEnabled) {
+    _floatingEnabled = floatingEnabled;
+    [self updatePlaceholderY];
+  }
+}
+
 - (void)setFloatingPlaceholderScale:(NSNumber *)floatingPlaceholderScale {
   if (![_floatingPlaceholderScale isEqualToNumber:floatingPlaceholderScale]) {
     _floatingPlaceholderScale = floatingPlaceholderScale;
@@ -685,25 +713,6 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 
 - (BOOL)isDisplayingErrorText {
   return self.errorText != nil;
-}
-- (void)setFloatingEnabled:(BOOL)floatingEnabled {
-  if (_floatingEnabled != floatingEnabled) {
-    _floatingEnabled = floatingEnabled;
-    BOOL isDirectionToUp = NO;
-    if (floatingEnabled) {
-      isDirectionToUp = self.textInput.text.length > 1 || self.textInput.isEditing;
-    }
-
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [self movePlaceholderToUp:isDirectionToUp];
-    [CATransaction commit];
-
-    [self updateLayout];
-
-    self.textInput.hidesPlaceholderOnInput = !floatingEnabled;
-    [self.textInput layoutIfNeeded];
-  }
 }
 
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {
@@ -909,7 +918,12 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 }
 
 - (void)textInputDidChange:(NSNotification *)note {
-  [self updateLayout];
+  if ([note.name isEqualToString:MDCTextFieldTextDidSetTextNotification]) {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:0];
+    [self updatePlaceholderY];
+    [CATransaction commit];
+  }
 
   // Accessibility
   if (self.textInput.isEditing && self.characterCountMax > 0) {
