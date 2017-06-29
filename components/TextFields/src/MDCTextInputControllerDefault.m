@@ -419,7 +419,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 - (void)updatePlaceholderY {
   BOOL isDirectionToUp = NO;
   if (self.floatingEnabled) {
-    isDirectionToUp = self.textInput.text.length > 1 || self.textInput.isEditing;
+    isDirectionToUp = self.textInput.text.length >= 1 || self.textInput.isEditing;
   }
 
   [CATransaction begin];
