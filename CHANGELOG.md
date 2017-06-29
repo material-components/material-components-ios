@@ -1,3 +1,5 @@
+# release-candidate TODO: Replace me with version number. 
+
 # 25.1.1
 
 Hotfix: Cherry picked: [[Buttons] Call designated initializer in init methods](https://github.com/material-components/material-components-ios/pull/1553)
