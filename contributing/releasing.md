@@ -9,6 +9,18 @@ tested, and then merged into `stable`, which serves as the stable "vetted" branc
 
 ## Before you start
 
+### One time setup for release cop
+
+#### Check that you have push access to publish our cocoapod
+
+    scripts/release/test_pod_push
+
+#### Check that you can push to the `stable` branch of the repository
+
+You should be a
+[MDC-iOS](https://github.com/material-components/material-components-ios/settings/collaboration)
+team member which gives you Admin rights.
+
 ### Check for issues that might affect the release process
 
 Occasionally there are temporary issues with the release process, check the [`release`
@@ -197,10 +209,6 @@ Commit the results to your branch:
 Send our local podspec through the CocoaPods linter:
 
     pod lib lint MaterialComponents.podspec
-
-#### Check that you have push access to publish our cocoapod
-
-    scripts/release/test_pod_push
 
 ## Testing with release-blocking clients
 
