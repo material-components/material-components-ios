@@ -28,12 +28,12 @@
 /* Auto-generated code using PaintCode and formatted with clang-format. */
 + (void)draw:(CGRect)frame {
   //// Color Declarations
-  UIColor* fillColor = [UIColor colorWithRed:0.04 green:0.041 blue:0.037 alpha:1];
+  UIColor* fillColor = [UIColor colorWithRed:0.04f green:0.041f blue:0.037f alpha:1];
 
   //// Subframes
   CGRect group = CGRectMake(
-      CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 19.83f) * 0.52934f + 0.06f) + 0.44f,
-      CGRectGetMinY(frame) + floor((CGRectGetHeight(frame) - 17.25f) * 0.47003f - 0.32f) + 0.82f, 19.83f,
+      CGRectGetMinX(frame) + (CGFloat)floor((CGRectGetWidth(frame) - 19.83f) * 0.52934f + 0.06f) + 0.44f,
+      CGRectGetMinY(frame) + (CGFloat)floor((CGRectGetHeight(frame) - 17.25f) * 0.47003f - 0.32f) + 0.82f, 19.83f,
       17.25f);
 
   //// Group

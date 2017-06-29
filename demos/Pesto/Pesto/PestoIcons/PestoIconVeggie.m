@@ -35,8 +35,8 @@
 
   //// Subframes
   CGRect group = CGRectMake(
-      CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 14.08f) * 0.47855f - 0.08f) + 0.58f,
-      CGRectGetMinY(frame) + floor((CGRectGetHeight(frame) - 26.64f) * 0.58262f + 0.26f) + 0.24f, 14.08f,
+      CGRectGetMinX(frame) + (CGFloat)floor((CGRectGetWidth(frame) - 14.08f) * 0.47855f - 0.08f) + 0.58f,
+      CGRectGetMinY(frame) + (CGFloat)floor((CGRectGetHeight(frame) - 26.64f) * 0.58262f + 0.26f) + 0.24f, 14.08f,
       26.64f);
 
   //// Group
@@ -52,7 +52,7 @@
     //// Rectangle 2 Drawing
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, CGRectGetMinX(group) + 8.72f, CGRectGetMinY(group) + 3.33f);
-    CGContextRotateCTM(context, 44.9f * M_PI / 180);
+    CGContextRotateCTM(context, 44.9f * (CGFloat)M_PI / 180);
 
     UIBezierPath* rectangle2Path =
         [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-0.9f, -2.58f, 1.8f, 5.15f)
@@ -65,7 +65,7 @@
     //// Rectangle 3 Drawing
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, CGRectGetMinX(group) + 5.32f, CGRectGetMinY(group) + 3.38f);
-    CGContextRotateCTM(context, 44.9f * M_PI / 180);
+    CGContextRotateCTM(context, 44.9f * (CGFloat)M_PI / 180);
 
     UIBezierPath* rectangle3Path =
         [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-2.58f, -0.9f, 5.15f, 1.8f)
