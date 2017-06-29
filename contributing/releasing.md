@@ -61,8 +61,6 @@ test the release.
     scripts/prep_all
     scripts/build_all
     scripts/test_all
-    scripts/release/test_pod_push
-    scripts/release/test_pod_format
 
 Identify why any failures occurred and resolve them before continuing.
 
@@ -194,6 +192,16 @@ Commit the results to your branch:
     git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
 
+#### Verify CocoaPods podspec format
+
+Send our local podspec through the CocoaPods linter:
+
+    pod lib lint MaterialComponents.podspec
+
+#### Check that you have push access to publish our cocoapod
+
+    scripts/release/test_pod_push
+
 ## Testing with release-blocking clients
 
 Before you can merge the release branch into either develop or stable you **must** get the release
@@ -252,8 +260,7 @@ Before pushing these changes to GitHub it's a good idea to run a final sanity ch
 
     git checkout stable
     scripts/test_all
-    scripts/release/test_pod_push
-    scripts/release/test_pod_format
+    pod lib lint MaterialComponents.podspec
 
     git checkout develop
     scripts/test_all

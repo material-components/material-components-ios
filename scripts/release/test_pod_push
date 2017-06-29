@@ -15,5 +15,6 @@
 # limitations under the License.
 
 if ! pod trunk me | grep -q 'MaterialComponents'; then
+  echo "Failed! Register an account and session: https://guides.cocoapods.org/making/getting-setup-with-trunk.html"
   exit 1
 fi
