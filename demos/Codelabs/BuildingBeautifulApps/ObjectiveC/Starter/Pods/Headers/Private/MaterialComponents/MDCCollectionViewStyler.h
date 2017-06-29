@@ -1,1 +1,0 @@
-../../../MaterialComponents/components/Collections/src/private/MDCCollectionViewStyler.h

@@ -73,7 +73,6 @@
   [self addChildViewController:self.appBar.headerViewController];
 
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
 
   self.appBar.navigationBar.titleTextAttributes = @{
@@ -162,7 +161,7 @@
   self.starPage = [[UIView alloc] initWithFrame:CGRectZero];
   self.starPage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:self.starPage];
-  self.starPage.backgroundColor = [[MDCPalette lightBluePalette] tint200];
+  self.starPage.backgroundColor = MDCPalette.lightBluePalette.tint200;
   [self addStarCentered:YES];
 
   // Layout the views to be equal height and width to each other and self.view, hug the edges of the

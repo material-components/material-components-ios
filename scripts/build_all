@@ -14,6 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Build all Xcode schemes in all Xcode projects.
+#
+# If --verbose (-v) is specified, print the progress of each build.
+#
+# If xcpretty is installed (https://github.com/supermarin/xcpretty) then it will
+# be used in verbose mode.
+
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$SCRIPTS_DIR/.."
 
@@ -25,24 +32,44 @@ function is_expected_failure() {
   grep --quiet "is not configured for Running" "$1" 
 }
 
-# Given a path to an Xcode log file in $1, print a guess at what caused the
-# failure.
-function guess_failure() {
-  if [[ $TRAVIS == "true" ]]; then
-    tail -n 200 "$1"
+# Test if the xcpretty command is available.
+#
+# Returns exit status zero if available and non-zero if not.
+function is_xcpretty_available() {
+  xcpretty > /dev/null 2>&1
+  # Exit code 127 is the standard "command not found" exit code.
+  if [ $? -eq 127 ]; then
+    return 1
   else
-    grep --context=20 "The following build commands failed:" "$1"
+    return 0
   fi
 }
+
+# Parse command-line arguments.
+#
+# Note that we're following the command-line exit status convention of zero
+# to mean "success".
+verbose=1
+for i in "$@"; do
+  case $i in
+    -v|--verbose)
+      verbose=0
+      shift
+      ;;
+    *)
+      echo "Unknown option $i, aborting."
+      exit -1
+      ;;
+  esac
+done
+
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
 readonly SIGNING_OPTIONS="CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO"
 
-if [[ ! -z $1 ]]; then
-  readonly COMMAND="$1"
-else
-  readonly COMMAND=build
-fi
+# Check for xcpretty once and cache the result.
+is_xcpretty_available
+readonly IS_XCPRETTY_AVAILABLE=$?
 
 all_builds_ok=1
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
@@ -52,14 +79,26 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   echo "xcodebuild $COMMAND $scheme in $workspace."
   log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
   options="-workspace $workspace -scheme $scheme $SIGNING_OPTIONS"
-  if xcodebuild $options $COMMAND >"$log_file" 2>&1 || \
-     is_expected_failure "$log_file"; then
+  build_command="xcodebuild $options build"
+
+  # We need to have the output in a log file in all cases so we can check for
+  # expected failures.
+  if [ "$verbose" -eq 0 ]; then
+    if [ "$IS_XCPRETTY_AVAILABLE" -eq 0 ]; then
+      $build_command 2>&1 | tee "$log_file" | xcpretty
+    else
+      $build_command 2>&1 | tee "$log_file"
+    fi
+  else
+    $build_command >"$log_file" 2>&1 
+  fi
+
+  if [ ${PIPESTATUS[0]} -eq 0 ] || is_expected_failure "$log_file"; then
     rm "$log_file"
   else
     all_builds_ok=0
     echo
     echo "Failed to build $scheme in $workspace:"
-    guess_failure "$log_file"
     echo "Log left in $log_file."
     echo "Continuing with next build..."
     echo

@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCSlider.h"
+#import "MaterialSlider.h"
 
 @class MDCThumbTrack;
 

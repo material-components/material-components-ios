@@ -15,6 +15,5 @@
  */
 
 #import "MDCColorScheme.h"
-
-#import "MDCAlertColorThemer.h"
-#import "MDCFeatureHighlightColorThemer.h"
+#import "MDCTonalColorScheme.h"
+#import "MDCTonalPalette.h"

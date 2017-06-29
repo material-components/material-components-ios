@@ -18,7 +18,7 @@
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
 #import "MaterialOverlayWindow.h"
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 #import "private/MDCSnackbarMessageInternal.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
@@ -570,6 +570,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _identifier = [NSUUID UUID];
   }
   return self;
+}
+
+- (void)dealloc {
+  [MDCSnackbarManager resumeMessagesWithToken:self];
 }
 
 @end

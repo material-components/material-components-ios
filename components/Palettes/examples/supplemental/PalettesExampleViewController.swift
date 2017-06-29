@@ -20,14 +20,14 @@ typealias ExampleTone = (name: String, tone: UIColor)
 
 func ExampleTonesForPalette(_ palette: MDCPalette) -> [ExampleTone] {
   var tones: [ExampleTone] = [
-    (MDCPaletteTint100Name, palette.tint100),
-    (MDCPaletteTint300Name, palette.tint300),
-    (MDCPaletteTint500Name, palette.tint500),
-    (MDCPaletteTint700Name, palette.tint700)
+    (MDCPaletteTint.tint100Name.rawValue, palette.tint100),
+    (MDCPaletteTint.tint300Name.rawValue, palette.tint300),
+    (MDCPaletteTint.tint500Name.rawValue, palette.tint500),
+    (MDCPaletteTint.tint700Name.rawValue, palette.tint700)
     ]
 
   if let accent = palette.accent400 {
-    tones.append((MDCPaletteAccent400Name, accent))
+    tones.append((MDCPaletteAccent.accent400Name.rawValue, accent))
   }
 
   return tones

@@ -39,8 +39,8 @@
   ];
 
   self.colors = @[
-    [MDCPalette bluePalette].tint500, [MDCPalette pinkPalette].tint500,
-    [MDCPalette redPalette].tint500, [MDCPalette greenPalette].tint500
+    MDCPalette.bluePalette.tint500, MDCPalette.pinkPalette.tint500,
+    MDCPalette.redPalette.tint500, MDCPalette.greenPalette.tint500
   ];
 
   self.view.backgroundColor = self.colors[0];

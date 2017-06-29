@@ -22,6 +22,10 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
 
 @implementation MDCFlatButton
 
+- (instancetype)init {
+  return [self initWithFrame:CGRectZero];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -41,12 +45,17 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
   return self;
 }
 
++ (void)initialize {
+  // Default background colors.
+  [[MDCFlatButton appearance] setBackgroundColor:[UIColor clearColor]
+                                    forState:UIControlStateNormal];
+}
+
 - (void)commonMDCFlatButtonInit {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.shouldRaiseOnTouch = NO;
 #pragma clang diagnostic pop
-  [self setBackgroundColor:nil forState:UIControlStateNormal];
   self.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
 }
 

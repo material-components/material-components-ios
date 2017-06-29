@@ -85,12 +85,12 @@ scheme.
 #### Swift
 
 ``` swift
-view.backgroundColor = MDCPalette.green().tint500;
+view.backgroundColor = MDCPalette.green.tint500
 ```
 
 #### Objective-C
 
 ``` objc
-self.view.backgroundColor = [MDCPalette greenPalette].tint500;
+self.view.backgroundColor = MDCPalette.greenPalette.tint500;
 ```
 <!--</div>-->

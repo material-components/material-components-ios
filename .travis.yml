@@ -1,21 +1,31 @@
 language: objective-c
-osx_image: xcode8.2
+osx_image: xcode8.3
 sudo: false
+
+# Only do a shallow clone of our Git repo.
+# https://docs.travis-ci.com/user/customizing-the-build#Git-Clone-Depth
+git:
+  depth: 3
+
 # Only fire off builds for specific branches.
 branches:
   only:
     - develop
     - stable
     - /^feature-.*$/
+
 env:
   global:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
   matrix:
     - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2" SDK="iphonesimulator10.2"
+    - DESTINATION="platform=iOS Simulator,name=iPhone 5s,OS=8.1" SDK="iphonesimulator8.1"
+
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
   - scripts/install_contributor_tools
+
 # The travis_wait prefix ensures that the build doesn't error out because too much time went past
 # without any output being produced.
 #
@@ -25,9 +35,10 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - pod --version
-  - swiftlint
   - scripts/prep_all
-  - travis_wait scripts/build_all
+  - travis_wait scripts/build_all --verbose
   - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+
+# Upload our testing coverage to codecov.io.
 after_success:
   - bash <(curl -s https://codecov.io/bash)

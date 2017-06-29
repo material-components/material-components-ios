@@ -1,2 +1,0 @@
-/* Accessibility label for page control. Example: "page 1 of 4". */
-"MaterialPageControlAccessibilityLabel" = "page %1$zd of %2$zd";

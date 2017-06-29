@@ -17,15 +17,18 @@ limitations under the License.
 import UIKit
 
 import CatalogByConvention
+import MaterialComponents
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
+  var colorScheme: (MDCColorScheme & NSObjectProtocol)!
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
+    UIApplication.shared.statusBarStyle = .lightContent
 
     let tree = CBCCreateNavigationTree()
 
@@ -40,6 +43,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
+
+    colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
+                                      primaryLightColor: .init(white: 0.7, alpha: 1),
+                                      primaryDarkColor: .init(white: 0, alpha: 1))
+
+    // Apply color scheme to material design components using component themers.
+    MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
+    MDCAlertColorThemer.apply(colorScheme)
+    MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
+    MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
+    MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
+    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+    MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())
+    MDCNavigationBarColorThemer.apply(colorScheme, to: MDCNavigationBar.appearance())
+    MDCPageControlColorThemer.apply(colorScheme, to: MDCPageControl.appearance())
+    MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
+    MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
+    MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
+
+    // Apply color scheme to UIKit components.
+    UISlider.appearance().tintColor = colorScheme?.primaryColor
+    UISwitch.appearance().tintColor = colorScheme?.primaryColor
+
     return true
   }
 }

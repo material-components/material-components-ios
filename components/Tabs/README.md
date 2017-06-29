@@ -50,9 +50,10 @@ pod install
 
 ## Overview
 
-When a user taps a tab, the content should change to match the selected subject in the tabs. This is similar to a UITabBarViewController's behavior. But unlike a UITabBarViewController, tabs does not provide an interface for switching the views or view controllers. There is no array of view controllers like UITabBarViewController's array of view controllers.
+When a user taps a tab, the content changes to match the selected subject in the tabs.
 
-Rather, the tabs report to their delegate when there is a tab selection. The delegate can then handle the changing of views.
+We provide this functionality through MDCTabBar which communicates via a delegate as well as
+MDCTabBarViewController which provides a view containment model similar to UITabViewController.
 
 Tabs can also show a badge (usually a number) like UITabBar.
 
@@ -96,6 +97,11 @@ Set the `itemAppearance` property on the tab bar to switch between item display 
 By default, the tab bar is configured to display items with white text and icons. To customize the color of the tab bar, set the `tintColor`, `selectedItemTintColor`, `unselectedItemTintColor`, `inkColor`, and `barTintColor` properties. If `selectedItemTintColor` is nil, the tab bar's `tintColor` will be used automatically for selected items.
 
 Configure where items are placed in the tab bar by setting the `alignment` property.
+
+### Bottom navigation
+
+Implement `positionForBar:` and return `UIBarPositionBottom` to configure the tab bar as a bottom
+navigation bar. The bar will automatically update with the appropriate styling.
 
 - - -
 
