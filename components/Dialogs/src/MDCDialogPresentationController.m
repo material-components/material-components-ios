@@ -80,7 +80,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   CGRect presentedViewFrame = CGRectZero;
 
   CGRect containerBounds = self.containerView.bounds;
-  containerBounds.size.height -= [MDCKeyboardWatcher sharedKeyboardWatcher].keyboardOffset;
+  containerBounds.size.height -= [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
 
   presentedViewFrame.size = [self sizeForChildContentContainer:self.presentedViewController
                                        withParentContainerSize:containerBounds.size];
