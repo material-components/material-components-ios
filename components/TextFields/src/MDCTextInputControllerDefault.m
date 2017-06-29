@@ -927,6 +927,8 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
     [CATransaction setAnimationDuration:0];
     [self updatePlaceholderY];
     [CATransaction commit];
+  } else {
+    [self updateLayout];
   }
 
   // Accessibility
