@@ -178,9 +178,11 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   self = [self init];
   if (self) {
     _textInput = textInput;
-
-    [self setupInput];
   }
+
+  // This should happen last because it relies on the state of a ton of properties.
+  [self setupInput];
+
   return self;
 }
 
