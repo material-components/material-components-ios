@@ -30,6 +30,7 @@ PODS:
   - MaterialComponents/Buttons (25.1.1):
     - MaterialComponents/Buttons/ColorThemer (= 25.1.1)
     - MaterialComponents/Buttons/Component (= 25.1.1)
+    - MaterialComponents/Buttons/TitleColorAccessibilityMutator (= 25.1.1)
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
@@ -46,6 +47,14 @@ PODS:
     - MaterialComponents/Typography
     - MDFTextAccessibility
   - MaterialComponents/Buttons/Component (25.1.1):
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFTextAccessibility
+  - MaterialComponents/Buttons/TitleColorAccessibilityMutator (25.1.1):
+    - MaterialComponents/Buttons/Component
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
@@ -124,7 +133,7 @@ EXTERNAL SOURCES:
     :path: "../supplemental"
 
 SPEC CHECKSUMS:
-  MaterialComponents: a1eaced896db0cb250d0fa8b00acea5efbbeb153
+  MaterialComponents: a3db0c1a5086a0b97ab6c9a35d04644404a6866e
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   RemoteImageServiceForMDCDemos: 151c231004f1c5b58e311fe15de2d12158e6bc19
 
