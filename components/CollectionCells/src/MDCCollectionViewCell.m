@@ -274,7 +274,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 - (MDCInkView *)inkView {
   if (!_inkView) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    [self addSubview:_inkView];
+    [self insertSubview:_inkView aboveSubview:self.backgroundView];
   }
   return _inkView;
 }
@@ -287,7 +287,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
     [_inkView removeFromSuperview];
   }
   if (inkView) {
-    [self addSubview:inkView];
+    [self insertSubview:inkView aboveSubview:self.backgroundView];
   }
   _inkView = inkView;
 }
