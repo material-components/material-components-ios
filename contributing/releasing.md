@@ -60,7 +60,9 @@ test the release.
 
     scripts/prep_all
     scripts/build_all
-    scripts/release/test_all
+    scripts/test_all
+    scripts/release/test_pod_push
+    scripts/release/test_pod_format
 
 Identify why any failures occurred and resolve them before continuing.
 
@@ -249,10 +251,12 @@ include the latest changes from `release-candidate`.
 Before pushing these changes to GitHub it's a good idea to run a final sanity check:
 
     git checkout stable
-    scripts/release/test_all
+    scripts/test_all
+    scripts/release/test_pod_push
+    scripts/release/test_pod_format
 
     git checkout develop
-    scripts/release/test_all
+    scripts/test_all
 
 You can now push both branches to GitHub:
 
