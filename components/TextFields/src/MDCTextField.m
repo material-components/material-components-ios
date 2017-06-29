@@ -205,6 +205,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [self.fundament setPlaceholder:placeholder];
 }
 
+// Note: this is also called by the internals of UITextField when editing ends.
 - (void)setText:(NSString *)text {
   [super setText:text];
   [_fundament didSetText];
