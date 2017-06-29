@@ -1,4 +1,4 @@
-# release-candidate TODO: Replace me with version number. 
+# 26.0.0
 
 ## API diffs
 
@@ -26,6 +26,117 @@
 * Added 'MDCTextInputControllerFullWidth'
 
 ## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Default cycleColors property for empty arrays #1508 (#1540)](https://github.com/material-components/material-components-ios/commit/8be69aecb9f5ff70d526317a5f7685a94f9e042b) (Robert Moore)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### AppBar
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### BottomSheet
+
+#### Changes
+
+* [[Bottom sheet] component (#1297)](https://github.com/material-components/material-components-ios/commit/681b2de2fd9b9b30546e9f84ee3b8391f682c21c) (Sam Morrison)
+
+### ButtonBar
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [Button title color accessibility mutator (#1567)](https://github.com/material-components/material-components-ios/commit/70cfb2bc6edce5ef951a17ded3d975cf95afa7d0) (Randall Li)
+* [Call designated initializer in init methods (#1553)](https://github.com/material-components/material-components-ios/commit/8a98e74d9cb99b8f7dceaab2d4c958023265762b) (ianegordon)
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### Dialogs
+
+#### Changes
+
+* [Add nullability annotation (#1544)](https://github.com/material-components/material-components-ios/commit/4e3c62ba2fbac8dc9ae04dee78eb6eb4574a533e) (ianegordon)
+* [[Themer] Support alert color themer in iOS 8 (#1569)](https://github.com/material-components/material-components-ios/commit/695b2dc3ece5c6351e45472b61ff1b8fecba6ab7) (Junius Gunaratne)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Changes
+
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### Slider
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### Snackbar
+
+#### Changes
+
+* [Resuming messages when tokens are deallocated (#1551)](https://github.com/material-components/material-components-ios/commit/50319d0edb2bb5b3bcfa2c9a34938a924d455eaa) (Robert Moore)
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+
+### Tabs
+
+#### Changes
+
+* [Reposition the Ink layer in ItemBar cells (#1554)](https://github.com/material-components/material-components-ios/commit/a68a5531935ad1fae496266732b63482deb481dd) (Robert Moore)
+* [[ButtonBar] Restoring ink to the top of the cell (#1584)](https://github.com/material-components/material-components-ios/commit/6858f4b0938b83a9cf67c1ce47658aefe5fd2ed0) (Robert Moore)
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### TextFields
+
+#### Changes
+
+* [Fix for missing guard from presentationStyles to controller classes refactor. (#1579)](https://github.com/material-components/material-components-ios/commit/68535ad5a9280b4927268b18d9ab771a2b3ba72f) (Will Larche)
+* [Fix of minor details and PR comments (#1585)](https://github.com/material-components/material-components-ios/commit/ba85bd03ed123323273cff285ab831d95b234fb1) (Will Larche)
+* [Fix text fields placeholder Y preset (#1581)](https://github.com/material-components/material-components-ios/commit/3fdbdea8d99ddb60ac7822d7c24e94eea6bc212f) (Will Larche)
+* [Presentation styles to controller classes (#1549)](https://github.com/material-components/material-components-ios/commit/13dcb5746bd2d3f50bbe9d2a289efe0ed2aa2d6b) (Will Larche)
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
 
 # 25.1.1
 
