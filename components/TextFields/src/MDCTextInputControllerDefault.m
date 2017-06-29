@@ -178,9 +178,11 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   self = [self init];
   if (self) {
     _textInput = textInput;
-
-    [self setupInput];
   }
+
+  // This should happen last because it relies on the state of a ton of properties.
+  [self setupInput];
+
   return self;
 }
 
@@ -409,8 +411,11 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   }
 }
 
-// Sometimes the text field is showing the correct layout for its values (like when it's created
+// Sometimes the text field is not showing the correct layout for its values (like when it's created
 // with .text already entered) so we make sure it's in the right place always.
+//
+// Note that this calls updateLayout inside it so it is the only 'update-' method not included in
+// updateLayout.
 - (void)updatePlaceholderY {
   BOOL isDirectionToUp = NO;
   if (self.floatingEnabled) {
@@ -758,7 +763,6 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
   if (_underlineViewMode != underlineViewMode) {
     _underlineViewMode = underlineViewMode;
-
     [self updateLayout];
   }
 }
