@@ -4,7 +4,7 @@
 
 ### ActivityIndicator
 
-# Setting 'cycleColors' to an empty array now sets 'cycleColors' to the default cycle colors.
+* Setting 'cycleColors' to an empty array now sets 'cycleColors' to the default cycle colors.
 
 ### BottomSheet
 
