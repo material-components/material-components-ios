@@ -54,6 +54,9 @@
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
     UI_APPEARANCE_SELECTOR;
 
+/* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
+
 /** The ink style of the button. */
 @property(nonatomic, assign) MDCInkStyle inkStyle;
 
