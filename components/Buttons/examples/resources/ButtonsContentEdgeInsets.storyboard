@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Uhh-iX-aVf">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Buttons Content Edge Insets Example-->
+        <scene sceneID="Jts-Jk-8ba">
+            <objects>
+                <viewController id="Uhh-iX-aVf" customClass="ButtonsContentEdgeInsetsExample" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pu1-Ea-nBj"/>
+                        <viewControllerLayoutGuide type="bottom" id="aOy-6t-l8i"/>
+                    </layoutGuides>
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="dDe-BW-Avd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvE-5P-0PG" customClass="MDCFlatButton">
+                                <rect key="frame" x="142" y="274.5" width="91" height="34"/>
+                                <color key="tintColor" red="0.19254023644059035" green="0.53181806153905575" blue="0.91669365284974091" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="16"/>
+                                <state key="normal" title="Flat Button">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-nu-adB" customClass="MDCRaisedButton">
+                                <rect key="frame" x="127" y="324.5" width="120" height="18"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="24" maxY="0.0"/>
+                                <state key="normal" title="Raised Button">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCS-6P-hwz" customClass="MDCFloatingButton">
+                                <rect key="frame" x="174" y="358.5" width="26" height="34"/>
+                                <inset key="contentEdgeInsets" minX="16" minY="16" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="+"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.89888392857142863" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="YCS-6P-hwz" firstAttribute="centerX" secondItem="dDe-BW-Avd" secondAttribute="centerX" id="Aeg-aQ-A5S"/>
+                            <constraint firstItem="Dqo-nu-adB" firstAttribute="centerY" secondItem="dDe-BW-Avd" secondAttribute="centerY" id="h3j-9m-Xpr"/>
+                            <constraint firstItem="bvE-5P-0PG" firstAttribute="centerX" secondItem="dDe-BW-Avd" secondAttribute="centerX" id="k35-WX-pnN"/>
+                            <constraint firstItem="Dqo-nu-adB" firstAttribute="centerX" secondItem="dDe-BW-Avd" secondAttribute="centerX" id="wdb-rY-gK0"/>
+                            <constraint firstItem="Dqo-nu-adB" firstAttribute="top" secondItem="bvE-5P-0PG" secondAttribute="bottom" constant="16" id="y2n-KT-Jew"/>
+                            <constraint firstItem="YCS-6P-hwz" firstAttribute="top" secondItem="Dqo-nu-adB" secondAttribute="bottom" constant="16" id="zBf-pL-lyJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="flatButton" destination="bvE-5P-0PG" id="8px-6Z-f5o"/>
+                        <outlet property="floatingActionButton" destination="YCS-6P-hwz" id="Mw6-3r-5YL"/>
+                        <outlet property="raisedButton" destination="Dqo-nu-adB" id="rEm-SL-wQr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z12-Wq-Srl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-298" y="87"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+</document>
