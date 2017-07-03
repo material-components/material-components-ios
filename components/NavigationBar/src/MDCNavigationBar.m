@@ -314,7 +314,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGRect titleFrame = CGRectMake(textFrame.origin.x, 0, titleSize.width, titleSize.height);
   titleFrame = MDCRectFlippedForRTL(titleFrame, self.bounds.size.width,
                                     self.mdc_effectiveUserInterfaceLayoutDirection);
-  UIControlContentVerticalAlignment titleVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+  UIControlContentVerticalAlignment titleVerticalAlignment = UIControlContentVerticalAlignmentTop;
   CGRect alignedFrame = [self mdc_frameAlignedVertically:titleFrame
                                             withinBounds:textFrame
                                                alignment:titleVerticalAlignment];
@@ -448,7 +448,10 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     }
 
     case UIControlContentVerticalAlignmentTop: {
-      return CGRectMake(frame.origin.x, bounds.origin.y, frame.size.width, frame.size.height);
+      CGFloat navigationBarCenteredY =
+          MDCFloor(([self intrinsicContentSize].height - frame.size.height) / 2);
+      return CGRectMake(frame.origin.x, navigationBarCenteredY, frame.size.width,
+                        frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentFill: {
