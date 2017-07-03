@@ -450,6 +450,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     case UIControlContentVerticalAlignmentTop: {
       CGFloat navigationBarCenteredY =
           MDCFloor(([self intrinsicContentSize].height - frame.size.height) / 2);
+      navigationBarCenteredY = MAX(0, navigationBarCenteredY);
       return CGRectMake(frame.origin.x, navigationBarCenteredY, frame.size.width,
                         frame.size.height);
     }
