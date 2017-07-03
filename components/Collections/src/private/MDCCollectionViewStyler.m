@@ -294,6 +294,15 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   return insets;
 }
 
+-(CGFloat)cellStyleCardSectionHorizontalMargin {
+  CGFloat margin = MDCCollectionViewCellStyleCardSectionInset;
+  if (self.delegate &&
+      [self.delegate respondsToSelector:@selector(collectionViewCellStyleCardSectionMargin:)]) {
+    margin = [self.delegate collectionViewCellStyleCardSectionMargin:_collectionView];
+  }
+  return margin;
+}
+
 - (void)setCellStyle:(MDCCollectionViewCellStyle)cellStyle animated:(BOOL)animated {
   _cellStyle = cellStyle;
   [self updateLayoutAnimated:animated];

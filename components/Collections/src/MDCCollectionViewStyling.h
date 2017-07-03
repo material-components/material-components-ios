@@ -92,6 +92,13 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 @property(nonatomic, assign) MDCCollectionViewCellStyle cellStyle;
 
 /**
+ The left and right margin for a section with a Cards style.
+
+ @return The margin of the sections.
+ */
+-(CGFloat)cellStyleCardSectionHorizontalMargin;
+
+/**
  Updates the cell style with/without animation.
 
  @param animated YES the transition will be animated; otherwise, NO.
