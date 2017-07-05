@@ -20,6 +20,8 @@ env:
   - LANG=en_US.UTF-8
   matrix:
     - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2" SDK="iphonesimulator10.2"
+    # The iPhone 5 was chosen because it is a 32-bit device.
+    # 8.1 was chosen because it is the earliest iOS offered here.
     - DESTINATION="platform=iOS Simulator,name=iPhone 5,OS=8.1" SDK="iphonesimulator8.1"
 
 before_install:
