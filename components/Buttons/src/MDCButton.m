@@ -493,7 +493,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - BackgroundColor
 
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor {
-  // Turns out swift ignores NS_UNAVAILABLE
   [self setBackgroundColor:backgroundColor forState:UIControlStateNormal];
 }
 

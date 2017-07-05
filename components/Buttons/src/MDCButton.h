@@ -54,6 +54,9 @@
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
     UI_APPEARANCE_SELECTOR;
 
+/* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
+
 /** The ink style of the button. */
 @property(nonatomic, assign) MDCInkStyle inkStyle;
 
@@ -171,9 +174,6 @@
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
 #pragma mark - Deprecated
-
-/** Use setBackgroundColor:forState: instead. */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor NS_UNAVAILABLE;
 
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
