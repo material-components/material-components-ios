@@ -16,11 +16,22 @@
 
 #import "MDCFlatButton.h"
 
+#import "MaterialShadowElevations.h"
 #import "private/MDCButton+Subclassing.h"
 
 static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaqueBackground";
 
 @implementation MDCFlatButton
+
++ (void)initialize {
+  // Default background colors.
+  [[MDCFlatButton appearance] setBackgroundColor:[UIColor clearColor]
+                                        forState:UIControlStateNormal];
+  [[MDCFlatButton appearance] setElevation:MDCShadowElevationNone
+                                  forState:UIControlStateNormal];
+  [[MDCFlatButton appearance] setElevation:MDCShadowElevationNone
+                                  forState:UIControlStateHighlighted];
+}
 
 - (instancetype)init {
   return [self initWithFrame:CGRectZero];
@@ -45,17 +56,7 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
   return self;
 }
 
-+ (void)initialize {
-  // Default background colors.
-  [[MDCFlatButton appearance] setBackgroundColor:[UIColor clearColor]
-                                    forState:UIControlStateNormal];
-}
-
 - (void)commonMDCFlatButtonInit {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  self.shouldRaiseOnTouch = NO;
-#pragma clang diagnostic pop
   self.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
 }
 
