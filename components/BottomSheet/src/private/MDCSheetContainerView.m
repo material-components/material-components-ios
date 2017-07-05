@@ -241,7 +241,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 // Calculates the snap-point for the view to spring to.
 - (CGPoint)targetPoint {
   CGRect bounds = self.bounds;
-  CGFloat keyboardOffset = [MDCKeyboardWatcher sharedKeyboardWatcher].keyboardOffset;
+  CGFloat keyboardOffset = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
   CGFloat midX = CGRectGetMidX(bounds);
   CGFloat bottomY = CGRectGetMaxY(bounds) - keyboardOffset;
 
