@@ -19,8 +19,10 @@ env:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
   matrix:
-    - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2" SDK="iphonesimulator10.2"
-    - DESTINATION="platform=iOS Simulator,name=iPhone 5s,OS=8.1" SDK="iphonesimulator8.1"
+    - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.3.1" SDK="iphonesimulator10.3.1"
+    # The iPhone 5 was chosen because it is a 32-bit device.
+    # 8.1 was chosen because it is the earliest iOS offered here.
+    - DESTINATION="platform=iOS Simulator,name=iPhone 5,OS=8.1" SDK="iphonesimulator8.1"
 
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
