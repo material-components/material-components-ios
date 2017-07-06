@@ -79,12 +79,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   /// Current style properties.
   MDCItemBarStyle *_style;
-
-  /// Internal state tracking what should happen to `selectedItem` when the `items` array changes.
-  /// By default this is NO which causes empty selections to not be preserved: Instead, the bar
-  /// selects the first item in the new items array on updates. When YES, a nil selection remains
-  /// nil after updating `items`. It's set to YES when `selectedItem` is explicitly set by clients.
-  BOOL _shouldPreserveEmptySelectionOnItemsChange;
 }
 
 + (CGFloat)defaultHeightForStyle:(nonnull MDCItemBarStyle *)style {
@@ -184,21 +178,15 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         // Preserve selection.
         newSelectedItem = _selectedItem;
       } else {
-        // Previously-selected item gone - clear selection.
-        newSelectedItem = nil;
-      }
-    } else {
-      // No previously selected item.
-      if (_shouldPreserveEmptySelectionOnItemsChange) {
-        // Preserve the empty selection.
-        newSelectedItem = nil;
-      } else {
-        // Select first item. (Default behavior)
+        // Previously-selected item gone - select first.
         newSelectedItem = _items.firstObject;
       }
+    } else {
+      // No previously selected item, select first item.
+      newSelectedItem = _items.firstObject;
     }
 
-    // Update _selectedItem directly to avoid clearing _shouldPreserveEmptySelectionOnItemsChange.
+    // Update _selectedItem directly so we can update _lastSelectedIndexPath before reloading.
     _selectedItem = newSelectedItem;
     [self updateLastSelectedIndexPath];
 
@@ -231,9 +219,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)setSelectedItem:(nullable UITabBarItem *)selectedItem animated:(BOOL)animated {
-  // Selected item was explicitly set - must preserve empty selection now.
-  _shouldPreserveEmptySelectionOnItemsChange = YES;
-
   if (_selectedItem != selectedItem) {
     NSUInteger itemIndex = NSNotFound;
     if (selectedItem) {

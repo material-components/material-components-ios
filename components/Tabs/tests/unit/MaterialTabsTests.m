@@ -42,7 +42,7 @@
 }
 
 /// Tab bars should preserve their selection if possible when changing items.
-- (void)testPreservesDefaultSelectedItem {
+- (void)testPreservesSelectedItem {
   // Set items {A, B} which should select item A
   _tabBar.items = @[ _itemA, _itemB ];
 
@@ -51,36 +51,14 @@
   XCTAssertEqual(_tabBar.selectedItem, _itemA);
 }
 
-/// Tab bars should preserve their explicitly-set selection if possible when changing items.
-- (void)testPreservesNondefaultSelectedItem {
-  // Set items {A, B} and explicitly select B.
-  _tabBar.items = @[ _itemA, _itemB ];
-  _tabBar.selectedItem = _itemB;
-
-  // Set items {B, C} which should preserve the selection of B.
-  _tabBar.items = @[ _itemB, _itemC ];
-  XCTAssertEqual(_tabBar.selectedItem, _itemB);
-}
-
-/// Tab bars should clear the default selection if that item is no longer present.
-- (void)testDeselectsWhenDefaultSelectedItemMissing {
+/// Tab bars should select the first item if the old selection is no longer present.
+- (void)testSelectsFirstWhenSelectedItemMissing {
   // Set items {A, B} which should select item A
   _tabBar.items = @[ _itemA, _itemB ];
 
-  // Set items not including A, which should clear the selection.
+  // Set items not including A, which should select B.
   _tabBar.items = @[ _itemB, _itemC ];
-  XCTAssertNil(_tabBar.selectedItem);
-}
-
-/// Tab bars should clear the explicit selection if that item is no longer present.
-- (void)testDeselectsWhenNondefaultSelectedItemMissing {
-  // Set items {A, B} and select B
-  _tabBar.items = @[ _itemA, _itemB ];
-  _tabBar.selectedItem = _itemB;
-
-  // Set items not including B, which should clear the selection.
-  _tabBar.items = @[ _itemA, _itemC ];
-  XCTAssertNil(_tabBar.selectedItem);
+  XCTAssertEqual(_tabBar.selectedItem, _itemB);
 }
 
 /// Tab bars should safely accept having their items set to the empty array.
@@ -94,16 +72,19 @@
   XCTAssertNil(_tabBar.selectedItem);
 }
 
-/// If the selection is cleared, future updates should preserve the empty selection.
-- (void)testPerservesEmptySelection {
-  // Initial state: Items but explicitly cleared selection.
+// Setting items to the same set of items should change nothing.
+- (void)testItemsUpdateIsIdempotent {
+  // Start with {A, B}, which selects A.
   _tabBar.items = @[ _itemA, _itemB ];
-  _tabBar.selectedItem = nil;
-  XCTAssertNil(_tabBar.selectedItem);
+  XCTAssertEqual(_tabBar.selectedItem, _itemA);
 
-  // Update with new items, verify that empty selection is preserved.
-  _tabBar.items = @[ _itemB, _itemC ];
-  XCTAssertNil(_tabBar.selectedItem);
+  // Remove A, which selects B.
+  _tabBar.items = @[ _itemB ];
+  XCTAssertEqual(_tabBar.selectedItem, _itemB);
+
+  // Set same set of items, which should make no difference to the selection.
+  _tabBar.items = @[ _itemB ];
+  XCTAssertEqual(_tabBar.selectedItem, _itemB);
 }
 
 @end

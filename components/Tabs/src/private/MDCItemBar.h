@@ -37,9 +37,9 @@
 
  The bar determines the newly-selected item using the following logic:
  * Reselect the previously-selected item if it's still present in `items` after the update.
- * Select the first item in `items` if `selectedItem` is nil and has never been explicitly set. This
- enables simple setup in the common case of creating a tab bar and setting its `items`.
- * Preserve empty selection if `selectedItem` is nil and has been explicitly set at some point.
+ * If there was no selection previously or if the old selected item is gone, select the first item.
+   Clients that need empty selection to be preserved across updates to `items` must manually reset
+   selectedItem to nil after the update.
 
  Changes to this property are not animated.
  */
