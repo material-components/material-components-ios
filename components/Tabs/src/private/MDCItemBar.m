@@ -198,35 +198,20 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       }
     }
 
-    // Update selected item.
-    if ((newSelectedItem != _selectedItem) && ![newSelectedItem isEqual:_selectedItem]) {
-      // Update _selectedItem directly to avoid clearing _shouldPreserveEmptySelectionOnItemsChange.
-      _selectedItem = newSelectedItem;
-      [self selectedItemDidChange];
-    }
+    // Update _selectedItem directly to avoid clearing _shouldPreserveEmptySelectionOnItemsChange.
+    _selectedItem = newSelectedItem;
+    [self updateLastSelectedIndexPath];
 
     // Update collection with new items
     [self reload];
 
+    // Select tab for current item.
+    [self selectItemAtIndex:(_lastSelectedIndexPath ? _lastSelectedIndexPath.item : NSNotFound)
+                   animated:NO];
+
     // Start observing new items for changes.
     [self startObservingItems];
   }
-}
-
-- (void)selectedItemDidChange {
-  // Update the index path for the selected item.
-  NSIndexPath *selectedItemIndexPath = nil;
-  if (_selectedItem) {
-    NSUInteger index = [_items indexOfObject:_selectedItem];
-    if (NSNotFound != index) {
-      // Valid index
-      selectedItemIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    }
-  }
-  _lastSelectedIndexPath = selectedItemIndexPath;
-
-  // Update UI to select the item.
-  [self selectItemAtIndex:NSNotFound animated:NO];
 }
 
 - (void)setAlignment:(MDCItemBarAlignment)alignment {
@@ -260,7 +245,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       }
     }
     _selectedItem = selectedItem;
-    [self selectedItemDidChange];
+    [self updateLastSelectedIndexPath];
+    [self selectItemAtIndex:(_lastSelectedIndexPath ? _lastSelectedIndexPath.item : NSNotFound)
+                   animated:NO];
   }
 }
 
@@ -491,6 +478,19 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       [item removeObserver:self forKeyPath:key context:kItemPropertyContext];
     }
   }
+}
+
+- (void)updateLastSelectedIndexPath {
+  // Update the index path for the selected item.
+  NSIndexPath *selectedItemIndexPath = nil;
+  if (_selectedItem) {
+    NSUInteger index = [_items indexOfObject:_selectedItem];
+    if (NSNotFound != index) {
+      // Valid index
+      selectedItemIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    }
+  }
+  _lastSelectedIndexPath = selectedItemIndexPath;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
