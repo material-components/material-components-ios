@@ -79,6 +79,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   /// Current style properties.
   MDCItemBarStyle *_style;
+
+  BOOL _shouldPreserveEmptySelectionOnItemsChange;
 }
 
 + (CGFloat)defaultHeightForStyle:(nonnull MDCItemBarStyle *)style {
@@ -170,30 +172,57 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     [self stopObservingItems];
 
     _items = [items copy];
-    // Update the path to the selected item.
-    if (_lastSelectedIndexPath) {
-      if (_selectedItem) {
-        NSUInteger index = [_items indexOfObject:_selectedItem];
-        if (NSNotFound != index) {
-          _lastSelectedIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
-        } else {
-          _lastSelectedIndexPath = nil;
-        }
+
+    // Determine newly selected item.
+    UITabBarItem *newSelectedItem = nil;
+    if (_selectedItem) {
+      if ([_items containsObject:_selectedItem]) {
+        // Preserve selection.
+        newSelectedItem = _selectedItem;
       } else {
-        _lastSelectedIndexPath = nil;
+        // Previously-selected item gone - clear selection.
+        newSelectedItem = nil;
+      }
+    } else {
+      // No previously selected item
+      if (_shouldPreserveEmptySelectionOnItemsChange) {
+        // Preserve empty selection.
+        newSelectedItem = nil;
+      } else {
+        // Default state: Select first item.
+        newSelectedItem = _items.firstObject;
       }
     }
 
-    [self reload];
-
-    // Reset selection to the unselected state.
-    if (![_items containsObject:_selectedItem]) {
-      self.selectedItem = nil;
+    // Update selected item.
+    if ((newSelectedItem != _selectedItem) && ![newSelectedItem isEqual:_selectedItem]) {
+      // Update _selectedItem directly to avoid clearing _shouldPreserveEmptySelectionOnItemsChange.
+      _selectedItem = newSelectedItem;
+      [self selectedItemDidChange];
     }
+
+    // Update collection with new items
+    [self reload];
 
     // Start observing new items for changes.
     [self startObservingItems];
   }
+}
+
+- (void)selectedItemDidChange {
+  // Update the index path for the selected item.
+  NSIndexPath *selectedItemIndexPath = nil;
+  if (_selectedItem) {
+    NSUInteger index = [_items indexOfObject:_selectedItem];
+    if (NSNotFound != index) {
+      // Valid index
+      selectedItemIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    }
+  }
+  _lastSelectedIndexPath = selectedItemIndexPath;
+
+  // Update UI to select the item.
+  [self selectItemAtIndex:NSNotFound animated:NO];
 }
 
 - (void)setAlignment:(MDCItemBarAlignment)alignment {
@@ -213,6 +242,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)setSelectedItem:(nullable UITabBarItem *)selectedItem animated:(BOOL)animated {
+  // Selected item was explicitly set - must preserve empty selection now.
+  _shouldPreserveEmptySelectionOnItemsChange = YES;
+
   if (_selectedItem != selectedItem) {
     NSUInteger itemIndex = NSNotFound;
     if (selectedItem) {
@@ -224,7 +256,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       }
     }
     _selectedItem = selectedItem;
-    [self selectItemAtIndex:itemIndex animated:animated];
+    [self selectedItemDidChange];
   }
 }
 
