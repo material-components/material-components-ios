@@ -168,13 +168,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       self.underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
     }
 
-    if ([aDecoder containsValueForKey:MDCButtonCustomTitleColorKey]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-      self.customTitleColor = [aDecoder decodeObjectForKey:MDCButtonCustomTitleColorKey];
-#pragma clang diagnostic pop
-    }
-
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
       self.disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
     }
@@ -213,12 +206,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     [aCoder encodeObject:_underlyingColorHint forKey:MDCButtonUnderlyingColorHintKey];
   }
   [aCoder encodeDouble:self.disabledAlpha forKey:MDCButtonDisableAlphaKey];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if (self.customTitleColor) {
-    [aCoder encodeObject:self.customTitleColor forKey:MDCButtonCustomTitleColorKey];
-  }
-#pragma clang diagnostic pop
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
