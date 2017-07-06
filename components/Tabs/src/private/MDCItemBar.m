@@ -80,6 +80,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   /// Current style properties.
   MDCItemBarStyle *_style;
 
+  /// Internal state tracking what should happen to `selectedItem` when the `items` array changes.
+  /// By default this is NO which causes empty selections to not be preserved: Instead, the bar
+  /// selects the first item in the new items array on updates. When YES, a nil selection remains
+  /// nil after updating `items`. It's set to YES when `selectedItem` is explicitly set by clients.
   BOOL _shouldPreserveEmptySelectionOnItemsChange;
 }
 
@@ -173,7 +177,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
     _items = [items copy];
 
-    // Determine newly selected item.
+    // Determine new selected item.
     UITabBarItem *newSelectedItem = nil;
     if (_selectedItem) {
       if ([_items containsObject:_selectedItem]) {
@@ -184,12 +188,12 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         newSelectedItem = nil;
       }
     } else {
-      // No previously selected item
+      // No previously selected item.
       if (_shouldPreserveEmptySelectionOnItemsChange) {
-        // Preserve empty selection.
+        // Preserve the empty selection.
         newSelectedItem = nil;
       } else {
-        // Default state: Select first item.
+        // Select first item. (Default behavior)
         newSelectedItem = _items.firstObject;
       }
     }
