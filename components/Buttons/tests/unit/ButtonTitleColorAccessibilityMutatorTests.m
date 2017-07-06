@@ -53,10 +53,10 @@ static NSString *controlStateDescription(UIControlState controlState);
         // passed that state. See `UIButton strangeness` in ButtonTests.m
         continue;
       }
-      
+
       // When
       [MDCButtonTitleColorAccessibilityMutator changeTitleColorOfButton:button];
-      
+
       // Then
       XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
                                @"for control state:%@ ", controlStateDescription(controlState));
@@ -80,10 +80,10 @@ static NSString *controlStateDescription(UIControlState controlState);
       // Making the background color the same as the title color.
       [button setBackgroundColor:backgroundColor forState:(UIControlState)controlState];
       [button setTitleColor:titleColor forState:(UIControlState)controlState];
-      
+
       // When
       [MDCButtonTitleColorAccessibilityMutator changeTitleColorOfButton:button];
-      
+
       // Then
       XCTAssertEqualObjects([button titleColorForState:controlState], titleColor,
                             @"for control state:%@ ", controlStateDescription(controlState));
@@ -100,10 +100,10 @@ static NSString *controlStateDescription(UIControlState controlState);
       button.underlyingColorHint = color;
       [button setBackgroundColor:[UIColor clearColor] forState:controlState];
       [button setTitleColor:color forState:(UIControlState)controlState];
-      
+
       // When
       [MDCButtonTitleColorAccessibilityMutator changeTitleColorOfButton:button];
-      
+
       // Then
       XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
                                @"for control state:%@ ", controlStateDescription(controlState));
