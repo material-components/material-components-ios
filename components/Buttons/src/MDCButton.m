@@ -130,19 +130,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (self) {
     [self commonMDCButtonInit];
 
-    // TODO(randallli): Add backward compatibility to background colors
-    //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
-    //      self.enabledBackgroundColor =
-    //          [aDecoder decodeObjectForKey:MDCButtonEnabledBackgroundColorKey];
-    //    }
-    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorLightKey]) {
-    //      self.disabledBackgroundColorLight =
-    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorLightKey];
-    //    }
-    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorDarkKey]) {
-    //      self.disabledBackgroundColorDark =
-    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorDarkKey];
-    //    }
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkStyleKey]) {
       self.inkView.inkStyle = [aDecoder decodeIntegerForKey:MDCButtonInkViewInkStyleKey];
     }
