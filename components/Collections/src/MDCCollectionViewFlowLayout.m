@@ -24,7 +24,7 @@
 #import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionViewEditor.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 /** The grid background decoration view kind. */
 NSString *const kCollectionGridDecorationView = @"MDCCollectionGridDecorationView";

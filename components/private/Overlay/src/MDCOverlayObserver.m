@@ -151,7 +151,8 @@ static MDCOverlayObserver *_sOverlayObserver;
     return;
   }
 
-  NSValue *frame = userInfo[MDCOverlayFrameKey] ?: [NSValue valueWithCGRect:CGRectNull];
+  NSValue *frame = userInfo[MDCOverlayFrameKey] ?
+                      userInfo[MDCOverlayFrameKey] : [NSValue valueWithCGRect:CGRectNull];
   NSNumber *duration = userInfo[MDCOverlayTransitionDurationKey];
 
   // Update the overlay frame.

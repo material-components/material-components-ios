@@ -492,8 +492,11 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
 
-      self.textInput.placeholderLabel.textColor =
-          self.previousPlaceholderColor ?: self.inlinePlaceholderColor;
+      if (self.previousPlaceholderColor) {
+        self.textInput.placeholderLabel.textColor = self.previousPlaceholderColor;
+      } else {
+        self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
+      }
 
       [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
     };
@@ -665,7 +668,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 }
 
 - (UIColor *)floatingPlaceholderColor {
-  return _floatingPlaceholderColor ?: self.textInput.tintColor;
+  return _floatingPlaceholderColor ? _floatingPlaceholderColor : self.textInput.tintColor;
 }
 
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
@@ -709,7 +712,8 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 }
 
 - (UIColor *)inlinePlaceholderColor {
-  return _inlinePlaceholderColor ?: MDCTextInputDefaultInlinePlaceholderTextColor();
+  return _inlinePlaceholderColor ?
+            _inlinePlaceholderColor : MDCTextInputDefaultInlinePlaceholderTextColor();
 }
 
 - (BOOL)isDisplayingCharacterCountError {
@@ -746,7 +750,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 }
 
 - (UIColor *)underlineColorActive {
-  return _underlineColorActive ?: MDCTextInputDefaultActiveUnderlineColor();
+  return _underlineColorActive ? _underlineColorActive : MDCTextInputDefaultActiveUnderlineColor();
 }
 
 - (void)setUnderlineColorNormal:(UIColor *)underlineColorNormal {
@@ -757,7 +761,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 }
 
 - (UIColor *)underlineColorNormal {
-  return _underlineColorNormal ?: MDCTextInputDefaultNormalUnderlineColor();
+  return _underlineColorNormal ? _underlineColorNormal : MDCTextInputDefaultNormalUnderlineColor();
 }
 
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
@@ -1018,9 +1022,10 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
   // If error text is unset (nil) we reset to previous values.
   if (!errorText) {
     // If there is a saved state, use it.
-    self.textInput.leadingUnderlineLabel.text =
-        self.previousLeadingText ?: self.textInput.leadingUnderlineLabel.text;
-
+    if (self.previousLeadingText) {
+      self.textInput.leadingUnderlineLabel.text = self.previousLeadingText;
+    }
+    
     // Clear out saved state.
     self.previousLeadingText = nil;
   }
@@ -1044,7 +1049,7 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
 
     NSString *valueString = @"";
 
-    if (self.textInput.text > 0) {
+    if (self.textInput.text.length > 0) {
       valueString = [self.textInput.text copy];
     }
     if (self.textInput.placeholder.length > 0) {
@@ -1053,8 +1058,10 @@ static inline UIColor *MDCTextInputDefaultTextErrorColor() {
     valueString = [valueString stringByAppendingString:@"."];
 
     self.textInput.accessibilityValue = valueString;
+    NSString *leadingUnderlineLabelText = self.textInput.leadingUnderlineLabel.text;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString
-        stringWithFormat:@"Error: %@.", self.textInput.leadingUnderlineLabel.text ?: @""];
+        stringWithFormat:@"Error: %@.", leadingUnderlineLabelText ?
+                                                               leadingUnderlineLabelText : @""];
   } else {
     self.textInput.accessibilityValue = nil;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;

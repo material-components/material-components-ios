@@ -157,8 +157,9 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   }
   UIFontDescriptor *fontDescriptor =
       [font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
-  return [UIFont fontWithDescriptor:fontDescriptor size:0]
-             ?: [UIFont italicSystemFontOfSize:font.pointSize];
+  UIFont *fontFromDescriptor = [UIFont fontWithDescriptor:fontDescriptor size:0];
+  return fontFromDescriptor
+             ? fontFromDescriptor : [UIFont italicSystemFontOfSize:font.pointSize];
 }
 
 + (UIFont *)boldFontFromFont:(UIFont *)font {
@@ -171,8 +172,9 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     traits = traits | UIFontDescriptorTraitItalic;
   }
   UIFontDescriptor *fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits:traits];
-  return [UIFont fontWithDescriptor:fontDescriptor size:0]
-             ?: [UIFont boldSystemFontOfSize:font.pointSize];
+  UIFont *fontFromDescriptor = [UIFont fontWithDescriptor:fontDescriptor size:0];
+  return fontFromDescriptor
+             ? fontFromDescriptor : [UIFont boldSystemFontOfSize:font.pointSize];
 }
 
 #pragma mark - Private
