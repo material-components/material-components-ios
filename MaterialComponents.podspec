@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "25.1.1"
+  s.version      = "26.0.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -94,6 +94,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
+    ss.dependency "MaterialComponents/private/KeyboardWatcher"
     ss.dependency "MaterialComponents/private/Math"
   end
 
@@ -143,6 +144,7 @@ Pod::Spec.new do |s|
       sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
       sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
       sss.dependency "MaterialComponents/ButtonBar/Component"
+      sss.dependency "MaterialComponents/NavigationBar/Component"
       sss.dependency "MaterialComponents/Themes"
     end
   end
@@ -285,7 +287,7 @@ Pod::Spec.new do |s|
       # Accessibility Configurator
       sss.dependency "MDFTextAccessibility"
 
-      sss.dependency "MaterialComponents/ButtonBar"
+      sss.dependency "MaterialComponents/ButtonBar/Component"
       sss.dependency "MaterialComponents/Typography"
 
       sss.dependency "MaterialComponents/private/Math"
