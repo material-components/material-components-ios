@@ -19,4 +19,6 @@
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
+#import "MDCTextInputControllerDefault.h"
+#import "MDCTextInputControllerFullWidth.h"
 #import "MDCTextInputUnderlineView.h"

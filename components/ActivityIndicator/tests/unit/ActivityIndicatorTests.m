@@ -65,4 +65,40 @@ static CGFloat randomNumber() {
   XCTAssertEqual(indicator.radius, random);
 }
 
+- (void)testDefaultColorCycle {
+  // Given
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+
+  // Then
+  XCTAssertGreaterThan(indicator.cycleColors.count, 0,
+                        @"The default value for |cycleColors| should be a non-empty array.");
+}
+
+- (void)testSetCycleColorsEmptyReturnsDefault {
+  // Given
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+
+  // When
+  indicator.cycleColors = @[];
+
+  // Then
+  XCTAssertGreaterThan(indicator.cycleColors.count, 0,
+                        @"Assigning an empty array for |cycleColors| should result in a default"
+                        " value being used instead.");
+}
+
+- (void)testSetCycleColorNonEmpty {
+  // Given
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+  NSArray <UIColor *> *cycleColors = @[[UIColor redColor], [UIColor whiteColor]];
+
+  // When
+  indicator.cycleColors = cycleColors;
+
+  // Then
+  XCTAssertEqualObjects(indicator.cycleColors, cycleColors,
+                        @"With a non-empty array, the |cycleColors| property should override the"
+                        " default value.");
+}
+
 @end

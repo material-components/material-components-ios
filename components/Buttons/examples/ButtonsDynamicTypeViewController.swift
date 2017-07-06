@@ -51,7 +51,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
 
     let views = [
       "flatStatic": flatButtonStatic,
-      "flatDynamic": flatButtonDynamic,
+      "flatDynamic": flatButtonDynamic
     ]
 
     centerView(view: flatButtonDynamic, onView: self.view)

@@ -426,14 +426,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       .active = YES;
 
   CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
-  _underlineY = [NSLayoutConstraint constraintWithItem:_underline
-                                             attribute:NSLayoutAttributeCenterY
-                                             relatedBy:NSLayoutRelationEqual
-                                                toItem:_relativeSuperview
-                                             attribute:NSLayoutAttributeTop
-                                            multiplier:1
-                                              constant:[self textContainerInset].top + estimatedTextHeight +
-                 MDCTextInputHalfPadding];
+  _underlineY =
+      [NSLayoutConstraint constraintWithItem:_underline
+                                   attribute:NSLayoutAttributeCenterY
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:_relativeSuperview
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:[self textContainerInset].top + estimatedTextHeight +
+                                             MDCTextInputHalfPadding];
   _underlineY.priority = UILayoutPriorityDefaultLow;
   _underlineY.active = YES;
 }

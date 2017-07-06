@@ -1,11 +1,11 @@
 PODS:
-  - MaterialComponents/AppBar (25.1.1):
-    - MaterialComponents/AppBar/ColorThemer (= 25.1.1)
-    - MaterialComponents/AppBar/Component (= 25.1.1)
-  - MaterialComponents/AppBar/ColorThemer (25.1.1):
+  - MaterialComponents/AppBar (26.0.0):
+    - MaterialComponents/AppBar/ColorThemer (= 26.0.0)
+    - MaterialComponents/AppBar/Component (= 26.0.0)
+  - MaterialComponents/AppBar/ColorThemer (26.0.0):
     - MaterialComponents/AppBar/Component
     - MaterialComponents/Themes
-  - MaterialComponents/AppBar/Component (25.1.1):
+  - MaterialComponents/AppBar/Component (26.0.0):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -14,29 +14,30 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (25.1.1):
-    - MaterialComponents/ButtonBar/ColorThemer (= 25.1.1)
-    - MaterialComponents/ButtonBar/Component (= 25.1.1)
+  - MaterialComponents/ButtonBar (26.0.0):
+    - MaterialComponents/ButtonBar/ColorThemer (= 26.0.0)
+    - MaterialComponents/ButtonBar/Component (= 26.0.0)
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/ButtonBar/ColorThemer (25.1.1):
+  - MaterialComponents/ButtonBar/ColorThemer (26.0.0):
     - MaterialComponents/ButtonBar/Component
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
     - MaterialComponents/Themes
-  - MaterialComponents/ButtonBar/Component (25.1.1):
+  - MaterialComponents/ButtonBar/Component (26.0.0):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (25.1.1):
-    - MaterialComponents/Buttons/ColorThemer (= 25.1.1)
-    - MaterialComponents/Buttons/Component (= 25.1.1)
+  - MaterialComponents/Buttons (26.0.0):
+    - MaterialComponents/Buttons/ColorThemer (= 26.0.0)
+    - MaterialComponents/Buttons/Component (= 26.0.0)
+    - MaterialComponents/Buttons/TitleColorAccessibilityMutator (= 26.0.0)
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/Buttons/ColorThemer (25.1.1):
+  - MaterialComponents/Buttons/ColorThemer (26.0.0):
     - MaterialComponents/Buttons/Component
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
@@ -45,72 +46,80 @@ PODS:
     - MaterialComponents/Themes
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/Buttons/Component (25.1.1):
+  - MaterialComponents/Buttons/Component (26.0.0):
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (25.1.1):
-    - MaterialComponents/FlexibleHeader/ColorThemer (= 25.1.1)
-    - MaterialComponents/FlexibleHeader/Component (= 25.1.1)
+  - MaterialComponents/Buttons/TitleColorAccessibilityMutator (26.0.0):
+    - MaterialComponents/Buttons/Component
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFTextAccessibility
+  - MaterialComponents/FlexibleHeader (26.0.0):
+    - MaterialComponents/FlexibleHeader/ColorThemer (= 26.0.0)
+    - MaterialComponents/FlexibleHeader/Component (= 26.0.0)
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader/ColorThemer (25.1.1):
+  - MaterialComponents/FlexibleHeader/ColorThemer (26.0.0):
     - MaterialComponents/FlexibleHeader/Component
     - MaterialComponents/private/Application
     - MaterialComponents/Themes
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader/Component (25.1.1):
+  - MaterialComponents/FlexibleHeader/Component (26.0.0):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/HeaderStackView (25.1.1):
-    - MaterialComponents/HeaderStackView/ColorThemer (= 25.1.1)
-    - MaterialComponents/HeaderStackView/Component (= 25.1.1)
-  - MaterialComponents/HeaderStackView/ColorThemer (25.1.1):
+  - MaterialComponents/HeaderStackView (26.0.0):
+    - MaterialComponents/HeaderStackView/ColorThemer (= 26.0.0)
+    - MaterialComponents/HeaderStackView/Component (= 26.0.0)
+  - MaterialComponents/HeaderStackView/ColorThemer (26.0.0):
     - MaterialComponents/HeaderStackView/Component
     - MaterialComponents/Themes
-  - MaterialComponents/HeaderStackView/Component (25.1.1)
-  - MaterialComponents/Ink (25.1.1):
-    - MaterialComponents/Ink/ColorThemer (= 25.1.1)
-    - MaterialComponents/Ink/Component (= 25.1.1)
-  - MaterialComponents/Ink/ColorThemer (25.1.1):
+  - MaterialComponents/HeaderStackView/Component (26.0.0)
+  - MaterialComponents/Ink (26.0.0):
+    - MaterialComponents/Ink/ColorThemer (= 26.0.0)
+    - MaterialComponents/Ink/Component (= 26.0.0)
+  - MaterialComponents/Ink/ColorThemer (26.0.0):
     - MaterialComponents/Ink/Component
     - MaterialComponents/Themes
-  - MaterialComponents/Ink/Component (25.1.1)
-  - MaterialComponents/NavigationBar (25.1.1):
-    - MaterialComponents/NavigationBar/ColorThemer (= 25.1.1)
-    - MaterialComponents/NavigationBar/Component (= 25.1.1)
-  - MaterialComponents/NavigationBar/ColorThemer (25.1.1):
+  - MaterialComponents/Ink/Component (26.0.0)
+  - MaterialComponents/NavigationBar (26.0.0):
+    - MaterialComponents/NavigationBar/ColorThemer (= 26.0.0)
+    - MaterialComponents/NavigationBar/Component (= 26.0.0)
+  - MaterialComponents/NavigationBar/ColorThemer (26.0.0):
     - MaterialComponents/NavigationBar/Component
     - MaterialComponents/Themes
-  - MaterialComponents/NavigationBar/Component (25.1.1):
+  - MaterialComponents/NavigationBar/Component (26.0.0):
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/PageControl (25.1.1):
-    - MaterialComponents/PageControl/ColorThemer (= 25.1.1)
-    - MaterialComponents/PageControl/Component (= 25.1.1)
-  - MaterialComponents/PageControl/ColorThemer (25.1.1):
+  - MaterialComponents/PageControl (26.0.0):
+    - MaterialComponents/PageControl/ColorThemer (= 26.0.0)
+    - MaterialComponents/PageControl/Component (= 26.0.0)
+  - MaterialComponents/PageControl/ColorThemer (26.0.0):
     - MaterialComponents/PageControl/Component
     - MaterialComponents/Themes
-  - MaterialComponents/PageControl/Component (25.1.1)
-  - MaterialComponents/private/Application (25.1.1)
-  - MaterialComponents/private/Icons/Base (25.1.1)
-  - MaterialComponents/private/Icons/ic_arrow_back (25.1.1):
+  - MaterialComponents/PageControl/Component (26.0.0)
+  - MaterialComponents/private/Application (26.0.0)
+  - MaterialComponents/private/Icons/Base (26.0.0)
+  - MaterialComponents/private/Icons/ic_arrow_back (26.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Math (25.1.1)
-  - MaterialComponents/private/RTL (25.1.1)
-  - MaterialComponents/ShadowElevations (25.1.1)
-  - MaterialComponents/ShadowLayer (25.1.1)
-  - MaterialComponents/Themes (25.1.1)
-  - MaterialComponents/Typography (25.1.1):
+  - MaterialComponents/private/Math (26.0.0)
+  - MaterialComponents/private/RTL (26.0.0)
+  - MaterialComponents/ShadowElevations (26.0.0)
+  - MaterialComponents/ShadowLayer (26.0.0)
+  - MaterialComponents/Themes (26.0.0)
+  - MaterialComponents/Typography (26.0.0):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
-  - RemoteImageServiceForMDCDemos (25.1.1)
+  - RemoteImageServiceForMDCDemos (26.0.0)
 
 DEPENDENCIES:
   - MaterialComponents/AppBar (from `../../`)
@@ -124,9 +133,9 @@ EXTERNAL SOURCES:
     :path: "../supplemental"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 269f677006e18f72c0a32b7e00a901851835124c
+  MaterialComponents: 45604ca1d02b856c5fe862f91b5047ab1e3ee366
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
-  RemoteImageServiceForMDCDemos: 151c231004f1c5b58e311fe15de2d12158e6bc19
+  RemoteImageServiceForMDCDemos: 0b2eed6c2fe8691f530f50ebc7b66838b15d0d3b
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
 

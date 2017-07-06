@@ -54,7 +54,6 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
   self.appBar.navigationBar.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
   self.appBar.headerViewController.headerView.minimumHeight =
       kStatusBarHeight + kTabBarHeight;
   self.appBar.headerViewController.headerView.maximumHeight =

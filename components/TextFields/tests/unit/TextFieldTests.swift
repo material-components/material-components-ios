@@ -107,7 +107,7 @@ class TextFieldTests: XCTestCase {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
-    let controller = MDCTextInputController(textInput: textField)
+    let controller = MDCTextInputControllerDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
     let leadingText = "Serialized Helper Test"
@@ -130,7 +130,8 @@ class TextFieldTests: XCTestCase {
                    unserializedInput?.leadingUnderlineLabel.text)
 
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
-    XCTAssertEqual(textField.trailingUnderlineLabel.text, unserializedInput?.trailingUnderlineLabel.text)
+    XCTAssertEqual(textField.trailingUnderlineLabel.text,
+                   unserializedInput?.trailingUnderlineLabel.text)
   }
 
   func testSizing() {

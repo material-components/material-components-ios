@@ -205,6 +205,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [self.fundament setPlaceholder:placeholder];
 }
 
+// Note: this is also called by the internals of UITextField when editing ends.
 - (void)setText:(NSString *)text {
   [super setText:text];
   [_fundament didSetText];
@@ -373,11 +374,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
 
-  CGFloat height =
-      MDCTextInputFullPadding + estimatedTextHeight + MDCTextInputHalfPadding * 2.f;
+  CGFloat height = MDCTextInputFullPadding + estimatedTextHeight + MDCTextInputHalfPadding * 2.f;
 
-  CGFloat underlineLabelsHeight = MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f,
-                                      MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+  CGFloat underlineLabelsHeight =
+      MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f,
+          MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
   height += underlineLabelsHeight;
   boundingSize.height = height;
 

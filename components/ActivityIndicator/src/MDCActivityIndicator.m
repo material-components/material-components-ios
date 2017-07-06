@@ -16,6 +16,8 @@
 
 #import "MDCActivityIndicator.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "MaterialRTL.h"
 #import "MaterialApplication.h"
 #import "private/MDCActivityIndicator+Private.h"
@@ -46,10 +48,11 @@ static const CGFloat kSingleCycleRotation =
 @property(nonatomic, assign, readonly) CGFloat minStrokeDifference;
 
 /**
- The current color count for the spinner. Subclasses can change this value to start the spinner at
- a different color.
+ The index of the current stroke color in the @c cycleColors array.
+
+ @note Subclasses can change this value to start the spinner at a different color.
  */
-@property(nonatomic, assign) NSUInteger currentColorCount;
+@property(nonatomic, assign) NSUInteger cycleColorsIndex;
 
 /**
  The current cycle count.
@@ -105,17 +108,17 @@ static const CGFloat kSingleCycleRotation =
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCActivityIndicatorInit];
+    // TODO: Overwrite cycleColors if the value is present in the coder
+    // https://github.com/material-components/material-components-ios/issues/1530
   }
   return self;
 }
 
 + (void)initialize {
-  NSArray<UIColor *> *defaultColors =
-      @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-         [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-         [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-         [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
-  [MDCActivityIndicator appearance].cycleColors = defaultColors;
+  // Ensure we do not set the UIAppearance proxy if subclasses are initialized
+  if (self == [MDCActivityIndicator class]) {
+    [MDCActivityIndicator appearance].cycleColors = [MDCActivityIndicator defaultCycleColors];
+  }
 }
 
 - (void)dealloc {
@@ -154,7 +157,8 @@ static const CGFloat kSingleCycleRotation =
   _strokeWidth = 2.0f;
 
   // Colors.
-  _currentColorCount = 0;
+  _cycleColorsIndex = 0;
+  _cycleColors = [MDCActivityIndicator defaultCycleColors];
 
   // Track layer.
   _trackLayer = [CAShapeLayer layer];
@@ -236,7 +240,7 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)resetStrokeColor {
-  _currentColorCount = 0;
+  _cycleColorsIndex = 0;
 
   [self updateStrokeColor];
 }
@@ -383,10 +387,14 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)setCycleColors:(NSArray<UIColor *> *)cycleColors {
-  _cycleColors = [cycleColors copy];
-  NSAssert(cycleColors.count > 0, @"Cycle colors array cannot be empty.");
-  if (cycleColors.count > 0) {
-    [self setStrokeColor:cycleColors[0]];
+  if (cycleColors.count) {
+    _cycleColors = [cycleColors copy];
+  } else {
+    _cycleColors = [MDCActivityIndicator defaultCycleColors];
+  }
+
+  if (self.cycleColors.count) {
+    [self setStrokeColor:self.cycleColors[0]];
   }
 }
 
@@ -404,13 +412,11 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)updateStrokeColor {
-  if (_cycleColors.count > 0) {
-    [self setStrokeColor:_cycleColors[_currentColorCount]];
-  }
-  // TODO(https://github.com/material-components/material-components-ios/issues/1508): REMOVE HACK
-  // BELOW THAT PROTECTS AGAINST EMPTY cycleColors ARRAY
-  else {
-    [self setStrokeColor:[[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1]];
+  if (self.cycleColors.count > 0 && self.cycleColors.count > self.cycleColorsIndex) {
+    [self setStrokeColor:self.cycleColors[self.cycleColorsIndex]];
+  } else {
+    NSAssert(NO, @"cycleColorsIndex is outside the bounds of cycleColors.");
+    [self setStrokeColor:[[MDCActivityIndicator defaultCycleColors] firstObject]];
   }
 }
 
@@ -691,8 +697,8 @@ static const CGFloat kSingleCycleRotation =
     return;
   }
   if (state == MDCActivityIndicatorStateIndeterminate) {
-    if (_cycleColors.count > 0) {
-      _currentColorCount = (_currentColorCount + 1) % _cycleColors.count;
+    if (self.cycleColors.count > 0) {
+      self.cycleColorsIndex = (self.cycleColorsIndex + 1) % self.cycleColors.count;
       [self updateStrokeColor];
     }
     _cycleCount = (_cycleCount + 1) % kMDCActivityIndicatorTotalDetentCount;
@@ -778,6 +784,19 @@ static const CGFloat kSingleCycleRotation =
 
 + (CGFloat)defaultHeight {
   return kSpinnerRadius * 2.f;
+}
+
++ (NSArray<UIColor *> *)defaultCycleColors {
+  static NSArray<UIColor *> *s_defaultCycleColors;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    s_defaultCycleColors =
+    @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
+       [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
+       [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
+       [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
+  });
+  return s_defaultCycleColors;
 }
 
 - (void)applyPropertiesWithoutAnimation:(void (^)(void))setPropBlock {

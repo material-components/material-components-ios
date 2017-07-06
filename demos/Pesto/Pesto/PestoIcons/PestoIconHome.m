@@ -32,30 +32,30 @@
 
   //// Bezier Drawing
   UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-  [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame) + 0.41667 * CGRectGetWidth(frame),
-                                      CGRectGetMinY(frame) + 0.83333 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.41667 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.58333 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.58333 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.58333 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.58333 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.83333 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.79167 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.83333 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.79167 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.50000 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.91667 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.50000 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.50000 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.12500 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.08333 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.50000 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.20833 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.50000 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.20833 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.83333 * CGRectGetHeight(frame))];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.41667 * CGRectGetWidth(frame),
-                                         CGRectGetMinY(frame) + 0.83333 * CGRectGetHeight(frame))];
+  [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame) + 0.41667f * CGRectGetWidth(frame),
+                                      CGRectGetMinY(frame) + 0.83333f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.41667f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.58333f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.58333f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.58333f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.58333f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.83333f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.79167f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.83333f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.79167f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.50000f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.91667f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.50000f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.50000f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.12500f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.08333f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.50000f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.20833f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.50000f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.20833f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.83333f * CGRectGetHeight(frame))];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 0.41667f * CGRectGetWidth(frame),
+                                         CGRectGetMinY(frame) + 0.83333f * CGRectGetHeight(frame))];
   [bezierPath closePath];
   [fillColor setFill];
   [bezierPath fill];

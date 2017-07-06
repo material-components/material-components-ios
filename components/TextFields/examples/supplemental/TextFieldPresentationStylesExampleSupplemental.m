@@ -62,7 +62,7 @@
 @implementation TextFieldPresentationStylesExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Presentation Styles (Objective C)" ];
+  return @[ @"Text Field", @"Controller Styles (Objective C)" ];
 }
 
 @end

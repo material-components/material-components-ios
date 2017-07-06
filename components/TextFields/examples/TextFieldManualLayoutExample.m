@@ -18,8 +18,8 @@
 
 @interface TextFieldManualLayoutExample : UIViewController <UITextFieldDelegate>
 
-@property (nonatomic) MDCTextInputController *nameController;
-@property (nonatomic) MDCTextInputController *phoneController;
+@property(nonatomic) MDCTextInputControllerDefault *nameController;
+@property(nonatomic) MDCTextInputControllerDefault *phoneController;
 
 @end
 
@@ -36,10 +36,9 @@
   textFieldName.delegate = self;
   textFieldName.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  self.nameController = [[MDCTextInputController alloc] initWithTextInput:textFieldName];
+  self.nameController = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldName];
 
-  self.nameController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-  textFieldName.frame = CGRectMake(10, 40, CGRectGetWidth(self.view.bounds)-20, 0);
+  textFieldName.frame = CGRectMake(10, 40, CGRectGetWidth(self.view.bounds) - 20, 0);
 
   MDCTextField *textFieldPhone = [[MDCTextField alloc] init];
   [self.view addSubview:textFieldPhone];
@@ -48,10 +47,10 @@
   textFieldPhone.delegate = self;
   textFieldPhone.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  self.phoneController = [[MDCTextInputController alloc] initWithTextInput:textFieldPhone];
+  self.phoneController = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldPhone];
 
-  self.phoneController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-  textFieldPhone.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20, CGRectGetWidth(self.view.bounds)-20, 0);
+  textFieldPhone.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20,
+                                    CGRectGetWidth(self.view.bounds) - 20, 0);
 
   self.phoneController.helperText = @"XXX-XXX-XXXX";
 }
@@ -61,7 +60,9 @@
 
   [self.nameController.textInput sizeToFit];
   [self.phoneController.textInput sizeToFit];
-  self.phoneController.textInput.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20, CGRectGetWidth(self.view.bounds)-20, CGRectGetHeight(self.phoneController.textInput.frame));
+  self.phoneController.textInput.frame = CGRectMake(
+      10, CGRectGetMaxY(self.nameController.textInput.frame) + 20,
+      CGRectGetWidth(self.view.bounds) - 20, CGRectGetHeight(self.phoneController.textInput.frame));
 }
 
 #pragma mark - UITextFieldDelegate
@@ -77,14 +78,15 @@
   return NO;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-  NSString *finishedString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+- (BOOL)textField:(UITextField *)textField
+    shouldChangeCharactersInRange:(NSRange)range
+                replacementString:(NSString *)string {
+  NSString *finishedString =
+      [textField.text stringByReplacingCharactersInRange:range withString:string];
 
   if (textField == (UITextField *)self.nameController.textInput) {
-
     if ([finishedString rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].length &&
         ![self.nameController.errorText isEqualToString:@"You cannot enter numbers"]) {
-
       // The entered text contains numbers and we have not set an error
       [self.nameController setErrorText:@"You cannot enter numbers" errorAccessibilityValue:nil];
 
@@ -92,7 +94,6 @@
       // come from setting an error.
       [self.view setNeedsLayout];
     } else if (self.nameController.errorText != nil) {
-
       // There should be no error but error text is being shown.
       [self.nameController setErrorText:nil errorAccessibilityValue:nil];
 
@@ -103,10 +104,8 @@
   }
 
   if (textField == (UITextField *)self.phoneController.textInput) {
-
     if (![self isValidPhoneNumber:finishedString partially:YES] &&
         ![self.phoneController.errorText isEqualToString:@"Invalid phone number"]) {
-
       // The entered text is not valid and we have not set an error
       [self.phoneController setErrorText:@"Invalid phone number" errorAccessibilityValue:nil];
 
@@ -138,7 +137,7 @@
   if (!isPartialCheck) {
     isValid = isValid && inputString.length == 12;
   }
-  return  isValid;
+  return isValid;
 }
 
 @end
