@@ -41,7 +41,12 @@ IB_DESIGNABLE
 /**
  Items displayed in the tab bar.
 
- If the new items do not contain the currently selected item, the selection will be reset to nil.
+ The bar determines the newly-selected item using the following logic:
+ * Reselect the previously-selected item if it's still present in `items` after the update.
+ * If there was no selection previously or if the old selected item is gone, select the first item.
+   Clients that need empty selection to be preserved across updates to `items` must manually reset
+   selectedItem to nil after the update.
+ 
  Changes to this property are not animated.
  */
 @property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *items;
