@@ -224,7 +224,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (UIEdgeInsets)insetsAtSectionIndex:(NSInteger)section {
   // Determine insets based on cell style.
-  CGFloat inset = (CGFloat)floor(MDCCollectionViewCellStyleCardSectionInset);
+  CGFloat verticalInset = (CGFloat)floor(MDCCollectionViewCellStyleCardSectionInset);
+  CGFloat horizontalInset = (CGFloat)floor([_styler cellStyleCardSectionHorizontalMargin]);
   UIEdgeInsets insets = UIEdgeInsetsZero;
   NSInteger numberOfSections = self.collectionView.numberOfSections;
   BOOL isTop = (section == 0);
@@ -234,13 +235,13 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   BOOL isGroupedStyle = cellStyle == MDCCollectionViewCellStyleGrouped;
   // Set left/right insets.
   if (isCardStyle) {
-    insets.left = inset;
-    insets.right = inset;
+    insets.left = horizontalInset;
+    insets.right = horizontalInset;
   }
   // Set top/bottom insets.
   if (isCardStyle || isGroupedStyle) {
-    insets.top = (CGFloat)floor((isTop) ? inset : inset / 2.0f);
-    insets.bottom = (CGFloat)floor((isBottom) ? inset : inset / 2.0f);
+    insets.top = (CGFloat)floor((isTop) ? verticalInset : verticalInset / 2.0f);
+    insets.bottom = (CGFloat)floor((isBottom) ? verticalInset : verticalInset / 2.0f);
   }
   return insets;
 }

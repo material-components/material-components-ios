@@ -40,6 +40,14 @@
     cellHeightAtIndexPath:(nonnull NSIndexPath *)indexPath;
 
 /**
+ The left and right margin for a section with a Cards style.
+
+ @return The margin of the sections.
+ */
+-(CGFloat)collectionViewCellStyleCardSectionMargin:(nonnull UICollectionView *)collectionView;
+
+
+/**
  Asks the delegate for the cell style at the specified collection view section index. All
  remaining sections to have their cells styled per the styler @c cellStyle property.
 
