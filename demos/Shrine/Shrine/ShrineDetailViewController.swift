@@ -33,8 +33,8 @@ class ShrineDetailView: UIScrollView {
   override func layoutSubviews() {
     super.layoutSubviews()
     backgroundColor = .white
-    let minContentHeight = CGFloat(640)
-    contentSize = CGSize(width: frame.width, height: minContentHeight)
+    //let minContentHeight = CGFloat(640)
+    //contentSize = CGSize(width: frame.width, height: minContentHeight)
 
     let labelPadding: CGFloat = 50
     imageView.frame = CGRect(x: labelPadding, y: labelPadding,
@@ -56,6 +56,8 @@ class ShrineDetailView: UIScrollView {
 
     configureDescriptionLabel(label: labelDesc, labelPadding: labelPadding)
     self.addSubview(labelDesc)
+
+    contentSize = CGSize(width: frame.width, height: self.imageView.frame.height + self.label.frame.height + self.labelDesc.frame.height + labelPadding * 3)
   }
 
   // MARK: Private
@@ -81,7 +83,7 @@ class ShrineDetailView: UIScrollView {
 
   func configureDescriptionLabel(label: UILabel, labelPadding: CGFloat) {
     label.lineBreakMode = .byWordWrapping
-    label.numberOfLines = 5
+    label.numberOfLines = 25
     label.font = UIFont(name: "Helvetica", size: 14)
     label.textColor = UIColor(white: 0.54, alpha: 1)
     let descParagraphStyle = NSMutableParagraphStyle()
