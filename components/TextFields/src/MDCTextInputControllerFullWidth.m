@@ -347,7 +347,7 @@ static BOOL _mdc_adjustsFontForContentSizeCategoryDefault;
     }
   }
 
-  UIColor *textColor = [MDCTextInputControllerFullWidth inlinePlaceholderColorDefault];
+  UIColor *textColor = [[self class] inlinePlaceholderColorDefault];
 
   if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
     textColor = self.errorColor;
