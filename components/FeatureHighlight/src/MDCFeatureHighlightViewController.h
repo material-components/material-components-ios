@@ -32,7 +32,7 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  MDCFeatureHighlightViewController highlights an element of a UI to introduce features or
  functionality that a user hasn’t tried.
 
- https://material.googleplex.com/growth-communications/feature-discovery.html
+ https://material.io/guidelines/growth-communications/feature-discovery.html
 
  MDCFeatureHighlightViewController should be presented modally and dismissed using either
  |acceptFeature| or |rejectFeature|.
