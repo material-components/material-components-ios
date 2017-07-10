@@ -64,7 +64,14 @@
 
  Default is red.
  */
-@property(nonatomic, nullable, strong) UIColor *errorColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, strong) UIColor *errorColor;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, nullable, strong) UIColor *errorColorDefault;
 
 /**
  The text being displayed in the leading underline label when in an error state.
@@ -86,8 +93,14 @@
 
  Default is black with Material Design hint text opacity.
  */
-@property(nonatomic, null_resettable, strong)
-    UIColor *inlinePlaceholderColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColor;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
@@ -99,7 +112,14 @@
  Default value is NO.
  */
 @property(nonatomic, assign, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, assign) BOOL mdc_adjustsFontForContentSizeCategoryDefault;
 
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
@@ -111,13 +131,34 @@
 
  Default is UITextFieldViewModeAlways.
  */
-@property(nonatomic, assign) UITextFieldViewMode underlineViewMode UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) UITextFieldViewMode underlineViewMode;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, assign) UITextFieldViewMode underlineViewModeDefault;
 
 /** Color the underline changes to when the input is editing. */
-@property(nonatomic, null_resettable, strong) UIColor *underlineColorActive UI_APPEARANCE_SELECTOR;
+@property(nonatomic, null_resettable, strong) UIColor *underlineColorActive;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *underlineColorActiveDefault;
 
 /** Color of the underline when the input is not editing but still enabled. */
-@property(nonatomic, null_resettable, strong) UIColor *underlineColorNormal UI_APPEARANCE_SELECTOR;
+@property(nonatomic, null_resettable, strong) UIColor *underlineColorNormal;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *underlineColorNormalDefault;
 
 /**
  Convenience init. Never fails.

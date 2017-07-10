@@ -34,8 +34,14 @@
 
  Default is black with Material Design hint text opacity (textInput's tint).
  */
-@property(nonatomic, null_resettable, strong)
-    UIColor *floatingPlaceholderColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, null_resettable, strong) UIColor *floatingPlaceholderColor;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *floatingPlaceholderColorDefault;
 
 /**
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
@@ -43,7 +49,14 @@
 
  Default is 0.75.
  */
-@property(nonatomic, nullable, strong) NSNumber *floatingPlaceholderScale UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, strong) NSNumber *floatingPlaceholderScale;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, assign) CGFloat floatingPlaceholderScaleDefault;
 
 /**
  If enabled, the inline placeholder label will float above the input when there is inputted text or
@@ -52,5 +65,12 @@
  Defaults to true.
  */
 @property(nonatomic, assign, getter=isFloatingEnabled) BOOL floatingEnabled;
+
+/**
+ Default value for above property.
+
+ Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ */
+@property(class, nonatomic, assign, getter=isFloatingEnabledDefault) BOOL floatingEnabledDefault;
 
 @end
