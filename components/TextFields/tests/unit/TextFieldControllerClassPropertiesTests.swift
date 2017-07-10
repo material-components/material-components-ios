@@ -39,7 +39,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     // Test the values of the class properties.
     XCTAssertEqual(MDCTextInputControllerDefault.errorColorDefault, MDCPalette.red.tint500)
-    XCTAssertEqual(MDCTextInputControllerDefault.inlinePlaceholderColorDefault, UIColor(white: 0, alpha: 0.54))
+    XCTAssertEqual(MDCTextInputControllerDefault.inlinePlaceholderColorDefault, UIColor(white: 0, alpha: CGFloat(Float(0.54))))
     XCTAssertEqual(MDCTextInputControllerDefault.mdc_adjustsFontForContentSizeCategoryDefault, true)
     XCTAssertEqual(MDCTextInputControllerDefault.underlineColorActiveDefault, MDCPalette.indigo.tint500)
     XCTAssertEqual(MDCTextInputControllerDefault.underlineColorNormalDefault, .lightGray)
@@ -63,7 +63,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     // Default specific properties
     XCTAssertEqual(controller.floatingPlaceholderColor, MDCTextInputControllerDefault.floatingPlaceholderColorDefault)
-    XCTAssertEqual(controller.floatingPlaceholderScale?.floatValue, Float(MDCTextInputControllerDefault.floatingPlaceholderScaleDefault))
     XCTAssertEqual(controller.isFloatingEnabled, MDCTextInputControllerDefault.isFloatingEnabledDefault)
 
     // Test the changes to the class properties.
@@ -107,7 +106,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     // Default specific properties
     XCTAssertEqual(controller.floatingPlaceholderColor, MDCTextInputControllerDefault.floatingPlaceholderColorDefault)
-    XCTAssertEqual(controller.floatingPlaceholderScale?.floatValue, Float(MDCTextInputControllerDefault.floatingPlaceholderScaleDefault))
     XCTAssertEqual(controller.isFloatingEnabled, MDCTextInputControllerDefault.isFloatingEnabledDefault)
   }
 
@@ -123,11 +121,11 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     // Test the values of the class properties.
     XCTAssertEqual(MDCTextInputControllerFullWidth.errorColorDefault, MDCPalette.red.tint500)
-    XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault, UIColor(white: 0, alpha: 0.54))
+    XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault, UIColor(white: 0, alpha: CGFloat(Float(0.54))))
     XCTAssertEqual(MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault, true)
-    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineColorActiveDefault, MDCPalette.indigo.tint500)
-    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineColorNormalDefault, .lightGray)
-    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineViewModeDefault, .whileEditing)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineColorActiveDefault, .clear)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineColorNormalDefault, .clear)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineViewModeDefault, .never)
 
     // Test the use of the class properties.
     let textField = MDCTextField()
@@ -151,13 +149,13 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault, false)
 
     MDCTextInputControllerFullWidth.underlineColorActiveDefault = .purple
-    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineColorActiveDefault, .purple)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineColorActiveDefault, .clear)
 
     MDCTextInputControllerFullWidth.underlineColorNormalDefault = .white
-    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineColorNormalDefault, .white)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineColorNormalDefault, .clear)
 
     MDCTextInputControllerFullWidth.underlineViewModeDefault = .unlessEditing
-    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineViewModeDefault, .unlessEditing)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.underlineViewModeDefault, .never)
 
     // Test the changes to the class properties can propogate to an instance.
     controller = MDCTextInputControllerFullWidth(textInput: textField)
