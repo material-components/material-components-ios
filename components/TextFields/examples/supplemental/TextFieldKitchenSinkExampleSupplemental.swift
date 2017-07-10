@@ -277,7 +277,7 @@ extension TextFieldKitchenSinkSwiftExample {
       object: nil)
   }
 
-  func keyboardWillShow(notif: Notification) {
+  @objc func keyboardWillShow(notif: Notification) {
     guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
       return
     }
@@ -287,7 +287,7 @@ extension TextFieldKitchenSinkSwiftExample {
                                            right: 0.0)
   }
 
-  func keyboardWillHide(notif: Notification) {
+  @objc func keyboardWillHide(notif: Notification) {
     scrollView.contentInset = UIEdgeInsets()
   }
 
@@ -299,7 +299,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
 extension TextFieldKitchenSinkSwiftExample {
   // The 3 'mode' buttons all are similar. The following code is shared by them
-  func buttonDidTouch(button: MDCButton) {
+  @objc func buttonDidTouch(button: MDCButton) {
     var controllersToChange = allInputControllers
     var partialTitle = ""
 
