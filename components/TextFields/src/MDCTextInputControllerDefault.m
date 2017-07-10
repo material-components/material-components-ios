@@ -262,6 +262,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _characterCountViewMode = UITextFieldViewModeAlways;
   _floatingEnabled = [[self class] isFloatingEnabledDefault];
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
+  _underlineViewMode = [[self class] underlineViewModeDefault];
   _textInput.hidesPlaceholderOnInput = NO;
 
   [self updatePlaceholderY];
@@ -706,7 +707,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIColor *)floatingPlaceholderColorDefault {
   if (!_floatingPlaceholderColorDefault) {
-    _floatingPlaceholderColorDefault = MDCTextInputDefaultInlinePlaceholderTextColorDefault();
+    _floatingPlaceholderColorDefault = MDCTextInputDefaultActiveColorDefault();
   }
   return _floatingPlaceholderColorDefault;
 }
@@ -714,7 +715,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 + (void)setFloatingPlaceholderColorDefault:(UIColor *)floatingPlaceholderColorDefault {
   _floatingPlaceholderColorDefault = floatingPlaceholderColorDefault
                                          ? floatingPlaceholderColorDefault
-                                         : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
+                                         : MDCTextInputDefaultActiveColorDefault();
 }
 
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {

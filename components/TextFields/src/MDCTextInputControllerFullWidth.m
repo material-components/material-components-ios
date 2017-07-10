@@ -73,7 +73,7 @@ static inline UIColor *MDCTextInputTextErrorColorDefault() {
 
 static UIColor *_errorColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
-static BOOL _mdc_adjustsFontForContentSizeCategoryDefault;
+static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
 
 @interface MDCTextInputControllerFullWidth () {
   UIColor *_inlinePlaceholderColor;
@@ -540,7 +540,7 @@ static BOOL _mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
 + (UIColor *)underlineColorNormalDefault {
-  return nil;
+  return [UIColor clearColor];
 }
 
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
