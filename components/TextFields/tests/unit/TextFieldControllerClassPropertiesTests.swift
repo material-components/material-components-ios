@@ -24,6 +24,18 @@ import MaterialComponents.MaterialTypography
 
 class TextFieldControllerClassPropertiesTests: XCTestCase {
   func testDefault() {
+    addTeardownBlock {
+      MDCTextInputControllerDefault.errorColorDefault = nil
+      MDCTextInputControllerDefault.inlinePlaceholderColorDefault = nil
+      MDCTextInputControllerDefault.mdc_adjustsFontForContentSizeCategoryDefault = true
+      MDCTextInputControllerDefault.underlineColorActiveDefault = nil
+      MDCTextInputControllerDefault.underlineColorNormalDefault = nil
+      MDCTextInputControllerDefault.underlineViewModeDefault = .whileEditing
+
+      MDCTextInputControllerDefault.floatingPlaceholderColorDefault = nil
+      MDCTextInputControllerDefault.floatingPlaceholderScaleDefault = 0.75
+      MDCTextInputControllerDefault.isFloatingEnabledDefault = true
+    }
 
     // Test the values of the class properties.
     XCTAssertEqual(MDCTextInputControllerDefault.errorColorDefault, MDCPalette.red.tint500)
@@ -100,6 +112,14 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
   }
 
   func testFullWidth() {
+    addTeardownBlock {
+      MDCTextInputControllerFullWidth.errorColorDefault = nil
+      MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault = nil
+      MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault = true
+      MDCTextInputControllerFullWidth.underlineColorActiveDefault = nil
+      MDCTextInputControllerFullWidth.underlineColorNormalDefault = nil
+      MDCTextInputControllerFullWidth.underlineViewModeDefault = .never
+    }
 
     // Test the values of the class properties.
     XCTAssertEqual(MDCTextInputControllerFullWidth.errorColorDefault, MDCPalette.red.tint500)
