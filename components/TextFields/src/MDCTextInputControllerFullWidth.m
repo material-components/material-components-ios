@@ -204,7 +204,9 @@ static BOOL _mdc_adjustsFontForContentSizeCategoryDefault;
   }
 
   // This controller will handle Dynamic Type and all fonts for the text input
-  _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory || [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
+  _mdc_adjustsFontForContentSizeCategory =
+      _textInput.mdc_adjustsFontForContentSizeCategory ||
+      [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
 
@@ -466,8 +468,8 @@ static BOOL _mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
 - (UIColor *)inlinePlaceholderColor {
-  return _inlinePlaceholderColor
-      ? _inlinePlaceholderColor : [[self class] inlinePlaceholderColorDefault];
+  return _inlinePlaceholderColor ? _inlinePlaceholderColor
+                                 : [[self class] inlinePlaceholderColorDefault];
 }
 
 + (UIColor *)inlinePlaceholderColorDefault {
@@ -479,7 +481,8 @@ static BOOL _mdc_adjustsFontForContentSizeCategoryDefault;
 
 + (void)setInlinePlaceholderColorDefault:(UIColor *)inlinePlaceholderColorDefault {
   _inlinePlaceholderColorDefault = inlinePlaceholderColorDefault
-  ? inlinePlaceholderColorDefault : MDCTextInputInlinePlaceholderTextColorDefault();
+                                       ? inlinePlaceholderColorDefault
+                                       : MDCTextInputInlinePlaceholderTextColorDefault();
 }
 
 - (BOOL)isDisplayingCharacterCountError {
@@ -957,7 +960,8 @@ static BOOL _mdc_adjustsFontForContentSizeCategoryDefault;
   return _mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
-+ (void)setMdc_adjustsFontForContentSizeCategoryDefault:(BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
++ (void)setMdc_adjustsFontForContentSizeCategoryDefault:
+        (BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
   _mdc_adjustsFontForContentSizeCategoryDefault = mdc_adjustsFontForContentSizeCategoryDefault;
 }
 

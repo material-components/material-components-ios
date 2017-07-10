@@ -95,7 +95,8 @@ static inline UIColor *MDCTextInputDefaultTextErrorColorDefault() {
 static UIColor *_errorColorDefault;
 static BOOL _floatingEnabledDefault = YES;
 static UIColor *_floatingPlaceholderColorDefault;
-static CGFloat _floatingPlaceholderScaleDefault = MDCTextInputDefaultFloatingPlaceholderScaleDefault;
+static CGFloat _floatingPlaceholderScaleDefault =
+    MDCTextInputDefaultFloatingPlaceholderScaleDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
 static UIColor *_underlineColorActiveDefault;
@@ -271,7 +272,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 
   // This controller will handle Dynamic Type and all fonts for the text input
-  _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory || [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
+  _mdc_adjustsFontForContentSizeCategory =
+      _textInput.mdc_adjustsFontForContentSizeCategory ||
+      [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
   _textInput.hidesPlaceholderOnInput = !self.isFloatingEnabled;
@@ -680,7 +683,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setErrorColorDefault:(UIColor *)errorColorDefault {
-  _errorColorDefault = errorColorDefault ? errorColorDefault : MDCTextInputDefaultTextErrorColorDefault();
+  _errorColorDefault =
+      errorColorDefault ? errorColorDefault : MDCTextInputDefaultTextErrorColorDefault();
 }
 
 - (void)setErrorText:(NSString *)errorText {
@@ -695,7 +699,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (UIColor *)floatingPlaceholderColor {
-  return _floatingPlaceholderColor ? _floatingPlaceholderColor : [[self class] floatingPlaceholderColorDefault];
+  return _floatingPlaceholderColor ? _floatingPlaceholderColor
+                                   : [[self class] floatingPlaceholderColorDefault];
 }
 
 + (UIColor *)floatingPlaceholderColorDefault {
@@ -706,7 +711,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setFloatingPlaceholderColorDefault:(UIColor *)floatingPlaceholderColorDefault {
-  _floatingPlaceholderColorDefault = floatingPlaceholderColorDefault ? floatingPlaceholderColorDefault : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
+  _floatingPlaceholderColorDefault = floatingPlaceholderColorDefault
+                                         ? floatingPlaceholderColorDefault
+                                         : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
 }
 
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
@@ -766,7 +773,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (UIColor *)inlinePlaceholderColor {
-  return _inlinePlaceholderColor ? _inlinePlaceholderColor : [[self class] inlinePlaceholderColorDefault];
+  return _inlinePlaceholderColor ? _inlinePlaceholderColor
+                                 : [[self class] inlinePlaceholderColorDefault];
 }
 
 + (UIColor *)inlinePlaceholderColorDefault {
@@ -777,7 +785,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setInlinePlaceholderColorDefault:(UIColor *)inlinePlaceholderColorDefault {
-  _inlinePlaceholderColorDefault = inlinePlaceholderColorDefault ? inlinePlaceholderColorDefault : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
+  _inlinePlaceholderColorDefault = inlinePlaceholderColorDefault
+                                       ? inlinePlaceholderColorDefault
+                                       : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
 }
 
 - (BOOL)isDisplayingCharacterCountError {
@@ -825,7 +835,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setUnderlineColorActiveDefault:(UIColor *)underlineColorActiveDefault {
-  _underlineColorActiveDefault = underlineColorActiveDefault ? underlineColorActiveDefault : MDCTextInputDefaultActiveColorDefault();
+  _underlineColorActiveDefault = underlineColorActiveDefault
+                                     ? underlineColorActiveDefault
+                                     : MDCTextInputDefaultActiveColorDefault();
 }
 
 - (UIColor *)underlineColorNormal {
@@ -847,7 +859,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setUnderlineColorNormalDefault:(UIColor *)underlineColorNormalDefault {
-  _underlineColorNormalDefault = underlineColorNormalDefault ? underlineColorNormalDefault : MDCTextInputDefaultNormalUnderlineColorDefault();
+  _underlineColorNormalDefault = underlineColorNormalDefault
+                                     ? underlineColorNormalDefault
+                                     : MDCTextInputDefaultNormalUnderlineColorDefault();
 }
 
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
@@ -955,7 +969,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (!self.isFloatingEnabled) {
     return defaultInsets;
   }
-  
+
   CGFloat scale = [self effectiveFloatingScale];
   textContainerInset.top = MDCTextInputDefaultVerticalPadding +
                            MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +
@@ -1191,7 +1205,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return _mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
-+ (void)setMdc_adjustsFontForContentSizeCategoryDefault:(BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
++ (void)setMdc_adjustsFontForContentSizeCategoryDefault:
+        (BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
   _mdc_adjustsFontForContentSizeCategoryDefault = mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
