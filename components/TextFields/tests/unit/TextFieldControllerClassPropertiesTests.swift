@@ -22,7 +22,7 @@ import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTextFields
 import MaterialComponents.MaterialTypography
 
-class TextFieldControllerClassPropertiesTests: XCTest {
+class TextFieldControllerClassPropertiesTests: XCTestCase {
   func testDefault() {
 
     // Test the values of the class properties.
