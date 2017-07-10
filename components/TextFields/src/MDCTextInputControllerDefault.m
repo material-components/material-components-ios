@@ -260,6 +260,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)commonMDCTextInputControllerDefaultInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
+  _floatingEnabled = [[self class] isFloatingEnabledDefault];
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
   _textInput.hidesPlaceholderOnInput = NO;
 
