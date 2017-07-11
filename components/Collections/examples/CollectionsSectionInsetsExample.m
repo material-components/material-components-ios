@@ -82,10 +82,9 @@
 
 #pragma mark - UIControlEventHandlers
 
-- (void)didSet:(id)sender {
-  UISwitch *switchControl = (UISwitch *)sender;
-  NSUInteger section = switchControl.tag;
-  self.sectionUsesCustomInsets[@(section)] = @(switchControl.isOn);
+- (void)didSet:(UISwitch *)sender {
+  NSUInteger section = sender.tag;
+  self.sectionUsesCustomInsets[@(section)] = @(sender.isOn);
   [self.collectionView.collectionViewLayout invalidateLayout];
 }
 

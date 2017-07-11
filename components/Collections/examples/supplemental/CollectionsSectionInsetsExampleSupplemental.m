@@ -22,10 +22,6 @@
   return @[ @"Collections", @"Custom Section Insets" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Demonstration of customizing section insets in Material Collections views.";
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = @"Custom Section Insets";
