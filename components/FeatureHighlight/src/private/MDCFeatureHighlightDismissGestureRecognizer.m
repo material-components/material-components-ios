@@ -49,6 +49,7 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
   CGFloat _previousProgress;
   NSTimeInterval _eventTimeStamp;
   NSTimeInterval _previousEventTimeStamp;
+  BOOL _hasTouch;
 }
 
 @dynamic view;
@@ -60,16 +61,27 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
 
 - (void)reset {
   [super reset];
+
+  _hasTouch = NO;
+  _velocity = 0;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   assert([self.view isKindOfClass:[MDCFeatureHighlightView class]]);
+
+  if (_hasTouch) {
+    for (UITouch *touch in touches) {
+      [self ignoreTouch:touch forEvent:event];
+    }
+    return;
+  }
+
   [super touchesBegan:touches withEvent:event];
 
+  _hasTouch = YES;
   _startProgress = [self dismissPercentOfTouches:touches];
   _progress = _previousProgress = 1;
   _eventTimeStamp = _previousEventTimeStamp = event.timestamp;
-  _velocity = 0;
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
