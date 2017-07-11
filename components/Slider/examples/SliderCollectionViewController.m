@@ -23,19 +23,6 @@ static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16.f;
 static CGFloat const kSliderVerticalMargin = 12.f;
 
-// From https://material.io/guidelines/style/color.html#color-color-palette .
-static const uint32_t MDCGreenColor = 0x4CAF50;
-static const uint32_t MDCDeepOrangeColor = 0xFF5722;
-static const uint32_t MDCPurpleColor = 0x9C27B0;
-
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
-}
-
 @interface MDCSliderModel : NSObject
 
 @property(nonatomic, copy) NSString *labelString;
@@ -110,8 +97,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _label.text = model.labelString;
   _label.textColor = model.labelColor;
   self.contentView.backgroundColor = model.bgColor;
-  _slider.color = model.sliderColor;
-  _slider.trackBackgroundColor = model.trackBackgroundColor;
   _slider.numberOfDiscreteValues = model.numDiscreteValues;
   _slider.value = model.value;
   _slider.filledTrackAnchorValue = model.anchorValue;
@@ -201,7 +186,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Green slider without hollow circle at 0";
     model.hollowCircle = NO;
-    model.sliderColor = MDCColorFromRGB(MDCGreenColor);
     model.value = 0.f;
     [_sliders addObject:model];
 
@@ -215,7 +199,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     model.labelString = @"Discrete slider without numeric value label";
     model.numDiscreteValues = 7;
     model.value = 1.f;
-    model.sliderColor = MDCColorFromRGB(MDCDeepOrangeColor);
     model.discreteValueLabel = NO;
     [_sliders addObject:model];
 
@@ -231,7 +214,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     model.labelString = @"Anchored slider";
     model.anchorValue = 0.5f;
     model.value = 0.7f;
-    model.sliderColor = MDCColorFromRGB(MDCPurpleColor);
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];

@@ -20,8 +20,13 @@
 @implementation MDCAlertColorThemer
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
+  #if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
   [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
       setCustomTitleColor:colorScheme.primaryColor];
+  #else
+  [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
+      setCustomTitleColor:colorScheme.primaryColor];
+  #endif
 }
 
 @end

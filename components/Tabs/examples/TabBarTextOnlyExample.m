@@ -29,7 +29,7 @@
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case"]];
+    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case", @"Clear Selection"]];
   }
   return self;
 }
@@ -46,6 +46,10 @@
   self.tabBar.displaysUppercaseTitles = !self.tabBar.displaysUppercaseTitles;
 }
 
+- (void)clearSelection:(id)sender {
+  self.tabBar.selectedItem = nil;
+}
+
 #pragma mark - Private
 
 - (void)loadTabBar {
@@ -59,15 +63,15 @@
     [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length That Might Be Long"
+                                  image:nil
+                                    tag:0],
   ];
 
-  // Give it a white appearance to show dark text and customize the unselected title color.
+  // Give change the selected item tint color and the tab bar tint color. For other color properties
+  // rely on the UIAppearance proxy.
   self.tabBar.selectedItemTintColor = [UIColor whiteColor];
-  self.tabBar.unselectedItemTintColor = [UIColor grayColor];
-  self.tabBar.tintColor = [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1];
-  self.tabBar.barTintColor = [UIColor colorWithWhite:0.1 alpha:1];
-  self.tabBar.inkColor = [UIColor colorWithWhite:1 alpha:0.1];
+  self.tabBar.tintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
@@ -111,10 +115,22 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
-  if (indexPath.row == 0) {
-    [self changeAlignment:collectionView];
-  } else {
-    [self toggleCase:collectionView];
+  switch (indexPath.row) {
+    case 0:
+      [self changeAlignment:collectionView];
+      break;
+
+    case 1:
+      [self toggleCase:collectionView];
+      break;
+
+    case 2:
+      [self clearSelection:collectionView];
+      break;
+
+    default:
+      // Unsupported
+      break;
   }
 }
 

@@ -21,9 +21,9 @@
 @interface TextFieldPresentationStylesExample ()
 
 // Be sure to keep your controllers in memory somewhere like a property:
-@property(nonatomic, strong) MDCTextInputController *textFieldControllerDefaultCharMax;
-@property(nonatomic, strong) MDCTextInputController *textFieldControllerFloating;
-@property(nonatomic, strong) MDCTextInputController *textFieldControllerFullWidth;
+@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
+@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFloating;
+@property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldControllerFullWidth;
 
 @end
 
@@ -56,9 +56,10 @@
 
   // Second the controller is created to manage the text field
   self.textFieldControllerDefaultCharMax =
-      [[MDCTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldDefaultCharMax];
   self.textFieldControllerDefaultCharMax.characterCountMax = defaultMax;
   [self.textFieldControllerDefaultCharMax mdc_setAdjustsFontForContentSizeCategory:YES];
+  self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
   MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
   [self.scrollView addSubview:textFieldFloating];
@@ -77,10 +78,8 @@
   }
 
   self.textFieldControllerFloating =
-      [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
 
-  self.textFieldControllerFloating.presentationStyle =
-      MDCTextInputPresentationStyleFloatingPlaceholder;
   [self.textFieldControllerFloating mdc_setAdjustsFontForContentSizeCategory:YES];
 
   [NSLayoutConstraint
@@ -121,9 +120,8 @@
   textFieldFullWidth.backgroundColor = [UIColor whiteColor];
 
   self.textFieldControllerFullWidth =
-      [[MDCTextInputController alloc] initWithTextInput:textFieldFullWidth];
+      [[MDCTextInputControllerFullWidth alloc] initWithTextInput:textFieldFullWidth];
 
-  self.textFieldControllerFullWidth.presentationStyle = MDCTextInputPresentationStyleFullWidth;
   [self.textFieldControllerFullWidth mdc_setAdjustsFontForContentSizeCategory:YES];
 
   [NSLayoutConstraint constraintWithItem:textFieldFullWidth

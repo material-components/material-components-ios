@@ -1,3 +1,316 @@
+# 26.0.0
+
+## API diffs
+
+### ActivityIndicator
+
+* Setting 'cycleColors' to an empty array now sets 'cycleColors' to the default cycle colors.
+
+### BottomSheet
+
+* New component for presenting a view controller as a bottom sheet.
+
+### Buttons
+
+* New subcomponent MDCButtonTitleColorAccessibilityMutator for enforcing title/background color contrast.
+
+### Dialogs
+
+* 'UIViewController+MaterialDialogs' property 'mdc_dialogPresentationController' now has the nullability annotation of nullable.
+
+### TextFields
+
+* 'MDCTextInputController' renamed to 'MDCTextInputControllerDefault'
+* Added 'MDCTextInputController' protocol
+* Removed 'presentationStyle' property from MDCTextInputController
+* Added 'MDCTextInputControllerFullWidth'
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Default cycleColors property for empty arrays #1508 (#1540)](https://github.com/material-components/material-components-ios/commit/8be69aecb9f5ff70d526317a5f7685a94f9e042b) (Robert Moore)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### AppBar
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### BottomSheet
+
+#### Changes
+
+* [[Bottom sheet] component (#1297)](https://github.com/material-components/material-components-ios/commit/681b2de2fd9b9b30546e9f84ee3b8391f682c21c) (Sam Morrison)
+
+### ButtonBar
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [Button title color accessibility mutator (#1567)](https://github.com/material-components/material-components-ios/commit/70cfb2bc6edce5ef951a17ded3d975cf95afa7d0) (Randall Li)
+* [Call designated initializer in init methods (#1553)](https://github.com/material-components/material-components-ios/commit/8a98e74d9cb99b8f7dceaab2d4c958023265762b) (ianegordon)
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### Dialogs
+
+#### Changes
+
+* [Add nullability annotation (#1544)](https://github.com/material-components/material-components-ios/commit/4e3c62ba2fbac8dc9ae04dee78eb6eb4574a533e) (ianegordon)
+* [[Themer] Support alert color themer in iOS 8 (#1569)](https://github.com/material-components/material-components-ios/commit/695b2dc3ece5c6351e45472b61ff1b8fecba6ab7) (Junius Gunaratne)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Changes
+
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### Slider
+
+#### Changes
+
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### Snackbar
+
+#### Changes
+
+* [Resuming messages when tokens are deallocated (#1551)](https://github.com/material-components/material-components-ios/commit/50319d0edb2bb5b3bcfa2c9a34938a924d455eaa) (Robert Moore)
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+
+### Tabs
+
+#### Changes
+
+* [Reposition the Ink layer in ItemBar cells (#1554)](https://github.com/material-components/material-components-ios/commit/a68a5531935ad1fae496266732b63482deb481dd) (Robert Moore)
+* [[ButtonBar] Restoring ink to the top of the cell (#1584)](https://github.com/material-components/material-components-ios/commit/6858f4b0938b83a9cf67c1ce47658aefe5fd2ed0) (Robert Moore)
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+* [[Themes] Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+### TextFields
+
+#### Changes
+
+* [Fix for missing guard from presentationStyles to controller classes refactor. (#1579)](https://github.com/material-components/material-components-ios/commit/68535ad5a9280b4927268b18d9ab771a2b3ba72f) (Will Larche)
+* [Fix of minor details and PR comments (#1585)](https://github.com/material-components/material-components-ios/commit/ba85bd03ed123323273cff285ab831d95b234fb1) (Will Larche)
+* [Fix text fields placeholder Y preset (#1581)](https://github.com/material-components/material-components-ios/commit/3fdbdea8d99ddb60ac7822d7c24e94eea6bc212f) (Will Larche)
+* [Presentation styles to controller classes (#1549)](https://github.com/material-components/material-components-ios/commit/13dcb5746bd2d3f50bbe9d2a289efe0ed2aa2d6b) (Will Larche)
+* [[Swift] Fixing swift style errors (#1577)](https://github.com/material-components/material-components-ios/commit/f879c91a9073433d59ee851916310359ca86fb7c) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [Add ability to change catalog theme (#1477)](https://github.com/material-components/material-components-ios/commit/2873e798f28f70d4808b9c6bdba9fd0cea7fe2c9) (Junius Gunaratne)
+
+# 25.1.1
+
+Hotfix: Cherry picked: [[Buttons] Call designated initializer in init methods](https://github.com/material-components/material-components-ios/pull/1553)
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Call designated initializer in init methods (#1553)](https://github.com/material-components/material-components-ios/commit/6f2709de8c8cfd2874934abf293cb7e9b2864368) (ianegordon)
+
+# 25.1.0
+
+#### Changes
+
+## API diffs
+
+### Buttons
+
+* Added 'init' method in MDCFloatingButton
+
+### TextFields
+
+* Added properties 'underlineColorNormal', 'underlineColorActive','errorText' properties in MDCTextInputController
+* Changed nullabilitity attributes on 'floatingPlaceholdColor' & 'inlinePlaceholderColor' from nullable to null_resettable
+* Added class 'MDCTextInputUnderlineView'
+* Added properties 'disabledUnderline', 'underline', 'color', 'lineHeight', 'enabled' in MDCTextInputUnderlineView
+* Added 'sizeThatFIts:defaultSize:' method to MDCTextFieldPositioningDelegate
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### AppBar
+
+#### Changes
+
+* [[Themers] Add app bar color themer (#1503)](https://github.com/material-components/material-components-ios/commit/cda52f4e6b29f0ed72a4de47974c603970bfe142) (Junius Gunaratne)
+
+### ButtonBar
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [[Themers] Add app bar color themer (#1503)](https://github.com/material-components/material-components-ios/commit/cda52f4e6b29f0ed72a4de47974c603970bfe142) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [Make sure that MDCButton has the proper init methods. (#1542)](https://github.com/material-components/material-components-ios/commit/ee2880881ae374e2fbde39002e4323dabea8420a) (Randall Li)
+* [[mdcbutton] Using UIAppearance to set the default background color for the normal state.](https://github.com/material-components/material-components-ios/commit/6670e7409f8fc3ecadbcc18a12de781f16569798) (randallli)
+* [Button appearance (#1502)](https://github.com/material-components/material-components-ios/commit/b18aaff93e62ab853e0930867c90da3339cfb2d8) (Randall Li)
+* [Revert "Button appearance (#1502)" (#1504)](https://github.com/material-components/material-components-ios/commit/9db80b68b05969f5ab7fdeeab8806fc34f57a2a1) (Randall Li)
+* [Reverted MDCButton changes from Component Themer change: (#1490)](https://github.com/material-components/material-components-ios/commit/4128a44538e25c2ba19f627b9a96cffe568f1cad) (Randall Li)
+* [[Button] Calling commonMDCButtonInit from init. (#1501)](https://github.com/material-components/material-components-ios/commit/6217edab9e7eba9d5da5fee531211e09f2a2bda2) (Randall Li)
+
+
+### CollectionCells
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Collections
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Dialogs
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [[Feature Highlight] Rotation fixes and animation improvement (#1505)](https://github.com/material-components/material-components-ios/commit/0a102db99bddceefadb0f7bce9474be6180ae0cd) (Sam Morrison)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [Remove unused function from example. (#1527)](https://github.com/material-components/material-components-ios/commit/3cba5ed8b39e88d88d6d21bf0dd11bf6de123ec8) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Ink
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### NavigationBar
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### OverlayWindow
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### PageControl
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### ProgressView
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Slider
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Snackbar
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### Tabs
+
+#### Changes
+
+* [Add -Wstrict-prototypes and fix errors. (#1532)](https://github.com/material-components/material-components-ios/commit/4dba0dfff81e2c2a9073cb29a30f228f02938d49) (Adrian Secord)
+* [Added implementation for accessibilityElementForItem:](https://github.com/material-components/material-components-ios/commit/f78fd30242241fa051c882077791b340cb113a6b) (brianjmoore)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
+### TextFields
+
+#### Changes
+
+* [Adding missing implementations of properties (#1528)](https://github.com/material-components/material-components-ios/commit/448153d7154dc829f1287a7e19d0fb8fdd54f16a) (Will Larche)
+* [Corrections to height and frame and better manual layout support (#1525)](https://github.com/material-components/material-components-ios/commit/484a82cd8dbfcdcf490f0aee1c1c12c2dd348dcd) (Will Larche)
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+* [Underline color customization (#1537)](https://github.com/material-components/material-components-ios/commit/d085183658a5d88c8e57567ca6a7b8034599c26c) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Fix imports to use umbrella imports (#1529)](https://github.com/material-components/material-components-ios/commit/266a716f6096857dc6970e031e23c2c85a6e4f83) (Randall Li)
+
 # 25.0.1
 
 Hotfix: Added implementation for accessibilityElementForItem: for MDCTabBar

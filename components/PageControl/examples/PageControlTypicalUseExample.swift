@@ -105,7 +105,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
   // MARK: - User events
 
-  func didChangePage(_ sender: MDCPageControl) {
+  @objc func didChangePage(_ sender: MDCPageControl) {
     var offset = scrollView.contentOffset
     offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width
     scrollView.setContentOffset(offset, animated: true)

@@ -23,13 +23,13 @@
 @interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTextField *firstTextField;
-@property(nonatomic, strong) MDCTextInputController *firstController;
+@property(nonatomic, strong) MDCTextInputControllerDefault *firstController;
 @property(weak, nonatomic) IBOutlet MDCTextField *lastTextField;
-@property(nonatomic, strong) MDCTextInputController *lastController;
+@property(nonatomic, strong) MDCTextInputControllerDefault *lastController;
 @property(weak, nonatomic) IBOutlet MDCTextField *address1TextField;
-@property(nonatomic, strong) MDCTextInputController *address1Controller;
+@property(nonatomic, strong) MDCTextInputControllerDefault *address1Controller;
 @property(weak, nonatomic) IBOutlet MDCTextField *address2TextField;
-@property(nonatomic, strong) MDCTextInputController *address2Controller;
+@property(nonatomic, strong) MDCTextInputControllerDefault *address2Controller;
 
 @end
 
@@ -42,16 +42,19 @@
 
   [self setupExampleViews];
 
-  self.firstController = [[MDCTextInputController alloc] initWithTextInput:self.firstTextField];
-  self.firstController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-  self.lastController = [[MDCTextInputController alloc] initWithTextInput:self.lastTextField];
-  self.lastController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
+  self.firstController =
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.firstTextField];
+  self.lastController =
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.lastTextField];
   self.address1Controller =
-      [[MDCTextInputController alloc] initWithTextInput:self.address1TextField];
-  self.address1Controller.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address1TextField];
   self.address2Controller =
-      [[MDCTextInputController alloc] initWithTextInput:self.address2TextField];
-  self.address2Controller.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address2TextField];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  self.address2TextField.text = @"Apt 3F";
 }
 
 @end

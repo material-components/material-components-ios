@@ -26,11 +26,17 @@
 
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
+#import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
 #import "MDCFeatureHighlightColorThemer.h"
 #import "MDCFlexibleHeaderColorThemer.h"
-#import "MDCSliderColorThemer.h"
+#import "MDCHeaderStackViewColorThemer.h"
+#import "MDCNavigationBarColorThemer.h"
 #import "MDCProgressViewColorThemer.h"
+#import "MDCPageControlColorThemer.h"
+#import "MDCSliderColorThemer.h"
+#import "MDCTabBarColorThemer.h"
+
 
 static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 

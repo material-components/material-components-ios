@@ -65,7 +65,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     view.backgroundColor = UIColor(white: 0.9, alpha:1.0)
   }
 
-  func didTapActionButton(_ sender: Any) {
+  @objc func didTapActionButton(_ sender: Any) {
     print("Did tap action item: \(sender)")
   }
 
