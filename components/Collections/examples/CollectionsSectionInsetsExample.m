@@ -71,14 +71,17 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewTextCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
-                                            forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.section][indexPath.item];
-  cell.accessibilityIdentifier = [NSString stringWithFormat:@"%ld.%ld", indexPath.section, indexPath.row];
+  cell.accessibilityIdentifier =
+      [NSString stringWithFormat:@"%ld.%ld", indexPath.section, indexPath.row];
   if (indexPath.row == 0) {
     UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
     [switchControl setOn:[_sectionUsesCustomInsets[@(indexPath.section)] boolValue]];
-    [switchControl addTarget:self action:@selector(didSet:) forControlEvents:UIControlEventValueChanged];
+    [switchControl addTarget:self
+                      action:@selector(didSet:)
+            forControlEvents:UIControlEventValueChanged];
     switchControl.tag = indexPath.section;
 
     cell.accessoryView = switchControl;
