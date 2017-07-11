@@ -100,15 +100,15 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let raiseButton = MDCRaisedButton.init();
-        raiseButton.setTitle("Raised Button", forState: .Normal);
-        raiseButton.sizeToFit();
-        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
-        self.view.addSubview(raiseButton);
+        let raiseButton = MDCRaisedButton()
+        raiseButton.setTitle("Raised Button", for: .normal)
+        raiseButton.sizeToFit()
+        raiseButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        view.addSubview(raiseButton)
     }
 
-    func tapped(sender: UIButton!){
-        NSLog("Button was tapped!");
+    @objc func tapped(sender: UIButton){
+        print("Button was tapped!")
     }
 
 }
