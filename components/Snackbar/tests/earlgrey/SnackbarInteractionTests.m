@@ -23,12 +23,27 @@
 
 @implementation SnackbarEarlGreyTests
 
++ (void)returnToMainScreen {
+  // Leave the Demo view
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"back_bar_button")]
+      performAction:grey_tap()];
+  // Leave the Snackbar view
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"back_bar_button")]
+      performAction:grey_tap()];
+  // Scroll to the top of the main screen
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"collectionView")]
+   performAction:grey_scrollToContentEdge(kGREYContentEdgeTop)];
+}
+
 - (void)testSliding {
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"collectionView")] performAction:grey_scrollToContentEdge(kGREYContentEdgeBottom)];
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"collectionView")]
+      performAction:grey_scrollToContentEdge(kGREYContentEdgeBottom)];
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Snackbar")] performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"CellDemo")] performAction:grey_tap()];
 
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Simple Snackbar")] performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Simple Snackbar")]
+      performAction:grey_tap()];
+  [SnackbarEarlGreyTests returnToMainScreen];
 }
 
 @end
