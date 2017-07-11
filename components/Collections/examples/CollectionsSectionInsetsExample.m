@@ -13,59 +13,34 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-#import "CollectionsSectionInsetsExample.h"
+#import "CollectionsSectionInsetsExampleSupplemental.h"
 
-static const NSInteger kSectionCount = 5;
-static const NSInteger kSectionItemCount = 3;
-static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
+@implementation CollectionsSectionInsetsExample
 
-@implementation CollectionsSectionInsetsExample {
-  NSMutableArray *_content;
-  NSMutableDictionary *_sectionUsesCustomInsets;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  if (self = [super initWithCoder:aDecoder]) {
+    [self collectionsSectionInsetsExampleCommonInit];
+  }
+  return self;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Custom Section Insets" ];
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+    [self collectionsSectionInsetsExampleCommonInit];
+  }
+  return self;
 }
 
-+ (NSString *)catalogDescription {
-  return @"Demonstration of customizing section insets in Material Collections views.";
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+  if (self = [super initWithCollectionViewLayout:layout]) {
+    [self collectionsSectionInsetsExampleCommonInit];
+  }
+  return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  self.title = @"Custom Section Insets";
-  self.collectionView.accessibilityIdentifier = @"collectionsCustomSectionInsetsCollectionView";
-
-  // Register cell class.
-  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
-          forCellWithReuseIdentifier:kReusableIdentifierItem];
-
-  // Populate content.
+- (void)collectionsSectionInsetsExampleCommonInit {
   _content = [NSMutableArray array];
   _sectionUsesCustomInsets = [NSMutableDictionary dictionaryWithCapacity:kSectionCount];
-  for (NSInteger i = 0; i < kSectionCount; i++) {
-    NSMutableArray *items = [NSMutableArray array];
-    for (NSInteger j = 0; j < kSectionItemCount; j++) {
-      NSString *itemString = [NSString stringWithFormat:@"Section-%zd Item-%zd", i, j];
-      [items addObject:itemString];
-    }
-    [_content addObject:items];
-  }
-
-  // Customize collection view settings.
-  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
-}
-
-#pragma mark - <UICollectionViewDataSource>
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-  return [_content count];
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section {
-  return [_content[section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -73,12 +48,12 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   MDCCollectionViewTextCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
-  cell.textLabel.text = _content[indexPath.section][indexPath.item];
+  cell.textLabel.text = self.content[indexPath.section][indexPath.item];
   cell.accessibilityIdentifier =
-      [NSString stringWithFormat:@"%ld.%ld", indexPath.section, indexPath.row];
+      [NSString stringWithFormat:@"%ld.%ld", (long)indexPath.section, (long)indexPath.row];
   if (indexPath.row == 0) {
     UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
-    [switchControl setOn:[_sectionUsesCustomInsets[@(indexPath.section)] boolValue]];
+    [switchControl setOn:[self.sectionUsesCustomInsets[@(indexPath.section)] boolValue]];
     [switchControl addTarget:self
                       action:@selector(didSet:)
             forControlEvents:UIControlEventValueChanged];
@@ -98,7 +73,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   UIEdgeInsets insets = [super collectionView:collectionView
                                        layout:collectionViewLayout
                        insetForSectionAtIndex:section];
-  if ([_sectionUsesCustomInsets[@(section)] boolValue]) {
+  if ([self.sectionUsesCustomInsets[@(section)] boolValue]) {
     insets.left = MIN(40, 8 * section);
     insets.right = insets.left;
   }
@@ -110,7 +85,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (void)didSet:(id)sender {
   UISwitch *switchControl = (UISwitch *)sender;
   NSUInteger section = switchControl.tag;
-  _sectionUsesCustomInsets[@(section)] = @(switchControl.isOn);
+  self.sectionUsesCustomInsets[@(section)] = @(switchControl.isOn);
   [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
