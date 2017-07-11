@@ -23,6 +23,9 @@ env:
     # The iPhone 5 was chosen because it is a 32-bit device.
     # 8.1 was chosen because it is the earliest iOS offered here.
     - DESTINATION="platform=iOS Simulator,name=iPhone 5,OS=8.1" SDK="iphonesimulator8.1"
+    # The iPad Pro 12.9 was chosen because it is the largest resolution we can test on.
+    # 9.3 was chosen to round out the range of iOS versions we are testing on.
+    - DESTINATION="platform=iOS Simulator,name=iPad Pro (12.9-inch),OS=9.3" SDK="iphonesimulator9.3"
 
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
