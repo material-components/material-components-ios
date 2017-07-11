@@ -19,7 +19,7 @@
 #import "MaterialCollections.h"
 #import "MaterialShadowLayer.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 // Distance from center before we start fading the item.
 static const CGFloat kDismissalDistanceBeforeFading = 50.0f;

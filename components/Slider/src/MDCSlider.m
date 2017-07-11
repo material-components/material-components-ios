@@ -96,7 +96,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 #pragma mark - ThumbTrack passthrough methods
 
 - (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
-  _thumbTrack.trackOffColor = trackBackgroundColor ?: [[self class] defaultTrackOffColor];
+  _thumbTrack.trackOffColor =
+      trackBackgroundColor ? trackBackgroundColor : [[self class] defaultTrackOffColor];
   ;
 }
 
@@ -105,7 +106,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)setColor:(UIColor *)color {
-  _thumbTrack.primaryColor = color ?: [[self class] defaultColor];
+  _thumbTrack.primaryColor = color ? color : [[self class] defaultColor];
 }
 
 - (UIColor *)color {

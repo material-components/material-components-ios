@@ -82,7 +82,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   [self transferCustomViewOwnershipForBarButtonItem:buttonItem];
 
   // Take the real custom view if it exists instead of sandbag view.
-  UIView *customView = buttonItem.mdc_customView ?: buttonItem.customView;
+  UIView *customView =
+      buttonItem.mdc_customView ? buttonItem.mdc_customView : buttonItem.customView;
   if (customView) {
     return customView;
   }
@@ -213,7 +214,10 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
             withItem:(UIBarButtonItem *)item
           barMetrics:(UIBarMetrics)barMetrics {
   [self updateButton:button withItem:item forState:UIControlStateNormal barMetrics:barMetrics];
-  [self updateButton:button withItem:item forState:UIControlStateHighlighted barMetrics:barMetrics];
+  [self updateButton:button
+            withItem:item
+            forState:UIControlStateHighlighted
+          barMetrics:barMetrics];
   [self updateButton:button withItem:item forState:UIControlStateDisabled barMetrics:barMetrics];
 }
 
@@ -221,7 +225,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
             withItem:(UIBarButtonItem *)item
             forState:(UIControlState)state
           barMetrics:(UIBarMetrics)barMetrics {
-  NSString *title = item.title ?: @"";
+  NSString *title = item.title ? item.title : @"";
   if ([UIButton instancesRespondToSelector:@selector(setAttributedTitle:forState:)]) {
     NSMutableDictionary<NSString *, id> *attributes = [NSMutableDictionary dictionary];
 

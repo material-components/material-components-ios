@@ -20,7 +20,7 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 // Default cell heights.
 const CGFloat MDCCellDefaultOneLineHeight = 48.0f;
