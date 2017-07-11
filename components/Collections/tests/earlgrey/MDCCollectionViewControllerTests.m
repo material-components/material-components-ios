@@ -61,7 +61,6 @@
  @param step the amount to scroll in each repeated step until the target element is found. If @c
              step is non-positive, a default value is used.
  @param tap YES if a tap should be performed on the element once it is visible
-
  */
 + (void)scrollToElementWithIdentifier:(nonnull NSString *)identifier
               inElementWithIdentifier:(nonnull NSString *)scrollableIdentifier
