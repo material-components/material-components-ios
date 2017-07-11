@@ -166,29 +166,6 @@ static NSString *const kExampleDetailText =
   return cell;
 }
 
-#pragma mark - <UICollectionViewDelegateFlowLayout>
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
-                        layout:(UICollectionViewLayout *)collectionViewLayout
-        insetForSectionAtIndex:(NSInteger)section {
-  UIEdgeInsets insets = [super collectionView:collectionView
-                                       layout:collectionViewLayout
-                       insetForSectionAtIndex:section];
-  if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-    insets.left = 24;
-    insets.right = 24;
-  }
-  return insets;
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-  if (previousTraitCollection && self.view.traitCollection.horizontalSizeClass
-                                     != previousTraitCollection.horizontalSizeClass) {
-    [self.collectionView.collectionViewLayout invalidateLayout];
-  }
-}
-
 #pragma mark - <MDCCollectionViewStylingDelegate>
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
