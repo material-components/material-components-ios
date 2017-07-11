@@ -21,23 +21,6 @@
 
 #import "MaterialMath.h"
 
-static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizerState state) {
-  switch (state) {
-    case UIGestureRecognizerStatePossible:
-      return @"UIGestureRecognizerStatePossible";
-    case UIGestureRecognizerStateEnded:
-      return @"UIGestureRecognizerState(Ended|Recognized)";
-    case UIGestureRecognizerStateBegan:
-      return @"UIGestureRecognizerStateBegan";
-    case UIGestureRecognizerStateFailed:
-      return @"UIGestureRecognizerStateFailed";
-    case UIGestureRecognizerStateChanged:
-      return @"UIGestureRecognizerStateChanged";
-    case UIGestureRecognizerStateCancelled:
-      return @"UIGestureRecognizerStateCancelled";
-  }
-}
-
 @interface MDCFeatureHighlightDismissGestureRecognizer ()
 
 @property(nullable, nonatomic, readonly) MDCFeatureHighlightView *view;
@@ -53,11 +36,6 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
 }
 
 @dynamic view;
-
-- (void)setState:(UIGestureRecognizerState)state {
-  super.state = state;
-  NSLog(@"%@", NSStringFromUIGestureRecognizerState(self.state));
-}
 
 - (void)reset {
   [super reset];
