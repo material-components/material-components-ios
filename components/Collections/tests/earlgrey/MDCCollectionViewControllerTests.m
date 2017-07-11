@@ -151,16 +151,14 @@
  @param width the width value for comparison.
  */
 - (GREYAssertionBlock *)assertBoundsWidthLessThanOrEqualTo:(CGFloat)width {
-  return [GREYAssertionBlock assertionWithName:@"boundsAreGreaterOrEqualThanOtherBounds"
-                       assertionBlockWithError:^BOOL(id element, NSError *__strong *errorOrNil) {
-                         XCTAssert([element isKindOfClass:[UIView class]]);
-                         UIView *asView = (UIView *)element;
-
-                         XCTAssertLessThanOrEqual(asView.bounds.size.width, width,
-                                                  @"View's width is not less than or equal to the "
-                                                   "expected width.");
-                         return YES;
-                       }];
+  return
+      [GREYAssertionBlock assertionWithName:@"boundsAreGreaterOrEqualThanOtherBounds"
+                    assertionBlockWithError:^BOOL(UIView *element, NSError *__strong *errorOrNil) {
+                      XCTAssertLessThanOrEqual(element.bounds.size.width, width,
+                                               @"View's width is not less than or equal to the "
+                                                "expected width.");
+                      return YES;
+                    }];
 }
 
 /**
