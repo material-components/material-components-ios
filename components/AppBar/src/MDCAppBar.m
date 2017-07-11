@@ -57,9 +57,17 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   // Update title label color based on navigationBar/headerView backgroundColor
   NSMutableDictionary *textAttr =
       [NSMutableDictionary dictionaryWithDictionary:[appBar.navigationBar titleTextAttributes]];
-  UIColor *textColor = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                                        targetTextAlpha:1.0
-                                                  font:[textAttr objectForKey:NSFontAttributeName]];
+  MDFTextAccessibilityOptions options = 0;
+  BOOL isLarge =
+      [MDCTypography isLargeForContrastRatios:[textAttr objectForKey:NSFontAttributeName]];
+  if (isLarge) {
+    options |= MDFTextAccessibilityOptionsLargeFont;
+  }
+  UIColor *textColor =
+      [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                       targetTextAlpha:1.0
+                                                  options:options];
+
   [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
   [appBar.navigationBar setTitleTextAttributes:textAttr];
 
