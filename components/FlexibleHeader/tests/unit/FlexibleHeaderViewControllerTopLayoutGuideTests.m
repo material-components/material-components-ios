@@ -52,7 +52,9 @@
   self.scrollView.frame = self.view.bounds;
   self.scrollView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.scrollView.contentSize = CGSizeMake(320, 2000);
+  CGFloat contentHeight = [UIScreen mainScreen].bounds.size.height * 5;
+  CGFloat contentWidth = [UIScreen mainScreen].bounds.size.width;
+  self.scrollView.contentSize = CGSizeMake(contentWidth, contentHeight);
   [self.view addSubview:self.scrollView];
   self.fhvc.headerView.trackingScrollView = self.scrollView;
   self.fhvc.view.frame = self.view.bounds;
