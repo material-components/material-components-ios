@@ -20,8 +20,6 @@
 /**
  A Core Animation layer that draws and animates the ink effect.
 
- Exact behaviour of the ink splash is defined in this sandbox demo: http://go/qinkdemo.
-
  Quick summary of how the ink ripple works:
 
  1. On touch down, blast initiates from the touch point.

@@ -88,7 +88,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     return cell!
   }
 
-  func dismissSelf() {
+  @objc func dismissSelf() {
     self.dismiss(animated: true, completion: nil)
   }
 }
@@ -144,7 +144,7 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  func presentModal() {
+  @objc func presentModal() {
     let modalVC = AppBarModalPresentationSwiftExamplePresented()
     self.present(modalVC, animated: true, completion: nil)
   }

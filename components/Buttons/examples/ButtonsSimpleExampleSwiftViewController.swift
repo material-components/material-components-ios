@@ -97,7 +97,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
       constant: 0.0))
   }
 
-  func tap(_ sender: Any) {
+  @objc func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
 

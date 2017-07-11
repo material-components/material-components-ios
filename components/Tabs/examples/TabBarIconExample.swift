@@ -76,7 +76,7 @@ class TabBarIconSwiftExample: UIViewController {
                               for: .touchUpInside)
   }
 
-  func changeAlignmentDidTouch(sender: UIButton) {
+  @objc func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler: { _ in
       self.alignment = .leading
@@ -103,9 +103,9 @@ class TabBarIconSwiftExample: UIViewController {
     starItem.badgeValue = NumberFormatter.localizedString(from:(badgeNumber + 1) as NSNumber,
                                                           number: .none)
   }
+
   // MARK: Action
-  func incrementDidTouch(sender: UIBarButtonItem) {
-    incrementStarBadge()
+  @objc func incrementDidTouch(sender: UIBarButtonItem) { incrementStarBadge()
 
     addStar(centered: false)
   }

@@ -63,7 +63,9 @@
     [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length That Might Be Long"
+                                  image:nil
+                                    tag:0],
   ];
 
   // Give change the selected item tint color and the tab bar tint color. For other color properties

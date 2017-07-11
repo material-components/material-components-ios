@@ -397,10 +397,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     size.width = _collectionView.bounds.size.width / MAX(count, 1);
   }
 
-  // Constrain width if necessary.
+  // Constrain to style-based width if necessary.
   if (_style.maximumItemWidth > 0) {
     size.width = MIN(size.width, _style.maximumItemWidth);
   }
+
+  // Constrain to view width
+  size.width = MIN(size.width, CGRectGetWidth(collectionView.frame));
 
   // Force height to our height.
   size.height = itemHeight;

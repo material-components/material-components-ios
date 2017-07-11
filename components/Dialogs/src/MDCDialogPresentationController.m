@@ -98,7 +98,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 - (void)presentationTransitionWillBegin {
   // TODO: Follow the Material spec description of Autonomous surface creation for both
   // presentation and dismissal of the dialog.
-  // https://spec.googleplex.com/quantum/motion/choreography.html#choreography-creation
+  // https://material.io/guidelines/motion/choreography.html#choreography-creation
 
   // Set the dimming view to the container's bounds and fully transparent.
   self.dimmingView.frame = self.containerView.bounds;

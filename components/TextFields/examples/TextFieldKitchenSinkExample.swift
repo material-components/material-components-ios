@@ -370,11 +370,11 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
             textFieldControllerDefaultLeftRightViewFloating]
   }
 
-  func tapDidTouch(sender: Any) {
+  @objc func tapDidTouch(sender: Any) {
     self.view.endEditing(true)
   }
 
-  func errorSwitchDidChange(errorSwitch: UISwitch) {
+  @objc func errorSwitchDidChange(errorSwitch: UISwitch) {
     allInputControllers.forEach { controller in
       if errorSwitch.isOn {
         controller.setErrorText("Uh oh! Try something else.", errorAccessibilityValue: nil)
@@ -384,7 +384,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     }
   }
 
-  func helperSwitchDidChange(helperSwitch: UISwitch) {
+  @objc func helperSwitchDidChange(helperSwitch: UISwitch) {
     allInputControllers.forEach { controller in
       controller.helperText = helperSwitch.isOn ? "This is helper text." : nil
     }
@@ -400,7 +400,7 @@ extension TextFieldKitchenSinkSwiftExample: UITextFieldDelegate {
 }
 
 extension TextFieldKitchenSinkSwiftExample {
-  func contentSizeCategoryDidChange(notif: Notification) {
+  @objc func contentSizeCategoryDidChange(notif: Notification) {
     controlLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     singleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     errorLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
