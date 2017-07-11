@@ -168,8 +168,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   [self commonMDCShadowLayerConfigure];
 }
 
-// TODO(#993): Implement missing initWithLayer:
-
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
   [aCoder encodeDouble:_elevation forKey:MDCShadowLayerElevationKey];
