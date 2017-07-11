@@ -145,11 +145,13 @@ static inline NSString *NSStringFromUIGestureRecognizerState(UIGestureRecognizer
 
   // Now compute in the form at^2 + bt + c = 0
   // a = (r2 - r1)^2 - (c2.x - c1.x)^2 - (c2.y - c1.y)^2
-  // b = 2r1(r2 - r1) - 2c1.x(c2.x - c1.x) + 2(c2.x - c1.x)p.x - 2c1.y(c2.y - c1.y) + 2(c2.y - c1.y)p.y
-  // c = r1^2 - c1.x^2 + 2c1.x*p.x - p.x^2 - c1.y^2 + 2c1.y*p.y - p.y^2
   CGFloat a = pow(r2 - r1, 2) - pow(c2.x - c1.x, 2) - pow(c2.y - c1.y, 2);
-  CGFloat b = 2*r1*(r2 - r1) - 2*c1.x*(c2.x - c1.x) + 2*(c2.x - c1.x)*p.x - 2*c1.y*(c2.y - c1.y) + 2*(c2.y - c1.y)*p.y;
-  CGFloat c = pow(r1, 2) - pow(c1.x, 2) + 2*c1.x*p.x - pow(p.x, 2) - pow(c1.y, 2) + 2*c1.y*p.y - pow(p.y, 2);
+  // b = 2r1(r2 - r1) - 2c1.x(c2.x - c1.x) + 2(c2.x - c1.x)p.x - 2c1.y(c2.y - c1.y) + 2(c2.y - c1.y)p.y
+  CGFloat b = 2*r1*(r2 - r1) - 2*c1.x*(c2.x - c1.x) + 2*(c2.x - c1.x)*p.x - 2*c1.y*(c2.y - c1.y)
+      + 2*(c2.y - c1.y)*p.y;
+  // c = r1^2 - c1.x^2 + 2c1.x*p.x - p.x^2 - c1.y^2 + 2c1.y*p.y - p.y^2
+  CGFloat c = pow(r1, 2) - pow(c1.x, 2) + 2*c1.x*p.x - pow(p.x, 2) - pow(c1.y, 2) + 2*c1.y*p.y
+      - pow(p.y, 2);
 
   CGFloat t = (-b - sqrt(b*b - 4*a*c))/(2*a);
 
