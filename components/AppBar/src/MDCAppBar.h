@@ -33,11 +33,6 @@
 @interface MDCAppBarTextColorAccessibilityMutator : NSObject
 
 /**
- Initializes and returns a newly created accessibility mutator
- */
-- (nonnull instancetype)init;
-
-/**
  Mutates title text color and navigation items' tint colors based on background color of
  app bar's navigation bar or header view background color.
  */

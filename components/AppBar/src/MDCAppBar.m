@@ -40,11 +40,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 @implementation MDCAppBarTextColorAccessibilityMutator
 
-- (nonnull instancetype)init {
-  self = [super init];
-  return self;
-}
-
 - (void)mutate:(nonnull MDCAppBar *)appBar {
   // Determine what is the appropriate background color
   // Because navigation bar renders above headerview, it takes presedence
