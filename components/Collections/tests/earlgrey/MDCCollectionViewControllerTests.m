@@ -121,13 +121,13 @@
  @param numberOfSections inout parameter for storing the number of sections value.
  */
 + (GREYActionBlock *)getNumberOfSections:(NSInteger *)numberOfSections {
-  return [GREYActionBlock actionWithName:@"getNumberOfSectionsFromUICollectionView"
-                             constraints:grey_respondsToSelector(@selector(numberOfSections))
-                            performBlock:^BOOL(id element, NSError *__strong *errorOrNil) {
-                              UICollectionView *asCollectionView = (UICollectionView *)element;
-                              *numberOfSections = asCollectionView.numberOfSections;
-                              return YES;
-                            }];
+  return [GREYActionBlock
+      actionWithName:@"getNumberOfSectionsFromUICollectionView"
+         constraints:grey_respondsToSelector(@selector(numberOfSections))
+        performBlock:^BOOL(UICollectionView *collectionView, NSError *__strong *errorOrNil) {
+          *numberOfSections = collectionView.numberOfSections;
+          return YES;
+        }];
 }
 
 /**
@@ -138,9 +138,8 @@
 + (GREYActionBlock *)getBounds:(CGRect *)bounds {
   return [GREYActionBlock actionWithName:@"getBoundsFromUIView"
                              constraints:grey_respondsToSelector(@selector(bounds))
-                            performBlock:^BOOL(id element, NSError *__strong *errorOrNil) {
-                              UIView *asView = (UIView *)element;
-                              *bounds = asView.bounds;
+                            performBlock:^BOOL(UIView *view, NSError *__strong *errorOrNil) {
+                              *bounds = view.bounds;
                               return YES;
                             }];
 }
