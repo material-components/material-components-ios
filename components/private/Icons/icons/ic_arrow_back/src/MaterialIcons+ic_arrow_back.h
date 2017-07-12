@@ -33,6 +33,7 @@
 
 /*
  Change the style returned by `pathFor_ic_arrow_back`.
+ 
  @param useNewStyle Use the new iOS style OR Material style for ic_arrow_back.
  */
 + (void)ic_arrow_backUseNewStyle:(BOOL)useNewStyle;
