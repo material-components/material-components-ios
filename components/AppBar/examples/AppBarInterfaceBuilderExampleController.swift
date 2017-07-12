@@ -37,7 +37,7 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
     addChildViewController(appBar.headerViewController)
-    let headerColor = UIColor(white: 0.1, alpha:1)
+    let headerColor = UIColor(white: 0.2, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = headerColor
 
     let mutator = MDCAppBarTextColorAccessibilityMutator()
