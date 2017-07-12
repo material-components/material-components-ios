@@ -150,7 +150,7 @@
 /**
  Default value for underlineColorActive.
 
- Default is primary color or blue.
+ Default is blue.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *underlineColorActiveDefault;
 
@@ -164,7 +164,8 @@
 /**
  Default value for underlineColorNormal.
 
- Default is same as inlinePlaceholderColorDefault.
+ Default is black with Material Design hint text opacity which is the same as 
+ inlinePlaceholderColorDefault.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *underlineColorNormalDefault;
 
