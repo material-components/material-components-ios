@@ -96,7 +96,7 @@ static BOOL _floatingEnabledDefault = YES;
 static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
 
 static CGFloat _floatingPlaceholderScaleDefault =
-MDCTextInputDefaultFloatingPlaceholderScaleDefault;
+    MDCTextInputDefaultFloatingPlaceholderScaleDefault;
 
 static UIColor *_errorColorDefault;
 static UIColor *_floatingPlaceholderColorDefault;
