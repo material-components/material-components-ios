@@ -122,16 +122,31 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
       _shadowMaskEnabled = otherLayer.isShadowMaskEnabled;
       _bottomShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadow];
       _topShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadow];
-      [self commonMDCShadowLayerConfigure];
+      [self commonMDCShadowLayerInit];
     }
   }
   return self;
 }
 
 /**
- Configure the internal sublayers and metrics once they've been created in an @c -init method.
+ commonMDCShadowLayerInit creates additional layers based on the values of _elevation and
+ _shadowMaskEnabled.
  */
-- (void)commonMDCShadowLayerConfigure {
+- (void)commonMDCShadowLayerInit {
+  if (!_bottomShadow) {
+    _bottomShadow = [CAShapeLayer layer];
+    _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
+    _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
+    [self addSublayer:_bottomShadow];
+  }
+
+  if (!_topShadow) {
+    _topShadow = [CAShapeLayer layer];
+    _topShadow.backgroundColor = [UIColor clearColor].CGColor;
+    _topShadow.shadowColor = [UIColor blackColor].CGColor;
+    [self addSublayer:_topShadow];
+  }
+
   // Setup shadow layer state based off _elevation and _shadowMaskEnabled
   MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:_elevation];
   _topShadow.shadowOffset = shadowMetrics.topShadowOffset;
@@ -146,26 +161,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
     _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
   }
-}
-
-/**
- commonMDCShadowLayerInit creates additional layers based on the values of _elevation and
- _shadowMaskEnabled.
- */
-- (void)commonMDCShadowLayerInit {
-  _bottomShadow = [CAShapeLayer layer];
-  _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
-  _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
-
-  _topShadow = [CAShapeLayer layer];
-  _topShadow.backgroundColor = [UIColor clearColor].CGColor;
-  _topShadow.shadowColor = [UIColor blackColor].CGColor;
-
-  // -addSublayer: cannot be called from -initWithLayer: since it only works with model layers
-  [self addSublayer:_bottomShadow];
-  [self addSublayer:_topShadow];
-
-  [self commonMDCShadowLayerConfigure];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
