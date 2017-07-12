@@ -221,7 +221,7 @@ EOL
 
 #import "$file.h"
 
-#import "MDCIcons+BundleLoader.h"
+#import "MaterialIcons.h"
 
 static NSString *const kBundleName = @"MaterialIcons_$icon_name";
 static NSString *const kIconName = @"$icon_name";

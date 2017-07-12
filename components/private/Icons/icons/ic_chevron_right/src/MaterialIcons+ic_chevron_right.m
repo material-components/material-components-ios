@@ -19,7 +19,7 @@
 
 #import "MaterialIcons+ic_chevron_right.h"
 
-#import "MDCIcons+BundleLoader.h"
+#import "MaterialIcons.h"
 
 static NSString *const kBundleName = @"MaterialIcons_ic_chevron_right";
 static NSString *const kIconName = @"ic_chevron_right";

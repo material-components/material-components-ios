@@ -19,7 +19,7 @@
 
 #import "MaterialIcons+ic_check.h"
 
-#import "MDCIcons+BundleLoader.h"
+#import "MaterialIcons.h"
 
 static NSString *const kBundleName = @"MaterialIcons_ic_check";
 static NSString *const kIconName = @"ic_check";
