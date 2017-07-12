@@ -43,6 +43,13 @@ const CGFloat kMDCFeatureHighlightMaxTextHeight = 1000.0f;
 const CGFloat kMDCFeatureHighlightTitleFontSize = 20.0f;
 const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
+const CGFloat kMDCFeatureHighlightGestureDisappearThresh = 0.9f;
+const CGFloat kMDCFeatureHighlightGestureAppearThresh = 0.95f;
+const CGFloat kMDCFeatureHighlightGestureDismissThresh = 0.6f;
+const CGFloat kMDCFeatureHighlightGestureAnimationDuration = 0.2f;
+
+const CGFloat kMDCFeatureHighlightDismissAnimationDuration = 0.25f;
+
 // Animation consts
 const CGFloat kMDCFeatureHighlightInnerRadiusFactor = 1.1f;
 const CGFloat kMDCFeatureHighlightOuterRadiusFactor = 1.125f;
@@ -65,6 +72,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   CGPoint _outerCenter;
   CGFloat _outerRadius;
   CGFloat _outerRadiusScale;
+  BOOL _isLayedOutAppearing;
   MDCFeatureHighlightLayer *_outerLayer;
   MDCFeatureHighlightLayer *_pulseLayer;
   MDCFeatureHighlightLayer *_innerLayer;
@@ -180,6 +188,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)layoutAppearing {
+  _isLayedOutAppearing = YES;
+
   // TODO: Mask the labels during the presentation and dismissal animations.
   _titleLabel.alpha = 1;
   _bodyLabel.alpha = 1;
@@ -189,6 +199,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)layoutDisappearing {
+  _isLayedOutAppearing = NO;
+
   _titleLabel.alpha = 0;
   _bodyLabel.alpha = 0;
 
@@ -331,7 +343,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       break;
 
     case UIGestureRecognizerStateEnded:
-      if (progress > 0.6) {
+      if (progress > kMDCFeatureHighlightGestureDismissThresh) {
         [self animateDismissalCancelled];
       } else {
         if (self.interactionBlock) {
@@ -349,10 +361,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       break;
 
     case UIGestureRecognizerStateBegan:
-      [UIView animateWithDuration:0.2 animations:^{
-        _titleLabel.alpha = 0.0;
-        _bodyLabel.alpha = 0.0;
-      }];
       break;
   }
 }
@@ -368,19 +376,30 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   CGPoint center = CGPointAddedToPoint(_highlightCenter, pointOffset);
   [_outerLayer setPosition:center animated:NO];
   [_outerLayer removeAllAnimations];
+
+  if (_isLayedOutAppearing) {
+    if (progress < kMDCFeatureHighlightGestureDisappearThresh) {
+      [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration animations:^{
+        [self layoutDisappearing];
+      }];
+    }
+  } else if (progress > kMDCFeatureHighlightGestureAppearThresh) {
+    [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration animations:^{
+      [self layoutAppearing];
+    }];
+  }
 }
 
 - (void)animateDismissalCancelled {
-  [UIView animateWithDuration:0.2 animations:^{
-    _titleLabel.alpha = 1.0;
-    _bodyLabel.alpha = 1.0;
+  [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration animations:^{
+    [self layoutAppearing];
   }];
 
   _outerRadiusScale = 1;
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                              functionWithName:kCAMediaTimingFunctionEaseOut]];
-  [CATransaction setAnimationDuration:0.25];
+  [CATransaction setAnimationDuration:kMDCFeatureHighlightDismissAnimationDuration];
   [_outerLayer setRadius:_outerRadius * _outerRadiusScale animated:YES];
   [_outerLayer setPosition:_highlightCenter animated:YES];
   [CATransaction commit];
