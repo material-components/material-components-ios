@@ -19,7 +19,7 @@
 
 #import "MaterialIcons+ic_reorder.h"
 
-#import "MaterialIcons.h"
+#import "MDCIcons+BundleLoader.h"
 
 static NSString *const kBundleName = @"MaterialIcons_ic_reorder";
 static NSString *const kIconName = @"ic_reorder";
@@ -31,6 +31,11 @@ __attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarni
 
 + (nonnull NSString *)pathFor_ic_reorder {
   return [self pathForIconName:kIconName withBundleName:kBundleName];
+}
+
++ (nullable UIImage *)imageFor_ic_reorder {
+  NSBundle *bundle = [self bundleNamed:kBundleName];
+  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
 }
 
 @end

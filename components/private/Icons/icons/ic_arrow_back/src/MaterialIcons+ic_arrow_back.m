@@ -19,6 +19,7 @@
 
 #import "MaterialIcons+ic_arrow_back.h"
 
+#import "MDCIcons+BundleLoader.h"
 #import "MaterialIcons.h"
 
 static NSString *const kBundleName = @"MaterialIcons_ic_arrow_back";
@@ -45,6 +46,11 @@ __attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarni
   } else {
     __icArrowBackIconName = kIconName;
   }
+}
+
++ (nullable UIImage *)imageFor_ic_arrow_back {
+  NSBundle *bundle = [self bundleNamed:kBundleName];
+  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
 }
 
 @end

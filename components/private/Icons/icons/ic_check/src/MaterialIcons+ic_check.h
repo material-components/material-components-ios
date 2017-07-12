@@ -29,4 +29,10 @@
  */
 + (nonnull NSString *)pathFor_ic_check;
 
+/*
+ Returns the bundle for the ic_check image contained in
+ MaterialIcons_ic_check.bundle.
+ */
++ (nullable UIImage *)imageFor_ic_check;
+
 @end

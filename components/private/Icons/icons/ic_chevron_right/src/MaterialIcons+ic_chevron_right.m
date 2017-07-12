@@ -19,7 +19,7 @@
 
 #import "MaterialIcons+ic_chevron_right.h"
 
-#import "MaterialIcons.h"
+#import "MDCIcons+BundleLoader.h"
 
 static NSString *const kBundleName = @"MaterialIcons_ic_chevron_right";
 static NSString *const kIconName = @"ic_chevron_right";
@@ -32,6 +32,11 @@ __attribute__((
 
 + (nonnull NSString *)pathFor_ic_chevron_right {
   return [self pathForIconName:kIconName withBundleName:kBundleName];
+}
+
++ (nullable UIImage *)imageFor_ic_chevron_right {
+  NSBundle *bundle = [self bundleNamed:kBundleName];
+  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
 }
 
 @end

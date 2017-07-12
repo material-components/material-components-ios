@@ -19,7 +19,7 @@
 
 #import "MaterialIcons+ic_radio_button_unchecked.h"
 
-#import "MaterialIcons.h"
+#import "MDCIcons+BundleLoader.h"
 
 static NSString *const kBundleName = @"MaterialIcons_ic_radio_button_unchecked";
 static NSString *const kIconName = @"ic_radio_button_unchecked";
@@ -32,6 +32,11 @@ __attribute__((visibility(
 
 + (nonnull NSString *)pathFor_ic_radio_button_unchecked {
   return [self pathForIconName:kIconName withBundleName:kBundleName];
+}
+
++ (nullable UIImage *)imageFor_ic_radio_button_unchecked {
+  NSBundle *bundle = [self bundleNamed:kBundleName];
+  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
 }
 
 @end

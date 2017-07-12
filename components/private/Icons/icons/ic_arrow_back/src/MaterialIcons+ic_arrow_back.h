@@ -38,4 +38,10 @@
  */
 + (void)ic_arrow_backUseNewStyle:(BOOL)useNewStyle;
 
+/*
+ Returns the bundle for the ic_arrow_back image contained in
+ MaterialIcons_ic_arrow_back.bundle.
+ */
++ (nullable UIImage *)imageFor_ic_arrow_back;
+
 @end
