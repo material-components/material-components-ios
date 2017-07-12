@@ -692,7 +692,11 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
 - (void)restorePanningItemIfNecessaryWithMomentumX:(CGFloat)momentumX {
   // If we never had a snapshot, or the snapshot never moved, then skip straight to cleanup.
-  if (_cellSnapshot == nil || CGAffineTransformIsIdentity(_cellSnapshot.transform)) {
+  if (_cellSnapshot == nil) {
+    [self cleanupDismissingInformation];
+    return;
+  }
+  if (CGAffineTransformIsIdentity(_cellSnapshot.transform)) {
     [self restoreEditingItem];
     return;
   }
@@ -748,13 +752,17 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 }
 
 - (void)restoreEditingItem {
+  [self cleanupDismissingInformation];
+  [_collectionView.collectionViewLayout invalidateLayout];
+}
+
+- (void)cleanupDismissingInformation {
   // Remove snapshot and reset item.
   [_cellSnapshot removeFromSuperview];
   _cellSnapshot = nil;
   _dismissingSection = NSNotFound;
   _dismissingCellIndexPath = nil;
   _reorderingCellIndexPath = nil;
-  [_collectionView.collectionViewLayout invalidateLayout];
 }
 
 // The distance an item must be panned before it is dismissed. Currently half of the bounds width.
