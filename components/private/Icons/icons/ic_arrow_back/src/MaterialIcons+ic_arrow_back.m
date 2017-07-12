@@ -49,7 +49,7 @@ __attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarni
 
 + (nullable UIImage *)imageFor_ic_arrow_back {
   NSBundle *bundle = [self bundleNamed:kBundleName];
-  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
+  return [UIImage imageNamed:__icArrowBackIconName inBundle:bundle compatibleWithTraitCollection:nil];
 }
 
 @end
