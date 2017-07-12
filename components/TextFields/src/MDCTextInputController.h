@@ -71,7 +71,7 @@
 
  Class property. Replaces UIAppearance for classes that do not inherit from UIView.
  */
-@property(class, nonatomic, nullable, strong) UIColor *errorColorDefault;
+@property(class, nonatomic, null_resettable, strong) UIColor *errorColorDefault;
 
 /**
  The text being displayed in the leading underline label when in an error state.
