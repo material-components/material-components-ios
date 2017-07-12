@@ -114,20 +114,38 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   return self;
 }
 
+- (instancetype)initWithLayer:(id)layer {
+  if (self = [super initWithLayer:layer]) {
+    if ([layer isKindOfClass:[MDCShadowLayer class]]) {
+      MDCShadowLayer *otherLayer = (MDCShadowLayer *)layer;
+      _elevation = otherLayer.elevation;
+      _shadowMaskEnabled = otherLayer.isShadowMaskEnabled;
+      _bottomShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadow];
+      _topShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadow];
+      [self commonMDCShadowLayerInit];
+    }
+  }
+  return self;
+}
+
 /**
  commonMDCShadowLayerInit creates additional layers based on the values of _elevation and
  _shadowMaskEnabled.
  */
 - (void)commonMDCShadowLayerInit {
-  _bottomShadow = [CAShapeLayer layer];
-  _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
-  _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
-  [self addSublayer:_bottomShadow];
+  if (!_bottomShadow) {
+    _bottomShadow = [CAShapeLayer layer];
+    _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
+    _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
+    [self addSublayer:_bottomShadow];
+  }
 
-  _topShadow = [CAShapeLayer layer];
-  _topShadow.backgroundColor = [UIColor clearColor].CGColor;
-  _topShadow.shadowColor = [UIColor blackColor].CGColor;
-  [self addSublayer:_topShadow];
+  if (!_topShadow) {
+    _topShadow = [CAShapeLayer layer];
+    _topShadow.backgroundColor = [UIColor clearColor].CGColor;
+    _topShadow.shadowColor = [UIColor blackColor].CGColor;
+    [self addSublayer:_topShadow];
+  }
 
   // Setup shadow layer state based off _elevation and _shadowMaskEnabled
   MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:_elevation];
@@ -144,8 +162,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
   }
 }
-
-// TODO(#993): Implement missing initWithLayer:
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
