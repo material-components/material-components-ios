@@ -26,7 +26,7 @@
 #import "MaterialTypography.h"
 
 static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
-  return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
+  return MDCHypot(a.x - b.x, a.y - b.y);
 }
 
 // The Bundle for string resources.

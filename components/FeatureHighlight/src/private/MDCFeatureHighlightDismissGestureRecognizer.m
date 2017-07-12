@@ -45,7 +45,8 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  assert([self.view isKindOfClass:[MDCFeatureHighlightView class]]);
+  NSCAssert([self.view isKindOfClass:[MDCFeatureHighlightView class]],
+            @"%@ was attached to a view not of type MDCFeatureHighlightView", self);
 
   if (_hasTouch) {
     for (UITouch *touch in touches) {
