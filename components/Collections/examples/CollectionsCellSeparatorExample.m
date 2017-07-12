@@ -35,6 +35,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
+  // Register header.
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                 withReuseIdentifier:UICollectionElementKindSectionHeader];
+
   // Populate content.
   _content = [NSMutableArray array];
   for (NSInteger i = 0; i < kSectionCount; i++) {
@@ -78,6 +83,46 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   }
 
   return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+           viewForSupplementaryElementOfKind:(NSString *)kind
+                                 atIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *supplementaryView =
+      [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                         withReuseIdentifier:kind
+                                                forIndexPath:indexPath];
+
+  if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+    if (indexPath.section == 3) {
+      supplementaryView.textLabel.text = @"Header with separator";
+    } else if (indexPath.section == 4) {
+      supplementaryView.textLabel.text = @"Header without separator";
+    }
+  }
+
+  return supplementaryView;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                             layout:(UICollectionViewLayout *)collectionViewLayout
+    referenceSizeForHeaderInSection:(NSInteger)section {
+  if (section == 3 || section == 4) {
+    return CGSizeMake(collectionView.bounds.size.width, MDCCellDefaultOneLineHeight);
+  }
+  return CGSizeZero;
+}
+
+#pragma mark - <MDCCollectionViewStylingDelegate>
+
+- (BOOL)collectionView:(UICollectionView *)collectionView
+    shouldHideItemSeparatorAtIndexPath:(NSIndexPath *)indexPath {
+  return indexPath.section == 3;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView
+    shouldHideHeaderSeparatorForSection:(NSInteger)section {
+  return section == 4;
 }
 
 @end

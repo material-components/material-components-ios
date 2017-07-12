@@ -142,6 +142,16 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 /* Whether to hide the cell separators. Defaults to NO. */
 @property(nonatomic) BOOL shouldHideSeparators;
 
+/**
+ Returns whether the separator should be hidden for the cell with this layout attributes, determined
+ by the cell position and type.
+
+ @param attr The cell's layout attributes.
+ @return Whether the separtor should be hidden.
+ */
+- (BOOL)shouldHideSeparatorForCellLayoutAttributes:
+        (nonnull MDCCollectionViewLayoutAttributes *)attr;
+
 #pragma mark - Item Inlaying
 
 /**
