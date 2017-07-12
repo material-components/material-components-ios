@@ -47,9 +47,9 @@
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
  as a value from 0.0 to 1.0. Only relevent when floatingEnabled = true.
 
- If null, the floating placeholder scale is floatingPlaceholderScaleDefault.
+ If null, the floatingPlaceholderScale is @(floatingPlaceholderScaleDefault).
  */
-@property(nonatomic, nullable, strong) NSNumber *floatingPlaceholderScale;
+@property(nonatomic, null_resettable, strong) NSNumber *floatingPlaceholderScale;
 
 /**
  Default value for the floating placeholder scale.
