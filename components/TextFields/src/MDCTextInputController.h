@@ -62,14 +62,14 @@
  The color used to denote error state in the underline, the errorText's label, the placeholder and
  the character count label.
 
- Default is red.
+ Default is errorColorDefault.
  */
 @property(nonatomic, null_resettable, strong) UIColor *errorColor;
 
-/**
- Default value for above property.
-
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+/** 
+ Default value for above errorColor.
+ 
+ Default is red.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *errorColorDefault;
 
@@ -91,14 +91,14 @@
 /**
  The color applied to the placeholder when inline (not floating).
 
- Default is black with Material Design hint text opacity.
+ Default is inlinePlaceholderColorDefault.
  */
 @property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColor;
 
 /**
- Default value for above property.
+ Default value for inlinePlaceholderColor.
 
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ Default is black with Material Design hint text opacity.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
@@ -109,15 +109,15 @@
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
- Default value is NO.
+ Default is mdc_adjustsFontForContentSizeCategoryDefault.
  */
 @property(nonatomic, assign, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- Default value for above property.
+ Default value for mdc_adjustsFontForContentSizeCategory.
 
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ Default is NO.
  */
 @property(class, nonatomic, assign) BOOL mdc_adjustsFontForContentSizeCategoryDefault;
 
@@ -129,34 +129,42 @@
 
  The underline is an overlay that can be hidden depending on the editing state of the input text.
 
- Default is UITextFieldViewModeAlways.
+ Default is underlineViewModeDefault.
  */
 @property(nonatomic, assign) UITextFieldViewMode underlineViewMode;
 
 /**
- Default value for above property.
+ Default value for underlineViewMode.
 
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ Default is UITextFieldViewModeAlways.
  */
 @property(class, nonatomic, assign) UITextFieldViewMode underlineViewModeDefault;
 
-/** Color the underline changes to when the input is editing. */
+/** 
+ Color the underline changes to when the input is editing. 
+ 
+ Default is underlineColorActiveDefault.
+ */
 @property(nonatomic, null_resettable, strong) UIColor *underlineColorActive;
 
 /**
- Default value for above property.
+ Default value for underlineColorActive.
 
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ Default is primary color or blue.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *underlineColorActiveDefault;
 
-/** Color of the underline when the input is not editing but still enabled. */
+/** 
+ Color of the underline when the input is not editing but still enabled. 
+ 
+ Default is underlineColorNormalDefault.
+ */
 @property(nonatomic, null_resettable, strong) UIColor *underlineColorNormal;
 
 /**
- Default value for above property.
+ Default value for underlineColorNormal.
 
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ Default is same as inlinePlaceholderColorDefault.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *underlineColorNormalDefault;
 

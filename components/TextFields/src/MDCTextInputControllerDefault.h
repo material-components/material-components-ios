@@ -32,14 +32,14 @@
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color. Only relevent when floatingEnabled = true.
 
- Default is black with Material Design hint text opacity (textInput's tint).
+ Default is floatingPlaceholderColorDefault.
  */
 @property(nonatomic, null_resettable, strong) UIColor *floatingPlaceholderColor;
 
 /**
- Default value for above property.
+ Default value for floatingPlaceholderColor.
 
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ Default is black with Material Design hint text opacity (textInput's tint).
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *floatingPlaceholderColorDefault;
 
@@ -47,14 +47,14 @@
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
  as a value from 0.0 to 1.0. Only relevent when floatingEnabled = true.
 
- Default is 0.75.
+ If null, the floating placeholder scale is floatingPlaceholderScaleDefault.
  */
 @property(nonatomic, nullable, strong) NSNumber *floatingPlaceholderScale;
 
 /**
- Default value for above property.
+ Default value for the floating placeholder scale.
 
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ Default is 0.75.
  */
 @property(class, nonatomic, assign) CGFloat floatingPlaceholderScaleDefault;
 
@@ -62,14 +62,14 @@
  If enabled, the inline placeholder label will float above the input when there is inputted text or
  the field is being edited.
 
- Defaults to true.
+ Default is floatingEnabledDefault.
  */
 @property(nonatomic, assign, getter=isFloatingEnabled) BOOL floatingEnabled;
 
 /**
- Default value for above property.
+ Default value for floatingEnabled.
 
- Class property. Replaces UIAppearance for classes that do not inherit from UIView.
+ Default is YES.
  */
 @property(class, nonatomic, assign, getter=isFloatingEnabledDefault) BOOL floatingEnabledDefault;
 
