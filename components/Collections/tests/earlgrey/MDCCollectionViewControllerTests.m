@@ -114,6 +114,8 @@
       performAction:grey_scrollToContentEdge(kGREYContentEdgeTop)];
 }
 
+#pragma mark - Property accessors
+
 /**
  Returns a GREYActionBlock that retrieves the @c numberOfSections property value from a
  UICollectionView.
@@ -144,28 +146,32 @@
                             }];
 }
 
+#pragma mark - EarlGrey assertions
+
 /**
  Returns a GREYAssertionBlock that will XCTAssert that the selected element's bounds width is less
  than or equal to the passed width.
 
  @param width the width value for comparison.
  */
-- (GREYAssertionBlock *)assertBoundsWidthLessThanOrEqualTo:(CGFloat)width {
+- (GREYAssertionBlock *)assertBoundsWidthLessThan:(CGFloat)width {
   return
       [GREYAssertionBlock assertionWithName:@"boundsAreGreaterOrEqualThanOtherBounds"
                     assertionBlockWithError:^BOOL(UIView *element, NSError *__strong *errorOrNil) {
-                      XCTAssertLessThanOrEqual(element.bounds.size.width, width,
-                                               @"View's width is not less than or equal to the "
-                                                "expected width.");
+                      XCTAssertLessThan(element.bounds.size.width, width,
+                                        @"View's width is not less than or equal to the expected "
+                                         "width.");
                       return YES;
                     }];
 }
 
+#pragma mark - Tests
+
 /**
- Tests that the width of the bounds of each section is less than or equal to the width of the bounds
- of the one above (before) it.
+ Tests that the width of the bounds of each section is less than the width of the bounds of the one
+ above (before) it.
  */
-- (void)testEachSectionWidthLessOrEqualThanSectionAbove {
+- (void)testEachSectionWidthLessThanSectionAbove {
   [MDCCollectionViewControllerTests
       jumpToExampleWithBreadcrumbs:@[ @"Collections", @"Custom Section Insets" ]];
 
@@ -196,7 +202,7 @@
                           withStep:-1
                             action:grey_turnSwitchOn(YES)];
     [[[EarlGrey selectElementWithMatcher:grey_accessibilityID(cellIdentifier)]
-        assert:[self assertBoundsWidthLessThanOrEqualTo:bounds.size.width]]
+        assert:[self assertBoundsWidthLessThan:bounds.size.width]]
         performAction:[MDCCollectionViewControllerTests getBounds:&bounds]];
   }
 
