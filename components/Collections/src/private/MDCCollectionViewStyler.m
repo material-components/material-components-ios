@@ -528,8 +528,11 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   // Get cell color.
   UIColor *backgroundColor = _cellBackgroundColor;
   if ([_delegate respondsToSelector:@selector(collectionView:cellBackgroundColorAtIndexPath:)]) {
-    backgroundColor =
+    UIColor *customBackgroundColor =
         [_delegate collectionView:_collectionView cellBackgroundColorAtIndexPath:attr.indexPath];
+    if (customBackgroundColor) {
+      backgroundColor = customBackgroundColor;
+    }
   }
 
   NSPointerArray *cellBackgroundCache = _cellBackgroundCaches[backgroundColor];
