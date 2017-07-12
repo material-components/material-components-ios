@@ -214,16 +214,20 @@ final class TextFieldSwiftExample: UIViewController {
   }
 
   @objc func buttonDidTouch(sender: Any) {
-    let alert = UIAlertController(title: "Floating Enabled",
+    let isFloatingEnabled = allTextFieldControllers.first?.isFloatingEnabled ?? false
+    let alert = UIAlertController(title: "Floating Labels",
                                   message: nil,
                                   preferredStyle: .actionSheet)
-    let defaultAction = UIAlertAction(title: "Default (Yes)", style: .default) { _ in
+
+    let defaultAction = UIAlertAction(title: "Default (Yes)" + (isFloatingEnabled ? " ✓" : ""),
+                                      style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = true
       })
     }
     alert.addAction(defaultAction)
-    let floatingAction = UIAlertAction(title: "No", style: .default) { _ in
+    let floatingAction = UIAlertAction(title: "No" + (isFloatingEnabled ? "" : " ✓"),
+                                       style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = false
       })
