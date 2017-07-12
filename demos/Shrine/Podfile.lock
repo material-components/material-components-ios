@@ -14,16 +14,6 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (26.0.0):
-    - MaterialComponents/ButtonBar/ColorThemer (= 26.0.0)
-    - MaterialComponents/ButtonBar/Component (= 26.0.0)
-    - MaterialComponents/Buttons
-    - MaterialComponents/private/RTL
-  - MaterialComponents/ButtonBar/ColorThemer (26.0.0):
-    - MaterialComponents/ButtonBar/Component
-    - MaterialComponents/Buttons
-    - MaterialComponents/private/RTL
-    - MaterialComponents/Themes
   - MaterialComponents/ButtonBar/Component (26.0.0):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
@@ -95,7 +85,7 @@ PODS:
     - MaterialComponents/NavigationBar/Component
     - MaterialComponents/Themes
   - MaterialComponents/NavigationBar/Component (26.0.0):
-    - MaterialComponents/ButtonBar
+    - MaterialComponents/ButtonBar/Component
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
@@ -133,7 +123,7 @@ EXTERNAL SOURCES:
     :path: "../supplemental"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 45604ca1d02b856c5fe862f91b5047ab1e3ee366
+  MaterialComponents: 5ca5a2d73c93a471add1d9b59db0a9b8d948bce3
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   RemoteImageServiceForMDCDemos: 0b2eed6c2fe8691f530f50ebc7b66838b15d0d3b
 

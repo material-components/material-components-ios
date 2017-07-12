@@ -58,6 +58,7 @@ PODS:
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
   - MaterialComponents/BottomSheet (26.0.0):
+    - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Math
   - MaterialComponents/ButtonBar (26.0.0):
     - MaterialComponents/ButtonBar/ColorThemer (= 26.0.0)
@@ -67,6 +68,7 @@ PODS:
   - MaterialComponents/ButtonBar/ColorThemer (26.0.0):
     - MaterialComponents/ButtonBar/Component
     - MaterialComponents/Buttons
+    - MaterialComponents/NavigationBar/Component
     - MaterialComponents/private/RTL
     - MaterialComponents/Themes
   - MaterialComponents/ButtonBar/Component (26.0.0):
@@ -181,7 +183,7 @@ PODS:
     - MaterialComponents/NavigationBar/Component
     - MaterialComponents/Themes
   - MaterialComponents/NavigationBar/Component (26.0.0):
-    - MaterialComponents/ButtonBar
+    - MaterialComponents/ButtonBar/Component
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
@@ -298,7 +300,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 45604ca1d02b856c5fe862f91b5047ab1e3ee366
+  MaterialComponents: 5ca5a2d73c93a471add1d9b59db0a9b8d948bce3
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
