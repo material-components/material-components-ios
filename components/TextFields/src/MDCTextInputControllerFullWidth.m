@@ -66,7 +66,7 @@ static inline UIColor *MDCTextInputInlinePlaceholderTextColorDefault() {
 }
 
 static inline UIColor *MDCTextInputTextErrorColorDefault() {
-  return [MDCPalette redPalette].tint500;
+  return [MDCPalette redPalette].accent400;
 }
 
 #pragma mark - Class Properties
