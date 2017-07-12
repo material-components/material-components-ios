@@ -48,7 +48,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   if [[ $scheme != *Tests* ]]; then
     continue
   fi
-  echo $workspace $scheme
+  echo Testing $workspace $scheme ...
   log_file=$(dirname "$workspace")/"test_log_for_scheme_${scheme}.txt"
   options="-workspace $workspace -scheme $scheme"
   if xcodebuild test $options $COVERAGE_OPTIONS -destination "$DESTINATION" >"$log_file" 2>&1; then
