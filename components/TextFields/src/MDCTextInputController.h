@@ -64,7 +64,7 @@
 
  Default is red.
  */
-@property(nonatomic, nullable, strong) UIColor *errorColor;
+@property(nonatomic, null_resettable, strong) UIColor *errorColor;
 
 /**
  Default value for above property.
