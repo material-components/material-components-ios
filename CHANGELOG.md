@@ -1,5 +1,12 @@
 # release-candidate TODO: Replace me with version number. 
 
+## API Diffs
+
+### Button
+
+* Removed 'resetElevationForState'.
+* Removed NS_UNAVAILABLE from 'setBackgroundColor'.
+
 # 26.0.0
 
 ## API diffs
