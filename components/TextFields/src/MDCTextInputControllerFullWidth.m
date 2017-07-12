@@ -71,33 +71,39 @@ static inline UIColor *MDCTextInputTextErrorColorDefault() {
 
 #pragma mark - Class Properties
 
+static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
 static UIColor *_errorColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
-static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
 
 @interface MDCTextInputControllerFullWidth () {
-  UIColor *_inlinePlaceholderColor;
   BOOL _mdc_adjustsFontForContentSizeCategory;
+
+  UIColor *_inlinePlaceholderColor;
 }
+
+@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
+@property(nonatomic, assign) BOOL isRegisteredForKVO;
+
+@property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 
 @property(nonatomic, strong) NSLayoutConstraint *characterCountY;
 @property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonY;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailingCharacterCountLeading;
-@property(nonatomic, strong) UIFont *customPlaceholderFont;
-@property(nonatomic, strong) UIFont *customTrailingFont;
-@property(nonatomic, copy, readwrite) NSString *errorText;
-@property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
-@property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
-@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
-@property(nonatomic, assign) BOOL isRegisteredForKVO;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
+
+@property(nonatomic, copy) NSString *errorAccessibilityValue;
+@property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *previousLeadingText;
+
 @property(nonatomic, strong) UIColor *previousPlaceholderColor;
+
+@property(nonatomic, strong) UIFont *customPlaceholderFont;
+@property(nonatomic, strong) UIFont *customTrailingFont;
 @end
 
 @implementation MDCTextInputControllerFullWidth

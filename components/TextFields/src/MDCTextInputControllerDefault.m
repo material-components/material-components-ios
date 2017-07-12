@@ -92,47 +92,57 @@ static inline UIColor *MDCTextInputDefaultTextErrorColorDefault() {
 
 #pragma mark - Class Properties
 
-static UIColor *_errorColorDefault;
 static BOOL _floatingEnabledDefault = YES;
-static UIColor *_floatingPlaceholderColorDefault;
-static CGFloat _floatingPlaceholderScaleDefault =
-    MDCTextInputDefaultFloatingPlaceholderScaleDefault;
-static UIColor *_inlinePlaceholderColorDefault;
 static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
+
+static CGFloat _floatingPlaceholderScaleDefault =
+MDCTextInputDefaultFloatingPlaceholderScaleDefault;
+
+static UIColor *_errorColorDefault;
+static UIColor *_floatingPlaceholderColorDefault;
+static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_underlineColorActiveDefault;
 static UIColor *_underlineColorNormalDefault;
+
 static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileEditing;
 
 @interface MDCTextInputControllerDefault () {
+  BOOL _mdc_adjustsFontForContentSizeCategory;
+
   UIColor *_floatingPlaceholderColor;
   UIColor *_inlinePlaceholderColor;
-  BOOL _mdc_adjustsFontForContentSizeCategory;
   UIColor *_underlineColorActive;
   UIColor *_underlineColorNormal;
 }
+
+@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
+@property(nonatomic, assign, readonly) BOOL isDisplayingErrorText;
+@property(nonatomic, assign, readonly) BOOL isPlaceholderUp;
+@property(nonatomic, assign) BOOL isRegisteredForKVO;
+
+@property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
+
+@property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
 
 @property(nonatomic, strong) NSLayoutConstraint *characterCountY;
 @property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonY;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailingCharacterCountLeading;
-@property(nonatomic, strong) UIFont *customLeadingFont;
-@property(nonatomic, strong) UIFont *customPlaceholderFont;
-@property(nonatomic, strong) UIFont *customTrailingFont;
-@property(nonatomic, copy, readwrite) NSString *errorText;
-@property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
-@property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
-@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
-@property(nonatomic, assign, readonly) BOOL isDisplayingErrorText;
-@property(nonatomic, assign, readonly) BOOL isPlaceholderUp;
-@property(nonatomic, assign) BOOL isRegisteredForKVO;
-@property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
+
+@property(nonatomic, copy) NSString *errorAccessibilityValue;
+@property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *previousLeadingText;
+
 @property(nonatomic, strong) UIColor *previousPlaceholderColor;
+
+@property(nonatomic, strong) UIFont *customLeadingFont;
+@property(nonatomic, strong) UIFont *customPlaceholderFont;
+@property(nonatomic, strong) UIFont *customTrailingFont;
 
 @end
 
