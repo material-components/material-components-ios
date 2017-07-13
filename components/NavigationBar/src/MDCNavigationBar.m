@@ -466,12 +466,18 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (CGRect)mdc_frameAlignedHorizontally:(CGRect)frame
                              alignment:(MDCNavigationBarTitleAlignment)alignment {
   switch (alignment) {
-      // Center align title if desired unless leading icons will overlap frame
+    // Center align title if desired unless leading icons will overlap frame
     case MDCNavigationBarTitleAlignmentCenter: {
       CGFloat xOrigin = CGRectGetMaxX(self.bounds) / 2 - CGRectGetWidth(frame) / 2;
-      if (CGRectGetMinX(frame) <= xOrigin) {
-        return CGRectMake(xOrigin, CGRectGetMinY(frame),
-                          CGRectGetWidth(frame), CGRectGetHeight(frame));
+      CGFloat minX = CGRectGetMinX(frame);
+      // If RTL, we must use distance from maxX to bounds instead
+      if (self.mdc_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionRightToLeft) {
+        minX = CGRectGetMaxX(self.bounds) - CGRectGetMaxX(frame);
+      }
+      if (minX <= xOrigin) {
+        return CGRectMake(xOrigin, CGRectGetMinY(frame), CGRectGetWidth(frame),
+                          CGRectGetHeight(frame));
       }
     }
     // Intentional fall through
