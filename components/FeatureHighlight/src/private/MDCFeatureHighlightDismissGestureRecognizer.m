@@ -76,7 +76,7 @@
 
   NSTimeInterval deltaTime = _eventTimeStamp - _previousEventTimeStamp;
   if (deltaTime > 0) {
-    _velocity = (_progress - _previousProgress) / deltaTime;
+    _velocity = (CGFloat)((_progress - _previousProgress) / deltaTime);
   }
 
   [self updateState:touches];
@@ -103,8 +103,8 @@
   if (newProgress < _startProgress) {
     _startProgress = newProgress;
   }
-  _progress = 1.0 - [self dismissPercentOfTouches:touches] + _startProgress;
-  _progress = MIN(1.0, MAX(0.0, _progress));
+  _progress = 1.0f - [self dismissPercentOfTouches:touches] + _startProgress;
+  _progress = MIN(1.0f, MAX(0.0f, _progress));
 }
 
 - (CGFloat)progressForTouchPosition:(CGPoint)touchPos {
@@ -136,17 +136,18 @@
 
   // Now compute in the form at^2 + bt + c = 0
   // a = (r2 - r1)^2 - (c2.x - c1.x)^2 - (c2.y - c1.y)^2
-  CGFloat a = pow(r2 - r1, 2) - pow(c2.x - c1.x, 2) - pow(c2.y - c1.y, 2);
+  double a = pow(r2 - r1, 2) - pow(c2.x - c1.x, 2) - pow(c2.y - c1.y, 2);
   // b = 2r1(r2 - r1) - 2c1.x(c2.x - c1.x) + 2(c2.x - c1.x)p.x - 2c1.y(c2.y - c1.y) + 2(c2.y - c1.y)p.y
-  CGFloat b = 2*r1*(r2 - r1) - 2*c1.x*(c2.x - c1.x) + 2*(c2.x - c1.x)*p.x - 2*c1.y*(c2.y - c1.y)
+  double b = 2*r1*(r2 - r1) - 2*c1.x*(c2.x - c1.x) + 2*(c2.x - c1.x)*p.x - 2*c1.y*(c2.y - c1.y)
       + 2*(c2.y - c1.y)*p.y;
   // c = r1^2 - c1.x^2 + 2c1.x*p.x - p.x^2 - c1.y^2 + 2c1.y*p.y - p.y^2
-  CGFloat c = pow(r1, 2) - pow(c1.x, 2) + 2*c1.x*p.x - pow(p.x, 2) - pow(c1.y, 2) + 2*c1.y*p.y
+  double c = pow(r1, 2) - pow(c1.x, 2) + 2*c1.x*p.x - pow(p.x, 2) - pow(c1.y, 2) + 2*c1.y*p.y
       - pow(p.y, 2);
 
-  CGFloat t = (-b - sqrt(b*b - 4*a*c))/(2*a);
+  // Apply the quadratic equation
+  double t = (-b - sqrt(b*b - 4*a*c))/(2*a);
 
-  return MIN(1, MAX(0, t));
+  return (CGFloat)MIN(1, MAX(0, t));
 }
 
 - (CGFloat)dismissPercentOfTouches:(NSSet<UITouch *> *)touches {
@@ -161,7 +162,7 @@
   }
 
   CGFloat progress = dismissSum / touches.count;
-  return MIN(1, MAX(0, progress));
+  return MIN(1.0f, MAX(0.0f, progress));
 }
 
 @end
