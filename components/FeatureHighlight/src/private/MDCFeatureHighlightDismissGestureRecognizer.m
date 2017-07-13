@@ -136,18 +136,18 @@
 
   // Now compute in the form at^2 + bt + c = 0
   // a = (r2 - r1)^2 - (c2.x - c1.x)^2 - (c2.y - c1.y)^2
-  double a = pow(r2 - r1, 2) - pow(c2.x - c1.x, 2) - pow(c2.y - c1.y, 2);
+  CGFloat a = MDCPow(r2 - r1, 2) - MDCPow(c2.x - c1.x, 2) - MDCPow(c2.y - c1.y, 2);
   // b = 2r1(r2 - r1) - 2c1.x(c2.x - c1.x) + 2(c2.x - c1.x)p.x - 2c1.y(c2.y - c1.y) + 2(c2.y - c1.y)p.y
-  double b = 2*r1*(r2 - r1) - 2*c1.x*(c2.x - c1.x) + 2*(c2.x - c1.x)*p.x - 2*c1.y*(c2.y - c1.y)
+  CGFloat b = 2*r1*(r2 - r1) - 2*c1.x*(c2.x - c1.x) + 2*(c2.x - c1.x)*p.x - 2*c1.y*(c2.y - c1.y)
       + 2*(c2.y - c1.y)*p.y;
   // c = r1^2 - c1.x^2 + 2c1.x*p.x - p.x^2 - c1.y^2 + 2c1.y*p.y - p.y^2
-  double c = pow(r1, 2) - pow(c1.x, 2) + 2*c1.x*p.x - pow(p.x, 2) - pow(c1.y, 2) + 2*c1.y*p.y
-      - pow(p.y, 2);
+  CGFloat c = MDCPow(r1, 2) - MDCPow(c1.x, 2) + 2*c1.x*p.x - MDCPow(p.x, 2) - MDCPow(c1.y, 2)
+       + 2*c1.y*p.y - MDCPow(p.y, 2);
 
   // Apply the quadratic equation
-  double t = (-b - sqrt(b*b - 4*a*c))/(2*a);
+  CGFloat t = (-b - MDCSqrt(b*b - 4*a*c))/(2*a);
 
-  return (CGFloat)MIN(1, MAX(0, t));
+  return MIN(1, MAX(0, t));
 }
 
 - (CGFloat)dismissPercentOfTouches:(NSSet<UITouch *> *)touches {
