@@ -191,7 +191,7 @@ EOL
 + (nonnull NSString *)pathFor_$icon_name;
 
 /*
- Returns the bundle for the $icon_name image contained in
+ Returns the image for the $icon_name image contained in
  MaterialIcons_$icon_name.bundle.
  */
 + (nullable UIImage *)imageFor_$icon_name;

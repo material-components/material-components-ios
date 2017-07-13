@@ -30,7 +30,7 @@
 + (nonnull NSString *)pathFor_ic_check_circle;
 
 /*
- Returns the bundle for the ic_check_circle image contained in
+ Returns the image for the ic_check_circle image contained in
  MaterialIcons_ic_check_circle.bundle.
  */
 + (nullable UIImage *)imageFor_ic_check_circle;

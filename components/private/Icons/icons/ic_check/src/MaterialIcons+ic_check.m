@@ -35,7 +35,9 @@ __attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarni
 
 + (nullable UIImage *)imageFor_ic_check {
   NSBundle *bundle = [self bundleNamed:kBundleName];
-  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
+  return [UIImage imageNamed:kIconName
+                    inBundle:bundle
+      compatibleWithTraitCollection:nil];
 }
 
 @end

@@ -30,7 +30,7 @@
 + (nonnull NSString *)pathFor_ic_info;
 
 /*
- Returns the bundle for the ic_info image contained in
+ Returns the image for the ic_info image contained in
  MaterialIcons_ic_info.bundle.
  */
 + (nullable UIImage *)imageFor_ic_info;

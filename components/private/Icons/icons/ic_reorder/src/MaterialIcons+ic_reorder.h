@@ -30,7 +30,7 @@
 + (nonnull NSString *)pathFor_ic_reorder;
 
 /*
- Returns the bundle for the ic_reorder image contained in
+ Returns the image for the ic_reorder image contained in
  MaterialIcons_ic_reorder.bundle.
  */
 + (nullable UIImage *)imageFor_ic_reorder;
