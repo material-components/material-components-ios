@@ -448,6 +448,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     }
 
     case UIControlContentVerticalAlignmentTop: {
+      // The title frame is vertically centered with the back button but will stick to the top of
+      // the header regardless of the header's height.
       CGFloat navigationBarCenteredY =
           MDCFloor(([self intrinsicContentSize].height - frame.size.height) / 2);
       navigationBarCenteredY = MAX(0, navigationBarCenteredY);
