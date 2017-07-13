@@ -238,8 +238,9 @@ __attribute__((visibility("default")))
 
 + (nullable UIImage *)imageFor_$icon_name {
   NSBundle *bundle = [self bundleNamed:kBundleName];
-  return [UIImage imageNamed:kIconName inBundle:bundle
-             compatibleWithTraitCollection:nil];
+  return [UIImage imageNamed:kIconName
+                    inBundle:bundle
+      compatibleWithTraitCollection:nil];
 }
 
 @end
