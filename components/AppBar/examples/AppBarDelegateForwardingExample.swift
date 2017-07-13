@@ -30,12 +30,18 @@ class AppBarDelegateForwardingExample: UITableViewController {
   override init(style: UITableViewStyle) {
     super.init(style: style)
 
+    self.appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes =
       [ NSForegroundColorAttributeName: UIColor.white ]
 
     self.addChildViewController(appBar.headerViewController)
 
     self.title = "Delegate Forwarding"
+
+    let color = UIColor(white: 0.2, alpha:1)
+    appBar.headerViewController.headerView.backgroundColor = color
+    let mutator = MDCAppBarTextColorAccessibilityMutator()
+    mutator.mutate(appBar)
   }
 
   override func viewDidLoad() {

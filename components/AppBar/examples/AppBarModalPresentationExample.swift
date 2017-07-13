@@ -28,11 +28,10 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
     self.addChildViewController(appBar.headerViewController)
 
-    let color = UIColor(white: 0.1, alpha:1)
+    let color = UIColor(white: 0.2, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+    let mutator = MDCAppBarTextColorAccessibilityMutator()
+    mutator.mutate(appBar)
     self.modalPresentationStyle = .formSheet
     self.modalTransitionStyle = .coverVertical
   }
@@ -106,9 +105,8 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 
     let color = UIColor(white: 0.1, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+    let mutator = MDCAppBarTextColorAccessibilityMutator()
+    mutator.mutate(appBar)
   }
 
   required init?(coder aDecoder: NSCoder) {
