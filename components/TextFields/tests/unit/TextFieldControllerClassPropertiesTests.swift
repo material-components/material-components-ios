@@ -48,18 +48,18 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
   func testDefault() {
 
     // Test the values of the class properties.
-    XCTAssertEqual(MDCTextInputControllerDefault.errorColorDefault, MDCPalette.red.tint500)
+    XCTAssertEqual(MDCTextInputControllerDefault.errorColorDefault, MDCPalette.red.accent400)
     XCTAssertEqual(MDCTextInputControllerDefault.inlinePlaceholderColorDefault,
                    UIColor(white: 0, alpha: CGFloat(Float(0.54))))
     XCTAssertEqual(MDCTextInputControllerDefault.mdc_adjustsFontForContentSizeCategoryDefault, true)
     XCTAssertEqual(MDCTextInputControllerDefault.underlineColorActiveDefault,
-                   MDCPalette.indigo.tint500)
+                   MDCPalette.blue.accent700)
     XCTAssertEqual(MDCTextInputControllerDefault.underlineColorNormalDefault, .lightGray)
     XCTAssertEqual(MDCTextInputControllerDefault.underlineViewModeDefault, .whileEditing)
 
     // Default specific properties
     XCTAssertEqual(MDCTextInputControllerDefault.floatingPlaceholderColorDefault,
-                   MDCPalette.indigo.tint500)
+                   MDCPalette.blue.accent700)
     XCTAssertEqual(Float(MDCTextInputControllerDefault.floatingPlaceholderScaleDefault), 0.75)
     XCTAssertEqual(MDCTextInputControllerDefault.isFloatingEnabledDefault, true)
 
@@ -139,7 +139,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
   func testFullWidth() {
     // Test the values of the class properties.
-    XCTAssertEqual(MDCTextInputControllerFullWidth.errorColorDefault, MDCPalette.red.tint500)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.errorColorDefault, MDCPalette.red.accent400)
     XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault,
                    UIColor(white: 0, alpha: CGFloat(Float(0.54))))
     XCTAssertEqual(MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault,

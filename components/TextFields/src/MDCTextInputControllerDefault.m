@@ -79,7 +79,7 @@ static inline UIColor *MDCTextInputDefaultInlinePlaceholderTextColorDefault() {
 }
 
 static inline UIColor *MDCTextInputDefaultActiveColorDefault() {
-  return [MDCPalette indigoPalette].tint500;
+  return [MDCPalette bluePalette].accent700;
 }
 
 static inline UIColor *MDCTextInputDefaultNormalUnderlineColorDefault() {
@@ -87,7 +87,7 @@ static inline UIColor *MDCTextInputDefaultNormalUnderlineColorDefault() {
 }
 
 static inline UIColor *MDCTextInputDefaultTextErrorColorDefault() {
-  return [MDCPalette redPalette].tint500;
+  return [MDCPalette redPalette].accent400;
 }
 
 #pragma mark - Class Properties

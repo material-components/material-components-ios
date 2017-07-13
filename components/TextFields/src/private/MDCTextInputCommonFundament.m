@@ -56,7 +56,7 @@ const CGFloat MDCTextInputFullPadding = 16.f;
 const CGFloat MDCTextInputHalfPadding = 8.f;
 
 static inline UIColor *_Nonnull MDCTextInputCursorColor() {
-  return [MDCPalette indigoPalette].tint500;
+  return [MDCPalette bluePalette].accent700;
 }
 
 static inline UIColor *MDCTextInputDefaultPlaceholderTextColor() {
