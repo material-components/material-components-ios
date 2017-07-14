@@ -1,3 +1,153 @@
+# 27.0.0
+
+## API Diffs
+
+### Button
+
+* Removed 'resetElevationForState'.
+* Removed NS_UNAVAILABLE from 'setBackgroundColor'.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Activity Indicator] Add import to QuartzCore (#1587)](https://github.com/material-components/material-components-ios/commit/97098c6caa3f3acafa5500fe788cf7a842e9135e) (Randall Li)
+
+### AppBar
+
+#### Changes
+
+* [Explicitly annotating some known ObjC methods. (#1617)](https://github.com/material-components/material-components-ios/commit/1e14d4109178956486863dec607996100c91795e) (Martin Petrov)
+
+### BottomSheet
+
+#### Changes
+
+* [[KeyboardWatcher] iOS 8 simplification and cleanup (#1589)](https://github.com/material-components/material-components-ios/commit/87574e57e313cb3e90281b3225031b329e8f91de) (ianegordon)
+
+### ButtonBar
+
+#### Changes
+
+* [Explicitly annotating some known ObjC methods. (#1617)](https://github.com/material-components/material-components-ios/commit/1e14d4109178956486863dec607996100c91795e) (Martin Petrov)
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+
+### Buttons
+
+#### Changes
+
+* [Elevation clean up (#1574)](https://github.com/material-components/material-components-ios/commit/eec61cf77316c2853f52070931cb8472a1ced48e) (Sam Morrison)
+* [Explicitly annotating some known ObjC methods. (#1617)](https://github.com/material-components/material-components-ios/commit/1e14d4109178956486863dec607996100c91795e) (Martin Petrov)
+* [Ink should ignore content edge insets (#1593)](https://github.com/material-components/material-components-ios/commit/cc57a0791890b07cd268da8f3950cb74b4729825) (Robert Moore)
+* [Remove NS_UNAVAILABLE from setBackgroundColor (#1572)](https://github.com/material-components/material-components-ios/commit/467b843b169d07f8d71ea8d4dc55df7b03ac7900) (Sam Morrison)
+* [Remove trailing spaces from test (#1602)](https://github.com/material-components/material-components-ios/commit/418a5a65fceaadb669a87646c5b17ac53b77e39b) (Sam Morrison)
+* [Sort property/method definitions (#1599)](https://github.com/material-components/material-components-ios/commit/360d504442fe1b5cd80a3923e9c875e6c58d0adf) (Sam Morrison)
+
+### CollectionCells
+
+#### Changes
+
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+* [Reset cells in prepareForReuse (#1633)](https://github.com/material-components/material-components-ios/commit/25b7c217ca3ed0d082abb4406c400cd8405d63ee) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [Do not invalidate layout for all gesture beginning (#1623)](https://github.com/material-components/material-components-ios/commit/0b905c647d3267ca0d3332226fbf806a5c538bb1) (Gauthier Ambard)
+* [Fallback to default cell background color on nil. (#1630)](https://github.com/material-components/material-components-ios/commit/3c92cfe80c6a8b795f52b1baaf6525e0624d433d) (Yurii Samsoniuk)
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+
+### Dialogs
+
+#### Changes
+
+* [Explicitly annotating some known ObjC methods. (#1617)](https://github.com/material-components/material-components-ios/commit/1e14d4109178956486863dec607996100c91795e) (Martin Petrov)
+* [[Docs] Replaced internal site references with public equivalents. (#1616)](https://github.com/material-components/material-components-ios/commit/0abca36dbbc455c42795efe7e207419b2f1b6e5b) (Adrian Secord)
+* [[KeyboardWatcher] iOS 8 simplification and cleanup (#1589)](https://github.com/material-components/material-components-ios/commit/87574e57e313cb3e90281b3225031b329e8f91de) (ianegordon)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Docs] Replaced internal site references with public equivalents. (#1616)](https://github.com/material-components/material-components-ios/commit/0abca36dbbc455c42795efe7e207419b2f1b6e5b) (Adrian Secord)
+
+### FlexibleHeader
+
+#### Changes
+
+* [- Updated unit tests (#1619)](https://github.com/material-components/material-components-ios/commit/921241302a7e3f92c8941bf52c6d50f8aaeaf2a2) (Justin Shephard)
+
+### Ink
+
+#### Changes
+
+* [[Docs] Replaced internal site references with public equivalents. (#1616)](https://github.com/material-components/material-components-ios/commit/0abca36dbbc455c42795efe7e207419b2f1b6e5b) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+
+### PageControl
+
+#### Changes
+
+* [Explicitly annotating some known ObjC methods. (#1617)](https://github.com/material-components/material-components-ios/commit/1e14d4109178956486863dec607996100c91795e) (Martin Petrov)
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+
+### ProgressView
+
+#### Changes
+
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+
+### ShadowLayer
+
+#### Changes
+
+* [Explicitly annotating some known ObjC methods. (#1617)](https://github.com/material-components/material-components-ios/commit/1e14d4109178956486863dec607996100c91795e) (Martin Petrov)
+* [Support layer copying (#1625)](https://github.com/material-components/material-components-ios/commit/2283e04f02fe15588e95ed7564e53abeef926cba) (Robert Moore)
+
+### Slider
+
+#### Changes
+
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+
+### Snackbar
+
+#### Changes
+
+* [[KeyboardWatcher] iOS 8 simplification and cleanup (#1589)](https://github.com/material-components/material-components-ios/commit/87574e57e313cb3e90281b3225031b329e8f91de) (ianegordon)
+
+### Tabs
+
+#### Changes
+
+* [Constrain tabs to the view's width (#1615)](https://github.com/material-components/material-components-ios/commit/00ee81453977901ca03ef987d229a20ca51cba06) (Brian Moore)
+* [Explicitly annotating some known ObjC methods. (#1617)](https://github.com/material-components/material-components-ios/commit/1e14d4109178956486863dec607996100c91795e) (Martin Petrov)
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+* [Restore initial tab selection behavior (#1605)](https://github.com/material-components/material-components-ios/commit/60db284cb2803e873a4a03ba9a57d1a2ab8b6226) (Brian Moore)
+
+### TextFields
+
+#### Changes
+
+* [Explicitly annotating some known ObjC methods. (#1617)](https://github.com/material-components/material-components-ios/commit/1e14d4109178956486863dec607996100c91795e) (Martin Petrov)
+* [Fixes for minor bugs and comment improvements (#1588)](https://github.com/material-components/material-components-ios/commit/6b2cddba39c78b66d1401c6d280632de5857c940) (Will Larche)
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+* [[TextField] Update demo alert to indicate floating setting. (#1612)](https://github.com/material-components/material-components-ios/commit/7a26712eb96036e416b1937752ac6b164ebac1fc) (Donna McCulloch)
+
+### Typography
+
+#### Changes
+
+* [Remove uses of `typeof` and the `?:` operator (#1601)](https://github.com/material-components/material-components-ios/commit/fa10d655d7f42f9e564636deb6f32573c3975cfe) (Robert Moore)
+
 # 26.0.0
 
 ## API diffs

@@ -14,7 +14,8 @@
  limitations under the License.
  */
 
-@import XCTest;
+#import <XCTest/XCTest.h>
+
 #import "MaterialCollectionCells.h"
 
 @interface CollectionViewTextCellsReuseTests : XCTestCase
