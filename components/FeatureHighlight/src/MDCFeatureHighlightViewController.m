@@ -231,6 +231,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                            }];
 }
 
+#pragma mark - Accessibility
+
+- (BOOL)accessibilityPerformEscape {
+  [self rejectFeature];
+
+  return YES;
+}
+
 #pragma mark - UIViewControllerTransitioningDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)
