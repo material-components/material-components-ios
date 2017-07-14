@@ -20,12 +20,15 @@
  The MDCIcons class is designed to be extended by adding individual icon extensions to a project.
 
  Individual icons can be accessed by importing their MaterialIcons+<icon_name>.h header and calling
- [MDCIcons pathFor_<icon_name>] to get the icon's file system path.
+ [MDCIcons pathFor_<icon_name>] to get the icon's file system path or calling
+ [MDCIcons imageFor_<icon_name>] to get a cached image.
  */
 @interface MDCIcons (BundleLoader)
 
 /** Returns a disk path for an icon contained within a bundle of a given name. */
 + (nonnull NSString *)pathForIconName:(nonnull NSString *)iconName
                        withBundleName:(nonnull NSString *)bundleName;
+
++ (nullable NSBundle *)bundleNamed:(nonnull NSString *)bundleName;
 
 @end

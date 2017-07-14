@@ -29,4 +29,10 @@
  */
 + (nonnull NSString *)pathFor_ic_radio_button_unchecked;
 
+/*
+ Returns the image for the ic_radio_button_unchecked image contained in
+ MaterialIcons_ic_radio_button_unchecked.bundle.
+ */
++ (nullable UIImage *)imageFor_ic_radio_button_unchecked;
+
 @end

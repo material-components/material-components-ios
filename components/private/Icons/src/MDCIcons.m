@@ -20,11 +20,17 @@
 
 @implementation MDCIcons
 
-+ (nonnull NSString *)pathForIconName:(nonnull NSString *)iconName
-                       withBundleName:(nonnull NSString *)bundleName {
++ (nullable NSBundle *)bundleNamed:(nonnull NSString *)bundleName {
   NSBundle *baseBundle = [NSBundle bundleForClass:[self class]];
   NSString *bundlePath = [baseBundle pathForResource:bundleName ofType:@"bundle"];
   NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+
+  return bundle;
+}
+
++ (nonnull NSString *)pathForIconName:(nonnull NSString *)iconName
+                       withBundleName:(nonnull NSString *)bundleName {
+  NSBundle *bundle = [self bundleNamed:bundleName];
   NSAssert(bundle, @"Missing bundle %@ containing icon %@.", bundleName, iconName);
   return [bundle pathForResource:iconName ofType:@"png"];
 }

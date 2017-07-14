@@ -25,13 +25,20 @@ static NSString *const kBundleName = @"MaterialIcons_ic_check_circle";
 static NSString *const kIconName = @"ic_check_circle";
 
 // Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
-__attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarning_ic_check_circle =
-    0;
+__attribute__((visibility("default")))
+    char MDCIconsExportToSuppressLibToolWarning_ic_check_circle = 0;
 
 @implementation MDCIcons (ic_check_circle)
 
 + (nonnull NSString *)pathFor_ic_check_circle {
   return [self pathForIconName:kIconName withBundleName:kBundleName];
+}
+
++ (nullable UIImage *)imageFor_ic_check_circle {
+  NSBundle *bundle = [self bundleNamed:kBundleName];
+  return [UIImage imageNamed:kIconName
+                    inBundle:bundle
+      compatibleWithTraitCollection:nil];
 }
 
 @end

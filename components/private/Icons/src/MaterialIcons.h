@@ -14,5 +14,5 @@
  limitations under the License.
  */
 
-#import "MDCIcons.h"
 #import "MDCIcons+BundleLoader.h"
+#import "MDCIcons.h"

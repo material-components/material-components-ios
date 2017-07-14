@@ -248,7 +248,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   }
   UIBarButtonItem *backBarButtonItem = previousViewControler.navigationItem.backBarButtonItem;
   if (!backBarButtonItem) {
-    UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
+    UIImage *backButtonImage = [MDCIcons imageFor_ic_arrow_back];
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if (self.navigationBar.mdc_effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
