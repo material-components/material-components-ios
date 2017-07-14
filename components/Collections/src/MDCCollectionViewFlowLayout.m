@@ -394,15 +394,13 @@ static const NSInteger kSupplementaryViewZIndex = 99;
     UIEdgeInsets insets = self.sectionInset;
 
     // Retrieve the insets from the Flow Layout delegate to maintain consistency with the CVC
-    if (self.collectionView.delegate) {
+    if ([self.collectionView.delegate
+            respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
       id<UICollectionViewDelegateFlowLayout> flowLayoutDelegate =
           (id<UICollectionViewDelegateFlowLayout>)self.collectionView.delegate;
-      if ([flowLayoutDelegate
-              respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
         insets = [flowLayoutDelegate collectionView:self.collectionView
                                              layout:self.collectionView.collectionViewLayout
                              insetForSectionAtIndex:attr.indexPath.section];
-      }
     } else {
       insets = [self insetsAtSectionIndex:attr.indexPath.section];
     }
