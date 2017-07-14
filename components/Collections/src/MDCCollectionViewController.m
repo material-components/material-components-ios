@@ -24,7 +24,7 @@
 #import "private/MDCCollectionViewEditor.h"
 #import "private/MDCCollectionViewStyler.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 NSString *const MDCCollectionInfoBarKindHeader = @"MDCCollectionInfoBarKindHeader";
 NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFooter";

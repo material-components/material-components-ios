@@ -29,7 +29,7 @@
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case"]];
+    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case", @"Clear Selection"]];
   }
   return self;
 }
@@ -46,6 +46,10 @@
   self.tabBar.displaysUppercaseTitles = !self.tabBar.displaysUppercaseTitles;
 }
 
+- (void)clearSelection:(id)sender {
+  self.tabBar.selectedItem = nil;
+}
+
 #pragma mark - Private
 
 - (void)loadTabBar {
@@ -59,7 +63,9 @@
     [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length That Might Be Long"
+                                  image:nil
+                                    tag:0],
   ];
 
   // Give change the selected item tint color and the tab bar tint color. For other color properties
@@ -109,10 +115,22 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
-  if (indexPath.row == 0) {
-    [self changeAlignment:collectionView];
-  } else {
-    [self toggleCase:collectionView];
+  switch (indexPath.row) {
+    case 0:
+      [self changeAlignment:collectionView];
+      break;
+
+    case 1:
+      [self toggleCase:collectionView];
+      break;
+
+    case 2:
+      [self clearSelection:collectionView];
+      break;
+
+    default:
+      // Unsupported
+      break;
   }
 }
 

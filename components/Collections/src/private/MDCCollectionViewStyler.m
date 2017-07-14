@@ -19,7 +19,7 @@
 #import "MaterialCollections.h"
 #import "MaterialCollectionLayoutAttributes.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 #define RGBCOLOR(r, g, b) \
   [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
@@ -528,8 +528,11 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   // Get cell color.
   UIColor *backgroundColor = _cellBackgroundColor;
   if ([_delegate respondsToSelector:@selector(collectionView:cellBackgroundColorAtIndexPath:)]) {
-    backgroundColor =
+    UIColor *customBackgroundColor =
         [_delegate collectionView:_collectionView cellBackgroundColorAtIndexPath:attr.indexPath];
+    if (customBackgroundColor) {
+      backgroundColor = customBackgroundColor;
+    }
   }
 
   NSPointerArray *cellBackgroundCache = _cellBackgroundCaches[backgroundColor];

@@ -191,7 +191,7 @@ static const CGFloat kMaximumHeight = 80.0f;
  change at any time during runtime.
  */
 - (CGFloat)dynamicBottomMargin {
-  CGFloat keyboardHeight = self.watcher.keyboardOffset;
+  CGFloat keyboardHeight = self.watcher.visibleKeyboardHeight;
   CGFloat userHeight = self.bottomOffset;
 
   return MAX(keyboardHeight, userHeight);

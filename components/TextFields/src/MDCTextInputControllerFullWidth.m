@@ -444,7 +444,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (UIColor *)inlinePlaceholderColor {
-  return _inlinePlaceholderColor ?: MDCTextInputInlinePlaceholderTextColor();
+  return _inlinePlaceholderColor
+            ? _inlinePlaceholderColor : MDCTextInputInlinePlaceholderTextColor();
 }
 
 - (BOOL)isDisplayingCharacterCountError {
@@ -705,7 +706,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
   // Full width text boxes have their character count on the text input line
-  if (self.textInput.text.length > 0) {
+  if (self.textInput.text.length) {
     switch (textField.clearButtonMode) {
       case UITextFieldViewModeWhileEditing:
         editingRect.size.width -= CGRectGetWidth(self.textInput.clearButton.bounds);
@@ -823,8 +824,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // If error text is unset (nil) we reset to previous values.
   if (!errorText) {
     // If there is a saved state, use it.
-    self.textInput.leadingUnderlineLabel.text =
-        self.previousLeadingText ?: self.textInput.leadingUnderlineLabel.text;
+    if (self.previousLeadingText) {
+      self.textInput.leadingUnderlineLabel.text = self.previousLeadingText;
+    }
 
     // Clear out saved state.
     self.previousLeadingText = nil;
@@ -849,7 +851,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
     NSString *valueString = @"";
 
-    if (self.textInput.text > 0) {
+    if (self.textInput.text.length > 0) {
       valueString = [self.textInput.text copy];
     }
     if (self.textInput.placeholder.length > 0) {
@@ -858,8 +860,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     valueString = [valueString stringByAppendingString:@"."];
 
     self.textInput.accessibilityValue = valueString;
+    NSString *leadingUnderlineLabelText = self.textInput.leadingUnderlineLabel.text;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString
-        stringWithFormat:@"Error: %@.", self.textInput.leadingUnderlineLabel.text ?: @""];
+        stringWithFormat:@"Error: %@.", leadingUnderlineLabelText ?
+                                                               leadingUnderlineLabelText : @""];
   } else {
     self.textInput.accessibilityValue = nil;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;

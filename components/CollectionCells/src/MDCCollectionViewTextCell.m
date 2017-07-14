@@ -20,7 +20,7 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 // Default cell heights.
 const CGFloat MDCCellDefaultOneLineHeight = 48.0f;
@@ -90,6 +90,24 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   return self;
 }
 
+- (void)resetMDCCollectionViewTextCellLabelProperties {
+  _textLabel.font = kCellDefaultTextFont;
+  _textLabel.textColor = [UIColor colorWithWhite:0 alpha:kCellDefaultTextOpacity];
+  _textLabel.shadowColor = nil;
+  _textLabel.shadowOffset = CGSizeZero;
+  _textLabel.textAlignment = NSTextAlignmentNatural;
+  _textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  _textLabel.numberOfLines = 1;
+
+  _detailTextLabel.font = kCellDefaultDetailTextFont;
+  _detailTextLabel.textColor = [UIColor colorWithWhite:0 alpha:kCellDefaultDetailTextFontOpacity];
+  _detailTextLabel.shadowColor = nil;
+  _detailTextLabel.shadowOffset = CGSizeZero;
+  _detailTextLabel.textAlignment = NSTextAlignmentNatural;
+  _detailTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  _detailTextLabel.numberOfLines = 1;
+}
+
 - (void)commonMDCCollectionViewTextCellInit {
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
   _contentWrapper.autoresizingMask =
@@ -100,26 +118,17 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
 
   // Text label.
   _textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _textLabel.font = kCellDefaultTextFont;
-  _textLabel.textColor = [UIColor colorWithWhite:0 alpha:kCellDefaultTextOpacity];
-  _textLabel.shadowColor = nil;
-  _textLabel.shadowOffset = CGSizeZero;
-  _textLabel.textAlignment = NSTextAlignmentNatural;
-  _textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
   _textLabel.autoresizingMask =
       MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
-  [_contentWrapper addSubview:_textLabel];
 
   // Detail text label.
   _detailTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _detailTextLabel.font = kCellDefaultDetailTextFont;
-  _detailTextLabel.textColor = [UIColor colorWithWhite:0 alpha:kCellDefaultDetailTextFontOpacity];
-  _detailTextLabel.shadowColor = nil;
-  _detailTextLabel.shadowOffset = CGSizeZero;
-  _detailTextLabel.textAlignment = NSTextAlignmentNatural;
-  _detailTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
   _detailTextLabel.autoresizingMask =
       MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
+
+  [self resetMDCCollectionViewTextCellLabelProperties];
+
+  [_contentWrapper addSubview:_textLabel];
   [_contentWrapper addSubview:_detailTextLabel];
 
   // Image view.
@@ -132,7 +141,11 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
 #pragma mark - Layout
 
 - (void)prepareForReuse {
-  _imageView.image = nil;
+  self.imageView.image = nil;
+  self.textLabel.text = nil;
+  self.detailTextLabel.text = nil;
+
+  [self resetMDCCollectionViewTextCellLabelProperties];
 
   [super prepareForReuse];
   [self setNeedsLayout];

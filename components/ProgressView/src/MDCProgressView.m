@@ -16,7 +16,7 @@
 
 #import "MDCProgressView.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 #import "MaterialMath.h"
 #import "MaterialRTL.h"

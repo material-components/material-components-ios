@@ -56,8 +56,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     NSString *interfaceBuilderPlaceholder = super.placeholder;
     [self commonMDCTextFieldInitialization];
 
-    _fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey]
-                     ?: [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+    MDCTextInputCommonFundament *fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey];
+    _fundament =
+        fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;

@@ -21,7 +21,7 @@
 #import "private/MaterialPageControlStrings.h"
 #import "private/MaterialPageControlStrings_table.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 // The Bundle for string resources.
 static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle";

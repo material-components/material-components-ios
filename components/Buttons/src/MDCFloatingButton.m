@@ -27,6 +27,13 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
   MDCFloatingButtonShape _shape;
 }
 
++ (void)initialize {
+  [[MDCFloatingButton appearance] setElevation:MDCShadowElevationFABResting
+                                      forState:UIControlStateNormal];
+  [[MDCFloatingButton appearance] setElevation:MDCShadowElevationFABPressed
+                                      forState:UIControlStateHighlighted];
+}
+
 + (CGFloat)defaultDimension {
   return MDCFloatingButtonDefaultDimension;
 }
@@ -110,12 +117,6 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
     case MDCFloatingButtonShapeMini:
       return UIEdgeInsetsMake(8, 8, 8, 8);
   }
-}
-
-- (CGFloat)defaultElevationForState:(UIControlState)state {
-  return (((state & UIControlStateSelected) == UIControlStateSelected)
-              ? MDCShadowElevationFABPressed
-              : MDCShadowElevationFABResting);
 }
 
 #pragma mark - Deprecations

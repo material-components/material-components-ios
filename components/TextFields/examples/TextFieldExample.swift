@@ -209,21 +209,25 @@ final class TextFieldSwiftExample: UIViewController {
 
   // MARK: - Actions
 
-  func tapDidTouch(sender: Any) {
+  @objc func tapDidTouch(sender: Any) {
     self.view.endEditing(true)
   }
 
-  func buttonDidTouch(sender: Any) {
-    let alert = UIAlertController(title: "Floating Enabled",
+  @objc func buttonDidTouch(sender: Any) {
+    let isFloatingEnabled = allTextFieldControllers.first?.isFloatingEnabled ?? false
+    let alert = UIAlertController(title: "Floating Labels",
                                   message: nil,
                                   preferredStyle: .actionSheet)
-    let defaultAction = UIAlertAction(title: "Default (Yes)", style: .default) { _ in
+
+    let defaultAction = UIAlertAction(title: "Default (Yes)" + (isFloatingEnabled ? " ✓" : ""),
+                                      style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = true
       })
     }
     alert.addAction(defaultAction)
-    let floatingAction = UIAlertAction(title: "No", style: .default) { _ in
+    let floatingAction = UIAlertAction(title: "No" + (isFloatingEnabled ? "" : " ✓"),
+                                       style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = false
       })
@@ -296,7 +300,7 @@ extension TextFieldSwiftExample {
       object: nil)
   }
 
-  func keyboardWillShow(notif: Notification) {
+  @objc func keyboardWillShow(notif: Notification) {
     guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
       return
     }
@@ -306,7 +310,7 @@ extension TextFieldSwiftExample {
                                            right: 0.0)
   }
 
-  func keyboardWillHide(notif: Notification) {
+  @objc func keyboardWillHide(notif: Notification) {
     scrollView.contentInset = UIEdgeInsets()
   }
 }

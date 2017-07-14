@@ -62,8 +62,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   backButton.image = backImage;
   self.navigationItem.leftBarButtonItem = backButton;
   self.navigationItem.rightBarButtonItem = nil;
-  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
-          forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Register cell.
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]

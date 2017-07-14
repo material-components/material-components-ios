@@ -35,25 +35,6 @@
  */
 @interface MDCButton : UIButton
 
-/**
- A color used as the button's @c backgroundColor for @c state.
-
- @param state The state.
- @return The background color.
- */
-- (nullable UIColor *)backgroundColorForState:(UIControlState)state;
-
-/**
- A color used as the button's @c backgroundColor.
-
- If left unset or reset to nil for a given state, then a default blue color is used.
-
- @param backgroundColor The background color.
- @param state The state.
- */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
-
 /** The ink style of the button. */
 @property(nonatomic, assign) MDCInkStyle inkStyle;
 
@@ -116,6 +97,42 @@
  */
 @property(nonatomic, strong, nullable) UIColor *underlyingColorHint;
 
+/*
+ Indicates whether the button should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ If set to YES, this button will base its text font on MDCFontTextStyleButton.
+
+ Defaults value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
+/**
+ A color used as the button's @c backgroundColor for @c state.
+
+ @param state The state.
+ @return The background color.
+ */
+- (nullable UIColor *)backgroundColorForState:(UIControlState)state;
+
+/**
+ A color used as the button's @c backgroundColor.
+
+ If left unset or reset to nil for a given state, then a default blue color is used.
+
+ @param backgroundColor The background color.
+ @param state The state.
+ */
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
+
 /** Sets the enabled state with optional animation. */
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
 
@@ -140,27 +157,6 @@
  */
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state;
 
-/**
- Resets the elevation for a particular control state back to the button's default behavior.
-
- @param state The control state to reset the elevation.
- */
-- (void)resetElevationForState:(UIControlState)state;
-
-/*
- Indicates whether the button should automatically update its font when the device’s
- UIContentSizeCategory is changed.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- If set to YES, this button will base its text font on MDCFontTextStyleButton.
-
- Defaults value is NO.
- */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
 #pragma mark - UIButton changes
 
 /**
@@ -171,9 +167,6 @@
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
 #pragma mark - Deprecated
-
-/** Use setBackgroundColor:forState: instead. */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor NS_UNAVAILABLE;
 
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")

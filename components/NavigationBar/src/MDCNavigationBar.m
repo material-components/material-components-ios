@@ -254,7 +254,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 #pragma mark Accessibility
 
 - (NSArray<__kindof UIView *> *)accessibilityElements {
-  return @[ _leadingButtonBar, self.titleView ?: _titleLabel, _trailingButtonBar ];
+  return @[ _leadingButtonBar, self.titleView ? self.titleView : _titleLabel, _trailingButtonBar ];
 }
 
 - (BOOL)isAccessibilityElement {

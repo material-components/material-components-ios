@@ -21,12 +21,11 @@
 
 @implementation MDCRaisedButton
 
-#pragma mark - Subclassing
-
-- (CGFloat)defaultElevationForState:(UIControlState)state {
-  return (((state & UIControlStateSelected) == UIControlStateSelected)
-              ? MDCShadowElevationRaisedButtonPressed
-              : MDCShadowElevationRaisedButtonResting);
++ (void)initialize {
+  [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonResting
+                                    forState:UIControlStateNormal];
+  [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed
+                                    forState:UIControlStateHighlighted];
 }
 
 @end

@@ -494,7 +494,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
-  style.selectedTitleColor = (_selectedItemTintColor ?: self.tintColor);
+  style.selectedTitleColor = (_selectedItemTintColor ? _selectedItemTintColor : self.tintColor);
   style.titleColor = _unselectedItemTintColor;
   style.displaysUppercaseTitles = _displaysUppercaseTitles;
 
