@@ -391,13 +391,26 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // view rows.
   CGRect insetFrame = attr.frame;
   if (!CGRectIsEmpty(insetFrame)) {
-    UIEdgeInsets insets = [self insetsAtSectionIndex:attr.indexPath.section];
+    UIEdgeInsets insets = self.sectionInset;
+
+    // Retrieve the insets from the Flow Layout delegate to maintain consistency with the CVC
+    if ([self.collectionView.delegate
+            respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
+      id<UICollectionViewDelegateFlowLayout> flowLayoutDelegate =
+          (id<UICollectionViewDelegateFlowLayout>)self.collectionView.delegate;
+        insets = [flowLayoutDelegate collectionView:self.collectionView
+                                             layout:self.collectionView.collectionViewLayout
+                             insetForSectionAtIndex:attr.indexPath.section];
+    } else {
+      insets = [self insetsAtSectionIndex:attr.indexPath.section];
+    }
+
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
       insetFrame = CGRectInset(insetFrame, insets.left / 2 + insets.right / 2, 0);
       if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
         insetFrame.origin.y += insets.top;
       } else if ([attr.representedElementKind
-                  isEqualToString:UICollectionElementKindSectionFooter]) {
+                     isEqualToString:UICollectionElementKindSectionFooter]) {
         insetFrame.origin.y -= insets.bottom;
       }
       attr.frame = insetFrame;
@@ -531,8 +544,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
           (id<MDCCollectionViewEditingDelegate>)self.collectionView.dataSource;
 
       // Check if delegate can select during editing.
-      if ([editingDelegate respondsToSelector:@selector(collectionView:
-                                                  canSelectItemDuringEditingAtIndexPath:)]) {
+      if ([editingDelegate respondsToSelector:@selector
+                           (collectionView:canSelectItemDuringEditingAtIndexPath:)]) {
         attr.shouldShowSelectorStateMask = [editingDelegate collectionView:self.collectionView
                                      canSelectItemDuringEditingAtIndexPath:attr.indexPath];
       }

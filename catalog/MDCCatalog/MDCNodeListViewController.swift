@@ -107,6 +107,12 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.tableView.backgroundColor = UIColor.white
     self.tableView.separatorStyle = .none
 
+    if node.title.characters.count > 0 {
+      self.tableView.accessibilityIdentifier = "Table" + node.title
+    } else {
+      self.tableView.accessibilityIdentifier = "DemoTableList"
+    }
+
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()
