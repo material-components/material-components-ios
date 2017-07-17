@@ -71,8 +71,8 @@ const NSTimeInterval kMDCFeatureHighlightDismissalDuration = 0.2f;
       options:UIViewAnimationOptionBeginFromCurrentState
       animations:^{
         // We have to perform an animation on highlightView in this block or else UIKit
-        // will not know we are performing an animation and will cancel our
-        // CAAnimations.
+        // will not know we are performing an animation and will call the completion block
+        // immediately, causing our CAAnimations to be cut short.
         if (self.presenting) {
           [highlightView layoutAppearing];
         } else {

@@ -220,6 +220,7 @@ Pod::Spec.new do |s|
       sss.public_header_files = "components/#{ss.base_name}/src/*.h"
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+      sss.dependency "MaterialComponents/private/Math"
       sss.dependency "MaterialComponents/Typography"
       sss.dependency "MDFTextAccessibility"
     end
