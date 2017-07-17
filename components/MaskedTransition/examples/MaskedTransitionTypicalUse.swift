@@ -23,6 +23,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     let name: String
     let viewControllerType: UIViewController.Type
     let calculateFrame: ((UIPresentationController) -> CGRect)?
+    let autoresizingMask: UIViewAutoresizing
   }
   var targets: [TargetInfo] = []
 
@@ -62,7 +63,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
                     y: info.containerView!.bounds.height - size.height,
                     width: size.width,
                     height: size.height)
-    }))
+    }, autoresizingMask: [.flexibleWidth, .flexibleTopMargin]))
 
     targets.append(.init(name: "Centered card", viewControllerType: ModalViewController.self, calculateFrame: { info in
       let size = CGSize(width: 200, height: 200)
@@ -70,24 +71,25 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
                     y: (info.containerView!.bounds.height - size.height) / 2,
                     width: size.width,
                     height: size.height)
-    }))
+    }, autoresizingMask: [.flexibleLeftMargin, .flexibleTopMargin,
+                          .flexibleRightMargin, .flexibleBottomMargin]))
 
-    targets.append(.init(name: "Full screen", viewControllerType: ModalViewController.self, calculateFrame: nil))
+    targets.append(.init(name: "Full screen", viewControllerType: ModalViewController.self, calculateFrame: nil, autoresizingMask: [.flexibleWidth, .flexibleHeight]))
 
     targets.append(.init(name: "Left card", viewControllerType: ModalViewController.self, calculateFrame: { info in
       return CGRect(x: leftFab.frame.minX - 16, y: leftFab.frame.minY - 200, width: 200, height: 264)
-    }))
+    }, autoresizingMask: [.flexibleTopMargin, .flexibleRightMargin, .flexibleBottomMargin]))
 
     targets.append(.init(name: "Right card", viewControllerType: ModalViewController.self, calculateFrame: { info in
       return CGRect(x: rightFab.frame.maxX - 200, y: rightFab.frame.minY - 200, width: 200, height: 264)
-    }))
+    }, autoresizingMask: [.flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin]))
 
     targets.append(.init(name: "Toolbar", viewControllerType: ToolbarViewController.self, calculateFrame: { info in
       guard let containerView = info.containerView else {
         return .zero
       }
       return CGRect(x: 0, y: containerView.bounds.height - 100, width: containerView.bounds.width, height: 100)
-    }))
+    }, autoresizingMask: [.flexibleTopMargin, .flexibleWidth]))
 
     tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
   }
@@ -98,6 +100,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
 
     let transition = MDCMaskedTransition(sourceView: fab)
     transition.calculateFrameOfPresentedView = target.calculateFrame
+    vc.view.autoresizingMask = target.autoresizingMask
     vc.transitionController.transition = transition
 
     showDetailViewController(vc, sender: self)

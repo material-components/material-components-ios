@@ -16,7 +16,7 @@
 
 #import "MDCMaskedPresentationController.h"
 
-#import <Transitioning/Transitioning.h>
+#import <MotionTransitioning/MotionTransitioning.h>
 #import <MotionAnimator/MotionAnimator.h>
 
 #import "MDCMaskedTransitionMotionForContext.h"
@@ -93,6 +93,8 @@
 
   if (!self.scrimView) {
     self.scrimView = [[UIView alloc] initWithFrame:context.containerView.bounds];
+    self.scrimView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
+                                       | UIViewAutoresizingFlexibleHeight);
     self.scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
     [context.containerView addSubview:self.scrimView];
   }

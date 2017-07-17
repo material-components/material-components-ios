@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <Transitioning/Transitioning.h>
+#import <MotionTransitioning/MotionTransitioning.h>
 
 /**
  A masked transition will animate between two view controllers using an expanding mask effect.
