@@ -78,16 +78,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   kInkRippleCancelled,
 };
 
-@protocol MDCInkLayerRippleDelegate <NSObject>
-
-@optional
-
-- (void)animationDidStop:(CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
-                finished:(BOOL)finished;
-
-@end
-
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 @interface MDCInkLayerRipple () <CAAnimationDelegate>
 @end
@@ -279,6 +269,14 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     self.opacity = 0;
+    __weak MDCInkLayerForegroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^(void) {
+      MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      if ([strongSelf.animationDelegate
+              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
+        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
+      }
+    }];
     [CATransaction commit];
     return;
   }
@@ -398,6 +396,14 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     self.opacity = 0;
+    __weak MDCInkLayerBackgroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^(void) {
+      MDCInkLayerBackgroundRipple *strongSelf = weakSelf;
+      if ([strongSelf.animationDelegate
+              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
+        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
+      }
+    }];
     [CATransaction commit];
     return;
   }
@@ -429,7 +435,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 @end
 
-@interface MDCInkLayer () <MDCInkLayerRippleDelegate>
+@interface MDCInkLayer ()
 
 /**
  Reset the bottom-most ink applied to the layer with a completion handler to be called on completion

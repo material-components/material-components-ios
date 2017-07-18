@@ -16,6 +16,19 @@
 
 #import "MDCInkLayer.h"
 
+@protocol MDCInkLayerRippleDelegate <NSObject>
+
+@optional
+
+- (void)animationDidStop:(CAAnimation *)anim
+              shapeLayer:(CAShapeLayer *)shapeLayer
+                finished:(BOOL)finished;
+
+@end
+
+@interface MDCInkLayer ()  <MDCInkLayerRippleDelegate>
+@end
+
 @interface MDCInkLayerRipple : CAShapeLayer
 @end
 
