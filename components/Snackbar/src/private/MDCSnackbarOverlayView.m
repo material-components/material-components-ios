@@ -542,6 +542,20 @@ static const CGFloat kMaximumHeight = 80.0f;
 
     self.bottomConstraint.constant = -[self dynamicBottomMargin];
     [self triggerSnackbarLayoutChange];
+
+    // If there is no snackbar the following method returns CGRectNull, but we still need to notify
+    // observers of bottom offset changes.
+    CGRect frame = [self snackbarRectInScreenCoordinates];
+    if (CGRectIsNull(frame)) {
+      frame = CGRectMake(0,
+                         CGRectGetMaxY(self.frame) - self.bottomOffset,
+                         CGRectGetMaxX(self.frame),
+                         self.bottomOffset);
+    }
+    [self notifyOverlayChangeWithFrame:frame
+                              duration:[CATransaction animationDuration]
+                                 curve:UIViewAnimationCurveEaseInOut
+                        timingFunction:nil];
   }
 }
 
