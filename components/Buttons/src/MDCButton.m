@@ -285,7 +285,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
-  if (newSuperview) {
+  if (newSuperview == nil) {
     [self.inkView cancelAllAnimationsAnimated:NO];
   }
 }
