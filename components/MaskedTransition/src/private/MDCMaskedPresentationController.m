@@ -95,7 +95,7 @@
     self.scrimView = [[UIView alloc] initWithFrame:context.containerView.bounds];
     self.scrimView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                                        | UIViewAutoresizingFlexibleHeight);
-    self.scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    self.scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3f];
     [context.containerView addSubview:self.scrimView];
   }
 
