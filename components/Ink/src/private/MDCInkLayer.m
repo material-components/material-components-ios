@@ -78,16 +78,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   kInkRippleCancelled,
 };
 
-@protocol MDCInkLayerRippleDelegate <NSObject>
-
-@optional
-
-- (void)animationDidStop:(CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
-                finished:(BOOL)finished;
-
-@end
-
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 @interface MDCInkLayerRipple () <CAAnimationDelegate>
 @end
@@ -445,7 +435,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 @end
 
-@interface MDCInkLayer () <MDCInkLayerRippleDelegate>
+@interface MDCInkLayer ()
 
 /**
  Reset the bottom-most ink applied to the layer with a completion handler to be called on completion

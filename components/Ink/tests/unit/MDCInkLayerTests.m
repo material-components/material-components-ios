@@ -26,6 +26,12 @@
 
 @end
 
+@interface MDCInkLayerRipple (UnitTests)
+
+@property(nonatomic, weak) id<MDCInkLayerRippleDelegate> animationDelegate;
+
+@end
+
 #pragma mark - Subclasses for testing
 
 @interface MDCFakeForegroundRipple : MDCInkLayerForegroundRipple
@@ -56,12 +62,30 @@
 
 @end
 
-#pragma mark - Tests
+#pragma mark - XCTestCase
 
-@interface MDCInkLayerTests : XCTestCase
+@interface MDCInkLayerTests : XCTestCase <MDCInkLayerRippleDelegate>
+@property(nonatomic, strong) XCTestExpectation *expectation;
+@property(nonatomic, strong) MDCInkLayer *inkLayer;
 @end
 
 @implementation MDCInkLayerTests
+
+#pragma mark - <MDCInkLayerDelegate>
+
+- (void)animationDidStop:(CAAnimation *)anim
+              shapeLayer:(CAShapeLayer *)shapeLayer
+                finished:(BOOL)finished {
+  [self.inkLayer animationDidStop:anim shapeLayer:shapeLayer finished:finished];
+  [self.expectation fulfill];
+}
+
+#pragma mark - Unit Tests
+
+- (void)tearDown {
+  self.expectation = nil;
+  self.inkLayer = nil;
+}
 
 - (void)testResetRipplesWithoutAnimation {
   // Given
@@ -97,6 +121,44 @@
                 @"When calling without animation, the ripple should receive a 'NO' argument");
   XCTAssertTrue(fakeBackgroundRipple.exitAnimationParameter,
                 @"When calling without animation, the ripple should receive a 'NO' argument");
+}
+
+- (void)testForegroundRippleExitWithoutAnimation {
+  // Given
+  self.inkLayer = [[MDCInkLayer alloc] init];
+  MDCInkLayerForegroundRipple *foregroundRipple = [[MDCInkLayerForegroundRipple alloc] init];
+  foregroundRipple.animationDelegate = self;
+  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0,
+                 @"There should be no foreground ripples at the start of the test.");
+  [self.inkLayer.foregroundRipples addObject:foregroundRipple];
+  self.expectation = [self expectationWithDescription:@"Background ripple completion"];
+
+  // When
+  [self.inkLayer resetAllInk:NO];
+
+  // Then
+  [self waitForExpectationsWithTimeout:5 handler:nil];
+  XCTAssertEqual(self.inkLayer.foregroundRipples.count, 0,
+                 @"After exiting the only foreround ripple, the array should be empty.");
+}
+
+- (void)testBackgroundRippleExitWithoutAnimation {
+  // Given
+  self.inkLayer = [[MDCInkLayer alloc] init];
+  MDCInkLayerBackgroundRipple *backgroundRipple = [[MDCInkLayerBackgroundRipple alloc] init];
+  backgroundRipple.animationDelegate = self;
+  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0,
+                 @"There should be no background ripples at the start of the test.");
+  [self.inkLayer.backgroundRipples addObject:backgroundRipple];
+  self.expectation = [self expectationWithDescription:@"Background ripple completion"];
+
+  // When
+  [self.inkLayer resetAllInk:NO];
+
+  // Then
+  [self waitForExpectationsWithTimeout:5 handler:nil];
+  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0,
+                 @"After exiting the only foreround ripple, the array should be empty.");
 }
 
 @end
