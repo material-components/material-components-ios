@@ -30,6 +30,10 @@
 /** The floating action button shown in the bottom right corner. */
 @property(nonatomic) MDCFloatingButton *floatingButton;
 
+@property(nonatomic) UIView *bottomBar;
+
+@property(nonatomic) BOOL isShowingBottomBar;
+
 @end
 
 @interface SnackbarSimpleExample : SnackbarExample
