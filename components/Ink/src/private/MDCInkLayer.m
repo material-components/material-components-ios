@@ -279,6 +279,14 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     self.opacity = 0;
+    __weak MDCInkLayerForegroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^(void) {
+      MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      if ([strongSelf.animationDelegate
+              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
+        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
+      }
+    }];
     [CATransaction commit];
     return;
   }
@@ -398,6 +406,14 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     self.opacity = 0;
+    __weak MDCInkLayerBackgroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^(void) {
+      MDCInkLayerBackgroundRipple *strongSelf = weakSelf;
+      if ([strongSelf.animationDelegate
+              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
+        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
+      }
+    }];
     [CATransaction commit];
     return;
   }
