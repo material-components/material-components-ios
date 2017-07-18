@@ -168,7 +168,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
   if (!self.isAnimationCleared) {
-    [self removeFromSuperlayer];
     [self.animationDelegate animationDidStop:anim shapeLayer:self finished:finished];
   }
 }
@@ -588,6 +587,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)animationDidStop:(CAAnimation *)anim
               shapeLayer:(CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished {
+  // Even when the ripple is "exited" without animation, we need to remove it from compositeRipple
+  [shapeLayer removeFromSuperlayer];
   [shapeLayer removeAllAnimations];
 
   if ([shapeLayer isMemberOfClass:[MDCInkLayerForegroundRipple class]]) {

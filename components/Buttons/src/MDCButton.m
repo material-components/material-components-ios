@@ -283,6 +283,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, _hitAreaInsets), point);
 }
 
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+  [super willMoveToSuperview:newSuperview];
+  if (newSuperview) {
+    [self.inkView cancelAllAnimationsAnimated:NO];
+  }
+}
+
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
