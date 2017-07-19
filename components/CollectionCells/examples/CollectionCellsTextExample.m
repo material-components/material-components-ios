@@ -50,16 +50,44 @@ static NSString *const kExampleDetailText =
 
   // Populate content with array of text, details text, and number of lines.
   _content = [NSMutableArray array];
-  [_content addObject:@[ @"Single line text", @"", @(MDCCellDefaultOneLineHeight) ]];
-  [_content addObject:@[ @"", @"Single line detail text", @(MDCCellDefaultOneLineHeight) ]];
-  [_content
-      addObject:@[ @"Two line text", @"Here is the detail text", @(MDCCellDefaultTwoLineHeight) ]];
-  [_content addObject:@[
-    @"Two line text (truncated)", kExampleDetailText, @(MDCCellDefaultTwoLineHeight)
-  ]];
-  [_content addObject:@[
-    @"Three line text (wrapped)", kExampleDetailText, @(MDCCellDefaultThreeLineHeight)
-  ]];
+  NSDictionary *alignmentValues = @{
+    @"Left" : @(NSTextAlignmentLeft),
+    @"Right" : @(NSTextAlignmentRight),
+    @"Center" : @(NSTextAlignmentCenter),
+    @"Just." : @(NSTextAlignmentJustified),
+    @"Natural" : @(NSTextAlignmentNatural)
+  };
+
+  for (NSString *alignmentKey in alignmentValues) {
+    [_content addObject:@[
+      [NSString stringWithFormat:@"(%@) Single line text", alignmentKey],
+      alignmentValues[alignmentKey], @"", alignmentValues[alignmentKey],
+      @(MDCCellDefaultOneLineHeight)
+    ]];
+    [_content addObject:@[
+      @"", alignmentValues[alignmentKey],
+      [NSString stringWithFormat:@"(%@) Single line detail text", alignmentKey],
+      alignmentValues[alignmentKey], @(MDCCellDefaultOneLineHeight)
+    ]];
+    [_content addObject:@[
+      [NSString stringWithFormat:@"(%@) Two line text", alignmentKey],
+      alignmentValues[alignmentKey],
+      [NSString stringWithFormat:@"(%@) Here is the detail text", alignmentKey],
+      alignmentValues[alignmentKey], @(MDCCellDefaultTwoLineHeight)
+    ]];
+    [_content addObject:@[
+      [NSString stringWithFormat:@"(%@) Two line text (truncated)", alignmentKey],
+      alignmentValues[alignmentKey],
+      [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
+      alignmentValues[alignmentKey], @(MDCCellDefaultTwoLineHeight)
+    ]];
+    [_content addObject:@[
+      [NSString stringWithFormat:@"(%@) Three line text (wrapped)", alignmentKey],
+      alignmentValues[alignmentKey],
+      [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
+      alignmentValues[alignmentKey], @(MDCCellDefaultThreeLineHeight)
+    ]];
+  }
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -75,9 +103,11 @@ static NSString *const kExampleDetailText =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.item][0];
-  cell.detailTextLabel.text = _content[indexPath.item][1];
+  cell.textLabel.textAlignment = [_content[indexPath.item][1] integerValue];
+  cell.detailTextLabel.text = _content[indexPath.item][2];
+  cell.detailTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
 
-  if (indexPath.item == 4) {
+  if (indexPath.item % 5 == 4) {
     cell.detailTextLabel.numberOfLines = 2;
   }
   return cell;
@@ -87,7 +117,7 @@ static NSString *const kExampleDetailText =
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {
-  return [_content[indexPath.item][2] integerValue];
+  return [_content[indexPath.item][4] floatValue];
 }
 
 @end

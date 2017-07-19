@@ -241,8 +241,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
 }
 
 - (CGSize)frameSizeForLabel:(UILabel *)label {
-  CGFloat width = MIN(CGRectGetWidth(_contentWrapper.bounds),
-                      [label.text sizeWithAttributes:@{NSFontAttributeName : label.font}].width);
+  CGFloat width = CGRectGetWidth(_contentWrapper.bounds);
   CGFloat height =
       [label textRectForBounds:_contentWrapper.bounds limitedToNumberOfLines:label.numberOfLines]
           .size.height;
