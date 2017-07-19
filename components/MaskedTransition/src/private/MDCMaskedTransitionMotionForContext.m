@@ -33,8 +33,7 @@ MDCMaskedTransitionMotionSpec motionForContext(NSObject<MDMTransitionContext> *c
       return toolbar;
     }
 
-  } else if (foreBounds.size.width < containerBounds.size.width
-             && CGRectGetMidY(foreFrame) >= CGRectGetMidY(containerBounds)) {
+  } else if (foreBounds.size.width < containerBounds.size.width) {
     return bottomCard;
   }
 
