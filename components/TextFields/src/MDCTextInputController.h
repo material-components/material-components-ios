@@ -66,9 +66,9 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *errorColor;
 
-/** 
+/**
  Default value for errorColor.
- 
+
  Default is red.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *errorColorDefault;
@@ -140,9 +140,9 @@
  */
 @property(class, nonatomic, assign) UITextFieldViewMode underlineViewModeDefault;
 
-/** 
- Color the underline changes to when the input is editing. 
- 
+/**
+ Color the underline changes to when the input is editing.
+
  Default is underlineColorActiveDefault.
  */
 @property(nonatomic, null_resettable, strong) UIColor *underlineColorActive;
@@ -154,9 +154,9 @@
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *underlineColorActiveDefault;
 
-/** 
- Color of the underline when the input is not editing but still enabled. 
- 
+/**
+ Color of the underline when the input is not editing but still enabled.
+
  Default is underlineColorNormalDefault.
  */
 @property(nonatomic, null_resettable, strong) UIColor *underlineColorNormal;
@@ -164,7 +164,7 @@
 /**
  Default value for underlineColorNormal.
 
- Default is black with Material Design hint text opacity which is the same as 
+ Default is black with Material Design hint text opacity which is the same as
  inlinePlaceholderColorDefault.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *underlineColorNormalDefault;
