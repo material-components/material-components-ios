@@ -1,4 +1,20 @@
-# release-candidate TODO: Replace me with version number. 
+# 28.0.0
+
+## API Diffs
+
+### AppBar
+
+* Added MDCAppBarTextColorAccessibilityMutator
+
+### Button
+
+* Marked 'customTitleColor' as deprecated.
+* Changed behavior of 'setTitleColor:forState:' so that it no longer changes the titleColor if the color was deemed to be of insufficient contrast with the background color.
+
+### TextFields
+
+* Removed UI_APPEARANCE_SELECTOR from all controller style properties.
+* Changed all controller style properties from instance to class properties.
 
 # 27.0.0
 
