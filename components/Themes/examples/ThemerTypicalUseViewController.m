@@ -51,6 +51,8 @@
                                 toProgressView:[MDCProgressView appearance]];
   [MDCSliderColorThemer applyColorScheme:self.colorScheme toSlider:[MDCSlider appearance]];
   [MDCTabBarColorThemer applyColorScheme:self.colorScheme toTabBar:[MDCTabBar appearance]];
+  [MDCTextFieldColorThemer
+      applyColorSchemeToAllTextInputControllerDefault:self.colorScheme];
 
   // Apply color scheme to UIKit components.
   [UISlider appearance].tintColor = self.colorScheme.primaryColor;

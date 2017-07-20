@@ -36,7 +36,7 @@
 #import "MDCPageControlColorThemer.h"
 #import "MDCSliderColorThemer.h"
 #import "MDCTabBarColorThemer.h"
-
+#import "MDCTextFieldColorThemer.h"
 
 static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
@@ -49,6 +49,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 @property(nonatomic, strong) MDCRaisedButton *alertButton;
 @property(nonatomic, strong) MDCRaisedButton *featureButton;
 @property(nonatomic, strong) MDCSlider *slider;
+@property(nonatomic, strong) MDCTextField *textField;
+@property(nonatomic, strong) MDCTextInputControllerDefault *textInputControllerDefault;
 @property(nonatomic, strong) NSObject<MDCColorScheme> *colorScheme;
 @property(nonatomic, strong) UIScrollView *scrollView;
 
