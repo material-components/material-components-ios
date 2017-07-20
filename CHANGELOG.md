@@ -13,7 +13,7 @@
 
 ### Icons
 
-* For each icon in MDCIcons we now have
+* For each icon in MDCIcons we now have a method that returns a UIImage.
 
 ### TextFields
 
