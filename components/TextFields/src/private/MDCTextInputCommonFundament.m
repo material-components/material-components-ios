@@ -251,6 +251,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                             attribute:NSLayoutAttributeWidth
                                                            multiplier:1
                                                              constant:0];
+  height.priority = UILayoutPriorityDefaultLow;
+
   self.clearButtonWidth =
       [NSLayoutConstraint constraintWithItem:_clearButton
                                    attribute:NSLayoutAttributeWidth
@@ -259,6 +261,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                    attribute:NSLayoutAttributeNotAnAttribute
                                   multiplier:1
                                     constant:MDCTextInputClearButtonImageSquareWidthHeight];
+  self.clearButtonWidth.priority = UILayoutPriorityDefaultLow;
+
   NSLayoutConstraint *bottom = [NSLayoutConstraint
       constraintWithItem:_clearButton
                attribute:NSLayoutAttributeBottom
@@ -267,6 +271,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                attribute:NSLayoutAttributeTop
               multiplier:1
                 constant:-1 * MDCTextInputHalfPadding + MDCTextInputClearButtonImageBuiltInPadding];
+  bottom.priority = UILayoutPriorityDefaultLow;
+
   self.placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                           attribute:NSLayoutAttributeTrailing
                                                           relatedBy:NSLayoutRelationLessThanOrEqual
@@ -274,6 +280,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                           attribute:NSLayoutAttributeTrailing
                                                          multiplier:1
                                                            constant:MDCTextInputHalfPadding];
+  self.placeholderTrailing.priority = UILayoutPriorityDefaultLow;
+
   NSLayoutConstraint *trailingSuperview =
       [NSLayoutConstraint constraintWithItem:_clearButton
                                    attribute:NSLayoutAttributeTrailing
@@ -282,11 +290,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
                                     constant:MDCTextInputClearButtonImageBuiltInPadding];
-
-  height.priority = UILayoutPriorityDefaultLow;
-  self.clearButtonWidth.priority = UILayoutPriorityDefaultLow;
-  bottom.priority = UILayoutPriorityDefaultLow;
-  self.placeholderTrailing.priority = UILayoutPriorityDefaultLow;
   trailingSuperview.priority = UILayoutPriorityDefaultLow;
 
   [NSLayoutConstraint activateConstraints:@[
@@ -408,22 +411,25 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.textInput addSubview:_underline];
   [self.textInput sendSubviewToBack:_underline];
 
-  [NSLayoutConstraint constraintWithItem:_underline
+  NSLayoutConstraint *underlineLeading = [NSLayoutConstraint constraintWithItem:_underline
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:_relativeSuperview
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:0]
-      .active = YES;
-  [NSLayoutConstraint constraintWithItem:_underline
+                                                                       constant:0];
+  underlineLeading.priority = UILayoutPriorityDefaultLow;
+      underlineLeading.active = YES;
+
+  NSLayoutConstraint *underlineTrailing = [NSLayoutConstraint constraintWithItem:_underline
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
                                   toItem:_relativeSuperview
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
-                                constant:0]
-      .active = YES;
+                                                                        constant:0];
+  underlineTrailing.priority = UILayoutPriorityDefaultLow;
+  underlineTrailing.active = YES;
 
   CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
   _underlineY =
@@ -811,6 +817,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                      attribute:NSLayoutAttributeTop
                                                     multiplier:1
                                                       constant:[self textContainerInset].top];
+  [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
 
   // This can be affected by .leftView and .rightView.
   // See updatePlaceholderToOverlayViewsPosition()
@@ -821,6 +828,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
                                                           constant:[self textContainerInset].left];
+  [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
+
   NSLayoutConstraint *placeholderTrailing =
       [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                    attribute:NSLayoutAttributeTrailing
@@ -829,9 +838,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
                                     constant:[self textContainerInset].right];
-
-  [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
-  [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
+  placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
   return @[ self.placeholderTop, self.placeholderLeading, placeholderTrailing ];
 }
