@@ -11,6 +11,10 @@
 * Marked 'customTitleColor' as deprecated.
 * Changed behavior of 'setTitleColor:forState:' so that it no longer changes the titleColor if the color was deemed to be of insufficient contrast with the background color.
 
+### Icons
+
+* For each icon in MDCIcons we now have
+
 ### TextFields
 
 * Removed UI_APPEARANCE_SELECTOR from all controller style properties.
@@ -24,7 +28,6 @@
 
 * [- Accessibility Mutator (#1236)](https://github.com/material-components/material-components-ios/commit/c6940925206512c4c9523f772dba1df398ba9423) (Justin Shephard)
 * [Remove trailing whitespace](https://github.com/material-components/material-components-ios/commit/e63035cb751496da42844d0abbc5315faed69790) (Sam Morrison)
-* [[Collections] Use image cache for selection icons (#1638)](https://github.com/material-components/material-components-ios/commit/565ae15cdb79e995fa25aa4b116e047973192813) (Robert Moore)
 
 ### ButtonBar
 
@@ -82,12 +85,6 @@
 #### Changes
 
 * [Remove internal references. (#1648)](https://github.com/material-components/material-components-ios/commit/18906c0e1e2a7bff467a837a2e71bbe8fa243d11) (Adrian Secord)
-
-### Snackbar
-
-#### Changes
-
-* [[Collections] Allow custom UIEdgeInsets (#1614)](https://github.com/material-components/material-components-ios/commit/0495092f1ecd9656e0fcb4d6b750a94f02af23f0) (Robert Moore)
 
 ### TextFields
 
