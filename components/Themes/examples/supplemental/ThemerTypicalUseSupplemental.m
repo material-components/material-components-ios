@@ -43,12 +43,13 @@
   [super viewDidLayoutSubviews];
   self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 600);
   
-  self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, 100);
-  self.alertButton.center = CGPointMake(self.view.frame.size.width / 2 - 100, 200);
-  self.featureButton.center = CGPointMake(self.view.frame.size.width / 2 + 50, 200);
-  self.slider.center = CGPointMake(self.view.frame.size.width / 2, 300);
-  self.progressView.center = CGPointMake(self.view.frame.size.width / 2, 400);
-  self.floatingButton.center = CGPointMake(self.view.frame.size.width / 2, 500);
+  self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, 80);
+  self.alertButton.center = CGPointMake(self.view.frame.size.width / 2 - 100, 160);
+  self.featureButton.center = CGPointMake(self.view.frame.size.width / 2 + 50, 160);
+  self.slider.center = CGPointMake(self.view.frame.size.width / 2, 240);
+  self.progressView.center = CGPointMake(self.view.frame.size.width / 2, 320);
+  self.floatingButton.center = CGPointMake(self.view.frame.size.width / 2, 400);
+  self.textField.center = CGPointMake(self.view.frame.size.width / 2, 480);
 }
 
 - (void)setupAppBar {
@@ -119,6 +120,12 @@
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
   [self.floatingButton sizeToFit];
   [self.scrollView addSubview:self.floatingButton];
+
+  self.textField = [[MDCTextField alloc] initWithFrame:CGRectMake(0, 0, 250, 50)];
+  [self.scrollView addSubview:self.textField];
+  self.textField.placeholder = @"Text Field";
+  self.textInputControllerDefault =
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.textField];
 }
 
 - (void)didTapShowAlert:(id)sender {
