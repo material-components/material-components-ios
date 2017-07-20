@@ -277,6 +277,20 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [super layoutSubviews];
   self.layer.shadowPath = [self boundingPath].CGPath;
   self.layer.cornerRadius = [self cornerRadius];
+
+  // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
+  if (_inkView.inkStyle == MDCInkStyleUnbounded) {
+    CGRect contentRect = [self contentRectForBounds:self.bounds];
+    CGPoint contentCenterPoint = CGPointMake(CGRectGetMidX(contentRect),
+                                             CGRectGetMidY(contentRect));
+    CGPoint boundsCenterPoint = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+
+    CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
+    CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y;
+    _inkView.frame = CGRectMake(offsetX, offsetY, self.bounds.size.width, self.bounds.size.height);
+  } else {
+    _inkView.frame = self.bounds;
+  }
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
