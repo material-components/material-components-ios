@@ -1,3 +1,101 @@
+# 28.0.0
+
+## API Diffs
+
+### AppBar
+
+* Added MDCAppBarTextColorAccessibilityMutator
+
+### Button
+
+* Marked 'customTitleColor' as deprecated.
+* Changed behavior of 'setTitleColor:forState:' so that it no longer changes the titleColor if the color was deemed to be of insufficient contrast with the background color.
+
+### Icons
+
+* For each icon in MDCIcons we now have
+
+### TextFields
+
+* Removed UI_APPEARANCE_SELECTOR from all controller style properties.
+* Changed all controller style properties from instance to class properties.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [- Accessibility Mutator (#1236)](https://github.com/material-components/material-components-ios/commit/c6940925206512c4c9523f772dba1df398ba9423) (Justin Shephard)
+* [Remove trailing whitespace](https://github.com/material-components/material-components-ios/commit/e63035cb751496da42844d0abbc5315faed69790) (Sam Morrison)
+
+### ButtonBar
+
+#### Changes
+
+* [[Buttons] Deprecate customTitleColor and remove auto-accessibility from setTitleColor (#1609)](https://github.com/material-components/material-components-ios/commit/4c84b99f2b65fdd4208d385c26133d4e4bd153d6) (Sam Morrison)
+
+### Buttons
+
+#### Changes
+
+* [Deprecate customTitleColor and remove auto-accessibility from setTitleColor (#1609)](https://github.com/material-components/material-components-ios/commit/4c84b99f2b65fdd4208d385c26133d4e4bd153d6) (Sam Morrison)
+
+### CollectionCells
+
+#### Changes
+
+* [[Collections] Use image cache for selection icons (#1638)](https://github.com/material-components/material-components-ios/commit/565ae15cdb79e995fa25aa4b116e047973192813) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [Allow custom UIEdgeInsets (#1614)](https://github.com/material-components/material-components-ios/commit/0495092f1ecd9656e0fcb4d6b750a94f02af23f0) (Robert Moore)
+
+### Dialogs
+
+#### Changes
+
+* [MDCAlertController should announce 'alert' in VO (#1639)](https://github.com/material-components/material-components-ios/commit/164493929913d25747220d0f6a6160813c254e42) (Sarah Read)
+* [[Buttons] Deprecate customTitleColor and remove auto-accessibility from setTitleColor (#1609)](https://github.com/material-components/material-components-ios/commit/4c84b99f2b65fdd4208d385c26133d4e4bd153d6) (Sam Morrison)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Feature Highlight] Swipe to dismiss (#1636)](https://github.com/material-components/material-components-ios/commit/f466588e4f35d4b6a415c0c888c2e4f2e6b9f250) (Sam Morrison)
+
+### Ink
+
+#### Changes
+
+* [Ink reset passes animation value to ripples (#1652)](https://github.com/material-components/material-components-ios/commit/72657d5f8d45ca7ad399023f24bf93ad6a54a921) (Robert Moore)
+* [Reset ink without animation calls delegate (#1654)](https://github.com/material-components/material-components-ios/commit/9e417817cb872354030bfed0137a6d256bf68503) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [Vertically center navigationBar title within its default height for UIControlContentVerticalAlignmentTop (#1576)](https://github.com/material-components/material-components-ios/commit/780654af4ca4524f7d06f4732408841f2d679cfe) (Kien Tran)
+* [[AppBar] - Fixed center align issue on RTL which was taking incorrect x value to determine centering (#1646)](https://github.com/material-components/material-components-ios/commit/ed6d150208f3d0a23679815092765c64bc2f7d8f) (Justin Shephard)
+
+### PageControl
+
+#### Changes
+
+* [Remove internal references. (#1648)](https://github.com/material-components/material-components-ios/commit/18906c0e1e2a7bff467a837a2e71bbe8fa243d11) (Adrian Secord)
+
+### TextFields
+
+#### Changes
+
+* [Appearance defaults (#1620)](https://github.com/material-components/material-components-ios/commit/36ef081eea4bb720b74a2f905e1d5d231e758ec0) (Will Larche)
+* [Correcting active color. (#1640)](https://github.com/material-components/material-components-ios/commit/7a1ad7b4c4cf516e290b2802483a6dc30ecbe7c1) (Will Larche)
+* [Correcting documentation typo. (#1647)](https://github.com/material-components/material-components-ios/commit/f3d1b35c6f17eb477107fe285fd2eadcf4de7a3d) (Will Larche)
+* [Remove trailing whitespace](https://github.com/material-components/material-components-ios/commit/e63035cb751496da42844d0abbc5315faed69790) (Sam Morrison)
+* [[Buttons] Deprecate customTitleColor and remove auto-accessibility from setTitleColor (#1609)](https://github.com/material-components/material-components-ios/commit/4c84b99f2b65fdd4208d385c26133d4e4bd153d6) (Sam Morrison)
+
 # 27.0.0
 
 ## API Diffs

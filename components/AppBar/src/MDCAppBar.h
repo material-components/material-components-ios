@@ -21,7 +21,7 @@
 @class MDCAppBar;
 
 /**
- The MDCAppBarTextColorAccessibilityMutator class creates an external object with which to work on 
+ The MDCAppBarTextColorAccessibilityMutator class creates an external object with which to work on
  an instance of a Material App Bar to activate and ensure accessibility on its title and buttons.
 
  ### Dependencies
