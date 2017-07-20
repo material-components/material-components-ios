@@ -29,4 +29,10 @@
  */
 + (nonnull NSString *)pathFor_ic_chevron_right;
 
+/*
+ Returns the image for the ic_chevron_right image contained in
+ MaterialIcons_ic_chevron_right.bundle.
+ */
++ (nullable UIImage *)imageFor_ic_chevron_right;
+
 @end

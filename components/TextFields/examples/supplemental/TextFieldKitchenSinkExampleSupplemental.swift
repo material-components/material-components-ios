@@ -49,7 +49,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
   func setupButton() -> MDCButton {
     let button = MDCButton()
-    button.customTitleColor = .white
+    button.setTitleColor(.white, for: .normal)
     return button
   }
 

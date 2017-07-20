@@ -62,9 +62,16 @@
  The color used to denote error state in the underline, the errorText's label, the placeholder and
  the character count label.
 
+ Default is errorColorDefault.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *errorColor;
+
+/**
+ Default value for errorColor.
+
  Default is red.
  */
-@property(nonatomic, nullable, strong) UIColor *errorColor UI_APPEARANCE_SELECTOR;
+@property(class, nonatomic, null_resettable, strong) UIColor *errorColorDefault;
 
 /**
  The text being displayed in the leading underline label when in an error state.
@@ -84,10 +91,16 @@
 /**
  The color applied to the placeholder when inline (not floating).
 
+ Default is inlinePlaceholderColorDefault.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColor;
+
+/**
+ Default value for inlinePlaceholderColor.
+
  Default is black with Material Design hint text opacity.
  */
-@property(nonatomic, null_resettable, strong)
-    UIColor *inlinePlaceholderColor UI_APPEARANCE_SELECTOR;
+@property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
@@ -96,10 +109,17 @@
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
- Default value is NO.
+ Default is mdc_adjustsFontForContentSizeCategoryDefault.
  */
 @property(nonatomic, assign, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ Default value for mdc_adjustsFontForContentSizeCategory.
+
+ Default is NO.
+ */
+@property(class, nonatomic, assign) BOOL mdc_adjustsFontForContentSizeCategoryDefault;
 
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
@@ -109,15 +129,45 @@
 
  The underline is an overlay that can be hidden depending on the editing state of the input text.
 
+ Default is underlineViewModeDefault.
+ */
+@property(nonatomic, assign) UITextFieldViewMode underlineViewMode;
+
+/**
+ Default value for underlineViewMode.
+
  Default is UITextFieldViewModeAlways.
  */
-@property(nonatomic, assign) UITextFieldViewMode underlineViewMode UI_APPEARANCE_SELECTOR;
+@property(class, nonatomic, assign) UITextFieldViewMode underlineViewModeDefault;
 
-/** Color the underline changes to when the input is editing. */
-@property(nonatomic, null_resettable, strong) UIColor *underlineColorActive UI_APPEARANCE_SELECTOR;
+/**
+ Color the underline changes to when the input is editing.
 
-/** Color of the underline when the input is not editing but still enabled. */
-@property(nonatomic, null_resettable, strong) UIColor *underlineColorNormal UI_APPEARANCE_SELECTOR;
+ Default is underlineColorActiveDefault.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *underlineColorActive;
+
+/**
+ Default value for underlineColorActive.
+
+ Default is blue.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *underlineColorActiveDefault;
+
+/**
+ Color of the underline when the input is not editing but still enabled.
+
+ Default is underlineColorNormalDefault.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *underlineColorNormal;
+
+/**
+ Default value for underlineColorNormal.
+
+ Default is black with Material Design hint text opacity which is the same as
+ inlinePlaceholderColorDefault.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *underlineColorNormalDefault;
 
 /**
  Convenience init. Never fails.

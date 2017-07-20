@@ -15,6 +15,7 @@
  */
 
 #import "MDCInkLayer.h"
+#import "MDCInkLayer+Testing.h"
 
 #import <UIKit/UIKit.h>
 
@@ -77,17 +78,12 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   kInkRippleCancelled,
 };
 
-@protocol MDCInkLayerRippleDelegate <NSObject>
-
-@optional
-
-- (void)animationDidStop:(CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
-                finished:(BOOL)finished;
-
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCInkLayerRipple () <CAAnimationDelegate>
 @end
+#endif
 
-@interface MDCInkLayerRipple : CAShapeLayer
+@interface MDCInkLayerRipple ()
 
 @property(nonatomic, assign, getter=isAnimationCleared) BOOL animationCleared;
 @property(nonatomic, weak) id<MDCInkLayerRippleDelegate> animationDelegate;
@@ -98,13 +94,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 @property(nonatomic, assign) CGRect targetFrame;
 @property(nonatomic, assign) MDCInkRippleState rippleState;
 @property(nonatomic, strong) UIColor *color;
-
 @end
-
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-@interface MDCInkLayerRipple () <CAAnimationDelegate>
-@end
-#endif
 
 @implementation MDCInkLayerRipple
 
@@ -197,14 +187,12 @@ static NSString *const kInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim"
 static NSString *const kInkLayerForegroundPositionAnim = @"foregroundPositionAnim";
 static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
-@interface MDCInkLayerForegroundRipple : MDCInkLayerRipple
-
+@interface MDCInkLayerForegroundRipple ()
 @property(nonatomic, assign) BOOL useCustomInkCenter;
 @property(nonatomic, assign) CGPoint customInkCenter;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundOpacityAnim;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundPositionAnim;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundScaleAnim;
-
 @end
 
 @implementation MDCInkLayerForegroundRipple
@@ -281,6 +269,14 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     self.opacity = 0;
+    __weak MDCInkLayerForegroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^(void) {
+      MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      if ([strongSelf.animationDelegate
+              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
+        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
+      }
+    }];
     [CATransaction commit];
     return;
   }
@@ -379,10 +375,8 @@ static CGFloat const kInkLayerBackgroundBaseOpacityExitDuration = 0.48f;
 static CGFloat const kInkLayerBackgroundFastEnterDuration = 0.12f;
 static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 
-@interface MDCInkLayerBackgroundRipple : MDCInkLayerRipple
-
+@interface MDCInkLayerBackgroundRipple ()
 @property(nonatomic, strong) CAKeyframeAnimation *backgroundOpacityAnim;
-
 @end
 
 @implementation MDCInkLayerBackgroundRipple
@@ -402,6 +396,14 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     self.opacity = 0;
+    __weak MDCInkLayerBackgroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^(void) {
+      MDCInkLayerBackgroundRipple *strongSelf = weakSelf;
+      if ([strongSelf.animationDelegate
+              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
+        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
+      }
+    }];
     [CATransaction commit];
     return;
   }
@@ -433,7 +435,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 @end
 
-@interface MDCInkLayer () <MDCInkLayerRippleDelegate>
+@interface MDCInkLayer ()
 
 /**
  Reset the bottom-most ink applied to the layer with a completion handler to be called on completion
@@ -452,7 +454,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
  @param point Evaporate the ink towards the point.
  @param completionBlock Block called after the completion of the animation.
  */
-- (void)resetBottomInk:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)(void))completionBlock;
+- (void)resetBottomInk:(BOOL)animated
+               toPoint:(CGPoint)point
+            completion:(void (^)(void))completionBlock;
 
 @property(nonatomic, strong) CAShapeLayer *compositeRipple;
 @property(nonatomic, strong) NSMutableArray<MDCInkLayerForegroundRipple *> *foregroundRipples;
@@ -493,11 +497,11 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 }
 
 - (void)resetAllInk:(BOOL)animated {
-  if (self.foregroundRipples.count > 0) {
-    [self.foregroundRipples makeObjectsPerformSelector:@selector(exit:)];
+  for (MDCInkLayerForegroundRipple *foregroundRipple in self.foregroundRipples) {
+    [foregroundRipple exit:animated];
   }
-  if (self.backgroundRipples.count > 0) {
-    [self.backgroundRipples makeObjectsPerformSelector:@selector(exit:)];
+  for (MDCInkLayerBackgroundRipple *backgroundRipple in self.backgroundRipples) {
+    [backgroundRipple exit:animated];
   }
 }
 

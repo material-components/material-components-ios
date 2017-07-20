@@ -24,6 +24,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "MDFTextAccessibility.h"
 #import "private/MaterialAppBarStrings.h"
 #import "private/MaterialAppBarStrings_table.h"
 
@@ -36,6 +37,40 @@ static const CGFloat kStatusBarHeight = 20;
 
 // The Bundle for string resources.
 static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
+
+@implementation MDCAppBarTextColorAccessibilityMutator
+
+- (void)mutate:(nonnull MDCAppBar *)appBar {
+  // Determine what is the appropriate background color
+  // Because navigation bar renders above headerview, it takes presedence
+  UIColor *backgroundColor = appBar.navigationBar.backgroundColor ?:
+      appBar.headerViewController.headerView.backgroundColor;
+  if (!backgroundColor) {
+    return;
+  }
+
+  // Update title label color based on navigationBar/headerView backgroundColor
+  NSMutableDictionary *textAttr =
+      [NSMutableDictionary dictionaryWithDictionary:[appBar.navigationBar titleTextAttributes]];
+  MDFTextAccessibilityOptions options = 0;
+  BOOL isLarge =
+      [MDCTypography isLargeForContrastRatios:[textAttr objectForKey:NSFontAttributeName]];
+  if (isLarge) {
+    options |= MDFTextAccessibilityOptionsLargeFont;
+  }
+  UIColor *textColor =
+      [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                       targetTextAlpha:1.0
+                                                  options:options];
+
+  [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
+  [appBar.navigationBar setTitleTextAttributes:textAttr];
+
+  // Update button's tint color based on navigationBar backgroundColor
+  appBar.navigationBar.tintColor = textColor;
+}
+
+@end
 
 @class MDCAppBarViewController;
 
@@ -213,7 +248,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   }
   UIBarButtonItem *backBarButtonItem = previousViewControler.navigationItem.backBarButtonItem;
   if (!backBarButtonItem) {
-    UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
+    UIImage *backButtonImage = [MDCIcons imageFor_ic_arrow_back];
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if (self.navigationBar.mdc_effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {

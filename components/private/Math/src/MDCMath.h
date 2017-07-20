@@ -63,6 +63,14 @@ static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) {
   return (value == 0.f);
 }
 
+static inline CGFloat MDCPow(CGFloat value, CGFloat power) {
+#if CGFLOAT_IS_DOUBLE
+  return pow(value, power);
+#else
+  return powf(value, power);
+#endif
+}
+
 static inline CGFloat MDCRint(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return rint(value);
@@ -76,5 +84,13 @@ static inline CGFloat MDCRound(CGFloat value) {
   return round(value);
 #else
   return roundf(value);
+#endif
+}
+
+static inline CGFloat MDCSqrt(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return sqrt(value);
+#else
+  return sqrtf(value);
 #endif
 }

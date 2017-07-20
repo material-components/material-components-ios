@@ -61,38 +61,49 @@ static NSString *const MDCTextInputControllerFullWidthUnderlineViewModeKey =
 
 static NSString *const MDCTextInputControllerFullWidthKVOKeyFont = @"font";
 
-static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
+static inline UIColor *MDCTextInputInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputFullWidthHintTextOpacity];
 }
 
-static inline UIColor *MDCTextInputTextErrorColor() {
-  return [MDCPalette redPalette].tint500;
+static inline UIColor *MDCTextInputTextErrorColorDefault() {
+  return [MDCPalette redPalette].accent400;
 }
 
+#pragma mark - Class Properties
+
+static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
+static UIColor *_errorColorDefault;
+static UIColor *_inlinePlaceholderColorDefault;
+
 @interface MDCTextInputControllerFullWidth () {
-  UIColor *_inlinePlaceholderColor;
   BOOL _mdc_adjustsFontForContentSizeCategory;
+
+  UIColor *_inlinePlaceholderColor;
 }
+
+@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
+@property(nonatomic, assign) BOOL isRegisteredForKVO;
+
+@property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 
 @property(nonatomic, strong) NSLayoutConstraint *characterCountY;
 @property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonY;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailingCharacterCountLeading;
-@property(nonatomic, strong) UIFont *customPlaceholderFont;
-@property(nonatomic, strong) UIFont *customTrailingFont;
-@property(nonatomic, copy, readwrite) NSString *errorText;
-@property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
-
-@property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
-@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
-@property(nonatomic, assign) BOOL isRegisteredForKVO;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
+
+@property(nonatomic, copy) NSString *errorAccessibilityValue;
+@property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *previousLeadingText;
+
 @property(nonatomic, strong) UIColor *previousPlaceholderColor;
+
+@property(nonatomic, strong) UIFont *customPlaceholderFont;
+@property(nonatomic, strong) UIFont *customTrailingFont;
 @end
 
 @implementation MDCTextInputControllerFullWidth
@@ -190,7 +201,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)commonMDCTextInputControllerFullWidthInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
-  _errorColor = MDCTextInputTextErrorColor();
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
 }
 
@@ -200,7 +210,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   // This controller will handle Dynamic Type and all fonts for the text input
-  _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory;
+  _mdc_adjustsFontForContentSizeCategory =
+      _textInput.mdc_adjustsFontForContentSizeCategory ||
+      [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
 
@@ -341,7 +353,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     }
   }
 
-  UIColor *textColor = MDCTextInputInlinePlaceholderTextColor();
+  UIColor *textColor = [[self class] inlinePlaceholderColorDefault];
 
   if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
     textColor = self.errorColor;
@@ -401,9 +413,16 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   _errorAccessibilityValue = [errorAccessibilityValue copy];
 }
 
+- (UIColor *)errorColor {
+  if (!_errorColor) {
+    _errorColor = [[self class] errorColorDefault];
+  }
+  return _errorColor;
+}
+
 - (void)setErrorColor:(UIColor *)errorColor {
   if (![_errorColor isEqual:errorColor]) {
-    _errorColor = errorColor;
+    _errorColor = errorColor ? errorColor : [[self class] errorColorDefault];
     if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
       [self updateLeadingUnderlineLabel];
       [self updatePlaceholder];
@@ -411,6 +430,17 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       [self updateUnderline];
     }
   }
+}
+
++ (UIColor *)errorColorDefault {
+  if (!_errorColorDefault) {
+    _errorColorDefault = MDCTextInputTextErrorColorDefault();
+  }
+  return _errorColorDefault;
+}
+
++ (void)setErrorColorDefault:(UIColor *)errorColorDefault {
+  _errorColorDefault = errorColorDefault ? errorColorDefault : MDCTextInputTextErrorColorDefault();
 }
 
 - (void)setErrorText:(NSString *)errorText {
@@ -444,8 +474,21 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (UIColor *)inlinePlaceholderColor {
-  return _inlinePlaceholderColor
-            ? _inlinePlaceholderColor : MDCTextInputInlinePlaceholderTextColor();
+  return _inlinePlaceholderColor ? _inlinePlaceholderColor
+                                 : [[self class] inlinePlaceholderColorDefault];
+}
+
++ (UIColor *)inlinePlaceholderColorDefault {
+  if (!_inlinePlaceholderColorDefault) {
+    _inlinePlaceholderColorDefault = MDCTextInputInlinePlaceholderTextColorDefault();
+  }
+  return _inlinePlaceholderColorDefault;
+}
+
++ (void)setInlinePlaceholderColorDefault:(UIColor *)inlinePlaceholderColorDefault {
+  _inlinePlaceholderColorDefault = inlinePlaceholderColorDefault
+                                       ? inlinePlaceholderColorDefault
+                                       : MDCTextInputInlinePlaceholderTextColorDefault();
 }
 
 - (BOOL)isDisplayingCharacterCountError {
@@ -482,11 +525,27 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return [UIColor clearColor];
 }
 
++ (UIColor *)underlineColorActiveDefault {
+  return [UIColor clearColor];
+}
+
++ (void)setUnderlineColorActiveDefault:(UIColor *)underlineColorActiveDefault {
+  // Not implemented. Underline is always clear.
+}
+
 - (void)setUnderlineColorNormal:(UIColor *)underlineColorNormal {
   [self updateUnderline];
 }
 
 - (UIColor *)underlineColorNormal {
+  return [UIColor clearColor];
+}
+
++ (void)setUnderlineColorNormalDefault:(UIColor *)underlineColorNormalDefault {
+  // Not implemented. Underline is always clear.
+}
+
++ (UIColor *)underlineColorNormalDefault {
   return [UIColor clearColor];
 }
 
@@ -496,6 +555,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (UITextFieldViewMode)underlineViewMode {
   return UITextFieldViewModeNever;
+}
+
++ (UITextFieldViewMode)underlineViewModeDefault {
+  return UITextFieldViewModeNever;
+}
+
++ (void)setUnderlineViewModeDefault:(UITextFieldViewMode)underlineViewModeDefault {
+  // Not implemented. Underline is never shown.
 }
 
 #pragma mark - Layout
@@ -706,7 +773,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
   // Full width text boxes have their character count on the text input line
-  if (self.textInput.text.length) {
+  if (self.textInput.text.length > 0) {
     switch (textField.clearButtonMode) {
       case UITextFieldViewModeWhileEditing:
         editingRect.size.width -= CGRectGetWidth(self.textInput.clearButton.bounds);
@@ -893,6 +960,15 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                                     name:UIContentSizeCategoryDidChangeNotification
                                                   object:nil];
   }
+}
+
++ (BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
+  return _mdc_adjustsFontForContentSizeCategoryDefault;
+}
+
++ (void)setMdc_adjustsFontForContentSizeCategoryDefault:
+        (BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
+  _mdc_adjustsFontForContentSizeCategoryDefault = mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {

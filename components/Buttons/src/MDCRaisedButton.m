@@ -26,6 +26,8 @@
                                     forState:UIControlStateNormal];
   [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed
                                     forState:UIControlStateHighlighted];
+  [[MDCRaisedButton appearance] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [[MDCRaisedButton appearance] setTitleColor:[UIColor blackColor] forState:UIControlStateDisabled];
 }
 
 @end

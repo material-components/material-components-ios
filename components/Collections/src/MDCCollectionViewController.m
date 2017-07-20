@@ -213,7 +213,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section {
   CGFloat bounds = CGRectGetWidth(
       UIEdgeInsetsInsetRect(self.collectionView.bounds, self.collectionView.contentInset));
-  UIEdgeInsets sectionInsets = [self insetsAtSectionIndex:section];
+  UIEdgeInsets sectionInsets = [self collectionView:self.collectionView
+                                             layout:self.collectionView.collectionViewLayout
+                             insetForSectionAtIndex:section];
+
   CGFloat insets = sectionInsets.left + sectionInsets.right;
   if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));

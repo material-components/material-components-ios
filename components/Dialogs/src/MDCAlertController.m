@@ -20,6 +20,11 @@
 #import "MaterialButtons.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
+#import "private/MaterialDialogsStrings.h"
+#import "private/MaterialDialogsStrings_table.h"
+
+// The Bundle for string resources.
+static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @interface MDCAlertAction ()
 
@@ -287,6 +292,36 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   _previousLayoutSize = CGSizeZero;
 
   [self.view setNeedsLayout];
+
+  NSString *key =
+      kMaterialDialogsStringTable[kStr_MaterialDialogsPresentedAccessibilityAnnouncement];
+  NSString *announcement = NSLocalizedStringFromTableInBundle(key,
+                                                              kMaterialDialogsStringsTableName,
+                                                              [[self class] bundle],
+                                                              @"Alert");
+  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
+                                  announcement);
+}
+
+#pragma mark - Resource bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialDialogsBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 - (void)viewWillLayoutSubviews {

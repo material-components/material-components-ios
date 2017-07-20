@@ -448,7 +448,13 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     }
 
     case UIControlContentVerticalAlignmentTop: {
-      return CGRectMake(frame.origin.x, bounds.origin.y, frame.size.width, frame.size.height);
+      // The title frame is vertically centered with the back button but will stick to the top of
+      // the header regardless of the header's height.
+      CGFloat navigationBarCenteredY =
+          MDCFloor(([self intrinsicContentSize].height - frame.size.height) / 2);
+      navigationBarCenteredY = MAX(0, navigationBarCenteredY);
+      return CGRectMake(frame.origin.x, navigationBarCenteredY, frame.size.width,
+                        frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentFill: {
@@ -460,12 +466,18 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (CGRect)mdc_frameAlignedHorizontally:(CGRect)frame
                              alignment:(MDCNavigationBarTitleAlignment)alignment {
   switch (alignment) {
-      // Center align title if desired unless leading icons will overlap frame
+    // Center align title if desired unless leading icons will overlap frame
     case MDCNavigationBarTitleAlignmentCenter: {
       CGFloat xOrigin = CGRectGetMaxX(self.bounds) / 2 - CGRectGetWidth(frame) / 2;
-      if (CGRectGetMinX(frame) <= xOrigin) {
-        return CGRectMake(xOrigin, CGRectGetMinY(frame),
-                          CGRectGetWidth(frame), CGRectGetHeight(frame));
+      CGFloat minX = CGRectGetMinX(frame);
+      // If RTL, we must use distance from maxX to bounds instead
+      if (self.mdc_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionRightToLeft) {
+        minX = CGRectGetMaxX(self.bounds) - CGRectGetMaxX(frame);
+      }
+      if (minX <= xOrigin) {
+        return CGRectMake(xOrigin, CGRectGetMinY(frame), CGRectGetWidth(frame),
+                          CGRectGetHeight(frame));
       }
     }
     // Intentional fall through

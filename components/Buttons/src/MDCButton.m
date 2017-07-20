@@ -52,10 +52,10 @@ static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilit
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 // https://material.io/guidelines/components/buttons.html#buttons-main-buttons
-static const CGFloat MDCButtonDisabledAlpha = 0.1f;
+static const CGFloat MDCButtonDisabledAlpha = 0.12f;
 
 // Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
-static const uint32_t MDCButtonDefaultBackgroundColor = 0x2196F3;
+static const uint32_t MDCButtonDefaultBackgroundColor = 0x191919;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
@@ -130,19 +130,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (self) {
     [self commonMDCButtonInit];
 
-    // TODO(randallli): Add backward compatibility to background colors
-    //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
-    //      self.enabledBackgroundColor =
-    //          [aDecoder decodeObjectForKey:MDCButtonEnabledBackgroundColorKey];
-    //    }
-    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorLightKey]) {
-    //      self.disabledBackgroundColorLight =
-    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorLightKey];
-    //    }
-    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorDarkKey]) {
-    //      self.disabledBackgroundColorDark =
-    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorDarkKey];
-    //    }
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkStyleKey]) {
       self.inkView.inkStyle = [aDecoder decodeIntegerForKey:MDCButtonInkViewInkStyleKey];
     }
@@ -169,10 +156,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
     if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorHintKey]) {
       self.underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCButtonCustomTitleColorKey]) {
-      self.customTitleColor = [aDecoder decodeObjectForKey:MDCButtonCustomTitleColorKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
@@ -213,9 +196,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     [aCoder encodeObject:_underlyingColorHint forKey:MDCButtonUnderlyingColorHintKey];
   }
   [aCoder encodeDouble:self.disabledAlpha forKey:MDCButtonDisableAlphaKey];
-  if (self.customTitleColor) {
-    [aCoder encodeObject:self.customTitleColor forKey:MDCButtonCustomTitleColorKey];
-  }
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
@@ -279,11 +259,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIContentSizeCategoryDidChangeNotification
                                                 object:nil];
-}
-
-- (void)setCustomTitleColor:(UIColor *)customTitleColor {
-  _customTitleColor = customTitleColor;
-  [self updateTitleColor];
 }
 
 - (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {
@@ -628,16 +603,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateBackgroundColor {
-  //  UIColor *color = nil;
-  //  if ([self shouldHaveOpaqueBackground]) {
-  //    if (self.enabled) {
-  ////      color = self.enabledBackgroundColor;
-  //    } else {
-  //      color = [self isDarkColor:_underlyingColorHint] ? _disabledBackgroundColorLight
-  //                                                  : _disabledBackgroundColorDark;
-  //    }
-  //  }
-  [self updateTitleColor];
   [self updateDisabledTitleColor];
   super.backgroundColor = self.currentBackgroundColor;
 }
@@ -649,25 +614,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   BOOL darkBackground = [self isDarkColor:[self underlyingColorHint]];
   [self setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
              forState:UIControlStateDisabled];
-}
-
-- (void)updateTitleColor {
-  if (_customTitleColor) {
-    [self setTitleColor:_customTitleColor forState:UIControlStateNormal];
-    return;
-  }
-
-  if (![self isTransparentColor:[self effectiveBackgroundColor]]) {
-    MDFTextAccessibilityOptions options = 0;
-    if ([MDFTextAccessibility isLargeForContrastRatios:self.titleLabel.font]) {
-      options = MDFTextAccessibilityOptionsLargeFont;
-    }
-    UIColor *color =
-        [MDFTextAccessibility textColorOnBackgroundColor:[self effectiveBackgroundColor]
-                                         targetTextAlpha:[MDCTypography buttonFontOpacity]
-                                                 options:options];
-    [self setTitleColor:color forState:UIControlStateNormal];
-  }
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
@@ -697,6 +643,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 #pragma mark - Deprecations
+
+- (void)setCustomTitleColor:(UIColor *)customTitleColor {
+  [self setTitleColor:customTitleColor forState:UIControlStateNormal];
+}
+
+- (UIColor *)customTitleColor {
+  return [self titleColorForState:UIControlStateNormal];
+}
 
 - (BOOL)shouldCapitalizeTitle {
   return [self isUppercaseTitle];

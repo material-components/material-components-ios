@@ -125,8 +125,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
     XCTAssertTrue("51 / 50".isEqual(textField.trailingUnderlineLabel.text))
-    XCTAssertEqual(MDCPalette.red.tint500, textField.underline?.color)
-    XCTAssertEqual(MDCPalette.red.tint500, textField.trailingUnderlineLabel.textColor)
+    XCTAssertEqual(MDCPalette.red.accent400, textField.underline?.color)
+    XCTAssertEqual(MDCPalette.red.accent400, textField.trailingUnderlineLabel.textColor)
   }
 
   func testCharacterMaxFullWidth() {
@@ -143,7 +143,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
     XCTAssertTrue("51 / 50".isEqual(textField.trailingUnderlineLabel.text))
-    XCTAssertEqual(MDCPalette.red.tint500, textField.trailingUnderlineLabel.textColor)
+    XCTAssertEqual(MDCPalette.red.accent400, textField.trailingUnderlineLabel.textColor)
   }
 
   func testErrorsDefault() {
@@ -181,9 +181,9 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.errorColor = .blue
     XCTAssertEqual(.blue, controller.errorColor)
 
-    XCTAssertNotEqual(MDCPalette.red.tint500, textField.leadingUnderlineLabel.textColor)
-    XCTAssertNotEqual(MDCPalette.red.tint500, textField.trailingUnderlineLabel.textColor)
-    XCTAssertNotEqual(MDCPalette.red.tint500, textField.underline?.color)
+    XCTAssertNotEqual(MDCPalette.red.accent400, textField.leadingUnderlineLabel.textColor)
+    XCTAssertNotEqual(MDCPalette.red.accent400, textField.trailingUnderlineLabel.textColor)
+    XCTAssertNotEqual(MDCPalette.red.accent400, textField.underline?.color)
 
     XCTAssertEqual(.blue, textField.leadingUnderlineLabel.textColor)
     XCTAssertEqual(.blue, textField.trailingUnderlineLabel.textColor)
@@ -238,7 +238,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.underlineViewMode = .never
     XCTAssertEqual(.lightGray, textField.underline?.color)
     controller.underlineViewMode = .always
-    XCTAssertEqual(MDCPalette.indigo.tint500, textField.underline?.color)
+    XCTAssertEqual(MDCPalette.blue.accent700, textField.underline?.color)
   }
 
   func testPresentationFullWidth() {
