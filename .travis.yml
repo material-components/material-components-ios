@@ -14,7 +14,7 @@ branches:
     - stable
     - /^feature-.*$/
 
-xcode_workspace: catalog/MDCCatalog.xcworkspace
+xcode_workspace: ./catalog/MDCCatalog.xcworkspace
 xcode_scheme: MDCCatalog
 
 env:
