@@ -14,6 +14,9 @@ branches:
     - stable
     - /^feature-.*$/
 
+xcode_workspace: catalog/MDCCatalog.xcworkspace
+xcode_scheme: MDCCatalog
+
 env:
   global:
   - LC_CTYPE=en_US.UTF-8
@@ -38,8 +41,9 @@ script:
   - xcodebuild -showsdks
   - pod --version
   - scripts/prep_all
-  - travis_wait scripts/build_all --verbose
-  - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+  - xcodebuild build test
+#  - travis_wait scripts/build_all --verbose
+#  - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
 
 # Upload our testing coverage to codecov.io.
 after_success:
