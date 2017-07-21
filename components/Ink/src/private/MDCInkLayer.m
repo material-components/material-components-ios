@@ -271,6 +271,8 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     __weak MDCInkLayerForegroundRipple *weakSelf = self;
     [CATransaction setCompletionBlock:^(void) {
       MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      [strongSelf removeFromSuperlayer];
+
       if ([strongSelf.animationDelegate
               respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
         [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
@@ -398,6 +400,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     __weak MDCInkLayerBackgroundRipple *weakSelf = self;
     [CATransaction setCompletionBlock:^(void) {
       MDCInkLayerBackgroundRipple *strongSelf = weakSelf;
+      [strongSelf removeFromSuperlayer];
+
       if ([strongSelf.animationDelegate
               respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
         [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
