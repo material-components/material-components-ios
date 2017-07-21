@@ -25,9 +25,8 @@
 
 @interface ButtonsTypicalUseViewController : UIViewController
 
-@property(nonatomic, strong) NSMutableDictionary *views;
-@property(nonatomic, strong) NSMutableArray<NSLayoutConstraint *> *portraitLayoutConstraints;
-@property(nonatomic, strong) NSMutableArray<NSLayoutConstraint *> *landscapeLayoutConstraints;
+@property(nonatomic, strong) NSArray *buttons;
+@property(nonatomic, strong) NSArray *labels;
 
 @end
 
