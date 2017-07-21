@@ -21,6 +21,7 @@
 @property(weak, nonatomic) IBOutlet MDCFlatButton *flatButton;
 @property(weak, nonatomic) IBOutlet MDCRaisedButton *raisedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
+@property (weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
 
 @end
 
@@ -45,10 +46,21 @@
   [self.flatButton setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:1.0]
                              forState:UIControlStateNormal];
   self.flatButton.inkColor = [UIColor colorWithWhite:1.0 alpha:0.1];
-
   self.flatButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
   self.raisedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);
-  self.floatingActionButton.contentEdgeInsets = UIEdgeInsetsMake(0, 128, 0, 0);
+  self.floatingActionButton.contentEdgeInsets = UIEdgeInsetsMake(40, 40, 0, 0);
+
+  [self updateInkStyle:self.inkBoundingSwitch.isOn ? MDCInkStyleBounded : MDCInkStyleUnbounded];
+}
+
+- (void)updateInkStyle:(MDCInkStyle)inkStyle {
+  self.flatButton.inkStyle = inkStyle;
+  self.raisedButton.inkStyle = inkStyle;
+  self.floatingActionButton.inkStyle = inkStyle;
+}
+
+- (IBAction)didChangeInkStyle:(UISwitch *)sender {
+  [self updateInkStyle:sender.isOn ? MDCInkStyleBounded : MDCInkStyleUnbounded];
 }
 
 @end
