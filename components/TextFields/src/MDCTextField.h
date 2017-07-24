@@ -31,8 +31,9 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 @property(nonatomic, assign) UITextBorderStyle borderStyle NS_UNAVAILABLE;
 
 /**
- An overlay view on the side of the input where reading and writing lines begin. In LTR this is
- the Left side. In RTL, the Right side.
+ An overlay view on the leading side.
+ 
+ Note: if RTL is engaged, this will return the .rightView and if LTR, it will return the .leftView.
  */
 @property(nonatomic, nullable, strong) UIView *leadingView;
 
