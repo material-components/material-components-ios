@@ -29,6 +29,14 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.attributedText?.string, string)
   }
 
+  func testConstraintPriorities() {
+    let textField = MDCTextField()
+
+    for constraint in textField.constraints {
+      XCTAssertLessThanOrEqual(constraint.priority, UILayoutPriorityDefaultLow + 10, String(describing: constraint))
+    }
+  }
+
   func testCopyingTextField() {
     let textField = MDCTextField()
 
