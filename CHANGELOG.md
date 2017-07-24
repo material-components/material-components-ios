@@ -1,3 +1,7 @@
+# 29.0.0
+
+* Reverts changes to the title color of MDCFlatButton and MDCRaisedButton.
+
 # 28.0.0
 
 ## API Diffs
