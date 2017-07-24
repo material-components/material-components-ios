@@ -37,12 +37,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
 
-/** 
- 
- This constraint controls the default center Y of the underline view. 
+/**
+ Constraint for center Y of the underline view.
 
- Default is from the top of the text field with constant of height of input's font line-height +
- half padding.
+ Default constant: self.top + font line height + MDCTextInputHalfPadding. 
+ eg: ~4 pts below the input rect.
  */
 @property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
