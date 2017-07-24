@@ -123,6 +123,20 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
                       object:self];
 }
 
+#pragma mark - Layout
+
+- (UIEdgeInsets)textInsets {
+  UIEdgeInsets textInsets = UIEdgeInsetsZero;
+
+  textInsets.top = MDCTextInputFullPadding;
+  textInsets.bottom = MDCTextInputFullPadding;
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
+    return [self.positioningDelegate textInsets:textInsets];
+  }
+  return textInsets;
+}
+
 #pragma mark - Properties Implementation
 
 - (UIButton *)clearButton {
@@ -298,14 +312,14 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 #pragma mark - UITextField Overrides
 
 // This method doesn't have a positioning delegate mirror per se. But it uses the
-// textContainerInsets' value that the positioning delegate can return to inset this text rect.
+// textInsets' value that the positioning delegate can return to inset this text rect.
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = bounds;
 
   // Standard textRect calculation
-  UIEdgeInsets textContainerInset = [_fundament textContainerInset];
-  textRect.origin.x += textContainerInset.left;
-  textRect.size.width -= textContainerInset.left + textContainerInset.right;
+  UIEdgeInsets textInsets = self.textInsets;
+  textRect.origin.x += textInsets.left;
+  textRect.size.width -= textInsets.left + textInsets.right;
 
   // Adjustments for .leftView, .rightView
   // When in RTL mode, the .rightView is presented using the leftViewRectForBounds frame and the
@@ -435,7 +449,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
-  CGFloat centerY = [_fundament textContainerInset].top +
+  CGFloat centerY = self.textInsets.top +
                     (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
   return centerY;
 }

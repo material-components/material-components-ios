@@ -713,18 +713,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 }
 
-- (UIEdgeInsets)textContainerInset {
-  UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
-
-  textContainerInset.top = MDCTextInputFullPadding;
-  textContainerInset.bottom = MDCTextInputFullPadding;
-
-  if ([self.textInput.positioningDelegate respondsToSelector:@selector(textContainerInset:)]) {
-    return [self.textInput.positioningDelegate textContainerInset:textContainerInset];
-  }
-  return textContainerInset;
-}
-
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
   _textInput = textInput;
 
@@ -806,20 +794,28 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)updatePlaceholderPosition {
-  self.placeholderTop.constant = [self textContainerInset].top;
+  if ([_textInput isKindOfClass:[MDCTextField class]]) {
+    MDCTextField *textField = (MDCTextField *)_textInput;
+    self.placeholderTop.constant = textField.textInsets.top;
+  }
 
   [self updatePlaceholderToOverlayViewsPosition];
   [self.textInput invalidateIntrinsicContentSize];
 }
 
 - (NSArray<NSLayoutConstraint *> *)placeholderDefaultConstaints {
+  UIEdgeInsets insets = UIEdgeInsetsZero;
+  if ([_textInput isKindOfClass:[MDCTextField class]]) {
+    insets = ((MDCTextField *)_textInput).textInsets;
+  }
+
   self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                      attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:_relativeSuperview
                                                      attribute:NSLayoutAttributeTop
                                                     multiplier:1
-                                                      constant:[self textContainerInset].top];
+                                                      constant:insets.top];
   [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
 
   // This can be affected by .leftView and .rightView.
@@ -830,7 +826,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                             toItem:_relativeSuperview
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
-                                                          constant:[self textContainerInset].left];
+                                                          constant:insets.left];
   [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
 
   NSLayoutConstraint *placeholderTrailing =
@@ -840,7 +836,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                       toItem:_relativeSuperview
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
-                                    constant:[self textContainerInset].right];
+                                    constant:insets.right];
   placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
   return @[ self.placeholderTop, self.placeholderLeading, placeholderTrailing ];
