@@ -157,14 +157,14 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   underlineTrailing.active = YES;
 
   _underlineY =
-  [NSLayoutConstraint constraintWithItem:self.underline
-                               attribute:NSLayoutAttributeCenterY
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:[self textInsets].top + [self estimatedTextHeight] +
-   MDCTextInputHalfPadding];
+      [NSLayoutConstraint constraintWithItem:self.underline
+                                   attribute:NSLayoutAttributeCenterY
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:[self textInsets].top + [self estimatedTextHeight] +
+      MDCTextInputHalfPadding];
   _underlineY.priority = UILayoutPriorityDefaultLow;
   _underlineY.active = YES;
 }
