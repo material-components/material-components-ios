@@ -248,29 +248,34 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
 - (BOOL)shouldHideSeparatorForCellLayoutAttributes:(MDCCollectionViewLayoutAttributes *)attr {
   BOOL shouldHideSeparator = self.shouldHideSeparators;
-  if (!self.delegate)
+  if (!self.delegate) {
     return shouldHideSeparator;
+  }
 
   NSIndexPath *indexPath = attr.indexPath;
+  BOOL isCell = attr.representedElementCategory == UICollectionElementCategoryCell;
   BOOL isSectionHeader =
       [attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader];
   BOOL isSectionFooter =
       [attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter];
-  BOOL isCell = attr.representedElementCategory == UICollectionElementCategoryCell;
-  if (isSectionHeader && [self.delegate respondsToSelector:@selector
-                                        (collectionView:shouldHideHeaderSeparatorForSection:)]) {
-    shouldHideSeparator = [self.delegate collectionView:_collectionView
-                    shouldHideHeaderSeparatorForSection:indexPath.section];
-  }
-  if (isSectionFooter && [self.delegate respondsToSelector:@selector
-                                        (collectionView:shouldHideFooterSeparatorForSection:)]) {
-    shouldHideSeparator = [self.delegate collectionView:_collectionView
-                    shouldHideFooterSeparatorForSection:indexPath.section];
-  }
-  if (isCell && [self.delegate respondsToSelector:@selector
-                               (collectionView:shouldHideItemSeparatorAtIndexPath:)]) {
-    shouldHideSeparator =
-        [self.delegate collectionView:_collectionView shouldHideItemSeparatorAtIndexPath:indexPath];
+  if (isCell) {
+    if ([self.delegate
+            respondsToSelector:@selector(collectionView:shouldHideItemSeparatorAtIndexPath:)]) {
+      shouldHideSeparator = [self.delegate collectionView:_collectionView
+                       shouldHideItemSeparatorAtIndexPath:indexPath];
+    }
+  } else if (isSectionHeader) {
+    if ([self.delegate
+            respondsToSelector:@selector(collectionView:shouldHideHeaderSeparatorForSection:)]) {
+      shouldHideSeparator = [self.delegate collectionView:_collectionView
+                      shouldHideHeaderSeparatorForSection:indexPath.section];
+    }
+  } else if (isSectionFooter) {
+    if ([self.delegate
+            respondsToSelector:@selector(collectionView:shouldHideFooterSeparatorForSection:)]) {
+      shouldHideSeparator = [self.delegate collectionView:_collectionView
+                      shouldHideFooterSeparatorForSection:indexPath.section];
+    }
   }
   return shouldHideSeparator;
 }
