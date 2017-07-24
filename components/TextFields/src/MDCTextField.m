@@ -92,9 +92,15 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   copy.fundament = [self.fundament copy];
   copy.enabled = self.isEnabled;
+  if ([self.leadingView conformsToProtocol:@protocol(NSCopying)]) {
+    copy.leadingView = [self.leadingView copy];
+  }
   copy.leadingViewMode = self.leadingViewMode;
   copy.placeholder = [self.placeholder copy];
   copy.text = [self.text copy];
+  if ([self.trailingView conformsToProtocol:@protocol(NSCopying)]) {
+    copy.trailingView = [self.trailingView copy];
+  }
   copy.trailingViewMode = self.trailingViewMode;
 
   return copy;

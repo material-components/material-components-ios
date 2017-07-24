@@ -47,22 +47,12 @@ class TextFieldTests: XCTestCase {
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
-
-    let leadingView = UILabel()
-    leadingView.text = "$"
-    textField.leadingView = leadingView
     textField.leadingViewMode = .unlessEditing
-
     textField.mdc_adjustsFontForContentSizeCategory = true
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
-
-    let trailingView = UILabel()
-    trailingView.text = ".com"
-    textField.trailingView = trailingView
     textField.trailingViewMode = .unlessEditing
-
     textField.underline?.color = .red
     textField.underline?.lineHeight = 10
 
@@ -74,21 +64,6 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
-
-      if let leadingViewCopy = textField.leadingView as? UILabel {
-        XCTAssertEqual(leadingViewCopy, leadingView)
-        XCTAssertEqual(leadingViewCopy.text, leadingView.text)
-      } else {
-        XCTFail("No leading view or it isn't a UILabel")
-      }
-
-      if let trailingViewCopy = textField.trailingView as? UILabel {
-        XCTAssertEqual(trailingViewCopy, trailingView)
-        XCTAssertEqual(trailingViewCopy.text, trailingView.text)
-      } else {
-        XCTFail("No trailing view or it isn't a UILabel")
-      }
-
       XCTAssertEqual(textField.leadingViewMode, textFieldCopy.leadingViewMode)
       XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
                      textFieldCopy.mdc_adjustsFontForContentSizeCategory)
