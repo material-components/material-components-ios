@@ -148,7 +148,7 @@
 /**
  Controls when the trailing view will display.
  */
- @property(nonatomic) UITextFieldViewMode trailingViewMode;
+ @property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
 
 /** The underline view */
 @property(nonatomic, nullable, strong, readonly) MDCTextInputUnderlineView *underline;
