@@ -197,6 +197,22 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   _fundament.enabled = enabled;
 }
 
+- (UIView *)leadingView {
+  return self.leftView;
+}
+
+- (void)setLeadingView:(UIView *)leadingView {
+  self.leftView = leadingView;
+}
+
+- (UITextFieldViewMode)leadingViewMode {
+  return self.leadingViewMode;
+}
+
+- (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
+  self.leftViewMode = leadingViewMode;
+}
+
 - (NSString *)placeholder {
   return self.fundament.placeholder;
 }
@@ -212,6 +228,22 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [_fundament didSetText];
   [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
                                                       object:self];
+}
+
+- (UIView *)trailingView {
+  return self.rightView;
+}
+
+- (void)setTrailingView:(UIView *)trailingView {
+  self.trailingView = trailingView;
+}
+
+- (UITextFieldViewMode)trailingViewMode {
+  return self.rightViewMode;
+}
+
+- (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
+  self.trailingViewMode = trailingViewMode;
 }
 
 #pragma mark - UITextField Overrides

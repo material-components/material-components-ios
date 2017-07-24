@@ -94,7 +94,7 @@ class TextFieldTests: XCTestCase {
     }
   }
 
-  func testTextFieldOverlayViews() {
+  func testOverlayViews() {
     let textField = MDCTextField()
 
     let leftView = UILabel()
@@ -110,6 +110,12 @@ class TextFieldTests: XCTestCase {
 
     XCTAssertTrue(textField.subviews.contains(leftView))
     XCTAssertTrue(textField.subviews.contains(rightView))
+
+    XCTAssertEqual(textField.leadingView, leftView)
+    XCTAssertEqual(textField.leadingView, textField.leftView)
+
+    XCTAssertEqual(textField.trailingView, rightView)
+    XCTAssertEqual(textField.trailingView, textField.rightView)
   }
 
   func testSerializationTextField() {
