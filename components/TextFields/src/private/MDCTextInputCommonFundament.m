@@ -101,8 +101,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize enabled = _enabled;
 @synthesize hidesPlaceholderOnInput = _hidesPlaceholderOnInput;
 @synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
-@synthesize leadingView = _leadingView;
-@synthesize leadingViewMode = _leadingViewMode;
 @synthesize placeholderLabel = _placeholderLabel;
 @synthesize positioningDelegate = _positioningDelegate;
 @synthesize textColor = _textColor;

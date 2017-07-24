@@ -29,14 +29,6 @@ extern const CGFloat MDCTextInputHalfPadding;
 /** Whether the text field is enabled. */
 @property(nonatomic, assign, getter=isEnabled) BOOL enabled;
 
-/**
- An overlay view on the side of the input where reading and writing lines begin. In LTR this is
- the Left side. In RTL, the Right side.
- */
-@property(nonatomic, nullable, strong) UIView *leadingView;
-
-@property(nonatomic) UITextFieldViewMode leadingViewMode;
-
 /** The color of the input's text. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
