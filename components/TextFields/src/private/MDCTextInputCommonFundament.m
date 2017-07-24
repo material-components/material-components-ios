@@ -98,6 +98,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize clearButton = _clearButton;
 @synthesize clearButtonColor = _clearButtonColor;
 @synthesize clearButtonMode = _clearButtonMode;
+@synthesize enabled = _enabled;
 @synthesize hidesPlaceholderOnInput = _hidesPlaceholderOnInput;
 @synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
 @synthesize placeholderLabel = _placeholderLabel;
