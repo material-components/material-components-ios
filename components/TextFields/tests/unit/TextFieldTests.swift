@@ -29,6 +29,16 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.attributedText?.string, string)
   }
 
+  // All the constraints created internally by the MDCTextField need to have a rather low priority 
+  // so they can be overridden by a controller from the outside.
+  func testConstraintPriorities() {
+    let textField = MDCTextField()
+
+    for constraint in textField.constraints {
+      XCTAssertLessThanOrEqual(constraint.priority, UILayoutPriorityDefaultLow + 10, String(describing: constraint))
+    }
+  }
+
   func testCopyingTextField() {
     let textField = MDCTextField()
 
