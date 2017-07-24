@@ -23,8 +23,8 @@
 #import "MaterialTypography.h"
 
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
-static NSString *const MDCTextFieldRightViewModeKey = @"MDCTextFieldRightViewModeKey";
 static NSString *const MDCTextFieldLeftViewModeKey = @"MDCTextFieldLeftViewModeKey";
+static NSString *const MDCTextFieldRightViewModeKey = @"MDCTextFieldRightViewModeKey";
 
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
