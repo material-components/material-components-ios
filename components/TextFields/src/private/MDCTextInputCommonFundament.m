@@ -438,7 +438,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)unsubscribeFromKVO {
-  if (!self.textInput || !self.isRegisteredForKVO) {
+  if (!self.underline || !self.isRegisteredForKVO) {
     return;
   }
   @try {
