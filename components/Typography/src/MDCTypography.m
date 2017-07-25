@@ -26,6 +26,9 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma mark - Font loader access
 
 + (void)setFontLoader:(id<MDCTypographyFontLoading>)fontLoader {
+  if (fontLoader && fontLoader != gFontLoader) {
+    [[NSNotificationCenter defaultCenter] removeObserver:gFontLoader];
+  }
   gFontLoader = fontLoader;
   NSAssert(gFontLoader,
            @"Font loader can't be null. The font loader will be reset to the default font loader.");
@@ -158,8 +161,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   UIFontDescriptor *fontDescriptor =
       [font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
   UIFont *fontFromDescriptor = [UIFont fontWithDescriptor:fontDescriptor size:0];
-  return fontFromDescriptor
-             ? fontFromDescriptor : [UIFont italicSystemFontOfSize:font.pointSize];
+  return fontFromDescriptor ? fontFromDescriptor : [UIFont italicSystemFontOfSize:font.pointSize];
 }
 
 + (UIFont *)boldFontFromFont:(UIFont *)font {
@@ -173,8 +175,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   }
   UIFontDescriptor *fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits:traits];
   UIFont *fontFromDescriptor = [UIFont fontWithDescriptor:fontDescriptor size:0];
-  return fontFromDescriptor
-             ? fontFromDescriptor : [UIFont boldSystemFontOfSize:font.pointSize];
+  return fontFromDescriptor ? fontFromDescriptor : [UIFont boldSystemFontOfSize:font.pointSize];
 }
 
 #pragma mark - Private
@@ -185,45 +186,135 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 @end
 
+@interface MDCSystemFontLoader ()
+
+/**
+ Basic cache to keep track of recently-used fonts.
+ */
+@property(nonatomic, strong) NSCache *fontCache;
+
+@end
+
 @implementation MDCSystemFontLoader
 
-- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _fontCache = [[NSCache alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didChangeContentSizeCategory)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
   }
-  return [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
+  return self;
+}
+
+- (void)didChangeContentSizeCategory {
+  [_fontCache removeAllObjects];
+}
+
+- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  NSString *cacheKey = [NSString stringWithFormat:@"light-%06f", fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
+  }
+
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
+  } else {
+    font = [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
+  }
+
+  if (font) {
+    [self.fontCache setObject:font forKey:cacheKey];
+  }
+  return font;
 }
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+  NSString *cacheKey = [NSString stringWithFormat:@"regular-%06f", fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
   }
-  return [UIFont systemFontOfSize:fontSize];
+
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+  } else {
+    font = [UIFont systemFontOfSize:fontSize];
+  }
+  if (font) {
+    [self.fontCache setObject:font forKey:cacheKey];
+  }
+  return font;
 }
 
 - (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
+  NSString *cacheKey = [NSString stringWithFormat:@"medium-%06f", fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
   }
-  return [UIFont fontWithName:@"HelveticaNeue-Medium" size:fontSize];
+
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
+  } else {
+    font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:fontSize];
+  }
+  if (font) {
+    [self.fontCache setObject:font forKey:cacheKey];
+  }
+  return font;
 }
 
 - (UIFont *)boldFontOfSize:(CGFloat)fontSize {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
+  NSString *cacheKey = [NSString stringWithFormat:@"bold-%06f", fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
   }
-  return [UIFont boldSystemFontOfSize:fontSize];
+
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
+  } else {
+    font = [UIFont boldSystemFontOfSize:fontSize];
+  }
+  if (font) {
+    [self.fontCache setObject:font forKey:cacheKey];
+  }
+  return font;
 }
 
 - (UIFont *)italicFontOfSize:(CGFloat)fontSize {
-  return [UIFont italicSystemFontOfSize:fontSize];
+  NSString *cacheKey = [NSString stringWithFormat:@"italic-%06f", fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
+  }
+
+  font = [UIFont italicSystemFontOfSize:fontSize];
+  if (font) {
+    [self.fontCache setObject:font forKey:cacheKey];
+  }
+  return font;
 }
 
 - (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
+  NSString *cacheKey = [NSString stringWithFormat:@"boldItalic-%06f", fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
+  }
+  
   UIFont *regular = [self regularFontOfSize:fontSize];
   UIFontDescriptor *descriptor = [regular.fontDescriptor
       fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
-  return [UIFont fontWithDescriptor:descriptor size:fontSize];
+  font = [UIFont fontWithDescriptor:descriptor size:fontSize];
+  if (font) {
+    [self.fontCache setObject:font forKey:cacheKey];
+  }
+  return font;
 }
 
 - (BOOL)isLargeForContrastRatios:(UIFont *)font {
