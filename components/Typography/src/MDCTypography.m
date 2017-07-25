@@ -26,7 +26,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma mark - Font loader access
 
 + (void)setFontLoader:(id<MDCTypographyFontLoading>)fontLoader {
-  if (fontLoader && fontLoader != gFontLoader) {
+  if (gFontLoader && fontLoader != gFontLoader) {
     [[NSNotificationCenter defaultCenter] removeObserver:gFontLoader];
   }
   gFontLoader = fontLoader;
