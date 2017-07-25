@@ -110,8 +110,11 @@ static MDCCollectionViewLayoutAttributes* footer1() {
   styler.shouldHideSeparators = YES;
 
   // Then
+  XCTAssertTrue([styler shouldHideSeparatorForCellLayoutAttributes:cell00()]);
   XCTAssertTrue([styler shouldHideSeparatorForCellLayoutAttributes:cell01()]);
   XCTAssertTrue([styler shouldHideSeparatorForCellLayoutAttributes:header0()]);
+  XCTAssertTrue([styler shouldHideSeparatorForCellLayoutAttributes:header1()]);
+  XCTAssertTrue([styler shouldHideSeparatorForCellLayoutAttributes:footer0()]);
   XCTAssertTrue([styler shouldHideSeparatorForCellLayoutAttributes:footer1()]);
 }
 
@@ -128,9 +131,12 @@ static MDCCollectionViewLayoutAttributes* footer1() {
   styler.shouldHideSeparators = NO;
 
   // Then
+  XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:cell00()]);
   XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:cell01()]);
   XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:header0()]);
+  XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:header1()]);
   XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:footer0()]);
+  XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:footer1()]);
 }
 
 @end

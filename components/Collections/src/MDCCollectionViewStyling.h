@@ -145,6 +145,8 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 /**
  Returns whether the separator should be hidden for the cell with this layout attributes, determined
  by the cell position and type.
+ This method may override the shouldHideSeparators property depending on which delegate methods are
+ implemented.
 
  @param attr The cell's layout attributes.
  @return Whether the separtor should be hidden.
