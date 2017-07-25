@@ -132,6 +132,9 @@
 /** The color of the text in the input. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
+/** Insets used to calculate the spacing of subviews. */
+@property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
+
 /**
  The label on the trailing side under the input.
 

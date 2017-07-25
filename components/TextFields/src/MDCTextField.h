@@ -42,7 +42,4 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
  */
 @property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
 
-/** Insets used to calculate the spacing of subviews. */
-@property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
-
 @end
