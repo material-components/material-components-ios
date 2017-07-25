@@ -28,13 +28,13 @@
 @required
 
 /** Asks the receiver to return a font with a light weight. FontSize must be larger tha 0. */
-- (nonnull UIFont *)lightFontOfSize:(CGFloat)fontSize;
+- (nullable UIFont *)lightFontOfSize:(CGFloat)fontSize;
 
 /** Asks the receiver to return a font with a normal weight. FontSize must be larger tha 0. */
 - (nonnull UIFont *)regularFontOfSize:(CGFloat)fontSize;
 
 /** Asks the receiver to return a font with a medium weight. FontSize must be larger tha 0. */
-- (nonnull UIFont *)mediumFontOfSize:(CGFloat)fontSize;
+- (nullable UIFont *)mediumFontOfSize:(CGFloat)fontSize;
 
 @optional
 
@@ -45,7 +45,7 @@
 - (nonnull UIFont *)italicFontOfSize:(CGFloat)fontSize;
 
 /** Asks the receiver to return a font with an italic bold weight. FontSize must be larger tha 0. */
-- (nonnull UIFont *)boldItalicFontOfSize:(CGFloat)fontSize;
+- (nullable UIFont *)boldItalicFontOfSize:(CGFloat)fontSize;
 
 /** Returns a bold version of the specified font. */
 - (nonnull UIFont *)boldFontFromFont:(nonnull UIFont *)font;
