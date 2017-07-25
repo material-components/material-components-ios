@@ -929,7 +929,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self.placeholderTrailingCharacterCountLeading.active = NO;
   self.placeholderTrailingSuperviewTrailing.active = NO;
 
-  UIEdgeInsets insets = [self textContainerInset:UIEdgeInsetsZero];
+  UIEdgeInsets insets = [self textInsets:UIEdgeInsetsZero];
 
   if (self.isFloatingEnabled) {
     self.heightConstraint.constant =
@@ -959,7 +959,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 // clang-format off
 /**
- textContainerInset: is the source of truth for vertical layout. It's used to figure out the proper
+ textInsets: is the source of truth for vertical layout. It's used to figure out the proper
  height and also where to place the placeholder / text field.
  
  NOTE: It's applied before the textRect is flipped for RTL. So all calculations are done here à la
@@ -976,17 +976,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
  MAX(underlineLabelsOffset,MDCTextInputDefaultVerticalHalfPadding)           // Padding and/or labels
  */
 // clang-format on
-- (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
-  UIEdgeInsets textContainerInset = defaultInsets;
+  UIEdgeInsets textInsets = defaultInsets;
 
   if (!self.isFloatingEnabled) {
     return defaultInsets;
   }
 
-  textContainerInset.top = MDCTextInputDefaultVerticalPadding +
+  textInsets.top = MDCTextInputDefaultVerticalPadding +
                            MDCRint(self.textInput.placeholderLabel.font.lineHeight *
                                    (CGFloat)self.floatingPlaceholderScale.floatValue) +
                                    MDCTextInputDefaultVerticalHalfPadding;
@@ -1007,9 +1007,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGFloat underlineOffset = MDCTextInputDefaultVerticalHalfPadding + underlineLabelsOffset;
 
   // .bottom = underlineOffset + the half padding above the line but below the text field
-  textContainerInset.bottom = underlineOffset + MDCTextInputDefaultVerticalHalfPadding;
+  textInsets.bottom = underlineOffset + MDCTextInputDefaultVerticalHalfPadding;
 
-  return textContainerInset;
+  return textInsets;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {

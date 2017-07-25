@@ -37,6 +37,14 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
 
+/**
+ Constraint for center Y of the underline view.
+
+ Default constant: self.top + font line height + MDCTextInputHalfPadding. 
+ eg: ~4 pts below the input rect.
+ */
+@property(nonatomic, strong) NSLayoutConstraint *underlineY;
+
 @end
 
 @implementation MDCTextField
@@ -112,6 +120,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   // Set the clear button color to black with 54% opacity.
   [self setClearButtonColor:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
 
+  [self setupUnderlineConstraints];
+
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
                     selector:@selector(textFieldDidBeginEditing:)
@@ -121,6 +131,75 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
                     selector:@selector(textFieldDidChange:)
                         name:UITextFieldTextDidChangeNotification
                       object:self];
+}
+
+#pragma mark - Underline View Implementation
+
+- (void)setupUnderlineConstraints {
+  NSLayoutConstraint *underlineLeading = [NSLayoutConstraint constraintWithItem:self.underline
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                                                       constant:0];
+  underlineLeading.priority = UILayoutPriorityDefaultLow;
+  underlineLeading.active = YES;
+
+  NSLayoutConstraint *underlineTrailing = [NSLayoutConstraint constraintWithItem:self.underline
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                                                        constant:0];
+  underlineTrailing.priority = UILayoutPriorityDefaultLow;
+  underlineTrailing.active = YES;
+
+  _underlineY =
+      [NSLayoutConstraint constraintWithItem:self.underline
+                                   attribute:NSLayoutAttributeCenterY
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:[self textInsets].top + [self estimatedTextHeight] +
+      MDCTextInputHalfPadding];
+  _underlineY.priority = UILayoutPriorityDefaultLow;
+  _underlineY.active = YES;
+}
+
+- (CGFloat)underlineYConstant {
+  return [self textInsets].top + [self estimatedTextHeight] + MDCTextInputHalfPadding;
+}
+
+- (BOOL)needsUpdateUnderlinePosition {
+  return MDCCGFloatEqual(self.underlineY.constant, [self underlineYConstant]);
+}
+
+- (void)updateUnderlinePosition {
+  self.underlineY.constant = [self underlineYConstant];
+  [self invalidateIntrinsicContentSize];
+}
+
+#pragma mark - Layout
+
+- (UIEdgeInsets)textInsets {
+  UIEdgeInsets textInsets = UIEdgeInsetsZero;
+
+  textInsets.top = MDCTextInputFullPadding;
+  textInsets.bottom = MDCTextInputFullPadding;
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
+    return [self.positioningDelegate textInsets:textInsets];
+  }
+  return textInsets;
+}
+
+- (CGFloat)estimatedTextHeight {
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
+
+  return estimatedTextHeight;
 }
 
 #pragma mark - Properties Implementation
@@ -298,14 +377,14 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 #pragma mark - UITextField Overrides
 
 // This method doesn't have a positioning delegate mirror per se. But it uses the
-// textContainerInsets' value that the positioning delegate can return to inset this text rect.
+// textInsets' value that the positioning delegate can return to inset this text rect.
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = bounds;
 
   // Standard textRect calculation
-  UIEdgeInsets textContainerInset = [_fundament textContainerInset];
-  textRect.origin.x += textContainerInset.left;
-  textRect.size.width -= textContainerInset.left + textContainerInset.right;
+  UIEdgeInsets textInsets = self.textInsets;
+  textRect.origin.x += textInsets.left;
+  textRect.size.width -= textInsets.left + textInsets.right;
 
   // Adjustments for .leftView, .rightView
   // When in RTL mode, the .rightView is presented using the leftViewRectForBounds frame and the
@@ -354,7 +433,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
       (CGRectGetHeight(bounds) / 2.f) - MDCRint(MAX(self.font.lineHeight,
                                                     self.placeholderLabel.font.lineHeight) /
                                                 2.f);  // Text field or placeholder
-  actualY = textContainerInset.top - actualY;
+  actualY = textInsets.top - actualY;
   textRect.origin.y = actualY;
 
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
@@ -435,7 +514,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
-  CGFloat centerY = [_fundament textContainerInset].top +
+  CGFloat centerY = self.textInsets.top +
                     (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
   return centerY;
 }
@@ -454,9 +533,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
-
-  CGFloat height = MDCTextInputFullPadding + estimatedTextHeight + MDCTextInputHalfPadding * 2.f;
+  CGFloat height = MDCTextInputFullPadding + [self estimatedTextHeight] + MDCTextInputHalfPadding * 2.f;
 
   CGFloat underlineLabelsHeight =
       MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f,
@@ -481,11 +558,15 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [super layoutSubviews];
 
   [_fundament layoutSubviewsOfInput];
+  if ([self needsUpdateUnderlinePosition]) {
+    [self setNeedsUpdateConstraints];
+  }
 }
 
 - (void)updateConstraints {
   [_fundament updateConstraintsOfInput];
 
+  [self updateUnderlinePosition];
   [super updateConstraints];
 }
 
