@@ -174,10 +174,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (BOOL)needsUpdateUnderlinePosition {
-  NSInteger currentConstant = (NSInteger)(self.underlineY.constant * 1000);
-  NSInteger idealConstant = (NSInteger)([self underlineYConstant] * 1000);
-
-  return currentConstant != idealConstant;
+  return MDCCGFloatEqual(self.underlineY.constant, [self underlineYConstant]);
 }
 
 - (void)updateUnderlinePosition {
