@@ -85,8 +85,7 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
 
-  if (self.state == UIGestureRecognizerStateBegan
-      || self.state == UIGestureRecognizerStateChanged) {
+  if (_hasTouch) {
     self.state = UIGestureRecognizerStateEnded;
   }
 }
@@ -94,7 +93,9 @@
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
 
-  self.state = UIGestureRecognizerStateCancelled;
+  if (_hasTouch) {
+    self.state = UIGestureRecognizerStateCancelled;
+  }
 }
 
 - (void)updateState:(NSSet<UITouch *> *)touches {
