@@ -477,7 +477,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   void (^animationBlock)(void);
 
   // The animation is accomplished pretty simply. A constraint for vertical and a constraint for
-  // horizontal offset, both with a required priority (1000), are acivated to the placeholderLabel.
+  // horizontal offset, both with a required priority (1000), are acivated on the placeholderLabel.
   // A simple scale transform is also applied. Then it's animated through the UIView animation API
   // (layoutIfNeeded). If in reverse (isToUp == NO), these things are just removed / deactivated.
 
