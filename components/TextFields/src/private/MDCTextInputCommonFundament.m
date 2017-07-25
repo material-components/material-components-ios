@@ -75,18 +75,22 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-@property(nonatomic, strong) UIImage *clearButtonImage;
-@property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
+
+@property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingRightViewLeading;
-@property(nonatomic, strong) UIView *relativeSuperview;
-@property(nonatomic, weak) UIView<MDCTextInput> *textInput;
 @property(nonatomic, strong) NSLayoutConstraint *underlineY;
+
+@property(nonatomic, strong) UIImage *clearButtonImage;
+
+@property(nonatomic, strong) UIView *relativeSuperview;
+
+@property(nonatomic, weak) UIView<MDCTextInput> *textInput;
 
 @end
 
