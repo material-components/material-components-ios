@@ -188,12 +188,13 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   detailFrame.origin.x = 0;
 
   // Adjust the labels Y origin.
-  if ([self numberOfAllVisibleTextLines] == 1) {
+  NSInteger numberOfAllVisibleTextLines = [self numberOfAllVisibleTextLinesForLabelSize:textFrame.size detailSize:detailFrame.size];
+  if (numberOfAllVisibleTextLines == 1) {
     // Alignment for single line.
     textFrame.origin.y = (boundsHeight / 2) - (textFrame.size.height / 2);
     detailFrame.origin.y = (boundsHeight / 2) - (detailFrame.size.height / 2);
 
-  } else if ([self numberOfAllVisibleTextLines] == 2) {
+  } else if (numberOfAllVisibleTextLines == 2) {
     if (!CGRectIsEmpty(textFrame) && !CGRectIsEmpty(detailFrame)) {
       // Alignment for two lines.
       textFrame.origin.y =
@@ -206,7 +207,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
       detailFrame.origin.y = (boundsHeight / 2) - (detailFrame.size.height / 2);
     }
 
-  } else if ([self numberOfAllVisibleTextLines] == 3) {
+  } else if (numberOfAllVisibleTextLines == 3) {
     if (!CGRectIsEmpty(textFrame) && !CGRectIsEmpty(detailFrame)) {
       // Alignment for three lines.
       textFrame.origin.y =
@@ -231,12 +232,12 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
                                           self.mdc_effectiveUserInterfaceLayoutDirection);
 }
 
-- (NSInteger)numberOfAllVisibleTextLines {
-  return [self numberOfLinesForLabel:_textLabel] + [self numberOfLinesForLabel:_detailTextLabel];
+- (NSInteger)numberOfAllVisibleTextLinesForLabelSize:(CGSize)labelSize detailSize:(CGSize)detailSize {
+  return [self numberOfLinesForLabel:_textLabel withSize:labelSize] + [self numberOfLinesForLabel:_detailTextLabel withSize:detailSize];
 }
 
-- (NSInteger)numberOfLinesForLabel:(UILabel *)label {
-  CGSize size = [self frameSizeForLabel:label];
+- (NSInteger)numberOfLinesForLabel:(UILabel *)label withSize:(CGSize)aSize {
+  CGSize size = CGSizeEqualToSize(CGSizeZero, aSize) ? [self frameSizeForLabel:label] : aSize;
   return (NSInteger)floor(size.height / label.font.lineHeight);
 }
 
