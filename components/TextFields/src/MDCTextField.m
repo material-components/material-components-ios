@@ -23,6 +23,9 @@
 #import "MaterialTypography.h"
 
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
+static NSString *const MDCTextFieldLeftViewModeKey = @"MDCTextFieldLeftViewModeKey";
+static NSString *const MDCTextFieldRightViewModeKey = @"MDCTextFieldRightViewModeKey";
+
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
 // The image we use for the clear button has a little too much air around it. So we have to shrink
@@ -54,11 +57,15 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   self = [super initWithCoder:aDecoder];
   if (self) {
     NSString *interfaceBuilderPlaceholder = super.placeholder;
-    [self commonMDCTextFieldInitialization];
 
     MDCTextInputCommonFundament *fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey];
     _fundament =
         fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+
+    [self commonMDCTextFieldInitialization];
+
+    self.leftViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldLeftViewModeKey];
+    self.rightViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldRightViewModeKey];
 
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
@@ -76,15 +83,25 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
   [aCoder encodeObject:self.fundament forKey:MDCTextFieldFundamentKey];
+  [aCoder encodeInteger:self.leftViewMode forKey:MDCTextFieldLeftViewModeKey];
+  [aCoder encodeInteger:self.rightViewMode forKey:MDCTextFieldRightViewModeKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCTextField *copy = [[[self class] alloc] init];
+  MDCTextField *copy = [[[self class] alloc] initWithFrame:self.frame];
 
   copy.fundament = [self.fundament copy];
   copy.enabled = self.isEnabled;
+  if ([self.leadingView conformsToProtocol:@protocol(NSCopying)]) {
+    copy.leadingView = [self.leadingView copy];
+  }
+  copy.leadingViewMode = self.leadingViewMode;
   copy.placeholder = [self.placeholder copy];
   copy.text = [self.text copy];
+  if ([self.trailingView conformsToProtocol:@protocol(NSCopying)]) {
+    copy.trailingView = [self.trailingView copy];
+  }
+  copy.trailingViewMode = self.trailingViewMode;
 
   return copy;
 }
@@ -197,6 +214,38 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   _fundament.enabled = enabled;
 }
 
+- (UIView *)leadingView {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    return self.leftView;
+  } else {
+    return self.rightView;
+  }
+}
+
+- (void)setLeadingView:(UIView *)leadingView {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    self.leftView = leadingView;
+  } else {
+    self.rightView = leadingView;
+  }
+}
+
+- (UITextFieldViewMode)leadingViewMode {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    return self.leftViewMode;
+  } else {
+    return self.rightViewMode;
+  }
+}
+
+- (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    self.leftViewMode = leadingViewMode;
+  } else {
+    self.rightViewMode = leadingViewMode;
+  }
+}
+
 - (NSString *)placeholder {
   return self.fundament.placeholder;
 }
@@ -212,6 +261,38 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [_fundament didSetText];
   [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
                                                       object:self];
+}
+
+- (UIView *)trailingView {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    return self.rightView;
+  } else {
+    return self.leftView;
+  }
+}
+
+- (void)setTrailingView:(UIView *)trailingView {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    self.rightView = trailingView;
+  } else {
+    self.leftView = trailingView;
+  }
+}
+
+- (UITextFieldViewMode)trailingViewMode {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    return self.rightViewMode;
+  } else {
+    return self.leftViewMode;
+  }
+}
+
+- (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    self.rightViewMode = trailingViewMode;
+  } else {
+    self.leftViewMode = trailingViewMode;
+  }
 }
 
 #pragma mark - UITextField Overrides

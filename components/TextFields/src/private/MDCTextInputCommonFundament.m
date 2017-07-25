@@ -105,6 +105,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize positioningDelegate = _positioningDelegate;
 @synthesize textColor = _textColor;
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
+@synthesize trailingView = _trailingView;
+@synthesize trailingViewMode = _trailingViewMode;
 @synthesize underline = _underline;
 
 - (instancetype)init {

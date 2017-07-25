@@ -139,6 +139,17 @@
  */
 @property(nonatomic, nonnull, strong, readonly) UILabel *trailingUnderlineLabel;
 
+/**
+ An overlay view on the side of the input opposite from where reading and writing lines begin. In
+ LTR this means it will show on the Right side. In LTR, the Left side.
+ */
+@property(nonatomic, nullable, strong) UIView *trailingView;
+
+/**
+ Controls when the trailing view will display.
+ */
+ @property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
 /** The underline view */
 @property(nonatomic, nullable, strong, readonly) MDCTextInputUnderlineView *underline;
 

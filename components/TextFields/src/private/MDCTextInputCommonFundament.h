@@ -26,6 +26,9 @@ extern const CGFloat MDCTextInputHalfPadding;
 /** The color of the caret indicating where inputted characters will be placed (in the text.) */
 @property(nonatomic, nullable, strong) UIColor *cursorColor;
 
+/** Whether the text field is enabled. */
+@property(nonatomic, assign, getter=isEnabled) BOOL enabled;
+
 /** The color of the input's text. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
@@ -61,4 +64,5 @@ extern const CGFloat MDCTextInputHalfPadding;
 - (void)updateConstraintsOfInput;
 
 - (nullable instancetype)initWithCoder:(NSCoder *_Nonnull)aDecoder NS_DESIGNATED_INITIALIZER;
+
 @end

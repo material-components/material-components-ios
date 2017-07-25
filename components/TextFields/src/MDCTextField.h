@@ -30,4 +30,19 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 /** MDCTextField does not implement borders that conform to UITextBorderStyle. */
 @property(nonatomic, assign) UITextBorderStyle borderStyle NS_UNAVAILABLE;
 
+/**
+ An overlay view on the leading side.
+ 
+ Note: if RTL is engaged, this will return the .rightView and if LTR, it will return the .leftView.
+ */
+@property(nonatomic, nullable, strong) UIView *leadingView;
+
+/**
+ Controls when the leading view will display.
+ */
+@property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
+
+/** Insets used to calculate the spacing of subviews. */
+@property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
+
 @end
