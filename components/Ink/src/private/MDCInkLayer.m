@@ -484,7 +484,6 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 - (void)layoutSublayers {
   [super layoutSublayers];
-  _compositeRipple.frame = self.frame;
   CGFloat radius = MDCInkLayerRadiusBounds(_maxRippleRadius,
                                            MDCInkLayerRectHypotenuse(self.bounds) / 2.f, _bounded);
 
