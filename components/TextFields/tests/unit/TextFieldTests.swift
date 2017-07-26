@@ -86,7 +86,7 @@ class TextFieldTests: XCTestCase {
     XCTAssertNotEqual(UIFont.systemFont(ofSize: UIFont.smallSystemFontSize), textField.font)
   }
 
-  func testTextFieldMDCDynamicTypeAPI() {
+  func testMDCDynamicTypeAPI() {
     let textField = MDCTextField()
 
     textField.mdc_adjustsFontForContentSizeCategory = true
