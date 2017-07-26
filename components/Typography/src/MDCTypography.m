@@ -26,7 +26,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma mark - Font loader access
 
 + (void)setFontLoader:(id<MDCTypographyFontLoading>)fontLoader {
-  if (fontLoader && fontLoader != gFontLoader) {
+  if (gFontLoader && fontLoader != gFontLoader) {
     [[NSNotificationCenter defaultCenter] removeObserver:gFontLoader];
   }
   gFontLoader = fontLoader;
@@ -214,7 +214,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   [_fontCache removeAllObjects];
 }
 
-- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+- (nullable UIFont *)lightFontOfSize:(CGFloat)fontSize {
   NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
   UIFont *font = [self.fontCache objectForKey:cacheKey];
   if (font) {
@@ -245,13 +245,13 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   } else {
     font = [UIFont systemFontOfSize:fontSize];
   }
-  if (font) {
-    [self.fontCache setObject:font forKey:cacheKey];
-  }
-  return font;
+
+  [self.fontCache setObject:font forKey:cacheKey];
+
+  return (UIFont *)font;
 }
 
-- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+- (nullable UIFont *)mediumFontOfSize:(CGFloat)fontSize {
   NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
   UIFont *font = [self.fontCache objectForKey:cacheKey];
   if (font) {
@@ -281,9 +281,9 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   } else {
     font = [UIFont boldSystemFontOfSize:fontSize];
   }
-  if (font) {
-    [self.fontCache setObject:font forKey:cacheKey];
-  }
+
+  [self.fontCache setObject:font forKey:cacheKey];
+
   return font;
 }
 
@@ -295,13 +295,13 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   }
 
   font = [UIFont italicSystemFontOfSize:fontSize];
-  if (font) {
-    [self.fontCache setObject:font forKey:cacheKey];
-  }
+
+  [self.fontCache setObject:font forKey:cacheKey];
+
   return font;
 }
 
-- (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
+- (nullable UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
   NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
   UIFont *font = [self.fontCache objectForKey:cacheKey];
   if (font) {
@@ -309,12 +309,16 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   }
   
   UIFont *regular = [self regularFontOfSize:fontSize];
-  UIFontDescriptor *descriptor = [regular.fontDescriptor
+  UIFontDescriptor * _Nullable descriptor = [regular.fontDescriptor
       fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
-  font = [UIFont fontWithDescriptor:descriptor size:fontSize];
-  if (font) {
-    [self.fontCache setObject:font forKey:cacheKey];
+  if (!descriptor) {
+    return nil;
   }
+  UIFontDescriptor *nonnullDescriptor = descriptor;
+  font = [UIFont fontWithDescriptor:nonnullDescriptor size:fontSize];
+
+  [self.fontCache setObject:font forKey:cacheKey];
+
   return font;
 }
 
