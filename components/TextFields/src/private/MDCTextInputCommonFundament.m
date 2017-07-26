@@ -673,6 +673,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_textInput setNeedsLayout];
 }
 
+- (UIEdgeInsets)textInsets {
+  return _textInput.textInsets;
+}
+
 - (MDCTextInputUnderlineView *)underline {
   if (!_underline) {
     _underline = [self setupUnderlineView];
