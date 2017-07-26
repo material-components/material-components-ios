@@ -253,6 +253,38 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return _fundament.trailingUnderlineLabel;
 }
 
+- (UIView *)trailingView {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    return self.rightView;
+  } else {
+    return self.leftView;
+  }
+}
+
+- (void)setTrailingView:(UIView *)trailingView {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    self.rightView = trailingView;
+  } else {
+    self.leftView = trailingView;
+  }
+}
+
+- (UITextFieldViewMode)trailingViewMode {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    return self.rightViewMode;
+  } else {
+    return self.leftViewMode;
+  }
+}
+
+- (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    self.rightViewMode = trailingViewMode;
+  } else {
+    self.leftViewMode = trailingViewMode;
+  }
+}
+
 - (MDCTextInputUnderlineView *)underline {
   return _fundament.underline;
 }
@@ -340,38 +372,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [_fundament didSetText];
   [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
                                                       object:self];
-}
-
-- (UIView *)trailingView {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    return self.rightView;
-  } else {
-    return self.leftView;
-  }
-}
-
-- (void)setTrailingView:(UIView *)trailingView {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    self.rightView = trailingView;
-  } else {
-    self.leftView = trailingView;
-  }
-}
-
-- (UITextFieldViewMode)trailingViewMode {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    return self.rightViewMode;
-  } else {
-    return self.leftViewMode;
-  }
-}
-
-- (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    self.rightViewMode = trailingViewMode;
-  } else {
-    self.leftViewMode = trailingViewMode;
-  }
 }
 
 #pragma mark - UITextField Overrides
