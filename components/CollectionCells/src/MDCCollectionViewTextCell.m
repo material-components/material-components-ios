@@ -188,7 +188,8 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   detailFrame.origin.x = 0;
 
   // Adjust the labels Y origin.
-  NSInteger numberOfAllVisibleTextLines = [self numberOfAllVisibleTextLinesForLabelSize:textFrame.size detailSize:detailFrame.size];
+  NSInteger numberOfAllVisibleTextLines =
+      [self visibleTextLinesForTitleLabelOfSize:textFrame.size detailLabelOfSize:detailFrame.size];
   if (numberOfAllVisibleTextLines == 1) {
     // Alignment for single line.
     textFrame.origin.y = (boundsHeight / 2) - (textFrame.size.height / 2);
@@ -232,8 +233,10 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
                                           self.mdc_effectiveUserInterfaceLayoutDirection);
 }
 
-- (NSInteger)numberOfAllVisibleTextLinesForLabelSize:(CGSize)labelSize detailSize:(CGSize)detailSize {
-  return [self numberOfLinesForLabel:_textLabel withSize:labelSize] + [self numberOfLinesForLabel:_detailTextLabel withSize:detailSize];
+- (NSInteger)visibleTextLinesForTitleLabelOfSize:(CGSize)labelSize
+                               detailLabelOfSize:(CGSize)detailSize {
+  return [self numberOfLinesForLabel:_textLabel withSize:labelSize] +
+         [self numberOfLinesForLabel:_detailTextLabel withSize:detailSize];
 }
 
 - (NSInteger)numberOfLinesForLabel:(UILabel *)label withSize:(CGSize)aSize {
