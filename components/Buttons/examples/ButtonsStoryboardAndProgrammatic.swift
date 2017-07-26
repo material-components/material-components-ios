@@ -31,6 +31,9 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()
 
+  // UIAppearance colors will overwrite values set in storyboards. In order to see the values set in
+  // ButtonsStoryboardAndProgrammatic.storyboard comment out the MDCButtonColorThemer.apply(...)
+  // call in AppDelegate.swift.
   @IBOutlet weak var storyboardRaised: MDCRaisedButton!
   @IBOutlet weak var storyboardFlat: MDCFlatButton!
   @IBOutlet weak var storyboardFloating: MDCFloatingButton!
