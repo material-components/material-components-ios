@@ -548,8 +548,8 @@ static const CGFloat kMaximumHeight = 80.0f;
     CGRect frame = [self snackbarRectInScreenCoordinates];
     if (CGRectIsNull(frame)) {
       frame = CGRectMake(0,
-                         CGRectGetMaxY(self.frame) - self.bottomOffset,
-                         CGRectGetMaxX(self.frame),
+                         CGRectGetHeight(self.frame) - self.bottomOffset,
+                         CGRectGetWidth(self.frame),
                          self.bottomOffset);
     }
     [self notifyOverlayChangeWithFrame:frame

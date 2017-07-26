@@ -54,8 +54,8 @@ static const CGFloat kBottomBarHeight = 44.0f;
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin);
 
   self.bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                            CGRectGetMaxY(self.view.bounds),
-                                                            CGRectGetMaxX(self.view.bounds),
+                                                            CGRectGetHeight(self.view.bounds),
+                                                            CGRectGetWidth(self.view.bounds),
                                                             kBottomBarHeight)];
   self.bottomBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   self.bottomBar.backgroundColor = [UIColor redColor];
