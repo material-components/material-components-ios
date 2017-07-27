@@ -18,5 +18,9 @@
 
 #import "MaterialCollections.h"
 
+static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
+static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
+
 @interface CollectionsEditingManyCellsExample : MDCCollectionViewController
+@property (nonatomic, strong) NSMutableArray *content;
 @end
