@@ -42,6 +42,8 @@ static NSString *const MDCTextInputFundamentPlaceholderLabelKey =
 static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
 static NSString *const MDCTextInputFundamentTrailingLabelKey =
     @"MDCTextInputFundamentTrailingLabelKey";
+static NSString *const MDCTextInputFundamentTrailingViewKey =
+    @"MDCTextInputFundamentTrailingViewKey";
 static NSString *const MDCTextInputFundamentUnderlineViewKey =
     @"MDCTextInputFundamentUnderlineViewKey";
 
@@ -159,6 +161,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
         [aDecoder decodeObjectForKey:MDCTextInputFundamentCharacterRelativeSuperviewKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
+    _trailingViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
     _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
 
     [self subscribeForKVO];
@@ -180,6 +183,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                 forKey:MDCTextInputFundamentCharacterRelativeSuperviewKey];
   [aCoder encodeObject:self.textColor forKey:MDCTextInputFundamentTextColorKey];
   [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputFundamentTrailingLabelKey];
+  [aCoder encodeInteger:self.trailingViewMode forKey:MDCTextInputFundamentTrailingViewKey];
   [aCoder encodeObject:self.underline forKey:MDCTextInputFundamentUnderlineViewKey];
 }
 
@@ -199,6 +203,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
   copy.text = [self.text copy];
   copy.textColor = self.textColor;
+  copy.trailingViewMode = self.trailingViewMode;
   copy.underline.lineHeight = self.underline.lineHeight;
   copy.underline.color = self.underline.color;
 
