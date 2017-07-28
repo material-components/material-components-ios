@@ -34,3 +34,6 @@ limitations under the License.
 - (void)setupExampleViews;
 
 @end
+
+@interface NavigationBarWithBarItemsExample : NavigationBarTypicalUseExample
+@end
