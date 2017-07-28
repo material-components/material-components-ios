@@ -430,17 +430,19 @@ NSString *const kDeselectedCellAccessibilityHintKey =
     if (_editingSelectorImageView && previousSelectedState != selected) {
       _editingSelectorImageView.image = [MDCIcons imageFor_ic_check_circle];
       _editingSelectorImageView.tintColor = self.editingSelectorColor;
+      _editingSelectorImageView.image = [_editingSelectorImageView.image
+          imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }
     self.accessibilityTraits |= UIAccessibilityTraitSelected;
   } else {
     if (_editingSelectorImageView && previousSelectedState != selected) {
       _editingSelectorImageView.image = [MDCIcons imageFor_ic_radio_button_unchecked];
       _editingSelectorImageView.tintColor = HEXCOLOR(kCellGrayColor);
+      _editingSelectorImageView.image = [_editingSelectorImageView.image
+          imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }
     self.accessibilityTraits &= ~UIAccessibilityTraitSelected;
   }
-  _editingSelectorImageView.image =
-      [_editingSelectorImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)setEditingSelectorColor:(UIColor *)editingSelectorColor {
