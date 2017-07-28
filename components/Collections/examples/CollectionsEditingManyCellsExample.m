@@ -29,12 +29,12 @@ static const NSInteger kSectionItemCount = 50;
 
   // Register cell class.
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
-          forCellWithReuseIdentifier:kReusableIdentifierItem];
+          forCellWithReuseIdentifier:kCollectionsEditingManyCellsCellIdentifierItem];
   // Optional
   // Register section header class
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                 withReuseIdentifier:HEADER_REUSE_IDENTIFIER];
+                 withReuseIdentifier:kCollectionsEditingManyCellsHeaderReuseIdentifier];
 
   // Populate content.
   self.content = [NSMutableArray array];

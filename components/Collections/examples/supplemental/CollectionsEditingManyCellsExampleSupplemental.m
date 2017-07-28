@@ -36,7 +36,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewTextCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+  [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionsEditingManyCellsCellIdentifierItem
                                             forIndexPath:indexPath];
   cell.textLabel.text = self.content[indexPath.section][indexPath.item];
   return cell;
@@ -49,7 +49,7 @@
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     MDCCollectionViewTextCell *sectionHeader =
     [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                       withReuseIdentifier:HEADER_REUSE_IDENTIFIER
+                                       withReuseIdentifier:kCollectionsEditingManyCellsHeaderReuseIdentifier
                                               forIndexPath:indexPath];
 
     NSAssert(sectionHeader != nil, @"Unable to dequeue SupplementaryView");
