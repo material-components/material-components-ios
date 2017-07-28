@@ -325,10 +325,13 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   CGFloat centerDist = CGPointDistanceToPoint(_highlightCenter, pos);
 
   if (self.interactionBlock) {
-    if (centerDist > _outerRadius * _outerRadiusScale) {
+    if (UIAccessibilityIsVoiceOverRunning() && pointDist > _innerRadius) {
+      // For voiceover we want any tap outside the inner highlight to dismiss
+      self.interactionBlock(NO);
+    } else if (centerDist > _outerRadius * _outerRadiusScale) {
       // For taps outside the outer highlight, dismiss as not accepted
       self.interactionBlock(NO);
-    } else if (pointDist < _innerRadius) {
+    } else if (pointDist <= _innerRadius) {
       // For taps inside the inner highlight, dismiss as accepted
       self.interactionBlock(YES);
     }
