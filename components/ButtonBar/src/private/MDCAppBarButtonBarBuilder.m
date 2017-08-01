@@ -110,7 +110,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
     [button setImage:buttonItem.image forState:UIControlStateNormal];
   }
   if (buttonItem.tintColor != nil) {
-    button.tintColor = buttonItem.tintColor;
+    button.inkColor = buttonItem.tintColor;
   }
 
   if (buttonItem.title) {
