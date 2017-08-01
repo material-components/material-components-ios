@@ -105,58 +105,56 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
 }
 
 - (CGSize)sizeThatFits:(CGSize)size shouldLayout:(BOOL)shouldLayout {
-    CGFloat totalWidth = self.frame.size.width;
-    
-    CGFloat edge;
+  CGFloat totalWidth = 0;
+
+  CGFloat edge;
+  switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
+    case UIUserInterfaceLayoutDirectionLeftToRight:
+      edge = 0;
+      break;
+    case UIUserInterfaceLayoutDirectionRightToLeft:
+      edge = size.width;
+      break;
+  }
+
+  BOOL shouldAlignBaselines = _buttonTitleBaseline > 0;
+
+  NSEnumerator<__kindof UIView *> *positionedButtonViews =
+      self.layoutPosition == MDCButtonBarLayoutPositionTrailing
+          ? [_buttonViews reverseObjectEnumerator]
+          : [_buttonViews objectEnumerator];
+
+  for (UIView *view in positionedButtonViews) {
+    CGFloat width = view.frame.size.width;
     switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
-        case UIUserInterfaceLayoutDirectionLeftToRight:
-            edge = 0;
-            break;
-        case UIUserInterfaceLayoutDirectionRightToLeft:
-            edge = size.width;
-            break;
+      case UIUserInterfaceLayoutDirectionLeftToRight:
+        break;
+      case UIUserInterfaceLayoutDirectionRightToLeft:
+        edge -= width;
+        break;
     }
-    
-    BOOL shouldAlignBaselines = _buttonTitleBaseline > 0;
-    
-    NSEnumerator<__kindof UIView *> *positionedButtonViews =
-    self.layoutPosition == MDCButtonBarLayoutPositionTrailing
-    ? [_buttonViews reverseObjectEnumerator]
-    : [_buttonViews objectEnumerator];
-    
-    CGFloat buttonWidth = totalWidth / [_buttonViews count];
-    
-    for (UIView *view in positionedButtonViews) {
-        //CGFloat width = view.frame.size.width;
-        switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
-            case UIUserInterfaceLayoutDirectionLeftToRight:
-                break;
-            case UIUserInterfaceLayoutDirectionRightToLeft:
-                edge -= buttonWidth;
-                break;
+    if (shouldLayout) {
+      view.frame = CGRectMake(edge, 0, width, size.height);
+
+      if (shouldAlignBaselines && [view isKindOfClass:[UIButton class]]) {
+        if ([(UIButton *)view titleForState:UIControlStateNormal].length > 0) {
+          [self alignButtonBaseline:(UIButton *)view];
         }
-        if (shouldLayout) {
-            view.frame = CGRectMake(edge, 0, buttonWidth, size.height);
-            
-            if (shouldAlignBaselines && [view isKindOfClass:[UIButton class]]) {
-                if ([(UIButton *)view titleForState:UIControlStateNormal].length > 0) {
-                    [self alignButtonBaseline:(UIButton *)view];
-                }
-            }
-        }
-        switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
-            case UIUserInterfaceLayoutDirectionLeftToRight:
-                edge += buttonWidth;
-                break;
-            case UIUserInterfaceLayoutDirectionRightToLeft:
-                break;
-        }
-        //totalWidth += width;
+      }
     }
-    // TODO(featherless): Take into account compact/regular sizes rather than the device idiom.
-    const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-    CGFloat height = isPad ? kDefaultPadHeight : kDefaultHeight;
-    return CGSizeMake(totalWidth, height);
+    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
+      case UIUserInterfaceLayoutDirectionLeftToRight:
+        edge += width;
+        break;
+      case UIUserInterfaceLayoutDirectionRightToLeft:
+        break;
+    }
+    totalWidth += width;
+  }
+  // TODO(featherless): Take into account compact/regular sizes rather than the device idiom.
+  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+  CGFloat height = isPad ? kDefaultPadHeight : kDefaultHeight;
+  return CGSizeMake(totalWidth, height);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
