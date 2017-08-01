@@ -25,6 +25,19 @@
 
 @implementation ButtonsTypicalUseViewController
 
+- (MDCButton *)buildCustomStrokedButton {
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setBackgroundColor:[UIColor clearColor]
+                    forState:UIControlStateNormal];
+  [button setTitleColor:[UIColor colorWithWhite:0.1 alpha:1.0]
+               forState:UIControlStateNormal];
+  button.inkColor = [UIColor colorWithWhite:0 alpha:0.06];
+  button.layer.borderWidth = 1;
+  button.layer.borderColor = [UIColor blackColor].CGColor;
+  button.disabledAlpha = 0.38;
+  return button;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -81,6 +94,29 @@
   disabledFlatButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:disabledFlatButton];
 
+  // Custom stroked button
+
+  MDCButton *strokedButton = [self buildCustomStrokedButton];
+  [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [strokedButton sizeToFit];
+  [strokedButton addTarget:self
+                    action:@selector(didTap:)
+          forControlEvents:UIControlEventTouchUpInside];
+  strokedButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:strokedButton];
+
+  // Disabled custom stroked button
+
+  MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
+  [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [disabledStrokedButton sizeToFit];
+  [disabledStrokedButton addTarget:self
+                            action:@selector(didTap:)
+                  forControlEvents:UIControlEventTouchUpInside];
+  [disabledStrokedButton setEnabled:NO];
+  disabledStrokedButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:disabledStrokedButton];
+
   // Floating action button
 
   MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
@@ -95,16 +131,15 @@
   [floatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.view addSubview:floatingButton];
 
-  NSDictionary *views = @{
-    @"raised" : raisedButton,
-    @"disabledRaised" : disabledRaisedButton,
-    @"flat" : flatButton,
-    @"disabledFlat" : disabledFlatButton,
-    @"floating" : floatingButton
-  };
-
-  self.views = [NSMutableDictionary dictionary];
-  [self.views addEntriesFromDictionary:views];
+  self.buttons = @[
+    raisedButton,
+    disabledRaisedButton,
+    flatButton,
+    disabledFlatButton,
+    strokedButton,
+    disabledStrokedButton,
+    floatingButton
+  ];
 
   [self setupExampleViews];
 }
