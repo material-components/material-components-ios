@@ -175,7 +175,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:action.title forState:UIControlStateNormal];
-  // TODO(iangordon): Determine default text color values for Normal and Disabled
+  // TODO(#1726): Determine default text color values for Normal and Disabled
   [actionButton sizeToFit];
   CGRect buttonRect = actionButton.bounds;
   buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonHeight);
