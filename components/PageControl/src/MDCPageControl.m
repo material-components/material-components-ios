@@ -175,6 +175,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                                                    // more to ensure
                                                    // no hidden indicators remain.
                                                    [self revealIndicatorsReversed:shouldReverse];
+                                                   [self sendActionsForControlEvents:UIControlEventValueChanged];
                                                  }];
                        [self revealIndicatorsReversed:shouldReverse];
                      });
@@ -193,6 +194,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     [CATransaction setDisableActions:YES];
     [_indicators[previousPage] setHidden:NO];
     [CATransaction commit];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
 }
 
