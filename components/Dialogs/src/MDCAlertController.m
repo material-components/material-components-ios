@@ -17,7 +17,6 @@
 #import "MDCAlertController.h"
 
 #import "MDCDialogTransitionController.h"
-#import "MDFTextAccessibility.h"
 #import "MaterialButtons.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
@@ -173,15 +172,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)addAction:(MDCAlertAction *)action {
   [_actions addObject:[action copy]];
 
-  UIColor *titleColor =
-      [MDFTextAccessibility textColorOnBackgroundColor:self.view.backgroundColor
-                                       targetTextAlpha:[MDCTypography buttonFontOpacity]
-                                               options:0];
-
   MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:action.title forState:UIControlStateNormal];
-  [actionButton setTitleColor:titleColor forState:UIControlStateNormal];
   // TODO(iangordon): Determine default text color values for Normal and Disabled
   [actionButton sizeToFit];
   CGRect buttonRect = actionButton.bounds;
