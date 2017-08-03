@@ -1,3 +1,122 @@
+# 30.0.0
+
+## API Diffs
+
+### Collections
+
+* Added 'shouldHideSeparatorForCellLayoutAttributes' to MDCCollectionViewStyling protocol.
+* Added three methods to MDCCollectionViewStylingDelegate for optionally hiding cell separators.
+
+### MaskedTransitioning
+
+* New component that makes it easy to animate between two view controllers using an expanding mask effect.
+
+### TextFields
+
+* Added 'leadingView' and 'leadingViewMode' properties to MDCTextField.
+* Renamed MDCTextFieldPositioningDelegate method 'textContainerInset:' to 'textInsets:'
+* Added 'enabled', 'textInsets', 'trailingView' and 'trailingViewMode' properties to MDCTextInput.
+
+### Typography
+
+* Changed nullability of 'lightFontOfSize', 'mediumFontOfSize' and 'boldItalicFontOfSize' methods from nonnull to nullable.
+
+## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [[Themer] Avoid deprecation warning on iOS 9+ targets (#1700)](https://github.com/material-components/material-components-ios/commit/68d21a901edccd0ffffc9ed11ed067dc22e7b3d9) (ianegordon)
+
+### Buttons
+
+#### Changes
+
+* [Add a stroked button to the examples (#1714)](https://github.com/material-components/material-components-ios/commit/04b8ced5a4b7971ad1dddb98bc9191ae8dff9a12) (Sam Morrison)
+* [Fix storyboard backgroundColor assignment (#1706)](https://github.com/material-components/material-components-ios/commit/057a430b4b8d059a00b1f4e01930c71c6b20eaff) (Sam Morrison)
+* [Reset Ink when moved to new superview (#1656)](https://github.com/material-components/material-components-ios/commit/4110e30ef23e7d5c007d07e676e8fc0c06bf87c9) (Robert Moore)
+* [Set default title color of MDCFlatButton to black (#1725)](https://github.com/material-components/material-components-ios/commit/f1059f6aa9c85f52388a9525fd15603f3b925356) (Sam Morrison)
+* [Unbounded ink aligns to content insets (#1670)](https://github.com/material-components/material-components-ios/commit/cafcbe3544c6bcbb1725e8f7ccdf5bb008760205) (Robert Moore)
+* [Undo MDCFlatButton title color changes (#1681)](https://github.com/material-components/material-components-ios/commit/f4c76013577bc05f1bbdbcc50e1700db6766b9c9) (Sam Morrison)
+
+### CollectionCells
+
+#### Changes
+
+* [[Collections] Extend cell label to superview width (#1661)](https://github.com/material-components/material-components-ios/commit/6785e7a0d33cb3a832cd96debe2a9e960967a059) (Robert Moore)
+* [[Collections] Only change selected icon if needed (#1692)](https://github.com/material-components/material-components-ios/commit/44e7c7974b557d0e0e670e50390fd997e56723d7) (Robert Moore)
+* [[Collections] Reuse label frames (#1705)](https://github.com/material-components/material-components-ios/commit/c1ce8bcca184a2a31c8af15da42294c450c2e13c) (ianegordon)
+
+### Collections
+
+#### Changes
+
+* [Add "editing" performance example (#1710)](https://github.com/material-components/material-components-ios/commit/14e00b76ce457ca0538056b04bfb8f14d73f74f1) (Robert Moore)
+* [Add StylingDelegate methods to control separator display (#1627)](https://github.com/material-components/material-components-ios/commit/14496a33a24652e0df175c2907eee543b6b06fd5) (Gauthier Ambard)
+
+### Dialogs
+
+#### Changes
+
+* [Add Issue number. (#1727)](https://github.com/material-components/material-components-ios/commit/b8f8bfef9c13c06e0030b22398c8a0a8a33cde9e) (ianegordon)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Correctly handle ended and cancelled touches (#1684)](https://github.com/material-components/material-components-ios/commit/cfbb1d9862b5d52e32376caff4f71ef92f2c3041) (Sam Morrison)
+
+### Ink
+
+#### Changes
+
+* [Don't assign compositeRipple frame twice (#1687)](https://github.com/material-components/material-components-ios/commit/756728d0b05eddfc2a9b0b6594c4ba03e6ce60a4) (Robert Moore)
+* [[Buttons] Reset Ink when moved to new superview (#1656)](https://github.com/material-components/material-components-ios/commit/4110e30ef23e7d5c007d07e676e8fc0c06bf87c9) (Robert Moore)
+
+### MaskedTransition
+
+#### Changes
+
+* [Add Masked Transition component. (#1513)](https://github.com/material-components/material-components-ios/commit/61acb1cbb09327f24acbebda2f9909a4fd9435fe) (featherless)
+
+### Snackbar
+
+#### Changes
+
+* [Notify MDCOverlayObservers of bottom offset changes  (#1659)](https://github.com/material-components/material-components-ios/commit/392ac852614b72324cd7a3ee77ed20757ccd1f7f) (Sam Morrison)
+
+### TextFields
+
+#### Changes
+
+* [Alphabetizing propertys. (#1691)](https://github.com/material-components/material-components-ios/commit/695dc6d5763ca041a8967ded7499af6e8db545b4) (Will Larche)
+* [Comment grammar correction. (#1695)](https://github.com/material-components/material-components-ios/commit/3e135694ab954cc7dfe71b9cac77d376c04b74da) (Will Larche)
+* [Constraint correction and cleanup. (#1665)](https://github.com/material-components/material-components-ios/commit/df0d4cbd297284d783358a4cbdbda555d7ab63d5) (Will Larche)
+* [Fundament implementation of trailingViewMode. (#1702)](https://github.com/material-components/material-components-ios/commit/ca879cf159a5c3e69d89b465814579db46b591b9) (Will Larche)
+* [Making enabled mandatory. (#1679)](https://github.com/material-components/material-components-ios/commit/0578ca3635729c00a16c89c63715154ae8269ddc) (Will Larche)
+* [Making textInsets mandatory. (#1697)](https://github.com/material-components/material-components-ios/commit/31810b8872ad1335889809d918deebcbce8970b4) (Will Larche)
+* [Moving two propertys to be below the correct pragma mark. (#1703)](https://github.com/material-components/material-components-ios/commit/b005771b19a0928bcd5403daea33490164e7a8e2) (Will Larche)
+* [Overlay views. (#1676)](https://github.com/material-components/material-components-ios/commit/9cb9a209c5449e4de2a25dce530c25184c5f0d46) (Will Larche)
+* [Renaming a tests file. (#1718)](https://github.com/material-components/material-components-ios/commit/80f7a1b58d5f1bed1a7561c15c77d00e20b40f2a) (Will Larche)
+* [Reorganizing and internal clean up (#1677)](https://github.com/material-components/material-components-ios/commit/1920ec92092060cb3209defc9dfca5e000b37619) (Will Larche)
+* [Tests for default priorities of constraints. (#1678)](https://github.com/material-components/material-components-ios/commit/ff618a457a21f074a3ef1ad2f8e2a6c8543311af) (Will Larche)
+* [[TextField] Add color themer for text fields (#1666)](https://github.com/material-components/material-components-ios/commit/c3d24b71840fff47849a0b1bb0d44f0f6b3252d9) (Junius Gunaratne)
+* [[Textfields] Better naming two tests (#1704)](https://github.com/material-components/material-components-ios/commit/b73c23cf1822122d5cba4d7e3ec046db7533c784) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [[TextField] Add color themer for text fields (#1666)](https://github.com/material-components/material-components-ios/commit/c3d24b71840fff47849a0b1bb0d44f0f6b3252d9) (Junius Gunaratne)
+
+### Typography
+
+#### Changes
+
+* [Fixing nullability attributes for fonts (#1696)](https://github.com/material-components/material-components-ios/commit/a2968c6decbc88226db868ffb6f8b4eb6ad6ea36) (Robert Moore)
+* [[Fonts] Cache system fonts (#1689)](https://github.com/material-components/material-components-ios/commit/ebabb3385a8528e0e1bf9044d542ba9f12e01ed4) (Robert Moore)
+
 # 29.0.0
 
 * Reverts changes to the title color of MDCFlatButton and MDCRaisedButton.
