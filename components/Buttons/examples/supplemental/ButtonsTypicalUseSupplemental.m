@@ -131,7 +131,8 @@
     UILabel *label = self.labels[i];
 
     button.frame = CGRectOffset(button.frame, 0, verticalCenterY);
-    label.frame = MDCRectIntegral(CGRectOffset(label.frame, 0, verticalCenterY));
+    label.frame = MDCRectAlignToScale(CGRectOffset(label.frame, 0, verticalCenterY),
+                                      [[UIScreen mainScreen] scale]);
   }
 }
 

@@ -43,7 +43,7 @@
   [label sizeToFit];
   [self.view addSubview:label];
   label.center = CGPointMake(slider.center.x, slider.center.y + 2 * label.frame.size.height);
-  label.frame = MDCRectIntegral(label.frame);
+  label.frame = MDCRectAlignToScale(label.frame, [[UIScreen mainScreen] scale]);
 
   // Vanilla  UISlider for comparison.
   UISlider *uiSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
@@ -60,7 +60,7 @@
   [self.view addSubview:uiSliderLabel];
   uiSliderLabel.center =
       CGPointMake(uiSlider.center.x, uiSlider.center.y + 2 * uiSliderLabel.frame.size.height);
-  uiSliderLabel.frame = MDCRectIntegral(uiSliderLabel.frame);
+  uiSliderLabel.frame = MDCRectAlignToScale(uiSliderLabel.frame, [[UIScreen mainScreen] scale]);
 }
 
 - (void)didChangeMDCSliderValue:(MDCSlider *)slider {

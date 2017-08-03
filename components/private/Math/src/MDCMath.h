@@ -100,13 +100,15 @@ static inline CGFloat MDCSqrt(CGFloat value) {
  
  @see CGRectIntegral
  */
-static inline CGRect MDCRectIntegral(CGRect rect) {
-  CGFloat scale = [[UIScreen mainScreen] scale];
+static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 1)) {
     return CGRectIntegral(rect);
   }
-  return CGRectMake(MDCFloor(rect.origin.x * scale) / scale,
-                    MDCFloor(rect.origin.y * scale) / scale,
-                    MDCCeil(rect.size.width * scale) / scale,
-                    MDCCeil(rect.size.height * scale) / scale);
+  CGPoint newOrigin = CGPointMake(MDCFloor(rect.origin.x * scale) / scale,
+                                  MDCFloor(rect.origin.y * scale) / scale);
+  CGSize adjustWidthHeight = CGSizeMake(rect.origin.x - newOrigin.x,
+                                         rect.origin.y - newOrigin.y);
+  return CGRectMake(newOrigin.x, newOrigin.y,
+                    MDCCeil((rect.size.width + adjustWidthHeight.width) * scale) / scale,
+                    MDCCeil((rect.size.height + adjustWidthHeight.height) * scale) / scale);
 }
