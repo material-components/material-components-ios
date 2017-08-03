@@ -182,26 +182,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [self invalidateIntrinsicContentSize];
 }
 
-#pragma mark - Layout
-
-- (UIEdgeInsets)textInsets {
-  UIEdgeInsets textInsets = UIEdgeInsetsZero;
-
-  textInsets.top = MDCTextInputFullPadding;
-  textInsets.bottom = MDCTextInputFullPadding;
-
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
-    return [self.positioningDelegate textInsets:textInsets];
-  }
-  return textInsets;
-}
-
-- (CGFloat)estimatedTextHeight {
-  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
-
-  return estimatedTextHeight;
-}
-
 #pragma mark - Properties Implementation
 
 - (UIButton *)clearButton {
@@ -527,7 +507,27 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   // it here.
 }
 
-#pragma mark - Layout
+#pragma mark - Layout (Custom)
+
+- (UIEdgeInsets)textInsets {
+  UIEdgeInsets textInsets = UIEdgeInsetsZero;
+
+  textInsets.top = MDCTextInputFullPadding;
+  textInsets.bottom = MDCTextInputFullPadding;
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
+    return [self.positioningDelegate textInsets:textInsets];
+  }
+  return textInsets;
+}
+
+- (CGFloat)estimatedTextHeight {
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
+
+  return estimatedTextHeight;
+}
+
+#pragma mark - Layout (UIView)
 
 - (CGSize)intrinsicContentSize {
   CGSize boundingSize = CGSizeZero;
