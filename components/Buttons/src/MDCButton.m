@@ -299,6 +299,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   } else {
     _inkView.frame = self.bounds;
   }
+  self.titleLabel.frame = MDCRectIntegral(self.titleLabel.frame);
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {

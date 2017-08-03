@@ -94,3 +94,14 @@ static inline CGFloat MDCSqrt(CGFloat value) {
   return sqrtf(value);
 #endif
 }
+
+static inline CGRect MDCRectIntegral(CGRect rect) {
+  CGFloat scale = [[UIScreen mainScreen] scale];
+  if (MDCCGFloatEqual(scale, 1)) {
+    return CGRectIntegral(rect);
+  }
+  return CGRectMake(MDCFloor(rect.origin.x * scale) / scale,
+                    MDCFloor(rect.origin.y * scale) / scale,
+                    MDCCeil(rect.size.width * scale) / scale,
+                    MDCCeil(rect.size.height * scale) / scale);
+}

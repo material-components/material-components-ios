@@ -294,7 +294,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     titlePos.y = _highlightPoint.y - kMDCFeatureHighlightInnerPadding - _innerRadius - textHeight;
   }
 
-  CGRect titleFrame = (CGRect){titlePos, titleSize};
+  CGRect titleFrame = MDCRectIntegral((CGRect){titlePos, titleSize});
   _titleLabel.frame = titleFrame;
 
   CGRect detailFrame = (CGRect){CGPointMake(titlePos.x, CGRectGetMaxY(titleFrame)), detailSize};
