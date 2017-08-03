@@ -374,7 +374,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   attr.separatorColor = self.styler.separatorColor;
   attr.separatorInset = self.styler.separatorInset;
   attr.separatorLineHeight = self.styler.separatorLineHeight;
-  attr.shouldHideSeparators = self.styler.shouldHideSeparators;
+  attr.shouldHideSeparators = [self.styler shouldHideSeparatorForCellLayoutAttributes:attr];
 
   // Set inlay and hidden state if necessary.
   [self inlayAttributeIfNecessary:attr];

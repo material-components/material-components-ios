@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvE-5P-0PG" customClass="MDCFlatButton">
-                                <rect key="frame" x="142" y="274.5" width="91" height="34"/>
+                                <rect key="frame" x="127.5" y="83" width="120" height="34"/>
                                 <color key="tintColor" red="0.19254023644059035" green="0.53181806153905575" blue="0.91669365284974091" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="16"/>
                                 <state key="normal" title="Flat Button">
@@ -30,22 +30,53 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-nu-adB" customClass="MDCRaisedButton">
-                                <rect key="frame" x="127" y="324.5" width="120" height="18"/>
+                                <rect key="frame" x="127" y="133" width="120" height="18"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="24" maxY="0.0"/>
                                 <state key="normal" title="Raised Button">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCS-6P-hwz" customClass="MDCFloatingButton">
-                                <rect key="frame" x="174" y="358.5" width="26" height="34"/>
+                                <rect key="frame" x="174" y="167" width="26" height="34"/>
                                 <inset key="contentEdgeInsets" minX="16" minY="16" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="+"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                             </button>
+                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ggl-rV-inE">
+                                <rect key="frame" x="104" y="20" width="167" height="47"/>
+                                <subviews>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2pb-ML-fiY">
+                                        <rect key="frame" x="118" y="8" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="didChangeInkStyle:" destination="Uhh-iX-aVf" eventType="valueChanged" id="iAS-pV-Hc9"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bounded Ink" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCF-we-RaG">
+                                        <rect key="frame" x="0.0" y="13" width="96" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="WCF-we-RaG" firstAttribute="centerY" secondItem="2pb-ML-fiY" secondAttribute="centerY" id="4nB-tA-ZA3"/>
+                                    <constraint firstAttribute="trailing" secondItem="2pb-ML-fiY" secondAttribute="trailing" id="8a4-nK-P45"/>
+                                    <constraint firstItem="2pb-ML-fiY" firstAttribute="top" secondItem="ggl-rV-inE" secondAttribute="top" constant="8" id="HxI-yb-E3d"/>
+                                    <constraint firstItem="2pb-ML-fiY" firstAttribute="leading" secondItem="WCF-we-RaG" secondAttribute="trailing" constant="22" id="JQg-G0-dHB"/>
+                                    <constraint firstAttribute="bottom" secondItem="2pb-ML-fiY" secondAttribute="bottom" constant="8" id="VdS-eX-o2l"/>
+                                    <constraint firstItem="WCF-we-RaG" firstAttribute="leading" secondItem="ggl-rV-inE" secondAttribute="leading" id="xe4-62-U98"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.89888392857142863" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="YCS-6P-hwz" firstAttribute="centerX" secondItem="dDe-BW-Avd" secondAttribute="centerX" id="Aeg-aQ-A5S"/>
-                            <constraint firstItem="Dqo-nu-adB" firstAttribute="centerY" secondItem="dDe-BW-Avd" secondAttribute="centerY" id="h3j-9m-Xpr"/>
+                            <constraint firstItem="ggl-rV-inE" firstAttribute="centerX" secondItem="dDe-BW-Avd" secondAttribute="centerX" id="BOB-as-3UC"/>
+                            <constraint firstItem="bvE-5P-0PG" firstAttribute="width" secondItem="Dqo-nu-adB" secondAttribute="width" id="P90-m1-NoY"/>
+                            <constraint firstItem="ggl-rV-inE" firstAttribute="top" secondItem="pu1-Ea-nBj" secondAttribute="bottom" id="Wvf-e8-PGo"/>
+                            <constraint firstItem="bvE-5P-0PG" firstAttribute="top" secondItem="ggl-rV-inE" secondAttribute="bottom" constant="16" id="jcM-hg-XjL"/>
                             <constraint firstItem="bvE-5P-0PG" firstAttribute="centerX" secondItem="dDe-BW-Avd" secondAttribute="centerX" id="k35-WX-pnN"/>
                             <constraint firstItem="Dqo-nu-adB" firstAttribute="centerX" secondItem="dDe-BW-Avd" secondAttribute="centerX" id="wdb-rY-gK0"/>
                             <constraint firstItem="Dqo-nu-adB" firstAttribute="top" secondItem="bvE-5P-0PG" secondAttribute="bottom" constant="16" id="y2n-KT-Jew"/>
@@ -55,6 +86,7 @@
                     <connections>
                         <outlet property="flatButton" destination="bvE-5P-0PG" id="8px-6Z-f5o"/>
                         <outlet property="floatingActionButton" destination="YCS-6P-hwz" id="Mw6-3r-5YL"/>
+                        <outlet property="inkBoundingSwitch" destination="2pb-ML-fiY" id="LUP-MI-2Lq"/>
                         <outlet property="raisedButton" destination="Dqo-nu-adB" id="rEm-SL-wQr"/>
                     </connections>
                 </viewController>

@@ -64,4 +64,5 @@ extern const CGFloat MDCTextInputHalfPadding;
 - (void)updateConstraintsOfInput;
 
 - (nullable instancetype)initWithCoder:(NSCoder *_Nonnull)aDecoder NS_DESIGNATED_INITIALIZER;
+
 @end

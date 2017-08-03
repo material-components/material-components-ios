@@ -121,6 +121,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self = [super initWithFrame:frame];
   if (self) {
     [self commonMDCButtonInit];
+    [self updateBackgroundColor];
   }
   return self;
 }
@@ -155,11 +156,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorHintKey]) {
-      self.underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
+      _underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
-      self.disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
+      _disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonAreaInsetKey]) {
@@ -172,7 +173,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
     if ([aDecoder containsValueForKey:MDCButtonBackgroundColorsKey]) {
       _backgroundColors = [aDecoder decodeObjectForKey:MDCButtonBackgroundColorsKey];
+    } else {
+      // Storyboards will set the backgroundColor via the UIView backgroundColor setter, so we have
+      // to write that in to our _backgroundColors dictionary.
+      _backgroundColors[@(UIControlStateNormal)] = super.backgroundColor;
     }
+    [self updateBackgroundColor];
 
     if ([aDecoder containsValueForKey:MDCButtonAccessibilityLabelsKey]) {
       _accessibilityLabelForState = [aDecoder decodeObjectForKey:MDCButtonAccessibilityLabelsKey];
@@ -207,10 +213,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
-  _backgroundColors = [NSMutableDictionary dictionary];
   _accessibilityLabelForState = [NSMutableDictionary dictionary];
 
-  _backgroundColors[@(UIControlStateNormal)] = MDCColorFromRGB(MDCButtonDefaultBackgroundColor);
+  if (!_backgroundColors) {
+    // _backgroundColors may have already been initialized by setting the backgroundColor setter.
+    _backgroundColors = [NSMutableDictionary dictionary];
+    _backgroundColors[@(UIControlStateNormal)] = MDCColorFromRGB(MDCButtonDefaultBackgroundColor);
+  }
 
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
@@ -218,7 +227,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Set up title label attributes.
   self.titleLabel.font = [MDCTypography buttonFont];
-  [self updateAlphaAndBackgroundColorAnimated:NO];
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
@@ -277,10 +285,29 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [super layoutSubviews];
   self.layer.shadowPath = [self boundingPath].CGPath;
   self.layer.cornerRadius = [self cornerRadius];
+
+  // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
+  if (_inkView.inkStyle == MDCInkStyleUnbounded) {
+    CGRect contentRect = [self contentRectForBounds:self.bounds];
+    CGPoint contentCenterPoint = CGPointMake(CGRectGetMidX(contentRect),
+                                             CGRectGetMidY(contentRect));
+    CGPoint boundsCenterPoint = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+
+    CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
+    CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y;
+    _inkView.frame = CGRectMake(offsetX, offsetY, self.bounds.size.width, self.bounds.size.height);
+  } else {
+    _inkView.frame = self.bounds;
+  }
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
   return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, _hitAreaInsets), point);
+}
+
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+  [super willMoveToSuperview:newSuperview];
+  [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
 #pragma mark - UIResponder
@@ -478,7 +505,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - BackgroundColor
 
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor {
-  [self setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+  // Since setBackgroundColor can be called in the initializer we need to optionally build the dict.
+  if (!_backgroundColors) {
+    _backgroundColors = [NSMutableDictionary dictionary];
+  }
+  _backgroundColors[@(UIControlStateNormal)] = backgroundColor;
+  [self updateBackgroundColor];
 }
 
 - (UIColor *)backgroundColorForState:(UIControlState)state {

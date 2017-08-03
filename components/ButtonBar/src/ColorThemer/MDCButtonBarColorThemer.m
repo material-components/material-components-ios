@@ -27,8 +27,12 @@
   // When a button bar is contained in a navigation bar do not color the button bar. This is useful
   // for when an app bar with imagery in the flexible header has a button bar. If the button bar has
   // a color then the imagery is obstucted by the solid color of the button bar.
-  [MDCButtonBar appearanceWhenContainedIn:[MDCNavigationBar class], nil].backgroundColor
-      = nil;
+#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
+  [MDCButtonBar appearanceWhenContainedInInstancesOfClasses:@[[MDCNavigationBar class]]]
+      .backgroundColor = nil;
+#else
+  [MDCButtonBar appearanceWhenContainedIn:[MDCNavigationBar class], nil].backgroundColor = nil;
+#endif
 }
 
 @end

@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "29.0.0"
+  s.version      = "30.0.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -280,6 +280,16 @@ Pod::Spec.new do |s|
     end
   end
 
+  s.subspec "MaskedTransition" do |ss|
+    ss.ios.deployment_target = '8.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+
+    ss.dependency "MotionTransitioning", "~> 3.0"
+    ss.dependency "MotionAnimator", "~> 1.0"
+    ss.dependency "MotionInterchange", "~> 1.0"
+  end
+
   s.subspec "NavigationBar" do |ss|
     ss.subspec "Component" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -417,16 +427,25 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "TextFields" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.subspec "Component" do |sss|
+      sss.ios.deployment_target = '8.0'
+      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
+      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
-    ss.dependency "MaterialComponents/AnimationTiming"
-    ss.dependency "MaterialComponents/Palettes"
-    ss.dependency "MaterialComponents/Typography"
+      sss.dependency "MaterialComponents/AnimationTiming"
+      sss.dependency "MaterialComponents/Palettes"
+      sss.dependency "MaterialComponents/Typography"
 
-    ss.dependency "MaterialComponents/private/Math"
-    ss.dependency "MaterialComponents/private/RTL"
+      sss.dependency "MaterialComponents/private/Math"
+      sss.dependency "MaterialComponents/private/RTL"
+    end
+    ss.subspec "ColorThemer" do |sss|
+      sss.ios.deployment_target = '8.0'
+      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
+      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
+      sss.dependency "MaterialComponents/TextFields/Component"
+      sss.dependency "MaterialComponents/Themes"
+    end
   end
 
   s.subspec "Themes" do |ss|

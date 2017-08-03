@@ -18,7 +18,7 @@ import XCTest
 import MaterialComponents.MaterialTextFields
 
 class TextInputTests: XCTestCase {
-  func testTextFieldTextInputProtocolConformance() {
+  func testMDCTextInputProtocolConformanceSingleline() {
     let textField = MDCTextField()
 
     XCTAssertNotNil(textField.leadingUnderlineLabel)

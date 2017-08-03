@@ -22,12 +22,13 @@
 
 static const CGFloat kFABBottomOffset = 24.0f;
 static const CGFloat kFABSideOffset = 24.0f;
+static const CGFloat kBottomBarHeight = 44.0f;
 
 @implementation SnackbarOverlayViewExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self setupExampleViews:@[@"Show Snackbar"]];
+  [self setupExampleViews:@[@"Show Snackbar", @"Toggle bottom bar"]];
   self.title = @"Snackbar Overlay View";
 
   // Make sure we're listening for overlay notifications.
@@ -51,17 +52,50 @@ static const CGFloat kFABSideOffset = 24.0f;
   self.floatingButton.frame = fabFrame;
   self.floatingButton.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin);
+
+  self.bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                            CGRectGetHeight(self.view.bounds),
+                                                            CGRectGetWidth(self.view.bounds),
+                                                            kBottomBarHeight)];
+  self.bottomBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+  self.bottomBar.backgroundColor = [UIColor redColor];
+  [self.view addSubview:self.bottomBar];
 }
 
 #pragma mark - Event Handling
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+  if (indexPath.row == 0) {
+    [self showSnackbar];
+  } else {
+    [self toggleBottomBar];
+  }
+  return;
+}
+
+- (void)showSnackbar {
   NSString *text = @"Snackbar Message";
   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:text];
   message.duration = 5.0f;
   [MDCSnackbarManager showMessage:message];
-  return;
+}
+
+- (void)toggleBottomBar {
+  self.isShowingBottomBar = !self.isShowingBottomBar;
+
+  CGFloat bottomOffset = 0;
+  CGFloat translation = kBottomBarHeight;
+
+  if (self.isShowingBottomBar) {
+    translation = -translation;
+    bottomOffset = kBottomBarHeight;
+  }
+
+  [UIView animateWithDuration:0.25 animations:^{
+      self.bottomBar.frame = CGRectOffset(self.bottomBar.frame, 0, translation);
+      [MDCSnackbarManager setBottomOffset:bottomOffset];
+  }];
 }
 
 #pragma mark - Overlay Transitions

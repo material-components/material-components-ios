@@ -29,7 +29,17 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.attributedText?.string, string)
   }
 
-  func testCopyingTextField() {
+  // All the constraints created internally by the MDCTextField need to have a rather low priority 
+  // so they can be overridden by a controller from the outside.
+  func testConstraintPriorities() {
+    let textField = MDCTextField()
+
+    for constraint in textField.constraints {
+      XCTAssertLessThanOrEqual(constraint.priority, UILayoutPriorityDefaultLow + 10, String(describing: constraint))
+    }
+  }
+
+  func testCopying() {
     let textField = MDCTextField()
 
     textField.clearButtonColor = .red
@@ -37,10 +47,12 @@ class TextFieldTests: XCTestCase {
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
+    textField.leadingViewMode = .unlessEditing
     textField.mdc_adjustsFontForContentSizeCategory = true
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
+    textField.trailingViewMode = .unlessEditing
     textField.underline?.color = .red
     textField.underline?.lineHeight = 10
 
@@ -52,11 +64,13 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
+      XCTAssertEqual(textField.leadingViewMode, textFieldCopy.leadingViewMode)
       XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
                      textFieldCopy.mdc_adjustsFontForContentSizeCategory)
       XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
+      XCTAssertEqual(textField.trailingViewMode, textFieldCopy.trailingViewMode)
       XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
       XCTAssertEqual(textField.underline?.lineHeight, textFieldCopy.underline?.lineHeight)
     } else {
@@ -72,7 +86,7 @@ class TextFieldTests: XCTestCase {
     XCTAssertNotEqual(UIFont.systemFont(ofSize: UIFont.smallSystemFontSize), textField.font)
   }
 
-  func testTextFieldMDCDynamicTypeAPI() {
+  func testMDCDynamicTypeAPI() {
     let textField = MDCTextField()
 
     textField.mdc_adjustsFontForContentSizeCategory = true
@@ -84,7 +98,7 @@ class TextFieldTests: XCTestCase {
     }
   }
 
-  func testTextFieldOverlayViews() {
+  func testOverlayViews() {
     let textField = MDCTextField()
 
     let leftView = UILabel()
@@ -100,10 +114,40 @@ class TextFieldTests: XCTestCase {
 
     XCTAssertTrue(textField.subviews.contains(leftView))
     XCTAssertTrue(textField.subviews.contains(rightView))
+
+
+    if #available(iOS 9.0, *) {
+      if UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight {
+        XCTAssertEqual(textField.leadingView, leftView)
+        XCTAssertEqual(textField.leadingView, textField.leftView)
+        
+        XCTAssertEqual(textField.trailingView, rightView)
+        XCTAssertEqual(textField.trailingView, textField.rightView)
+      } else {
+        XCTAssertEqual(textField.leadingView, rightView)
+        XCTAssertEqual(textField.leadingView, textField.rightView)
+        
+        XCTAssertEqual(textField.trailingView, leftView)
+        XCTAssertEqual(textField.trailingView, textField.leftView)
+      }
+    }
   }
 
   func testSerializationTextField() {
     let textField = MDCTextField()
+
+    let leadingView = UILabel()
+    leadingView.text = "$"
+
+    textField.leadingView = leadingView
+    textField.leadingViewMode = .unlessEditing
+
+    let trailingView = UILabel()
+    trailingView.text = ".com"
+
+    textField.trailingView = trailingView
+    textField.trailingViewMode = .unlessEditing
+
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
@@ -132,6 +176,20 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
     XCTAssertEqual(textField.trailingUnderlineLabel.text,
                    unserializedInput?.trailingUnderlineLabel.text)
+
+    if let leadingViewUnserialized = unserializedInput?.leadingView as? UILabel {
+      XCTAssertEqual(leadingViewUnserialized.text, leadingView.text)
+    } else {
+      XCTFail("No leading view or it isn't a UILabel")
+    }
+    XCTAssertEqual(unserializedInput?.leadingViewMode, .unlessEditing)
+
+    if let trailingViewUnserialized = unserializedInput?.trailingView as? UILabel {
+      XCTAssertEqual(trailingViewUnserialized.text, trailingView.text)
+    } else {
+      XCTFail("No trailing view or it isn't a UILabel")
+    }
+    XCTAssertEqual(unserializedInput?.trailingViewMode, .unlessEditing)
   }
 
   func testSizing() {

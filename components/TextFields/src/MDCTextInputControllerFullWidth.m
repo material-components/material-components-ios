@@ -714,7 +714,7 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 // clang-format off
 /**
- textContainerInset: is the source of truth for vertical layout. It's used to figure out the proper
+ textInsets: is the source of truth for vertical layout. It's used to figure out the proper
  height and also where to place the placeholder / text field.
 
  NOTE: It's applied before the textRect is flipped for RTL. So all calculations are done here à la
@@ -731,21 +731,21 @@ static UIColor *_inlinePlaceholderColorDefault;
  MAX(underlineLabelsOffset,MDCTextInputVerticalHalfPadding)           // Padding and/or labels
  */
 // clang-format on
-- (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
-  UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
+  UIEdgeInsets textInsets = UIEdgeInsetsZero;
 
-  textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
-  textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
-  textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
-  textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
+  textInsets.top = MDCTextInputFullWidthVerticalPadding;
+  textInsets.bottom = MDCTextInputFullWidthVerticalPadding;
+  textInsets.left = MDCTextInputFullWidthHorizontalPadding;
+  textInsets.right = MDCTextInputFullWidthHorizontalPadding;
 
   // The trailing label gets in the way. If it has a frame, it's used. But if not, an
   // estimate is made of the size the text will be.
   if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1.f) {
-    textContainerInset.right +=
+    textInsets.right +=
         MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
   } else if (self.characterCountMax) {
     CGRect charCountRect = [[self characterCountText]
@@ -755,10 +755,10 @@ static UIColor *_inlinePlaceholderColorDefault;
                     NSFontAttributeName : self.textInput.trailingUnderlineLabel.font
                   }
                      context:nil];
-    textContainerInset.right += MDCCeil(CGRectGetWidth(charCountRect));
+    textInsets.right += MDCCeil(CGRectGetWidth(charCountRect));
   }
 
-  return textContainerInset;
+  return textInsets;
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
@@ -778,7 +778,7 @@ static UIColor *_inlinePlaceholderColorDefault;
       case UITextFieldViewModeWhileEditing:
         editingRect.size.width -= CGRectGetWidth(self.textInput.clearButton.bounds);
       case UITextFieldViewModeUnlessEditing:
-        // The 'defaultRect' is based on the textContainerInsets so we need to compensate for
+        // The 'defaultRect' is based on the textInsets so we need to compensate for
         // the button NOT being there.
         editingRect.size.width += CGRectGetWidth(self.textInput.clearButton.bounds);
         editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;

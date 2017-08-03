@@ -168,7 +168,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
   if (!self.isAnimationCleared) {
-    [self removeFromSuperlayer];
     [self.animationDelegate animationDidStop:anim shapeLayer:self finished:finished];
   }
 }
@@ -272,6 +271,8 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     __weak MDCInkLayerForegroundRipple *weakSelf = self;
     [CATransaction setCompletionBlock:^(void) {
       MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      [strongSelf removeFromSuperlayer];
+
       if ([strongSelf.animationDelegate
               respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
         [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
@@ -399,6 +400,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     __weak MDCInkLayerBackgroundRipple *weakSelf = self;
     [CATransaction setCompletionBlock:^(void) {
       MDCInkLayerBackgroundRipple *strongSelf = weakSelf;
+      [strongSelf removeFromSuperlayer];
+
       if ([strongSelf.animationDelegate
               respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
         [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
@@ -481,7 +484,6 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 - (void)layoutSublayers {
   [super layoutSublayers];
-  _compositeRipple.frame = self.frame;
   CGFloat radius = MDCInkLayerRadiusBounds(_maxRippleRadius,
                                            MDCInkLayerRectHypotenuse(self.bounds) / 2.f, _bounded);
 
@@ -588,6 +590,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)animationDidStop:(CAAnimation *)anim
               shapeLayer:(CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished {
+  // Even when the ripple is "exited" without animation, we need to remove it from compositeRipple
+  [shapeLayer removeFromSuperlayer];
   [shapeLayer removeAllAnimations];
 
   if ([shapeLayer isMemberOfClass:[MDCInkLayerForegroundRipple class]]) {
