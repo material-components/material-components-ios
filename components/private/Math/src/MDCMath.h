@@ -96,8 +96,7 @@ static inline CGFloat MDCSqrt(CGFloat value) {
 }
 
 /**
- Expand `rect' to the smallest rect containing it with integral origin and
- size.
+ Expand `rect' to the smallest rect containing it with pixel-aligned origin and size.
  
  @see CGRectIntegral
  */
