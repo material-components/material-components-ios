@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialSlider.h"
 #import "MaterialMath.h"
+#import "MaterialSlider.h"
 
 @interface SliderCompareExampleViewController : UIViewController
 

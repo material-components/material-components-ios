@@ -95,6 +95,12 @@ static inline CGFloat MDCSqrt(CGFloat value) {
 #endif
 }
 
+/**
+ Expand `rect' to the smallest rect containing it with integral origin and
+ size.
+ 
+ @see CGRectIntegral
+ */
 static inline CGRect MDCRectIntegral(CGRect rect) {
   CGFloat scale = [[UIScreen mainScreen] scale];
   if (MDCCGFloatEqual(scale, 1)) {
