@@ -204,7 +204,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   CGFloat height = MDCCellDefaultOneLineHeight;
   if ([_styler.delegate respondsToSelector:@selector(collectionView:cellHeightAtIndexPath:)]) {
     height =
-        [_styler.delegate collectionView:self.collectionView cellHeightAtIndexPath:attr.indexPath];
+        [_styler.delegate collectionView:collectionView cellHeightAtIndexPath:attr.indexPath];
   }
 
   CGFloat width = [self cellWidthAtSectionIndex:attr.indexPath.section
@@ -317,9 +317,13 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
                              insetForSectionAtIndex:section];
 
   CGFloat insets = sectionInsets.left + sectionInsets.right;
-  if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
-    CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
-    return cellWidth / _styler.gridColumnCount;
+  if (_styler != nil) {
+    if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
+      CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
+      if (_styler.gridColumnCount > 0) {
+        return cellWidth / _styler.gridColumnCount;
+      }
+    }
   }
   return bounds - insets;
 }
