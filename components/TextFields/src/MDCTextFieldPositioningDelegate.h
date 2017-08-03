@@ -44,11 +44,4 @@
  */
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
-/**
- An object can use this to inject a custom value to be returned by the text input's sizeThatFits:.
-
- @param defaultSize The default value of the the input's sizeThatFits:.
- */
-- (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize;
-
 @end
