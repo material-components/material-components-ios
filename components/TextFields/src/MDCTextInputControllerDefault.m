@@ -128,7 +128,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 @property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonY;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailingCharacterCountLeading;
-@property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
@@ -910,16 +909,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)updateConstraints {
-  if (!self.heightConstraint) {
-    self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.textInput
-                                                         attribute:NSLayoutAttributeHeight
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1
-                                                          constant:0];
-  }
-
   // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
   self.characterCountTrailing.active = NO;
   self.characterCountY.active = NO;
@@ -928,22 +917,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self.placeholderLeading.active = NO;
   self.placeholderTrailingCharacterCountLeading.active = NO;
   self.placeholderTrailingSuperviewTrailing.active = NO;
-
-  UIEdgeInsets insets = [self textInsets:UIEdgeInsetsZero];
-
-  if (self.isFloatingEnabled) {
-    self.heightConstraint.constant =
-        insets.top +  // Labels and padding
-        MDCRint(MAX(self.textInput.font.lineHeight,
-                    self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
-        insets.bottom;                                                   // Padding or labels
-
-  }  // else is .default which needs no heightConstraint.
-
-  // Default just uses the built in intrinsic content size but floating placeholder needs more
-  // height and full width needs less. (Constants set above.)
-  self.heightConstraint.active =
-      (self.floatingEnabled && !self.textInput.translatesAutoresizingMaskIntoConstraints);
 }
 
 - (void)updateFontsForDynamicType {
@@ -1010,15 +983,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   textInsets.bottom = underlineOffset + MDCTextInputDefaultVerticalHalfPadding;
 
   return textInsets;
-}
-
-- (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
-  CGSize newSize = defaultSize;
-  newSize.height = (!self.isFloatingEnabled || !self.heightConstraint)
-                       ? defaultSize.height
-                       : self.heightConstraint.constant;
-
-  return newSize;
 }
 
 #pragma mark - UITextField & UITextView Notification Observation

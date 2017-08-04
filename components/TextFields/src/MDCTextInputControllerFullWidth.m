@@ -90,7 +90,6 @@ static UIColor *_inlinePlaceholderColorDefault;
 @property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonY;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailingCharacterCountLeading;
-@property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
@@ -580,16 +579,6 @@ static UIColor *_inlinePlaceholderColorDefault;
 }
 
 - (void)updateConstraints {
-  if (!self.heightConstraint) {
-    self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.textInput
-                                                         attribute:NSLayoutAttributeHeight
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1
-                                                          constant:0];
-  }
-
   if (!self.characterCountTrailing) {
     self.characterCountTrailing =
         [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
@@ -676,9 +665,6 @@ static UIColor *_inlinePlaceholderColorDefault;
   } else {
     // Single Line Only
     // .fullWidth
-    self.heightConstraint.constant =
-        2 * MDCTextInputFullWidthVerticalPadding + MDCRint(self.textInput.font.lineHeight);
-
     if (!self.characterCountY) {
       self.characterCountY =
           [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
@@ -698,7 +684,6 @@ static UIColor *_inlinePlaceholderColorDefault;
 
   [self.textInput.trailingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired
                                                            forAxis:UILayoutConstraintAxisVertical];
-  self.heightConstraint.active = !self.textInput.translatesAutoresizingMaskIntoConstraints;
 }
 
 - (void)updateFontsForDynamicType {
@@ -789,13 +774,6 @@ static UIColor *_inlinePlaceholderColorDefault;
   }
 
   return editingRect;
-}
-
-- (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
-  CGSize newSize = defaultSize;
-  newSize.height = self.heightConstraint.constant;
-
-  return newSize;
 }
 
 #pragma mark - UITextField & UITextView Notification Observation

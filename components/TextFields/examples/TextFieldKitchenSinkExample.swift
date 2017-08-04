@@ -211,6 +211,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
     let textFieldControllerDefaultDisabled =
       MDCTextInputControllerDefault(textInput: textFieldDisabled)
+    textFieldControllerDefaultDisabled.isFloatingEnabled = false
 
     let textFieldCustomFont = MDCTextField()
     scrollView.addSubview(textFieldCustomFont)

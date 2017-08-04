@@ -513,7 +513,24 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   UIEdgeInsets textInsets = UIEdgeInsetsZero;
 
   textInsets.top = MDCTextInputFullPadding;
-  textInsets.bottom = MDCTextInputFullPadding;
+
+  // The amount of space underneath the underline is variable. It could just be
+  // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
+  // MDCTextInputHalfPadding
+  CGFloat underlineLabelsOffset = 0;
+  if (self.leadingUnderlineLabel.text.length) {
+    underlineLabelsOffset =
+    MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  }
+  if (self.trailingUnderlineLabel.text.length) {
+    underlineLabelsOffset =
+    MAX(underlineLabelsOffset,
+        MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+  }
+  CGFloat underlineOffset = MDCTextInputHalfPadding + underlineLabelsOffset;
+
+  // .bottom = underlineOffset + the half padding above the line but below the text field
+  textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
 
   if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
     return [self.positioningDelegate textInsets:textInsets];
@@ -533,13 +550,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat height = MDCTextInputFullPadding + [self estimatedTextHeight] + MDCTextInputHalfPadding * 2.f;
-
-  CGFloat underlineLabelsHeight =
-      MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f,
-          MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-  height += underlineLabelsHeight;
-  boundingSize.height = height;
+  boundingSize.height = [self textInsets].top + [self estimatedTextHeight] +
+      [self textInsets].bottom;
 
   return boundingSize;
 }
@@ -548,9 +560,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   CGSize sizeThatFits = [self intrinsicContentSize];
   sizeThatFits.width = size.width;
 
-  if ([self.positioningDelegate respondsToSelector:@selector(sizeThatFits:defaultSize:)]) {
-    sizeThatFits = [self.positioningDelegate sizeThatFits:size defaultSize:sizeThatFits];
-  }
   return sizeThatFits;
 }
 

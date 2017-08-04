@@ -200,6 +200,10 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.frame.height, 40)
 
     textField.sizeToFit()
+    XCTAssertEqual(textField.frame.height, 49)
+
+    textField.leadingUnderlineLabel.text = "Helper"
+    textField.sizeToFit()
     XCTAssertEqual(textField.frame.height, 66)
   }
 
