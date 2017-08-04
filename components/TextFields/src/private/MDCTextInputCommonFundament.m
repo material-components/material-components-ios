@@ -23,8 +23,8 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCTextInputFundamentCharacterRelativeSuperviewKey =
-    @"MDCTextInputFundamentCharacterRelativeSuperviewKey";
+static NSString *const MDCTextInputFundamentTextInputKey =
+    @"MDCTextInputFundamentTextInputKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
 static NSString *const MDCTextInputFundamentClearButtonColorKey =
     @"MDCTextInputFundamentClearButtonColorKey";
@@ -90,8 +90,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 @property(nonatomic, strong) UIImage *clearButtonImage;
 
-@property(nonatomic, strong) UIView *relativeSuperview;
-
 @property(nonatomic, weak) UIView<MDCTextInput> *textInput;
 
 @end
@@ -129,8 +127,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     self.textInput.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
     // Initialize elements of UI
-    [self setupRelativeSuperview];
-
     [self setupPlaceholderLabel];
     [self setupClearButton];
     [self setupUnderlineLabels];
@@ -157,8 +153,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
         [aDecoder decodeBoolForKey:MDCTextInputFundamentMDCAdjustsFontsKey];
     _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentPlaceholderLabelKey];
     _positioningDelegate = [aDecoder decodeObjectForKey:MDCTextInputPositioningDelegateKey];
-    _relativeSuperview =
-        [aDecoder decodeObjectForKey:MDCTextInputFundamentCharacterRelativeSuperviewKey];
+    _textInput =
+        [aDecoder decodeObjectForKey:MDCTextInputFundamentTextInputKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
     _trailingViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
@@ -179,8 +175,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
               forKey:MDCTextInputFundamentMDCAdjustsFontsKey];
   [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputFundamentPlaceholderLabelKey];
   [aCoder encodeObject:self.positioningDelegate forKey:MDCTextInputPositioningDelegateKey];
-  [aCoder encodeObject:self.relativeSuperview
-                forKey:MDCTextInputFundamentCharacterRelativeSuperviewKey];
+  [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputFundamentTextInputKey];
   [aCoder encodeObject:self.textColor forKey:MDCTextInputFundamentTextColorKey];
   [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputFundamentTrailingLabelKey];
   [aCoder encodeInteger:self.trailingViewMode forKey:MDCTextInputFundamentTrailingViewKey];
@@ -198,9 +193,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   copy.hidesPlaceholderOnInput = self.hidesPlaceholderOnInput;
   copy.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   copy.positioningDelegate = self.positioningDelegate;
-  if (![self.relativeSuperview isKindOfClass:[MDCTextField class]]) {
-    copy.relativeSuperview = [self.relativeSuperview copy];
-  }
   copy.text = [self.text copy];
   copy.textColor = self.textColor;
   copy.trailingViewMode = self.trailingViewMode;
@@ -218,24 +210,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)commonMDCTextInputCommonFundamentInit {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
-}
-
-// UITextViews are subclasses of UIScrollView and that complicates autolayout. This container is
-// just a box to give a 'real' value to constraints related to superview.
-- (void)setupRelativeSuperview {
-  if ([_textInput isKindOfClass:[UIScrollView class]]) {
-    _relativeSuperview = [[UIView alloc] initWithFrame:CGRectZero];
-    [_textInput addSubview:_relativeSuperview];
-    [_textInput sendSubviewToBack:_relativeSuperview];
-    _relativeSuperview.opaque = NO;
-    _relativeSuperview.backgroundColor = [UIColor clearColor];
-    [_textInput setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                  forAxis:UILayoutConstraintAxisVertical];
-    [_textInput setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                  forAxis:UILayoutConstraintAxisHorizontal];
-  } else {
-    _relativeSuperview = _textInput;
-  }
 }
 
 - (void)setupClearButton {
@@ -297,7 +271,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [NSLayoutConstraint constraintWithItem:_clearButton
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationEqual
-                                      toItem:_relativeSuperview
+                                      toItem:_textInput
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
                                     constant:MDCTextInputClearButtonImageBuiltInPadding];
@@ -358,7 +332,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                    attribute:NSLayoutAttributeLeading
                                    relatedBy:NSLayoutRelationEqual
-                                      toItem:_relativeSuperview
+                                      toItem:_textInput
                                    attribute:NSLayoutAttributeLeading
                                   multiplier:1
                                     constant:0];
@@ -368,7 +342,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationEqual
-                                      toItem:_relativeSuperview
+                                      toItem:_textInput
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
                                     constant:0];
@@ -389,7 +363,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   NSLayoutConstraint *leadingBottom = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                                                    attribute:NSLayoutAttributeBottom
                                                                    relatedBy:NSLayoutRelationEqual
-                                                                      toItem:_relativeSuperview
+                                                                      toItem:_textInput
                                                                    attribute:NSLayoutAttributeBottom
                                                                   multiplier:1
                                                                     constant:0];
@@ -399,7 +373,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
                                    attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
-                                      toItem:_relativeSuperview
+                                      toItem:_textInput
                                    attribute:NSLayoutAttributeBottom
                                   multiplier:1
                                     constant:0];
@@ -431,11 +405,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)subscribeForKVO {
-  if (!_textInput) {
+  if (!_underline) {
     return;
   }
-  [self.underline addObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor options:0 context:nil];
-  [self.underline addObserver:self
+  [_underline addObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor options:0 context:nil];
+  [_underline addObserver:self
                forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight
                   options:0
                   context:nil];
@@ -443,12 +417,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)unsubscribeFromKVO {
-  if (!self.textInput || !self.isRegisteredForKVO) {
+  if (!_underline || !self.isRegisteredForKVO) {
     return;
   }
   @try {
-    [self.underline removeObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor];
-    [self.underline removeObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight];
+    [_underline removeObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor];
+    [_underline removeObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight];
   } @catch (NSException *exception) {
     NSLog(@"Tried to unsubscribe from KVO in MDCTextInputCommonFundament but could not.");
   }
@@ -458,17 +432,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Mirrored Layout Methods
 
 - (void)layoutSubviewsOfInput {
-  if (self.relativeSuperview != self.textInput) {
-    self.relativeSuperview.frame = self.textInput.bounds;
-    [self.textInput setNeedsUpdateConstraints];
-  }
-
-  if ([self.textInput isKindOfClass:[UITextView class]] &&
-      !UIEdgeInsetsEqualToEdgeInsets(((UITextView *)self.textInput).textContainerInset,
-                                     self.textContainerInset)) {
-    ((UITextView *)self.textInput).textContainerInset = self.textContainerInset;
-  }
-
   [self updatePlaceholderAlpha];
 
   if ([self needsUpdateConstraintsForPlaceholderToOverlayViewsPosition]) {
@@ -541,8 +504,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     }
   }
 
-  if ([self.textInput isKindOfClass:[UITextField class]] &&
-      ((UITextField *)self.textInput).rightView.superview) {
+  if (self.textInput.trailingView.superview) {
     clearButtonAlpha = 0;
   }
 
@@ -765,25 +727,19 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)updatePlaceholderPosition {
-  if ([_textInput isKindOfClass:[MDCTextField class]]) {
-    MDCTextField *textField = (MDCTextField *)_textInput;
-    self.placeholderTop.constant = textField.textInsets.top;
-  }
+  self.placeholderTop.constant = _textInput.textInsets.top;
 
   [self updatePlaceholderToOverlayViewsPosition];
   [self.textInput invalidateIntrinsicContentSize];
 }
 
 - (NSArray<NSLayoutConstraint *> *)placeholderDefaultConstaints {
-  UIEdgeInsets insets = UIEdgeInsetsZero;
-  if ([_textInput isKindOfClass:[MDCTextField class]]) {
-    insets = ((MDCTextField *)_textInput).textInsets;
-  }
+  UIEdgeInsets insets = ((MDCTextField*)_textInput).textInsets;
 
   self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                      attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:_relativeSuperview
+                                                        toItem:_textInput
                                                      attribute:NSLayoutAttributeTop
                                                     multiplier:1
                                                       constant:insets.top];
@@ -794,20 +750,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.placeholderLeading = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:_relativeSuperview
+                                                            toItem:_textInput
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
                                                           constant:insets.left];
   [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
 
   NSLayoutConstraint *placeholderTrailing =
-      [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                   attribute:NSLayoutAttributeTrailing
-                                   relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:_relativeSuperview
-                                   attribute:NSLayoutAttributeTrailing
-                                  multiplier:1
-                                    constant:insets.right];
+  [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationLessThanOrEqual
+                                  toItem:_textInput
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:insets.right];
   placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
   return @[ self.placeholderTop, self.placeholderLeading, placeholderTrailing ];
