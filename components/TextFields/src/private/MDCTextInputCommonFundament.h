@@ -26,14 +26,16 @@ extern const CGFloat MDCTextInputHalfPadding;
 /** The color of the caret indicating where inputted characters will be placed (in the text.) */
 @property(nonatomic, nullable, strong) UIColor *cursorColor;
 
-/** Whether the text field is enabled. */
-@property(nonatomic, assign, getter=isEnabled) BOOL enabled;
+/**
+ An overlay view on the side of the input where reading and writing lines begin. In LTR this is
+ the Left side. In RTL, the Right side.
+ */
+@property(nonatomic, nullable, strong) UIView *leadingView;
+
+@property(nonatomic) UITextFieldViewMode leadingViewMode;
 
 /** The color of the input's text. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
-
-/** Inset set on the text container based upon the text input's style. */
-@property(nonatomic, assign, readonly) UIEdgeInsets textContainerInset;
 
 /** Designated initializer with the controlled text input. */
 - (nonnull instancetype)initWithTextInput:(UIView<MDCTextInput> *_Nonnull)textInput
