@@ -69,7 +69,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    MDCTextInputCommonFundament *fundament = [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
+    MDCTextInputCommonFundament *fundament =
+        [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
     _fundament =
         fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
@@ -87,7 +88,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     } else {
       _textView = [[UITextView alloc] initWithFrame:CGRectZero];
     }
-    _trailingViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCMultilineTextFieldTrailingViewModeKey];
+    _trailingViewMode = (UITextFieldViewMode)
+        [aDecoder decodeIntegerForKey:MDCMultilineTextFieldTrailingViewModeKey];
   }
 
   return self;
@@ -101,7 +103,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [super encodeWithCoder:aCoder];
   [aCoder encodeBool:self.expandsOnOverflow forKey:MDCMultilineTextFieldExpandsOnOverflowKey];
   [aCoder encodeObject:self.fundament forKey:MDCMultilineTextFieldFundamentKey];
-  [aCoder encodeConditionalObject:self.layoutDelegate forKey:MDCMultilineTextFieldLayoutDelegateKey];
+  [aCoder encodeConditionalObject:self.layoutDelegate
+                           forKey:MDCMultilineTextFieldLayoutDelegateKey];
   [aCoder encodeInteger:self.minimumLines forKey:MDCMultilineTextFieldMinimumLinesKey];
   [aCoder encodeObject:self.textView forKey:MDCMultilineTextFieldTextViewKey];
   [aCoder encodeInteger:self.trailingViewMode forKey:MDCMultilineTextFieldTrailingViewModeKey];
@@ -164,9 +167,12 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.textView.translatesAutoresizingMaskIntoConstraints = NO;
   self.textView.scrollEnabled = NO;
 
-  [self.textView setContentHuggingPriority:UILayoutPriorityDefaultLow - 1 forAxis:UILayoutConstraintAxisHorizontal];
-  [self.textView setContentHuggingPriority:UILayoutPriorityDefaultLow - 1 forAxis:UILayoutConstraintAxisVertical];
-  [self.textView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1 forAxis:UILayoutConstraintAxisHorizontal];
+  [self.textView setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
+                                   forAxis:UILayoutConstraintAxisHorizontal];
+  [self.textView setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
+                                   forAxis:UILayoutConstraintAxisVertical];
+  [self.textView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
+                                                 forAxis:UILayoutConstraintAxisHorizontal];
 
   self.textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
   self.textView.textContainer.lineFragmentPadding = 0;
@@ -181,33 +187,36 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 #pragma mark - Underline View Implementation
 
 - (void)setupUnderlineConstraints {
-  NSLayoutConstraint *underlineLeading = [NSLayoutConstraint constraintWithItem:self.underline
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:0];
+  NSLayoutConstraint *underlineLeading =
+      [NSLayoutConstraint constraintWithItem:self.underline
+                                   attribute:NSLayoutAttributeLeading
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeLeading
+                                  multiplier:1
+                                    constant:0];
   underlineLeading.priority = UILayoutPriorityDefaultLow;
   underlineLeading.active = YES;
 
-  NSLayoutConstraint *underlineTrailing = [NSLayoutConstraint constraintWithItem:self.underline
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:0];
+  NSLayoutConstraint *underlineTrailing =
+      [NSLayoutConstraint constraintWithItem:self.underline
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeTrailing
+                                  multiplier:1
+                                    constant:0];
   underlineTrailing.priority = UILayoutPriorityDefaultLow;
   underlineTrailing.active = YES;
 
-  NSLayoutConstraint *underlineYTextView = [NSLayoutConstraint constraintWithItem:self.underline
-                               attribute:NSLayoutAttributeCenterY
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.textView
-                               attribute:NSLayoutAttributeBottom
-                              multiplier:1
-                                constant:MDCTextInputHalfPadding];
+  NSLayoutConstraint *underlineYTextView =
+      [NSLayoutConstraint constraintWithItem:self.underline
+                                   attribute:NSLayoutAttributeCenterY
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.textView
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1
+                                    constant:MDCTextInputHalfPadding];
   underlineYTextView.priority = UILayoutPriorityDefaultLow;
   underlineYTextView.active = YES;
 
@@ -257,13 +266,11 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   // MDCTextInputHalfPadding
   CGFloat underlineLabelsOffset = 0;
   if (self.leadingUnderlineLabel.text.length) {
-    underlineLabelsOffset =
-    MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+    underlineLabelsOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
   }
   if (self.trailingUnderlineLabel.text.length) {
-    underlineLabelsOffset =
-    MAX(underlineLabelsOffset,
-        MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+    underlineLabelsOffset = MAX(underlineLabelsOffset,
+                                MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
   }
   CGFloat underlineOffset = MDCTextInputHalfPadding + underlineLabelsOffset;
 
@@ -283,10 +290,13 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   boundingSize.width = UIViewNoIntrinsicMetric;
 
   [self.textView layoutIfNeeded];
-  CGFloat estimatedTextViewHeight = [self.textView systemLayoutSizeFittingSize:CGSizeMake(CGRectGetWidth(self.textView.bounds), 0) withHorizontalFittingPriority:UILayoutPriorityDefaultLow verticalFittingPriority:UILayoutPriorityDefaultLow].height;
+  CGFloat estimatedTextViewHeight =
+      [self.textView systemLayoutSizeFittingSize:CGSizeMake(CGRectGetWidth(self.textView.bounds), 0)
+                   withHorizontalFittingPriority:UILayoutPriorityDefaultLow
+                         verticalFittingPriority:UILayoutPriorityDefaultLow]
+          .height;
 
-  boundingSize.height = [self textInsets].top + estimatedTextViewHeight +
-      [self textInsets].bottom;
+  boundingSize.height = [self textInsets].top + estimatedTextViewHeight + [self textInsets].bottom;
 
   return boundingSize;
 }
@@ -351,13 +361,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   }
 
   if (!self.textViewMinHeight) {
-    self.textViewMinHeight = [NSLayoutConstraint constraintWithItem:self.textView
-                                                         attribute:NSLayoutAttributeHeight
-                                                         relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1
-                                                          constant:[self estimatedTextViewLineHeight] * self.minimumLines];
+    self.textViewMinHeight = [NSLayoutConstraint
+        constraintWithItem:self.textView
+                 attribute:NSLayoutAttributeHeight
+                 relatedBy:NSLayoutRelationGreaterThanOrEqual
+                    toItem:nil
+                 attribute:NSLayoutAttributeNotAnAttribute
+                multiplier:1
+                  constant:[self estimatedTextViewLineHeight] * self.minimumLines];
     self.textViewMinHeight.priority = UILayoutPriorityDefaultLow;
   }
   self.textViewMinHeight.active = self.minimumLines > 1;
@@ -389,7 +400,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   return self.mdc_adjustsFontForContentSizeCategory;
 }
 
-- (void)setAdjustsFontForContentSizeCategory:(BOOL) adjustsFontForContentSizeCategory {
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
   [self mdc_setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
 }
 
@@ -573,7 +584,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
   if (currentSize.height != requiredSize.height && self.textView.delegate &&
-      [self.layoutDelegate respondsToSelector:@selector(multilineTextField:didChangeContentSize:)]) {
+      [self.layoutDelegate
+          respondsToSelector:@selector(multilineTextField:didChangeContentSize:)]) {
     id<MDCMultilineTextInputLayoutDelegate> delegate =
         (id<MDCMultilineTextInputLayoutDelegate>)self.layoutDelegate;
     [delegate multilineTextField:self didChangeContentSize:requiredSize];
@@ -588,11 +600,11 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 #pragma mark - Accessibility
 
 - (NSString *)accessibilityValue {
-  NSString *value =  [self.text length] ? self.text : self.placeholder;
+  NSString *value = [self.text length] ? self.text : self.placeholder;
 
   if (self.leadingUnderlineLabel.text.length > 0) {
     [value stringByAppendingFormat:@"%@ %@", [super accessibilityValue],
-            self.leadingUnderlineLabel.accessibilityLabel];
+                                   self.leadingUnderlineLabel.accessibilityLabel];
   }
 
   return value;

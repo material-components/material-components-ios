@@ -23,8 +23,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCTextInputFundamentTextInputKey =
-    @"MDCTextInputFundamentTextInputKey";
+static NSString *const MDCTextInputFundamentTextInputKey = @"MDCTextInputFundamentTextInputKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
 static NSString *const MDCTextInputFundamentClearButtonColorKey =
     @"MDCTextInputFundamentClearButtonColorKey";
@@ -153,11 +152,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
         [aDecoder decodeBoolForKey:MDCTextInputFundamentMDCAdjustsFontsKey];
     _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentPlaceholderLabelKey];
     _positioningDelegate = [aDecoder decodeObjectForKey:MDCTextInputPositioningDelegateKey];
-    _textInput =
-        [aDecoder decodeObjectForKey:MDCTextInputFundamentTextInputKey];
+    _textInput = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextInputKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
-    _trailingViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
+    _trailingViewMode =
+        (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
     _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
 
     [self subscribeForKVO];
@@ -389,7 +388,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (MDCTextInputUnderlineView *)setupUnderlineView {
-  MDCTextInputUnderlineView *underline = [[MDCTextInputUnderlineView alloc] initWithFrame:CGRectZero];
+  MDCTextInputUnderlineView *underline =
+      [[MDCTextInputUnderlineView alloc] initWithFrame:CGRectZero];
   underline.color = MDCTextInputUnderlineColor();
   underline.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -734,7 +734,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (NSArray<NSLayoutConstraint *> *)placeholderDefaultConstaints {
-  UIEdgeInsets insets = ((MDCTextField*)_textInput).textInsets;
+  UIEdgeInsets insets = ((MDCTextField *)_textInput).textInsets;
 
   self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                      attribute:NSLayoutAttributeTop
@@ -757,13 +757,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
 
   NSLayoutConstraint *placeholderTrailing =
-  [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationLessThanOrEqual
-                                  toItem:_textInput
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:insets.right];
+      [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationLessThanOrEqual
+                                      toItem:_textInput
+                                   attribute:NSLayoutAttributeTrailing
+                                  multiplier:1
+                                    constant:insets.right];
   placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
   return @[ self.placeholderTop, self.placeholderLeading, placeholderTrailing ];

@@ -34,7 +34,8 @@
 
  If using auto layout, it is not necessary to have a layout delegate.
  */
-@property(nonatomic, nullable, weak) IBOutlet id<MDCMultilineTextInputLayoutDelegate> layoutDelegate;
+@property(nonatomic, nullable, weak) IBOutlet id<MDCMultilineTextInputLayoutDelegate>
+    layoutDelegate;
 
 /** Insets used to calculate the spacing of subviews. */
 @property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
@@ -60,6 +61,7 @@
  @param multilineTextField  The text field for which the content size changed.
  @param size                The size required by the text view to fit all of its content.
  */
-- (void)multilineTextField:(id <MDCMultilineTextInput> _Nonnull)multilineTextField didChangeContentSize:(CGSize)size;
+- (void)multilineTextField:(id<MDCMultilineTextInput> _Nonnull)multilineTextField
+      didChangeContentSize:(CGSize)size;
 
 @end
