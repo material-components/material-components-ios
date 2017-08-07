@@ -33,7 +33,7 @@ typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
 @end
 
-@interface MDCFeatureHighlightView (Private)
+@interface MDCFeatureHighlightView (Private) <UIGestureRecognizerDelegate>
 
 - (void)layoutAppearing;
 - (void)layoutDisappearing;
