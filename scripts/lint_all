@@ -16,9 +16,12 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$SCRIPTS_DIR/.."
+readonly LINT_DIRS=("catalog" "components" "demos")
 
 if which swiftlint >/dev/null; then
-  swiftlint lint --path "$ROOT_DIR" --quiet
+  for lintdir in ${LINT_DIRS[@]}; do
+    swiftlint lint --path "$ROOT_DIR/$lintdir" --quiet
+  done 
 else
   echo "warning: run scripts/install_contributor_tools to enable SwiftLint warnings."
 fi
