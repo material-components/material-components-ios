@@ -466,18 +466,48 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (CGRect)mdc_frameAlignedHorizontally:(CGRect)frame
                              alignment:(MDCNavigationBarTitleAlignment)alignment {
   switch (alignment) {
-    // Center align title if desired unless leading icons will overlap frame
+    // Center align title
     case MDCNavigationBarTitleAlignmentCenter: {
-      CGFloat xOrigin = CGRectGetMaxX(self.bounds) / 2 - CGRectGetWidth(frame) / 2;
-      CGFloat minX = CGRectGetMinX(frame);
-      // If RTL, we must use distance from maxX to bounds instead
-      if (self.mdc_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionRightToLeft) {
-        minX = CGRectGetMaxX(self.bounds) - CGRectGetMaxX(frame);
+      BOOL isRTL = [self mdc_effectiveUserInterfaceLayoutDirection] ==
+                   UIUserInterfaceLayoutDirectionRightToLeft;
+
+      MDCButtonBar *leftButtonBar = self.leadingButtonBar;
+      MDCButtonBar *rightButtonBar = self.trailingButtonBar;
+      UIEdgeInsets textInsets =
+          [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ? kTextPadInsets
+                                                                                   : kTextInsets;
+      CGFloat titleLeftInset = textInsets.left;
+      CGFloat titleRightInset = textInsets.right;
+
+      if (isRTL) {
+        leftButtonBar = self.trailingButtonBar;
+        rightButtonBar = self.leadingButtonBar;
+        titleLeftInset = textInsets.right;
+        titleRightInset = textInsets.left;
       }
-      if (minX <= xOrigin) {
+
+      // Determine how much space is available to the left/right of the navigation bar's midpoint
+      CGFloat midX = CGRectGetMidX(self.bounds);
+      CGFloat leftMidSpaceX = midX - CGRectGetMaxX(leftButtonBar.frame) - titleLeftInset;
+      CGFloat rightMidSpaceX = CGRectGetMinX(rightButtonBar.frame) - midX - titleRightInset;
+      CGFloat halfFrameWidth = CGRectGetWidth(frame) / 2;
+
+      // Place the title in the exact center if we have enough left/right space
+      if (leftMidSpaceX >= halfFrameWidth && rightMidSpaceX >= halfFrameWidth) {
+        CGFloat xOrigin = CGRectGetMaxX(self.bounds) / 2 - CGRectGetWidth(frame) / 2;
         return CGRectMake(xOrigin, CGRectGetMinY(frame), CGRectGetWidth(frame),
                           CGRectGetHeight(frame));
+      }
+
+      // Place the title as close to the center, shifting it slightly in to the side with more space
+      if (leftMidSpaceX >= halfFrameWidth) {
+        CGFloat frameMaxX = CGRectGetMinX(rightButtonBar.frame) - titleRightInset;
+        return CGRectMake(frameMaxX - frame.size.width, frame.origin.y, frame.size.width,
+                          frame.size.height);
+      }
+      if (rightMidSpaceX >= halfFrameWidth) {
+        CGFloat frameOriginX = CGRectGetMaxX(leftButtonBar.frame) + titleLeftInset;
+        return CGRectMake(frameOriginX, frame.origin.y, frame.size.width, frame.size.height);
       }
     }
     // Intentional fall through
