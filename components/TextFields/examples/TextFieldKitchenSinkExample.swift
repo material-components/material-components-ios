@@ -482,6 +482,25 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
   }
 
   func setupSpecialMultilineTextFields() -> [MDCTextInputController] {
+      let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
+      let rightViewImagePath = bundle.path(forResource: "ic_done", ofType: "png")!
+      let rightViewImage = UIImage(contentsOfFile: rightViewImagePath)!
+      
+      let multilineTextFieldTrailingView = MDCMultilineTextField()
+      multilineTextFieldTrailingView.trailingViewMode = .always
+      multilineTextFieldTrailingView.trailingView = UIImageView(image:rightViewImage)
+      
+      scrollView.addSubview(multilineTextFieldTrailingView)
+      multilineTextFieldTrailingView.translatesAutoresizingMaskIntoConstraints = false
+      
+      multilineTextFieldTrailingView.placeholder = "This has a trailing view"
+      multilineTextFieldTrailingView.textView?.delegate = self
+      multilineTextFieldTrailingView.clearButtonMode = .whileEditing
+      
+      let multilineTextFieldControllerDefaultTrailingView =
+      MDCTextInputControllerDefault(textInput: multilineTextFieldTrailingView)
+      multilineTextFieldControllerDefaultTrailingView.isFloatingEnabled = false
+      
     let multilineTextFieldCustomFont = MDCMultilineTextField()
     scrollView.addSubview(multilineTextFieldCustomFont)
     multilineTextFieldCustomFont.translatesAutoresizingMaskIntoConstraints = false

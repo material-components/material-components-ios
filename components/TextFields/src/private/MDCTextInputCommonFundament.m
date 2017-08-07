@@ -647,6 +647,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return _textInput.textInsets;
 }
 
+- (void)setTrailingView:(UIView *)trailingView {
+  if (_trailingView != trailingView) {
+    [_trailingView removeFromSuperview];
+    [self.textInput addSubview:trailingView];
+    _trailingView = trailingView;
+    [self.textInput setNeedsUpdateConstraints];
+  }
+}
+
 - (MDCTextInputUnderlineView *)underline {
   if (!_underline) {
     _underline = [self setupUnderlineView];
