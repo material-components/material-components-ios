@@ -28,7 +28,7 @@
   CGRect misalignedRect = CGRectMake(0.45, 0.78, 1.01, 5.98);
   CGRect alignedScale1Rect = CGRectMake(0, 0, 2, 7);
   CGRect alignedScale2Rect = CGRectMake(0, 0.5, 1.5, 6.5);
-  CGRect alignedScale3Rect = CGRectMake(1.0/3.0, 2.0/3.0, 4.0/3.0, 19.0/3.0);
+  CGRect alignedScale3Rect = CGRectMake(1.0 / 3.0, 2.0 / 3.0, 4.0 / 3.0, 19.0 / 3.0);
 
   // Then
   XCTAssertTrue(CGRectEqualToRect(alignedScale1Rect, MDCRectAlignToScale(misalignedRect, 1)));
@@ -41,7 +41,7 @@
   CGRect misalignedRect = CGRectMake(-5.01, -0.399, 8.35, 2.65);
   CGRect alignedScale1Rect = CGRectMake(-6, -1, 10, 4);
   CGRect alignedScale2Rect = CGRectMake(-5.5, -0.5, 9, 3);
-  CGRect alignedScale3Rect = CGRectMake(-16.0/3.0, -2.0/3.0, 9, 3);
+  CGRect alignedScale3Rect = CGRectMake(-16.0 / 3.0, -2.0 / 3.0, 9, 3);
 
   // Then
   XCTAssertTrue(CGRectEqualToRect(alignedScale1Rect, MDCRectAlignToScale(misalignedRect, 1)));
