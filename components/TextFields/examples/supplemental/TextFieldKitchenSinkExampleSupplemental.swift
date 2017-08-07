@@ -42,7 +42,7 @@ extension TextFieldKitchenSinkSwiftExample {
                               setupFloatingMultilineTextFields(),
                               setupSpecialMultilineTextFields()].flatMap { $0 as! [MDCTextInputController] }
 
-    controllersFullWidth = multilineTextFieldControllersFullWidth + multilineTextFieldControllersFullWidth
+    controllersFullWidth = textFieldControllersFullWidth + multilineTextFieldControllersFullWidth
 
     allInputControllers = allTextFieldControllers + allMultilineTextFieldControllers
 

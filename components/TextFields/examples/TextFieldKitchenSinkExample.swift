@@ -443,6 +443,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     let multilineTextFieldControllerFullWidthCharMax = MDCTextInputControllerFullWidth(textInput: multilineTextFieldFullWidthCharMax)
 
     controllersWithCharacterCount.append(multilineTextFieldControllerFullWidthCharMax)
+    multilineTextFieldControllerFullWidthCharMax.characterCountMax = 140
 
     return [multilineTextFieldControllerFullWidth, multilineTextFieldControllerFullWidthCharMax]
   }
