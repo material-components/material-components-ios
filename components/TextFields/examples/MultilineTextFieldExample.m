@@ -24,6 +24,7 @@
 @property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
 @property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFloating;
 @property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldControllerFullWidth;
+@property(nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
@@ -35,8 +36,18 @@
 
   self.title = @"Material Multiline Text Fields";
 
+  self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  [self.view addSubview:self.scrollView];
+  self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+
+  UIEdgeInsets margins = UIEdgeInsetsMake(0, 16, 0, 16);
+  self.scrollView.layoutMargins = margins;
+
+  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics:nil views:@{@"scrollView": self.scrollView}]];
+  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:@{@"scrollView": self.scrollView}]];
+
   MDCMultilineTextField *multilineTextFieldUnstyled = [[MDCMultilineTextField alloc] init];
-  [self.view addSubview:multilineTextFieldUnstyled];
+  [self.scrollView addSubview:multilineTextFieldUnstyled];
   multilineTextFieldUnstyled.translatesAutoresizingMaskIntoConstraints = NO;
 
   multilineTextFieldUnstyled.placeholder = @"No Controller (unstyled)";
@@ -45,7 +56,7 @@
   multilineTextFieldUnstyled.trailingUnderlineLabel.text = @"Trailing";
 
   MDCMultilineTextField *multilineTextFieldUnstyledBox = [[MDCMultilineTextField alloc] init];
-  [self.view addSubview:multilineTextFieldUnstyledBox];
+  [self.scrollView addSubview:multilineTextFieldUnstyledBox];
   multilineTextFieldUnstyledBox.translatesAutoresizingMaskIntoConstraints = NO;
 
   multilineTextFieldUnstyledBox.placeholder = @"No Controller (unstyled) minimum of 3 lines";
@@ -56,7 +67,7 @@
   multilineTextFieldUnstyledBox.expandsOnOverflow = NO;
 
   MDCMultilineTextField *multilineTextFieldFloating = [[MDCMultilineTextField alloc] init];
-  [self.view addSubview:multilineTextFieldFloating];
+  [self.scrollView addSubview:multilineTextFieldFloating];
   multilineTextFieldFloating.translatesAutoresizingMaskIntoConstraints = NO;
 
   multilineTextFieldFloating.placeholder = @"Floating Controller";
@@ -66,7 +77,7 @@
   [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldFloating];
 
   MDCMultilineTextField *multilineTextFieldCharMaxDefault = [[MDCMultilineTextField alloc] init];
-  [self.view addSubview:multilineTextFieldCharMaxDefault];
+  [self.scrollView addSubview:multilineTextFieldCharMaxDefault];
   multilineTextFieldCharMaxDefault.translatesAutoresizingMaskIntoConstraints = NO;
 
   multilineTextFieldCharMaxDefault.placeholder = @"Inline Placeholder Only";
@@ -78,7 +89,7 @@
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
   MDCMultilineTextField *multilineTextFieldCharMaxFullWidth = [[MDCMultilineTextField alloc] init];
-  [self.view addSubview:multilineTextFieldCharMaxFullWidth];
+  [self.scrollView addSubview:multilineTextFieldCharMaxFullWidth];
   multilineTextFieldCharMaxFullWidth.translatesAutoresizingMaskIntoConstraints = NO;
 
   multilineTextFieldCharMaxFullWidth.placeholder = @"Full Width Controller";
@@ -86,11 +97,11 @@
 
   self.textFieldControllerFullWidth =
   [[MDCTextInputControllerFullWidth alloc] initWithTextInput:multilineTextFieldCharMaxFullWidth];
-  self.textFieldControllerFullWidth.characterCountMax = 30;
+  self.textFieldControllerFullWidth.characterCountMax = 140;
 
   [NSLayoutConstraint
    activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"V:|-20-[unstyled]-[box]-[floating]-[charMax]-[fullWidth]"
+                        constraintsWithVisualFormat:@"V:|-20-[unstyled]-[box]-[floating]-[charMax]-[fullWidth]-|"
                         options:0
                         metrics:nil
                         views:@{
@@ -132,6 +143,9 @@
                         views:@{
                                 @"charMax": multilineTextFieldCharMaxDefault
                                 }]];
+
+  [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0].active = YES;
   [NSLayoutConstraint
    activateConstraints:[NSLayoutConstraint
                         constraintsWithVisualFormat:@"H:|[fullWidth]|"
@@ -145,6 +159,11 @@
   UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                   action:@selector(tapDidTouch)];
   [self.view addGestureRecognizer:tapRecognizer];
+
+  [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillShowNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+    CGRect frame = [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, CGRectGetHeight(frame), 0);
+  }];
 }
 
 - (void)tapDidTouch {
