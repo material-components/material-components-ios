@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialMath.h"
 #import "MaterialSlider.h"
 
 @interface SliderCompareExampleViewController : UIViewController
@@ -42,6 +43,7 @@
   [label sizeToFit];
   [self.view addSubview:label];
   label.center = CGPointMake(slider.center.x, slider.center.y + 2 * label.frame.size.height);
+  label.frame = MDCRectAlignToScale(label.frame, [UIScreen mainScreen].scale);
 
   // Vanilla  UISlider for comparison.
   UISlider *uiSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
@@ -58,6 +60,7 @@
   [self.view addSubview:uiSliderLabel];
   uiSliderLabel.center =
       CGPointMake(uiSlider.center.x, uiSlider.center.y + 2 * uiSliderLabel.frame.size.height);
+  uiSliderLabel.frame = MDCRectAlignToScale(uiSliderLabel.frame, [UIScreen mainScreen].scale);
 }
 
 - (void)didChangeMDCSliderValue:(MDCSlider *)slider {
