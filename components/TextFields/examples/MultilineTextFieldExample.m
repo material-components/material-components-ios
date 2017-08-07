@@ -18,7 +18,7 @@
 
 #import "MaterialTextFields.h"
 
-@interface MultilineTextFieldExample () <UITextViewDelegate>
+@interface MultilineTextFieldExample : UIViewController
 
 // Be sure to keep your controllers in memory somewhere like a property:
 @property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
