@@ -486,17 +486,20 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
         titleRightInset = textInsets.left;
       }
 
+      // Determine how much space is available to the left/right of the navigation bar's midpoint
       CGFloat midX = CGRectGetMidX(self.bounds);
       CGFloat leftMidSpaceX = midX - CGRectGetMaxX(leftButtonBar.frame) - titleLeftInset;
       CGFloat rightMidSpaceX = CGRectGetMinX(rightButtonBar.frame) - midX - titleRightInset;
       CGFloat halfFrameWidth = CGRectGetWidth(frame) / 2;
+
+      // Place the title in the exact center if we have enough left/right space
       if (leftMidSpaceX >= halfFrameWidth && rightMidSpaceX >= halfFrameWidth) {
         CGFloat xOrigin = CGRectGetMaxX(self.bounds) / 2 - CGRectGetWidth(frame) / 2;
         return CGRectMake(xOrigin, CGRectGetMinY(frame), CGRectGetWidth(frame),
                           CGRectGetHeight(frame));
       }
 
-      // Attempt to get as close to center as possible
+      // Place the title as close to the center, shifting it slightly in to the side with more space
       if (leftMidSpaceX >= halfFrameWidth) {
         CGFloat frameMaxX = CGRectGetMinX(rightButtonBar.frame) - titleRightInset;
         return CGRectMake(frameMaxX - frame.size.width, frame.origin.y, frame.size.width,
