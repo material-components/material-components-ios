@@ -46,6 +46,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 @property(nonatomic, strong) NSLayoutConstraint *textViewMinHeight;
 @property(nonatomic, strong) NSLayoutConstraint *textViewTop;
 @property(nonatomic, strong) NSLayoutConstraint *textViewTrailing;
+@property(nonatomic, strong) NSLayoutConstraint *textViewTrailingTrailingViewLeading;
+@property(nonatomic, strong) NSLayoutConstraint *trailingViewCenterY;
+@property(nonatomic, strong) NSLayoutConstraint *trailingViewTrailing;
 
 @end
 
@@ -318,6 +321,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     [self sendSubviewToBack:self.textView];
   }
 
+  [self updateTrailingViewAlpha];
+
   [self.fundament layoutSubviewsOfInput];
 }
 
@@ -376,6 +381,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
   [self.fundament updateConstraintsOfInput];
 
+  [self updateTrailingViewLayout];
+
   [super updateConstraints];
 }
 
@@ -385,6 +392,72 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 - (CGFloat)estimatedTextViewLineHeight {
   return MDCCeil(self.textView.font.lineHeight * 2.f) / 2.f;
+}
+
+#pragma mark - Trailing View Implementation
+
+- (void)updateTrailingViewLayout {
+  if (!self.trailingView) {
+    return;
+  }
+
+  self.trailingView.translatesAutoresizingMaskIntoConstraints = NO;
+
+  if (![self.trailingView isDescendantOfView:self]) {
+    [self addSubview:self.trailingView];
+  }
+
+  if (!self.trailingViewTrailing) {
+    self.trailingViewTrailing = [NSLayoutConstraint constraintWithItem:self.trailingView
+                                                             attribute:NSLayoutAttributeTrailing
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.clearButton
+                                                             attribute:NSLayoutAttributeTrailing
+                                                            multiplier:1
+                                                              constant:0];
+  }
+  self.trailingViewTrailing.active = YES;
+
+  if (!self.trailingViewCenterY) {
+    self.trailingViewCenterY = [NSLayoutConstraint constraintWithItem:self.trailingView
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.clearButton
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  }
+  self.trailingViewCenterY.active = YES;
+  
+  if (!self.textViewTrailingTrailingViewLeading) {
+    self.textViewTrailingTrailingViewLeading = [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.trailingView attribute:NSLayoutAttributeLeading multiplier:1 constant:self.textViewTrailing.constant];
+  }
+  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0.f);
+}
+
+- (void)updateTrailingViewAlpha {
+  self.trailingView.alpha = [self trailingViewAlpha];
+}
+
+- (CGFloat)trailingViewAlpha {
+  // The trailing view has the same behavior as .rightView in UITextField: It has visual precidence
+  // over the clear button.
+  CGFloat trailingViewAlpha = self.trailingView.alpha;
+  switch (self.trailingViewMode) {
+    case UITextFieldViewModeAlways:
+      trailingViewAlpha = 1.f;
+      break;
+    case UITextFieldViewModeWhileEditing:
+      trailingViewAlpha = self.isEditing ? 1.f : 0.f;
+      break;
+    case UITextFieldViewModeUnlessEditing:
+      trailingViewAlpha = self.isEditing ? 0.f : 1.f;
+      break;
+    case UITextFieldViewModeNever:
+      trailingViewAlpha = 0.f;
+      break;
+  }
+  return trailingViewAlpha;
 }
 
 #pragma mark - Properties Implementation
