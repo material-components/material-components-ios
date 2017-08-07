@@ -620,6 +620,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _valueLabel.textColor = [UIColor whiteColor];
     if ([_delegate respondsToSelector:@selector(thumbTrack:stringForValue:)]) {
       _valueLabel.text = [_delegate thumbTrack:self stringForValue:_value];
+      if (CGRectGetWidth(_valueLabel.frame) > 1) {
+        _valueLabel.frame = MDCRectAlignToScale(_valueLabel.frame, [UIScreen mainScreen].scale);
+      }
     }
   }
 
