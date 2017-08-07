@@ -605,15 +605,6 @@ static UIColor *_inlinePlaceholderColorDefault;
                                     multiplier:1
                                       constant:0];
   }
-  if (!self.clearButtonY) {
-    self.clearButtonY = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.textInput
-                                                     attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1
-                                                      constant:0];
-  }
   if (!self.placeholderLeading) {
     self.placeholderLeading =
         [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -665,6 +656,15 @@ static UIColor *_inlinePlaceholderColorDefault;
                                        attribute:NSLayoutAttributeBottom
                                       multiplier:1
                                         constant:0];
+    }
+    if (!self.clearButtonY) {
+        self.clearButtonY = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
+                                                         attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.textInput.trailingUnderlineLabel
+                                                         attribute:NSLayoutAttributeCenterY
+                                                        multiplier:1
+                                                          constant:0];
     }
 
     if (!self.multilineTextViewBottom) {
@@ -731,6 +731,15 @@ static UIColor *_inlinePlaceholderColorDefault;
                                        attribute:NSLayoutAttributeCenterY
                                       multiplier:1
                                         constant:0];
+    }
+    if (!self.clearButtonY) {
+        self.clearButtonY = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
+                                                         attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.textInput
+                                                         attribute:NSLayoutAttributeCenterY
+                                                        multiplier:1
+                                                          constant:0];
     }
   }
   [NSLayoutConstraint activateConstraints:@[
