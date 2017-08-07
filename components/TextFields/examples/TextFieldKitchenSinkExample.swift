@@ -47,7 +47,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     singleLabel.numberOfLines = 0
     return singleLabel
   }()
-  
+
   let multiLabel: UILabel = {
     let multiLabel = UILabel()
     multiLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -383,7 +383,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
             textFieldControllerDefaultLeftRightViewFloating]
   }
 
-  //MARK: - Multiline
+  // MARK: - Multiline
   func setupDefaultMultilineTextFields() -> [MDCTextInputControllerDefault] {
     let multilineTextFieldDefault = MDCMultilineTextField()
     scrollView.addSubview(multilineTextFieldDefault)

@@ -43,8 +43,22 @@
   UIEdgeInsets margins = UIEdgeInsetsMake(0, 16, 0, 16);
   self.scrollView.layoutMargins = margins;
 
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics:nil views:@{@"scrollView": self.scrollView}]];
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:@{@"scrollView": self.scrollView}]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
 
   MDCMultilineTextField *multilineTextFieldUnstyled = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldUnstyled];
@@ -74,7 +88,7 @@
   multilineTextFieldFloating.textView.delegate = self;
 
   self.textFieldControllerFloating =
-  [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldFloating];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldFloating];
 
   MDCMultilineTextField *multilineTextFieldCharMaxDefault = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldCharMaxDefault];
@@ -84,7 +98,7 @@
   multilineTextFieldCharMaxDefault.textView.delegate = self;
 
   self.textFieldControllerDefaultCharMax =
-    [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
   self.textFieldControllerDefaultCharMax.characterCountMax = 30;
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
@@ -95,75 +109,96 @@
   multilineTextFieldCharMaxFullWidth.placeholder = @"Full Width Controller";
   multilineTextFieldCharMaxFullWidth.textView.delegate = self;
 
-  self.textFieldControllerFullWidth =
-  [[MDCTextInputControllerFullWidth alloc] initWithTextInput:multilineTextFieldCharMaxFullWidth];
+  self.textFieldControllerFullWidth = [[MDCTextInputControllerFullWidth alloc]
+      initWithTextInput:multilineTextFieldCharMaxFullWidth];
   self.textFieldControllerFullWidth.characterCountMax = 140;
 
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"V:|-20-[unstyled]-[box]-[floating]-[charMax]-[fullWidth]-|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"unstyled": multilineTextFieldUnstyled,
-                                @"box": multilineTextFieldUnstyledBox,
-                                @"charMax" : multilineTextFieldCharMaxDefault,
-                                @"floating": multilineTextFieldFloating,
-                                @"fullWidth": multilineTextFieldCharMaxFullWidth
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:
+                                  @"V:|-20-[unstyled]-[box]-[floating]-[charMax]-[fullWidth]-|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"unstyled" : multilineTextFieldUnstyled,
+                                                      @"box" : multilineTextFieldUnstyledBox,
+                                                      @"charMax" : multilineTextFieldCharMaxDefault,
+                                                      @"floating" : multilineTextFieldFloating,
+                                                      @"fullWidth" :
+                                                          multilineTextFieldCharMaxFullWidth
+                                                    }]];
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-[unstyled]-|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"unstyled": multilineTextFieldUnstyled
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|-[unstyled]-|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"unstyled" : multilineTextFieldUnstyled
+                                                    }]];
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-[box]-|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"box": multilineTextFieldUnstyledBox
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|-[box]-|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"box" : multilineTextFieldUnstyledBox
+                                                    }]];
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-[floating]-|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"floating": multilineTextFieldFloating
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|-[floating]-|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"floating" : multilineTextFieldFloating
+                                                    }]];
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-[charMax]-|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"charMax": multilineTextFieldCharMaxDefault
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|-[charMax]-|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"charMax" : multilineTextFieldCharMaxDefault
+                                                    }]];
 
-  [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0].active = YES;
-  [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|[fullWidth]|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"fullWidth": multilineTextFieldCharMaxFullWidth
-                                }]];
-  
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|[fullWidth]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"fullWidth" :
+                                                          multilineTextFieldCharMaxFullWidth
+                                                    }]];
 
-  UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                  action:@selector(tapDidTouch)];
+  UITapGestureRecognizer *tapRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidTouch)];
   [self.view addGestureRecognizer:tapRecognizer];
 
-  [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillShowNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-    CGRect frame = [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, CGRectGetHeight(frame), 0);
-  }];
+  [[NSNotificationCenter defaultCenter]
+      addObserverForName:UIKeyboardWillShowNotification
+                  object:nil
+                   queue:[NSOperationQueue mainQueue]
+              usingBlock:^(NSNotification *_Nonnull note) {
+                CGRect frame =
+                    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+                self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, CGRectGetHeight(frame), 0);
+              }];
 }
 
 - (void)tapDidTouch {
