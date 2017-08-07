@@ -232,7 +232,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
           UIUserInterfaceLayoutDirectionRightToLeft) {
         image = [image mdc_imageFlippedForRightToLeftLayoutDirection];
       }
-      accessoryImageView.image = image;
+      accessoryImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
       break;
     }
     case MDCCollectionViewCellAccessoryCheckmark: {
