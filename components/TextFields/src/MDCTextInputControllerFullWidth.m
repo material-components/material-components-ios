@@ -730,8 +730,7 @@ static UIColor *_inlinePlaceholderColorDefault;
   // The trailing label gets in the way. If it has a frame, it's used. But if not, an
   // estimate is made of the size the text will be.
   if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1.f) {
-    textInsets.right +=
-        MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
+    textInsets.right += MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
   } else if (self.characterCountMax) {
     CGRect charCountRect = [[self characterCountText]
         boundingRectWithSize:self.textInput.bounds.size
@@ -906,9 +905,9 @@ static UIColor *_inlinePlaceholderColorDefault;
 
     self.textInput.accessibilityValue = valueString;
     NSString *leadingUnderlineLabelText = self.textInput.leadingUnderlineLabel.text;
-    self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString
-        stringWithFormat:@"Error: %@.", leadingUnderlineLabelText ?
-                                                               leadingUnderlineLabelText : @""];
+    self.textInput.leadingUnderlineLabel.accessibilityLabel =
+        [NSString stringWithFormat:@"Error: %@.",
+                                   leadingUnderlineLabelText ? leadingUnderlineLabelText : @""];
   } else {
     self.textInput.accessibilityValue = nil;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;

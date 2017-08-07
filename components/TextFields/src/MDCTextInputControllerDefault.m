@@ -544,9 +544,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because our users wouldn't expect it.
-  placeholderY -=
-      self.textInput.placeholderLabel.font.lineHeight *
-          (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+  placeholderY -= self.textInput.placeholderLabel.font.lineHeight *
+                  (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
 
   CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text
       boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.textInput.placeholderLabel.font.lineHeight)
@@ -555,8 +554,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                   NSFontAttributeName : self.textInput.font
                 }
                    context:nil]));
-  CGFloat placeholderX = -1 * estimatedWidth *
-      (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+  CGFloat placeholderX =
+      -1 * estimatedWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
 
   return CGPointMake(placeholderX, placeholderY);
 }
@@ -746,8 +745,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setFloatingPlaceholderScale:(NSNumber *)floatingPlaceholderScale {
   if (![_floatingPlaceholderScale isEqualToNumber:floatingPlaceholderScale]) {
-    _floatingPlaceholderScale = floatingPlaceholderScale ? floatingPlaceholderScale :
-        [NSNumber numberWithFloat:(float)[[self class] floatingPlaceholderScaleDefault]];
+    _floatingPlaceholderScale =
+        floatingPlaceholderScale
+            ? floatingPlaceholderScale
+            : [NSNumber numberWithFloat:(float)[[self class] floatingPlaceholderScaleDefault]];
 
     [self updatePlaceholder];
   }
@@ -960,9 +961,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 
   textInsets.top = MDCTextInputDefaultVerticalPadding +
-                           MDCRint(self.textInput.placeholderLabel.font.lineHeight *
-                                   (CGFloat)self.floatingPlaceholderScale.floatValue) +
-                                   MDCTextInputDefaultVerticalHalfPadding;
+                   MDCRint(self.textInput.placeholderLabel.font.lineHeight *
+                           (CGFloat)self.floatingPlaceholderScale.floatValue) +
+                   MDCTextInputDefaultVerticalHalfPadding;
 
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputDefaultVerticalPadding or the biggest estimated underlineLabel height +
@@ -1113,7 +1114,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     if (self.previousLeadingText) {
       self.textInput.leadingUnderlineLabel.text = self.previousLeadingText;
     }
-    
+
     // Clear out saved state.
     self.previousLeadingText = nil;
   }
@@ -1147,9 +1148,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
     self.textInput.accessibilityValue = valueString;
     NSString *leadingUnderlineLabelText = self.textInput.leadingUnderlineLabel.text;
-    self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString
-        stringWithFormat:@"Error: %@.", leadingUnderlineLabelText ?
-                                                               leadingUnderlineLabelText : @""];
+    self.textInput.leadingUnderlineLabel.accessibilityLabel =
+        [NSString stringWithFormat:@"Error: %@.",
+                                   leadingUnderlineLabelText ? leadingUnderlineLabelText : @""];
   } else {
     self.textInput.accessibilityValue = nil;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;

@@ -161,7 +161,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
         [aDecoder decodeObjectForKey:MDCTextInputFundamentCharacterRelativeSuperviewKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
-    _trailingViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
+    _trailingViewMode =
+        (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
     _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
 
     [self subscribeForKVO];
@@ -415,7 +416,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (MDCTextInputUnderlineView *)setupUnderlineView {
-  MDCTextInputUnderlineView *underline = [[MDCTextInputUnderlineView alloc] initWithFrame:CGRectZero];
+  MDCTextInputUnderlineView *underline =
+      [[MDCTextInputUnderlineView alloc] initWithFrame:CGRectZero];
   underline.color = MDCTextInputUnderlineColor();
   underline.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -434,11 +436,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (!_textInput) {
     return;
   }
-  [self.underline addObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor options:0 context:nil];
   [self.underline addObserver:self
-               forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight
-                  options:0
-                  context:nil];
+                   forKeyPath:MDCTextInputUnderlineKVOKeyColor
+                      options:0
+                      context:nil];
+  [self.underline addObserver:self
+                   forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight
+                      options:0
+                      context:nil];
   _isRegisteredForKVO = YES;
 }
 
