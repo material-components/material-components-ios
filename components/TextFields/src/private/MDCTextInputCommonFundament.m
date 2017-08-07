@@ -408,11 +408,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (!_underline) {
     return;
   }
-  [_underline addObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor options:0 context:nil];
-  [_underline addObserver:self
-               forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight
-                  options:0
-                  context:nil];
+  [self.underline addObserver:self
+                   forKeyPath:MDCTextInputUnderlineKVOKeyColor
+                      options:0
+                      context:nil];
+  [self.underline addObserver:self
+                   forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight
+                      options:0
+                      context:nil];
   _isRegisteredForKVO = YES;
 }
 

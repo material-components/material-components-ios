@@ -32,7 +32,7 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
 /**
  An overlay view on the leading side.
- 
+
  Note: if RTL is engaged, this will return the .rightView and if LTR, it will return the .leftView.
  */
 @property(nonatomic, nullable, strong) UIView *leadingView;
