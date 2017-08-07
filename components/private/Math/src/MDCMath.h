@@ -96,7 +96,7 @@ static inline CGFloat MDCSqrt(CGFloat value) {
 }
 
 /**
- Expand `rect' to the smallest rect containing it with pixel-aligned origin and size.
+ Expand `rect' to the smallest standardized rect containing it with pixel-aligned origin and size.
 
  @see CGRectIntegral
  */
@@ -104,10 +104,13 @@ static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 1)) {
     return CGRectIntegral(rect);
   }
-  CGPoint newOrigin =
-      CGPointMake(MDCFloor(rect.origin.x * scale) / scale, MDCFloor(rect.origin.y * scale) / scale);
-  CGSize adjustWidthHeight = CGSizeMake(rect.origin.x - newOrigin.x, rect.origin.y - newOrigin.y);
+
+  CGPoint originalMinimumPoint = CGPointMake(CGRectGetMinX(rect), CGRectGetMinY(rect));
+  CGPoint newOrigin = CGPointMake(MDCFloor(originalMinimumPoint.x * scale) / scale,
+                                  MDCFloor(originalMinimumPoint.y * scale) / scale);
+  CGSize adjustWidthHeight =
+      CGSizeMake(originalMinimumPoint.x - newOrigin.x, originalMinimumPoint.y - newOrigin.y);
   return CGRectMake(newOrigin.x, newOrigin.y,
-                    MDCCeil((rect.size.width + adjustWidthHeight.width) * scale) / scale,
-                    MDCCeil((rect.size.height + adjustWidthHeight.height) * scale) / scale);
+                    MDCCeil((CGRectGetWidth(rect) + adjustWidthHeight.width) * scale) / scale,
+                    MDCCeil((CGRectGetHeight(rect) + adjustWidthHeight.height) * scale) / scale);
 }
