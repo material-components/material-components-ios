@@ -86,11 +86,7 @@
   [super touchesEnded:touches withEvent:event];
 
   if (_hasTouch) {
-    if (MDCCGFloatEqual(_progress, 1.0)) {
-      self.state = UIGestureRecognizerStateCancelled;
-    } else {
-      self.state = UIGestureRecognizerStateEnded;
-    }
+    self.state = UIGestureRecognizerStateEnded;
   }
 }
 
