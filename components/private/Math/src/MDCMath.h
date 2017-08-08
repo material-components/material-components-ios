@@ -101,6 +101,9 @@ static inline CGFloat MDCSqrt(CGFloat value) {
  @see CGRectIntegral
  */
 static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
+  if (CGRectIsNull(rect) || MDCCGFloatEqual(scale, 0)) {
+    return CGRectNull;
+  }
   if (MDCCGFloatEqual(scale, 1)) {
     return CGRectIntegral(rect);
   }
