@@ -14,11 +14,9 @@
  limitations under the License.
  */
 
-#import "MultilineTextFieldExample.h"
-
 #import "MaterialTextFields.h"
 
-@interface MultilineTextFieldExample : UIViewController
+@interface MultilineTextFieldExample : UIViewController <UITextViewDelegate>
 
 // Be sure to keep your controllers in memory somewhere like a property:
 @property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
@@ -211,6 +209,14 @@
 
 + (NSString *)catalogDescription {
   return @"Simple MDCMultilineTextField example.";
+}
+
+@end
+
+@implementation MultilineTextFieldExample (UITextViewDelegate)
+
+- (void)textViewDidChange:(UITextView *)textView {
+  NSLog(@"%@", textView.text);
 }
 
 @end
