@@ -119,4 +119,22 @@
   XCTAssertTrue(CGRectContainsRect(outputScale3Rect, alignedScale3Rect));
 }
 
+/**
+ Test that a null rectangle returns CGRectNull.
+ */
+- (void)testMDCRectAlignScaleNullRectangle {
+  // Then
+  XCTAssertTrue(CGRectIsNull(MDCRectAlignToScale(CGRectNull, 1)));
+  XCTAssertTrue(CGRectIsNull(MDCRectAlignToScale(CGRectNull, 2)));
+  XCTAssertTrue(CGRectIsNull(MDCRectAlignToScale(CGRectNull, 3)));
+}
+
+/**
+ Test that a scale value of zero returns CGRectNull.
+ */
+- (void)testMDCRectAlignScaleZeroScale {
+  // Then
+  XCTAssertTrue(CGRectIsNull(MDCRectAlignToScale(CGRectZero, 0)));
+}
+
 @end
