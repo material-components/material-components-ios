@@ -46,6 +46,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 @property(nonatomic, strong) NSLayoutConstraint *textViewMinHeight;
 @property(nonatomic, strong) NSLayoutConstraint *textViewTop;
 @property(nonatomic, strong) NSLayoutConstraint *textViewTrailing;
+
+// textViewTrailingTrailingViewLeading is a constraint from .textView's trailing edge to
+// .trailingView's leading edge.
 @property(nonatomic, strong) NSLayoutConstraint *textViewTrailingTrailingViewLeading;
 @property(nonatomic, strong) NSLayoutConstraint *trailingViewCenterY;
 @property(nonatomic, strong) NSLayoutConstraint *trailingViewTrailing;
