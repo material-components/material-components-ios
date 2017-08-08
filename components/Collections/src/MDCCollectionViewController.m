@@ -203,21 +203,21 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
              collectionView:(UICollectionView *)collectionView {
   CGFloat height = MDCCellDefaultOneLineHeight;
   if ([_styler.delegate respondsToSelector:@selector(collectionView:cellHeightAtIndexPath:)]) {
-    height =
-        [_styler.delegate collectionView:collectionView cellHeightAtIndexPath:attr.indexPath];
+    height = [_styler.delegate collectionView:collectionView cellHeightAtIndexPath:attr.indexPath];
   }
 
-  CGFloat width = [self cellWidthAtSectionIndex:attr.indexPath.section
-                                 collectionView:collectionView];
+  CGFloat width =
+      [self cellWidthAtSectionIndex:attr.indexPath.section collectionView:collectionView];
   return CGSizeMake(width, height);
 }
 
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section
                     collectionView:(UICollectionView *)collectionView {
-  CGFloat bounds = CGRectGetWidth(
-      UIEdgeInsetsInsetRect(collectionView.bounds, collectionView.contentInset));
-  UIEdgeInsets sectionInsets = [self insetsAtSectionIndex:section collectionView:collectionView];
-
+  CGFloat bounds =
+      CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, collectionView.contentInset));
+  UIEdgeInsets sectionInsets = [self collectionView:collectionView
+                                             layout:collectionView.collectionViewLayout
+                             insetForSectionAtIndex:section];
   CGFloat insets = sectionInsets.left + sectionInsets.right;
   if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
@@ -310,8 +310,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
  */
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section {
   CGFloat bounds = CGRectGetWidth(
-                                  UIEdgeInsetsInsetRect(self.collectionView.bounds,
-                                                        self.collectionView.contentInset));
+      UIEdgeInsetsInsetRect(self.collectionView.bounds, self.collectionView.contentInset));
   UIEdgeInsets sectionInsets = [self collectionView:self.collectionView
                                              layout:self.collectionView.collectionViewLayout
                              insetForSectionAtIndex:section];
