@@ -16,6 +16,7 @@
 
 #import "MDCTextInputControllerDefault.h"
 
+#import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
@@ -321,19 +322,20 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                         object:_textInput];
   }
 
-  if ([_textInput isKindOfClass:[UITextView class]]) {
+  if ([_textInput isKindOfClass:[MDCMultilineTextField class]]) {
+    MDCMultilineTextField *textField = (MDCMultilineTextField*)_textInput;
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidBeginEditing:)
                           name:UITextViewTextDidBeginEditingNotification
-                        object:_textInput];
+                        object:textField.textView];
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidChange:)
                           name:UITextViewTextDidChangeNotification
-                        object:_textInput];
+                        object:textField.textView];
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextViewTextDidEndEditingNotification
-                        object:_textInput];
+                        object:textField.textView];
   }
 }
 
