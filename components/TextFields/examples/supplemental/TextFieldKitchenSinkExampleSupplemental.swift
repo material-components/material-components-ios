@@ -35,9 +35,16 @@ extension TextFieldKitchenSinkSwiftExample {
                                setupFloatingTextFields(),
                                setupSpecialTextFields()].flatMap { $0 as! [MDCTextInputController] }
 
-    controllersFullWidth = textFieldControllersFullWidth
+    let multilineTextFieldControllersFullWidth = setupFullWidthMultilineTextFields()
 
-    allInputControllers = allTextFieldControllers
+    allMultilineTextFieldControllers = [setupDefaultMultilineTextFields(),
+                              multilineTextFieldControllersFullWidth,
+                              setupFloatingMultilineTextFields(),
+                              setupSpecialMultilineTextFields()].flatMap { $0 as! [MDCTextInputController] }
+
+    controllersFullWidth = textFieldControllersFullWidth + multilineTextFieldControllersFullWidth
+
+    allInputControllers = allTextFieldControllers + allMultilineTextFieldControllers
 
     setupScrollView()
 
@@ -121,6 +128,7 @@ extension TextFieldKitchenSinkSwiftExample {
   func setupSectionLabels() {
     scrollView.addSubview(controlLabel)
     scrollView.addSubview(singleLabel)
+    scrollView.addSubview(multiLabel)
 
     NSLayoutConstraint(item: singleLabel,
                        attribute: .leading,
@@ -183,16 +191,27 @@ extension TextFieldKitchenSinkSwiftExample {
       textFields[unique(from: textInput, with: prefix)] = textInput
     }
 
+    let allTextViews = allMultilineTextFieldControllers.flatMap { $0.textInput }
+    let textViewsString = allTextViews.reduce("", concatenatingClosure)
+
+    var textViews = [String: UIView]()
+    allTextViews.forEach { input in
+      textViews[unique(from: input, with: prefix)] = input
+    }
+
     let visualString = "V:|-20-[singleLabel]-" +
-      textFieldsString + "[unstyledTextField]-10-[controlLabel]-" + controlsString + "20-|"
+      textFieldsString + "[unstyledTextField]-20-[multiLabel]-" + textViewsString +
+      "[unstyledTextView]-10-[controlLabel]-" + controlsString + "20-|"
 
     let labels: [String: UIView] = ["controlLabel": controlLabel,
                                     "singleLabel": singleLabel,
-                                    "unstyledTextField": unstyledTextField]
+                                    "multiLabel": multiLabel,
+                                    "unstyledTextField": unstyledTextField,
+                                    "unstyledTextView": unstyledMultilineTextField]
 
     var views = [String: UIView]()
 
-    let dictionaries = [labels, textFields, controls]
+    let dictionaries = [labels, textFields, controls, textViews]
 
     dictionaries.forEach { dictionary in
       dictionary.forEach { (key, value) in

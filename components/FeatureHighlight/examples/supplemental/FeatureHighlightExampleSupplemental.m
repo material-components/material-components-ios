@@ -17,6 +17,7 @@
 #import "FeatureHighlightExampleSupplemental.h"
 
 #import "MaterialButtons.h"
+#import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
@@ -74,8 +75,10 @@ static NSString *const reuseIdentifier = @"Cell";
   self.button.frame = frame;
 
   CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
-  self.infoLabel.frame = CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
-                                    labelSize.width, labelSize.height);
+  self.infoLabel.frame =
+      MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
+                                     labelSize.width, labelSize.height),
+                          [UIScreen mainScreen].scale);
 }
 
 - (void)didTapBackground:(UITapGestureRecognizer *)recognizer {

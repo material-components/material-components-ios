@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialTextFields.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCTextField within MDCTextInputController.
@@ -33,7 +33,7 @@
 
 /**
  Applies a color scheme to theme MDCTextField in MDCTextInputControllerDefault.
- 
+
  @param colorScheme The color scheme to apply.
  @param textInputControllerDefault A MDCTextInputControllerDefault instance to apply a color scheme.
  */

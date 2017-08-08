@@ -20,9 +20,6 @@
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
-@interface NavigationBarWithBarItemsExample : NavigationBarTypicalUseExample
-@end
-
 @implementation NavigationBarWithBarItemsExample
 
 - (void)viewDidLoad {
