@@ -127,6 +127,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
     UITapGestureRecognizer *tapRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapView:)];
+    tapRecognizer.delegate = self;
     [self addGestureRecognizer:tapRecognizer];
 
     MDCFeatureHighlightDismissGestureRecognizer *panRecognizer =
@@ -522,6 +523,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   NSString *localizedString = NSLocalizedStringFromTableInBundle(
       key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
   return localizedString;
+}
+
+#pragma mark - UIGestureRecognizerDelegate (Tap)
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+  return YES;
 }
 
 #pragma mark - Resource bundle
