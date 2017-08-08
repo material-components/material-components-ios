@@ -16,11 +16,11 @@
 
 #import "MDCTextInputControllerFullWidth.h"
 
+#import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
-#import "MDCMultilineTextField.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
