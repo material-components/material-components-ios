@@ -48,6 +48,16 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     return singleLabel
   }()
 
+  let multiLabel: UILabel = {
+    let multiLabel = UILabel()
+    multiLabel.translatesAutoresizingMaskIntoConstraints = false
+    multiLabel.text = "Multiline Text Fields"
+    multiLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+    multiLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
+    multiLabel.numberOfLines = 0
+    return multiLabel
+  }()
+
   let errorLabel: UILabel = {
     let errorLabel = UILabel()
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -70,10 +80,12 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   var allInputControllers = [MDCTextInputController]()
   var allTextFieldControllers = [MDCTextInputController]()
+  var allMultilineTextFieldControllers = [MDCTextInputController]()
   var controllersWithCharacterCount = [MDCTextInputController]()
   var controllersFullWidth = [MDCTextInputControllerFullWidth]()
 
   let unstyledTextField = MDCTextField()
+  let unstyledMultilineTextField = MDCMultilineTextField()
 
   lazy var characterModeButton: MDCButton = self.setupButton()
   lazy var clearModeButton: MDCButton = self.setupButton()
@@ -371,6 +383,146 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
             textFieldControllerDefaultLeftRightViewFloating]
   }
 
+  // MARK: - Multiline
+  func setupDefaultMultilineTextFields() -> [MDCTextInputControllerDefault] {
+    let multilineTextFieldDefault = MDCMultilineTextField()
+    scrollView.addSubview(multilineTextFieldDefault)
+    multilineTextFieldDefault.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldDefault.textView?.delegate = self
+
+    let multilineTextFieldControllerDefault =
+        MDCTextInputControllerDefault(textInput: multilineTextFieldDefault)
+    multilineTextFieldControllerDefault.isFloatingEnabled = false
+
+    let multilineTextFieldDefaultPlaceholder = MDCMultilineTextField()
+    scrollView.addSubview(multilineTextFieldDefaultPlaceholder)
+    multilineTextFieldDefaultPlaceholder.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldDefaultPlaceholder.placeholder =
+        "This is a multiline text field with placeholder"
+    multilineTextFieldDefaultPlaceholder.textView?.delegate = self
+
+    let multilineTextFieldControllerDefaultPlaceholder =
+      MDCTextInputControllerDefault(textInput: multilineTextFieldDefaultPlaceholder)
+    multilineTextFieldControllerDefaultPlaceholder.isFloatingEnabled = false
+
+    let multilineTextFieldDefaultCharMax = MDCMultilineTextField()
+    scrollView.addSubview(multilineTextFieldDefaultCharMax)
+    multilineTextFieldDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldDefaultCharMax.placeholder = "This is a multiline text field with placeholder"
+    multilineTextFieldDefaultCharMax.textView?.delegate = self
+
+    let multilineTextFieldControllerDefaultCharMax =
+          MDCTextInputControllerDefault(textInput: multilineTextFieldDefaultCharMax)
+    multilineTextFieldControllerDefaultCharMax.characterCountMax = 140
+    multilineTextFieldControllerDefaultCharMax.isFloatingEnabled = false
+
+    controllersWithCharacterCount.append(multilineTextFieldControllerDefaultCharMax)
+
+    return [multilineTextFieldControllerDefault, multilineTextFieldControllerDefaultPlaceholder,
+            multilineTextFieldControllerDefaultCharMax]
+  }
+
+  func setupFullWidthMultilineTextFields() -> [MDCTextInputControllerFullWidth] {
+    let multilineTextFieldFullWidth = MDCMultilineTextField()
+    scrollView.addSubview(multilineTextFieldFullWidth)
+    multilineTextFieldFullWidth.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldFullWidth.placeholder = "This is a full width multiline text field"
+    multilineTextFieldFullWidth.textView?.delegate = self
+
+    let multilineTextFieldControllerFullWidth =
+          MDCTextInputControllerFullWidth(textInput: multilineTextFieldFullWidth)
+
+    let multilineTextFieldFullWidthCharMax = MDCMultilineTextField()
+    scrollView.addSubview(multilineTextFieldFullWidthCharMax)
+    multilineTextFieldFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldFullWidthCharMax.placeholder =
+        "This is a full width multiline text field with character count"
+    multilineTextFieldFullWidthCharMax.textView?.delegate = self
+
+    let multilineTextFieldControllerFullWidthCharMax =
+          MDCTextInputControllerFullWidth(textInput: multilineTextFieldFullWidthCharMax)
+
+    controllersWithCharacterCount.append(multilineTextFieldControllerFullWidthCharMax)
+    multilineTextFieldControllerFullWidthCharMax.characterCountMax = 140
+
+    return [multilineTextFieldControllerFullWidth, multilineTextFieldControllerFullWidthCharMax]
+  }
+
+  func setupFloatingMultilineTextFields() -> [MDCTextInputControllerDefault] {
+    let multilineTextFieldFloating = MDCMultilineTextField()
+    scrollView.addSubview(multilineTextFieldFloating)
+    multilineTextFieldFloating.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldFloating.textView?.delegate = self
+    multilineTextFieldFloating.placeholder =
+        "This is a multiline text field with a floating placeholder"
+
+    let multilineTextFieldControllerFloating =
+          MDCTextInputControllerDefault(textInput: multilineTextFieldFloating)
+
+    let multilineTextFieldFloatingCharMax = MDCMultilineTextField()
+    scrollView.addSubview(multilineTextFieldFloatingCharMax)
+    multilineTextFieldFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldFloatingCharMax.textView?.delegate = self
+    multilineTextFieldFloatingCharMax.placeholder =
+        "This is a multiline text field with a floating placeholder and character count"
+
+    let multilineTextFieldControllerFloatingCharMax =
+          MDCTextInputControllerDefault(textInput: multilineTextFieldFloatingCharMax)
+
+    controllersWithCharacterCount.append(multilineTextFieldControllerFloatingCharMax)
+
+    return [multilineTextFieldControllerFloating, multilineTextFieldControllerFloatingCharMax]
+  }
+
+  func setupSpecialMultilineTextFields() -> [MDCTextInputController] {
+    let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
+    let rightViewImagePath = bundle.path(forResource: "ic_done", ofType: "png")!
+    let rightViewImage = UIImage(contentsOfFile: rightViewImagePath)!
+
+    let multilineTextFieldTrailingView = MDCMultilineTextField()
+    multilineTextFieldTrailingView.trailingViewMode = .always
+    multilineTextFieldTrailingView.trailingView = UIImageView(image:rightViewImage)
+
+    scrollView.addSubview(multilineTextFieldTrailingView)
+    multilineTextFieldTrailingView.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldTrailingView.placeholder = "This has a trailing view"
+    multilineTextFieldTrailingView.textView?.delegate = self
+    multilineTextFieldTrailingView.clearButtonMode = .whileEditing
+
+    let multilineTextFieldControllerDefaultTrailingView =
+        MDCTextInputControllerDefault(textInput: multilineTextFieldTrailingView)
+    multilineTextFieldControllerDefaultTrailingView.isFloatingEnabled = false
+
+    let multilineTextFieldCustomFont = MDCMultilineTextField()
+    scrollView.addSubview(multilineTextFieldCustomFont)
+    multilineTextFieldCustomFont.translatesAutoresizingMaskIntoConstraints = false
+
+    multilineTextFieldCustomFont.placeholder = "This has a custom font"
+
+    let multilineTextFieldControllerDefaultCustomFont =
+        MDCTextInputControllerDefault(textInput: multilineTextFieldCustomFont)
+
+    scrollView.addSubview(unstyledMultilineTextField)
+    unstyledMultilineTextField.translatesAutoresizingMaskIntoConstraints = false
+
+    unstyledMultilineTextField.placeholder =
+        "This multiline text field has no controller (unstyled)"
+    unstyledMultilineTextField.leadingUnderlineLabel.text = "Leading label"
+    unstyledMultilineTextField.trailingUnderlineLabel.text = "Trailing label"
+    unstyledMultilineTextField.textView?.delegate = self
+
+    return [multilineTextFieldControllerDefaultTrailingView,
+            multilineTextFieldControllerDefaultCustomFont]
+  }
+
   @objc func tapDidTouch(sender: Any) {
     self.view.endEditing(true)
   }
@@ -397,6 +549,12 @@ extension TextFieldKitchenSinkSwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
+  }
+}
+
+extension TextFieldKitchenSinkSwiftExample: UITextViewDelegate {
+  func textViewDidChange(_ textView: UITextView) {
+    print(textView.text)
   }
 }
 

@@ -157,3 +157,28 @@
 @property(nonatomic, nullable, strong, readonly) MDCTextInputUnderlineView *underline;
 
 @end
+
+/** Common API for Material Design compliant multiline text inputs. */
+@protocol MDCMultilineTextInput <MDCTextInput>
+
+/**
+ The minimum number of lines to use for rendering text.
+
+ The height of an empty text field is measured in potential lines. If the value were 3, the height
+ of would never be shorter than 3 times the line height of the input font (plus clearance for
+ auxillary views like the underline and the underline labels.)
+
+ The smallest number of lines allowed is 1. A value of 0 has no effect.
+
+ Default is 1.
+ */
+@property(nonatomic, assign) NSUInteger minimumLines UI_APPEARANCE_SELECTOR;
+
+/**
+ Should the text field grow vertically as new lines are added.
+ 
+ Default is YES.
+ */
+@property(nonatomic, assign) BOOL expandsOnOverflow UI_APPEARANCE_SELECTOR;
+
+@end
