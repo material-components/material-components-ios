@@ -69,13 +69,8 @@
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
-    raisedButtonLabel,
-    disabledRaisedButtonLabel,
-    flatButtonLabel,
-    disabledFlatButtonLabel,
-    strokedButtonLabel,
-    disabledStrokedButtonLabel,
-    floatingButtonLabel
+    raisedButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
+    strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
   ];
 }
 
@@ -89,12 +84,11 @@
     CGFloat colOffset = CGRectGetWidth(self.view.frame) / 4;
     NSUInteger splitIndex = ceil(self.buttons.count / 2);
 
-    if (((MDCButton*)self.buttons[splitIndex - 1]).enabled) {
+    if (((MDCButton *)self.buttons[splitIndex - 1]).enabled) {
       splitIndex++;
     }
 
-    [self layoutButtonsInRange:NSMakeRange(0, splitIndex)
-                        around:centerX - colOffset];
+    [self layoutButtonsInRange:NSMakeRange(0, splitIndex) around:centerX - colOffset];
     [self layoutButtonsInRange:NSMakeRange(splitIndex, self.buttons.count - splitIndex)
                         around:centerX + colOffset];
   }
@@ -108,15 +102,11 @@
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
 
-    button.frame = (CGRect) {
-      CGPointMake(centerX + 20, heightSum),
-      button.frame.size
-    };
+    button.frame = (CGRect){CGPointMake(centerX + 20, heightSum), button.frame.size};
     CGFloat labelOffset = (button.frame.size.height - label.frame.size.height) / 2;
-    label.frame = (CGRect) {
-      CGPointMake(centerX - label.frame.size.width - 20, heightSum + labelOffset),
-      label.frame.size
-    };
+    label.frame =
+        (CGRect){CGPointMake(centerX - label.frame.size.width - 20, heightSum + labelOffset),
+                 label.frame.size};
 
     heightSum += button.frame.size.height;
     if (i < self.buttons.count - 1) {
