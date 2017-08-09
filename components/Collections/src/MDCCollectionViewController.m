@@ -176,15 +176,15 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   UICollectionViewLayoutAttributes *attr =
       [collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-  CGSize size = [self sizeWithAttribute:attr];
-  size = [self inlaidSizeAtIndexPath:indexPath withSize:size];
+  CGSize size = [self sizeWithAttribute:attr collectionView:collectionView];
+  size = [self inlaidSizeAtIndexPath:indexPath withSize:size collectionView:collectionView];
   return size;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
                         layout:(UICollectionViewLayout *)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
-  return [self insetsAtSectionIndex:section];
+  return [self insetsAtSectionIndex:section collectionView:collectionView];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
@@ -199,24 +199,25 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return 0;
 }
 
-- (CGSize)sizeWithAttribute:(UICollectionViewLayoutAttributes *)attr {
+- (CGSize)sizeWithAttribute:(UICollectionViewLayoutAttributes *)attr
+             collectionView:(UICollectionView *)collectionView {
   CGFloat height = MDCCellDefaultOneLineHeight;
   if ([_styler.delegate respondsToSelector:@selector(collectionView:cellHeightAtIndexPath:)]) {
-    height =
-        [_styler.delegate collectionView:self.collectionView cellHeightAtIndexPath:attr.indexPath];
+    height = [_styler.delegate collectionView:collectionView cellHeightAtIndexPath:attr.indexPath];
   }
 
-  CGFloat width = [self cellWidthAtSectionIndex:attr.indexPath.section];
+  CGFloat width =
+      [self cellWidthAtSectionIndex:attr.indexPath.section collectionView:collectionView];
   return CGSizeMake(width, height);
 }
 
-- (CGFloat)cellWidthAtSectionIndex:(NSInteger)section {
-  CGFloat bounds = CGRectGetWidth(
-      UIEdgeInsetsInsetRect(self.collectionView.bounds, self.collectionView.contentInset));
-  UIEdgeInsets sectionInsets = [self collectionView:self.collectionView
-                                             layout:self.collectionView.collectionViewLayout
+- (CGFloat)cellWidthAtSectionIndex:(NSInteger)section
+                    collectionView:(UICollectionView *)collectionView {
+  CGFloat bounds =
+      CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, collectionView.contentInset));
+  UIEdgeInsets sectionInsets = [self collectionView:collectionView
+                                             layout:collectionView.collectionViewLayout
                              insetForSectionAtIndex:section];
-
   CGFloat insets = sectionInsets.left + sectionInsets.right;
   if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
@@ -225,11 +226,12 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return bounds - insets;
 }
 
-- (UIEdgeInsets)insetsAtSectionIndex:(NSInteger)section {
+- (UIEdgeInsets)insetsAtSectionIndex:(NSInteger)section
+                      collectionView:(UICollectionView *)collectionView {
   // Determine insets based on cell style.
   CGFloat inset = (CGFloat)floor(MDCCollectionViewCellStyleCardSectionInset);
   UIEdgeInsets insets = UIEdgeInsetsZero;
-  NSInteger numberOfSections = self.collectionView.numberOfSections;
+  NSInteger numberOfSections = collectionView.numberOfSections;
   BOOL isTop = (section == 0);
   BOOL isBottom = (section == numberOfSections - 1);
   MDCCollectionViewCellStyle cellStyle = [_styler cellStyleAtSectionIndex:section];
@@ -248,9 +250,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return insets;
 }
 
-- (CGSize)inlaidSizeAtIndexPath:(NSIndexPath *)indexPath withSize:(CGSize)size {
+- (CGSize)inlaidSizeAtIndexPath:(NSIndexPath *)indexPath
+                       withSize:(CGSize)size
+                 collectionView:(UICollectionView *)collectionView {
   // If object is inlaid, return its adjusted size.
-  UICollectionView *collectionView = self.collectionView;
   if ([_styler isItemInlaidAtIndexPath:indexPath]) {
     CGFloat inset = MDCCollectionViewCellStyleCardSectionInset;
     UIEdgeInsets inlayInsets = UIEdgeInsetsZero;
@@ -261,7 +264,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     if ([self
             respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
       CGSize headerSize = [self collectionView:collectionView
-                                        layout:_collectionViewLayout
+                                        layout:collectionView.collectionViewLayout
                referenceSizeForHeaderInSection:indexPath.section];
       hasSectionHeader = !CGSizeEqualToSize(headerSize, CGSizeZero);
     }
@@ -296,6 +299,32 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     size.height += inlayInsets.top + inlayInsets.bottom;
   }
   return size;
+}
+
+#pragma mark - Subclassing Methods
+
+/*
+ The below method is solely used for subclasses to retrieve width information in order to
+ calculate cell height. Not meant to call method cellWidthAtSectionIndex:collectionView as
+ that method recalculates section insets which we don't want to do.
+ */
+- (CGFloat)cellWidthAtSectionIndex:(NSInteger)section {
+  CGFloat bounds = CGRectGetWidth(
+      UIEdgeInsetsInsetRect(self.collectionView.bounds, self.collectionView.contentInset));
+  UIEdgeInsets sectionInsets = [self collectionView:self.collectionView
+                                             layout:self.collectionView.collectionViewLayout
+                             insetForSectionAtIndex:section];
+
+  CGFloat insets = sectionInsets.left + sectionInsets.right;
+  if (_styler != nil) {
+    if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
+      CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
+      if (_styler.gridColumnCount > 0) {
+        return cellWidth / _styler.gridColumnCount;
+      }
+    }
+  }
+  return bounds - insets;
 }
 
 #pragma mark - <MDCInkTouchControllerDelegate>

@@ -23,6 +23,7 @@
 
 #import "ButtonsTypicalUseSupplemental.h"
 #import "MaterialButtons.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 #pragma mark - ButtonsTypicalUseViewController
@@ -130,7 +131,8 @@
     UILabel *label = self.labels[i];
 
     button.frame = CGRectOffset(button.frame, 0, verticalCenterY);
-    label.frame = CGRectOffset(label.frame, 0, verticalCenterY);
+    label.frame = MDCRectAlignToScale(CGRectOffset(label.frame, 0, verticalCenterY),
+                                      [UIScreen mainScreen].scale);
   }
 }
 

@@ -16,6 +16,7 @@
 
 #import "MDCTextInputControllerFullWidth.h"
 
+#import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
@@ -90,7 +91,10 @@ static UIColor *_inlinePlaceholderColorDefault;
 @property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonY;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailingCharacterCountLeading;
-@property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *multilineCharacterCountHeight;
+@property(nonatomic, strong) NSLayoutConstraint *multilinePlaceholderCenterY;
+@property(nonatomic, strong) NSLayoutConstraint *multilineTextViewBottom;
+@property(nonatomic, strong) NSLayoutConstraint *multilineTextViewTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
@@ -247,19 +251,20 @@ static UIColor *_inlinePlaceholderColorDefault;
                         object:_textInput];
   }
 
-  if ([_textInput isKindOfClass:[UITextView class]]) {
+  if ([_textInput isKindOfClass:[MDCMultilineTextField class]]) {
+    MDCMultilineTextField *textField = (MDCMultilineTextField*)_textInput;
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidBeginEditing:)
                           name:UITextViewTextDidBeginEditingNotification
-                        object:_textInput];
+                        object:textField.textView];
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidChange:)
                           name:UITextViewTextDidChangeNotification
-                        object:_textInput];
+                        object:textField.textView];
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextViewTextDidEndEditingNotification
-                        object:_textInput];
+                        object:textField.textView];
   }
 }
 
@@ -580,16 +585,6 @@ static UIColor *_inlinePlaceholderColorDefault;
 }
 
 - (void)updateConstraints {
-  if (!self.heightConstraint) {
-    self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.textInput
-                                                         attribute:NSLayoutAttributeHeight
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1
-                                                          constant:0];
-  }
-
   if (!self.characterCountTrailing) {
     self.characterCountTrailing =
         [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
@@ -609,15 +604,6 @@ static UIColor *_inlinePlaceholderColorDefault;
                                      attribute:NSLayoutAttributeLeading
                                     multiplier:1
                                       constant:0];
-  }
-  if (!self.clearButtonY) {
-    self.clearButtonY = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.textInput
-                                                     attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1
-                                                      constant:0];
   }
   if (!self.placeholderLeading) {
     self.placeholderLeading =
@@ -651,8 +637,7 @@ static UIColor *_inlinePlaceholderColorDefault;
   }
 
   // Multi Line Only
-  // .fullWidth
-  if ([self.textInput isKindOfClass:[UITextView class]]) {
+  if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
     [self.textInput.leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired
                                                             forAxis:UILayoutConstraintAxisVertical];
     [self.textInput.leadingUnderlineLabel
@@ -667,18 +652,76 @@ static UIColor *_inlinePlaceholderColorDefault;
           [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
                                        attribute:NSLayoutAttributeBottom
                                        relatedBy:NSLayoutRelationEqual
-                                          toItem:self.textInput
+                                          toItem:((MDCMultilineTextField*)self.textInput).textView
                                        attribute:NSLayoutAttributeBottom
                                       multiplier:1
                                         constant:0];
     }
+    if (!self.clearButtonY) {
+        self.clearButtonY = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
+                                                         attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.textInput.trailingUnderlineLabel
+                                                         attribute:NSLayoutAttributeCenterY
+                                                        multiplier:1
+                                                          constant:0];
+    }
 
+    if (!self.multilineTextViewBottom) {
+      self.multilineTextViewBottom =
+                                         [NSLayoutConstraint constraintWithItem:((MDCMultilineTextField*)self.textInput).textView
+                                                                      attribute:NSLayoutAttributeBottom
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.textInput
+                                                                      attribute:NSLayoutAttributeBottom
+                                                                     multiplier:1
+                                                                       constant:-1 * MDCTextInputFullWidthVerticalPadding];
+    }
+    if (!self.multilineTextViewTop) {
+      self.multilineTextViewTop = [NSLayoutConstraint constraintWithItem:((MDCMultilineTextField*)self.textInput).textView
+                                                               attribute:NSLayoutAttributeTop
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.textInput
+                                                               attribute:NSLayoutAttributeTop
+                                                              multiplier:1
+                                                                constant:MDCTextInputFullWidthVerticalPadding];
+    }
+
+    if (!self.multilinePlaceholderCenterY) {
+      self.multilinePlaceholderCenterY =
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeCenterY
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:((MDCMultilineTextField*)self.textInput).textView
+                                       attribute:NSLayoutAttributeCenterY
+                                      multiplier:1
+                                        constant:0];
+    }
+
+    CGFloat characterCountHeightConstant =
+        MDCCeil(((MDCMultilineTextField*)self.textInput).textView.font.lineHeight * 2.f) / 2.f;
+    if (!self.multilineCharacterCountHeight) {
+      self.multilineCharacterCountHeight =
+          [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                       attribute:NSLayoutAttributeHeight
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:nil
+                                       attribute:NSLayoutAttributeNotAnAttribute
+                                      multiplier:1
+                                        constant:characterCountHeightConstant];
+    }
+    self.multilineCharacterCountHeight.constant = characterCountHeightConstant;
+
+    [NSLayoutConstraint activateConstraints:@[self.multilineTextViewBottom,
+                                              self.multilineTextViewTop,
+                                              self.multilinePlaceholderCenterY,
+                                              self.multilineCharacterCountHeight]];
+
+    // A height constraint is not necessary for multiline. Its height is calculated in
+    // intrinsicContentSize:
   } else {
     // Single Line Only
     // .fullWidth
-    self.heightConstraint.constant =
-        2 * MDCTextInputFullWidthVerticalPadding + MDCRint(self.textInput.font.lineHeight);
-
     if (!self.characterCountY) {
       self.characterCountY =
           [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
@@ -689,6 +732,15 @@ static UIColor *_inlinePlaceholderColorDefault;
                                       multiplier:1
                                         constant:0];
     }
+    if (!self.clearButtonY) {
+        self.clearButtonY = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
+                                                         attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.textInput
+                                                         attribute:NSLayoutAttributeCenterY
+                                                        multiplier:1
+                                                          constant:0];
+    }
   }
   [NSLayoutConstraint activateConstraints:@[
     self.characterCountY, self.characterCountTrailing,
@@ -698,7 +750,6 @@ static UIColor *_inlinePlaceholderColorDefault;
 
   [self.textInput.trailingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired
                                                            forAxis:UILayoutConstraintAxisVertical];
-  self.heightConstraint.active = !self.textInput.translatesAutoresizingMaskIntoConstraints;
 }
 
 - (void)updateFontsForDynamicType {
@@ -745,8 +796,7 @@ static UIColor *_inlinePlaceholderColorDefault;
   // The trailing label gets in the way. If it has a frame, it's used. But if not, an
   // estimate is made of the size the text will be.
   if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1.f) {
-    textInsets.right +=
-        MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
+    textInsets.right += MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
   } else if (self.characterCountMax) {
     CGRect charCountRect = [[self characterCountText]
         boundingRectWithSize:self.textInput.bounds.size
@@ -789,13 +839,6 @@ static UIColor *_inlinePlaceholderColorDefault;
   }
 
   return editingRect;
-}
-
-- (CGSize)sizeThatFits:(CGSize)size defaultSize:(CGSize)defaultSize {
-  CGSize newSize = defaultSize;
-  newSize.height = self.heightConstraint.constant;
-
-  return newSize;
 }
 
 #pragma mark - UITextField & UITextView Notification Observation
@@ -928,9 +971,9 @@ static UIColor *_inlinePlaceholderColorDefault;
 
     self.textInput.accessibilityValue = valueString;
     NSString *leadingUnderlineLabelText = self.textInput.leadingUnderlineLabel.text;
-    self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString
-        stringWithFormat:@"Error: %@.", leadingUnderlineLabelText ?
-                                                               leadingUnderlineLabelText : @""];
+    self.textInput.leadingUnderlineLabel.accessibilityLabel =
+        [NSString stringWithFormat:@"Error: %@.",
+                                   leadingUnderlineLabelText ? leadingUnderlineLabelText : @""];
   } else {
     self.textInput.accessibilityValue = nil;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;

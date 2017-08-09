@@ -16,8 +16,8 @@
 
 #import "MDCFeatureHighlightView+Private.h"
 
-#import "MDCFeatureHighlightLayer.h"
 #import "MDCFeatureHighlightDismissGestureRecognizer.h"
+#import "MDCFeatureHighlightLayer.h"
 #import "MDFTextAccessibility.h"
 
 #import "MaterialFeatureHighlightStrings.h"
@@ -127,11 +127,13 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
     UITapGestureRecognizer *tapRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapView:)];
+    tapRecognizer.delegate = self;
     [self addGestureRecognizer:tapRecognizer];
 
     MDCFeatureHighlightDismissGestureRecognizer *panRecognizer =
         [[MDCFeatureHighlightDismissGestureRecognizer alloc]
-             initWithTarget:self action:@selector(didGestureDismiss:)];
+            initWithTarget:self
+                    action:@selector(didGestureDismiss:)];
     [self addGestureRecognizer:panRecognizer];
 
     // We want the inner and outer highlights to animate from the same origin so we start them from
@@ -294,7 +296,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     titlePos.y = _highlightPoint.y - kMDCFeatureHighlightInnerPadding - _innerRadius - textHeight;
   }
 
-  CGRect titleFrame = (CGRect){titlePos, titleSize};
+  CGRect titleFrame =
+      MDCRectAlignToScale((CGRect){titlePos, titleSize}, [UIScreen mainScreen].scale);
   _titleLabel.frame = titleFrame;
 
   CGRect detailFrame = (CGRect){CGPointMake(titlePos.x, CGRectGetMaxY(titleFrame)), detailSize};
@@ -370,7 +373,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   [self updateOuterHighlight];
 
   // Square progress to ease-in the translation
-  CGFloat translationProgress = (1 - progress*progress);
+  CGFloat translationProgress = (1 - progress * progress);
   CGPoint pointOffset = CGPointMake((_highlightPoint.x - _highlightCenter.x) * translationProgress,
                                     (_highlightPoint.y - _highlightCenter.y) * translationProgress);
   CGPoint center = CGPointAddedToPoint(_highlightCenter, pointOffset);
@@ -379,26 +382,29 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   if (_isLayedOutAppearing) {
     if (progress < kMDCFeatureHighlightGestureDisappearThresh) {
-      [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration animations:^{
-        [self layoutDisappearing];
-      }];
+      [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration
+                       animations:^{
+                         [self layoutDisappearing];
+                       }];
     }
   } else if (progress > kMDCFeatureHighlightGestureAppearThresh) {
-    [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration animations:^{
-      [self layoutAppearing];
-    }];
+    [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration
+                     animations:^{
+                       [self layoutAppearing];
+                     }];
   }
 }
 
 - (void)animateDismissalCancelled {
-  [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration animations:^{
-    [self layoutAppearing];
-  }];
+  [UIView animateWithDuration:kMDCFeatureHighlightGestureAnimationDuration
+                   animations:^{
+                     [self layoutAppearing];
+                   }];
 
   _outerRadiusScale = 1;
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:kMDCFeatureHighlightDismissAnimationDuration];
   [_outerLayer setRadius:_outerRadius * _outerRadiusScale animated:YES];
   [_outerLayer setPosition:_highlightCenter animated:YES];
@@ -420,7 +426,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setRadius:_innerRadius animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1].CGColor animated:YES];
@@ -436,15 +442,16 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 - (void)animatePulse {
   NSArray *keyTimes = @[ @0, @0.5, @1 ];
   id pulseColorStart =
-      (__bridge id)[_innerHighlightColor
-                    colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha].CGColor;
+      (__bridge id)
+          [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
+              .CGColor;
   id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
   CGFloat radius = _innerRadius;
 
   [CATransaction begin];
   [CATransaction setAnimationDuration:1.0f];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   CGFloat innerBloomRadius = radius + kMDCFeatureHighlightInnerRadiusBloomAmount;
   CGFloat pulseBloomRadius = radius + kMDCFeatureHighlightPulseRadiusBloomAmount;
   NSArray *innerKeyframes = @[ @(radius), @(innerBloomRadius), @(radius) ];
@@ -462,7 +469,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setPosition:displayMaskCenter animated:YES];
   [_displayMaskLayer setRadius:0.0 animated:YES];
@@ -482,7 +489,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setPosition:displayMaskCenter animated:YES];
   [_displayMaskLayer setRadius:0 animated:YES];
@@ -513,12 +520,17 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 + (NSString *)dismissAccessibilityHint {
   NSString *key =
       kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
-  NSString *localizedString =
-      NSLocalizedStringFromTableInBundle(key,
-                                         kMaterialFeatureHighlightStringsTableName,
-                                         [self bundle],
-                                         @"Double-tap to dismiss.");
+  NSString *localizedString = NSLocalizedStringFromTableInBundle(
+      key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
   return localizedString;
+}
+
+#pragma mark - UIGestureRecognizerDelegate (Tap)
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+  return YES;
 }
 
 #pragma mark - Resource bundle
@@ -538,7 +550,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
   // and use that as the search location.
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 

@@ -40,7 +40,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 /**
  Constraint for center Y of the underline view.
 
- Default constant: self.top + font line height + MDCTextInputHalfPadding. 
+ Default constant: self.top + font line height + MDCTextInputHalfPadding.
  eg: ~4 pts below the input rect.
  */
 @property(nonatomic, strong) NSLayoutConstraint *underlineY;
@@ -72,8 +72,10 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
     [self commonMDCTextFieldInitialization];
 
-    self.leftViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldLeftViewModeKey];
-    self.rightViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldRightViewModeKey];
+    self.leftViewMode =
+        (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldLeftViewModeKey];
+    self.rightViewMode =
+        (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldRightViewModeKey];
 
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
@@ -136,23 +138,25 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 #pragma mark - Underline View Implementation
 
 - (void)setupUnderlineConstraints {
-  NSLayoutConstraint *underlineLeading = [NSLayoutConstraint constraintWithItem:self.underline
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                                                       constant:0];
+  NSLayoutConstraint *underlineLeading =
+      [NSLayoutConstraint constraintWithItem:self.underline
+                                   attribute:NSLayoutAttributeLeading
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeLeading
+                                  multiplier:1
+                                    constant:0];
   underlineLeading.priority = UILayoutPriorityDefaultLow;
   underlineLeading.active = YES;
 
-  NSLayoutConstraint *underlineTrailing = [NSLayoutConstraint constraintWithItem:self.underline
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                                                        constant:0];
+  NSLayoutConstraint *underlineTrailing =
+      [NSLayoutConstraint constraintWithItem:self.underline
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeTrailing
+                                  multiplier:1
+                                    constant:0];
   underlineTrailing.priority = UILayoutPriorityDefaultLow;
   underlineTrailing.active = YES;
 
@@ -164,7 +168,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
                                    attribute:NSLayoutAttributeTop
                                   multiplier:1
                                     constant:[self textInsets].top + [self estimatedTextHeight] +
-      MDCTextInputHalfPadding];
+                                             MDCTextInputHalfPadding];
   _underlineY.priority = UILayoutPriorityDefaultLow;
   _underlineY.active = YES;
 }
@@ -180,26 +184,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 - (void)updateUnderlinePosition {
   self.underlineY.constant = [self underlineYConstant];
   [self invalidateIntrinsicContentSize];
-}
-
-#pragma mark - Layout
-
-- (UIEdgeInsets)textInsets {
-  UIEdgeInsets textInsets = UIEdgeInsetsZero;
-
-  textInsets.top = MDCTextInputFullPadding;
-  textInsets.bottom = MDCTextInputFullPadding;
-
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
-    return [self.positioningDelegate textInsets:textInsets];
-  }
-  return textInsets;
-}
-
-- (CGFloat)estimatedTextHeight {
-  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
-
-  return estimatedTextHeight;
 }
 
 #pragma mark - Properties Implementation
@@ -514,8 +498,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
-  CGFloat centerY = self.textInsets.top +
-                    (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
+  CGFloat centerY =
+      self.textInsets.top + (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
   return centerY;
 }
 
@@ -527,19 +511,49 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   // it here.
 }
 
-#pragma mark - Layout
+#pragma mark - Layout (Custom)
+
+- (UIEdgeInsets)textInsets {
+  UIEdgeInsets textInsets = UIEdgeInsetsZero;
+
+  textInsets.top = MDCTextInputFullPadding;
+
+  // The amount of space underneath the underline is variable. It could just be
+  // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
+  // MDCTextInputHalfPadding
+  CGFloat underlineLabelsOffset = 0;
+  if (self.leadingUnderlineLabel.text.length) {
+    underlineLabelsOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  }
+  if (self.trailingUnderlineLabel.text.length) {
+    underlineLabelsOffset = MAX(underlineLabelsOffset,
+                                MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+  }
+  CGFloat underlineOffset = MDCTextInputHalfPadding + underlineLabelsOffset;
+
+  // .bottom = underlineOffset + the half padding above the line but below the text field
+  textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
+    return [self.positioningDelegate textInsets:textInsets];
+  }
+  return textInsets;
+}
+
+- (CGFloat)estimatedTextHeight {
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
+
+  return estimatedTextHeight;
+}
+
+#pragma mark - Layout (UIView)
 
 - (CGSize)intrinsicContentSize {
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat height = MDCTextInputFullPadding + [self estimatedTextHeight] + MDCTextInputHalfPadding * 2.f;
-
-  CGFloat underlineLabelsHeight =
-      MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f,
-          MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-  height += underlineLabelsHeight;
-  boundingSize.height = height;
+  boundingSize.height =
+      [self textInsets].top + [self estimatedTextHeight] + [self textInsets].bottom;
 
   return boundingSize;
 }
@@ -548,9 +562,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   CGSize sizeThatFits = [self intrinsicContentSize];
   sizeThatFits.width = size.width;
 
-  if ([self.positioningDelegate respondsToSelector:@selector(sizeThatFits:defaultSize:)]) {
-    sizeThatFits = [self.positioningDelegate sizeThatFits:size defaultSize:sizeThatFits];
-  }
   return sizeThatFits;
 }
 

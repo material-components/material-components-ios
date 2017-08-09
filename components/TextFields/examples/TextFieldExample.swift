@@ -26,6 +26,7 @@ final class TextFieldSwiftExample: UIViewController {
     let name = MDCTextField()
     name.placeholder = "Name"
     name.translatesAutoresizingMaskIntoConstraints = false
+    name.autocapitalizationType = .words
     return name
   }()
 
@@ -33,6 +34,7 @@ final class TextFieldSwiftExample: UIViewController {
     let address = MDCTextField()
     address.placeholder = "Address"
     address.translatesAutoresizingMaskIntoConstraints = false
+    address.autocapitalizationType = .words
     return address
   }()
 
@@ -40,6 +42,7 @@ final class TextFieldSwiftExample: UIViewController {
     let city = MDCTextField()
     city.placeholder = "City"
     city.translatesAutoresizingMaskIntoConstraints = false
+    city.autocapitalizationType = .words
     return city
   }()
   let cityController: MDCTextInputControllerDefault
@@ -48,6 +51,7 @@ final class TextFieldSwiftExample: UIViewController {
     let state = MDCTextField()
     state.placeholder = "State"
     state.translatesAutoresizingMaskIntoConstraints = false
+    state.autocapitalizationType = .allCharacters
     return state
   }()
 

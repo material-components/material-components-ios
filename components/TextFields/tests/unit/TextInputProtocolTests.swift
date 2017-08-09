@@ -58,4 +58,54 @@ class TextInputTests: XCTestCase {
     textField.underline?.lineHeight = width
     XCTAssertEqual(width, textField.underline?.lineHeight)
   }
+
+  func testMDCTextInputProtocolConformanceMultiline() {
+    let textField = MDCMultilineTextField()
+
+    XCTAssertNotNil(textField.leadingUnderlineLabel)
+    XCTAssertNotNil(textField.trailingUnderlineLabel)
+    XCTAssertNotNil(textField.placeholderLabel)
+
+    let gray = UIColor.gray
+
+    textField.textColor = gray.copy() as? UIColor
+    XCTAssertEqual(textField.textColor, gray)
+
+    let testText = "Test text"
+    textField.text = testText
+    XCTAssertEqual(textField.text, testText)
+
+    let testPlaceholder = "Test placeholder"
+    textField.placeholder = testPlaceholder
+    XCTAssertEqual(textField.placeholder, testPlaceholder)
+
+    textField.underline?.color = gray.copy() as? UIColor
+    XCTAssertEqual(textField.underline?.color, gray)
+
+    let width: CGFloat = 5.0
+    textField.underline?.lineHeight = width
+    XCTAssertEqual(textField.underline?.lineHeight, width)
+
+    let testLeading = "Helper Test"
+    textField.leadingUnderlineLabel.text = testLeading
+    XCTAssertEqual(textField.leadingUnderlineLabel.text, testLeading)
+
+    let testTrailing = "NN / NN"
+    textField.trailingUnderlineLabel.text = testTrailing
+    XCTAssertEqual(textField.trailingUnderlineLabel.text, testTrailing)
+
+    let controller = MDCTextInputControllerDefault(textInput: textField)
+    XCTAssertNotNil(controller.textInput)
+  }
+
+  func testMDCMultilineTextInputProtocolConformance() {
+    let textField = MDCMultilineTextField()
+    XCTAssertEqual(textField.minimumLines, 1)
+
+    textField.minimumLines = 3
+    XCTAssertEqual(textField.minimumLines, 3)
+
+    textField.minimumLines = 0
+    XCTAssertEqual(textField.minimumLines, 1)
+  }
 }

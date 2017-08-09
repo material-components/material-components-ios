@@ -94,3 +94,26 @@ static inline CGFloat MDCSqrt(CGFloat value) {
   return sqrtf(value);
 #endif
 }
+
+/**
+ Expand `rect' to the smallest standardized rect containing it with pixel-aligned origin and size.
+
+ @see CGRectIntegral
+ */
+static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
+  if (CGRectIsNull(rect) || MDCCGFloatEqual(scale, 0)) {
+    return CGRectNull;
+  }
+  if (MDCCGFloatEqual(scale, 1)) {
+    return CGRectIntegral(rect);
+  }
+
+  CGPoint originalMinimumPoint = CGPointMake(CGRectGetMinX(rect), CGRectGetMinY(rect));
+  CGPoint newOrigin = CGPointMake(MDCFloor(originalMinimumPoint.x * scale) / scale,
+                                  MDCFloor(originalMinimumPoint.y * scale) / scale);
+  CGSize adjustWidthHeight =
+      CGSizeMake(originalMinimumPoint.x - newOrigin.x, originalMinimumPoint.y - newOrigin.y);
+  return CGRectMake(newOrigin.x, newOrigin.y,
+                    MDCCeil((CGRectGetWidth(rect) + adjustWidthHeight.width) * scale) / scale,
+                    MDCCeil((CGRectGetHeight(rect) + adjustWidthHeight.height) * scale) / scale);
+}
