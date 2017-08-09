@@ -20,7 +20,7 @@
 #import "MaterialTypography.h"
 
 @interface ButtonsTypicalUseViewController ()
-@property (nonatomic, strong) MDCFloatingButton *floatingButton;
+@property(nonatomic, strong) MDCFloatingButton *floatingButton;
 @end
 
 @implementation ButtonsTypicalUseViewController
@@ -28,18 +28,18 @@
 - (MDCButton *)buildCustomStrokedButton {
   MDCButton *button = [[MDCButton alloc] init];
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
-  [button setTitleColor:[UIColor colorWithWhite:0.1 alpha:1.0] forState:UIControlStateNormal];
-  button.inkColor = [UIColor colorWithWhite:0 alpha:0.06];
+  [button setTitleColor:[UIColor colorWithWhite:0.1F alpha:1] forState:UIControlStateNormal];
+  button.inkColor = [UIColor colorWithWhite:0 alpha:0.06F];
   button.layer.borderWidth = 1;
   button.layer.borderColor = [UIColor blackColor].CGColor;
-  button.disabledAlpha = 0.38;
+  button.disabledAlpha = 0.38F;
   return button;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.9F alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
   // Raised button
@@ -121,8 +121,8 @@
   [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   [self.floatingButton addTarget:self
-                     action:@selector(didTap:)
-           forControlEvents:UIControlEventTouchUpInside];
+                          action:@selector(didTap:)
+                forControlEvents:UIControlEventTouchUpInside];
   self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
 
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
@@ -140,28 +140,27 @@
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
-    [self.floatingButton shrink:YES
-                               completion:^{
-                                 dispatch_after(
-                                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                                     dispatch_get_main_queue(), ^{
-                                       [self.floatingButton grow:YES completion:nil];
-                                     });
-                               }];
+    [self.floatingButton exit:YES
+                   completion:^{
+                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                                    dispatch_get_main_queue(), ^{
+                                      [self.floatingButton enter:YES completion:nil];
+                                    });
+                   }];
   }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   if (animated) {
-    [self.floatingButton shrink:NO completion:nil];
+    [self.floatingButton exit:NO completion:nil];
   }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   if (animated) {
-    [self.floatingButton grow:YES completion:nil];
+    [self.floatingButton enter:YES completion:nil];
   }
 }
 

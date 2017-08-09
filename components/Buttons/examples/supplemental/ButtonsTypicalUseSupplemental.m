@@ -81,16 +81,16 @@
 
   UIView *lastButton = self.buttons.lastObject;
   if (CGRectGetMaxY(lastButton.frame) > CGRectGetHeight(self.view.frame)) {
-    CGFloat colOffset = CGRectGetWidth(self.view.frame) / 4;
+    CGFloat columnOffset = CGRectGetWidth(self.view.frame) / 4;
     NSUInteger splitIndex = ceil(self.buttons.count / 2);
 
     if (((MDCButton *)self.buttons[splitIndex - 1]).enabled) {
       splitIndex++;
     }
 
-    [self layoutButtonsInRange:NSMakeRange(0, splitIndex) around:centerX - colOffset];
+    [self layoutButtonsInRange:NSMakeRange(0, splitIndex) around:centerX - columnOffset];
     [self layoutButtonsInRange:NSMakeRange(splitIndex, self.buttons.count - splitIndex)
-                        around:centerX + colOffset];
+                        around:centerX + columnOffset];
   }
 }
 
