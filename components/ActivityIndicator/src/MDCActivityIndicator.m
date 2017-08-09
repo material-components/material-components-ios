@@ -21,6 +21,8 @@
 #import "MaterialRTL.h"
 #import "MaterialApplication.h"
 #import "private/MDCActivityIndicator+Private.h"
+#import "private/MaterialActivityIndicatorStrings.h"
+#import "private/MaterialActivityIndicatorStrings_table.h"
 
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
 static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
@@ -32,6 +34,9 @@ static const CGFloat kOuterRotationIncrement =
     (1.0f / kMDCActivityIndicatorTotalDetentCount) * (CGFloat)M_PI;
 static const CGFloat kSpinnerRadius = 12.f;
 static const CGFloat kStrokeLength = 0.75f;
+
+// The Bundle for string resources.
+static NSString *const kMaterialActivityIndicatorBundle = @"MaterialActivityIndicator.bundle";
 
 /**
  Total rotation (outer rotation + stroke rotation) per _cycleCount. One turn is 2.0f.
@@ -807,6 +812,57 @@ static const CGFloat kSingleCycleRotation =
   setPropBlock();
 
   [CATransaction commit];
+}
+
+#pragma mark - Resource Bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialActivityIndicatorBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
+}
+
+#pragma mark - Accessibility
+
+- (BOOL)isAccessibilityElement
+{
+  return YES;
+}
+
+- (NSString *)accessibilityLabel {
+
+  if (self.isAnimating) {
+    NSString *key =
+        kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorInProgressAccessibilityLabel];
+    return NSLocalizedStringFromTableInBundle(key,
+                                              kMaterialActivityIndicatorStringsTableName,
+                                              [[self class] bundle],
+                                              @"In Progress");
+  } else {
+    NSString *key =
+        kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorProgressHaltedAccessibilityLabel];
+    return NSLocalizedStringFromTableInBundle(key,
+                                              kMaterialActivityIndicatorStringsTableName,
+                                              [[self class] bundle],
+                                              @"Progress Halted");
+  }
+}
+
+- (UIAccessibilityTraits)accessibilityTraits {
+  return UIAccessibilityTraitUpdatesFrequently;
 }
 
 @end

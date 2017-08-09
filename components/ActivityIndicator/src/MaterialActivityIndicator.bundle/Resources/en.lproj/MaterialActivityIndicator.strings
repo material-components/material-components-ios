@@ -1,0 +1,5 @@
+/* Accessibility label for activity indicator in progress */
+"MaterialActivityIndicatorInProgressAccessibilityLabel" = "In Progress";
+
+/* Accessibility label for activity indicator progress halted */
+"MaterialActivityIndicatorProgressHaltedAccessibilityLabel" = "Progress Halted";
