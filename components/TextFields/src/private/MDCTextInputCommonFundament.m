@@ -507,7 +507,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     }
   }
 
-  if (self.textInput.trailingView.superview) {
+  if (self.textInput.trailingView.superview && !MDCCGFloatEqual(self.textInput.trailingView.alpha, 0.f)) {
     clearButtonAlpha = 0;
   }
 
@@ -645,6 +645,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (UIEdgeInsets)textInsets {
   return _textInput.textInsets;
+}
+
+- (void)setTrailingView:(UIView *)trailingView {
+  if (_trailingView != trailingView) {
+    [_trailingView removeFromSuperview];
+    [self.textInput addSubview:trailingView];
+    _trailingView = trailingView;
+    [self.textInput setNeedsUpdateConstraints];
+  }
 }
 
 - (MDCTextInputUnderlineView *)underline {
