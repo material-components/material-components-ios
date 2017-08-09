@@ -21,8 +21,8 @@
 @interface TextFieldPresentationStylesExample ()
 
 // Be sure to keep your controllers in memory somewhere like a property:
-@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
-@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFloating;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerDefaultCharMax;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerFloating;
 @property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldControllerFullWidth;
 
 @end
@@ -56,7 +56,7 @@
 
   // Second the controller is created to manage the text field
   self.textFieldControllerDefaultCharMax =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldDefaultCharMax];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:textFieldDefaultCharMax];
   self.textFieldControllerDefaultCharMax.characterCountMax = defaultMax;
   [self.textFieldControllerDefaultCharMax mdc_setAdjustsFontForContentSizeCategory:YES];
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
@@ -78,7 +78,7 @@
   }
 
   self.textFieldControllerFloating =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:textFieldFloating];
 
   [self.textFieldControllerFloating mdc_setAdjustsFontForContentSizeCategory:YES];
 

@@ -38,7 +38,7 @@
  @param textInputControllerDefault A MDCTextInputControllerDefault instance to apply a color scheme.
  */
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-    toTextInputControllerDefault:(MDCTextInputControllerDefault *)textInputControllerDefault;
+    toTextInputControllerDefault:(MDCTextInputControllerLegacyDefault *)textInputControllerDefault;
 
 /**
  Applies a color scheme to MDCTextField for all instances of MDCTextInputControllerDefault using the

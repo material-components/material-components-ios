@@ -16,14 +16,14 @@
 
 #import "MaterialTextFields.h"
 
-@interface TextFieldManualLayoutExample : UIViewController <UITextFieldDelegate>
+@interface TextFieldManualLayoutLegacyExample : UIViewController <UITextFieldDelegate>
 
 @property(nonatomic) MDCTextInputControllerLegacyDefault *nameController;
 @property(nonatomic) MDCTextInputControllerLegacyDefault *phoneController;
 
 @end
 
-@implementation TextFieldManualLayoutExample
+@implementation TextFieldManualLayoutLegacyExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -148,10 +148,10 @@
 
 @end
 
-@implementation TextFieldManualLayoutExample (CatalogByConvention)
+@implementation TextFieldManualLayoutLegacyExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Manual Layout (Objective C)" ];
+  return @[ @"Text Field", @"Legacy Manual Layout (Objective C)" ];
 }
 
 @end

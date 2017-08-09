@@ -14,13 +14,24 @@
  limitations under the License.
  */
 
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInput.h"
-#import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputController.h"
-#import "MDCTextInputControllerDefault.h"
-#import "MDCTextInputControllerLegacyDefault.h"
-#import "MDCTextInputControllerFullWidth.h"
-#import "MDCTextInputUnderlineView.h"
-#import "MDCMultilineTextField.h"
+#import "TextFieldInterfaceBuilderLegacyExampleSupplemental.h"
+
+@implementation TextFieldInterfaceBuilderLegacyExample (Supplemental)
+
+- (void)setupExampleViews {
+  self.title = @"Material Text Fields";
+}
+
+@end
+
+@implementation TextFieldInterfaceBuilderLegacyExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Text Field", @"Legacy Storyboard (Objective C)" ];
+}
+
++ (NSString *)catalogStoryboardName {
+  return @"TextFieldInterfaceBuilderExample";
+}
+
+@end

@@ -25,7 +25,7 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTypography
 
-final class TextFieldKitchenSinkSwiftExample: UIViewController {
+final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -252,8 +252,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
       MDCTextInputControllerLegacyDefault(textInput: textFieldCustomFontFloating)
     textFieldControllerDefaultCustomFontFloating.characterCountMax = 40
     textFieldControllerDefaultCustomFontFloating.helperText = "Custom Font"
-    textFieldControllerDefaultCustomFontFloating.activeColor = .green
-    textFieldControllerDefaultCustomFontFloating.normalColor = .purple
+    textFieldControllerDefaultCustomFontFloating.underlineColorActive = .green
+    textFieldControllerDefaultCustomFontFloating.underlineColorNormal = .purple
     textFieldCustomFontFloating.leadingUnderlineLabel.font =
       UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFontFloating.placeholderLabel.font =
@@ -545,20 +545,20 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
 }
 
-extension TextFieldKitchenSinkSwiftExample: UITextFieldDelegate {
+extension TextFieldKitchenSinkLegacySwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }
 }
 
-extension TextFieldKitchenSinkSwiftExample: UITextViewDelegate {
+extension TextFieldKitchenSinkLegacySwiftExample: UITextViewDelegate {
   func textViewDidChange(_ textView: UITextView) {
     print(textView.text)
   }
 }
 
-extension TextFieldKitchenSinkSwiftExample {
+extension TextFieldKitchenSinkLegacySwiftExample {
   @objc func contentSizeCategoryDidChange(notif: Notification) {
     controlLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     singleLabel.font = UIFont.preferredFont(forTextStyle: .headline)

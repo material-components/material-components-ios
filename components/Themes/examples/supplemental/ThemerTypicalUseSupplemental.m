@@ -125,7 +125,7 @@
   [self.scrollView addSubview:self.textField];
   self.textField.placeholder = @"Text Field";
   self.textInputControllerDefault =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.textField];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.textField];
 }
 
 - (void)didTapShowAlert:(id)sender {

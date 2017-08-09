@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldManualLayoutSwiftExample: UIViewController {
+final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
 
   private enum LayoutConstants {
     static let largeMargin: CGFloat = 16
@@ -233,7 +233,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldManualLayoutSwiftExample: UITextFieldDelegate {
+extension TextFieldManualLayoutLegacySwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -281,7 +281,7 @@ extension TextFieldManualLayoutSwiftExample: UITextFieldDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldManualLayoutSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -313,14 +313,14 @@ extension TextFieldManualLayoutSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldManualLayoutSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldManualLayoutSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Manual Layout"]
+    return ["Text Field", "Legacy Manual Layout"]
   }
 }

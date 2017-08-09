@@ -14,13 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInput.h"
-#import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputController.h"
-#import "MDCTextInputControllerDefault.h"
-#import "MDCTextInputControllerLegacyDefault.h"
-#import "MDCTextInputControllerFullWidth.h"
-#import "MDCTextInputUnderlineView.h"
-#import "MDCMultilineTextField.h"
+@import UIKit;
+
+@interface TextFieldInterfaceBuilderLegacyExample : UIViewController
+
+@end
+
+@interface TextFieldInterfaceBuilderLegacyExample (Supplemental)
+
+- (void)setupExampleViews;
+
+@end
