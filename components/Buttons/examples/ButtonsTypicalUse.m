@@ -28,18 +28,18 @@
 - (MDCButton *)buildCustomStrokedButton {
   MDCButton *button = [[MDCButton alloc] init];
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
-  [button setTitleColor:[UIColor colorWithWhite:0.1F alpha:1] forState:UIControlStateNormal];
-  button.inkColor = [UIColor colorWithWhite:0 alpha:0.06F];
+  [button setTitleColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
+  button.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
   button.layer.borderWidth = 1;
   button.layer.borderColor = [UIColor blackColor].CGColor;
-  button.disabledAlpha = 0.38F;
+  button.disabledAlpha = 0.38f;
   return button;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9F alpha:1];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
   // Raised button
@@ -140,27 +140,28 @@
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
-    [self.floatingButton exit:YES
-                   completion:^{
-                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                                    dispatch_get_main_queue(), ^{
-                                      [self.floatingButton enter:YES completion:nil];
-                                    });
-                   }];
+    [self.floatingButton
+          collapse:YES
+        completion:^{
+          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                         dispatch_get_main_queue(), ^{
+                           [self.floatingButton expand:YES completion:nil];
+                         });
+        }];
   }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   if (animated) {
-    [self.floatingButton exit:NO completion:nil];
+    [self.floatingButton collapse:NO completion:nil];
   }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   if (animated) {
-    [self.floatingButton enter:YES completion:nil];
+    [self.floatingButton expand:YES completion:nil];
   }
 }
 

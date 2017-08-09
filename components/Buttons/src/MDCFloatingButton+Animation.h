@@ -19,21 +19,19 @@
 @interface MDCFloatingButton (Animation)
 
 /**
- Causes this button to return to its "normal" size.
+ Expand this button to its unscaled (normal) size.
 
  @param animated YES if the size change should be animated.
  @param completion a completion block to call after the size change is complete.
  */
-- (void)enter:(BOOL)animated completion:(void (^_Nullable)(void))completion;
+- (void)expand:(BOOL)animated completion:(void (^_Nullable)(void))completion;
 
 /**
- Causes this button to decrease in size until it is very small. Specifically, it sets the button's
- transform to a scale less than 0.001. For example, a 56-point button will become fewer than 0.056
- points in diameter.
+ Collapses this button so that it becomes smaller than 0.1% of its normal size.
 
  @param animated YES if the size change should be animated.
  @param completion a completion block to call after the size change is complete.
  */
-- (void)exit:(BOOL)animated completion:(void (^_Nullable)(void))completion;
+- (void)collapse:(BOOL)animated completion:(void (^_Nullable)(void))completion;
 
 @end
