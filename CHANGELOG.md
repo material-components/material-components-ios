@@ -1,4 +1,12 @@
-# release-candidate TODO: Replace me with version number. 
+# 31.0.0
+
+## API Diffs
+
+### TextFields
+
+* Added `MDCMultilineTextField`, a [Material Design-themed mutiline text field](https://www.google.com/design/spec/components/text-fields.html#text-fields-multi-line-text-field) (multiline text input).
+* `[MDCTextFieldPositioningDelegate sizeThatFits:defaultSize:]` has been removed, see `[MDCTextFieldPositioningDelegate textInsets:]` instead.
+* Added `MDCMultilineTextInput.minimumLines` and `.expandsOnOverflow` properties.
 
 # 30.0.0
 
