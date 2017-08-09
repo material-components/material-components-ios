@@ -100,12 +100,8 @@
 
 - (void)updateState:(NSSet<UITouch *> *)touches {
   _previousProgress = _progress;
-  CGFloat newProgress = [self dismissPercentOfTouches:touches];
-  if (newProgress < _startProgress) {
-    _startProgress = newProgress;
-  }
   _progress = 1.0f - [self dismissPercentOfTouches:touches] + _startProgress;
-  _progress = MIN(1.0f, MAX(0.0f, _progress));
+  _progress = MAX(0.0f, _progress);
 }
 
 - (CGFloat)progressForTouchPosition:(CGPoint)touchPos {
