@@ -37,6 +37,10 @@ static const NSTimeInterval kMDCFloatingButtonOpacityDuration = 0.015f;
 static const NSTimeInterval kMDCFloatingButtonOpacityEnterOffset = 0.030f;
 static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 
+@interface MDCButton (Private)
+@property (nonatomic, strong) UIView *innerView;
+@end
+
 @implementation MDCFloatingButton (Animation)
 
 + (CABasicAnimation *)animationWithKeypath:(nonnull NSString *)keyPath
@@ -81,11 +85,12 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 
 - (void)expand:(BOOL)animated completion:(void (^_Nullable)(void))completion {
   void (^enterActions)(void) = ^{
-    self.layer.transform = CATransform3DIdentity;
-    self.layer.opacity = 1;
+    self.innerView.layer.transform = CATransform3DIdentity;
+    self.innerView.layer.opacity = 1;
     self.imageView.layer.transform = CATransform3DIdentity;
-    [self.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
-    [self.layer removeAnimationForKey:kMDCFloatingButtonOpacityKey];
+    [self setNeedsLayout];
+    [self.innerView.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
+    [self.innerView.layer removeAnimationForKey:kMDCFloatingButtonOpacityKey];
     [self.imageView.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
     if (completion) {
       completion();
@@ -106,11 +111,11 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
                     fillMode:kCAFillModeForwards
                     duration:kMDCFloatingButtonEnterDuration
                  beginOffset:0];
-    [self.layer addAnimation:overallScaleAnimation forKey:kMDCFloatingButtonTransformKey];
+    [self.innerView.layer addAnimation:overallScaleAnimation forKey:kMDCFloatingButtonTransformKey];
 
     CABasicAnimation *iconScaleAnimation = [MDCFloatingButton
         animationWithKeypath:@"transform"
-                     toValue:[NSValue valueWithCATransform3D:self.layer.presentationLayer.transform]
+                     toValue:[NSValue valueWithCATransform3D:self.innerView.layer.presentationLayer.transform]
                    fromValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0, 0, 1)]
               timingFunction:[[CAMediaTimingFunction alloc]
                                  initWithControlPoints:0.0f:0.0f:0.2f:1.0f]
@@ -127,7 +132,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
                     fillMode:kCAFillModeForwards
                     duration:kMDCFloatingButtonOpacityDuration
                  beginOffset:kMDCFloatingButtonOpacityEnterOffset];
-    [self.layer addAnimation:opacityAnimation forKey:kMDCFloatingButtonOpacityKey];
+    [self.innerView.layer addAnimation:opacityAnimation forKey:kMDCFloatingButtonOpacityKey];
 
     [CATransaction commit];
   } else {
@@ -140,11 +145,12 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
       kMDCFloatingButtonTransformScale, kMDCFloatingButtonTransformScale));
 
   void (^exitActions)() = ^{
-    self.layer.transform = scaleTransform;
-    self.layer.opacity = 0;
+    self.innerView.layer.transform = scaleTransform;
+    self.innerView.layer.opacity = 0;
     self.imageView.layer.transform = scaleTransform;
-    [self.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
-    [self.layer removeAnimationForKey:kMDCFloatingButtonOpacityKey];
+    [self setNeedsLayout];
+    [self.innerView.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
+    [self.innerView.layer removeAnimationForKey:kMDCFloatingButtonOpacityKey];
     [self.imageView.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
     if (completion) {
       completion();
@@ -165,7 +171,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
                                        fillMode:kCAFillModeForwards
                                        duration:kMDCFloatingButtonExitDuration
                                     beginOffset:0];
-    [self.layer addAnimation:overallScaleAnimation forKey:kMDCFloatingButtonTransformKey];
+    [self.innerView.layer addAnimation:overallScaleAnimation forKey:kMDCFloatingButtonTransformKey];
 
     CABasicAnimation *iconScaleAnimation =
         [MDCFloatingButton animationWithKeypath:@"transform"
@@ -186,7 +192,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
                     fillMode:kCAFillModeForwards
                     duration:kMDCFloatingButtonOpacityDuration
                  beginOffset:kMDCFloatingButtonOpacityExitOffset];
-    [self.layer addAnimation:opacityAnimation forKey:kMDCFloatingButtonOpacityKey];
+    [self.innerView.layer addAnimation:opacityAnimation forKey:kMDCFloatingButtonOpacityKey];
 
     [CATransaction commit];
   } else {
@@ -208,16 +214,16 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 
  https://developer.apple.com/documentation/uikit/uiview/1622621-frame
  */
-- (CGRect)frame {
-  CGRect frame = [super frame];
-  if (CATransform3DEqualToTransform(self.layer.transform, CATransform3DIdentity)) {
-    return frame;
-  }
-  CGFloat width = CGRectGetWidth(self.bounds);
-  CGFloat height = CGRectGetHeight(self.bounds);
-  return CGRectMake(self.center.x - (width / 2.f), self.center.y - (height / 2.f),
-                    CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
-}
+//- (CGRect)frame {
+//  CGRect frame = [super frame];
+//  if (CATransform3DEqualToTransform(self.layer.transform, CATransform3DIdentity)) {
+//    return frame;
+//  }
+//  CGFloat width = CGRectGetWidth(self.bounds);
+//  CGFloat height = CGRectGetHeight(self.bounds);
+//  return CGRectMake(self.center.x - (width / 2.f), self.center.y - (height / 2.f),
+//                    CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+//}
 
 /*
  Apple documents clearly that when a non-identity transform is applied to a UIView, frame
@@ -227,16 +233,16 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 
  https://developer.apple.com/documentation/uikit/uiview/1622621-frame
  */
-- (void)setFrame:(CGRect)frame {
-  if (CATransform3DEqualToTransform(self.layer.transform, CATransform3DIdentity)) {
-    [super setFrame:frame];
-  } else {
-    CGPoint center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
-    CGSize boundsSize = CGSizeMake(CGRectGetWidth(frame), CGRectGetHeight(frame));
-    self.center = center;
-    self.bounds = CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds),
-                             boundsSize.width, boundsSize.height);
-  }
-}
+//- (void)setFrame:(CGRect)frame {
+//  if (CATransform3DEqualToTransform(self.layer.transform, CATransform3DIdentity)) {
+//    [super setFrame:frame];
+//  } else {
+//    CGPoint center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+//    CGSize boundsSize = CGSizeMake(CGRectGetWidth(frame), CGRectGetHeight(frame));
+//    self.center = center;
+//    self.bounds = CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds),
+//                             boundsSize.width, boundsSize.height);
+//  }
+//}
 
 @end

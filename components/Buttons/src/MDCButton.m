@@ -91,6 +91,21 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return [mutableString copy];
 }
 
+@interface MDCButtonInner : UIView
+@property(nonatomic, readonly, strong) MDCShadowLayer *layer;
+
+@end
+
+@implementation MDCButtonInner
+
+@dynamic layer;
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+@end
+
 @interface MDCButton () {
   NSMutableDictionary<NSNumber *, NSNumber *> *_userElevations;   // For each UIControlState.
   NSMutableDictionary<NSNumber *, UIColor *> *_backgroundColors;  // For each UIControlState.
@@ -102,16 +117,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 @property(nonatomic, strong) MDCInkView *inkView;
-@property(nonatomic, readonly, strong) MDCShadowLayer *layer;
+@property (nonatomic, strong) MDCButtonInner *innerView;
 @end
 
 @implementation MDCButton
-
-@dynamic layer;
-
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
-}
 
 - (instancetype)init {
   return [self initWithFrame:CGRectZero];
@@ -122,6 +131,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (self) {
     [self commonMDCButtonInit];
     [self updateBackgroundColor];
+    [self swapInnerView];
   }
   return self;
 }
@@ -208,6 +218,23 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
 }
 
+- (void)swapInnerView {
+  _innerView = [[MDCButtonInner alloc] initWithFrame:self.bounds];
+  _innerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+  _innerView.clipsToBounds = NO;
+  _innerView.userInteractionEnabled = NO;
+  _innerView.translatesAutoresizingMaskIntoConstraints = NO;
+  _innerView.autoresizesSubviews = NO;
+  [_innerView addSubview:self.imageView];
+  [_innerView addSubview:self.titleLabel];
+  [_innerView insertSubview:self.inkView belowSubview:self.imageView];
+
+  for (UIView *view in self.subviews) {
+    NSLog(@"%@", view);
+  }
+  [self addSubview:_innerView];
+}
+
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
@@ -231,7 +258,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
 
-  MDCShadowLayer *shadowLayer = self.layer;
+  MDCShadowLayer *shadowLayer = self.innerView.layer;
   shadowLayer.shadowPath = [self boundingPath].CGPath;
   shadowLayer.shadowColor = [UIColor blackColor].CGColor;
   shadowLayer.elevation = [self elevationForState:self.state];
@@ -283,8 +310,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.layer.shadowPath = [self boundingPath].CGPath;
-  self.layer.cornerRadius = [self cornerRadius];
+  self.innerView.layer.shadowPath = [self boundingPath].CGPath;
+  self.innerView.layer.cornerRadius = [self cornerRadius];
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
   if (_inkView.inkStyle == MDCInkStyleUnbounded) {
@@ -494,12 +521,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)animateButtonToHeightForState:(UIControlState)state {
   CGFloat newElevation = [self elevationForState:state];
-  if (self.layer.elevation == newElevation) {
+  if (self.innerView.layer.elevation == newElevation) {
     return;
   }
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCButtonAnimationDuration];
-  self.layer.elevation = newElevation;
+  self.innerView.layer.elevation = newElevation;
   [CATransaction commit];
 }
 
@@ -538,7 +565,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
   _userElevations[@(state)] = @(elevation);
-  self.layer.elevation = [self elevationForState:self.state];
+  self.innerView.layer.elevation = [self elevationForState:self.state];
 
   // The elevation of the normal state controls whether this button is flat or not, and flat buttons
   // have different background color requirements than raised buttons.
@@ -598,7 +625,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (CGPoint)locationFromTouches:(NSSet *)touches {
   UITouch *touch = [touches anyObject];
-  return [touch locationInView:self];
+  return [touch locationInView:self.innerView];
 }
 
 - (void)evaporateInkToPoint:(CGPoint)toPoint {
@@ -637,7 +664,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateBackgroundColor {
   [self updateDisabledTitleColor];
-  super.backgroundColor = self.currentBackgroundColor;
+  self.innerView.backgroundColor = self.currentBackgroundColor;
+  super.backgroundColor = UIColor.clearColor;// = self.currentBackgroundColor;
 }
 
 - (void)updateDisabledTitleColor {
@@ -700,5 +728,4 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setUnderlyingColor:(UIColor *)underlyingColor {
   [self setUnderlyingColorHint:underlyingColor];
 }
-
 @end
