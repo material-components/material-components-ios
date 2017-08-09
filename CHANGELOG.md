@@ -1,3 +1,64 @@
+# 31.0.0
+
+## API Diffs
+
+### TextFields
+
+* Added `MDCMultilineTextField`, a [Material Design-themed mutiline text field](https://www.google.com/design/spec/components/text-fields.html#text-fields-multi-line-text-field) (multiline text input).
+* `[MDCTextFieldPositioningDelegate sizeThatFits:defaultSize:]` has been removed, see `[MDCTextFieldPositioningDelegate textInsets:]` instead.
+* Added `MDCMultilineTextInput.minimumLines` and `.expandsOnOverflow` properties.
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [[Math] Align frames to pixel boundaries (#1730)](https://github.com/material-components/material-components-ios/commit/e03ad370c6fdfe23f35e4d3f61d2f55783be83c8) (Robert Moore)
+
+### CollectionCells
+
+#### Changes
+
+* [[Collections] Making Disclosure indicator tinted (#1745)](https://github.com/material-components/material-components-ios/commit/e12db0f2ea806a3f64b3d4865b3402d66d8923b4) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [Fix for possible infinite recursion (#1711)](https://github.com/material-components/material-components-ios/commit/abb81d969b09c6baaf51997c04bcf384607ac8d0) (Justin Shephard)
+* [Custom section insets call delegate (#1752)](https://github.com/material-components/material-components-ios/commit/0223d431e551e6afdbc33080ef815fef3794e79c) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Fix gesture recognizers (#1749)](https://github.com/material-components/material-components-ios/commit/6281b33d66029118c32693098f70d067ffb0b0fc) (Sam Morrison)
+* [[Math] Align frames to pixel boundaries (#1730)](https://github.com/material-components/material-components-ios/commit/e03ad370c6fdfe23f35e4d3f61d2f55783be83c8) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [Improve centering when barButtonItems are asymmetric (#1721)](https://github.com/material-components/material-components-ios/commit/65434fb244fd5997b84ddf6965404ce7c4cfe0bc) (Robert Moore)
+
+### Slider
+
+#### Changes
+
+* [[Math] Align frames to pixel boundaries (#1730)](https://github.com/material-components/material-components-ios/commit/e03ad370c6fdfe23f35e4d3f61d2f55783be83c8) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Examples improvements. (#1734)](https://github.com/material-components/material-components-ios/commit/0922de660cfe7844e3d792ccfb03043030eed7ad) (Will Larche)
+* [Fixing the ordering and labeling of 2 pragma marks. (#1731)](https://github.com/material-components/material-components-ios/commit/be703bc80037d9097c1704427321988d89045f3a) (Will Larche)
+* [Formatting. (#1748)](https://github.com/material-components/material-components-ios/commit/980b9080f01fee0eed02e92a403a22828eb66fbc) (Will Larche)
+* [Multiline textfields (#1756)](https://github.com/material-components/material-components-ios/commit/af964fe6706360b6c5bba839385133efe75bcba5) (Will Larche)
+* [[Text fields] Simplification of height calculation. (#1733)](https://github.com/material-components/material-components-ios/commit/7d706cdddac80f42bc64d4276a3beda4b0ee935f) (Will Larche)
+
+
 # 30.0.0
 
 ## API Diffs
