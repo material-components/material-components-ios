@@ -17,7 +17,7 @@
 #import "MDCTextInputController.h"
 
 /**
- Material Design compliant text field. The logic for 'automagic' error states changes:
+ Material Design compliant text field from 2016. The logic for 'automagic' error states changes:
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
 
