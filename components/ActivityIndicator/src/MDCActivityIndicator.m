@@ -845,12 +845,23 @@ static const CGFloat kSingleCycleRotation =
 - (NSString *)accessibilityLabel {
 
   if (self.isAnimating) {
-    NSString *key =
-        kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorInProgressAccessibilityLabel];
-    return NSLocalizedStringFromTableInBundle(key,
-                                              kMaterialActivityIndicatorStringsTableName,
-                                              [[self class] bundle],
-                                              @"In Progress");
+    if (self.indicatorMode == MDCActivityIndicatorModeIndeterminate) {
+      NSString *key =
+      kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorInProgressAccessibilityLabel];
+      return NSLocalizedStringFromTableInBundle(key,
+                                                kMaterialActivityIndicatorStringsTableName,
+                                                [[self class] bundle],
+                                                @"In Progress");
+    } else {
+      NSUInteger percentage = (int)(self.progress * 100);
+      NSString *key =
+      kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorProgressCompletedAccessibilityLabel];
+      NSString *localizedString = NSLocalizedStringFromTableInBundle(key,
+                                                kMaterialActivityIndicatorStringsTableName,
+                                                [[self class] bundle],
+                                                @"{percentage} Percent Complete");
+      return [NSString localizedStringWithFormat:localizedString, percentage];
+    }
   } else {
     NSString *key =
         kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorProgressHaltedAccessibilityLabel];
@@ -863,6 +874,14 @@ static const CGFloat kSingleCycleRotation =
 
 - (UIAccessibilityTraits)accessibilityTraits {
   return UIAccessibilityTraitUpdatesFrequently;
+}
+
+- (NSString *)accessibilityValue {
+  if (self.isAnimating) {
+    return @"1";
+  } else {
+    return @"0";
+  }
 }
 
 @end

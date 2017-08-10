@@ -6,4 +6,5 @@
 typedef enum {
   kStr_MaterialActivityIndicatorInProgressAccessibilityLabel = 0,
   kStr_MaterialActivityIndicatorProgressHaltedAccessibilityLabel = 1,
+  kStr_MaterialActivityIndicatorProgressCompletedAccessibilityLabel = 2,
 } MaterialActivityIndicatorStringId;
