@@ -89,7 +89,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 #endif
 
 - (void)expand:(BOOL)animated completion:(void (^_Nullable)(void))completion {
-  void (^enterActions)(void) = ^{
+  void (^expandActions)(void) = ^{
     self.layer.transform =
         CATransform3DConcat(self.layer.transform, [MDCFloatingButton expandTransform]);
     self.layer.opacity = 1;
@@ -106,7 +106,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
   if (animated) {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    [CATransaction setCompletionBlock:enterActions];
+    [CATransaction setCompletionBlock:expandActions];
 
     CABasicAnimation *overallScaleAnimation = [MDCFloatingButton
         animationWithKeypath:@"transform"
@@ -149,12 +149,12 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 
     [CATransaction commit];
   } else {
-    enterActions();
+    expandActions();
   }
 }
 
 - (void)collapse:(BOOL)animated completion:(void (^_Nullable)(void))completion {
-  void (^exitActions)() = ^{
+  void (^collapseActions)() = ^{
     self.layer.transform =
         CATransform3DConcat(self.layer.transform, [MDCFloatingButton collapseTransform]);
     self.layer.opacity = 0;
@@ -171,7 +171,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
   if (animated) {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    [CATransaction setCompletionBlock:exitActions];
+    [CATransaction setCompletionBlock:collapseActions];
 
     CABasicAnimation *overallScaleAnimation = [MDCFloatingButton
         animationWithKeypath:@"transform"
@@ -213,7 +213,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 
     [CATransaction commit];
   } else {
-    exitActions();
+    collapseActions();
   }
 }
 
