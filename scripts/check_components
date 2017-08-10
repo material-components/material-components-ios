@@ -71,8 +71,8 @@ verbose_echo "ROOT_DIR: $ROOT_DIR"
 
 # If no component listed on the command line, find them all.
 if [[ -z "$components" ]]; then
-  readonly PUBLIC_COMPONENTS=$(cd $ROOT_DIR && find components -maxdepth 1 -type d | grep -v "components$" | grep -v "components/private$")
-  readonly PRIVATE_COMPONENTS=$(cd $ROOT_DIR && find components/private -maxdepth 1 -type d | grep -v "components/private$")
+  readonly PUBLIC_COMPONENTS=$($SCRIPTS_DIR/list_components --public)
+  readonly PRIVATE_COMPONENTS=$($SCRIPTS_DIR/list_components --private)
   components="$PUBLIC_COMPONENTS $PRIVATE_COMPONENTS"
 fi
 verbose_echo "components: $components"
@@ -92,7 +92,7 @@ for component in $components; do
 
   all_checks_passed=1
   for check in $checks; do
-    $check $ROOT_DIR/$component
+    $check $component
     if [[ $? -ne 0 ]]; then
       all_checks_passed=0
     fi
