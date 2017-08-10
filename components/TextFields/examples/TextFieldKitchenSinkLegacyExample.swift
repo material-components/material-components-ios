@@ -252,8 +252,8 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
       MDCTextInputControllerLegacyDefault(textInput: textFieldCustomFontFloating)
     textFieldControllerDefaultCustomFontFloating.characterCountMax = 40
     textFieldControllerDefaultCustomFontFloating.helperText = "Custom Font"
-    textFieldControllerDefaultCustomFontFloating.underlineColorActive = .green
-    textFieldControllerDefaultCustomFontFloating.underlineColorNormal = .purple
+    textFieldControllerDefaultCustomFontFloating.activeColor = .green
+    textFieldControllerDefaultCustomFontFloating.normalColor = .purple
     textFieldCustomFontFloating.leadingUnderlineLabel.font =
       UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFontFloating.placeholderLabel.font =

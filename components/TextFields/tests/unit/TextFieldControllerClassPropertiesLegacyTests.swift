@@ -29,8 +29,8 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     MDCTextInputControllerLegacyDefault.errorColorDefault = nil
     MDCTextInputControllerLegacyDefault.inlinePlaceholderColorDefault = nil
     MDCTextInputControllerLegacyDefault.mdc_adjustsFontForContentSizeCategoryDefault = true
-    MDCTextInputControllerLegacyDefault.underlineColorActiveDefault = nil
-    MDCTextInputControllerLegacyDefault.underlineColorNormalDefault = nil
+    MDCTextInputControllerLegacyDefault.activeColorDefault = nil
+    MDCTextInputControllerLegacyDefault.normalColorDefault = nil
     MDCTextInputControllerLegacyDefault.underlineViewModeDefault = .whileEditing
 
     MDCTextInputControllerLegacyDefault.floatingPlaceholderColorDefault = nil
@@ -40,8 +40,8 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     MDCTextInputControllerFullWidth.errorColorDefault = nil
     MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault = nil
     MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault = true
-    MDCTextInputControllerFullWidth.underlineColorActiveDefault = nil
-    MDCTextInputControllerFullWidth.underlineColorNormalDefault = nil
+    MDCTextInputControllerFullWidth.activeColorDefault = nil
+    MDCTextInputControllerFullWidth.normalColorDefault = nil
     MDCTextInputControllerFullWidth.underlineViewModeDefault = .never
   }
 
@@ -52,9 +52,9 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.inlinePlaceholderColorDefault,
                    UIColor(white: 0, alpha: CGFloat(Float(0.54))))
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.mdc_adjustsFontForContentSizeCategoryDefault, true)
-    XCTAssertEqual(MDCTextInputControllerLegacyDefault.underlineColorActiveDefault,
+    XCTAssertEqual(MDCTextInputControllerLegacyDefault.activeColorDefault,
                    MDCPalette.blue.accent700)
-    XCTAssertEqual(MDCTextInputControllerLegacyDefault.underlineColorNormalDefault, .lightGray)
+    XCTAssertEqual(MDCTextInputControllerLegacyDefault.normalColorDefault, .lightGray)
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.underlineViewModeDefault, .whileEditing)
 
     // Default specific properties
@@ -72,10 +72,10 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
                    MDCTextInputControllerLegacyDefault.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
                    MDCTextInputControllerLegacyDefault.mdc_adjustsFontForContentSizeCategoryDefault)
-    XCTAssertEqual(controller.underlineColorActive,
-                   MDCTextInputControllerLegacyDefault.underlineColorActiveDefault)
-    XCTAssertEqual(controller.underlineColorNormal,
-                   MDCTextInputControllerLegacyDefault.underlineColorNormalDefault)
+    XCTAssertEqual(controller.activeColor,
+                   MDCTextInputControllerLegacyDefault.activeColorDefault)
+    XCTAssertEqual(controller.normalColor,
+                   MDCTextInputControllerLegacyDefault.normalColorDefault)
     XCTAssertEqual(controller.underlineViewMode,
                    MDCTextInputControllerLegacyDefault.underlineViewModeDefault)
 
@@ -96,11 +96,11 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.mdc_adjustsFontForContentSizeCategoryDefault,
                    false)
 
-    MDCTextInputControllerLegacyDefault.underlineColorActiveDefault = .purple
-    XCTAssertEqual(MDCTextInputControllerLegacyDefault.underlineColorActiveDefault, .purple)
+    MDCTextInputControllerLegacyDefault.activeColorDefault = .purple
+    XCTAssertEqual(MDCTextInputControllerLegacyDefault.activeColorDefault, .purple)
 
-    MDCTextInputControllerLegacyDefault.underlineColorNormalDefault = .white
-    XCTAssertEqual(MDCTextInputControllerLegacyDefault.underlineColorNormalDefault, .white)
+    MDCTextInputControllerLegacyDefault.normalColorDefault = .white
+    XCTAssertEqual(MDCTextInputControllerLegacyDefault.normalColorDefault, .white)
 
     MDCTextInputControllerLegacyDefault.underlineViewModeDefault = .unlessEditing
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.underlineViewModeDefault, .unlessEditing)
@@ -123,10 +123,10 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
                    MDCTextInputControllerLegacyDefault.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
                    MDCTextInputControllerLegacyDefault.mdc_adjustsFontForContentSizeCategoryDefault)
-    XCTAssertEqual(controller.underlineColorActive,
-                   MDCTextInputControllerLegacyDefault.underlineColorActiveDefault)
-    XCTAssertEqual(controller.underlineColorNormal,
-                   MDCTextInputControllerLegacyDefault.underlineColorNormalDefault)
+    XCTAssertEqual(controller.activeColor,
+                   MDCTextInputControllerLegacyDefault.activeColorDefault)
+    XCTAssertEqual(controller.normalColor,
+                   MDCTextInputControllerLegacyDefault.normalColorDefault)
     XCTAssertEqual(controller.underlineViewMode,
                    MDCTextInputControllerLegacyDefault.underlineViewModeDefault)
 
