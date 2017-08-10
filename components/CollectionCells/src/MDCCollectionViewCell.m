@@ -25,9 +25,12 @@
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialRTL.h"
 
-#define RGBCOLOR(r, g, b) \
-  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
-#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
+static inline UIColor *RGBColor(NSInteger red, NSInteger green, NSInteger blue) {
+  return [UIColor colorWithRed:(red / 255.0f) green:(green / 255.0f) blue:(blue / 255.0f) alpha:1];
+}
+static inline UIColor *HexColor(NSInteger hex) {
+  return RGBColor((hex >> 16) & 0xFF, (hex >> 8) & 0xFF, hex & 0xFF);
+}
 
 static CGFloat kEditingControlAppearanceOffset = 16.0f;
 
@@ -95,7 +98,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
   // Accessory defaults.
   _accessoryType = MDCCollectionViewCellAccessoryNone;
   _accessoryInset = kAccessoryInsetDefault;
-  _editingSelectorColor = HEXCOLOR(kCellRedColor);
+  _editingSelectorColor = HexColor(kCellRedColor);
 }
 
 #pragma mark - Layout
@@ -366,7 +369,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
         UIImage *reorderImage = [MDCIcons imageFor_ic_reorder];
         reorderImage = [reorderImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _editingReorderImageView = [[UIImageView alloc] initWithImage:reorderImage];
-        _editingReorderImageView.tintColor = HEXCOLOR(kCellGrayColor);
+        _editingReorderImageView.tintColor = HexColor(kCellGrayColor);
         _editingReorderImageView.autoresizingMask =
             MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
         [self addSubview:_editingReorderImageView];
@@ -390,7 +393,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
         UIImage *selectorImage = [MDCIcons imageFor_ic_radio_button_unchecked];
         selectorImage = [selectorImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _editingSelectorImageView = [[UIImageView alloc] initWithImage:selectorImage];
-        _editingSelectorImageView.tintColor = HEXCOLOR(kCellGrayColor);
+        _editingSelectorImageView.tintColor = HexColor(kCellGrayColor);
         _editingSelectorImageView.autoresizingMask =
             MDCAutoresizingFlexibleLeadingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
         [self addSubview:_editingSelectorImageView];
@@ -437,7 +440,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
   } else {
     if (_editingSelectorImageView && previousSelectedState != selected) {
       _editingSelectorImageView.image = [MDCIcons imageFor_ic_radio_button_unchecked];
-      _editingSelectorImageView.tintColor = HEXCOLOR(kCellGrayColor);
+      _editingSelectorImageView.tintColor = HexColor(kCellGrayColor);
       _editingSelectorImageView.image = [_editingSelectorImageView.image
           imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }
@@ -447,7 +450,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 
 - (void)setEditingSelectorColor:(UIColor *)editingSelectorColor {
   if (editingSelectorColor == nil) {
-    editingSelectorColor = HEXCOLOR(kCellRedColor);
+    editingSelectorColor = HexColor(kCellRedColor);
   }
   _editingSelectorColor = editingSelectorColor;
 }

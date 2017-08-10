@@ -21,8 +21,9 @@
 
 #include <tgmath.h>
 
-#define RGBCOLOR(r, g, b) \
-  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+static inline UIColor *RGBColor(NSInteger red, NSInteger green, NSInteger blue) {
+  return [UIColor colorWithRed:(red / 255.0f) green:(green / 255.0f) blue:(blue / 255.0f) alpha:1];
+}
 
 typedef NS_OPTIONS(NSUInteger, BackgroundCacheKey) {
   BackgroundCacheKeyFlat = 0,
@@ -125,11 +126,11 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // Cell default style properties.
     _cellBackgroundColor = [UIColor whiteColor];
     _cellStyle = MDCCollectionViewCellStyleDefault;
-    _collectionView.backgroundColor = RGBCOLOR(0xEE, 0xEE, 0xEE);
+    _collectionView.backgroundColor = RGBColor(0xEE, 0xEE, 0xEE);
     _inlaidIndexPathSet = [NSMutableSet set];
 
     // Cell separator defaults.
-    _separatorColor = RGBCOLOR(224, 224, 224);
+    _separatorColor = RGBColor(224, 224, 224);
     _separatorInset = UIEdgeInsetsZero;
     _separatorLineHeight =
         kCollectionViewCellSeparatorDefaultHeightInPixels / [[UIScreen mainScreen] scale];
