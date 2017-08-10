@@ -188,6 +188,30 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 #pragma mark - Properties Implementation
 
+- (UIColor *)borderFillColor {
+  return self.fundament.borderFillColor;
+}
+
+- (void)setBorderFillColor:(UIColor *)borderFillColor {
+  [self.fundament setBorderFillColor: borderFillColor];
+}
+
+- (UIBezierPath *)borderPath {
+  return self.fundament.borderPath;
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  [self.fundament setBorderPath: borderPath];
+}
+
+- (UIColor *)borderStrokeColor {
+  return self.fundament.borderStrokeColor;
+}
+
+- (void)setBorderStrokeColor:(UIColor *)borderStrokeColor {
+  [self.fundament setBorderStrokeColor: borderStrokeColor];
+}
+
 - (UIButton *)clearButton {
   return _fundament.clearButton;
 }

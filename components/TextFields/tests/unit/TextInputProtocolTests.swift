@@ -25,8 +25,27 @@ class TextInputTests: XCTestCase {
     XCTAssertNotNil(textField.trailingUnderlineLabel)
     XCTAssertNotNil(textField.placeholderLabel)
 
+    textField.borderFillColor = .purple
+    XCTAssertEqual(textField.borderFillColor, .purple)
+
+    let borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderPath = borderPath
+    XCTAssertEqual(textField.borderPath, borderPath)
+
+    textField.borderStrokeColor = .orange
+    XCTAssertEqual(textField.borderStrokeColor, .orange)
+
     textField.clearButtonColor = .red
     XCTAssertEqual(textField.clearButtonColor, .red)
+
+    textField.borderFillColor = nil
+    XCTAssertNotEqual(textField.borderFillColor, .purple)
+
+    textField.borderPath = nil
+    XCTAssertNotEqual(textField.borderPath, borderPath)
+
+    textField.borderStrokeColor = nil
+    XCTAssertNotEqual(textField.borderStrokeColor, .orange)
 
     let font = UIFont.boldSystemFont(ofSize: 6)
     textField.font = font
@@ -65,6 +84,25 @@ class TextInputTests: XCTestCase {
     XCTAssertNotNil(textField.leadingUnderlineLabel)
     XCTAssertNotNil(textField.trailingUnderlineLabel)
     XCTAssertNotNil(textField.placeholderLabel)
+
+    textField.borderFillColor = .purple
+    XCTAssertEqual(textField.borderFillColor, .purple)
+
+    let borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderPath = borderPath
+    XCTAssertEqual(textField.borderPath, borderPath)
+
+    textField.borderStrokeColor = .orange
+    XCTAssertEqual(textField.borderStrokeColor, .orange)
+
+    textField.borderFillColor = nil
+    XCTAssertNotEqual(textField.borderFillColor, .purple)
+
+    textField.borderPath = nil
+    XCTAssertNotEqual(textField.borderPath, borderPath)
+
+    textField.borderStrokeColor = nil
+    XCTAssertNotEqual(textField.borderStrokeColor, .orange)
 
     let gray = UIColor.gray
 

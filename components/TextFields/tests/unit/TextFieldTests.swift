@@ -39,6 +39,11 @@ class TextFieldTests: XCTestCase {
     }
   }
 
+  func testBorder() {
+    let textField = MDCTextField()
+
+  }
+
   func testCopying() {
     let textField = MDCTextField()
 

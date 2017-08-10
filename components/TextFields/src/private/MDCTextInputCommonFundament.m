@@ -23,6 +23,12 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
+static NSString *const MDCTextInputFundamentClearBorderFillColorKey =
+    @"MDCTextInputFundamentClearBorderFillColorKey";
+static NSString *const MDCTextInputFundamentClearBorderPathKey =
+    @"MDCTextInputFundamentClearBorderPathKey";
+static NSString *const MDCTextInputFundamentClearBorderStrokeColorKey =
+    @"MDCTextInputFundamentClearBorderStrokeColorKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
 static NSString *const MDCTextInputFundamentClearButtonColorKey =
     @"MDCTextInputFundamentClearButtonColorKey";
@@ -52,6 +58,7 @@ static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
 
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.5f;
 static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24.f;
+static const CGFloat MDCTextInputBorderRadius = 4.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
 const CGFloat MDCTextInputFullPadding = 16.f;
@@ -73,12 +80,49 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
 
+static inline NSString * _Nullable MDCNSStringFromCGLineCap(CGLineCap lineCap) {
+  NSString *lineCapString;
+  switch (lineCap) {
+    case kCGLineCapButt:
+      lineCapString = kCALineCapButt;
+      break;
+    case kCGLineCapRound:
+      lineCapString = kCALineCapRound;
+      break;
+    case kCGLineCapSquare:
+      lineCapString = kCALineCapSquare;
+      break;
+    default:
+      break;
+  }
+  return lineCapString;
+}
+
+static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin) {
+  NSString *lineJoinString;
+  switch (lineJoin) {
+    case kCGLineJoinBevel:
+      lineJoinString = kCALineJoinBevel;
+      break;
+    case kCGLineJoinMiter:
+      lineJoinString = kCALineJoinMiter;
+      break;
+    case kCGLineJoinRound:
+      lineJoinString = kCALineJoinRound;
+      break;
+    default:
+      break;
+  }
+  return lineJoinString;
+}
+
 @interface MDCTextInputCommonFundament () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
 
+@property(nonatomic, strong) CAShapeLayer *borderLayer;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
@@ -97,6 +141,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 // We never use the text property. Instead always read from the text field.
 
 @synthesize attributedText = _do_no_use_attributedText;
+@synthesize borderFillColor = _borderFillColor;
+@synthesize borderLayer = _borderLayer;
+@synthesize borderPath = _borderPath;
+@synthesize borderStrokeColor = _borderStrokeColor;
 @synthesize clearButton = _clearButton;
 @synthesize clearButtonColor = _clearButtonColor;
 @synthesize clearButtonMode = _clearButtonMode;
@@ -142,6 +190,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
+    _borderFillColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderFillColorKey];
+    _borderPath = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderPathKey];
+    _borderStrokeColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderStrokeColorKey];
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
     _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonColorKey];
@@ -165,6 +216,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeObject:self.borderFillColor forKey:MDCTextInputFundamentClearBorderFillColorKey];
+  [aCoder encodeObject:self.borderPath forKey:MDCTextInputFundamentClearBorderPathKey];
+  [aCoder encodeObject:self.borderStrokeColor forKey:MDCTextInputFundamentClearBorderStrokeColorKey];
   [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
   [aCoder encodeObject:self.clearButtonImage forKey:MDCTextInputFundamentClearButtonImageKey];
@@ -185,6 +239,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   MDCTextInputCommonFundament *copy =
       [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
 
+  copy.borderFillColor = self.borderFillColor;
+  copy.borderPath = self.borderPath;
+  copy.borderStrokeColor = self.borderStrokeColor;
   copy.clearButtonColor = self.clearButtonColor;
   copy.clearButtonImage = self.clearButtonImage;
   copy.clearButtonMode = self.clearButtonMode;
@@ -209,6 +266,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)commonMDCTextInputCommonFundamentInit {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
+  [self setupBorder];
 }
 
 - (void)setupClearButton {
@@ -399,10 +457,38 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return underline;
 }
 
+#pragma mark - Border implementation
+
+- (void)setupBorder {
+  _borderFillColor = [UIColor clearColor];
+  _borderStrokeColor = [UIColor clearColor];
+  _borderLayer = [CAShapeLayer layer];
+}
+
+- (UIBezierPath *)defaultBorderPath {
+  CGRect borderBound = self.textInput.bounds;
+  borderBound = CGRectInset(borderBound, 0, self.underlineY.constant);
+  return [UIBezierPath bezierPathWithRoundedRect:borderBound
+                               byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                                     cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
+                                                            MDCTextInputBorderRadius)];
+}
+
+- (void)updateBorder {
+  self.borderLayer.path = self.borderPath.CGPath;
+  self.borderLayer.lineWidth = self.borderPath.lineWidth;
+  self.borderLayer.lineCap = MDCNSStringFromCGLineCap(self.borderPath.lineCapStyle);
+  self.borderLayer.lineJoin = MDCNSStringFromCGLineJoin(self.borderPath.lineJoinStyle);
+  self.borderLayer.fillColor = self.borderFillColor.CGColor;
+  self.borderLayer.strokeColor = self.borderStrokeColor.CGColor;
+}
+
 - (void)unsubscribeFromNotifications {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self];
 }
+
+#pragma mark - KVO Subscription
 
 - (void)subscribeForKVO {
   if (!_underline) {
@@ -443,6 +529,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   [self updateColors];
   [self updateClearButton];
+  [self updateBorder];
 }
 
 - (void)updateConstraintsOfInput {
@@ -564,6 +651,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   [self updatePlaceholderAlpha];
   [self.textInput setNeedsUpdateConstraints];
+}
+
+- (UIBezierPath *)borderPath {
+  return _borderPath ? _borderPath : [self defaultBorderPath];
 }
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {

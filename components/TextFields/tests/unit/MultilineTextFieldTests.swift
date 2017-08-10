@@ -35,6 +35,10 @@ class MultilineTextFieldTests: XCTestCase {
   func testCopying() {
     let textField = MDCMultilineTextField()
 
+    textField.borderFillColor = .blue
+    textField.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderPath?.lineWidth = 2
+    textField.borderStrokeColor = .green
     textField.clearButtonColor = .red
     textField.clearButtonMode = .always
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)

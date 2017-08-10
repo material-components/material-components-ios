@@ -497,6 +497,30 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self.fundament didSetText];
 }
 
+- (UIColor *)borderFillColor {
+  return self.fundament.borderFillColor;
+}
+
+- (void)setBorderFillColor:(UIColor *)borderFillColor {
+  [self.fundament setBorderFillColor: borderFillColor];
+}
+
+- (UIBezierPath *)borderPath {
+  return self.fundament.borderPath;
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  [self.fundament setBorderPath: borderPath];
+}
+
+- (UIColor *)borderStrokeColor {
+  return self.fundament.borderStrokeColor;
+}
+
+- (void)setBorderStrokeColor:(UIColor *)borderStrokeColor {
+  [self.fundament setBorderStrokeColor: borderStrokeColor];
+}
+
 - (UIButton *)clearButton {
   return self.fundament.clearButton;
 }

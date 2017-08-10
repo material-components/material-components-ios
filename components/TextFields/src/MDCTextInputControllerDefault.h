@@ -17,7 +17,7 @@
 #import "MDCTextInputController.h"
 
 /**
- Material Design compliant text field. The logic for 'automagic' error states changes:
+ Material Design compliant text field 'box' from 2017. The logic for 'automagic' error states changes:
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
 
@@ -27,6 +27,10 @@
  https://material.io/guidelines/components/text-fields.html#text-fields-labels
 */
 @interface MDCTextInputControllerDefault : NSObject <MDCTextInputController>
+
+@property(nonatomic, nullable, strong) UIColor *backgroundFillColor;
+
+@property(class, nonatomic, null_resettable, strong) UIColor *backgroundFillColorDefault;
 
 /**
  The color applied to the placeholder when floating. However, when in error state, it will be
