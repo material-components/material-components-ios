@@ -186,6 +186,7 @@ static UIColor *_inlinePlaceholderColorDefault;
   copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy
   copy.activeColor = self.activeColor;
+  copy.disabledColor = self.disabledColor;
   copy.normalColor = self.normalColor;
 
   return copy;

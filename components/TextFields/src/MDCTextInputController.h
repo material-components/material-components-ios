@@ -87,7 +87,7 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *disabledColorDefault;
 
 /**
- The color used to denote error state in the underline, the errorText's label, the placeholder and
+ The color used to denote error state in decorations, the errorText's label, the placeholder and
  the character count label.
 
  Default is errorColorDefault.
