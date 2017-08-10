@@ -53,7 +53,6 @@
   label.font = [MDCTypography captionFont];
   label.alpha = [MDCTypography captionFontOpacity];
   [label sizeToFit];
-  label.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:label];
 
   return label;
@@ -74,9 +73,10 @@
   ];
 }
 
-- (void)viewWillLayoutSubviews {
-  CGFloat centerX = CGRectGetMidX(self.view.bounds);
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
 
+  CGFloat centerX = CGRectGetMidX(self.view.bounds);
   [self layoutButtonsInRange:NSMakeRange(0, self.buttons.count) around:centerX];
 
   UIView *lastButton = self.buttons.lastObject;
