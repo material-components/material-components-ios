@@ -51,7 +51,6 @@
   [raisedButton addTarget:self
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
-  raisedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:raisedButton];
 
   // Disabled raised button
@@ -64,7 +63,6 @@
                            action:@selector(didTap:)
                  forControlEvents:UIControlEventTouchUpInside];
   [disabledRaisedButton setEnabled:NO];
-  disabledRaisedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:disabledRaisedButton];
 
   // Flat button
@@ -76,7 +74,6 @@
   [flatButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
-  flatButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:flatButton];
 
   // Disabled flat
@@ -89,7 +86,6 @@
                          action:@selector(didTap:)
                forControlEvents:UIControlEventTouchUpInside];
   [disabledFlatButton setEnabled:NO];
-  disabledFlatButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:disabledFlatButton];
 
   // Custom stroked button
@@ -100,7 +96,6 @@
   [strokedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
-  strokedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:strokedButton];
 
   // Disabled custom stroked button
@@ -112,7 +107,6 @@
                             action:@selector(didTap:)
                   forControlEvents:UIControlEventTouchUpInside];
   [disabledStrokedButton setEnabled:NO];
-  disabledStrokedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:disabledStrokedButton];
 
   // Floating action button
