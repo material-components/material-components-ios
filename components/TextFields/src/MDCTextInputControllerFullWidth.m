@@ -57,8 +57,6 @@ static NSString *const MDCTextInputControllerFullWidthUnderlineColorActiveKey =
     @"MDCTextInputControllerFullWidthUnderlineColorActiveKey";
 static NSString *const MDCTextInputControllerFullWidthUnderlineColorNormalKey =
     @"MDCTextInputControllerFullWidthUnderlineColorNormalKey";
-static NSString *const MDCTextInputControllerFullWidthUnderlineViewModeKey =
-    @"MDCTextInputControllerFullWidthUnderlineViewModeKey";
 
 static NSString *const MDCTextInputControllerFullWidthKVOKeyFont = @"font";
 
