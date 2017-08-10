@@ -1,3 +1,12 @@
+<!--docs:
+title: "Text Fields"
+layout: detail
+section: components
+excerpt: "Text fields allow users to input text into your app."
+iconId: textfields
+path: /catalog/textfields/
+-->
+
 # Text Fields
 
 <a alt="Text Fields"><img src="docs/assets/textfields.png" width="375px"></a>
