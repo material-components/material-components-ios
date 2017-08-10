@@ -154,7 +154,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 }
 
 - (void)collapse:(BOOL)animated completion:(void (^_Nullable)(void))completion {
-  void (^collapseActions)() = ^{
+  void (^collapseActions)(void) = ^{
     self.layer.transform =
         CATransform3DConcat(self.layer.transform, [MDCFloatingButton collapseTransform]);
     self.layer.opacity = 0;
