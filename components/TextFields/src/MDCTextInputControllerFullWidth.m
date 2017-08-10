@@ -53,12 +53,6 @@ static NSString *const MDCTextInputControllerFullWidthPresentationStyleKey =
     @"MDCTextInputControllerFullWidthPresentationStyleKey";
 static NSString *const MDCTextInputControllerFullWidthTextInputKey =
     @"MDCTextInputControllerFullWidthTextInputKey";
-static NSString *const MDCTextInputControllerFullWidthUnderlineColorActiveKey =
-    @"MDCTextInputControllerFullWidthUnderlineColorActiveKey";
-static NSString *const MDCTextInputControllerFullWidthUnderlineColorNormalKey =
-    @"MDCTextInputControllerFullWidthUnderlineColorNormalKey";
-static NSString *const MDCTextInputControllerFullWidthUnderlineViewModeKey =
-    @"MDCTextInputControllerFullWidthUnderlineViewModeKey";
 
 static NSString *const MDCTextInputControllerFullWidthKVOKeyFont = @"font";
 
@@ -192,8 +186,8 @@ static UIColor *_inlinePlaceholderColorDefault;
   copy.previousLeadingText = [self.previousLeadingText copy];
   copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy
-  copy.underlineColorActive = self.underlineColorActive;
-  copy.underlineColorNormal = self.underlineColorNormal;
+  copy.activeColor = self.activeColor;
+  copy.normalColor = self.normalColor;
 
   return copy;
 }
@@ -406,6 +400,22 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 #pragma mark - Properties Implementation
 
+- (void)setActiveColor:(UIColor *)activeColor {
+  [self updateUnderline];
+}
+
+- (UIColor *)activeColor {
+  return [UIColor clearColor];
+}
+
++ (UIColor *)activeColorDefault {
+  return [UIColor clearColor];
+}
+
++ (void)setActiveColorDefault:(UIColor *)activeColorDefault {
+  // Not implemented. Underline is always clear.
+}
+
 - (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
   if (_characterCountViewMode != characterCountViewMode) {
     _characterCountViewMode = characterCountViewMode;
@@ -504,6 +514,22 @@ static UIColor *_inlinePlaceholderColorDefault;
   return self.errorText != nil;
 }
 
+- (void)setNormalColor:(UIColor *)normalColor {
+  [self updateUnderline];
+}
+
+- (UIColor *)normalColor {
+  return [UIColor clearColor];
+}
+
++ (void)setNormalColorDefault:(UIColor *)normalColorDefault {
+  // Not implemented. Underline is always clear.
+}
+
++ (UIColor *)normalColorDefault {
+  return [UIColor clearColor];
+}
+
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {
   _previousLeadingText = [previousLeadingText copy];
 }
@@ -520,38 +546,6 @@ static UIColor *_inlinePlaceholderColorDefault;
     _textInput = textInput;
     [self setupInput];
   }
-}
-
-- (void)setUnderlineColorActive:(UIColor *)underlineColorActive {
-  [self updateUnderline];
-}
-
-- (UIColor *)underlineColorActive {
-  return [UIColor clearColor];
-}
-
-+ (UIColor *)underlineColorActiveDefault {
-  return [UIColor clearColor];
-}
-
-+ (void)setUnderlineColorActiveDefault:(UIColor *)underlineColorActiveDefault {
-  // Not implemented. Underline is always clear.
-}
-
-- (void)setUnderlineColorNormal:(UIColor *)underlineColorNormal {
-  [self updateUnderline];
-}
-
-- (UIColor *)underlineColorNormal {
-  return [UIColor clearColor];
-}
-
-+ (void)setUnderlineColorNormalDefault:(UIColor *)underlineColorNormalDefault {
-  // Not implemented. Underline is always clear.
-}
-
-+ (UIColor *)underlineColorNormalDefault {
-  return [UIColor clearColor];
 }
 
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
