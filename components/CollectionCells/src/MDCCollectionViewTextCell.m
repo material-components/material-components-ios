@@ -29,12 +29,22 @@ const CGFloat MDCCellDefaultTwoLineHeight = 72.0f;
 const CGFloat MDCCellDefaultThreeLineHeight = 88.0f;
 
 // Default cell fonts.
-#define kCellDefaultTextFont [MDCTypography subheadFont]
-#define kCellDefaultDetailTextFont [MDCTypography body1Font]
+static inline UIFont *CellDefaultTextFont(void) {
+  return [MDCTypography subheadFont];
+}
+
+static inline UIFont *CellDefaultDetailTextFont(void) {
+  return [MDCTypography body1Font];
+}
 
 // Default cell font opacity.
-#define kCellDefaultTextOpacity [MDCTypography subheadFontOpacity]
-#define kCellDefaultDetailTextFontOpacity [MDCTypography captionFontOpacity]
+static inline CGFloat CellDefaultTextOpacity(void) {
+  return [MDCTypography subheadFontOpacity];
+}
+
+static inline CGFloat CellDefaultDetailTextFontOpacity(void) {
+  return [MDCTypography captionFontOpacity];
+}
 
 // Cell padding top/bottom.
 static const CGFloat kCellTwoLinePaddingTop = 20;
@@ -91,16 +101,16 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
 }
 
 - (void)resetMDCCollectionViewTextCellLabelProperties {
-  _textLabel.font = kCellDefaultTextFont;
-  _textLabel.textColor = [UIColor colorWithWhite:0 alpha:kCellDefaultTextOpacity];
+  _textLabel.font = CellDefaultTextFont();
+  _textLabel.textColor = [UIColor colorWithWhite:0 alpha:CellDefaultTextOpacity()];
   _textLabel.shadowColor = nil;
   _textLabel.shadowOffset = CGSizeZero;
   _textLabel.textAlignment = NSTextAlignmentNatural;
   _textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
   _textLabel.numberOfLines = 1;
 
-  _detailTextLabel.font = kCellDefaultDetailTextFont;
-  _detailTextLabel.textColor = [UIColor colorWithWhite:0 alpha:kCellDefaultDetailTextFontOpacity];
+  _detailTextLabel.font = CellDefaultDetailTextFont();
+  _detailTextLabel.textColor = [UIColor colorWithWhite:0 alpha:CellDefaultDetailTextFontOpacity()];
   _detailTextLabel.shadowColor = nil;
   _detailTextLabel.shadowOffset = CGSizeZero;
   _detailTextLabel.textAlignment = NSTextAlignmentNatural;
