@@ -877,9 +877,9 @@ static const CGFloat kSingleCycleRotation =
 
 - (NSString *)accessibilityValue {
   if (self.isAnimating) {
-    return @"1";
+    return [NSNumberFormatter localizedStringFromNumber:@1 numberStyle:NSNumberFormatterNoStyle];
   } else {
-    return @"0";
+    return [NSNumberFormatter localizedStringFromNumber:@0 numberStyle:NSNumberFormatterNoStyle];
   }
 }
 
