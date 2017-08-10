@@ -32,8 +32,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.floatingPlaceholderScale = 0.1
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
-    controller.underlineColorActive = .blue
-    controller.underlineColorNormal = .white
+    controller.activeColor = .blue
+    controller.normalColor = .white
     controller.underlineViewMode = .always
 
     if let controllerCopy = controller.copy() as? MDCTextInputControllerDefault {
@@ -44,8 +44,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
       XCTAssertEqual(controller.floatingPlaceholderScale, controllerCopy.floatingPlaceholderScale)
       XCTAssertEqual(controller.helperText, controllerCopy.helperText)
       XCTAssertEqual(controller.inlinePlaceholderColor, controllerCopy.inlinePlaceholderColor)
-      XCTAssertEqual(controller.underlineColorActive, controllerCopy.underlineColorActive)
-      XCTAssertEqual(controller.underlineColorNormal, controllerCopy.underlineColorNormal)
+      XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
+      XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
     } else {
       XCTFail("No copy or copy is wrong class")
@@ -60,8 +60,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.characterCountViewMode = .always
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
-    controller.underlineColorActive = .blue
-    controller.underlineColorNormal = .white
+    controller.activeColor = .blue
+    controller.normalColor = .white
     controller.underlineViewMode = .always
 
     if let controllerCopy = controller.copy() as? MDCTextInputControllerFullWidth {
@@ -69,8 +69,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
       XCTAssertEqual(controller.helperText, controllerCopy.helperText)
       XCTAssertEqual(controller.inlinePlaceholderColor, controllerCopy.inlinePlaceholderColor)
-      XCTAssertEqual(controller.underlineColorActive, controllerCopy.underlineColorActive)
-      XCTAssertEqual(controller.underlineColorNormal, controllerCopy.underlineColorNormal)
+      XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
+      XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
     } else {
       XCTFail("No copy or copy is wrong class")
@@ -270,8 +270,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.floatingPlaceholderScale = 0.1
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
-    controller.underlineColorActive = .blue
-    controller.underlineColorNormal = .white
+    controller.activeColor = .blue
+    controller.normalColor = .white
     controller.underlineViewMode = .always
 
     let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
@@ -294,8 +294,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(controller.helperText, unserializedController?.helperText)
     XCTAssertEqual(controller.inlinePlaceholderColor,
                    unserializedController?.inlinePlaceholderColor)
-    XCTAssertEqual(controller.underlineColorActive, unserializedController?.underlineColorActive)
-    XCTAssertEqual(controller.underlineColorNormal, unserializedController?.underlineColorNormal)
+    XCTAssertEqual(controller.activeColor, unserializedController?.activeColor)
+    XCTAssertEqual(controller.normalColor, unserializedController?.normalColor)
     XCTAssertEqual(controller.underlineViewMode, unserializedController?.underlineViewMode)
   }
 

@@ -20,18 +20,18 @@
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toTextInputController:(NSObject<MDCTextInputController> *)textInputController {
-  textInputController.underlineColorActive = colorScheme.primaryColor;
+  textInputController.activeColor = colorScheme.primaryColor;
 }
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toTextInputControllerDefault:(MDCTextInputControllerDefault *)textInputControllerDefault {
   textInputControllerDefault.floatingPlaceholderColor = colorScheme.primaryColor;
-  textInputControllerDefault.underlineColorActive = colorScheme.primaryColor;
+  textInputControllerDefault.activeColor = colorScheme.primaryColor;
 }
 
 + (void)applyColorSchemeToAllTextInputControllerDefault:(NSObject<MDCColorScheme> *)colorScheme {
   MDCTextInputControllerDefault.floatingPlaceholderColorDefault = colorScheme.primaryColor;
-  MDCTextInputControllerDefault.underlineColorActiveDefault = colorScheme.primaryColor;
+  MDCTextInputControllerDefault.activeColorDefault = colorScheme.primaryColor;
 }
 
 @end
