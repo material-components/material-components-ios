@@ -33,6 +33,15 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *backgroundFillColorDefault;
 
 /**
+ Should the controller's .textInput grow vertically as new lines are added.
+
+ If the text input does not conform to MDCMultilineTextInput, this parameter has no effect.
+
+ Default is YES.
+ */
+@property(nonatomic, assign) BOOL expandsOnOverflow;
+
+/**
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color. Only relevent when floatingEnabled = true.
 
@@ -76,5 +85,20 @@
  Default is YES.
  */
 @property(class, nonatomic, assign, getter=isFloatingEnabledDefault) BOOL floatingEnabledDefault;
+
+/**
+ The minimum number of lines the controller's .textInput should use for rendering text.
+
+ The height of an empty text field is measured in potential lines. If the value were 3, the height
+ of would never be shorter than 3 times the line height of the input font (plus clearance for
+ auxillary views like the underline and the underline labels.)
+
+ The smallest number of lines allowed is 1. A value of 0 has no effect.
+
+ If the text input does not conform to MDCMultilineTextInput, this parameter has no effect.
+
+ Default is 1.
+ */
+@property(nonatomic, assign) NSUInteger minimumLines;
 
 @end
