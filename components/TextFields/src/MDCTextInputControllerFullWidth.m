@@ -433,7 +433,7 @@ static UIColor *_inlinePlaceholderColorDefault;
 }
 
 + (void)setDisabledColorDefault:(UIColor *)disabledColorDefault {
-
+  // This controller does not have decorations that need to change for a disabled state.
 }
 
 + (UIColor *)disabledColorDefault {
