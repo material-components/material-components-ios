@@ -424,6 +424,22 @@ static UIColor *_inlinePlaceholderColorDefault;
   }
 }
 
+- (void)setDisabledColor:(UIColor *)disabledColor {
+  [self updateUnderline];
+}
+
+- (UIColor *)disabledColor {
+  return [UIColor clearColor];
+}
+
++ (void)setDisabledColorDefault:(UIColor *)disabledColorDefault {
+
+}
+
++ (UIColor *)disabledColorDefault {
+  return [UIColor clearColor];
+}
+
 - (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
   _errorAccessibilityValue = [errorAccessibilityValue copy];
 }

@@ -19,6 +19,8 @@
 #import "MaterialPalettes.h"
 
 static NSString *const MDCTextInputUnderlineColorKey = @"MDCTextInputUnderlineColorKey";
+static NSString *const MDCTextInputUnderlineDisabledColorKey =
+    @"MDCTextInputUnderlineDisabledColorKey";
 static NSString *const MDCTextInputUnderlineEnabledKey = @"MDCTextInputUnderlineEnabledKey";
 static NSString *const MDCTextInputUnderlineLineHeightKey = @"MDCTextInputUnderlineLineHeightKey";
 
@@ -28,6 +30,13 @@ static const CGFloat MDCTextInputUnderlineDefaultHeight = 1.f;
 static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
+
+@interface MDCTextInputUnderlineView ()
+
+@property(nonatomic, strong) CAShapeLayer *disabledUnderline;
+@property(nonatomic, strong) CAShapeLayer *underline;
+
+@end
 
 @implementation MDCTextInputUnderlineView
 
@@ -45,6 +54,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self commonMDCUnderlineViewInit];
 
     _color = [coder decodeObjectForKey:MDCTextInputUnderlineColorKey];
+    _disabledColor = [coder decodeObjectForKey:MDCTextInputUnderlineDisabledColorKey];
     _enabled = [coder decodeBoolForKey:MDCTextInputUnderlineEnabledKey];
     _lineHeight = (CGFloat)[coder decodeFloatForKey:MDCTextInputUnderlineLineHeightKey];
   }
@@ -53,6 +63,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)commonMDCUnderlineViewInit {
   _color = MDCTextInputUnderlineColor();
+  _disabledColor = MDCTextInputUnderlineColor();
   _enabled = YES;
   _lineHeight = MDCTextInputUnderlineDefaultHeight;
 
@@ -65,6 +76,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)encodeWithCoder:(NSCoder *)coder {
   [super encodeWithCoder:coder];
   [coder encodeObject:self.color forKey:MDCTextInputUnderlineColorKey];
+  [coder encodeObject:self.disabledColor forKey:MDCTextInputUnderlineDisabledColorKey];
   [coder encodeBool:self.enabled forKey:MDCTextInputUnderlineEnabledKey];
   [coder encodeFloat:(float)self.lineHeight forKey:MDCTextInputUnderlineLineHeightKey];
 }
@@ -73,6 +85,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   MDCTextInputUnderlineView *copy = [[[self class] alloc] initWithFrame:self.frame];
 
   copy.color = self.color;
+  copy.disabledColor = self.disabledColor;
   copy.enabled = self.enabled;
   copy.lineHeight = self.lineHeight;
 
@@ -114,7 +127,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       _underline.contentsScale = [UIScreen mainScreen].scale;
       _underline.frame = CGRectZero;
       _underline.lineWidth = self.lineHeight;
-      _underline.strokeColor = MDCTextInputUnderlineColor().CGColor;
+      _underline.strokeColor = _color.CGColor;
 
       [self.layer addSublayer:_underline];
     }
@@ -129,7 +142,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       _disabledUnderline.lineDashPattern = @[ @1.5, @1.5 ];
       _disabledUnderline.lineWidth = 1.0;
       _disabledUnderline.opaque = NO;
-      _disabledUnderline.strokeColor = MDCTextInputUnderlineColor().CGColor;
+      _disabledUnderline.strokeColor = _disabledColor.CGColor;
       [self.layer addSublayer:_disabledUnderline];
     }
 
@@ -139,6 +152,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _underline.lineWidth = self.lineHeight;
 
   [self updateUnderlinePath];
+  [self updateColor];
 }
 
 - (void)updateColor {
@@ -148,6 +162,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     strokeColor = _color;
   }
 
+  self.disabledUnderline.strokeColor = self.disabledColor.CGColor;
   self.underline.strokeColor = strokeColor.CGColor;
   self.opaque = showUnderline;
 }

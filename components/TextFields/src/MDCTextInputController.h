@@ -73,6 +73,20 @@
 @property(nonatomic, assign) UITextFieldViewMode characterCountViewMode;
 
 /**
+ Color for decorations that indicates the input is not enabled / not accepting touch.
+
+ Default is disabledColorDefault.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *disabledColor;
+
+/**
+ Default value for disabledColor.
+
+ Default is blue.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *disabledColorDefault;
+
+/**
  The color used to denote error state in the underline, the errorText's label, the placeholder and
  the character count label.
 

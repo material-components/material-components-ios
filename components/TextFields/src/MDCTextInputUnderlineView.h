@@ -23,9 +23,8 @@
 @interface MDCTextInputUnderlineView : UIView <NSCopying, NSCoding>
 
 @property(nonatomic, strong) UIColor *color;
-@property(nonatomic, strong) CAShapeLayer *disabledUnderline;
+@property(nonatomic, strong) UIColor *disabledColor;
 @property(nonatomic, assign) BOOL enabled;
 @property(nonatomic, assign) CGFloat lineHeight;
-@property(nonatomic, strong) CAShapeLayer *underline;
 
 @end
