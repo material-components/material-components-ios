@@ -837,8 +837,7 @@ static const CGFloat kSingleCycleRotation =
 
 #pragma mark - Accessibility
 
-- (BOOL)isAccessibilityElement
-{
+- (BOOL)isAccessibilityElement {
   return YES;
 }
 
