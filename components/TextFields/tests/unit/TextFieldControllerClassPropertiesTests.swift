@@ -139,6 +139,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
   func testFullWidth() {
     // Test the values of the class properties.
+    XCTAssertEqual(MDCTextInputControllerFullWidth.disabledColorDefault, .clear)
     XCTAssertEqual(MDCTextInputControllerFullWidth.errorColorDefault, MDCPalette.red.accent400)
     XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault,
                    UIColor(white: 0, alpha: CGFloat(Float(0.54))))
@@ -152,6 +153,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     let textField = MDCTextField()
     var controller = MDCTextInputControllerFullWidth(textInput: textField)
 
+    XCTAssertEqual(controller.disabledColor, .clear)
     XCTAssertEqual(controller.errorColor, MDCTextInputControllerFullWidth.errorColorDefault)
     XCTAssertEqual(controller.inlinePlaceholderColor,
                    MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault)
@@ -165,6 +167,9 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerFullWidth.underlineViewModeDefault)
 
     // Test the changes to the class properties.
+    MDCTextInputControllerFullWidth.disabledColorDefault = .red
+    XCTAssertNotEqual(MDCTextInputControllerFullWidth.disabledColorDefault, .red)
+
     MDCTextInputControllerFullWidth.errorColorDefault = .green
     XCTAssertEqual(MDCTextInputControllerFullWidth.errorColorDefault, .green)
 
@@ -187,6 +192,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     // Test the changes to the class properties can propogate to an instance.
     controller = MDCTextInputControllerFullWidth(textInput: textField)
 
+    XCTAssertEqual(controller.disabledColor, .clear)
     XCTAssertEqual(controller.errorColor, MDCTextInputControllerFullWidth.errorColorDefault)
     XCTAssertEqual(controller.inlinePlaceholderColor,
                    MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault)
