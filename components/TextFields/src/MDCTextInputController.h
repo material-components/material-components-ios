@@ -148,20 +148,6 @@
  Default is NO.
  */
 @property(class, nonatomic, assign) BOOL mdc_adjustsFontForContentSizeCategoryDefault;
-/**
- Color for decorations that indicates the input is enabled but not currently editing.
-
- Default is normalColorDefault.
- */
-@property(nonatomic, null_resettable, strong) UIColor *normalColor;
-
-/**
- Default value for normalColor.
-
- Default is black with Material Design hint text opacity which is the same as
- inlinePlaceholderColorDefault.
- */
-@property(class, nonatomic, null_resettable, strong) UIColor *normalColorDefault;
 
 /**
  Color for decorations that indicates the input is enabled but not currently editing.
