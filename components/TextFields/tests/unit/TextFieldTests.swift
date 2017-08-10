@@ -47,6 +47,9 @@ class TextFieldTests: XCTestCase {
   func testCopying() {
     let textField = MDCTextField()
 
+    textField.borderFillColor = .purple
+    textField.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderStrokeColor = .yellow
     textField.clearButtonColor = .red
     textField.clearButtonMode = .always
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
@@ -64,6 +67,9 @@ class TextFieldTests: XCTestCase {
     if let textFieldCopy = textField.copy() as? MDCTextField {
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
+      XCTAssertEqual(textField.borderFillColor, textFieldCopy.borderFillColor)
+      XCTAssertEqual(textField.borderPath, textFieldCopy.borderPath)
+      XCTAssertEqual(textField.borderStrokeColor, textFieldCopy.borderStrokeColor)
       XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.font, textFieldCopy.font)
@@ -140,6 +146,10 @@ class TextFieldTests: XCTestCase {
   func testSerializationTextField() {
     let textField = MDCTextField()
 
+    textField.borderFillColor = .purple
+    textField.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderStrokeColor = .yellow
+
     let leadingView = UILabel()
     leadingView.text = "$"
 
@@ -174,6 +184,9 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.text,
                    unserializedInput?.text)
 
+    XCTAssertEqual(textField.borderFillColor, unserializedInput?.borderFillColor)
+    XCTAssertEqual(textField.borderPath, unserializedInput?.borderPath)
+    XCTAssertEqual(textField.borderStrokeColor, unserializedInput?.borderStrokeColor)
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)
 
