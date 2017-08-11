@@ -103,7 +103,7 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 
     self.addChildViewController(appBar.headerViewController)
 
-    let color = UIColor(white: 0.1, alpha:1)
+    let color = UIColor(white: 0.2, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
     let mutator = MDCAppBarTextColorAccessibilityMutator()
     mutator.mutate(appBar)

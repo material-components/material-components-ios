@@ -224,7 +224,7 @@
 
     self.title = @"Modal Presentation";
 
-    UIColor *color = [UIColor colorWithWhite:0.1 alpha:1];
+    UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
     MDCAppBarTextColorAccessibilityMutator *mutator =
         [[MDCAppBarTextColorAccessibilityMutator alloc] init];
