@@ -60,7 +60,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
   return [MDCSnackbarMessageView class];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCSnackbarMessage *copy = [[[self class] alloc] init];
   copy.attributedText = self.attributedText;
   copy.duration = self.duration;
@@ -153,7 +153,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
 
 @synthesize accessibilityIdentifier;
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCSnackbarMessageAction *copy = [[[self class] alloc] init];
   copy.title = self.title;
   copy.handler = self.handler;  // See the comment on @c completionHandler above.

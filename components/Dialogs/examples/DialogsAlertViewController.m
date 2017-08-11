@@ -23,11 +23,13 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self loadCollectionView:
-    @[ @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Dynamic Alert"]];
+  [self loadCollectionView:@[
+    @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Dynamic Alert"
+  ]];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
@@ -47,26 +49,42 @@
 }
 
 - (IBAction)didTapShowAlert:(id)sender {
+  static BOOL showUIAlert = NO;
 
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
 
-  MDCAlertController *materialAlertController =
-      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  if (showUIAlert) {
+    UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:titleString
+                                            message:messageString
+                                     preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *_Nonnull action) {
+                                              [self dismissViewControllerAnimated:YES
+                                                                       completion:nil];
+                                            }]];
+    [self presentViewController:alert animated:YES completion:nil];
+  } else {
+    MDCAlertController *materialAlertController =
+        [MDCAlertController alertControllerWithTitle:titleString message:messageString];
 
-  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
-                                                         handler:^(MDCAlertAction *action) {
-                                                           NSLog(@"%@", @"AGREE pressed");
-                                                         }];
-  [materialAlertController addAction:agreeAaction];
+    MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
+                                                           handler:^(MDCAlertAction *action) {
+                                                             NSLog(@"%@", @"AGREE pressed");
+                                                           }];
+    [materialAlertController addAction:agreeAaction];
 
-  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
-                                                            handler:^(MDCAlertAction *action) {
-                                                              NSLog(@"%@", @"DISAGREE pressed");
-                                                            }];
-  [materialAlertController addAction:disagreeAaction];
+    MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
+                                                              handler:^(MDCAlertAction *action) {
+                                                                NSLog(@"%@", @"DISAGREE pressed");
+                                                              }];
+    [materialAlertController addAction:disagreeAaction];
 
-  [self presentViewController:materialAlertController animated:YES completion:NULL];
+    [self presentViewController:materialAlertController animated:YES completion:NULL];
+  }
+  showUIAlert = !showUIAlert;
 }
 
 - (IBAction)didTapShowLongAlert:(id)sender {

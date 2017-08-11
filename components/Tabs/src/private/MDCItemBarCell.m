@@ -81,7 +81,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
     // Set up ink controller to splash ink on taps.
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];   // Ink should always be on top of other views
+    [_inkTouchController addInkView];  // Ink should always be on top of other views
 
     [self updateInk];
     [self updateColors];
@@ -508,7 +508,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     _badgeLabel.transform = imageTransform;
     _imageView.transform = imageTransform;
   };
-  void (^completeAnimations)(BOOL) = ^(BOOL finished) {
+  void (^completeAnimations)(BOOL) = ^(__unused BOOL finished) {
     if (titleContentsScale != _titleLabel.layer.contentsScale) {
       // Update the title with the final contents scale and redraw.
       _titleLabel.layer.contentsScale = titleContentsScale;

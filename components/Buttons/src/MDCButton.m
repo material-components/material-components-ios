@@ -70,7 +70,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSMutableArray<NSDictionary *> *attributes = [NSMutableArray array];
   [string enumerateAttributesInRange:NSMakeRange(0, [string length])
                              options:0
-                          usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+                          usingBlock:^(NSDictionary *attrs, NSRange range, __unused BOOL *stop) {
                             [attributes addObject:@{
                               @"attrs" : attrs,
                               @"range" : [NSValue valueWithRange:range]
@@ -289,8 +289,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
   if (_inkView.inkStyle == MDCInkStyleUnbounded) {
     CGRect contentRect = [self contentRectForBounds:self.bounds];
-    CGPoint contentCenterPoint = CGPointMake(CGRectGetMidX(contentRect),
-                                             CGRectGetMidY(contentRect));
+    CGPoint contentCenterPoint =
+        CGPointMake(CGRectGetMidX(contentRect), CGRectGetMidY(contentRect));
     CGPoint boundsCenterPoint = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
     CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
@@ -302,7 +302,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.titleLabel.frame = MDCRectAlignToScale(self.titleLabel.frame, [UIScreen mainScreen].scale);
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
   return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, _hitAreaInsets), point);
 }
 
@@ -583,11 +583,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0.0f;
 }
 
-- (void)touchDragEnter:(MDCButton *)button forEvent:(UIEvent *)event {
+- (void)touchDragEnter:(__unused MDCButton *)button forEvent:(UIEvent *)event {
   [self handleBeginTouches:event.allTouches];
 }
 
-- (void)touchDragExit:(MDCButton *)button forEvent:(UIEvent *)event {
+- (void)touchDragExit:(__unused MDCButton *)button forEvent:(UIEvent *)event {
   CGPoint location = [self locationFromTouches:event.allTouches];
   [self evaporateInkToPoint:location];
 }
@@ -669,7 +669,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 }
 
-- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
   self.titleLabel.font = font;
   [self sizeToFit];

@@ -205,7 +205,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
   CGFloat dx = MIN(0, kDefaultThumbRadius - kMinTouchSize / 2);
   CGFloat dy = MIN(0, (self.bounds.size.height - kMinTouchSize) / 2);
   CGRect rect = CGRectInset(self.bounds, dx, dy);
@@ -410,8 +410,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 #pragma mark - MDCInkTouchControllerDelegate
 
-- (BOOL)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+- (BOOL)inkTouchController:(nonnull __unused MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(__unused CGPoint)location {
   return _shouldDisplayInk;
 }
 
@@ -492,7 +492,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       CGFloat animationDurationToAnchor = (MDCFabs(previousValue - _filledTrackAnchorValue) /
                                            MDCFabs(previousValue - currentValue)) *
                                           kAnimationDuration;
-      void (^afterCrossingAnchorAnimation)(BOOL) = ^void(BOOL finished) {
+      void (^afterCrossingAnchorAnimation)(BOOL) = ^void(__unused BOOL finished) {
         UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseOut;
         [UIView animateWithDuration:(kAnimationDuration - animationDurationToAnchor)
                               delay:0.0f
@@ -549,7 +549,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
           [self updateViewsForThumbAfterMoveIsAnimated:animated
                                           withDuration:kThumbChangeAnimationDuration];
         }
-        completion:^void(BOOL _) {
+        completion:^void(__unused BOOL _) {
           if (completion) {
             completion();
           }
@@ -592,7 +592,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  Updates the properties of the ThumbTrack that are animated in the main animation body. May be
  called from within a UIView animation block.
  */
-- (void)updateViewsMainIsAnimated:(BOOL)animated
+- (void)updateViewsMainIsAnimated:(__unused BOOL)animated
                      withDuration:(NSTimeInterval)duration
                  animationOptions:(UIViewAnimationOptions)animationOptions {
   // Move thumb position.
@@ -730,7 +730,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 // Used to make sure we update the mask after animating the thumb growing or shrinking. Specifically
 // in the case where the thumb is at the start and hollow, forgetting to update could leave the mask
 // in a strange visual state.
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+- (void)animationDidStop:(CAAnimation *)anim finished:(__unused BOOL)flag {
   if (anim == [_thumbView.layer animationForKey:@"cornerRadius"]) {
     [_thumbView.layer removeAllAnimations];
     [self updateTrackMask];
@@ -931,7 +931,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  every touch.
  */
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(__unused UIEvent *)event {
   if (!self.enabled || _currentTouch != nil) {
     return;
   }
@@ -958,7 +958,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(__unused UIEvent *)event {
   UITouch *touch = [touches anyObject];
   if (!self.enabled || touch != _currentTouch) {
     return;
@@ -994,7 +994,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(__unused UIEvent *)event {
   UITouch *touch = [touches anyObject];
   if (touch == _currentTouch) {
     BOOL wasDragging = _isDraggingThumb;
@@ -1017,7 +1017,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(__unused UIEvent *)event {
   UITouch *touch = [touches anyObject];
   if (!self.enabled || touch != _currentTouch) {
     return;
@@ -1083,9 +1083,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                  completion:^{
                    MDCThumbTrack *strongSelf = weakSelf;
                    [strongSelf sendDiscreteChangeAction];
-                   if (strongSelf &&
-                       [strongSelf->_delegate
-                           respondsToSelector:@selector(thumbTrack:didAnimateToValue:)]) {
+                   if (strongSelf && [strongSelf->_delegate respondsToSelector:@selector
+                                                            (thumbTrack:didAnimateToValue:)]) {
                      [strongSelf->_delegate thumbTrack:weakSelf didAnimateToValue:value];
                    }
                  }];

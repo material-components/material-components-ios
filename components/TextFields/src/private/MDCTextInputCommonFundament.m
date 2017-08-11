@@ -183,7 +183,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [aCoder encodeObject:self.underline forKey:MDCTextInputFundamentUnderlineViewKey];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCTextInputCommonFundament *copy =
       [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
 
@@ -428,7 +428,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   @try {
     [_underline removeObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor];
     [_underline removeObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight];
-  } @catch (NSException *exception) {
+  } @catch (__unused NSException *exception) {
     NSLog(@"Tried to unsubscribe from KVO in MDCTextInputCommonFundament but could not.");
   }
   _isRegisteredForKVO = NO;
@@ -509,7 +509,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     }
   }
 
-  if (self.textInput.trailingView.superview && !MDCCGFloatEqual(self.textInput.trailingView.alpha, 0.f)) {
+  if (self.textInput.trailingView.superview &&
+      !MDCCGFloatEqual(self.textInput.trailingView.alpha, 0.f)) {
     clearButtonAlpha = 0;
   }
 
@@ -816,8 +817,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)context {
+                        change:(__unused NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(__unused void *)context {
   // Listening to outside setting of underline properties.
   if (object != self.underline) {
     return;
@@ -860,7 +861,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 }
 
-- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
 }
 

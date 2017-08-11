@@ -36,8 +36,8 @@
 
 #pragma mark - Runloop Observer
 
-static void runloopObserverCallback(CFRunLoopObserverRef observer,
-                                    CFRunLoopActivity activity,
+static void runloopObserverCallback(__unused CFRunLoopObserverRef observer,
+                                    __unused CFRunLoopActivity activity,
                                     void *info) {
   MDCOverlayAnimationObserver *animationObserver = (__bridge MDCOverlayAnimationObserver *)info;
   if (animationObserver != NULL && animationObserver->_primed) {

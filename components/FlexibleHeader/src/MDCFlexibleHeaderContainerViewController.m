@@ -32,11 +32,12 @@
   return self;
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (instancetype)initWithNibName:(__unused NSString *)nibNameOrNil
+                         bundle:(__unused NSBundle *)nibBundleOrNil {
   return [self initWithContentViewController:nil];
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (instancetype)initWithCoder:(__unused NSCoder *)aDecoder {
   return [self initWithContentViewController:nil];
 }
 

@@ -18,8 +18,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "MaterialRTL.h"
 #import "MaterialApplication.h"
+#import "MaterialRTL.h"
 #import "private/MDCActivityIndicator+Private.h"
 
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
@@ -267,7 +267,7 @@ static const CGFloat kSingleCycleRotation =
   }
 }
 
-- (void)setIndicatorMode:(MDCActivityIndicatorMode)mode animated:(BOOL)animated {
+- (void)setIndicatorMode:(MDCActivityIndicatorMode)mode animated:(__unused BOOL)animated {
   [self setIndicatorMode:mode];
 }
 
@@ -790,11 +790,12 @@ static const CGFloat kSingleCycleRotation =
   static NSArray<UIColor *> *s_defaultCycleColors;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    s_defaultCycleColors =
-    @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-       [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-       [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-       [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
+    s_defaultCycleColors = @[
+      [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
+      [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
+      [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
+      [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1]
+    ];
   });
   return s_defaultCycleColors;
 }
