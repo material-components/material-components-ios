@@ -1,11 +1,11 @@
 PODS:
-  - MaterialComponents/AppBar (31.0.0):
-    - MaterialComponents/AppBar/ColorThemer (= 31.0.0)
-    - MaterialComponents/AppBar/Component (= 31.0.0)
-  - MaterialComponents/AppBar/ColorThemer (31.0.0):
+  - MaterialComponents/AppBar (31.0.1):
+    - MaterialComponents/AppBar/ColorThemer (= 31.0.1)
+    - MaterialComponents/AppBar/Component (= 31.0.1)
+  - MaterialComponents/AppBar/ColorThemer (31.0.1):
     - MaterialComponents/AppBar/Component
     - MaterialComponents/Themes
-  - MaterialComponents/AppBar/Component (31.0.0):
+  - MaterialComponents/AppBar/Component (31.0.1):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -14,20 +14,20 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar/Component (31.0.0):
+  - MaterialComponents/ButtonBar/Component (31.0.1):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (31.0.0):
-    - MaterialComponents/Buttons/ColorThemer (= 31.0.0)
-    - MaterialComponents/Buttons/Component (= 31.0.0)
-    - MaterialComponents/Buttons/TitleColorAccessibilityMutator (= 31.0.0)
+  - MaterialComponents/Buttons (31.0.1):
+    - MaterialComponents/Buttons/ColorThemer (= 31.0.1)
+    - MaterialComponents/Buttons/Component (= 31.0.1)
+    - MaterialComponents/Buttons/TitleColorAccessibilityMutator (= 31.0.1)
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/Buttons/ColorThemer (31.0.0):
+  - MaterialComponents/Buttons/ColorThemer (31.0.1):
     - MaterialComponents/Buttons/Component
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
@@ -36,14 +36,14 @@ PODS:
     - MaterialComponents/Themes
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/Buttons/Component (31.0.0):
+  - MaterialComponents/Buttons/Component (31.0.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/Buttons/TitleColorAccessibilityMutator (31.0.0):
+  - MaterialComponents/Buttons/TitleColorAccessibilityMutator (31.0.1):
     - MaterialComponents/Buttons/Component
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
@@ -51,65 +51,65 @@ PODS:
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (31.0.0):
-    - MaterialComponents/FlexibleHeader/ColorThemer (= 31.0.0)
-    - MaterialComponents/FlexibleHeader/Component (= 31.0.0)
+  - MaterialComponents/FlexibleHeader (31.0.1):
+    - MaterialComponents/FlexibleHeader/ColorThemer (= 31.0.1)
+    - MaterialComponents/FlexibleHeader/Component (= 31.0.1)
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader/ColorThemer (31.0.0):
+  - MaterialComponents/FlexibleHeader/ColorThemer (31.0.1):
     - MaterialComponents/FlexibleHeader/Component
     - MaterialComponents/private/Application
     - MaterialComponents/Themes
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader/Component (31.0.0):
+  - MaterialComponents/FlexibleHeader/Component (31.0.1):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/HeaderStackView (31.0.0):
-    - MaterialComponents/HeaderStackView/ColorThemer (= 31.0.0)
-    - MaterialComponents/HeaderStackView/Component (= 31.0.0)
-  - MaterialComponents/HeaderStackView/ColorThemer (31.0.0):
+  - MaterialComponents/HeaderStackView (31.0.1):
+    - MaterialComponents/HeaderStackView/ColorThemer (= 31.0.1)
+    - MaterialComponents/HeaderStackView/Component (= 31.0.1)
+  - MaterialComponents/HeaderStackView/ColorThemer (31.0.1):
     - MaterialComponents/HeaderStackView/Component
     - MaterialComponents/Themes
-  - MaterialComponents/HeaderStackView/Component (31.0.0)
-  - MaterialComponents/Ink (31.0.0):
-    - MaterialComponents/Ink/ColorThemer (= 31.0.0)
-    - MaterialComponents/Ink/Component (= 31.0.0)
-  - MaterialComponents/Ink/ColorThemer (31.0.0):
+  - MaterialComponents/HeaderStackView/Component (31.0.1)
+  - MaterialComponents/Ink (31.0.1):
+    - MaterialComponents/Ink/ColorThemer (= 31.0.1)
+    - MaterialComponents/Ink/Component (= 31.0.1)
+  - MaterialComponents/Ink/ColorThemer (31.0.1):
     - MaterialComponents/Ink/Component
     - MaterialComponents/Themes
-  - MaterialComponents/Ink/Component (31.0.0)
-  - MaterialComponents/NavigationBar (31.0.0):
-    - MaterialComponents/NavigationBar/ColorThemer (= 31.0.0)
-    - MaterialComponents/NavigationBar/Component (= 31.0.0)
-  - MaterialComponents/NavigationBar/ColorThemer (31.0.0):
+  - MaterialComponents/Ink/Component (31.0.1)
+  - MaterialComponents/NavigationBar (31.0.1):
+    - MaterialComponents/NavigationBar/ColorThemer (= 31.0.1)
+    - MaterialComponents/NavigationBar/Component (= 31.0.1)
+  - MaterialComponents/NavigationBar/ColorThemer (31.0.1):
     - MaterialComponents/NavigationBar/Component
     - MaterialComponents/Themes
-  - MaterialComponents/NavigationBar/Component (31.0.0):
+  - MaterialComponents/NavigationBar/Component (31.0.1):
     - MaterialComponents/ButtonBar/Component
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/PageControl (31.0.0):
-    - MaterialComponents/PageControl/ColorThemer (= 31.0.0)
-    - MaterialComponents/PageControl/Component (= 31.0.0)
-  - MaterialComponents/PageControl/ColorThemer (31.0.0):
+  - MaterialComponents/PageControl (31.0.1):
+    - MaterialComponents/PageControl/ColorThemer (= 31.0.1)
+    - MaterialComponents/PageControl/Component (= 31.0.1)
+  - MaterialComponents/PageControl/ColorThemer (31.0.1):
     - MaterialComponents/PageControl/Component
     - MaterialComponents/Themes
-  - MaterialComponents/PageControl/Component (31.0.0)
-  - MaterialComponents/private/Application (31.0.0)
-  - MaterialComponents/private/Icons/Base (31.0.0)
-  - MaterialComponents/private/Icons/ic_arrow_back (31.0.0):
+  - MaterialComponents/PageControl/Component (31.0.1)
+  - MaterialComponents/private/Application (31.0.1)
+  - MaterialComponents/private/Icons/Base (31.0.1)
+  - MaterialComponents/private/Icons/ic_arrow_back (31.0.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Math (31.0.0)
-  - MaterialComponents/private/RTL (31.0.0)
-  - MaterialComponents/ShadowElevations (31.0.0)
-  - MaterialComponents/ShadowLayer (31.0.0)
-  - MaterialComponents/Themes (31.0.0)
-  - MaterialComponents/Typography (31.0.0):
+  - MaterialComponents/private/Math (31.0.1)
+  - MaterialComponents/private/RTL (31.0.1)
+  - MaterialComponents/ShadowElevations (31.0.1)
+  - MaterialComponents/ShadowLayer (31.0.1)
+  - MaterialComponents/Themes (31.0.1)
+  - MaterialComponents/Typography (31.0.1):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
-  - RemoteImageServiceForMDCDemos (31.0.0)
+  - RemoteImageServiceForMDCDemos (31.0.1)
 
 DEPENDENCIES:
   - MaterialComponents/AppBar (from `../../`)
@@ -118,14 +118,14 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../../
+    :path: "../../"
   RemoteImageServiceForMDCDemos:
-    :path: ../supplemental
+    :path: "../supplemental"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 5ccac89efd35fe4705d172f5b1c645cee7af4a5e
+  MaterialComponents: a45736c91b93be6a7f557b187d1dbe1d29f9189e
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
-  RemoteImageServiceForMDCDemos: 6adacf14fc3c5ed23b21bd493bc2b4d34388bbbc
+  RemoteImageServiceForMDCDemos: 3d134c130ece78f7ebad1656a91454ae40af4175
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
 
