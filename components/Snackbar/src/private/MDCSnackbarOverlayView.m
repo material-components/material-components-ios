@@ -18,12 +18,12 @@
 
 #import "MDCSnackbarOverlayView.h"
 
-#import "MaterialSnackbar.h"
-#import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
+#import "MaterialApplication.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlay.h"
-#import "MaterialApplication.h"
+#import "MaterialSnackbar.h"
+#import "MDCSnackbarMessageViewInternal.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
@@ -399,7 +399,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   void (^animations)(void) = ^{
     self.snackbarView.alpha = 1.0;
   };
-  void (^realCompletion)(BOOL) = ^(BOOL finished) {
+  void (^realCompletion)(BOOL) = ^(__unused BOOL finished) {
     if (completion) {
       completion();
     }
@@ -448,7 +448,7 @@ static const CGFloat kMaximumHeight = 80.0f;
         // Trigger snackbar animation.
         [_containingView layoutIfNeeded];
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         if (completion) {
           completion();
         }
@@ -547,10 +547,8 @@ static const CGFloat kMaximumHeight = 80.0f;
     // observers of bottom offset changes.
     CGRect frame = [self snackbarRectInScreenCoordinates];
     if (CGRectIsNull(frame)) {
-      frame = CGRectMake(0,
-                         CGRectGetHeight(self.frame) - self.bottomOffset,
-                         CGRectGetWidth(self.frame),
-                         self.bottomOffset);
+      frame = CGRectMake(0, CGRectGetHeight(self.frame) - self.bottomOffset,
+                         CGRectGetWidth(self.frame), self.bottomOffset);
     }
     [self notifyOverlayChangeWithFrame:frame
                               duration:[CATransaction animationDuration]
@@ -605,7 +603,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   }
 }
 
-- (void)didRotate:(NSNotification *)notification {
+- (void)didRotate:(__unused NSNotification *)notification {
   // The UIApplicationDidChangeStatusBarOrientationNotification happens pretty much immediately
   // after the willRotate notification, before any layouts are changed. By delaying this until the
   // next runloop, any rotation-related layout changes will occur, and we can know that they were

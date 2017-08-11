@@ -18,13 +18,13 @@
 
 #import "MDCAppBarContainerViewController.h"
 
+#import "MDFTextAccessibility.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialRTL.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
-#import "MDFTextAccessibility.h"
 #import "private/MaterialAppBarStrings.h"
 #import "private/MaterialAppBarStrings_table.h"
 
@@ -43,8 +43,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 - (void)mutate:(nonnull MDCAppBar *)appBar {
   // Determine what is the appropriate background color
   // Because navigation bar renders above headerview, it takes presedence
-  UIColor *backgroundColor = appBar.navigationBar.backgroundColor ?:
-      appBar.headerViewController.headerView.backgroundColor;
+  UIColor *backgroundColor = appBar.navigationBar.backgroundColor
+                                 ?: appBar.headerViewController.headerView.backgroundColor;
   if (!backgroundColor) {
     return;
   }
@@ -58,10 +58,9 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   if (isLarge) {
     options |= MDFTextAccessibilityOptionsLargeFont;
   }
-  UIColor *textColor =
-      [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                       targetTextAlpha:1.0
-                                                  options:options];
+  UIColor *textColor = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                                        targetTextAlpha:1.0
+                                                                options:options];
 
   [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
   [appBar.navigationBar setTitleTextAttributes:textAttr];
@@ -260,13 +259,9 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                                                         action:@selector(didTapBackButton:)];
   }
   backBarButtonItem.accessibilityIdentifier = @"back_bar_button";
-  NSString *key =
-      kMaterialAppBarStringTable[kStr_MaterialAppBarBackButtonAccessibilityLabel];
-  backBarButtonItem.accessibilityLabel =
-      NSLocalizedStringFromTableInBundle(key,
-                                         kMaterialAppBarStringsTableName,
-                                         [[self class] bundle],
-                                         @"Back");
+  NSString *key = kMaterialAppBarStringTable[kStr_MaterialAppBarBackButtonAccessibilityLabel];
+  backBarButtonItem.accessibilityLabel = NSLocalizedStringFromTableInBundle(
+      key, kMaterialAppBarStringsTableName, [[self class] bundle], @"Back");
   return backBarButtonItem;
 }
 
@@ -287,7 +282,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
   // and use that as the search location.
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
@@ -330,7 +325,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 #pragma mark User actions
 
-- (void)didTapBackButton:(id)sender {
+- (void)didTapBackButton:(__unused id)sender {
   UIViewController *pvc = self.flexibleHeaderParentViewController;
   if (pvc.navigationController && pvc.navigationController.viewControllers.count > 1) {
     [pvc.navigationController popViewControllerAnimated:YES];

@@ -26,7 +26,10 @@
 
   // If we are within an application, query the preferredContentSizeCategory.
   if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+    sizeCategory =
+        ((UIApplication *)[UIApplication valueForKey:@"sharedApplication"])
+            .preferredContentSizeCategory;  //[UIApplication
+                                            // mdc_safeSharedApplication].preferredContentSizeCategory;
   }
 
   // TODO(#1179): We should include our leading and tracking metrics when creating this descriptor.

@@ -79,7 +79,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
           animations:^{
             [self.view layoutIfNeeded];
           }
-          completion:^(BOOL finished) {
+          completion:^(__unused BOOL finished) {
             // If we are hiding, set the state after the animation.
             _tabBar.hidden = hidden;
           }];
@@ -233,13 +233,12 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   }
 }
 
-- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar {
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
   if (_tabBar == bar) {
     return UIBarPositionBottom;
   } else {
     return UIBarPositionAny;
   }
 }
-
 
 @end

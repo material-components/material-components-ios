@@ -34,12 +34,10 @@
 
 @end
 
-
-@interface MDCDraggableView ()<UIGestureRecognizerDelegate>
+@interface MDCDraggableView () <UIGestureRecognizerDelegate>
 @property(nonatomic) UIPanGestureRecognizer *dragRecognizer;
 @property(nonatomic, strong) UIScrollView *scrollView;
 @end
-
 
 @implementation MDCDraggableView
 
@@ -47,8 +45,8 @@
   self = [super initWithFrame:frame];
   if (self) {
     _scrollView = scrollView;
-    _dragRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                              action:@selector(didPan:)];
+    _dragRecognizer =
+        [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
     _dragRecognizer.maximumNumberOfTouches = 1;
     _dragRecognizer.delegate = self;
     [self addGestureRecognizer:_dragRecognizer];
@@ -104,7 +102,7 @@
 }
 
 // Allow the drag recogniser to recognize alongside the embedded scrollview's pan gesture.
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)recognizer
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)recognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:
         (UIGestureRecognizer *)otherGestureRecognizer {
   if (otherGestureRecognizer == self.scrollView.panGestureRecognizer) {

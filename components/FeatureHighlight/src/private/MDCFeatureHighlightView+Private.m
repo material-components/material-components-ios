@@ -287,7 +287,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
   CGFloat rightTextBound = self.frame.size.width - MAX(titleSize.width, detailSize.width) -
-      kMDCFeatureHighlightTextPadding;
+                           kMDCFeatureHighlightTextPadding;
   CGPoint titlePos = CGPointMake(0, 0);
   titlePos.x = MIN(MAX(_highlightCenter.x - textWidth / 2, leftTextBound), rightTextBound);
   if (topHalf) {
@@ -527,9 +527,9 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 #pragma mark - UIGestureRecognizerDelegate (Tap)
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:
+        (__unused UIGestureRecognizer *)otherGestureRecognizer {
   return YES;
 }
 

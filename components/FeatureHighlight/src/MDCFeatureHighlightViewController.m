@@ -16,8 +16,8 @@
 
 #import "MDCFeatureHighlightViewController.h"
 
-#import "MaterialTypography.h"
 #import "MDFTextAccessibility.h"
+#import "MaterialTypography.h"
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView+Private.h"
 
@@ -55,13 +55,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 /* Disable setter. Always use internal transition controller */
-- (void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+- (void)setTransitioningDelegate:
+        (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
   return;
 }
 
 /* Disable setter. Always use custom presentation style */
-- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
+- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
   NSAssert(NO, @"MDCAlertController.modalPresentationStyle cannot be changed.");
   return;
 }
@@ -165,15 +166,16 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  [coordinator animateAlongsideTransition:
-   ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-     CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                                       toView:_featureHighlightView];
+  [coordinator animateAlongsideTransition:^(
+                   __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+    CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
+                                                      toView:_featureHighlightView];
 
-     _featureHighlightView.highlightPoint = point;
-     [_featureHighlightView layoutIfNeeded];
-     [_featureHighlightView updateOuterHighlight];
-   } completion:nil];
+    _featureHighlightView.highlightPoint = point;
+    [_featureHighlightView layoutIfNeeded];
+    [_featureHighlightView updateOuterHighlight];
+  }
+                               completion:nil];
 }
 
 - (UIColor *)outerHighlightColor {
@@ -243,8 +245,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (id<UIViewControllerAnimatedTransitioning>)
     animationControllerForPresentedController:(UIViewController *)presented
-                         presentingController:(UIViewController *)presenting
-                             sourceController:(UIViewController *)source {
+                         presentingController:(__unused UIViewController *)presenting
+                             sourceController:(__unused UIViewController *)source {
   if (presented == self) {
     return _animationController;
   }

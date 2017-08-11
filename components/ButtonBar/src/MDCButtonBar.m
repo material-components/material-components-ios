@@ -192,29 +192,30 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   id<MDCButtonBarDelegate> delegate = _defaultBuilder;
 
   NSMutableArray<UIView *> *views = [NSMutableArray array];
-  [barButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *item, NSUInteger idx, BOOL *stop) {
-    MDCBarButtonItemLayoutHints hints = MDCBarButtonItemLayoutHintsNone;
-    if (idx == 0) {
-      hints |= MDCBarButtonItemLayoutHintsIsFirstButton;
-    }
-    if (idx == [barButtonItems count] - 1) {
-      hints |= MDCBarButtonItemLayoutHintsIsLastButton;
-    }
-    UIView *view = [delegate buttonBar:self viewForItem:item layoutHints:hints];
-    if (!view) {
-      return;
-    }
+  [barButtonItems
+      enumerateObjectsUsingBlock:^(UIBarButtonItem *item, NSUInteger idx, __unused BOOL *stop) {
+        MDCBarButtonItemLayoutHints hints = MDCBarButtonItemLayoutHintsNone;
+        if (idx == 0) {
+          hints |= MDCBarButtonItemLayoutHintsIsFirstButton;
+        }
+        if (idx == [barButtonItems count] - 1) {
+          hints |= MDCBarButtonItemLayoutHintsIsLastButton;
+        }
+        UIView *view = [delegate buttonBar:self viewForItem:item layoutHints:hints];
+        if (!view) {
+          return;
+        }
 
-    [view sizeToFit];
-    if (item.width > 0) {
-      CGRect frame = view.frame;
-      frame.size.width = item.width;
-      view.frame = frame;
-    }
+        [view sizeToFit];
+        if (item.width > 0) {
+          CGRect frame = view.frame;
+          frame.size.width = item.width;
+          view.frame = frame;
+        }
 
-    [self addSubview:view];
-    [views addObject:view];
-  }];
+        [self addSubview:view];
+        [views addObject:view];
+      }];
   return views;
 }
 

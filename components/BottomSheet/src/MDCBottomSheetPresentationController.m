@@ -91,8 +91,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
                                                 contentView:self.presentedViewController.view
                                                  scrollView:scrollView];
   _sheetView.delegate = self;
-  _sheetView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _sheetView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   [containerView addSubview:_dimmingView];
   [containerView addSubview:_sheetView];
@@ -100,22 +99,23 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [self updatePreferredSheetHeight];
 
   // Add tap handler to dismiss the sheet.
-  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                               action:
-      @selector(dismissPresentedControllerIfNecessary:)];
+  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]
+      initWithTarget:self
+              action:@selector(dismissPresentedControllerIfNecessary:)];
   tapGesture.cancelsTouchesInView = NO;
   containerView.userInteractionEnabled = YES;
   [containerView addGestureRecognizer:tapGesture];
 
-  id <UIViewControllerTransitionCoordinator> transitionCoordinator =
+  id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
 
   // Fade in the dimming view during the transition.
   _dimmingView.alpha = 0.0;
-  [transitionCoordinator animateAlongsideTransition:
-   ^(id<UIViewControllerTransitionCoordinatorContext> context) {
-     _dimmingView.alpha = 1.0;
-   } completion:nil];
+  [transitionCoordinator animateAlongsideTransition:^(
+                             __unused id<UIViewControllerTransitionCoordinatorContext> context) {
+    _dimmingView.alpha = 1.0;
+  }
+                                         completion:nil];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -125,13 +125,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)dismissalTransitionWillBegin {
-  id <UIViewControllerTransitionCoordinator> transitionCoordinator =
-    [[self presentingViewController] transitionCoordinator];
+  id<UIViewControllerTransitionCoordinator> transitionCoordinator =
+      [[self presentingViewController] transitionCoordinator];
 
-  [transitionCoordinator animateAlongsideTransition:
-   ^(id<UIViewControllerTransitionCoordinatorContext> context) {
-     _dimmingView.alpha = 0.0;
-   } completion:nil];
+  [transitionCoordinator animateAlongsideTransition:^(
+                             __unused id<UIViewControllerTransitionCoordinatorContext> context) {
+    _dimmingView.alpha = 0.0;
+  }
+                                         completion:nil];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
@@ -141,15 +142,16 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  [coordinator animateAlongsideTransition:
-       ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+  [coordinator animateAlongsideTransition:^(
+                   __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
     _sheetView.frame = [self frameOfPresentedViewInContainerView];
     [_sheetView layoutIfNeeded];
     [self updatePreferredSheetHeight];
-  } completion:nil];
+  }
+                               completion:nil];
 }
 
 - (void)updatePreferredSheetHeight {
@@ -172,20 +174,20 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
-  if ([strongDelegate respondsToSelector:
-       @selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
+  if ([strongDelegate
+          respondsToSelector:@selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
     [strongDelegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
   }
 }
 
 #pragma mark - MDCSheetContainerViewDelegate
 
-- (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView {
+- (void)sheetContainerViewDidHide:(nonnull __unused MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
-  if ([strongDelegate respondsToSelector:
-       @selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
+  if ([strongDelegate
+          respondsToSelector:@selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
     [strongDelegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
   }
 }

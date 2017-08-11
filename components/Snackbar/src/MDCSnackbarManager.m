@@ -17,8 +17,8 @@
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
-#import "MaterialOverlayWindow.h"
 #import "MaterialApplication.h"
+#import "MaterialOverlayWindow.h"
 #import "private/MDCSnackbarMessageInternal.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
@@ -408,16 +408,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   // through pending messages and fire off their completion blocks as we remove them from the
   // queue.
   NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
-  [self.pendingMessages
-      enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage, NSUInteger idx, BOOL *stop) {
-        if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
-          // Mark the message for removal from the pending messages list.
-          [indexesToRemove addIndex:idx];
+  [self.pendingMessages enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
+                                                     NSUInteger idx, __unused BOOL *stop) {
+    if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
+      // Mark the message for removal from the pending messages list.
+      [indexesToRemove addIndex:idx];
 
-          // Notify the outside world that this snackbar has been completed.
-          [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
-        }
-      }];
+      // Notify the outside world that this snackbar has been completed.
+      [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
+    }
+  }];
 
   // Make sure the queued up messages aren't shown.
   if ([indexesToRemove count]) {

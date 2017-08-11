@@ -186,7 +186,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
       animations:^{
         _backgroundView.transform = CGAffineTransformIdentity;
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         self.userInteractionEnabled = _allowsTap;
 
         // Notify delegate.
@@ -213,7 +213,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
       animations:^{
         _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         self.userInteractionEnabled = NO;
         _backgroundView.hidden = YES;
 
@@ -228,7 +228,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 #pragma mark - Private
 
-- (void)handleTapGesture:(UITapGestureRecognizer *)recognizer {
+- (void)handleTapGesture:(__unused UITapGestureRecognizer *)recognizer {
   if ([_delegate respondsToSelector:@selector(didTapInfoBar:)]) {
     [_delegate didTapInfoBar:self];
   }

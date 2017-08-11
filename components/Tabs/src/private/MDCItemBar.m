@@ -376,7 +376,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
+                    layout:(__unused UICollectionViewLayout *)collectionViewLayout
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSParameterAssert(_collectionView == collectionView);
 
@@ -796,7 +796,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   if (_correctedAttributesForIndexPath) {
     NSPredicate *predicate =
         [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes *layoutAttributes,
-                                              NSDictionary *__nullable bindings) {
+                                              __unused NSDictionary *__nullable bindings) {
           return CGRectIntersectsRect(layoutAttributes.frame, rect);
         }];
     return [_correctedAttributesForIndexPath.allValues filteredArrayUsingPredicate:predicate];
