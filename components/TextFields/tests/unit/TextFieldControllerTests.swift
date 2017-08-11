@@ -232,11 +232,11 @@ class TextFieldControllerDefaultTests: XCTestCase {
 
     controller.isFloatingEnabled = true
     textField.sizeToFit()
-    XCTAssertEqual(textField.frame.height, 70)
+    XCTAssertEqual(textField.frame.height, 64)
 
     controller.helperText = "Helper"
     textField.sizeToFit()
-    XCTAssertEqual(textField.frame.height, 84.5)
+    XCTAssertEqual(textField.frame.height, 86.5)
 
     controller.characterCountViewMode = .never
     XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)

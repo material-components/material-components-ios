@@ -1025,8 +1025,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
  MDCRint(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
               self.textInput.placeholderLabel.font.lineHeight)) +
  MDCTextInputDefaultVerticalHalfPadding +                                    // Small padding
- --Underline-- (height not counted)                                   // Underline (height ignored)
- MAX(underlineLabelsOffset,MDCTextInputDefaultVerticalHalfPadding)           // Padding and/or labels
+ --Underline--                                                        // Underline (at active height)
+ underlineLabelsOffset                                                      // Padding and labels
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
@@ -1057,10 +1057,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         MAX(underlineLabelsOffset,
             MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
   }
-  CGFloat underlineOffset = MDCTextInputDefaultVerticalHalfPadding + underlineLabelsOffset;
 
-  // .bottom = underlineOffset + the half padding above the line but below the text field
-  textInsets.bottom = underlineOffset + MDCTextInputDefaultVerticalHalfPadding;
+  CGFloat underlineOffset = underlineLabelsOffset + MDCTextInputDefaultUnderlineActiveHeight +
+      MDCTextInputDefaultVerticalHalfPadding;
+  if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
+    underlineOffset += MDCTextInputDefaultVerticalHalfPadding;
+  }
+
+  // .bottom = underlineOffset + the half padding above the line but below the text field and any
+  // space needed for the labels and / or line.
+  // Legacy has an additional half padding here but this version does not.
+  textInsets.bottom = underlineOffset;
 
   return textInsets;
 }
