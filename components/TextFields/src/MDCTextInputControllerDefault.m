@@ -404,6 +404,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _isRegisteredForKVO = NO;
 }
 
+#pragma mark - Border Customization
+
+- (void)updateBorder {
+  self.textInput.borderFillColor = self.borderFillColor;
+}
+
 #pragma mark - Character Max Implementation
 
 - (NSUInteger)characterCount {
@@ -709,8 +715,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)setBorderFillColor:(UIColor *)borderFillColor {
-  _borderFillColor = borderFillColor ? borderFillColor :
-      [[self class] borderFillColorDefault];
+  if (_borderFillColor != borderFillColor) {
+    _borderFillColor = borderFillColor ? borderFillColor : [[self class] borderFillColorDefault];
+    [self updateBorder];
+  }
 }
 
 + (UIColor *)borderFillColorDefault {
@@ -721,8 +729,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setBorderFillColorDefault:(UIColor *)borderFillColorDefault {
-  _borderFillColorDefault = borderFillColorDefault ? borderFillColorDefault :
-      MDCTextInputDefaultBorderFillColorDefault();
+    _borderFillColorDefault = borderFillColorDefault ? borderFillColorDefault :
+        MDCTextInputDefaultBorderFillColorDefault();
 }
 
 - (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
@@ -757,7 +765,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)setDisabledColor:(UIColor *)disabledColor {
-  _disabledColor = disabledColor ? disabledColor : MDCTextInputDefaultNormalUnderlineColorDefault();
+  if (_disabledColor != disabledColor) {
+    _disabledColor = disabledColor ? disabledColor : MDCTextInputDefaultNormalUnderlineColorDefault();
+    [self updateLayout];
+  }
 }
 
 + (UIColor *)disabledColorDefault {
@@ -997,6 +1008,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
   [self updateUnderline];
+  [self updateBorder];
 }
 
 - (void)updateFontsForDynamicType {
