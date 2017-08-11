@@ -28,9 +28,19 @@
 */
 @interface MDCTextInputControllerDefault : NSObject <MDCTextInputController>
 
-@property(nonatomic, nullable, strong) UIColor *backgroundFillColor;
+/**
+ The color behind the input and label that defines the preferred tap zone.
 
-@property(class, nonatomic, null_resettable, strong) UIColor *backgroundFillColorDefault;
+ Default is borderFillColorDefault.
+ */
+@property(nonatomic, nullable, strong) UIColor *borderFillColor;
+
+/**
+ Default value for borderFillColor.
+
+ Default is 6% black.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *borderFillColorDefault;
 
 /**
  Should the controller's .textInput grow vertically as new lines are added.

@@ -42,8 +42,8 @@ static const NSTimeInterval MDCTextInputDefaultFloatingPlaceholderUpAnimationDur
 
 static NSString *const MDCTextInputControllerDefaultActiveColorKey =
     @"MDCTextInputControllerDefaultActiveColorKey";
-static NSString *const MDCTextInputControllerDefaultBackgroundFillColorKey =
-    @"MDCTextInputControllerDefaultBackgroundFillColorKey";
+static NSString *const MDCTextInputControllerDefaultBorderFillColorKey =
+    @"MDCTextInputControllerDefaultBorderFillColorKey";
 static NSString *const MDCTextInputControllerDefaultCharacterCounterKey =
     @"MDCTextInputControllerDefaultCharacterCounterKey";
 static NSString *const MDCTextInputControllerDefaultCharacterCountViewModeKey =
@@ -87,8 +87,8 @@ static inline UIColor *MDCTextInputDefaultActiveColorDefault() {
   return [MDCPalette bluePalette].accent700;
 }
 
-static inline UIColor *MDCTextInputDefaultBackgroundFillColorDefault() {
-  return [UIColor colorWithWhite:0 alpha:.08];
+static inline UIColor *MDCTextInputDefaultBorderFillColorDefault() {
+  return [UIColor colorWithWhite:0 alpha:.06];
 }
 
 static inline UIColor *MDCTextInputDefaultNormalUnderlineColorDefault() {
@@ -108,7 +108,7 @@ static CGFloat _floatingPlaceholderScaleDefault =
     MDCTextInputDefaultFloatingPlaceholderScaleDefault;
 
 static UIColor *_activeColorDefault;
-static UIColor *_backgroundFillColorDefault;
+static UIColor *_borderFillColorDefault;
 static UIColor *_disabledColorDefault;
 static UIColor *_errorColorDefault;
 static UIColor *_floatingPlaceholderColorDefault;
@@ -121,7 +121,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
   UIColor *_activeColor;
-  UIColor *_backgroundFillColor;
+  UIColor *_borderFillColor;
   UIColor *_disabledColor;
   UIColor *_floatingPlaceholderColor;
   UIColor *_inlinePlaceholderColor;
@@ -177,8 +177,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
     _activeColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultActiveColorKey];
-    _backgroundFillColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultBackgroundFillColorKey];
+    _borderFillColor =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultBorderFillColorKey];
     _characterCounter =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultCharacterCounterKey];
     _characterCountMax =
@@ -218,8 +218,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.activeColor
                 forKey:MDCTextInputControllerDefaultActiveColorKey];
-  [aCoder encodeObject:self.backgroundFillColor
-                forKey:MDCTextInputControllerDefaultBackgroundFillColorKey];
+  [aCoder encodeObject:self.borderFillColor
+                forKey:MDCTextInputControllerDefaultBorderFillColorKey];
   if ([self.characterCounter conformsToProtocol:@protocol(NSCoding)]) {
     [aCoder encodeObject:self.characterCounter
                   forKey:MDCTextInputControllerDefaultCharacterCounterKey];
@@ -252,7 +252,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   MDCTextInputControllerDefault *copy = [[[self class] alloc] init];
 
   copy.activeColor = self.activeColor;
-  copy.backgroundFillColor = self.backgroundFillColor;
+  copy.borderFillColor = self.borderFillColor;
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
   copy.characterCountMax = self.characterCountMax;
@@ -689,28 +689,28 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   : MDCTextInputDefaultActiveColorDefault();
 }
 
-- (UIColor *)backgroundFillColor {
-  if (!_backgroundFillColor) {
-    _backgroundFillColor = [[self class] backgroundFillColorDefault];
+- (UIColor *)borderFillColor {
+  if (!_borderFillColor) {
+    _borderFillColor = [[self class] borderFillColorDefault];
   }
-  return _backgroundFillColor;
+  return _borderFillColor;
 }
 
-- (void)setBackgroundFillColor:(UIColor *)backgroundFillColor {
-  _backgroundFillColor = backgroundFillColor ? backgroundFillColor :
-      [[self class] backgroundFillColorDefault];
+- (void)setBorderFillColor:(UIColor *)borderFillColor {
+  _borderFillColor = borderFillColor ? borderFillColor :
+      [[self class] borderFillColorDefault];
 }
 
-+ (UIColor *)backgroundFillColorDefault {
-  if (!_backgroundFillColorDefault) {
-    _backgroundFillColorDefault = MDCTextInputDefaultBackgroundFillColorDefault();
++ (UIColor *)borderFillColorDefault {
+  if (!_borderFillColorDefault) {
+    _borderFillColorDefault = MDCTextInputDefaultBorderFillColorDefault();
   }
-  return _backgroundFillColorDefault;
+  return _borderFillColorDefault;
 }
 
-+ (void)setBackgroundFillColorDefault:(UIColor *)backgroundFillColorDefault {
-  _backgroundFillColorDefault = backgroundFillColorDefault ? backgroundFillColorDefault :
-      MDCTextInputDefaultBackgroundFillColorDefault();
++ (void)setBorderFillColorDefault:(UIColor *)borderFillColorDefault {
+  _borderFillColorDefault = borderFillColorDefault ? borderFillColorDefault :
+      MDCTextInputDefaultBorderFillColorDefault();
 }
 
 - (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
