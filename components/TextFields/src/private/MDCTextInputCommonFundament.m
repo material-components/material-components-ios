@@ -845,6 +845,8 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 
 - (void)updatePlaceholderPosition {
   self.placeholderTop.constant = _textInput.textInsets.top;
+  self.placeholderLeading.constant = _textInput.textInsets.left;
+  self.placeholderTrailing.constant = -1 * _textInput.textInsets.right;
 
   [self updatePlaceholderToOverlayViewsPosition];
   [self.textInput invalidateIntrinsicContentSize];
@@ -880,7 +882,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
                                       toItem:_textInput
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
-                                    constant:insets.right];
+                                    constant:-1 * insets.right];
   placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
   return @[ self.placeholderTop, self.placeholderLeading, placeholderTrailing ];

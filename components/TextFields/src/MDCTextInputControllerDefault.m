@@ -34,8 +34,9 @@ static const CGFloat MDCTextInputDefaultFloatingPlaceholderScaleDefault = 0.75f;
 static const CGFloat MDCTextInputDefaultHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputDefaultUnderlineActiveHeight = 2.f;
 static const CGFloat MDCTextInputDefaultUnderlineNormalHeight = 1.f;
-static const CGFloat MDCTextInputDefaultVerticalHalfPadding = 8.f;
-static const CGFloat MDCTextInputDefaultVerticalPadding = 16.f;
+static const CGFloat MDCTextInputDefaultHalfPadding = 8.f;
+static const CGFloat MDCTextInputDefaultFullPadding = 16.f;
+static const CGFloat MDCTextInputDefaultOversizedPadding = 20.f;
 
 static const NSTimeInterval MDCTextInputDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
 static const NSTimeInterval MDCTextInputDefaultFloatingPlaceholderUpAnimationDuration = 0.3f;
@@ -573,7 +574,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (CGPoint)placeholderFloatingPosition {
-  CGFloat placeholderY = MDCTextInputDefaultVerticalPadding;
+  CGFloat placeholderY = MDCTextInputDefaultHalfPadding;
 
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because our users wouldn't expect it.
@@ -589,6 +590,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                    context:nil]));
   CGFloat placeholderX =
       -1 * estimatedWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+
+  placeholderX += self.textInput.textInsets.left;
 
   return CGPointMake(placeholderX, placeholderY);
 }
@@ -1048,13 +1051,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIEdgeInsets textInsets = defaultInsets;
 
   if (!self.isFloatingEnabled) {
-    return defaultInsets;
+    return textInsets;
   }
 
-  textInsets.top = MDCTextInputDefaultVerticalPadding +
+  textInsets.top = MDCTextInputDefaultHalfPadding +
                    MDCRint(self.textInput.placeholderLabel.font.lineHeight *
                            (CGFloat)self.floatingPlaceholderScale.floatValue) +
-                   MDCTextInputDefaultVerticalHalfPadding;
+                   MDCTextInputDefaultHalfPadding;
 
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputDefaultVerticalPadding or the biggest estimated underlineLabel height +
@@ -1071,15 +1074,18 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 
   CGFloat underlineOffset = underlineLabelsOffset + MDCTextInputDefaultUnderlineActiveHeight +
-      MDCTextInputDefaultVerticalHalfPadding;
+      MDCTextInputDefaultHalfPadding;
   if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
-    underlineOffset += MDCTextInputDefaultVerticalHalfPadding;
+    underlineOffset += MDCTextInputDefaultHalfPadding;
   }
 
   // .bottom = underlineOffset + the half padding above the line but below the text field and any
   // space needed for the labels and / or line.
   // Legacy has an additional half padding here but this version does not.
   textInsets.bottom = underlineOffset;
+
+  textInsets.left = MDCTextInputDefaultFullPadding;
+  textInsets.right = MDCTextInputDefaultFullPadding;
 
   return textInsets;
 }
