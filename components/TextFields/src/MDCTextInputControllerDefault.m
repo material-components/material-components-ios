@@ -88,7 +88,7 @@ static inline UIColor *MDCTextInputDefaultActiveColorDefault() {
 }
 
 static inline UIColor *MDCTextInputDefaultBorderFillColorDefault() {
-  return [UIColor colorWithWhite:0 alpha:.06];
+  return [UIColor colorWithWhite:0 alpha:.06f];
 }
 
 static inline UIColor *MDCTextInputDefaultNormalUnderlineColorDefault() {
