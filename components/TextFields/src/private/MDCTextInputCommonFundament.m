@@ -462,7 +462,16 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 - (void)setupBorder {
   _borderFillColor = [UIColor clearColor];
   _borderStrokeColor = [UIColor clearColor];
+
   _borderLayer = [CAShapeLayer layer];
+  [self.textInput.layer addSublayer:_borderLayer];
+
+  _borderLayer.backgroundColor = [UIColor clearColor].CGColor;
+  _borderLayer.contentsScale = UIScreen.mainScreen.scale;
+  _borderLayer.opaque = NO;
+  _borderLayer.rasterizationScale = _borderLayer.contentsScale;
+  _borderLayer.shouldRasterize = YES;
+  _borderLayer.zPosition = -1.f;
 }
 
 - (UIBezierPath *)defaultBorderPath {
@@ -475,12 +484,17 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 }
 
 - (void)updateBorder {
-  self.borderLayer.path = self.borderPath.CGPath;
+  self.borderLayer.fillColor = self.borderFillColor.CGColor;
   self.borderLayer.lineWidth = self.borderPath.lineWidth;
   self.borderLayer.lineCap = MDCNSStringFromCGLineCap(self.borderPath.lineCapStyle);
   self.borderLayer.lineJoin = MDCNSStringFromCGLineJoin(self.borderPath.lineJoinStyle);
-  self.borderLayer.fillColor = self.borderFillColor.CGColor;
+  self.borderLayer.miterLimit = self.borderPath.miterLimit;
+  self.borderLayer.path = self.borderPath.CGPath;
   self.borderLayer.strokeColor = self.borderStrokeColor.CGColor;
+
+  self.borderLayer.bounds = self.textInput.bounds;
+  self.borderLayer.position = CGPointMake(CGRectGetMidX(self.textInput.bounds),
+                                          CGRectGetMidY(self.textInput.bounds));
 }
 
 - (void)unsubscribeFromNotifications {
