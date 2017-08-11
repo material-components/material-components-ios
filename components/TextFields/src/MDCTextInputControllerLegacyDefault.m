@@ -666,6 +666,22 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
+- (UIRectCorner)cornersRounded {
+  return 0;
+}
+
+- (void)setCornersRounded:(UIRectCorner)cornersRounded {
+  // Not implemented. Corners are not rounded.
+}
+
++ (UIRectCorner)cornersRoundedDefault {
+  return 0;
+}
+
++ (void)setCornersRoundedDefault:(UIRectCorner)cornersRoundedDefault {
+  // Not implemented. Corners are not rounded.
+}
+
 - (UIColor *)disabledColor {
   if (!_disabledColor) {
     _disabledColor = [[self class] disabledColorDefault];

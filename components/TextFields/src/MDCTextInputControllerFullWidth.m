@@ -424,6 +424,22 @@ static UIColor *_inlinePlaceholderColorDefault;
   }
 }
 
+- (UIRectCorner)cornersRounded {
+  return 0;
+}
+
+- (void)setCornersRounded:(UIRectCorner)cornersRounded {
+  // Not implemented. There are no corners to round.
+}
+
++ (UIRectCorner)cornersRoundedDefault {
+  return 0;
+}
+
++ (void)setCornersRoundedDefault:(UIRectCorner)cornersRoundedDefault {
+  // Not implemented. There are no corners to round.
+}
+
 - (void)setDisabledColor:(UIColor *)disabledColor {
   [self updateUnderline];
 }

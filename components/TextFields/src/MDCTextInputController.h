@@ -73,6 +73,20 @@
 @property(nonatomic, assign) UITextFieldViewMode characterCountViewMode;
 
 /**
+ The corners to be rounded in the border area.
+
+ Default is cornersRoundedDefault;
+ */
+@property(nonatomic, assign) UIRectCorner cornersRounded;
+
+/**
+ Default for cornersRounded.
+
+ Default is top right and top left.
+ */
+@property(class, nonatomic, assign) UIRectCorner cornersRoundedDefault;
+
+/**
  Color for decorations that indicates the input is not enabled / not accepting touch.
 
  Default is disabledColorDefault.

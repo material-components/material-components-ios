@@ -50,6 +50,8 @@ static NSString *const MDCTextInputControllerDefaultCharacterCountViewModeKey =
     @"MDCTextInputControllerDefaultCharacterCountViewModeKey";
 static NSString *const MDCTextInputControllerDefaultCharacterCountMaxKey =
     @"MDCTextInputControllerDefaultCharacterCountMaxKey";
+static NSString *const MDCTextInputControllerDefaultCornersRounded =
+    @"MDCTextInputControllerDefaultCornersRounded";
 static NSString *const MDCTextInputControllerDefaultDisabledColorKey =
     @"MDCTextInputControllerDefaultDisabledColorKey";
 static NSString *const MDCTextInputControllerDefaultErrorAccessibilityValueKey =
@@ -115,6 +117,8 @@ static UIColor *_floatingPlaceholderColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_normalColorDefault;
 
+static UIRectCorner _cornersRoundedDefault = UIRectCornerTopLeft | UIRectCornerTopRight;
+
 static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileEditing;
 
 @interface MDCTextInputControllerDefault () {
@@ -126,6 +130,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIColor *_floatingPlaceholderColor;
   UIColor *_inlinePlaceholderColor;
   UIColor *_normalColor;
+
+  UIRectCorner _cornersRounded;
 }
 
 @property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
@@ -154,6 +160,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 @synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
 @synthesize characterCountViewMode = _characterCountViewMode;
+@synthesize cornersRounded = _cornersRounded;
 @synthesize errorColor = _errorColor;
 @synthesize floatingPlaceholderScale = _floatingPlaceholderScale;
 @synthesize textInput = _textInput;
@@ -185,6 +192,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountMaxKey];
     _characterCountViewMode =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
+    _cornersRounded = (UIRectCorner)
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCornersRounded];
     _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultDisabledColorKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultErrorColorKey];
     _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultFloatingEnabledKey];
@@ -228,6 +237,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                  forKey:MDCTextInputControllerDefaultCharacterCountMaxKey];
   [aCoder encodeInteger:self.characterCountViewMode
                  forKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
+  [aCoder encodeInteger:self.cornersRounded forKey:MDCTextInputControllerDefaultCornersRounded];
   [aCoder encodeObject:self.disabledColor forKey:MDCTextInputControllerDefaultDisabledColorKey];
   [aCoder encodeObject:self.errorAccessibilityValue
                 forKey:MDCTextInputControllerDefaultErrorAccessibilityValueKey];
@@ -256,6 +266,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
   copy.characterCountMax = self.characterCountMax;
+  copy.cornersRounded = self.cornersRounded;
   copy.disabledColor = self.disabledColor;
   copy.errorAccessibilityValue = [self.errorAccessibilityValue copy];
   copy.errorColor = self.errorColor;
@@ -280,6 +291,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)commonMDCTextInputControllerDefaultInitialization {
+  _cornersRounded = [[self class] cornersRoundedDefault];
   _characterCountViewMode = UITextFieldViewModeAlways;
   _disabledColor = [[self class] disabledColorDefault];
   _floatingEnabled = [[self class] isFloatingEnabledDefault];
@@ -719,6 +731,22 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
     [self updateLayout];
   }
+}
+
+- (void)setCornersRounded:(UIRectCorner)cornersRounded {
+  if (_cornersRounded != cornersRounded) {
+    _cornersRounded = cornersRounded;
+
+    [self updateLayout];
+  }
+}
+
++ (UIRectCorner)cornersRoundedDefault {
+  return _cornersRoundedDefault;
+}
+
++ (void)setCornersRoundedDefault:(UIRectCorner)cornersRoundedDefault {
+  _cornersRoundedDefault = cornersRoundedDefault;
 }
 
 - (UIColor *)disabledColor {
