@@ -32,6 +32,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerDefault.mdc_adjustsFontForContentSizeCategoryDefault = true
     MDCTextInputControllerDefault.activeColorDefault = nil
     MDCTextInputControllerDefault.normalColorDefault = nil
+    MDCTextInputControllerDefault.disabledColorDefault = nil
     MDCTextInputControllerDefault.underlineViewModeDefault = .whileEditing
 
     MDCTextInputControllerDefault.floatingPlaceholderColorDefault = nil
@@ -43,6 +44,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault = true
     MDCTextInputControllerFullWidth.activeColorDefault = nil
     MDCTextInputControllerFullWidth.normalColorDefault = nil
+    MDCTextInputControllerFullWidth.disabledColorDefault = nil
     MDCTextInputControllerFullWidth.underlineViewModeDefault = .never
   }
 
