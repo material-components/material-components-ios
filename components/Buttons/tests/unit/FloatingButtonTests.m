@@ -35,6 +35,23 @@
   XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
 }
 
+- (void)testCollapseExpandRestoresIdentityTransform {
+  // Given
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
+  CGAffineTransform transform = CGAffineTransformIdentity;
+  button.transform = transform;
+
+  // When
+  [button collapse:NO completion:nil];
+  [button expand:NO completion:nil];
+
+  // Then
+  XCTAssertTrue(
+      CGAffineTransformEqualToTransform(button.transform, transform),
+      @"Collapse and expand did not restore the original transform.\nExpected: %@\nReceived: %@",
+      NSStringFromCGAffineTransform(transform), NSStringFromCGAffineTransform(button.transform));
+}
+
 - (void)testCollapseExpandRestoresTransform {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
