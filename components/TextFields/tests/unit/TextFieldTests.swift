@@ -185,7 +185,10 @@ class TextFieldTests: XCTestCase {
                    unserializedInput?.text)
 
     XCTAssertEqual(textField.borderFillColor, unserializedInput?.borderFillColor)
-    XCTAssertEqual(textField.borderPath, unserializedInput?.borderPath)
+
+    // Because of floating point inaccuracies, we can't compare the paths for equality. So, we
+    // compare the bounding box. But this too may be innaccurate. Revisit this if it starts failing.
+    XCTAssertEqual(textField.borderPath?.bounds.integral, unserializedInput?.borderPath?.bounds.integral)
     XCTAssertEqual(textField.borderStrokeColor, unserializedInput?.borderStrokeColor)
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)
