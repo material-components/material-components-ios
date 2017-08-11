@@ -35,5 +35,76 @@
   XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
 }
 
+- (void)testCollapseExpandRestoresIdentityTransform {
+  // Given
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
+  CGAffineTransform transform = CGAffineTransformIdentity;
+  button.transform = transform;
+
+  // When
+  [button collapse:NO completion:nil];
+  [button expand:NO completion:nil];
+
+  // Then
+  XCTAssertTrue(
+      CGAffineTransformEqualToTransform(button.transform, transform),
+      @"Collapse and expand did not restore the original transform.\nExpected: %@\nReceived: %@",
+      NSStringFromCGAffineTransform(transform), NSStringFromCGAffineTransform(button.transform));
+}
+
+- (void)testCollapseExpandRestoresTransform {
+  // Given
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
+  CGAffineTransform transform = CGAffineTransformRotate(button.transform, M_PI_2);
+  button.transform = transform;
+
+  // When
+  [button collapse:NO completion:nil];
+  [button expand:NO completion:nil];
+
+  // Then
+  XCTAssertTrue(
+      CGAffineTransformEqualToTransform(button.transform, transform),
+      @"Collapse and expand did not restore the original transform.\nExpected: %@\nReceived: %@",
+      NSStringFromCGAffineTransform(transform), NSStringFromCGAffineTransform(button.transform));
+}
+
+- (void)testCollapseExpandAnimatedRestoresTransform {
+  // Given
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
+  CGAffineTransform transform = CGAffineTransformMakeTranslation(10, -77.1);
+  button.transform = transform;
+  XCTestExpectation *expectation = [self expectationWithDescription:@"Collapse animation complete"];
+
+  // When
+  [button collapse:YES
+        completion:^{
+          [expectation fulfill];
+        }];
+
+  // Then
+  // Collapse should take around 200ms in total
+  [self waitForExpectationsWithTimeout:1 handler:nil];
+
+  XCTAssertFalse(CGAffineTransformEqualToTransform(button.transform, transform),
+                 @"Collapse did not modify the original transform.\nOriginal: %@\nReceived: %@",
+                 NSStringFromCGAffineTransform(transform),
+                 NSStringFromCGAffineTransform(button.transform));
+
+  expectation = [self expectationWithDescription:@"Expand animation complete"];
+
+  [button expand:YES
+      completion:^{
+        [expectation fulfill];
+      }];
+
+  // Expand should take around 200ms in total
+  [self waitForExpectationsWithTimeout:1 handler:nil];
+
+  XCTAssertTrue(
+      CGAffineTransformEqualToTransform(button.transform, transform),
+      @"Collapse and expand did not restore the original transform.\nExpected: %@\nReceived: %@",
+      NSStringFromCGAffineTransform(transform), NSStringFromCGAffineTransform(button.transform));
+}
 
 @end

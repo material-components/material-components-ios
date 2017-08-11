@@ -23,7 +23,8 @@ float UIAnimationDragCoefficient(void);  // Private API for simulator animation 
 static NSString *const kMDCFloatingButtonTransformKey = @"kMDCFloatingButtonTransformKey";
 static NSString *const kMDCFloatingButtonOpacityKey = @"kMDCFloatingButtonOpacityKey";
 
-static const CGFloat kMDCFloatingButtonTransformScale = 0.00001f;
+// By using a power of 2 (2^-12), we can reduce rounding errors during transform multiplication
+static const CGFloat kMDCFloatingButtonTransformScale = (CGFloat)0.000244140625;
 
 static const NSTimeInterval kMDCFloatingButtonEnterDuration = 0.270f;
 static const NSTimeInterval kMDCFloatingButtonExitDuration = 0.180f;
