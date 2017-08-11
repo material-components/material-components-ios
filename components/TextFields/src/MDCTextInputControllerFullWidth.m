@@ -424,6 +424,22 @@ static UIColor *_inlinePlaceholderColorDefault;
   }
 }
 
+- (void)setDisabledColor:(UIColor *)disabledColor {
+  [self updateUnderline];
+}
+
+- (UIColor *)disabledColor {
+  return [UIColor clearColor];
+}
+
++ (void)setDisabledColorDefault:(UIColor *)disabledColorDefault {
+  // This controller does not have decorations that need to change for a disabled state.
+}
+
++ (UIColor *)disabledColorDefault {
+  return [UIColor clearColor];
+}
+
 - (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
   _errorAccessibilityValue = [errorAccessibilityValue copy];
 }

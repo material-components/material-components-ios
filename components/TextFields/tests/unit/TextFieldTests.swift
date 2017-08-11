@@ -210,6 +210,7 @@ class TextFieldTests: XCTestCase {
     let textField = MDCTextField()
 
     textField.underline?.color = .red
+    textField.underline?.disabledColor = .yellow
     textField.underline?.lineHeight = 10
 
     XCTAssertEqual(textField.underline?.color, .red)
@@ -219,6 +220,8 @@ class TextFieldTests: XCTestCase {
 
       XCTAssertEqual(underline.lineHeight, 10)
       XCTAssertEqual(underline.lineHeight, textField.underline?.lineHeight)
+
+      XCTAssertEqual(underline.disabledColor, .yellow)
     } else {
       XCTFail("No underline or underline is wrong class")
     }

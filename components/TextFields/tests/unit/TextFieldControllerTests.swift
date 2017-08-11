@@ -27,6 +27,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     let controller = MDCTextInputControllerDefault(textInput: textField)
     controller.characterCountMax = 49
     controller.characterCountViewMode = .always
+    controller.disabledColor = .orange
     controller.isFloatingEnabled = false
     controller.floatingPlaceholderColor = .purple
     controller.floatingPlaceholderScale = 0.1
@@ -39,6 +40,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     if let controllerCopy = controller.copy() as? MDCTextInputControllerDefault {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
+      XCTAssertEqual(controller.disabledColor, controllerCopy.disabledColor)
       XCTAssertEqual(controller.isFloatingEnabled, controllerCopy.isFloatingEnabled)
       XCTAssertEqual(controller.floatingPlaceholderColor, controllerCopy.floatingPlaceholderColor)
       XCTAssertEqual(controller.floatingPlaceholderScale, controllerCopy.floatingPlaceholderScale)
@@ -58,6 +60,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     let controller = MDCTextInputControllerFullWidth(textInput: textField)
     controller.characterCountMax = 49
     controller.characterCountViewMode = .always
+    controller.disabledColor = .yellow
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
     controller.activeColor = .blue
@@ -67,6 +70,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     if let controllerCopy = controller.copy() as? MDCTextInputControllerFullWidth {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
+      XCTAssertEqual(controller.disabledColor, controllerCopy.disabledColor)
       XCTAssertEqual(controller.helperText, controllerCopy.helperText)
       XCTAssertEqual(controller.inlinePlaceholderColor, controllerCopy.inlinePlaceholderColor)
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
@@ -257,6 +261,9 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(.clear, textField.underline?.color)
     controller.underlineViewMode = .always
     XCTAssertEqual(.clear, textField.underline?.color)
+
+    controller.disabledColor = .red
+    XCTAssertEqual(controller.disabledColor, .clear)
   }
 
   func testSerializationDefault() {
@@ -265,6 +272,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     let controller = MDCTextInputControllerDefault(textInput: textField)
     controller.characterCountMax = 25
     controller.characterCountViewMode = .always
+    controller.disabledColor = .yellow
     controller.isFloatingEnabled = false
     controller.floatingPlaceholderColor = .purple
     controller.floatingPlaceholderScale = 0.1
@@ -286,6 +294,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
     XCTAssertEqual(controller.characterCountViewMode,
                    unserializedController?.characterCountViewMode)
+    XCTAssertEqual(controller.disabledColor, unserializedController?.disabledColor)
     XCTAssertEqual(controller.isFloatingEnabled, unserializedController?.isFloatingEnabled)
     XCTAssertEqual(controller.floatingPlaceholderColor,
                    unserializedController?.floatingPlaceholderColor)
@@ -305,6 +314,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     let controller = MDCTextInputControllerFullWidth(textInput: textField)
     controller.characterCountMax = 25
     controller.characterCountViewMode = .always
+    controller.disabledColor = .yellow
     controller.errorColor = .blue
     controller.inlinePlaceholderColor = .green
 
@@ -320,6 +330,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
     XCTAssertEqual(controller.characterCountViewMode,
                    unserializedController?.characterCountViewMode)
+    XCTAssertEqual(unserializedController?.disabledColor, .clear)
     XCTAssertEqual(controller.errorColor, unserializedController?.errorColor)
     XCTAssertEqual(controller.helperText, unserializedController?.helperText)
     XCTAssertEqual(controller.inlinePlaceholderColor,

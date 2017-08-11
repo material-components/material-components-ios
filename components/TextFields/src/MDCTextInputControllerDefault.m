@@ -48,6 +48,8 @@ static NSString *const MDCTextInputControllerDefaultCharacterCountViewModeKey =
     @"MDCTextInputControllerDefaultCharacterCountViewModeKey";
 static NSString *const MDCTextInputControllerDefaultCharacterCountMaxKey =
     @"MDCTextInputControllerDefaultCharacterCountMaxKey";
+static NSString *const MDCTextInputControllerDefaultDisabledColorKey =
+    @"MDCTextInputControllerDefaultDisabledColorKey";
 static NSString *const MDCTextInputControllerDefaultErrorAccessibilityValueKey =
     @"MDCTextInputControllerDefaultErrorAccessibilityValueKey";
 static NSString *const MDCTextInputControllerDefaultErrorColorKey =
@@ -100,6 +102,7 @@ static CGFloat _floatingPlaceholderScaleDefault =
     MDCTextInputDefaultFloatingPlaceholderScaleDefault;
 
 static UIColor *_activeColorDefault;
+static UIColor *_disabledColorDefault;
 static UIColor *_errorColorDefault;
 static UIColor *_floatingPlaceholderColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
@@ -111,6 +114,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
   UIColor *_activeColor;
+  UIColor *_disabledColor;
   UIColor *_floatingPlaceholderColor;
   UIColor *_inlinePlaceholderColor;
   UIColor *_normalColor;
@@ -180,6 +184,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountMaxKey];
     _characterCountViewMode =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
+    _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultDisabledColorKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultErrorColorKey];
     _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultFloatingEnabledKey];
     _floatingPlaceholderColor =
@@ -220,6 +225,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                  forKey:MDCTextInputControllerDefaultCharacterCountMaxKey];
   [aCoder encodeInteger:self.characterCountViewMode
                  forKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
+  [aCoder encodeObject:self.disabledColor forKey:MDCTextInputControllerDefaultDisabledColorKey];
   [aCoder encodeObject:self.errorAccessibilityValue
                 forKey:MDCTextInputControllerDefaultErrorAccessibilityValueKey];
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerDefaultErrorColorKey];
@@ -246,6 +252,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
   copy.characterCountMax = self.characterCountMax;
+  copy.disabledColor = self.disabledColor;
   copy.errorAccessibilityValue = [self.errorAccessibilityValue copy];
   copy.errorColor = self.errorColor;
   copy.errorText = [self.errorText copy];
@@ -270,6 +277,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)commonMDCTextInputControllerDefaultInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
+  _disabledColor = [[self class] disabledColorDefault];
   _floatingEnabled = [[self class] isFloatingEnabledDefault];
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
   _underlineViewMode = [[self class] underlineViewModeDefault];
@@ -287,6 +295,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _mdc_adjustsFontForContentSizeCategory =
       _textInput.mdc_adjustsFontForContentSizeCategory ||
       [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
+  _textInput.underline.disabledColor = self.disabledColor;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
   _textInput.hidesPlaceholderOnInput = !self.isFloatingEnabled;
@@ -636,6 +645,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
                                                                            : underlineColor;
   self.textInput.underline.lineHeight = underlineHeight;
+
+  self.textInput.underline.disabledColor = self.disabledColor;
 }
 
 #pragma mark - Underline Labels Fonts
@@ -680,6 +691,29 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
     [self updateLayout];
   }
+}
+
+- (UIColor *)disabledColor {
+  if (!_disabledColor) {
+    _disabledColor = [[self class] disabledColorDefault];
+  }
+  return _disabledColor;
+}
+
+- (void)setDisabledColor:(UIColor *)disabledColor {
+  _disabledColor = disabledColor ? disabledColor : MDCTextInputDefaultNormalUnderlineColorDefault();
+}
+
++ (UIColor *)disabledColorDefault {
+  if (!_disabledColorDefault) {
+    _disabledColorDefault = MDCTextInputDefaultNormalUnderlineColorDefault();
+  }
+  return _disabledColorDefault;
+}
+
++ (void)setDisabledColorDefault:(UIColor *)disabledColorDefault {
+  _disabledColorDefault = disabledColorDefault ? disabledColorDefault :
+      MDCTextInputDefaultNormalUnderlineColorDefault();
 }
 
 - (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
