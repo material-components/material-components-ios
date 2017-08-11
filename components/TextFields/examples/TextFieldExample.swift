@@ -45,7 +45,7 @@ final class TextFieldSwiftExample: UIViewController {
     city.autocapitalizationType = .words
     return city
   }()
-  let cityController: MDCTextInputControllerLegacyDefault
+  let cityController: MDCTextInputControllerDefault
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -54,7 +54,7 @@ final class TextFieldSwiftExample: UIViewController {
     state.autocapitalizationType = .allCharacters
     return state
   }()
-  let stateController: MDCTextInputControllerLegacyDefault
+  let stateController: MDCTextInputControllerDefault
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -62,7 +62,7 @@ final class TextFieldSwiftExample: UIViewController {
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputControllerLegacyDefault
+  let zipController: MDCTextInputControllerDefault
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -78,12 +78,12 @@ final class TextFieldSwiftExample: UIViewController {
     return message
   }()
 
-  var allTextFieldControllers = [MDCTextInputControllerLegacyDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    stateController = MDCTextInputControllerLegacyDefault(textInput: state)
-    cityController = MDCTextInputControllerLegacyDefault(textInput: city)
-    zipController = MDCTextInputControllerLegacyDefault(textInput: zip)
+    stateController = MDCTextInputControllerDefault(textInput: state)
+    cityController = MDCTextInputControllerDefault(textInput: city)
+    zipController = MDCTextInputControllerDefault(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -112,12 +112,12 @@ final class TextFieldSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerLegacyDefault(textInput: name)
+    let nameController = MDCTextInputControllerDefault(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerLegacyDefault(textInput: address)
+    let addressController = MDCTextInputControllerDefault(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -132,7 +132,7 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(stateZip)
 
     stateZip.addSubview(state)
-    let stateController = MDCTextInputControllerLegacyDefault(textInput: state)
+    let stateController = MDCTextInputControllerDefault(textInput: state)
     state.delegate = self
     allTextFieldControllers.append(stateController)
 
@@ -141,12 +141,12 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerLegacyDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerDefault(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerLegacyDefault(textInput: message)
+    let messageController = MDCTextInputControllerDefault(textInput: message)
     message.textView?.delegate = self
     allTextFieldControllers.append(messageController)
 

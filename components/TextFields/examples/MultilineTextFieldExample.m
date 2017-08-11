@@ -19,8 +19,8 @@
 @interface MultilineTextFieldExample : UIViewController <UITextViewDelegate>
 
 // Be sure to keep your controllers in memory somewhere like a property:
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerDefaultCharMax;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerFloating;
+@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
+@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFloating;
 @property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldControllerFullWidth;
 @property(nonatomic, strong) UIScrollView *scrollView;
 
@@ -86,7 +86,7 @@
   multilineTextFieldFloating.textView.delegate = self;
 
   self.textFieldControllerFloating =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldFloating];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldFloating];
 
   MDCMultilineTextField *multilineTextFieldCharMaxDefault = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldCharMaxDefault];
@@ -96,7 +96,7 @@
   multilineTextFieldCharMaxDefault.textView.delegate = self;
 
   self.textFieldControllerDefaultCharMax =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
   self.textFieldControllerDefaultCharMax.characterCountMax = 30;
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 

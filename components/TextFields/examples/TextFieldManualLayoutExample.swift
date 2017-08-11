@@ -49,7 +49,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     city.placeholder = "City"
     return city
   }()
-  let cityController: MDCTextInputControllerLegacyDefault
+  let cityController: MDCTextInputControllerDefault
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -62,7 +62,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     zip.placeholder = "Zip code"
     return zip
   }()
-  let zipController: MDCTextInputControllerLegacyDefault
+  let zipController: MDCTextInputControllerDefault
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -72,11 +72,11 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
 
   let stateZip = UIView()
 
-  var allTextFieldControllers = [MDCTextInputControllerLegacyDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerLegacyDefault(textInput: city)
-    zipController = MDCTextInputControllerLegacyDefault(textInput: zip)
+    cityController = MDCTextInputControllerDefault(textInput: city)
+    zipController = MDCTextInputControllerDefault(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -107,12 +107,12 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerLegacyDefault(textInput: name)
+    let nameController = MDCTextInputControllerDefault(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerLegacyDefault(textInput: address)
+    let addressController = MDCTextInputControllerDefault(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -123,7 +123,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     scrollView.addSubview(stateZip)
 
     stateZip.addSubview(state)
-    let stateController = MDCTextInputControllerLegacyDefault(textInput: state)
+    let stateController = MDCTextInputControllerDefault(textInput: state)
     state.delegate = self
     allTextFieldControllers.append(stateController)
 
@@ -132,7 +132,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerLegacyDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerDefault(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 

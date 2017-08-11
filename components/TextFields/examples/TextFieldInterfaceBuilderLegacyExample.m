@@ -38,7 +38,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.title = @"Legacy MDCTextFields";
+  self.title = @"MDCTextFields";
 
   [self setupExampleViews];
 
