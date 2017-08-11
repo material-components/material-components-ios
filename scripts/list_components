@@ -1,0 +1,80 @@
+#!/bin/bash
+#
+# Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# List all component directories.
+#
+# If --public (-p) is specified, list public components.
+# If --private (-P) is specified, list private components.
+#
+# If nothing is specified, act as if --public were specified.
+
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly ROOT_DIR="$SCRIPTS_DIR/.."
+
+# Detect if the output is a terminal.
+if [ -t 1 ]; then
+  terminal=0
+else
+  terminal=1
+fi
+
+# Parse command-line arguments.
+#
+# Note that we're following the command-line exit status convention of zero
+# to mean "success".
+private=1
+public=1
+one_per_line=$terminal
+for i in "$@"; do
+  case $i in
+    -P|--private)
+      private=0
+      shift
+      ;;
+    -p|--public)
+      public=0
+      shift
+      ;;
+    *)
+      echo "Unknown option $i, aborting."
+      exit -1
+      ;;
+  esac
+done
+
+# If neither are set, list public components.
+if [[ "$private" -eq 1 && "$public" -eq 1 ]]; then
+  public=0
+fi
+
+dirs=()
+
+if [ "$public" -eq 0 ]; then
+  dirs[0]="$ROOT_DIR/components"
+fi
+
+if [ "$private" -eq 0 ]; then
+  dirs[1]="$ROOT_DIR/components/private"
+fi
+
+readonly COMPONENTS=$(find ${dirs[*]} -depth 1 -type d ! \( -regex '.*/private$' -or -regex '.*/docs$' \))
+if [ $terminal -eq 0 ]; then
+  for i in $COMPONENTS; do
+    echo $i
+  done
+else
+  echo $COMPONENTS
+fi
