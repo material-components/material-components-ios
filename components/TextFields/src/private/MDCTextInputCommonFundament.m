@@ -124,6 +124,8 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 
 @property(nonatomic, strong) CAShapeLayer *borderLayer;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
+@property(nonatomic, strong) NSLayoutConstraint *leadingUnderlineLeading;
+@property(nonatomic, strong) NSLayoutConstraint *trailingUnderlineTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
@@ -385,7 +387,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_trailingUnderlineLabel];
 
-  NSLayoutConstraint *leadingLeading =
+  _leadingUnderlineLeading =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                    attribute:NSLayoutAttributeLeading
                                    relatedBy:NSLayoutRelationEqual
@@ -393,9 +395,9 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
                                    attribute:NSLayoutAttributeLeading
                                   multiplier:1
                                     constant:0];
-  leadingLeading.priority = UILayoutPriorityDefaultLow;
+  _leadingUnderlineLeading.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint *trailingTrailing =
+  _trailingUnderlineTrailing =
       [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationEqual
@@ -403,7 +405,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
                                     constant:0];
-  trailingTrailing.priority = UILayoutPriorityDefaultLow;
+  _trailingUnderlineTrailing.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *labelSpacing =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
@@ -415,7 +417,8 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
                                     constant:0];
   labelSpacing.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint activateConstraints:@[ labelSpacing, leadingLeading, trailingTrailing ]];
+  [NSLayoutConstraint activateConstraints:@[ labelSpacing, _leadingUnderlineLeading,
+                                             _trailingUnderlineTrailing ]];
 
   NSLayoutConstraint *leadingBottom = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                                                    attribute:NSLayoutAttributeBottom
@@ -549,6 +552,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 - (void)updateConstraintsOfInput {
   [self updateClearButtonConstraint];
   [self updatePlaceholderPosition];
+  [self updateUnderlineLabels];
 }
 
 #pragma mark - Clear Button Implementation
@@ -886,6 +890,13 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
   return @[ self.placeholderTop, self.placeholderLeading, placeholderTrailing ];
+}
+
+- (void)updateUnderlineLabels {
+  UIEdgeInsets textInsets = self.textInsets;
+
+  self.leadingUnderlineLeading.constant = textInsets.left;
+  self.trailingUnderlineTrailing.constant = -1 * textInsets.right;
 }
 
 #pragma mark - Text Input Events
