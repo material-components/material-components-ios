@@ -22,6 +22,7 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
+static NSString *const MDCTextFieldBorderPathKey = @"MDCTextFieldBorderPathKey";
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
 static NSString *const MDCTextFieldLeftViewModeKey = @"MDCTextFieldLeftViewModeKey";
 static NSString *const MDCTextFieldRightViewModeKey = @"MDCTextFieldRightViewModeKey";
@@ -30,6 +31,7 @@ NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSe
 
 // The image we use for the clear button has a little too much air around it. So we have to shrink
 // by this amount on each side.
+static const CGFloat MDCTextInputBorderRadius = 4.f;
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
@@ -51,6 +53,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 @dynamic borderStyle;
 
+@synthesize borderPath = _borderPath;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -66,6 +70,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   if (self) {
     NSString *interfaceBuilderPlaceholder = super.placeholder;
 
+    _borderPath = [aDecoder decodeObjectForKey:MDCTextFieldBorderPathKey];
     MDCTextInputCommonFundament *fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey];
     _fundament =
         fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
@@ -80,6 +85,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
     }
+
     [self setNeedsLayout];
   }
   return self;
@@ -92,6 +98,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
+  [aCoder encodeObject:self.borderPath forKey:MDCTextFieldBorderPathKey];
   [aCoder encodeObject:self.fundament forKey:MDCTextFieldFundamentKey];
   [aCoder encodeInteger:self.leftViewMode forKey:MDCTextFieldLeftViewModeKey];
   [aCoder encodeInteger:self.rightViewMode forKey:MDCTextFieldRightViewModeKey];
@@ -100,6 +107,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextField *copy = [[[self class] alloc] initWithFrame:self.frame];
 
+  copy.borderPath = [self.borderPath copy];
   copy.fundament = [self.fundament copy];
   copy.enabled = self.isEnabled;
   if ([self.leadingView conformsToProtocol:@protocol(NSCopying)]) {
@@ -186,6 +194,17 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [self invalidateIntrinsicContentSize];
 }
 
+#pragma mark - Border Implementation
+
+- (UIBezierPath *)defaultBorderPath {
+  CGRect borderBound = self.bounds;
+  borderBound.size.height = self.underlineY.constant;
+  return [UIBezierPath bezierPathWithRoundedRect:borderBound
+                               byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                                     cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
+                                                            MDCTextInputBorderRadius)];
+}
+
 #pragma mark - Properties Implementation
 
 - (UIColor *)borderFillColor {
@@ -197,11 +216,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (UIBezierPath *)borderPath {
-  return self.fundament.borderPath;
-}
-
-- (void)setBorderPath:(UIBezierPath *)borderPath {
-  [self.fundament setBorderPath: borderPath];
+  return _borderPath ? _borderPath : [self defaultBorderPath];
 }
 
 - (UIColor *)borderStrokeColor {

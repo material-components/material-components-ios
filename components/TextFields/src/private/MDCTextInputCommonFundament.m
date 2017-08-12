@@ -25,8 +25,6 @@
 
 static NSString *const MDCTextInputFundamentClearBorderFillColorKey =
     @"MDCTextInputFundamentClearBorderFillColorKey";
-static NSString *const MDCTextInputFundamentClearBorderPathKey =
-    @"MDCTextInputFundamentClearBorderPathKey";
 static NSString *const MDCTextInputFundamentClearBorderStrokeColorKey =
     @"MDCTextInputFundamentClearBorderStrokeColorKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
@@ -58,7 +56,6 @@ static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
 
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.5f;
 static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24.f;
-static const CGFloat MDCTextInputBorderRadius = 4.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
 const CGFloat MDCTextInputFullPadding = 16.f;
@@ -145,7 +142,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 @synthesize attributedText = _do_no_use_attributedText;
 @synthesize borderFillColor = _borderFillColor;
 @synthesize borderLayer = _borderLayer;
-@synthesize borderPath = _borderPath;
 @synthesize borderStrokeColor = _borderStrokeColor;
 @synthesize clearButton = _clearButton;
 @synthesize clearButtonColor = _clearButtonColor;
@@ -193,7 +189,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
     [self commonMDCTextInputCommonFundamentInit];
 
     _borderFillColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderFillColorKey];
-    _borderPath = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderPathKey];
     _borderStrokeColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderStrokeColorKey];
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
@@ -219,7 +214,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.borderFillColor forKey:MDCTextInputFundamentClearBorderFillColorKey];
-  [aCoder encodeObject:self.borderPath forKey:MDCTextInputFundamentClearBorderPathKey];
   [aCoder encodeObject:self.borderStrokeColor forKey:MDCTextInputFundamentClearBorderStrokeColorKey];
   [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
@@ -477,15 +471,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   _borderLayer.zPosition = -1.f;
 }
 
-- (UIBezierPath *)defaultBorderPath {
-  CGRect borderBound = self.textInput.bounds;
-  borderBound = CGRectInset(borderBound, 0, self.underlineY.constant);
-  return [UIBezierPath bezierPathWithRoundedRect:borderBound
-                               byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
-                                     cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
-                                                            MDCTextInputBorderRadius)];
-}
-
 - (void)updateBorder {
   self.borderLayer.fillColor = self.borderFillColor.CGColor;
   self.borderLayer.lineWidth = self.borderPath.lineWidth;
@@ -672,7 +657,11 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 }
 
 - (UIBezierPath *)borderPath {
-  return _borderPath ? _borderPath : [self defaultBorderPath];
+  return self.textInput.borderPath;
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  self.textInput.borderPath = borderPath;
 }
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
