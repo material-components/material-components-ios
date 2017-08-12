@@ -34,9 +34,7 @@ static const CGFloat MDCTextInputDefaultFloatingPlaceholderScaleDefault = 0.75f;
 static const CGFloat MDCTextInputDefaultHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputDefaultUnderlineActiveHeight = 2.f;
 static const CGFloat MDCTextInputDefaultUnderlineNormalHeight = 1.f;
-static const CGFloat MDCTextInputDefaultHalfPadding = 8.f;
-static const CGFloat MDCTextInputDefaultFullPadding = 16.f;
-static const CGFloat MDCTextInputDefaultOversizedPadding = 20.f;
+static const CGFloat MDCTextInputDefaultPadding = 8.f;
 
 static const NSTimeInterval MDCTextInputDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
 static const NSTimeInterval MDCTextInputDefaultFloatingPlaceholderUpAnimationDuration = 0.3f;
@@ -90,10 +88,6 @@ static inline UIColor *MDCTextInputDefaultActiveColorDefault() {
   return [MDCPalette bluePalette].accent700;
 }
 
-static inline UIColor *MDCTextInputDefaultBorderFillColorDefault() {
-  return [UIColor colorWithWhite:0 alpha:.06f];
-}
-
 static inline UIColor *MDCTextInputDefaultNormalUnderlineColorDefault() {
   return [UIColor lightGrayColor];
 }
@@ -118,7 +112,7 @@ static UIColor *_floatingPlaceholderColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_normalColorDefault;
 
-static UIRectCorner _cornersRoundedDefault = UIRectCornerTopLeft | UIRectCornerTopRight;
+static UIRectCorner _cornersRoundedDefault = 0;
 
 static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileEditing;
 
@@ -574,7 +568,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (CGPoint)placeholderFloatingPosition {
-  CGFloat placeholderY = MDCTextInputDefaultHalfPadding;
+  CGFloat placeholderY = MDCTextInputDefaultPadding;
 
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because our users wouldn't expect it.
@@ -726,14 +720,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIColor *)borderFillColorDefault {
   if (!_borderFillColorDefault) {
-    _borderFillColorDefault = MDCTextInputDefaultBorderFillColorDefault();
+    _borderFillColorDefault = [UIColor clearColor];
   }
   return _borderFillColorDefault;
 }
 
 + (void)setBorderFillColorDefault:(UIColor *)borderFillColorDefault {
     _borderFillColorDefault = borderFillColorDefault ? borderFillColorDefault :
-        MDCTextInputDefaultBorderFillColorDefault();
+        [UIColor clearColor];
 }
 
 - (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
@@ -1054,14 +1048,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     return textInsets;
   }
 
-  textInsets.top = MDCTextInputDefaultHalfPadding +
+  textInsets.top = MDCTextInputDefaultPadding +
                    MDCRint(self.textInput.placeholderLabel.font.lineHeight *
                            (CGFloat)self.floatingPlaceholderScale.floatValue) +
-                   MDCTextInputDefaultHalfPadding;
+                   MDCTextInputDefaultPadding;
 
-  // The amount of space underneath the underline is variable. It could just be
-  // MDCTextInputDefaultVerticalPadding or the biggest estimated underlineLabel height +
-  // MDCTextInputDefaultVerticalHalfPadding
+  // The amount of space underneath the underline depends on whether there is content in the
+  // underline labels.
   CGFloat underlineLabelsOffset = 0;
   if (self.textInput.leadingUnderlineLabel.text.length) {
     underlineLabelsOffset =
@@ -1073,19 +1066,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
             MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
   }
 
-  CGFloat underlineOffset = underlineLabelsOffset + MDCTextInputDefaultUnderlineActiveHeight +
-      MDCTextInputDefaultHalfPadding;
+  CGFloat underlineOffset = underlineLabelsOffset +
+      MDCTextInputDefaultPadding;
   if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
-    underlineOffset += MDCTextInputDefaultHalfPadding;
+    underlineOffset += MDCTextInputDefaultPadding;
   }
 
   // .bottom = underlineOffset + the half padding above the line but below the text field and any
   // space needed for the labels and / or line.
-  // Legacy has an additional half padding here but this version does not.
+  // Legacy default has an additional half padding here but this version does not.
   textInsets.bottom = underlineOffset;
-
-  textInsets.left = MDCTextInputDefaultFullPadding;
-  textInsets.right = MDCTextInputDefaultFullPadding;
 
   return textInsets;
 }
