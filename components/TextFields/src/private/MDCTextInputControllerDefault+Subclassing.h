@@ -21,4 +21,7 @@
 /** Refreshes the geometry and style of the component. */
 - (void)updateLayout;
 
+/** Refreshes the layout and style of the placeholder label. Called within updateLayout. */
+- (void)updatePlaceholder;
+
 @end

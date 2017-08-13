@@ -16,6 +16,8 @@
 
 #import "MDCTextInputController.h"
 
+extern const CGFloat MDCTextInputDefaultUnderlineActiveHeight;
+
 /**
  Material Design compliant text field from 2017. The logic for 'automagic' error states changes:
  underline color, underline text color.

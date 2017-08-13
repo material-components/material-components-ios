@@ -198,7 +198,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (UIBezierPath *)defaultBorderPath {
   CGRect borderBound = self.bounds;
-  borderBound.size.height = self.underlineY.constant;
+  borderBound.size.height = self.underline.center.y;
   return [UIBezierPath bezierPathWithRoundedRect:borderBound
                                byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
                                      cornerRadii:CGSizeMake(MDCTextInputBorderRadius,

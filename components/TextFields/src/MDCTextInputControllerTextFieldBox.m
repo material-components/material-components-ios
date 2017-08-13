@@ -28,8 +28,11 @@
 
 #pragma mark - Constants
 
-static const CGFloat MDCTextInputTextFieldBoxFullPadding = 8.f;
-static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 8.f;
+static const CGFloat MDCTextInputTextFieldBoxFullPadding = 16.f;
+
+// The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
+// to add points to keep the versions at the same height.
+static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 9.f;
 static const CGFloat MDCTextInputTextFieldBoxNormalPlaceholderPadding = 20.f;
 
 static inline UIColor *MDCTextInputDefaultBorderFillColorDefault() {
@@ -45,6 +48,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
 @interface MDCTextInputControllerTextFieldBox()
 
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
+@property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
 
@@ -87,8 +91,8 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   }
   if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
     underlineLabelsOffset =
-    MAX(underlineLabelsOffset,
-        MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+        MAX(underlineLabelsOffset,
+            MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
   }
 
   CGFloat underlineOffset = underlineLabelsOffset;
@@ -115,15 +119,9 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
 
 #pragma mark - Layout
 
-- (void)updateLayout {
-  if (!self.textInput) {
-    return;
-  }
-
-  [super updateLayout];
-}
-
 - (void)updatePlaceholder {
+  [super updatePlaceholder];
+  
   if (!self.placeholderTop) {
     self.placeholderTop = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
                                                        attribute:NSLayoutAttributeTop
@@ -134,6 +132,17 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
                                                         constant:MDCTextInputTextFieldBoxNormalPlaceholderPadding];
     self.placeholderTop.priority = UILayoutPriorityDefaultHigh;
     self.placeholderTop.active = YES;
+  }
+
+  if (!self.underlineY) {
+    self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
+                                                   attribute:NSLayoutAttributeCenterY
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.textInput
+                                                   attribute:NSLayoutAttributeBottom
+                                                  multiplier:1
+                                                    constant:-1 * (MDCTextInputDefaultUnderlineActiveHeight / 2)];
+    self.underlineY.active = YES;
   }
 }
 

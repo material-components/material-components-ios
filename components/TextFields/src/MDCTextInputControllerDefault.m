@@ -32,7 +32,7 @@
 
 static const CGFloat MDCTextInputDefaultFloatingPlaceholderScaleDefault = 0.75f;
 static const CGFloat MDCTextInputDefaultHintTextOpacity = 0.54f;
-static const CGFloat MDCTextInputDefaultUnderlineActiveHeight = 2.f;
+const CGFloat MDCTextInputDefaultUnderlineActiveHeight = 2.f;
 static const CGFloat MDCTextInputDefaultUnderlineNormalHeight = 1.f;
 static const CGFloat MDCTextInputDefaultPadding = 8.f;
 
