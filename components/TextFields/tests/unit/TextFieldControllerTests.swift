@@ -222,6 +222,22 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertNotEqual(.blue, textField.underline?.color)
   }
 
+  func testPresentationBox() {
+    let textField = MDCTextField()
+    let controller = MDCTextInputControllerTextFieldBox(textInput: textField);
+
+    textField.sizeToFit()
+    XCTAssertEqual(textField.frame.height, 57)
+
+    controller.isFloatingEnabled = true
+    textField.sizeToFit()
+    XCTAssertEqual(textField.frame.height, 57)
+
+    controller.helperText = "Helper"
+    textField.sizeToFit()
+    XCTAssertEqual(Int(textField.frame.height), 80)
+  }
+
   func testPresentationDefault() {
     let textField = MDCTextField()
     let controller = MDCTextInputControllerDefault(textInput: textField)
