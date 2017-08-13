@@ -31,7 +31,6 @@ NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSe
 
 // The image we use for the clear button has a little too much air around it. So we have to shrink
 // by this amount on each side.
-static const CGFloat MDCTextInputBorderRadius = 4.f;
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 

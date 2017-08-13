@@ -57,6 +57,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 @implementation MDCMultilineTextField
 
+@synthesize borderPath = _borderPath;
 @synthesize expandsOnOverflow = _expandsOnOverflow;
 @synthesize minimumLines = _minimumLines;
 @synthesize trailingViewMode = _trailingViewMode;
@@ -463,6 +464,17 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   return trailingViewAlpha;
 }
 
+#pragma mark - Border Implementation
+
+- (UIBezierPath *)defaultBorderPath {
+  CGRect borderBound = self.bounds;
+  borderBound.size.height = self.underline.center.y;
+  return [UIBezierPath bezierPathWithRoundedRect:borderBound
+                               byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                                     cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
+                                                            MDCTextInputBorderRadius)];
+}
+
 #pragma mark - Properties Implementation
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_10_0)
@@ -506,11 +518,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 }
 
 - (UIBezierPath *)borderPath {
-  return self.fundament.borderPath;
-}
-
-- (void)setBorderPath:(UIBezierPath *)borderPath {
-  [self.fundament setBorderPath: borderPath];
+  return _borderPath ? _borderPath : [self defaultBorderPath];
 }
 
 - (UIColor *)borderStrokeColor {
