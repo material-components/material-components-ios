@@ -680,6 +680,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   return self.fundament.underline;
 }
 
+- (BOOL)isUnderlineMasked {
+  return self.fundament.isUnderlineMasked;
+}
+
+- (void)setUnderlineMasked:(BOOL)underlineMasked {
+  self.fundament.underlineMasked = underlineMasked;
+}
+
 #pragma mark - UITextView Notification Observation
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {

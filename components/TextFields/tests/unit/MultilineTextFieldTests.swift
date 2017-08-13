@@ -98,6 +98,7 @@ class MultilineTextFieldTests: XCTestCase {
     let textField = MDCMultilineTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
+    textField.isUnderlineMasked = false;
 
     let controller = MDCTextInputControllerDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
@@ -117,6 +118,7 @@ class MultilineTextFieldTests: XCTestCase {
                    unserializedInput?.translatesAutoresizingMaskIntoConstraints)
     XCTAssertEqual(textField.text,
                    unserializedInput?.text)
+    XCTAssertEqual(textField.isUnderlineMasked, unserializedInput?.isUnderlineMasked)
 
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)
@@ -157,5 +159,13 @@ class MultilineTextFieldTests: XCTestCase {
     } else {
       XCTFail("No underline or underline is wrong class")
     }
+  }
+
+  func testUnderlineMasked() {
+    let textField = MDCTextField()
+    XCTAssert(textField.isUnderlineMasked)
+
+    textField.isUnderlineMasked = false
+    XCTAssertFalse(textField.isUnderlineMasked)
   }
 }

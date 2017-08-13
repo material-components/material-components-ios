@@ -114,6 +114,9 @@
 /** Should it have the standard behavior of disappearing when you type? Defaults to YES. */
 @property(nonatomic, assign) BOOL hidesPlaceholderOnInput;
 
+/** Should the underline be masked by the border path (to have rounded corners? Defaults to YES. */
+@property(nonatomic, assign, getter=isUnderlineMasked) BOOL underlineMasked UI_APPEARANCE_SELECTOR;
+
 /**
  The label on the leading side under the input.
 

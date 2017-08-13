@@ -50,6 +50,8 @@ static NSString *const MDCTextInputFundamentUnderlineViewKey =
     @"MDCTextInputFundamentUnderlineViewKey";
 static NSString *const MDCTextInputFundamentPositioningDelegateKey =
     @"MDCTextInputFundamentPositioningDelegateKey";
+static NSString *const MDCTextInputFundamentUnderlineMaskedKey =
+    @"MDCTextInputFundamentUnderlineMaskedKey";
 
 static NSString *const MDCTextInputUnderlineKVOKeyColor = @"color";
 static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
@@ -157,6 +159,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 @synthesize trailingView = _trailingView;
 @synthesize trailingViewMode = _trailingViewMode;
 @synthesize underline = _underline;
+@synthesize underlineMasked = _underlineMasked;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -207,6 +210,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
     _trailingViewMode =
         (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
     _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
+    _underlineMasked = [aDecoder decodeBoolForKey:MDCTextInputFundamentUnderlineMaskedKey];
 
     [self subscribeForKVO];
   }
@@ -230,6 +234,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputFundamentTrailingLabelKey];
   [aCoder encodeInteger:self.trailingViewMode forKey:MDCTextInputFundamentTrailingViewKey];
   [aCoder encodeObject:self.underline forKey:MDCTextInputFundamentUnderlineViewKey];
+  [aCoder encodeBool:self.isUnderlineMasked forKey:MDCTextInputFundamentUnderlineMaskedKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
@@ -251,6 +256,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   copy.trailingViewMode = self.trailingViewMode;
   copy.underline.lineHeight = self.underline.lineHeight;
   copy.underline.color = self.underline.color;
+  copy.underlineMasked = self.isUnderlineMasked;
 
   return copy;
 }
@@ -263,6 +269,8 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 - (void)commonMDCTextInputCommonFundamentInit {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
+  _underlineMasked = YES;
+  
   [self setupBorder];
 }
 
