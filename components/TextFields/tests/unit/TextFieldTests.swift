@@ -63,7 +63,6 @@ class TextFieldTests: XCTestCase {
     textField.trailingViewMode = .unlessEditing
     textField.underline?.color = .red
     textField.underline?.lineHeight = 10
-    textField.isUnderlineMasked = false
 
     if let textFieldCopy = textField.copy() as? MDCTextField {
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
@@ -85,7 +84,6 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.trailingViewMode, textFieldCopy.trailingViewMode)
       XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
       XCTAssertEqual(textField.underline?.lineHeight, textFieldCopy.underline?.lineHeight)
-      XCTAssertEqual(textField.isUnderlineMasked, textFieldCopy.isUnderlineMasked)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -166,7 +164,6 @@ class TextFieldTests: XCTestCase {
 
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
-    textField.isUnderlineMasked = false;
 
     let controller = MDCTextInputControllerDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
@@ -186,7 +183,6 @@ class TextFieldTests: XCTestCase {
                    unserializedInput?.translatesAutoresizingMaskIntoConstraints)
     XCTAssertEqual(textField.text,
                    unserializedInput?.text)
-    XCTAssertEqual(textField.isUnderlineMasked, unserializedInput?.isUnderlineMasked)
 
     XCTAssertEqual(textField.borderFillColor, unserializedInput?.borderFillColor)
 
@@ -250,13 +246,5 @@ class TextFieldTests: XCTestCase {
     } else {
       XCTFail("No underline or underline is wrong class")
     }
-  }
-
-  func testUnderlineMasked() {
-    let textField = MDCTextField()
-    XCTAssert(textField.isUnderlineMasked)
-
-    textField.isUnderlineMasked = false
-    XCTAssertFalse(textField.isUnderlineMasked)
   }
 }

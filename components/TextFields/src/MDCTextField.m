@@ -311,14 +311,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return _fundament.underline;
 }
 
-- (BOOL)isUnderlineMasked {
-  return self.fundament.isUnderlineMasked;
-}
-
-- (void)setUnderlineMasked:(BOOL)underlineMasked {
-  self.fundament.underlineMasked = underlineMasked;
-}
-
 #pragma mark - UITextField Property Overrides
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_10_0)
