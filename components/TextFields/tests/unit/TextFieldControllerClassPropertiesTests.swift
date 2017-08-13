@@ -65,7 +65,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCPalette.blue.accent700)
     XCTAssertEqual(Float(MDCTextInputControllerDefault.floatingPlaceholderScaleDefault), 0.75)
     XCTAssertEqual(MDCTextInputControllerDefault.isFloatingEnabledDefault, true)
-    XCTAssertEqual(MDCTextInputControllerDefault.cornersRoundedDefault, 0)
+    XCTAssertEqual(MDCTextInputControllerDefault.cornersRoundedDefault, [])
 
     // Test the use of the class properties.
     let textField = MDCTextField()

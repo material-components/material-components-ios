@@ -40,6 +40,8 @@ static NSString *const MDCTextInputFundamentMDCAdjustsFontsKey =
     @"MDCTextInputFundamentMDCAdjustsFontsKey";
 static NSString *const MDCTextInputFundamentPlaceholderLabelKey =
     @"MDCTextInputFundamentPlaceholderLabelKey";
+static NSString *const MDCTextInputFundamentPositioningDelegateKey =
+@"MDCTextInputFundamentPositioningDelegateKey";
 static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
 static NSString *const MDCTextInputFundamentTextInputKey = @"MDCTextInputFundamentTextInputKey";
 static NSString *const MDCTextInputFundamentTrailingLabelKey =
@@ -48,8 +50,6 @@ static NSString *const MDCTextInputFundamentTrailingViewKey =
     @"MDCTextInputFundamentTrailingViewKey";
 static NSString *const MDCTextInputFundamentUnderlineViewKey =
     @"MDCTextInputFundamentUnderlineViewKey";
-static NSString *const MDCTextInputFundamentPositioningDelegateKey =
-    @"MDCTextInputFundamentPositioningDelegateKey";
 static NSString *const MDCTextInputFundamentUnderlineMaskedKey =
     @"MDCTextInputFundamentUnderlineMaskedKey";
 
