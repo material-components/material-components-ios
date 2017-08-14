@@ -5,6 +5,7 @@ section: components
 excerpt: "Text fields allow users to input text into your app."
 iconId: textfields
 path: /catalog/textfields/
+api_doc_root: true
 -->
 
 # Text Fields
