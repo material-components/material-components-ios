@@ -103,23 +103,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   button.disabledAlpha = kDisabledButtonAlpha;
 
   button.exclusiveTouch = YES;
-  if (buttonItem.title != nil) {
-    [button setTitle:buttonItem.title forState:UIControlStateNormal];
-  }
-  if (buttonItem.image != nil) {
-    [button setImage:buttonItem.image forState:UIControlStateNormal];
-  }
-  if (buttonItem.tintColor != nil) {
-    button.tintColor = buttonItem.tintColor;
-  }
 
-  if (buttonItem.title) {
-    button.inkStyle = MDCInkStyleBounded;
-  } else {
-    button.inkStyle = MDCInkStyleUnbounded;
-  }
-
-  button.tag = buttonItem.tag;
+  [MDCAppBarButtonBarBuilder configureButton:button fromButtonItem:buttonItem];
 
   [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
   [button setUnderlyingColorHint:self.buttonUnderlyingColor];
@@ -210,14 +195,36 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
 #pragma mark - Private
 
++ (void)configureButton:(MDCButton *)destinationButton
+         fromButtonItem:(UIBarButtonItem *)sourceButtonItem {
+  if (sourceButtonItem == nil || destinationButton == nil) {
+    return;
+  }
+
+  if (sourceButtonItem.title != nil) {
+    [destinationButton setTitle:sourceButtonItem.title forState:UIControlStateNormal];
+  }
+  if (sourceButtonItem.image != nil) {
+    [destinationButton setImage:sourceButtonItem.image forState:UIControlStateNormal];
+  }
+  if (sourceButtonItem.tintColor != nil) {
+    destinationButton.tintColor = sourceButtonItem.tintColor;
+  }
+
+  if (sourceButtonItem.title) {
+    destinationButton.inkStyle = MDCInkStyleBounded;
+  } else {
+    destinationButton.inkStyle = MDCInkStyleUnbounded;
+  }
+
+  destinationButton.tag = sourceButtonItem.tag;
+}
+
 - (void)updateButton:(UIButton *)button
             withItem:(UIBarButtonItem *)item
           barMetrics:(UIBarMetrics)barMetrics {
   [self updateButton:button withItem:item forState:UIControlStateNormal barMetrics:barMetrics];
-  [self updateButton:button
-            withItem:item
-            forState:UIControlStateHighlighted
-          barMetrics:barMetrics];
+  [self updateButton:button withItem:item forState:UIControlStateHighlighted barMetrics:barMetrics];
   [self updateButton:button withItem:item forState:UIControlStateDisabled barMetrics:barMetrics];
 }
 
