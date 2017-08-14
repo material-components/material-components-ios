@@ -428,11 +428,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     for (NSLayoutConstraint *constraint in constraints) {
       constraint.priority = UILayoutPriorityDefaultLow;
     }
+    [NSLayoutConstraint activateConstraints:constraints];
   }
-}
-
-- (void)updateBorder {
-  self.borderView.frame = CGRectMake(0, 0, self.textInput.bounds.size.width, self.textInput.bounds.size.height);
 }
 
 - (void)unsubscribeFromNotifications {
@@ -481,7 +478,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   [self updateColors];
   [self updateClearButton];
-  [self updateBorder];
 }
 
 - (void)updateConstraintsOfInput {

@@ -15,6 +15,7 @@
  */
 
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "private/MDCTextInputCommonFundament.h"
 
@@ -197,6 +198,10 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
                                byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
                                      cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
                                                             MDCTextInputBorderRadius)];
+}
+
+- (void)updateBorder {
+  self.borderView.borderPath = [self defaultBorderPath];;
 }
 
 #pragma mark - Properties Implementation
@@ -593,6 +598,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   if ([self needsUpdateUnderlinePosition]) {
     [self setNeedsUpdateConstraints];
   }
+  [self updateBorder];
 }
 
 - (void)updateConstraints {

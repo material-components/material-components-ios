@@ -61,7 +61,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 
 @interface MDCTextInputBorderView()
 
-@property(nonatomic, strong) CAShapeLayer *borderLayer;
+@property(nonatomic, strong, readonly) CAShapeLayer *borderLayer;
 @property(nonatomic, strong) CAShapeLayer *borderMask;
 
 @end
@@ -108,17 +108,17 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 - (void)commonMDCTextInputBorderViewInit {
   _borderFillColor = _borderFillColor ? _borderFillColor : [UIColor clearColor];
   _borderStrokeColor = _borderStrokeColor ? _borderStrokeColor : [UIColor clearColor];
-  self.layer.mask = self.borderMask;
+  //self.layer.mask = self.borderMask;
 
   self.userInteractionEnabled = NO;
   self.opaque = NO;
 
-  _borderLayer.backgroundColor = [UIColor clearColor].CGColor;
-  _borderLayer.contentsScale = UIScreen.mainScreen.scale;
-  _borderLayer.opaque = NO;
-  _borderLayer.rasterizationScale = _borderLayer.contentsScale;
-  _borderLayer.shouldRasterize = YES;
-  _borderLayer.zPosition = -1.f;
+  self.borderLayer.backgroundColor = [UIColor clearColor].CGColor;
+  self.borderLayer.contentsScale = UIScreen.mainScreen.scale;
+  self.borderLayer.opaque = NO;
+  self.borderLayer.rasterizationScale = self.borderLayer.contentsScale;
+  self.borderLayer.shouldRasterize = YES;
+  self.borderLayer.zPosition = -1.f;
 }
 
 - (void)updateBorder {
@@ -129,6 +129,39 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   self.borderLayer.miterLimit = self.borderPath.miterLimit;
   self.borderLayer.path = self.borderPath.CGPath;
   self.borderLayer.strokeColor = self.borderStrokeColor.CGColor;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  [self updateBorder];
+}
+
+#pragma mark - Properties
+
+- (void)setBorderFillColor:(UIColor *)borderFillColor {
+  if (_borderFillColor != borderFillColor) {
+    _borderFillColor = borderFillColor;
+    [self updateBorder];
+  }
+}
+
+- (CAShapeLayer *)borderLayer {
+  return (CAShapeLayer *)self.layer;
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  if (_borderPath != borderPath) {
+    _borderPath = borderPath;
+    [self updateBorder];
+  }
+}
+
+- (void)setBorderStrokeColor:(UIColor *)borderStrokeColor {
+  if (_borderStrokeColor != borderStrokeColor) {
+    _borderStrokeColor = borderStrokeColor;
+    [self updateBorder];
+  }
 }
 
 #pragma mark - UIView Methods
