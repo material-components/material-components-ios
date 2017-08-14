@@ -43,7 +43,7 @@ static NSString *const MDCTextInputFundamentMDCAdjustsFontsKey =
 static NSString *const MDCTextInputFundamentPlaceholderLabelKey =
     @"MDCTextInputFundamentPlaceholderLabelKey";
 static NSString *const MDCTextInputFundamentPositioningDelegateKey =
-@"MDCTextInputFundamentPositioningDelegateKey";
+    @"MDCTextInputFundamentPositioningDelegateKey";
 static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
 static NSString *const MDCTextInputFundamentTextInputKey = @"MDCTextInputFundamentTextInputKey";
 static NSString *const MDCTextInputFundamentTrailingLabelKey =
@@ -182,6 +182,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
     [self updateColors];
     [self mdc_setAdjustsFontForContentSizeCategory:NO];
 
+    [self setupBorder];
     [self subscribeForKVO];
   }
   return self;
@@ -212,6 +213,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
         (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
     _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
 
+    [self setupBorder];
     [self subscribeForKVO];
   }
   return self;
@@ -268,7 +270,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 - (void)commonMDCTextInputCommonFundamentInit {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
-  [self setupBorder];
 }
 
 - (void)setupClearButton {
@@ -463,29 +464,32 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 #pragma mark - Border implementation
 
 - (void)setupBorder {
-  _borderFillColor = [UIColor clearColor];
-  _borderStrokeColor = [UIColor clearColor];
+  _borderFillColor = _borderFillColor ? _borderFillColor : [UIColor clearColor];
+  _borderStrokeColor = _borderStrokeColor ? _borderStrokeColor : [UIColor clearColor];
 
-  _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];;
-  _borderView.userInteractionEnabled = NO;
-  _borderView.opaque = NO;
-  [self.textInput addSubview:_borderView];
-  [self.textInput sendSubviewToBack:_borderView];
-  _borderView.translatesAutoresizingMaskIntoConstraints = NO;
+  if (!_borderView) {
+    _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];;
+    _borderView.userInteractionEnabled = NO;
+    _borderView.opaque = NO;
+    [self.textInput addSubview:_borderView];
+    [self.textInput sendSubviewToBack:_borderView];
+    _borderView.translatesAutoresizingMaskIntoConstraints = NO;
 
-  NSArray <NSLayoutConstraint *> *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}];
-  constraints = [constraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
-  for (NSLayoutConstraint *constraint in constraints) {
-    constraint.priority = UILayoutPriorityDefaultLow;
+    NSArray <NSLayoutConstraint *> *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}];
+    constraints = [constraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
+    for (NSLayoutConstraint *constraint in constraints) {
+      constraint.priority = UILayoutPriorityDefaultLow;
+    }
+    
+    _borderLayer.backgroundColor = [UIColor clearColor].CGColor;
+    _borderLayer.contentsScale = UIScreen.mainScreen.scale;
+    _borderLayer.opaque = NO;
+    _borderLayer.rasterizationScale = _borderLayer.contentsScale;
+    _borderLayer.shouldRasterize = YES;
+    _borderLayer.zPosition = -1.f;
   }
 
   _borderLayer = (CAShapeLayer *)_borderView.layer;
-  _borderLayer.backgroundColor = [UIColor clearColor].CGColor;
-  _borderLayer.contentsScale = UIScreen.mainScreen.scale;
-  _borderLayer.opaque = NO;
-  _borderLayer.rasterizationScale = _borderLayer.contentsScale;
-  _borderLayer.shouldRasterize = YES;
-  _borderLayer.zPosition = -1.f;
 }
 
 - (void)updateBorder {
