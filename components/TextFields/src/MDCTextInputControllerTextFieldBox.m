@@ -87,11 +87,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   // Legacy has an additional half padding here but this version does not.
   CGFloat underlineOffset = [self underlineOffset];
 
-  if (self.isFloatingEnabled) {
-    underlineOffset += MDCTextInputTextFieldBoxHalfPadding;
-  } else {
-    underlineOffset += MDCTextInputTextFieldBoxNormalPlaceholderPadding;
-  }
+
 
   textInsets.bottom = underlineOffset;
   textInsets.left = MDCTextInputTextFieldBoxFullPadding;
@@ -117,13 +113,15 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
     self.placeholderTop.active = YES;
   }
 
-  CGFloat underlineYConstant = -1 * ((MDCTextInputDefaultUnderlineActiveHeight / 2) + [self underlineOffset]);
+  UIEdgeInsets textInsets = [self textInsets:UIEdgeInsetsZero];
+  CGFloat underlineYConstant = (MDCTextInputDefaultUnderlineActiveHeight / 2) + textInsets.top +
+                               [self estimatedTextHeight] + [self beneathInputPadding];
   if (!self.underlineY) {
     self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
                                                    attribute:NSLayoutAttributeCenterY
                                                    relatedBy:NSLayoutRelationEqual
                                                       toItem:self.textInput
-                                                   attribute:NSLayoutAttributeBottom
+                                                   attribute:NSLayoutAttributeTop
                                                   multiplier:1
                                                     constant:underlineYConstant];
     self.underlineY.active = YES;
@@ -147,12 +145,28 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   }
 
   CGFloat underlineOffset = underlineLabelsOffset;
+  underlineOffset += [self beneathInputPadding];
 
   if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
     underlineOffset += MDCTextInputTextFieldBoxHalfPadding;
   }
 
   return underlineOffset;
+}
+
+- (CGFloat)estimatedTextHeight {
+  CGFloat estimatedTextHeight = MDCCeil(self.textInput.font.lineHeight * 2.f) / 2.f;
+
+  return estimatedTextHeight;
+}
+
+// The space above the underline but under the text input area.
+- (CGFloat)beneathInputPadding {
+  if (self.isFloatingEnabled) {
+    return MDCTextInputTextFieldBoxHalfPadding;
+  } else {
+    return MDCTextInputTextFieldBoxNormalPlaceholderPadding;
+  }
 }
 
 @end
