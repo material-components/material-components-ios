@@ -16,6 +16,7 @@
 #import "MaterialTextFields.h"
 
 #import "MDCTextInputArt.h"
+#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCommonFundament.h"
 
 #import "MaterialAnimationTiming.h"
@@ -27,6 +28,7 @@ static NSString *const MDCTextInputFundamentClearBorderFillColorKey =
     @"MDCTextInputFundamentClearBorderFillColorKey";
 static NSString *const MDCTextInputFundamentClearBorderStrokeColorKey =
     @"MDCTextInputFundamentClearBorderStrokeColorKey";
+static NSString *const MDCTextInputFundamentBorderViewKey = @"MDCTextInputFundamentBorderViewKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
 static NSString *const MDCTextInputFundamentClearButtonColorKey =
     @"MDCTextInputFundamentClearButtonColorKey";
@@ -144,6 +146,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 @synthesize borderFillColor = _borderFillColor;
 @synthesize borderLayer = _borderLayer;
 @synthesize borderStrokeColor = _borderStrokeColor;
+@synthesize borderView = _borderView;
 @synthesize clearButton = _clearButton;
 @synthesize clearButtonColor = _clearButtonColor;
 @synthesize clearButtonMode = _clearButtonMode;
@@ -191,6 +194,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 
     _borderFillColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderFillColorKey];
     _borderStrokeColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderStrokeColorKey];
+    _borderView = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderViewKey];
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
     _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonColorKey];
@@ -216,6 +220,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.borderFillColor forKey:MDCTextInputFundamentClearBorderFillColorKey];
   [aCoder encodeObject:self.borderStrokeColor forKey:MDCTextInputFundamentClearBorderStrokeColorKey];
+  [aCoder encodeObject:self.borderView forKey:MDCTextInputFundamentBorderViewKey];
   [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
   [aCoder encodeObject:self.clearButtonImage forKey:MDCTextInputFundamentClearButtonImageKey];
@@ -461,9 +466,16 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   _borderFillColor = [UIColor clearColor];
   _borderStrokeColor = [UIColor clearColor];
 
-  _borderLayer = [CAShapeLayer layer];
-  [self.textInput.layer addSublayer:_borderLayer];
+  _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];;
+  [self.textInput addSubview:_borderView];
+  [self.textInput sendSubviewToBack:_borderView];
+  _borderView.translatesAutoresizingMaskIntoConstraints = NO;
+  _borderView.userInteractionEnabled = NO;
+  _borderView.opaque = NO;
+  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
+  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
 
+  _borderLayer = (CAShapeLayer *)_borderView.layer;
   _borderLayer.backgroundColor = [UIColor clearColor].CGColor;
   _borderLayer.contentsScale = UIScreen.mainScreen.scale;
   _borderLayer.opaque = NO;
@@ -473,6 +485,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 }
 
 - (void)updateBorder {
+  self.borderView.frame = CGRectMake(0, 0, self.textInput.bounds.size.width, self.textInput.bounds.size.height);
   self.borderLayer.fillColor = self.borderFillColor.CGColor;
   self.borderLayer.lineWidth = self.borderPath.lineWidth;
   self.borderLayer.lineCap = MDCNSStringFromCGLineCap(self.borderPath.lineCapStyle);
@@ -480,10 +493,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   self.borderLayer.miterLimit = self.borderPath.miterLimit;
   self.borderLayer.path = self.borderPath.CGPath;
   self.borderLayer.strokeColor = self.borderStrokeColor.CGColor;
-
-  self.borderLayer.bounds = self.textInput.bounds;
-  self.borderLayer.position = CGPointMake(CGRectGetMidX(self.textInput.bounds),
-                                          CGRectGetMidY(self.textInput.bounds));
 }
 
 - (void)unsubscribeFromNotifications {

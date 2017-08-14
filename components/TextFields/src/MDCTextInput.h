@@ -29,6 +29,7 @@
    - https://github.com/adamwaite/Validator
  */
 
+@class MDCTextInputBorderView;
 @class MDCTextInputUnderlineView;
 
 @protocol MDCTextInputPositioningDelegate;
@@ -73,6 +74,8 @@
  */
 @property(nonatomic, nullable, strong) UIColor *borderStrokeColor UI_APPEARANCE_SELECTOR;
 
+/** The view that implements a bordered or background filled area. */
+@property(nonatomic, nullable, strong, readonly) MDCTextInputBorderView *borderView;
 
 /**
  A button that can appear inline that when touched clears all entered text and resets the input to

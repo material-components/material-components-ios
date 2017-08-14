@@ -529,6 +529,10 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self.fundament setBorderStrokeColor: borderStrokeColor];
 }
 
+- (MDCTextInputBorderView *)borderView {
+  return self.fundament.borderView;
+}
+
 - (UIButton *)clearButton {
   return self.fundament.clearButton;
 }
