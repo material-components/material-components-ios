@@ -119,54 +119,11 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
                 action:@selector(didTapButton:event:)
       forControlEvents:UIControlEventTouchUpInside];
 
-  UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-
-  UIEdgeInsets (^addInsets)(UIEdgeInsets, UIEdgeInsets) = ^(UIEdgeInsets i1, UIEdgeInsets i2) {
-    UIEdgeInsets sum = i1;
-    sum.left += i2.left;
-    sum.top += i2.top;
-    sum.right += i2.right;
-    sum.bottom += i2.bottom;
-    return sum;
-  };
-
-  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-
-  if ([[button currentTitle] length]) {  // Text-only buttons.
-    contentInsets = addInsets(contentInsets, kTextOnlyButtonInset);
-
-  } else if ([button currentImage]) {  // Image-only buttons.
-    contentInsets = addInsets(contentInsets, kImageOnlyButtonInset);
-
-    if ((layoutHints & MDCBarButtonItemLayoutHintsIsFirstButton) ==
-        MDCBarButtonItemLayoutHintsIsFirstButton) {
-      CGFloat additionalInset =
-          (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
-
-      if (buttonBar.mdc_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionLeftToRight) {
-        contentInsets.left += additionalInset;
-      } else {
-        contentInsets.right += additionalInset;
-      }
-    }
-
-    if ((layoutHints & MDCBarButtonItemLayoutHintsIsLastButton) ==
-        MDCBarButtonItemLayoutHintsIsLastButton) {
-      CGFloat additionalInset =
-          (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
-
-      if (buttonBar.mdc_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionLeftToRight) {
-        contentInsets.right += additionalInset;
-      } else {
-        contentInsets.left += additionalInset;
-      }
-    }
-
-  } else {
-    NSAssert(0, @"No button title or image");
-  }
+  UIEdgeInsets contentInsets = [MDCAppBarButtonBarBuilder
+      contentInsetsForButton:button
+                 layoutHints:layoutHints
+             layoutDirection:[buttonBar mdc_effectiveUserInterfaceLayoutDirection]
+          userInterfaceIdiom:[[UIDevice currentDevice] userInterfaceIdiom]];
 
   // Only add padding to the first item of the button bar.
   if (layoutHints == MDCBarButtonItemLayoutHintsIsFirstButton) {
@@ -194,6 +151,60 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 }
 
 #pragma mark - Private
+
++ (UIEdgeInsets)contentInsetsForButton:(MDCButton *)button
+                           layoutHints:(MDCBarButtonItemLayoutHints)layoutHints
+                       layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection
+                    userInterfaceIdiom:(UIUserInterfaceIdiom)userInterfaceIdiom {
+  UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+
+  UIEdgeInsets (^addInsets)(UIEdgeInsets, UIEdgeInsets) = ^(UIEdgeInsets i1, UIEdgeInsets i2) {
+    UIEdgeInsets sum = i1;
+    sum.left += i2.left;
+    sum.top += i2.top;
+    sum.right += i2.right;
+    sum.bottom += i2.bottom;
+    return sum;
+  };
+
+  const BOOL isPad = userInterfaceIdiom == UIUserInterfaceIdiomPad;
+
+  if ([[button currentTitle] length]) {  // Text-only buttons.
+    contentInsets = addInsets(contentInsets, kTextOnlyButtonInset);
+
+  } else if ([button currentImage]) {  // Image-only buttons.
+    contentInsets = addInsets(contentInsets, kImageOnlyButtonInset);
+
+    if ((layoutHints & MDCBarButtonItemLayoutHintsIsFirstButton) ==
+        MDCBarButtonItemLayoutHintsIsFirstButton) {
+      CGFloat additionalInset =
+          (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
+
+      if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+        contentInsets.left += additionalInset;
+      } else {
+        contentInsets.right += additionalInset;
+      }
+    }
+
+    if ((layoutHints & MDCBarButtonItemLayoutHintsIsLastButton) ==
+        MDCBarButtonItemLayoutHintsIsLastButton) {
+      CGFloat additionalInset =
+          (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
+
+      if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+        contentInsets.right += additionalInset;
+      } else {
+        contentInsets.left += additionalInset;
+      }
+    }
+
+  } else {
+    NSAssert(0, @"No button title or image");
+  }
+
+  return contentInsets;
+}
 
 + (void)configureButton:(MDCButton *)destinationButton
          fromButtonItem:(UIBarButtonItem *)sourceButtonItem {
