@@ -129,15 +129,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
 
-@property(nonatomic, strong) NSLayoutConstraint *characterCountY;
-@property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
-@property(nonatomic, strong) NSLayoutConstraint *clearButtonY;
-@property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailingCharacterCountLeading;
-@property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
-@property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
-@property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
-@property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
-
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *previousLeadingText;
@@ -941,18 +932,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
   [self updateUnderline];
-  [self updateConstraints];
-}
-
-- (void)updateConstraints {
-  // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
-  self.characterCountTrailing.active = NO;
-  self.characterCountY.active = NO;
-  self.clearButtonY.active = NO;
-  self.clearButtonTrailingCharacterCountLeading.active = NO;
-  self.placeholderLeading.active = NO;
-  self.placeholderTrailingCharacterCountLeading.active = NO;
-  self.placeholderTrailingSuperviewTrailing.active = NO;
 }
 
 - (void)updateFontsForDynamicType {

@@ -90,7 +90,6 @@ static UIColor *_inlinePlaceholderColorDefault;
 @property(nonatomic, strong) NSLayoutConstraint *multilineTextViewBottom;
 @property(nonatomic, strong) NSLayoutConstraint *multilineTextViewTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
-@property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
 
