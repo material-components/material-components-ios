@@ -71,6 +71,13 @@ final class TextFieldSwiftExample: UIViewController {
     return phone
   }()
 
+  let message: MDCMultilineTextField = {
+    let message = MDCMultilineTextField()
+    message.placeholder = "Message"
+    message.translatesAutoresizingMaskIntoConstraints = false
+    return message
+  }()
+
   var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -137,6 +144,11 @@ final class TextFieldSwiftExample: UIViewController {
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
+    scrollView.addSubview(message)
+    let messageController = MDCTextInputControllerDefault(textInput: message)
+    message.textView?.delegate = self
+    allTextFieldControllers.append(messageController)
+
     var tag = 0
     for controller in allTextFieldControllers {
       guard let textField = controller.textInput as? MDCTextField else { continue }
@@ -148,9 +160,10 @@ final class TextFieldSwiftExample: UIViewController {
                   "address": address,
                   "city": city,
                   "stateZip": stateZip,
-                  "phone": phone ]
+                  "phone": phone,
+                  "message": message ]
     var constraints = NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-[name]-[address]-[city]-[stateZip]-[phone]-|",
+      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-|",
                                                      options: [.alignAllLeading, .alignAllTrailing],
                                                      metrics: nil,
                                                      views: views)
@@ -297,6 +310,12 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
     }
 
     return false
+  }
+}
+
+extension TextFieldSwiftExample: UITextViewDelegate {
+  func textViewDidEndEditing(_ textView: UITextView) {
+    print(textView.text)
   }
 }
 
