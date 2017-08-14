@@ -29,7 +29,6 @@ env:
 
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
-  - scripts/install_contributor_tools
 
 # The travis_wait prefix ensures that the build doesn't error out because too much time went past
 # without any output being produced.
