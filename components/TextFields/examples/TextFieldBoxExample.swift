@@ -93,7 +93,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Material Text Fields"
+    title = "Material Text Field Boxes"
 
     setupScrollView()
     setupTextFields()
