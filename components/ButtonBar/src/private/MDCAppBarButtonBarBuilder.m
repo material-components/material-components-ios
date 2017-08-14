@@ -22,8 +22,6 @@
 
 #import <objc/runtime.h>
 
-#define IS_FLAG_SET(value, flag) (((value) & (flag)) == (flag))
-
 static const CGFloat kMinimumItemWidth = 36.f;
 
 // The padding around button contents.
@@ -155,7 +153,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   } else if ([button currentImage]) {  // Image-only buttons.
     contentInsets = addInsets(contentInsets, kImageOnlyButtonInset);
 
-    if (IS_FLAG_SET(layoutHints, MDCBarButtonItemLayoutHintsIsFirstButton)) {
+    if ((layoutHints & MDCBarButtonItemLayoutHintsIsFirstButton) ==
+        MDCBarButtonItemLayoutHintsIsFirstButton) {
       CGFloat additionalInset =
           (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
 
@@ -167,7 +166,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
       }
     }
 
-    if (IS_FLAG_SET(layoutHints, MDCBarButtonItemLayoutHintsIsLastButton)) {
+    if ((layoutHints & MDCBarButtonItemLayoutHintsIsLastButton) ==
+        MDCBarButtonItemLayoutHintsIsLastButton) {
       CGFloat additionalInset =
           (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
 
@@ -214,10 +214,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
             withItem:(UIBarButtonItem *)item
           barMetrics:(UIBarMetrics)barMetrics {
   [self updateButton:button withItem:item forState:UIControlStateNormal barMetrics:barMetrics];
-  [self updateButton:button
-            withItem:item
-            forState:UIControlStateHighlighted
-          barMetrics:barMetrics];
+  [self updateButton:button withItem:item forState:UIControlStateHighlighted barMetrics:barMetrics];
   [self updateButton:button withItem:item forState:UIControlStateDisabled barMetrics:barMetrics];
 }
 
