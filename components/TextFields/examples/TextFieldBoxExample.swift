@@ -54,6 +54,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
     state.autocapitalizationType = .allCharacters
     return state
   }()
+  let stateController: MDCTextInputControllerTextFieldBox
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -81,6 +82,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerTextFieldBox(textInput: city)
+    stateController = MDCTextInputControllerTextFieldBox(textInput: state)
     zipController = MDCTextInputControllerTextFieldBox(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
@@ -130,7 +132,6 @@ final class TextFieldBoxSwiftExample: UIViewController {
     scrollView.addSubview(stateZip)
 
     stateZip.addSubview(state)
-    let stateController = MDCTextInputControllerTextFieldBox(textInput: state)
     state.delegate = self
     allTextFieldControllers.append(stateController)
 
@@ -192,6 +193,10 @@ final class TextFieldBoxSwiftExample: UIViewController {
                                                   metrics: nil,
                                                   views: stateZipViews)
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[state]|",
+                                                  options: [],
+                                                  metrics: nil,
+                                                  views: stateZipViews)
+    constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[zip]|",
                                                   options: [],
                                                   metrics: nil,
                                                   views: stateZipViews)
@@ -264,8 +269,15 @@ extension TextFieldBoxSwiftExample: UITextFieldDelegate {
 
     let fullString = NSString(string: rawText).replacingCharacters(in: range, with: string)
 
-    if textField == zip {
-      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
+    if textField == state {
+      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
+        fullString[range].characters.count > 0 {
+        stateController.setErrorText("Error: State can only contain letters",
+                                     errorAccessibilityValue: nil)
+      } else {
+        stateController.setErrorText(nil, errorAccessibilityValue: nil)
+      }
+    } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         fullString[range].characters.count > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
