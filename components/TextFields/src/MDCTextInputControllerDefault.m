@@ -19,6 +19,7 @@
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
+#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
 
@@ -402,7 +403,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 #pragma mark - Border Customization
 
 - (void)updateBorder {
-  self.textInput.borderFillColor = self.borderFillColor;
+  self.textInput.borderView.borderFillColor = self.borderFillColor;
 }
 
 #pragma mark - Character Max Implementation

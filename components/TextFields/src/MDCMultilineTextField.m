@@ -57,7 +57,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 @implementation MDCMultilineTextField
 
-@synthesize borderPath = _borderPath;
 @synthesize expandsOnOverflow = _expandsOnOverflow;
 @synthesize minimumLines = _minimumLines;
 @synthesize trailingViewMode = _trailingViewMode;
@@ -509,28 +508,12 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self.fundament didSetText];
 }
 
-- (UIColor *)borderFillColor {
-  return self.fundament.borderFillColor;
-}
-
-- (void)setBorderFillColor:(UIColor *)borderFillColor {
-  [self.fundament setBorderFillColor: borderFillColor];
-}
-
-- (UIBezierPath *)borderPath {
-  return _borderPath ? _borderPath : [self defaultBorderPath];
-}
-
-- (UIColor *)borderStrokeColor {
-  return self.fundament.borderStrokeColor;
-}
-
-- (void)setBorderStrokeColor:(UIColor *)borderStrokeColor {
-  [self.fundament setBorderStrokeColor: borderStrokeColor];
-}
-
 - (MDCTextInputBorderView *)borderView {
   return self.fundament.borderView;
+}
+
+- (void)setBorderView:(MDCTextInputBorderView *)borderView {
+  self.fundament.borderView = borderView;
 }
 
 - (UIButton *)clearButton {

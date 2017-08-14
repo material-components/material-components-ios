@@ -52,8 +52,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 @dynamic borderStyle;
 
-@synthesize borderPath = _borderPath;
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -69,7 +67,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   if (self) {
     NSString *interfaceBuilderPlaceholder = super.placeholder;
 
-    _borderPath = [aDecoder decodeObjectForKey:MDCTextFieldBorderPathKey];
     MDCTextInputCommonFundament *fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey];
     _fundament =
         fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
@@ -97,7 +94,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.borderPath forKey:MDCTextFieldBorderPathKey];
   [aCoder encodeObject:self.fundament forKey:MDCTextFieldFundamentKey];
   [aCoder encodeInteger:self.leftViewMode forKey:MDCTextFieldLeftViewModeKey];
   [aCoder encodeInteger:self.rightViewMode forKey:MDCTextFieldRightViewModeKey];
@@ -106,7 +102,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextField *copy = [[[self class] alloc] initWithFrame:self.frame];
 
-  copy.borderPath = [self.borderPath copy];
   copy.fundament = [self.fundament copy];
   copy.enabled = self.isEnabled;
   if ([self.leadingView conformsToProtocol:@protocol(NSCopying)]) {
@@ -206,28 +201,12 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 #pragma mark - Properties Implementation
 
-- (UIColor *)borderFillColor {
-  return self.fundament.borderFillColor;
-}
-
-- (void)setBorderFillColor:(UIColor *)borderFillColor {
-  [self.fundament setBorderFillColor: borderFillColor];
-}
-
-- (UIBezierPath *)borderPath {
-  return _borderPath ? _borderPath : [self defaultBorderPath];
-}
-
-- (UIColor *)borderStrokeColor {
-  return self.fundament.borderStrokeColor;
-}
-
-- (void)setBorderStrokeColor:(UIColor *)borderStrokeColor {
-  [self.fundament setBorderStrokeColor: borderStrokeColor];
-}
-
 - (MDCTextInputBorderView *)borderView {
   return self.fundament.borderView;
+}
+
+- (void)setBorderView:(MDCTextInputBorderView *)borderView {
+  self.fundament.borderView = borderView;
 }
 
 - (UIButton *)clearButton {

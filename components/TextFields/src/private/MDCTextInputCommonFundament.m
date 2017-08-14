@@ -13,6 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+
 #import "MaterialTextFields.h"
 
 #import "MDCTextInputArt.h"
@@ -24,10 +25,6 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCTextInputFundamentClearBorderFillColorKey =
-    @"MDCTextInputFundamentClearBorderFillColorKey";
-static NSString *const MDCTextInputFundamentClearBorderStrokeColorKey =
-    @"MDCTextInputFundamentClearBorderStrokeColorKey";
 static NSString *const MDCTextInputFundamentBorderViewKey = @"MDCTextInputFundamentBorderViewKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
 static NSString *const MDCTextInputFundamentClearButtonColorKey =
@@ -80,49 +77,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
 
-static inline NSString * _Nullable MDCNSStringFromCGLineCap(CGLineCap lineCap) {
-  NSString *lineCapString;
-  switch (lineCap) {
-    case kCGLineCapButt:
-      lineCapString = kCALineCapButt;
-      break;
-    case kCGLineCapRound:
-      lineCapString = kCALineCapRound;
-      break;
-    case kCGLineCapSquare:
-      lineCapString = kCALineCapSquare;
-      break;
-    default:
-      break;
-  }
-  return lineCapString;
-}
-
-static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin) {
-  NSString *lineJoinString;
-  switch (lineJoin) {
-    case kCGLineJoinBevel:
-      lineJoinString = kCALineJoinBevel;
-      break;
-    case kCGLineJoinMiter:
-      lineJoinString = kCALineJoinMiter;
-      break;
-    case kCGLineJoinRound:
-      lineJoinString = kCALineJoinRound;
-      break;
-    default:
-      break;
-  }
-  return lineJoinString;
-}
-
 @interface MDCTextInputCommonFundament () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
 
-@property(nonatomic, strong) CAShapeLayer *borderLayer;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
 @property(nonatomic, strong) NSLayoutConstraint *leadingUnderlineLeading;
 @property(nonatomic, strong) NSLayoutConstraint *trailingUnderlineTrailing;
@@ -143,9 +103,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 // We never use the text property. Instead always read from the text field.
 
 @synthesize attributedText = _do_no_use_attributedText;
-@synthesize borderFillColor = _borderFillColor;
-@synthesize borderLayer = _borderLayer;
-@synthesize borderStrokeColor = _borderStrokeColor;
 @synthesize borderView = _borderView;
 @synthesize clearButton = _clearButton;
 @synthesize clearButtonColor = _clearButtonColor;
@@ -193,8 +150,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
-    _borderFillColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderFillColorKey];
-    _borderStrokeColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearBorderStrokeColorKey];
     _borderView = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderViewKey];
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
@@ -220,8 +175,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.borderFillColor forKey:MDCTextInputFundamentClearBorderFillColorKey];
-  [aCoder encodeObject:self.borderStrokeColor forKey:MDCTextInputFundamentClearBorderStrokeColorKey];
   [aCoder encodeObject:self.borderView forKey:MDCTextInputFundamentBorderViewKey];
   [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
@@ -243,9 +196,9 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   MDCTextInputCommonFundament *copy =
       [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
 
-  copy.borderFillColor = self.borderFillColor;
-  copy.borderPath = self.borderPath;
-  copy.borderStrokeColor = self.borderStrokeColor;
+  if ([self.borderView conformsToProtocol:@protocol(NSCopying)]) {
+    copy.borderView = self.borderView.copy;
+  }
   copy.clearButtonColor = self.clearButtonColor;
   copy.clearButtonImage = self.clearButtonImage;
   copy.clearButtonMode = self.clearButtonMode;
@@ -464,13 +417,8 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 #pragma mark - Border implementation
 
 - (void)setupBorder {
-  _borderFillColor = _borderFillColor ? _borderFillColor : [UIColor clearColor];
-  _borderStrokeColor = _borderStrokeColor ? _borderStrokeColor : [UIColor clearColor];
-
   if (!_borderView) {
     _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];;
-    _borderView.userInteractionEnabled = NO;
-    _borderView.opaque = NO;
     [self.textInput addSubview:_borderView];
     [self.textInput sendSubviewToBack:_borderView];
     _borderView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -480,27 +428,11 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
     for (NSLayoutConstraint *constraint in constraints) {
       constraint.priority = UILayoutPriorityDefaultLow;
     }
-    
-    _borderLayer.backgroundColor = [UIColor clearColor].CGColor;
-    _borderLayer.contentsScale = UIScreen.mainScreen.scale;
-    _borderLayer.opaque = NO;
-    _borderLayer.rasterizationScale = _borderLayer.contentsScale;
-    _borderLayer.shouldRasterize = YES;
-    _borderLayer.zPosition = -1.f;
   }
-
-  _borderLayer = (CAShapeLayer *)_borderView.layer;
 }
 
 - (void)updateBorder {
   self.borderView.frame = CGRectMake(0, 0, self.textInput.bounds.size.width, self.textInput.bounds.size.height);
-  self.borderLayer.fillColor = self.borderFillColor.CGColor;
-  self.borderLayer.lineWidth = self.borderPath.lineWidth;
-  self.borderLayer.lineCap = MDCNSStringFromCGLineCap(self.borderPath.lineCapStyle);
-  self.borderLayer.lineJoin = MDCNSStringFromCGLineJoin(self.borderPath.lineJoinStyle);
-  self.borderLayer.miterLimit = self.borderPath.miterLimit;
-  self.borderLayer.path = self.borderPath.CGPath;
-  self.borderLayer.strokeColor = self.borderStrokeColor.CGColor;
 }
 
 - (void)unsubscribeFromNotifications {
@@ -672,14 +604,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 
   [self updatePlaceholderAlpha];
   [self.textInput setNeedsUpdateConstraints];
-}
-
-- (UIBezierPath *)borderPath {
-  return self.textInput.borderPath;
-}
-
-- (void)setBorderPath:(UIBezierPath *)borderPath {
-  self.textInput.borderPath = borderPath;
 }
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
