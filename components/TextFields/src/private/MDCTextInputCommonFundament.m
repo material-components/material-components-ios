@@ -467,13 +467,17 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   _borderStrokeColor = [UIColor clearColor];
 
   _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];;
+  _borderView.userInteractionEnabled = NO;
+  _borderView.opaque = NO;
   [self.textInput addSubview:_borderView];
   [self.textInput sendSubviewToBack:_borderView];
   _borderView.translatesAutoresizingMaskIntoConstraints = NO;
-  _borderView.userInteractionEnabled = NO;
-  _borderView.opaque = NO;
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
+
+  NSArray <NSLayoutConstraint *> *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}];
+  constraints = [constraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
+  for (NSLayoutConstraint *constraint in constraints) {
+    constraint.priority = UILayoutPriorityDefaultLow;
+  }
 
   _borderLayer = (CAShapeLayer *)_borderView.layer;
   _borderLayer.backgroundColor = [UIColor clearColor].CGColor;
