@@ -116,6 +116,8 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   UIEdgeInsets textInsets = [self textInsets:UIEdgeInsetsZero];
   CGFloat underlineYConstant = (MDCTextInputDefaultUnderlineActiveHeight / 2) + textInsets.top +
                                [self estimatedTextHeight] + [self beneathInputPadding];
+  // When floating placeholders are turned off, the underline will drift up unless this is set. Even
+  // tho it is redundant when floating is on, we just keep it on always for simplicity.
   if (!self.underlineY) {
     self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
                                                    attribute:NSLayoutAttributeCenterY

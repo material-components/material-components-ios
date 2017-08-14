@@ -165,7 +165,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   _underlineY =
       [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
+                                   attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:self
                                    attribute:NSLayoutAttributeTop
