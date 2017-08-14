@@ -41,7 +41,7 @@ class TextFieldTests: XCTestCase {
 
   func testBorder() {
     let textField = MDCTextField()
-
+    XCTAssertTrue((textField.borderView?.isDescendant(of: textField))!)
   }
 
   func testCopying() {
