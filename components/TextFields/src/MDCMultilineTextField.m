@@ -75,7 +75,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
-  if (self) {
+  if (self) {\
     MDCTextInputCommonFundament *fundament =
         [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
     _fundament =
@@ -445,7 +445,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 }
 
 - (void)updateBorder {
-  self.borderView.borderPath = [self defaultBorderPath];;
+  self.borderView.borderPath = self.borderPath;
 }
 
 #pragma mark - Properties Implementation
@@ -480,6 +480,17 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (void)setAttributedText:(NSAttributedString *)attributedText {
   self.textView.attributedText = attributedText;
   [self.fundament didSetText];
+}
+
+- (UIBezierPath *)borderPath {
+  return self.fundament.borderPath ? self.fundament.borderPath : [self defaultBorderPath];
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  if (self.fundament.borderPath != borderPath) {
+    self.fundament.borderPath = borderPath;
+    [self updateBorder];
+  }
 }
 
 - (MDCTextInputBorderView *)borderView {

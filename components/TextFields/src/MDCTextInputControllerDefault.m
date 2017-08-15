@@ -32,6 +32,7 @@
 
 #pragma mark - Constants
 
+const CGFloat MDCTextInputDefaultBorderRadius = 4.f;
 static const CGFloat MDCTextInputDefaultFloatingPlaceholderScaleDefault = 0.75f;
 static const CGFloat MDCTextInputDefaultHintTextOpacity = 0.54f;
 const CGFloat MDCTextInputDefaultUnderlineActiveHeight = 2.f;
@@ -403,6 +404,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)updateBorder {
   self.textInput.borderView.borderFillColor = self.borderFillColor;
+  self.textInput.borderPath = [self defaultBorderPath];
+}
+
+- (UIBezierPath *)defaultBorderPath {
+  CGRect borderBound = self.textInput.bounds;
+  borderBound.size.height = CGRectGetMaxY(self.textInput.underline.frame);
+  return [UIBezierPath bezierPathWithRoundedRect:borderBound
+                               byRoundingCorners:self.cornersRounded
+                                     cornerRadii:CGSizeMake(MDCTextInputDefaultBorderRadius,
+                                                            MDCTextInputDefaultBorderRadius)];
 }
 
 #pragma mark - Character Max Implementation

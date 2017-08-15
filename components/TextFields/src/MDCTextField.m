@@ -23,7 +23,6 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCTextFieldBorderPathKey = @"MDCTextFieldBorderPathKey";
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
 static NSString *const MDCTextFieldLeftViewModeKey = @"MDCTextFieldLeftViewModeKey";
 static NSString *const MDCTextFieldRightViewModeKey = @"MDCTextFieldRightViewModeKey";
@@ -193,7 +192,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (UIBezierPath *)defaultBorderPath {
   CGRect borderBound = self.bounds;
-  borderBound.size.height = self.underline.center.y;
+  borderBound.size.height = CGRectGetMaxY(self.underline.frame);
   return [UIBezierPath bezierPathWithRoundedRect:borderBound
                                byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
                                      cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
@@ -201,10 +200,21 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (void)updateBorder {
-  self.borderView.borderPath = [self defaultBorderPath];;
+  self.borderView.borderPath = self.borderPath;
 }
 
 #pragma mark - Properties Implementation
+
+- (UIBezierPath *)borderPath {
+  return self.fundament.borderPath ? self.fundament.borderPath : [self defaultBorderPath];
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  if (self.fundament.borderPath != borderPath) {
+    self.fundament.borderPath = borderPath;
+    [self updateBorder];
+  }
+}
 
 - (MDCTextInputBorderView *)borderView {
   return self.fundament.borderView;
@@ -599,6 +609,10 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     [self setNeedsUpdateConstraints];
   }
   [self updateBorder];
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
+    [self.positioningDelegate textInputDidLayoutSubviews];
+  }
 }
 
 - (void)updateConstraints {

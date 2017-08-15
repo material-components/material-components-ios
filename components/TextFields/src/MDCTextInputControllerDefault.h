@@ -16,6 +16,7 @@
 
 #import "MDCTextInputController.h"
 
+extern const CGFloat MDCTextInputDefaultBorderRadius;
 extern const CGFloat MDCTextInputDefaultUnderlineActiveHeight;
 
 /**

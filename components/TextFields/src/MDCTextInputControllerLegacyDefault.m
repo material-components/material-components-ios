@@ -77,6 +77,10 @@ static NSString *const MDCTextInputControllerDefaultUnderlineViewModeKey =
 
 static NSString *const MDCTextInputControllerDefaultKVOKeyFont = @"font";
 
+static inline UIBezierPath *MDCTextInputDefaultEmptyPath() {
+  return [UIBezierPath bezierPath];
+}
+
 static inline UIColor *MDCTextInputDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputDefaultHintTextOpacity];
 }
@@ -385,6 +389,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   } @catch (NSException *exception) {
   }
   _isRegisteredForKVO = NO;
+}
+
+#pragma mark - Border Customization
+
+- (void)updateBorder {
+  self.textInput.borderPath = MDCTextInputDefaultEmptyPath();
 }
 
 #pragma mark - Character Max Implementation
@@ -959,6 +969,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self updateTrailingUnderlineLabel];
   [self updateUnderline];
   [self updateConstraints];
+  [self updateBorder];
 }
 
 - (void)updateConstraints {

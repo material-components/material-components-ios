@@ -25,6 +25,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
+static NSString *const MDCTextInputFundamentBorderPathKey = @"MDCTextInputFundamentBorderPathKey";
 static NSString *const MDCTextInputFundamentBorderViewKey = @"MDCTextInputFundamentBorderViewKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
 static NSString *const MDCTextInputFundamentClearButtonColorKey =
@@ -103,6 +104,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 // We never use the text property. Instead always read from the text field.
 
 @synthesize attributedText = _do_no_use_attributedText;
+@synthesize borderPath = _borderPath;
 @synthesize borderView = _borderView;
 @synthesize clearButton = _clearButton;
 @synthesize clearButtonColor = _clearButtonColor;
@@ -150,6 +152,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
+    _borderPath = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderPathKey];
     _borderView = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderViewKey];
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
@@ -175,6 +178,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeObject:self.borderPath forKey:MDCTextInputFundamentBorderPathKey];
   [aCoder encodeObject:self.borderView forKey:MDCTextInputFundamentBorderViewKey];
   [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
@@ -196,6 +200,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   MDCTextInputCommonFundament *copy =
       [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
 
+  copy.borderPath = self.borderPath.copy;
   if ([self.borderView conformsToProtocol:@protocol(NSCopying)]) {
     copy.borderView = self.borderView.copy;
   }

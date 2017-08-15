@@ -48,6 +48,18 @@
 /** The text displayed in the text input with style attributes. */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedText;
 
+/**
+ The path of the area to be highlighted with a border. This could either be with a drawn line or a
+ drawn fill.
+
+ Note: The settable propertys of the UIBezierPath are respected (.lineWidth, etc).
+
+ Default is a rectangle of the same width as the input with rounded top corners. That means the
+ underline labels are not included inside the border. Settable propertys of UIBezierPath are left at
+ system defaults.
+ */
+@property(nonatomic, nullable, strong) UIBezierPath *borderPath UI_APPEARANCE_SELECTOR;
+
 /** The view that implements a bordered or background filled area. */
 @property(nonatomic, nullable, strong) MDCTextInputBorderView *borderView;
 

@@ -44,4 +44,6 @@
  */
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
+- (void)textInputDidLayoutSubviews;
+
 @end
