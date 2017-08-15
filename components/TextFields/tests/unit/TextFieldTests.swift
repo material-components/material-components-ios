@@ -68,7 +68,7 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
       XCTAssertEqual(textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
-      XCTAssertEqual(textField.borderView?.borderPath, textFieldCopy.borderView?.borderPath)
+      XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral, textFieldCopy.borderView?.borderPath?.bounds.integral)
       XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
