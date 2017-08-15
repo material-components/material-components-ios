@@ -166,6 +166,13 @@
 @protocol MDCMultilineTextInput <MDCTextInput>
 
 /**
+ Should the text field grow vertically as new lines are added.
+
+ Default is YES.
+ */
+@property(nonatomic, assign) BOOL expandsOnOverflow UI_APPEARANCE_SELECTOR;
+
+/**
  The minimum number of lines to use for rendering text.
 
  The height of an empty text field is measured in potential lines. If the value were 3, the height
@@ -177,12 +184,5 @@
  Default is 1.
  */
 @property(nonatomic, assign) NSUInteger minimumLines UI_APPEARANCE_SELECTOR;
-
-/**
- Should the text field grow vertically as new lines are added.
- 
- Default is YES.
- */
-@property(nonatomic, assign) BOOL expandsOnOverflow UI_APPEARANCE_SELECTOR;
 
 @end
