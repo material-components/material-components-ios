@@ -392,6 +392,6 @@ extension TextFieldKitchenSinkLegacySwiftExample {
 
 extension TextFieldKitchenSinkLegacySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Legacy Kitchen Sink"]
+    return ["Text Field", "[Legacy] Kitchen Sink"]
   }
 }

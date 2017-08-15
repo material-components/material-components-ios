@@ -204,7 +204,7 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Legacy Multiline (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Multiline (Objective C)" ];
 }
 
 + (NSString *)catalogDescription {

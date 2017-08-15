@@ -27,7 +27,7 @@
 @implementation TextFieldInterfaceBuilderLegacyExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Legacy Storyboard (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Storyboard (Objective C)" ];
 }
 
 + (NSString *)catalogStoryboardName {

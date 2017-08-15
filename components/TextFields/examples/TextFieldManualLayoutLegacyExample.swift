@@ -321,6 +321,6 @@ extension TextFieldManualLayoutLegacySwiftExample {
 
 extension TextFieldManualLayoutLegacySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Legacy Manual Layout"]
+    return ["Text Field", "[Legacy] Manual Layout"]
   }
 }
