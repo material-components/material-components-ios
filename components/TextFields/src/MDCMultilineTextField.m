@@ -218,7 +218,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
   NSLayoutConstraint *underlineYTextView =
       [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
+                                   attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:self.textView
                                    attribute:NSLayoutAttributeBottom
