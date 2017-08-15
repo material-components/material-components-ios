@@ -1091,6 +1091,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return textInsets;
 }
 
+- (void)textInputDidLayoutSubviews {
+  [self updateBorder];
+}
+
 #pragma mark - UITextField & UITextView Notification Observation
 
 - (void)textInputDidBeginEditing:(NSNotification *)note {

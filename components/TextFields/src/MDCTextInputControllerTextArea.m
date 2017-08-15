@@ -39,10 +39,9 @@ static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 9.f;
 
 static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
 
-@interface MDCTextInputControllerTextFieldBox()
+@interface MDCTextInputControllerTextArea()
 
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
-@property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
 
@@ -103,10 +102,21 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
 
 - (void)updateLayout {
   [super updateLayout];
-  ((MDCMultilineTextField *)self.textInput).expandsOnOverflow = YES;
-  ((MDCMultilineTextField *)self.textInput).minimumLines = 3;
+
+  if (!self.textInput) {
+    return;
+  }
+  
+  ((MDCMultilineTextField *)self.textInput).expandsOnOverflow = NO;
+  ((MDCMultilineTextField *)self.textInput).minimumLines = 5;
 
   self.textInput.underline.alpha = 0;
+
+  if (!self.placeholderTop) {
+    self.placeholderTop = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.textInput attribute:NSLayoutAttributeTop multiplier:1 constant:MDCTextInputTextFieldBoxFullPadding];
+    self.placeholderTop.priority = UILayoutPriorityDefaultHigh;
+    self.placeholderTop.active = YES;
+  }
 }
 
 // Measurement from bottom to underline center Y
