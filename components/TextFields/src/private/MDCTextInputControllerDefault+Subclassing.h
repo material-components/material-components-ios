@@ -18,6 +18,11 @@
 
 @interface MDCTextInputControllerDefault (Subclassing)
 
+@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
+@property(nonatomic, assign, readonly) BOOL isDisplayingErrorText;
+
+- (void)updateBorder;
+
 /** Refreshes the geometry and style of the component. */
 - (void)updateLayout;
 

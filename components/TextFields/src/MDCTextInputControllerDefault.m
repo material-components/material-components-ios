@@ -15,6 +15,7 @@
  */
 
 #import "MDCTextInputControllerDefault.h"
+#import "private/MDCTextInputControllerDefault+Subclassing.h"
 
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
@@ -130,8 +131,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIRectCorner _cornersRounded;
 }
 
-@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
-@property(nonatomic, assign, readonly) BOOL isDisplayingErrorText;
 @property(nonatomic, assign, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
 
