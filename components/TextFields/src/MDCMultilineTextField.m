@@ -227,38 +227,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   underlineYTextView.priority = UILayoutPriorityDefaultLow;
   underlineYTextView.active = YES;
 
-  NSLayoutConstraint *underlineYSuperviewBottom =
-      [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
-                                   relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:self
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1
-                                    constant:-1 * MDCTextInputHalfPadding];
-  underlineYSuperviewBottom.priority = UILayoutPriorityDefaultLow;
-  underlineYSuperviewBottom.active = YES;
-
-  NSLayoutConstraint *underlineYLeadingLabelTop =
-      [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
-                                   relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:self.leadingUnderlineLabel
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:-1 * MDCTextInputHalfPadding];
-  underlineYLeadingLabelTop.priority = UILayoutPriorityDefaultLow;
-  underlineYLeadingLabelTop.active = YES;
-
-  NSLayoutConstraint *underlineYTrailingLabelTop =
-      [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
-                                   relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:self.trailingUnderlineLabel
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:-1 * MDCTextInputHalfPadding];
-  underlineYTrailingLabelTop.priority = UILayoutPriorityDefaultLow;
-  underlineYTrailingLabelTop.active = YES;
 }
 
 #pragma mark - Layout (Custom)
