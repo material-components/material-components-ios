@@ -17,6 +17,7 @@
 #import "MDCMultilineTextField.h"
 
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "private/MDCTextInputCommonFundament.h"
 
@@ -327,6 +328,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self updateTrailingViewAlpha];
 
   [self.fundament layoutSubviewsOfInput];
+  [self updateBorder];
 }
 
 - (void)updateConstraints {
@@ -472,6 +474,10 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
                                      cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
                                                             MDCTextInputBorderRadius)];
+}
+
+- (void)updateBorder {
+  self.borderView.borderPath = [self defaultBorderPath];;
 }
 
 #pragma mark - Properties Implementation

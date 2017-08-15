@@ -471,6 +471,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)layoutSubviewsOfInput {
   [self updatePlaceholderAlpha];
+  [self.textInput sendSubviewToBack:_borderView];
 
   if ([self needsUpdateConstraintsForPlaceholderToOverlayViewsPosition]) {
     [self.textInput setNeedsUpdateConstraints];
