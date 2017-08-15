@@ -1,3 +1,7 @@
+# 31.0.2
+
+Hotfix release: fixes autolayout bug involving TextFields height.
+
 # 31.0.1
 
 No changes to code or docs, only updating metadata for generating https://material.io/components/ios/.
