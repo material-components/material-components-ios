@@ -297,6 +297,10 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
   [self.fundament layoutSubviewsOfInput];
   [self updateBorder];
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
+    [self.positioningDelegate textInputDidLayoutSubviews];
+  }
 }
 
 - (void)updateConstraints {
