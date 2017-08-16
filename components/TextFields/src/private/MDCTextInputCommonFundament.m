@@ -608,6 +608,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.textInput setNeedsUpdateConstraints];
 }
 
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  if (_borderPath != borderPath) {
+    _borderPath = [UIBezierPath bezierPathWithCGPath:borderPath.CGPath];
+  }
+}
+
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
   if (![_clearButtonColor isEqual:clearButtonColor]) {
     _clearButtonColor = clearButtonColor;
