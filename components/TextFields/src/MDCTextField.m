@@ -135,6 +135,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
                     selector:@selector(textFieldDidChange:)
                         name:UITextFieldTextDidChangeNotification
                       object:self];
+
+  [self setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 1
+                                        forAxis:UILayoutConstraintAxisVertical];
 }
 
 #pragma mark - Underline View Implementation
