@@ -43,6 +43,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
 
+@property(nonatomic, strong) NSLayoutConstraint *textViewBottomSuperviewBottom;
 @property(nonatomic, strong) NSLayoutConstraint *textViewLeading;
 @property(nonatomic, strong) NSLayoutConstraint *textViewMinHeight;
 @property(nonatomic, strong) NSLayoutConstraint *textViewTop;
@@ -183,6 +184,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                    forAxis:UILayoutConstraintAxisVertical];
   [self.textView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
                                                  forAxis:UILayoutConstraintAxisHorizontal];
+  [self.textView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 1
+                                                 forAxis:UILayoutConstraintAxisVertical];
 
   self.textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
   self.textView.textContainer.lineFragmentPadding = 0;
@@ -274,6 +277,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                          verticalFittingPriority:UILayoutPriorityDefaultLow]
           .height;
 
+  CGFloat minimumHeight = [self estimatedTextViewLineHeight] * self.minimumLines;
+  estimatedTextViewHeight = MAX(estimatedTextViewHeight, minimumHeight);
+
   boundingSize.height = [self textInsets].top + estimatedTextViewHeight + [self textInsets].bottom;
 
   return boundingSize;
@@ -320,6 +326,18 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   }
   self.textViewLeading.constant = self.textInsets.left;
 
+  if (!self.textViewBottomSuperviewBottom) {
+    self.textViewBottomSuperviewBottom = [NSLayoutConstraint constraintWithItem:self.textView
+                                                                      attribute:NSLayoutAttributeBottom
+                                                                      relatedBy:NSLayoutRelationLessThanOrEqual
+                                                                         toItem:self
+                                                                      attribute:NSLayoutAttributeBottom
+                                                                     multiplier:1
+                                                                       constant:-1 * MDCTextInputHalfPadding];
+    self.textViewBottomSuperviewBottom.priority = UILayoutPriorityDefaultLow;
+    self.textViewBottomSuperviewBottom.active = YES;
+  }
+
   if (!self.textViewTop) {
     self.textViewTop = [NSLayoutConstraint constraintWithItem:self.textView
                                                     attribute:NSLayoutAttributeTop
@@ -356,9 +374,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                   constant:[self estimatedTextViewLineHeight] * self.minimumLines];
     self.textViewMinHeight.priority = UILayoutPriorityDefaultLow;
   }
-  self.textViewMinHeight.active = self.minimumLines > 1;
+  self.textViewMinHeight.active = YES;
   self.textViewMinHeight.constant = [self estimatedTextViewLineHeight] * self.minimumLines;
-
   [self.fundament updateConstraintsOfInput];
 
   [self updateTrailingViewLayout];

@@ -62,6 +62,8 @@ static NSString *const MDCTextInputControllerDefaultErrorColorKey =
     @"MDCTextInputControllerDefaultErrorColorKey";
 static NSString *const MDCTextInputControllerDefaultErrorTextKey =
     @"MDCTextInputControllerDefaultErrorTextKey";
+static NSString *const MDCTextInputControllerDefaultExpandsOnOverflowKey =
+    @"MDCTextInputControllerDefaultExpandsOnOverflowKey";
 static NSString *const MDCTextInputControllerDefaultFloatingEnabledKey =
     @"MDCTextInputControllerDefaultFloatingEnabledKey";
 static NSString *const MDCTextInputControllerDefaultFloatingPlaceholderColorKey =
@@ -72,6 +74,8 @@ static NSString *const MDCTextInputControllerDefaultHelperTextKey =
     @"MDCTextInputControllerDefaultHelperTextKey";
 static NSString *const MDCTextInputControllerDefaultInlinePlaceholderColorKey =
     @"MDCTextInputControllerDefaultInlinePlaceholderColorKey";
+static NSString *const MDCTextInputControllerDefaultMinimumLinesKey =
+    @"MDCTextInputControllerDefaultMinimumLinesKey";
 static NSString *const MDCTextInputControllerDefaultNormalColorKey =
     @"MDCTextInputControllerDefaultNormalColorKey";
 static NSString *const MDCTextInputControllerDefaultPresentationStyleKey =
@@ -192,6 +196,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCornersRounded];
     _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultDisabledColorKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultErrorColorKey];
+    _expandsOnOverflow = [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultExpandsOnOverflowKey];
     _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultFloatingEnabledKey];
     _floatingPlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultFloatingPlaceholderColorKey];
@@ -199,6 +204,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultFloatingPlaceholderScaleKey];
     _inlinePlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultInlinePlaceholderColorKey];
+    _minimumLines = [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultMinimumLinesKey];
     _normalColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultNormalColorKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTextInputKey];
@@ -239,6 +245,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerDefaultErrorAccessibilityValueKey];
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerDefaultErrorColorKey];
   [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerDefaultErrorTextKey];
+  [aCoder encodeBool:self.expandsOnOverflow forKey:MDCTextInputControllerDefaultExpandsOnOverflowKey];
   [aCoder encodeBool:self.isFloatingEnabled forKey:MDCTextInputControllerDefaultFloatingEnabledKey];
   [aCoder encodeObject:self.floatingPlaceholderColor
                 forKey:MDCTextInputControllerDefaultFloatingPlaceholderColorKey];
@@ -247,6 +254,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerDefaultHelperTextKey];
   [aCoder encodeObject:self.inlinePlaceholderColor
                 forKey:MDCTextInputControllerDefaultInlinePlaceholderColorKey];
+  [aCoder encodeInteger:self.minimumLines forKey:MDCTextInputControllerDefaultMinimumLinesKey];
   [aCoder encodeObject:self.normalColor
                 forKey:MDCTextInputControllerDefaultNormalColorKey];
   [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerDefaultTextInputKey];
@@ -267,11 +275,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   copy.errorAccessibilityValue = [self.errorAccessibilityValue copy];
   copy.errorColor = self.errorColor;
   copy.errorText = [self.errorText copy];
+  copy.expandsOnOverflow = self.expandsOnOverflow;
   copy.floatingEnabled = self.isFloatingEnabled;
   copy.floatingPlaceholderColor = self.floatingPlaceholderColor;
   copy.floatingPlaceholderScale = self.floatingPlaceholderScale;
   copy.helperText = [self.helperText copy];
   copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
+  copy.minimumLines = self.minimumLines;
   copy.normalColor = self.normalColor;
   copy.previousLeadingText = [self.previousLeadingText copy];
   copy.previousPlaceholderColor = self.previousPlaceholderColor;
@@ -290,8 +300,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _cornersRounded = [[self class] cornersRoundedDefault];
   _characterCountViewMode = UITextFieldViewModeAlways;
   _disabledColor = [[self class] disabledColorDefault];
+  _expandsOnOverflow = YES;
   _floatingEnabled = [[self class] isFloatingEnabledDefault];
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
+  _minimumLines = 1;
   _underlineViewMode = [[self class] underlineViewModeDefault];
   _textInput.hidesPlaceholderOnInput = NO;
 
@@ -311,6 +323,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
   _textInput.hidesPlaceholderOnInput = !self.isFloatingEnabled;
+
+  if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
+      [_textInput respondsToSelector:@selector(setMinimumLines:)]) {
+    ((MDCMultilineTextField *)_textInput).minimumLines = self.minimumLines;
+  }
+
+  if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
+      [_textInput respondsToSelector:@selector(setExpandsOnOverflow:)]) {
+    ((MDCMultilineTextField *)_textInput).expandsOnOverflow = self.expandsOnOverflow;
+  }
 
   [self subscribeForNotifications];
   [self subscribeForKVO];
@@ -830,6 +852,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _errorText = [errorText copy];
 }
 
+- (void)setExpandsOnOverflow:(BOOL)expandsOnOverflow {
+  if (_expandsOnOverflow != expandsOnOverflow) {
+    _expandsOnOverflow = expandsOnOverflow;
+    if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
+        [_textInput respondsToSelector:@selector(setExpandsOnOverflow:)]) {
+      ((MDCMultilineTextField *)_textInput).expandsOnOverflow = expandsOnOverflow;
+    }
+  }
+}
+
 - (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
   if (![_floatingPlaceholderColor isEqual:floatingPlaceholderColor]) {
     _floatingPlaceholderColor = floatingPlaceholderColor;
@@ -947,6 +979,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (BOOL)isDisplayingErrorText {
   return self.errorText != nil;
+}
+
+- (void)setMinimumLines:(NSUInteger)minimumLines {
+  if (_minimumLines != minimumLines) {
+    _minimumLines = minimumLines;
+    if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
+        [_textInput respondsToSelector:@selector(setMinimumLines:)]) {
+      ((MDCMultilineTextField *)_textInput).minimumLines = minimumLines;
+    }
+  }
 }
 
 - (UIColor *)normalColor {
@@ -1305,3 +1347,4 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 @end
+

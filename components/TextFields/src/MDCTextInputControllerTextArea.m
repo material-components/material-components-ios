@@ -30,10 +30,11 @@
 #pragma mark - Constants
 
 static const CGFloat MDCTextInputTextFieldBoxFullPadding = 16.f;
+static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 8.f;
 
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
-static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 9.f;
+static const CGFloat MDCTextInputTextFieldBoxPaddingAdjustment = 1.f;
 
 #pragma mark - Class Properties
 
@@ -73,19 +74,19 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
 
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
-    textInsets.top = MDCTextInputTextFieldBoxHalfPadding + MDCRint(self.textInput.placeholderLabel.font.lineHeight *
-                                                                   (CGFloat)self.floatingPlaceholderScale.floatValue) + MDCTextInputTextFieldBoxHalfPadding;
+  textInsets.top = MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxPaddingAdjustment +
+      MDCRint(self.textInput.placeholderLabel.font.lineHeight *
+              (CGFloat)self.floatingPlaceholderScale.floatValue) +
+                  MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxPaddingAdjustment;
 
   // .bottom = underlineOffset + the half padding above the line but below the text field and any
   // space needed for the labels and / or line.
   // Legacy has an additional half padding here but this version does not.
   CGFloat underlineOffset = [self underlineOffset];
 
-
-
   textInsets.bottom = underlineOffset;
   textInsets.left = MDCTextInputTextFieldBoxFullPadding;
-  textInsets.right = MDCTextInputTextFieldBoxHalfPadding;
+  textInsets.right = MDCTextInputTextFieldBoxFullPadding;
 
   return textInsets;
 }

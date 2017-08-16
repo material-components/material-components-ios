@@ -118,7 +118,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
       [self beneathInputPadding];
   // When floating placeholders are turned off, the underline will drift up unless this is set. Even
   // tho it is redundant when floating is on, we just keep it on always for simplicity.
-  // This is an issue only on singleline text fields.
+  // Note: This is an issue only on singleline text fields.
   if (![self.textInput isKindOfClass:[MDCMultilineTextField class]] && !self.underlineY) {
     self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
                                                    attribute:NSLayoutAttributeBottom
