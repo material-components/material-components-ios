@@ -21,6 +21,7 @@
 // Be sure to keep your controllers in memory somewhere like a property:
 @property(nonatomic, strong) MDCTextInputControllerTextArea *textFieldControllerTextArea;
 @property(nonatomic, strong) MDCTextInputControllerTextFieldBox *textFieldControllerTextFieldBox;
+@property(nonatomic, strong) MDCTextInputControllerTextFieldBox *textFieldControllerTextAreaBox;
 @property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
 @property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFloating;
 @property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldControllerFullWidth;
@@ -80,6 +81,18 @@
   self.textFieldControllerTextFieldBox =
       [[MDCTextInputControllerTextFieldBox alloc] initWithTextInput:multilineTextFieldTextBox];
 
+  MDCMultilineTextField *multilineTextFieldTextAreaBox = [[MDCMultilineTextField alloc] init];
+  [self.scrollView addSubview:multilineTextFieldTextAreaBox];
+  multilineTextFieldTextAreaBox.translatesAutoresizingMaskIntoConstraints = NO;
+
+  multilineTextFieldTextAreaBox.placeholder = @"Text Area Box";
+  multilineTextFieldTextAreaBox.textView.delegate = self;
+
+  self.textFieldControllerTextAreaBox =
+      [[MDCTextInputControllerTextFieldBox alloc] initWithTextInput:multilineTextFieldTextAreaBox];
+  self.textFieldControllerTextAreaBox.minimumLines = 5;
+  self.textFieldControllerTextAreaBox.expandsOnOverflow = NO;
+
   MDCMultilineTextField *multilineTextFieldUnstyled = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldUnstyled];
   multilineTextFieldUnstyled.translatesAutoresizingMaskIntoConstraints = NO;
@@ -136,12 +149,13 @@
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:
-                                  @"V:|-20-[textArea]-[textBox]-[unstyled]-[unstyledArea]-[floating]-[charMax]-[fullWidth]-|"
+                                  @"V:|-20-[textArea]-[textBox]-[textAreaBox]-[unstyled]-[unstyledArea]-[floating]-[charMax]-[fullWidth]-|"
                                                   options:0
                                                   metrics:nil
                                                     views:@{
                                                             @"textArea" : multilineTextFieldTextArea,
                                                             @"textBox" : multilineTextFieldTextBox,
+                                                            @"textAreaBox" : multilineTextFieldTextAreaBox,
                                                             @"unstyled" : multilineTextFieldUnstyled,
                                                       @"unstyledArea" : multilineTextFieldUnstyledArea,
                                                       @"charMax" : multilineTextFieldCharMaxDefault,
@@ -164,6 +178,14 @@
                         metrics:nil
                         views:@{
                                 @"textBox" : multilineTextFieldTextBox
+                                }]];
+  [NSLayoutConstraint
+   activateConstraints:[NSLayoutConstraint
+                        constraintsWithVisualFormat:@"H:|-[textAreaBox]-|"
+                        options:0
+                        metrics:nil
+                        views:@{
+                                @"textAreaBox" : multilineTextFieldTextAreaBox
                                 }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
