@@ -12,7 +12,7 @@ api_doc_root: true
 
 <a alt="Text Fields"><img src="docs/assets/textfields.png" width="375px"></a>
 
-Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states.
+Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text, error states, and styles.
 <!--{: .intro :}-->
 
 ### Material Design Specifications
@@ -47,24 +47,26 @@ pod install
 
 ### Overview
 
-Text Fields provides both a single-line version based on UITextField and a multi-line version based on UITextView as well as objects that customize the text fields' behavior and appearance.
+Text Fields provides both a single-line version based on UITextField and a multi-line version backed by UITextView as well as objects that customize the text fields' behavior and appearance called 'Text Input Controllers'.
 
-The actual components (MDCTextField & MDCTextView) are 'dumb': they do not have styles, animations, or advanced features. They are designed to be controlled from the outside, via very liberal public API, with a Text Input Controller.
+The actual components (MDCTextField & MDCMultilineTextField) are 'dumb': they do not have styles, animations, or advanced features. They are designed to be controlled from the outside, via very liberal public API, with a text input controller.
 
-A text input controller is included (MDCTextInputController) that supplies the features and styles defined in the Material guidelines. It manipulates the exposed elements of the text field to make placeholders float or error text appear red.
+One text input controller is included (MDCTextInputControllerDefault) manipulates the exposed elements of the text field to make placeholders float.
+
+There is also a text input controller for full width forms (MDCTextInputControllerFullWidth). Like MDCTextInputControllerDefault, it also handles errors and character counting.
+
+Customize the included text input controllers via their parameters or create your own to express your app's brand identity thru typography, color, and animation: if the placeholder should move, add constraints or change the frame. If the trailing label should display validation information, change the text and color it.
 
 This pattern is not a delegation or data source-like relationship but rather a controller-to-view relationship: the text field does not require nor expect to be served data or instruction but is instead malleable and easily influenced by outside interference.
 
-Customize the included MDCTextInputController and its parameters or create your own to express your app's brand identity thru typography, color, and animation: if the placeholder should move, add constraints or change the frame. If the trailing label should display validation information, change the text and color it.
-
-### Text Field Classes
+### Text Field Classes: The Inputs
 
 #### Text Field
 
 This is a single line text input. It's subclassed from UITextField and supports all the features you'd expect from a UITextField:
 
 * Placeholder
-* Associate views (left and right)
+* Overlay views (left and right / leading and trailing)
 * Custom fonts, colors
 * Clear button
 
@@ -75,7 +77,15 @@ as well as new features:
 * Custom layouts
 * Persistable placeholder
 
-#### Text Input Controller
+#### Multiline Text Field
+
+This is a multiline line text input. It's subclassed from UIView with an embedded UITextView. It supports all the features of the single line text field and UITextView plus:
+
+* Minimum number of lines
+
+### Text Field Classes: The Controllers
+
+#### Default Text Input Controller
 
 This class holds all the 'magic' logic necessary to make the naturally 'dumb' text field and text view behave with:
 
@@ -86,9 +96,13 @@ This class holds all the 'magic' logic necessary to make the naturally 'dumb' te
 
 - - -
 
+#### Full Width Text Input Controller
+
+Similar to the default text input controller but optimized for full width forms like emails.
+
 ## Usage
 
-A text field or text view can be added to a view hierarchy the same way UITextField and UITextView are but to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), an MDCTextInputController must be initialized to manage the text field.
+A text field that conforms to MDCTextInput can be added to a view hierarchy the same way UITextField and UIView are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol MDCTextInputController must be initialized to manage the text field.
 
 **NOTE:** Expect to interact with _both the text field_ (for the traditional API) _and the controller_ (for changes affecting the presentation and state).
 
@@ -110,41 +124,7 @@ import MaterialComponents.MaterialTextFields
 ~~~
 <!--</div>-->
 
-## Examples
-
-### Text Field with Character Count
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-~~~ swift
-// First the text field component is setup just like a UITextField
-let textFieldDefaultCharMax = MDCTextField()
-scrollView.addSubview(textFieldDefaultCharMax)
-
-textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
-textFieldDefaultCharMax.delegate = self
-
-// Second the controller is created to manage the text field
-textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax) // Hold on as a property
-textFieldControllerDefaultCharMax.characterCountMax = 50
-~~~
-
-#### Objective-C
-
-~~~ objc
-// First the text field component is setup just like a UITextField
-MDCTextField *textFieldDefaultCharMax = [[MDCTextField alloc] init];
-[self.scrollView addSubview:textFieldDefaultCharMax];
-
-textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
-textFieldDefaultCharMax.delegate = self;
-
-// Second the controller is created to manage the text field
-self.textFieldControllerDefaultCharMax = [[MDCTextInputController alloc] initWithTextInput: textFieldDefaultCharMax];
-textFieldControllerDefaultCharMax.characterCountMax = 50;
-~~~
-<!--</div>-->
+## Examples - Single Line
 
 ### Text Field with Floating Placeholder
 
@@ -158,9 +138,7 @@ scrollView.addSubview(textFieldFloating)
 textFieldFloating.placeholder = "Full Name"
 textFieldFloating.delegate = self
 
-textFieldControllerFloating = MDCTextInputController(input: textFieldFloating) // Hold on as a property
-
-textFieldControllerFloating.presentation = .floatingPlaceholder
+textFieldControllerFloating = MDCTextInputControllerDefault(input: textFieldFloating) // Hold on as a property
 ~~~
 
 #### Objective-C
@@ -172,8 +150,110 @@ MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
 textFieldFloating.placeholder = @"Full Name";
 textFieldFloating.delegate = self;
 
-self.textFieldControllerFloating = [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
-
-textFieldControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
+self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
 ~~~
 <!--</div>-->
+
+### Text Field with Character Count and Inline Placeholder
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+// First the text field component is setup just like a UITextField
+let textFieldDefaultCharMax = MDCTextField()
+scrollView.addSubview(textFieldDefaultCharMax)
+
+textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
+textFieldDefaultCharMax.delegate = self
+
+// Second the controller is created to manage the text field
+textFieldControllerDefaultCharMax = MDCTextInputControllerDefault(input: textFieldDefaultCharMax) // Hold on as a property
+textFieldControllerDefaultCharMax.characterCountMax = 50
+textFieldControllerDefaultCharMax.isFloatingEnabled = false
+~~~
+
+#### Objective-C
+
+~~~ objc
+// First the text field component is setup just like a UITextField
+MDCTextField *textFieldDefaultCharMax = [[MDCTextField alloc] init];
+[self.scrollView addSubview:textFieldDefaultCharMax];
+
+textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
+textFieldDefaultCharMax.delegate = self;
+
+// Second the controller is created to manage the text field
+self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerDefault alloc] initWithTextInput: textFieldDefaultCharMax];
+self.textFieldControllerDefaultCharMax.characterCountMax = 50;
+self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
+
+~~~
+<!--</div>-->
+
+## Examples - Multi Line
+
+### Text Field with Floating Placeholder
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+let textFieldFloating = MDCMultilineTextField()
+scrollView.addSubview(textFieldFloating)
+
+textFieldFloating.placeholder = "Full Name"
+textFieldFloating.delegate = self
+
+textFieldControllerFloating = MDCTextInputControllerDefault(input: textFieldFloating) // Hold on as a property
+~~~
+
+#### Objective-C
+
+~~~ objc
+MDCMultilineTextField *textFieldFloating = [[MDCMultilineTextField alloc] init];
+[self.scrollView addSubview:textFieldFloating];
+
+textFieldFloating.placeholder = @"Full Name";
+textFieldFloating.delegate = self;
+
+self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
+~~~
+<!--</div>-->
+
+### Text Field with Character Count and Inline Placeholder
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+// First the text field component is setup just like a UITextField
+let textFieldDefaultCharMax = MDCMultilineTextField()
+scrollView.addSubview(textFieldDefaultCharMax)
+
+textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
+textFieldDefaultCharMax.delegate = self
+
+// Second the controller is created to manage the text field
+textFieldControllerDefaultCharMax = MDCTextInputControllerDefault(input: textFieldDefaultCharMax) // Hold on as a property
+textFieldControllerDefaultCharMax.characterCountMax = 50
+textFieldControllerDefaultCharMax.isFloatingEnabled = false
+~~~
+
+#### Objective-C
+
+~~~ objc
+// First the text field component is setup just like a UITextField
+MDCMultilineTextField *textFieldDefaultCharMax = [[MDCMultilineTextField alloc] init];
+[self.scrollView addSubview:textFieldDefaultCharMax];
+
+textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
+textFieldDefaultCharMax.delegate = self;
+
+// Second the controller is created to manage the text field
+self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerDefault alloc] initWithTextInput: textFieldDefaultCharMax];
+self.textFieldControllerDefaultCharMax.characterCountMax = 50;
+self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
+~~~
+<!--</div>-->
+
