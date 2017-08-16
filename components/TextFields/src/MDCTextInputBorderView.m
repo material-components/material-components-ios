@@ -62,7 +62,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 @interface MDCTextInputBorderView()
 
 @property(nonatomic, strong, readonly) CAShapeLayer *borderLayer;
-@property(nonatomic, strong) CAShapeLayer *borderMask;
 
 @end
 
@@ -108,7 +107,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 - (void)commonMDCTextInputBorderViewInit {
   _borderFillColor = _borderFillColor ? _borderFillColor : [UIColor clearColor];
   _borderStrokeColor = _borderStrokeColor ? _borderStrokeColor : [UIColor clearColor];
-  //self.layer.mask = self.borderMask;
 
   self.userInteractionEnabled = NO;
   self.opaque = NO;
@@ -168,16 +166,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 
 + (Class)layerClass {
   return [CAShapeLayer class];
-}
-
-#pragma mark - Mask Implementation
-
-- (CAShapeLayer *)borderMask {
-  if (!_borderMask) {
-    _borderMask = [CAShapeLayer layer];
-  }
-
-  return _borderMask;
 }
 
 @end
