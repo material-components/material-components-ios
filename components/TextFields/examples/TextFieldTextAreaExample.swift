@@ -163,7 +163,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
                   "phone": phone,
                   "message": message ]
     var constraints = NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-|",
+      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-20-|",
                                                      options: [.alignAllLeading, .alignAllTrailing],
                                                      metrics: nil,
                                                      views: views)
