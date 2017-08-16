@@ -26,8 +26,18 @@
  screen.
  */
 typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
-  MDCFloatingButtonShapeDefault,
-  MDCFloatingButtonShapeMini
+  /**
+   A 56-point circular button surrounding a 24-point square icon or short text.
+   */
+  MDCFloatingButtonShapeDefault = 0,
+  /**
+   A 40-point circular button surrounding a 24-point square icon or short text.
+   */
+  MDCFloatingButtonShapeMini = 1,
+  /**
+   A 56-point circular button surrounding a 36-point square icon or short text.
+   */
+  MDCFloatingButtonShapeLargeIcon = 2
 };
 
 /**
