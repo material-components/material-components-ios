@@ -144,6 +144,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   _minimumLines = 1;
 
   [self setupUnderlineConstraints];
+
+  [self setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 1
+                                        forAxis:UILayoutConstraintAxisVertical];
 }
 
 - (BOOL)becomeFirstResponder {
