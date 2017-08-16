@@ -358,10 +358,11 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                             toItem:self.clearButton
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
-                                                          constant:0];
+                                                          constant:-1 * [self textInsets].right];
     self.textViewTrailing.priority = UILayoutPriorityDefaultLow;
     self.textViewTrailing.active = YES;
   }
+  self.textViewTrailing.constant = -1 * [self textInsets].right;
 
   if (!self.textViewMinHeight) {
     self.textViewMinHeight = [NSLayoutConstraint

@@ -84,6 +84,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
 
+@property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
 @property(nonatomic, strong) NSLayoutConstraint *leadingUnderlineLeading;
 @property(nonatomic, strong) NSLayoutConstraint *trailingUnderlineTrailing;
@@ -285,18 +286,18 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                            constant:MDCTextInputHalfPadding];
   self.placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint *trailingSuperview =
+  self.clearButtonTrailing =
       [NSLayoutConstraint constraintWithItem:_clearButton
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:_textInput
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
-                                    constant:MDCTextInputClearButtonImageBuiltInPadding];
-  trailingSuperview.priority = UILayoutPriorityDefaultLow;
+                                    constant:-1 * (MDCTextInputClearButtonImageBuiltInPadding + [self textInsets].right)];
+  self.clearButtonTrailing.priority = UILayoutPriorityDefaultLow;
 
   [NSLayoutConstraint activateConstraints:@[
-    height, self.clearButtonWidth, bottom, self.placeholderLeading, trailingSuperview
+    height, self.clearButtonWidth, bottom, self.placeholderLeading, self.clearButtonTrailing
   ]];
 
   [_clearButton addTarget:self
@@ -487,7 +488,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)updateConstraintsOfInput {
-  [self updateClearButtonConstraint];
+  [self updateClearButtonConstraints];
   [self updatePlaceholderPosition];
   [self updateUnderlineLabels];
 }
@@ -519,12 +520,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.clearButton.superview bringSubviewToFront:self.clearButton];
 }
 
-- (void)updateClearButtonConstraint {
+- (void)updateClearButtonConstraints {
   CGFloat constant = MDCTextInputClearButtonImageSquareWidthHeight * [self clearButtonAlpha];
   if (self.clearButtonWidth.constant != constant) {
     self.clearButtonWidth.constant = constant;
     [self.textInput invalidateIntrinsicContentSize];
   }
+
+  self.clearButtonTrailing.constant =  MDCTextInputClearButtonImageBuiltInPadding - [self textInsets].right;
 }
 
 - (CGFloat)clearButtonAlpha {
