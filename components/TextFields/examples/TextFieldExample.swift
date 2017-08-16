@@ -83,7 +83,6 @@ final class TextFieldSwiftExample: UIViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     stateController = MDCTextInputControllerDefault(textInput: state)
     cityController = MDCTextInputControllerDefault(textInput: city)
-    stateController = MDCTextInputControllerDefault(textInput: state)
     zipController = MDCTextInputControllerDefault(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
