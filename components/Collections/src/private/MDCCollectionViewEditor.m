@@ -767,7 +767,11 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
 // The distance an item must be panned before it is dismissed. Currently half of the bounds width.
 - (CGFloat)distanceThresholdForDismissal {
-  return _collectionView.bounds.size.width / 2;
+  if (_cellSnapshot) {
+    return _cellSnapshot.bounds.size.width / 2;
+  } else {
+    return _collectionView.bounds.size.width / 2;
+  }
 }
 
 - (CGFloat)dismissalAlphaForTranslationX:(CGFloat)translationX {
