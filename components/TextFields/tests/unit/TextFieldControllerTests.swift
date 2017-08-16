@@ -37,6 +37,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.activeColor = .blue
     controller.normalColor = .white
     controller.underlineViewMode = .always
+    controller.minimumLines = 5
+    controller.expandsOnOverflow = false
 
     if let controllerCopy = controller.copy() as? MDCTextInputControllerDefault {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
@@ -51,6 +53,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
       XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
+      XCTAssertEqual(controller.minimumLines, controllerCopy.minimumLines)
+      XCTAssertEqual(controller.expandsOnOverflow, controller.expandsOnOverflow)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -302,6 +306,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.activeColor = .blue
     controller.normalColor = .white
     controller.underlineViewMode = .always
+    controller.minimumLines = 2
+    controller.expandsOnOverflow = false
 
     let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
     XCTAssertNotNil(serializedController)
@@ -328,6 +334,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(controller.activeColor, unserializedController?.activeColor)
     XCTAssertEqual(controller.normalColor, unserializedController?.normalColor)
     XCTAssertEqual(controller.underlineViewMode, unserializedController?.underlineViewMode)
+    XCTAssertEqual(controller.minimumLines, unserializedController?.minimumLines)
+    XCTAssertEqual(controller.expandsOnOverflow, unserializedController?.expandsOnOverflow)
   }
 
   func testSerializationFullWidth() {
