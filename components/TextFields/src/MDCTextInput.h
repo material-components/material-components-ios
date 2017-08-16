@@ -58,7 +58,7 @@
  underline labels are not included inside the border. Settable propertys of UIBezierPath are left at
  system defaults.
  */
-@property(nonatomic, nullable, strong) UIBezierPath *borderPath UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, copy) UIBezierPath *borderPath UI_APPEARANCE_SELECTOR;
 
 /** The view that implements a bordered or background filled area. */
 @property(nonatomic, nullable, strong) MDCTextInputBorderView *borderView;

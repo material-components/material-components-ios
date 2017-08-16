@@ -75,7 +75,7 @@
 /**
  The corners to be rounded in the border area.
 
- Default is cornersRoundedDefault;
+ Default is cornersRoundedDefault.
  */
 @property(nonatomic, assign) UIRectCorner cornersRounded;
 
