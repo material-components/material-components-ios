@@ -594,15 +594,6 @@ static const CGFloat kMaximumHeight = 80.0f;
   }
 
   self.rotationDuration = duration;
-
-  // On iOS 7, the layout of this overlay view will have already occurred by the time the will
-  // rotation notification is posted. In that event, we need to report rotation here. Opting to
-  // check for version using the UIDevice string methods because we need to perform this check even
-  // if the app was compiled on an iOS 7 SDK and is running on an iOS 8 device.
-  NSString *version = [[UIDevice currentDevice] systemVersion];
-  if ([version compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending) {
-    [self handleRotation];
-  }
 }
 
 - (void)didRotate:(NSNotification *)notification {
