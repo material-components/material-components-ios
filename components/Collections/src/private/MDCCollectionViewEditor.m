@@ -770,7 +770,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   if (_cellSnapshot) {
     return CGRectGetWidth(_cellSnapshot.bounds) / 2;
   } else {
-    return _collectionView.bounds.size.width / 2;
+    return CGRectGetWidth(_collectionView.bounds) / 2;
   }
 }
 
