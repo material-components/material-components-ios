@@ -95,70 +95,12 @@
   _overlayView.backgroundColor = [UIColor clearColor];
   [self addSubview:_overlayView];
 
-  NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-  [nc addObserver:self
-         selector:@selector(handleRotationNotification:)
-             name:UIApplicationWillChangeStatusBarOrientationNotification
-           object:nil];
-
-  // Set a sane initial position.
-  [self updateOverlayViewForOrientation:[[UIApplication mdc_safeSharedApplication]
-                                            statusBarOrientation]];
-
   // Set a sane hidden state.
   [self updateOverlayHiddenState];
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - Rotation
-
-- (void)updateOverlayViewForOrientation:(UIInterfaceOrientation)orientation {
-  // On iOS 8, the window orientation is corrected logically after transforms, so there is
-  // no need to apply this transform correction like we do for iOS 7 and below.
-  BOOL hasFixedCoordinateSpace = NO;
-  UIScreen *screen = [UIScreen mainScreen];
-  hasFixedCoordinateSpace = [screen respondsToSelector:@selector(fixedCoordinateSpace)];
-
-  if (!hasFixedCoordinateSpace) {
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    BOOL swapBounds = NO;
-
-    switch (orientation) {
-      case UIInterfaceOrientationLandscapeLeft:
-        transform = CGAffineTransformMakeRotation((CGFloat)-M_PI_2);
-        swapBounds = YES;
-        break;
-      case UIInterfaceOrientationLandscapeRight:
-        transform = CGAffineTransformMakeRotation((CGFloat)M_PI_2);
-        swapBounds = YES;
-        break;
-      case UIInterfaceOrientationPortraitUpsideDown:
-        transform = CGAffineTransformMakeRotation((CGFloat)M_PI);
-        break;
-      case UIInterfaceOrientationPortrait:
-      default:
-        break;
-    }
-
-    CGRect bounds = self.bounds;
-
-    if (swapBounds) {
-      bounds = CGRectMake(0, 0, bounds.size.height, bounds.size.width);
-    }
-    self.overlayView.bounds = bounds;
-    self.overlayView.transform = transform;
-    [self.overlayView layoutIfNeeded];
-  }
-}
-
-// This method is called within an animation block, so we simply need to update the overlay view.
-- (void)handleRotationNotification:(NSNotification *)notification {
-  UIInterfaceOrientation orientation =
-      [notification.userInfo[UIApplicationStatusBarOrientationUserInfoKey] integerValue];
-  [self updateOverlayViewForOrientation:orientation];
 }
 
 #pragma mark - Window positioning
