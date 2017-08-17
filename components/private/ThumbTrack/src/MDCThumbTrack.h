@@ -24,6 +24,7 @@
 /** The delegate for the thumb track. */
 @property(nullable, nonatomic, weak) id<MDCThumbTrackDelegate> delegate;
 
+/** The color of the thumb on and left track. */
 @property(nullable, nonatomic, strong) UIColor *primaryColor;
 
 /** The color of the thumb off color. */
@@ -129,6 +130,14 @@
 
 /** Whether the ends of the track are inset by the radius of the thumb. The default is NO. */
 @property(nonatomic, assign) BOOL trackEndsAreInset;
+
+/**
+ Whether or not to show the filled track on the left of the thumb. If NO, the left track will be
+ displayed with the same tint color as the right track.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL shouldDisplayFilledTrack;
 
 /**
  The value from which the filled part of the track is anchored. If set to a value between
