@@ -77,24 +77,11 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
 
 #pragma mark - Keyboard Notifications
 
-- (BOOL)deviceTransformsKeyboardFrame {
-  static BOOL useCoordinateSpace;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    // If the screen responds to fixedCoordinateSpace, that indicates an iOS8+ device. On iOS8+
-    // the frame values returned in the keyboard notifications have been transformed into the local
-    // keyboard space.
-    useCoordinateSpace = [[UIScreen mainScreen] respondsToSelector:@selector(fixedCoordinateSpace)];
-  });
-
-  return useCoordinateSpace;
-}
-
 - (void)updateKeyboardOffsetWithKeyboardUserInfo:(NSDictionary *)userInfo {
   // On iOS 8, the window orientation is corrected logically after transforms, so there is
   // no need to swap the width and height like we had to on iOS 7 and below..
-
   CGRect keyboardRect = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+
   // iOS 8 doesn't notify us of a new keyboard rect when a keyboard dock or undocks to/from the
   // bottom of the screen. The more common case of no frame is a keyboard undocking and moving
   // around, so on iOS 8 we'll take a missing frame to indicate an undocked keyboard. Unfortunately
@@ -102,58 +89,18 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
   // This also means that our "failure" mode is at the bottom of the screen, so we shouldn't get
   // into a situation where the offset is too far up with no keyboard on screen.
   if (CGRectIsEmpty(keyboardRect)) {
-    if ([self deviceTransformsKeyboardFrame]) {
-      // Set the offset to zero, as if the keyboard was undocked.
-      self.keyboardFrame = CGRectZero;
-    }
+    // Set the offset to zero, as if the keyboard was undocked.
+    self.keyboardFrame = CGRectZero;
     return;
   }
 
   CGRect screenBounds = [[UIScreen mainScreen] bounds];
   CGRect intersection = CGRectIntersection(screenBounds, keyboardRect);
 
-  BOOL dockedKeyboard;
-
-  if ([self deviceTransformsKeyboardFrame]) {
-    // If the extent of the keyboard is at or below the bottom of the screen it is docked.
-    // This handles the case of an external keyboard on iOS8+ where the entire frame of the keyboard
-    // view is used, but on the top, the input accessory section is show.
-    dockedKeyboard = CGRectGetMaxY(screenBounds) <= CGRectGetMaxY(keyboardRect);
-  } else {
-    UIInterfaceOrientation orientation =
-      [[UIApplication mdc_safeSharedApplication] statusBarOrientation];
-    if (UIInterfaceOrientationIsLandscape(orientation)) {
-      CGFloat width = intersection.size.width;
-      CGFloat x = intersection.origin.x;
-
-      intersection.size.width = intersection.size.height;
-      intersection.size.height = width;
-
-      intersection.origin.x = intersection.origin.y;
-      intersection.origin.y = x;
-    }
-
-    // These calculations all depend on the fixed screen coordinate space, so we use the keyboard
-    // rectangle instead of @c intersection, which has already accounted for rotation.
-    switch (orientation) {
-      case UIInterfaceOrientationPortraitUpsideDown:
-        dockedKeyboard = CGRectGetMinY(keyboardRect) == CGRectGetMinY(screenBounds);
-        break;
-      case UIInterfaceOrientationLandscapeLeft:
-        dockedKeyboard = CGRectGetMaxX(keyboardRect) == CGRectGetMaxX(screenBounds);
-        break;
-      case UIInterfaceOrientationLandscapeRight:
-        dockedKeyboard = CGRectGetMinX(keyboardRect) == CGRectGetMinX(screenBounds);
-        break;
-      case UIInterfaceOrientationPortrait:
-      case UIInterfaceOrientationUnknown:
-        dockedKeyboard = CGRectGetMaxY(keyboardRect) == CGRectGetMaxY(screenBounds);
-        break;
-      default:
-        dockedKeyboard = YES;
-        break;
-    }
-  }
+  // If the extent of the keyboard is at or below the bottom of the screen it is docked.
+  // This handles the case of an external keyboard on iOS8+ where the entire frame of the keyboard
+  // view is used, but on the top, the input accessory section is show.
+  BOOL dockedKeyboard = CGRectGetMaxY(screenBounds) <= CGRectGetMaxY(keyboardRect);
 
   // If the bottom of the keyboard isn't at the bottom of the screen, then it is undocked, and we
   // shouldn't try to account for it.
