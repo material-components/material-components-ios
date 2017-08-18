@@ -94,7 +94,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
   MDCTextInputBorderView *copy = [[[self class] alloc] initWithFrame:self.frame];
   copy.borderFillColor = self.borderFillColor;
-  copy.borderPath = self.borderPath.copy;
+  copy.borderPath = [self.borderPath copy];
   copy.borderStrokeColor = self.borderStrokeColor;
 
   return copy;
