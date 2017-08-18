@@ -291,7 +291,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   } else {
     [_trackOnLayer removeFromSuperlayer];
   }
-  [self setNeedsLayout];
 }
 
 - (void)setMinimumValue:(CGFloat)minimumValue {
