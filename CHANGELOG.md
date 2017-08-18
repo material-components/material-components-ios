@@ -1,4 +1,17 @@
-# release-candidate TODO: Replace me with version number. 
+# 32.0.0
+
+## API Diffs
+
+### Buttons
+
+* Added larger-icon version of the floating action button.
+
+### TextFields
+
+* Added `MDCTextInputController` properties `activeColor`, `disabledColor`, `normalColor`, and associated default colors.
+* Removed `MDCTextInputController` properties `underlineColorActive`, `underlineColorNormal`, and associated default colors.
+* Removed `MDCTextInputUnderlineView` properties `disabledUnderline` and `underline` in favor of `color` and `disabledColor`.
+
 
 # 31.0.2
 
