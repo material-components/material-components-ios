@@ -117,7 +117,6 @@
   [self.floatingButton addTarget:self
                           action:@selector(didTap:)
                 forControlEvents:UIControlEventTouchUpInside];
-  self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
 
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
