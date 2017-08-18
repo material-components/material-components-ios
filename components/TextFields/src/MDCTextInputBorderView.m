@@ -35,8 +35,6 @@ static inline NSString * _Nullable MDCNSStringFromCGLineCap(CGLineCap lineCap) {
     case kCGLineCapSquare:
       lineCapString = kCALineCapSquare;
       break;
-    default:
-      break;
   }
   return lineCapString;
 }
@@ -52,8 +50,6 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
       break;
     case kCGLineJoinRound:
       lineJoinString = kCALineJoinRound;
-      break;
-    default:
       break;
   }
   return lineJoinString;
