@@ -95,6 +95,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSMutableDictionary<NSNumber *, NSNumber *> *_userElevations;   // For each UIControlState.
   NSMutableDictionary<NSNumber *, UIColor *> *_backgroundColors;  // For each UIControlState.
 
+  BOOL _hasCustomDisabledTitleColor;
+
   // Cached accessibility settings.
   NSMutableDictionary<NSNumber *, NSString *> *_accessibilityLabelForState;
   NSString *_accessibilityLabelExplicitValue;
@@ -636,17 +638,33 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateBackgroundColor {
-  [self updateDisabledTitleColor];
   super.backgroundColor = self.currentBackgroundColor;
+  [self updateDisabledTitleColor];
 }
 
 - (void)updateDisabledTitleColor {
+  // We only want to automatically set a disabled title color if the user hasn't already provided a
+  // value.
+  if (_hasCustomDisabledTitleColor) {
+    return;
+  }
   // Disabled buttons have very low opacity, so we full-opacity text color here to make the text
   // readable. Also, even for non-flat buttons with opaque backgrounds, the correct background color
   // to examine is the underlying color, since disabled buttons are so transparent.
   BOOL darkBackground = [self isDarkColor:[self underlyingColorHint]];
-  [self setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
-             forState:UIControlStateDisabled];
+  // We call super here to distinguish between automatic title color assignments and that of users.
+  [super setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
+              forState:UIControlStateDisabled];
+}
+
+- (void)setTitleColor:(UIColor *)color forState:(UIControlState)state {
+  [super setTitleColor:color forState:state];
+  if (state == UIControlStateDisabled) {
+    _hasCustomDisabledTitleColor = color != nil;
+    if (!_hasCustomDisabledTitleColor) {
+      [self updateDisabledTitleColor];
+    }
+  }
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
