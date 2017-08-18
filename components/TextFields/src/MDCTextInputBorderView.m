@@ -134,7 +134,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 #pragma mark - Properties
 
 - (void)setBorderFillColor:(UIColor *)borderFillColor {
-  if (_borderFillColor != borderFillColor) {
+  if (![_borderFillColor isEqual:borderFillColor]) {
     _borderFillColor = borderFillColor;
     [self updateBorder];
   }
@@ -145,14 +145,14 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 }
 
 - (void)setBorderPath:(UIBezierPath *)borderPath {
-  if (_borderPath != borderPath) {
+  if (![_borderPath isEqual:borderPath]) {
     _borderPath = borderPath;
     [self updateBorder];
   }
 }
 
 - (void)setBorderStrokeColor:(UIColor *)borderStrokeColor {
-  if (_borderStrokeColor != borderStrokeColor) {
+  if (![_borderStrokeColor isEqual:borderStrokeColor]) {
     _borderStrokeColor = borderStrokeColor;
     [self updateBorder];
   }
