@@ -13,6 +13,7 @@ branches:
     - develop
     - stable
     - /^feature-.*$/
+    - release-candidate
 
 env:
   global:
