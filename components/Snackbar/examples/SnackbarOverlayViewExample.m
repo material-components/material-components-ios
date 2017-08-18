@@ -24,11 +24,15 @@ static const CGFloat kFABBottomOffset = 24.0f;
 static const CGFloat kFABSideOffset = 24.0f;
 static const CGFloat kBottomBarHeight = 44.0f;
 
+@interface SnackbarOverlayViewExample ()
+@property(nonatomic, assign) CGFloat floatingButtonOffset;
+@end
+
 @implementation SnackbarOverlayViewExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self setupExampleViews:@[@"Show Snackbar", @"Toggle bottom bar"]];
+  [self setupExampleViews:@[ @"Show Snackbar", @"Toggle bottom bar" ]];
   self.title = @"Snackbar Overlay View";
 
   // Make sure we're listening for overlay notifications.
@@ -44,27 +48,31 @@ static const CGFloat kBottomBarHeight = 44.0f;
   fabFrame.origin.x = CGRectGetMaxX(self.view.bounds) - CGRectGetWidth(fabFrame) - kFABSideOffset;
   fabFrame.origin.y =
       CGRectGetMaxY(self.view.bounds) - CGRectGetHeight(fabFrame) - kFABBottomOffset;
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0f
-                                                          green:232/255.0f
-                                                           blue:94/255.0f
+  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11 / 255.0f
+                                                          green:232 / 255.0f
+                                                           blue:94 / 255.0f
                                                           alpha:1]
                                  forState:UIControlStateNormal];
   self.floatingButton.frame = fabFrame;
   self.floatingButton.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin);
+  [self.floatingButton addTarget:self
+                          action:@selector(didTapFAB:)
+                forControlEvents:UIControlEventTouchUpInside];
 
-  self.bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                            CGRectGetHeight(self.view.bounds),
-                                                            CGRectGetWidth(self.view.bounds),
-                                                            kBottomBarHeight)];
-  self.bottomBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+  self.bottomBar =
+      [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds),
+                                               CGRectGetWidth(self.view.bounds), kBottomBarHeight)];
+  self.bottomBar.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   self.bottomBar.backgroundColor = [UIColor redColor];
   [self.view addSubview:self.bottomBar];
 }
 
 #pragma mark - Event Handling
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   if (indexPath.row == 0) {
     [self showSnackbar];
@@ -92,10 +100,19 @@ static const CGFloat kBottomBarHeight = 44.0f;
     bottomOffset = kBottomBarHeight;
   }
 
-  [UIView animateWithDuration:0.25 animations:^{
-      self.bottomBar.frame = CGRectOffset(self.bottomBar.frame, 0, translation);
-      [MDCSnackbarManager setBottomOffset:bottomOffset];
-  }];
+  [UIView animateWithDuration:0.25
+                   animations:^{
+                     self.bottomBar.center = CGPointMake(self.bottomBar.center.x,
+                                                         self.bottomBar.center.y + translation);
+                     [MDCSnackbarManager setBottomOffset:bottomOffset];
+                   }];
+}
+
+- (void)didTapFAB:(id)sender {
+  [self.floatingButton collapse:YES
+                     completion:^{
+                       [self.floatingButton expand:YES completion:nil];
+                     }];
 }
 
 #pragma mark - Overlay Transitions
@@ -109,22 +126,21 @@ static const CGFloat kBottomBarHeight = 44.0f;
 
   // How much should we shift the FAB up by.
   CGFloat fabVerticalShift = 0;
+  CGFloat distanceFromBottom = 0;
 
   if (!CGRectIsEmpty(boundedRect)) {
     // Calculate how far from the bottom of the current view the overlay goes. All we really care
     // about is the absolute top of all overlays, we'll put the FAB above that point.
-    CGFloat distanceFromBottom = CGRectGetMaxY(bounds) - CGRectGetMinY(boundedRect);
-
-    // We're applying a transform to the FAB, so no need to account for padding or such.
-    fabVerticalShift = distanceFromBottom;
+    distanceFromBottom = CGRectGetMaxY(bounds) - CGRectGetMinY(boundedRect);
   }
 
+  // We're applying a transform to the FAB, so no need to account for padding or such.
+  fabVerticalShift = self.floatingButtonOffset - distanceFromBottom;
+  self.floatingButtonOffset = distanceFromBottom;
+
   [transition animateAlongsideTransition:^{
-    if (fabVerticalShift > 0) {
-      self.floatingButton.transform = CGAffineTransformMakeTranslation(0, -fabVerticalShift);
-    } else {
-      self.floatingButton.transform = CGAffineTransformIdentity;
-    }
+    self.floatingButton.center =
+        CGPointMake(self.floatingButton.center.x, self.floatingButton.center.y + fabVerticalShift);
   }];
 }
 
