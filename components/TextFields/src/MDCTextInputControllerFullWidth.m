@@ -418,6 +418,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 #pragma mark - Properties Implementation
 
+// The underline is never shown in this style.
 - (void)setActiveColor:(UIColor *)activeColor {
   [self updateUnderline];
 }
@@ -548,6 +549,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return self.errorText != nil;
 }
 
+// The leading underline label must always be clear to not obstruct the placeholder and input.
 - (UIColor *)leadingUnderlineLabelTextColor {
   return [UIColor clearColor];
 }
@@ -564,6 +566,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   // Not implemented. Leading underline label is always clear.
 }
 
+// The underline is never shown in this style.
 - (void)setNormalColor:(UIColor *)normalColor {
   [self updateUnderline];
 }
