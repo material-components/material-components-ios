@@ -110,6 +110,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize clearButton = _clearButton;
 @synthesize clearButtonColor = _clearButtonColor;
 @synthesize clearButtonMode = _clearButtonMode;
+@synthesize clearButtonPath = _clearButtonPath;
 @synthesize enabled = _enabled;
 @synthesize hidesPlaceholderOnInput = _hidesPlaceholderOnInput;
 @synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
@@ -500,7 +501,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                       MDCTextInputClearButtonImageSquareWidthHeight);
   if (!self.clearButtonImage || !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonSize)) {
     self.clearButtonImage =
-        [self drawnClearButtonImage:clearButtonSize color:self.clearButtonColor];
+    [self drawnClearButtonImage: size:clearButtonSize color:self.clearButtonColor];
   }
 
   if (![self.clearButton imageForState:UIControlStateNormal]) {
@@ -559,7 +560,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return clearButtonAlpha;
 }
 
-- (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
+- (UIImage *)drawnClearButtonImage:(UIBezierPath *)path size:(CGSize)size color:(UIColor *)color {
   NSAssert1(size.width >= 0, @"drawnClearButtonImage was passed a size with a width less than 0 %@",
             NSStringFromCGSize(size));
   NSAssert1(size.height >= 0,
@@ -574,7 +575,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
   [color setFill];
-  [MDCPathForClearButtonLegacyImageFrame(bounds) fill];
+
+  [path ? path : MDCPathForClearButtonImageFrame(bounds) fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
 

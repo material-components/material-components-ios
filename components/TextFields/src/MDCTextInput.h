@@ -79,6 +79,13 @@
 @property(nonatomic, nullable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The path to be drawn for the clear button's icon. This path will be filled with one color.
+
+ Default is a circle with a die-cut 'X' in the center.
+ */
+@property(nonatomic, null_resettable, strong) UIBezierPath *clearButtonPath;
+
+/**
  Controls when the clear button will display.
 
  Note: The clear button will never display when there is no entered text.
