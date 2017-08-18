@@ -122,6 +122,14 @@
 /** Whether or not to show the numeric value label when dragging a discrete slider. */
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
 
+/**
+ Whether or not to show the filled track on the left of the thumb. If NO, the left track will be
+ displayed with the same tint color as the right track.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL shouldDisplayFilledTrack;
+
 /** Whether a disabled thumb track includes gaps on either side of the thumb. The default is NO. */
 @property(nonatomic, assign) BOOL disabledTrackHasThumbGaps;
 
@@ -130,14 +138,6 @@
 
 /** Whether the ends of the track are inset by the radius of the thumb. The default is NO. */
 @property(nonatomic, assign) BOOL trackEndsAreInset;
-
-/**
- Whether or not to show the filled track on the left of the thumb. If NO, the left track will be
- displayed with the same tint color as the right track.
-
- Defaults to YES.
- */
-@property(nonatomic, assign) BOOL shouldDisplayFilledTrack;
 
 /**
  The value from which the filled part of the track is anchored. If set to a value between

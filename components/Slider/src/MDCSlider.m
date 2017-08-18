@@ -157,14 +157,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.maximumValue = maximumValue;
 }
 
-- (BOOL)shouldDisplayFilledTrack {
-  return _thumbTrack.shouldDisplayFilledTrack;
-}
-
-- (void)setShouldDisplayFilledTrack:(BOOL)shouldDisplayFilledTrack {
-  _thumbTrack.shouldDisplayFilledTrack = shouldDisplayFilledTrack;
-}
-
 - (CGFloat)filledTrackAnchorValue {
   return _thumbTrack.filledTrackAnchorValue;
 }

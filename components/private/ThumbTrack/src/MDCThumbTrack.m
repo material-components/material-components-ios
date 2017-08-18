@@ -279,6 +279,21 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
+- (BOOL)shouldDisplayFilledTrack {
+  return [_trackOnLayer superlayer] != nil;
+}
+
+- (void)setShouldDisplayFilledTrack:(BOOL)shouldDisplayFilledTrack {
+  if (shouldDisplayFilledTrack) {
+    if ([_trackOnLayer superlayer] == nil) {
+      [_trackView.layer addSublayer:_trackOnLayer];
+    }
+  } else {
+    [_trackOnLayer removeFromSuperlayer];
+  }
+  [self setNeedsLayout];
+}
+
 - (void)setMinimumValue:(CGFloat)minimumValue {
   _minimumValue = minimumValue;
   CGFloat previousValue = _value;
@@ -324,21 +339,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _panningAllowedOnEntireControl = panningAllowedOnEntireControl;
     [self updateDummyPanRecognizerTarget];
   }
-}
-
-- (BOOL)shouldDisplayFilledTrack {
-  return [_trackOnLayer superlayer] != nil;
-}
-
-- (void)setShouldDisplayFilledTrack:(BOOL)shouldDisplayFilledTrack {
-  if (shouldDisplayFilledTrack) {
-    if ([_trackOnLayer superlayer] == nil) {
-      [_trackView.layer addSublayer:_trackOnLayer];
-    }
-  } else {
-    [_trackOnLayer removeFromSuperlayer];
-  }
-  [self setNeedsLayout];
 }
 
 - (void)setFilledTrackAnchorValue:(CGFloat)filledTrackAnchorValue {

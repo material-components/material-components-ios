@@ -124,14 +124,6 @@ IB_DESIGNABLE
 @property(nonatomic, assign, getter=isContinuous) BOOL continuous;
 
 /**
- Whether or not to show the filled track on the left of the thumb. If NO, the left track will be
- displayed with the same tint color as the right track.
-
- Defaults to YES.
- */
-@property(nonatomic, assign) BOOL shouldDisplayFilledTrack;
-
-/**
  The value from which the filled part of the track is anchored. If set to a value between
  minimumValue and maximumValue, then the filled/colored part of the track extends from the
  trackAnchorValue to the thumb. Values beyond the minimum/maximum values are effectively capped.
