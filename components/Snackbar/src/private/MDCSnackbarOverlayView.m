@@ -18,12 +18,12 @@
 
 #import "MDCSnackbarOverlayView.h"
 
-#import "MaterialSnackbar.h"
 #import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
+#import "MaterialApplication.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlay.h"
-#import "MaterialApplication.h"
+#import "MaterialSnackbar.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
@@ -341,16 +341,8 @@ static const CGFloat kMaximumHeight = 80.0f;
     return CGRectNull;
   }
 
-  UIScreen *screen = window.screen;
-  if ([screen respondsToSelector:@selector(fixedCoordinateSpace)]) {
-    return [self.snackbarView convertRect:self.snackbarView.bounds
-                        toCoordinateSpace:screen.fixedCoordinateSpace];
-  }
-
-  CGRect snackbarWindowFrame =
-      [window convertRect:self.snackbarView.bounds fromView:self.snackbarView];
-  CGRect snackbarScreenFrame = [window convertRect:snackbarWindowFrame toWindow:nil];
-  return snackbarScreenFrame;
+  return [self.snackbarView convertRect:self.snackbarView.bounds
+                      toCoordinateSpace:window.screen.coordinateSpace];
 }
 
 #pragma mark - Presentation/Dismissal
@@ -547,10 +539,8 @@ static const CGFloat kMaximumHeight = 80.0f;
     // observers of bottom offset changes.
     CGRect frame = [self snackbarRectInScreenCoordinates];
     if (CGRectIsNull(frame)) {
-      frame = CGRectMake(0,
-                         CGRectGetHeight(self.frame) - self.bottomOffset,
-                         CGRectGetWidth(self.frame),
-                         self.bottomOffset);
+      frame = CGRectMake(0, CGRectGetHeight(self.frame) - self.bottomOffset,
+                         CGRectGetWidth(self.frame), self.bottomOffset);
     }
     [self notifyOverlayChangeWithFrame:frame
                               duration:[CATransaction animationDuration]
@@ -574,6 +564,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   [super layoutSubviews];
 
   if (!self.manualLayoutChange && self.rotationDuration > 0) {
+    [self.containingView layoutIfNeeded];
     [self handleRotation];
   }
 }

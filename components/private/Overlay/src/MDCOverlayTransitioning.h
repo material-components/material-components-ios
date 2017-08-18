@@ -31,13 +31,6 @@
  */
 @property(nonatomic, readonly) CGRect frame;
 
-/**
- Returns the frame of the overlay, in @c targetView's coordinate space.
-
- The result may go outside of the bounds of @c targetView.
- */
-- (CGRect)overlayFrameInView:(UIView *)targetView;
-
 @end
 
 /**
