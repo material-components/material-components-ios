@@ -75,16 +75,16 @@
 /**
  The corners to be rounded in the border area.
 
- Default is cornersRoundedDefault.
+ Default is roundedCornersDefault.
  */
-@property(nonatomic, assign) UIRectCorner cornersRounded;
+@property(nonatomic, assign) UIRectCorner roundedCorners;
 
 /**
- Default for cornersRounded.
+ Default for roundedCorners.
 
  Default is top right and top left.
  */
-@property(class, nonatomic, assign) UIRectCorner cornersRoundedDefault;
+@property(class, nonatomic, assign) UIRectCorner roundedCornersDefault;
 
 /**
  Color for decorations that indicates the input is not enabled / not accepting touch.
