@@ -118,11 +118,6 @@ Material Components for iOS are written in Objective-C and support Swift and Int
   ](Snackbar/)
   <!--{: .icon-snackbar }-->
 
-- [**Switch**
-  A Material on/off switch with an interface similar to UISwitch.
-  ](Switch/)
-  <!--{: .icon-switch }-->
-
 - [**Tabs**
   A material tab bar for switching between grouped content.
   ](Tabs/)
