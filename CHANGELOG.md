@@ -1,3 +1,16 @@
+# 31.0.2
+
+Hotfix release: fixes autolayout bug involving TextFields height.
+
+## Component changes
+
+### TextFields
+
+#### Changes
+
+* [Correcting content compression resistance priority. (#1809)](https://github.com/material-components/material-components-ios/commit/2ddf6a2f8c00179347e0ef3bcf67eb9e1e16fc65) (Will Larche)
+
+
 # 31.0.1
 
 No changes to code or docs, only updating metadata for generating https://material.io/components/ios/.
