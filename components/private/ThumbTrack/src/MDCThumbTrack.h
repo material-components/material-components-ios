@@ -24,6 +24,7 @@
 /** The delegate for the thumb track. */
 @property(nullable, nonatomic, weak) id<MDCThumbTrackDelegate> delegate;
 
+/** The color of the thumb on and left track. */
 @property(nullable, nonatomic, strong) UIColor *primaryColor;
 
 /** The color of the thumb off color. */
@@ -120,6 +121,14 @@
 
 /** Whether or not to show the numeric value label when dragging a discrete slider. */
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
+
+/**
+ Whether or not to show the filled track on the left of the thumb. If NO, the left track will be
+ displayed with the same tint color as the right track.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL shouldDisplayFilledTrack;
 
 /** Whether a disabled thumb track includes gaps on either side of the thumb. The default is NO. */
 @property(nonatomic, assign) BOOL disabledTrackHasThumbGaps;
