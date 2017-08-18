@@ -33,7 +33,6 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @property(nonatomic, assign) int numDiscreteValues;
 @property(nonatomic, assign) CGFloat value;
 @property(nonatomic, assign) CGFloat anchorValue;
-@property(nonatomic, assign) BOOL displayFilledTrack;
 @property(nonatomic, assign) BOOL discreteValueLabel;
 @property(nonatomic, assign) BOOL hollowCircle;
 @property(nonatomic, assign) BOOL enabled;
@@ -55,7 +54,6 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     _numDiscreteValues = 0;
     _value = 0.5;
     _anchorValue = -CGFLOAT_MAX;
-    _displayFilledTrack = YES;
     _discreteValueLabel = YES;
     _hollowCircle = YES;
     _enabled = YES;
@@ -101,9 +99,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   self.contentView.backgroundColor = model.bgColor;
   _slider.numberOfDiscreteValues = model.numDiscreteValues;
   _slider.value = model.value;
-
   _slider.filledTrackAnchorValue = model.anchorValue;
-  _slider.shouldDisplayFilledTrack = model.displayFilledTrack;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
   _slider.thumbHollowAtStart = model.hollowCircle;
   _slider.enabled = model.enabled;
@@ -217,12 +213,6 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Anchored slider";
     model.anchorValue = 0.5f;
-    model.value = 0.7f;
-    [_sliders addObject:model];
-
-    model = [[MDCSliderModel alloc] init];
-    model.labelString = @"Slider without filled track";
-    model.displayFilledTrack = NO;
     model.value = 0.7f;
     [_sliders addObject:model];
 

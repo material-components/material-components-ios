@@ -284,17 +284,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   }
 }
 
-- (void)testHideFilledTrack {
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  XCTAssertEqual(slider.shouldDisplayFilledTrack, YES);
-
-  slider.shouldDisplayFilledTrack = NO;
-  XCTAssertEqual(slider.shouldDisplayFilledTrack, NO);
-
-  slider.shouldDisplayFilledTrack = YES;
-  XCTAssertEqual(slider.shouldDisplayFilledTrack, YES);
-}
-
 #pragma mark colors
 
 - (void)testThumbColor {
