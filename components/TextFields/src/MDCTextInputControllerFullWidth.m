@@ -424,19 +424,19 @@ static UIColor *_inlinePlaceholderColorDefault;
   }
 }
 
-- (UIRectCorner)cornersRounded {
+- (UIRectCorner)roundedCorners {
   return 0;
 }
 
-- (void)setCornersRounded:(UIRectCorner)cornersRounded {
+- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
   // Not implemented. There are no corners to round.
 }
 
-+ (UIRectCorner)cornersRoundedDefault {
++ (UIRectCorner)roundedCornersDefault {
   return 0;
 }
 
-+ (void)setCornersRoundedDefault:(UIRectCorner)cornersRoundedDefault {
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
   // Not implemented. There are no corners to round.
 }
 
