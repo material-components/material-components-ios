@@ -227,7 +227,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   // This controller will handle Dynamic Type and all fonts for the text input
   _mdc_adjustsFontForContentSizeCategory =
       _textInput.mdc_adjustsFontForContentSizeCategory ||
-      [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
+      [self class].mdc_adjustsFontForContentSizeCategoryDefault;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
 
@@ -465,14 +465,14 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 - (UIColor *)errorColor {
   if (!_errorColor) {
-    _errorColor = [[self class] errorColorDefault];
+    _errorColor = [self class].errorColorDefault;
   }
   return _errorColor;
 }
 
 - (void)setErrorColor:(UIColor *)errorColor {
   if (![_errorColor isEqual:errorColor]) {
-    _errorColor = errorColor ? errorColor : [[self class] errorColorDefault];
+    _errorColor = errorColor ? errorColor : [self class].errorColorDefault;
     if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
       [self updateLeadingUnderlineLabel];
       [self updatePlaceholder];
@@ -525,7 +525,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 - (UIColor *)inlinePlaceholderColor {
   return _inlinePlaceholderColor ? _inlinePlaceholderColor
-                                 : [[self class] inlinePlaceholderColorDefault];
+                                 : [self class].inlinePlaceholderColorDefault;
 }
 
 + (UIColor *)inlinePlaceholderColorDefault {
@@ -603,13 +603,13 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 - (UIColor *)trailingUnderlineLabelTextColor {
   return _trailingUnderlineLabelTextColor ? _trailingUnderlineLabelTextColor :
-      [[self class] trailingUnderlineLabelTextColorDefault];
+      [self class].trailingUnderlineLabelTextColorDefault;
 }
 
 - (void)setTrailingUnderlineLabelTextColor:(UIColor *)trailingUnderlineLabelTextColor {
   if (_trailingUnderlineLabelTextColor != trailingUnderlineLabelTextColor) {
     _trailingUnderlineLabelTextColor = trailingUnderlineLabelTextColor ? trailingUnderlineLabelTextColor :
-        [[self class] trailingUnderlineLabelTextColorDefault];
+        [self class].trailingUnderlineLabelTextColorDefault;
 
     [self updateTrailingUnderlineLabel];
   }

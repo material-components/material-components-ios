@@ -286,10 +286,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)commonMDCTextInputControllerDefaultInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
-  _disabledColor = [[self class] disabledColorDefault];
-  _floatingEnabled = [[self class] isFloatingEnabledDefault];
+  _disabledColor = [self class].disabledColorDefault;
+  _floatingEnabled = [self class].isFloatingEnabledDefault;
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
-  _underlineViewMode = [[self class] underlineViewModeDefault];
+  _underlineViewMode = [self class].underlineViewModeDefault;
   _textInput.hidesPlaceholderOnInput = NO;
 
   [self updatePlaceholderY];
@@ -303,7 +303,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // This controller will handle Dynamic Type and all fonts for the text input
   _mdc_adjustsFontForContentSizeCategory =
       _textInput.mdc_adjustsFontForContentSizeCategory ||
-      [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
+      [self class].mdc_adjustsFontForContentSizeCategoryDefault;
   _textInput.underline.disabledColor = self.disabledColor;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
@@ -311,7 +311,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   [self subscribeForNotifications];
   [self subscribeForKVO];
-  _textInput.underline.color = [[self class] normalColorDefault];
+  _textInput.underline.color = [self class].normalColorDefault;
   [self updatePlaceholderY];
 }
 
@@ -671,7 +671,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 #pragma mark - Properties Implementation
 
 - (UIColor *)activeColor {
-  return _activeColor ? _activeColor : [[self class] activeColorDefault];
+  return _activeColor ? _activeColor : [self class].activeColorDefault;
 }
 
 - (void)setActiveColor:(UIColor *)activeColor {
@@ -704,7 +704,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIColor *)disabledColor {
   if (!_disabledColor) {
-    _disabledColor = [[self class] disabledColorDefault];
+    _disabledColor = [self class].disabledColorDefault;
   }
   return _disabledColor;
 }
@@ -731,14 +731,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIColor *)errorColor {
   if (!_errorColor) {
-    _errorColor = [[self class] errorColorDefault];
+    _errorColor = [self class].errorColorDefault;
   }
   return _errorColor;
 }
 
 - (void)setErrorColor:(UIColor *)errorColor {
   if (![_errorColor isEqual:errorColor]) {
-    _errorColor = errorColor ? errorColor : [[self class] errorColorDefault];
+    _errorColor = errorColor ? errorColor : [self class].errorColorDefault;
     if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
       [self updateLeadingUnderlineLabel];
       [self updatePlaceholder];
@@ -773,7 +773,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIColor *)floatingPlaceholderColor {
   return _floatingPlaceholderColor ? _floatingPlaceholderColor
-                                   : [[self class] floatingPlaceholderColorDefault];
+                                   : [self class].floatingPlaceholderColorDefault;
 }
 
 + (UIColor *)floatingPlaceholderColorDefault {
@@ -807,7 +807,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (NSNumber *)floatingPlaceholderScale {
   if (!_floatingPlaceholderScale) {
     _floatingPlaceholderScale =
-        [NSNumber numberWithFloat:(float)[[self class] floatingPlaceholderScaleDefault]];
+        [NSNumber numberWithFloat:(float)[self class].floatingPlaceholderScaleDefault];
   }
   return _floatingPlaceholderScale;
 }
@@ -817,7 +817,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _floatingPlaceholderScale =
         floatingPlaceholderScale
             ? floatingPlaceholderScale
-            : [NSNumber numberWithFloat:(float)[[self class] floatingPlaceholderScaleDefault]];
+            : [NSNumber numberWithFloat:(float)[self class].floatingPlaceholderScaleDefault];
 
     [self updatePlaceholder];
   }
@@ -859,7 +859,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIColor *)inlinePlaceholderColor {
   return _inlinePlaceholderColor ? _inlinePlaceholderColor
-                                 : [[self class] inlinePlaceholderColorDefault];
+                                 : [self class].inlinePlaceholderColorDefault;
 }
 
 + (UIColor *)inlinePlaceholderColorDefault {
@@ -885,13 +885,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIColor *)leadingUnderlineLabelTextColor {
   return _leadingUnderlineLabelTextColor ? _leadingUnderlineLabelTextColor :
-      [[self class] leadingUnderlineLabelTextColorDefault];
+      [self class].leadingUnderlineLabelTextColorDefault;
 }
 
 - (void)setLeadingUnderlineLabelTextColor:(UIColor *)leadingUnderlineLabelTextColor {
   if (_leadingUnderlineLabelTextColor != leadingUnderlineLabelTextColor) {
     _leadingUnderlineLabelTextColor = leadingUnderlineLabelTextColor ? leadingUnderlineLabelTextColor :
-        [[self class] leadingUnderlineLabelTextColorDefault];
+        [self class].leadingUnderlineLabelTextColorDefault;
 
     [self updateLeadingUnderlineLabel];
   }
@@ -910,7 +910,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (UIColor *)normalColor {
-  return _normalColor ? _normalColor : [[self class] normalColorDefault];
+  return _normalColor ? _normalColor : [self class].normalColorDefault;
 }
 
 - (void)setNormalColor:(UIColor *)normalColor {
@@ -952,13 +952,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIColor *)trailingUnderlineLabelTextColor {
   return _trailingUnderlineLabelTextColor ? _trailingUnderlineLabelTextColor :
-      [[self class] trailingUnderlineLabelTextColorDefault];
+      [self class].trailingUnderlineLabelTextColorDefault;
 }
 
 - (void)setTrailingUnderlineLabelTextColor:(UIColor *)trailingUnderlineLabelTextColor {
   if (_trailingUnderlineLabelTextColor != trailingUnderlineLabelTextColor) {
     _trailingUnderlineLabelTextColor = trailingUnderlineLabelTextColor ? trailingUnderlineLabelTextColor :
-        [[self class] trailingUnderlineLabelTextColorDefault];
+        [self class].trailingUnderlineLabelTextColorDefault;
 
     [self updateTrailingUnderlineLabel];
   }
