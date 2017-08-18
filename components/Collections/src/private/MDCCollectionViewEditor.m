@@ -27,12 +27,6 @@ static const CGFloat kDismissalDistanceBeforeFading = 50.0f;
 // Minimum alpha for an item being dismissed.
 static const CGFloat kDismissalMinimumAlpha = 0.5f;
 
-// Final angle of the arc the item travels through during dismissal.
-static const CGFloat kDismissalArcAngle = (CGFloat)(M_PI / 6.0f);
-
-// The centroid for the item dismissal arc.
-static const CGFloat kDismissalArcYOffset = 400.0f;
-
 // Simple linear friction applied to swipe velocity.
 static const CGFloat kDismissalSwipeFriction = 0.05f;
 
@@ -472,9 +466,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
         _reorderingCellIndexPath = newIndexPath;
 
         // Notify delegate that item will move.
-        if ([_delegate respondsToSelector:@selector(collectionView:
-                                              willMoveItemAtIndexPath:
-                                                          toIndexPath:)]) {
+        if ([_delegate respondsToSelector:@selector
+                       (collectionView:willMoveItemAtIndexPath:toIndexPath:)]) {
           [_delegate collectionView:_collectionView
               willMoveItemAtIndexPath:previousIndexPath
                           toIndexPath:newIndexPath];
@@ -559,8 +552,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
           if ([_delegate collectionView:_collectionView
                   canSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath]) {
             // Notify delegate.
-            if ([_delegate respondsToSelector:@selector(collectionView:
-                                                  willBeginSwipeToDismissItemAtIndexPath:)]) {
+            if ([_delegate respondsToSelector:@selector
+                           (collectionView:willBeginSwipeToDismissItemAtIndexPath:)]) {
               [_delegate collectionView:_collectionView
                   willBeginSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
             }
@@ -631,30 +624,15 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
 - (CGAffineTransform)transformItemDismissalToTranslationX:(CGFloat)translationX {
   // Returns a transform that can be applied to the snapshot during dismissal. The
-  // translation will pan along an arc facing downwards.
-  CGFloat panDistance = (CGFloat)fabs(translationX) - kDismissalDistanceBeforeFading;
-  CGFloat panRatio = panDistance / CGRectGetWidth(_collectionView.bounds);
-  CGFloat arcAngle = (translationX > 0 ? kDismissalArcAngle : -kDismissalArcAngle);
-
-  CGAffineTransform initialTranslation = CGAffineTransformMakeTranslation(0, -kDismissalArcYOffset);
-  CGAffineTransform rotation = CGAffineTransformMakeRotation(panRatio * arcAngle);
-
-  // Modify the X translation to take account of the rotation angle.
-  // This makes the item continue to track the finger as it follows the arc.
-  CGFloat correctedXTranslation = (CGFloat)(translationX * (1 - cos(kDismissalArcAngle) / 2));
-  if (translationX > 0) {
-    correctedXTranslation = MAX(kDismissalDistanceBeforeFading, correctedXTranslation);
+  // translation will pan along the direction of the swipe.
+  CGFloat finalXTranslation = translationX;
+  if (finalXTranslation > 0) {
+    finalXTranslation = MAX(kDismissalDistanceBeforeFading, finalXTranslation);
   } else {
-    correctedXTranslation = MIN(-kDismissalDistanceBeforeFading, correctedXTranslation);
+    finalXTranslation = MIN(-kDismissalDistanceBeforeFading, finalXTranslation);
   }
 
-  // Reverse @c initialTranslation and add @c translation.x to ensure that
-  // we pan along with the arc.
-  CGAffineTransform reverseTranslation =
-      CGAffineTransformMakeTranslation(correctedXTranslation, kDismissalArcYOffset);
-
-  CGAffineTransform arcTransform = CGAffineTransformConcat(initialTranslation, rotation);
-  return CGAffineTransformConcat(arcTransform, reverseTranslation);
+  return CGAffineTransformMakeTranslation(finalXTranslation, 0);
 }
 
 - (void)animateFinalItemDismissalToTranslationX:(CGFloat)translationX {
@@ -809,9 +787,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
   // Quit early if scrolling past collection view bounds.
   if ((!isPanningDown && contentYOffset <= 0) ||
-      (isPanningDown &&
-       contentYOffset >=
-           self.collectionView.contentSize.height - CGRectGetHeight(self.collectionView.bounds))) {
+      (isPanningDown && contentYOffset >= self.collectionView.contentSize.height -
+                                              CGRectGetHeight(self.collectionView.bounds))) {
     [self stopAutoscroll];
     return;
   }
