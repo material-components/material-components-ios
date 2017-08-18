@@ -182,7 +182,7 @@
 
  Default is YES.
  */
-@property(nonatomic, assign) BOOL expandsOnOverflow UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) IBInspectable BOOL expandsOnOverflow;
 
 /**
  The minimum number of lines to use for rendering text.
