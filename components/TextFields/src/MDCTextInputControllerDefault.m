@@ -126,9 +126,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 @interface MDCTextInputControllerDefault () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
+  MDCTextInputAllCharactersCounter *_characterCounter;
+
+  NSNumber *_floatingPlaceholderScale;
+
   UIColor *_activeColor;
   UIColor *_borderFillColor;
   UIColor *_disabledColor;
+  UIColor *_errorColor;
   UIColor *_floatingPlaceholderColor;
   UIColor *_inlinePlaceholderColor;
   UIColor *_normalColor;
@@ -157,12 +162,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 @implementation MDCTextInputControllerDefault
 
-@synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
 @synthesize characterCountViewMode = _characterCountViewMode;
 @synthesize cornersRounded = _cornersRounded;
-@synthesize errorColor = _errorColor;
-@synthesize floatingPlaceholderScale = _floatingPlaceholderScale;
 @synthesize textInput = _textInput;
 @synthesize underlineViewMode = _underlineViewMode;
 
