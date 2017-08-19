@@ -25,5 +25,8 @@
 
 @interface DialogsAlertViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) NSArray *modes;
+@end
+
+@interface DialogsAlertViewController (Supplemental)
 - (void)loadCollectionView:(nullable NSArray *)modes;
 @end
