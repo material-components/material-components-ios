@@ -19,6 +19,7 @@
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
+#import "private/MDCTextInputArt.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
 
@@ -30,6 +31,7 @@
 
 #pragma mark - Constants
 
+static const CGFloat MDCTextInputDefaultClearButtonImageSquareWidthHeight = 24.f;
 static const CGFloat MDCTextInputDefaultFloatingPlaceholderScaleDefault = 0.75f;
 static const CGFloat MDCTextInputDefaultHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputDefaultUnderlineActiveHeight = 2.f;
@@ -303,10 +305,19 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _textInput.positioningDelegate = self;
   _textInput.hidesPlaceholderOnInput = !self.isFloatingEnabled;
 
+  [self setupClearButton];
+
   [self subscribeForNotifications];
   [self subscribeForKVO];
   _textInput.underline.color = [[self class] normalColorDefault];
   [self updatePlaceholderY];
+}
+
+- (void)setupClearButton {
+  UIImage *image = [self drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
 }
 
 - (void)subscribeForNotifications {
@@ -422,6 +433,25 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _characterCountMax = characterCountMax;
     [self updateLayout];
   }
+}
+
+#pragma mark - Clear Button Customization
+
+- (UIImage *)drawnClearButtonImage:(UIColor *)color {
+  CGSize clearButtonSize = CGSizeMake(MDCTextInputDefaultClearButtonImageSquareWidthHeight,
+                                      MDCTextInputDefaultClearButtonImageSquareWidthHeight);
+
+  CGFloat scale = [UIScreen mainScreen].scale;
+  CGRect bounds = CGRectMake(0, 0, clearButtonSize.width * scale, clearButtonSize.height * scale);
+  UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
+  [color setFill];
+
+  [MDCPathForClearButtonLegacyImageFrame(bounds) fill];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+
+  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  return image;
 }
 
 #pragma mark - Leading Label Customization

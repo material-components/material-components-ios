@@ -260,7 +260,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
       UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFontFloating.trailingUnderlineLabel.font =
       UIFont.preferredFont(forTextStyle: .subheadline)
-    textFieldCustomFontFloating.clearButtonColor = MDCPalette.red.accent400
+    textFieldCustomFontFloating.clearButton.tintColor = MDCPalette.red.accent400
 
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
     let leftViewImagePath = bundle.path(forResource: "ic_search", ofType: "png")!
