@@ -36,6 +36,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.activeColor = .blue
     controller.normalColor = .white
     controller.underlineViewMode = .always
+    controller.leadingUnderlineLabelTextColor = .yellow
+    controller.trailingUnderlineLabelTextColor = .orange
 
     if let controllerCopy = controller.copy() as? MDCTextInputControllerDefault {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
@@ -49,6 +51,10 @@ class TextFieldControllerDefaultTests: XCTestCase {
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
       XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
+      XCTAssertEqual(controller.leadingUnderlineLabelTextColor,
+                     controllerCopy.leadingUnderlineLabelTextColor)
+      XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
+                     controllerCopy.trailingUnderlineLabelTextColor)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -66,6 +72,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.activeColor = .blue
     controller.normalColor = .white
     controller.underlineViewMode = .always
+    controller.trailingUnderlineLabelTextColor = .purple
 
     if let controllerCopy = controller.copy() as? MDCTextInputControllerFullWidth {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
@@ -76,6 +83,8 @@ class TextFieldControllerDefaultTests: XCTestCase {
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
       XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
+      XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
+                     controllerCopy.trailingUnderlineLabelTextColor)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -158,9 +167,14 @@ class TextFieldControllerDefaultTests: XCTestCase {
     // expected.
     let altLeading = "Alternative Helper Test"
     controller.helperText = altLeading
-    textField.leadingUnderlineLabel.textColor = .green
+    controller.leadingUnderlineLabelTextColor = .green
+
     XCTAssertEqual(.green, textField.leadingUnderlineLabel.textColor)
     XCTAssertEqual(altLeading, textField.leadingUnderlineLabel.text)
+
+    controller.trailingUnderlineLabelTextColor = .white
+    XCTAssertEqual(textField.trailingUnderlineLabel.textColor, .white)
+
     XCTAssertNil(controller.errorText)
 
     // Setting error text should change the color and content of the leading underline label

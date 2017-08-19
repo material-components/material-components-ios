@@ -49,10 +49,15 @@ static NSString *const MDCTextInputControllerFullWidthHelperTextKey =
     @"MDCTextInputControllerFullWidthHelperTextKey";
 static NSString *const MDCTextInputControllerFullWidthInlinePlaceholderColorKey =
     @"MDCTextInputControllerFullWidthInlinePlaceholderColorKey";
+static NSString *const MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor =
+    @"MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor";
 static NSString *const MDCTextInputControllerFullWidthPresentationStyleKey =
     @"MDCTextInputControllerFullWidthPresentationStyleKey";
 static NSString *const MDCTextInputControllerFullWidthTextInputKey =
     @"MDCTextInputControllerFullWidthTextInputKey";
+static NSString *const MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor =
+    @"MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor";
+
 
 static NSString *const MDCTextInputControllerFullWidthKVOKeyFont = @"font";
 
@@ -69,11 +74,14 @@ static inline UIColor *MDCTextInputTextErrorColorDefault() {
 static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
 static UIColor *_errorColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
+static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 @interface MDCTextInputControllerFullWidth () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
   UIColor *_inlinePlaceholderColor;
+  UIColor *_leadingUnderlineLabelTextColor;
+  UIColor *_trailingUnderlineLabelTextColor;
 }
 
 @property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
@@ -136,7 +144,11 @@ static UIColor *_inlinePlaceholderColorDefault;
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthErrorColorKey];
     _inlinePlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
+    _leadingUnderlineLabelTextColor =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthTextInputKey];
+    _trailingUnderlineLabelTextColor =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
   }
   return self;
 }
@@ -167,8 +179,12 @@ static UIColor *_inlinePlaceholderColorDefault;
   [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerFullWidthHelperTextKey];
   [aCoder encodeObject:self.inlinePlaceholderColor
                 forKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
+  [aCoder encodeObject:self.leadingUnderlineLabelTextColor
+                forKey:MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor];
   [aCoder encodeConditionalObject:self.textInput
                            forKey:MDCTextInputControllerFullWidthTextInputKey];
+  [aCoder encodeObject:self.trailingUnderlineLabelTextColor
+                forKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
@@ -182,9 +198,11 @@ static UIColor *_inlinePlaceholderColorDefault;
   copy.errorText = [self.errorText copy];
   copy.helperText = [self.helperText copy];
   copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
+  copy.leadingUnderlineLabelTextColor = self.leadingUnderlineLabelTextColor;
   copy.previousLeadingText = [self.previousLeadingText copy];
   copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy
+  copy.trailingUnderlineLabelTextColor = self.trailingUnderlineLabelTextColor;
   copy.activeColor = self.activeColor;
   copy.normalColor = self.normalColor;
 
@@ -209,7 +227,7 @@ static UIColor *_inlinePlaceholderColorDefault;
   // This controller will handle Dynamic Type and all fonts for the text input
   _mdc_adjustsFontForContentSizeCategory =
       _textInput.mdc_adjustsFontForContentSizeCategory ||
-      [[self class] mdc_adjustsFontForContentSizeCategoryDefault];
+      [self class].mdc_adjustsFontForContentSizeCategoryDefault;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
 
@@ -327,6 +345,7 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 - (void)updateLeadingUnderlineLabel {
   self.textInput.leadingUnderlineLabel.text = nil;
+  self.textInput.leadingUnderlineLabel.textColor = self.leadingUnderlineLabelTextColor;
 }
 
 #pragma mark - Placeholder Customization
@@ -351,7 +370,7 @@ static UIColor *_inlinePlaceholderColorDefault;
     }
   }
 
-  UIColor *textColor = [[self class] inlinePlaceholderColorDefault];
+  UIColor *textColor = self.trailingUnderlineLabelTextColor;
 
   if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
     textColor = self.errorColor;
@@ -399,6 +418,7 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 #pragma mark - Properties Implementation
 
+// The underline is never shown in this style.
 - (void)setActiveColor:(UIColor *)activeColor {
   [self updateUnderline];
 }
@@ -445,14 +465,14 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 - (UIColor *)errorColor {
   if (!_errorColor) {
-    _errorColor = [[self class] errorColorDefault];
+    _errorColor = [self class].errorColorDefault;
   }
   return _errorColor;
 }
 
 - (void)setErrorColor:(UIColor *)errorColor {
   if (![_errorColor isEqual:errorColor]) {
-    _errorColor = errorColor ? errorColor : [[self class] errorColorDefault];
+    _errorColor = errorColor ? errorColor : [self class].errorColorDefault;
     if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
       [self updateLeadingUnderlineLabel];
       [self updatePlaceholder];
@@ -505,7 +525,7 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 - (UIColor *)inlinePlaceholderColor {
   return _inlinePlaceholderColor ? _inlinePlaceholderColor
-                                 : [[self class] inlinePlaceholderColorDefault];
+                                 : [self class].inlinePlaceholderColorDefault;
 }
 
 + (UIColor *)inlinePlaceholderColorDefault {
@@ -529,6 +549,24 @@ static UIColor *_inlinePlaceholderColorDefault;
   return self.errorText != nil;
 }
 
+// The leading underline label must always be clear to not obstruct the placeholder and input.
+- (UIColor *)leadingUnderlineLabelTextColor {
+  return [UIColor clearColor];
+}
+
+- (void)setLeadingUnderlineLabelTextColor:(UIColor *)leadingUnderlineLabelTextColor {
+  // Not implemented. Leading underline label is always clear.
+}
+
++ (UIColor *)leadingUnderlineLabelTextColorDefault {
+  return [UIColor clearColor];
+}
+
++ (void)setLeadingUnderlineLabelTextColorDefault:(UIColor *)leadingUnderlineLabelTextColorDefault {
+  // Not implemented. Leading underline label is always clear.
+}
+
+// The underline is never shown in this style.
 - (void)setNormalColor:(UIColor *)normalColor {
   [self updateUnderline];
 }
@@ -561,6 +599,32 @@ static UIColor *_inlinePlaceholderColorDefault;
     _textInput = textInput;
     [self setupInput];
   }
+}
+
+- (UIColor *)trailingUnderlineLabelTextColor {
+  return _trailingUnderlineLabelTextColor ? _trailingUnderlineLabelTextColor :
+      [self class].trailingUnderlineLabelTextColorDefault;
+}
+
+- (void)setTrailingUnderlineLabelTextColor:(UIColor *)trailingUnderlineLabelTextColor {
+  if (_trailingUnderlineLabelTextColor != trailingUnderlineLabelTextColor) {
+    _trailingUnderlineLabelTextColor = trailingUnderlineLabelTextColor ? trailingUnderlineLabelTextColor :
+        [self class].trailingUnderlineLabelTextColorDefault;
+
+    [self updateTrailingUnderlineLabel];
+  }
+}
+
++ (UIColor *)trailingUnderlineLabelTextColorDefault {
+  if (!_trailingUnderlineLabelTextColorDefault) {
+    _trailingUnderlineLabelTextColorDefault = MDCTextInputInlinePlaceholderTextColorDefault();
+  }
+  return _trailingUnderlineLabelTextColorDefault;
+}
+
++ (void)setTrailingUnderlineLabelTextColorDefault:(UIColor *)trailingUnderlineLabelTextColorDefault {
+  _trailingUnderlineLabelTextColorDefault = trailingUnderlineLabelTextColorDefault ?
+      trailingUnderlineLabelTextColorDefault : MDCTextInputInlinePlaceholderTextColorDefault();
 }
 
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {

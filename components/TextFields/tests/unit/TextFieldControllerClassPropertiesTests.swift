@@ -32,6 +32,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerDefault.activeColorDefault = nil
     MDCTextInputControllerDefault.normalColorDefault = nil
     MDCTextInputControllerDefault.underlineViewModeDefault = .whileEditing
+    MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault = nil
+    MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault = nil
 
     MDCTextInputControllerDefault.floatingPlaceholderColorDefault = nil
     MDCTextInputControllerDefault.floatingPlaceholderScaleDefault = 0.75
@@ -43,6 +45,9 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerFullWidth.activeColorDefault = nil
     MDCTextInputControllerFullWidth.normalColorDefault = nil
     MDCTextInputControllerFullWidth.underlineViewModeDefault = .never
+
+    MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault = nil
+    MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault = nil
   }
 
   func testDefault() {
@@ -56,6 +61,15 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCPalette.blue.accent700)
     XCTAssertEqual(MDCTextInputControllerDefault.normalColorDefault, .lightGray)
     XCTAssertEqual(MDCTextInputControllerDefault.underlineViewModeDefault, .whileEditing)
+    XCTAssertEqual(MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault,
+                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
+    XCTAssertEqual(MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault,
+                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
+    XCTAssertEqual(MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault,
+                   MDCTextInputControllerDefault.inlinePlaceholderColorDefault)
+    XCTAssertEqual(MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault,
+                   MDCTextInputControllerDefault.inlinePlaceholderColorDefault)
+
 
     // Default specific properties
     XCTAssertEqual(MDCTextInputControllerDefault.floatingPlaceholderColorDefault,
@@ -78,6 +92,10 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerDefault.normalColorDefault)
     XCTAssertEqual(controller.underlineViewMode,
                    MDCTextInputControllerDefault.underlineViewModeDefault)
+    XCTAssertEqual(controller.leadingUnderlineLabelTextColor,
+                   MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault)
+    XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
+                   MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault)
 
     // Default specific properties
     XCTAssertEqual(controller.floatingPlaceholderColor,
@@ -105,6 +123,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerDefault.underlineViewModeDefault = .unlessEditing
     XCTAssertEqual(MDCTextInputControllerDefault.underlineViewModeDefault, .unlessEditing)
 
+    MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault = .blue
+    XCTAssertEqual(MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault, .blue)
+
+    MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault = .white
+    XCTAssertEqual(MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault, .white)
+
     // Default specific properties
     MDCTextInputControllerDefault.floatingPlaceholderColorDefault = .red
     XCTAssertEqual(MDCTextInputControllerDefault.floatingPlaceholderColorDefault, .red)
@@ -129,6 +153,10 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerDefault.normalColorDefault)
     XCTAssertEqual(controller.underlineViewMode,
                    MDCTextInputControllerDefault.underlineViewModeDefault)
+    XCTAssertEqual(controller.leadingUnderlineLabelTextColor,
+                   MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault)
+    XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
+                   MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault)
 
     // Default specific properties
     XCTAssertEqual(controller.floatingPlaceholderColor,
@@ -148,6 +176,9 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerFullWidth.activeColorDefault, .clear)
     XCTAssertEqual(MDCTextInputControllerFullWidth.normalColorDefault, .clear)
     XCTAssertEqual(MDCTextInputControllerFullWidth.underlineViewModeDefault, .never)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault, .clear)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault,
+                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
 
     // Test the use of the class properties.
     let textField = MDCTextField()
@@ -165,6 +196,10 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerFullWidth.normalColorDefault)
     XCTAssertEqual(controller.underlineViewMode,
                    MDCTextInputControllerFullWidth.underlineViewModeDefault)
+    XCTAssertEqual(controller.leadingUnderlineLabelTextColor,
+                   MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault)
+    XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
+                   MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault)
 
     // Test the changes to the class properties.
     MDCTextInputControllerFullWidth.disabledColorDefault = .red
@@ -189,6 +224,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerFullWidth.underlineViewModeDefault = .unlessEditing
     XCTAssertEqual(MDCTextInputControllerFullWidth.underlineViewModeDefault, .never)
 
+    MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault = .brown
+    XCTAssertEqual(MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault, .clear)
+
+    MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault = .cyan
+    XCTAssertEqual(MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault, .cyan)
+
     // Test the changes to the class properties can propogate to an instance.
     controller = MDCTextInputControllerFullWidth(textInput: textField)
 
@@ -204,5 +245,9 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerFullWidth.normalColorDefault)
     XCTAssertEqual(controller.underlineViewMode,
                    MDCTextInputControllerFullWidth.underlineViewModeDefault)
+    XCTAssertEqual(controller.leadingUnderlineLabelTextColor,
+                   MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault)
+    XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
+                   MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault)
   }
 }
