@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,17 +14,20 @@
  limitations under the License.
  */
 
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInput.h"
-#import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputController.h"
-#import "MDCTextInputControllerDefault.h"
 #import "MDCTextInputControllerFloatingBordered.h"
-#import "MDCTextInputControllerFullWidth.h"
-#import "MDCTextInputControllerLegacyDefault.h"
-#import "MDCTextInputControllerLegacyFullWidth.h"
-#import "MDCTextInputControllerTextArea.h"
-#import "MDCTextInputControllerTextFieldBox.h"
-#import "MDCTextInputUnderlineView.h"
+
 #import "MDCMultilineTextField.h"
+#import "MDCTextField.h"
+
+@implementation MDCTextInputControllerFloatingBordered
+
+- (instancetype)initWithTextInput:(UIView<MDCTextInput> *)input {
+  NSAssert([input isKindOfClass:[MDCMultilineTextField class]], @"This design is meant for single-line text fields only. For a complementary multi-line style, see MDCTextInputControllerTextArea.");
+  self = [super initWithTextInput:input];
+  if (self) {
+
+  }
+  return self;
+}
+
+@end
