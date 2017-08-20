@@ -126,9 +126,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 @interface MDCTextInputControllerDefault () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
+  MDCTextInputAllCharactersCounter *_characterCounter;
+
+  NSNumber *_floatingPlaceholderScale;
+
   UIColor *_activeColor;
   UIColor *_borderFillColor;
   UIColor *_disabledColor;
+  UIColor *_errorColor;
   UIColor *_floatingPlaceholderColor;
   UIColor *_inlinePlaceholderColor;
   UIColor *_normalColor;
@@ -157,12 +162,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 @implementation MDCTextInputControllerDefault
 
-@synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
 @synthesize characterCountViewMode = _characterCountViewMode;
 @synthesize roundedCorners = _roundedCorners;
-@synthesize errorColor = _errorColor;
-@synthesize floatingPlaceholderScale = _floatingPlaceholderScale;
 @synthesize textInput = _textInput;
 @synthesize underlineViewMode = _underlineViewMode;
 
@@ -218,10 +220,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self = [self init];
   if (self) {
     _textInput = textInput;
-  }
 
-  // This should happen last because it relies on the state of a ton of properties.
-  [self setupInput];
+    // This should happen last because it relies on the state of a ton of properties.
+    [self setupInput];
+  }
 
   return self;
 }
@@ -302,7 +304,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _disabledColor = [[self class] disabledColorDefault];
   _expandsOnOverflow = YES;
   _floatingEnabled = [[self class] isFloatingEnabledDefault];
-  _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
+  _internalCharacterCounter = [[MDCTextInputAllCharactersCounter alloc] init];
   _minimumLines = 1;
   _underlineViewMode = [[self class] underlineViewModeDefault];
   _textInput.hidesPlaceholderOnInput = NO;

@@ -60,7 +60,7 @@ static inline UIColor *MDCTextInputInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputFullWidthHintTextOpacity];
 }
 
-static inline UIColor *MDCTextInputTextErrorColorDefault() {
+static inline UIColor *MDCTextInputTextLegacyFullWidthErrorColorDefault() {
   return [MDCPalette redPalette].accent400;
 }
 
@@ -73,6 +73,9 @@ static UIColor *_inlinePlaceholderColorDefault;
 @interface MDCTextInputControllerFullWidth () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
+  MDCTextInputAllCharactersCounter *_characterCounter;
+
+  UIColor *_errorColor;
   UIColor *_inlinePlaceholderColor;
 }
 
@@ -105,10 +108,8 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 @implementation MDCTextInputControllerFullWidth
 
-@synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
 @synthesize characterCountViewMode = _characterCountViewMode;
-@synthesize errorColor = _errorColor;
 @synthesize textInput = _textInput;
 
 // TODO: (larche): Support in-line auto complete.
@@ -199,7 +200,7 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 - (void)commonMDCTextInputControllerFullWidthInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
-  _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
+  _internalCharacterCounter = [[MDCTextInputAllCharactersCounter alloc] init];
 }
 
 - (void)setupInput {
@@ -481,13 +482,14 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 + (UIColor *)errorColorDefault {
   if (!_errorColorDefault) {
-    _errorColorDefault = MDCTextInputTextErrorColorDefault();
+    _errorColorDefault = MDCTextInputTextLegacyFullWidthErrorColorDefault();
   }
   return _errorColorDefault;
 }
 
 + (void)setErrorColorDefault:(UIColor *)errorColorDefault {
-  _errorColorDefault = errorColorDefault ? errorColorDefault : MDCTextInputTextErrorColorDefault();
+  _errorColorDefault = errorColorDefault ? errorColorDefault :
+      MDCTextInputTextLegacyFullWidthErrorColorDefault();
 }
 
 - (void)setErrorText:(NSString *)errorText {
