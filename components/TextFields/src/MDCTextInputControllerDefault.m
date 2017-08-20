@@ -52,8 +52,8 @@ static NSString *const MDCTextInputControllerDefaultCharacterCountViewModeKey =
     @"MDCTextInputControllerDefaultCharacterCountViewModeKey";
 static NSString *const MDCTextInputControllerDefaultCharacterCountMaxKey =
     @"MDCTextInputControllerDefaultCharacterCountMaxKey";
-static NSString *const MDCTextInputControllerDefaultCornersRounded =
-    @"MDCTextInputControllerDefaultCornersRounded";
+static NSString *const MDCTextInputControllerDefaultRoundedCorners =
+    @"MDCTextInputControllerDefaultRoundedCorners";
 static NSString *const MDCTextInputControllerDefaultDisabledColorKey =
     @"MDCTextInputControllerDefaultDisabledColorKey";
 static NSString *const MDCTextInputControllerDefaultErrorAccessibilityValueKey =
@@ -119,7 +119,7 @@ static UIColor *_floatingPlaceholderColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_normalColorDefault;
 
-static UIRectCorner _cornersRoundedDefault = 0;
+static UIRectCorner _roundedCornersDefault = 0;
 
 static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileEditing;
 
@@ -138,7 +138,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIColor *_inlinePlaceholderColor;
   UIColor *_normalColor;
 
-  UIRectCorner _cornersRounded;
+  UIRectCorner _roundedCorners;
 }
 
 @property(nonatomic, assign, readonly) BOOL isPlaceholderUp;
@@ -164,7 +164,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 @synthesize characterCountMax = _characterCountMax;
 @synthesize characterCountViewMode = _characterCountViewMode;
-@synthesize cornersRounded = _cornersRounded;
+@synthesize roundedCorners = _roundedCorners;
 @synthesize textInput = _textInput;
 @synthesize underlineViewMode = _underlineViewMode;
 
@@ -194,8 +194,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountMaxKey];
     _characterCountViewMode =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
-    _cornersRounded = (UIRectCorner)
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCornersRounded];
+    _roundedCorners = (UIRectCorner)
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultRoundedCorners];
     _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultDisabledColorKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultErrorColorKey];
     _expandsOnOverflow = [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultExpandsOnOverflowKey];
@@ -241,7 +241,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                  forKey:MDCTextInputControllerDefaultCharacterCountMaxKey];
   [aCoder encodeInteger:self.characterCountViewMode
                  forKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
-  [aCoder encodeInteger:self.cornersRounded forKey:MDCTextInputControllerDefaultCornersRounded];
+  [aCoder encodeInteger:self.roundedCorners forKey:MDCTextInputControllerDefaultRoundedCorners];
   [aCoder encodeObject:self.disabledColor forKey:MDCTextInputControllerDefaultDisabledColorKey];
   [aCoder encodeObject:self.errorAccessibilityValue
                 forKey:MDCTextInputControllerDefaultErrorAccessibilityValueKey];
@@ -272,7 +272,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
   copy.characterCountMax = self.characterCountMax;
-  copy.cornersRounded = self.cornersRounded;
+  copy.roundedCorners = self.roundedCorners;
   copy.disabledColor = self.disabledColor;
   copy.errorAccessibilityValue = [self.errorAccessibilityValue copy];
   copy.errorColor = self.errorColor;
@@ -299,12 +299,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)commonMDCTextInputControllerDefaultInitialization {
-  _cornersRounded = [[self class] cornersRoundedDefault];
+  _roundedCorners = [[self class] roundedCornersDefault];
   _characterCountViewMode = UITextFieldViewModeAlways;
   _disabledColor = [[self class] disabledColorDefault];
   _expandsOnOverflow = YES;
   _floatingEnabled = [[self class] isFloatingEnabledDefault];
-  _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
+  _internalCharacterCounter = [[MDCTextInputAllCharactersCounter alloc] init];
   _minimumLines = 1;
   _underlineViewMode = [[self class] underlineViewModeDefault];
   _textInput.hidesPlaceholderOnInput = NO;
@@ -435,7 +435,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGRect borderBound = self.textInput.bounds;
   borderBound.size.height = CGRectGetMaxY(self.textInput.underline.frame);
   return [UIBezierPath bezierPathWithRoundedRect:borderBound
-                               byRoundingCorners:self.cornersRounded
+                               byRoundingCorners:self.roundedCorners
                                      cornerRadii:CGSizeMake(MDCTextInputDefaultBorderRadius,
                                                             MDCTextInputDefaultBorderRadius)];
 }
@@ -773,20 +773,20 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
-- (void)setCornersRounded:(UIRectCorner)cornersRounded {
-  if (_cornersRounded != cornersRounded) {
-    _cornersRounded = cornersRounded;
+- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
+  if (_roundedCorners != roundedCorners) {
+    _roundedCorners = roundedCorners;
 
     [self updateLayout];
   }
 }
 
-+ (UIRectCorner)cornersRoundedDefault {
-  return _cornersRoundedDefault;
++ (UIRectCorner)roundedCornersDefault {
+  return _roundedCornersDefault;
 }
 
-+ (void)setCornersRoundedDefault:(UIRectCorner)cornersRoundedDefault {
-  _cornersRoundedDefault = cornersRoundedDefault;
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  _roundedCornersDefault = roundedCornersDefault;
 }
 
 - (UIColor *)disabledColor {
@@ -1179,11 +1179,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   // Accessibility
   if (self.textInput.isEditing && self.characterCountMax > 0) {
-    NSString *announcementString = [NSString
+    NSString *announcementString;
+    if (!announcementString.length) {
+      announcementString = [NSString
           stringWithFormat:@"%lu characters remaining",
                            (unsigned long)(self.characterCountMax -
                                            [self.characterCounter
                                                characterCountForTextInput:self.textInput])];
+    }
 
     // Simply sending a layout change notification does not seem to
     UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
