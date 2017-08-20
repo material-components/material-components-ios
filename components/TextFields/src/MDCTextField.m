@@ -335,6 +335,12 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   _fundament.attributedPlaceholder = attributedPlaceholder;
 }
 
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  [super setBackgroundColor:backgroundColor];
+
+  self.placeholderLabel.backgroundColor = backgroundColor;
+}
+
 - (UITextFieldViewMode)clearButtonMode {
   return _fundament.clearButtonMode;
 }

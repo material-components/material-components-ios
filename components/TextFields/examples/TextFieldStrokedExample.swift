@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldTextAreaSwiftExample: UIViewController {
+final class TextFieldStrokedSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -45,7 +45,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     city.autocapitalizationType = .words
     return city
   }()
-  let cityController: MDCTextInputControllerDefault
+  let cityController: MDCTextInputControllerFloatingBordered
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -54,7 +54,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     state.autocapitalizationType = .allCharacters
     return state
   }()
-  let stateController: MDCTextInputControllerDefault
+  let stateController: MDCTextInputControllerFloatingBordered
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -62,7 +62,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputControllerDefault
+  let zipController: MDCTextInputControllerFloatingBordered
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -81,9 +81,9 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
   var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerDefault(textInput: city)
-    stateController = MDCTextInputControllerDefault(textInput: state)
-    zipController = MDCTextInputControllerDefault(textInput: zip)
+    cityController = MDCTextInputControllerFloatingBordered(textInput: city)
+    stateController = MDCTextInputControllerFloatingBordered(textInput: state)
+    zipController = MDCTextInputControllerFloatingBordered(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -93,9 +93,9 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
+    view.backgroundColor = .white
 
-    title = "Material Text Areas"
+    title = "Stroked Text Fields"
 
     setupScrollView()
     setupTextFields()
@@ -112,12 +112,12 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerDefault(textInput: name)
+    let nameController = MDCTextInputControllerFloatingBordered(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerDefault(textInput: address)
+    let addressController = MDCTextInputControllerFloatingBordered(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -140,7 +140,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerFloatingBordered(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
@@ -261,7 +261,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldTextAreaSwiftExample: UITextFieldDelegate {
+extension TextFieldStrokedSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -314,7 +314,7 @@ extension TextFieldTextAreaSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldTextAreaSwiftExample: UITextViewDelegate {
+extension TextFieldStrokedSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -322,7 +322,7 @@ extension TextFieldTextAreaSwiftExample: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldTextAreaSwiftExample {
+extension TextFieldStrokedSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -354,14 +354,14 @@ extension TextFieldTextAreaSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldTextAreaSwiftExample {
+extension TextFieldStrokedSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldTextAreaSwiftExample {
+extension TextFieldStrokedSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Text Areas"]
+    return ["Text Field", "Text Areas & Floating Bordered"]
   }
 }

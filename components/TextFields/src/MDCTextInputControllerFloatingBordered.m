@@ -16,8 +16,15 @@
 
 #import "MDCTextInputControllerFloatingBordered.h"
 
-#import "MDCMultilineTextField.h"
-#import "MDCTextField.h"
+#import "MDCTextInputBorderView.h"
+#import "private/MDCTextInputControllerDefault+Subclassing.h"
+
+#pragma mark - Class Properties
+
+static const CGFloat MDCTextInputTextFieldBoxFullPadding = 16.f;
+static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 8.f;
+
+static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 @implementation MDCTextInputControllerFloatingBordered
 
@@ -28,6 +35,62 @@
 
   }
   return self;
+}
+
+#pragma mark - Properties Implementations
+
++ (UIRectCorner)roundedCornersDefault {
+  return _roundedCornersDefault;
+}
+
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  _roundedCornersDefault = roundedCornersDefault;
+}
+
+- (BOOL)isFloatingEnabled {
+  return YES;
+}
+
+- (void)setFloatingEnabled:(BOOL)floatingEnabled {
+  // Unused. Floating is always enabled.
+}
+
+#pragma mark - MDCTextInputPositioningDelegate
+
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  UIEdgeInsets textInsets = [super textInsets:defaultInsets];
+  textInsets.top = MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxPaddingAdjustment +
+  MDCRint(self.textInput.placeholderLabel.font.lineHeight *
+          (CGFloat)self.floatingPlaceholderScale.floatValue) +
+  MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxPaddingAdjustment;
+
+  // .bottom = underlineOffset + the half padding above the line but below the text field and any
+  // space needed for the labels and / or line.
+  // Legacy has an additional half padding here but this version does not.
+  CGFloat underlineOffset = [self underlineOffset];
+
+  textInsets.bottom = underlineOffset;
+  textInsets.left = MDCTextInputTextFieldBoxFullPadding;
+  textInsets.right = MDCTextInputTextFieldBoxFullPadding;
+
+  return textInsets;
+}
+
+#pragma mark - MDCTextInputControllerDefault overrides
+
+- (void)textInputDidLayoutSubviews {
+  [self updateBorder];
+
+  [self.textInput setBackgroundColor:[UIColor whiteColor]];
+}
+
+- (void)updateBorder {
+  [super updateBorder];
+  UIColor *borderColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
+  self.textInput.borderView.borderStrokeColor =
+      (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
+      : borderColor;
+  self.textInput.borderView.borderPath.lineWidth = self.textInput.isEditing ? 2 : 1;
 }
 
 @end
