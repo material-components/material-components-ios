@@ -122,7 +122,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [super setBorderStyle:UITextBorderStyleNone];
 
   // Set the clear button color to black with 54% opacity.
-  [self setClearButtonColor:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
+  self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
 
   [self setupUnderlineConstraints];
 
@@ -229,14 +229,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (UIButton *)clearButton {
   return _fundament.clearButton;
-}
-
-- (UIColor *)clearButtonColor {
-  return _fundament.clearButtonColor;
-}
-
-- (void)setClearButtonColor:(UIColor *)clearButtonColor {
-  _fundament.clearButtonColor = clearButtonColor;
 }
 
 - (BOOL)hidesPlaceholderOnInput {
