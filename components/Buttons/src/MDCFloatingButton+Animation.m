@@ -123,20 +123,22 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
                  beginOffset:0];
     [self.layer addAnimation:overallScaleAnimation forKey:kMDCFloatingButtonTransformKey];
 
-    CABasicAnimation *iconScaleAnimation = [MDCFloatingButton
-        animationWithKeypath:@"transform"
-                     toValue:[NSValue valueWithCATransform3D:self.imageView.layer.presentationLayer
-                                                                 .transform]
-                   fromValue:[NSValue
-                                 valueWithCATransform3D:CATransform3DConcat(
-                                                            self.layer.presentationLayer.transform,
-                                                            CATransform3DMakeScale(0, 0, 1))]
-              timingFunction:[[CAMediaTimingFunction alloc]
-                                 initWithControlPoints:0.0f:0.0f:0.2f:1.0f]
-                    fillMode:kCAFillModeBoth
-                    duration:kMDCFloatingButtonEnterIconDuration
-                 beginOffset:kMDCFloatingButtonEnterIconOffset];
-    [self.imageView.layer addAnimation:iconScaleAnimation forKey:kMDCFloatingButtonTransformKey];
+    CALayer *iconPresentationLayer = self.imageView.layer.presentationLayer;
+    if (iconPresentationLayer) {
+      CABasicAnimation *iconScaleAnimation = [MDCFloatingButton
+          animationWithKeypath:@"transform"
+                       toValue:[NSValue valueWithCATransform3D:iconPresentationLayer.transform]
+                     fromValue:[NSValue
+                                   valueWithCATransform3D:CATransform3DConcat(
+                                                              iconPresentationLayer.transform,
+                                                              CATransform3DMakeScale(0, 0, 1))]
+                timingFunction:[[CAMediaTimingFunction alloc]
+                                   initWithControlPoints:0.0f:0.0f:0.2f:1.0f]
+                      fillMode:kCAFillModeBoth
+                      duration:kMDCFloatingButtonEnterIconDuration
+                   beginOffset:kMDCFloatingButtonEnterIconOffset];
+      [self.imageView.layer addAnimation:iconScaleAnimation forKey:kMDCFloatingButtonTransformKey];
+    }
 
     CABasicAnimation *opacityAnimation = [MDCFloatingButton
         animationWithKeypath:@"opacity"
