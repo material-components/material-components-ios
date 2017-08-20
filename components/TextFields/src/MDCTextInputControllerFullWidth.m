@@ -60,7 +60,7 @@ static inline UIColor *MDCTextInputInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputFullWidthHintTextOpacity];
 }
 
-static inline UIColor *MDCTextInputTextLegacyFullWidthErrorColorDefault() {
+static inline UIColor *MDCTextInputTextFullWidthErrorColorDefault() {
   return [MDCPalette redPalette].accent400;
 }
 
@@ -482,14 +482,14 @@ static UIColor *_inlinePlaceholderColorDefault;
 
 + (UIColor *)errorColorDefault {
   if (!_errorColorDefault) {
-    _errorColorDefault = MDCTextInputTextLegacyFullWidthErrorColorDefault();
+    _errorColorDefault = MDCTextInputTextFullWidthErrorColorDefault();
   }
   return _errorColorDefault;
 }
 
 + (void)setErrorColorDefault:(UIColor *)errorColorDefault {
   _errorColorDefault = errorColorDefault ? errorColorDefault :
-      MDCTextInputTextLegacyFullWidthErrorColorDefault();
+      MDCTextInputTextFullWidthErrorColorDefault();
 }
 
 - (void)setErrorText:(NSString *)errorText {
