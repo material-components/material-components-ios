@@ -19,10 +19,12 @@
 #import "MDCTextInputBorderView.h"
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
 
+#import "MDCMath.h"
+
 #pragma mark - Class Properties
 
-static const CGFloat MDCTextInputTextFieldBoxFullPadding = 16.f;
-static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 8.f;
+static const CGFloat MDCTextInputTextFieldFloatingBorderedFullPadding = 16.f;
+static const CGFloat MDCTextInputTextFieldFloatingBorderedHalfPadding = 8.f;
 
 static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
@@ -59,10 +61,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
-  textInsets.top = MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxPaddingAdjustment +
+  textInsets.top = MDCTextInputTextFieldFloatingBorderedHalfPadding +
   MDCRint(self.textInput.placeholderLabel.font.lineHeight *
           (CGFloat)self.floatingPlaceholderScale.floatValue) +
-  MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxPaddingAdjustment;
+  MDCTextInputTextFieldFloatingBorderedHalfPadding;
 
   // .bottom = underlineOffset + the half padding above the line but below the text field and any
   // space needed for the labels and / or line.
@@ -70,8 +72,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   CGFloat underlineOffset = [self underlineOffset];
 
   textInsets.bottom = underlineOffset;
-  textInsets.left = MDCTextInputTextFieldBoxFullPadding;
-  textInsets.right = MDCTextInputTextFieldBoxFullPadding;
+  textInsets.left = MDCTextInputTextFieldFloatingBorderedFullPadding;
+  textInsets.right = MDCTextInputTextFieldFloatingBorderedFullPadding;
 
   return textInsets;
 }
@@ -91,6 +93,31 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
       (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
       : borderColor;
   self.textInput.borderView.borderPath.lineWidth = self.textInput.isEditing ? 2 : 1;
+}
+
+// Measurement from bottom to underline center Y
+- (CGFloat)underlineOffset {
+  // The amount of space underneath the underline depends on whether there is content in the
+  // underline labels.
+  CGFloat underlineLabelsOffset = 0;
+  if (self.textInput.leadingUnderlineLabel.text.length) {
+    underlineLabelsOffset =
+    MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  }
+  if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
+    underlineLabelsOffset =
+    MAX(underlineLabelsOffset,
+        MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+  }
+
+  CGFloat underlineOffset = underlineLabelsOffset;
+  underlineOffset += MDCTextInputTextFieldFloatingBorderedHalfPadding;
+
+  if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
+    underlineOffset += MDCTextInputTextFieldFloatingBorderedHalfPadding;
+  }
+
+  return underlineOffset;
 }
 
 @end
