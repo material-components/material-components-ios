@@ -15,6 +15,7 @@
  */
 
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "private/MDCTextInputCommonFundament.h"
 
@@ -80,6 +81,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
     }
+
     [self setNeedsLayout];
   }
   return self;
@@ -120,7 +122,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [super setBorderStyle:UITextBorderStyleNone];
 
   // Set the clear button color to black with 54% opacity.
-  [self setClearButtonColor:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
+  self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
 
   [self setupUnderlineConstraints];
 
@@ -165,7 +167,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   _underlineY =
       [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
+                                   attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:self
                                    attribute:NSLayoutAttributeTop
@@ -189,18 +191,44 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [self invalidateIntrinsicContentSize];
 }
 
+#pragma mark - Border Implementation
+
+- (UIBezierPath *)defaultBorderPath {
+  CGRect borderBound = self.bounds;
+  borderBound.size.height = CGRectGetMaxY(self.underline.frame);
+  return [UIBezierPath bezierPathWithRoundedRect:borderBound
+                               byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                                     cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
+                                                            MDCTextInputBorderRadius)];
+}
+
+- (void)updateBorder {
+  self.borderView.borderPath = self.borderPath;
+}
+
 #pragma mark - Properties Implementation
+
+- (UIBezierPath *)borderPath {
+  return self.fundament.borderPath ? self.fundament.borderPath : [self defaultBorderPath];
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  if (self.fundament.borderPath != borderPath) {
+    self.fundament.borderPath = borderPath;
+    [self updateBorder];
+  }
+}
+
+- (MDCTextInputBorderView *)borderView {
+  return self.fundament.borderView;
+}
+
+- (void)setBorderView:(MDCTextInputBorderView *)borderView {
+  self.fundament.borderView = borderView;
+}
 
 - (UIButton *)clearButton {
   return _fundament.clearButton;
-}
-
-- (UIColor *)clearButtonColor {
-  return _fundament.clearButtonColor;
-}
-
-- (void)setClearButtonColor:(UIColor *)clearButtonColor {
-  _fundament.clearButtonColor = clearButtonColor;
 }
 
 - (BOOL)hidesPlaceholderOnInput {
@@ -574,6 +602,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [_fundament layoutSubviewsOfInput];
   if ([self needsUpdateUnderlinePosition]) {
     [self setNeedsUpdateConstraints];
+  }
+  [self updateBorder];
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
+    [self.positioningDelegate textInputDidLayoutSubviews];
   }
 }
 
