@@ -76,7 +76,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
-  if (self) {\
+  if (self) {
     MDCTextInputCommonFundament *fundament =
         [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
     _fundament =
