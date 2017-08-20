@@ -43,8 +43,8 @@ extern const CGFloat MDCTextInputDefaultUnderlineActiveHeight;
 
  Default is clear.
  */
-
 @property(class, nonatomic, null_resettable, strong) UIColor *borderFillColorDefault;
+
 /**
  Should the controller's .textInput grow vertically as new lines are added.
 
