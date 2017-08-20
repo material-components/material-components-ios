@@ -65,7 +65,7 @@ static inline UIColor *MDCTextInputInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputFullWidthHintTextOpacity];
 }
 
-static inline UIColor *MDCTextInputTextErrorColorDefault() {
+static inline UIColor *MDCTextInputTextFullWidthErrorColorDefault() {
   return [MDCPalette redPalette].accent400;
 }
 
@@ -79,6 +79,9 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 @interface MDCTextInputControllerLegacyFullWidth () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
+  MDCTextInputAllCharactersCounter *_characterCounter;
+
+  UIColor *_errorColor;
   UIColor *_inlinePlaceholderColor;
   UIColor *_leadingUnderlineLabelTextColor;
   UIColor *_trailingUnderlineLabelTextColor;
@@ -113,10 +116,8 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 @implementation MDCTextInputControllerLegacyFullWidth
 
-@synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
 @synthesize characterCountViewMode = _characterCountViewMode;
-@synthesize errorColor = _errorColor;
 @synthesize textInput = _textInput;
 
 // TODO: (larche): Support in-line auto complete.
@@ -204,6 +205,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   copy.textInput = self.textInput;  // Just a pointer value copy
   copy.trailingUnderlineLabelTextColor = self.trailingUnderlineLabelTextColor;
   copy.activeColor = self.activeColor;
+  copy.disabledColor = self.disabledColor;
   copy.normalColor = self.normalColor;
 
   return copy;
@@ -216,7 +218,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 - (void)commonMDCTextInputControllerLegacyFullWidthInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
-  _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
+  _internalCharacterCounter = [[MDCTextInputAllCharactersCounter alloc] init];
 }
 
 - (void)setupInput {
@@ -443,6 +445,22 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   }
 }
 
+- (UIRectCorner)roundedCorners {
+  return 0;
+}
+
+- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
+  // Not implemented. There are no corners to round.
+}
+
++ (UIRectCorner)roundedCornersDefault {
+  return 0;
+}
+
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  // Not implemented. There are no corners to round.
+}
+
 - (void)setDisabledColor:(UIColor *)disabledColor {
   [self updateUnderline];
 }
@@ -484,13 +502,14 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 + (UIColor *)errorColorDefault {
   if (!_errorColorDefault) {
-    _errorColorDefault = MDCTextInputTextErrorColorDefault();
+    _errorColorDefault = MDCTextInputTextFullWidthErrorColorDefault();
   }
   return _errorColorDefault;
 }
 
 + (void)setErrorColorDefault:(UIColor *)errorColorDefault {
-  _errorColorDefault = errorColorDefault ? errorColorDefault : MDCTextInputTextErrorColorDefault();
+  _errorColorDefault = errorColorDefault ? errorColorDefault :
+      MDCTextInputTextFullWidthErrorColorDefault();
 }
 
 - (void)setErrorText:(NSString *)errorText {
