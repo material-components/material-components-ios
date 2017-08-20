@@ -29,12 +29,12 @@
 
 #pragma mark - Constants
 
-static const CGFloat MDCTextInputTextFieldBoxFullPadding = 16.f;
-static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 8.f;
+static const CGFloat MDCTextInputTextFieldTextAreaFullPadding = 16.f;
+static const CGFloat MDCTextInputTextFieldTextAreaHalfPadding = 8.f;
 
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
-static const CGFloat MDCTextInputTextFieldBoxPaddingAdjustment = 1.f;
+static const CGFloat MDCTextInputTextFieldTextAreaPaddingAdjustment = 1.f;
 
 #pragma mark - Class Properties
 
@@ -83,10 +83,10 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
 
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
-  textInsets.top = MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxPaddingAdjustment +
+  textInsets.top = MDCTextInputTextFieldTextAreaHalfPadding + MDCTextInputTextFieldTextAreaPaddingAdjustment +
       MDCRint(self.textInput.placeholderLabel.font.lineHeight *
               (CGFloat)self.floatingPlaceholderScale.floatValue) +
-                  MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxPaddingAdjustment;
+                  MDCTextInputTextFieldTextAreaHalfPadding + MDCTextInputTextFieldTextAreaPaddingAdjustment;
 
   // .bottom = underlineOffset + the half padding above the line but below the text field and any
   // space needed for the labels and / or line.
@@ -94,8 +94,8 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   CGFloat underlineOffset = [self underlineOffset];
 
   textInsets.bottom = underlineOffset;
-  textInsets.left = MDCTextInputTextFieldBoxFullPadding;
-  textInsets.right = MDCTextInputTextFieldBoxFullPadding;
+  textInsets.left = MDCTextInputTextFieldTextAreaFullPadding;
+  textInsets.right = MDCTextInputTextFieldTextAreaFullPadding;
 
   return textInsets;
 }
@@ -108,6 +108,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   self.textInput.borderView.borderStrokeColor =
       (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
       : borderColor;
+  self.textInput.borderView.borderPath.lineWidth = self.textInput.isEditing ? 2 : 1;
 }
 
 - (void)updateLayout {
@@ -123,7 +124,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   self.textInput.underline.alpha = 0;
 
   if (!self.placeholderTop) {
-    self.placeholderTop = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.textInput attribute:NSLayoutAttributeTop multiplier:1 constant:MDCTextInputTextFieldBoxFullPadding];
+    self.placeholderTop = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.textInput attribute:NSLayoutAttributeTop multiplier:1 constant:MDCTextInputTextFieldTextAreaFullPadding];
     self.placeholderTop.priority = UILayoutPriorityDefaultHigh;
     self.placeholderTop.active = YES;
   }
@@ -145,10 +146,10 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   }
 
   CGFloat underlineOffset = underlineLabelsOffset;
-  underlineOffset += MDCTextInputTextFieldBoxHalfPadding;
+  underlineOffset += MDCTextInputTextFieldTextAreaHalfPadding;
 
   if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
-    underlineOffset += MDCTextInputTextFieldBoxHalfPadding;
+    underlineOffset += MDCTextInputTextFieldTextAreaHalfPadding;
   }
 
   return underlineOffset;
