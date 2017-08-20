@@ -48,6 +48,15 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
 
 @implementation MDCTextInputControllerTextArea
 
+- (instancetype)initWithTextInput:(UIView<MDCTextInput> *)input {
+  NSAssert([input conformsToProtocol:@protocol(MDCMultilineTextInput)], @"This design is meant for multi-line text fields only.");
+  self = [super initWithTextInput:input];
+  if (self) {
+
+  }
+  return self;
+}
+
 #pragma mark - Properties Implementations
 
 + (UIRectCorner)cornersRoundedDefault {
