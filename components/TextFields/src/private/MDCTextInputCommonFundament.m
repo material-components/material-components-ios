@@ -13,9 +13,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+
 #import "MaterialTextFields.h"
 
 #import "MDCTextInputArt.h"
+#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCommonFundament.h"
 
 #import "MaterialAnimationTiming.h"
@@ -23,6 +25,8 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
+static NSString *const MDCTextInputFundamentBorderPathKey = @"MDCTextInputFundamentBorderPathKey";
+static NSString *const MDCTextInputFundamentBorderViewKey = @"MDCTextInputFundamentBorderViewKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
 static NSString *const MDCTextInputFundamentClearButtonColorKey =
     @"MDCTextInputFundamentClearButtonColorKey";
@@ -36,6 +40,8 @@ static NSString *const MDCTextInputFundamentMDCAdjustsFontsKey =
     @"MDCTextInputFundamentMDCAdjustsFontsKey";
 static NSString *const MDCTextInputFundamentPlaceholderLabelKey =
     @"MDCTextInputFundamentPlaceholderLabelKey";
+static NSString *const MDCTextInputFundamentPositioningDelegateKey =
+    @"MDCTextInputFundamentPositioningDelegateKey";
 static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
 static NSString *const MDCTextInputFundamentTextInputKey = @"MDCTextInputFundamentTextInputKey";
 static NSString *const MDCTextInputFundamentTrailingLabelKey =
@@ -44,12 +50,11 @@ static NSString *const MDCTextInputFundamentTrailingViewKey =
     @"MDCTextInputFundamentTrailingViewKey";
 static NSString *const MDCTextInputFundamentUnderlineViewKey =
     @"MDCTextInputFundamentUnderlineViewKey";
-static NSString *const MDCTextInputFundamentPositioningDelegateKey =
-    @"MDCTextInputFundamentPositioningDelegateKey";
 
 static NSString *const MDCTextInputUnderlineKVOKeyColor = @"color";
 static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
 
+const CGFloat MDCTextInputBorderRadius = 4.f;
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.5f;
 static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
@@ -79,7 +84,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
 
+@property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
+@property(nonatomic, strong) NSLayoutConstraint *leadingUnderlineLeading;
+@property(nonatomic, strong) NSLayoutConstraint *trailingUnderlineTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
@@ -97,6 +105,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 // We never use the text property. Instead always read from the text field.
 
 @synthesize attributedText = _do_no_use_attributedText;
+@synthesize borderPath = _borderPath;
+@synthesize borderView = _borderView;
 @synthesize clearButton = _clearButton;
 @synthesize clearButtonColor = _clearButtonColor;
 @synthesize clearButtonMode = _clearButtonMode;
@@ -132,6 +142,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self updateColors];
     [self mdc_setAdjustsFontForContentSizeCategory:NO];
 
+    [self setupBorder];
     [self subscribeForKVO];
   }
   return self;
@@ -142,6 +153,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
+    _borderPath = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderPathKey];
+    _borderView = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderViewKey];
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
     _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonColorKey];
@@ -159,12 +172,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
         (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
     _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
 
+    [self setupBorder];
     [self subscribeForKVO];
   }
   return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeObject:self.borderPath forKey:MDCTextInputFundamentBorderPathKey];
+  [aCoder encodeObject:self.borderView forKey:MDCTextInputFundamentBorderViewKey];
   [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
   [aCoder encodeObject:self.clearButtonImage forKey:MDCTextInputFundamentClearButtonImageKey];
@@ -185,6 +201,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   MDCTextInputCommonFundament *copy =
       [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
 
+  copy.borderPath = self.borderPath.copy;
+  if ([self.borderView conformsToProtocol:@protocol(NSCopying)]) {
+    copy.borderView = self.borderView.copy;
+  }
   copy.clearButtonColor = self.clearButtonColor;
   copy.clearButtonImage = self.clearButtonImage;
   copy.clearButtonMode = self.clearButtonMode;
@@ -266,18 +286,18 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                            constant:MDCTextInputHalfPadding];
   self.placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint *trailingSuperview =
+  self.clearButtonTrailing =
       [NSLayoutConstraint constraintWithItem:_clearButton
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:_textInput
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
-                                    constant:MDCTextInputClearButtonImageBuiltInPadding];
-  trailingSuperview.priority = UILayoutPriorityDefaultLow;
+                                    constant:-1 * (MDCTextInputClearButtonImageBuiltInPadding + [self textInsets].right)];
+  self.clearButtonTrailing.priority = UILayoutPriorityDefaultLow;
 
   [NSLayoutConstraint activateConstraints:@[
-    height, self.clearButtonWidth, bottom, self.placeholderLeading, trailingSuperview
+    height, self.clearButtonWidth, bottom, self.placeholderLeading, self.clearButtonTrailing
   ]];
 
   [_clearButton addTarget:self
@@ -327,7 +347,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_trailingUnderlineLabel];
 
-  NSLayoutConstraint *leadingLeading =
+  _leadingUnderlineLeading =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                    attribute:NSLayoutAttributeLeading
                                    relatedBy:NSLayoutRelationEqual
@@ -335,9 +355,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                    attribute:NSLayoutAttributeLeading
                                   multiplier:1
                                     constant:0];
-  leadingLeading.priority = UILayoutPriorityDefaultLow;
+  _leadingUnderlineLeading.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint *trailingTrailing =
+  _trailingUnderlineTrailing =
       [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationEqual
@@ -345,7 +365,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
                                     constant:0];
-  trailingTrailing.priority = UILayoutPriorityDefaultLow;
+  _trailingUnderlineTrailing.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *labelSpacing =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
@@ -357,7 +377,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                     constant:0];
   labelSpacing.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint activateConstraints:@[ labelSpacing, leadingLeading, trailingTrailing ]];
+  [NSLayoutConstraint activateConstraints:@[ labelSpacing, _leadingUnderlineLeading,
+                                             _trailingUnderlineTrailing ]];
 
   NSLayoutConstraint *leadingBottom = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                                                    attribute:NSLayoutAttributeBottom
@@ -399,10 +420,30 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return underline;
 }
 
+#pragma mark - Border implementation
+
+- (void)setupBorder {
+  if (!_borderView) {
+    _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];;
+    [self.textInput addSubview:_borderView];
+    [self.textInput sendSubviewToBack:_borderView];
+    _borderView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray <NSLayoutConstraint *> *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}];
+    constraints = [constraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
+    for (NSLayoutConstraint *constraint in constraints) {
+      constraint.priority = UILayoutPriorityDefaultLow;
+    }
+    [NSLayoutConstraint activateConstraints:constraints];
+  }
+}
+
 - (void)unsubscribeFromNotifications {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self];
 }
+
+#pragma mark - KVO Subscription
 
 - (void)subscribeForKVO {
   if (!_underline) {
@@ -436,6 +477,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)layoutSubviewsOfInput {
   [self updatePlaceholderAlpha];
+  [self.textInput sendSubviewToBack:_borderView];
 
   if ([self needsUpdateConstraintsForPlaceholderToOverlayViewsPosition]) {
     [self.textInput setNeedsUpdateConstraints];
@@ -446,8 +488,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)updateConstraintsOfInput {
-  [self updateClearButtonConstraint];
+  [self updateClearButtonConstraints];
   [self updatePlaceholderPosition];
+  [self updateUnderlineLabels];
 }
 
 #pragma mark - Clear Button Implementation
@@ -477,12 +520,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.clearButton.superview bringSubviewToFront:self.clearButton];
 }
 
-- (void)updateClearButtonConstraint {
+- (void)updateClearButtonConstraints {
   CGFloat constant = MDCTextInputClearButtonImageSquareWidthHeight * [self clearButtonAlpha];
   if (self.clearButtonWidth.constant != constant) {
     self.clearButtonWidth.constant = constant;
     [self.textInput invalidateIntrinsicContentSize];
   }
+
+  self.clearButtonTrailing.constant =  MDCTextInputClearButtonImageBuiltInPadding - [self textInsets].right;
 }
 
 - (CGFloat)clearButtonAlpha {
@@ -529,7 +574,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
   [color setFill];
-  [MDCPathForClearButtonImageFrame(bounds) fill];
+  [MDCPathForClearButtonLegacyImageFrame(bounds) fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
 
@@ -564,6 +609,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   [self updatePlaceholderAlpha];
   [self.textInput setNeedsUpdateConstraints];
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  if (_borderPath != borderPath) {
+    _borderPath = [UIBezierPath bezierPathWithCGPath:borderPath.CGPath];
+  }
 }
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
@@ -740,6 +791,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)updatePlaceholderPosition {
   self.placeholderTop.constant = _textInput.textInsets.top;
+  self.placeholderLeading.constant = _textInput.textInsets.left;
+  self.placeholderTrailing.constant = -1 * _textInput.textInsets.right;
 
   [self updatePlaceholderToOverlayViewsPosition];
   [self.textInput invalidateIntrinsicContentSize];
@@ -775,10 +828,17 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                       toItem:_textInput
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
-                                    constant:insets.right];
+                                    constant:-1 * insets.right];
   placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
   return @[ self.placeholderTop, self.placeholderLeading, placeholderTrailing ];
+}
+
+- (void)updateUnderlineLabels {
+  UIEdgeInsets textInsets = self.textInsets;
+
+  self.leadingUnderlineLeading.constant = textInsets.left;
+  self.trailingUnderlineTrailing.constant = -1 * textInsets.right;
 }
 
 #pragma mark - Text Input Events
