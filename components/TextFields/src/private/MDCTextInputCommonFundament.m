@@ -28,10 +28,6 @@
 static NSString *const MDCTextInputFundamentBorderPathKey = @"MDCTextInputFundamentBorderPathKey";
 static NSString *const MDCTextInputFundamentBorderViewKey = @"MDCTextInputFundamentBorderViewKey";
 static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
-static NSString *const MDCTextInputFundamentClearButtonColorKey =
-    @"MDCTextInputFundamentClearButtonColorKey";
-static NSString *const MDCTextInputFundamentClearButtonImageKey =
-    @"MDCTextInputFundamentClearButtonImageKey";
 static NSString *const MDCTextInputFundamentHidesPlaceholderKey =
     @"MDCTextInputFundamentHidesPlaceholderKey";
 static NSString *const MDCTextInputFundamentLeadingLabelKey =
@@ -94,8 +90,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingRightViewLeading;
 
-@property(nonatomic, strong) UIImage *clearButtonImage;
-
 @property(nonatomic, weak) UIView<MDCTextInput> *textInput;
 
 @end
@@ -108,7 +102,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize borderPath = _borderPath;
 @synthesize borderView = _borderView;
 @synthesize clearButton = _clearButton;
-@synthesize clearButtonColor = _clearButtonColor;
 @synthesize clearButtonMode = _clearButtonMode;
 @synthesize enabled = _enabled;
 @synthesize hidesPlaceholderOnInput = _hidesPlaceholderOnInput;
@@ -156,8 +149,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _borderPath = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderPathKey];
     _borderView = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderViewKey];
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
-    _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
-    _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonColorKey];
     _hidesPlaceholderOnInput = [aDecoder decodeBoolForKey:MDCTextInputFundamentHidesPlaceholderKey];
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentLeadingLabelKey];
     _mdc_adjustsFontForContentSizeCategory =
@@ -182,8 +173,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [aCoder encodeObject:self.borderPath forKey:MDCTextInputFundamentBorderPathKey];
   [aCoder encodeObject:self.borderView forKey:MDCTextInputFundamentBorderViewKey];
   [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
-  [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
-  [aCoder encodeObject:self.clearButtonImage forKey:MDCTextInputFundamentClearButtonImageKey];
   [aCoder encodeBool:self.hidesPlaceholderOnInput forKey:MDCTextInputFundamentHidesPlaceholderKey];
   [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputFundamentLeadingLabelKey];
   [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory
@@ -205,8 +194,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if ([self.borderView conformsToProtocol:@protocol(NSCopying)]) {
     copy.borderView = self.borderView.copy;
   }
-  copy.clearButtonColor = self.clearButtonColor;
-  copy.clearButtonImage = self.clearButtonImage;
   copy.clearButtonMode = self.clearButtonMode;
   copy.enabled = self.isEnabled;
   copy.hidesPlaceholderOnInput = self.hidesPlaceholderOnInput;
@@ -496,17 +483,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Clear Button Implementation
 
 - (void)updateClearButton {
-  CGSize clearButtonSize = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
-                                      MDCTextInputClearButtonImageSquareWidthHeight);
-  if (!self.clearButtonImage || !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonSize)) {
-    self.clearButtonImage =
-        [self drawnClearButtonImage:clearButtonSize color:self.clearButtonColor];
-  }
+  UIImage *image = self.clearButton.currentImage ? self.clearButton.currentImage :
+      [self drawnClearButtonImage:self.clearButton.tintColor];
 
   if (![self.clearButton imageForState:UIControlStateNormal]) {
-    [self.clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
-    [self.clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
-    [self.clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
+    [self.clearButton setImage:image forState:UIControlStateNormal];
+    [self.clearButton setImage:image forState:UIControlStateHighlighted];
+    [self.clearButton setImage:image forState:UIControlStateSelected];
   }
 
   CGFloat clearButtonAlpha = [self clearButtonAlpha];
@@ -559,25 +542,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return clearButtonAlpha;
 }
 
-- (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
-  NSAssert1(size.width >= 0, @"drawnClearButtonImage was passed a size with a width less than 0 %@",
-            NSStringFromCGSize(size));
-  NSAssert1(size.height >= 0,
-            @"drawnClearButtonImage was passed a size with a height less than 0 %@",
-            NSStringFromCGSize(size));
+- (UIImage *)drawnClearButtonImage:(UIColor *)color {
+  CGSize clearButtonSize = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
+                                      MDCTextInputClearButtonImageSquareWidthHeight);
 
-  if (CGSizeEqualToSize(size, CGSizeZero)) {
-    size = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
-                      MDCTextInputClearButtonImageSquareWidthHeight);
-  }
   CGFloat scale = [UIScreen mainScreen].scale;
-  CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
+  CGRect bounds = CGRectMake(0, 0, clearButtonSize.width * scale, clearButtonSize.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
   [color setFill];
-  [MDCPathForClearButtonLegacyImageFrame(bounds) fill];
+
+  [MDCPathForClearButtonImageFrame(bounds) fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
 
+  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   return image;
 }
 
@@ -614,14 +592,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)setBorderPath:(UIBezierPath *)borderPath {
   if (_borderPath != borderPath) {
     _borderPath = [UIBezierPath bezierPathWithCGPath:borderPath.CGPath];
-  }
-}
-
-- (void)setClearButtonColor:(UIColor *)clearButtonColor {
-  if (![_clearButtonColor isEqual:clearButtonColor]) {
-    _clearButtonColor = clearButtonColor;
-    self.clearButtonImage =
-        [self drawnClearButtonImage:self.clearButtonImage.size color:_clearButtonColor];
   }
 }
 

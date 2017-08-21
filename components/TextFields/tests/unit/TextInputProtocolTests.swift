@@ -35,8 +35,8 @@ class TextInputTests: XCTestCase {
     textField.borderView?.borderStrokeColor = .orange
     XCTAssertEqual(textField.borderView?.borderStrokeColor, .orange)
 
-    textField.clearButtonColor = .red
-    XCTAssertEqual(textField.clearButtonColor, .red)
+    textField.clearButton.tintColor = .red
+    XCTAssertEqual(textField.clearButton.tintColor, .red)
 
     textField.borderView?.borderFillColor = nil
     XCTAssertNotEqual(textField.borderView?.borderFillColor, .purple)

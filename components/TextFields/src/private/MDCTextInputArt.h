@@ -25,7 +25,7 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 
   CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 2, CGRectGetMinY(frame) + 2,
                                   MDCFloor((frame.size.width - 2) * 0.90909f + 0.5f),
-                                  floor((frame.size.height - 2) * 0.90909f + 0.5f));
+                                  MDCFloor((frame.size.height - 2) * 0.90909f + 0.5f));
 
   UIBezierPath *ic_clear_pathPath = [UIBezierPath bezierPath];
   [ic_clear_pathPath

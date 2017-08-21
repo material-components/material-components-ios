@@ -39,7 +39,7 @@ class MultilineTextFieldTests: XCTestCase {
     textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
     textField.borderView?.borderPath?.lineWidth = 2
     textField.borderView?.borderStrokeColor = .green
-    textField.clearButtonColor = .red
+    textField.clearButton.tintColor = .red
     textField.clearButtonMode = .always
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
@@ -61,7 +61,7 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertEqual(textField.borderView?.borderPath?.bounds, textFieldCopy.borderView?.borderPath?.bounds)
       XCTAssertEqual(textField.borderView?.borderPath?.lineWidth, textFieldCopy.borderView?.borderPath?.lineWidth)
       XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
-      XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
+      XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
