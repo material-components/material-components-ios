@@ -28,10 +28,10 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-static const CGFloat MDCTextInputFullWidthHintTextOpacity = 0.54f;
-static const CGFloat MDCTextInputFullWidthHorizontalInnerPadding = 8.f;
-static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
-static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
+static const CGFloat MDCTextInputControllerLegacyFullWidthHintTextOpacity = 0.54f;
+static const CGFloat MDCTextInputControllerLegacyFullWidthHorizontalInnerPadding = 8.f;
+static const CGFloat MDCTextInputControllerLegacyFullWidthHorizontalPadding = 16.f;
+static const CGFloat MDCTextInputControllerLegacyFullWidthVerticalPadding = 20.f;
 
 static NSString *const MDCTextInputControllerLegacyFullWidthCharacterCounterKey =
     @"MDCTextInputControllerLegacyFullWidthCharacterCounterKey";
@@ -61,11 +61,11 @@ static NSString *const MDCTextInputControllerLegacyFullWidthTrailingUnderlineLab
 
 static NSString *const MDCTextInputControllerLegacyFullWidthKVOKeyFont = @"font";
 
-static inline UIColor *MDCTextInputInlinePlaceholderTextColorDefault() {
-  return [UIColor colorWithWhite:0 alpha:MDCTextInputFullWidthHintTextOpacity];
+static inline UIColor *MDCTextInputControllerLegacyFullWidthInlinePlaceholderTextColorDefault() {
+  return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerLegacyFullWidthHintTextOpacity];
 }
 
-static inline UIColor *MDCTextInputTextFullWidthErrorColorDefault() {
+static inline UIColor *MDCTextInputControllerLegacyFullWidthErrorColorDefault() {
   return [MDCPalette redPalette].accent400;
 }
 
@@ -502,14 +502,14 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 + (UIColor *)errorColorDefault {
   if (!_errorColorDefault) {
-    _errorColorDefault = MDCTextInputTextFullWidthErrorColorDefault();
+    _errorColorDefault = MDCTextInputControllerLegacyFullWidthErrorColorDefault();
   }
   return _errorColorDefault;
 }
 
 + (void)setErrorColorDefault:(UIColor *)errorColorDefault {
   _errorColorDefault = errorColorDefault ? errorColorDefault :
-      MDCTextInputTextFullWidthErrorColorDefault();
+      MDCTextInputControllerLegacyFullWidthErrorColorDefault();
 }
 
 - (void)setErrorText:(NSString *)errorText {
@@ -636,14 +636,14 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 + (UIColor *)trailingUnderlineLabelTextColorDefault {
   if (!_trailingUnderlineLabelTextColorDefault) {
-    _trailingUnderlineLabelTextColorDefault = MDCTextInputInlinePlaceholderTextColorDefault();
+    _trailingUnderlineLabelTextColorDefault = MDCTextInputControllerLegacyFullWidthInlinePlaceholderTextColorDefault();
   }
   return _trailingUnderlineLabelTextColorDefault;
 }
 
 + (void)setTrailingUnderlineLabelTextColorDefault:(UIColor *)trailingUnderlineLabelTextColorDefault {
   _trailingUnderlineLabelTextColorDefault = trailingUnderlineLabelTextColorDefault ?
-      trailingUnderlineLabelTextColorDefault : MDCTextInputInlinePlaceholderTextColorDefault();
+      trailingUnderlineLabelTextColorDefault : MDCTextInputControllerLegacyFullWidthInlinePlaceholderTextColorDefault();
 }
 
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
@@ -685,7 +685,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                         toItem:self.textInput
                                      attribute:NSLayoutAttributeTrailing
                                     multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
+                                      constant:-1 * MDCTextInputControllerLegacyFullWidthHorizontalPadding];
   }
   if (!self.clearButtonTrailingCharacterCountLeading) {
     self.clearButtonTrailingCharacterCountLeading =
@@ -705,7 +705,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                         toItem:self.textInput
                                      attribute:NSLayoutAttributeLeading
                                     multiplier:1
-                                      constant:MDCTextInputFullWidthHorizontalPadding];
+                                      constant:MDCTextInputControllerLegacyFullWidthHorizontalPadding];
   }
   if (!self.placeholderTrailingCharacterCountLeading) {
     self.placeholderTrailingCharacterCountLeading =
@@ -715,7 +715,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                         toItem:self.textInput.trailingUnderlineLabel
                                      attribute:NSLayoutAttributeLeading
                                     multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalInnerPadding];
+                                      constant:-1 * MDCTextInputControllerLegacyFullWidthHorizontalInnerPadding];
   }
   if (!self.placeholderTrailingSuperviewTrailing) {
     self.placeholderTrailingSuperviewTrailing =
@@ -725,7 +725,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                         toItem:self.textInput
                                      attribute:NSLayoutAttributeTrailing
                                     multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
+                                      constant:-1 * MDCTextInputControllerLegacyFullWidthHorizontalPadding];
   }
 
   // Multi Line Only
@@ -767,7 +767,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                                                          toItem:self.textInput
                                                                       attribute:NSLayoutAttributeBottom
                                                                      multiplier:1
-                                                                       constant:-1 * MDCTextInputFullWidthVerticalPadding];
+                                                                       constant:-1 * MDCTextInputControllerLegacyFullWidthVerticalPadding];
     }
     if (!self.multilineTextViewTop) {
       self.multilineTextViewTop = [NSLayoutConstraint constraintWithItem:((MDCMultilineTextField*)self.textInput).textView
@@ -776,7 +776,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                                                   toItem:self.textInput
                                                                attribute:NSLayoutAttributeTop
                                                               multiplier:1
-                                                                constant:MDCTextInputFullWidthVerticalPadding];
+                                                                constant:MDCTextInputControllerLegacyFullWidthVerticalPadding];
     }
 
     if (!self.multilinePlaceholderCenterY) {
@@ -880,10 +880,10 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
   UIEdgeInsets textInsets = UIEdgeInsetsZero;
 
-  textInsets.top = MDCTextInputFullWidthVerticalPadding;
-  textInsets.bottom = MDCTextInputFullWidthVerticalPadding;
-  textInsets.left = MDCTextInputFullWidthHorizontalPadding;
-  textInsets.right = MDCTextInputFullWidthHorizontalPadding;
+  textInsets.top = MDCTextInputControllerLegacyFullWidthVerticalPadding;
+  textInsets.bottom = MDCTextInputControllerLegacyFullWidthVerticalPadding;
+  textInsets.left = MDCTextInputControllerLegacyFullWidthHorizontalPadding;
+  textInsets.right = MDCTextInputControllerLegacyFullWidthHorizontalPadding;
 
   // The trailing label gets in the way. If it has a frame, it's used. But if not, an
   // estimate is made of the size the text will be.
