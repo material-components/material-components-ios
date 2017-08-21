@@ -110,6 +110,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   copy.leadingViewMode = self.leadingViewMode;
   copy.placeholder = [self.placeholder copy];
   copy.text = [self.text copy];
+  copy.clearButton.tintColor = self.clearButton.tintColor;
   if ([self.trailingView conformsToProtocol:@protocol(NSCopying)]) {
     copy.trailingView = [self.trailingView copy];
   }
