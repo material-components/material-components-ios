@@ -125,13 +125,17 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
 
     CALayer *iconPresentationLayer = self.imageView.layer.presentationLayer;
     if (iconPresentationLayer) {
+      // Transform from a scale of 0, up to the icon view's current (animated) transform
+      CALayer *presentationLayer = self.layer.presentationLayer;
+      NSValue *fromValue =
+          presentationLayer ? [NSValue valueWithCATransform3D:CATransform3DConcat(
+                                                                  presentationLayer.transform,
+                                                                  CATransform3DMakeScale(0, 0, 1))]
+                            : nil;
       CABasicAnimation *iconScaleAnimation = [MDCFloatingButton
           animationWithKeypath:@"transform"
                        toValue:[NSValue valueWithCATransform3D:iconPresentationLayer.transform]
-                     fromValue:[NSValue
-                                   valueWithCATransform3D:CATransform3DConcat(
-                                                              iconPresentationLayer.transform,
-                                                              CATransform3DMakeScale(0, 0, 1))]
+                     fromValue:fromValue
                 timingFunction:[[CAMediaTimingFunction alloc]
                                    initWithControlPoints:0.0f:0.0f:0.2f:1.0f]
                       fillMode:kCAFillModeBoth
@@ -199,7 +203,8 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
                    fromValue:nil
               timingFunction:[[CAMediaTimingFunction alloc]
                                  initWithControlPoints:0.4f:0.0f:1.0f:1.0f]
-                    fillMode:kCAFillModeForwards duration:kMDCFloatingButtonExitIconDuration
+                    fillMode:kCAFillModeForwards
+                    duration:kMDCFloatingButtonExitIconDuration
                  beginOffset:kMDCFloatingButtonExitIconOffset];
     [self.imageView.layer addAnimation:iconScaleAnimation forKey:kMDCFloatingButtonTransformKey];
 
