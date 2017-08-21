@@ -3,24 +3,32 @@ title: "Text Fields"
 layout: detail
 section: components
 excerpt: "Text fields allow users to input text into your app."
-iconId: textfields
+icon_id: text_field
 path: /catalog/textfields/
 api_doc_root: true
 -->
 
 # Text Fields
 
-<a alt="Text Fields"><img src="docs/assets/textfields.png" width="375px"></a>
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/textfields.png" alt="Text Fields" width="375">
+</div>
 
 Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text, error states, and styles.
-<!--{: .intro :}-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="https://material.io/guidelines/components/text-fields.html">Text Fields</a></li>
+  <li class="icon-list-item icon-list-item--spec">
+    <a href="https://material.io/guidelines/components/text-fields.html">Material Design guidelines: Text Fields</a>
+  </li>
+  <li class="icon-list-item icon-list-item--link">
+    <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html">API: MDCTextField</a>
+  </li>
+  <li class="icon-list-item icon-list-item--link">
+    <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCMultilineTextField.html">API: MDCMultilineTextField</a>
+  </li>
 </ul>
-
 
 ## Installation
 
