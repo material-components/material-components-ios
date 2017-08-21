@@ -401,6 +401,32 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertFalse([button pointInside:touchPointOutsideBoundsBottomLeft withEvent:nil]);
 }
 
+- (void)testPointInsideWithoutHitAreaInsetsTooSmall {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+
+  CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake(9.9, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(9.9, 9.9);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 9.9);
+
+  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, -0.1);
+  CGPoint touchPointOutsideBoundsTopRight = CGPointMake(10, 0);
+  CGPoint touchPointOutsideBoundsBottomRight = CGPointMake(10, 10);
+  CGPoint touchPointOutsideBoundsBottomLeft = CGPointMake(0, 10);
+
+  // Then
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsTopLeft withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsTopRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsBottomRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsBottomLeft withEvent:nil]);
+
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsTopLeft withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsTopRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsBottomRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsBottomLeft withEvent:nil]);
+}
+
 - (void)testPointInsideWithCustomHitAreaInsets {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
