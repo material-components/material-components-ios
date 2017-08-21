@@ -1,3 +1,119 @@
+# 32.0.0
+
+## API Diffs
+
+### Buttons
+
+* Added larger-icon version of the floating action button.
+
+### TextFields
+
+* Added `MDCTextInputController` properties `activeColor`, `disabledColor`, `normalColor`, and associated default colors.
+* Removed `MDCTextInputController` properties `underlineColorActive`, `underlineColorNormal`, and associated default colors.
+* Removed `MDCTextInputUnderlineView` properties `disabledUnderline` and `underline` in favor of `color` and `disabledColor`.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Added missing license stanzas. (#1768)](https://github.com/material-components/material-components-ios/commit/206b0bf39b4ddeb745433bf1a933f70c87b15b42) (Adrian Secord)
+* [Fixing modal example bar colors (#1785)](https://github.com/material-components/material-components-ios/commit/f33f8c2d54829acbb43a57d3fb8cfe68ffe9bd1d) (Robert Moore)
+
+### ButtonBar
+
+#### Changes
+
+* [Make ButtonBarButton insets in method (#1797)](https://github.com/material-components/material-components-ios/commit/0ee27517d076212355ffb15e1a6dfd8d021f8581) (Robert Moore)
+* [Refactor ButtonBarBuilder for testing (#1796)](https://github.com/material-components/material-components-ios/commit/1441a01113a509cd7a4d37e9aab8dd1f768ae930) (Robert Moore)
+* [Remove macro for bit masks (#1795)](https://github.com/material-components/material-components-ios/commit/28f6159e98f56918c3f095779f4841428a6e5c0c) (Robert Moore)
+
+### Buttons
+
+#### Changes
+
+* [Adding FAB support for 36-point icons (#1810)](https://github.com/material-components/material-components-ios/commit/d7521029a8faa67d4c199ad36caf91f65fd25fea) (Robert Moore)
+* [Creating animations for FAB appearance (#1755)](https://github.com/material-components/material-components-ios/commit/aaab9e6bb2010d9bed8d37ac62a4a535c5f2853d) (Robert Moore)
+* [Fix FAB icon scale collapse timing (#1794)](https://github.com/material-components/material-components-ios/commit/18c8a884dd6c8ebfaa45973f43c54f7c0e0eddc2) (Robert Moore)
+* [Unit tests for FAB animations (#1778)](https://github.com/material-components/material-components-ios/commit/7fc013958ee38b619eb33041eabf7b968941fdff) (Robert Moore)
+* [[Catalog] Fix button typical use layout on iOS 9 (#1769)](https://github.com/material-components/material-components-ios/commit/4c6d0ba437ed62e3e59e1e365192eb2a7db8074e) (Robert Moore)
+* [[FAB] Adding missing void. (#1771)](https://github.com/material-components/material-components-ios/commit/657c9163ffaafea29d304f5da85ed016c87891ea) (Will Larche)
+
+### CollectionCells
+
+#### Changes
+
+* [[Collections] Make cell font values functions (#1763)](https://github.com/material-components/material-components-ios/commit/8b5aeec8e4ec5c730d556b524c72c5c8aebf938f) (Robert Moore)
+* [[Collections] Replacing macros with function calls (#1787)](https://github.com/material-components/material-components-ios/commit/080cc3705823587303d78c63039f72be45318b1b) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [Adding unit tests for flow layouts (#1779)](https://github.com/material-components/material-components-ios/commit/417ce2b4f637f4101730eafa21940d4160e9bb4e) (Robert Moore)
+* [Fix header info view z-index (#1798)](https://github.com/material-components/material-components-ios/commit/155a3975be5ed3abdc0d443036fd909a1d439f37) (Robert Moore)
+* [Limit the drag needed to dismiss an item (#1811)](https://github.com/material-components/material-components-ios/commit/84a7a6bf7115724eaf698f2212fcd2e5193b1b4b) (Gauthier Ambard)
+* [Replacing macros with function calls (#1787)](https://github.com/material-components/material-components-ios/commit/080cc3705823587303d78c63039f72be45318b1b) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Added missing license stanzas. (#1768)](https://github.com/material-components/material-components-ios/commit/206b0bf39b4ddeb745433bf1a933f70c87b15b42) (Adrian Secord)
+* [Adjust Dismiss Drag Proportions To Feel More Natural #1754 (#1799)](https://github.com/material-components/material-components-ios/commit/b1c2bef67d05ba48fe1907547b10fd983fb9d28f) (InbarItayG)
+
+### MaskedTransition
+
+#### Changes
+
+* [[Jazzy] Ran `scripts/generate_jazzy_yamls.sh` for new components. (#1766)](https://github.com/material-components/material-components-ios/commit/b89b714964971af19009b5ba5e7859d4831d8f92) (Adrian Secord)
+* [[MDCMaskedTransition] Fixed Xcode 9 block declaration.](https://github.com/material-components/material-components-ios/commit/9e885d9f755bd26bfa3c9fef23c82171ce85a648) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Added missing license stanzas. (#1768)](https://github.com/material-components/material-components-ios/commit/206b0bf39b4ddeb745433bf1a933f70c87b15b42) (Adrian Secord)
+* [Hide UINavigationBar in example (#1784)](https://github.com/material-components/material-components-ios/commit/dca1fa0efb504496cbaa08997e57ed2f6122d7d8) (Robert Moore)
+
+### OverlayWindow
+
+#### Changes
+
+* [Remove iOS 7 code (#1826)](https://github.com/material-components/material-components-ios/commit/3aa72e51292957ee47932376344e671fe638adc0) (Robert Moore)
+
+### Snackbar
+
+#### Changes
+
+* [Fixing snackbar/overlay during rotation (#1830)](https://github.com/material-components/material-components-ios/commit/18d791e463cf835aac9c71e55e1c249f3bbf7268) (Robert Moore)
+* [[OverlayWindow] Remove iOS 7 code (#1826)](https://github.com/material-components/material-components-ios/commit/3aa72e51292957ee47932376344e671fe638adc0) (Robert Moore)
+
+### Tabs
+
+#### Changes
+
+* [Added missing license stanzas. (#1768)](https://github.com/material-components/material-components-ios/commit/206b0bf39b4ddeb745433bf1a933f70c87b15b42) (Adrian Secord)
+* [[Jazzy] Ran `scripts/generate_jazzy_yamls.sh` for new components. (#1766)](https://github.com/material-components/material-components-ios/commit/b89b714964971af19009b5ba5e7859d4831d8f92) (Adrian Secord)
+
+### TextFields
+
+#### Changes
+
+* [Adding a multiline text field to main example (#1790)](https://github.com/material-components/material-components-ios/commit/25c36a4867d525dec67077cf326d4dd25bee60be) (Will Larche)
+* [Adding readme metadata. (#1777)](https://github.com/material-components/material-components-ios/commit/988dcc9a6afefb1bbb30c13596511ffa6a18229b) (Will Larche)
+* [Adds api_components_root to TextFields/README.md. (#1788)](https://github.com/material-components/material-components-ios/commit/ffdd9b4c486d0f33cea04e4cf4d7b5aef4b0f4b7) (Scott Hyndman)
+* [Correcting key typos. (#1770)](https://github.com/material-components/material-components-ios/commit/d8071fe78bc20791afa85f9cfd4fdfd29de79f75) (Will Larche)
+* [Making a disabled color property on controllers (#1776)](https://github.com/material-components/material-components-ios/commit/7830d7eb29bcff7c5e3347d235e7d2058671caca) (Will Larche)
+* [Readme update. (#1824)](https://github.com/material-components/material-components-ios/commit/e30c9a9f9617c63db81a3329caef2c52eca89409) (Will Larche)
+* [Regular example improvements. (#1791)](https://github.com/material-components/material-components-ios/commit/5ab6885a2ad11866300b9490a6f0d4e5b2e3697a) (Will Larche)
+* [Removing unused constraints in default. (#1789)](https://github.com/material-components/material-components-ios/commit/ba51dddd2d50504183ccb8ae5afe7fc2a6ba9a1b) (Will Larche)
+* [Renaming and cleaning up propertys. (#1767)](https://github.com/material-components/material-components-ios/commit/d42f2c7713278ae585785fb818f95427b626f62d) (Will Larche)
+* [[Jazzy] Ran `scripts/generate_jazzy_yamls.sh` for new components. (#1766)](https://github.com/material-components/material-components-ios/commit/b89b714964971af19009b5ba5e7859d4831d8f92) (Adrian Secord)
+
+
+
 # 31.0.2
 
 Hotfix release: fixes autolayout bug involving TextFields height.

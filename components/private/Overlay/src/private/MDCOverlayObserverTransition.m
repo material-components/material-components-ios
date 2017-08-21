@@ -75,8 +75,10 @@
                                    completion:(void (^)(BOOL finished))completion {
   if (animations != nil) {
     // Capture the options and animation block, to be executed later when @c runAnimation is called.
+    __weak MDCOverlayObserverTransition *weakSelf = self;
     void (^animationToRun)(void) = ^{
-      [self runAnimationWithOptions:options animations:animations];
+      MDCOverlayObserverTransition *strongSelf = weakSelf;
+      [strongSelf runAnimationWithOptions:options animations:animations];
     };
 
     [self.animationBlocks addObject:[animationToRun copy]];

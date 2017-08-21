@@ -53,7 +53,6 @@
   label.font = [MDCTypography captionFont];
   label.alpha = [MDCTypography captionFontOpacity];
   [label sizeToFit];
-  label.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:label];
 
   return label;
@@ -69,70 +68,68 @@
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
-    raisedButtonLabel,
-    disabledRaisedButtonLabel,
-    flatButtonLabel,
-    disabledFlatButtonLabel,
-    strokedButtonLabel,
-    disabledStrokedButtonLabel,
-    floatingButtonLabel
+    raisedButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
+    strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
   ];
 }
 
-- (void)viewWillLayoutSubviews {
-  CGFloat centerX = CGRectGetMidX(self.view.frame);
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
 
+  CGFloat centerX = CGRectGetMidX(self.view.bounds);
   [self layoutButtonsInRange:NSMakeRange(0, self.buttons.count) around:centerX];
 
   UIView *lastButton = self.buttons.lastObject;
-  if (CGRectGetMaxY(lastButton.frame) > CGRectGetHeight(self.view.frame)) {
-    CGFloat colOffset = CGRectGetWidth(self.view.frame) / 4;
+  CGFloat lastButtonMaxY = (CGRectGetHeight(lastButton.bounds) / 2) + lastButton.center.y;
+  if (lastButtonMaxY > CGRectGetHeight(self.view.bounds)) {
+    CGFloat columnOffset = CGRectGetWidth(self.view.bounds) / 4;
     NSUInteger splitIndex = ceil(self.buttons.count / 2);
 
-    if (((MDCButton*)self.buttons[splitIndex - 1]).enabled) {
+    if (((MDCButton *)self.buttons[splitIndex - 1]).enabled) {
       splitIndex++;
     }
 
-    [self layoutButtonsInRange:NSMakeRange(0, splitIndex)
-                        around:centerX - colOffset];
+    [self layoutButtonsInRange:NSMakeRange(0, splitIndex) around:centerX - columnOffset];
     [self layoutButtonsInRange:NSMakeRange(splitIndex, self.buttons.count - splitIndex)
-                        around:centerX + colOffset];
+                        around:centerX + columnOffset];
   }
 }
 
 - (void)layoutButtonsInRange:(NSRange)range around:(CGFloat)centerX {
   CGFloat heightSum = 0;
-  CGFloat viewHeight = CGRectGetHeight(self.view.frame);
+  CGFloat viewHeight = CGRectGetHeight(self.view.bounds);
 
   for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
 
-    button.frame = (CGRect) {
-      CGPointMake(centerX + 20, heightSum),
-      button.frame.size
-    };
-    CGFloat labelOffset = (button.frame.size.height - label.frame.size.height) / 2;
-    label.frame = (CGRect) {
-      CGPointMake(centerX - label.frame.size.width - 20, heightSum + labelOffset),
-      label.frame.size
-    };
-
-    heightSum += button.frame.size.height;
+    button.center = CGPointMake(centerX + 20 + (CGRectGetWidth(button.bounds) / 2),
+                                heightSum + (CGRectGetHeight(button.bounds) / 2));
+    CGFloat labelOffset = (CGRectGetHeight(button.bounds) - CGRectGetHeight(label.bounds)) / 2;
+    label.center = CGPointMake(centerX - (CGRectGetWidth(label.bounds) / 2) - 20,
+                               heightSum + labelOffset + (CGRectGetHeight(label.bounds) / 2));
+    heightSum += CGRectGetHeight(button.bounds);
     if (i < self.buttons.count - 1) {
       heightSum += button.enabled ? 24 : 36;
     }
   }
 
   MDCButton *lastButton = self.buttons[NSMaxRange(range) - 1];
-  CGFloat verticalCenterY = (viewHeight - CGRectGetMaxY(lastButton.frame)) / 2;
+  CGFloat verticalCenterY =
+      (viewHeight - (lastButton.center.y + (CGRectGetHeight(lastButton.bounds) / 2))) / 2;
   for (NSInteger i = range.location; i < NSMaxRange(range); i++) {
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
+    button.center = CGPointMake(button.center.x, button.center.y + verticalCenterY);
 
-    button.frame = CGRectOffset(button.frame, 0, verticalCenterY);
-    label.frame = MDCRectAlignToScale(CGRectOffset(label.frame, 0, verticalCenterY),
-                                      [UIScreen mainScreen].scale);
+    CGFloat labelWidth = CGRectGetWidth(label.bounds);
+    CGFloat labelHeight = CGRectGetHeight(label.bounds);
+    CGPoint labelOrigin = CGPointMake(label.center.x - (labelWidth / 2),
+                                      label.center.y - (labelHeight / 2) + verticalCenterY);
+    CGRect alignedFrame = MDCRectAlignToScale(
+        (CGRect){labelOrigin, CGSizeMake(labelWidth, labelHeight)}, [UIScreen mainScreen].scale);
+    label.center = CGPointMake(CGRectGetMidX(alignedFrame), CGRectGetMidY(alignedFrame));
+    label.bounds = (CGRect){label.bounds.origin, alignedFrame.size};
   }
 }
 

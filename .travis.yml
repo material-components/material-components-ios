@@ -13,6 +13,7 @@ branches:
     - develop
     - stable
     - /^feature-.*$/
+    - release-candidate
 
 env:
   global:
@@ -29,7 +30,6 @@ env:
 
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
-  - scripts/install_contributor_tools
 
 # The travis_wait prefix ensures that the build doesn't error out because too much time went past
 # without any output being produced.
@@ -42,7 +42,7 @@ script:
   - pod --version
   - scripts/prep_all
   - travis_wait scripts/build_all --verbose
-  - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+  - travis_wait travis_retry scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
 
 # Upload our testing coverage to codecov.io.
 after_success:

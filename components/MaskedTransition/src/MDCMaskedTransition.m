@@ -210,7 +210,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   }
 
   {
-    void (^completion)() = nil;
+    void (^completion)(void) = nil;
     if (context.direction == MDMTransitionDirectionForward) {
       completion = ^{
         // Upon completion of the animation we want all of the content to be visible, so we jump

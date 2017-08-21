@@ -88,6 +88,8 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
       return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
     case MDCFloatingButtonShapeMini:
       return CGSizeMake([[self class] miniDimension], [[self class] miniDimension]);
+    case MDCFloatingButtonShapeLargeIcon:
+      return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
   }
 }
 
@@ -97,6 +99,8 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
       return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
     case MDCFloatingButtonShapeMini:
       return CGSizeMake([[self class] miniDimension], [[self class] miniDimension]);
+    case MDCFloatingButtonShapeLargeIcon:
+      return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
   }
 }
 
@@ -116,6 +120,8 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
       return UIEdgeInsetsMake(16, 16, 16, 16);
     case MDCFloatingButtonShapeMini:
       return UIEdgeInsetsMake(8, 8, 8, 8);
+    case MDCFloatingButtonShapeLargeIcon:
+      return UIEdgeInsetsMake(10, 10, 10, 10);
   }
 }
 

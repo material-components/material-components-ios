@@ -45,7 +45,7 @@ const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
 const CGFloat kMDCFeatureHighlightGestureDisappearThresh = 0.9f;
 const CGFloat kMDCFeatureHighlightGestureAppearThresh = 0.95f;
-const CGFloat kMDCFeatureHighlightGestureDismissThresh = 0.6f;
+const CGFloat kMDCFeatureHighlightGestureDismissThresh = 0.85f;
 const CGFloat kMDCFeatureHighlightGestureAnimationDuration = 0.2f;
 
 const CGFloat kMDCFeatureHighlightDismissAnimationDuration = 0.25f;

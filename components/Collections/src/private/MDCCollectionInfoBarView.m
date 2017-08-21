@@ -104,6 +104,11 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                             CGRectGetHeight(self.backgroundView.bounds) + 1);
 }
 
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+  [super applyLayoutAttributes:layoutAttributes];
+  self.layer.zPosition = layoutAttributes.zIndex;
+}
+
 - (void)setTintColor:(UIColor *)tintColor {
   _tintColor = tintColor;
   _backgroundView.backgroundColor = _tintColor;

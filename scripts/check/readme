@@ -15,11 +15,18 @@
 # limitations under the License.
 
 readonly COMPONENT_DIR=$1
+readonly README="$COMPONENT_DIR/README.md"
+readonly METADATA_PATTERN="<!--docs:"
 
 # Private components do not require a README.md.
 if [[ $COMPONENT_DIR != *"/private/"* ]]; then
-  if [ ! -f "$COMPONENT_DIR/README.md" ]; then
+  if [ ! -f "$README" ]; then
     echo "Error: $COMPONENT_DIR is missing a README.md file."
+    exit -1
+  fi
+ 
+  if ! grep --quiet $METADATA_PATTERN "$README"; then
+    echo "Error: $README is missing configuration metadata, see https://github.com/material-components/material-components-site-generator ."
     exit -1
   fi
 fi

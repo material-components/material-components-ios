@@ -22,8 +22,6 @@
 
 #import <objc/runtime.h>
 
-#define IS_FLAG_SET(value, flag) (((value) & (flag)) == (flag))
-
 static const CGFloat kMinimumItemWidth = 36.f;
 
 // The padding around button contents.
@@ -103,23 +101,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   button.disabledAlpha = kDisabledButtonAlpha;
 
   button.exclusiveTouch = YES;
-  if (buttonItem.title != nil) {
-    [button setTitle:buttonItem.title forState:UIControlStateNormal];
-  }
-  if (buttonItem.image != nil) {
-    [button setImage:buttonItem.image forState:UIControlStateNormal];
-  }
-  if (buttonItem.tintColor != nil) {
-    button.tintColor = buttonItem.tintColor;
-  }
 
-  if (buttonItem.title) {
-    button.inkStyle = MDCInkStyleBounded;
-  } else {
-    button.inkStyle = MDCInkStyleUnbounded;
-  }
-
-  button.tag = buttonItem.tag;
+  [MDCAppBarButtonBarBuilder configureButton:button fromButtonItem:buttonItem];
 
   [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
   [button setUnderlyingColorHint:self.buttonUnderlyingColor];
@@ -136,52 +119,11 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
                 action:@selector(didTapButton:event:)
       forControlEvents:UIControlEventTouchUpInside];
 
-  UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-
-  UIEdgeInsets (^addInsets)(UIEdgeInsets, UIEdgeInsets) = ^(UIEdgeInsets i1, UIEdgeInsets i2) {
-    UIEdgeInsets sum = i1;
-    sum.left += i2.left;
-    sum.top += i2.top;
-    sum.right += i2.right;
-    sum.bottom += i2.bottom;
-    return sum;
-  };
-
-  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-
-  if ([[button currentTitle] length]) {  // Text-only buttons.
-    contentInsets = addInsets(contentInsets, kTextOnlyButtonInset);
-
-  } else if ([button currentImage]) {  // Image-only buttons.
-    contentInsets = addInsets(contentInsets, kImageOnlyButtonInset);
-
-    if (IS_FLAG_SET(layoutHints, MDCBarButtonItemLayoutHintsIsFirstButton)) {
-      CGFloat additionalInset =
-          (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
-
-      if (buttonBar.mdc_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionLeftToRight) {
-        contentInsets.left += additionalInset;
-      } else {
-        contentInsets.right += additionalInset;
-      }
-    }
-
-    if (IS_FLAG_SET(layoutHints, MDCBarButtonItemLayoutHintsIsLastButton)) {
-      CGFloat additionalInset =
-          (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
-
-      if (buttonBar.mdc_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionLeftToRight) {
-        contentInsets.right += additionalInset;
-      } else {
-        contentInsets.left += additionalInset;
-      }
-    }
-
-  } else {
-    NSAssert(0, @"No button title or image");
-  }
+  UIEdgeInsets contentInsets = [MDCAppBarButtonBarBuilder
+      contentInsetsForButton:button
+                 layoutHints:layoutHints
+             layoutDirection:[buttonBar mdc_effectiveUserInterfaceLayoutDirection]
+          userInterfaceIdiom:[[UIDevice currentDevice] userInterfaceIdiom]];
 
   // Only add padding to the first item of the button bar.
   if (layoutHints == MDCBarButtonItemLayoutHintsIsFirstButton) {
@@ -210,14 +152,90 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
 #pragma mark - Private
 
++ (UIEdgeInsets)contentInsetsForButton:(MDCButton *)button
+                           layoutHints:(MDCBarButtonItemLayoutHints)layoutHints
+                       layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection
+                    userInterfaceIdiom:(UIUserInterfaceIdiom)userInterfaceIdiom {
+  UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+
+  UIEdgeInsets (^addInsets)(UIEdgeInsets, UIEdgeInsets) = ^(UIEdgeInsets i1, UIEdgeInsets i2) {
+    UIEdgeInsets sum = i1;
+    sum.left += i2.left;
+    sum.top += i2.top;
+    sum.right += i2.right;
+    sum.bottom += i2.bottom;
+    return sum;
+  };
+
+  const BOOL isPad = userInterfaceIdiom == UIUserInterfaceIdiomPad;
+
+  if ([[button currentTitle] length]) {  // Text-only buttons.
+    contentInsets = addInsets(contentInsets, kTextOnlyButtonInset);
+
+  } else if ([button currentImage]) {  // Image-only buttons.
+    contentInsets = addInsets(contentInsets, kImageOnlyButtonInset);
+
+    if ((layoutHints & MDCBarButtonItemLayoutHintsIsFirstButton) ==
+        MDCBarButtonItemLayoutHintsIsFirstButton) {
+      CGFloat additionalInset =
+          (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
+
+      if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+        contentInsets.left += additionalInset;
+      } else {
+        contentInsets.right += additionalInset;
+      }
+    }
+
+    if ((layoutHints & MDCBarButtonItemLayoutHintsIsLastButton) ==
+        MDCBarButtonItemLayoutHintsIsLastButton) {
+      CGFloat additionalInset =
+          (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
+
+      if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+        contentInsets.right += additionalInset;
+      } else {
+        contentInsets.left += additionalInset;
+      }
+    }
+
+  } else {
+    NSAssert(0, @"No button title or image");
+  }
+
+  return contentInsets;
+}
+
++ (void)configureButton:(MDCButton *)destinationButton
+         fromButtonItem:(UIBarButtonItem *)sourceButtonItem {
+  if (sourceButtonItem == nil || destinationButton == nil) {
+    return;
+  }
+
+  if (sourceButtonItem.title != nil) {
+    [destinationButton setTitle:sourceButtonItem.title forState:UIControlStateNormal];
+  }
+  if (sourceButtonItem.image != nil) {
+    [destinationButton setImage:sourceButtonItem.image forState:UIControlStateNormal];
+  }
+  if (sourceButtonItem.tintColor != nil) {
+    destinationButton.tintColor = sourceButtonItem.tintColor;
+  }
+
+  if (sourceButtonItem.title) {
+    destinationButton.inkStyle = MDCInkStyleBounded;
+  } else {
+    destinationButton.inkStyle = MDCInkStyleUnbounded;
+  }
+
+  destinationButton.tag = sourceButtonItem.tag;
+}
+
 - (void)updateButton:(UIButton *)button
             withItem:(UIBarButtonItem *)item
           barMetrics:(UIBarMetrics)barMetrics {
   [self updateButton:button withItem:item forState:UIControlStateNormal barMetrics:barMetrics];
-  [self updateButton:button
-            withItem:item
-            forState:UIControlStateHighlighted
-          barMetrics:barMetrics];
+  [self updateButton:button withItem:item forState:UIControlStateHighlighted barMetrics:barMetrics];
   [self updateButton:button withItem:item forState:UIControlStateDisabled barMetrics:barMetrics];
 }
 

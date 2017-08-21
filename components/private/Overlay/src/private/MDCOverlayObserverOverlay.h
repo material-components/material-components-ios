@@ -31,6 +31,6 @@
 /**
  The frame of the overlay, in screen coordinates.
  */
-@property(nonatomic) CGRect frame;
+@property(nonatomic, assign) CGRect frame;
 
 @end

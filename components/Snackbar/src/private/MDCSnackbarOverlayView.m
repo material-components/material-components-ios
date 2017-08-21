@@ -18,12 +18,12 @@
 
 #import "MDCSnackbarOverlayView.h"
 
-#import "MaterialSnackbar.h"
 #import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
+#import "MaterialApplication.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlay.h"
-#import "MaterialApplication.h"
+#import "MaterialSnackbar.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
@@ -341,16 +341,8 @@ static const CGFloat kMaximumHeight = 80.0f;
     return CGRectNull;
   }
 
-  UIScreen *screen = window.screen;
-  if ([screen respondsToSelector:@selector(fixedCoordinateSpace)]) {
-    return [self.snackbarView convertRect:self.snackbarView.bounds
-                        toCoordinateSpace:screen.fixedCoordinateSpace];
-  }
-
-  CGRect snackbarWindowFrame =
-      [window convertRect:self.snackbarView.bounds fromView:self.snackbarView];
-  CGRect snackbarScreenFrame = [window convertRect:snackbarWindowFrame toWindow:nil];
-  return snackbarScreenFrame;
+  return [self.snackbarView convertRect:self.snackbarView.bounds
+                      toCoordinateSpace:window.screen.coordinateSpace];
 }
 
 #pragma mark - Presentation/Dismissal
@@ -547,10 +539,8 @@ static const CGFloat kMaximumHeight = 80.0f;
     // observers of bottom offset changes.
     CGRect frame = [self snackbarRectInScreenCoordinates];
     if (CGRectIsNull(frame)) {
-      frame = CGRectMake(0,
-                         CGRectGetHeight(self.frame) - self.bottomOffset,
-                         CGRectGetWidth(self.frame),
-                         self.bottomOffset);
+      frame = CGRectMake(0, CGRectGetHeight(self.frame) - self.bottomOffset,
+                         CGRectGetWidth(self.frame), self.bottomOffset);
     }
     [self notifyOverlayChangeWithFrame:frame
                               duration:[CATransaction animationDuration]
@@ -574,6 +564,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   [super layoutSubviews];
 
   if (!self.manualLayoutChange && self.rotationDuration > 0) {
+    [self.containingView layoutIfNeeded];
     [self handleRotation];
   }
 }
@@ -594,15 +585,6 @@ static const CGFloat kMaximumHeight = 80.0f;
   }
 
   self.rotationDuration = duration;
-
-  // On iOS 7, the layout of this overlay view will have already occurred by the time the will
-  // rotation notification is posted. In that event, we need to report rotation here. Opting to
-  // check for version using the UIDevice string methods because we need to perform this check even
-  // if the app was compiled on an iOS 7 SDK and is running on an iOS 8 device.
-  NSString *version = [[UIDevice currentDevice] systemVersion];
-  if ([version compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending) {
-    [self handleRotation];
-  }
 }
 
 - (void)didRotate:(NSNotification *)notification {
