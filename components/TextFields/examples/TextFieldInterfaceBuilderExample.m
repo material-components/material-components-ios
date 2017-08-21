@@ -23,13 +23,13 @@
 @interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTextField *firstTextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *firstController;
+@property(nonatomic, strong) MDCTextInputControllerDefault *firstController;
 @property(weak, nonatomic) IBOutlet MDCTextField *lastTextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *lastController;
+@property(nonatomic, strong) MDCTextInputControllerDefault *lastController;
 @property(weak, nonatomic) IBOutlet MDCTextField *address1TextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *address1Controller;
+@property(nonatomic, strong) MDCTextInputControllerDefault *address1Controller;
 @property(weak, nonatomic) IBOutlet MDCTextField *address2TextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *address2Controller;
+@property(nonatomic, strong) MDCTextInputControllerDefault *address2Controller;
 
 @end
 
@@ -43,13 +43,13 @@
   [self setupExampleViews];
 
   self.firstController =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.firstTextField];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.firstTextField];
   self.lastController =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.lastTextField];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.lastTextField];
   self.address1Controller =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address1TextField];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address1TextField];
   self.address2Controller =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address2TextField];
+      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address2TextField];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
