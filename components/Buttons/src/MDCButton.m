@@ -255,7 +255,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
+  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
   // Uppercase all titles
   if (_uppercaseTitle) {
