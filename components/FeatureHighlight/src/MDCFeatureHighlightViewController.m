@@ -21,6 +21,7 @@
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView+Private.h"
 
+static const CGFloat kMDCFeatureHighlightLineSpacing = 1.0f;
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
@@ -103,7 +104,9 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)viewWillLayoutSubviews {
   _featureHighlightView.titleLabel.text = self.titleText;
-  _featureHighlightView.bodyLabel.text = self.bodyText;
+      [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing];
+  _featureHighlightView.bodyLabel.attributedText =
+      [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing];
 }
 
 - (void)dealloc {
@@ -257,6 +260,18 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     return _animationController;
   }
   return nil;
+}
+
+#pragma mark - Private
+
+- (NSAttributedString *)attributedStringForString:(NSString *)string
+                                      lineSpacing:(CGFloat)lineSpacing {
+  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+  paragraphStyle.lineSpacing = lineSpacing;
+
+  NSDictionary *attrs = @{ NSParagraphStyleAttributeName: paragraphStyle };
+
+  return [[NSAttributedString alloc] initWithString:string attributes:attrs];
 }
 
 @end
