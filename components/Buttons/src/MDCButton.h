@@ -36,16 +36,16 @@
 @interface MDCButton : UIButton
 
 /** The ink style of the button. */
-@property(nonatomic, assign) MDCInkStyle inkStyle;
+@property(nonatomic, assign) MDCInkStyle inkStyle UI_APPEARANCE_SELECTOR;
 
 /** The ink color of the button. */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor;
+@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /*
  Maximum radius of the button's ink. If the radius <= 0 then half the length of the diagonal of
  self.bounds is used. This value is ignored if button's @c inkStyle is set to |MDCInkStyleBounded|.
  */
-@property(nonatomic, assign) CGFloat inkMaxRippleRadius;
+@property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
 
 /**
  The alpha value that will be applied when the button is disabled. Most clients can leave this as
@@ -59,7 +59,7 @@
 
  Default is YES and is recommended whenever possible.
  */
-@property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle;
+@property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle UI_APPEARANCE_SELECTOR;
 
 /**
  Insets to apply to the button’s hit area.
