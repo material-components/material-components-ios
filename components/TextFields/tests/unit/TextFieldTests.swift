@@ -39,9 +39,17 @@ class TextFieldTests: XCTestCase {
     }
   }
 
+  func testBorder() {
+    let textField = MDCTextField()
+    XCTAssertTrue((textField.borderView?.isDescendant(of: textField))!)
+  }
+
   func testCopying() {
     let textField = MDCTextField()
 
+    textField.borderView?.borderFillColor = .purple
+    textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderView?.borderStrokeColor = .yellow
     textField.clearButtonColor = .red
     textField.clearButtonMode = .always
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
@@ -59,6 +67,9 @@ class TextFieldTests: XCTestCase {
     if let textFieldCopy = textField.copy() as? MDCTextField {
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
+      XCTAssertEqual(textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
+      XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral, textFieldCopy.borderView?.borderPath?.bounds.integral)
+      XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.font, textFieldCopy.font)
@@ -135,6 +146,10 @@ class TextFieldTests: XCTestCase {
   func testSerializationTextField() {
     let textField = MDCTextField()
 
+    textField.borderView?.borderFillColor = .purple
+    textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderView?.borderStrokeColor = .yellow
+
     let leadingView = UILabel()
     leadingView.text = "$"
 
@@ -169,6 +184,13 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.text,
                    unserializedInput?.text)
 
+    XCTAssertTrue(unserializedInput?.borderView != nil)
+    XCTAssertEqual(textField.borderView?.borderFillColor, unserializedInput?.borderView?.borderFillColor)
+
+    // Because of floating point inaccuracies, we can't compare the paths for equality. So, we
+    // compare the bounding box. But this too may be innaccurate. Revisit this if it starts failing.
+    XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral, unserializedInput?.borderView?.borderPath?.bounds.integral)
+    XCTAssertEqual(textField.borderView?.borderStrokeColor, unserializedInput?.borderView?.borderStrokeColor)
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)
 
