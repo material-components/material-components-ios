@@ -21,74 +21,6 @@ import XCTest
 import MaterialComponents.MaterialTextFields
 
 class MultilineTextFieldLegacyTests: XCTestCase {
-  func testAttributedSetters() {
-    let textField = MDCMultilineTextField()
-
-    let string = "attributed"
-    textField.attributedPlaceholder = NSAttributedString(string: string)
-    XCTAssertEqual(textField.attributedPlaceholder?.string, string)
-
-    textField.attributedText = NSAttributedString(string: string)
-    XCTAssertEqual(textField.attributedText?.string, string)
-  }
-
-  func testCopying() {
-    let textField = MDCMultilineTextField()
-
-    textField.clearButtonColor = .red
-    textField.clearButtonMode = .always
-    textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
-    textField.hidesPlaceholderOnInput = false
-    textField.isEnabled = false
-    textField.mdc_adjustsFontForContentSizeCategory = true
-    textField.placeholder = "test"
-    textField.text = "test"
-    textField.textColor = .red
-    textField.underline?.color = .red
-    textField.underline?.lineHeight = 10
-
-    if let textFieldCopy = textField.copy() as? MDCMultilineTextField {
-      XCTAssertNotNil(textField.textView)
-      XCTAssertTrue(textField.subviews.contains(textField.textView!))
-
-      XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
-      XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
-      XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
-      XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
-      XCTAssertEqual(textField.font, textFieldCopy.font)
-      XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
-      XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
-      XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
-                     textFieldCopy.mdc_adjustsFontForContentSizeCategory)
-      XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
-      XCTAssertEqual(textField.text, textFieldCopy.text)
-      XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
-      XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
-      XCTAssertEqual(textField.underline?.lineHeight, textFieldCopy.underline?.lineHeight)
-    } else {
-      XCTFail("No copy or copy is wrong class")
-    }
-  }
-
-  func testFontChange() {
-    let textField = MDCMultilineTextField()
-
-    textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
-    XCTAssertEqual(UIFont.systemFont(ofSize: UIFont.labelFontSize), textField.font)
-    XCTAssertNotEqual(UIFont.systemFont(ofSize: UIFont.smallSystemFontSize), textField.font)
-  }
-
-  func testMDCDynamicTypeAPI() {
-    let textField = MDCMultilineTextField()
-
-    textField.mdc_adjustsFontForContentSizeCategory = true
-    XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
-
-    if #available(iOS 10, *) {
-      XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
-                     textField.adjustsFontForContentSizeCategory)
-    }
-  }
 
   func testSerializationLegacy() {
     let textField = MDCMultilineTextField()
@@ -120,38 +52,5 @@ class MultilineTextFieldLegacyTests: XCTestCase {
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
     XCTAssertEqual(textField.trailingUnderlineLabel.text,
                    unserializedInput?.trailingUnderlineLabel.text)
-  }
-
-  func testSizing() {
-    let textField = MDCMultilineTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 0))
-    XCTAssertEqual(textField.frame.height, 0)
-
-    textField.frame = CGRect(x: 0, y: 0, width: 300, height: 40)
-    XCTAssertEqual(textField.frame.height, 40)
-
-    textField.sizeToFit()
-    XCTAssertEqual(textField.frame.height, 49)
-
-    textField.leadingUnderlineLabel.text = "Helper"
-    textField.sizeToFit()
-    XCTAssertEqual(textField.frame.height, 66)
-  }
-
-  func testUnderlineSetters() {
-    let textField = MDCMultilineTextField()
-
-    textField.underline?.color = .red
-    textField.underline?.lineHeight = 10
-
-    XCTAssertEqual(textField.underline?.color, .red)
-    if let underline = textField.underline {
-      XCTAssertEqual(underline.color, .red)
-      XCTAssertEqual(underline.color, textField.underline?.color)
-
-      XCTAssertEqual(underline.lineHeight, 10)
-      XCTAssertEqual(underline.lineHeight, textField.underline?.lineHeight)
-    } else {
-      XCTFail("No underline or underline is wrong class")
-    }
   }
 }
