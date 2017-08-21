@@ -21,7 +21,6 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
 #import "MDCTextInputControllerDefault.h"
-#import "MDCTextInputControllerLegacyDefault.h"
 #import "MDCTextInputControllerFullWidth.h"
 #import "MDCTextInputControllerLegacyDefault.h"
 #import "MDCTextInputControllerLegacyFullWidth.h"
