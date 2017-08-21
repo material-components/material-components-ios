@@ -276,7 +276,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
   [button setElevation:elevation forState:UIControlStateHighlighted];
-  ;
 
   // When
   button.highlighted = YES;
@@ -292,7 +291,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
   [button setElevation:elevation forState:UIControlStateDisabled];
-  ;
 
   // When
   button.enabled = NO;
@@ -308,7 +306,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
   [button setElevation:elevation forState:UIControlStateSelected];
-  ;
 
   // When
   button.selected = YES;
