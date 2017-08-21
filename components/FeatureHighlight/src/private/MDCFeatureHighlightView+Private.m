@@ -41,6 +41,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0f;
 const CGFloat kMDCFeatureHighlightNonconcentricOffset = 20.0f;
 const CGFloat kMDCFeatureHighlightMaxTextHeight = 1000.0f;
 const CGFloat kMDCFeatureHighlightTitleFontSize = 20.0f;
+const CGFloat kMDCFeatureHighlightTitleBodyBaselineOffset = 32.0f;
 const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
 const CGFloat kMDCFeatureHighlightGestureDisappearThresh = 0.9f;
@@ -109,7 +110,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.font =
-        [[MDCTypography fontLoader] regularFontOfSize:kMDCFeatureHighlightTitleFontSize];
+        [[MDCTypography fontLoader] mediumFontOfSize:kMDCFeatureHighlightTitleFontSize];
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
@@ -244,10 +245,17 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       [_titleLabel sizeThatFits:CGSizeMake(textWidth, kMDCFeatureHighlightMaxTextHeight)];
   CGSize detailSize =
       [_bodyLabel sizeThatFits:CGSizeMake(textWidth, kMDCFeatureHighlightMaxTextHeight)];
-  titleSize.width = MAX(titleSize.width, detailSize.width);
+  titleSize.width = (CGFloat)ceil(MAX(titleSize.width, detailSize.width));
   detailSize.width = titleSize.width;
 
-  CGFloat textHeight = titleSize.height + detailSize.height;
+  CGFloat textVerticalPadding = 0;
+  CGFloat textPaddingAbove = _titleLabel.font.descender;
+  CGFloat textPaddingBelow = _bodyLabel.font.ascender - textPaddingAbove;
+  if (titleSize.height > 0 && detailSize.height > 0) {
+    textVerticalPadding = kMDCFeatureHighlightTitleBodyBaselineOffset - textPaddingBelow;
+  }
+
+  CGFloat textHeight = titleSize.height + detailSize.height + textVerticalPadding;
 
   if ((_highlightPoint.y <= kMDCFeatureHighlightConcentricBound) ||
       (_highlightPoint.y >= self.frame.size.height - kMDCFeatureHighlightConcentricBound)) {
@@ -300,7 +308,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       MDCRectAlignToScale((CGRect){titlePos, titleSize}, [UIScreen mainScreen].scale);
   _titleLabel.frame = titleFrame;
 
-  CGRect detailFrame = (CGRect){CGPointMake(titlePos.x, CGRectGetMaxY(titleFrame)), detailSize};
+  CGFloat detailPositionY = (CGFloat)ceil(CGRectGetMaxY(titleFrame) + textVerticalPadding);
+  CGRect detailFrame = (CGRect){CGPointMake(titlePos.x, detailPositionY), detailSize};
   _bodyLabel.frame = detailFrame;
 
   // Calculating the radius required for a circle centered at _highlightCenter that fully encircles
