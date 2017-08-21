@@ -23,5 +23,7 @@
 #import "MDCTextInputControllerFullWidth.h"
 #import "MDCTextInputControllerLegacyDefault.h"
 #import "MDCTextInputControllerLegacyFullWidth.h"
+#import "MDCTextInputControllerTextArea.h"
+#import "MDCTextInputControllerTextFieldBox.h"
 #import "MDCTextInputUnderlineView.h"
 #import "MDCMultilineTextField.h"
