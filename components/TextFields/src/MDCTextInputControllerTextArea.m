@@ -38,7 +38,7 @@ static const CGFloat MDCTextInputTextFieldTextAreaPaddingAdjustment = 1.f;
 
 #pragma mark - Class Properties
 
-static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
+static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 @interface MDCTextInputControllerTextArea()
 
@@ -59,12 +59,12 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
 
 #pragma mark - Properties Implementations
 
-+ (UIRectCorner)cornersRoundedDefault {
-  return _cornersRoundedDefault;
++ (UIRectCorner)roundedCornersDefault {
+  return _roundedCornersDefault;
 }
 
-+ (void)setCornersRoundedDefault:(UIRectCorner)cornersRoundedDefault {
-  _cornersRoundedDefault = cornersRoundedDefault;
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  _roundedCornersDefault = roundedCornersDefault;
 }
 
 - (BOOL)isFloatingEnabled {
@@ -118,7 +118,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
     return;
   }
 
-  NSAssert([input conformsToProtocol:@protocol(MDCMultilineTextInput)],
+  NSAssert([self.textInput conformsToProtocol:@protocol(MDCMultilineTextInput)],
            @"This design is meant for multi-line text fields only.");
   if (![self.textInput conformsToProtocol:@protocol(MDCMultilineTextInput)]) {
     return;
