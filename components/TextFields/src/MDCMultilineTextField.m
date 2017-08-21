@@ -127,6 +127,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   copy.minimumLines = self.minimumLines;
   copy.placeholder = self.placeholder;
   copy.text = self.text;
+  copy.clearButton.tintColor = self.clearButton.tintColor;
   copy.trailingViewMode = self.trailingViewMode;
 
   return copy;
