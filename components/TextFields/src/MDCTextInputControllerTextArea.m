@@ -118,7 +118,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
     return;
   }
 
-  NSAssert([input conformsToProtocol:@protocol(MDCMultilineTextInput)],
+  NSAssert([self.textInput conformsToProtocol:@protocol(MDCMultilineTextInput)],
            @"This design is meant for multi-line text fields only.");
   if (![self.textInput conformsToProtocol:@protocol(MDCMultilineTextInput)]) {
     return;
