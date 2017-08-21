@@ -82,7 +82,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
   var allTextFieldControllers = [MDCTextInputController]()
   var allMultilineTextFieldControllers = [MDCTextInputController]()
   var controllersWithCharacterCount = [MDCTextInputController]()
-  var controllersFullWidth = [MDCTextInputControllerFullWidth]()
+  var controllersFullWidth = [MDCTextInputControllerLegacyFullWidth]()
 
   let unstyledTextField = MDCTextField()
   let unstyledMultilineTextField = MDCMultilineTextField()
@@ -119,7 +119,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldDefaultPlaceholder.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultPlaceholder =
-      MDCTextInputControllerLegacyDefault(textInput: textFieldDefaultPlaceholder)
+        MDCTextInputControllerLegacyDefault(textInput: textFieldDefaultPlaceholder)
 
     textFieldControllerDefaultPlaceholder.isFloatingEnabled = false
 
@@ -132,7 +132,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldDefaultCharMax.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultCharMax =
-      MDCTextInputControllerLegacyDefault(textInput: textFieldDefaultCharMax)
+        MDCTextInputControllerLegacyDefault(textInput: textFieldDefaultCharMax)
     textFieldControllerDefaultCharMax.characterCountMax = 50
     textFieldControllerDefaultCharMax.isFloatingEnabled = false
 
@@ -142,7 +142,8 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
             textFieldControllerDefaultCharMax]
   }
 
-  func setupFullWidthTextFields() -> [MDCTextInputControllerFullWidth] {
+  func setupFullWidthTextFields() -> [MDCTextInputControllerLegacyFullWidth] {
+
     let textFieldFullWidth = MDCTextField()
     scrollView.addSubview(textFieldFullWidth)
     textFieldFullWidth.translatesAutoresizingMaskIntoConstraints = false
@@ -152,7 +153,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldFullWidth.backgroundColor = .white
 
     let textFieldControllerFullWidth =
-      MDCTextInputControllerFullWidth(textInput: textFieldFullWidth)
+        MDCTextInputControllerLegacyFullWidth(textInput: textFieldFullWidth)
 
     let textFieldFullWidthPlaceholder = MDCTextField()
     scrollView.addSubview(textFieldFullWidthPlaceholder)
@@ -163,7 +164,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldFullWidthPlaceholder.clearButtonMode = .whileEditing
 
     let textFieldControllerFullWidthPlaceholder =
-      MDCTextInputControllerFullWidth(textInput: textFieldFullWidthPlaceholder)
+      MDCTextInputControllerLegacyFullWidth(textInput: textFieldFullWidthPlaceholder)
 
     let textFieldFullWidthCharMax = MDCTextField()
     scrollView.addSubview(textFieldFullWidthCharMax)
@@ -175,7 +176,8 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldFullWidthCharMax.clearButtonMode = .whileEditing
 
     let textFieldControllerFullWidthCharMax =
-      MDCTextInputControllerFullWidth(textInput: textFieldFullWidthCharMax)
+        MDCTextInputControllerLegacyFullWidth(textInput: textFieldFullWidthCharMax)
+
     textFieldControllerFullWidthCharMax.characterCountMax = 50
 
     controllersWithCharacterCount.append(textFieldControllerFullWidthCharMax)
@@ -260,7 +262,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
       UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFontFloating.trailingUnderlineLabel.font =
       UIFont.preferredFont(forTextStyle: .subheadline)
-    textFieldCustomFontFloating.clearButtonColor = MDCPalette.red.accent400
+    textFieldCustomFontFloating.clearButton.tintColor = MDCPalette.red.accent400
 
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
     let leftViewImagePath = bundle.path(forResource: "ic_search", ofType: "png")!
@@ -278,7 +280,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldLeftView.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultLeftView =
-      MDCTextInputControllerLegacyDefault(textInput: textFieldLeftView)
+        MDCTextInputControllerLegacyDefault(textInput: textFieldLeftView)
     textFieldControllerDefaultLeftView.isFloatingEnabled = false
 
     let textFieldLeftViewFloating = MDCTextField()
@@ -293,7 +295,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldLeftViewFloating.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultLeftViewFloating =
-      MDCTextInputControllerLegacyDefault(textInput: textFieldLeftViewFloating)
+        MDCTextInputControllerLegacyDefault(textInput: textFieldLeftViewFloating)
 
     let rightViewImagePath = bundle.path(forResource: "ic_done", ofType: "png")!
     let rightViewImage = UIImage(contentsOfFile: rightViewImagePath)!
@@ -310,7 +312,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldRightView.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultRightView =
-      MDCTextInputControllerLegacyDefault(textInput: textFieldRightView)
+        MDCTextInputControllerLegacyDefault(textInput: textFieldRightView)
     textFieldControllerDefaultRightView.isFloatingEnabled = false
 
     let textFieldRightViewFloating = MDCTextField()
@@ -325,7 +327,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     textFieldRightViewFloating.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultRightViewFloating =
-      MDCTextInputControllerLegacyDefault(textInput: textFieldRightViewFloating)
+        MDCTextInputControllerLegacyDefault(textInput: textFieldRightViewFloating)
 
     let textFieldLeftRightView = MDCTextField()
     textFieldLeftRightView.leftViewMode = .whileEditing
@@ -425,7 +427,8 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
             multilineTextFieldControllerDefaultCharMax]
   }
 
-  func setupFullWidthMultilineTextFields() -> [MDCTextInputControllerFullWidth] {
+  func setupFullWidthMultilineTextFields() -> [MDCTextInputControllerLegacyFullWidth] {
+
     let multilineTextFieldFullWidth = MDCMultilineTextField()
     scrollView.addSubview(multilineTextFieldFullWidth)
     multilineTextFieldFullWidth.translatesAutoresizingMaskIntoConstraints = false
@@ -434,7 +437,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     multilineTextFieldFullWidth.textView?.delegate = self
 
     let multilineTextFieldControllerFullWidth =
-          MDCTextInputControllerFullWidth(textInput: multilineTextFieldFullWidth)
+          MDCTextInputControllerLegacyFullWidth(textInput: multilineTextFieldFullWidth)
 
     let multilineTextFieldFullWidthCharMax = MDCMultilineTextField()
     scrollView.addSubview(multilineTextFieldFullWidthCharMax)
@@ -445,7 +448,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
     multilineTextFieldFullWidthCharMax.textView?.delegate = self
 
     let multilineTextFieldControllerFullWidthCharMax =
-          MDCTextInputControllerFullWidth(textInput: multilineTextFieldFullWidthCharMax)
+          MDCTextInputControllerLegacyFullWidth(textInput: multilineTextFieldFullWidthCharMax)
 
     controllersWithCharacterCount.append(multilineTextFieldControllerFullWidthCharMax)
     multilineTextFieldControllerFullWidthCharMax.characterCountMax = 140
