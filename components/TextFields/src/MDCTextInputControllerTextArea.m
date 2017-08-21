@@ -130,7 +130,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   }
 }
 
-// Measurement from bottom to underline center Y
+// The measurement from bottom to underline center Y.
 - (CGFloat)underlineOffset {
   // The amount of space underneath the underline depends on whether there is content in the
   // underline labels.
@@ -140,8 +140,7 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
     MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
   }
   if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-    underlineLabelsOffset =
-    MAX(underlineLabelsOffset,
+    underlineLabelsOffset = MAX(underlineLabelsOffset,
         MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
   }
 
