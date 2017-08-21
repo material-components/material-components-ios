@@ -117,14 +117,26 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   if (!self.textInput) {
     return;
   }
-  
-  ((MDCMultilineTextField *)self.textInput).expandsOnOverflow = NO;
-  ((MDCMultilineTextField *)self.textInput).minimumLines = 5;
+
+  NSAssert([input conformsToProtocol:@protocol(MDCMultilineTextInput)],
+           @"This design is meant for multi-line text fields only.");
+  if (![self.textInput conformsToProtocol:@protocol(MDCMultilineTextInput)]) {
+    return;
+  }
+
+  ((UIView <MDCMultilineTextInput> *)self.textInput).expandsOnOverflow = NO;
+  ((UIView <MDCMultilineTextInput> *)self.textInput).minimumLines = 5;
 
   self.textInput.underline.alpha = 0;
 
   if (!self.placeholderTop) {
-    self.placeholderTop = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.textInput attribute:NSLayoutAttributeTop multiplier:1 constant:MDCTextInputTextFieldTextAreaFullPadding];
+    self.placeholderTop = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                                       attribute:NSLayoutAttributeTop
+                                                       relatedBy:NSLayoutRelationEqual
+                                                          toItem:self.textInput
+                                                       attribute:NSLayoutAttributeTop
+                                                      multiplier:1
+                                                        constant:MDCTextInputTextFieldTextAreaFullPadding];
     self.placeholderTop.priority = UILayoutPriorityDefaultHigh;
     self.placeholderTop.active = YES;
   }
