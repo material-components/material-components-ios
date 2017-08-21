@@ -16,26 +16,23 @@
 
 #import "MaterialTextFields.h"
 
-@interface MultilineTextFieldExample : UIViewController <UITextViewDelegate>
+@interface MultilineTextFieldLegacyExample : UIViewController <UITextViewDelegate>
 
 // Be sure to keep your controllers in memory somewhere like a property:
-@property(nonatomic, strong) MDCTextInputControllerTextArea *textFieldControllerTextArea;
-@property(nonatomic, strong) MDCTextInputControllerTextFieldBox *textFieldControllerTextFieldBox;
-@property(nonatomic, strong) MDCTextInputControllerTextFieldBox *textFieldControllerTextAreaBox;
-@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
-@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFloating;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerDefaultCharMax;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerFloating;
 @property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldControllerFullWidth;
 @property(nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
-@implementation MultilineTextFieldExample
+@implementation MultilineTextFieldLegacyExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
 
-  self.title = @"Material Multiline Text Fields";
+  self.title = @"Legacy Multiline Text Fields";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
   [self.view addSubview:self.scrollView];
@@ -61,38 +58,6 @@
                                                       @"scrollView" : self.scrollView
                                                     }]];
 
-  MDCMultilineTextField *multilineTextFieldTextArea = [[MDCMultilineTextField alloc] init];
-  [self.scrollView addSubview:multilineTextFieldTextArea];
-  multilineTextFieldTextArea.translatesAutoresizingMaskIntoConstraints = NO;
-
-  multilineTextFieldTextArea.placeholder = @"Text Area";
-  multilineTextFieldTextArea.textView.delegate = self;
-
-  self.textFieldControllerTextArea =
-      [[MDCTextInputControllerTextArea alloc] initWithTextInput:multilineTextFieldTextArea];
-
-  MDCMultilineTextField *multilineTextFieldTextBox = [[MDCMultilineTextField alloc] init];
-  [self.scrollView addSubview:multilineTextFieldTextBox];
-  multilineTextFieldTextBox.translatesAutoresizingMaskIntoConstraints = NO;
-
-  multilineTextFieldTextBox.placeholder = @"Text Field Box";
-  multilineTextFieldTextBox.textView.delegate = self;
-
-  self.textFieldControllerTextFieldBox =
-      [[MDCTextInputControllerTextFieldBox alloc] initWithTextInput:multilineTextFieldTextBox];
-
-  MDCMultilineTextField *multilineTextFieldTextAreaBox = [[MDCMultilineTextField alloc] init];
-  [self.scrollView addSubview:multilineTextFieldTextAreaBox];
-  multilineTextFieldTextAreaBox.translatesAutoresizingMaskIntoConstraints = NO;
-
-  multilineTextFieldTextAreaBox.placeholder = @"Text Area Box";
-  multilineTextFieldTextAreaBox.textView.delegate = self;
-
-  self.textFieldControllerTextAreaBox =
-      [[MDCTextInputControllerTextFieldBox alloc] initWithTextInput:multilineTextFieldTextAreaBox];
-  self.textFieldControllerTextAreaBox.minimumLines = 5;
-  self.textFieldControllerTextAreaBox.expandsOnOverflow = NO;
-
   MDCMultilineTextField *multilineTextFieldUnstyled = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldUnstyled];
   multilineTextFieldUnstyled.translatesAutoresizingMaskIntoConstraints = NO;
@@ -102,16 +67,16 @@
   multilineTextFieldUnstyled.leadingUnderlineLabel.text = @"Leading";
   multilineTextFieldUnstyled.trailingUnderlineLabel.text = @"Trailing";
 
-  MDCMultilineTextField *multilineTextFieldUnstyledArea = [[MDCMultilineTextField alloc] init];
-  [self.scrollView addSubview:multilineTextFieldUnstyledArea];
-  multilineTextFieldUnstyledArea.translatesAutoresizingMaskIntoConstraints = NO;
+  MDCMultilineTextField *multilineTextFieldUnstyledBox = [[MDCMultilineTextField alloc] init];
+  [self.scrollView addSubview:multilineTextFieldUnstyledBox];
+  multilineTextFieldUnstyledBox.translatesAutoresizingMaskIntoConstraints = NO;
 
-  multilineTextFieldUnstyledArea.placeholder = @"No Controller (unstyled) minimum of 3 lines";
-  multilineTextFieldUnstyledArea.textView.delegate = self;
-  multilineTextFieldUnstyledArea.leadingUnderlineLabel.text = @"Leading";
-  multilineTextFieldUnstyledArea.trailingUnderlineLabel.text = @"Trailing";
-  multilineTextFieldUnstyledArea.minimumLines = 3;
-  multilineTextFieldUnstyledArea.expandsOnOverflow = NO;
+  multilineTextFieldUnstyledBox.placeholder = @"No Controller (unstyled) minimum of 3 lines";
+  multilineTextFieldUnstyledBox.textView.delegate = self;
+  multilineTextFieldUnstyledBox.leadingUnderlineLabel.text = @"Leading";
+  multilineTextFieldUnstyledBox.trailingUnderlineLabel.text = @"Trailing";
+  multilineTextFieldUnstyledBox.minimumLines = 3;
+  multilineTextFieldUnstyledBox.expandsOnOverflow = NO;
 
   MDCMultilineTextField *multilineTextFieldFloating = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldFloating];
@@ -121,7 +86,7 @@
   multilineTextFieldFloating.textView.delegate = self;
 
   self.textFieldControllerFloating =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldFloating];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldFloating];
 
   MDCMultilineTextField *multilineTextFieldCharMaxDefault = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldCharMaxDefault];
@@ -131,7 +96,7 @@
   multilineTextFieldCharMaxDefault.textView.delegate = self;
 
   self.textFieldControllerDefaultCharMax =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
   self.textFieldControllerDefaultCharMax.characterCountMax = 30;
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
@@ -149,44 +114,17 @@
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:
-                                  @"V:|-20-[textArea]-[textBox]-[textAreaBox]-[unstyled]-[unstyledArea]-[floating]-[charMax]-[fullWidth]-|"
+                                  @"V:|-20-[unstyled]-[box]-[floating]-[charMax]-[fullWidth]-|"
                                                   options:0
                                                   metrics:nil
                                                     views:@{
-                                                            @"textArea" : multilineTextFieldTextArea,
-                                                            @"textBox" : multilineTextFieldTextBox,
-                                                            @"textAreaBox" : multilineTextFieldTextAreaBox,
-                                                            @"unstyled" : multilineTextFieldUnstyled,
-                                                      @"unstyledArea" : multilineTextFieldUnstyledArea,
+                                                      @"unstyled" : multilineTextFieldUnstyled,
+                                                      @"box" : multilineTextFieldUnstyledBox,
                                                       @"charMax" : multilineTextFieldCharMaxDefault,
                                                       @"floating" : multilineTextFieldFloating,
                                                       @"fullWidth" :
                                                           multilineTextFieldCharMaxFullWidth
                                                     }]];
-  [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-[textArea]-|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"textArea" : multilineTextFieldTextArea
-                                }]];
-  [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-[textBox]-|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"textBox" : multilineTextFieldTextBox
-                                }]];
-  [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-[textAreaBox]-|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"textAreaBox" : multilineTextFieldTextAreaBox
-                                }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|-[unstyled]-|"
@@ -197,11 +135,11 @@
                                                     }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"H:|-[unstyledArea]-|"
+                              constraintsWithVisualFormat:@"H:|-[box]-|"
                                                   options:0
                                                   metrics:nil
                                                     views:@{
-                                                      @"unstyledArea" : multilineTextFieldUnstyledArea
+                                                      @"box" : multilineTextFieldUnstyledBox
                                                     }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
@@ -266,16 +204,16 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Multiline (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Multiline (Objective C)" ];
 }
 
 + (NSString *)catalogDescription {
-  return @"Simple MDCMultilineTextField example.";
+  return @"Simple legacy MDCMultilineTextField example.";
 }
 
 @end
 
-@implementation MultilineTextFieldExample (UITextViewDelegate)
+@implementation MultilineTextFieldLegacyExample (UITextViewDelegate)
 
 - (void)textViewDidChange:(UITextView *)textView {
   NSLog(@"%@", textView.text);

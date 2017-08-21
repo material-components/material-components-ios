@@ -35,6 +35,10 @@ class MultilineTextFieldTests: XCTestCase {
   func testCopying() {
     let textField = MDCMultilineTextField()
 
+    textField.borderView?.borderFillColor = .blue
+    textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderView?.borderPath?.lineWidth = 2
+    textField.borderView?.borderStrokeColor = .green
     textField.clearButtonColor = .red
     textField.clearButtonMode = .always
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
@@ -53,6 +57,10 @@ class MultilineTextFieldTests: XCTestCase {
 
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
+      XCTAssertEqual(textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
+      XCTAssertEqual(textField.borderView?.borderPath?.bounds, textFieldCopy.borderView?.borderPath?.bounds)
+      XCTAssertEqual(textField.borderView?.borderPath?.lineWidth, textFieldCopy.borderView?.borderPath?.lineWidth)
+      XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.font, textFieldCopy.font)

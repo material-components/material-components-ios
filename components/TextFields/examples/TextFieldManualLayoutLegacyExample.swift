@@ -18,72 +18,65 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldSwiftExample: UIViewController {
+final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
+
+  private enum LayoutConstants {
+    static let largeMargin: CGFloat = 16
+    static let smallMargin: CGFloat = 8
+
+    static let floatingHeight: CGFloat = 84
+    static let defaultHeight: CGFloat = 62
+
+    static let stateWidth: CGFloat = 80
+  }
 
   let scrollView = UIScrollView()
 
   let name: MDCTextField = {
     let name = MDCTextField()
     name.placeholder = "Name"
-    name.translatesAutoresizingMaskIntoConstraints = false
-    name.autocapitalizationType = .words
     return name
   }()
 
   let address: MDCTextField = {
     let address = MDCTextField()
     address.placeholder = "Address"
-    address.translatesAutoresizingMaskIntoConstraints = false
-    address.autocapitalizationType = .words
     return address
   }()
 
   let city: MDCTextField = {
     let city = MDCTextField()
     city.placeholder = "City"
-    city.translatesAutoresizingMaskIntoConstraints = false
-    city.autocapitalizationType = .words
     return city
   }()
-  let cityController: MDCTextInputControllerDefault
+  let cityController: MDCTextInputControllerLegacyDefault
 
   let state: MDCTextField = {
     let state = MDCTextField()
     state.placeholder = "State"
-    state.translatesAutoresizingMaskIntoConstraints = false
-    state.autocapitalizationType = .allCharacters
     return state
   }()
-  let stateController: MDCTextInputControllerDefault
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
     zip.placeholder = "Zip code"
-    zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputControllerDefault
+  let zipController: MDCTextInputControllerLegacyDefault
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
     phone.placeholder = "Phone number"
-    phone.translatesAutoresizingMaskIntoConstraints = false
     return phone
   }()
 
-  let message: MDCMultilineTextField = {
-    let message = MDCMultilineTextField()
-    message.placeholder = "Message"
-    message.translatesAutoresizingMaskIntoConstraints = false
-    return message
-  }()
+  let stateZip = UIView()
 
-  var allTextFieldControllers = [MDCTextInputControllerDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerLegacyDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    stateController = MDCTextInputControllerDefault(textInput: state)
-    cityController = MDCTextInputControllerDefault(textInput: city)
-    zipController = MDCTextInputControllerDefault(textInput: zip)
+    cityController = MDCTextInputControllerLegacyDefault(textInput: city)
+    zipController = MDCTextInputControllerLegacyDefault(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -95,10 +88,12 @@ final class TextFieldSwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Material Text Fields"
+    title = "Manual Text Fields"
 
     setupScrollView()
     setupTextFields()
+
+    updateLayout()
 
     registerKeyboardNotifications()
     addGestureRecognizer()
@@ -112,12 +107,12 @@ final class TextFieldSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerDefault(textInput: name)
+    let nameController = MDCTextInputControllerLegacyDefault(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerDefault(textInput: address)
+    let addressController = MDCTextInputControllerLegacyDefault(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -125,13 +120,10 @@ final class TextFieldSwiftExample: UIViewController {
     city.delegate = self
     allTextFieldControllers.append(cityController)
 
-    // In iOS 9+, you could accomplish this with a UILayoutGuide.
-    // TODO: (larche) add iOS version specific implementations
-    let stateZip = UIView()
-    stateZip.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(stateZip)
 
     stateZip.addSubview(state)
+    let stateController = MDCTextInputControllerLegacyDefault(textInput: state)
     state.delegate = self
     allTextFieldControllers.append(stateController)
 
@@ -140,14 +132,9 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerLegacyDefault(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
-
-    scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerDefault(textInput: message)
-    message.textView?.delegate = self
-    allTextFieldControllers.append(messageController)
 
     var tag = 0
     for controller in allTextFieldControllers {
@@ -156,77 +143,66 @@ final class TextFieldSwiftExample: UIViewController {
       tag += 1
     }
 
-    let views = [ "name": name,
-                  "address": address,
-                  "city": city,
-                  "stateZip": stateZip,
-                  "phone": phone,
-                  "message": message ]
-    var constraints = NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-|",
-                                                     options: [.alignAllLeading, .alignAllTrailing],
-                                                     metrics: nil,
-                                                     views: views)
-
-    constraints += [NSLayoutConstraint(item: name,
-                                       attribute: .leading,
-                                       relatedBy: .equal,
-                                       toItem: view,
-                                       attribute: .leadingMargin,
-                                       multiplier: 1,
-                                       constant: 0)]
-    constraints += [NSLayoutConstraint(item: name,
-                                       attribute: .trailing,
-                                       relatedBy: .equal,
-                                       toItem: view,
-                                       attribute: .trailingMargin,
-                                       multiplier: 1,
-                                       constant: 0)]
-    constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:[name]|",
-                                                  options: [],
-                                                  metrics: nil,
-                                                  views: views)
-
-    let stateZipViews = [ "state": state, "zip": zip ]
-    constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
-                                                  options: [.alignAllTop],
-                                                  metrics: nil,
-                                                  views: stateZipViews)
-    constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[state]|",
-                                                  options: [],
-                                                  metrics: nil,
-                                                  views: stateZipViews)
-    constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[zip]|",
-                                                  options: [],
-                                                  metrics: nil,
-                                                  views: stateZipViews)
-
-    NSLayoutConstraint.activate(constraints)
   }
 
   func setupScrollView() {
     view.addSubview(scrollView)
-    scrollView.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.frame = view.bounds
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
-      withVisualFormat: "V:|[scrollView]|",
-      options: [],
-      metrics: nil,
-      views: ["scrollView": scrollView]))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["scrollView": scrollView]))
-    let marginOffset: CGFloat = 16
-    let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
-
-    scrollView.layoutMargins = margins
+    scrollView.contentSize =
+      CGSize(width: scrollView.bounds.width - 2 * LayoutConstants.largeMargin,
+             height: 372.0)
   }
 
   func addGestureRecognizer() {
     let tapRecognizer = UITapGestureRecognizer(target: self,
                                                action: #selector(tapDidTouch(sender: )))
     self.scrollView.addGestureRecognizer(tapRecognizer)
+  }
+
+  func updateLayout() {
+    let commonWidth = view.bounds.width - 2 * LayoutConstants.largeMargin
+    var height = LayoutConstants.floatingHeight
+    if let controller = allTextFieldControllers.first {
+      height = controller.isFloatingEnabled ?
+        LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
+    }
+
+    name.frame = CGRect(x: LayoutConstants.largeMargin,
+                        y: LayoutConstants.smallMargin,
+                        width: commonWidth,
+                        height: height)
+
+    address.frame = CGRect(x: LayoutConstants.largeMargin,
+                           y: name.frame.minY + height + LayoutConstants.smallMargin,
+                           width: commonWidth,
+                           height: height)
+
+    city.frame = CGRect(x: LayoutConstants.largeMargin,
+                        y: address.frame.minY + height + LayoutConstants.smallMargin,
+                        width: commonWidth,
+                        height: height)
+
+    stateZip.frame = CGRect(x: LayoutConstants.largeMargin,
+                            y: city.frame.minY + height + LayoutConstants.smallMargin,
+                            width: commonWidth,
+                            height: height)
+
+    state.frame = CGRect(x: 0,
+                         y: 0,
+                         width: LayoutConstants.stateWidth,
+                         height: height)
+
+    zip.frame = CGRect(x: LayoutConstants.stateWidth + LayoutConstants.smallMargin,
+                       y: 0,
+                       width: stateZip.bounds.width - LayoutConstants.stateWidth -
+                        LayoutConstants.smallMargin,
+                       height: height)
+
+    phone.frame = CGRect(x: LayoutConstants.largeMargin,
+                         y: stateZip.frame.minY + height + LayoutConstants.smallMargin,
+                         width: commonWidth,
+                         height: height)
   }
 
   // MARK: - Actions
@@ -236,30 +212,28 @@ final class TextFieldSwiftExample: UIViewController {
   }
 
   @objc func buttonDidTouch(sender: Any) {
-    let isFloatingEnabled = allTextFieldControllers.first?.isFloatingEnabled ?? false
-    let alert = UIAlertController(title: "Floating Labels",
+    let alert = UIAlertController(title: "Floating Enabled",
                                   message: nil,
                                   preferredStyle: .actionSheet)
-
-    let defaultAction = UIAlertAction(title: "Default (Yes)" + (isFloatingEnabled ? " ✓" : ""),
-                                      style: .default) { _ in
+    let defaultAction = UIAlertAction(title: "Default (Yes)", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = true
       })
+      self.updateLayout()
     }
     alert.addAction(defaultAction)
-    let floatingAction = UIAlertAction(title: "No" + (isFloatingEnabled ? "" : " ✓"),
-                                       style: .default) { _ in
+    let floatingAction = UIAlertAction(title: "No", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = false
       })
+      self.updateLayout()
     }
     alert.addAction(floatingAction)
     present(alert, animated: true, completion: nil)
   }
 }
 
-extension TextFieldSwiftExample: UITextFieldDelegate {
+extension TextFieldManualLayoutLegacySwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -269,15 +243,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 
     let fullString = NSString(string: rawText).replacingCharacters(in: range, with: string)
 
-    if textField == state {
-      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
-        fullString[range].characters.count > 0 {
-        stateController.setErrorText("Error: State can only contain letters",
-                                   errorAccessibilityValue: nil)
-      } else {
-        stateController.setErrorText(nil, errorAccessibilityValue: nil)
-      }
-    } else if textField == zip {
+    if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         fullString[range].characters.count > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
@@ -313,15 +279,9 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldSwiftExample: UITextViewDelegate {
-  func textViewDidEndEditing(_ textView: UITextView) {
-    print(textView.text)
-  }
-}
-
 // MARK: - Keyboard Handling
 
-extension TextFieldSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -353,22 +313,14 @@ extension TextFieldSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Typical Use"]
-  }
-
-  class func catalogDescription() -> String {
-    // swiftlint:disable:next line_length
-    return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
-  }
-  class func catalogIsPrimaryDemo() -> Bool {
-    return true
+    return ["Text Field", "[Legacy] Manual Layout"]
   }
 }

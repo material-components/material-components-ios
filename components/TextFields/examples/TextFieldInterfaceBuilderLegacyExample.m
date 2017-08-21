@@ -16,11 +16,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TextFieldInterfaceBuilderExampleSupplemental.h"
+#import "TextFieldInterfaceBuilderLegacyExampleSupplemental.h"
 
 @import MaterialComponents.MaterialTextFields;
 
-@interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
+@interface TextFieldInterfaceBuilderLegacyExample () <UITextFieldDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTextField *firstTextField;
 @property(nonatomic, strong) MDCTextInputControllerLegacyDefault *firstController;
@@ -33,7 +33,7 @@
 
 @end
 
-@implementation TextFieldInterfaceBuilderExample
+@implementation TextFieldInterfaceBuilderLegacyExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
