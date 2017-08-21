@@ -43,7 +43,7 @@ static inline UIColor *MDCTextInputDefaultBorderFillColorDefault() {
 
 static UIColor *_borderFillColorDefault;
 
-static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
+static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 @interface MDCTextInputControllerTextFieldBox()
 
@@ -63,12 +63,12 @@ static UIRectCorner _cornersRoundedDefault = UIRectCornerAllCorners;
   return _borderFillColorDefault;
 }
 
-+ (UIRectCorner)cornersRoundedDefault {
-  return _cornersRoundedDefault;
++ (UIRectCorner)roundedCornersDefault {
+  return _roundedCornersDefault;
 }
 
-+ (void)setCornersRoundedDefault:(UIRectCorner)cornersRoundedDefault {
-  _cornersRoundedDefault = cornersRoundedDefault;
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  _roundedCornersDefault = roundedCornersDefault;
 }
 
 #pragma mark - MDCTextInputPositioningDelegate
