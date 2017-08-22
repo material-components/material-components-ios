@@ -23,7 +23,7 @@
 }
 
 - (void)setPosition:(CGPoint)position animated:(BOOL)animated {
-  if (CGPointEqualToPoint(self.position , position)) {
+  if (CGPointEqualToPoint(self.position, position)) {
     return;
   }
   if (animated) {
@@ -51,8 +51,8 @@
     if (self.path) {
       animation.fromValue = (__bridge id)self.path;
     } else {
-      animation.fromValue = CFBridgingRelease(
-          CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 0, 0), NULL));
+      animation.fromValue =
+          CFBridgingRelease(CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 0, 0), NULL));
     }
     self.path = (__bridge CGPathRef _Nullable)CFBridgingRelease(
         CGPathCreateWithEllipseInRect(circleRect, NULL));
@@ -76,8 +76,7 @@
   }
 }
 
-- (void)animateRadiusOverKeyframes:(NSArray *)radii
-                          keyTimes:(NSArray *)keyTimes {
+- (void)animateRadiusOverKeyframes:(NSArray *)radii keyTimes:(NSArray *)keyTimes {
   NSMutableArray *values = [NSMutableArray arrayWithCapacity:radii.count];
   for (NSNumber *radius in radii) {
     CGFloat r = radius.floatValue;

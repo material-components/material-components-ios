@@ -46,7 +46,7 @@ IB_DESIGNABLE
  * If there was no selection previously or if the old selected item is gone, select the first item.
    Clients that need empty selection to be preserved across updates to `items` must manually reset
    selectedItem to nil after the update.
- 
+
  Changes to this property are not animated.
  */
 @property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *items;

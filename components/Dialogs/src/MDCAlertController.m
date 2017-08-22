@@ -295,12 +295,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   NSString *key =
       kMaterialDialogsStringTable[kStr_MaterialDialogsPresentedAccessibilityAnnouncement];
-  NSString *announcement = NSLocalizedStringFromTableInBundle(key,
-                                                              kMaterialDialogsStringsTableName,
-                                                              [[self class] bundle],
-                                                              @"Alert");
-  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
-                                  announcement);
+  NSString *announcement = NSLocalizedStringFromTableInBundle(key, kMaterialDialogsStringsTableName,
+                                                              [[self class] bundle], @"Alert");
+  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, announcement);
 }
 
 #pragma mark - Resource bundle

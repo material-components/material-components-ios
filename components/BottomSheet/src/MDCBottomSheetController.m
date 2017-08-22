@@ -24,7 +24,7 @@
 }
 
 - (nonnull instancetype)initWithContentViewController:
-    (nonnull UIViewController *)contentViewController {
+        (nonnull UIViewController *)contentViewController {
   if (self = [super initWithNibName:nil bundle:nil]) {
     _contentViewController = contentViewController;
     _transitionController = [[MDCBottomSheetTransitionController alloc] init];
@@ -85,7 +85,7 @@
 }
 
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
-    (nonnull MDCBottomSheetPresentationController *)bottomSheet {
+        (nonnull MDCBottomSheetPresentationController *)bottomSheet {
   [self.delegate bottomSheetControllerDidDismissBottomSheet:self];
 }
 

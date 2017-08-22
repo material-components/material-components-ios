@@ -22,12 +22,13 @@
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController
-                  calculateFrameOfPresentedView:(CGRect (^)(UIPresentationController *))calculateFrameOfPresentedView
-NS_DESIGNATED_INITIALIZER;
+                  calculateFrameOfPresentedView:
+                      (CGRect (^)(UIPresentationController *))calculateFrameOfPresentedView
+    NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController
-NS_UNAVAILABLE;
+    NS_UNAVAILABLE;
 
 @property(nonatomic, strong) UIView *sourceView;
 @property(nonatomic, strong) UIView *scrimView;

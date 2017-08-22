@@ -36,7 +36,7 @@
 
   self.exampleView.translatesAutoresizingMaskIntoConstraints = NO;
 
-  NSDictionary *viewBindings = @{ @"exampleView" : self.exampleView, @"navBar" : self.navBar };
+  NSDictionary *viewBindings = @{@"exampleView" : self.exampleView, @"navBar" : self.navBar};
   NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
 
   // clang-format off

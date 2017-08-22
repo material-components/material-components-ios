@@ -24,10 +24,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self setupExampleViews:@[
-      @"Simple Snackbar",
-      @"Snackbar with Action Button",
-      @"Snackbar with Long Text",
-      @"Attributed Text Example"
+    @"Simple Snackbar", @"Snackbar with Action Button", @"Snackbar with Long Text",
+    @"Attributed Text Example"
   ]];
   self.title = @"Snackbar";
 }
@@ -48,10 +46,9 @@
   action.title = @"Tap Me";
   message.action = action;
   message.buttonTextColor =
-      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
+      [UIColor colorWithRed:11 / 255.0f green:232 / 255.0f blue:94 / 255.0f alpha:1];
   [MDCSnackbarManager showMessage:message];
 }
-
 
 - (void)showLongSnackbarMessage:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
@@ -66,32 +63,30 @@
   action.title = @"Action";
   message.action = action;
   message.buttonTextColor =
-      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
+      [UIColor colorWithRed:11 / 255.0f green:232 / 255.0f blue:94 / 255.0f alpha:1];
 
   [MDCSnackbarManager showMessage:message];
 }
-
 
 - (void)showBoldSnackbar:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
   [text appendAttributedString:[[NSAttributedString alloc]
-                                initWithString:@"Boldly"
-                                attributes:@{
-                                             MDCSnackbarMessageBoldAttributeName : @YES
-                                             }]];
+                                   initWithString:@"Boldly"
+                                       attributes:@{
+                                         MDCSnackbarMessageBoldAttributeName : @YES
+                                       }]];
   [text appendAttributedString:[[NSAttributedString alloc]
-                                initWithString:@" go where no one has gone before."]];
+                                   initWithString:@" go where no one has gone before."]];
   message.attributedText = text;
-  
+
   [MDCSnackbarManager showMessage:message];
 }
 
-
-
 #pragma mark - UICollectionView
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:

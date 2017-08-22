@@ -34,7 +34,8 @@
   self.transitionController = [[MDCDialogTransitionController alloc] init];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
 
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.

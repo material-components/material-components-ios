@@ -1097,9 +1097,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                  completion:^{
                    MDCThumbTrack *strongSelf = weakSelf;
                    [strongSelf sendDiscreteChangeAction];
-                   if (strongSelf &&
-                       [strongSelf->_delegate
-                           respondsToSelector:@selector(thumbTrack:didAnimateToValue:)]) {
+                   if (strongSelf && [strongSelf->_delegate respondsToSelector:@selector
+                                                            (thumbTrack:didAnimateToValue:)]) {
                      [strongSelf->_delegate thumbTrack:weakSelf didAnimateToValue:value];
                    }
                  }];

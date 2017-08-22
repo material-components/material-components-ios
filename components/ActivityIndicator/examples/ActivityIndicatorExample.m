@@ -22,8 +22,8 @@
 #import "MaterialPalettes.h"
 
 #define MDC_CATALOG_BLACK [UIColor colorWithWhite:0.1f alpha:1]
-#define MDC_CATALOG_GREY  [UIColor colorWithWhite:0.9f alpha:1]
-#define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1]
+#define MDC_CATALOG_GREY [UIColor colorWithWhite:0.9f alpha:1]
+#define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6 / 255.0f blue:0x76 / 255.0f alpha:1]
 
 @interface ActivityIndicatorExample ()
 @end
@@ -65,10 +65,10 @@
   // Initiatlize multiple color indicator
   self.activityIndicator3 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
   self.activityIndicator3.delegate = self;
-  self.activityIndicator3.cycleColors =  @[ [MDCPalette bluePalette].tint500,
-                                            [MDCPalette redPalette].tint500,
-                                            [MDCPalette greenPalette].tint500,
-                                            [MDCPalette yellowPalette].tint500 ];
+  self.activityIndicator3.cycleColors = @[
+    [MDCPalette bluePalette].tint500, [MDCPalette redPalette].tint500,
+    [MDCPalette greenPalette].tint500, [MDCPalette yellowPalette].tint500
+  ];
   self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeIndeterminate;
   [self.activityIndicator3 sizeToFit];
   [self.activityIndicator3 startAnimating];

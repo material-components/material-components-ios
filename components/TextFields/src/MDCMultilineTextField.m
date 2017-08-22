@@ -434,9 +434,16 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                              constant:0];
   }
   self.trailingViewCenterY.active = YES;
-  
+
   if (!self.textViewTrailingTrailingViewLeading) {
-    self.textViewTrailingTrailingViewLeading = [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.trailingView attribute:NSLayoutAttributeLeading multiplier:1 constant:self.textViewTrailing.constant];
+    self.textViewTrailingTrailingViewLeading =
+        [NSLayoutConstraint constraintWithItem:self.textView
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.trailingView
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:self.textViewTrailing.constant];
   }
   self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0.f);
 }

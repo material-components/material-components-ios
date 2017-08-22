@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInput.h"
@@ -22,4 +23,3 @@
 #import "MDCTextInputControllerDefault.h"
 #import "MDCTextInputControllerFullWidth.h"
 #import "MDCTextInputUnderlineView.h"
-#import "MDCMultilineTextField.h"

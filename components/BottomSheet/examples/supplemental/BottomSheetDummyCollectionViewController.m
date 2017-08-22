@@ -39,11 +39,11 @@
   _layout.minimumInteritemSpacing = 0;
   _layout.minimumLineSpacing = 0;
 
-  UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero
-                                                        collectionViewLayout:_layout];
+  UICollectionView *collectionView =
+      [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:_layout];
   collectionView.backgroundColor = [UIColor whiteColor];
   [collectionView registerClass:[DummyCollectionViewCell class]
-     forCellWithReuseIdentifier:NSStringFromClass([DummyCollectionViewCell class])];
+      forCellWithReuseIdentifier:NSStringFromClass([DummyCollectionViewCell class])];
   collectionView.dataSource = self;
   self.view = collectionView;
 }

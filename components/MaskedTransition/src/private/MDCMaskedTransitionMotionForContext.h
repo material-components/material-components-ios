@@ -19,4 +19,5 @@
 
 #import "MDCMaskedTransitionMotionSpec.h"
 
-FOUNDATION_EXPORT MDCMaskedTransitionMotionSpec motionForContext(NSObject<MDMTransitionContext> *context);
+FOUNDATION_EXPORT MDCMaskedTransitionMotionSpec
+    motionForContext(NSObject<MDMTransitionContext> *context);

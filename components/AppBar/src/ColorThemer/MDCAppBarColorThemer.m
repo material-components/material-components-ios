@@ -18,8 +18,7 @@
 
 @implementation MDCAppBarColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-                toAppBar:(MDCAppBar *)appBar {
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme toAppBar:(MDCAppBar *)appBar {
   appBar.headerViewController.headerView.backgroundColor = colorScheme.primaryColor;
 }
 

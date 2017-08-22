@@ -161,8 +161,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
   // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
+  if (![UIViewController instancesRespondToSelector:@selector
+                         (viewWillTransitionToSize:withTransitionCoordinator:)]) {
     [_headerView interfaceOrientationWillChange];
   }
 }
@@ -172,8 +172,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
   // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
+  if (![UIViewController instancesRespondToSelector:@selector
+                         (viewWillTransitionToSize:withTransitionCoordinator:)]) {
     [_headerView interfaceOrientationIsChanging];
   }
 }
@@ -182,8 +182,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
   // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
+  if (![UIViewController instancesRespondToSelector:@selector
+                         (viewWillTransitionToSize:withTransitionCoordinator:)]) {
     [_headerView interfaceOrientationDidChange];
   }
 }

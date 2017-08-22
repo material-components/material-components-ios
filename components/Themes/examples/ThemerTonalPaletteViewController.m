@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialThemes.h"
 #import "MaterialPalettes.h"
+#import "MaterialThemes.h"
 
 #import "ThemerTypicalUseSupplemental.h"
 
@@ -38,7 +38,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self loadCollectionView: @[ @"Tonal Color Scheme Theme" ]];
+  [self loadCollectionView:@[ @"Tonal Color Scheme Theme" ]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -47,41 +47,35 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
   switch (indexPath.item) {
     case 0: {
-      NSArray<UIColor *> *primaryTonalColors = @[ [MDCPalette purplePalette].tint50,
-                                                  [MDCPalette purplePalette].tint100,
-                                                  [MDCPalette purplePalette].tint200,
-                                                  [MDCPalette purplePalette].tint300,
-                                                  [MDCPalette purplePalette].tint400,
-                                                  [MDCPalette purplePalette].tint500,
-                                                  [MDCPalette purplePalette].tint600,
-                                                  [MDCPalette purplePalette].tint700,
-                                                  [MDCPalette purplePalette].tint800,
-                                                  [MDCPalette purplePalette].tint900 ];
+      NSArray<UIColor *> *primaryTonalColors = @[
+        [MDCPalette purplePalette].tint50, [MDCPalette purplePalette].tint100,
+        [MDCPalette purplePalette].tint200, [MDCPalette purplePalette].tint300,
+        [MDCPalette purplePalette].tint400, [MDCPalette purplePalette].tint500,
+        [MDCPalette purplePalette].tint600, [MDCPalette purplePalette].tint700,
+        [MDCPalette purplePalette].tint800, [MDCPalette purplePalette].tint900
+      ];
       MDCTonalPalette *primaryTonalPalette =
           [[MDCTonalPalette alloc] initWithColors:primaryTonalColors
                                    mainColorIndex:5
                                   lightColorIndex:1
                                    darkColorIndex:7];
-      
-      NSArray<UIColor *> *secondaryTonalColors = @[ [MDCPalette orangePalette].tint50,
-                                                    [MDCPalette orangePalette].tint100,
-                                                    [MDCPalette orangePalette].tint200,
-                                                    [MDCPalette orangePalette].tint300,
-                                                    [MDCPalette orangePalette].tint400,
-                                                    [MDCPalette orangePalette].tint500,
-                                                    [MDCPalette orangePalette].tint600,
-                                                    [MDCPalette orangePalette].tint700,
-                                                    [MDCPalette orangePalette].tint800,
-                                                    [MDCPalette orangePalette].tint900 ];
+
+      NSArray<UIColor *> *secondaryTonalColors = @[
+        [MDCPalette orangePalette].tint50, [MDCPalette orangePalette].tint100,
+        [MDCPalette orangePalette].tint200, [MDCPalette orangePalette].tint300,
+        [MDCPalette orangePalette].tint400, [MDCPalette orangePalette].tint500,
+        [MDCPalette orangePalette].tint600, [MDCPalette orangePalette].tint700,
+        [MDCPalette orangePalette].tint800, [MDCPalette orangePalette].tint900
+      ];
       MDCTonalPalette *secondaryTonalPalette =
-           [[MDCTonalPalette alloc] initWithColors:secondaryTonalColors
-                                    mainColorIndex:5
-                                   lightColorIndex:1
-                                    darkColorIndex:7];
-      
+          [[MDCTonalPalette alloc] initWithColors:secondaryTonalColors
+                                   mainColorIndex:5
+                                  lightColorIndex:1
+                                   darkColorIndex:7];
+
       MDCTonalColorScheme *tonalColorScheme =
-           [[MDCTonalColorScheme alloc] initWithPrimaryTonalPalette:primaryTonalPalette
-                                              secondaryTonalPalette:secondaryTonalPalette];
+          [[MDCTonalColorScheme alloc] initWithPrimaryTonalPalette:primaryTonalPalette
+                                             secondaryTonalPalette:secondaryTonalPalette];
       self.colorScheme = tonalColorScheme;
       break;
     }

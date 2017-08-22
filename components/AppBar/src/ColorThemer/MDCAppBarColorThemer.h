@@ -29,7 +29,6 @@
  @param colorScheme The color scheme to apply to MDCAppBar.
  @param appBar A MDCAppBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-                toAppBar:(MDCAppBar *)appBar;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme toAppBar:(MDCAppBar *)appBar;
 
 @end

@@ -30,7 +30,7 @@
  @param bottomSheet The MDCBottomSheetPresentationController being presented.
  */
 - (void)prepareForBottomSheetPresentation:
-    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+        (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
 /**
  Called after dimissing the bottom sheet to let clients know it is no longer onscreen. The bottom
@@ -41,7 +41,7 @@
  @param bottomSheet The MDCBottomSheetPresentationController that was dismissed.
  */
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
-    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+        (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
 @end
 

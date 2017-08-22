@@ -47,7 +47,7 @@
   // implement -preferredStatusBarStyle.
   self.appBar.navigationBar.tintColor = [UIColor whiteColor];
   self.appBar.navigationBar.titleTextAttributes =
-      @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+      @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
   // Make sure navigation bar background color is clear so the image view is visible.
   self.appBar.navigationBar.backgroundColor = [UIColor clearColor];

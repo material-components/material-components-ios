@@ -46,7 +46,7 @@
  @param contentViewController The view controller to be presented as a bottom sheet.
  */
 - (nonnull instancetype)initWithContentViewController:
-    (nonnull UIViewController *)contentViewController;
+        (nonnull UIViewController *)contentViewController;
 
 @end
 

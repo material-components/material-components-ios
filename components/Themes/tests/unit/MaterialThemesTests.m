@@ -26,23 +26,18 @@
 @implementation MaterialThemesTests
 
 - (void)testTonalPaletteEncodingDecoding {
-
   // Given
-  NSArray<UIColor *> *tonalColors = @[ [MDCPalette purplePalette].tint50,
-                                              [MDCPalette purplePalette].tint100,
-                                              [MDCPalette purplePalette].tint200,
-                                              [MDCPalette purplePalette].tint300,
-                                              [MDCPalette purplePalette].tint400,
-                                              [MDCPalette purplePalette].tint500,
-                                              [MDCPalette purplePalette].tint600,
-                                              [MDCPalette purplePalette].tint700,
-                                              [MDCPalette purplePalette].tint800,
-                                              [MDCPalette purplePalette].tint900 ];
-  MDCTonalPalette *tonalPalette =
-      [[MDCTonalPalette alloc] initWithColors:tonalColors
-                               mainColorIndex:5
-                              lightColorIndex:1
-                               darkColorIndex:7];
+  NSArray<UIColor *> *tonalColors = @[
+    [MDCPalette purplePalette].tint50, [MDCPalette purplePalette].tint100,
+    [MDCPalette purplePalette].tint200, [MDCPalette purplePalette].tint300,
+    [MDCPalette purplePalette].tint400, [MDCPalette purplePalette].tint500,
+    [MDCPalette purplePalette].tint600, [MDCPalette purplePalette].tint700,
+    [MDCPalette purplePalette].tint800, [MDCPalette purplePalette].tint900
+  ];
+  MDCTonalPalette *tonalPalette = [[MDCTonalPalette alloc] initWithColors:tonalColors
+                                                           mainColorIndex:5
+                                                          lightColorIndex:1
+                                                           darkColorIndex:7];
 
   // When
   NSMutableData *data = [NSMutableData data];

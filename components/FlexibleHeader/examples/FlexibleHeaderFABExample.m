@@ -89,8 +89,9 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1]
-                                 forState:UIControlStateNormal];
+  [self.floatingButton
+      setBackgroundColor:[UIColor colorWithRed:11 / 255.0 green:232 / 255.0 blue:94 / 255.0 alpha:1]
+                forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   self.floatingButton.center = CGPointMake(
       self.view.frame.size.width - self.floatingButton.frame.size.width, kFlexibleHeaderMinHeight);

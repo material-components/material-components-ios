@@ -18,8 +18,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "MaterialRTL.h"
 #import "MaterialApplication.h"
+#import "MaterialRTL.h"
 #import "private/MDCActivityIndicator+Private.h"
 #import "private/MaterialActivityIndicatorStrings.h"
 #import "private/MaterialActivityIndicatorStrings_table.h"
@@ -795,11 +795,12 @@ static const CGFloat kSingleCycleRotation =
   static NSArray<UIColor *> *s_defaultCycleColors;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    s_defaultCycleColors =
-    @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-       [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-       [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-       [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
+    s_defaultCycleColors = @[
+      [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
+      [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
+      [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
+      [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1]
+    ];
   });
   return s_defaultCycleColors;
 }
@@ -831,7 +832,7 @@ static const CGFloat kSingleCycleRotation =
   // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
   // and use that as the search location.
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
@@ -842,32 +843,26 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (NSString *)accessibilityLabel {
-
   if (self.isAnimating) {
     if (self.indicatorMode == MDCActivityIndicatorModeIndeterminate) {
-      NSString *key =
-      kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorInProgressAccessibilityLabel];
-      return NSLocalizedStringFromTableInBundle(key,
-                                                kMaterialActivityIndicatorStringsTableName,
-                                                [[self class] bundle],
-                                                @"In Progress");
+      NSString *key = kMaterialActivityIndicatorStringTable
+          [kStr_MaterialActivityIndicatorInProgressAccessibilityLabel];
+      return NSLocalizedStringFromTableInBundle(key, kMaterialActivityIndicatorStringsTableName,
+                                                [[self class] bundle], @"In Progress");
     } else {
       NSUInteger percentage = (int)(self.progress * 100);
-      NSString *key =
-      kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorProgressCompletedAccessibilityLabel];
-      NSString *localizedString = NSLocalizedStringFromTableInBundle(key,
-                                                kMaterialActivityIndicatorStringsTableName,
-                                                [[self class] bundle],
-                                                @"{percentage} Percent Complete");
+      NSString *key = kMaterialActivityIndicatorStringTable
+          [kStr_MaterialActivityIndicatorProgressCompletedAccessibilityLabel];
+      NSString *localizedString = NSLocalizedStringFromTableInBundle(
+          key, kMaterialActivityIndicatorStringsTableName, [[self class] bundle],
+          @"{percentage} Percent Complete");
       return [NSString localizedStringWithFormat:localizedString, percentage];
     }
   } else {
-    NSString *key =
-        kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorProgressHaltedAccessibilityLabel];
-    return NSLocalizedStringFromTableInBundle(key,
-                                              kMaterialActivityIndicatorStringsTableName,
-                                              [[self class] bundle],
-                                              @"Progress Halted");
+    NSString *key = kMaterialActivityIndicatorStringTable
+        [kStr_MaterialActivityIndicatorProgressHaltedAccessibilityLabel];
+    return NSLocalizedStringFromTableInBundle(key, kMaterialActivityIndicatorStringsTableName,
+                                              [[self class] bundle], @"Progress Halted");
   }
 }
 

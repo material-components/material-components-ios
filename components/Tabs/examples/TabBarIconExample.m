@@ -72,7 +72,7 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  UIColor *green =  [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
+  UIColor *green = [UIColor colorWithRed:11 / 255.0f green:232 / 255.0f blue:94 / 255.0f alpha:1];
 
   tabBar.barTintColor = [UIColor colorWithWhite:0.1f alpha:1.0];
   tabBar.tintColor = green;

@@ -30,25 +30,26 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
                                                               presentingViewController:presenting];
 }
 
-- (nullable id <UIViewControllerAnimatedTransitioning>)
+- (nullable id<UIViewControllerAnimatedTransitioning>)
     animationControllerForPresentedController:(UIViewController *)presented
                          presentingController:(UIViewController *)presenting
                              sourceController:(UIViewController *)source {
   return self;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)
-    animationControllerForDismissedController:(UIViewController *)dismissed {
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
+        (UIViewController *)dismissed {
   return self;
 }
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
-- (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)transitionDuration:
+        (nullable id<UIViewControllerContextTransitioning>)transitionContext {
   return MDCBottomSheetTransitionDuration;
 }
 
-- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   // If a view in the transitionContext is nil, it likely hasn't been loaded by its ViewController
   // yet.  Ask for it directly to initiate a loadView on the ViewController.
   UIViewController *fromViewController =
@@ -59,8 +60,8 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   }
 
   UIViewController *toViewController =
-  [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-      UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
+      [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
   if (toView == nil) {
     toView = toViewController.view;
   }
@@ -77,8 +78,8 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
     [containerView addSubview:toView];
   }
 
-  CGRect onscreenFrame = [self frameOfPresentedViewController:animatingViewController
-                                              inContainerView:containerView];
+  CGRect onscreenFrame =
+      [self frameOfPresentedViewController:animatingViewController inContainerView:containerView];
   CGRect offscreenFrame = CGRectOffset(onscreenFrame, 0, containerView.frame.size.height);
 
   CGRect initialFrame = presenting ? offscreenFrame : onscreenFrame;
@@ -91,23 +92,23 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
       UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
 
   [UIView animateWithDuration:transitionDuration
-                        delay:0.0
-                      options:options
-                   animations:^{
-                     animatingView.frame = finalFrame;
-                   }
-                   completion:^(BOOL finished) {
-                     // If we're dismissing, remove the presented view from the hierarchy
-                     if (!presenting) {
-                       [fromView removeFromSuperview];
-                     }
+      delay:0.0
+      options:options
+      animations:^{
+        animatingView.frame = finalFrame;
+      }
+      completion:^(BOOL finished) {
+        // If we're dismissing, remove the presented view from the hierarchy
+        if (!presenting) {
+          [fromView removeFromSuperview];
+        }
 
-                     // From ADC : UIViewControllerContextTransitioning
-                     // When you do create transition animations, always call the
-                     // completeTransition: from an appropriate completion block to let UIKit know
-                     // when all of your animations have finished.
-                     [transitionContext completeTransition:YES];
-                   }];
+        // From ADC : UIViewControllerContextTransitioning
+        // When you do create transition animations, always call the
+        // completeTransition: from an appropriate completion block to let UIKit know
+        // when all of your animations have finished.
+        [transitionContext completeTransition:YES];
+      }];
 }
 
 - (CGRect)frameOfPresentedViewController:(UIViewController *)presentedViewController

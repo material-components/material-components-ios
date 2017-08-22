@@ -59,12 +59,12 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 
   CGFloat lineSpace = (self.view.frame.size.height - 50.f) / 4.f;
   UILabel *linearLabel = [AnimationTimingExample curveLabelWithTitle:@"Linear"];
-  linearLabel.frame =
-      CGRectMake(kLeftGutter, kTopMargin, linearLabel.frame.size.width, linearLabel.frame.size.height);
+  linearLabel.frame = CGRectMake(kLeftGutter, kTopMargin, linearLabel.frame.size.width,
+                                 linearLabel.frame.size.height);
   [self.scrollView addSubview:linearLabel];
 
-  CGRect linearViewFrame =
-      CGRectMake(kLeftGutter, kTextOffset + kTopMargin, kAnimationCircleSize.width, kAnimationCircleSize.height);
+  CGRect linearViewFrame = CGRectMake(kLeftGutter, kTextOffset + kTopMargin,
+                                      kAnimationCircleSize.width, kAnimationCircleSize.height);
   self.linearView = [[UIView alloc] initWithFrame:linearViewFrame];
   self.linearView.backgroundColor = [AnimationTimingExample defaultColors][0];
   self.linearView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
@@ -131,10 +131,8 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   dispatch_once(&onceToken, ^{
     UIColor *primaryColor = [UIColor darkGrayColor];
     defaultColors = @[
-      [primaryColor colorWithAlphaComponent:0.8],
-      [primaryColor colorWithAlphaComponent:0.6],
-      [primaryColor colorWithAlphaComponent:0.4],
-      [primaryColor colorWithAlphaComponent:0.2]
+      [primaryColor colorWithAlphaComponent:0.8], [primaryColor colorWithAlphaComponent:0.6],
+      [primaryColor colorWithAlphaComponent:0.4], [primaryColor colorWithAlphaComponent:0.2]
     ];
   });
   return defaultColors;

@@ -40,12 +40,9 @@ static NSString *const kCategoryB = @"CategoryB";
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self setupExampleViews:@[
-      @"Show Category A Message",
-      @"Show Category B Message",
-      @"Show Message with no category",
-      @"Suspend Category A",
-      @"Suspend Category B",
-      @"Suspend All"]];
+    @"Show Category A Message", @"Show Category B Message", @"Show Message with no category",
+    @"Suspend Category A", @"Suspend Category B", @"Suspend All"
+  ]];
   self.title = @"Message Suspension";
 }
 
@@ -99,7 +96,8 @@ static NSString *const kCategoryB = @"CategoryB";
 
 #pragma mark - Event Handling
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:

@@ -51,15 +51,14 @@
                                 toProgressView:[MDCProgressView appearance]];
   [MDCSliderColorThemer applyColorScheme:self.colorScheme toSlider:[MDCSlider appearance]];
   [MDCTabBarColorThemer applyColorScheme:self.colorScheme toTabBar:[MDCTabBar appearance]];
-  [MDCTextFieldColorThemer
-      applyColorSchemeToAllTextInputControllerDefault:self.colorScheme];
+  [MDCTextFieldColorThemer applyColorSchemeToAllTextInputControllerDefault:self.colorScheme];
 
   // Apply color scheme to UIKit components.
   [UISlider appearance].tintColor = self.colorScheme.primaryColor;
   [UISwitch appearance].tintColor = self.colorScheme.primaryColor;
 
   // Send notification that color scheme has changed so existing components can update if necessary.
-  NSDictionary *userInfo = @{ @"colorScheme" : self.colorScheme };
+  NSDictionary *userInfo = @{@"colorScheme" : self.colorScheme};
   [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
                                                       object:self
                                                     userInfo:userInfo];

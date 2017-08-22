@@ -32,7 +32,7 @@
       performAction:grey_tap()];
   // Scroll to the top of the main screen
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"collectionView")]
-   performAction:grey_scrollToContentEdge(kGREYContentEdgeTop)];
+      performAction:grey_scrollToContentEdge(kGREYContentEdgeTop)];
 }
 
 - (void)testSliding {

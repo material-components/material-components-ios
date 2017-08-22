@@ -176,7 +176,7 @@
 
 /**
  Should the text field grow vertically as new lines are added.
- 
+
  Default is YES.
  */
 @property(nonatomic, assign) BOOL expandsOnOverflow UI_APPEARANCE_SELECTOR;

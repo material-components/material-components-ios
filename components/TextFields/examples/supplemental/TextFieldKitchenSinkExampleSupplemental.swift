@@ -356,7 +356,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
   func presentAlert (alert: UIAlertController,
                      partialTitle: String,
-                     closure: @escaping (_ mode: UITextFieldViewMode, _ title: String) -> Void) -> Void {
+                     closure: @escaping (_ mode: UITextFieldViewMode, _ title: String) -> Void) {
 
     for rawMode in 0...3 {
       let mode = UITextFieldViewMode(rawValue: rawMode)!

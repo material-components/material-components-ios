@@ -24,8 +24,8 @@ MDCMaskedTransitionMotionSpec motionForContext(NSObject<MDMTransitionContext> *c
   if (CGRectEqualToRect(context.foreViewController.view.frame, containerBounds)) {
     return fullscreen;
 
-  } else if (foreBounds.size.width == containerBounds.size.width
-             && CGRectGetMaxY(foreFrame) == CGRectGetMaxY(containerBounds)) {
+  } else if (foreBounds.size.width == containerBounds.size.width &&
+             CGRectGetMaxY(foreFrame) == CGRectGetMaxY(containerBounds)) {
     if (foreFrame.size.height > 100) {
       return bottomSheet;
 

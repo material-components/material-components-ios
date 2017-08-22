@@ -32,6 +32,7 @@
 
  @return nil if the view controller is not managed by a Material dialog presentaiton controller.
  */
-@property(nonatomic, nullable, readonly) MDCDialogPresentationController *mdc_dialogPresentationController;
+@property(nonatomic, nullable, readonly)
+    MDCDialogPresentationController *mdc_dialogPresentationController;
 
 @end

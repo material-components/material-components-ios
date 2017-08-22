@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialTabs.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCTabBar.
@@ -27,9 +27,8 @@
  all instances of MDCTabBar.
 
  @param colorScheme The color scheme to apply to MDCTabBar.
- @param tabBar A MDCTabBar instance to apply a color scheme. 
+ @param tabBar A MDCTabBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-                toTabBar:(MDCTabBar *)tabBar;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme toTabBar:(MDCTabBar *)tabBar;
 
 @end

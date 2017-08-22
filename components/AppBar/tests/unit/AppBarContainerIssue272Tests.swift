@@ -39,7 +39,7 @@ class AppBarContainerIssue272Tests: XCTestCase {
   }
 
   func testObservedAfterViewDidLoad() {
-    let _ = container.view // Force the container to load its view
+    _ = container.view // Force the container to load its view
     content.navigationItem.title = "Some title"
 
     XCTAssertEqual(content.navigationItem.title, container.appBar.navigationBar.title)

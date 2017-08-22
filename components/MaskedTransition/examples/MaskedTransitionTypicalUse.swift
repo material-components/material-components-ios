@@ -76,11 +76,11 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
 
     targets.append(.init(name: "Full screen", viewControllerType: ModalViewController.self, calculateFrame: nil, autoresizingMask: [.flexibleWidth, .flexibleHeight]))
 
-    targets.append(.init(name: "Left card", viewControllerType: ModalViewController.self, calculateFrame: { info in
+    targets.append(.init(name: "Left card", viewControllerType: ModalViewController.self, calculateFrame: { _ in
       return CGRect(x: leftFab.frame.minX - 16, y: leftFab.frame.minY - 200, width: 200, height: 264)
     }, autoresizingMask: [.flexibleTopMargin, .flexibleRightMargin, .flexibleBottomMargin]))
 
-    targets.append(.init(name: "Right card", viewControllerType: ModalViewController.self, calculateFrame: { info in
+    targets.append(.init(name: "Right card", viewControllerType: ModalViewController.self, calculateFrame: { _ in
       return CGRect(x: rightFab.frame.maxX - 200, y: rightFab.frame.minY - 200, width: 200, height: 264)
     }, autoresizingMask: [.flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin]))
 

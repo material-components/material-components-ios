@@ -117,8 +117,8 @@
  @param backgroundColor The background color.
  @param state The state.
  */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
+                  forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
@@ -159,8 +159,9 @@
 /**
  This property sets/gets the title color for UIControlStateNormal.
  */
-@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR
-    __deprecated_msg("Use setTitleColor:forState: instead");
+@property(nonatomic, strong, nullable)
+    UIColor *customTitleColor UI_APPEARANCE_SELECTOR __deprecated_msg(
+        "Use setTitleColor:forState: instead");
 
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")

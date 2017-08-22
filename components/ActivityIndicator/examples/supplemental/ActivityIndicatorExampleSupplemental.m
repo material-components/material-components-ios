@@ -24,10 +24,9 @@
 #import "ActivityIndicatorExampleSupplemental.h"
 #import "MaterialTypography.h"
 
-#define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1]
+#define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6 / 255.0f blue:0x76 / 255.0f alpha:1]
 
-static NSString * const kCell = @"Cell";
-
+static NSString *const kCell = @"Cell";
 
 @implementation ActivityIndicatorExample (CatalogByConvention)
 
@@ -49,7 +48,6 @@ static NSString * const kCell = @"Cell";
 @implementation ActivityIndicatorExample (Supplemental)
 
 - (void)setupExampleViews {
-
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCell];
 
@@ -98,15 +96,13 @@ static NSString * const kCell = @"Cell";
 
 - (void)didChangeSliderValue:(UISlider *)slider {
   self.activityIndicator1.progress = slider.value;
-  MDCCollectionViewTextCell *cell =
-      (MDCCollectionViewTextCell *)[self.collectionView cellForItemAtIndexPath:
-                                        [NSIndexPath indexPathForRow:1 inSection:0]];
+  MDCCollectionViewTextCell *cell = (MDCCollectionViewTextCell *)[self.collectionView
+      cellForItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
   cell.textLabel.text = [NSString stringWithFormat:@"%.00f%%", slider.value * 100];
   [cell setNeedsDisplay];
 }
 
-#pragma mark - 
-
+#pragma mark -
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -115,7 +111,8 @@ static NSString * const kCell = @"Cell";
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {
-  if (indexPath.row == 0) return 160;
+  if (indexPath.row == 0)
+    return 160;
   return 56;
 }
 
@@ -143,6 +140,5 @@ static NSString * const kCell = @"Cell";
   }
   return cell;
 }
-
 
 @end

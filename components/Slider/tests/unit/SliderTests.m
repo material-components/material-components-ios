@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialThumbTrack.h"
 #import "MaterialSlider.h"
+#import "MaterialThumbTrack.h"
 
 static const NSUInteger kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = 0.001f;

@@ -206,8 +206,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-  if ([_delegate respondsToSelector:@selector(inkTouchController:
-                                        shouldProcessInkTouchesAtTouchLocation:)]) {
+  if ([_delegate respondsToSelector:@selector
+                 (inkTouchController:shouldProcessInkTouchesAtTouchLocation:)]) {
     CGPoint touchLocation = [gestureRecognizer locationInView:_view];
     return [_delegate inkTouchController:self shouldProcessInkTouchesAtTouchLocation:touchLocation];
   } else if ([_delegate respondsToSelector:@selector(shouldInkTouchControllerProcessInkTouches:)]) {
