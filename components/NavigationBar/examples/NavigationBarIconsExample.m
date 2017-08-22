@@ -77,24 +77,20 @@
   self.navigationItem.rightBarButtonItem = trailingButtonItem;
   self.navigationItem.backBarButtonItem = backButtonItem;
 
-  id topLayoutGuide;
-
-  NSOperatingSystemVersion iOS10Version = {11, 0, 0};
-  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
-      [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
-    topLayoutGuide = self.view.safeAreaLayoutGuide;
+  if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
+    UILayoutGuide *layoutGuide = [self.view performSelector:@selector(safeAreaLayoutGuide)];
+    [layoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
   } else {
-    topLayoutGuide = self.topLayoutGuide;
+    [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.navigationBar
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1.0
+                                  constant:0]
+        .active = YES;
   }
-  NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar, topLayoutGuide);
-
-  [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:[topLayoutGuide]-0-[_navigationBar]"
-                                                  options:0
-                                                  metrics:nil
-                                                    views:viewsBindings]];
+  NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar);
 
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_navigationBar]|"
