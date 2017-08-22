@@ -753,7 +753,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setDisabledColor:(UIColor *)disabledColor {
   if (![_disabledColor isEqual:disabledColor]) {
-    _disabledColor = disabledColor ? disabledColor : [[self class] disabledColorDefault];
     _disabledColor = disabledColor ? disabledColor : [self class].disabledColorDefault;
     self.textInput.underline.disabledColor = disabledColor;
   }
