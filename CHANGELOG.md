@@ -1,4 +1,13 @@
-# release-candidate TODO: Replace me with version number. 
+# 33.0.0
+
+## API Diffs
+
+### TextFields
+
+Renaming changes in preparation for a new text field style coming soon. No functional or visual changes to the text fields.
+
+* `MDCTextInputControllerDefault` was renamed to `MDCTextInputControllerLegacyDefault`.
+* `MDCTextInputControllerFullWidth` was renamed to `MDCTextInputControllerLegacyFullWidth`.
 
 # 32.0.0
 
