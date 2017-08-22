@@ -233,13 +233,12 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   }
 }
 
-- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar {
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
   if (_tabBar == bar) {
     return UIBarPositionBottom;
   } else {
     return UIBarPositionAny;
   }
 }
-
 
 @end

@@ -34,12 +34,10 @@
 
 @end
 
-
-@interface MDCDraggableView ()<UIGestureRecognizerDelegate>
+@interface MDCDraggableView () <UIGestureRecognizerDelegate>
 @property(nonatomic) UIPanGestureRecognizer *dragRecognizer;
 @property(nonatomic, strong) UIScrollView *scrollView;
 @end
-
 
 @implementation MDCDraggableView
 
@@ -47,8 +45,8 @@
   self = [super initWithFrame:frame];
   if (self) {
     _scrollView = scrollView;
-    _dragRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                              action:@selector(didPan:)];
+    _dragRecognizer =
+        [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
     _dragRecognizer.maximumNumberOfTouches = 1;
     _dragRecognizer.delegate = self;
     [self addGestureRecognizer:_dragRecognizer];

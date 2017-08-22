@@ -26,7 +26,7 @@
 
 @end
 
-@interface MDCInkLayer ()  <MDCInkLayerRippleDelegate>
+@interface MDCInkLayer () <MDCInkLayerRippleDelegate>
 @end
 
 @interface MDCInkLayerRipple : CAShapeLayer

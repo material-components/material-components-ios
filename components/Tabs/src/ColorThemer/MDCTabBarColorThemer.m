@@ -18,8 +18,7 @@
 
 @implementation MDCTabBarColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-                toTabBar:(MDCTabBar *)tabBar {
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme toTabBar:(MDCTabBar *)tabBar {
   tabBar.tintColor = colorScheme.primaryColor;
   tabBar.barTintColor = colorScheme.primaryColor;
   tabBar.selectedItemTintColor = colorScheme.primaryDarkColor;

@@ -31,11 +31,11 @@
   [_button setTitle:@"Show Bottom Sheet" forState:UIControlStateNormal];
   [_button sizeToFit];
   _button.autoresizingMask =
-  UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
-  UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   [_button addTarget:self
-              action:@selector(presentBottomSheet)
-    forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(presentBottomSheet)
+      forControlEvents:UIControlEventTouchUpInside];
   _button.center = self.view.center;
   [self.view addSubview:_button];
 }

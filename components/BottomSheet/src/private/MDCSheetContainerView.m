@@ -16,9 +16,9 @@
 
 #import "MDCSheetContainerView.h"
 
-#import "MaterialKeyboardWatcher.h"
 #import "MDCDraggableView.h"
 #import "MDCSheetBehavior.h"
+#import "MaterialKeyboardWatcher.h"
 
 // KVO key for monitoring the content size for the content view if it is a scrollview.
 static NSString *kContentSizeKey = nil;
@@ -87,10 +87,10 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
     for (NSString *name in notificationNames) {
       [[NSNotificationCenter defaultCenter]
-       addObserver:self
-       selector:@selector(keyboardStateChangedWithNotification:)
-       name:name
-       object:nil];
+          addObserver:self
+             selector:@selector(keyboardStateChangedWithNotification:)
+                 name:name
+               object:nil];
     }
   }
   return self;
@@ -198,8 +198,8 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 - (void)updateSheetState {
   CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
-  self.sheetState = (currentSheetHeight >= [self maximumSheetHeight] ?
-                     MDCSheetStateExtended : MDCSheetStatePreferred);
+  self.sheetState = (currentSheetHeight >= [self maximumSheetHeight] ? MDCSheetStateExtended
+                                                                     : MDCSheetStatePreferred);
 }
 
 // Returns |preferredSheetHeight|, truncated as necessary, so that it never exceeds the height of
@@ -245,7 +245,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   CGFloat midX = CGRectGetMidX(bounds);
   CGFloat bottomY = CGRectGetMaxY(bounds) - keyboardOffset;
 
-  switch(self.sheetState) {
+  switch (self.sheetState) {
     case MDCSheetStatePreferred:
       return CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
     case MDCSheetStateExtended:
@@ -285,7 +285,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 - (BOOL)draggableView:(MDCDraggableView *)view shouldBeginDraggingWithVelocity:(CGPoint)velocity {
   [self updateSheetState];
 
-  switch(self.sheetState) {
+  switch (self.sheetState) {
     case MDCSheetStatePreferred:
       return YES;
     case MDCSheetStateExtended: {

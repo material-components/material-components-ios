@@ -33,9 +33,7 @@ static inline CGPoint AnchorPointFromPosition(CGPoint position, CGRect bounds) {
 }
 
 static inline CGRect FrameCenteredAround(CGPoint position, CGSize size) {
-  return CGRectMake(position.x - size.width / 2,
-                    position.y - size.height / 2,
-                    size.width,
+  return CGRectMake(position.x - size.width / 2, position.y - size.height / 2, size.width,
                     size.height);
 }
 
@@ -69,13 +67,14 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   return UIModalPresentationCustom;
 }
 
-- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented
-                                                      presentingViewController:(UIViewController *)presenting
-                                                          sourceViewController:(UIViewController *)source {
-  MDCMaskedPresentationController *presentationController =
-      [[MDCMaskedPresentationController alloc] initWithPresentedViewController:presented
-                                                      presentingViewController:presenting
-                                                 calculateFrameOfPresentedView:_calculateFrameOfPresentedView];
+- (UIPresentationController *)
+    presentationControllerForPresentedViewController:(UIViewController *)presented
+                            presentingViewController:(UIViewController *)presenting
+                                sourceViewController:(UIViewController *)source {
+  MDCMaskedPresentationController *presentationController = [[MDCMaskedPresentationController alloc]
+      initWithPresentedViewController:presented
+             presentingViewController:presenting
+        calculateFrameOfPresentedView:_calculateFrameOfPresentedView];
   presentationController.sourceView = _sourceView;
   return presentationController;
 }
@@ -118,8 +117,8 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   [maskedView addSubview:context.foreViewController.view];
 
   // All frames are assumed to be relative to the container view unless named otherwise.
-  const CGRect initialSourceFrame = [_sourceView convertRect:_sourceView.bounds
-                                                      toView:context.containerView];
+  const CGRect initialSourceFrame =
+      [_sourceView convertRect:_sourceView.bounds toView:context.containerView];
   const CGRect finalMaskedFrame = originalFrame;
   CGRect initialMaskedFrame;
   CGPoint corner;
@@ -132,8 +131,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   } else {
     initialMaskedFrame = CGRectMake(CGRectGetMinX(context.containerView.bounds),
                                     CGRectGetMinY(initialSourceFrame) - 20,
-                                    CGRectGetWidth(originalFrame),
-                                    CGRectGetHeight(originalFrame));
+                                    CGRectGetWidth(originalFrame), CGRectGetHeight(originalFrame));
     if (CGRectGetMidX(initialSourceFrame) < CGRectGetMidX(initialMaskedFrame)) {
       // Middle-right
       corner = CGPointMake(CGRectGetMaxX(initialMaskedFrame), CGRectGetMidY(initialMaskedFrame));
@@ -144,19 +142,19 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   }
 
   maskedView.frame = initialMaskedFrame;
-  const CGRect initialSourceFrameInMask = [maskedView convertRect:initialSourceFrame
-                                                         fromView:context.containerView];
+  const CGRect initialSourceFrameInMask =
+      [maskedView convertRect:initialSourceFrame fromView:context.containerView];
 
   const CGFloat initialRadius = CGRectGetWidth(_sourceView.bounds) / 2;
-  const CGFloat finalRadius = LengthOfVector(CGVectorMake(initialSourceCenter.x - corner.x,
-                                                          initialSourceCenter.y - corner.y));
+  const CGFloat finalRadius = LengthOfVector(
+      CGVectorMake(initialSourceCenter.x - corner.x, initialSourceCenter.y - corner.y));
   const CGFloat finalScale = finalRadius / initialRadius;
 
   CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
   {
     // Ensures that we transform from the center of the source view's frame.
-    shapeLayer.anchorPoint = AnchorPointFromPosition(CenterOfFrame(initialSourceFrameInMask),
-                                                     maskedView.layer.bounds);
+    shapeLayer.anchorPoint =
+        AnchorPointFromPosition(CenterOfFrame(initialSourceFrameInMask), maskedView.layer.bounds);
     shapeLayer.frame = maskedView.layer.bounds;
     shapeLayer.path = [[UIBezierPath bezierPathWithOvalInRect:initialSourceFrameInMask] CGPath];
   }
@@ -177,10 +175,11 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 
     [maskedView removeFromSuperview];
 
-    [context transitionDidEnd]; // Hand off back to UIKit
+    [context transitionDidEnd];  // Hand off back to UIKit
   }];
 
-  MDCMaskedTransitionMotionTiming motion = (context.direction == MDMTransitionDirectionForward) ? spec.expansion : spec.collapse;
+  MDCMaskedTransitionMotionTiming motion =
+      (context.direction == MDMTransitionDirectionForward) ? spec.expansion : spec.collapse;
 
   [animator animateWithTiming:motion.iconFade
                       toLayer:_sourceView.layer
@@ -216,8 +215,8 @@ static inline CGFloat LengthOfVector(CGVector vector) {
         // Upon completion of the animation we want all of the content to be visible, so we jump
         // to a full bounds mask.
         shapeLayer.transform = CATransform3DIdentity;
-        shapeLayer.path = [[UIBezierPath bezierPathWithRect:context.foreViewController.view.bounds]
-                           CGPath];
+        shapeLayer.path =
+            [[UIBezierPath bezierPathWithRect:context.foreViewController.view.bounds] CGPath];
       };
     }
     [animator animateWithTiming:motion.maskTransformation
@@ -229,14 +228,16 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 
   [animator animateWithTiming:motion.horizontalMovement
                       toLayer:maskedView.layer
-                   withValues:@[ @(CGRectGetMidX(initialMaskedFrame)),
-                                 @(CGRectGetMidX(finalMaskedFrame)) ]
+                   withValues:@[
+                     @(CGRectGetMidX(initialMaskedFrame)), @(CGRectGetMidX(finalMaskedFrame))
+                   ]
                       keyPath:@"position.x"];
 
   [animator animateWithTiming:motion.verticalMovement
                       toLayer:maskedView.layer
-                   withValues:@[ @(CGRectGetMidY(initialMaskedFrame)),
-                                 @(CGRectGetMidY(finalMaskedFrame)) ]
+                   withValues:@[
+                     @(CGRectGetMidY(initialMaskedFrame)), @(CGRectGetMidY(finalMaskedFrame))
+                   ]
                       keyPath:@"position.y"];
 
   [CATransaction commit];

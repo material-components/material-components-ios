@@ -23,11 +23,13 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self loadCollectionView:
-    @[ @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Dynamic Alert"]];
+  [self loadCollectionView:@[
+    @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Dynamic Alert"
+  ]];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
@@ -47,7 +49,6 @@
 }
 
 - (IBAction)didTapShowAlert:(id)sender {
-
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
 

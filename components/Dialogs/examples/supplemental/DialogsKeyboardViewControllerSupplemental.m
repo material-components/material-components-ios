@@ -25,8 +25,7 @@
 
 #pragma mark - DialogsKeyboardViewController
 
-static NSString * const kReusableIdentifierItem = @"cell";
-
+static NSString *const kReusableIdentifierItem = @"cell";
 
 @implementation DialogsKeyboardViewController (Supplemental)
 
@@ -35,7 +34,8 @@ static NSString * const kReusableIdentifierItem = @"cell";
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
   return 1;
 }
 
@@ -49,7 +49,6 @@ static NSString * const kReusableIdentifierItem = @"cell";
 }
 
 @end
-
 
 @implementation DialogsKeyboardViewController (CatalogByConvention)
 

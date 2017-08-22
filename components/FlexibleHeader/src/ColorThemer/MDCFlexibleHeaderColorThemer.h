@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialFlexibleHeader.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCFlexibleHeaderView.

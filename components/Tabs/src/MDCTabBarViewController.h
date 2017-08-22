@@ -82,6 +82,6 @@ IB_DESIGNABLE
  by changing the selected view controller.
  */
 - (void)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
- didSelectViewController:(nonnull UIViewController *)viewController;
+    didSelectViewController:(nonnull UIViewController *)viewController;
 
 @end

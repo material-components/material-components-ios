@@ -265,8 +265,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setElevation:normalElevation forState:UIControlStateNormal];
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
-                             normalElevation,
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state], normalElevation,
                              kEpsilonAccuracy);
 }
 
@@ -276,15 +275,14 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat normalElevation = 10;
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
-  [button setElevation:elevation forState:UIControlStateHighlighted];;
+  [button setElevation:elevation forState:UIControlStateHighlighted];
+  ;
 
   // When
   button.highlighted = YES;
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
-                             elevation,
-                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state], elevation, kEpsilonAccuracy);
 }
 
 - (void)testCurrentElevationDisabled {
@@ -293,15 +291,14 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat normalElevation = 10;
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
-  [button setElevation:elevation forState:UIControlStateDisabled];;
+  [button setElevation:elevation forState:UIControlStateDisabled];
+  ;
 
   // When
   button.enabled = NO;
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
-                             elevation,
-                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state], elevation, kEpsilonAccuracy);
 }
 
 - (void)testCurrentElevationSelected {
@@ -310,15 +307,14 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat normalElevation = 10;
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
-  [button setElevation:elevation forState:UIControlStateSelected];;
+  [button setElevation:elevation forState:UIControlStateSelected];
+  ;
 
   // When
   button.selected = YES;
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
-                             elevation,
-                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state], elevation, kEpsilonAccuracy);
 }
 
 - (void)testInkColors {
@@ -398,8 +394,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
     [button setTitleColor:color forState:controlState];
 
     // Then
-    XCTAssertEqualObjects([button titleColorForState:controlState], color,
-                          @"for control state:%@ ", controlStateDescription(controlState));
+    XCTAssertEqualObjects([button titleColorForState:controlState], color, @"for control state:%@ ",
+                          controlStateDescription(controlState));
   }
 }
 - (void)testTitleColorForStateDisabledHighlight {
@@ -420,7 +416,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualObjects([button titleColorForState:controlState], normalColor,
                         @"for control state:%@ ", controlStateDescription(controlState));
   XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
-                        @"for control state:%@ ", controlStateDescription(controlState));
+                           @"for control state:%@ ", controlStateDescription(controlState));
 }
 
 #pragma mark - UIButton state changes

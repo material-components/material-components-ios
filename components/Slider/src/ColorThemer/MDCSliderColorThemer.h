@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialSlider.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCSlider.
@@ -29,7 +29,6 @@
  @param colorScheme The color scheme to apply to MDCSlider.
  @param slider A MDCSlider instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-                toSlider:(MDCSlider *)slider;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme toSlider:(MDCSlider *)slider;
 
 @end

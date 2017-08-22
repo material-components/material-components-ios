@@ -23,10 +23,10 @@ static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkC
 
 @interface MDCTonalPalette ()
 
-@property (nonatomic, copy, nonnull) NSArray<UIColor *> *colors;
-@property (nonatomic) NSUInteger mainColorIndex;
-@property (nonatomic) NSUInteger lightColorIndex;
-@property (nonatomic) NSUInteger darkColorIndex;
+@property(nonatomic, copy, nonnull) NSArray<UIColor *> *colors;
+@property(nonatomic) NSUInteger mainColorIndex;
+@property(nonatomic) NSUInteger lightColorIndex;
+@property(nonatomic) NSUInteger darkColorIndex;
 
 @end
 

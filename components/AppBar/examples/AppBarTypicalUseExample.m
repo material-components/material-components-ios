@@ -41,8 +41,8 @@
     _appBar.headerViewController.headerView.backgroundColor = color;
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
     _appBar.navigationBar.titleTextAttributes = @{
-                                            NSForegroundColorAttributeName : [UIColor whiteColor],
-                                            };
+      NSForegroundColorAttributeName : [UIColor whiteColor],
+    };
   }
   return self;
 }

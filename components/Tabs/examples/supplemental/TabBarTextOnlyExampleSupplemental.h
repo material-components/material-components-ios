@@ -24,7 +24,6 @@
 @class MDCAppBar;
 @class MDCTabBar;
 
-
 @interface TabBarTextOnlyExample : MDCCollectionViewController
 
 @property(nullable) MDCAppBar *appBar;

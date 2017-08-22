@@ -19,6 +19,6 @@
 @interface BottomSheetDummyCollectionViewController : UIViewController
 - (instancetype)initWithNumItems:(NSInteger)numItems NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil
+                         bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 @end

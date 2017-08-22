@@ -16,8 +16,8 @@
 
 #import "MDCMaskedPresentationController.h"
 
-#import <MotionTransitioning/MotionTransitioning.h>
 #import <MotionAnimator/MotionAnimator.h>
+#import <MotionTransitioning/MotionTransitioning.h>
 
 #import "MDCMaskedTransitionMotionForContext.h"
 
@@ -30,7 +30,8 @@
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController
-                  calculateFrameOfPresentedView:(CGRect (^)(UIPresentationController *))calculateFrameOfPresentedView {
+                  calculateFrameOfPresentedView:
+                      (CGRect (^)(UIPresentationController *))calculateFrameOfPresentedView {
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
@@ -61,9 +62,12 @@
 
 - (void)dismissalTransitionWillBegin {
   if (!self.presentedViewController.mdm_transitionController.activeTransition) {
-    [self.presentedViewController.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-      self.scrimView.alpha = 0;
-    } completion:nil];
+    [self.presentedViewController.transitionCoordinator
+        animateAlongsideTransition:^(
+            id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+          self.scrimView.alpha = 0;
+        }
+                        completion:nil];
 
     self.sourceView.alpha = 1;
   }
@@ -89,12 +93,13 @@
   MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
   animator.shouldReverseValues = context.direction == MDMTransitionDirectionBackward;
 
-  MDCMaskedTransitionMotionTiming motion = (context.direction == MDMTransitionDirectionForward) ? spec.expansion : spec.collapse;
+  MDCMaskedTransitionMotionTiming motion =
+      (context.direction == MDMTransitionDirectionForward) ? spec.expansion : spec.collapse;
 
   if (!self.scrimView) {
     self.scrimView = [[UIView alloc] initWithFrame:context.containerView.bounds];
-    self.scrimView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                       | UIViewAutoresizingFlexibleHeight);
+    self.scrimView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3f];
     [context.containerView addSubview:self.scrimView];
   }

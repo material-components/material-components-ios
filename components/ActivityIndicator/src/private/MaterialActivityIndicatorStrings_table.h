@@ -9,9 +9,9 @@
 // This table is to be indexed using the generated enum.
 
 static NSString *const kMaterialActivityIndicatorStringTable[] = {
-  @"MaterialActivityIndicatorInProgressAccessibilityLabel",   // In Progress
-  @"MaterialActivityIndicatorProgressHaltedAccessibilityLabel",   // Progress Halted
-  @"MaterialActivityIndicatorProgressCompletedAccessibilityLabel",   // %ld Percent Complete
+    @"MaterialActivityIndicatorInProgressAccessibilityLabel",         // In Progress
+    @"MaterialActivityIndicatorProgressHaltedAccessibilityLabel",     // Progress Halted
+    @"MaterialActivityIndicatorProgressCompletedAccessibilityLabel",  // %ld Percent Complete
 };
 #define kNumMaterialActivityIndicatorStrings 3
 #define kMaterialActivityIndicatorStringsOffset 0

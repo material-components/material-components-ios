@@ -114,9 +114,8 @@ static inline UIUserInterfaceLayoutDirection
                                       relativeToLayoutDirection:
                                           (UIUserInterfaceLayoutDirection)layoutDirection {
 #if MDC_BASE_SDK_EQUAL_OR_ABOVE(10_0)
-  if ([self
-          respondsToSelector:@selector(userInterfaceLayoutDirectionForSemanticContentAttribute:
-                                                                     relativeToLayoutDirection:)]) {
+  if ([self respondsToSelector:@selector
+            (userInterfaceLayoutDirectionForSemanticContentAttribute:relativeToLayoutDirection:)]) {
     return [self userInterfaceLayoutDirectionForSemanticContentAttribute:semanticContentAttribute
                                                relativeToLayoutDirection:layoutDirection];
   } else {

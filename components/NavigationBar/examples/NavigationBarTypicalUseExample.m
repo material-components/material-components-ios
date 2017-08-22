@@ -44,7 +44,7 @@
 
   self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
 
-  NSDictionary *viewBindings = @{ @"navBar" : self.navBar };
+  NSDictionary *viewBindings = @{@"navBar" : self.navBar};
   NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
   [arrayOfConstraints
       addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"

@@ -23,13 +23,12 @@
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
-
 @implementation TabBarTextOnlyExample
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case", @"Clear Selection"]];
+    [self setupExampleViews:@[ @"Change Alignment", @"Toggle Case", @"Clear Selection" ]];
   }
   return self;
 }
@@ -112,8 +111,8 @@
 
 #pragma mark - Options in Collection View
 
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:

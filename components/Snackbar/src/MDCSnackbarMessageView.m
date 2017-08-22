@@ -298,7 +298,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                   if ([value boolValue]) {
                     font = [MDCTypography body2Font];
                   }
-                  [messageString setAttributes:@{ NSFontAttributeName : font } range:range];
+                  [messageString setAttributes:@{NSFontAttributeName : font} range:range];
                 }];
 
     // Apply 'global' attributes along the whole string.

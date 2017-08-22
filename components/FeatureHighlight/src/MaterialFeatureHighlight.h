@@ -14,5 +14,5 @@
  limitations under the License.
  */
 
-#import "MDCFeatureHighlightViewController.h"
 #import "MDCFeatureHighlightView.h"
+#import "MDCFeatureHighlightViewController.h"
