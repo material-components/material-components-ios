@@ -25,7 +25,7 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTypography
 
-final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
+final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -264,7 +264,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
       UIFont.preferredFont(forTextStyle: .subheadline)
     textFieldCustomFontFloating.clearButtonColor = MDCPalette.red.accent400
 
-    let bundle = Bundle(for: TextFieldKitchenSinkLegacySwiftExample.self)
+    let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
     let leftViewImagePath = bundle.path(forResource: "ic_search", ofType: "png")!
     let leftViewImage = UIImage(contentsOfFile: leftViewImagePath)!
 
@@ -484,7 +484,7 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
   }
 
   func setupSpecialMultilineTextFields() -> [MDCTextInputController] {
-    let bundle = Bundle(for: TextFieldKitchenSinkLegacySwiftExample.self)
+    let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
     let rightViewImagePath = bundle.path(forResource: "ic_done", ofType: "png")!
     let rightViewImage = UIImage(contentsOfFile: rightViewImagePath)!
 
@@ -547,20 +547,20 @@ final class TextFieldKitchenSinkLegacySwiftExample: UIViewController {
 
 }
 
-extension TextFieldKitchenSinkLegacySwiftExample: UITextFieldDelegate {
+extension TextFieldKitchenSinkSwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }
 }
 
-extension TextFieldKitchenSinkLegacySwiftExample: UITextViewDelegate {
+extension TextFieldKitchenSinkSwiftExample: UITextViewDelegate {
   func textViewDidChange(_ textView: UITextView) {
     print(textView.text)
   }
 }
 
-extension TextFieldKitchenSinkLegacySwiftExample {
+extension TextFieldKitchenSinkSwiftExample {
   @objc func contentSizeCategoryDidChange(notif: Notification) {
     controlLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     singleLabel.font = UIFont.preferredFont(forTextStyle: .headline)

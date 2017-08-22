@@ -18,7 +18,7 @@
 
 @import MaterialComponents.MaterialTextFields;
 
-@interface TextFieldPresentationStylesLegacyExample ()
+@interface TextFieldPresentationStylesExample ()
 
 // Be sure to keep your controllers in memory somewhere like a property:
 @property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerDefaultCharMax;
@@ -27,13 +27,13 @@
 
 @end
 
-@implementation TextFieldPresentationStylesLegacyExample
+@implementation TextFieldPresentationStylesExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
-  self.title = @"Legacy Text Fields";
+  self.title = @"Material Text Fields";
 
   [self setupExampleViews];
 

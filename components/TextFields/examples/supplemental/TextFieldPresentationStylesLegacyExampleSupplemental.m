@@ -16,7 +16,7 @@
 
 #import "TextFieldPresentationStylesLegacyExampleSupplemental.h"
 
-@implementation TextFieldPresentationStylesLegacyExample (Supplemental)
+@implementation TextFieldPresentationStylesExample (Supplemental)
 
 - (void)setupExampleViews {
   [self setupScrollView];
@@ -59,10 +59,10 @@
 
 @end
 
-@implementation TextFieldPresentationStylesLegacyExample (CatalogByConvention)
+@implementation TextFieldPresentationStylesExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"[Legacy] Controller Styles (Objective C)" ];
+  return @[ @"Text Field", @"Controller Styles (Objective C)" ];
 }
 
 @end
