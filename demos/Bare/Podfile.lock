@@ -316,7 +316,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 1f5eef1236301bbe4c4d169b5c8fba44cd57be67
+  MaterialComponents: c997c89fb8169475bd3087f1fc97894c709cb9ee
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   MotionAnimator: 9d025cda7572737e5db5ca779eb28c767fe6cf45
   MotionInterchange: 7a7c355ba2ed5d36c5cf2ceb76cacd3d3680dbf5

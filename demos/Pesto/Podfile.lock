@@ -151,7 +151,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 1f5eef1236301bbe4c4d169b5c8fba44cd57be67
+  MaterialComponents: c997c89fb8169475bd3087f1fc97894c709cb9ee
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: cdec7a9b5bf338e8f41916eb1ec5588703a9dc16
