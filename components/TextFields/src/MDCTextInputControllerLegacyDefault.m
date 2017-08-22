@@ -81,6 +81,9 @@ static NSString *const MDCTextInputControllerLegacyDefaultUnderlineViewModeKey =
 
 static NSString *const MDCTextInputControllerLegacyDefaultKVOKeyFont = @"font";
 
+static inline UIBezierPath *MDCTextInputControllerLegacyDefaultEmptyPath() {
+  return [UIBezierPath bezierPath];
+    
 static inline UIColor *MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputDefaultHintTextOpacity];
 }
@@ -209,10 +212,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self = [self init];
   if (self) {
     _textInput = textInput;
-  }
 
-  // This should happen last because it relies on the state of a ton of properties.
-  [self setupInput];
+    // This should happen last because it relies on the state of a ton of properties.
+    [self setupInput];
+  }
 
   return self;
 }
@@ -309,10 +312,19 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _textInput.positioningDelegate = self;
   _textInput.hidesPlaceholderOnInput = !self.isFloatingEnabled;
 
+  [self setupClearButton];
+
   [self subscribeForNotifications];
   [self subscribeForKVO];
   _textInput.underline.color = [self class].normalColorDefault;
   [self updatePlaceholderY];
+}
+
+- (void)setupClearButton {
+  UIImage *image = [self drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
 }
 
 - (void)subscribeForNotifications {
@@ -395,6 +407,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   } @catch (NSException *exception) {
   }
   _isRegisteredForKVO = NO;
+}
+
+#pragma mark - Border Customization
+
+- (void)updateBorder {
+  self.textInput.borderPath = MDCTextInputLegacyDefaultEmptyPath();
 }
 
 #pragma mark - Character Max Implementation
@@ -921,6 +939,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _normalColor = normalColor;
     [self updateUnderline];
   }
+  return _trailingUnderlineLabelTextColorDefault;
 }
 
 + (UIColor *)normalColorDefault {
@@ -941,6 +960,22 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
   _previousPlaceholderColor = previousPlaceholderColor;
+}
+
+- (UIRectCorner)roundedCorners {
+    return 0;
+}
+
+- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
+    // Not implemented. Corners are not rounded.
+}
+
++ (UIRectCorner)roundedCornersDefault {
+    return 0;
+}
+
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+    // Not implemented. Corners are not rounded.
 }
 
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
