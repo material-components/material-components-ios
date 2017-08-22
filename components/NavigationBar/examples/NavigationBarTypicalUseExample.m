@@ -16,7 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
+#import "MaterialRTL.h"
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
@@ -31,7 +33,13 @@
   self.view.backgroundColor = [UIColor whiteColor];
 
   self.title = @"Navigation Bar";
+  UIImage *backButtonIcon = [[MDCIcons imageFor_ic_arrow_back] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
+  if ([self.view mdc_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft) {
+    backButtonIcon = [backButtonIcon mdc_imageFlippedForRightToLeftLayoutDirection];
+  }
+  self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonIcon  style:UIBarButtonItemStylePlain target:self action:@selector(didTap:)];
+  
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   [self.navBar observeNavigationItem:self.navigationItem];
@@ -70,6 +78,10 @@
   [super viewWillAppear:animated];
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)didTap:(id)sender {
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

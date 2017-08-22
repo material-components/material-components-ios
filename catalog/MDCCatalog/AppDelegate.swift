@@ -44,9 +44,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
-    colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
-                                      primaryLightColor: .init(white: 0.7, alpha: 1),
-                                      primaryDarkColor: .init(white: 0, alpha: 1))
+
+    colorScheme = MDCBasicColorScheme(primaryColor: MDCPalette.lightBlue.tint500,
+                                      primaryLightColor: MDCPalette.lightBlue.tint700,
+                                      primaryDarkColor: MDCPalette.lightBlue.tint300,
+                                      secondaryColor: MDCPalette.lime.accent200!,
+                                      secondaryLightColor: MDCPalette.lime.accent400!,
+                                      secondaryDarkColor: MDCPalette.lime.accent100!)
 
     // Apply color scheme to material design components using component themers.
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())

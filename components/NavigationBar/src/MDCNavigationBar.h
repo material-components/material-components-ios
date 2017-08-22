@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
 @property(nonatomic, strong, nullable) UIBarButtonItem *leftBarButtonItem;
 @property(nonatomic, strong, nullable) UIBarButtonItem *rightBarButtonItem;
+@property(nonatomic, strong, nullable) UIBarButtonItem *backBarButtonItem;
 
 @end
 
