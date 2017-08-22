@@ -17,6 +17,7 @@
 
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
+#import "MDCAppBarColorThemer.h"
 #import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
 #import "MDCFeatureHighlightColorThemer.h"

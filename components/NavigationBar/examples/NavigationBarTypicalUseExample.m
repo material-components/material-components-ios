@@ -16,7 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
+#import "MaterialRTL.h"
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
@@ -28,12 +30,24 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   self.title = @"Navigation Bar";
+  UIImage *backButtonIcon =
+      [[MDCIcons imageFor_ic_arrow_back] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
+  UIUserInterfaceLayoutDirection orientation =
+      [self.view mdc_effectiveUserInterfaceLayoutDirection];
+  if (orientation == UIUserInterfaceLayoutDirectionRightToLeft) {
+    backButtonIcon = [backButtonIcon mdc_imageFlippedForRightToLeftLayoutDirection];
+  }
+  self.navigationItem.backBarButtonItem =
+      [[UIBarButtonItem alloc] initWithImage:backButtonIcon
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didTap:)];
+  
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
-  self.navBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   [self.navBar observeNavigationItem:self.navigationItem];
 
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
@@ -70,6 +84,10 @@
   [super viewWillAppear:animated];
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)didTap:(id)sender {
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

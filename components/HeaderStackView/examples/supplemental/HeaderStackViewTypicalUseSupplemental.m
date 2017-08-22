@@ -38,7 +38,7 @@
 
   [self.view addSubview:self.exampleView];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   self.topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
   self.topView.autoresizingMask =
@@ -53,7 +53,6 @@
   [self.topView addSubview:imageView];
 
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
-  self.navBar.titleTextAttributes = [self itemTitleTextAttributes];
 
   UIBarButtonItem *moreButton =
       [[UIBarButtonItem alloc] initWithTitle:@"Reveal"
@@ -61,15 +60,7 @@
                                       target:self
                                       action:@selector(didTapToggleButton:)];
 
-  // Set the title text attributes before assigning to buttonBar.items
-  // because of https://github.com/material-components/material-components-ios/issues/277
-  [moreButton setTitleTextAttributes:[self itemTitleTextAttributes] forState:UIControlStateNormal];
   self.navBar.trailingBarButtonItems = @[ moreButton ];
-}
-
-- (NSDictionary *)itemTitleTextAttributes {
-  UIColor *textColor = [UIColor whiteColor];
-  return @{NSForegroundColorAttributeName : textColor};
 }
 
 - (void)didTapToggleButton:(id)sender {
@@ -159,15 +150,11 @@
 
   NSDictionary *instructionAttributes1 = @{
     NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
-    NSForegroundColorAttributeName :
-        [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f],
     NSParagraphStyleAttributeName : style
   };
 
   NSDictionary *instructionAttributes2 = @{
     NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
-    NSForegroundColorAttributeName :
-        [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f],
     NSParagraphStyleAttributeName : style
   };
 

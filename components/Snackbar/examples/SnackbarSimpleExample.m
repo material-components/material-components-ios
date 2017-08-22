@@ -47,8 +47,6 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
-  message.buttonTextColor =
-      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
   [MDCSnackbarManager showMessage:message];
 }
 
@@ -65,8 +63,6 @@
   action.handler = actionHandler;
   action.title = @"Action";
   message.action = action;
-  message.buttonTextColor =
-      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
 
   [MDCSnackbarManager showMessage:message];
 }

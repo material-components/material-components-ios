@@ -22,14 +22,13 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
   override open func viewDidLoad() {
 
     super.viewDidLoad()
-    view.backgroundColor = .white
+    view.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     title = "Navigation Bar (Swift)"
 
     navBar = MDCNavigationBar()
     navBar!.observe(navigationItem)
 
-    navBar!.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     let mutator = MDCNavigationBarTextColorAccessibilityMutator()
     mutator.mutate(navBar!)
 

@@ -31,9 +31,6 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
     MDCAppBarTextColorAccessibilityMutator *mutator =
         [[MDCAppBarTextColorAccessibilityMutator alloc] init];
     [mutator mutate:_appBar];
@@ -221,15 +218,10 @@
   self = [super init];
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     [self addChildViewController:_appBar.headerViewController];
 
     self.title = @"Modal Presentation";
 
-    UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
     MDCAppBarTextColorAccessibilityMutator *mutator =
         [[MDCAppBarTextColorAccessibilityMutator alloc] init];
     [mutator mutate:_appBar];

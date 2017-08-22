@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   _button = [[MDCButton alloc] initWithFrame:CGRectZero];
   [_button setTitle:@"Show Bottom Sheet" forState:UIControlStateNormal];

@@ -46,10 +46,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  // Force a darker background color to show the button frame
-  [self.flatButton setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:1.0]
-                             forState:UIControlStateNormal];
-  self.flatButton.inkColor = [UIColor colorWithWhite:1.0 alpha:0.1];
   self.flatButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
   self.raisedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);
   self.floatingActionButton.contentEdgeInsets = UIEdgeInsetsMake(40, 40, 0, 0);

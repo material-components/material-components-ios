@@ -20,6 +20,7 @@ import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialTypography
+import MDFTextAccessibility
 
 import UIKit
 
@@ -29,6 +30,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   let inset = CGFloat(16)
   let node: CBCNode
   var headerViewController: MDCFlexibleHeaderViewController
+  var titleLabel: UILabel
   let imageNames = NSMutableArray()
 
   private lazy var inkController: MDCInkTouchController = {
@@ -51,8 +53,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     layout.minimumInteritemSpacing = spacing
     layout.minimumLineSpacing = spacing
 
-    self.headerViewController = MDCFlexibleHeaderViewController()
+    self.titleLabel = UILabel()
 
+    self.headerViewController = MDCFlexibleHeaderViewController()
     super.init(collectionViewLayout: layout)
 
     self.title = "Material Design Components"
@@ -80,6 +83,14 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
 
+    MDCFlexibleHeaderColorThemer.apply(appDelegate.colorScheme,
+                                       toMDCFlexibleHeaderController: self.headerViewController)
+    if let backgroundColor = self.headerViewController.headerView.backgroundColor {
+      self.titleLabel.textColor = MDFTextAccessibility.textColor(onBackgroundColor: backgroundColor,
+                                                                 targetTextAlpha: 1,
+                                                                 options: .enhancedContrast)
+    }
+
     collectionView?.collectionViewLayout.invalidateLayout()
     collectionView?.reloadData()
   }
@@ -100,9 +111,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let containerView = UIView(frame: self.headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    let titleLabel = UILabel()
+
     titleLabel.text = self.title!.uppercased()
-    titleLabel.textColor = UIColor(white: 1, alpha: 1)
     titleLabel.font = UIFont(name: "RobotoMono-Regular", size: 14)
     titleLabel.sizeToFit()
     if inset + titleLabel.frame.size.width > containerView.frame.size.width {
@@ -128,7 +138,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.headerViewController.headerView.addSubview(containerView)
     self.headerViewController.headerView.forwardTouchEvents(for: containerView)
 
-    self.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
@@ -138,6 +147,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     self.view.addSubview(self.headerViewController.view)
     self.headerViewController.didMove(toParentViewController: self)
+
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    MDCFlexibleHeaderColorThemer.apply(appDelegate.colorScheme, toMDCFlexibleHeaderController: self.headerViewController)
+    if let backgroundColor = self.headerViewController.headerView.backgroundColor {
+      self.titleLabel.textColor = MDFTextAccessibility.textColor(onBackgroundColor: backgroundColor, targetTextAlpha: 1, options: .enhancedContrast)
+    }
 
     self.collectionView?.accessibilityIdentifier = "collectionView"
   }
@@ -171,7 +186,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func inkViewForView(_ view: UIView) -> MDCInkView {
     let foundInkView = MDCInkTouchController.injectedInkView(for: view)
     foundInkView.inkStyle = .unbounded
-    foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
     return foundInkView
   }
 
