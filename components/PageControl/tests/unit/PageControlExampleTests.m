@@ -121,7 +121,7 @@
   pageControl.numberOfPages = 3;
   UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:frame];
   scrollView.delegate = pageControl;
-  NSUInteger page = 2;
+  NSInteger page = 2;
 
   // When
   [scrollView setContentOffset:CGPointMake(frame.size.width * page, 0) animated:YES];

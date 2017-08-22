@@ -70,8 +70,8 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
 
   // Then
-  XCTAssertGreaterThan(indicator.cycleColors.count, 0,
-                        @"The default value for |cycleColors| should be a non-empty array.");
+  XCTAssertGreaterThan(indicator.cycleColors.count, 0U,
+                       @"The default value for |cycleColors| should be a non-empty array.");
 }
 
 - (void)testSetCycleColorsEmptyReturnsDefault {
@@ -82,8 +82,8 @@ static CGFloat randomNumber() {
   indicator.cycleColors = @[];
 
   // Then
-  XCTAssertGreaterThan(indicator.cycleColors.count, 0,
-                        @"Assigning an empty array for |cycleColors| should result in a default"
+  XCTAssertGreaterThan(indicator.cycleColors.count, 0U,
+                       @"Assigning an empty array for |cycleColors| should result in a default"
                         " value being used instead.");
 }
 
