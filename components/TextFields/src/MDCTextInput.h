@@ -29,6 +29,15 @@
    - https://github.com/adamwaite/Validator
  */
 
+/**
+ This represents different options for the relationship between the labels and the alignment rect.
+ */
+typedef NS_ENUM(NSUInteger, MDCTextInputAlignmentRectMode) {
+  MDCTextInputAlignmentRectModeNever = 0,
+  MDCTextInputAlignmentRectModeIfContent,
+  MDCTextInputAlignmentRectModeAlways,
+};
+
 @class MDCTextInputBorderView;
 @class MDCTextInputUnderlineView;
 
@@ -36,6 +45,30 @@
 
 /** Common API for Material Design compliant text inputs. */
 @protocol MDCTextInput <NSObject>
+
+/**
+ Used to calculate alignment rect.
+
+ The different options apply to the alignment rect of the entire text input in relation to the
+ underline labels and the placeholder if any of them are outside the border view.
+
+ MDCTextInputAlignmentRectModeNever:      Alignment rect never includes the labels.
+
+ MDCTextInputAlignmentRectModeIfContent:  Alignment rect height includes space for each label that
+   has text.
+
+ MDCTextInputAlignmentRectModeAlways:     Alignment rect always includes the labels.
+
+ Default is alignmentRectModeDefault.
+ */
+@property(nonatomic, assign) MDCTextInputAlignmentRectMode alignmentRectMode;
+
+/**
+ Default value for alignmentRectMode.
+
+ Default is MDCTextInputAlignmentRectModeIfContent.
+ */
+@property(class, nonatomic, assign) MDCTextInputAlignmentRectMode alignmentRectModeDefault;
 
 /**
  The attributed text string of the placeholder label.
