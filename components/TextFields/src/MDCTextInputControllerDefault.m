@@ -791,22 +791,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
-- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
-  if (_roundedCorners != roundedCorners) {
-    _roundedCorners = roundedCorners;
-
-    [self updateLayout];
-  }
-}
-
-+ (UIRectCorner)roundedCornersDefault {
-  return _roundedCornersDefault;
-}
-
-+ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
-  _roundedCornersDefault = roundedCornersDefault;
-}
-
 - (UIColor *)disabledColor {
   if (!_disabledColor) {
     _disabledColor = [self class].disabledColorDefault;
@@ -831,6 +815,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 + (void)setDisabledColorDefault:(UIColor *)disabledColorDefault {
   _disabledColorDefault = disabledColorDefault ? disabledColorDefault :
       MDCTextInputDefaultNormalUnderlineColorDefault();
+}
+
+- (BOOL)isDisplayingCharacterCountError {
+  return self.characterCountMax && [self characterCount] > self.characterCountMax;
+}
+
+- (BOOL)isDisplayingErrorText {
+  return self.errorText != nil;
 }
 
 - (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
@@ -882,16 +874,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
+- (UIColor *)floatingPlaceholderColor {
+  return _floatingPlaceholderColor ? _floatingPlaceholderColor
+  : [self class].floatingPlaceholderColorDefault;
+}
+
 - (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
   if (![_floatingPlaceholderColor isEqual:floatingPlaceholderColor]) {
     _floatingPlaceholderColor = floatingPlaceholderColor;
     [self updatePlaceholder];
   }
-}
-
-- (UIColor *)floatingPlaceholderColor {
-  return _floatingPlaceholderColor ? _floatingPlaceholderColor
-                                   : [self class].floatingPlaceholderColorDefault;
 }
 
 + (UIColor *)floatingPlaceholderColorDefault {
@@ -993,14 +985,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                        : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
 }
 
-- (BOOL)isDisplayingCharacterCountError {
-  return self.characterCountMax && [self characterCount] > self.characterCountMax;
-}
-
-- (BOOL)isDisplayingErrorText {
-  return self.errorText != nil;
-}
-
 - (UIColor *)leadingUnderlineLabelTextColor {
   return _leadingUnderlineLabelTextColor ? _leadingUnderlineLabelTextColor :
       [self class].leadingUnderlineLabelTextColorDefault;
@@ -1066,6 +1050,22 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
   _previousPlaceholderColor = previousPlaceholderColor;
+}
+
+- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
+  if (_roundedCorners != roundedCorners) {
+    _roundedCorners = roundedCorners;
+
+    [self updateLayout];
+  }
+}
+
++ (UIRectCorner)roundedCornersDefault {
+  return _roundedCornersDefault;
+}
+
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  _roundedCornersDefault = roundedCornersDefault;
 }
 
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
