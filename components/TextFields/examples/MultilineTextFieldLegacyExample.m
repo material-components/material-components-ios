@@ -16,23 +16,23 @@
 
 #import "MaterialTextFields.h"
 
-@interface MultilineTextFieldExample : UIViewController <UITextViewDelegate>
+@interface MultilineTextFieldLegacyExample : UIViewController <UITextViewDelegate>
 
 // Be sure to keep your controllers in memory somewhere like a property:
-@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerDefaultCharMax;
-@property(nonatomic, strong) MDCTextInputControllerDefault *textFieldControllerFloating;
-@property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldControllerFullWidth;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerDefaultCharMax;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textFieldControllerFloating;
+@property(nonatomic, strong) MDCTextInputControllerLegacyFullWidth *textFieldControllerFullWidth;
 @property(nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
-@implementation MultilineTextFieldExample
+@implementation MultilineTextFieldLegacyExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
 
-  self.title = @"Material Multiline Text Fields";
+  self.title = @"Legacy Multiline Styles";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
   [self.view addSubview:self.scrollView];
@@ -86,7 +86,7 @@
   multilineTextFieldFloating.textView.delegate = self;
 
   self.textFieldControllerFloating =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldFloating];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldFloating];
 
   MDCMultilineTextField *multilineTextFieldCharMaxDefault = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldCharMaxDefault];
@@ -96,7 +96,7 @@
   multilineTextFieldCharMaxDefault.textView.delegate = self;
 
   self.textFieldControllerDefaultCharMax =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
   self.textFieldControllerDefaultCharMax.characterCountMax = 30;
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
@@ -107,7 +107,7 @@
   multilineTextFieldCharMaxFullWidth.placeholder = @"Full Width Controller";
   multilineTextFieldCharMaxFullWidth.textView.delegate = self;
 
-  self.textFieldControllerFullWidth = [[MDCTextInputControllerFullWidth alloc]
+  self.textFieldControllerFullWidth = [[MDCTextInputControllerLegacyFullWidth alloc]
       initWithTextInput:multilineTextFieldCharMaxFullWidth];
   self.textFieldControllerFullWidth.characterCountMax = 140;
 
@@ -204,16 +204,16 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Multiline (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Multiline (Objective C)" ];
 }
 
 + (NSString *)catalogDescription {
-  return @"Simple MDCMultilineTextField example.";
+  return @"Simple Legacy MDCMultilineTextField example.";
 }
 
 @end
 
-@implementation MultilineTextFieldExample (UITextViewDelegate)
+@implementation MultilineTextFieldLegacyExample (UITextViewDelegate)
 
 - (void)textViewDidChange:(UITextView *)textView {
   NSLog(@"%@", textView.text);

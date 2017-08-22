@@ -94,7 +94,7 @@ class TextInputTests: XCTestCase {
     textField.trailingUnderlineLabel.text = testTrailing
     XCTAssertEqual(textField.trailingUnderlineLabel.text, testTrailing)
 
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
   }
 

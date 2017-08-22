@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerDefault.h"
+#import "MDCTextInputControllerLegacyDefault.h"
 
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
@@ -40,46 +40,46 @@ static const CGFloat MDCTextInputDefaultVerticalPadding = 16.f;
 static const NSTimeInterval MDCTextInputDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
 static const NSTimeInterval MDCTextInputDefaultFloatingPlaceholderUpAnimationDuration = 0.3f;
 
-static NSString *const MDCTextInputControllerDefaultActiveColorKey =
-    @"MDCTextInputControllerDefaultActiveColorKey";
-static NSString *const MDCTextInputControllerDefaultCharacterCounterKey =
-    @"MDCTextInputControllerDefaultCharacterCounterKey";
-static NSString *const MDCTextInputControllerDefaultCharacterCountViewModeKey =
-    @"MDCTextInputControllerDefaultCharacterCountViewModeKey";
-static NSString *const MDCTextInputControllerDefaultCharacterCountMaxKey =
-    @"MDCTextInputControllerDefaultCharacterCountMaxKey";
-static NSString *const MDCTextInputControllerDefaultDisabledColorKey =
-    @"MDCTextInputControllerDefaultDisabledColorKey";
-static NSString *const MDCTextInputControllerDefaultErrorAccessibilityValueKey =
-    @"MDCTextInputControllerDefaultErrorAccessibilityValueKey";
-static NSString *const MDCTextInputControllerDefaultErrorColorKey =
-    @"MDCTextInputControllerDefaultErrorColorKey";
-static NSString *const MDCTextInputControllerDefaultErrorTextKey =
-    @"MDCTextInputControllerDefaultErrorTextKey";
-static NSString *const MDCTextInputControllerDefaultFloatingEnabledKey =
-    @"MDCTextInputControllerDefaultFloatingEnabledKey";
-static NSString *const MDCTextInputControllerDefaultFloatingPlaceholderColorKey =
-    @"MDCTextInputControllerDefaultFloatingPlaceholderColorKey";
-static NSString *const MDCTextInputControllerDefaultFloatingPlaceholderScaleKey =
-    @"MDCTextInputControllerDefaultFloatingPlaceholderScaleKey";
-static NSString *const MDCTextInputControllerDefaultHelperTextKey =
-    @"MDCTextInputControllerDefaultHelperTextKey";
-static NSString *const MDCTextInputControllerDefaultInlinePlaceholderColorKey =
-    @"MDCTextInputControllerDefaultInlinePlaceholderColorKey";
-static NSString *const MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor =
-    @"MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor";
-static NSString *const MDCTextInputControllerDefaultNormalColorKey =
-    @"MDCTextInputControllerDefaultNormalColorKey";
-static NSString *const MDCTextInputControllerDefaultPresentationStyleKey =
-    @"MDCTextInputControllerDefaultPresentationStyleKey";
-static NSString *const MDCTextInputControllerDefaultTextInputKey =
-    @"MDCTextInputControllerDefaultTextInputKey";
-static NSString *const MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor =
-    @"MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor";
-static NSString *const MDCTextInputControllerDefaultUnderlineViewModeKey =
-    @"MDCTextInputControllerDefaultUnderlineViewModeKey";
+static NSString *const MDCTextInputControllerLegacyDefaultActiveColorKey =
+    @"MDCTextInputControllerLegacyDefaultActiveColorKey";
+static NSString *const MDCTextInputControllerLegacyDefaultCharacterCounterKey =
+    @"MDCTextInputControllerLegacyDefaultCharacterCounterKey";
+static NSString *const MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey =
+    @"MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey";
+static NSString *const MDCTextInputControllerLegacyDefaultCharacterCountMaxKey =
+    @"MDCTextInputControllerLegacyDefaultCharacterCountMaxKey";
+static NSString *const MDCTextInputControllerLegacyDefaultDisabledColorKey =
+    @"MDCTextInputControllerLegacyDefaultDisabledColorKey";
+static NSString *const MDCTextInputControllerLegacyDefaultErrorAccessibilityValueKey =
+    @"MDCTextInputControllerLegacyDefaultErrorAccessibilityValueKey";
+static NSString *const MDCTextInputControllerLegacyDefaultErrorColorKey =
+    @"MDCTextInputControllerLegacyDefaultErrorColorKey";
+static NSString *const MDCTextInputControllerLegacyDefaultErrorTextKey =
+    @"MDCTextInputControllerLegacyDefaultErrorTextKey";
+static NSString *const MDCTextInputControllerLegacyDefaultFloatingEnabledKey =
+    @"MDCTextInputControllerLegacyDefaultFloatingEnabledKey";
+static NSString *const MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey =
+    @"MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey";
+static NSString *const MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey =
+    @"MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey";
+static NSString *const MDCTextInputControllerLegacyDefaultHelperTextKey =
+    @"MDCTextInputControllerLegacyDefaultHelperTextKey";
+static NSString *const MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey =
+    @"MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey";
+static NSString *const MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor =
+    @"MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor";
+static NSString *const MDCTextInputControllerLegacyDefaultNormalColorKey =
+    @"MDCTextInputControllerLegacyDefaultNormalColorKey";
+static NSString *const MDCTextInputControllerLegacyDefaultPresentationStyleKey =
+    @"MDCTextInputControllerLegacyDefaultPresentationStyleKey";
+static NSString *const MDCTextInputControllerLegacyDefaultTextInputKey =
+    @"MDCTextInputControllerLegacyDefaultTextInputKey";
+static NSString *const MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor =
+    @"MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor";
+static NSString *const MDCTextInputControllerLegacyDefaultUnderlineViewModeKey =
+    @"MDCTextInputControllerLegacyDefaultUnderlineViewModeKey";
 
-static NSString *const MDCTextInputControllerDefaultKVOKeyFont = @"font";
+static NSString *const MDCTextInputControllerLegacyDefaultKVOKeyFont = @"font";
 
 static inline UIColor *MDCTextInputDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputDefaultHintTextOpacity];
@@ -116,7 +116,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileEditing;
 
-@interface MDCTextInputControllerDefault () {
+@interface MDCTextInputControllerLegacyDefault () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
   UIColor *_activeColor;
@@ -149,7 +149,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 @end
 
-@implementation MDCTextInputControllerDefault
+@implementation MDCTextInputControllerLegacyDefault
 
 @synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
@@ -164,7 +164,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonMDCTextInputControllerDefaultInitialization];
+    [self commonMDCTextInputControllerLegacyDefaultInitialization];
   }
 
   return self;
@@ -173,34 +173,34 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
   if (self) {
-    [self commonMDCTextInputControllerDefaultInitialization];
+    [self commonMDCTextInputControllerLegacyDefaultInitialization];
 
     _activeColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultActiveColorKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
     _characterCounter =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultCharacterCounterKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
     _characterCountMax =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountMaxKey];
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey];
     _characterCountViewMode =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
-    _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultDisabledColorKey];
-    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultErrorColorKey];
-    _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerDefaultFloatingEnabledKey];
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey];
+    _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
+    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultErrorColorKey];
+    _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
     _floatingPlaceholderColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultFloatingPlaceholderColorKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey];
     _floatingPlaceholderScale =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultFloatingPlaceholderScaleKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
     _inlinePlaceholderColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultInlinePlaceholderColorKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
     _leadingUnderlineLabelTextColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor];
     _normalColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultNormalColorKey];
-    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTextInputKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
+    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultTextInputKey];
     _trailingUnderlineLabelTextColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
     _underlineViewMode = (UITextFieldViewMode)
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultUnderlineViewModeKey];
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey];
   }
   return self;
 }
@@ -219,41 +219,41 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.activeColor
-                forKey:MDCTextInputControllerDefaultActiveColorKey];
+                forKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
   if ([self.characterCounter conformsToProtocol:@protocol(NSCoding)]) {
     [aCoder encodeObject:self.characterCounter
-                  forKey:MDCTextInputControllerDefaultCharacterCounterKey];
+                  forKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
   }
   [aCoder encodeInteger:self.characterCountMax
-                 forKey:MDCTextInputControllerDefaultCharacterCountMaxKey];
+                 forKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey];
   [aCoder encodeInteger:self.characterCountViewMode
-                 forKey:MDCTextInputControllerDefaultCharacterCountViewModeKey];
-  [aCoder encodeObject:self.disabledColor forKey:MDCTextInputControllerDefaultDisabledColorKey];
+                 forKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey];
+  [aCoder encodeObject:self.disabledColor forKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
   [aCoder encodeObject:self.errorAccessibilityValue
-                forKey:MDCTextInputControllerDefaultErrorAccessibilityValueKey];
-  [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerDefaultErrorColorKey];
-  [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerDefaultErrorTextKey];
-  [aCoder encodeBool:self.isFloatingEnabled forKey:MDCTextInputControllerDefaultFloatingEnabledKey];
+                forKey:MDCTextInputControllerLegacyDefaultErrorAccessibilityValueKey];
+  [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerLegacyDefaultErrorColorKey];
+  [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerLegacyDefaultErrorTextKey];
+  [aCoder encodeBool:self.isFloatingEnabled forKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
   [aCoder encodeObject:self.floatingPlaceholderColor
-                forKey:MDCTextInputControllerDefaultFloatingPlaceholderColorKey];
+                forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey];
   [aCoder encodeObject:self.floatingPlaceholderScale
-                forKey:MDCTextInputControllerDefaultFloatingPlaceholderScaleKey];
-  [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerDefaultHelperTextKey];
+                forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
+  [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerLegacyDefaultHelperTextKey];
   [aCoder encodeObject:self.inlinePlaceholderColor
-                forKey:MDCTextInputControllerDefaultInlinePlaceholderColorKey];
+                forKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
   [aCoder encodeObject:self.leadingUnderlineLabelTextColor
-                forKey:MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor];
+                forKey:MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor];
   [aCoder encodeObject:self.normalColor
-                forKey:MDCTextInputControllerDefaultNormalColorKey];
-  [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerDefaultTextInputKey];
+                forKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
+  [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerLegacyDefaultTextInputKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
-                forKey:MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor];
+                forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
   [aCoder encodeInteger:self.underlineViewMode
-                 forKey:MDCTextInputControllerDefaultUnderlineViewModeKey];
+                 forKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCTextInputControllerDefault *copy = [[[self class] alloc] init];
+  MDCTextInputControllerLegacyDefault *copy = [[[self class] alloc] init];
 
   copy.activeColor = self.activeColor;
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
@@ -284,7 +284,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self unsubscribeFromKVO];
 }
 
-- (void)commonMDCTextInputControllerDefaultInitialization {
+- (void)commonMDCTextInputControllerLegacyDefaultInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
   _disabledColor = [self class].disabledColorDefault;
   _floatingEnabled = [self class].isFloatingEnabledDefault;
@@ -367,15 +367,15 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     return;
   }
   [_textInput.leadingUnderlineLabel addObserver:self
-                                     forKeyPath:MDCTextInputControllerDefaultKVOKeyFont
+                                     forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont
                                         options:0
                                         context:nil];
   [_textInput.placeholderLabel addObserver:self
-                                forKeyPath:MDCTextInputControllerDefaultKVOKeyFont
+                                forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont
                                    options:0
                                    context:nil];
   [_textInput.trailingUnderlineLabel addObserver:self
-                                      forKeyPath:MDCTextInputControllerDefaultKVOKeyFont
+                                      forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont
                                          options:0
                                          context:nil];
   _isRegisteredForKVO = YES;
@@ -387,11 +387,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
   @try {
     [self.textInput.leadingUnderlineLabel removeObserver:self
-                                              forKeyPath:MDCTextInputControllerDefaultKVOKeyFont];
+                                              forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont];
     [self.textInput.placeholderLabel removeObserver:self
-                                         forKeyPath:MDCTextInputControllerDefaultKVOKeyFont];
+                                         forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont];
     [self.textInput.trailingUnderlineLabel removeObserver:self
-                                               forKeyPath:MDCTextInputControllerDefaultKVOKeyFont];
+                                               forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont];
   } @catch (NSException *exception) {
   }
   _isRegisteredForKVO = NO;
@@ -1146,7 +1146,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
   // Listening to outside setting of custom fonts.
-  if (![keyPath isEqualToString:MDCTextInputControllerDefaultKVOKeyFont]) {
+  if (![keyPath isEqualToString:MDCTextInputControllerLegacyDefaultKVOKeyFont]) {
     return;
   }
 

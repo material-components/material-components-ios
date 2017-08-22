@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldManualLayoutSwiftExample: UIViewController {
+final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
 
   private enum LayoutConstants {
     static let largeMargin: CGFloat = 16
@@ -49,7 +49,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     city.placeholder = "City"
     return city
   }()
-  let cityController: MDCTextInputControllerDefault
+  let cityController: MDCTextInputControllerLegacyDefault
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -62,7 +62,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     zip.placeholder = "Zip code"
     return zip
   }()
-  let zipController: MDCTextInputControllerDefault
+  let zipController: MDCTextInputControllerLegacyDefault
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -72,11 +72,11 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
 
   let stateZip = UIView()
 
-  var allTextFieldControllers = [MDCTextInputControllerDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerLegacyDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerDefault(textInput: city)
-    zipController = MDCTextInputControllerDefault(textInput: zip)
+    cityController = MDCTextInputControllerLegacyDefault(textInput: city)
+    zipController = MDCTextInputControllerLegacyDefault(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -88,7 +88,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Manual Text Fields"
+    title = "Legacy Manual Text Fields"
 
     setupScrollView()
     setupTextFields()
@@ -107,12 +107,12 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerDefault(textInput: name)
+    let nameController = MDCTextInputControllerLegacyDefault(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerDefault(textInput: address)
+    let addressController = MDCTextInputControllerLegacyDefault(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -123,7 +123,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     scrollView.addSubview(stateZip)
 
     stateZip.addSubview(state)
-    let stateController = MDCTextInputControllerDefault(textInput: state)
+    let stateController = MDCTextInputControllerLegacyDefault(textInput: state)
     state.delegate = self
     allTextFieldControllers.append(stateController)
 
@@ -132,7 +132,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerLegacyDefault(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
@@ -233,7 +233,7 @@ final class TextFieldManualLayoutSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldManualLayoutSwiftExample: UITextFieldDelegate {
+extension TextFieldManualLayoutLegacySwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -281,7 +281,7 @@ extension TextFieldManualLayoutSwiftExample: UITextFieldDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldManualLayoutSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -313,14 +313,14 @@ extension TextFieldManualLayoutSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldManualLayoutSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldManualLayoutSwiftExample {
+extension TextFieldManualLayoutLegacySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Manual Layout"]
+    return ["Text Field", "[Legacy] Manual Layout"]
   }
 }

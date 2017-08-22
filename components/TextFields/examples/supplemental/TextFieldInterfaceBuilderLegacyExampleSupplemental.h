@@ -14,24 +14,14 @@
  limitations under the License.
  */
 
-#import "TextFieldInterfaceBuilderExampleSupplemental.h"
+@import UIKit;
 
-@implementation TextFieldInterfaceBuilderExample (Supplemental)
-
-- (void)setupExampleViews {
-  self.title = @"Material Text Fields";
-}
+@interface TextFieldInterfaceBuilderLegacyExample : UIViewController
 
 @end
 
-@implementation TextFieldInterfaceBuilderExample (CatalogByConvention)
+@interface TextFieldInterfaceBuilderLegacyExample (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Storyboard (Objective C)" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"TextFieldInterfaceBuilderExample";
-}
+- (void)setupExampleViews;
 
 @end

@@ -26,7 +26,7 @@
  Design guidelines call this 'Floating inline labels.'
  https://material.io/guidelines/components/text-fields.html#text-fields-labels
 */
-@interface MDCTextInputControllerDefault : NSObject <MDCTextInputController>
+@interface MDCTextInputControllerLegacyDefault : NSObject <MDCTextInputController>
 
 /**
  The color applied to the placeholder when floating. However, when in error state, it will be

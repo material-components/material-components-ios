@@ -529,7 +529,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
   [color setFill];
-  [MDCPathForClearButtonImageFrame(bounds) fill];
+  [MDCPathForClearButtonLegacyImageFrame(bounds) fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
 

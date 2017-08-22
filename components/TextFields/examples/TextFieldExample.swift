@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldSwiftExample: UIViewController {
+final class TextFieldLegacySwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -45,7 +45,7 @@ final class TextFieldSwiftExample: UIViewController {
     city.autocapitalizationType = .words
     return city
   }()
-  let cityController: MDCTextInputControllerDefault
+  let cityController: MDCTextInputControllerLegacyDefault
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -54,7 +54,7 @@ final class TextFieldSwiftExample: UIViewController {
     state.autocapitalizationType = .allCharacters
     return state
   }()
-  let stateController: MDCTextInputControllerDefault
+  let stateController: MDCTextInputControllerLegacyDefault
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -62,7 +62,7 @@ final class TextFieldSwiftExample: UIViewController {
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputControllerDefault
+  let zipController: MDCTextInputControllerLegacyDefault
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -78,12 +78,12 @@ final class TextFieldSwiftExample: UIViewController {
     return message
   }()
 
-  var allTextFieldControllers = [MDCTextInputControllerDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerLegacyDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerDefault(textInput: city)
-    stateController = MDCTextInputControllerDefault(textInput: state)
-    zipController = MDCTextInputControllerDefault(textInput: zip)
+    cityController = MDCTextInputControllerLegacyDefault(textInput: city)
+    stateController = MDCTextInputControllerLegacyDefault(textInput: state)
+    zipController = MDCTextInputControllerLegacyDefault(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -95,7 +95,7 @@ final class TextFieldSwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Material Text Fields"
+    title = "Legacy Text Fields"
 
     setupScrollView()
     setupTextFields()
@@ -112,12 +112,12 @@ final class TextFieldSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerDefault(textInput: name)
+    let nameController = MDCTextInputControllerLegacyDefault(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerDefault(textInput: address)
+    let addressController = MDCTextInputControllerLegacyDefault(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -140,12 +140,12 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerLegacyDefault(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerDefault(textInput: message)
+    let messageController = MDCTextInputControllerLegacyDefault(textInput: message)
     message.textView?.delegate = self
     allTextFieldControllers.append(messageController)
 
@@ -259,7 +259,7 @@ final class TextFieldSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldSwiftExample: UITextFieldDelegate {
+extension TextFieldLegacySwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -313,7 +313,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldSwiftExample: UITextViewDelegate {
+extension TextFieldLegacySwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -321,7 +321,7 @@ extension TextFieldSwiftExample: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldSwiftExample {
+extension TextFieldLegacySwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -353,15 +353,15 @@ extension TextFieldSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldSwiftExample {
+extension TextFieldLegacySwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldSwiftExample {
+extension TextFieldLegacySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Typical Use"]
+    return ["Text Field", "[Legacy] Typical Use"]
   }
 
   class func catalogDescription() -> String {

@@ -16,40 +16,40 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TextFieldInterfaceBuilderExampleSupplemental.h"
+#import "TextFieldInterfaceBuilderLegacyExampleSupplemental.h"
 
 @import MaterialComponents.MaterialTextFields;
 
-@interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
+@interface TextFieldInterfaceBuilderLegacyExample () <UITextFieldDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTextField *firstTextField;
-@property(nonatomic, strong) MDCTextInputControllerDefault *firstController;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *firstController;
 @property(weak, nonatomic) IBOutlet MDCTextField *lastTextField;
-@property(nonatomic, strong) MDCTextInputControllerDefault *lastController;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *lastController;
 @property(weak, nonatomic) IBOutlet MDCTextField *address1TextField;
-@property(nonatomic, strong) MDCTextInputControllerDefault *address1Controller;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *address1Controller;
 @property(weak, nonatomic) IBOutlet MDCTextField *address2TextField;
-@property(nonatomic, strong) MDCTextInputControllerDefault *address2Controller;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *address2Controller;
 
 @end
 
-@implementation TextFieldInterfaceBuilderExample
+@implementation TextFieldInterfaceBuilderLegacyExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.title = @"MDCTextFields";
+  self.title = @"Legacy MDCTextFields";
 
   [self setupExampleViews];
 
   self.firstController =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.firstTextField];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.firstTextField];
   self.lastController =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.lastTextField];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.lastTextField];
   self.address1Controller =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address1TextField];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address1TextField];
   self.address2Controller =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.address2TextField];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address2TextField];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "TextFieldPresentationStylesExampleSupplemental.h"
+#import "TextFieldPresentationStylesLegacyExampleSupplemental.h"
 
 @implementation TextFieldPresentationStylesExample (Supplemental)
 
