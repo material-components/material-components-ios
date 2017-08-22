@@ -17,8 +17,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
-#import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_check_circle.h"
+#import "MaterialIcons+ic_info.h"
 
 @interface ButtonBarIconExample : UIViewController
 @end
@@ -34,23 +34,25 @@
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;
 
-  UIBarButtonItem *actionItem =
-  [[UIBarButtonItem alloc] initWithImage:[[MDCIcons imageFor_ic_info] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                                   style:ignored
-                                  target:self
-                                  action:@selector(didTapActionButton:)];
-  UIBarButtonItem *secondActionItem =
-  [[UIBarButtonItem alloc] initWithImage:[[MDCIcons imageFor_ic_check_circle] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                                   style:ignored
-                                  target:self
-                                  action:@selector(didTapActionButton:)];
+  UIBarButtonItem *actionItem = [[UIBarButtonItem alloc]
+      initWithImage:[[MDCIcons imageFor_ic_info]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              style:ignored
+             target:self
+             action:@selector(didTapActionButton:)];
+  UIBarButtonItem *secondActionItem = [[UIBarButtonItem alloc]
+      initWithImage:[[MDCIcons imageFor_ic_check_circle]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              style:ignored
+             target:self
+             action:@selector(didTapActionButton:)];
 
   NSArray *items = @[ actionItem, secondActionItem ];
 
   // Set the title text attributes before assigning to buttonBar.items
   // because of https://github.com/material-components/material-components-ios/issues/277
   for (UIBarButtonItem *item in items) {
-    [item setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}
                         forState:UIControlStateNormal];
   }
 
@@ -62,8 +64,8 @@
   CGFloat y = self.view.bounds.size.height / 2 - size.height;
   buttonBar.frame = CGRectMake(x, y, size.width, size.height);
   buttonBar.autoresizingMask =
-  (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
-   UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
+      (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
+       UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
@@ -103,4 +105,3 @@
 }
 
 @end
-

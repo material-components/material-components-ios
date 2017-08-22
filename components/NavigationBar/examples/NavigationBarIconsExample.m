@@ -46,26 +46,28 @@
   [self.view addSubview:self.navigationBar];
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
-                                     initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                                                     mdc_imageFlippedForRightToLeftLayoutDirection]
-                                                    imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                                     style:UIBarButtonItemStylePlain
-                                     target:self
-                                     action:@selector(didTapBackButton)];
-//  backButtonItem.tintColor = UIColor.whiteColor;
+      initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
+                        mdc_imageFlippedForRightToLeftLayoutDirection]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              style:UIBarButtonItemStylePlain
+             target:self
+             action:@selector(didTapBackButton)];
+  //  backButtonItem.tintColor = UIColor.whiteColor;
 
-  UIBarButtonItem *leadingButtonItem =
-  [[UIBarButtonItem alloc] initWithImage:[[MDCIcons imageFor_ic_info] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                                   style:UIBarButtonItemStylePlain
-                                  target:nil
-                                  action:nil];
-//  leadingButtonItem.tintColor = UIColor.whiteColor;
-  UIBarButtonItem *trailingButtonItem =
-  [[UIBarButtonItem alloc] initWithImage:[[MDCIcons imageFor_ic_reorder] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                                   style:UIBarButtonItemStylePlain
-                                  target:nil
-                                  action:nil];
-//  trailingButtonItem.tintColor = UIColor.whiteColor;
+  UIBarButtonItem *leadingButtonItem = [[UIBarButtonItem alloc]
+      initWithImage:[[MDCIcons imageFor_ic_info]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              style:UIBarButtonItemStylePlain
+             target:nil
+             action:nil];
+  //  leadingButtonItem.tintColor = UIColor.whiteColor;
+  UIBarButtonItem *trailingButtonItem = [[UIBarButtonItem alloc]
+      initWithImage:[[MDCIcons imageFor_ic_reorder]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              style:UIBarButtonItemStylePlain
+             target:nil
+             action:nil];
+  //  trailingButtonItem.tintColor = UIColor.whiteColor;
 
   self.navigationBar.tintColor = UIColor.whiteColor;
   self.leadingBarButtonItem = leadingButtonItem;
@@ -81,26 +83,24 @@
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
   if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
       [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
-        topLayoutGuide = self.view.safeAreaLayoutGuide;
+    topLayoutGuide = self.view.safeAreaLayoutGuide;
   } else {
     topLayoutGuide = self.topLayoutGuide;
-
-
   }
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar, topLayoutGuide);
 
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"V:[topLayoutGuide]-0-[_navigationBar]"
-                        options:0
-                        metrics:nil
-                        views:viewsBindings]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:[topLayoutGuide]-0-[_navigationBar]"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:viewsBindings]];
 
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_navigationBar]|"
-                                                               options:0
-                                                               metrics:nil
-                                                                 views:viewsBindings]];
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_navigationBar]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:viewsBindings]];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -130,4 +130,3 @@
 }
 
 @end
-
