@@ -9,6 +9,69 @@ Renaming changes in preparation for a new text field style coming soon. No funct
 * `MDCTextInputControllerDefault` was renamed to `MDCTextInputControllerLegacyDefault`.
 * `MDCTextInputControllerFullWidth` was renamed to `MDCTextInputControllerLegacyFullWidth`.
 
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [- Added voice accessibility support for MDCActivityIndicator (#1765)](https://github.com/material-components/material-components-ios/commit/be23697c814507591ea259df571757bb69024aa0) (Justin Shephard)
+
+### Buttons
+
+#### Changes
+
+* [Allow users to set a custom disabled title color (#1839)](https://github.com/material-components/material-components-ios/commit/6bbf52599f5dd25cc6ab8e2da4b2f64e3c3f0151) (Sam Morrison)
+* [Correcting FAB expansion animation (#1858)](https://github.com/material-components/material-components-ios/commit/4d6b3c4112bdc60257776bd1e74b95483874db7d) (Robert Moore)
+* [[Catalog] Fix ButtonsTypicalUse FAB position (#1847)](https://github.com/material-components/material-components-ios/commit/d5f28a6a4fd417352329c9efa00fc68489a7e64b) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [Decoration frame is unset when null (#1845)](https://github.com/material-components/material-components-ios/commit/70026b323b43e6bc6046462317b1215767b25385) (Robert Moore)
+* [Fix example property attribute (#1854)](https://github.com/material-components/material-components-ios/commit/584e212fa02afbdc568d2293e4dac74f2bfe1bab) (Robert Moore)
+
+### Dialogs
+
+#### Changes
+
+* [Fix example class warnings (#1850)](https://github.com/material-components/material-components-ios/commit/22d19b7ae68bafb978fc01a53dba6cd83ed07b5a) (Robert Moore)
+* [Fix typo in comment](https://github.com/material-components/material-components-ios/commit/73b41562b0dd6993e5e7de6e4004487bf9bdcf3d) (ianegordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Make default shadow layer background match the view (#1834)](https://github.com/material-components/material-components-ios/commit/9b4bc89ee59611161add7259458652765ee4859c) (Brian Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [[TextFields] Renaming text field controllers to have 'Legacy' (#1876)](https://github.com/material-components/material-components-ios/commit/3bd23322aded8d2c236590fe2f21b504bc533384) (Will Larche)
+
+### Tabs
+
+#### Changes
+
+* [[TabBar] Fix warnings and button color in example (#1849)](https://github.com/material-components/material-components-ios/commit/21b4e5028c90880a24d71e3f4f3589f4535ecd25) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [New controller api for leading and trailing colors. (#1846)](https://github.com/material-components/material-components-ios/commit/1dcbaeed6b8dbe61659490335a4961089e75e481) (Will Larche)
+* [Renaming text field controllers to have 'Legacy' (#1876)](https://github.com/material-components/material-components-ios/commit/3bd23322aded8d2c236590fe2f21b504bc533384) (Will Larche)
+* [[TextField] Documentation clean up. (#1868)](https://github.com/material-components/material-components-ios/commit/f465c02cec3baa705f3fd690101be5fd9d5c26dc) (Scott Hyndman)
+
+### Themes
+
+#### Changes
+
+* [[TextFields] Renaming text field controllers to have 'Legacy' (#1876)](https://github.com/material-components/material-components-ios/commit/3bd23322aded8d2c236590fe2f21b504bc533384) (Will Larche)
+
+
 # 32.0.0
 
 ## API Diffs
