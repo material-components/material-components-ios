@@ -19,6 +19,7 @@
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
+#import "private/MDCTextInputArt.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
 
@@ -28,6 +29,7 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
+static const CGFloat MDCTextInputControllerLegacyFullWidthClearButtonImageSquareWidthHeight = 24.f;
 static const CGFloat MDCTextInputControllerLegacyFullWidthHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputControllerLegacyFullWidthHorizontalInnerPadding = 8.f;
 static const CGFloat MDCTextInputControllerLegacyFullWidthHorizontalPadding = 16.f;
@@ -62,7 +64,7 @@ static NSString *const MDCTextInputControllerLegacyFullWidthTrailingUnderlineLab
 static NSString *const MDCTextInputControllerLegacyFullWidthKVOKeyFont = @"font";
 
 static inline UIColor *MDCTextInputControllerLegacyFullWidthInlinePlaceholderTextColorDefault() {
-  return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerLegacyFullWidthHintTextOpacity];
+  return [UIColor colorWithWhite:0 alpha:MDCTextInputLegacyFullWidthHintTextOpacity];
 }
 
 static inline UIColor *MDCTextInputControllerLegacyFullWidthErrorColorDefault() {
@@ -72,6 +74,7 @@ static inline UIColor *MDCTextInputControllerLegacyFullWidthErrorColorDefault() 
 #pragma mark - Class Properties
 
 static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
+
 static UIColor *_errorColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_trailingUnderlineLabelTextColorDefault;
@@ -83,7 +86,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
   UIColor *_errorColor;
   UIColor *_inlinePlaceholderColor;
-  UIColor *_leadingUnderlineLabelTextColor;
   UIColor *_trailingUnderlineLabelTextColor;
 }
 
@@ -233,10 +235,19 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
 
+  [self setupClearButton];
+
   [self subscribeForNotifications];
   [self subscribeForKVO];
   _textInput.underline.color = [UIColor clearColor];
   [self updateLayout];
+}
+
+- (void)setupClearButton {
+  UIImage *image = [self drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
+  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
 }
 
 - (void)subscribeForNotifications {
@@ -341,6 +352,25 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
     _characterCountMax = characterCountMax;
     [self updateLayout];
   }
+}
+
+#pragma mark - Clear Button Customization
+
+- (UIImage *)drawnClearButtonImage:(UIColor *)color {
+  CGSize clearButtonSize = CGSizeMake(MDCTextInputControllerLegacyFullWidthClearButtonImageSquareWidthHeight,
+                                      MDCTextInputControllerLegacyFullWidthClearButtonImageSquareWidthHeight);
+
+  CGFloat scale = [UIScreen mainScreen].scale;
+  CGRect bounds = CGRectMake(0, 0, clearButtonSize.width * scale, clearButtonSize.height * scale);
+  UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
+  [color setFill];
+
+  [MDCPathForClearButtonLegacyImageFrame(bounds) fill];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+
+  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  return image;
 }
 
 #pragma mark - Leading Label Customization
@@ -477,6 +507,14 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return [UIColor clearColor];
 }
 
+- (BOOL)isDisplayingCharacterCountError {
+  return self.characterCountMax && [self characterCount] > self.characterCountMax;
+}
+
+- (BOOL)isDisplayingErrorText {
+  return self.errorText != nil;
+}
+
 - (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
   _errorAccessibilityValue = [errorAccessibilityValue copy];
 }
@@ -549,7 +587,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 + (UIColor *)inlinePlaceholderColorDefault {
   if (!_inlinePlaceholderColorDefault) {
-    _inlinePlaceholderColorDefault = MDCTextInputInlinePlaceholderTextColorDefault();
+    _inlinePlaceholderColorDefault = MDCTextInputControllerLegacyFullWidthInlinePlaceholderTextColorDefault();
   }
   return _inlinePlaceholderColorDefault;
 }
@@ -557,18 +595,10 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 + (void)setInlinePlaceholderColorDefault:(UIColor *)inlinePlaceholderColorDefault {
   _inlinePlaceholderColorDefault = inlinePlaceholderColorDefault
                                        ? inlinePlaceholderColorDefault
-                                       : MDCTextInputInlinePlaceholderTextColorDefault();
+                                       : MDCTextInputControllerLegacyFullWidthInlinePlaceholderTextColorDefault();
 }
 
-- (BOOL)isDisplayingCharacterCountError {
-  return self.characterCountMax && [self characterCount] > self.characterCountMax;
-}
-
-- (BOOL)isDisplayingErrorText {
-  return self.errorText != nil;
-}
-
-// The leading underline label must always be clear to not obstruct the placeholder and input.
+// In This style, the leading underline is not shown. It would overlap the placeholder.
 - (UIColor *)leadingUnderlineLabelTextColor {
   return [UIColor clearColor];
 }
@@ -577,6 +607,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   // Not implemented. Leading underline label is always clear.
 }
 
+// In This style, the leading underline is not shown. It would overlap the placeholder.
 + (UIColor *)leadingUnderlineLabelTextColorDefault {
   return [UIColor clearColor];
 }
@@ -923,7 +954,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
         // The 'defaultRect' is based on the textInsets so we need to compensate for
         // the button NOT being there.
         editingRect.size.width += CGRectGetWidth(self.textInput.clearButton.bounds);
-        editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;
+        editingRect.size.width -= MDCTextInputControllerLegacyFullWidthHorizontalInnerPadding;
         break;
       default:
         break;
@@ -1042,11 +1073,8 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   // Accessibility
   // TODO: (larche) Localize
   if (errorText) {
-    NSString *announcementString = errorAccessibilityValue;
-    if (!announcementString.length) {
-      announcementString =
+    NSString *announcementString =
           errorText.length > 0 ? [NSString stringWithFormat:@"Error: %@", errorText] : @"Error.";
-    }
 
     // Simply sending a layout change notification does not seem to
     UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
