@@ -21,12 +21,12 @@
 
 import UIKit
 
-extension TextFieldKitchenSinkSwiftExample {
+extension TextFieldKitchenSinkLegacySwiftExample {
 
   func setupExampleViews() {
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Material Text Fields"
+    title = "Legacy Text Fields"
 
     let textFieldControllersFullWidth = setupFullWidthTextFields()
 
@@ -49,7 +49,7 @@ extension TextFieldKitchenSinkSwiftExample {
     setupScrollView()
 
     NotificationCenter.default.addObserver(self,
-                                           selector: #selector(TextFieldKitchenSinkSwiftExample.contentSizeCategoryDidChange(notif:)),
+                                           selector: #selector(TextFieldKitchenSinkLegacySwiftExample.contentSizeCategoryDidChange(notif:)),
                                            name:.UIContentSizeCategoryDidChange,
                                            object: nil)
   }
@@ -70,7 +70,7 @@ extension TextFieldKitchenSinkSwiftExample {
     let errorSwitch = UISwitch()
     errorSwitch.translatesAutoresizingMaskIntoConstraints = false
     errorSwitch.addTarget(self,
-                          action: #selector(TextFieldKitchenSinkSwiftExample.errorSwitchDidChange(errorSwitch:)),
+                          action: #selector(TextFieldKitchenSinkLegacySwiftExample.errorSwitchDidChange(errorSwitch:)),
                           for: .touchUpInside)
     container.addSubview(errorSwitch)
     errorSwitch.accessibilityLabel = "Show errors"
@@ -80,7 +80,7 @@ extension TextFieldKitchenSinkSwiftExample {
     let helperSwitch = UISwitch()
     helperSwitch.translatesAutoresizingMaskIntoConstraints = false
     helperSwitch.addTarget(self,
-                           action: #selector(TextFieldKitchenSinkSwiftExample.helperSwitchDidChange(helperSwitch:)),
+                           action: #selector(TextFieldKitchenSinkLegacySwiftExample.helperSwitchDidChange(helperSwitch:)),
                            for: .touchUpInside)
     container.addSubview(helperSwitch)
     helperSwitch.accessibilityLabel = "Helper text"
@@ -286,12 +286,12 @@ extension TextFieldKitchenSinkSwiftExample {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
       self,
-      selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillShow(notif:)),
+      selector: #selector(TextFieldKitchenSinkLegacySwiftExample.keyboardWillShow(notif:)),
       name: .UIKeyboardWillShow,
       object: nil)
     notificationCenter.addObserver(
       self,
-      selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillHide(notif:)),
+      selector: #selector(TextFieldKitchenSinkLegacySwiftExample.keyboardWillHide(notif:)),
       name: .UIKeyboardWillHide,
       object: nil)
   }
@@ -316,7 +316,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
 }
 
-extension TextFieldKitchenSinkSwiftExample {
+extension TextFieldKitchenSinkLegacySwiftExample {
   // The 3 'mode' buttons all are similar. The following code is shared by them
   @objc func buttonDidTouch(button: MDCButton) {
     var controllersToChange = allInputControllers
@@ -384,14 +384,14 @@ extension TextFieldKitchenSinkSwiftExample {
   }
 }
 
-extension TextFieldKitchenSinkSwiftExample {
+extension TextFieldKitchenSinkLegacySwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldKitchenSinkSwiftExample {
+extension TextFieldKitchenSinkLegacySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Kitchen Sink"]
+    return ["Text Field", "[Legacy] Kitchen Sink"]
   }
 }

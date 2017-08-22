@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "TextFieldPresentationStylesExampleSupplemental.h"
+#import "TextFieldPresentationStylesLegacyExampleSupplemental.h"
 
-@implementation TextFieldPresentationStylesExample (Supplemental)
+@implementation TextFieldPresentationStylesLegacyExample (Supplemental)
 
 - (void)setupExampleViews {
   [self setupScrollView];
@@ -59,10 +59,10 @@
 
 @end
 
-@implementation TextFieldPresentationStylesExample (CatalogByConvention)
+@implementation TextFieldPresentationStylesLegacyExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Controller Styles (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Controller Styles (Objective C)" ];
 }
 
 @end

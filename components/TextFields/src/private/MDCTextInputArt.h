@@ -20,7 +20,7 @@
 
 #pragma mark - Drawing
 
-static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
+static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) {
   // GENERATED CODE
 
   CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,

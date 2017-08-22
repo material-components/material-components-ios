@@ -14,24 +14,16 @@
  limitations under the License.
  */
 
-#import "TextFieldInterfaceBuilderExampleSupplemental.h"
+@import UIKit;
 
-@implementation TextFieldInterfaceBuilderExample (Supplemental)
+@interface TextFieldPresentationStylesLegacyExample : UIViewController <UITextFieldDelegate>
 
-- (void)setupExampleViews {
-  self.title = @"Material Text Fields";
-}
+@property(nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
-@implementation TextFieldInterfaceBuilderExample (CatalogByConvention)
+@interface TextFieldPresentationStylesLegacyExample (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Storyboard (Objective C)" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"TextFieldInterfaceBuilderExample";
-}
+- (void)setupExampleViews;
 
 @end

@@ -14,12 +14,15 @@
  limitations under the License.
  */
 
+// swiftlint:disable function_body_length
+// swiftlint:disable type_body_length
+
 import XCTest
 import MaterialComponents.MaterialTextFields
 
-class TextFieldTests: XCTestCase {
+class MultilineTextFieldLegacyTests: XCTestCase {
   func testAttributedSetters() {
-    let textField = MDCTextField()
+    let textField = MDCMultilineTextField()
 
     let string = "attributed"
     textField.attributedPlaceholder = NSAttributedString(string: string)
@@ -29,34 +32,25 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.attributedText?.string, string)
   }
 
-  // All the constraints created internally by the MDCTextField need to have a rather low priority 
-  // so they can be overridden by a controller from the outside.
-  func testConstraintPriorities() {
-    let textField = MDCTextField()
-
-    for constraint in textField.constraints {
-      XCTAssertLessThanOrEqual(constraint.priority, UILayoutPriorityDefaultLow + 10, String(describing: constraint))
-    }
-  }
-
   func testCopying() {
-    let textField = MDCTextField()
+    let textField = MDCMultilineTextField()
 
     textField.clearButtonColor = .red
     textField.clearButtonMode = .always
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
-    textField.leadingViewMode = .unlessEditing
     textField.mdc_adjustsFontForContentSizeCategory = true
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
-    textField.trailingViewMode = .unlessEditing
     textField.underline?.color = .red
     textField.underline?.lineHeight = 10
 
-    if let textFieldCopy = textField.copy() as? MDCTextField {
+    if let textFieldCopy = textField.copy() as? MDCMultilineTextField {
+      XCTAssertNotNil(textField.textView)
+      XCTAssertTrue(textField.subviews.contains(textField.textView!))
+
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
       XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
@@ -64,13 +58,11 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
-      XCTAssertEqual(textField.leadingViewMode, textFieldCopy.leadingViewMode)
       XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
                      textFieldCopy.mdc_adjustsFontForContentSizeCategory)
       XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
-      XCTAssertEqual(textField.trailingViewMode, textFieldCopy.trailingViewMode)
       XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
       XCTAssertEqual(textField.underline?.lineHeight, textFieldCopy.underline?.lineHeight)
     } else {
@@ -79,7 +71,7 @@ class TextFieldTests: XCTestCase {
   }
 
   func testFontChange() {
-    let textField = MDCTextField()
+    let textField = MDCMultilineTextField()
 
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     XCTAssertEqual(UIFont.systemFont(ofSize: UIFont.labelFontSize), textField.font)
@@ -87,7 +79,7 @@ class TextFieldTests: XCTestCase {
   }
 
   func testMDCDynamicTypeAPI() {
-    let textField = MDCTextField()
+    let textField = MDCMultilineTextField()
 
     textField.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
@@ -98,59 +90,12 @@ class TextFieldTests: XCTestCase {
     }
   }
 
-  func testOverlayViews() {
-    let textField = MDCTextField()
-
-    let leftView = UILabel()
-    let rightView = UILabel()
-    leftView.text = "X"
-    textField.leftView = leftView
-    textField.rightView = rightView
-    textField.leftViewMode = .always
-    textField.rightViewMode = .always
-
-    // This will trigger autolayout to scream in the console. It's ok. It's for the testing.
-    textField.layoutIfNeeded()
-
-    XCTAssertTrue(textField.subviews.contains(leftView))
-    XCTAssertTrue(textField.subviews.contains(rightView))
-
-    if #available(iOS 9.0, *) {
-      if UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight {
-        XCTAssertEqual(textField.leadingView, leftView)
-        XCTAssertEqual(textField.leadingView, textField.leftView)
-
-        XCTAssertEqual(textField.trailingView, rightView)
-        XCTAssertEqual(textField.trailingView, textField.rightView)
-      } else {
-        XCTAssertEqual(textField.leadingView, rightView)
-        XCTAssertEqual(textField.leadingView, textField.rightView)
-
-        XCTAssertEqual(textField.trailingView, leftView)
-        XCTAssertEqual(textField.trailingView, textField.leftView)
-      }
-    }
-  }
-
-  func testSerializationTextField() {
-    let textField = MDCTextField()
-
-    let leadingView = UILabel()
-    leadingView.text = "$"
-
-    textField.leadingView = leadingView
-    textField.leadingViewMode = .unlessEditing
-
-    let trailingView = UILabel()
-    trailingView.text = ".com"
-
-    textField.trailingView = trailingView
-    textField.trailingViewMode = .unlessEditing
-
+  func testSerializationLegacy() {
+    let textField = MDCMultilineTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
     let leadingText = "Serialized Helper Test"
@@ -161,7 +106,7 @@ class TextFieldTests: XCTestCase {
     XCTAssertNotNil(serializedInput)
 
     let unserializedInput =
-      NSKeyedUnarchiver.unarchiveObject(with: serializedInput) as? MDCTextField
+      NSKeyedUnarchiver.unarchiveObject(with: serializedInput) as? MDCMultilineTextField
     XCTAssertNotNil(unserializedInput)
 
     XCTAssertEqual(textField.translatesAutoresizingMaskIntoConstraints,
@@ -175,24 +120,10 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
     XCTAssertEqual(textField.trailingUnderlineLabel.text,
                    unserializedInput?.trailingUnderlineLabel.text)
-
-    if let leadingViewUnserialized = unserializedInput?.leadingView as? UILabel {
-      XCTAssertEqual(leadingViewUnserialized.text, leadingView.text)
-    } else {
-      XCTFail("No leading view or it isn't a UILabel")
-    }
-    XCTAssertEqual(unserializedInput?.leadingViewMode, .unlessEditing)
-
-    if let trailingViewUnserialized = unserializedInput?.trailingView as? UILabel {
-      XCTAssertEqual(trailingViewUnserialized.text, trailingView.text)
-    } else {
-      XCTFail("No trailing view or it isn't a UILabel")
-    }
-    XCTAssertEqual(unserializedInput?.trailingViewMode, .unlessEditing)
   }
 
   func testSizing() {
-    let textField = MDCTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 0))
+    let textField = MDCMultilineTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 0))
     XCTAssertEqual(textField.frame.height, 0)
 
     textField.frame = CGRect(x: 0, y: 0, width: 300, height: 40)
@@ -207,10 +138,9 @@ class TextFieldTests: XCTestCase {
   }
 
   func testUnderlineSetters() {
-    let textField = MDCTextField()
+    let textField = MDCMultilineTextField()
 
     textField.underline?.color = .red
-    textField.underline?.disabledColor = .yellow
     textField.underline?.lineHeight = 10
 
     XCTAssertEqual(textField.underline?.color, .red)
@@ -220,8 +150,6 @@ class TextFieldTests: XCTestCase {
 
       XCTAssertEqual(underline.lineHeight, 10)
       XCTAssertEqual(underline.lineHeight, textField.underline?.lineHeight)
-
-      XCTAssertEqual(underline.disabledColor, .yellow)
     } else {
       XCTFail("No underline or underline is wrong class")
     }

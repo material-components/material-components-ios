@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerFullWidth.h"
+#import "MDCTextInputControllerLegacyFullWidth.h"
 
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
@@ -33,33 +33,33 @@ static const CGFloat MDCTextInputFullWidthHorizontalInnerPadding = 8.f;
 static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
 static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
 
-static NSString *const MDCTextInputControllerFullWidthCharacterCounterKey =
-    @"MDCTextInputControllerFullWidthCharacterCounterKey";
-static NSString *const MDCTextInputControllerFullWidthCharacterCountViewModeKey =
-    @"MDCTextInputControllerFullWidthCharacterCountViewModeKey";
-static NSString *const MDCTextInputControllerFullWidthCharacterCountMaxKey =
-    @"MDCTextInputControllerFullWidthCharacterCountMaxKey";
-static NSString *const MDCTextInputControllerFullWidthErrorAccessibilityValueKey =
-    @"MDCTextInputControllerFullWidthErrorAccessibilityValueKey";
-static NSString *const MDCTextInputControllerFullWidthErrorColorKey =
-    @"MDCTextInputControllerFullWidthErrorColorKey";
-static NSString *const MDCTextInputControllerFullWidthErrorTextKey =
-    @"MDCTextInputControllerFullWidthErrorTextKey";
-static NSString *const MDCTextInputControllerFullWidthHelperTextKey =
-    @"MDCTextInputControllerFullWidthHelperTextKey";
-static NSString *const MDCTextInputControllerFullWidthInlinePlaceholderColorKey =
-    @"MDCTextInputControllerFullWidthInlinePlaceholderColorKey";
-static NSString *const MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor =
-    @"MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor";
-static NSString *const MDCTextInputControllerFullWidthPresentationStyleKey =
-    @"MDCTextInputControllerFullWidthPresentationStyleKey";
-static NSString *const MDCTextInputControllerFullWidthTextInputKey =
-    @"MDCTextInputControllerFullWidthTextInputKey";
-static NSString *const MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor =
-    @"MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor";
+static NSString *const MDCTextInputControllerLegacyFullWidthCharacterCounterKey =
+    @"MDCTextInputControllerLegacyFullWidthCharacterCounterKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey =
+    @"MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey =
+    @"MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthErrorAccessibilityValueKey =
+    @"MDCTextInputControllerLegacyFullWidthErrorAccessibilityValueKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthErrorColorKey =
+    @"MDCTextInputControllerLegacyFullWidthErrorColorKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthErrorTextKey =
+    @"MDCTextInputControllerLegacyFullWidthErrorTextKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthHelperTextKey =
+    @"MDCTextInputControllerLegacyFullWidthHelperTextKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey =
+    @"MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthLeadingUnderlineLabelTextColor =
+    @"MDCTextInputControllerLegacyFullWidthLeadingUnderlineLabelTextColor";
+static NSString *const MDCTextInputControllerLegacyFullWidthPresentationStyleKey =
+    @"MDCTextInputControllerLegacyFullWidthPresentationStyleKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthTextInputKey =
+    @"MDCTextInputControllerLegacyFullWidthTextInputKey";
+static NSString *const MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelTextColor =
+    @"MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelTextColor";
 
 
-static NSString *const MDCTextInputControllerFullWidthKVOKeyFont = @"font";
+static NSString *const MDCTextInputControllerLegacyFullWidthKVOKeyFont = @"font";
 
 static inline UIColor *MDCTextInputInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputFullWidthHintTextOpacity];
@@ -76,7 +76,7 @@ static UIColor *_errorColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_trailingUnderlineLabelTextColorDefault;
 
-@interface MDCTextInputControllerFullWidth () {
+@interface MDCTextInputControllerLegacyFullWidth () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
   UIColor *_inlinePlaceholderColor;
@@ -111,7 +111,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 @property(nonatomic, strong) UIFont *customTrailingFont;
 @end
 
-@implementation MDCTextInputControllerFullWidth
+@implementation MDCTextInputControllerLegacyFullWidth
 
 @synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
@@ -124,7 +124,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonMDCTextInputControllerFullWidthInitialization];
+    [self commonMDCTextInputControllerLegacyFullWidthInitialization];
   }
 
   return self;
@@ -133,22 +133,22 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
   if (self) {
-    [self commonMDCTextInputControllerFullWidthInitialization];
+    [self commonMDCTextInputControllerLegacyFullWidthInitialization];
 
     _characterCounter =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthCharacterCounterKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthCharacterCounterKey];
     _characterCountMax =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey];
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey];
     _characterCountViewMode =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey];
-    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthErrorColorKey];
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey];
+    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthErrorColorKey];
     _inlinePlaceholderColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey];
     _leadingUnderlineLabelTextColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor];
-    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthTextInputKey];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthLeadingUnderlineLabelTextColor];
+    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthTextInputKey];
     _trailingUnderlineLabelTextColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelTextColor];
   }
   return self;
 }
@@ -166,29 +166,29 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   if ([self.characterCounter conformsToProtocol:@protocol(NSCoding)]) {
     [aCoder encodeObject:self.characterCounter
-                  forKey:MDCTextInputControllerFullWidthCharacterCounterKey];
+                  forKey:MDCTextInputControllerLegacyFullWidthCharacterCounterKey];
   }
   [aCoder encodeInteger:self.characterCountMax
-                 forKey:MDCTextInputControllerFullWidthCharacterCountMaxKey];
+                 forKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey];
   [aCoder encodeInteger:self.characterCountViewMode
-                 forKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey];
+                 forKey:MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey];
   [aCoder encodeObject:self.errorAccessibilityValue
-                forKey:MDCTextInputControllerFullWidthErrorAccessibilityValueKey];
-  [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerFullWidthErrorColorKey];
-  [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerFullWidthErrorTextKey];
-  [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerFullWidthHelperTextKey];
+                forKey:MDCTextInputControllerLegacyFullWidthErrorAccessibilityValueKey];
+  [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerLegacyFullWidthErrorColorKey];
+  [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerLegacyFullWidthErrorTextKey];
+  [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerLegacyFullWidthHelperTextKey];
   [aCoder encodeObject:self.inlinePlaceholderColor
-                forKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
+                forKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey];
   [aCoder encodeObject:self.leadingUnderlineLabelTextColor
-                forKey:MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor];
+                forKey:MDCTextInputControllerLegacyFullWidthLeadingUnderlineLabelTextColor];
   [aCoder encodeConditionalObject:self.textInput
-                           forKey:MDCTextInputControllerFullWidthTextInputKey];
+                           forKey:MDCTextInputControllerLegacyFullWidthTextInputKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
-                forKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
+                forKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelTextColor];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCTextInputControllerFullWidth *copy = [[[self class] alloc] init];
+  MDCTextInputControllerLegacyFullWidth *copy = [[[self class] alloc] init];
 
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
@@ -214,7 +214,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   [self unsubscribeFromKVO];
 }
 
-- (void)commonMDCTextInputControllerFullWidthInitialization {
+- (void)commonMDCTextInputControllerLegacyFullWidthInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
 }
@@ -289,11 +289,11 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
     return;
   }
   [_textInput.placeholderLabel addObserver:self
-                                forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont
+                                forKeyPath:MDCTextInputControllerLegacyFullWidthKVOKeyFont
                                    options:0
                                    context:nil];
   [_textInput.trailingUnderlineLabel addObserver:self
-                                      forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont
+                                      forKeyPath:MDCTextInputControllerLegacyFullWidthKVOKeyFont
                                          options:0
                                          context:nil];
   _isRegisteredForKVO = YES;
@@ -305,10 +305,10 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   }
   @try {
     [self.textInput.placeholderLabel removeObserver:self
-                                         forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont];
+                                         forKeyPath:MDCTextInputControllerLegacyFullWidthKVOKeyFont];
     [self.textInput.trailingUnderlineLabel
         removeObserver:self
-            forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont];
+            forKeyPath:MDCTextInputControllerLegacyFullWidthKVOKeyFont];
   } @catch (NSException *exception) {
   }
   _isRegisteredForKVO = NO;
@@ -961,7 +961,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
   // Listening to outside setting of custom fonts.
-  if (![keyPath isEqualToString:MDCTextInputControllerFullWidthKVOKeyFont]) {
+  if (![keyPath isEqualToString:MDCTextInputControllerLegacyFullWidthKVOKeyFont]) {
     return;
   }
 
