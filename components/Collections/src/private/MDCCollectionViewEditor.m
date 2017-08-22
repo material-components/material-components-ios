@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   [self setEditing:editing animated:NO];
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+- (void)setEditing:(BOOL)editing animated:(__unused BOOL)animated {
   _editing = editing;
   _collectionView.allowsMultipleSelection = editing;
 
@@ -293,7 +293,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   return screenshotImage;
 }
 
-- (void)applyLayerShadowing:(CALayer *)layer {
+- (void)applyLayerShadowing:(__unused CALayer *)layer {
   MDCShadowLayer *shadowLayer = (MDCShadowLayer *)_cellSnapshot.layer;
   shadowLayer.shadowMaskEnabled = NO;
   shadowLayer.elevation = 3;
@@ -323,9 +323,9 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   return YES;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:
-        (UIGestureRecognizer *)otherGestureRecognizer {
+        (__unused UIGestureRecognizer *)otherGestureRecognizer {
   return YES;
 }
 
@@ -336,8 +336,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
           [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]);
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-       shouldReceiveTouch:(UITouch *)touch {
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(__unused UITouch *)touch {
   BOOL allowsSwipeToDismissItem = NO;
   if ([_delegate respondsToSelector:@selector(collectionViewAllowsSwipeToDismissItem:)]) {
     allowsSwipeToDismissItem = [_delegate collectionViewAllowsSwipeToDismissItem:_collectionView];
@@ -392,7 +392,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
         UICollectionViewLayoutAttributes *attributes = [_collectionView.collectionViewLayout
             layoutAttributesForItemAtIndexPath:currentIndexPath];
 
-        void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+        void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
           // Notify delegate dragging has finished.
           if ([_delegate
                   respondsToSelector:@selector(collectionView:didEndDraggingItemAtIndexPath:)]) {
@@ -663,7 +663,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
         _cellSnapshot.layer.transform = CATransform3DMakeAffineTransform(transform);
         _cellSnapshot.alpha = 0;
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         [self restoreEditingItem];
       }];
 }
@@ -705,7 +705,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   [_cellSnapshot.layer addAnimation:allAnimations forKey:nil];
 }
 
-- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)didFinish {
+- (void)animationDidStop:(__unused CAAnimation *)animation finished:(__unused BOOL)didFinish {
   [self cancelPanningItem];
 }
 
@@ -777,7 +777,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   }
 }
 
-- (void)autoscroll:(CADisplayLink *)sender {
+- (void)autoscroll:(__unused CADisplayLink *)sender {
   // Scrolls at each tick of CADisplayLink by setting scroll contentOffset. Animation is performed
   // within UIView animation block rather than directly calling -setContentOffset:animated: method
   // in order to prevent jerkiness in scrolling.

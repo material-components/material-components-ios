@@ -330,7 +330,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 #pragma mark User actions
 
-- (void)didTapBackButton:(id)sender {
+- (void)didTapBackButton:(__unused id)sender {
   UIViewController *pvc = self.flexibleHeaderParentViewController;
   if (pvc.navigationController && pvc.navigationController.viewControllers.count > 1) {
     [pvc.navigationController popViewControllerAnimated:YES];

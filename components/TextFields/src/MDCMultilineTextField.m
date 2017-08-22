@@ -118,7 +118,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [aCoder encodeInteger:self.trailingViewMode forKey:MDCMultilineTextFieldTrailingViewModeKey];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCMultilineTextField *copy = [[[self class] alloc] initWithFrame:self.frame];
 
   copy.expandsOnOverflow = self.expandsOnOverflow;
@@ -676,12 +676,12 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 #pragma mark - UITextView Notification Observation
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
+- (void)textViewDidBeginEditing:(__unused UITextView *)textView {
   self.editing = YES;
   [self.fundament didBeginEditing];
 }
 
-- (void)textViewDidChange:(UITextView *)textView {
+- (void)textViewDidChange:(__unused UITextView *)textView {
   [self.fundament didChange];
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
@@ -694,7 +694,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   }
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView {
+- (void)textViewDidEndEditing:(__unused UITextView *)textView {
   self.editing = NO;
   [self.fundament didEndEditing];
 }

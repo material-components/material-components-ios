@@ -99,7 +99,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [aCoder encodeInteger:self.rightViewMode forKey:MDCTextFieldRightViewModeKey];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCTextField *copy = [[[self class] alloc] initWithFrame:self.frame];
 
   copy.fundament = [self.fundament copy];
@@ -529,7 +529,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return editingRect;
 }
 
-- (CGRect)clearButtonRectForBounds:(CGRect)bounds {
+- (CGRect)clearButtonRectForBounds:(__unused CGRect)bounds {
   return self.clearButton.frame;
 }
 
@@ -555,7 +555,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 #pragma mark - UITextField Draw Overrides
 
-- (void)drawPlaceholderInRect:(CGRect)rect {
+- (void)drawPlaceholderInRect:(__unused CGRect)rect {
   // We implement our own placeholder that is managed by the fundament. However, to observe normal
   // VO placeholder behavior, we still set the placeholder on the UITextField, and need to not draw
   // it here.
@@ -616,15 +616,15 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 #pragma mark - UITextField Notification Observation
 
-- (void)textFieldDidBeginEditing:(NSNotification *)note {
+- (void)textFieldDidBeginEditing:(__unused NSNotification *)note {
   [_fundament didBeginEditing];
 }
 
-- (void)textFieldDidChange:(NSNotification *)note {
+- (void)textFieldDidChange:(__unused NSNotification *)note {
   [_fundament didChange];
 }
 
-- (void)textFieldDidEndEditing:(NSNotification *)note {
+- (void)textFieldDidEndEditing:(__unused NSNotification *)note {
   [_fundament didEndEditing];
 }
 

@@ -104,7 +104,7 @@
 }
 
 // Allow the drag recogniser to recognize alongside the embedded scrollview's pan gesture.
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)recognizer
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)recognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:
         (UIGestureRecognizer *)otherGestureRecognizer {
   if (otherGestureRecognizer == self.scrollView.panGestureRecognizer) {

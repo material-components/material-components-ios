@@ -83,7 +83,7 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 
 #pragma mark - UIView
 
-- (CGSize)sizeThatFits:(CGSize)size {
+- (CGSize)sizeThatFits:(__unused CGSize)size {
   switch (_shape) {
     case MDCFloatingButtonShapeDefault:
       return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);

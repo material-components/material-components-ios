@@ -79,7 +79,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
           animations:^{
             [self.view layoutIfNeeded];
           }
-          completion:^(BOOL finished) {
+          completion:^(__unused BOOL finished) {
             // If we are hiding, set the state after the animation.
             _tabBar.hidden = hidden;
           }];

@@ -49,7 +49,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone {
+- (id)copyWithZone:(__unused NSZone *)zone {
   MDCAlertAction *action = [[self class] actionWithTitle:self.title handler:self.completionHandler];
 
   return action;
@@ -128,13 +128,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 /* Disable setter. Always use internal transition controller */
-- (void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+- (void)setTransitioningDelegate:(__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
   return;
 }
 
 /* Disable setter. Always use custom presentation style */
-- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
+- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
   NSAssert(NO, @"MDCAlertController.modalPresentationStyle cannot be changed.");
   return;
 }
@@ -219,7 +219,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 // Handles UIContentSizeCategoryDidChangeNotifications
-- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
 }
 
@@ -474,7 +474,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
   [coordinator animateAlongsideTransition:^(
-                   id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+                   __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
     // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
     self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
   }

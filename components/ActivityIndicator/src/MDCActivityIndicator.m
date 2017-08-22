@@ -272,7 +272,7 @@ static const CGFloat kSingleCycleRotation =
   }
 }
 
-- (void)setIndicatorMode:(MDCActivityIndicatorMode)mode animated:(BOOL)animated {
+- (void)setIndicatorMode:(MDCActivityIndicatorMode)mode animated:(__unused BOOL)animated {
   [self setIndicatorMode:mode];
 }
 
