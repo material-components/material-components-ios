@@ -334,18 +334,18 @@ static const CGFloat kOpacityMedium = 0.87f;
 - (void)testFontFamilyMatchesSystemFontFamily {
   // Given
   NSArray<NSNumber *> *allFontStyles = @[
-                                         @(MDCFontTextStyleBody1),
-                                         @(MDCFontTextStyleBody2),
-                                         @(MDCFontTextStyleCaption),
-                                         @(MDCFontTextStyleHeadline),
-                                         @(MDCFontTextStyleSubheadline),
-                                         @(MDCFontTextStyleTitle),
-                                         @(MDCFontTextStyleDisplay1),
-                                         @(MDCFontTextStyleDisplay2),
-                                         @(MDCFontTextStyleDisplay3),
-                                         @(MDCFontTextStyleDisplay4),
-                                         @(MDCFontTextStyleButton),
-                                         ];
+    @(MDCFontTextStyleBody1),
+    @(MDCFontTextStyleBody2),
+    @(MDCFontTextStyleCaption),
+    @(MDCFontTextStyleHeadline),
+    @(MDCFontTextStyleSubheadline),
+    @(MDCFontTextStyleTitle),
+    @(MDCFontTextStyleDisplay1),
+    @(MDCFontTextStyleDisplay2),
+    @(MDCFontTextStyleDisplay3),
+    @(MDCFontTextStyleDisplay4),
+    @(MDCFontTextStyleButton),
+  ];
 
   for (NSNumber *styleObject in allFontStyles) {
     // When
