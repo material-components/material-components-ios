@@ -35,9 +35,9 @@
 
   // Store the system font family name to ensure that we load the system font.
   // If we do not explicitly include this UIFontDescriptorFamilyAttribute in the
-  // FontDescriptor the OS will default to Helvetica.
+  // FontDescriptor the OS will default to Helvetica. On iOS 9+, the Font Family
+  // changes from San Francisco to San Francisco Display at point size 20.
   static NSString *smallSystemFontFamilyName;
-  // For font size 20+, iOS returns a different font family. Query it separately.
   static NSString *largeSystemFontFamilyName;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
