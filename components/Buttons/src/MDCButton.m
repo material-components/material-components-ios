@@ -238,20 +238,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
   _nontransformedTitles = [NSMutableDictionary dictionary];
+  _borderColors = [NSMutableDictionary dictionary];
+  _borderWidths = [NSMutableDictionary dictionary];
 
-  // The following dictionaries may have already been initialized by setting their respective
-  // setters in a subclass's initializer.
   if (!_backgroundColors) {
+    // _backgroundColors may have already been initialized by setting the backgroundColor setter.
     _backgroundColors = [NSMutableDictionary dictionary];
     _backgroundColors[@(UIControlStateNormal)] = MDCColorFromRGB(MDCButtonDefaultBackgroundColor);
-  }
-
-  if (!_borderColors) {
-    _borderColors = [NSMutableDictionary dictionary];
-  }
-
-  if (!_borderWidths) {
-    _borderWidths = [NSMutableDictionary dictionary];
   }
 
   // Disable default highlight state.
@@ -609,9 +602,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)setBorderColor:(UIColor *)borderColor forState:(UIControlState)state {
-  if (!_borderColors) {
-    _borderColors = [NSMutableDictionary dictionary];
-  }
   _borderColors[@(state)] = borderColor;
 
   [self updateBorderColor];
@@ -620,6 +610,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)updateBorderColor {
   UIColor *color = _borderColors[@(self.state)];
   if (!color && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
     color = _borderColors[@(UIControlStateNormal)];
   }
   self.layer.borderColor = color ? color.CGColor : NULL;
@@ -636,9 +627,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state {
-  if (!_borderWidths) {
-    _borderWidths = [NSMutableDictionary dictionary];
-  }
   _borderWidths[@(state)] = @(borderWidth);
 
   [self updateBorderWidth];
@@ -647,6 +635,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)updateBorderWidth {
   NSNumber *width = _borderWidths[@(self.state)];
   if (!width && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
     width = _borderWidths[@(UIControlStateNormal)];
   }
   self.layer.borderWidth = width ? width.doubleValue : 0;
