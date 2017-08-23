@@ -29,11 +29,11 @@
  @param animations Animations to which the timing function will apply.
  @param completion A completion block fired after the animations complete.
  */
-+ (void)mdc_animateWithTimingFunction:(CAMediaTimingFunction *)timingFunction
++ (void)mdc_animateWithTimingFunction:(nullable CAMediaTimingFunction *)timingFunction
                              duration:(NSTimeInterval)duration
                                 delay:(NSTimeInterval)delay
                               options:(UIViewAnimationOptions)options
-                           animations:(void (^)(void))animations
-                           completion:(void (^)(BOOL finished))completion;
+                           animations:(void (^ __nonnull)(void))animations
+                           completion:(void (^ __nullable)(BOOL finished))completion;
 
 @end

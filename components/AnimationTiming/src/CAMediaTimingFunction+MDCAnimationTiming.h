@@ -65,6 +65,6 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
 
  @param type A Material Design media timing function.
  */
-+ (CAMediaTimingFunction *)mdc_functionWithType:(MDCAnimationTimingFunction)type;
++ (nullable CAMediaTimingFunction *)mdc_functionWithType:(MDCAnimationTimingFunction)type;
 
 @end
