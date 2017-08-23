@@ -456,6 +456,40 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertFalse([button pointInside:touchPointOutsideHitAreaBottomLeft withEvent:nil]);
 }
 
+- (void)testPointInsideWithNonStandardizedBounds {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  // This is (-10, -10, 20, 20) in standardized form
+  CGRect bounds = CGRectMake(10, 10, -20, -20);
+  // Once applied, these insets should increase the hitArea to (-15, -20, 30, 40)
+  UIEdgeInsets insets = UIEdgeInsetsMake(-10, -5, -10, -5);
+
+  CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-15, -20);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(14.9, -20);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9, 19.9);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(-15, 19.9);
+
+  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake(-15.1, -20);
+  CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(20, -20);
+  CGPoint touchPointOutsideHitAreaBottomRight = CGPointMake(15, 20);
+  CGPoint touchPointOutsideHitAreaBottomLeft = CGPointMake(-15, 20);
+
+  // When
+  button.bounds = bounds;
+  button.hitAreaInsets = insets;
+
+  // Then
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaTopLeft withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaTopRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaBottomRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaBottomLeft withEvent:nil]);
+
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaTopLeft withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaTopRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaBottomRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaBottomLeft withEvent:nil]);
+}
+
 #pragma mark - UIButton strangeness
 
 - (void)testTitleColorForState {
@@ -618,7 +652,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory);
-  XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize, preferredFont.pointSize,
+  XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize,
+                             preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
 }

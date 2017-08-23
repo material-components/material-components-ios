@@ -131,6 +131,7 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
     case MDCFloatingButtonShapeDefault:
       return UIEdgeInsetsZero;
     case MDCFloatingButtonShapeMini:
+      // Increase the touch target from (40, 40) to the minimum (48, 48)
       return UIEdgeInsetsMake(-4, -4, -4, -4);
     case MDCFloatingButtonShapeLargeIcon:
       return UIEdgeInsetsZero;
