@@ -35,25 +35,33 @@
 
   // Store the system font family name to ensure that we load the system font.
   // If we do not explicitly include this UIFontDescriptorFamilyAttribute in the
-  // FontDescriptor the OS will default to Helvetica.
-  static NSString *systemFontFamilyName;
+  // FontDescriptor the OS will default to Helvetica. On iOS 9+, the Font Family
+  // changes from San Francisco to San Francisco Display at point size 20.
+  static NSString *smallSystemFontFamilyName;
+  static NSString *largeSystemFontFamilyName;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    UIFont *systemFont;
+    UIFont *smallSystemFont;
+    UIFont *largeSystemFont;
     if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-      systemFont = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+      smallSystemFont = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+      largeSystemFont = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
     } else {
       // TODO: Remove this fallback once we are 8.2+
-      systemFont = [UIFont systemFontOfSize:12];
+      smallSystemFont = [UIFont systemFontOfSize:12];
+      largeSystemFont = [UIFont systemFontOfSize:20];
     }
-    systemFontFamilyName = [systemFont.familyName copy];
+    smallSystemFontFamilyName = [smallSystemFont.familyName copy];
+    largeSystemFontFamilyName = [largeSystemFont.familyName copy];
   });
 
   NSDictionary *traits = @{ UIFontWeightTrait : @(materialTraits.weight) };
+  NSString *fontFamily =
+      materialTraits.pointSize < 19.5 ? smallSystemFontFamilyName : largeSystemFontFamilyName;
   NSDictionary *attributes = @{
     UIFontDescriptorSizeAttribute : @(materialTraits.pointSize),
     UIFontDescriptorTraitsAttribute : traits,
-    UIFontDescriptorFamilyAttribute : systemFontFamilyName
+    UIFontDescriptorFamilyAttribute : fontFamily
   };
 
   UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] initWithFontAttributes:attributes];
