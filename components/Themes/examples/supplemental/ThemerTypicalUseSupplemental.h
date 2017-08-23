@@ -63,3 +63,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 - (void)setupExampleViews;
 
 @end
+
+@interface ThemerCustomSchemePickerController : UIViewController
+
+@end
+
