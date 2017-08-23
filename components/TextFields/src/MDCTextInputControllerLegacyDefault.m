@@ -21,6 +21,7 @@
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
+#import "private/MDCTextInputArt.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
@@ -85,7 +86,7 @@ static inline UIBezierPath *MDCTextInputControllerLegacyDefaultEmptyPath() {
   return [UIBezierPath bezierPath];
     
 static inline UIColor *MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault() {
-  return [UIColor colorWithWhite:0 alpha:MDCTextInputDefaultHintTextOpacity];
+  return [UIColor colorWithWhite:0 alpha:MDCTextInputLegacyDefaultHintTextOpacity];
 }
 
 static inline UIColor *MDCTextInputControllerLegacyDefaultActiveColorDefault() {
