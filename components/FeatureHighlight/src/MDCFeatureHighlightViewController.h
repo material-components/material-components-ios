@@ -122,6 +122,18 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  */
 @property(nonatomic, strong, nullable) UIColor *bodyColor;
 
+/*
+ Indicates whether the feature highlight contents should automatically update their font when the
+ device’s UIContentSizeCategory changes.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
 /**
  Dismisses the feature highlight using the 'accept' style dismissal animation and triggers the
  completion block with accepted set to YES.

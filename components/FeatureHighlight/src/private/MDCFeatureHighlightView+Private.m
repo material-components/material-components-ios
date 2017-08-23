@@ -525,6 +525,15 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   }
 }
 
+- (void)updateFontsForDynamicType {
+  _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
+  _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+
+  if (!CGRectIsEmpty(self.frame)) {
+    [self setNeedsLayout];
+  }
+}
+
 + (NSString *)dismissAccessibilityHint {
   NSString *key =
       kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
