@@ -398,6 +398,11 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - <UICollectionViewDelegate>
 
+- (BOOL)collectionView:(UICollectionView *)collectionView
+    shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  return YES;
+}
+
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)]

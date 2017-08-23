@@ -49,6 +49,9 @@
  as well as ink during the highlight/unhighlight states.
  */
 
+- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
+    shouldHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
+
 - (void)collectionView:(nonnull UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
 
