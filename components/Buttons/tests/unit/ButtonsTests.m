@@ -265,7 +265,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setElevation:normalElevation forState:UIControlStateNormal];
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state], normalElevation,
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
+                             normalElevation,
                              kEpsilonAccuracy);
 }
 
@@ -356,20 +357,26 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualObjects(button.inkColor, unarchivedButton.inkColor);
   XCTAssertEqual(button.uppercaseTitle, unarchivedButton.uppercaseTitle);
   XCTAssertEqual(button.inkStyle, unarchivedButton.inkStyle);
-  XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius, unarchivedButton.inkMaxRippleRadius,
+  XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius,
+                             unarchivedButton.inkMaxRippleRadius,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom, unarchivedButton.hitAreaInsets.bottom,
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom,
+                             unarchivedButton.hitAreaInsets.bottom,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.top, unarchivedButton.hitAreaInsets.top,
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.top,
+                             unarchivedButton.hitAreaInsets.top,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.right, unarchivedButton.hitAreaInsets.right,
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.right,
+                             unarchivedButton.hitAreaInsets.right,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.left, unarchivedButton.hitAreaInsets.left,
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.left,
+                             unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
   XCTAssertEqual(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button elevationForState:controlState],
-                               [unarchivedButton elevationForState:controlState], kEpsilonAccuracy);
+                               [unarchivedButton elevationForState:controlState],
+                               kEpsilonAccuracy);
     XCTAssertEqual([button backgroundColorForState:controlState],
                    [unarchivedButton backgroundColorForState:controlState]);
   }
@@ -506,7 +513,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
     [button setTitleColor:color forState:controlState];
 
     // Then
-    XCTAssertEqualObjects([button titleColorForState:controlState], color, @"for control state:%@ ",
+    XCTAssertEqualObjects([button titleColorForState:controlState],
+                          color,
+                          @"for control state:%@ ",
                           controlStateDescription(controlState));
   }
 }
@@ -525,10 +534,14 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setTitleColor:color forState:controlState];
 
   // Then
-  XCTAssertEqualObjects([button titleColorForState:controlState], normalColor,
-                        @"for control state:%@ ", controlStateDescription(controlState));
-  XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
-                           @"for control state:%@ ", controlStateDescription(controlState));
+  XCTAssertEqualObjects([button titleColorForState:controlState],
+                        normalColor,
+                        @"for control state:%@ ",
+                        controlStateDescription(controlState));
+  XCTAssertNotEqualObjects([button titleColorForState:controlState],
+                           color,
+                           @"for control state:%@ ",
+                           controlStateDescription(controlState));
 }
 
 #pragma mark - UIButton state changes
