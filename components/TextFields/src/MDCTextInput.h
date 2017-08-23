@@ -59,16 +59,9 @@ typedef NS_ENUM(NSUInteger, MDCTextInputAlignmentRectMode) {
 
  MDCTextInputAlignmentRectModeAlways:     Alignment rect always includes the labels.
 
- Default is alignmentRectModeDefault.
- */
-@property(nonatomic, assign) MDCTextInputAlignmentRectMode alignmentRectMode;
-
-/**
- Default value for alignmentRectMode.
-
  Default is MDCTextInputAlignmentRectModeIfContent.
  */
-@property(class, nonatomic, assign) MDCTextInputAlignmentRectMode alignmentRectModeDefault;
+@property(nonatomic, assign) MDCTextInputAlignmentRectMode alignmentRectMode UI_APPEARANCE_SELECTOR;
 
 /**
  The attributed text string of the placeholder label.
