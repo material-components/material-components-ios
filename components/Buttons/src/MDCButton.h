@@ -54,10 +54,10 @@
 @property(nonatomic) CGFloat disabledAlpha;
 
 /**
- If true, converts the button title to uppercase. Changing this property to NO will not update the
+ If true, converts the button title to uppercase. Changing this property to NO will update the
  current title string.
 
- Default is YES and is recommended whenever possible.
+ Default is YES.
  */
 @property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle UI_APPEARANCE_SELECTOR;
 
