@@ -47,7 +47,7 @@ static NSString *const MDCButtonAreaInsetKey = @"MDCButtonAreaInsetKey";
 
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
 static NSString *const MDCButtonBackgroundColorsKey = @"MDCButtonBackgroundColorsKey";
-static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilityLabelsKey";
+static NSString *const MDCButtonNontransformedTitlesKey = @"MDCButtonNontransformedTitlesKey";
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -98,7 +98,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   BOOL _hasCustomDisabledTitleColor;
 
   // Cached accessibility settings.
-  NSMutableDictionary<NSNumber *, NSString *> *_accessibilityLabelForState;
+  NSMutableDictionary<NSNumber *, NSString *> *_nontransformedTitles;
   NSString *_accessibilityLabelExplicitValue;
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
@@ -182,8 +182,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
     [self updateBackgroundColor];
 
-    if ([aDecoder containsValueForKey:MDCButtonAccessibilityLabelsKey]) {
-      _accessibilityLabelForState = [aDecoder decodeObjectForKey:MDCButtonAccessibilityLabelsKey];
+    if ([aDecoder containsValueForKey:MDCButtonNontransformedTitlesKey]) {
+      _nontransformedTitles = [aDecoder decodeObjectForKey:MDCButtonNontransformedTitlesKey];
     }
   }
   return self;
@@ -207,7 +207,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
-  [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
+  [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
 }
 
 - (void)commonMDCButtonInit {
@@ -215,7 +215,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
-  _accessibilityLabelForState = [NSMutableDictionary dictionary];
+  _nontransformedTitles = [NSMutableDictionary dictionary];
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -398,9 +398,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Intercept any setting of the title and store a copy in case the accessibilityLabel
   // is requested and the original non-uppercased version needs to be returned.
   if ([title length]) {
-    _accessibilityLabelForState[@(state)] = [title copy];
+    _nontransformedTitles[@(state)] = [title copy];
   } else {
-    [_accessibilityLabelForState removeObjectForKey:@(state)];
+    [_nontransformedTitles removeObjectForKey:@(state)];
   }
 
   if (_uppercaseTitle) {
@@ -413,9 +413,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Intercept any setting of the title and store a copy in case the accessibilityLabel
   // is requested and the original non-uppercased version needs to be returned.
   if ([title length]) {
-    _accessibilityLabelForState[@(state)] = [[title string] copy];
+    _nontransformedTitles[@(state)] = [[title string] copy];
   } else {
-    [_accessibilityLabelForState removeObjectForKey:@(state)];
+    [_nontransformedTitles removeObjectForKey:@(state)];
   }
 
   if (_uppercaseTitle) {
@@ -444,12 +444,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     return label;
   }
 
-  label = _accessibilityLabelForState[@(self.state)];
+  label = _nontransformedTitles[@(self.state)];
   if ([label length]) {
     return label;
   }
 
-  label = _accessibilityLabelForState[@(UIControlStateNormal)];
+  label = _nontransformedTitles[@(UIControlStateNormal)];
   if ([label length]) {
     return label;
   }
