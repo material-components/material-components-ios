@@ -49,7 +49,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
     _elevationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, frame.size.width, 100)];
     _elevationLabel.textAlignment = NSTextAlignmentCenter;
@@ -125,7 +125,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.title = @"Shadow Elevations";
   _shadowsView = [[ShadowElevationsPointsView alloc] initWithFrame:self.view.bounds];
   _shadowsView.autoresizingMask =

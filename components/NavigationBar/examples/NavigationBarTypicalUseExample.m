@@ -30,7 +30,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   self.title = @"Navigation Bar";
   UIImage *backButtonIcon = [[MDCIcons imageFor_ic_arrow_back] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -41,7 +41,6 @@
   self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonIcon  style:UIBarButtonItemStylePlain target:self action:@selector(didTap:)];
   
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
-  self.navBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   [self.navBar observeNavigationItem:self.navigationItem];
 
   MDCNavigationBarTextColorAccessibilityMutator *mutator =

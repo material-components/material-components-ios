@@ -32,17 +32,17 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
   // Array of cell background colors.
   _cellBackgroundColors = @[
-    [UIColor colorWithWhite:0 alpha:0.2], [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
-                                                          green:(CGFloat)0xA4 / (CGFloat)255
-                                                           blue:(CGFloat)0xDD / (CGFloat)255
-                                                          alpha:1],
-    [UIColor whiteColor]
-  ];
+                            [UIColor colorWithWhite:0 alpha:(CGFloat)0.2],
+                            [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
+                                            green:(CGFloat)0xA4 / (CGFloat)255
+                                             blue:(CGFloat)0xDD / (CGFloat)255
+                                            alpha:1]
+                            ];
 
   // Populate content.
   _content = [NSMutableArray array];
   [_content addObject:@[
-    @"[UIColor colorWithWhite:0 alpha:0.2]", @"Custom Blue Color", @"Default White Color"
+    @"[UIColor colorWithWhite:0 alpha:0.2]", @"Custom Blue Color", @"Default Color"
   ]];
 
   // Customize collection view settings.
@@ -73,7 +73,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (UIColor *)collectionView:(UICollectionView *)collectionView
     cellBackgroundColorAtIndexPath:(NSIndexPath *)indexPath {
-  return _cellBackgroundColors[indexPath.item];
+  if (indexPath.item < _cellBackgroundColors.count) {
+    return _cellBackgroundColors[indexPath.item];
+  }
+  return nil;
 }
 
 #pragma mark - CatalogByConvention

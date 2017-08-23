@@ -86,7 +86,7 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
+    view.backgroundColor = UIColor(white:0.9, alpha: 1.0)
 
     title = "Legacy Manual Text Fields"
 

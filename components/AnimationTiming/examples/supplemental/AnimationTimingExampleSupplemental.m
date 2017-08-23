@@ -46,7 +46,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 @implementation AnimationTimingExample (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = UIColor.whiteColor;
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.title = @"Animation Timing";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];

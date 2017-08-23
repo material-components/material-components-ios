@@ -32,7 +32,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+    view.backgroundColor = UIColor(white:0.9, alpha:1)
 
     let raisedButton = MDCRaisedButton()
     raisedButton.setElevation(4, for: UIControlState())
@@ -54,8 +54,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
 
-    let plusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    floatingButton.layer.addSublayer(plusShapeLayer)
+    floatingButton.setImage(UIImage.init(named: "Plus"), for: .normal)
 
     view.addSubview(floatingButton)
 

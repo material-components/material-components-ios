@@ -57,14 +57,10 @@
 
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
-
-  self.appBar.navigationBar.tintColor = [UIColor whiteColor];
-  self.appBar.navigationBar.titleTextAttributes =
-      @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
   self.scrollView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

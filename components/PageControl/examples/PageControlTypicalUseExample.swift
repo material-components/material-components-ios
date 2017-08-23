@@ -26,7 +26,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = UIColor(white:0.9, alpha:1)
 
     let pageColors = [
       type(of: self).ColorFromRGB(0x55C4f5),

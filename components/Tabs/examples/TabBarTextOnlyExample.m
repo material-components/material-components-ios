@@ -68,11 +68,6 @@
                                     tag:0],
   ];
 
-  // Give change the selected item tint color and the tab bar tint color. For other color properties
-  // rely on the UIAppearance proxy.
-  self.tabBar.selectedItemTintColor = [UIColor whiteColor];
-  self.tabBar.tintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
-
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.tabBar sizeToFit];

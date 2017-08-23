@@ -61,11 +61,6 @@
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
   [self.appBar addSubviewsToParent];
-  self.appBar.navigationBar.tintColor = UIColor.blackColor;
-  self.appBar.navigationBar.titleTextAttributes =
-      @{NSForegroundColorAttributeName : UIColor.blackColor};
-  self.appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor;
-  self.appBar.headerViewController.headerView.tintColor = UIColor.blackColor;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -100,8 +95,6 @@
 @implementation TabBarViewControllerExample (Supplemental)
 
 - (void)setupTabBarColors {
-  self.tabBar.unselectedItemTintColor = MDCPalette.greyPalette.tint900;
-  self.tabBar.selectedItemTintColor = MDCPalette.bluePalette.tint500;
 }
 
 - (nonnull NSArray *)constructExampleViewControllers {
@@ -111,7 +104,7 @@
   UIColor *blue = [UIColor colorWithRed:0x3A / 255. green:0x56 / 255. blue:0xFF / 255. alpha:1];
   UIViewController *child2 = [TBVCSampleViewController sampleWithTitle:@"Two" color:blue];
   UIImage *starImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
+      [[UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   UIViewController *child3 =
       [TBVCSampleViewController sampleWithTitle:@"Three" color:UIColor.blueColor icon:starImage];
   return @[ child1, child2, child3 ];

@@ -46,15 +46,12 @@
 }
 
 - (void)setupScrollViewContent {
-  UIColor *color =
-      [UIColor colorWithRed:(97.0 / 255.0) green:(97.0 / 255.0) blue:(97.0 / 255.0) alpha:1.0];
   UIView *scrollViewContent =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width, 700)];
   scrollViewContent.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   UILabel *pullDownLabel = [[UILabel alloc]
       initWithFrame:CGRectMake(20, 150, self.scrollView.frame.size.width - 40, 50)];
-  pullDownLabel.textColor = color;
   pullDownLabel.text = @"Pull Down";
   pullDownLabel.textAlignment = NSTextAlignmentCenter;
   pullDownLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth |
@@ -64,7 +61,6 @@
 
   UILabel *pushUpLabel = [[UILabel alloc]
       initWithFrame:CGRectMake(20, 225, self.scrollView.frame.size.width - 40, 50)];
-  pushUpLabel.textColor = color;
   pushUpLabel.text = @"Push Up";
   pushUpLabel.textAlignment = NSTextAlignmentCenter;
   pushUpLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth |
@@ -74,7 +70,6 @@
 
   UILabel *downResultsLabel = [[UILabel alloc]
       initWithFrame:CGRectMake(20, 325, self.scrollView.frame.size.width - 40, 50)];
-  downResultsLabel.textColor = color;
   downResultsLabel.text = @"UIView Stays Constrained to TopLayoutGuide of Parent View Controller.";
   downResultsLabel.numberOfLines = 0;
   downResultsLabel.textAlignment = NSTextAlignmentCenter;

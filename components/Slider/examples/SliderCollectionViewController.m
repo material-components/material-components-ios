@@ -184,7 +184,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
-    model.labelString = @"Green slider without hollow circle at 0";
+    model.labelString = @"Slider without hollow circle at 0";
     model.hollowCircle = NO;
     model.value = 0.f;
     [_sliders addObject:model];

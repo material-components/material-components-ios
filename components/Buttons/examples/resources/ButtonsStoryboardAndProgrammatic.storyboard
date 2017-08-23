@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmZ-Mt-scB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmZ-Mt-scB">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,37 +27,27 @@
                                 <rect key="frame" x="187.5" y="20" width="187.5" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VTp-Pq-SmW" userLabel="Inner Button Container">
-                                        <rect key="frame" x="48.5" y="254.5" width="91" height="138"/>
+                                        <rect key="frame" x="55.5" y="256.5" width="77" height="134"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" customClass="MDCRaisedButton">
-                                                <rect key="frame" x="0.0" y="0.0" width="91" height="34"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" customClass="MDCRaisedButton">
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="30"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
-                                                <state key="normal" title="Storyboard">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
+                                                <state key="normal" title="Storyboard"/>
                                                 <connections>
                                                     <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="JuO-kL-5tW"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dc-Q4-b6Z" customClass="MDCFlatButton">
-                                                <rect key="frame" x="7" y="56" width="77" height="30"/>
+                                                <rect key="frame" x="0.0" y="52" width="77" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
-                                                <state key="normal" title="Storyboard">
-                                                    <color key="titleColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
+                                                <state key="normal" title="Storyboard"/>
                                                 <connections>
                                                     <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="D3j-iL-WdR"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDu-tK-SwC" customClass="MDCFloatingButton">
-                                                <rect key="frame" x="30.5" y="108" width="30" height="30"/>
+                                                <rect key="frame" x="23.5" y="104" width="30" height="30"/>
                                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
-                                                <state key="normal">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
                                                 <connections>
                                                     <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="FTx-qa-X3A"/>
                                                 </connections>
@@ -102,5 +92,4 @@
             <point key="canvasLocation" x="442.39999999999998" y="467.3163418290855"/>
         </scene>
     </scenes>
-    <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
 </document>

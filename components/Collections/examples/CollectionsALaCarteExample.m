@@ -34,7 +34,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   self = [super initWithFrame:frame collectionViewLayout:layout];
   if (self) {
     // Our custom collection view settings.
-    self.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
     self.contentInset = UIEdgeInsetsMake(40, 20, 40, 20);
   }
   return self;
