@@ -41,7 +41,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
 
   override func prepareForReuse() {
     super.prepareForReuse()
-    textLabel!.textColor = UIColor.black
+    textLabel!.textColor = nil
     imageView!.image = UIImage(named: "Demo")
   }
 }
@@ -80,16 +80,14 @@ class MDCNodeListViewController: CBCNodeListViewController {
     // swiftlint:enable force_cast
 
     self.addChildViewController(appBar.headerViewController)
-    let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
+    let appBarFont = UIFont.preferredFont(forTextStyle: .subheadline)
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
     MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
 
-    appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
-      NSForegroundColorAttributeName: UIColor.white,
-      NSFontAttributeName: appBarFont! ]
+      NSFontAttributeName: appBarFont ]
     appBar.navigationBar.titleAlignment = .center
   }
 
@@ -185,7 +183,6 @@ extension MDCNodeListViewController {
                           viewForHeaderInSection section: Int) -> UIView? {
     var sectionViewFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50)
     let sectionView = UIView(frame: sectionViewFrame)
-    sectionView.backgroundColor = UIColor.white
 
     if section == 1 {
       let lineDivider =
@@ -358,12 +355,11 @@ extension MDCNodeListViewController {
       if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
         vc = contentVC
       } else {
-        let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
+        let appBarFont = UIFont.preferredFont(forTextStyle: .headline)
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
         container.appBar.navigationBar.titleAlignment = .center
-        container.appBar.navigationBar.tintColor = UIColor.white
         container.appBar.navigationBar.titleTextAttributes =
-            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont! ]
+            [ NSFontAttributeName: appBarFont ]
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.
@@ -374,12 +370,6 @@ extension MDCNodeListViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let colorScheme = appDelegate.colorScheme
         MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
-
-        let textColor = UIColor.white
-        UIBarButtonItem.appearance().setTitleTextAttributes(
-          [NSForegroundColorAttributeName: textColor],
-          for: UIControlState())
-
         var contentFrame = container.contentViewController.view.frame
         let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
         contentFrame.origin.y = headerSize.height

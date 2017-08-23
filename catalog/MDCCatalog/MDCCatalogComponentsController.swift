@@ -102,8 +102,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     let titleLabel = UILabel()
     titleLabel.text = self.title!.uppercased()
-    titleLabel.textColor = UIColor(white: 1, alpha: 1)
-    titleLabel.font = UIFont(name: "RobotoMono-Regular", size: 14)
+    titleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
     titleLabel.sizeToFit()
     if inset + titleLabel.frame.size.width > containerView.frame.size.width {
       titleLabel.font = MDCTypography.body2Font()
@@ -128,7 +127,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.headerViewController.headerView.addSubview(containerView)
     self.headerViewController.headerView.forwardTouchEvents(for: containerView)
 
-    self.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
@@ -171,7 +169,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func inkViewForView(_ view: UIView) -> MDCInkView {
     let foundInkView = MDCInkTouchController.injectedInkView(for: view)
     foundInkView.inkStyle = .unbounded
-    foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
     return foundInkView
   }
 

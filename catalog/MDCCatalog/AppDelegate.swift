@@ -41,10 +41,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // problems.
     navigationController.interactivePopGestureRecognizer?.delegate = navigationController
 
+    applyTheme()
+
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
+    return true
+  }
 
+  func applyTheme() {
     colorScheme = MDCBasicColorScheme(primaryColor: MDCPalette.lightBlue.tint500,
                                       primaryLightColor: MDCPalette.lightBlue.tint700,
                                       primaryDarkColor: MDCPalette.lightBlue.tint300,
@@ -70,10 +75,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor
     UISwitch.appearance().onTintColor = colorScheme?.primaryColor
-
-    return true
   }
 }
+
 
 extension UINavigationController: UIGestureRecognizerDelegate {
   public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
