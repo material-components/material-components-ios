@@ -98,6 +98,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 // We never use the text property. Instead always read from the text field.
 
+@synthesize alignmentRectMode = _alignmentRectMode;
 @synthesize attributedText = _do_no_use_attributedText;
 @synthesize borderPath = _borderPath;
 @synthesize borderView = _borderView;
@@ -564,6 +565,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 #pragma mark - Properties Implementation
+
+- (void)setAlignmentRectMode:(MDCTextInputAlignmentRectMode)alignmentRectMode {
+  if (_alignmentRectMode != alignmentRectMode) {
+    _alignmentRectMode = alignmentRectMode;
+    [self.textInput invalidateIntrinsicContentSize];
+  }
+}
 
 - (NSAttributedString *)attributedPlaceholder {
   id placeholderString = self.placeholderLabel.text;

@@ -491,6 +491,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self mdc_setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
 }
 
+- (MDCTextInputAlignmentRectMode)alignmentRectMode {
+  return self.fundament.alignmentRectMode;
+}
+
+- (void)setAlignmentRectMode:(MDCTextInputAlignmentRectMode)alignmentRectMode {
+  self.fundament.alignmentRectMode = alignmentRectMode;
+}
+
 - (NSAttributedString *)attributedPlaceholder {
   return self.fundament.attributedPlaceholder;
 }

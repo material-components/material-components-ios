@@ -209,6 +209,14 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 #pragma mark - Properties Implementation
 
+- (MDCTextInputAlignmentRectMode)alignmentRectMode {
+  return self.fundament.alignmentRectMode;
+}
+
+- (void)setAlignmentRectMode:(MDCTextInputAlignmentRectMode)alignmentRectMode {
+  self.fundament.alignmentRectMode = alignmentRectMode;
+}
+
 - (UIBezierPath *)borderPath {
   return self.fundament.borderPath ? self.fundament.borderPath : [self defaultBorderPath];
 }
