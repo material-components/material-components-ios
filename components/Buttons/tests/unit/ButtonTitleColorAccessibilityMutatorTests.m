@@ -95,7 +95,6 @@ static NSString *controlStateDescription(UIControlState controlState);
   for (UIColor *color in testColors()) {
     for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
       // Given
-      NSUInteger controlState = 0;
       MDCButton *button = [[MDCButton alloc] init];
       button.underlyingColorHint = color;
       [button setBackgroundColor:[UIColor clearColor] forState:controlState];

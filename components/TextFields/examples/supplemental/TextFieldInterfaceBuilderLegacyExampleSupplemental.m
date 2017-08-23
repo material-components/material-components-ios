@@ -14,14 +14,24 @@
  limitations under the License.
  */
 
-@import UIKit;
+#import "TextFieldInterfaceBuilderLegacyExampleSupplemental.h"
 
-@interface TextFieldInterfaceBuilderExample : UIViewController
+@implementation TextFieldInterfaceBuilderLegacyExample (Supplemental)
+
+- (void)setupExampleViews {
+  self.title = @"Legacy Text Fields";
+}
 
 @end
 
-@interface TextFieldInterfaceBuilderExample (Supplemental)
+@implementation TextFieldInterfaceBuilderLegacyExample (CatalogByConvention)
 
-- (void)setupExampleViews;
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Text Field", @"[Legacy] Storyboard (Objective C)" ];
+}
+
++ (NSString *)catalogStoryboardName {
+  return @"TextFieldInterfaceBuilderLegacyExample";
+}
 
 @end

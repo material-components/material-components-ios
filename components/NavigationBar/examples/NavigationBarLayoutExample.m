@@ -28,11 +28,11 @@
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
 
 @property(nonatomic, strong) MDCNavigationBar *navigationBar;
-@property(nonatomic, strong) MDCTextInputControllerDefault *leadingItemController;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *leadingItemController;
 @property(nonatomic, strong) MDCTextField *leadingItemField;
-@property(nonatomic, strong) MDCTextInputControllerDefault *trailingItemController;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *trailingItemController;
 @property(nonatomic, strong) MDCTextField *trailingItemField;
-@property(nonatomic, strong) MDCTextInputControllerDefault *titleController;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *titleController;
 @property(nonatomic, strong) MDCTextField *titleField;
 @property(nonatomic, weak) UIBarButtonItem *trailingBarButtonItem;
 @property(nonatomic, weak) UIBarButtonItem *leadingBarButtonItem;
@@ -87,20 +87,20 @@
   self.leadingItemField.text = @"L";
 
   self.leadingItemController =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.leadingItemField];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.leadingItemField];
 
   self.trailingItemField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   self.trailingItemField.translatesAutoresizingMaskIntoConstraints = NO;
   self.trailingItemField.delegate = self;
   self.trailingItemField.text = @"T";
   self.trailingItemController =
-      [[MDCTextInputControllerDefault alloc] initWithTextInput:self.trailingItemField];
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.trailingItemField];
 
   self.titleField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
   self.titleField.delegate = self;
   self.titleField.text = self.title;
-  self.titleController = [[MDCTextInputControllerDefault alloc] initWithTextInput:self.titleField];
+  self.titleController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.titleField];
 
   [self.view addSubview:self.leadingItemField];
   [self.view addSubview:self.trailingItemField];

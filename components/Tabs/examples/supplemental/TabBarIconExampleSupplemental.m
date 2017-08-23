@@ -25,6 +25,12 @@
 @import MaterialComponents.MaterialPalettes;
 @import MaterialComponents.MaterialTabs;
 
+// Exposing selectors defined in the main example class
+@interface TabBarIconExample ()
+- (void)changeAlignment:(id)sender;
+- (void)incrementDidTouch:(id)sender;
+@end
+
 @implementation TabBarIconExample (Supplemental)
 
 - (void)setupExampleViews {
@@ -76,9 +82,10 @@
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
 
   self.appBar.navigationBar.titleTextAttributes = @{
-    NSForegroundColorAttributeName: [UIColor whiteColor],
-    NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
-  
+    NSForegroundColorAttributeName : [UIColor whiteColor],
+    NSFontAttributeName : [UIFont fontWithName:@"RobotoMono-Regular" size:14]
+  };
+
   [self.appBar addSubviewsToParent];
 
   UIBarButtonItem *badgeIncrementItem =
@@ -86,7 +93,9 @@
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(incrementDidTouch:)];
+
   self.navigationItem.rightBarButtonItem = badgeIncrementItem;
+  self.appBar.navigationBar.tintColor = UIColor.whiteColor;
 
   self.title = @"Tabs With Icons";
 }
@@ -99,8 +108,7 @@
   [self.view addSubview:self.scrollView];
 
   NSDictionary *viewsScrollView =
-      @{ @"scrollView" : self.scrollView,
-         @"header" : self.appBar.headerStackView };
+      @{@"scrollView" : self.scrollView, @"header" : self.appBar.headerStackView};
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[header][scrollView]|"
                                                                   options:0
@@ -150,12 +158,11 @@
       .active = YES;
 
   [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[infoLabel]-50-|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:@{
-                                                                      @"infoLabel" : infoLabel
-                                                                    }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|-50-[infoLabel]-50-|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{@"infoLabel" : infoLabel}]];
 
   // Create the second view and its content. Then add to scrollView.
   self.starPage = [[UIView alloc] initWithFrame:CGRectZero];
@@ -193,7 +200,7 @@
                                 constant:0]
       .active = YES;
 
-  NSDictionary *viewsPages = @{ @"infoPage" : infoPage, @"starPage" : self.starPage };
+  NSDictionary *viewsPages = @{@"infoPage" : infoPage, @"starPage" : self.starPage};
 
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint

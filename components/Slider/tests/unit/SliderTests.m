@@ -19,7 +19,7 @@
 #import "MaterialThumbTrack.h"
 #import "MaterialSlider.h"
 
-static const NSUInteger kNumberOfRepeats = 20;
+static const int kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
 // Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
@@ -188,7 +188,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   MDCSlider *slider = [[MDCSlider alloc] init];
   slider.maximumValue = 10;
   slider.minimumValue = 0;
-  slider.value = arc4random_uniform(slider.maximumValue / 2);
+  slider.value = arc4random_uniform((u_int32_t)(slider.maximumValue / 2));
 
   // When
   slider.numberOfDiscreteValues = 2;
@@ -205,7 +205,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   slider.numberOfDiscreteValues = 2;
 
   // When
-  slider.value = arc4random_uniform(slider.maximumValue / 2);
+  slider.value = arc4random_uniform((u_int32_t)(slider.maximumValue / 2));
 
   // Then
   XCTAssertEqualWithAccuracy(slider.value, slider.minimumValue, kEpsilonAccuracy);
@@ -216,7 +216,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   MDCSlider *slider = [[MDCSlider alloc] init];
   slider.maximumValue = 100;
   slider.minimumValue = 0;
-  slider.value = arc4random_uniform(slider.maximumValue / 6);
+  slider.value = arc4random_uniform((u_int32_t)(slider.maximumValue / 6));
 
   // When
   slider.numberOfDiscreteValues = 3;
@@ -233,14 +233,14 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   slider.numberOfDiscreteValues = 3;
 
   // When
-  slider.value = arc4random_uniform(slider.maximumValue / 6);
+  slider.value = arc4random_uniform((u_int32_t)(slider.maximumValue / 6));
 
   // Then
   XCTAssertEqualWithAccuracy(slider.value, slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValuesWithIntegers {
-  for (int ii = 0; ii < kNumberOfRepeats; ++ii) {
+  for (int i = 0; i < kNumberOfRepeats; ++i) {
     // Given
     MDCSlider *slider = [[MDCSlider alloc] init];
     slider.maximumValue = (int)[self randomNumber];
@@ -249,7 +249,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     CGFloat originalValue = slider.value;
 
     // When
-    slider.numberOfDiscreteValues = slider.maximumValue + 1;
+    slider.numberOfDiscreteValues = (NSUInteger)(slider.maximumValue + 1);
 
     // Then
     XCTAssertEqualWithAccuracy(slider.value, originalValue, 0.5f + kEpsilonAccuracy);
@@ -258,11 +258,11 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)testDiscreteValuesWithFloatingPointDelta {
-  for (int ii = 0; ii < kNumberOfRepeats; ++ii) {
+  for (int i = 0; i < kNumberOfRepeats; ++i) {
     // Given
     CGFloat delta = [self randomNumber] + 1;
     NSUInteger numberOfValues = arc4random_uniform(8) + 2;
-    CGFloat snapedValue = arc4random_uniform((int)numberOfValues) * delta;
+    CGFloat snapedValue = arc4random_uniform((u_int32_t)numberOfValues) * delta;
     CGFloat originalValue = snapedValue + [self randomPercent] * (delta - kEpsilonAccuracy) -
                             (delta - kEpsilonAccuracy) / 2;
 
@@ -376,7 +376,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   // Then
   NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
   numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
-  NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:slider.value]];
+  NSString *expected =
+      [numberFormatter stringFromNumber:[NSNumber numberWithFloat:(float)slider.value]];
   XCTAssertEqualObjects([slider accessibilityValue], expected);
 }
 
@@ -394,7 +395,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
   CGFloat percent =
       (slider.value - slider.minimumValue) / (slider.maximumValue - slider.minimumValue);
-  NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:percent]];
+  NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:(float)percent]];
   XCTAssertEqualObjects([slider accessibilityValue], expected);
 }
 

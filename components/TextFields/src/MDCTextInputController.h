@@ -130,6 +130,20 @@
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
+/**
+ The color applied to the leading side underline label when not in error state.
+
+ Default is leadingUnderlineLabelTextColorDefault;
+ */
+@property(nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelTextColor;
+
+/**
+ Default value for leadingUnderlineLabelTextColor.
+
+ Default is black with Material Design hint text opacity.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelTextColorDefault;
+
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
  UIContentSizeCategory changes.
@@ -166,6 +180,20 @@
 
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
+
+/**
+ The color applied to the trailing side underline label when not in error state.
+
+ Default is trailingUnderlineLabelTextColorDefault;
+ */
+@property(nonatomic, nullable, strong) UIColor *trailingUnderlineLabelTextColor;
+
+/**
+ Default value for trailingUnderlineLabelTextColor.
+
+ Default is black with Material Design hint text opacity.
+ */
+@property(class, nonatomic, nullable, strong) UIColor *trailingUnderlineLabelTextColorDefault;
 
 /**
  Controls when the underline will be shown.

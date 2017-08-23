@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "32.0.0"
+  s.version      = "33.0.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -41,6 +41,7 @@ Pod::Spec.new do |s|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/*.h"
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
       ss.dependency "MaterialComponents/private/Application"
       ss.dependency "MaterialComponents/private/RTL"

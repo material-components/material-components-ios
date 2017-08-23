@@ -407,6 +407,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
 }
 
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  [super setBackgroundColor:backgroundColor];
+
+  // Update default shadow to match
+  _defaultShadowLayer.backgroundColor = self.backgroundColor.CGColor;
+}
+
 #pragma mark - Private (fhv_ prefix)
 
 - (void)fhv_removeInsetsFromScrollView:(UIScrollView *)scrollView {

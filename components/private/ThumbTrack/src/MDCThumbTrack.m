@@ -279,6 +279,20 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
+- (BOOL)shouldDisplayFilledTrack {
+  return [_trackOnLayer superlayer] != nil;
+}
+
+- (void)setShouldDisplayFilledTrack:(BOOL)shouldDisplayFilledTrack {
+  if (shouldDisplayFilledTrack) {
+    if ([_trackOnLayer superlayer] == nil) {
+      [_trackView.layer addSublayer:_trackOnLayer];
+    }
+  } else {
+    [_trackOnLayer removeFromSuperlayer];
+  }
+}
+
 - (void)setMinimumValue:(CGFloat)minimumValue {
   _minimumValue = minimumValue;
   CGFloat previousValue = _value;

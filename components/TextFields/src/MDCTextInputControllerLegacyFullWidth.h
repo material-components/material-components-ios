@@ -23,6 +23,6 @@
 
  The placeholder is laid out inline and the character count is also inline to the right.
  */
-@interface MDCTextInputControllerFullWidth : NSObject <MDCTextInputController>
+@interface MDCTextInputControllerLegacyFullWidth : NSObject <MDCTextInputController>
 
 @end

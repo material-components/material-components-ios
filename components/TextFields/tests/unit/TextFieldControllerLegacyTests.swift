@@ -20,11 +20,11 @@
 import XCTest
 import MaterialComponents.MaterialTextFields
 
-class TextFieldControllerDefaultTests: XCTestCase {
-  func testCopyingDefault() {
+class TextFieldControllerDefaultLegacyTests: XCTestCase {
+  func testCopyingLegacyDefault() {
     let textField = MDCTextField()
 
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
     controller.characterCountMax = 49
     controller.characterCountViewMode = .always
     controller.disabledColor = .orange
@@ -36,8 +36,10 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.activeColor = .blue
     controller.normalColor = .white
     controller.underlineViewMode = .always
+    controller.leadingUnderlineLabelTextColor = .yellow
+    controller.trailingUnderlineLabelTextColor = .orange
 
-    if let controllerCopy = controller.copy() as? MDCTextInputControllerDefault {
+    if let controllerCopy = controller.copy() as? MDCTextInputControllerLegacyDefault {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
       XCTAssertEqual(controller.disabledColor, controllerCopy.disabledColor)
@@ -49,15 +51,19 @@ class TextFieldControllerDefaultTests: XCTestCase {
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
       XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
+      XCTAssertEqual(controller.leadingUnderlineLabelTextColor,
+                     controllerCopy.leadingUnderlineLabelTextColor)
+      XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
+                     controllerCopy.trailingUnderlineLabelTextColor)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
   }
 
-  func testCopyingFullWidth() {
+  func testCopyingLegacyFullWidth() {
     let textField = MDCTextField()
 
-    let controller = MDCTextInputControllerFullWidth(textInput: textField)
+    let controller = MDCTextInputControllerLegacyFullWidth(textInput: textField)
     controller.characterCountMax = 49
     controller.characterCountViewMode = .always
     controller.disabledColor = .yellow
@@ -66,8 +72,9 @@ class TextFieldControllerDefaultTests: XCTestCase {
     controller.activeColor = .blue
     controller.normalColor = .white
     controller.underlineViewMode = .always
+    controller.trailingUnderlineLabelTextColor = .purple
 
-    if let controllerCopy = controller.copy() as? MDCTextInputControllerFullWidth {
+    if let controllerCopy = controller.copy() as? MDCTextInputControllerLegacyFullWidth {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
       XCTAssertEqual(controller.disabledColor, controllerCopy.disabledColor)
@@ -76,19 +83,21 @@ class TextFieldControllerDefaultTests: XCTestCase {
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
       XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
+      XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
+                     controllerCopy.trailingUnderlineLabelTextColor)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
   }
 
-  func testDynamicTypeDefault() {
+  func testDynamicTypeLegacyDefault() {
     let textField = MDCTextField()
 
     XCTAssertFalse(textField.mdc_adjustsFontForContentSizeCategory)
     textField.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
 
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
     controller.mdc_adjustsFontForContentSizeCategory = true
@@ -98,14 +107,14 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertFalse(textField.mdc_adjustsFontForContentSizeCategory)
   }
 
-  func testDynamicTypeFullWidth() {
+  func testDynamicTypeLegacyFullWidth() {
     let textField = MDCTextField()
 
     XCTAssertFalse(textField.mdc_adjustsFontForContentSizeCategory)
     textField.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
 
-    let controller = MDCTextInputControllerFullWidth(textInput: textField)
+    let controller = MDCTextInputControllerLegacyFullWidth(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
     controller.mdc_adjustsFontForContentSizeCategory = true
@@ -115,9 +124,9 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertFalse(textField.mdc_adjustsFontForContentSizeCategory)
   }
 
-  func testCharacterMaxDefault() {
+  func testCharacterMaxLegacyDefault() {
     let textField = MDCTextField()
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
 
     let altLeading = "Alternative Helper Test"
     controller.helperText = altLeading
@@ -133,9 +142,9 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(MDCPalette.red.accent400, textField.trailingUnderlineLabel.textColor)
   }
 
-  func testCharacterMaxFullWidth() {
+  func testCharacterMaxLegacyFullWidth() {
     let textField = MDCTextField()
-    let controller = MDCTextInputControllerFullWidth(textInput: textField)
+    let controller = MDCTextInputControllerLegacyFullWidth(textInput: textField)
 
     let altLeading = "Alternative Helper Test"
     controller.helperText = altLeading
@@ -150,17 +159,22 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(MDCPalette.red.accent400, textField.trailingUnderlineLabel.textColor)
   }
 
-  func testErrorsDefault() {
+  func testErrorsLegacyDefault() {
     let textField = MDCTextField()
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
 
     // Helper text is shown on the leading underline label. Make sure the color and content are as 
     // expected.
     let altLeading = "Alternative Helper Test"
     controller.helperText = altLeading
-    textField.leadingUnderlineLabel.textColor = .green
+    controller.leadingUnderlineLabelTextColor = .green
+
     XCTAssertEqual(.green, textField.leadingUnderlineLabel.textColor)
     XCTAssertEqual(altLeading, textField.leadingUnderlineLabel.text)
+
+    controller.trailingUnderlineLabelTextColor = .white
+    XCTAssertEqual(textField.trailingUnderlineLabel.textColor, .white)
+
     XCTAssertNil(controller.errorText)
 
     // Setting error text should change the color and content of the leading underline label
@@ -218,9 +232,9 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertNotEqual(.blue, textField.underline?.color)
   }
 
-  func testPresentationDefault() {
+  func testPresentationLegacyDefault() {
     let textField = MDCTextField()
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
 
     XCTAssertEqual(controller.isFloatingEnabled, true)
     controller.isFloatingEnabled = false
@@ -245,9 +259,9 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(MDCPalette.blue.accent700, textField.underline?.color)
   }
 
-  func testPresentationFullWidth() {
+  func testPresentationLegacyFullWidth() {
     let textField = MDCTextField()
-    let controller = MDCTextInputControllerFullWidth(textInput: textField)
+    let controller = MDCTextInputControllerLegacyFullWidth(textInput: textField)
 
     textField.sizeToFit()
     XCTAssertEqual(textField.frame.height, 57)
@@ -266,10 +280,10 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(controller.disabledColor, .clear)
   }
 
-  func testSerializationDefault() {
+  func testSerializationLegacyDefault() {
     let textField = MDCTextField()
 
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
     controller.characterCountMax = 25
     controller.characterCountViewMode = .always
     controller.disabledColor = .yellow
@@ -287,7 +301,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
 
     let unserializedController =
       NSKeyedUnarchiver.unarchiveObject(with: serializedController) as?
-      MDCTextInputControllerDefault
+      MDCTextInputControllerLegacyDefault
     XCTAssertNotNil(unserializedController)
 
     unserializedController?.textInput = textField
@@ -308,10 +322,10 @@ class TextFieldControllerDefaultTests: XCTestCase {
     XCTAssertEqual(controller.underlineViewMode, unserializedController?.underlineViewMode)
   }
 
-  func testSerializationFullWidth() {
+  func testSerializationLegacyFullWidth() {
     let textField = MDCTextField()
 
-    let controller = MDCTextInputControllerFullWidth(textInput: textField)
+    let controller = MDCTextInputControllerLegacyFullWidth(textInput: textField)
     controller.characterCountMax = 25
     controller.characterCountViewMode = .always
     controller.disabledColor = .yellow
@@ -323,7 +337,7 @@ class TextFieldControllerDefaultTests: XCTestCase {
 
     let unserializedController =
       NSKeyedUnarchiver.unarchiveObject(with: serializedController) as?
-      MDCTextInputControllerFullWidth
+      MDCTextInputControllerLegacyFullWidth
     XCTAssertNotNil(unserializedController)
 
     unserializedController?.textInput = textField
