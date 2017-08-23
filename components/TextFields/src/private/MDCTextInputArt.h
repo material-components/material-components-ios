@@ -104,7 +104,7 @@ static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) 
   return ic_clear_path;
 }
 
-static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) {
+static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   // GENERATED CODE
 
   CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,
