@@ -259,7 +259,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Uppercase all titles
   if (_uppercaseTitle) {
-    [self uppercaseAllTitles];
+    [self updateTitleCase];
   }
 }
 
@@ -372,24 +372,20 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setUppercaseTitle:(BOOL)uppercaseTitle {
   _uppercaseTitle = uppercaseTitle;
-  if (_uppercaseTitle) {
-    [self uppercaseAllTitles];
-  }
+
+  [self updateTitleCase];
 }
 
-- (void)uppercaseAllTitles {
-  // This ensures existing titles will get uppercased.
-  UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
-                                    UIControlStateDisabled | UIControlStateSelected;
-  for (UIControlState state = 0; state <= allControlStates; ++state) {
-    NSString *title = [self titleForState:state];
-    if (title) {
-      [self setTitle:[title uppercaseStringWithLocale:[NSLocale currentLocale]] forState:state];
-    }
-
-    NSAttributedString *attributedTitle = [self attributedTitleForState:state];
-    if (attributedTitle) {
-      [self setAttributedTitle:uppercaseAttributedString(attributedTitle) forState:state];
+- (void)updateTitleCase {
+  // This calls setTitle or setAttributedTitle for every title value we have stored. In each
+  // respective setter the title is upcased if _uppercaseTitle is YES.
+  for (NSNumber *key in _nontransformedTitles.keyEnumerator) {
+    UIControlState state = key.unsignedIntegerValue;
+    NSString *title = _nontransformedTitles[key];
+    if ([title isKindOfClass:[NSAttributedString class]]) {
+      [self setAttributedTitle:(NSAttributedString *)title forState:state];
+    } else {
+      [self setTitle:title forState:state];
     }
   }
 }

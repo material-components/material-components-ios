@@ -129,6 +129,20 @@ static NSString *controlStateDescription(UIControlState controlState) {
                         [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
 }
 
+- (void)testUppercaseTitleYesChangedToNo {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  NSString *originalTitle = @"some Text";
+
+  // When
+  button.uppercaseTitle = YES;
+  [button setTitle:originalTitle forState:UIControlStateNormal];
+  button.uppercaseTitle = NO;
+
+  // Then
+  XCTAssertEqualObjects(button.currentTitle, originalTitle);
+}
+
 - (void)testSetEnabledAnimated {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
