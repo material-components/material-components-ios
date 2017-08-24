@@ -29,16 +29,20 @@
 #import "MDCTabBarColorThemer.h"
 #import "MDCTextFieldColorThemer.h"
 #import "MaterialThemes.h"
+#import "MaterialTextFields.h"
 
 @interface ThemerCustomSchemePickerController () <UITextFieldDelegate>
 
 @property(weak, nonatomic) IBOutlet UIView *primaryColorPreView;
-@property(weak, nonatomic) IBOutlet UITextField *primaryColorField;
-@property(weak, nonatomic) IBOutlet UITextField *secondaryColorField;
+@property(weak, nonatomic) IBOutlet MDCTextField *primaryColorField;
+@property(weak, nonatomic) IBOutlet MDCTextField *secondaryColorField;
 @property(weak, nonatomic) IBOutlet UIView *secondaryColorPreView;
 @property(weak, nonatomic) IBOutlet MDCRaisedButton *previewButton;
 
 @property(nonatomic, strong) MDCBasicColorScheme *colorScheme;
+
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *primaryInputController;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *secondaryInputController;
 
 @end
 
@@ -48,6 +52,7 @@ static NSString *s_secondaryColorString;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  // Try to restore in-memory state
   self.primaryColorField.delegate = self;
   self.primaryColorField.text = s_primaryColorString;
   self.secondaryColorField.delegate = self;
@@ -57,10 +62,19 @@ static NSString *s_secondaryColorString;
                forControlEvents:UIControlEventTouchUpInside];
   self.previewButton.enabled = NO;
 
+  // Preview views
   self.primaryColorPreView.layer.borderWidth = 1;
   self.primaryColorPreView.layer.borderColor = [UIColor blackColor].CGColor;
   self.secondaryColorPreView.layer.borderWidth = 1;
   self.secondaryColorPreView.layer.borderColor = [UIColor blackColor].CGColor;
+
+  // Text Fields
+  self.primaryInputController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.primaryColorField];
+  self.primaryInputController.floatingEnabled = NO;
+  self.primaryInputController.helperText = @"1A2B3C";
+  self.secondaryInputController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.secondaryColorField];
+  self.secondaryInputController.floatingEnabled = NO;
+  self.secondaryInputController.helperText = @"9F7";
 
   [self updateSchemeWithPrimaryColorString:s_primaryColorString
                       secondaryColorString:s_secondaryColorString];
