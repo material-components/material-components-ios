@@ -78,49 +78,13 @@ static NSString *s_secondaryColorString;
   self.secondaryInputController.floatingEnabled = NO;
   self.secondaryInputController.helperText = @"9F7";
 
+  UITapGestureRecognizer *dismissKeyboardRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self
+                                              action:@selector(userTappedOutsideFields)];
+  [self.view addGestureRecognizer:dismissKeyboardRecognizer];
+
   [self updateSchemeWithPrimaryColorString:s_primaryColorString
                       secondaryColorString:s_secondaryColorString];
-}
-
-- (void)didTapPreviewButton {
-  ThemerTypicalUseViewController *themerController =
-      [[ThemerTypicalUseViewController alloc] initWithColorScheme:self.colorScheme];
-  [self.navigationController pushViewController:themerController animated:YES];
-}
-
-- (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
-  // Apply color scheme to material design components using component themers.
-  [MDCActivityIndicatorColorThemer applyColorScheme:colorScheme
-                                toActivityIndicator:[MDCActivityIndicator appearance]];
-  [MDCAlertColorThemer applyColorScheme:colorScheme];
-  [MDCButtonBarColorThemer applyColorScheme:colorScheme toButtonBar:[MDCButtonBar appearance]];
-  [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.previewButton];
-  [MDCButtonColorThemer applyColorScheme:colorScheme toButton:[MDCButton appearance]];
-  [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
-                            toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
-  [MDCFlexibleHeaderColorThemer applyColorScheme:colorScheme
-                            toFlexibleHeaderView:[MDCFlexibleHeaderView appearance]];
-  [MDCHeaderStackViewColorThemer applyColorScheme:colorScheme
-                                toHeaderStackView:[MDCHeaderStackView appearance]];
-  [MDCNavigationBarColorThemer applyColorScheme:colorScheme
-                                toNavigationBar:[MDCNavigationBar appearance]];
-  [MDCPageControlColorThemer applyColorScheme:colorScheme
-                                toPageControl:[MDCPageControl appearance]];
-  [MDCProgressViewColorThemer applyColorScheme:colorScheme
-                                toProgressView:[MDCProgressView appearance]];
-  [MDCSliderColorThemer applyColorScheme:colorScheme toSlider:[MDCSlider appearance]];
-  [MDCTabBarColorThemer applyColorScheme:colorScheme toTabBar:[MDCTabBar appearance]];
-  [MDCTextFieldColorThemer applyColorSchemeToAllTextInputControllerDefault:colorScheme];
-
-  // Apply color scheme to UIKit components.
-  [UISlider appearance].tintColor = colorScheme.primaryColor;
-  [UISwitch appearance].tintColor = colorScheme.primaryColor;
-
-  // Send notification that color scheme has changed so existing components can update if necessary.
-  NSDictionary *userInfo = @{ @"colorScheme" : colorScheme };
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
-                                                      object:self
-                                                    userInfo:userInfo];
 }
 
 - (void)updateSchemeWithPrimaryColorString:(NSString *)primaryString
@@ -214,6 +178,54 @@ static NSString *s_secondaryColorString;
       [[MDCBasicColorScheme alloc] initWithPrimaryColor:primaryColor secondaryColor:secondaryColor];
   [self applyColorScheme:self.colorScheme];
   self.previewButton.enabled = YES;
+}
+
+- (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
+  // Apply color scheme to material design components using component themers.
+  [MDCActivityIndicatorColorThemer applyColorScheme:colorScheme
+                                toActivityIndicator:[MDCActivityIndicator appearance]];
+  [MDCAlertColorThemer applyColorScheme:colorScheme];
+  [MDCButtonBarColorThemer applyColorScheme:colorScheme toButtonBar:[MDCButtonBar appearance]];
+  [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.previewButton];
+  [MDCButtonColorThemer applyColorScheme:colorScheme toButton:[MDCButton appearance]];
+  [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
+                            toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
+  [MDCFlexibleHeaderColorThemer applyColorScheme:colorScheme
+                            toFlexibleHeaderView:[MDCFlexibleHeaderView appearance]];
+  [MDCHeaderStackViewColorThemer applyColorScheme:colorScheme
+                                toHeaderStackView:[MDCHeaderStackView appearance]];
+  [MDCNavigationBarColorThemer applyColorScheme:colorScheme
+                                toNavigationBar:[MDCNavigationBar appearance]];
+  [MDCPageControlColorThemer applyColorScheme:colorScheme
+                                toPageControl:[MDCPageControl appearance]];
+  [MDCProgressViewColorThemer applyColorScheme:colorScheme
+                                toProgressView:[MDCProgressView appearance]];
+  [MDCSliderColorThemer applyColorScheme:colorScheme toSlider:[MDCSlider appearance]];
+  [MDCTabBarColorThemer applyColorScheme:colorScheme toTabBar:[MDCTabBar appearance]];
+  [MDCTextFieldColorThemer applyColorSchemeToAllTextInputControllerDefault:colorScheme];
+
+  // Apply color scheme to UIKit components.
+  [UISlider appearance].tintColor = colorScheme.primaryColor;
+  [UISwitch appearance].tintColor = colorScheme.primaryColor;
+
+  // Send notification that color scheme has changed so existing components can update if necessary.
+  NSDictionary *userInfo = @{@"colorScheme" : colorScheme};
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
+                                                      object:self
+                                                    userInfo:userInfo];
+}
+
+#pragma mark - Actions
+
+- (void)userTappedOutsideFields {
+  [self.primaryColorField resignFirstResponder];
+  [self.secondaryColorField resignFirstResponder];
+}
+
+- (void)didTapPreviewButton {
+  ThemerTypicalUseViewController *themerController =
+      [[ThemerTypicalUseViewController alloc] initWithColorScheme:self.colorScheme];
+  [self.navigationController pushViewController:themerController animated:YES];
 }
 
 #pragma mark - UITextFieldDelegate
