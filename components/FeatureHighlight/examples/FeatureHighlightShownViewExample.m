@@ -27,25 +27,25 @@
   [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
   [fab sizeToFit];
   fab.backgroundColor = UIColor.orangeColor;
-  [fab addTarget:self action:@selector(fabDidTap:) forControlEvents:UIControlEventTouchUpInside];
   fab.center = _button.center;
 
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                              andShowView:fab
-                                                              completion:nil];
+                                                              completion:^(BOOL accepted) {
+                                                                if (accepted) {
+                                                                  [self fabDidTap:fab];
+                                                                }
+                                                              }];
 
+  [fab addTarget:vc action:@selector(acceptFeature) forControlEvents:UIControlEventTouchUpInside];
   vc.titleText = @"Shown views can be interactive";
-  vc.bodyText =
-      @"Tapping the button below will dismiss it. Tap again to dismiss Feature Highlight.";
+  vc.bodyText = @"The shown button has custom tap animations.";
   [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)fabDidTap:(MDCFloatingButton *)sender {
-  [sender collapse:YES
-        completion:^(void) {
-          [sender removeFromSuperview];
-        }];
+  NSLog(@"Tapped %@", sender);
 }
 
 @end
