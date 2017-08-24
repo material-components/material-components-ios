@@ -32,7 +32,8 @@ static const CGFloat MDCTextInputTextFieldBoxFullPadding = 16.f;
 
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
-static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 9.f;
+static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 8.f;
+static const CGFloat MDCTextInputTextFieldBoxHalfPaddingAddition = 1.f;
 static const CGFloat MDCTextInputTextFieldBoxNormalPlaceholderPadding = 20.f;
 
 static inline UIColor *MDCTextInputDefaultBorderFillColorDefault() {
@@ -48,7 +49,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 @interface MDCTextInputControllerTextFieldBox()
 
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
-@property(nonatomic, strong) NSLayoutConstraint *underlineY;
+@property(nonatomic, strong) NSLayoutConstraint *underlineBottom;
 
 @end
 
@@ -73,20 +74,38 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 #pragma mark - MDCTextInputPositioningDelegate
 
+// clang-format off
+/**
+ textInsets: is the source of truth for vertical layout. It's used to figure out the proper
+ height and also where to place the placeholder / text field.
+
+
+
+ NOTE: It's applied before the textRect is flipped for RTL. So all calculations are done here à la
+ LTR.
+
+ The vertical layout is, at most complex (floating), this form:
+ MDCTextInputTextFieldBoxHalfPadding +                                // Small padding
+ MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +   // Placeholder when up
+ MDCTextInputDefaultVerticalHalfPadding +                             // Small padding
+ MDCCeil(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder line height
+ self.textInput.placeholderLabel.font.lineHeight)) +
+ MDCTextInputDefaultPadding +                                         // Padding to underline (equal to small padding)
+ --Underline--                                                        // Underline (height not counted)
+ underlineLabelsOffset                                                // Depends on text insets mode. See the super class.
+ */
+// clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
   if (self.isFloatingEnabled) {
-    textInsets.top = MDCTextInputTextFieldBoxHalfPadding + MDCRint(self.textInput.placeholderLabel.font.lineHeight *
-                                                                   (CGFloat)self.floatingPlaceholderScale.floatValue) + MDCTextInputTextFieldBoxHalfPadding;
+    textInsets.top = MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxHalfPaddingAddition + MDCRint(self.textInput.placeholderLabel.font.lineHeight *
+                                                                   (CGFloat)self.floatingPlaceholderScale.floatValue) + MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxHalfPaddingAddition;
   } else {
     textInsets.top = MDCTextInputTextFieldBoxNormalPlaceholderPadding;
   }
 
-  // .bottom = underlineOffset + the half padding above the line but below the text field and any
-  // space needed for the labels and / or line.
-  // Legacy has an additional half padding here but this version does not.
-  CGFloat underlineOffset = [self underlineOffset];
-  textInsets.bottom = underlineOffset;
+  textInsets.bottom = [self beneathInputPadding] + [self underlineOffset];
+  
   textInsets.left = MDCTextInputTextFieldBoxFullPadding;
   textInsets.right = MDCTextInputTextFieldBoxHalfPadding;
 
@@ -111,45 +130,55 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   }
 
   UIEdgeInsets textInsets = [self textInsets:UIEdgeInsetsZero];
-  CGFloat underlineYConstant = textInsets.top + [self estimatedTextHeight] +
+  CGFloat underlineBottomConstant = textInsets.top + [self estimatedTextHeight] +
       [self beneathInputPadding];
   // When floating placeholders are turned off, the underline will drift up unless this is set. Even
   // tho it is redundant when floating is on, we just keep it on always for simplicity.
   // Note: This is an issue only on singleline text fields.
-  if (![self.textInput isKindOfClass:[MDCMultilineTextField class]] && !self.underlineY) {
-    self.underlineY = [NSLayoutConstraint constraintWithItem:self.textInput.underline
+  if (![self.textInput isKindOfClass:[MDCMultilineTextField class]] && !self.underlineBottom) {
+    self.underlineBottom = [NSLayoutConstraint constraintWithItem:self.textInput.underline
                                                    attribute:NSLayoutAttributeBottom
                                                    relatedBy:NSLayoutRelationEqual
                                                       toItem:self.textInput
                                                    attribute:NSLayoutAttributeTop
                                                   multiplier:1
-                                                    constant:underlineYConstant];
-    self.underlineY.active = YES;
+                                                    constant:underlineBottomConstant];
+    self.underlineBottom.active = YES;
   }
-  self.underlineY.constant = underlineYConstant;
+  self.underlineBottom.constant = underlineBottomConstant;
 }
 
-// The measurement from bottom to underline center Y.
+// The measurement from bottom to underline bottom. Only used in non-floating case.
 - (CGFloat)underlineOffset {
-  // The amount of space underneath the underline depends on whether there is content in the
+  // The amount of space underneath the underline may depend on whether there is content in the
   // underline labels.
-  CGFloat underlineLabelsOffset = 0;
-  if (self.textInput.leadingUnderlineLabel.text.length) {
-    underlineLabelsOffset =
-    MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-  }
-  if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-    underlineLabelsOffset = MAX(underlineLabelsOffset,
-        MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-  }
+  CGFloat leadingOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  CGFloat trailingOffset = MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
 
-  CGFloat underlineOffset = underlineLabelsOffset;
-  underlineOffset += [self beneathInputPadding];
+  CGFloat underlineOffset = 0;
+  switch (self.textInput.textInsetsMode) {
+    case MDCTextInputTextInsetsModeAlways:
+      underlineOffset += MAX(leadingOffset, trailingOffset) + MDCTextInputTextFieldBoxHalfPadding;
+      break;
+    case MDCTextInputTextInsetsModeIfContent: {
+      // contentConditionalOffset will have the estimated text height for the largest underline
+      // label that also has text.
+      CGFloat contentConditionalOffset = 0;
+      if (self.textInput.leadingUnderlineLabel.text.length) {
+        contentConditionalOffset = leadingOffset;
+      }
+      if (self.textInput.trailingUnderlineLabel.text.length) {
+        contentConditionalOffset = MAX(contentConditionalOffset, trailingOffset);
+      }
 
-  if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
-    underlineOffset += MDCTextInputTextFieldBoxHalfPadding;
+      if (!MDCCGFloatEqual(contentConditionalOffset, 0)) {
+        underlineOffset += contentConditionalOffset + MDCTextInputTextFieldBoxHalfPadding;
+      }
+    }
+      break;
+    case MDCTextInputTextInsetsModeNever:
+      break;
   }
-
   return underlineOffset;
 }
 
@@ -159,10 +188,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   return estimatedTextHeight;
 }
 
-// The space above the underline but under the text input area.
+// The space ABOVE the underline but under the text input area.
 - (CGFloat)beneathInputPadding {
   if (self.isFloatingEnabled) {
-    return MDCTextInputTextFieldBoxHalfPadding;
+    return MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxHalfPaddingAddition;
   } else {
     return MDCTextInputTextFieldBoxNormalPlaceholderPadding;
   }
