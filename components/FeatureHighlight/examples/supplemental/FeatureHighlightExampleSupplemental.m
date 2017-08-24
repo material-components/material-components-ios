@@ -143,3 +143,50 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 @end
+
+@implementation FeatureHighlightShownViewExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Feature Highlight", @"Shown Views" ];
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.view.backgroundColor = [UIColor whiteColor];
+
+  self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  self.infoLabel.text = @"Tap on the button below.";
+  self.infoLabel.font = [MDCTypography subheadFont];
+  self.infoLabel.textColor =
+      [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
+  [self.view addSubview:self.infoLabel];
+
+  self.button = [[MDCRaisedButton alloc] init];
+  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1]];
+  [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [self.button setTitle:@"Action" forState:UIControlStateNormal];
+  [self.button sizeToFit];
+  [self.button addTarget:self
+                  action:@selector(didTapButton:)
+        forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.button];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  [self.button sizeToFit];
+  CGRect frame = self.button.frame;
+  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+  frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
+  self.button.frame = frame;
+
+  CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
+  self.infoLabel.frame =
+      MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
+                                     labelSize.width, labelSize.height),
+                          [UIScreen mainScreen].scale);
+}
+
+@end

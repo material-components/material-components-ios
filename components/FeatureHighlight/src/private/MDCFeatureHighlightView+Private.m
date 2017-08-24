@@ -134,6 +134,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
         [[MDCFeatureHighlightDismissGestureRecognizer alloc]
             initWithTarget:self
                     action:@selector(didGestureDismiss:)];
+    panRecognizer.cancelsTouchesInView = NO;
     [self addGestureRecognizer:panRecognizer];
 
     // We want the inner and outer highlights to animate from the same origin so we start them from
