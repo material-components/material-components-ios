@@ -47,10 +47,10 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     _animationController = [[MDCFeatureHighlightAnimationController alloc] init];
     _animationController.presenting = YES;
 
+    _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
+
     super.transitioningDelegate = self;
     super.modalPresentationStyle = UIModalPresentationCustom;
-
-    [self commonMDCFeatureHighlightViewControllerInit];
   }
   return self;
 }
@@ -86,9 +86,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                             completion:completion];
 }
 
-- (void)commonMDCFeatureHighlightViewControllerInit {
-  _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
-
+- (void)loadView {
   _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   _featureHighlightView.displayedView = _displayedView;
   _featureHighlightView.autoresizingMask =
