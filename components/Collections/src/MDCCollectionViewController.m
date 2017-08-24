@@ -400,14 +400,15 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)]) {
-    return ![_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath];
-  }
   return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)]
+      && [_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath]) {
+    return;
+  }
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
 
