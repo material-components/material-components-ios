@@ -16,8 +16,8 @@
 
 #import "MDCFeatureHighlightViewController.h"
 
-#import "MaterialTypography.h"
 #import "MDFTextAccessibility.h"
+#import "MaterialTypography.h"
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView+Private.h"
 
@@ -109,7 +109,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)viewWillLayoutSubviews {
   _featureHighlightView.titleLabel.text = self.titleText;
-      [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing];
+  [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing];
   _featureHighlightView.bodyLabel.attributedText =
       [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing];
 }
@@ -173,15 +173,16 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  [coordinator animateAlongsideTransition:
-   ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-     CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                                       toView:_featureHighlightView];
+  [coordinator animateAlongsideTransition:^(
+                   id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+    CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
+                                                      toView:_featureHighlightView];
 
-     _featureHighlightView.highlightPoint = point;
-     [_featureHighlightView layoutIfNeeded];
-     [_featureHighlightView updateOuterHighlight];
-   } completion:nil];
+    _featureHighlightView.highlightPoint = point;
+    [_featureHighlightView layoutIfNeeded];
+    [_featureHighlightView updateOuterHighlight];
+  }
+                               completion:nil];
 }
 
 - (UIColor *)outerHighlightColor {
@@ -274,7 +275,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.lineSpacing = lineSpacing;
 
-  NSDictionary *attrs = @{ NSParagraphStyleAttributeName: paragraphStyle };
+  NSDictionary *attrs = @{NSParagraphStyleAttributeName : paragraphStyle};
 
   return [[NSAttributedString alloc] initWithString:string attributes:attrs];
 }
