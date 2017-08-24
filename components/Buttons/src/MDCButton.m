@@ -47,7 +47,8 @@ static NSString *const MDCButtonAreaInsetKey = @"MDCButtonAreaInsetKey";
 
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
 static NSString *const MDCButtonBackgroundColorsKey = @"MDCButtonBackgroundColorsKey";
-static NSString *const MDCButtonNontransformedTitlesKey = @"MDCButtonNontransformedTitlesKey";
+// Previous value kept for backwards compatibility.
+static NSString *const MDCButtonNontransformedTitlesKey = @"MDCButtonAccessibilityLabelsKey";
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
