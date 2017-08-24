@@ -38,7 +38,6 @@
                                                                 }
                                                               }];
 
-  [fab addTarget:vc action:@selector(acceptFeature) forControlEvents:UIControlEventTouchUpInside];
   vc.titleText = @"Shown views can be interactive";
   vc.bodyText = @"The shown button has custom tap animations.";
   [self presentViewController:vc animated:YES completion:nil];

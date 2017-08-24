@@ -99,6 +99,11 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     __typeof__(self) strongSelf = weakSelf;
     [strongSelf dismiss:accepted];
   };
+
+  UIGestureRecognizer *tapGestureRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(acceptFeature)];
+  [_displayedView addGestureRecognizer:tapGestureRecognizer];
+
   self.view = _featureHighlightView;
 }
 
