@@ -28,8 +28,8 @@
 #import "MDCSliderColorThemer.h"
 #import "MDCTabBarColorThemer.h"
 #import "MDCTextFieldColorThemer.h"
-#import "MaterialThemes.h"
 #import "MaterialTextFields.h"
+#import "MaterialThemes.h"
 
 @interface ThemerCustomSchemePickerController () <UITextFieldDelegate>
 
@@ -69,10 +69,12 @@ static NSString *s_secondaryColorString;
   self.secondaryColorPreView.layer.borderColor = [UIColor blackColor].CGColor;
 
   // Text Fields
-  self.primaryInputController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.primaryColorField];
+  self.primaryInputController =
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.primaryColorField];
   self.primaryInputController.floatingEnabled = NO;
   self.primaryInputController.helperText = @"1A2B3C";
-  self.secondaryInputController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.secondaryColorField];
+  self.secondaryInputController =
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.secondaryColorField];
   self.secondaryInputController.floatingEnabled = NO;
   self.secondaryInputController.helperText = @"9F7";
 
