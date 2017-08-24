@@ -232,6 +232,33 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                            }];
 }
 
+#pragma mark - Dynamic Type
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [self updateFontsForDynamicType];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self updateFontsForDynamicType];
+}
+
+- (void)updateFontsForDynamicType {
+  [_featureHighlightView updateFontsForDynamicType];
+  [_featureHighlightView layoutIfNeeded];
+}
+
 #pragma mark - Accessibility
 
 - (BOOL)accessibilityPerformEscape {
@@ -264,6 +291,9 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (NSAttributedString *)attributedStringForString:(NSString *)string
                                       lineSpacing:(CGFloat)lineSpacing {
+  if (!string) {
+    return nil;
+  }
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.lineSpacing = lineSpacing;
 

@@ -109,8 +109,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.font =
-        [[MDCTypography fontLoader] mediumFontOfSize:kMDCFeatureHighlightTitleFontSize];
+    _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
@@ -118,7 +117,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _bodyLabel.font = [MDCTypography subheadFont];
+    _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
     _bodyLabel.textAlignment = NSTextAlignmentNatural;
@@ -523,6 +522,15 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     [CATransaction commit];
   } else {
     [_outerLayer setRadius:scaledRadius animated:NO];
+  }
+}
+
+- (void)updateFontsForDynamicType {
+  _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
+  _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+
+  if (!CGRectIsEmpty(self.frame)) {
+    [self setNeedsLayout];
   }
 }
 
