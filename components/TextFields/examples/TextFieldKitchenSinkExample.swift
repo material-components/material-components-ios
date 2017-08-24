@@ -87,6 +87,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
   let unstyledTextField = MDCTextField()
   let unstyledMultilineTextField = MDCMultilineTextField()
 
+  lazy var textInsetsModeButton: MDCButton = self.setupButton()
   lazy var characterModeButton: MDCButton = self.setupButton()
   lazy var clearModeButton: MDCButton = self.setupButton()
   lazy var underlineButton: MDCButton = self.setupButton()
