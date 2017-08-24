@@ -47,7 +47,6 @@
   MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitleColor:titleColor forState:UIControlStateNormal];
   [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [raisedButton sizeToFit];
   [raisedButton addTarget:self
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
@@ -58,7 +57,6 @@
   MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
   [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
   [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [disabledRaisedButton sizeToFit];
   [disabledRaisedButton addTarget:self
                            action:@selector(didTap:)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -70,7 +68,6 @@
   MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
   [flatButton setTitle:@"Button" forState:UIControlStateNormal];
   [flatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-  [flatButton sizeToFit];
   [flatButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -81,7 +78,6 @@
   MDCFlatButton *disabledFlatButton = [[MDCFlatButton alloc] init];
   [disabledFlatButton setTitle:@"Button" forState:UIControlStateNormal];
   [disabledFlatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-  [disabledFlatButton sizeToFit];
   [disabledFlatButton addTarget:self
                          action:@selector(didTap:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -92,7 +88,6 @@
 
   MDCButton *strokedButton = [self buildCustomStrokedButton];
   [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [strokedButton sizeToFit];
   [strokedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
@@ -102,7 +97,6 @@
 
   MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
   [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [disabledStrokedButton sizeToFit];
   [disabledStrokedButton addTarget:self
                             action:@selector(didTap:)
                   forControlEvents:UIControlEventTouchUpInside];
@@ -113,7 +107,6 @@
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
   [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [self.floatingButton sizeToFit];
   [self.floatingButton addTarget:self
                           action:@selector(didTap:)
                 forControlEvents:UIControlEventTouchUpInside];

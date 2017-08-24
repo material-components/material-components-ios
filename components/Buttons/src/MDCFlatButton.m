@@ -33,6 +33,7 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
                                   forState:UIControlStateNormal];
   [[MDCFlatButton appearance] setElevation:MDCShadowElevationNone
                                   forState:UIControlStateHighlighted];
+  [[MDCFlatButton appearance] setContentEdgeInsets:MDCButtonDefaultContentEdgeInsets];
 }
 
 - (instancetype)init {

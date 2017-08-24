@@ -52,7 +52,7 @@ static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilit
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
-static const UIEdgeInsets MDCButtonDefaultContentEdgeInsets = {8, 16, 8, 16};
+const UIEdgeInsets MDCButtonDefaultContentEdgeInsets = {8, 16, 8, 16};
 
 // https://material.io/guidelines/components/buttons.html#buttons-main-buttons
 static const CGFloat MDCButtonDisabledAlpha = 0.12f;
@@ -113,6 +113,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 @implementation MDCButton
 
 @dynamic layer;
+
++ (void)initialize {
+  [[MDCButton appearance] setContentEdgeInsets:MDCButtonDefaultContentEdgeInsets];
+}
 
 + (Class)layerClass {
   return [MDCShadowLayer class];
@@ -234,12 +238,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.titleLabel.font = [MDCTypography buttonFont];
 
   self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
-  self.contentEdgeInsets = MDCButtonDefaultContentEdgeInsets;
 
   // If a subclass is using the deprecated defaultContentEdgeInsets, fetch that value.
+  if ([self checkIfSubclassDidOverrideMethod:@selector(defaultContentEdgeInsets)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if ([self checkIfSubclassDidOverrideMethod:@selector(defaultContentEdgeInsets)]) {
     self.contentEdgeInsets = [self defaultContentEdgeInsets];
 #pragma clang diagnostic pop
   }

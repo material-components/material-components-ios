@@ -19,6 +19,8 @@
 
 #import "MaterialInk.h"
 
+extern const UIEdgeInsets MDCButtonDefaultContentEdgeInsets;
+
 /**
  A Material flat, raised or floating button.
 

@@ -25,6 +25,7 @@
                                     forState:UIControlStateNormal];
   [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed
                                     forState:UIControlStateHighlighted];
+  [[MDCRaisedButton appearance] setContentEdgeInsets:MDCButtonDefaultContentEdgeInsets];
 }
 
 @end
