@@ -684,20 +684,36 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   textInsets.top = MDCTextInputFullPadding;
 
+  CGFloat leadingOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  CGFloat trailingOffset = MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
-  // MDCTextInputHalfPadding
-  CGFloat underlineLabelsOffset = 0;
+  // MDCTextInputHalfPadding. It's also dependent on the .textInsetsMode.
+
+  // contentConditionalOffset will have the estimated text height for the largest underline label
+  // that also has text.
+  CGFloat contentConditionalOffset = 0;
   if (self.leadingUnderlineLabel.text.length) {
-    underlineLabelsOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+    contentConditionalOffset = leadingOffset;
   }
   if (self.trailingUnderlineLabel.text.length) {
-    underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+    contentConditionalOffset = MAX(contentConditionalOffset, trailingOffset);
   }
-  CGFloat underlineOffset = MDCTextInputHalfPadding + underlineLabelsOffset;
 
-  // .bottom = underlineOffset + the half padding above the line but below the text field
+  CGFloat underlineOffset = MDCTextInputHalfPadding;
+  switch (self.textInsetsMode) {
+    case MDCTextInputTextInsetsModeAlways:
+      underlineOffset += MAX(leadingOffset, trailingOffset);
+      break;
+    case MDCTextInputTextInsetsModeIfContent:
+      underlineOffset += contentConditionalOffset;
+      break;
+    case MDCTextInputTextInsetsModeNever:
+      break;
+  }
+
+  // .bottom = underlineOffset + the half padding ABOVE the line but below the text field
   textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
 
   if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
