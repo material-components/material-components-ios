@@ -313,8 +313,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // If there are custom hitAreaInsets, use those
   if (!UIEdgeInsetsEqualToEdgeInsets(self.hitAreaInsets, UIEdgeInsetsZero)) {
     return CGRectContainsPoint(
-        UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), self.hitAreaInsets),
-        point);
+        UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), self.hitAreaInsets), point);
   }
 
   // If the bounds are smaller than the minimum touch target, produce a warning once
@@ -323,10 +322,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (width < MDCButtonMinimumTouchTargetWidth || height < MDCButtonMinimumTouchTargetHeight) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-      NSLog(@"Button touch target does not meet minimum size guidlines of (48, 48). Button: %@, "
-            @"Touch Target: %@",
-            [self description],
-            NSStringFromCGSize(CGSizeMake(width, height)));
+      NSLog(
+          @"Button touch target does not meet minimum size guidlines of (%0.f, %0.f). Button: %@, "
+          @"Touch Target: %@",
+          MDCButtonMinimumTouchTargetWidth,
+          MDCButtonMinimumTouchTargetHeight,
+          [self description],
+          NSStringFromCGSize(CGSizeMake(width, height)));
     });
   }
   return [super pointInside:point withEvent:event];

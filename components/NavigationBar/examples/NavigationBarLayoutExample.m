@@ -14,6 +14,14 @@
  limitations under the License.
  */
 
+//
+//  NavigationBarLayoutExample.m
+//  Pods
+//
+//  Created by Rob Moore on 7/28/17.
+//
+//
+
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
@@ -95,7 +103,8 @@
   self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
   self.titleField.delegate = self;
   self.titleField.text = self.title;
-  self.titleController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.titleField];
+  self.titleController =
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.titleField];
 
   [self.view addSubview:self.leadingItemField];
   [self.view addSubview:self.trailingItemField];
