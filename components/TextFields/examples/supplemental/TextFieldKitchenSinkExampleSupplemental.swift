@@ -30,7 +30,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let textFieldControllersFullWidth = setupFullWidthTextFields()
 
-    allTextFieldControllers = [setupDefaultTextFields(),
+    allTextFieldControllers = [setupBoxTextFields(), setupDefaultTextFields(),
                                textFieldControllersFullWidth,
                                setupFloatingTextFields(),
                                setupSpecialTextFields()].flatMap { $0 as! [MDCTextInputController] }
