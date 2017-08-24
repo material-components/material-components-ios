@@ -265,6 +265,10 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   _fundament.textColor = textColor;
 }
 
+- (UIEdgeInsets)textInsets {
+  return self.fundament.textInsets;
+}
+
 - (MDCTextInputTextInsetsMode)textInsetsMode {
   return self.fundament.textInsetsMode;
 }
@@ -552,33 +556,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 #pragma mark - Layout (Custom)
-
-- (UIEdgeInsets)textInsets {
-  UIEdgeInsets textInsets = UIEdgeInsetsZero;
-
-  textInsets.top = MDCTextInputFullPadding;
-
-  // The amount of space underneath the underline is variable. It could just be
-  // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
-  // MDCTextInputHalfPadding
-  CGFloat underlineLabelsOffset = 0;
-  if (self.leadingUnderlineLabel.text.length) {
-    underlineLabelsOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-  }
-  if (self.trailingUnderlineLabel.text.length) {
-    underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-  }
-  CGFloat underlineOffset = MDCTextInputHalfPadding + underlineLabelsOffset;
-
-  // .bottom = underlineOffset + the half padding above the line but below the text field
-  textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
-
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
-    return [self.positioningDelegate textInsets:textInsets];
-  }
-  return textInsets;
-}
 
 - (CGFloat)estimatedTextHeight {
   CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
