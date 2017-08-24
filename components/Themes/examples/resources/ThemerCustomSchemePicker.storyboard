@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lFC-GV-0n9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lFC-GV-0n9">
     <device id="ipad12_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,43 +26,26 @@
                                 <rect key="frame" x="368" y="40" width="288" height="112"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Primary Color" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S6a-tS-3C0" userLabel="primaryInput" customClass="MDCTextField">
-                                        <rect key="frame" x="0.0" y="41" width="160" height="30"/>
+                                        <rect key="frame" x="0.0" y="24" width="160" height="64"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" priority="1" constant="160" id="C1a-8M-aWi"/>
-                                            <constraint firstAttribute="width" priority="750" constant="160" id="eha-Td-ZDH"/>
+                                            <constraint firstAttribute="width" priority="750" constant="160" id="C1a-8M-aWi"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="VQR-Rf-sMK"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="xCD-8B-E86"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="C1a-8M-aWi"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="C1a-8M-aWi"/>
-                                            </mask>
-                                        </variation>
                                     </textField>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BfC-Oh-khz" userLabel="primaryPreView">
                                         <rect key="frame" x="168" y="0.0" width="112" height="112"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="56" id="PrC-9M-sDF"/>
                                             <constraint firstAttribute="width" secondItem="BfC-Oh-khz" secondAttribute="height" id="hmw-y3-OF2"/>
                                             <constraint firstAttribute="width" constant="112" id="mWW-Je-ocF"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="PrC-9M-sDF"/>
                                                 <exclude reference="mWW-Je-ocF"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="PrC-9M-sDF"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=regular">
@@ -87,7 +70,10 @@
                                 <rect key="frame" x="368" y="160" width="288" height="112"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Secondary Color" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yCc-P4-0aA" userLabel="secondaryInput" customClass="MDCTextField">
-                                        <rect key="frame" x="0.0" y="41" width="160" height="30"/>
+                                        <rect key="frame" x="0.0" y="24" width="160" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="PKe-6d-Ig8"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
