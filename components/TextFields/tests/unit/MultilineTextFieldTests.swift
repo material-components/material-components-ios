@@ -35,6 +35,7 @@ class MultilineTextFieldTests: XCTestCase {
   func testCopying() {
     let textField = MDCMultilineTextField()
 
+    textField.alignmentRectMode = .never
     textField.borderView?.borderFillColor = .blue
     textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
     textField.borderView?.borderPath?.lineWidth = 2
@@ -55,6 +56,7 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertNotNil(textField.textView)
       XCTAssertTrue(textField.subviews.contains(textField.textView!))
 
+      XCTAssertEqual(textField.alignmentRectMode, textFieldCopy.alignmentRectMode)
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
       XCTAssertEqual(textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
@@ -109,6 +111,7 @@ class MultilineTextFieldTests: XCTestCase {
     let leadingText = "Serialized Helper Test"
     controller.helperText = leadingText
     controller.characterCountMax = 40
+    textField.alignmentRectMode = .never
 
     let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
     XCTAssertNotNil(serializedInput)
@@ -128,6 +131,8 @@ class MultilineTextFieldTests: XCTestCase {
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
     XCTAssertEqual(textField.trailingUnderlineLabel.text,
                    unserializedInput?.trailingUnderlineLabel.text)
+
+    XCTAssertEqual(textField.alignmentRectMode, unserializedInput?.alignmentRectMode)
   }
 
   func testSizing() {
@@ -143,6 +148,9 @@ class MultilineTextFieldTests: XCTestCase {
     textField.leadingUnderlineLabel.text = "Helper"
     textField.sizeToFit()
     XCTAssertEqual(textField.frame.height, 66)
+
+    textField.alignmentRectMode = .never
+    XCTAssertEqual(textField.alignmentRectMode, .never)
   }
 
   func testUnderlineSetters() {

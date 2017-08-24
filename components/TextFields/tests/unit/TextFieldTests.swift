@@ -47,6 +47,7 @@ class TextFieldTests: XCTestCase {
   func testCopying() {
     let textField = MDCTextField()
 
+    textField.alignmentRectMode = .never
     textField.borderView?.borderFillColor = .purple
     textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
     textField.borderView?.borderStrokeColor = .yellow
@@ -65,6 +66,7 @@ class TextFieldTests: XCTestCase {
     textField.underline?.lineHeight = 10
 
     if let textFieldCopy = textField.copy() as? MDCTextField {
+      XCTAssertEqual(textField.alignmentRectMode, textFieldCopy.alignmentRectMode)
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
       XCTAssertEqual(textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
@@ -172,6 +174,8 @@ class TextFieldTests: XCTestCase {
     controller.helperText = leadingText
     controller.characterCountMax = 40
 
+    textField.alignmentRectMode = .never
+
     let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
     XCTAssertNotNil(serializedInput)
 
@@ -197,6 +201,8 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
     XCTAssertEqual(textField.trailingUnderlineLabel.text,
                    unserializedInput?.trailingUnderlineLabel.text)
+
+    XCTAssertEqual(textField.alignmentRectMode, unserializedInput?.alignmentRectMode)
 
     if let leadingViewUnserialized = unserializedInput?.leadingView as? UILabel {
       XCTAssertEqual(leadingViewUnserialized.text, leadingView.text)
@@ -226,6 +232,9 @@ class TextFieldTests: XCTestCase {
     textField.leadingUnderlineLabel.text = "Helper"
     textField.sizeToFit()
     XCTAssertEqual(textField.frame.height, 66)
+
+    textField.alignmentRectMode = .never
+    XCTAssertEqual(textField.alignmentRectMode, .never)
   }
 
   func testUnderlineSetters() {
