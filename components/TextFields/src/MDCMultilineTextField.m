@@ -491,14 +491,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self mdc_setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
 }
 
-- (MDCTextInputAlignmentRectMode)alignmentRectMode {
-  return self.fundament.alignmentRectMode;
-}
-
-- (void)setAlignmentRectMode:(MDCTextInputAlignmentRectMode)alignmentRectMode {
-  self.fundament.alignmentRectMode = alignmentRectMode;
-}
-
 - (NSAttributedString *)attributedPlaceholder {
   return self.fundament.attributedPlaceholder;
 }
@@ -643,6 +635,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (void)setTextColor:(UIColor *)textColor {
   [self.textView setTextColor:textColor];
   self.fundament.textColor = textColor;
+}
+
+- (MDCTextInputTextInsetsMode)textInsetsMode {
+  return self.fundament.textInsetsMode;
+}
+
+- (void)setTextInsetsMode:(MDCTextInputTextInsetsMode)textInsetsMode {
+  self.fundament.textInsetsMode = textInsetsMode;
 }
 
 - (UITextView *)textView {

@@ -32,10 +32,10 @@
 /**
  This represents different options for the relationship between the labels and the alignment rect.
  */
-typedef NS_ENUM(NSUInteger, MDCTextInputAlignmentRectMode) {
-  MDCTextInputAlignmentRectModeNever = 0,
-  MDCTextInputAlignmentRectModeIfContent,
-  MDCTextInputAlignmentRectModeAlways,
+typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
+  MDCTextInputTextInsetsModeNever = 0,
+  MDCTextInputTextInsetsModeIfContent,
+  MDCTextInputTextInsetsModeAlways,
 };
 
 @class MDCTextInputBorderView;
@@ -45,23 +45,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputAlignmentRectMode) {
 
 /** Common API for Material Design compliant text inputs. */
 @protocol MDCTextInput <NSObject>
-
-/**
- Used to calculate alignment rect.
-
- The different options apply to the alignment rect of the entire text input in relation to the
- underline labels and the placeholder if any of them are outside the border view.
-
- MDCTextInputAlignmentRectModeNever:      Alignment rect never includes the labels.
-
- MDCTextInputAlignmentRectModeIfContent:  Alignment rect height includes space for each label that
-   has text.
-
- MDCTextInputAlignmentRectModeAlways:     Alignment rect always includes the labels.
-
- Default is MDCTextInputAlignmentRectModeIfContent.
- */
-@property(nonatomic, assign) MDCTextInputAlignmentRectMode alignmentRectMode UI_APPEARANCE_SELECTOR;
 
 /**
  The attributed text string of the placeholder label.
@@ -167,6 +150,23 @@ typedef NS_ENUM(NSUInteger, MDCTextInputAlignmentRectMode) {
 
 /** Insets used to calculate the spacing of subviews. */
 @property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
+
+/**
+ Used to calculate text insets.
+
+ The different options apply to the text insets of the entire text input in relation to the
+ underline labels and the placeholder should any of them be outside the border view.
+
+ MDCTextInputTextInsetsModeNever:      Text insets never includes the labels.
+
+ MDCTextInputTextInsetsModeIfContent:  Text insets height includes space for each label that has
+   text.
+
+ MDCTextInputTextInsetsModeAlways:     Text insets always includes the labels.
+
+ Default is MDCTextInputTextInsetsModeIfContent.
+ */
+@property(nonatomic, assign) MDCTextInputTextInsetsMode textInsetsMode UI_APPEARANCE_SELECTOR;
 
 /**
  The label on the trailing side under the input.
