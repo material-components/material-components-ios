@@ -49,6 +49,11 @@ static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey
 static NSString *const MDCButtonBackgroundColorsKey = @"MDCButtonBackgroundColorsKey";
 static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilityLabelsKey";
 
+// Specified in Material Guidelines
+// https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
+static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
+static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
+
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 // https://material.io/guidelines/components/buttons.html#buttons-main-buttons
@@ -291,8 +296,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
   if (_inkView.inkStyle == MDCInkStyleUnbounded) {
     CGRect contentRect = [self contentRectForBounds:self.bounds];
-    CGPoint contentCenterPoint = CGPointMake(CGRectGetMidX(contentRect),
-                                             CGRectGetMidY(contentRect));
+    CGPoint contentCenterPoint =
+        CGPointMake(CGRectGetMidX(contentRect), CGRectGetMidY(contentRect));
     CGPoint boundsCenterPoint = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
     CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
@@ -305,7 +310,28 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, _hitAreaInsets), point);
+  // If there are custom hitAreaInsets, use those
+  if (!UIEdgeInsetsEqualToEdgeInsets(self.hitAreaInsets, UIEdgeInsetsZero)) {
+    return CGRectContainsPoint(
+        UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), self.hitAreaInsets), point);
+  }
+
+  // If the bounds are smaller than the minimum touch target, produce a warning once
+  CGFloat width = CGRectGetWidth(self.bounds);
+  CGFloat height = CGRectGetHeight(self.bounds);
+  if (width < MDCButtonMinimumTouchTargetWidth || height < MDCButtonMinimumTouchTargetHeight) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+      NSLog(
+          @"Button touch target does not meet minimum size guidlines of (%0.f, %0.f). Button: %@, "
+          @"Touch Target: %@",
+          MDCButtonMinimumTouchTargetWidth,
+          MDCButtonMinimumTouchTargetHeight,
+          [self description],
+          NSStringFromCGSize(CGSizeMake(width, height)));
+    });
+  }
+  return [super pointInside:point withEvent:event];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {

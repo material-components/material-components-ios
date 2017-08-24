@@ -276,15 +276,13 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat normalElevation = 10;
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
-  [button setElevation:elevation forState:UIControlStateHighlighted];;
+  [button setElevation:elevation forState:UIControlStateHighlighted];
 
   // When
   button.highlighted = YES;
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
-                             elevation,
-                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state], elevation, kEpsilonAccuracy);
 }
 
 - (void)testCurrentElevationDisabled {
@@ -293,15 +291,13 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat normalElevation = 10;
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
-  [button setElevation:elevation forState:UIControlStateDisabled];;
+  [button setElevation:elevation forState:UIControlStateDisabled];
 
   // When
   button.enabled = NO;
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
-                             elevation,
-                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state], elevation, kEpsilonAccuracy);
 }
 
 - (void)testCurrentElevationSelected {
@@ -310,15 +306,13 @@ static NSString *controlStateDescription(UIControlState controlState) {
   CGFloat normalElevation = 10;
   CGFloat elevation = 40;
   [button setElevation:normalElevation forState:UIControlStateNormal];
-  [button setElevation:elevation forState:UIControlStateSelected];;
+  [button setElevation:elevation forState:UIControlStateSelected];
 
   // When
   button.selected = YES;
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
-                             elevation,
-                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state], elevation, kEpsilonAccuracy);
 }
 
 - (void)testInkColors {
@@ -363,23 +357,144 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualObjects(button.inkColor, unarchivedButton.inkColor);
   XCTAssertEqual(button.uppercaseTitle, unarchivedButton.uppercaseTitle);
   XCTAssertEqual(button.inkStyle, unarchivedButton.inkStyle);
-  XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius, unarchivedButton.inkMaxRippleRadius,
+  XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius,
+                             unarchivedButton.inkMaxRippleRadius,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom, unarchivedButton.hitAreaInsets.bottom,
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom,
+                             unarchivedButton.hitAreaInsets.bottom,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.top, unarchivedButton.hitAreaInsets.top,
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.top,
+                             unarchivedButton.hitAreaInsets.top,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.right, unarchivedButton.hitAreaInsets.right,
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.right,
+                             unarchivedButton.hitAreaInsets.right,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.left, unarchivedButton.hitAreaInsets.left,
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.left,
+                             unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
   XCTAssertEqual(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button elevationForState:controlState],
-                               [unarchivedButton elevationForState:controlState], kEpsilonAccuracy);
+                               [unarchivedButton elevationForState:controlState],
+                               kEpsilonAccuracy);
     XCTAssertEqual([button backgroundColorForState:controlState],
                    [unarchivedButton backgroundColorForState:controlState]);
   }
+}
+
+- (void)testPointInsideWithoutHitAreaInsets {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 50)];
+
+  CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake(79.9, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(79.9, 49.9);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 49.9);
+
+  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, -0.1);
+  CGPoint touchPointOutsideBoundsTopRight = CGPointMake(80, 0);
+  CGPoint touchPointOutsideBoundsBottomRight = CGPointMake(80, 50);
+  CGPoint touchPointOutsideBoundsBottomLeft = CGPointMake(0, 50);
+
+  // Then
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsTopLeft withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsTopRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsBottomRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsBottomLeft withEvent:nil]);
+
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsTopLeft withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsTopRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsBottomRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsBottomLeft withEvent:nil]);
+}
+
+- (void)testPointInsideWithoutHitAreaInsetsTooSmall {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+
+  CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake(9.9, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(9.9, 9.9);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 9.9);
+
+  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, -0.1);
+  CGPoint touchPointOutsideBoundsTopRight = CGPointMake(10, 0);
+  CGPoint touchPointOutsideBoundsBottomRight = CGPointMake(10, 10);
+  CGPoint touchPointOutsideBoundsBottomLeft = CGPointMake(0, 10);
+
+  // Then
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsTopLeft withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsTopRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsBottomRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideBoundsBottomLeft withEvent:nil]);
+
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsTopLeft withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsTopRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsBottomRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideBoundsBottomLeft withEvent:nil]);
+}
+
+- (void)testPointInsideWithCustomHitAreaInsets {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+
+  CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-5, -5);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(-5, 14.9);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9, 14.9);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(14.9, -5);
+
+  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake(-5.1, -5);
+  CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(-5, 15);
+  CGPoint touchPointOutsideHitAreaBottomRight = CGPointMake(15, 15);
+  CGPoint touchPointOutsideHitAreaBottomLeft = CGPointMake(15, -5);
+
+  // When
+  button.hitAreaInsets = UIEdgeInsetsMake(-5, -5, -5, -5);
+
+  // Then
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaTopLeft withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaTopRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaBottomRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaBottomLeft withEvent:nil]);
+
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaTopLeft withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaTopRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaBottomRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaBottomLeft withEvent:nil]);
+}
+
+- (void)testPointInsideWithNonStandardizedBounds {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  // This is (-10, -10, 20, 20) in standardized form
+  CGRect bounds = CGRectMake(10, 10, -20, -20);
+  // Once applied, these insets should increase the hitArea to (-15, -20, 30, 40)
+  UIEdgeInsets insets = UIEdgeInsetsMake(-10, -5, -10, -5);
+
+  CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-15, -20);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(14.9, -20);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9, 19.9);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(-15, 19.9);
+
+  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake(-15.1, -20);
+  CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(20, -20);
+  CGPoint touchPointOutsideHitAreaBottomRight = CGPointMake(15, 20);
+  CGPoint touchPointOutsideHitAreaBottomLeft = CGPointMake(-15, 20);
+
+  // When
+  button.bounds = bounds;
+  button.hitAreaInsets = insets;
+
+  // Then
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaTopLeft withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaTopRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaBottomRight withEvent:nil]);
+  XCTAssertTrue([button pointInside:touchPointInsideHitAreaBottomLeft withEvent:nil]);
+
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaTopLeft withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaTopRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaBottomRight withEvent:nil]);
+  XCTAssertFalse([button pointInside:touchPointOutsideHitAreaBottomLeft withEvent:nil]);
 }
 
 #pragma mark - UIButton strangeness
@@ -398,8 +513,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
     [button setTitleColor:color forState:controlState];
 
     // Then
-    XCTAssertEqualObjects([button titleColorForState:controlState], color,
-                          @"for control state:%@ ", controlStateDescription(controlState));
+    XCTAssertEqualObjects([button titleColorForState:controlState],
+                          color,
+                          @"for control state:%@ ",
+                          controlStateDescription(controlState));
   }
 }
 - (void)testTitleColorForStateDisabledHighlight {
@@ -417,10 +534,14 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setTitleColor:color forState:controlState];
 
   // Then
-  XCTAssertEqualObjects([button titleColorForState:controlState], normalColor,
-                        @"for control state:%@ ", controlStateDescription(controlState));
-  XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
-                        @"for control state:%@ ", controlStateDescription(controlState));
+  XCTAssertEqualObjects([button titleColorForState:controlState],
+                        normalColor,
+                        @"for control state:%@ ",
+                        controlStateDescription(controlState));
+  XCTAssertNotEqualObjects([button titleColorForState:controlState],
+                           color,
+                           @"for control state:%@ ",
+                           controlStateDescription(controlState));
 }
 
 #pragma mark - UIButton state changes
@@ -544,7 +665,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory);
-  XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize, preferredFont.pointSize,
+  XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize,
+                             preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
 }
