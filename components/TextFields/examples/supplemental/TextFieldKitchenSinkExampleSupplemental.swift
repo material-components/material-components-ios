@@ -403,7 +403,7 @@ extension TextFieldKitchenSinkSwiftExample {
                                   message: nil,
                                   preferredStyle: .alert)
 
-    for rawMode: UInt in 0...3 {
+    for rawMode: UInt in 0...2 {
       let mode = MDCTextInputTextInsetsMode(rawValue: rawMode)!
       alert.addAction(UIAlertAction(title: textInsetsModeName(mode: mode),
                                     style: .default,
