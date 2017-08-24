@@ -40,6 +40,7 @@ static NSString *const MDCTextInputFundamentPositioningDelegateKey =
     @"MDCTextInputFundamentPositioningDelegateKey";
 static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
 static NSString *const MDCTextInputFundamentTextInputKey = @"MDCTextInputFundamentTextInputKey";
+static NSString *const MDCTextInputFundamentTextInsetsModeKey = @"MDCTextInputFundamentTextInsetsModeKey";
 static NSString *const MDCTextInputFundamentTrailingLabelKey =
     @"MDCTextInputFundamentTrailingLabelKey";
 static NSString *const MDCTextInputFundamentTrailingViewKey =
@@ -98,7 +99,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 // We never use the text property. Instead always read from the text field.
 
-@synthesize alignmentRectMode = _alignmentRectMode;
 @synthesize attributedText = _do_no_use_attributedText;
 @synthesize borderPath = _borderPath;
 @synthesize borderView = _borderView;
@@ -114,6 +114,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize trailingView = _trailingView;
 @synthesize trailingViewMode = _trailingViewMode;
 @synthesize underline = _underline;
+@synthesize textInsetsMode = _textInsetsMode;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -217,6 +218,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)commonMDCTextInputCommonFundamentInit {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
+  _textInsetsMode = MDCTextInputTextInsetsModeIfContent;
 }
 
 - (void)setupClearButton {
@@ -566,9 +568,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 #pragma mark - Properties Implementation
 
-- (void)setAlignmentRectMode:(MDCTextInputAlignmentRectMode)alignmentRectMode {
-  if (_alignmentRectMode != alignmentRectMode) {
-    _alignmentRectMode = alignmentRectMode;
+- (void)setTextInsetsMode:(MDCTextInputTextInsetsMode)textInsetsMode {
+  if (_textInsetsMode != textInsetsMode) {
+    _textInsetsMode = textInsetsMode;
     [self.textInput invalidateIntrinsicContentSize];
   }
 }
