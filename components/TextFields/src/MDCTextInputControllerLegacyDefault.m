@@ -1111,24 +1111,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                            (CGFloat)self.floatingPlaceholderScale.floatValue) +
                    MDCTextInputControllerLegacyDefaultVerticalHalfPadding;
 
-  // The amount of space underneath the underline is variable. It could just be
-  // MDCTextInputControllerLegacyDefaultVerticalPadding or the biggest estimated underlineLabel height +
-  // MDCTextInputControllerLegacyDefaultVerticalHalfPadding
-  CGFloat underlineLabelsOffset = 0;
-  if (self.textInput.leadingUnderlineLabel.text.length) {
-    underlineLabelsOffset =
-        MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-  }
-  if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-    underlineLabelsOffset =
-        MAX(underlineLabelsOffset,
-            MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-  }
-  CGFloat underlineOffset = MDCTextInputControllerLegacyDefaultVerticalHalfPadding + underlineLabelsOffset;
-
-  // .bottom = underlineOffset + the half padding above the line but below the text field
-  textInsets.bottom = underlineOffset + MDCTextInputControllerLegacyDefaultVerticalHalfPadding;
-
   return textInsets;
 }
 
