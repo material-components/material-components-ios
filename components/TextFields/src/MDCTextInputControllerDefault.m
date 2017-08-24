@@ -343,6 +343,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
   _textInput.hidesPlaceholderOnInput = !self.isFloatingEnabled;
+  _textInput.textInsetsMode = MDCTextInputTextInsetsModeAlways;
 
   if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
       [_textInput respondsToSelector:@selector(setMinimumLines:)]) {
@@ -1153,14 +1154,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
  LTR.
 
  The vertical layout is, at most complex, this form:
- MDCTextInputDefaultVerticalPadding +                                        // Top padding
+ MDCTextInputDefaultPadding +                                         // Top padding
  MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +   // Placeholder when up
- MDCTextInputDefaultVerticalHalfPadding +                                    // Small padding
- MDCRint(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
-              self.textInput.placeholderLabel.font.lineHeight)) +
- MDCTextInputDefaultVerticalHalfPadding +                                    // Small padding
- --Underline--                                                        // Underline (at active height)
- underlineLabelsOffset                                                      // Padding and labels
+ MDCTextInputDefaultVerticalHalfPadding +                             // Small padding
+ MDCCeil(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
+            self.textInput.placeholderLabel.font.lineHeight)) +
+ MDCTextInputDefaultPadding +                                         // Padding to underline
+ --Underline--                                                        // Underline (height not counted)
+ underlineLabelsOffset                                                // Depends on text insets mode
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
@@ -1178,29 +1179,40 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                            (CGFloat)self.floatingPlaceholderScale.floatValue) +
                    MDCTextInputDefaultPadding;
 
-  // The amount of space underneath the underline depends on whether there is content in the
-  // underline labels.
-  CGFloat underlineLabelsOffset = 0;
-  if (self.textInput.leadingUnderlineLabel.text.length) {
-    underlineLabelsOffset =
-        MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-  }
-  if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-    underlineLabelsOffset =
-        MAX(underlineLabelsOffset,
-            MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+  CGFloat leadingOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  CGFloat trailingOffset = MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+
+  // The amount of space underneath the underline is variable. It could just be
+  // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
+  // MDCTextInputHalfPadding. It's also dependent on the .textInsetsMode.
+  CGFloat underlineOffset = 0;
+  switch (self.textInput.textInsetsMode) {
+    case MDCTextInputTextInsetsModeAlways:
+      underlineOffset += MAX(leadingOffset, trailingOffset) + MDCTextInputDefaultPadding;
+      break;
+    case MDCTextInputTextInsetsModeIfContent: {
+      // contentConditionalOffset will have the estimated text height for the largest underline
+      // label that also has text.
+      CGFloat contentConditionalOffset = 0;
+      if (self.textInput.leadingUnderlineLabel.text.length) {
+        contentConditionalOffset = leadingOffset;
+      }
+      if (self.textInput.trailingUnderlineLabel.text.length) {
+        contentConditionalOffset = MAX(contentConditionalOffset, trailingOffset);
+      }
+
+      if (!MDCCGFloatEqual(contentConditionalOffset, 0)) {
+        underlineOffset += contentConditionalOffset + MDCTextInputDefaultPadding;
+      }
+    }
+      break;
+    case MDCTextInputTextInsetsModeNever:
+      break;
   }
 
-  CGFloat underlineOffset = underlineLabelsOffset +
-      MDCTextInputDefaultPadding;
-  if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
-    underlineOffset += MDCTextInputDefaultPadding;
-  }
-
-  // .bottom = underlineOffset + the half padding above the line but below the text field and any
-  // space needed for the labels and / or line.
-  // Legacy default has an additional half padding here but this version does not.
-  textInsets.bottom = underlineOffset;
+  // .bottom = underlineOffset + the half padding ABOVE the line but below the text field
+  // Legacy default has an additional padding here but this version does not.
+  textInsets.bottom = underlineOffset + MDCTextInputDefaultPadding;
 
   return textInsets;
 }
