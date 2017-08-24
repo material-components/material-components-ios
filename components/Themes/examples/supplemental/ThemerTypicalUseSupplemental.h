@@ -32,8 +32,8 @@
 #import "MDCFlexibleHeaderColorThemer.h"
 #import "MDCHeaderStackViewColorThemer.h"
 #import "MDCNavigationBarColorThemer.h"
-#import "MDCProgressViewColorThemer.h"
 #import "MDCPageControlColorThemer.h"
+#import "MDCProgressViewColorThemer.h"
 #import "MDCSliderColorThemer.h"
 #import "MDCTabBarColorThemer.h"
 #import "MDCTextFieldColorThemer.h"
@@ -67,4 +67,3 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 @interface ThemerCustomSchemePickerController : UIViewController
 
 @end
-

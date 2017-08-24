@@ -68,7 +68,7 @@ static NSString *s_secondaryColorString;
 
 - (void)didTapPreviewButton {
   ThemerTypicalUseViewController *themerController =
-  [[ThemerTypicalUseViewController alloc] initWithColorScheme:self.colorScheme];
+      [[ThemerTypicalUseViewController alloc] initWithColorScheme:self.colorScheme];
   [self.navigationController pushViewController:themerController animated:YES];
 }
 
@@ -101,7 +101,7 @@ static NSString *s_secondaryColorString;
   [UISwitch appearance].tintColor = colorScheme.primaryColor;
 
   // Send notification that color scheme has changed so existing components can update if necessary.
-  NSDictionary *userInfo = @{@"colorScheme" : colorScheme};
+  NSDictionary *userInfo = @{ @"colorScheme" : colorScheme };
   [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
                                                       object:self
                                                     userInfo:userInfo];
