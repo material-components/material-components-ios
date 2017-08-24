@@ -400,6 +400,19 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   return MDCCeil(self.textView.font.lineHeight * 2.f) / 2.f;
 }
 
+#pragma mark - Touch (UIView)
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  UIView *receiver = [super hitTest:point withEvent:event];
+
+  // We do this so the hit zone to become first responder is larger than just the small text view.
+  if (receiver == self && self.isEditing == NO) {
+    return self.textView;
+  }
+
+  return receiver;
+}
+
 #pragma mark - Trailing View Implementation
 
 - (void)updateTrailingViewLayout {
