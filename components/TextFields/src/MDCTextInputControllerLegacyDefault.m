@@ -1086,14 +1086,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
  LTR.
 
  The vertical layout is, at most complex, this form:
- MDCTextInputControllerLegacyDefaultVerticalPadding +                                        // Top padding
- MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +   // Placeholder when up
- MDCTextInputControllerLegacyDefaultVerticalHalfPadding +                                    // Small padding
- MDCRint(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
+ MDCTextInputControllerLegacyDefaultVerticalPadding +                                 // Top padding
+ MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +                   // Placeholder when up
+ MDCTextInputControllerLegacyDefaultVerticalHalfPadding +                             // Small padding
+ MDCRint(MAX(self.textInput.font.lineHeight,                                          // Text field or placeholder
               self.textInput.placeholderLabel.font.lineHeight)) +
- MDCTextInputControllerLegacyDefaultVerticalHalfPadding +                                    // Small padding
- --Underline-- (height not counted)                                   // Underline (height ignored)
- MAX(underlineLabelsOffset,MDCTextInputControllerLegacyDefaultVerticalHalfPadding)           // Padding and/or labels
+ MDCTextInputControllerLegacyDefaultVerticalHalfPadding +                             // Small padding
+ --Underline-- (height not counted)                                                   // Underline (height ignored)
+ MAX(underlineLabelsOffset,MDCTextInputControllerLegacyDefaultVerticalHalfPadding)    // Padding and/or labels
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
