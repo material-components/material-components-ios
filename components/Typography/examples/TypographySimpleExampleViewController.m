@@ -39,8 +39,18 @@
   [self.view addSubview:label];
 }
 
+#pragma mark - CatalogByConvention
+
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Typography and Fonts", @"Read Me Demo" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end
