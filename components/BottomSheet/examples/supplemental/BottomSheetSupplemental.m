@@ -91,8 +91,9 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The Bottom Sheet is a presentation controller for presenting view controllers as a sheet"
-  " that slides up from the bottom of the screen. The sheet can be dismissed by swiping down.";
+  return
+      @"The Bottom Sheet is a presentation controller for presenting view controllers as a sheet"
+       " that slides up from the bottom of the screen. The sheet can be dismissed by swiping down.";
 }
 
 - (BOOL)catalogShouldHideNavigation {
