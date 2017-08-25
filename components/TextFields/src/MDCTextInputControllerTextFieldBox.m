@@ -136,7 +136,17 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   // tho it is redundant when floating is on, we just keep it on always for simplicity.
   // Note: This is an issue only on singleline text fields.
   if (!self.underlineBottom) {
-    if (![self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
+    if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
+      self.underlineBottom = [NSLayoutConstraint constraintWithItem:self.textInput.underline
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:((MDCMultilineTextField *)self.textInput).textView
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1
+                                                           constant:[self beneathInputPadding]];
+      self.underlineBottom.active = YES;
+
+    } else {
       self.underlineBottom = [NSLayoutConstraint constraintWithItem:self.textInput.underline
                                                           attribute:NSLayoutAttributeBottom
                                                           relatedBy:NSLayoutRelationEqual
@@ -145,25 +155,13 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
                                                          multiplier:1
                                                            constant:underlineBottomConstant];
       self.underlineBottom.active = YES;
-    } else {
-        self.underlineBottom = [NSLayoutConstraint constraintWithItem:self.textInput.underline
-                                                            attribute:NSLayoutAttributeBottom
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:((MDCMultilineTextField *)self.textInput).textView
-                                                            attribute:NSLayoutAttributeBottom
-                                                           multiplier:1
-                                                             constant:[self beneathInputPadding]];
-        self.underlineBottom.active = YES;
+
     }
   }
-
-  if (![self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
-    self.underlineBottom.constant = underlineBottomConstant;
-  } else {
+  if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
     self.underlineBottom.constant = [self beneathInputPadding];
-  }
-
-  if (![self.textInput isKindOfClass:[MDCMultilineTextField class]] && !self.underlineBottom) {
+  } else {
+    self.underlineBottom.constant = underlineBottomConstant;
   }
 }
 
