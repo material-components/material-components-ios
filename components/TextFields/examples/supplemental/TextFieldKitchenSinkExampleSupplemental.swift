@@ -30,7 +30,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let textFieldControllersFullWidth = setupFullWidthTextFields()
 
-    allTextFieldControllers = [setupDefaultTextFields(),
+    allTextFieldControllers = [setupBoxTextFields(), setupDefaultTextFields(),
                                textFieldControllersFullWidth,
                                setupFloatingTextFields(),
                                setupSpecialTextFields()].flatMap { $0 as! [MDCTextInputController] }
@@ -57,6 +57,8 @@ extension TextFieldKitchenSinkSwiftExample {
   func setupButton() -> MDCButton {
     let button = MDCButton()
     button.setTitleColor(.white, for: .normal)
+    button.mdc_adjustsFontForContentSizeCategory = true
+    button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }
 
@@ -96,30 +98,22 @@ extension TextFieldKitchenSinkSwiftExample {
 
     characterModeButton.translatesAutoresizingMaskIntoConstraints = false
     characterModeButton.addTarget(self,
-                                  action: #selector(buttonDidTouch(button:)),
+                                  action: #selector(textFieldModeButtonDidTouch(button:)),
                                   for: .touchUpInside)
     characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
-    characterModeButton.setTitleColor(.white, for: .normal)
-    characterModeButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(characterModeButton)
 
-    clearModeButton.translatesAutoresizingMaskIntoConstraints = false
     clearModeButton.addTarget(self,
-                              action: #selector(buttonDidTouch(button:)),
+                              action: #selector(textFieldModeButtonDidTouch(button:)),
                               for: .touchUpInside)
     clearModeButton.setTitle("Clear Button Mode: While Editing", for: .normal)
-    clearModeButton.setTitleColor(.white, for: .normal)
-    clearModeButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(clearModeButton)
 
-    underlineButton.translatesAutoresizingMaskIntoConstraints = false
     underlineButton.addTarget(self,
-                              action: #selector(buttonDidTouch(button:)),
+                              action: #selector(textFieldModeButtonDidTouch(button:)),
                               for: .touchUpInside)
 
     underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
-    underlineButton.setTitleColor(.white, for: .normal)
-    underlineButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(underlineButton)
 
     return [container, characterModeButton, underlineButton, clearModeButton]
@@ -317,8 +311,8 @@ extension TextFieldKitchenSinkSwiftExample {
 }
 
 extension TextFieldKitchenSinkSwiftExample {
-  // The 3 'mode' buttons all are similar. The following code is shared by them
-  @objc func buttonDidTouch(button: MDCButton) {
+  // 3 of the 'mode' buttons all are similar. The following code is shared by them
+  @objc func textFieldModeButtonDidTouch(button: MDCButton) {
     var controllersToChange = allInputControllers
     var partialTitle = ""
 
