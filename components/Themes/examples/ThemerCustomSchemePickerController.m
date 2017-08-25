@@ -50,6 +50,53 @@
 static NSString *s_primaryColorString;
 static NSString *s_secondaryColorString;
 
++ (BOOL)integersFromColorHexString:(NSString *)string
+                            redInt:(unsigned int *)redInt
+                          greenInt:(unsigned int *)greenInt
+                           blueInt:(unsigned int *)blueInt {
+  if (!string || (string.length != 3 && string.length != 6)) {
+    return NO;
+  }
+
+  BOOL use3Digit = string.length == 3;
+  NSInteger rangeStep = 2;
+  NSInteger rangeStart = 0;
+  if (use3Digit) {
+    rangeStep = 1;
+  }
+
+  unsigned int tempRed, tempGreen, tempBlue;
+  NSScanner *scanner =
+      [NSScanner scannerWithString:[string substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
+  rangeStart += rangeStep;
+
+  BOOL success = YES;
+  success = success && [scanner scanHexInt:&tempRed];
+  scanner =
+      [NSScanner scannerWithString:[string substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
+  rangeStart += rangeStep;
+  success = success && [scanner scanHexInt:&tempGreen];
+  scanner =
+      [NSScanner scannerWithString:[string substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
+  success = success && [scanner scanHexInt:&tempBlue];
+  if (!success) {
+    NSLog(@"Invalid hex input: %@", string);
+    return nil;
+  }
+
+  if (use3Digit) {
+    tempRed *= 17;
+    tempGreen *= 17;
+    tempBlue *= 17;
+  }
+
+  *redInt = tempRed;
+  *greenInt = tempGreen;
+  *blueInt = tempBlue;
+
+  return YES;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Try to restore in-memory state
@@ -93,39 +140,15 @@ static NSString *s_secondaryColorString;
   UIColor *secondaryColor = self.secondaryColorPreView.backgroundColor;
 
   // Primary color
-  if (primaryString.length != 6 && primaryString.length != 3) {
+  unsigned int redInt, greenInt, blueInt;
+
+  BOOL success = [ThemerCustomSchemePickerController integersFromColorHexString:primaryString
+                                                                         redInt:&redInt
+                                                                       greenInt:&greenInt
+                                                                        blueInt:&blueInt];
+  if (!success) {
     self.previewButton.enabled = NO;
     return;
-  }
-
-  BOOL use3Digit = primaryString.length == 3;
-  NSInteger rangeStep = 2;
-  NSInteger rangeStart = 0;
-  if (use3Digit) {
-    rangeStep = 1;
-  }
-  NSScanner *scanner = [NSScanner
-      scannerWithString:[primaryString substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
-  rangeStart += rangeStep;
-  unsigned int redInt, greenInt, blueInt;
-  BOOL success = YES;
-  success = success && [scanner scanHexInt:&redInt];
-  scanner = [NSScanner
-      scannerWithString:[primaryString substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
-  rangeStart += rangeStep;
-  success = success && [scanner scanHexInt:&greenInt];
-  scanner = [NSScanner
-      scannerWithString:[primaryString substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
-  success = success && [scanner scanHexInt:&blueInt];
-  if (!success) {
-    NSLog(@"Invalid hex input: %@", primaryString);
-    return;
-  }
-
-  if (use3Digit) {
-    redInt *= 17;
-    greenInt *= 17;
-    blueInt *= 17;
   }
 
   primaryColor =
@@ -134,39 +157,13 @@ static NSString *s_secondaryColorString;
   self.primaryColorPreView.backgroundColor = primaryColor;
 
   // Secondary color
-  if (secondaryString.length != 6 && secondaryString.length != 3) {
+  success = [ThemerCustomSchemePickerController integersFromColorHexString:secondaryString
+                                                                    redInt:&redInt
+                                                                  greenInt:&greenInt
+                                                                   blueInt:&blueInt];
+  if (!success) {
     self.previewButton.enabled = NO;
     return;
-  }
-
-  use3Digit = secondaryString.length == 3;
-  rangeStep = 2;
-  rangeStart = 0;
-  if (use3Digit) {
-    rangeStep = 1;
-  }
-  scanner = [NSScanner
-      scannerWithString:[secondaryString substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
-  rangeStart += rangeStep;
-  success = YES;
-  success = success && [scanner scanHexInt:&redInt];
-  scanner = [NSScanner
-      scannerWithString:[secondaryString substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
-  rangeStart += rangeStep;
-  success = success && [scanner scanHexInt:&greenInt];
-  scanner = [NSScanner
-      scannerWithString:[secondaryString substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
-  rangeStart += rangeStep;
-  success = success && [scanner scanHexInt:&blueInt];
-  if (!success) {
-    NSLog(@"Invalid hex input: %@", secondaryString);
-    return;
-  }
-
-  if (use3Digit) {
-    redInt *= 17;
-    greenInt *= 17;
-    blueInt *= 17;
   }
 
   secondaryColor =
@@ -209,7 +206,7 @@ static NSString *s_secondaryColorString;
   [UISwitch appearance].tintColor = colorScheme.primaryColor;
 
   // Send notification that color scheme has changed so existing components can update if necessary.
-  NSDictionary *userInfo = @{@"colorScheme" : colorScheme};
+  NSDictionary *userInfo = @{ @"colorScheme" : colorScheme };
   [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
                                                       object:self
                                                     userInfo:userInfo];
