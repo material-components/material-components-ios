@@ -21,7 +21,7 @@
 @property(weak, nonatomic) IBOutlet MDCFlatButton *flatButton;
 @property(weak, nonatomic) IBOutlet MDCRaisedButton *raisedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
-@property(weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
 
 @end
 
