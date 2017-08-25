@@ -79,7 +79,12 @@ extension DialogsLongAlertViewController {
   class func catalogBreadcrumbs() -> [String] {
     return [ "Dialogs", "Swift Alert Demo"]
   }
-  class func catalogDescription() -> String {
-    return "Swift Alert Example"
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
+  func catalogShouldHideNavigation() -> Bool {
+    return false
   }
 }
