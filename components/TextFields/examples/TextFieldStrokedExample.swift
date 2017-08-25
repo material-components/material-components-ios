@@ -45,7 +45,7 @@ final class TextFieldStrokedSwiftExample: UIViewController {
     city.autocapitalizationType = .words
     return city
   }()
-  let cityController: MDCTextInputControllerStrokedField
+  let cityController: MDCTextInputControllerOutlinedField
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -54,7 +54,7 @@ final class TextFieldStrokedSwiftExample: UIViewController {
     state.autocapitalizationType = .allCharacters
     return state
   }()
-  let stateController: MDCTextInputControllerStrokedField
+  let stateController: MDCTextInputControllerOutlinedField
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -62,7 +62,7 @@ final class TextFieldStrokedSwiftExample: UIViewController {
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputControllerStrokedField
+  let zipController: MDCTextInputControllerOutlinedField
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -81,9 +81,9 @@ final class TextFieldStrokedSwiftExample: UIViewController {
   var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerStrokedField(textInput: city)
-    stateController = MDCTextInputControllerStrokedField(textInput: state)
-    zipController = MDCTextInputControllerStrokedField(textInput: zip)
+    cityController = MDCTextInputControllerOutlinedField(textInput: city)
+    stateController = MDCTextInputControllerOutlinedField(textInput: state)
+    zipController = MDCTextInputControllerOutlinedField(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -112,12 +112,12 @@ final class TextFieldStrokedSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerStrokedField(textInput: name)
+    let nameController = MDCTextInputControllerOutlinedField(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerStrokedField(textInput: address)
+    let addressController = MDCTextInputControllerOutlinedField(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -140,7 +140,7 @@ final class TextFieldStrokedSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerStrokedField(textInput: phone)
+    let phoneController = MDCTextInputControllerOutlinedField(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 

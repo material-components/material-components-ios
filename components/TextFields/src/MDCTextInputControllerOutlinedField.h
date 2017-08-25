@@ -27,6 +27,6 @@
  the placeholder crosses the border cutting out a space.
  */
 
-@interface MDCTextInputControllerStrokedField : MDCTextInputControllerDefault
+@interface MDCTextInputControllerOutlinedField : MDCTextInputControllerDefault
 
 @end
