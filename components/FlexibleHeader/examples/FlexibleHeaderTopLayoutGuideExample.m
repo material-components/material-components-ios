@@ -127,14 +127,6 @@
   leading.active = YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
-  // comment this line:
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 

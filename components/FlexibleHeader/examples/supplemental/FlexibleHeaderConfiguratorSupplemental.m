@@ -32,6 +32,10 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   return @[ @"Flexible Header", @"Configurator" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }
@@ -53,12 +57,6 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
     self.title = @"Configurator";
   }
   return self;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
