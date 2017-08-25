@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldStrokedSwiftExample: UIViewController {
+final class TextFieldOutlinedSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -95,7 +95,7 @@ final class TextFieldStrokedSwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .white
 
-    title = "Stroked Text Fields"
+    title = "Outlined Text Fields"
 
     setupScrollView()
     setupTextFields()
@@ -261,7 +261,7 @@ final class TextFieldStrokedSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldStrokedSwiftExample: UITextFieldDelegate {
+extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -314,7 +314,7 @@ extension TextFieldStrokedSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldStrokedSwiftExample: UITextViewDelegate {
+extension TextFieldOutlinedSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -322,7 +322,7 @@ extension TextFieldStrokedSwiftExample: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldStrokedSwiftExample {
+extension TextFieldOutlinedSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -354,14 +354,14 @@ extension TextFieldStrokedSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldStrokedSwiftExample {
+extension TextFieldOutlinedSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldStrokedSwiftExample {
+extension TextFieldOutlinedSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Stroked Fields & Text Areas"]
+    return ["Text Field", "Outlined Fields & Text Areas"]
   }
 }
