@@ -621,7 +621,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (CGFloat)borderWidthForState:(UIControlState)state {
   NSNumber *borderWidth = _borderWidths[@(state)];
   if (borderWidth) {
-    return borderWidth.doubleValue;
+    return (CGFloat)borderWidth.doubleValue;
   }
   return 0;
 }
@@ -638,7 +638,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     // We fall back to UIControlStateNormal if there is no value for the current state.
     width = _borderWidths[@(UIControlStateNormal)];
   }
-  self.layer.borderWidth = width ? width.doubleValue : 0;
+  self.layer.borderWidth = width ? (CGFloat)width.doubleValue : 0;
 }
 
 #pragma mark - Private methods
