@@ -119,12 +119,6 @@
   return self.appBar.headerViewController;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
 @end
 
 #pragma mark - Typical application code (not Material-specific)
