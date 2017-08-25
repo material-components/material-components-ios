@@ -359,6 +359,8 @@ extension TextFieldLegacySwiftExample {
   }
 }
 
+// MARK: - CatalogByConvention
+
 extension TextFieldLegacySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "[Legacy] Typical Use"]
@@ -368,7 +370,12 @@ extension TextFieldLegacySwiftExample {
     // swiftlint:disable:next line_length
     return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
   }
+
   class func catalogIsPrimaryDemo() -> Bool {
     return true
+  }
+
+  func catalogShouldHideNavigation() -> Bool {
+    return false
   }
 }
