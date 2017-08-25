@@ -47,7 +47,7 @@
   // Set the title text attributes before assigning to buttonBar.items
   // because of https://github.com/material-components/material-components-ios/issues/277
   for (UIBarButtonItem *item in items) {
-    [item setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}
                         forState:UIControlStateNormal];
   }
 
@@ -88,6 +88,10 @@
 + (NSString *)catalogDescription {
   return @"The Button Bar is a view that represents a list of UIBarButtonItems as"
           " horizontally-aligned buttons.";
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

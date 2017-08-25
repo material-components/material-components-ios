@@ -36,13 +36,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 600);
-  
+
   self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, 80);
   self.alertButton.center = CGPointMake(self.view.frame.size.width / 2 - 100, 160);
   self.featureButton.center = CGPointMake(self.view.frame.size.width / 2 + 50, 160);
@@ -81,8 +80,7 @@
                                       action:nil];
 
   CGRect defaultRect = CGRectMake(0, 0, 32, 32);
-  self.activityIndicator =
-      [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
+  self.activityIndicator = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
   self.activityIndicator.indicatorMode = MDCActivityIndicatorModeIndeterminate;
   [self.activityIndicator sizeToFit];
   [self.scrollView addSubview:self.activityIndicator];
@@ -94,8 +92,8 @@
   self.alertButton.center = CGPointMake(100, 100);
   [self.scrollView addSubview:self.alertButton];
   [self.alertButton addTarget:self
-                  action:@selector(didTapShowAlert:)
-        forControlEvents:UIControlEventTouchUpInside];
+                       action:@selector(didTapShowAlert:)
+             forControlEvents:UIControlEventTouchUpInside];
 
   self.featureButton = [[MDCRaisedButton alloc] init];
   [self.featureButton setTitle:@"Feature Highlight" forState:UIControlStateNormal];
@@ -116,8 +114,7 @@
   [self.scrollView addSubview:self.progressView];
   [self animateStep1:self.progressView];
 
-  self.floatingButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  self.floatingButton = [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
   [self.floatingButton sizeToFit];
   [self.scrollView addSubview:self.floatingButton];
 

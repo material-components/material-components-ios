@@ -25,8 +25,7 @@
 
 #pragma mark - DialogsKeyboardViewController
 
-static NSString * const kReusableIdentifierItem = @"cell";
-
+static NSString *const kReusableIdentifierItem = @"cell";
 
 @implementation DialogsKeyboardViewController (Supplemental)
 
@@ -35,7 +34,8 @@ static NSString * const kReusableIdentifierItem = @"cell";
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
   return 1;
 }
 
@@ -50,15 +50,18 @@ static NSString * const kReusableIdentifierItem = @"cell";
 
 @end
 
-
 @implementation DialogsKeyboardViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Dialogs", @"Dialog with an Input Field" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Demonstrate Material dialog controller with an input field.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

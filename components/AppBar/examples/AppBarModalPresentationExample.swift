@@ -66,12 +66,6 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     return appBar.headerViewController
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
   }
@@ -136,12 +130,6 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     return appBar.headerViewController
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-
   @objc func presentModal() {
     let modalVC = AppBarModalPresentationSwiftExamplePresented()
     self.present(modalVC, animated: true, completion: nil)
@@ -153,6 +141,11 @@ extension AppBarModalPresentationSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Modal Presentation (Swift)"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+  
   func catalogShouldHideNavigation() -> Bool {
     return true
   }

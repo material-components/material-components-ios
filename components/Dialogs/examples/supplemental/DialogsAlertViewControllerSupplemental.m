@@ -58,11 +58,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
   return @[ @"Dialogs", @"AlertController" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Demonstrate Material spec'd alert controllers.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
-+ (BOOL)catalogIsPrimaryDemo {
+- (BOOL)catalogShouldHideNavigation {
   return NO;
 }
 

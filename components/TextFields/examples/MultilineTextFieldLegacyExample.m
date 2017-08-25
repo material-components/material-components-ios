@@ -46,17 +46,13 @@
                               constraintsWithVisualFormat:@"V:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
 
   MDCMultilineTextField *multilineTextFieldUnstyled = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldUnstyled];
@@ -95,8 +91,8 @@
   multilineTextFieldCharMaxDefault.placeholder = @"Inline Placeholder Only";
   multilineTextFieldCharMaxDefault.textView.delegate = self;
 
-  self.textFieldControllerDefaultCharMax =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
+  self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerLegacyDefault alloc]
+      initWithTextInput:multilineTextFieldCharMaxDefault];
   self.textFieldControllerDefaultCharMax.characterCountMax = 30;
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
@@ -203,12 +199,18 @@
   [self.view endEditing:YES];
 }
 
+#pragma mark - CatalogByConvention
+
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Text Field", @"[Legacy] Multiline (Objective C)" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Simple Legacy MDCMultilineTextField example.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

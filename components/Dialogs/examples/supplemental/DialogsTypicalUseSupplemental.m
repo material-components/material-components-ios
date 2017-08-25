@@ -23,14 +23,13 @@
 
 #import "DialogsTypicalUseSupplemental.h"
 #import "MaterialButtons.h"
+#import "MaterialCollections.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
-#import "MaterialCollections.h"
 
 #pragma mark - DialogsTypicalUseViewController
 
-static NSString * const kReusableIdentifierItem = @"cell";
-
+static NSString *const kReusableIdentifierItem = @"cell";
 
 @implementation DialogsTypicalUseViewController (Supplemental)
 
@@ -40,15 +39,16 @@ static NSString * const kReusableIdentifierItem = @"cell";
   self.modes = modes;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
   return self.modes.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewTextCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
-                                            forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
   cell.textLabel.text = self.modes[indexPath.row];
   return cell;
 }
@@ -68,6 +68,10 @@ static NSString * const kReusableIdentifierItem = @"cell";
 
 + (BOOL)catalogIsPrimaryDemo {
   return YES;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

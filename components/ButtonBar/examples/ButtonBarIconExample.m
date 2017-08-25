@@ -90,6 +90,10 @@
   return NO;
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end
 
 #pragma mark - Typical application code (not Material-specific)

@@ -29,6 +29,10 @@
   return @[ @"Flexible Header", @"Wrapped View Controller" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

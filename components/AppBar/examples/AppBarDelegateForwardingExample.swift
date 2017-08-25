@@ -119,6 +119,11 @@ extension AppBarDelegateForwardingExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Delegate Forwarding (Swift)"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
@@ -131,12 +136,6 @@ extension AppBarDelegateForwardingExample {
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 }
 

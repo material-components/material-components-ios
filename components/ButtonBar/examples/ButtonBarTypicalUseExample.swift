@@ -86,6 +86,14 @@ extension ButtonBarTypicalUseSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["Button Bar", "Button Bar (Swift)"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
+  func catalogShouldHideNavigation() -> Bool {
+    return false
+  }
 }
 
 // MARK: - Typical application code (not Material-specific)

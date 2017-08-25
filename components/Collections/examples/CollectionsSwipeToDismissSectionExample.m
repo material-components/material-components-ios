@@ -24,10 +24,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Swipe-To-Dismiss-Section Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -94,6 +90,20 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     willDeleteSections:(NSIndexSet *)sections {
   // Remove these swiped sections from our data.
   [_content removeObjectsAtIndexes:sections];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Swipe-To-Dismiss-Section Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

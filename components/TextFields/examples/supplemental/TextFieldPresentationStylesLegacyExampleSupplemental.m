@@ -32,17 +32,13 @@
                               constraintsWithVisualFormat:@"V:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
 
   CGFloat marginOffset = 16;
   UIEdgeInsets margins = UIEdgeInsetsMake(0, marginOffset, 0, marginOffset);
@@ -63,6 +59,14 @@
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Text Field", @"Controller Styles (Objective C)" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

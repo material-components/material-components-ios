@@ -40,9 +40,8 @@
     UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes = @{
-                                            NSForegroundColorAttributeName : [UIColor whiteColor],
-                                            };
+    _appBar.navigationBar.titleTextAttributes =
+        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   }
   return self;
 }
@@ -81,14 +80,6 @@
 //                color to identify whether the status bar should be light or dark-themed.
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.appBar.headerViewController;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
-  // we always hide the navigation bar when we're about to appear.
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 @end

@@ -18,7 +18,7 @@
 
 #import "SnackbarExampleSupplemental.h"
 
-static NSString * const kCellIdentifier = @"Cell";
+static NSString *const kCellIdentifier = @"Cell";
 
 @implementation SnackbarExample
 
@@ -35,7 +35,6 @@ static NSString * const kCellIdentifier = @"Cell";
      numberOfItemsInSection:(NSInteger)section {
   return self.choices.count;
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,12 +64,24 @@ static NSString * const kCellIdentifier = @"Cell";
   return YES;
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end
 
 @implementation SnackbarOverlayViewExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Snackbar", @"Snackbar Overlay View" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end
@@ -80,9 +91,9 @@ static NSString * const kCellIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewTextCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
-                                            forIndexPath:indexPath];
-  
+      [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
+                                                forIndexPath:indexPath];
+
   cell.textLabel.text = self.choices[indexPath.row];
   if (indexPath.row > 2) {
     UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -94,7 +105,7 @@ static NSString * const kCellIdentifier = @"Cell";
   } else {
     cell.accessoryView = nil;
   }
-  
+
   return cell;
 }
 
@@ -104,6 +115,14 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Snackbar", @"Snackbar Suspension" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

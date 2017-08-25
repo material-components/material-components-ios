@@ -23,10 +23,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSArray *_cellBackgroundColors;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Color Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -36,10 +32,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
   // Array of cell background colors.
   _cellBackgroundColors = @[
-    [UIColor colorWithWhite:0 alpha:0.2], [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
-                                                          green:(CGFloat)0xA4 / (CGFloat)255
-                                                           blue:(CGFloat)0xDD / (CGFloat)255
-                                                          alpha:1],
+    [UIColor colorWithWhite:0 alpha:0.2],
+    [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
+                    green:(CGFloat)0xA4 / (CGFloat)255
+                     blue:(CGFloat)0xDD / (CGFloat)255
+                    alpha:1],
     [UIColor whiteColor]
   ];
 
@@ -78,6 +75,20 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (UIColor *)collectionView:(UICollectionView *)collectionView
     cellBackgroundColorAtIndexPath:(NSIndexPath *)indexPath {
   return _cellBackgroundColors[indexPath.item];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Cell Color Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

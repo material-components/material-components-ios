@@ -100,7 +100,7 @@
   NSLog(@"UIFontWeightBlack %f", UIFontWeightBlack);
 
   UIFont *defaultFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  NSLog (@"Font Family : %@", defaultFont.familyName);
+  NSLog(@"Font Family : %@", defaultFont.familyName);
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
@@ -124,14 +124,6 @@
 
   [self.tableView reloadData];
 }
-
-#pragma mark - UITableViewDataSource
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Typography and Fonts", @"Material Font Styles" ];
-}
-
-#pragma mark - UITableViewDelegate
 
 #pragma mark - UITableViewDataSource
 
@@ -166,4 +158,19 @@
 
   return cell;
 }
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Typography and Fonts", @"Material Font Styles" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end

@@ -47,7 +47,7 @@
   // implement -preferredStatusBarStyle.
   self.appBar.navigationBar.tintColor = [UIColor whiteColor];
   self.appBar.navigationBar.titleTextAttributes =
-      @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+      @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
   // Make sure navigation bar background color is clear so the image view is visible.
   self.appBar.navigationBar.backgroundColor = [UIColor clearColor];
@@ -93,17 +93,16 @@
   return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
 @end
 
 @implementation AppBarImageryExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"App Bar", @"Imagery" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 - (BOOL)catalogShouldHideNavigation {

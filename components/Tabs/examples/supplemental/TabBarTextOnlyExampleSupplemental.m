@@ -29,7 +29,7 @@ static CGFloat const kStatusBarHeight = 20;
 static CGFloat const kAppBarMinHeight = 56;
 static CGFloat const kTabBarHeight = 48;
 
-static NSString * const kReusableIdentifierItem = @"Cell";
+static NSString *const kReusableIdentifierItem = @"Cell";
 
 @implementation TabBarTextOnlyExample (Supplemental)
 
@@ -54,29 +54,26 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
   self.appBar.navigationBar.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.minimumHeight =
-      kStatusBarHeight + kTabBarHeight;
+  self.appBar.headerViewController.headerView.minimumHeight = kStatusBarHeight + kTabBarHeight;
   self.appBar.headerViewController.headerView.maximumHeight =
       kStatusBarHeight + kAppBarMinHeight + kTabBarHeight;
-  
+
   self.appBar.navigationBar.titleTextAttributes = @{
-      NSForegroundColorAttributeName: [UIColor whiteColor],
-      NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
+    NSForegroundColorAttributeName : [UIColor whiteColor],
+    NSFontAttributeName : [UIFont fontWithName:@"RobotoMono-Regular" size:14]
+  };
   [self.appBar addSubviewsToParent];
-  
-  
+
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 }
 
 #pragma mark - UICollectionView
 
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   return self.choices.count;
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -103,7 +100,8 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
   if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+    [self.appBar.headerViewController.headerView
+        trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
   }
 }
 
@@ -111,8 +109,9 @@ static NSString * const kReusableIdentifierItem = @"Cell";
                      withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset {
   if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                                                           targetContentOffset:targetContentOffset];
+    [self.appBar.headerViewController.headerView
+        trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                  targetContentOffset:targetContentOffset];
   }
 }
 
@@ -124,12 +123,8 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   return @[ @"Tab Bar", @"Text Tabs" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
-}
-
 + (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return NO;
 }
 
 - (BOOL)catalogShouldHideNavigation {

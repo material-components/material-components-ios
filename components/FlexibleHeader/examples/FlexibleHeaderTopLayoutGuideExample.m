@@ -86,7 +86,7 @@
   // Create UIView Object
   UIView *constrainedView = [[UIView alloc] init];
   constrainedView.backgroundColor =
-      [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1];
+      [UIColor colorWithRed:11 / 255.0 green:232 / 255.0 blue:94 / 255.0 alpha:1];
   constrainedView.translatesAutoresizingMaskIntoConstraints = NO;
   self.constrainedView = constrainedView;
   [self.view addSubview:self.constrainedView];
@@ -125,14 +125,6 @@
                                                             multiplier:1.0
                                                               constant:0];
   leading.active = YES;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
-  // comment this line:
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewWillLayoutSubviews {

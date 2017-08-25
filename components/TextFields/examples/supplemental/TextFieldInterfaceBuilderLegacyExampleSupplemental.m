@@ -34,4 +34,12 @@
   return @"TextFieldInterfaceBuilderLegacyExample";
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end

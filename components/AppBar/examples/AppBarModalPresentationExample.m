@@ -205,6 +205,10 @@
   return @[ @"App Bar", @"Modal Presentation" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }
@@ -239,12 +243,6 @@
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.appBar.headerViewController;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 @end

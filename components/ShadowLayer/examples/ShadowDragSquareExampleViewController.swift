@@ -69,7 +69,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
     }
   }
 
-  // MARK: catalog by convention
+  // MARK: - CatalogByConvention
 
   class func catalogBreadcrumbs() -> [String] {
     return [ "Shadow", "Shadow Layer"]
@@ -87,4 +87,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
     return true
   }
 
+  func catalogShouldHideNavigation() -> Bool {
+    return false
+  }
 }
