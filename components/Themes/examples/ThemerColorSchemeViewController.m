@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialThemes.h"
 #import "MaterialPalettes.h"
+#import "MaterialThemes.h"
 
 #import "ThemerTypicalUseSupplemental.h"
 
@@ -38,14 +38,14 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self loadCollectionView: @[ @"Blue Theme",
-                               @"Red Theme",
-                               @"Green Theme",
-                               @"Amber Theme",
-                               @"Pink Theme",
-                               @"Orange Theme",
-                               @"Purple Theme",
-                               @"Teal Theme" ]];
+  [self loadCollectionView:@[ @"Blue Theme",
+                              @"Red Theme",
+                              @"Green Theme",
+                              @"Amber Theme",
+                              @"Pink Theme",
+                              @"Orange Theme",
+                              @"Purple Theme",
+                              @"Teal Theme" ]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
