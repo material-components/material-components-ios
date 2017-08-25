@@ -27,7 +27,6 @@ final class TextFieldLegacySwiftExample: UIViewController {
     name.placeholder = "Name"
     name.translatesAutoresizingMaskIntoConstraints = false
     name.autocapitalizationType = .words
-    name.textInsetsMode = .always
     return name
   }()
 
