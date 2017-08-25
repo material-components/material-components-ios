@@ -1179,8 +1179,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                            (CGFloat)self.floatingPlaceholderScale.floatValue) +
                    MDCTextInputDefaultPadding;
 
-  CGFloat leadingOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-  CGFloat trailingOffset = MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat leadingOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat trailingOffset = MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
 
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +

@@ -790,8 +790,9 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                         constant:0];
     }
 
+    CGFloat scale = UIScreen.mainScreen.scale;
     CGFloat characterCountHeightConstant =
-        MDCCeil(((MDCMultilineTextField*)self.textInput).textView.font.lineHeight * 2.f) / 2.f;
+        MDCCeil(((MDCMultilineTextField*)self.textInput).textView.font.lineHeight * scale) / scale;
     if (!self.multilineCharacterCountHeight) {
       self.multilineCharacterCountHeight =
           [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
