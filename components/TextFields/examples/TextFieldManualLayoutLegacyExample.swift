@@ -88,7 +88,7 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Manual Text Fields"
+    title = "Legacy Manual Text Fields"
 
     setupScrollView()
     setupTextFields()
