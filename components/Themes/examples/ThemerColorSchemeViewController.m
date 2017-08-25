@@ -164,4 +164,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
   return YES;
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end
