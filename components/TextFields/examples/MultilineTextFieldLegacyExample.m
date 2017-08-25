@@ -203,12 +203,18 @@
   [self.view endEditing:YES];
 }
 
+#pragma mark - CatalogByConvention
+
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Text Field", @"[Legacy] Multiline (Objective C)" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Simple Legacy MDCMultilineTextField example.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end

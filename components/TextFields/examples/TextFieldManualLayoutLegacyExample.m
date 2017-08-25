@@ -156,4 +156,12 @@
   return @[ @"Text Field", @"[Legacy] Manual Layout (Objective C)" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end

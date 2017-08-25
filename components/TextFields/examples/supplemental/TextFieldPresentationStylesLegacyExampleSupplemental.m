@@ -65,4 +65,12 @@
   return @[ @"Text Field", @"Controller Styles (Objective C)" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end
