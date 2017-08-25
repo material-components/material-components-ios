@@ -103,12 +103,6 @@
   return NO;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
 - (void)didTapBackButton {
   [self.navigationController popViewControllerAnimated:YES];
 }
@@ -119,6 +113,10 @@
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Navigation Bar", @"Navigation Bar With Icons" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 - (BOOL)catalogShouldHideNavigation {
