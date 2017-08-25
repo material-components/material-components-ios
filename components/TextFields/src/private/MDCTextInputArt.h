@@ -18,6 +18,8 @@
 
 #import "MaterialMath.h"
 
+static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.5f;
+
 #pragma mark - Drawing
 
 static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
