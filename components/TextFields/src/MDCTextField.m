@@ -214,7 +214,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (void)setBorderPath:(UIBezierPath *)borderPath {
-  if (self.fundament.borderPath != borderPath) {
+  if (![self.fundament.borderPath isEqual:borderPath]) {
     self.fundament.borderPath = borderPath;
     [self updateBorder];
   }
