@@ -25,6 +25,14 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     return ["Buttons", "Buttons (Swift)"]
   }
 
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
+  func catalogShouldHideNavigation() -> Bool {
+    return false
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 

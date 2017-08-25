@@ -23,6 +23,14 @@ class ButtonsDynamicTypeViewController: UIViewController {
     return ["Buttons", "Buttons (DynamicType)"]
   }
 
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
+  func catalogShouldHideNavigation() -> Bool {
+    return false
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
