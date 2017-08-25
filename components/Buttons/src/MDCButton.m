@@ -47,7 +47,8 @@ static NSString *const MDCButtonAreaInsetKey = @"MDCButtonAreaInsetKey";
 
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
 static NSString *const MDCButtonBackgroundColorsKey = @"MDCButtonBackgroundColorsKey";
-static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilityLabelsKey";
+// Previous value kept for backwards compatibility.
+static NSString *const MDCButtonNontransformedTitlesKey = @"MDCButtonAccessibilityLabelsKey";
 
 // Specified in Material Guidelines
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
@@ -103,7 +104,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   BOOL _hasCustomDisabledTitleColor;
 
   // Cached accessibility settings.
-  NSMutableDictionary<NSNumber *, NSString *> *_accessibilityLabelForState;
+  NSMutableDictionary<NSNumber *, NSString *> *_nontransformedTitles;
   NSString *_accessibilityLabelExplicitValue;
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
@@ -187,8 +188,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
     [self updateBackgroundColor];
 
-    if ([aDecoder containsValueForKey:MDCButtonAccessibilityLabelsKey]) {
-      _accessibilityLabelForState = [aDecoder decodeObjectForKey:MDCButtonAccessibilityLabelsKey];
+    if ([aDecoder containsValueForKey:MDCButtonNontransformedTitlesKey]) {
+      _nontransformedTitles = [aDecoder decodeObjectForKey:MDCButtonNontransformedTitlesKey];
     }
   }
   return self;
@@ -212,7 +213,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
-  [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
+  [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
 }
 
 - (void)commonMDCButtonInit {
@@ -220,7 +221,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
-  _accessibilityLabelForState = [NSMutableDictionary dictionary];
+  _nontransformedTitles = [NSMutableDictionary dictionary];
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -264,7 +265,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Uppercase all titles
   if (_uppercaseTitle) {
-    [self uppercaseAllTitles];
+    [self updateTitleCase];
   }
 }
 
@@ -398,24 +399,20 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setUppercaseTitle:(BOOL)uppercaseTitle {
   _uppercaseTitle = uppercaseTitle;
-  if (_uppercaseTitle) {
-    [self uppercaseAllTitles];
-  }
+
+  [self updateTitleCase];
 }
 
-- (void)uppercaseAllTitles {
-  // This ensures existing titles will get uppercased.
-  UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
-                                    UIControlStateDisabled | UIControlStateSelected;
-  for (UIControlState state = 0; state <= allControlStates; ++state) {
-    NSString *title = [self titleForState:state];
-    if (title) {
-      [self setTitle:[title uppercaseStringWithLocale:[NSLocale currentLocale]] forState:state];
-    }
-
-    NSAttributedString *attributedTitle = [self attributedTitleForState:state];
-    if (attributedTitle) {
-      [self setAttributedTitle:uppercaseAttributedString(attributedTitle) forState:state];
+- (void)updateTitleCase {
+  // This calls setTitle or setAttributedTitle for every title value we have stored. In each
+  // respective setter the title is upcased if _uppercaseTitle is YES.
+  for (NSNumber *key in _nontransformedTitles.keyEnumerator) {
+    UIControlState state = key.unsignedIntegerValue;
+    NSString *title = _nontransformedTitles[key];
+    if ([title isKindOfClass:[NSAttributedString class]]) {
+      [self setAttributedTitle:(NSAttributedString *)title forState:state];
+    } else {
+      [self setTitle:title forState:state];
     }
   }
 }
@@ -424,9 +421,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Intercept any setting of the title and store a copy in case the accessibilityLabel
   // is requested and the original non-uppercased version needs to be returned.
   if ([title length]) {
-    _accessibilityLabelForState[@(state)] = [title copy];
+    _nontransformedTitles[@(state)] = [title copy];
   } else {
-    [_accessibilityLabelForState removeObjectForKey:@(state)];
+    [_nontransformedTitles removeObjectForKey:@(state)];
   }
 
   if (_uppercaseTitle) {
@@ -439,9 +436,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Intercept any setting of the title and store a copy in case the accessibilityLabel
   // is requested and the original non-uppercased version needs to be returned.
   if ([title length]) {
-    _accessibilityLabelForState[@(state)] = [[title string] copy];
+    _nontransformedTitles[@(state)] = [[title string] copy];
   } else {
-    [_accessibilityLabelForState removeObjectForKey:@(state)];
+    [_nontransformedTitles removeObjectForKey:@(state)];
   }
 
   if (_uppercaseTitle) {
@@ -470,12 +467,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     return label;
   }
 
-  label = _accessibilityLabelForState[@(self.state)];
+  label = _nontransformedTitles[@(self.state)];
   if ([label length]) {
     return label;
   }
 
-  label = _accessibilityLabelForState[@(UIControlStateNormal)];
+  label = _nontransformedTitles[@(UIControlStateNormal)];
   if ([label length]) {
     return label;
   }
