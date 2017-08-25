@@ -139,4 +139,12 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
   return @[ @"Shadow", @"Shadow Elevations" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end
