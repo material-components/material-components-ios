@@ -40,8 +40,9 @@
     UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    _appBar.navigationBar.titleTextAttributes = @{
+                                            NSForegroundColorAttributeName : [UIColor whiteColor],
+                                            };
   }
   return self;
 }
