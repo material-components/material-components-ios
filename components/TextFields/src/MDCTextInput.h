@@ -29,6 +29,15 @@
    - https://github.com/adamwaite/Validator
  */
 
+/**
+ This represents different options for the relationship between the labels and the alignment rect.
+ */
+typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
+  MDCTextInputTextInsetsModeNever = 0,
+  MDCTextInputTextInsetsModeIfContent,
+  MDCTextInputTextInsetsModeAlways,
+};
+
 @class MDCTextInputBorderView;
 @class MDCTextInputUnderlineView;
 
@@ -141,6 +150,23 @@
 
 /** Insets used to calculate the spacing of subviews. */
 @property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
+
+/**
+ Used to calculate text insets.
+
+ The different options apply to the text insets of the entire text input in relation to the
+ underline labels and the placeholder should any of them be outside the border view.
+
+ MDCTextInputTextInsetsModeNever:      Text insets never includes the labels.
+
+ MDCTextInputTextInsetsModeIfContent:  Text insets height includes space for each label that has
+   text.
+
+ MDCTextInputTextInsetsModeAlways:     Text insets always includes the labels.
+
+ Default is MDCTextInputTextInsetsModeIfContent.
+ */
+@property(nonatomic, assign) MDCTextInputTextInsetsMode textInsetsMode UI_APPEARANCE_SELECTOR;
 
 /**
  The label on the trailing side under the input.
