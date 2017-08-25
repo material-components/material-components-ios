@@ -56,7 +56,7 @@
   self.vanillaSlider.enabled = newEnabledState;
 }
 
-#pragma mark catalg by convention
+#pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Slider", @"Slider Autolayout" ];
@@ -64,6 +64,10 @@
 
 + (NSString *)catalogStoryboardName {
   return @"SliderAutolayoutExample";
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end
