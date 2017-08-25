@@ -246,7 +246,7 @@ static NSString *s_secondaryColorString;
   return YES;
 }
 
-#pragma mark - Catalog By Convention
+#pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Themes", @"Custom Colors" ];
@@ -255,4 +255,9 @@ static NSString *s_secondaryColorString;
 + (NSString *)catalogStoryboardName {
   return @"ThemerCustomSchemePicker";
 }
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 @end
