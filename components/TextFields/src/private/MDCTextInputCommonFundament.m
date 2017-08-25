@@ -684,8 +684,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   textInsets.top = MDCTextInputFullPadding;
 
-  CGFloat leadingOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-  CGFloat trailingOffset = MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat leadingOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat trailingOffset = MDCCeil(self.trailingUnderlineLabel.font.lineHeight * scale) / scale;
 
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +

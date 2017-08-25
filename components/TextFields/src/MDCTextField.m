@@ -558,7 +558,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 #pragma mark - Layout (Custom)
 
 - (CGFloat)estimatedTextHeight {
-  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * scale) / scale;
 
   return estimatedTextHeight;
 }

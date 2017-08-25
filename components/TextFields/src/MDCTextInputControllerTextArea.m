@@ -147,13 +147,15 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   // The amount of space underneath the underline depends on whether there is content in the
   // underline labels.
   CGFloat underlineLabelsOffset = 0;
+  CGFloat scale = UIScreen.mainScreen.scale;
+
   if (self.textInput.leadingUnderlineLabel.text.length) {
     underlineLabelsOffset =
-    MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+      MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
   }
   if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
     underlineLabelsOffset = MAX(underlineLabelsOffset,
-        MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
+        MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale);
   }
 
   CGFloat underlineOffset = underlineLabelsOffset;

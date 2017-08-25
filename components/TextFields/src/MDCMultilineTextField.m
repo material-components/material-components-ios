@@ -361,7 +361,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 }
 
 - (CGFloat)estimatedTextViewLineHeight {
-  return MDCCeil(self.textView.font.lineHeight * 2.f) / 2.f;
+  CGFloat scale = UIScreen.mainScreen.scale;
+  return MDCCeil(self.textView.font.lineHeight * scale) / scale;
 }
 
 #pragma mark - Touch (UIView)
