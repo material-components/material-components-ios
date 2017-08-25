@@ -65,12 +65,24 @@ static NSString * const kCellIdentifier = @"Cell";
   return YES;
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end
 
 @implementation SnackbarOverlayViewExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Snackbar", @"Snackbar Overlay View" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end
@@ -104,6 +116,14 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Snackbar", @"Snackbar Suspension" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end
