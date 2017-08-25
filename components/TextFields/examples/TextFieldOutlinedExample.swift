@@ -27,6 +27,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     name.placeholder = "Name"
     name.translatesAutoresizingMaskIntoConstraints = false
     name.autocapitalizationType = .words
+    name.backgroundColor = .white
     return name
   }()
 
@@ -35,6 +36,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     address.placeholder = "Address"
     address.translatesAutoresizingMaskIntoConstraints = false
     address.autocapitalizationType = .words
+    address.backgroundColor = .white
     return address
   }()
 
@@ -43,6 +45,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     city.placeholder = "City"
     city.translatesAutoresizingMaskIntoConstraints = false
     city.autocapitalizationType = .words
+    city.backgroundColor = .white
     return city
   }()
   let cityController: MDCTextInputControllerOutlinedField
@@ -52,6 +55,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     state.placeholder = "State"
     state.translatesAutoresizingMaskIntoConstraints = false
     state.autocapitalizationType = .allCharacters
+    state.backgroundColor = .white
     return state
   }()
   let stateController: MDCTextInputControllerOutlinedField
@@ -60,6 +64,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     let zip = MDCTextField()
     zip.placeholder = "Zip code"
     zip.translatesAutoresizingMaskIntoConstraints = false
+    zip.backgroundColor = .white
     return zip
   }()
   let zipController: MDCTextInputControllerOutlinedField
@@ -68,6 +73,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     let phone = MDCTextField()
     phone.placeholder = "Phone number"
     phone.translatesAutoresizingMaskIntoConstraints = false
+    phone.backgroundColor = .white
     return phone
   }()
 
@@ -75,6 +81,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     let message = MDCMultilineTextField()
     message.placeholder = "Message"
     message.translatesAutoresizingMaskIntoConstraints = false
+    message.backgroundColor = .white
     return message
   }()
 
