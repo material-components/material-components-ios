@@ -22,10 +22,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSArray *_colors;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Inlay Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -68,6 +64,20 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   } else {
     [self.styler applyInlayToItemAtIndexPath:indexPath animated:YES];
   }
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Cell Inlay Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end
