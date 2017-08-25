@@ -29,6 +29,10 @@
   return @[ @"Flexible Header", @"Utilizing Top Layout Guide" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

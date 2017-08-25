@@ -135,14 +135,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.fhvc.headerView addSubview:self.pageControl];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
-  // comment this line:
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
 // This method must be implemented for MDCFlexibleHeaderViewController's
 // MDCFlexibleHeaderView to properly support MDCFlexibleHeaderShiftBehavior should you choose
 // to customize it.

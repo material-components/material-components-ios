@@ -29,6 +29,10 @@
   return @[ @"Flexible Header", @"Standard UINavigationBar" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }
