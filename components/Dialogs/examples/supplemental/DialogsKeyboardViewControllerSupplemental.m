@@ -57,8 +57,12 @@ static NSString * const kReusableIdentifierItem = @"cell";
   return @[ @"Dialogs", @"Dialog with an Input Field" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Demonstrate Material dialog controller with an input field.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end
