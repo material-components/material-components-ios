@@ -84,12 +84,6 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 #pragma mark - MDCTextInputControllerDefault overrides
 
-- (void)textInputDidLayoutSubviews {
-  [self updateBorder];
-
-  [self.textInput setBackgroundColor:[UIColor whiteColor]];
-}
-
 - (void)updateBorder {
   [super updateBorder];
   UIColor *borderColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
