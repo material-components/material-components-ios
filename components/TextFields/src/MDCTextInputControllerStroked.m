@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerFloatingBordered.h"
+#import "MDCTextInputControllerStroked.h"
 
 #import "MDCTextInputBorderView.h"
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
@@ -28,10 +28,10 @@ static const CGFloat MDCTextInputTextFieldFloatingBorderedHalfPadding = 8.f;
 
 static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
-@implementation MDCTextInputControllerFloatingBordered
+@implementation MDCTextInputControllerStroked
 
 - (instancetype)initWithTextInput:(UIView<MDCTextInput> *)input {
-  NSAssert([input isKindOfClass:[MDCMultilineTextField class]], @"This design is meant for single-line text fields only. For a complementary multi-line style, see MDCTextInputControllerTextArea.");
+  NSAssert(![input conformsToProtocol:@protocol(MDCMultilineTextField)], @"This design is meant for single-line text fields only. For a complementary multi-line style, see MDCTextInputControllerTextArea.");
   self = [super initWithTextInput:input];
   if (self) {
 

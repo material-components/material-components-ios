@@ -27,6 +27,6 @@
  the placeholder crosses the border cutting out a space.
  */
 
-@interface MDCTextInputControllerFloatingBordered : MDCTextInputControllerDefault
+@interface MDCTextInputControllerStroked : MDCTextInputControllerDefault
 
 @end
