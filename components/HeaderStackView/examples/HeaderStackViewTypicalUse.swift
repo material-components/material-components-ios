@@ -36,7 +36,7 @@ open class HeaderStackViewTypicalUseSwiftExample: HeaderStackViewTypicalUse {
     view.addSubview(stackView!)
   }
 
-  override func viewWillAppear(_ animated: Bool) {
+  override open func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)

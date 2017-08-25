@@ -127,17 +127,17 @@
   leading.active = YES;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
   // Call updateTopLayoutGuide on Flexible Header View Controller in viewWillLayoutSubviews
   [self.fhvc updateTopLayoutGuide];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's

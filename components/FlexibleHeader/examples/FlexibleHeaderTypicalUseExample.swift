@@ -51,9 +51,9 @@ open class FlexibleHeaderTypicalUseViewControllerSwift: FlexibleHeaderTypicalUse
     self.setupExampleViews()
   }
 
-  override func viewWillAppear(_ animated: Bool) {
+  override open func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 }
