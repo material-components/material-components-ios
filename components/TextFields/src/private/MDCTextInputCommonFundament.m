@@ -40,6 +40,7 @@ static NSString *const MDCTextInputFundamentPositioningDelegateKey =
     @"MDCTextInputFundamentPositioningDelegateKey";
 static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
 static NSString *const MDCTextInputFundamentTextInputKey = @"MDCTextInputFundamentTextInputKey";
+static NSString *const MDCTextInputFundamentTextInsetsModeKey = @"MDCTextInputFundamentTextInsetsModeKey";
 static NSString *const MDCTextInputFundamentTrailingLabelKey =
     @"MDCTextInputFundamentTrailingLabelKey";
 static NSString *const MDCTextInputFundamentTrailingViewKey =
@@ -113,6 +114,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize trailingView = _trailingView;
 @synthesize trailingViewMode = _trailingViewMode;
 @synthesize underline = _underline;
+@synthesize textInsetsMode = _textInsetsMode;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -158,6 +160,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
         [aDecoder decodeObjectForKey:MDCTextInputFundamentPositioningDelegateKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextInputKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
+    if ([aDecoder containsValueForKey:MDCTextInputFundamentTextInsetsModeKey]) {
+      _textInsetsMode = (MDCTextInputTextInsetsMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTextInsetsModeKey];
+    }
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
     _trailingViewMode =
         (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
@@ -181,6 +186,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [aCoder encodeObject:self.positioningDelegate forKey:MDCTextInputFundamentPositioningDelegateKey];
   [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputFundamentTextInputKey];
   [aCoder encodeObject:self.textColor forKey:MDCTextInputFundamentTextColorKey];
+  [aCoder encodeInteger:self.textInsetsMode forKey:MDCTextInputFundamentTextInsetsModeKey];
   [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputFundamentTrailingLabelKey];
   [aCoder encodeInteger:self.trailingViewMode forKey:MDCTextInputFundamentTrailingViewKey];
   [aCoder encodeObject:self.underline forKey:MDCTextInputFundamentUnderlineViewKey];
@@ -201,6 +207,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   copy.positioningDelegate = self.positioningDelegate;
   copy.text = [self.text copy];
   copy.textColor = self.textColor;
+  copy.textInsetsMode = self.textInsetsMode;
   copy.trailingViewMode = self.trailingViewMode;
   copy.underline.lineHeight = self.underline.lineHeight;
   copy.underline.color = self.underline.color;
@@ -216,6 +223,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)commonMDCTextInputCommonFundamentInit {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
+  _textInsetsMode = MDCTextInputTextInsetsModeIfContent;
 }
 
 - (void)setupClearButton {
@@ -565,6 +573,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 #pragma mark - Properties Implementation
 
+- (void)setTextInsetsMode:(MDCTextInputTextInsetsMode)textInsetsMode {
+  if (_textInsetsMode != textInsetsMode) {
+    _textInsetsMode = textInsetsMode;
+    [self.textInput invalidateIntrinsicContentSize];
+  }
+}
+
 - (NSAttributedString *)attributedPlaceholder {
   id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
@@ -665,7 +680,46 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (UIEdgeInsets)textInsets {
-  return _textInput.textInsets;
+  UIEdgeInsets textInsets = UIEdgeInsetsZero;
+
+  textInsets.top = MDCTextInputFullPadding;
+
+  CGFloat leadingOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+  CGFloat trailingOffset = MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+
+  // The amount of space underneath the underline is variable. It could just be
+  // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
+  // MDCTextInputHalfPadding. It's also dependent on the .textInsetsMode.
+
+  // contentConditionalOffset will have the estimated text height for the largest underline label
+  // that also has text.
+  CGFloat contentConditionalOffset = 0;
+  if (self.leadingUnderlineLabel.text.length) {
+    contentConditionalOffset = leadingOffset;
+  }
+  if (self.trailingUnderlineLabel.text.length) {
+    contentConditionalOffset = MAX(contentConditionalOffset, trailingOffset);
+  }
+
+  CGFloat underlineOffset = MDCTextInputHalfPadding;
+  switch (self.textInsetsMode) {
+    case MDCTextInputTextInsetsModeAlways:
+      underlineOffset += MAX(leadingOffset, trailingOffset);
+      break;
+    case MDCTextInputTextInsetsModeIfContent:
+      underlineOffset += contentConditionalOffset;
+      break;
+    case MDCTextInputTextInsetsModeNever:
+      break;
+  }
+
+  // .bottom = underlineOffset + the half padding ABOVE the line but below the text field
+  textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
+    return [self.positioningDelegate textInsets:textInsets];
+  }
+  return textInsets;
 }
 
 - (void)setTrailingView:(UIView *)trailingView {
