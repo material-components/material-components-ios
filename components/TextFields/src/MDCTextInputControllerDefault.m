@@ -560,7 +560,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // (layoutIfNeeded). If in reverse (isToUp == NO), these things are just removed / deactivated.
 
   if (isToUp) {
-    CGPoint destination = [self placeholderFloatingPosition];
+    CGPoint destination = [self floatingPlaceholderDestination];
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
@@ -618,7 +618,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       }];
 }
 
-- (CGPoint)placeholderFloatingPosition {
+- (CGPoint)floatingPlaceholderDestination {
   CGFloat placeholderY = MDCTextInputDefaultPadding;
 
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
