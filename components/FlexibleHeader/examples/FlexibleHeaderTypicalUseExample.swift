@@ -50,13 +50,4 @@ open class FlexibleHeaderTypicalUseViewControllerSwift: FlexibleHeaderTypicalUse
 
     self.setupExampleViews()
   }
-
-  override open func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
-    // comment this line:
-    navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-
 }
