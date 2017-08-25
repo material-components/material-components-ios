@@ -130,12 +130,6 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     return appBar.headerViewController
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-
   @objc func presentModal() {
     let modalVC = AppBarModalPresentationSwiftExamplePresented()
     self.present(modalVC, animated: true, completion: nil)
