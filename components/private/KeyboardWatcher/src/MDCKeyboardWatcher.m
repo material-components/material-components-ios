@@ -94,7 +94,13 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
     return;
   }
 
-  CGRect screenBounds = [[UIScreen mainScreen] bounds];
+  CGRect originalScreenBounds = [[UIScreen mainScreen] bounds];
+  CGRect newScreenBounds = [UIApplication mdc_safeSharedApplication].keyWindow.bounds;
+  if (!CGRectEqualToRect(originalScreenBounds, newScreenBounds)) {
+    NSLog(@"Original != New  ::   %.0f x %.0f  != %.0f x %.0f",
+          originalScreenBounds.size.width, originalScreenBounds.size.height, newScreenBounds.size.width, newScreenBounds.size.height);
+  }
+  CGRect screenBounds = newScreenBounds;
   CGRect intersection = CGRectIntersection(screenBounds, keyboardRect);
 
   // If the extent of the keyboard is at or below the bottom of the screen it is docked.
