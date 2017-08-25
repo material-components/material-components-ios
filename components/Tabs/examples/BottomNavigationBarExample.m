@@ -103,4 +103,12 @@
   return @[ @"Tab Bar", @"Bottom Navigation" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end
