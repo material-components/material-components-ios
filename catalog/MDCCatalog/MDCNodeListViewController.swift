@@ -355,7 +355,15 @@ extension MDCNodeListViewController {
     var vc: UIViewController
     if node.isExample() {
       let contentVC = node.createExampleViewController()
-      if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
+      var shouldHideNavigation = contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation"))
+      if (shouldHideNavigation) {
+        if let _ = contentVC.perform(NSSelectorFromString("catalogShouldHideNavigation")) {
+          shouldHideNavigation = true
+        } else {
+          shouldHideNavigation = false
+        }
+      }
+      if shouldHideNavigation {
         vc = contentVC
       } else {
         let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
