@@ -359,6 +359,8 @@ extension TextFieldSwiftExample {
   }
 }
 
+// MARK: - CatalogByConvention
+
 extension TextFieldSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Typical Use"]
@@ -368,7 +370,12 @@ extension TextFieldSwiftExample {
     // swiftlint:disable:next line_length
     return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
   }
+
   class func catalogIsPrimaryDemo() -> Bool {
     return true
+  }
+
+  func catalogShouldHideNavigation() -> Bool {
+    return false
   }
 }
