@@ -78,6 +78,10 @@
   return @[ @"App Bar", @"Interface Builder" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 + (NSString *)catalogStoryboardName {
   return @"AppBarInterfaceBuilderExampleController";
 }
