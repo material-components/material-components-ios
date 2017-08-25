@@ -233,7 +233,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                     constant:MDCTextInputHalfPadding];
   underlineYTextView.priority = UILayoutPriorityDefaultLow;
   underlineYTextView.active = YES;
-
 }
 
 #pragma mark - Layout (UIView)
@@ -299,13 +298,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.textViewLeading.constant = self.textInsets.left;
 
   if (!self.textViewBottomSuperviewBottom) {
-    self.textViewBottomSuperviewBottom = [NSLayoutConstraint constraintWithItem:self.textView
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                      relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                         toItem:self
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                     multiplier:1
-                                                                       constant:-1 * MDCTextInputHalfPadding];
+    self.textViewBottomSuperviewBottom =
+        [NSLayoutConstraint constraintWithItem:self.textView
+                                     attribute:NSLayoutAttributeBottom
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1
+                                      constant:-1 * MDCTextInputHalfPadding];
     self.textViewBottomSuperviewBottom.priority = UILayoutPriorityDefaultLow;
     self.textViewBottomSuperviewBottom.active = YES;
   }
@@ -412,9 +412,16 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                              constant:0];
   }
   self.trailingViewCenterY.active = YES;
-  
+
   if (!self.textViewTrailingTrailingViewLeading) {
-    self.textViewTrailingTrailingViewLeading = [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.trailingView attribute:NSLayoutAttributeLeading multiplier:1 constant:self.textViewTrailing.constant];
+    self.textViewTrailingTrailingViewLeading =
+        [NSLayoutConstraint constraintWithItem:self.textView
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.trailingView
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:self.textViewTrailing.constant];
   }
   self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0.f);
 }
@@ -449,10 +456,10 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (UIBezierPath *)defaultBorderPath {
   CGRect borderBound = self.bounds;
   borderBound.size.height = self.underline.center.y;
-  return [UIBezierPath bezierPathWithRoundedRect:borderBound
-                               byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
-                                     cornerRadii:CGSizeMake(MDCTextInputBorderRadius,
-                                                            MDCTextInputBorderRadius)];
+  return [UIBezierPath
+      bezierPathWithRoundedRect:borderBound
+              byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                    cornerRadii:CGSizeMake(MDCTextInputBorderRadius, MDCTextInputBorderRadius)];
 }
 
 - (void)updateBorder {

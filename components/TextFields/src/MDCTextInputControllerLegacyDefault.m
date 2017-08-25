@@ -39,8 +39,10 @@ static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineNormalHeight = 
 static const CGFloat MDCTextInputControllerLegacyDefaultVerticalHalfPadding = 8.f;
 static const CGFloat MDCTextInputControllerLegacyDefaultVerticalPadding = 16.f;
 
-static const NSTimeInterval MDCTextInputControllerLegacyDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
-static const NSTimeInterval MDCTextInputControllerLegacyDefaultFloatingPlaceholderUpAnimationDuration = 0.3f;
+static const NSTimeInterval
+    MDCTextInputControllerLegacyDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
+static const NSTimeInterval
+    MDCTextInputControllerLegacyDefaultFloatingPlaceholderUpAnimationDuration = 0.3f;
 
 static NSString *const MDCTextInputControllerLegacyDefaultActiveColorKey =
     @"MDCTextInputControllerLegacyDefaultActiveColorKey";
@@ -86,7 +88,7 @@ static NSString *const MDCTextInputControllerLegacyDefaultKVOKeyFont = @"font";
 static inline UIBezierPath *MDCTextInputControllerLegacyDefaultEmptyPath() {
   return [UIBezierPath bezierPath];
 }
-    
+
 static inline UIColor *MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerLegacyDefaultHintTextOpacity];
 }
@@ -183,30 +185,30 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (self) {
     [self commonMDCTextInputControllerLegacyDefaultInitialization];
 
-    _activeColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
+    _activeColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
     _characterCounter =
         [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
     _characterCountMax =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey];
     _characterCountViewMode =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey];
-    _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
+    _disabledColor =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultErrorColorKey];
-    _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
-    _floatingPlaceholderColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey];
-    _floatingPlaceholderScale =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
+    _floatingEnabled =
+        [aDecoder decodeBoolForKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
+    _floatingPlaceholderColor = [aDecoder
+        decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey];
+    _floatingPlaceholderScale = [aDecoder
+        decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
     _inlinePlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
-    _leadingUnderlineLabelTextColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor];
-    _normalColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
+    _leadingUnderlineLabelTextColor = [aDecoder
+        decodeObjectForKey:MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor];
+    _normalColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultTextInputKey];
-    _trailingUnderlineLabelTextColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
+    _trailingUnderlineLabelTextColor = [aDecoder
+        decodeObjectForKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
     _underlineViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey];
   }
@@ -226,8 +228,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.activeColor
-                forKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
+  [aCoder encodeObject:self.activeColor forKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
   if ([self.characterCounter conformsToProtocol:@protocol(NSCoding)]) {
     [aCoder encodeObject:self.characterCounter
                   forKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
@@ -236,12 +237,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                  forKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey];
   [aCoder encodeInteger:self.characterCountViewMode
                  forKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey];
-  [aCoder encodeObject:self.disabledColor forKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
+  [aCoder encodeObject:self.disabledColor
+                forKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
   [aCoder encodeObject:self.errorAccessibilityValue
                 forKey:MDCTextInputControllerLegacyDefaultErrorAccessibilityValueKey];
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerLegacyDefaultErrorColorKey];
   [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerLegacyDefaultErrorTextKey];
-  [aCoder encodeBool:self.isFloatingEnabled forKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
+  [aCoder encodeBool:self.isFloatingEnabled
+              forKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
   [aCoder encodeObject:self.floatingPlaceholderColor
                 forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey];
   [aCoder encodeObject:self.floatingPlaceholderScale
@@ -251,9 +254,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
   [aCoder encodeObject:self.leadingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor];
-  [aCoder encodeObject:self.normalColor
-                forKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
-  [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerLegacyDefaultTextInputKey];
+  [aCoder encodeObject:self.normalColor forKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
+  [aCoder encodeConditionalObject:self.textInput
+                           forKey:MDCTextInputControllerLegacyDefaultTextInputKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
   [aCoder encodeInteger:self.underlineViewMode
@@ -326,7 +329,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)setupClearButton {
-  UIImage *image = [self drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
+  UIImage *image = [self
+      drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
   [_textInput.clearButton setImage:image forState:UIControlStateNormal];
   [_textInput.clearButton setImage:image forState:UIControlStateNormal];
   [_textInput.clearButton setImage:image forState:UIControlStateNormal];
@@ -358,7 +362,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 
   if ([_textInput isKindOfClass:[MDCMultilineTextField class]]) {
-    MDCMultilineTextField *textField = (MDCMultilineTextField*)_textInput;
+    MDCMultilineTextField *textField = (MDCMultilineTextField *)_textInput;
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidBeginEditing:)
                           name:UITextViewTextDidBeginEditingNotification
@@ -403,12 +407,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     return;
   }
   @try {
-    [self.textInput.leadingUnderlineLabel removeObserver:self
-                                              forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont];
+    [self.textInput.leadingUnderlineLabel
+        removeObserver:self
+            forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont];
     [self.textInput.placeholderLabel removeObserver:self
                                          forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont];
-    [self.textInput.trailingUnderlineLabel removeObserver:self
-                                               forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont];
+    [self.textInput.trailingUnderlineLabel
+        removeObserver:self
+            forKeyPath:MDCTextInputControllerLegacyDefaultKVOKeyFont];
   } @catch (NSException *exception) {
   }
   _isRegisteredForKVO = NO;
@@ -450,8 +456,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 #pragma mark - Clear Button Customization
 
 - (UIImage *)drawnClearButtonImage:(UIColor *)color {
-  CGSize clearButtonSize = CGSizeMake(MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight,
-                                      MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight);
+  CGSize clearButtonSize =
+      CGSizeMake(MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight,
+                 MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight);
 
   CGFloat scale = [UIScreen mainScreen].scale;
   CGRect bounds = CGRectMake(0, 0, clearButtonSize.width * scale, clearButtonSize.height * scale);
@@ -675,16 +682,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       underlineHeight = MDCTextInputControllerLegacyDefaultUnderlineActiveHeight;
       break;
     case UITextFieldViewModeWhileEditing:
-      underlineColor =
-          self.textInput.isEditing ? self.activeColor : self.normalColor;
-      underlineHeight = self.textInput.isEditing ? MDCTextInputControllerLegacyDefaultUnderlineActiveHeight
-                                                 : MDCTextInputControllerLegacyDefaultUnderlineNormalHeight;
+      underlineColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
+      underlineHeight = self.textInput.isEditing
+                            ? MDCTextInputControllerLegacyDefaultUnderlineActiveHeight
+                            : MDCTextInputControllerLegacyDefaultUnderlineNormalHeight;
       break;
     case UITextFieldViewModeUnlessEditing:
-      underlineColor =
-          !self.textInput.isEditing ? self.activeColor : self.normalColor;
-      underlineHeight = !self.textInput.isEditing ? MDCTextInputControllerLegacyDefaultUnderlineActiveHeight
-                                                  : MDCTextInputControllerLegacyDefaultUnderlineNormalHeight;
+      underlineColor = !self.textInput.isEditing ? self.activeColor : self.normalColor;
+      underlineHeight = !self.textInput.isEditing
+                            ? MDCTextInputControllerLegacyDefaultUnderlineActiveHeight
+                            : MDCTextInputControllerLegacyDefaultUnderlineNormalHeight;
       break;
     case UITextFieldViewModeNever:
     default:
@@ -732,8 +739,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (void)setActiveColorDefault:(UIColor *)activeColorDefault {
   _activeColorDefault = activeColorDefault
-  ? activeColorDefault
-  : MDCTextInputControllerLegacyDefaultActiveColorDefault();
+                            ? activeColorDefault
+                            : MDCTextInputControllerLegacyDefaultActiveColorDefault();
 }
 
 - (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
@@ -766,8 +773,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setDisabledColorDefault:(UIColor *)disabledColorDefault {
-  _disabledColorDefault =
-    disabledColorDefault ? disabledColorDefault : MDCTextInputControllerLegacyDefaultNormalUnderlineColorDefault();
+  _disabledColorDefault = disabledColorDefault
+                              ? disabledColorDefault
+                              : MDCTextInputControllerLegacyDefaultNormalUnderlineColorDefault();
 }
 
 - (BOOL)isDisplayingCharacterCountError {
@@ -809,8 +817,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setErrorColorDefault:(UIColor *)errorColorDefault {
-  _errorColorDefault =
-      errorColorDefault ? errorColorDefault : MDCTextInputControllerLegacyDefaultTextErrorColorDefault();
+  _errorColorDefault = errorColorDefault
+                           ? errorColorDefault
+                           : MDCTextInputControllerLegacyDefaultTextErrorColorDefault();
 }
 
 - (void)setErrorText:(NSString *)errorText {
@@ -917,26 +926,29 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIColor *)inlinePlaceholderColorDefault {
   if (!_inlinePlaceholderColorDefault) {
-    _inlinePlaceholderColorDefault = MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
+    _inlinePlaceholderColorDefault =
+        MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
   }
   return _inlinePlaceholderColorDefault;
 }
 
 + (void)setInlinePlaceholderColorDefault:(UIColor *)inlinePlaceholderColorDefault {
-  _inlinePlaceholderColorDefault = inlinePlaceholderColorDefault
-                                       ? inlinePlaceholderColorDefault
-                                       : MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
+  _inlinePlaceholderColorDefault =
+      inlinePlaceholderColorDefault
+          ? inlinePlaceholderColorDefault
+          : MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
 }
 
 - (UIColor *)leadingUnderlineLabelTextColor {
-  return _leadingUnderlineLabelTextColor ? _leadingUnderlineLabelTextColor :
-      [self class].leadingUnderlineLabelTextColorDefault;
+  return _leadingUnderlineLabelTextColor ? _leadingUnderlineLabelTextColor
+                                         : [self class].leadingUnderlineLabelTextColorDefault;
 }
 
 - (void)setLeadingUnderlineLabelTextColor:(UIColor *)leadingUnderlineLabelTextColor {
   if (_leadingUnderlineLabelTextColor != leadingUnderlineLabelTextColor) {
-    _leadingUnderlineLabelTextColor = leadingUnderlineLabelTextColor ? leadingUnderlineLabelTextColor :
-        [self class].leadingUnderlineLabelTextColorDefault;
+    _leadingUnderlineLabelTextColor = leadingUnderlineLabelTextColor
+                                          ? leadingUnderlineLabelTextColor
+                                          : [self class].leadingUnderlineLabelTextColorDefault;
 
     [self updateLeadingUnderlineLabel];
   }
@@ -944,14 +956,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIColor *)leadingUnderlineLabelTextColorDefault {
   if (!_leadingUnderlineLabelTextColorDefault) {
-    _leadingUnderlineLabelTextColorDefault = MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
+    _leadingUnderlineLabelTextColorDefault =
+        MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
   }
   return _leadingUnderlineLabelTextColorDefault;
 }
 
 + (void)setLeadingUnderlineLabelTextColorDefault:(UIColor *)leadingUnderlineLabelTextColorDefault {
-  _leadingUnderlineLabelTextColorDefault = leadingUnderlineLabelTextColorDefault ?
-      leadingUnderlineLabelTextColorDefault : MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
+  _leadingUnderlineLabelTextColorDefault =
+      leadingUnderlineLabelTextColorDefault
+          ? leadingUnderlineLabelTextColorDefault
+          : MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
 }
 
 - (UIColor *)normalColor {
@@ -973,8 +988,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setNormalColorDefault:(UIColor *)normalColorDefault {
-  _normalColorDefault = normalColorDefault ? normalColorDefault
-      : MDCTextInputControllerLegacyDefaultNormalUnderlineColorDefault();
+  _normalColorDefault = normalColorDefault
+                            ? normalColorDefault
+                            : MDCTextInputControllerLegacyDefaultNormalUnderlineColorDefault();
 }
 
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {
@@ -1012,14 +1028,15 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (UIColor *)trailingUnderlineLabelTextColor {
-  return _trailingUnderlineLabelTextColor ? _trailingUnderlineLabelTextColor :
-      [self class].trailingUnderlineLabelTextColorDefault;
+  return _trailingUnderlineLabelTextColor ? _trailingUnderlineLabelTextColor
+                                          : [self class].trailingUnderlineLabelTextColorDefault;
 }
 
 - (void)setTrailingUnderlineLabelTextColor:(UIColor *)trailingUnderlineLabelTextColor {
   if (_trailingUnderlineLabelTextColor != trailingUnderlineLabelTextColor) {
-    _trailingUnderlineLabelTextColor = trailingUnderlineLabelTextColor ? trailingUnderlineLabelTextColor :
-        [self class].trailingUnderlineLabelTextColorDefault;
+    _trailingUnderlineLabelTextColor = trailingUnderlineLabelTextColor
+                                           ? trailingUnderlineLabelTextColor
+                                           : [self class].trailingUnderlineLabelTextColorDefault;
 
     [self updateTrailingUnderlineLabel];
   }
@@ -1027,14 +1044,18 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIColor *)trailingUnderlineLabelTextColorDefault {
   if (!_trailingUnderlineLabelTextColorDefault) {
-    _trailingUnderlineLabelTextColorDefault = MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
+    _trailingUnderlineLabelTextColorDefault =
+        MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
   }
   return _trailingUnderlineLabelTextColorDefault;
 }
 
-+ (void)setTrailingUnderlineLabelTextColorDefault:(UIColor *)trailingUnderlineLabelTextColorDefault {
-  _trailingUnderlineLabelTextColorDefault = trailingUnderlineLabelTextColorDefault ?
-      trailingUnderlineLabelTextColorDefault : MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
++ (void)setTrailingUnderlineLabelTextColorDefault:
+        (UIColor *)trailingUnderlineLabelTextColorDefault {
+  _trailingUnderlineLabelTextColorDefault =
+      trailingUnderlineLabelTextColorDefault
+          ? trailingUnderlineLabelTextColorDefault
+          : MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
 }
 
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
@@ -1118,7 +1139,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)textInputDidBeginEditing:(NSNotification *)note {
   [CATransaction begin];
-  [CATransaction setAnimationDuration:MDCTextInputControllerLegacyDefaultFloatingPlaceholderUpAnimationDuration];
+  [CATransaction setAnimationDuration:
+                     MDCTextInputControllerLegacyDefaultFloatingPlaceholderUpAnimationDuration];
   [CATransaction
       setAnimationTimingFunction:[CAMediaTimingFunction
                                      mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
@@ -1170,7 +1192,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)textInputDidEndEditing:(NSNotification *)note {
   [CATransaction begin];
-  [CATransaction setAnimationDuration:MDCTextInputControllerLegacyDefaultFloatingPlaceholderDownAnimationDuration];
+  [CATransaction setAnimationDuration:
+                     MDCTextInputControllerLegacyDefaultFloatingPlaceholderDownAnimationDuration];
   [CATransaction
       setAnimationTimingFunction:[CAMediaTimingFunction
                                      mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];

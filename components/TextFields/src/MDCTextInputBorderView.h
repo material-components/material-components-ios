@@ -32,7 +32,8 @@
  Note: The settable properties of the UIBezierPath are respected (.lineWidth, etc).
 
  Default is a rectangle of the same width as the input with rounded top corners. That means the
- underline labels are not included inside the border. Settable properties of UIBezierPath are left at
+ underline labels are not included inside the border. Settable properties of UIBezierPath are left
+ at
  system defaults.
  */
 @property(nonatomic, nullable, strong) UIBezierPath *borderPath UI_APPEARANCE_SELECTOR;

@@ -40,7 +40,8 @@ static NSString *const MDCTextInputFundamentPositioningDelegateKey =
     @"MDCTextInputFundamentPositioningDelegateKey";
 static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
 static NSString *const MDCTextInputFundamentTextInputKey = @"MDCTextInputFundamentTextInputKey";
-static NSString *const MDCTextInputFundamentTextInsetsModeKey = @"MDCTextInputFundamentTextInsetsModeKey";
+static NSString *const MDCTextInputFundamentTextInsetsModeKey =
+    @"MDCTextInputFundamentTextInsetsModeKey";
 static NSString *const MDCTextInputFundamentTrailingLabelKey =
     @"MDCTextInputFundamentTrailingLabelKey";
 static NSString *const MDCTextInputFundamentTrailingViewKey =
@@ -160,7 +161,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextInputKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
     if ([aDecoder containsValueForKey:MDCTextInputFundamentTextInsetsModeKey]) {
-      _textInsetsMode = (MDCTextInputTextInsetsMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTextInsetsModeKey];
+      _textInsetsMode = (MDCTextInputTextInsetsMode)
+          [aDecoder decodeIntegerForKey:MDCTextInputFundamentTextInsetsModeKey];
     }
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
     _trailingViewMode =
@@ -280,14 +282,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                            constant:MDCTextInputHalfPadding];
   self.placeholderTrailing.priority = UILayoutPriorityDefaultLow;
 
-  self.clearButtonTrailing =
-      [NSLayoutConstraint constraintWithItem:_clearButton
-                                   attribute:NSLayoutAttributeTrailing
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:_textInput
-                                   attribute:NSLayoutAttributeTrailing
-                                  multiplier:1
-                                    constant:-1 * (MDCTextInputClearButtonImageBuiltInPadding + [self textInsets].right)];
+  self.clearButtonTrailing = [NSLayoutConstraint
+      constraintWithItem:_clearButton
+               attribute:NSLayoutAttributeTrailing
+               relatedBy:NSLayoutRelationEqual
+                  toItem:_textInput
+               attribute:NSLayoutAttributeTrailing
+              multiplier:1
+                constant:-1 *
+                         (MDCTextInputClearButtonImageBuiltInPadding + [self textInsets].right)];
   self.clearButtonTrailing.priority = UILayoutPriorityDefaultLow;
 
   [NSLayoutConstraint activateConstraints:@[
@@ -341,24 +344,22 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_trailingUnderlineLabel];
 
-  _leadingUnderlineLeading =
-      [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                                   attribute:NSLayoutAttributeLeading
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:_textInput
-                                   attribute:NSLayoutAttributeLeading
-                                  multiplier:1
-                                    constant:0];
+  _leadingUnderlineLeading = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:_textInput
+                                                          attribute:NSLayoutAttributeLeading
+                                                         multiplier:1
+                                                           constant:0];
   _leadingUnderlineLeading.priority = UILayoutPriorityDefaultLow;
 
-  _trailingUnderlineTrailing =
-      [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
-                                   attribute:NSLayoutAttributeTrailing
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:_textInput
-                                   attribute:NSLayoutAttributeTrailing
-                                  multiplier:1
-                                    constant:0];
+  _trailingUnderlineTrailing = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                                            attribute:NSLayoutAttributeTrailing
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:_textInput
+                                                            attribute:NSLayoutAttributeTrailing
+                                                           multiplier:1
+                                                             constant:0];
   _trailingUnderlineTrailing.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *labelSpacing =
@@ -371,8 +372,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                     constant:0];
   labelSpacing.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint activateConstraints:@[ labelSpacing, _leadingUnderlineLeading,
-                                             _trailingUnderlineTrailing ]];
+  [NSLayoutConstraint
+      activateConstraints:@[ labelSpacing, _leadingUnderlineLeading, _trailingUnderlineTrailing ]];
 
   NSLayoutConstraint *leadingBottom = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                                                    attribute:NSLayoutAttributeBottom
@@ -418,13 +419,27 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setupBorder {
   if (!_borderView) {
-    _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];;
+    _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];
+    ;
     [self.textInput addSubview:_borderView];
     [self.textInput sendSubviewToBack:_borderView];
     _borderView.translatesAutoresizingMaskIntoConstraints = NO;
 
-    NSArray <NSLayoutConstraint *> *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}];
-    constraints = [constraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[border]|" options:0 metrics:nil views:@{@"border": _borderView}]];
+    NSArray<NSLayoutConstraint *> *constraints =
+        [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|"
+                                                options:0
+                                                metrics:nil
+                                                  views:@{
+                                                    @"border" : _borderView
+                                                  }];
+    constraints = [constraints
+        arrayByAddingObjectsFromArray:[NSLayoutConstraint
+                                          constraintsWithVisualFormat:@"H:|[border]|"
+                                                              options:0
+                                                              metrics:nil
+                                                                views:@{
+                                                                  @"border" : _borderView
+                                                                }]];
     for (NSLayoutConstraint *constraint in constraints) {
       constraint.priority = UILayoutPriorityDefaultLow;
     }
@@ -490,8 +505,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Clear Button Implementation
 
 - (void)updateClearButton {
-  UIImage *image = self.clearButton.currentImage ? self.clearButton.currentImage :
-      [self drawnClearButtonImage:self.clearButton.tintColor];
+  UIImage *image = self.clearButton.currentImage
+                       ? self.clearButton.currentImage
+                       : [self drawnClearButtonImage:self.clearButton.tintColor];
 
   if (![self.clearButton imageForState:UIControlStateNormal]) {
     [self.clearButton setImage:image forState:UIControlStateNormal];
@@ -517,7 +533,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self.textInput invalidateIntrinsicContentSize];
   }
 
-  self.clearButtonTrailing.constant =  MDCTextInputClearButtonImageBuiltInPadding - [self textInsets].right;
+  self.clearButtonTrailing.constant =
+      MDCTextInputClearButtonImageBuiltInPadding - [self textInsets].right;
 }
 
 - (CGFloat)clearButtonAlpha {
@@ -542,7 +559,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     }
   }
 
-  if (self.textInput.trailingView.superview && !MDCCGFloatEqual(self.textInput.trailingView.alpha, 0.f)) {
+  if (self.textInput.trailingView.superview &&
+      !MDCCGFloatEqual(self.textInput.trailingView.alpha, 0.f)) {
     clearButtonAlpha = 0;
   }
 
