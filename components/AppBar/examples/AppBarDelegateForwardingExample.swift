@@ -119,6 +119,11 @@ extension AppBarDelegateForwardingExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Delegate Forwarding (Swift)"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
