@@ -263,7 +263,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
                                  }];
 }
 
-#pragma mark - Catalog by Convention
+#pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Progress View", @"Progress View" ];
@@ -276,6 +276,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
 + (BOOL)catalogIsPrimaryDemo {
   return YES;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
 }
 
 @end
