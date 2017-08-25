@@ -135,17 +135,36 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   // When floating placeholders are turned off, the underline will drift up unless this is set. Even
   // tho it is redundant when floating is on, we just keep it on always for simplicity.
   // Note: This is an issue only on singleline text fields.
-  if (![self.textInput isKindOfClass:[MDCMultilineTextField class]] && !self.underlineBottom) {
-    self.underlineBottom = [NSLayoutConstraint constraintWithItem:self.textInput.underline
-                                                   attribute:NSLayoutAttributeBottom
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:self.textInput
-                                                   attribute:NSLayoutAttributeTop
-                                                  multiplier:1
-                                                    constant:underlineBottomConstant];
-    self.underlineBottom.active = YES;
+  if (!self.underlineBottom) {
+    if (![self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
+      self.underlineBottom = [NSLayoutConstraint constraintWithItem:self.textInput.underline
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.textInput
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1
+                                                           constant:underlineBottomConstant];
+      self.underlineBottom.active = YES;
+    } else {
+        self.underlineBottom = [NSLayoutConstraint constraintWithItem:self.textInput.underline
+                                                            attribute:NSLayoutAttributeBottom
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:((MDCMultilineTextField *)self.textInput).textView
+                                                            attribute:NSLayoutAttributeBottom
+                                                           multiplier:1
+                                                             constant:[self beneathInputPadding]];
+        self.underlineBottom.active = YES;
+    }
   }
-  self.underlineBottom.constant = underlineBottomConstant;
+
+  if (![self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
+    self.underlineBottom.constant = underlineBottomConstant;
+  } else {
+    self.underlineBottom.constant = [self beneathInputPadding];
+  }
+
+  if (![self.textInput isKindOfClass:[MDCMultilineTextField class]] && !self.underlineBottom) {
+  }
 }
 
 // The measurement from bottom to underline bottom. Only used in non-floating case.
