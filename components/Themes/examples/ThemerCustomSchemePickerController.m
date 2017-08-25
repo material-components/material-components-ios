@@ -81,7 +81,7 @@ static NSString *s_secondaryColorString;
   success = success && [scanner scanHexInt:&tempBlue];
   if (!success) {
     NSLog(@"Invalid hex input: %@", string);
-    return nil;
+    return NO;
   }
 
   if (use3Digit) {
