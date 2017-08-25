@@ -118,8 +118,8 @@ static NSString *const kExampleDetailText =
 
 + (NSString *)catalogDescription {
   return @"Material Collection Cells enables a native collection view cell to have Material "
-          "design layout and styling. It also provides editing and extensive customization "
-          "capabilities.";
+  "design layout and styling. It also provides editing and extensive customization "
+  "capabilities.";
 }
 
 - (BOOL)catalogShouldHideNavigation {
