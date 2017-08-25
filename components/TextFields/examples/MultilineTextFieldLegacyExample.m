@@ -46,17 +46,13 @@
                               constraintsWithVisualFormat:@"V:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
 
   MDCMultilineTextField *multilineTextFieldUnstyled = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldUnstyled];
