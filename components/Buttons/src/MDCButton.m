@@ -50,6 +50,9 @@ static NSString *const MDCButtonBackgroundColorsKey = @"MDCButtonBackgroundColor
 // Previous value kept for backwards compatibility.
 static NSString *const MDCButtonNontransformedTitlesKey = @"MDCButtonAccessibilityLabelsKey";
 
+static NSString *const MDCButtonBorderColorsKey = @"MDCButtonBorderColorsKey";
+static NSString *const MDCButtonBorderWidthsKey = @"MDCButtonBorderWidthsKey";
+
 // Specified in Material Guidelines
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
@@ -98,8 +101,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 @interface MDCButton () {
-  NSMutableDictionary<NSNumber *, NSNumber *> *_userElevations;   // For each UIControlState.
-  NSMutableDictionary<NSNumber *, UIColor *> *_backgroundColors;  // For each UIControlState.
+  // For each UIControlState.
+  NSMutableDictionary<NSNumber *, NSNumber *> *_userElevations;
+  NSMutableDictionary<NSNumber *, UIColor *> *_backgroundColors;
+  NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
+  NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
 
   BOOL _hasCustomDisabledTitleColor;
 
@@ -179,6 +185,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
     }
 
+    if ([aDecoder containsValueForKey:MDCButtonBorderColorsKey]) {
+      _borderColors = [aDecoder decodeObjectForKey:MDCButtonBorderColorsKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonBorderWidthsKey]) {
+      _borderWidths = [aDecoder decodeObjectForKey:MDCButtonBorderWidthsKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonBackgroundColorsKey]) {
       _backgroundColors = [aDecoder decodeObjectForKey:MDCButtonBackgroundColorsKey];
     } else {
@@ -214,6 +228,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
   [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
+  [aCoder encodeObject:_borderColors forKey:MDCButtonBorderColorsKey];
+  [aCoder encodeObject:_borderWidths forKey:MDCButtonBorderWidthsKey];
 }
 
 - (void)commonMDCButtonInit {
@@ -222,6 +238,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
   _nontransformedTitles = [NSMutableDictionary dictionary];
+  _borderColors = [NSMutableDictionary dictionary];
+  _borderWidths = [NSMutableDictionary dictionary];
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -377,22 +395,26 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated {
   [super setEnabled:enabled];
 
-  [self updateAlphaAndBackgroundColorAnimated:animated];
-  [self animateButtonToHeightForState:self.state];
+  [self updateAfterStateChange:animated];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
 
-  [self updateAlphaAndBackgroundColorAnimated:NO];
-  [self animateButtonToHeightForState:self.state];
+  [self updateAfterStateChange:NO];
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
 
-  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self updateAfterStateChange:NO];
+}
+
+- (void)updateAfterStateChange:(BOOL)animated {
+  [self updateAlphaAndBackgroundColorAnimated:animated];
   [self animateButtonToHeightForState:self.state];
+  [self updateBorderColor];
+  [self updateBorderWidth];
 }
 
 #pragma mark - Title Uppercasing
@@ -571,6 +593,52 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (state == UIControlStateNormal) {
     [self updateAlphaAndBackgroundColorAnimated:NO];
   }
+}
+
+#pragma mark - Border Color
+
+- (UIColor *)borderColorForState:(UIControlState)state {
+  return _borderColors[@(state)];
+}
+
+- (void)setBorderColor:(UIColor *)borderColor forState:(UIControlState)state {
+  _borderColors[@(state)] = borderColor;
+
+  [self updateBorderColor];
+}
+
+- (void)updateBorderColor {
+  UIColor *color = _borderColors[@(self.state)];
+  if (!color && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
+    color = _borderColors[@(UIControlStateNormal)];
+  }
+  self.layer.borderColor = color ? color.CGColor : NULL;
+}
+
+#pragma mark - Border Width
+
+- (CGFloat)borderWidthForState:(UIControlState)state {
+  NSNumber *borderWidth = _borderWidths[@(state)];
+  if (borderWidth) {
+    return (CGFloat)borderWidth.doubleValue;
+  }
+  return 0;
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state {
+  _borderWidths[@(state)] = @(borderWidth);
+
+  [self updateBorderWidth];
+}
+
+- (void)updateBorderWidth {
+  NSNumber *width = _borderWidths[@(self.state)];
+  if (!width && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
+    width = _borderWidths[@(UIControlStateNormal)];
+  }
+  self.layer.borderWidth = width ? (CGFloat)width.doubleValue : 0;
 }
 
 #pragma mark - Private methods
