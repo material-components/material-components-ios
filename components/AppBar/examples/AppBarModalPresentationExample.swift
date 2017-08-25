@@ -66,6 +66,12 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     return appBar.headerViewController
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
   }
@@ -128,6 +134,12 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
   @objc func presentModal() {

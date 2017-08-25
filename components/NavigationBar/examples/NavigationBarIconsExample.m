@@ -103,6 +103,12 @@
   return NO;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
 - (void)didTapBackButton {
   [self.navigationController popViewControllerAnimated:YES];
 }

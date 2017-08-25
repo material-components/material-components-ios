@@ -85,6 +85,8 @@ static const NSUInteger kNumberOfPages = 10;
   [super viewWillAppear:animated];
 
   [self recalculatePageBounds];
+
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
