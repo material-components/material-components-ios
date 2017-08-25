@@ -34,9 +34,9 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-    [UIColor colorWithWhite:0.9 alpha:1.0],
-    [UIColor colorWithWhite:0.8 alpha:1.0],
-    [UIColor colorWithWhite:0.7 alpha:1.0],
+      [UIColor colorWithWhite:0.9 alpha:1.0],
+      [UIColor colorWithWhite:0.8 alpha:1.0],
+      [UIColor colorWithWhite:0.7 alpha:1.0],
   ];
 
   // Scroll view configuration
@@ -132,7 +132,7 @@
 
 + (NSString *)catalogDescription {
   return @"This control is designed to be a drop-in replacement for UIPageControl, with a user"
-          " experience influenced by Material Design.";
+  " experience influenced by Material Design.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
