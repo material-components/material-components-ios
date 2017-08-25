@@ -83,14 +83,6 @@
   return self.appBar.headerViewController;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
-  // we always hide the navigation bar when we're about to appear.
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
 @end
 
 @implementation AppBarTypicalUseExample (CatalogByConvention)
