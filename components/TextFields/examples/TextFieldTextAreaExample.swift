@@ -149,6 +149,8 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     message.textView?.delegate = self
     allTextFieldControllers.append(messageController)
 
+    messageController.characterCountMax = 150
+
     var tag = 0
     for controller in allTextFieldControllers {
       guard let textField = controller.textInput as? MDCTextField else { continue }
