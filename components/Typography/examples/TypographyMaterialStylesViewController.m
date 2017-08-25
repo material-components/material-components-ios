@@ -100,7 +100,7 @@
   NSLog(@"UIFontWeightBlack %f", UIFontWeightBlack);
 
   UIFont *defaultFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  NSLog (@"Font Family : %@", defaultFont.familyName);
+  NSLog(@"Font Family : %@", defaultFont.familyName);
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
