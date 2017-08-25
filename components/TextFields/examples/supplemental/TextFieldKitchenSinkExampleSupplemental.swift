@@ -96,7 +96,12 @@ extension TextFieldKitchenSinkSwiftExample {
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
       "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
 
-    characterModeButton.translatesAutoresizingMaskIntoConstraints = false
+    textInsetsModeButton.addTarget(self,
+                                  action: #selector(textInsetsModeButtonDidTouch(button:)),
+                                  for: .touchUpInside)
+    textInsetsModeButton.setTitle("Text Insets Mode: If Content", for: .normal)
+    scrollView.addSubview(textInsetsModeButton)
+
     characterModeButton.addTarget(self,
                                   action: #selector(textFieldModeButtonDidTouch(button:)),
                                   for: .touchUpInside)
@@ -116,7 +121,7 @@ extension TextFieldKitchenSinkSwiftExample {
     underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
     scrollView.addSubview(underlineButton)
 
-    return [container, characterModeButton, underlineButton, clearModeButton]
+    return [container, textInsetsModeButton, characterModeButton, underlineButton, clearModeButton]
   }
 
   func setupSectionLabels() {
@@ -372,6 +377,50 @@ extension TextFieldKitchenSinkSwiftExample {
       return "While Editing"
     case .unlessEditing:
       return "Unless Editing"
+    case .never:
+      return "Never"
+    }
+  }
+}
+
+extension TextFieldKitchenSinkSwiftExample {
+  // The 'text insets' button does not have the same options as the other mode buttons
+  @objc func textInsetsModeButtonDidTouch(button: MDCButton) {
+
+    let closure: (MDCTextInputTextInsetsMode, String) -> Void = { mode, title in
+      self.allInputControllers.forEach { controller in
+        guard let input = controller.textInput as? MDCTextInput else {
+          return
+        }
+        input.textInsetsMode = mode
+
+      button.setTitle(title + ": " + self.textInsetsModeName(mode: mode), for: .normal)
+      }
+    }
+
+    let title = "Text Insets Mode"
+    let alert = UIAlertController(title: title,
+                                  message: nil,
+                                  preferredStyle: .alert)
+
+    for rawMode: UInt in 0...2 {
+      let mode = MDCTextInputTextInsetsMode(rawValue: rawMode)!
+      alert.addAction(UIAlertAction(title: textInsetsModeName(mode: mode),
+                                    style: .default,
+                                    handler: { _ in
+                                      closure(mode, title)
+      }))
+    }
+
+    present(alert, animated: true, completion: nil)
+  }
+
+  func textInsetsModeName(mode: MDCTextInputTextInsetsMode) -> String {
+    switch mode {
+    case .always:
+      return "Always"
+    case .ifContent:
+      return "If Content"
     case .never:
       return "Never"
     }
