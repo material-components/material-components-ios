@@ -41,10 +41,6 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   return YES;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end
 
 @implementation AnimationTimingExample (Supplemental)

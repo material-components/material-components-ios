@@ -31,10 +31,6 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     return false
   }
 
-  func catalogShouldHideNavigation() -> Bool {
-    return false
-  }
-
   let raisedButton = MDCRaisedButton()
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()

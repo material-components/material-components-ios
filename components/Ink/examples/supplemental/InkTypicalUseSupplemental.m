@@ -92,10 +92,6 @@
   return YES;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end
 
 @implementation InkTypicalUseViewController (Supplemental)

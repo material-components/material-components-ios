@@ -213,10 +213,6 @@
   return NO;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end
 
 @implementation MultilineTextFieldLegacyExample (UITextViewDelegate)

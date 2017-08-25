@@ -66,8 +66,4 @@
   return @"SliderAutolayoutExample";
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end

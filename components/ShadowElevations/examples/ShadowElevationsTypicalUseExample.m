@@ -143,8 +143,4 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
   return NO;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end

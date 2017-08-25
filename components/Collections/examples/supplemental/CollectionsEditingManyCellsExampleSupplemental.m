@@ -28,10 +28,6 @@
   return NO;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 #pragma mark - <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

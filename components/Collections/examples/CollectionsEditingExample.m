@@ -174,8 +174,4 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
   return NO;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end

@@ -122,8 +122,4 @@ static NSString *const kExampleDetailText =
   "capabilities.";
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end

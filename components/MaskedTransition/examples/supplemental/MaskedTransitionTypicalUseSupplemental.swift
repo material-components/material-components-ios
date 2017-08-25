@@ -35,8 +35,4 @@ extension MaskedTransitionTypicalUseSwiftExample {
   class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
-
-  func catalogShouldHideNavigation() -> Bool {
-    return false
-  }
 }

@@ -27,10 +27,6 @@ class ButtonsDynamicTypeViewController: UIViewController {
     return false
   }
 
-  func catalogShouldHideNavigation() -> Bool {
-    return false
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
 

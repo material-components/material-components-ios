@@ -90,10 +90,6 @@ static NSString *const reuseIdentifier = @"Cell";
   return YES;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end
 
 @implementation FeatureHighlightColorExample (CatalogByConvention)
@@ -150,10 +146,6 @@ static NSString *const reuseIdentifier = @"Cell";
   return NO;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end
 
 @implementation FeatureHighlightShownViewExample (CatalogByConvention)
@@ -204,10 +196,6 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-- (BOOL)catalogShouldHideNavigation {
   return NO;
 }
 

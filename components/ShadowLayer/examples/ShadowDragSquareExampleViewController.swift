@@ -86,8 +86,4 @@ class ShadowDragSquareExampleViewController: UIViewController {
   class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
-
-  func catalogShouldHideNavigation() -> Bool {
-    return false
-  }
 }

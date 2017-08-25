@@ -29,10 +29,6 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     return false
   }
 
-  func catalogShouldHideNavigation() -> Bool {
-    return false
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
 

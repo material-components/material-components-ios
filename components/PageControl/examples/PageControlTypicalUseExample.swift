@@ -129,8 +129,4 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
-
-  func catalogShouldHideNavigation() -> Bool {
-    return false
-  }
 }

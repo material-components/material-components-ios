@@ -52,8 +52,4 @@ extension PalettesGeneratedExampleViewController {
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
-
-  func catalogShouldHideNavigation() -> Bool {
-    return false
-  }
 }

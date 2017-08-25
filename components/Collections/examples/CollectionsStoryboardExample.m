@@ -82,10 +82,6 @@ static NSString *const kReusableIdentifierItem = @"customCell";
   return NO;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end
 
 @implementation CollectionStoryboardExampleCell

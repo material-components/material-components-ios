@@ -90,10 +90,6 @@ extension ButtonBarTypicalUseSwiftExample {
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
-
-  func catalogShouldHideNavigation() -> Bool {
-    return false
-  }
 }
 
 // MARK: - Typical application code (not Material-specific)

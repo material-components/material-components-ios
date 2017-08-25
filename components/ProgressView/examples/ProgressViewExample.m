@@ -278,8 +278,4 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   return YES;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 @end
