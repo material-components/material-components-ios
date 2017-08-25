@@ -37,6 +37,14 @@
   return @"ButtonsContentEdgeInsets";
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
