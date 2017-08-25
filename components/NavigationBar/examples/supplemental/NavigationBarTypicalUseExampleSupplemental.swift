@@ -30,11 +30,6 @@ extension NavigationBarTypicalUseSwiftExample {
     return [ "Navigation Bar", "Navigation Bar (Swift)" ]
   }
 
-  class func catalogDescription() -> String {
-    return "The Navigation Bar component is a view composed of a left and right Button Bar and" +
-          " either a title label or a custom title view."
-  }
-
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }

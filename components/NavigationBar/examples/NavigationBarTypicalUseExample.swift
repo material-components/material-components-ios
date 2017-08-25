@@ -48,11 +48,6 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
     self.setupExampleViews()
   }
 
-  override open func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-
   override open var prefersStatusBarHidden: Bool {
     return true
   }
