@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerStroked.h"
+#import "MDCTextInputControllerStrokedField.h"
 
 #import "MDCTextInputBorderView.h"
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
@@ -28,7 +28,7 @@ static const CGFloat MDCTextInputTextFieldFloatingBorderedHalfPadding = 8.f;
 
 static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
-@implementation MDCTextInputControllerStroked
+@implementation MDCTextInputControllerStrokedField
 
 - (instancetype)initWithTextInput:(UIView<MDCTextInput> *)input {
   NSAssert(![input conformsToProtocol:@protocol(MDCMultilineTextInput)], @"This design is meant for single-line text fields only. For a complementary multi-line style, see MDCTextInputControllerTextArea.");
@@ -41,20 +41,24 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 #pragma mark - Properties Implementations
 
-+ (UIRectCorner)roundedCornersDefault {
-  return _roundedCornersDefault;
-}
-
-+ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
-  _roundedCornersDefault = roundedCornersDefault;
-}
-
 - (BOOL)isFloatingEnabled {
   return YES;
 }
 
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
   // Unused. Floating is always enabled.
+}
+
+- (CGPoint)floatingPlaceholderDestination {
+  return CGPointMake(40, 80);
+}
+
++ (UIRectCorner)roundedCornersDefault {
+  return _roundedCornersDefault;
+}
+
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  _roundedCornersDefault = roundedCornersDefault;
 }
 
 #pragma mark - MDCTextInputPositioningDelegate
