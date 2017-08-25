@@ -226,11 +226,16 @@ extension TabBarIconSwiftExample {
   }
 }
 
-// MARK: Catalog by convention
+// MARK: - Catalog by convention
 extension TabBarIconSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["Tab Bar", "Icons and Text (Swift)"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
