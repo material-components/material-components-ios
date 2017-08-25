@@ -397,6 +397,20 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
   }
 
   // MARK: - Multiline
+
+  func setupAreaTextFields() -> [MDCTextInputControllerTextArea] {
+    let textFieldArea = MDCMultilineTextField()
+    scrollView.addSubview(textFieldArea)
+    textFieldArea.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldArea.textView?.delegate = self
+    textFieldArea.placeholder = "This is a text area"
+
+    let textFieldControllerArea = MDCTextInputControllerTextArea(textInput: textFieldArea)
+
+    return [textFieldControllerArea]
+  }
+
   func setupDefaultMultilineTextFields() -> [MDCTextInputControllerDefault] {
     let multilineTextFieldDefault = MDCMultilineTextField()
     scrollView.addSubview(multilineTextFieldDefault)
