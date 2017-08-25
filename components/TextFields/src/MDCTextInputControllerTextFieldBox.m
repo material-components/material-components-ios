@@ -17,6 +17,7 @@
 #import "MDCTextInputControllerTextFieldBox.h"
 
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
+#import "private/MDCTextInputArt.h"
 
 #import "MaterialMath.h"
 
@@ -28,6 +29,7 @@
 
 #pragma mark - Constants
 
+static const CGFloat MDCTextInputTextFieldBoxClearButtonPaddingAddition = -2.f;
 static const CGFloat MDCTextInputTextFieldBoxFullPadding = 16.f;
 
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
@@ -48,6 +50,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 @interface MDCTextInputControllerTextFieldBox()
 
+@property(nonatomic, strong) NSLayoutConstraint *clearButtonBottom;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *underlineBottom;
 
@@ -110,6 +113,27 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   textInsets.right = MDCTextInputTextFieldBoxHalfPadding;
 
   return textInsets;
+}
+
+- (void)updateLayout {
+  [super updateLayout];
+
+  if (!self.textInput) {
+    return;
+  }
+
+  CGFloat clearButtonConstant = -1 * ([self beneathInputPadding] - MDCTextInputClearButtonImageBuiltInPadding + MDCTextInputTextFieldBoxClearButtonPaddingAddition);
+  if (!self.clearButtonBottom) {
+    self.clearButtonBottom = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.textInput.underline
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1
+                                                           constant:clearButtonConstant];
+    self.clearButtonBottom.active = YES;
+  }
+  self.clearButtonBottom.constant = clearButtonConstant;
 }
 
 #pragma mark - Layout
