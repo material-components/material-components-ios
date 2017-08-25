@@ -16,13 +16,13 @@ import UIKit
 import MaterialComponents
 
 struct MDPalette {
-   static let blue: UIColor = UIColor(colorLiteralRed: 0.129, green: 0.588, blue: 0.953, alpha: 1.0)
-   static let red: UIColor = UIColor(colorLiteralRed: 0.957, green: 0.263, blue: 0.212, alpha: 1.0)
-   static let green: UIColor = UIColor(colorLiteralRed: 0.298, green: 0.686, blue: 0.314, alpha: 1.0)
-   static let yellow: UIColor = UIColor(colorLiteralRed: 1.0, green: 0.922, blue: 0.231, alpha: 1.0)
+   static let blue: UIColor = UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0)
+   static let red: UIColor = UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0)
+   static let green: UIColor = UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0)
+   static let yellow: UIColor = UIColor(red: 1.0, green: 0.922, blue: 0.231, alpha: 1.0)
 }
 
-class ViewController: UIViewController {
+class ActivityIndicatorSwiftController: UIViewController {
    
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -78,8 +78,13 @@ class ViewController: UIViewController {
    
 }
 
-extension ViewController : MDCActivityIndicatorDelegate {
+extension ActivityIndicatorSwiftController : MDCActivityIndicatorDelegate {
    func activityIndicatorAnimationDidFinish(_ activityIndicator: MDCActivityIndicator) {
       return
+   }
+   
+   // MARK: Catalog by convention
+   class func catalogBreadcrumbs() -> [String] {
+      return ["Activity Indicator", "Activity Indicator (Swift)"]
    }
 }
