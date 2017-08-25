@@ -122,6 +122,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
     return;
   }
 
+  CGFloat clearButtonConstant = -1 * ([self beneathInputPadding] - MDCTextInputClearButtonImageBuiltInPadding + MDCTextInputTextFieldBoxClearButtonPaddingAddition);
   if (!self.clearButtonBottom) {
     self.clearButtonBottom = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
                                                           attribute:NSLayoutAttributeBottom
@@ -129,10 +130,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
                                                              toItem:self.textInput.underline
                                                           attribute:NSLayoutAttributeTop
                                                          multiplier:1
-                                                           constant:-1 * ([self beneathInputPadding] - MDCTextInputClearButtonImageBuiltInPadding + MDCTextInputTextFieldBoxClearButtonPaddingAddition)];
+                                                           constant:clearButtonConstant];
     self.clearButtonBottom.active = YES;
   }
-  self.clearButtonBottom.constant = -1 * ([self beneathInputPadding] - MDCTextInputClearButtonImageBuiltInPadding + MDCTextInputTextFieldBoxClearButtonPaddingAddition);
+  self.clearButtonBottom.constant = clearButtonConstant;
 }
 
 #pragma mark - Layout
