@@ -70,7 +70,6 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.trailingUnderlineLabelTextColorDefault,
                    MDCTextInputControllerLegacyDefault.inlinePlaceholderColorDefault)
 
-
     // Default specific properties
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.floatingPlaceholderColorDefault,
                    MDCPalette.blue.accent700)

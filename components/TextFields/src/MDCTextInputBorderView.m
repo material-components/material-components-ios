@@ -18,12 +18,11 @@
 
 static NSString *const MDCTextInputBorderViewBorderFillColorKey =
     @"MDCTextInputBorderViewBorderFillColorKey";
-static NSString *const MDCTextInputBorderViewBorderPathKey =
-    @"MDCTextInputBorderViewBorderPathKey";
+static NSString *const MDCTextInputBorderViewBorderPathKey = @"MDCTextInputBorderViewBorderPathKey";
 static NSString *const MDCTextInputBorderViewBorderStrokeColorKey =
     @"MDCTextInputBorderViewBorderStrokeColorKey";
 
-static inline NSString * _Nullable MDCNSStringFromCGLineCap(CGLineCap lineCap) {
+static inline NSString *_Nullable MDCNSStringFromCGLineCap(CGLineCap lineCap) {
   NSString *lineCapString;
   switch (lineCap) {
     case kCGLineCapButt:
@@ -39,7 +38,7 @@ static inline NSString * _Nullable MDCNSStringFromCGLineCap(CGLineCap lineCap) {
   return lineCapString;
 }
 
-static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin) {
+static inline NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin) {
   NSString *lineJoinString;
   switch (lineJoin) {
     case kCGLineJoinBevel:
@@ -55,7 +54,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   return lineJoinString;
 }
 
-@interface MDCTextInputBorderView()
+@interface MDCTextInputBorderView ()
 
 @property(nonatomic, strong, readonly) CAShapeLayer *borderLayer;
 
@@ -63,8 +62,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
 
 @implementation MDCTextInputBorderView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self commonMDCTextInputBorderViewInit];
@@ -72,8 +70,7 @@ static inline  NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
     _borderFillColor = [coder decodeObjectForKey:MDCTextInputBorderViewBorderFillColorKey];
