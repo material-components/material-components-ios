@@ -44,6 +44,10 @@ static NSString * const kCell = @"Cell";
   return YES;
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return NO;
+}
+
 @end
 
 @implementation ActivityIndicatorExample (Supplemental)
