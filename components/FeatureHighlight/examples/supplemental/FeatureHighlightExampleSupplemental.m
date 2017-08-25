@@ -83,7 +83,7 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (NSString *)catalogDescription {
   return @"The Feature Highlight component is used to introduce users to new features and"
-  " functionality at contextually relevant moments.";
+          " functionality at contextually relevant moments.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
