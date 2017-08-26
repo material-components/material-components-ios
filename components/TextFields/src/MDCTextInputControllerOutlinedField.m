@@ -24,8 +24,7 @@
 #pragma mark - Class Properties
 
 static const CGFloat MDCTextInputTextFieldOutlinedFullPadding = 16.f;
-static const CGFloat MDCTextInputTextFieldOutlinedHalfPadding = 8.f;
-//static const CGFloat MDCTextInputTextFieldOutlinedNormalPlaceholderPadding = 20.f;
+static const CGFloat MDCTextInputTextFieldOutlinedNormalPlaceholderPadding = 20.f;
 
 static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
@@ -38,7 +37,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 @implementation MDCTextInputControllerOutlinedField
 
 - (instancetype)initWithTextInput:(UIView<MDCTextInput> *)input {
-  NSAssert(![input conformsToProtocol:@protocol(MDCMultilineTextInput)], @"This design is meant for single-line text fields only. For a complementary multi-line style, see MDCTextInputControllerTextArea.");
+  NSAssert(![input conformsToProtocol:@protocol(MDCMultilineTextInput)],
+           @"This design is meant for single-line text fields only. For a complementary multi-line style, see MDCTextInputControllerTextArea.");
   self = [super initWithTextInput:input];
   if (self) {
     input.textInsetsMode = MDCTextInputTextInsetsModeAlways;
@@ -75,17 +75,11 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
-  textInsets.top = MDCTextInputTextFieldOutlinedHalfPadding +
-  MDCRint(self.textInput.placeholderLabel.font.lineHeight *
-          (CGFloat)self.floatingPlaceholderScale.floatValue) +
-  MDCTextInputTextFieldOutlinedHalfPadding;
 
-  // .bottom = underlineOffset + the half padding above the line but below the text field and any
-  // space needed for the labels and / or line.
-  // Legacy has an additional half padding here but this version does not.
-//  CGFloat underlineOffset = [self underlineOffset];
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat placeholderEstimatedHeight = MDCCeil(self.textInput.placeholderLabel.font.lineHeight * scale) / scale;
+  textInsets.top = [self borderHeight] - MDCTextInputTextFieldOutlinedFullPadding - placeholderEstimatedHeight;
 
-//  textInsets.bottom = underlineOffset;
   textInsets.left = MDCTextInputTextFieldOutlinedFullPadding;
   textInsets.right = MDCTextInputTextFieldOutlinedFullPadding;
 
@@ -98,61 +92,54 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   [super updateLayout];
 
   self.textInput.underline.alpha = 0;
-
-
+  self.textInput.clipsToBounds = NO;
 }
 
 - (void)updateBorder {
   [super updateBorder];
+
+  CGRect pathRect = self.textInput.bounds;
+  pathRect.size.height = [self borderHeight];
+  UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:pathRect byRoundingCorners:self.roundedCorners cornerRadii:CGSizeMake(MDCTextInputDefaultBorderRadius, MDCTextInputDefaultBorderRadius)];
+  self.textInput.borderPath = path;
+
   UIColor *borderColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
   self.textInput.borderView.borderStrokeColor =
       (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
       : borderColor;
   self.textInput.borderView.borderPath.lineWidth = self.textInput.isEditing ? 2 : 1;
+
+  [self updatePlaceholder];
 }
 
 - (void)updatePlaceholder {
   [super updatePlaceholder];
 
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat placeholderEstimatedHeight = MDCCeil(self.textInput.placeholderLabel.font.lineHeight * scale) / scale;
+  CGFloat placeholderConstant = ([self borderHeight] / 2.f) - (placeholderEstimatedHeight / 2.f);
   if (!self.placeholderCenterY) {
     self.placeholderCenterY =
     [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                 attribute:NSLayoutAttributeCenterY
+                                 attribute:NSLayoutAttributeTop
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:self.textInput
-                                 attribute:NSLayoutAttributeCenterY
+                                 attribute:NSLayoutAttributeTop
                                 multiplier:1
-                                  constant:0];
+                                  constant:placeholderConstant];
     self.placeholderCenterY.priority = UILayoutPriorityDefaultHigh;
     self.placeholderCenterY.active = YES;
 
-    [self.textInput.placeholderLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh + 1 forAxis:UILayoutConstraintAxisVertical];
+    [self.textInput.placeholderLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh + 1
+                                                       forAxis:UILayoutConstraintAxisVertical];
   }
+  self.placeholderCenterY.constant = placeholderConstant;
 }
 
-//// Measurement from bottom to underline center Y
-//- (CGFloat)underlineOffset {
-//  // The amount of space underneath the underline depends on whether there is content in the
-//  // underline labels.
-//  CGFloat underlineLabelsOffset = 0;
-//  if (self.textInput.leadingUnderlineLabel.text.length) {
-//    underlineLabelsOffset =
-//    MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-//  }
-//  if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-//    underlineLabelsOffset =
-//    MAX(underlineLabelsOffset,
-//        MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-//  }
-//
-//  CGFloat underlineOffset = underlineLabelsOffset;
-//  underlineOffset += MDCTextInputTextFieldOutlinedHalfPadding;
-//
-//  if (!MDCCGFloatEqual(underlineLabelsOffset, 0)) {
-//    underlineOffset += MDCTextInputTextFieldOutlinedHalfPadding;
-//  }
-//
-//  return underlineOffset;
-//}
+- (CGFloat)borderHeight {
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat placeholderEstimatedHeight = MDCCeil(self.textInput.placeholderLabel.font.lineHeight * scale) / scale;
+  return MDCTextInputTextFieldOutlinedNormalPlaceholderPadding + placeholderEstimatedHeight + MDCTextInputTextFieldOutlinedNormalPlaceholderPadding;
+}
 
 @end
