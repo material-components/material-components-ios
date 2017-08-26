@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldTextAreaSwiftExample: UIViewController {
+final class TextFieldOutlinedSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -27,6 +27,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     name.placeholder = "Name"
     name.translatesAutoresizingMaskIntoConstraints = false
     name.autocapitalizationType = .words
+    name.backgroundColor = .white
     return name
   }()
 
@@ -35,6 +36,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     address.placeholder = "Address"
     address.translatesAutoresizingMaskIntoConstraints = false
     address.autocapitalizationType = .words
+    address.backgroundColor = .white
     return address
   }()
 
@@ -43,31 +45,35 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     city.placeholder = "City"
     city.translatesAutoresizingMaskIntoConstraints = false
     city.autocapitalizationType = .words
+    city.backgroundColor = .white
     return city
   }()
-  let cityController: MDCTextInputControllerDefault
+  let cityController: MDCTextInputControllerOutlinedField
 
   let state: MDCTextField = {
     let state = MDCTextField()
     state.placeholder = "State"
     state.translatesAutoresizingMaskIntoConstraints = false
     state.autocapitalizationType = .allCharacters
+    state.backgroundColor = .white
     return state
   }()
-  let stateController: MDCTextInputControllerDefault
+  let stateController: MDCTextInputControllerOutlinedField
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
     zip.placeholder = "Zip code"
     zip.translatesAutoresizingMaskIntoConstraints = false
+    zip.backgroundColor = .white
     return zip
   }()
-  let zipController: MDCTextInputControllerDefault
+  let zipController: MDCTextInputControllerOutlinedField
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
     phone.placeholder = "Phone number"
     phone.translatesAutoresizingMaskIntoConstraints = false
+    phone.backgroundColor = .white
     return phone
   }()
 
@@ -75,15 +81,16 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     let message = MDCMultilineTextField()
     message.placeholder = "Message"
     message.translatesAutoresizingMaskIntoConstraints = false
+    message.backgroundColor = .white
     return message
   }()
 
   var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerDefault(textInput: city)
-    stateController = MDCTextInputControllerDefault(textInput: state)
-    zipController = MDCTextInputControllerDefault(textInput: zip)
+    cityController = MDCTextInputControllerOutlinedField(textInput: city)
+    stateController = MDCTextInputControllerOutlinedField(textInput: state)
+    zipController = MDCTextInputControllerOutlinedField(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -93,9 +100,9 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
+    view.backgroundColor = .white
 
-    title = "Material Text Areas"
+    title = "Outlined Text Fields"
 
     setupScrollView()
     setupTextFields()
@@ -112,12 +119,12 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerDefault(textInput: name)
+    let nameController = MDCTextInputControllerOutlinedField(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerDefault(textInput: address)
+    let addressController = MDCTextInputControllerOutlinedField(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -140,7 +147,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerOutlinedField(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
@@ -261,7 +268,7 @@ final class TextFieldTextAreaSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldTextAreaSwiftExample: UITextFieldDelegate {
+extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -314,7 +321,7 @@ extension TextFieldTextAreaSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldTextAreaSwiftExample: UITextViewDelegate {
+extension TextFieldOutlinedSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -322,7 +329,7 @@ extension TextFieldTextAreaSwiftExample: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldTextAreaSwiftExample {
+extension TextFieldOutlinedSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -354,14 +361,14 @@ extension TextFieldTextAreaSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldTextAreaSwiftExample {
+extension TextFieldOutlinedSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldTextAreaSwiftExample {
+extension TextFieldOutlinedSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Text Areas"]
+    return ["Text Field", "Outlined Fields & Text Areas"]
   }
 }
