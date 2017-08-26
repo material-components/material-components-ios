@@ -246,7 +246,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
 
     controller.helperText = "Helper"
     textField.sizeToFit()
-    XCTAssertEqual(textField.frame.height, 84.5)
+    XCTAssertTrue(MDCCGFloatEqual(MDCFloor(textField.frame.height), 84.0))
 
     controller.characterCountViewMode = .never
     XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)
