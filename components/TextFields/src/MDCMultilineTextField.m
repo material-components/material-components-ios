@@ -17,6 +17,7 @@
 #import "MDCMultilineTextField.h"
 
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "private/MDCTextInputCommonFundament.h"
 
@@ -42,6 +43,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
 
+@property(nonatomic, strong) NSLayoutConstraint *textViewBottomSuperviewBottom;
 @property(nonatomic, strong) NSLayoutConstraint *textViewLeading;
 @property(nonatomic, strong) NSLayoutConstraint *textViewMinHeight;
 @property(nonatomic, strong) NSLayoutConstraint *textViewTop;
@@ -125,6 +127,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   copy.minimumLines = self.minimumLines;
   copy.placeholder = self.placeholder;
   copy.text = self.text;
+  copy.clearButton.tintColor = self.clearButton.tintColor;
   copy.trailingViewMode = self.trailingViewMode;
 
   return copy;
@@ -135,7 +138,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
   self.textColor = _fundament.textColor;
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  self.clearButtonColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
   self.clearButtonMode = UITextFieldViewModeWhileEditing;
 
   self.editable = YES;
@@ -182,6 +185,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                    forAxis:UILayoutConstraintAxisVertical];
   [self.textView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
                                                  forAxis:UILayoutConstraintAxisHorizontal];
+  [self.textView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 1
+                                                 forAxis:UILayoutConstraintAxisVertical];
 
   self.textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
   self.textView.textContainer.lineFragmentPadding = 0;
@@ -220,7 +225,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
   NSLayoutConstraint *underlineYTextView =
       [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
+                                   attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:self.textView
                                    attribute:NSLayoutAttributeBottom
@@ -228,68 +233,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                     constant:MDCTextInputHalfPadding];
   underlineYTextView.priority = UILayoutPriorityDefaultLow;
   underlineYTextView.active = YES;
-
-  NSLayoutConstraint *underlineYSuperviewBottom =
-      [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
-                                   relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:self
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1
-                                    constant:-1 * MDCTextInputHalfPadding];
-  underlineYSuperviewBottom.priority = UILayoutPriorityDefaultLow;
-  underlineYSuperviewBottom.active = YES;
-
-  NSLayoutConstraint *underlineYLeadingLabelTop =
-      [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
-                                   relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:self.leadingUnderlineLabel
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:-1 * MDCTextInputHalfPadding];
-  underlineYLeadingLabelTop.priority = UILayoutPriorityDefaultLow;
-  underlineYLeadingLabelTop.active = YES;
-
-  NSLayoutConstraint *underlineYTrailingLabelTop =
-      [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
-                                   relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:self.trailingUnderlineLabel
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:-1 * MDCTextInputHalfPadding];
-  underlineYTrailingLabelTop.priority = UILayoutPriorityDefaultLow;
-  underlineYTrailingLabelTop.active = YES;
-}
-
-#pragma mark - Layout (Custom)
-
-- (UIEdgeInsets)textInsets {
-  UIEdgeInsets textInsets = UIEdgeInsetsZero;
-
-  textInsets.top = MDCTextInputFullPadding;
-
-  // The amount of space underneath the underline is variable. It could just be
-  // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
-  // MDCTextInputHalfPadding
-  CGFloat underlineLabelsOffset = 0;
-  if (self.leadingUnderlineLabel.text.length) {
-    underlineLabelsOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-  }
-  if (self.trailingUnderlineLabel.text.length) {
-    underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-  }
-  CGFloat underlineOffset = MDCTextInputHalfPadding + underlineLabelsOffset;
-
-  // .bottom = underlineOffset + the half padding above the line but below the text field
-  textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
-
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
-    return [self.positioningDelegate textInsets:textInsets];
-  }
-  return textInsets;
 }
 
 #pragma mark - Layout (UIView)
@@ -304,6 +247,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                    withHorizontalFittingPriority:UILayoutPriorityDefaultLow
                          verticalFittingPriority:UILayoutPriorityDefaultLow]
           .height;
+
+  CGFloat minimumHeight = [self estimatedTextViewLineHeight] * self.minimumLines;
+  estimatedTextViewHeight = MAX(estimatedTextViewHeight, minimumHeight);
 
   boundingSize.height = [self textInsets].top + estimatedTextViewHeight + [self textInsets].bottom;
 
@@ -330,6 +276,11 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self updateTrailingViewAlpha];
 
   [self.fundament layoutSubviewsOfInput];
+  [self updateBorder];
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
+    [self.positioningDelegate textInputDidLayoutSubviews];
+  }
 }
 
 - (void)updateConstraints {
@@ -345,6 +296,19 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     self.textViewLeading.active = YES;
   }
   self.textViewLeading.constant = self.textInsets.left;
+
+  if (!self.textViewBottomSuperviewBottom) {
+    self.textViewBottomSuperviewBottom =
+        [NSLayoutConstraint constraintWithItem:self.textView
+                                     attribute:NSLayoutAttributeBottom
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1
+                                      constant:-1 * MDCTextInputHalfPadding];
+    self.textViewBottomSuperviewBottom.priority = UILayoutPriorityDefaultLow;
+    self.textViewBottomSuperviewBottom.active = YES;
+  }
 
   if (!self.textViewTop) {
     self.textViewTop = [NSLayoutConstraint constraintWithItem:self.textView
@@ -366,10 +330,11 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                             toItem:self.clearButton
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
-                                                          constant:0];
+                                                          constant:-1 * [self textInsets].right];
     self.textViewTrailing.priority = UILayoutPriorityDefaultLow;
     self.textViewTrailing.active = YES;
   }
+  self.textViewTrailing.constant = -1 * [self textInsets].right;
 
   if (!self.textViewMinHeight) {
     self.textViewMinHeight = [NSLayoutConstraint
@@ -382,9 +347,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                   constant:[self estimatedTextViewLineHeight] * self.minimumLines];
     self.textViewMinHeight.priority = UILayoutPriorityDefaultLow;
   }
-  self.textViewMinHeight.active = self.minimumLines > 1;
+  self.textViewMinHeight.active = YES;
   self.textViewMinHeight.constant = [self estimatedTextViewLineHeight] * self.minimumLines;
-
   [self.fundament updateConstraintsOfInput];
 
   [self updateTrailingViewLayout];
@@ -397,7 +361,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 }
 
 - (CGFloat)estimatedTextViewLineHeight {
-  return MDCCeil(self.textView.font.lineHeight * 2.f) / 2.f;
+  CGFloat scale = UIScreen.mainScreen.scale;
+  return MDCCeil(self.textView.font.lineHeight * scale) / scale;
 }
 
 #pragma mark - Touch (UIView)
@@ -447,9 +412,16 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                              constant:0];
   }
   self.trailingViewCenterY.active = YES;
-  
+
   if (!self.textViewTrailingTrailingViewLeading) {
-    self.textViewTrailingTrailingViewLeading = [NSLayoutConstraint constraintWithItem:self.textView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.trailingView attribute:NSLayoutAttributeLeading multiplier:1 constant:self.textViewTrailing.constant];
+    self.textViewTrailingTrailingViewLeading =
+        [NSLayoutConstraint constraintWithItem:self.textView
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.trailingView
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:self.textViewTrailing.constant];
   }
   self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0.f);
 }
@@ -477,6 +449,21 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
       break;
   }
   return trailingViewAlpha;
+}
+
+#pragma mark - Border Implementation
+
+- (UIBezierPath *)defaultBorderPath {
+  CGRect borderBound = self.bounds;
+  borderBound.size.height = self.underline.center.y;
+  return [UIBezierPath
+      bezierPathWithRoundedRect:borderBound
+              byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                    cornerRadii:CGSizeMake(MDCTextInputBorderRadius, MDCTextInputBorderRadius)];
+}
+
+- (void)updateBorder {
+  self.borderView.borderPath = self.borderPath;
 }
 
 #pragma mark - Properties Implementation
@@ -513,16 +500,27 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self.fundament didSetText];
 }
 
+- (UIBezierPath *)borderPath {
+  return self.fundament.borderPath ? self.fundament.borderPath : [self defaultBorderPath];
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  if (![self.fundament.borderPath isEqual:borderPath]) {
+    self.fundament.borderPath = borderPath;
+    [self updateBorder];
+  }
+}
+
+- (MDCTextInputBorderView *)borderView {
+  return self.fundament.borderView;
+}
+
+- (void)setBorderView:(MDCTextInputBorderView *)borderView {
+  self.fundament.borderView = borderView;
+}
+
 - (UIButton *)clearButton {
   return self.fundament.clearButton;
-}
-
-- (UIColor *)clearButtonColor {
-  return self.fundament.clearButtonColor;
-}
-
-- (void)setClearButtonColor:(UIColor *)clearButtonColor {
-  self.fundament.clearButtonColor = clearButtonColor;
 }
 
 - (UITextFieldViewMode)clearButtonMode {
@@ -629,6 +627,18 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (void)setTextColor:(UIColor *)textColor {
   [self.textView setTextColor:textColor];
   self.fundament.textColor = textColor;
+}
+
+- (UIEdgeInsets)textInsets {
+  return self.fundament.textInsets;
+}
+
+- (MDCTextInputTextInsetsMode)textInsetsMode {
+  return self.fundament.textInsetsMode;
+}
+
+- (void)setTextInsetsMode:(MDCTextInputTextInsetsMode)textInsetsMode {
+  self.fundament.textInsetsMode = textInsetsMode;
 }
 
 - (UITextView *)textView {

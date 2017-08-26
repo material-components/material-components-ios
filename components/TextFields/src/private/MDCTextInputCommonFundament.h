@@ -17,6 +17,7 @@
 
 #import "MaterialTextFields.h"
 
+extern const CGFloat MDCTextInputBorderRadius;
 extern const CGFloat MDCTextInputFullPadding;
 extern const CGFloat MDCTextInputHalfPadding;
 

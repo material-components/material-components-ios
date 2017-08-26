@@ -16,8 +16,11 @@
 
 #import "MDCTextInputController.h"
 
+extern const CGFloat MDCTextInputDefaultBorderRadius;
+extern const CGFloat MDCTextInputDefaultUnderlineActiveHeight;
+
 /**
- Material Design compliant text field from 2016. The logic for 'automagic' error states changes:
+ Material Design compliant text field from 2017. The logic for 'automagic' error states changes:
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
 
@@ -26,7 +29,30 @@
  Design guidelines call this 'Floating inline labels.'
  https://material.io/guidelines/components/text-fields.html#text-fields-labels
 */
-@interface MDCTextInputControllerLegacyDefault : NSObject <MDCTextInputController>
+@interface MDCTextInputControllerDefault : NSObject <MDCTextInputController>
+
+/**
+ The color behind the input and label that defines the preferred tap zone.
+
+ Default is borderFillColorDefault.
+ */
+@property(nonatomic, nullable, strong) UIColor *borderFillColor;
+
+/**
+ Default value for borderFillColor.
+
+ Default is clear.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *borderFillColorDefault;
+
+/**
+ Should the controller's .textInput grow vertically as new lines are added.
+
+ If the text input does not conform to MDCMultilineTextInput, this parameter has no effect.
+
+ Default is YES.
+ */
+@property(nonatomic, assign) BOOL expandsOnOverflow;
 
 /**
  The color applied to the placeholder when floating. However, when in error state, it will be
@@ -72,5 +98,20 @@
  Default is YES.
  */
 @property(class, nonatomic, assign, getter=isFloatingEnabledDefault) BOOL floatingEnabledDefault;
+
+/**
+ The minimum number of lines the controller's .textInput should use for rendering text.
+
+ The height of an empty text field is measured in potential lines. If the value were 3, the height
+ of would never be shorter than 3 times the line height of the input font (plus clearance for
+ auxillary views like the underline and the underline labels.)
+
+ The smallest number of lines allowed is 1. A value of 0 has no effect.
+
+ If the text input does not conform to MDCMultilineTextInput, this parameter has no effect.
+
+ Default is 1.
+ */
+@property(nonatomic, assign) NSUInteger minimumLines;
 
 @end

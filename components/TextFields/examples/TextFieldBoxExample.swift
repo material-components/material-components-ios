@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldSwiftExample: UIViewController {
+final class TextFieldBoxSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -45,7 +45,7 @@ final class TextFieldSwiftExample: UIViewController {
     city.autocapitalizationType = .words
     return city
   }()
-  let cityController: MDCTextInputControllerDefault
+  let cityController: MDCTextInputControllerTextFieldBox
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -54,7 +54,7 @@ final class TextFieldSwiftExample: UIViewController {
     state.autocapitalizationType = .allCharacters
     return state
   }()
-  let stateController: MDCTextInputControllerDefault
+  let stateController: MDCTextInputControllerTextFieldBox
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -62,7 +62,7 @@ final class TextFieldSwiftExample: UIViewController {
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputControllerDefault
+  let zipController: MDCTextInputControllerTextFieldBox
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -78,12 +78,12 @@ final class TextFieldSwiftExample: UIViewController {
     return message
   }()
 
-  var allTextFieldControllers = [MDCTextInputControllerDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerTextFieldBox]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    stateController = MDCTextInputControllerDefault(textInput: state)
-    cityController = MDCTextInputControllerDefault(textInput: city)
-    zipController = MDCTextInputControllerDefault(textInput: zip)
+    cityController = MDCTextInputControllerTextFieldBox(textInput: city)
+    stateController = MDCTextInputControllerTextFieldBox(textInput: state)
+    zipController = MDCTextInputControllerTextFieldBox(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -95,7 +95,7 @@ final class TextFieldSwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Material Text Fields"
+    title = "Material Text Field Boxes"
 
     setupScrollView()
     setupTextFields()
@@ -112,12 +112,12 @@ final class TextFieldSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerDefault(textInput: name)
+    let nameController = MDCTextInputControllerTextFieldBox(textInput: name)
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerDefault(textInput: address)
+    let addressController = MDCTextInputControllerTextFieldBox(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -140,12 +140,12 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerTextFieldBox(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerDefault(textInput: message)
+    let messageController = MDCTextInputControllerTextFieldBox(textInput: message)
     message.textView?.delegate = self
     allTextFieldControllers.append(messageController)
 
@@ -259,7 +259,7 @@ final class TextFieldSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldSwiftExample: UITextFieldDelegate {
+extension TextFieldBoxSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -273,12 +273,11 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
         fullString[range].characters.count > 0 {
         stateController.setErrorText("Error: State can only contain letters",
-                                   errorAccessibilityValue: nil)
+                                     errorAccessibilityValue: nil)
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
       }
-    } else if textField == zip {
-      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
+    } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         fullString[range].characters.count > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
@@ -313,7 +312,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldSwiftExample: UITextViewDelegate {
+extension TextFieldBoxSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -321,7 +320,7 @@ extension TextFieldSwiftExample: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldSwiftExample {
+extension TextFieldBoxSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -353,22 +352,14 @@ extension TextFieldSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldSwiftExample {
+extension TextFieldBoxSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldSwiftExample {
+extension TextFieldBoxSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Typical Use"]
-  }
-
-  class func catalogDescription() -> String {
-    // swiftlint:disable:next line_length
-    return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
-  }
-  class func catalogIsPrimaryDemo() -> Bool {
-    return true
+    return ["Text Field", "TextField Boxes"]
   }
 }

@@ -25,8 +25,27 @@ class TextInputTests: XCTestCase {
     XCTAssertNotNil(textField.trailingUnderlineLabel)
     XCTAssertNotNil(textField.placeholderLabel)
 
-    textField.clearButtonColor = .red
-    XCTAssertEqual(textField.clearButtonColor, .red)
+    textField.borderView?.borderFillColor = .purple
+    XCTAssertEqual(textField.borderView?.borderFillColor, .purple)
+
+    let borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderView?.borderPath = borderPath
+    XCTAssertEqual(textField.borderView?.borderPath, borderPath)
+
+    textField.borderView?.borderStrokeColor = .orange
+    XCTAssertEqual(textField.borderView?.borderStrokeColor, .orange)
+
+    textField.clearButton.tintColor = .red
+    XCTAssertEqual(textField.clearButton.tintColor, .red)
+
+    textField.borderView?.borderFillColor = nil
+    XCTAssertNotEqual(textField.borderView?.borderFillColor, .purple)
+
+    textField.borderView?.borderPath = nil
+    XCTAssertNotEqual(textField.borderView?.borderPath, borderPath)
+
+    textField.borderView?.borderStrokeColor = nil
+    XCTAssertNotEqual(textField.borderView?.borderStrokeColor, .orange)
 
     let font = UIFont.boldSystemFont(ofSize: 6)
     textField.font = font
@@ -65,6 +84,25 @@ class TextInputTests: XCTestCase {
     XCTAssertNotNil(textField.leadingUnderlineLabel)
     XCTAssertNotNil(textField.trailingUnderlineLabel)
     XCTAssertNotNil(textField.placeholderLabel)
+
+    textField.borderView?.borderFillColor = .purple
+    XCTAssertEqual(textField.borderView?.borderFillColor, .purple)
+
+    let borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderView?.borderPath = borderPath
+    XCTAssertEqual(textField.borderView?.borderPath, borderPath)
+
+    textField.borderView?.borderStrokeColor = .orange
+    XCTAssertEqual(textField.borderView?.borderStrokeColor, .orange)
+
+    textField.borderView?.borderFillColor = nil
+    XCTAssertNotEqual(textField.borderView?.borderFillColor, .purple)
+
+    textField.borderView?.borderPath = nil
+    XCTAssertNotEqual(textField.borderView?.borderPath, borderPath)
+
+    textField.borderView?.borderStrokeColor = nil
+    XCTAssertNotEqual(textField.borderView?.borderStrokeColor, .orange)
 
     let gray = UIColor.gray
 

@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldSwiftExample: UIViewController {
+final class TextFieldTextAreaSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -81,8 +81,8 @@ final class TextFieldSwiftExample: UIViewController {
   var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    stateController = MDCTextInputControllerDefault(textInput: state)
     cityController = MDCTextInputControllerDefault(textInput: city)
+    stateController = MDCTextInputControllerDefault(textInput: state)
     zipController = MDCTextInputControllerDefault(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
@@ -95,7 +95,7 @@ final class TextFieldSwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Material Text Fields"
+    title = "Material Text Areas"
 
     setupScrollView()
     setupTextFields()
@@ -145,9 +145,11 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerDefault(textInput: message)
+    let messageController = MDCTextInputControllerTextArea(textInput: message)
     message.textView?.delegate = self
     allTextFieldControllers.append(messageController)
+
+    messageController.characterCountMax = 150
 
     var tag = 0
     for controller in allTextFieldControllers {
@@ -163,7 +165,7 @@ final class TextFieldSwiftExample: UIViewController {
                   "phone": phone,
                   "message": message ]
     var constraints = NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-|",
+      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-20-|",
                                                      options: [.alignAllLeading, .alignAllTrailing],
                                                      metrics: nil,
                                                      views: views)
@@ -259,7 +261,7 @@ final class TextFieldSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldSwiftExample: UITextFieldDelegate {
+extension TextFieldTextAreaSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -273,12 +275,11 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
         fullString[range].characters.count > 0 {
         stateController.setErrorText("Error: State can only contain letters",
-                                   errorAccessibilityValue: nil)
+                                     errorAccessibilityValue: nil)
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
       }
-    } else if textField == zip {
-      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
+    } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         fullString[range].characters.count > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
@@ -313,7 +314,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldSwiftExample: UITextViewDelegate {
+extension TextFieldTextAreaSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -321,7 +322,7 @@ extension TextFieldSwiftExample: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldSwiftExample {
+extension TextFieldTextAreaSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -353,22 +354,14 @@ extension TextFieldSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldSwiftExample {
+extension TextFieldTextAreaSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldSwiftExample {
+extension TextFieldTextAreaSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Typical Use"]
-  }
-
-  class func catalogDescription() -> String {
-    // swiftlint:disable:next line_length
-    return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
-  }
-  class func catalogIsPrimaryDemo() -> Bool {
-    return true
+    return ["Text Field", "Text Areas"]
   }
 }
