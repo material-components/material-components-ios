@@ -34,13 +34,13 @@ static const NSTimeInterval kMDCFloatingButtonEnterDuration = 0.270f;
 static const NSTimeInterval kMDCFloatingButtonExitDuration = 0.180f;
 
 static const NSTimeInterval kMDCFloatingButtonEnterIconDuration = 0.180f;
-static const NSTimeInterval kMDCFloatingButtonEnterIconOffset = 0.090f;
+static const NSTimeInterval kMDCFloatingButtonEnterIconDelay = 0.090f;
 static const NSTimeInterval kMDCFloatingButtonExitIconDuration = 0.135f;
-static const NSTimeInterval kMDCFloatingButtonExitIconOffset = 0.000f;
+static const NSTimeInterval kMDCFloatingButtonExitIconDelay = 0.000f;
 
 static const NSTimeInterval kMDCFloatingButtonOpacityDuration = 0.015f;
-static const NSTimeInterval kMDCFloatingButtonOpacityEnterOffset = 0.030f;
-static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
+static const NSTimeInterval kMDCFloatingButtonOpacityEnterDelay = 0.030f;
+static const NSTimeInterval kMDCFloatingButtonOpacityExitDelay = 0.150f;
 
 @implementation MDCFloatingButton (Animation)
 
@@ -97,22 +97,21 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
   return [layer convertTime:finalDuration fromLayer:nil];
 }
 
-+ (CFTimeInterval)fab_animationBeginTimeFromWallTimeOffset:(CFTimeInterval)offset
-                                                  forLayer:(CALayer *)layer {
-  CFTimeInterval beginTime = offset;
++ (CFTimeInterval)fab_animationBeginTimeFromWallTimeDelay:(CFTimeInterval)delay
+                                                 forLayer:(CALayer *)layer {
+  CFTimeInterval beginTime = delay;
 
 #if TARGET_IPHONE_SIMULATOR
   beginTime *= [self fab_dragCoefficient];
 #endif
 
   beginTime += CACurrentMediaTime();
-  return [layer convertTime:beginTime fromLayer:nil];
+  return beginTime;
 }
 
 - (void)expand:(BOOL)animated completion:(void (^_Nullable)(void))completion {
   // If both X- and Y-scale values are 1 or greater, do not expand
   if (self.layer.transform.m11 >= 1 && self.layer.transform.m22 >= 1) {
-    NSAssert(NO, @"The FAB should not be expanded unless its X and Y scales are less than 1.");
     return;
   }
 
@@ -145,7 +144,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
         [MDCFloatingButton fab_animationDurationFromWallTimeDuration:kMDCFloatingButtonEnterDuration
                                                             forLayer:self.layer];
     CFTimeInterval beginTime =
-        [MDCFloatingButton fab_animationBeginTimeFromWallTimeOffset:0 forLayer:self.layer];
+        [MDCFloatingButton fab_animationBeginTimeFromWallTimeDelay:0 forLayer:self.layer];
 
     CABasicAnimation *overallScaleAnimation = [MDCFloatingButton
         animationWithKeypath:@"transform"
@@ -172,8 +171,8 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
           fab_animationDurationFromWallTimeDuration:kMDCFloatingButtonEnterIconDuration
                                            forLayer:self.imageView.layer];
       beginTime = [MDCFloatingButton
-          fab_animationBeginTimeFromWallTimeOffset:kMDCFloatingButtonEnterIconOffset
-                                          forLayer:self.imageView.layer];
+          fab_animationBeginTimeFromWallTimeDelay:kMDCFloatingButtonEnterIconDelay
+                                         forLayer:self.imageView.layer];
       CABasicAnimation *iconScaleAnimation = [MDCFloatingButton
           animationWithKeypath:@"transform"
                        toValue:[NSValue valueWithCATransform3D:iconTransformToValue]
@@ -193,8 +192,8 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
         fab_animationDurationFromWallTimeDuration:kMDCFloatingButtonOpacityDuration
                                          forLayer:self.layer];
     beginTime = [MDCFloatingButton
-        fab_animationBeginTimeFromWallTimeOffset:kMDCFloatingButtonOpacityEnterOffset
-                                        forLayer:self.layer];
+        fab_animationBeginTimeFromWallTimeDelay:kMDCFloatingButtonOpacityEnterDelay
+                                       forLayer:self.layer];
 
     CABasicAnimation *opacityAnimation = [MDCFloatingButton
         animationWithKeypath:@"opacity"
@@ -246,7 +245,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
         [MDCFloatingButton fab_animationDurationFromWallTimeDuration:kMDCFloatingButtonExitDuration
                                                             forLayer:self.layer];
     CFTimeInterval beginTime =
-        [MDCFloatingButton fab_animationBeginTimeFromWallTimeOffset:0 forLayer:self.layer];
+        [MDCFloatingButton fab_animationBeginTimeFromWallTimeDelay:0 forLayer:self.layer];
 
     CALayer *presentationLayer = self.layer.presentationLayer;
     NSValue *fromValue =
@@ -268,8 +267,8 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
         fab_animationDurationFromWallTimeDuration:kMDCFloatingButtonExitIconDuration
                                          forLayer:self.layer];
     beginTime =
-        [MDCFloatingButton fab_animationBeginTimeFromWallTimeOffset:kMDCFloatingButtonExitIconOffset
-                                                           forLayer:self.layer];
+        [MDCFloatingButton fab_animationBeginTimeFromWallTimeDelay:kMDCFloatingButtonExitIconDelay
+                                                          forLayer:self.layer];
 
     CABasicAnimation *iconScaleAnimation = [MDCFloatingButton
         animationWithKeypath:@"transform"
@@ -292,8 +291,8 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150f;
         fab_animationDurationFromWallTimeDuration:kMDCFloatingButtonOpacityDuration
                                          forLayer:self.layer];
     beginTime = [MDCFloatingButton
-        fab_animationBeginTimeFromWallTimeOffset:kMDCFloatingButtonOpacityExitOffset
-                                        forLayer:self.layer];
+        fab_animationBeginTimeFromWallTimeDelay:kMDCFloatingButtonOpacityExitDelay
+                                       forLayer:self.layer];
 
     CABasicAnimation *opacityAnimation = [MDCFloatingButton
         animationWithKeypath:@"opacity"
