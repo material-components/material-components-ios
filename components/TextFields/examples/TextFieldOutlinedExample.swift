@@ -109,12 +109,6 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
 
     registerKeyboardNotifications()
     addGestureRecognizer()
-
-    let styleButton = UIBarButtonItem(title: "Style",
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(buttonDidTouch(sender: )))
-    self.navigationItem.rightBarButtonItem = styleButton
   }
 
   func setupTextFields() {
@@ -244,28 +238,6 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     self.view.endEditing(true)
   }
 
-  @objc func buttonDidTouch(sender: Any) {
-    let isFloatingEnabled = allTextFieldControllers.first?.isFloatingEnabled ?? false
-    let alert = UIAlertController(title: "Floating Labels",
-                                  message: nil,
-                                  preferredStyle: .actionSheet)
-
-    let defaultAction = UIAlertAction(title: "Default (Yes)" + (isFloatingEnabled ? " ✓" : ""),
-                                      style: .default) { _ in
-      self.allTextFieldControllers.forEach({ (controller) in
-        controller.isFloatingEnabled = true
-      })
-    }
-    alert.addAction(defaultAction)
-    let floatingAction = UIAlertAction(title: "No" + (isFloatingEnabled ? "" : " ✓"),
-                                       style: .default) { _ in
-      self.allTextFieldControllers.forEach({ (controller) in
-        controller.isFloatingEnabled = false
-      })
-    }
-    alert.addAction(floatingAction)
-    present(alert, animated: true, completion: nil)
-  }
 }
 
 extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
