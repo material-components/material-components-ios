@@ -116,7 +116,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
       [self.presentedViewController transitionCoordinator];
   if (transitionCoordinator) {
     [transitionCoordinator
-        animateAlongsideTransition:^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+        animateAlongsideTransition:
+            ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
           self.dimmingView.alpha = 1.0f;
           self.trackingView.alpha = 1.0f;
         }
@@ -149,7 +150,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
       [self.presentedViewController transitionCoordinator];
   if (transitionCoordinator != nil) {
     [transitionCoordinator
-        animateAlongsideTransition:^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+        animateAlongsideTransition:
+            ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
           self.dimmingView.alpha = 0.0f;
           self.trackingView.alpha = 0.0f;
         }
@@ -225,7 +227,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
   [coordinator
-      animateAlongsideTransition:^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+      animateAlongsideTransition:
+          ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self.dimmingView.frame = self.containerView.bounds;
         CGRect presentedViewFrame = [self frameOfPresentedViewInContainerView];
         self.presentedView.frame = presentedViewFrame;

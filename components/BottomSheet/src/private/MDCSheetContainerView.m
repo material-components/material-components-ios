@@ -282,7 +282,8 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   return [self maximumSheetHeight];
 }
 
-- (BOOL)draggableView:(__unused MDCDraggableView *)view shouldBeginDraggingWithVelocity:(CGPoint)velocity {
+- (BOOL)draggableView:(__unused MDCDraggableView *)view
+      shouldBeginDraggingWithVelocity:(CGPoint)velocity {
   [self updateSheetState];
 
   switch(self.sheetState) {
@@ -307,7 +308,8 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   }
 }
 
-- (void)draggableView:(__unused MDCDraggableView *)view draggingEndedWithVelocity:(CGPoint)velocity {
+- (void)draggableView:(__unused MDCDraggableView *)view
+      draggingEndedWithVelocity:(CGPoint)velocity {
   MDCSheetState targetState;
   if (self.preferredSheetHeight == [self maximumSheetHeight]) {
     // Cannot be extended, only closed.
