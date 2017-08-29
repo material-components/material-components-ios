@@ -187,7 +187,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                 forKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCTextInputControllerFullWidth *copy = [[[self class] alloc] init];
 
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
@@ -310,7 +310,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
     [self.textInput.trailingUnderlineLabel
         removeObserver:self
             forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont];
-  } @catch (NSException *exception) {
+  } @catch (__unused NSException *exception) {
   }
   _isRegisteredForKVO = NO;
 }
@@ -420,7 +420,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 #pragma mark - Properties Implementation
 
 // The underline is never shown in this style.
-- (void)setActiveColor:(UIColor *)activeColor {
+- (void)setActiveColor:(__unused UIColor *)activeColor {
   [self updateUnderline];
 }
 
@@ -432,7 +432,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return [UIColor clearColor];
 }
 
-+ (void)setActiveColorDefault:(UIColor *)activeColorDefault {
++ (void)setActiveColorDefault:(__unused UIColor *)activeColorDefault {
   // Not implemented. Underline is always clear.
 }
 
@@ -448,7 +448,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return 0;
 }
 
-- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
+- (void)setRoundedCorners:(__unused UIRectCorner)roundedCorners {
   // Not implemented. There are no corners to round.
 }
 
@@ -456,11 +456,11 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return 0;
 }
 
-+ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
++ (void)setRoundedCornersDefault:(__unused UIRectCorner)roundedCornersDefault {
   // Not implemented. There are no corners to round.
 }
 
-- (void)setDisabledColor:(UIColor *)disabledColor {
+- (void)setDisabledColor:(__unused UIColor *)disabledColor {
   [self updateUnderline];
 }
 
@@ -468,7 +468,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return [UIColor clearColor];
 }
 
-+ (void)setDisabledColorDefault:(UIColor *)disabledColorDefault {
++ (void)setDisabledColorDefault:(__unused UIColor *)disabledColorDefault {
   // This controller does not have decorations that need to change for a disabled state.
 }
 
@@ -572,7 +572,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return [UIColor clearColor];
 }
 
-- (void)setLeadingUnderlineLabelTextColor:(UIColor *)leadingUnderlineLabelTextColor {
+- (void)setLeadingUnderlineLabelTextColor:(__unused UIColor *)leadingUnderlineLabelTextColor {
   // Not implemented. Leading underline label is always clear.
 }
 
@@ -580,12 +580,13 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return [UIColor clearColor];
 }
 
-+ (void)setLeadingUnderlineLabelTextColorDefault:(UIColor *)leadingUnderlineLabelTextColorDefault {
++ (void)setLeadingUnderlineLabelTextColorDefault:
+    (__unused UIColor *)leadingUnderlineLabelTextColorDefault {
   // Not implemented. Leading underline label is always clear.
 }
 
 // The underline is never shown in this style.
-- (void)setNormalColor:(UIColor *)normalColor {
+- (void)setNormalColor:(__unused UIColor *)normalColor {
   [self updateUnderline];
 }
 
@@ -593,7 +594,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return [UIColor clearColor];
 }
 
-+ (void)setNormalColorDefault:(UIColor *)normalColorDefault {
++ (void)setNormalColorDefault:(__unused UIColor *)normalColorDefault {
   // Not implemented. Underline is always clear.
 }
 
@@ -648,7 +649,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                                 : MDCTextInputInlinePlaceholderTextColorDefault();
 }
 
-- (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
+- (void)setUnderlineViewMode:(__unused UITextFieldViewMode)underlineViewMode {
   [self updateLayout];
 }
 
@@ -660,7 +661,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return UITextFieldViewModeNever;
 }
 
-+ (void)setUnderlineViewModeDefault:(UITextFieldViewMode)underlineViewModeDefault {
++ (void)setUnderlineViewModeDefault:(__unused UITextFieldViewMode)underlineViewModeDefault {
   // Not implemented. Underline is never shown.
 }
 
@@ -879,7 +880,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
  MAX(underlineLabelsOffset,MDCTextInputVerticalHalfPadding)           // Padding and/or labels
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+- (UIEdgeInsets)textInsets:(__unused UIEdgeInsets)defaultInsets {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
@@ -908,7 +909,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return textInsets;
 }
 
-- (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+- (CGRect)editingRectForBounds:(__unused CGRect)bounds defaultRect:(CGRect)defaultRect {
   if (![self.textInput isKindOfClass:[UITextField class]]) {
     return CGRectZero;
   }
@@ -940,7 +941,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 #pragma mark - UITextField & UITextView Notification Observation
 
-- (void)textInputDidBeginEditing:(NSNotification *)note {
+- (void)textInputDidBeginEditing:(__unused NSNotification *)note {
   [self updateLayout];
 
   if (self.characterCountMax > 0) {
@@ -955,7 +956,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   }
 }
 
-- (void)textInputDidChange:(NSNotification *)note {
+- (void)textInputDidChange:(__unused NSNotification *)note {
   [self updateLayout];
 
   // Accessibility
@@ -974,7 +975,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   }
 }
 
-- (void)textInputDidEndEditing:(NSNotification *)note {
+- (void)textInputDidEndEditing:(__unused NSNotification *)note {
   [self updateLayout];
 }
 
@@ -982,8 +983,8 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)context {
+                        change:(__unused NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(__unused void *)context {
   // Listening to outside setting of custom fonts.
   if (![keyPath isEqualToString:MDCTextInputControllerFullWidthKVOKeyFont]) {
     return;
@@ -1111,7 +1112,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   _mdc_adjustsFontForContentSizeCategoryDefault = mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
-- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
 }
 

@@ -109,7 +109,7 @@
   [self.inkLayer spreadFromPoint:point completion:completionBlock];
 }
 
-- (void)startTouchEndedAnimationAtPoint:(CGPoint)point
+- (void)startTouchEndedAnimationAtPoint:(__unused CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
   [self.inkLayer evaporateWithCompletion:completionBlock];
 }

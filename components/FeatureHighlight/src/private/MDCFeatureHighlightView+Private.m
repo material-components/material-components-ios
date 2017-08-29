@@ -545,8 +545,9 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 #pragma mark - UIGestureRecognizerDelegate (Tap)
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:
+        (__unused UIGestureRecognizer *)otherGestureRecognizer
 {
   return YES;
 }

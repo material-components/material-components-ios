@@ -25,26 +25,27 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 - (UIPresentationController *)
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
-                                sourceViewController:(UIViewController *)source {
+                                sourceViewController:(__unused UIViewController *)source {
   return [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                               presentingViewController:presenting];
 }
 
 - (nullable id <UIViewControllerAnimatedTransitioning>)
-    animationControllerForPresentedController:(UIViewController *)presented
-                         presentingController:(UIViewController *)presenting
-                             sourceController:(UIViewController *)source {
+    animationControllerForPresentedController:(__unused UIViewController *)presented
+                         presentingController:(__unused UIViewController *)presenting
+                             sourceController:(__unused UIViewController *)source {
   return self;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)
-    animationControllerForDismissedController:(UIViewController *)dismissed {
+    animationControllerForDismissedController:(__unused UIViewController *)dismissed {
   return self;
 }
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
-- (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)transitionDuration:
+    (nullable __unused id <UIViewControllerContextTransitioning>)transitionContext {
   return MDCBottomSheetTransitionDuration;
 }
 
@@ -96,7 +97,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
                    animations:^{
                      animatingView.frame = finalFrame;
                    }
-                   completion:^(BOOL finished) {
+                   completion:^(__unused BOOL finished) {
                      // If we're dismissing, remove the presented view from the hierarchy
                      if (!presenting) {
                        [fromView removeFromSuperview];

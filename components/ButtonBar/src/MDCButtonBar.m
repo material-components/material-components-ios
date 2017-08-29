@@ -192,7 +192,9 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   id<MDCButtonBarDelegate> delegate = _defaultBuilder;
 
   NSMutableArray<UIView *> *views = [NSMutableArray array];
-  [barButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *item, NSUInteger idx, BOOL *stop) {
+  [barButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *item,
+                                               NSUInteger idx,
+                                               __unused BOOL *stop) {
     MDCBarButtonItemLayoutHints hints = MDCBarButtonItemLayoutHintsNone;
     if (idx == 0) {
       hints |= MDCBarButtonItemLayoutHintsIsFirstButton;

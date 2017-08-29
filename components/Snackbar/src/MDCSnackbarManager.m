@@ -409,7 +409,9 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   // queue.
   NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
   [self.pendingMessages
-      enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage, NSUInteger idx, BOOL *stop) {
+      enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
+                                   NSUInteger idx,
+                                   __unused BOOL *stop) {
         if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
           // Mark the message for removal from the pending messages list.
           [indexesToRemove addIndex:idx];
