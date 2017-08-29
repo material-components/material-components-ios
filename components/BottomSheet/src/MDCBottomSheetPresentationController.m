@@ -113,9 +113,9 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   // Fade in the dimming view during the transition.
   _dimmingView.alpha = 0.0;
   [transitionCoordinator animateAlongsideTransition:
-   ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-     _dimmingView.alpha = 1.0;
-   } completion:nil];
+    ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+      _dimmingView.alpha = 1.0;
+    }                                    completion:nil];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -129,9 +129,9 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     [[self presentingViewController] transitionCoordinator];
 
   [transitionCoordinator animateAlongsideTransition:
-   ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-     _dimmingView.alpha = 0.0;
-   } completion:nil];
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+        _dimmingView.alpha = 0.0;
+      }                                  completion:nil];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
@@ -145,11 +145,11 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
   [coordinator animateAlongsideTransition:
-       ^(__unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-    _sheetView.frame = [self frameOfPresentedViewInContainerView];
-    [_sheetView layoutIfNeeded];
-    [self updatePreferredSheetHeight];
-  } completion:nil];
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        _sheetView.frame = [self frameOfPresentedViewInContainerView];
+        [_sheetView layoutIfNeeded];
+        [self updatePreferredSheetHeight];
+      }                        completion:nil];
 }
 
 - (void)updatePreferredSheetHeight {

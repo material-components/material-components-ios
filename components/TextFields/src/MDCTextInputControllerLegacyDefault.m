@@ -1005,7 +1005,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return 0;
 }
 
-- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
+- (void)setRoundedCorners:(__unused UIRectCorner)roundedCorners {
   // Not implemented. Corners are not rounded.
 }
 
@@ -1013,7 +1013,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return 0;
 }
 
-+ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
++ (void)setRoundedCornersDefault:(__unused UIRectCorner)roundedCornersDefault {
   // Not implemented. Corners are not rounded.
 }
 

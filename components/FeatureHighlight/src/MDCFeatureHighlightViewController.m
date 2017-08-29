@@ -256,7 +256,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   }
 }
 
-- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
 }
 

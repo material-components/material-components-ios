@@ -482,7 +482,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return 0;
 }
 
-- (void)setRoundedCorners:(UIRectCorner)roundedCorners {
+- (void)setRoundedCorners:(__unused UIRectCorner)roundedCorners {
   // Not implemented. There are no corners to round.
 }
 
@@ -490,7 +490,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   return 0;
 }
 
-+ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
++ (void)setRoundedCornersDefault:(__unused UIRectCorner)roundedCornersDefault {
   // Not implemented. There are no corners to round.
 }
 

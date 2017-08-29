@@ -277,7 +277,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                  forKey:MDCTextInputControllerDefaultUnderlineViewModeKey];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCTextInputControllerDefault *copy = [[[self class] alloc] init];
 
   copy.activeColor = self.activeColor;
@@ -435,7 +435,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                          forKeyPath:MDCTextInputControllerDefaultKVOKeyFont];
     [self.textInput.trailingUnderlineLabel removeObserver:self
                                                forKeyPath:MDCTextInputControllerDefaultKVOKeyFont];
-  } @catch (NSException *exception) {
+  } @catch (__unused NSException *exception) {
   }
   _isRegisteredForKVO = NO;
 }
@@ -611,7 +611,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         animationBlock();
         [self.textInput layoutIfNeeded];
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         if (!isToUp) {
           self.placeholderAnimationConstraints = nil;
         }
@@ -1227,7 +1227,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 #pragma mark - UITextField & UITextView Notification Observation
 
-- (void)textInputDidBeginEditing:(NSNotification *)note {
+- (void)textInputDidBeginEditing:(__unused NSNotification *)note {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputDefaultFloatingPlaceholderUpAnimationDuration];
   [CATransaction
@@ -1279,7 +1279,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
-- (void)textInputDidEndEditing:(NSNotification *)note {
+- (void)textInputDidEndEditing:(__unused NSNotification *)note {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputDefaultFloatingPlaceholderDownAnimationDuration];
   [CATransaction
@@ -1298,8 +1298,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)context {
+                        change:(__unused NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(__unused void *)context {
   // Listening to outside setting of custom fonts.
   if (![keyPath isEqualToString:MDCTextInputControllerDefaultKVOKeyFont]) {
     return;
@@ -1430,7 +1430,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _mdc_adjustsFontForContentSizeCategoryDefault = mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
-- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
 }
 

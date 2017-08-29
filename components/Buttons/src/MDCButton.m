@@ -328,7 +328,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.titleLabel.frame = MDCRectAlignToScale(self.titleLabel.frame, [UIScreen mainScreen].scale);
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
   // If there are custom hitAreaInsets, use those
   if (!UIEdgeInsetsEqualToEdgeInsets(self.hitAreaInsets, UIEdgeInsetsZero)) {
     return CGRectContainsPoint(
