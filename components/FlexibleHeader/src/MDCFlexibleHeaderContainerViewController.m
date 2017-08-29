@@ -32,7 +32,8 @@
   return self;
 }
 
-- (instancetype)initWithNibName:(__unused NSString *)nibNameOrNil bundle:(__unused NSBundle *)nibBundleOrNil {
+- (instancetype)initWithNibName:(__unused NSString *)nibNameOrNil
+                         bundle:(__unused NSBundle *)nibBundleOrNil {
   return [self initWithContentViewController:nil];
 }
 

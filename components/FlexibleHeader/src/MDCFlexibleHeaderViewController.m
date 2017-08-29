@@ -231,7 +231,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
 #pragma mark MDCFlexibleHeaderViewDelegate
 
-- (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:(__unused MDCFlexibleHeaderView *)headerView {
+- (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:
+      (__unused MDCFlexibleHeaderView *)headerView {
   [self setNeedsStatusBarAppearanceUpdate];
 }
 

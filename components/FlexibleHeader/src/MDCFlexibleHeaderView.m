@@ -926,7 +926,8 @@ static BOOL isRunningiOS10_3OrAbove() {
 
 #pragma mark - MDCStatusBarShifterDelegate
 
-- (void)statusBarShifterNeedsStatusBarAppearanceUpdate:(__unused MDCStatusBarShifter *)statusBarShifter {
+- (void)statusBarShifterNeedsStatusBarAppearanceUpdate:
+      (__unused MDCStatusBarShifter *)statusBarShifter {
   // UINavigationController reacts to status bar visibility changes by adjusting the content offset.
   // To counteract this sort of behavior, we forcefully stash the content offset and restore it
   // after updating the status bar appearance.
@@ -1121,8 +1122,8 @@ static BOOL isRunningiOS10_3OrAbove() {
 - (void)viewWillTransitionToSize:(__unused CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [self interfaceOrientationWillChange];
-  [coordinator
-      animateAlongsideTransition:^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+  [coordinator animateAlongsideTransition:
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         [self interfaceOrientationIsChanging];
       }
       completion:^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
