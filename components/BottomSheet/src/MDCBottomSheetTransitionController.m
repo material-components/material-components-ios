@@ -45,7 +45,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:
-      (nullable __unused id <UIViewControllerContextTransitioning>)transitionContext {
+    (nullable __unused id <UIViewControllerContextTransitioning>)transitionContext {
   return MDCBottomSheetTransitionDuration;
 }
 

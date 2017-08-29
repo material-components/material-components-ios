@@ -24,7 +24,7 @@ const NSTimeInterval kMDCFeatureHighlightDismissalDuration = 0.2f;
 @implementation MDCFeatureHighlightAnimationController
 
 - (NSTimeInterval)transitionDuration:
-        (nullable __unused id<UIViewControllerContextTransitioning>)transitionContext {
+    (nullable __unused id<UIViewControllerContextTransitioning>)transitionContext {
   if (self.presenting) {
     return kMDCFeatureHighlightPresentationDuration;
   } else {

@@ -129,7 +129,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
-      (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
   return;
 }
@@ -476,9 +476,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   [coordinator animateAlongsideTransition:
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-    // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
-    self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
-  }
+        // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
+        self.preferredContentSize =
+            [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+      }
                                completion:nil];
 }
 

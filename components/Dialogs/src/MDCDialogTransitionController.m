@@ -25,7 +25,7 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:
-      (__unused id<UIViewControllerContextTransitioning>)transitionContext {
+    (__unused id<UIViewControllerContextTransitioning>)transitionContext {
   return MDCDialogTransitionDuration;
 }
 
@@ -106,7 +106,7 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
-        (__unused UIViewController *)dismissed {
+    (__unused UIViewController *)dismissed {
   return self;
 }
 

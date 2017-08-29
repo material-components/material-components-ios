@@ -927,7 +927,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 #pragma mark - MDCStatusBarShifterDelegate
 
 - (void)statusBarShifterNeedsStatusBarAppearanceUpdate:
-      (__unused MDCStatusBarShifter *)statusBarShifter {
+    (__unused MDCStatusBarShifter *)statusBarShifter {
   // UINavigationController reacts to status bar visibility changes by adjusting the content offset.
   // To counteract this sort of behavior, we forcefully stash the content offset and restore it
   // after updating the status bar appearance.

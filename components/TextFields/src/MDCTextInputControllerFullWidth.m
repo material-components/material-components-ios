@@ -581,7 +581,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 }
 
 + (void)setLeadingUnderlineLabelTextColorDefault:
-      (__unused UIColor *)leadingUnderlineLabelTextColorDefault {
+    (__unused UIColor *)leadingUnderlineLabelTextColorDefault {
   // Not implemented. Leading underline label is always clear.
 }
 

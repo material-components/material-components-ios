@@ -74,7 +74,7 @@
 
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
-      (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCBottomSheetController.transitioningDelegate cannot be changed.");
   return;
 }
@@ -86,7 +86,7 @@
 }
 
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
-      (nonnull __unused MDCBottomSheetPresentationController *)bottomSheet {
+    (nonnull __unused MDCBottomSheetPresentationController *)bottomSheet {
   [self.delegate bottomSheetControllerDidDismissBottomSheet:self];
 }
 

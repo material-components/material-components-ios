@@ -399,7 +399,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 #pragma mark - <UICollectionViewDelegate>
 
 - (BOOL)collectionView:(__unused UICollectionView *)collectionView
-      shouldHighlightItemAtIndexPath:(__unused NSIndexPath *)indexPath {
+    shouldHighlightItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return YES;
 }
 
