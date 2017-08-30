@@ -19,6 +19,150 @@
 
 * Major update to improved visual styles. For previous version, use the `*Legacy*` classes.
 
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Activity Indicator] Added swift example (#1890)](https://github.com/material-components/material-components-ios/commit/178a7d676b7cc065c17d1ff44adf716ee96cf909) (Cody Weaver)
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### AnimationTiming
+
+#### Changes
+
+* [Add nullability annotations (#1881)](https://github.com/material-components/material-components-ios/commit/4c6601fef5a0e6142faf9ab42d4bf4535f0d4c36) (Brian Moore)
+
+### AppBar
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### BottomSheet
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### ButtonBar
+
+#### Changes
+
+* [[Buttons] Default hitAreaInsets for FAB (#1866)](https://github.com/material-components/material-components-ios/commit/15c0836e3dfc22e46c19931744f27d7dfec27188) (Robert Moore)
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### Buttons
+
+#### Changes
+
+* [Add state-based border color and width (#1878)](https://github.com/material-components/material-components-ios/commit/e0324dd64b4f4835989f3172772b30479f38f8b1) (Sam Morrison)
+* [Default hitAreaInsets for FAB (#1866)](https://github.com/material-components/material-components-ios/commit/15c0836e3dfc22e46c19931744f27d7dfec27188) (Robert Moore)
+* [Ink Appearance compatibility (#1873)](https://github.com/material-components/material-components-ios/commit/d0ffcdc9c7b260a335d22c8cdc56d98981be006b) (Sam Morrison)
+* [Make uppercaseTitle nondestructive (#1887)](https://github.com/material-components/material-components-ios/commit/a1e5f1685d6d15e572a991c614fdd2073ede1867) (Sam Morrison)
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [Allow selection of cells with hidden ink (#1739)](https://github.com/material-components/material-components-ios/commit/2b6552d09fa2db540c8ae479097a661d084775bc) (Robert Moore)
+* [Remove dismiss animation rotation (#1842)](https://github.com/material-components/material-components-ios/commit/6daa64df87679e5044356bf824c660c9d3083269) (Robert Moore)
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### Dialogs
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Correctly load view (#1883)](https://github.com/material-components/material-components-ios/commit/65f1571f5d42c402c4ebfa25e055e8fb3e716355) (Sam Morrison)
+* [Dynamic type support (#1884)](https://github.com/material-components/material-components-ios/commit/add558db3efce0d08747bc9c979003d9a9993638) (Sam Morrison)
+* [Improve text layout (#1867)](https://github.com/material-components/material-components-ios/commit/f73704593b8f7cb4a2bddb599acc7d69b8ee9600) (Sam Morrison)
+* [Shown views can receive taps (#1889)](https://github.com/material-components/material-components-ios/commit/7c8778ed75f7e58b7337e6bc9c60e7e2db7b96e2) (Robert Moore)
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### Ink
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### MaskedTransition
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [[Buttons] Default hitAreaInsets for FAB (#1866)](https://github.com/material-components/material-components-ios/commit/15c0836e3dfc22e46c19931744f27d7dfec27188) (Robert Moore)
+
+### OverlayWindow
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### PageControl
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### Slider
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### Snackbar
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### Tabs
+
+#### Changes
+
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Improving hit zone for becoming first responder in multiline. (#1894)](https://github.com/material-components/material-components-ios/commit/fbe70bd34cfc8290d0ab654da45de38f55a3ccce) (Will Larche)
+* [Making a test pass on 3x simulator. (#1915)](https://github.com/material-components/material-components-ios/commit/ac57979961da9c93e6786f5ca1a3a1eabf8afc10) (Will Larche)
+* [New styles: updated default, box, area (#1908)](https://github.com/material-components/material-components-ios/commit/c3ed6be9d15425c9ad7828efde5ad1588a0602c2) (Will Larche)
+* [Outlined fields (#1914)](https://github.com/material-components/material-components-ios/commit/af58c018d9227226ea93a58c23b2813a2ebff779) (Will Larche)
+* [[Catalog] Enabling all "unused" warnings (#1875)](https://github.com/material-components/material-components-ios/commit/5498005f65b672eaca14049c74d821eab24c0eb9) (Robert Moore)
+* [[Textfields] Remove unused option (#1926)](https://github.com/material-components/material-components-ios/commit/5a83898f0636260b329856c1921767d8d9d26390) (ianegordon)
+
+### Themes
+
+#### Changes
+
+* [New example for custom themes (#1891)](https://github.com/material-components/material-components-ios/commit/9abc922b0a18b2d4721083341780d568647d2b20) (Robert Moore)
+
+### Typography
+
+#### Changes
+
+* [Match large font family on iOS 9+ (#1880)](https://github.com/material-components/material-components-ios/commit/edd0dbc1b9f7b2a57d5ef57583c70982d7eb8586) (Yurii Samsoniuk)
 
 # 33.0.0
 
