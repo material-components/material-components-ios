@@ -71,7 +71,7 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
     // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
     // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
     self.contentEdgeInsets = self.contentEdgeInsets;
-    self.hitAreaInsets = self.contentEdgeInsets;
+    self.hitAreaInsets = [self defaultHitAreaInsets];
   }
   return self;
 }
