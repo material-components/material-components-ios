@@ -73,6 +73,20 @@
 @property(nonatomic, assign) UITextFieldViewMode characterCountViewMode;
 
 /**
+ The corners to be rounded in the border area.
+
+ Default is roundedCornersDefault.
+ */
+@property(nonatomic, assign) UIRectCorner roundedCorners;
+
+/**
+ Default for roundedCorners.
+
+ Default is top right and top left.
+ */
+@property(class, nonatomic, assign) UIRectCorner roundedCornersDefault;
+
+/**
  Color for decorations that indicates the input is not enabled / not accepting touch.
 
  Default is disabledColorDefault.
@@ -87,7 +101,7 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *disabledColorDefault;
 
 /**
- The color used to denote error state in the underline, the errorText's label, the placeholder and
+ The color used to denote error state in decorations, the errorText's label, the placeholder and
  the character count label.
 
  Default is errorColorDefault.

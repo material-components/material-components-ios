@@ -28,3 +28,10 @@
 @interface FeatureHighlightColorExample : MDCCollectionViewController
 @property(nonatomic) NSArray *colors;
 @end
+
+@interface FeatureHighlightShownViewExample : UIViewController
+@property(nonatomic) UILabel *infoLabel;
+@property(nonatomic) UIButton *button;
+
+- (void)didTapButton:(id)sender;
+@end

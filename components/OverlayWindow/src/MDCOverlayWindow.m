@@ -207,7 +207,7 @@
 
 static char kLevelKey;
 
-- (UIWindowLevel)windowLevelForOverlay:(UIView *)overlay {
+- (UIWindowLevel)windowLevelForOverlay:(__unused UIView *)overlay {
   NSNumber *levelObject = objc_getAssociatedObject(self, &kLevelKey);
   return [levelObject floatValue];
 }

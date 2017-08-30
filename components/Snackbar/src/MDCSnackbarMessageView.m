@@ -293,7 +293,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
         enumerateAttribute:MDCSnackbarMessageBoldAttributeName
                    inRange:NSMakeRange(0, messageString.length)
                    options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
-                usingBlock:^(id value, NSRange range, BOOL *stop) {
+                usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
                   UIFont *font = [MDCTypography body1Font];
                   if ([value boolValue]) {
                     font = [MDCTypography body2Font];
@@ -630,7 +630,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   };
 
   __block UIView *previousButton = nil;
-  [self.buttons enumerateObjectsUsingBlock:^(UIView *button, NSUInteger idx, BOOL *stop) {
+  [self.buttons enumerateObjectsUsingBlock:^(UIView *button, NSUInteger idx, __unused BOOL *stop) {
     // Convenience dictionary of views.
     NSMutableDictionary *views = [NSMutableDictionary dictionary];
     views[@"buttonContainer"] = button;
@@ -718,7 +718,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 #pragma mark - Event Handlers
 
-- (void)handleBackgroundSwipedRight:(UIButton *)sender {
+- (void)handleBackgroundSwipedRight:(__unused UIButton *)sender {
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
   translationAnimation.toValue = [NSNumber numberWithDouble:-self.frame.size.width];
@@ -731,7 +731,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
 }
 
-- (void)handleBackgroundSwipedLeft:(UIButton *)sender {
+- (void)handleBackgroundSwipedLeft:(__unused UIButton *)sender {
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
   translationAnimation.toValue = [NSNumber numberWithDouble:self.frame.size.width];
@@ -744,15 +744,15 @@ static const CGFloat kButtonInkRadius = 64.0f;
   [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
 }
 
-- (void)handleBackgroundTapped:(UIButton *)sender {
+- (void)handleBackgroundTapped:(__unused UIButton *)sender {
   [self dismissWithAction:nil userInitiated:YES];
 }
 
-- (void)handleButtonTapped:(UIButton *)sender {
+- (void)handleButtonTapped:(__unused UIButton *)sender {
   [self dismissWithAction:self.message.action userInitiated:YES];
 }
 
-- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
+- (void)animationDidStop:(__unused CAAnimation *)theAnimation finished:(BOOL)flag {
   if (flag) {
     [self dismissWithAction:nil userInitiated:YES];
   }

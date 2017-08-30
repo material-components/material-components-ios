@@ -145,15 +145,15 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 }
 
 - (void)infoBar:(MDCCollectionInfoBarView *)infoBar
-    willShowAnimated:(BOOL)animated
-     willAutoDismiss:(BOOL)willAutoDismiss {
+    willShowAnimated:(__unused BOOL)animated
+     willAutoDismiss:(__unused BOOL)willAutoDismiss {
   if ([infoBar.kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
     [self updateContentWithBottomInset:MDCCollectionInfoBarFooterHeight];
   }
 }
 
 - (void)infoBar:(MDCCollectionInfoBarView *)infoBar
-    willDismissAnimated:(BOOL)animated
+    willDismissAnimated:(__unused BOOL)animated
         willAutoDismiss:(BOOL)willAutoDismiss {
   if ([infoBar.kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
     _headerInfoBarDismissed = willAutoDismiss;
@@ -164,8 +164,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - <MDCCollectionViewStylingDelegate>
 
-- (MDCCollectionViewCellStyle)collectionView:(UICollectionView *)collectionView
-                         cellStyleForSection:(NSInteger)section {
+- (MDCCollectionViewCellStyle)collectionView:(__unused UICollectionView *)collectionView
+                         cellStyleForSection:(__unused NSInteger)section {
   return _styler.cellStyle;
 }
 
@@ -182,14 +182,14 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
-                        layout:(UICollectionViewLayout *)collectionViewLayout
+                        layout:(__unused UICollectionViewLayout *)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
   return [self insetsAtSectionIndex:section collectionView:collectionView];
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView
+- (CGFloat)collectionView:(__unused UICollectionView *)collectionView
                                  layout:(UICollectionViewLayout *)collectionViewLayout
-    minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    minimumLineSpacingForSectionAtIndex:(__unused NSInteger)section {
   if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
     if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
       return _styler.gridPadding;
@@ -329,7 +329,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - <MDCInkTouchControllerDelegate>
 
-- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+- (BOOL)inkTouchController:(__unused MDCInkTouchController *)inkTouchController
     shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   // Only store touch location and do not allow ink processing. This ink location will be used when
   // manually starting/stopping the ink animation during cell highlight/unhighlight states.
@@ -398,16 +398,17 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - <UICollectionViewDelegate>
 
-- (BOOL)collectionView:(UICollectionView *)collectionView
-    shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)]) {
-    return ![_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath];
-  }
+- (BOOL)collectionView:(__unused UICollectionView *)collectionView
+    shouldHighlightItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)]
+      && [_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath]) {
+    return;
+  }
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
 
@@ -460,27 +461,27 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    shouldDeselectItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return collectionView.allowsMultipleSelection;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
-    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(__unused UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   [self updateFooterInfoBarIfNecessary];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
-    didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(__unused UICollectionView *)collectionView
+    didDeselectItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   [self updateFooterInfoBarIfNecessary];
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>
 
-- (BOOL)collectionViewAllowsEditing:(UICollectionView *)collectionView {
+- (BOOL)collectionViewAllowsEditing:(__unused UICollectionView *)collectionView {
   return NO;
 }
 
-- (void)collectionViewWillBeginEditing:(UICollectionView *)collectionView {
+- (void)collectionViewWillBeginEditing:(__unused UICollectionView *)collectionView {
   if (self.currentlyActiveInk) {
     MDCInkView *activeInkView =
         [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
@@ -493,14 +494,14 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   [self updateHeaderInfoBarIfNecessary];
 }
 
-- (void)collectionViewWillEndEditing:(UICollectionView *)collectionView {
+- (void)collectionViewWillEndEditing:(__unused UICollectionView *)collectionView {
   // Remove inlay of all items.
   [_styler removeInlayFromAllItemsAnimated:YES];
   [self updateFooterInfoBarIfNecessary];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    canEditItemAtIndexPath:(NSIndexPath *)indexPath {
+    canEditItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return [self collectionViewAllowsEditing:collectionView];
 }
 
@@ -514,12 +515,12 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - Item Moving
 
-- (BOOL)collectionViewAllowsReordering:(UICollectionView *)collectionView {
+- (BOOL)collectionViewAllowsReordering:(__unused UICollectionView *)collectionView {
   return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+    canMoveItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return ([self collectionViewAllowsEditing:collectionView] &&
           [self collectionViewAllowsReordering:collectionView]);
 }
@@ -540,32 +541,32 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - Swipe-To-Dismiss-Items
 
-- (BOOL)collectionViewAllowsSwipeToDismissItem:(UICollectionView *)collectionView {
+- (BOOL)collectionViewAllowsSwipeToDismissItem:(__unused UICollectionView *)collectionView {
   return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    canSwipeToDismissItemAtIndexPath:(NSIndexPath *)indexPath {
+    canSwipeToDismissItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return [self collectionViewAllowsSwipeToDismissItem:collectionView];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
+- (void)collectionView:(__unused UICollectionView *)collectionView
     didEndSwipeToDismissItemAtIndexPath:(NSIndexPath *)indexPath {
   [self deleteIndexPaths:@[ indexPath ]];
 }
 
 #pragma mark - Swipe-To-Dismiss-Sections
 
-- (BOOL)collectionViewAllowsSwipeToDismissSection:(UICollectionView *)collectionView {
+- (BOOL)collectionViewAllowsSwipeToDismissSection:(__unused UICollectionView *)collectionView {
   return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    canSwipeToDismissSection:(NSInteger)section {
+    canSwipeToDismissSection:(__unused NSInteger)section {
   return [self collectionViewAllowsSwipeToDismissSection:collectionView];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
+- (void)collectionView:(__unused UICollectionView *)collectionView
     didEndSwipeToDismissSection:(NSInteger)section {
   [self deleteSections:[NSIndexSet indexSetWithIndex:section]];
 }
@@ -582,7 +583,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
       [self.collectionView deleteItemsAtIndexPaths:indexPaths];
     };
 
-    void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+    void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
       [self updateFooterInfoBarIfNecessary];
       // Notify delegate of deletion.
       if ([self respondsToSelector:@selector(collectionView:didDeleteItemsAtIndexPaths:)]) {
@@ -605,7 +606,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
       [self.collectionView deleteSections:sections];
     };
 
-    void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+    void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
       [self updateFooterInfoBarIfNecessary];
       // Notify delegate of deletion.
       if ([self respondsToSelector:@selector(collectionView:didDeleteSections:)]) {

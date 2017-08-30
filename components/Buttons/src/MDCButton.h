@@ -57,10 +57,10 @@ extern const UIEdgeInsets MDCButtonDefaultContentEdgeInsets;
 @property(nonatomic) CGFloat disabledAlpha;
 
 /**
- If true, converts the button title to uppercase. Changing this property to NO will not update the
+ If true, converts the button title to uppercase. Changing this property to NO will update the
  current title string.
 
- Default is YES and is recommended whenever possible.
+ Default is YES.
  */
 @property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle UI_APPEARANCE_SELECTOR;
 
@@ -147,6 +147,39 @@ extern const UIEdgeInsets MDCButtonDefaultContentEdgeInsets;
  @param state The state to set.
  */
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state;
+
+/**
+ A color used as the button's @c borderColor for @c state.
+
+ @param state The state.
+ @return The border color.
+ */
+- (nullable UIColor *)borderColorForState:(UIControlState)state;
+
+/**
+ Sets the border color for a particular control state. Sets the @c borderColor of the layer.
+
+ @param borderColor The border color to set.
+ @param state The state to set.
+ */
+- (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ The value set for the button's @c borderWidth for @c state.
+
+ @param state The state.
+ @return The border width.
+ */
+- (CGFloat)borderWidthForState:(UIControlState)state;
+
+/**
+ Sets the border width for a particular control state. Sets the @c borderWidth of the layer.
+
+ @param borderWidth The border width to set.
+ @param state The state to set.
+ */
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 #pragma mark - UIButton changes
 

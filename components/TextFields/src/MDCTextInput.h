@@ -29,6 +29,16 @@
    - https://github.com/adamwaite/Validator
  */
 
+/**
+ This represents different options for the relationship between the labels and the alignment rect.
+ */
+typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
+  MDCTextInputTextInsetsModeNever = 0,
+  MDCTextInputTextInsetsModeIfContent,
+  MDCTextInputTextInsetsModeAlways,
+};
+
+@class MDCTextInputBorderView;
 @class MDCTextInputUnderlineView;
 
 @protocol MDCTextInputPositioningDelegate;
@@ -48,19 +58,26 @@
 @property(nonatomic, nullable, copy) NSAttributedString *attributedText;
 
 /**
+ The path of the area to be highlighted with a border. This could either be with a drawn line or a
+ drawn fill.
+
+ Note: The settable properties of the UIBezierPath are respected (.lineWidth, etc).
+
+ Default is a rectangle of the same width as the input with rounded top corners. That means the
+ underline labels are not included inside the border. Settable properties of UIBezierPath are left
+ at
+ system defaults.
+ */
+@property(nonatomic, nullable, copy) UIBezierPath *borderPath UI_APPEARANCE_SELECTOR;
+
+/** The view that implements a bordered or background filled area. */
+@property(nonatomic, nullable, strong) MDCTextInputBorderView *borderView;
+
+/**
  A button that can appear inline that when touched clears all entered text and resets the input to
  an empty state.
  */
 @property(nonatomic, nonnull, strong, readonly) UIButton *clearButton;
-
-/**
- Color for the "clear the text" button image.
-
- Color changes are not animated.
-
- Default is black with 38% opacity.
- */
-@property(nonatomic, nullable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
 
 /**
  Controls when the clear button will display.
@@ -136,6 +153,23 @@
 @property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
 
 /**
+ Used to calculate text insets.
+
+ The different options apply to the text insets of the entire text input in relation to the
+ underline labels and the placeholder should any of them be outside the border view.
+
+ MDCTextInputTextInsetsModeNever:      Text insets never includes the labels.
+
+ MDCTextInputTextInsetsModeIfContent:  Text insets height includes space for each label that has
+   text.
+
+ MDCTextInputTextInsetsModeAlways:     Text insets always includes the labels.
+
+ Default is MDCTextInputTextInsetsModeIfContent.
+ */
+@property(nonatomic, assign) MDCTextInputTextInsetsMode textInsetsMode UI_APPEARANCE_SELECTOR;
+
+/**
  The label on the trailing side under the input.
 
  This will usually be for the character count / limit.
@@ -162,6 +196,13 @@
 @protocol MDCMultilineTextInput <MDCTextInput>
 
 /**
+ Should the text field grow vertically as new lines are added.
+
+ Default is YES.
+ */
+@property(nonatomic, assign) IBInspectable BOOL expandsOnOverflow;
+
+/**
  The minimum number of lines to use for rendering text.
 
  The height of an empty text field is measured in potential lines. If the value were 3, the height
@@ -173,12 +214,5 @@
  Default is 1.
  */
 @property(nonatomic, assign) NSUInteger minimumLines UI_APPEARANCE_SELECTOR;
-
-/**
- Should the text field grow vertically as new lines are added.
- 
- Default is YES.
- */
-@property(nonatomic, assign) BOOL expandsOnOverflow UI_APPEARANCE_SELECTOR;
 
 @end

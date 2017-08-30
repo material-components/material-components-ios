@@ -391,7 +391,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   void (^animations)(void) = ^{
     self.snackbarView.alpha = 1.0;
   };
-  void (^realCompletion)(BOOL) = ^(BOOL finished) {
+  void (^realCompletion)(BOOL) = ^(__unused BOOL finished) {
     if (completion) {
       completion();
     }
@@ -440,7 +440,7 @@ static const CGFloat kMaximumHeight = 80.0f;
         // Trigger snackbar animation.
         [_containingView layoutIfNeeded];
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         if (completion) {
           completion();
         }
@@ -587,7 +587,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   self.rotationDuration = duration;
 }
 
-- (void)didRotate:(NSNotification *)notification {
+- (void)didRotate:(__unused NSNotification *)notification {
   // The UIApplicationDidChangeStatusBarOrientationNotification happens pretty much immediately
   // after the willRotate notification, before any layouts are changed. By delaying this until the
   // next runloop, any rotation-related layout changes will occur, and we can know that they were

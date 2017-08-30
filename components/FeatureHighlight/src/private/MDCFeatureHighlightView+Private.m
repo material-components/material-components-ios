@@ -109,8 +109,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.font =
-        [[MDCTypography fontLoader] mediumFontOfSize:kMDCFeatureHighlightTitleFontSize];
+    _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
@@ -118,7 +117,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _bodyLabel.font = [MDCTypography subheadFont];
+    _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
     _bodyLabel.textAlignment = NSTextAlignmentNatural;
@@ -135,6 +134,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
         [[MDCFeatureHighlightDismissGestureRecognizer alloc]
             initWithTarget:self
                     action:@selector(didGestureDismiss:)];
+    panRecognizer.cancelsTouchesInView = NO;
     [self addGestureRecognizer:panRecognizer];
 
     // We want the inner and outer highlights to animate from the same origin so we start them from
@@ -526,6 +526,15 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   }
 }
 
+- (void)updateFontsForDynamicType {
+  _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
+  _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+
+  if (!CGRectIsEmpty(self.frame)) {
+    [self setNeedsLayout];
+  }
+}
+
 + (NSString *)dismissAccessibilityHint {
   NSString *key =
       kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
@@ -536,8 +545,9 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 #pragma mark - UIGestureRecognizerDelegate (Tap)
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:
+        (__unused UIGestureRecognizer *)otherGestureRecognizer
 {
   return YES;
 }

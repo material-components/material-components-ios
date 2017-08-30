@@ -37,3 +37,6 @@ limitations under the License.
 
 @interface NavigationBarWithBarItemsExample : NavigationBarTypicalUseExample
 @end
+
+@interface NavigationBarIconsExample : UIViewController
+@end

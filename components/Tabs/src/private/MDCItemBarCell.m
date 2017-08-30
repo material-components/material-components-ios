@@ -508,7 +508,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     _badgeLabel.transform = imageTransform;
     _imageView.transform = imageTransform;
   };
-  void (^completeAnimations)(BOOL) = ^(BOOL finished) {
+  void (^completeAnimations)(BOOL) = ^(__unused BOOL finished) {
     if (titleContentsScale != _titleLabel.layer.contentsScale) {
       // Update the title with the final contents scale and redraw.
       _titleLabel.layer.contentsScale = titleContentsScale;

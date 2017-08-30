@@ -270,7 +270,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 #pragma mark - Notifications
 
-- (void)keyboardStateChangedWithNotification:(NSNotification *)notification {
+- (void)keyboardStateChangedWithNotification:(__unused NSNotification *)notification {
   if (self.window) {
     [self animatePaneWithInitialVelocity:CGPointZero];
   }
@@ -278,11 +278,12 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 #pragma mark - MDCDraggableViewDelegate
 
-- (CGFloat)maximumHeightForDraggableView:(MDCDraggableView *)view {
+- (CGFloat)maximumHeightForDraggableView:(__unused MDCDraggableView *)view {
   return [self maximumSheetHeight];
 }
 
-- (BOOL)draggableView:(MDCDraggableView *)view shouldBeginDraggingWithVelocity:(CGPoint)velocity {
+- (BOOL)draggableView:(__unused MDCDraggableView *)view
+    shouldBeginDraggingWithVelocity:(CGPoint)velocity {
   [self updateSheetState];
 
   switch(self.sheetState) {
@@ -307,7 +308,8 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   }
 }
 
-- (void)draggableView:(MDCDraggableView *)view draggingEndedWithVelocity:(CGPoint)velocity {
+- (void)draggableView:(__unused MDCDraggableView *)view
+    draggingEndedWithVelocity:(CGPoint)velocity {
   MDCSheetState targetState;
   if (self.preferredSheetHeight == [self maximumSheetHeight]) {
     // Cannot be extended, only closed.
@@ -325,7 +327,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   [self animatePaneWithInitialVelocity:velocity];
 }
 
-- (void)draggableViewBeganDragging:(MDCDraggableView *)view {
+- (void)draggableViewBeganDragging:(__unused MDCDraggableView *)view {
   [self.animator removeAllBehaviors];
   self.isDragging = YES;
 }

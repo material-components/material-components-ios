@@ -100,7 +100,8 @@
   self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
   self.titleField.delegate = self;
   self.titleField.text = self.title;
-  self.titleController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.titleField];
+  self.titleController =
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.titleField];
 
   [self.view addSubview:self.leadingItemField];
   [self.view addSubview:self.trailingItemField];

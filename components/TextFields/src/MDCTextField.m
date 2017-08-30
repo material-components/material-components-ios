@@ -15,6 +15,7 @@
  */
 
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "private/MDCTextInputCommonFundament.h"
 
@@ -80,6 +81,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
     }
+
     [self setNeedsLayout];
   }
   return self;
@@ -97,7 +99,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [aCoder encodeInteger:self.rightViewMode forKey:MDCTextFieldRightViewModeKey];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCTextField *copy = [[[self class] alloc] initWithFrame:self.frame];
 
   copy.fundament = [self.fundament copy];
@@ -108,6 +110,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   copy.leadingViewMode = self.leadingViewMode;
   copy.placeholder = [self.placeholder copy];
   copy.text = [self.text copy];
+  copy.clearButton.tintColor = self.clearButton.tintColor;
   if ([self.trailingView conformsToProtocol:@protocol(NSCopying)]) {
     copy.trailingView = [self.trailingView copy];
   }
@@ -120,7 +123,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [super setBorderStyle:UITextBorderStyleNone];
 
   // Set the clear button color to black with 54% opacity.
-  [self setClearButtonColor:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
+  self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
 
   [self setupUnderlineConstraints];
 
@@ -165,7 +168,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   _underlineY =
       [NSLayoutConstraint constraintWithItem:self.underline
-                                   attribute:NSLayoutAttributeCenterY
+                                   attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:self
                                    attribute:NSLayoutAttributeTop
@@ -189,18 +192,44 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [self invalidateIntrinsicContentSize];
 }
 
+#pragma mark - Border Implementation
+
+- (UIBezierPath *)defaultBorderPath {
+  CGRect borderBound = self.bounds;
+  borderBound.size.height = CGRectGetMaxY(self.underline.frame);
+  return [UIBezierPath
+      bezierPathWithRoundedRect:borderBound
+              byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                    cornerRadii:CGSizeMake(MDCTextInputBorderRadius, MDCTextInputBorderRadius)];
+}
+
+- (void)updateBorder {
+  self.borderView.borderPath = self.borderPath;
+}
+
 #pragma mark - Properties Implementation
+
+- (UIBezierPath *)borderPath {
+  return self.fundament.borderPath ? self.fundament.borderPath : [self defaultBorderPath];
+}
+
+- (void)setBorderPath:(UIBezierPath *)borderPath {
+  if (![self.fundament.borderPath isEqual:borderPath]) {
+    self.fundament.borderPath = borderPath;
+    [self updateBorder];
+  }
+}
+
+- (MDCTextInputBorderView *)borderView {
+  return self.fundament.borderView;
+}
+
+- (void)setBorderView:(MDCTextInputBorderView *)borderView {
+  self.fundament.borderView = borderView;
+}
 
 - (UIButton *)clearButton {
   return _fundament.clearButton;
-}
-
-- (UIColor *)clearButtonColor {
-  return _fundament.clearButtonColor;
-}
-
-- (void)setClearButtonColor:(UIColor *)clearButtonColor {
-  _fundament.clearButtonColor = clearButtonColor;
 }
 
 - (BOOL)hidesPlaceholderOnInput {
@@ -234,6 +263,18 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 - (void)setTextColor:(UIColor *)textColor {
   [super setTextColor:textColor];
   _fundament.textColor = textColor;
+}
+
+- (UIEdgeInsets)textInsets {
+  return self.fundament.textInsets;
+}
+
+- (MDCTextInputTextInsetsMode)textInsetsMode {
+  return self.fundament.textInsetsMode;
+}
+
+- (void)setTextInsetsMode:(MDCTextInputTextInsetsMode)textInsetsMode {
+  self.fundament.textInsetsMode = textInsetsMode;
 }
 
 - (UILabel *)trailingUnderlineLabel {
@@ -292,6 +333,12 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   [super setAttributedPlaceholder:attributedPlaceholder];
   _fundament.attributedPlaceholder = attributedPlaceholder;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  [super setBackgroundColor:backgroundColor];
+
+  self.placeholderLabel.backgroundColor = backgroundColor;
 }
 
 - (UITextFieldViewMode)clearButtonMode {
@@ -482,7 +529,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return editingRect;
 }
 
-- (CGRect)clearButtonRectForBounds:(CGRect)bounds {
+- (CGRect)clearButtonRectForBounds:(__unused CGRect)bounds {
   return self.clearButton.frame;
 }
 
@@ -508,7 +555,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 #pragma mark - UITextField Draw Overrides
 
-- (void)drawPlaceholderInRect:(CGRect)rect {
+- (void)drawPlaceholderInRect:(__unused CGRect)rect {
   // We implement our own placeholder that is managed by the fundament. However, to observe normal
   // VO placeholder behavior, we still set the placeholder on the UITextField, and need to not draw
   // it here.
@@ -516,35 +563,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 #pragma mark - Layout (Custom)
 
-- (UIEdgeInsets)textInsets {
-  UIEdgeInsets textInsets = UIEdgeInsetsZero;
-
-  textInsets.top = MDCTextInputFullPadding;
-
-  // The amount of space underneath the underline is variable. It could just be
-  // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
-  // MDCTextInputHalfPadding
-  CGFloat underlineLabelsOffset = 0;
-  if (self.leadingUnderlineLabel.text.length) {
-    underlineLabelsOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
-  }
-  if (self.trailingUnderlineLabel.text.length) {
-    underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                MDCCeil(self.trailingUnderlineLabel.font.lineHeight * 2.f) / 2.f);
-  }
-  CGFloat underlineOffset = MDCTextInputHalfPadding + underlineLabelsOffset;
-
-  // .bottom = underlineOffset + the half padding above the line but below the text field
-  textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
-
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
-    return [self.positioningDelegate textInsets:textInsets];
-  }
-  return textInsets;
-}
-
 - (CGFloat)estimatedTextHeight {
-  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * 2.f) / 2.f;
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * scale) / scale;
 
   return estimatedTextHeight;
 }
@@ -575,6 +596,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   if ([self needsUpdateUnderlinePosition]) {
     [self setNeedsUpdateConstraints];
   }
+  [self updateBorder];
+
+  if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
+    [self.positioningDelegate textInputDidLayoutSubviews];
+  }
 }
 
 - (void)updateConstraints {
@@ -590,15 +616,15 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 #pragma mark - UITextField Notification Observation
 
-- (void)textFieldDidBeginEditing:(NSNotification *)note {
+- (void)textFieldDidBeginEditing:(__unused NSNotification *)note {
   [_fundament didBeginEditing];
 }
 
-- (void)textFieldDidChange:(NSNotification *)note {
+- (void)textFieldDidChange:(__unused NSNotification *)note {
   [_fundament didChange];
 }
 
-- (void)textFieldDidEndEditing:(NSNotification *)note {
+- (void)textFieldDidEndEditing:(__unused NSNotification *)note {
   [_fundament didEndEditing];
 }
 
