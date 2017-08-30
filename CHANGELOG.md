@@ -1,4 +1,24 @@
-# release-candidate TODO: Replace me with version number. 
+# 34.0.0
+
+## API Diffs
+
+### AnimationTiming
+
+* Improved nullibility annotations.
+
+### Buttons
+
+* Added more support for UIAppearance in MDCButton.
+* Added border color and width parameters.
+
+### FeatureHighlight
+
+* Added support for UIContentSize (preferred user font sizes).
+
+### TextFields
+
+* Major update to improved visual styles. For previous version, use the `*Legacy*` classes.
+
 
 # 33.0.0
 
