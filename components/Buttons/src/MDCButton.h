@@ -19,6 +19,7 @@
 
 #import "MaterialInk.h"
 
+/* The edge insets applied to @c contentEdgeInsets of MDCButton and its styled subclasses. */
 extern const UIEdgeInsets MDCButtonDefaultContentEdgeInsets;
 
 /**
