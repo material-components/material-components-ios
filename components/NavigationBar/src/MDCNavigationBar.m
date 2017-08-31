@@ -291,8 +291,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, self.bounds.size.width,
                                                   self.mdc_effectiveUserInterfaceLayoutDirection);
 
-  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-  UIEdgeInsets textInsets = isPad ? kTextPadInsets : kTextInsets;
+  UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
 
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
@@ -346,8 +345,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 }
 
 - (CGSize)intrinsicContentSize {
-  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-  CGFloat height = (isPad ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
+
+  CGFloat height = ([self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
@@ -361,6 +360,17 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 }
 
 #pragma mark Private
+
+// Used to determine whether or not to apply insets relevant for iPad or use smaller iPhone size.
+// As the difference between iPad/iPhone is only in top & bottom insets, we should use vertical
+// size class to determine
+- (BOOL)usePadInsets {
+  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+  if (isPad && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
+    return YES;
+  }
+  return NO;
+}
 
 + (NSTextAlignment)textAlignmentFromTitleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
   switch (titleAlignment) {
@@ -473,9 +483,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
       MDCButtonBar *leftButtonBar = self.leadingButtonBar;
       MDCButtonBar *rightButtonBar = self.trailingButtonBar;
-      UIEdgeInsets textInsets =
-          [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ? kTextPadInsets
-                                                                                   : kTextInsets;
+      UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
       CGFloat titleLeftInset = textInsets.left;
       CGFloat titleRightInset = textInsets.right;
 
