@@ -70,7 +70,7 @@ static const CGFloat kMinTouchSize = 48;
       [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:_cornerRadius].CGPath;
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
   CGFloat dx = MIN(0, _cornerRadius - kMinTouchSize / 2);
   // Converts point to presentation layer coordinate system so gesture will land on the right visual
   // position. Assuming superview is not animated.

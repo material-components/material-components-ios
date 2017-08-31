@@ -926,7 +926,8 @@ static BOOL isRunningiOS10_3OrAbove() {
 
 #pragma mark - MDCStatusBarShifterDelegate
 
-- (void)statusBarShifterNeedsStatusBarAppearanceUpdate:(MDCStatusBarShifter *)statusBarShifter {
+- (void)statusBarShifterNeedsStatusBarAppearanceUpdate:
+    (__unused MDCStatusBarShifter *)statusBarShifter {
   // UINavigationController reacts to status bar visibility changes by adjusting the content offset.
   // To counteract this sort of behavior, we forcefully stash the content offset and restore it
   // after updating the status bar appearance.
@@ -939,7 +940,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   _isChangingStatusBarVisibility = NO;
 }
 
-- (void)statusBarShifter:(MDCStatusBarShifter *)statusBarShifter
+- (void)statusBarShifter:(__unused MDCStatusBarShifter *)statusBarShifter
     wantsSnapshotViewAdded:(UIView *)view {
   [self addSubview:view];
 }
@@ -1118,14 +1119,14 @@ static BOOL isRunningiOS10_3OrAbove() {
   [_statusBarShifter interfaceOrientationDidChange];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size
+- (void)viewWillTransitionToSize:(__unused CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [self interfaceOrientationWillChange];
-  [coordinator
-      animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+  [coordinator animateAlongsideTransition:
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         [self interfaceOrientationIsChanging];
       }
-      completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+      completion:^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         [self interfaceOrientationDidChange];
       }];
 }
@@ -1190,7 +1191,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   [self fhv_updateLayout];
 }
 
-- (BOOL)trackingScrollViewWillEndDraggingWithVelocity:(CGPoint)velocity
+- (BOOL)trackingScrollViewWillEndDraggingWithVelocity:(__unused CGPoint)velocity
                                   targetContentOffset:(inout CGPoint *)targetContentOffset {
 #if DEBUG
   _didAdjustTargetContentOffset = YES;

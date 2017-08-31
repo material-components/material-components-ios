@@ -183,7 +183,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 #pragma mark - MDCThumbTrackDelegate methods
 
-- (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {
+- (NSString *)thumbTrack:(__unused MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {
   if ([_delegate respondsToSelector:@selector(slider:displayedStringForValue:)]) {
     return [_delegate slider:self displayedStringForValue:value];
   }
@@ -200,7 +200,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [numberFormatter stringFromNumber:@(value)];
 }
 
-- (BOOL)thumbTrack:(MDCThumbTrack *)thumbTrack shouldJumpToValue:(CGFloat)value {
+- (BOOL)thumbTrack:(__unused MDCThumbTrack *)thumbTrack shouldJumpToValue:(CGFloat)value {
   return ![_delegate respondsToSelector:@selector(slider:shouldJumpToValue:)] ||
          [_delegate slider:self shouldJumpToValue:value];
 }
@@ -222,7 +222,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return CGSizeMake(kSliderDefaultWidth, kSliderFrameHeight);
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
   CGFloat dx = MIN(0, kSliderThumbRadius - kSliderMinTouchSize / 2);
   CGFloat dy = MIN(0, (self.bounds.size.height - kSliderMinTouchSize) / 2);
   CGRect rect = CGRectInset(self.bounds, dx, dy);
@@ -234,7 +234,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.frame = self.bounds;
 }
 
-- (CGSize)sizeThatFits:(CGSize)size {
+- (CGSize)sizeThatFits:(__unused CGSize)size {
   CGSize result = self.bounds.size;
   result.height = kSliderFrameHeight;
   return result;
@@ -309,23 +309,23 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 #pragma mark - Private
 
-- (void)thumbTrackValueChanged:(MDCThumbTrack *)thumbTrack {
+- (void)thumbTrackValueChanged:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
-- (void)thumbTrackTouchDown:(MDCThumbTrack *)thumbTrack {
+- (void)thumbTrackTouchDown:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 
-- (void)thumbTrackTouchUpInside:(MDCThumbTrack *)thumbTrack {
+- (void)thumbTrackTouchUpInside:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)thumbTrackTouchUpOutside:(MDCThumbTrack *)thumbTrack {
+- (void)thumbTrackTouchUpOutside:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventTouchUpOutside];
 }
 
-- (void)thumbTrackTouchCanceled:(MDCThumbTrack *)thumbTrack {
+- (void)thumbTrackTouchCanceled:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventTouchCancel];
 }
 

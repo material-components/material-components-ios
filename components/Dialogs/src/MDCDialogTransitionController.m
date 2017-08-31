@@ -24,7 +24,8 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)transitionDuration:
+    (__unused id<UIViewControllerContextTransitioning>)transitionContext {
   return MDCDialogTransitionDuration;
 }
 
@@ -73,7 +74,7 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
       animations:^{
         animatingView.alpha = endingAlpha;
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         // If we're dismissing, remove the presented view from the hierarchy
         if (!presenting) {
           [fromView removeFromSuperview];
@@ -92,20 +93,20 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
 - (UIPresentationController *)
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
-                                sourceViewController:(UIViewController *)source {
+                                sourceViewController:(__unused UIViewController *)source {
   return [[MDCDialogPresentationController alloc] initWithPresentedViewController:presented
                                                          presentingViewController:presenting];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)
-    animationControllerForPresentedController:(UIViewController *)presented
-                         presentingController:(UIViewController *)presenting
-                             sourceController:(UIViewController *)source {
+    animationControllerForPresentedController:(__unused UIViewController *)presented
+                         presentingController:(__unused UIViewController *)presenting
+                             sourceController:(__unused UIViewController *)source {
   return self;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
-        (UIViewController *)dismissed {
+    (__unused UIViewController *)dismissed {
   return self;
 }
 

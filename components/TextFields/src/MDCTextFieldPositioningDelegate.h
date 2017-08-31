@@ -44,4 +44,7 @@
  */
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
+/** Called from the end of the input's layoutSubviews. */
+- (void)textInputDidLayoutSubviews;
+
 @end

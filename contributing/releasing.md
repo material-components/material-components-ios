@@ -32,8 +32,8 @@ the issue to a subsequent release.
 
 Releasing is important enough that we want to start with a clean slate:
 
-    git fetch -a
     git checkout develop
+    git pull
     scripts/clean_all
 
 ### Cut a release branch and notify clients

@@ -29,7 +29,7 @@ static inline CGPoint MDCInkLayerInterpolatePoint(CGPoint start,
 
 static inline CGFloat MDCInkLayerRadiusBounds(CGFloat maxRippleRadius,
                                               CGFloat inkLayerRectHypotenuse,
-                                              BOOL bounded) {
+                                              __unused BOOL bounded) {
   if (maxRippleRadius > 0) {
 #ifdef MDC_BOUNDED_INK_IGNORES_MAX_RIPPLE_RADIUS
     if (!bounded) {
@@ -587,9 +587,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 #pragma mark - MDCInkLayerRippleDelegate
 
-- (void)animationDidStop:(CAAnimation *)anim
+- (void)animationDidStop:(__unused CAAnimation *)anim
               shapeLayer:(CAShapeLayer *)shapeLayer
-                finished:(BOOL)finished {
+                finished:(__unused BOOL)finished {
   // Even when the ripple is "exited" without animation, we need to remove it from compositeRipple
   [shapeLayer removeFromSuperlayer];
   [shapeLayer removeAllAnimations];

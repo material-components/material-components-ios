@@ -30,14 +30,14 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let textFieldControllersFullWidth = setupFullWidthTextFields()
 
-    allTextFieldControllers = [setupDefaultTextFields(),
+    allTextFieldControllers = [setupBoxTextFields(), setupDefaultTextFields(),
                                textFieldControllersFullWidth,
                                setupFloatingTextFields(),
                                setupSpecialTextFields()].flatMap { $0 as! [MDCTextInputController] }
 
     let multilineTextFieldControllersFullWidth = setupFullWidthMultilineTextFields()
 
-    allMultilineTextFieldControllers = [setupDefaultMultilineTextFields(),
+    allMultilineTextFieldControllers = [setupAreaTextFields(), setupDefaultMultilineTextFields(),
                               multilineTextFieldControllersFullWidth,
                               setupFloatingMultilineTextFields(),
                               setupSpecialMultilineTextFields()].flatMap { $0 as! [MDCTextInputController] }
@@ -57,6 +57,8 @@ extension TextFieldKitchenSinkSwiftExample {
   func setupButton() -> MDCButton {
     let button = MDCButton()
     button.setTitleColor(.white, for: .normal)
+    button.mdc_adjustsFontForContentSizeCategory = true
+    button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }
 
@@ -94,35 +96,32 @@ extension TextFieldKitchenSinkSwiftExample {
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
       "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
 
-    characterModeButton.translatesAutoresizingMaskIntoConstraints = false
+    textInsetsModeButton.addTarget(self,
+                                  action: #selector(textInsetsModeButtonDidTouch(button:)),
+                                  for: .touchUpInside)
+    textInsetsModeButton.setTitle("Text Insets Mode: If Content", for: .normal)
+    scrollView.addSubview(textInsetsModeButton)
+
     characterModeButton.addTarget(self,
-                                  action: #selector(buttonDidTouch(button:)),
+                                  action: #selector(textFieldModeButtonDidTouch(button:)),
                                   for: .touchUpInside)
     characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
-    characterModeButton.setTitleColor(.white, for: .normal)
-    characterModeButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(characterModeButton)
 
-    clearModeButton.translatesAutoresizingMaskIntoConstraints = false
     clearModeButton.addTarget(self,
-                              action: #selector(buttonDidTouch(button:)),
+                              action: #selector(textFieldModeButtonDidTouch(button:)),
                               for: .touchUpInside)
     clearModeButton.setTitle("Clear Button Mode: While Editing", for: .normal)
-    clearModeButton.setTitleColor(.white, for: .normal)
-    clearModeButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(clearModeButton)
 
-    underlineButton.translatesAutoresizingMaskIntoConstraints = false
     underlineButton.addTarget(self,
-                              action: #selector(buttonDidTouch(button:)),
+                              action: #selector(textFieldModeButtonDidTouch(button:)),
                               for: .touchUpInside)
 
     underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
-    underlineButton.setTitleColor(.white, for: .normal)
-    underlineButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(underlineButton)
 
-    return [container, characterModeButton, underlineButton, clearModeButton]
+    return [container, textInsetsModeButton, characterModeButton, underlineButton, clearModeButton]
   }
 
   func setupSectionLabels() {
@@ -317,8 +316,8 @@ extension TextFieldKitchenSinkSwiftExample {
 }
 
 extension TextFieldKitchenSinkSwiftExample {
-  // The 3 'mode' buttons all are similar. The following code is shared by them
-  @objc func buttonDidTouch(button: MDCButton) {
+  // 3 of the 'mode' buttons all are similar. The following code is shared by them
+  @objc func textFieldModeButtonDidTouch(button: MDCButton) {
     var controllersToChange = allInputControllers
     var partialTitle = ""
 
@@ -378,6 +377,50 @@ extension TextFieldKitchenSinkSwiftExample {
       return "While Editing"
     case .unlessEditing:
       return "Unless Editing"
+    case .never:
+      return "Never"
+    }
+  }
+}
+
+extension TextFieldKitchenSinkSwiftExample {
+  // The 'text insets' button does not have the same options as the other mode buttons
+  @objc func textInsetsModeButtonDidTouch(button: MDCButton) {
+
+    let closure: (MDCTextInputTextInsetsMode, String) -> Void = { mode, title in
+      self.allInputControllers.forEach { controller in
+        guard let input = controller.textInput as? MDCTextInput else {
+          return
+        }
+        input.textInsetsMode = mode
+
+      button.setTitle(title + ": " + self.textInsetsModeName(mode: mode), for: .normal)
+      }
+    }
+
+    let title = "Text Insets Mode"
+    let alert = UIAlertController(title: title,
+                                  message: nil,
+                                  preferredStyle: .alert)
+
+    for rawMode: UInt in 0...2 {
+      let mode = MDCTextInputTextInsetsMode(rawValue: rawMode)!
+      alert.addAction(UIAlertAction(title: textInsetsModeName(mode: mode),
+                                    style: .default,
+                                    handler: { _ in
+                                      closure(mode, title)
+      }))
+    }
+
+    present(alert, animated: true, completion: nil)
+  }
+
+  func textInsetsModeName(mode: MDCTextInputTextInsetsMode) -> String {
+    switch mode {
+    case .always:
+      return "Always"
+    case .ifContent:
+      return "If Content"
     case .never:
       return "Never"
     }

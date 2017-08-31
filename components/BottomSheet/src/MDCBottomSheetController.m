@@ -73,19 +73,20 @@
 }
 
 /* Disable setter. Always use internal transition controller */
-- (void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+- (void)setTransitioningDelegate:
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCBottomSheetController.transitioningDelegate cannot be changed.");
   return;
 }
 
 /* Disable setter. Always use custom presentation style */
-- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
+- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
   NSAssert(NO, @"MDCBottomSheetController.modalPresentationStyle cannot be changed.");
   return;
 }
 
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
-    (nonnull MDCBottomSheetPresentationController *)bottomSheet {
+    (nonnull __unused MDCBottomSheetPresentationController *)bottomSheet {
   [self.delegate bottomSheetControllerDidDismissBottomSheet:self];
 }
 

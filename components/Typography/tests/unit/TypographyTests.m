@@ -330,4 +330,32 @@ static const CGFloat kOpacityMedium = 0.87f;
   // Cleanup
   [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 }
+
+- (void)testFontFamilyMatchesSystemFontFamily {
+  // Given
+  NSArray<NSNumber *> *allFontStyles = @[
+    @(MDCFontTextStyleBody1),
+    @(MDCFontTextStyleBody2),
+    @(MDCFontTextStyleCaption),
+    @(MDCFontTextStyleHeadline),
+    @(MDCFontTextStyleSubheadline),
+    @(MDCFontTextStyleTitle),
+    @(MDCFontTextStyleDisplay1),
+    @(MDCFontTextStyleDisplay2),
+    @(MDCFontTextStyleDisplay3),
+    @(MDCFontTextStyleDisplay4),
+    @(MDCFontTextStyleButton),
+  ];
+
+  for (NSNumber *styleObject in allFontStyles) {
+    // When
+    MDCFontTextStyle style = styleObject.integerValue;
+    UIFont *mdcFont = [UIFont mdc_preferredFontForMaterialTextStyle:style];
+    UIFont *systemFont = [UIFont systemFontOfSize:mdcFont.pointSize weight:UIFontWeightRegular];
+
+    // Then
+    XCTAssertEqualObjects(systemFont.familyName, mdcFont.familyName);
+  }
+}
+
 @end

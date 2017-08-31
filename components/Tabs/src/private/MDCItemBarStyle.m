@@ -29,7 +29,7 @@
   return self;
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCItemBarStyle *newStyle = [[[self class] alloc] init];
 
   newStyle.defaultHeight = _defaultHeight;

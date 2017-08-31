@@ -24,7 +24,7 @@ const NSTimeInterval kMDCFeatureHighlightDismissalDuration = 0.2f;
 @implementation MDCFeatureHighlightAnimationController
 
 - (NSTimeInterval)transitionDuration:
-        (nullable id<UIViewControllerContextTransitioning>)transitionContext {
+    (nullable __unused id<UIViewControllerContextTransitioning>)transitionContext {
   if (self.presenting) {
     return kMDCFeatureHighlightPresentationDuration;
   } else {
@@ -79,7 +79,7 @@ const NSTimeInterval kMDCFeatureHighlightDismissalDuration = 0.2f;
           [highlightView layoutDisappearing];
         }
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         // If we're dismissing, remove the highlight view from the hierarchy
         if (!self.presenting) {
           [fromView removeFromSuperview];

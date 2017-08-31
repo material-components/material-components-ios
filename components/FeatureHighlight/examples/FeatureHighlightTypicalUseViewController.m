@@ -23,8 +23,9 @@
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
+  vc.mdc_adjustsFontForContentSizeCategory = YES;
 
-  vc.titleText = @"Hey a title";
+  vc.titleText = @"Hey this is a multiline title for the Feature Highlight";
   vc.bodyText = @"This is the description of the feature highlight view controller.";
   [self presentViewController:vc animated:YES completion:nil];
 }

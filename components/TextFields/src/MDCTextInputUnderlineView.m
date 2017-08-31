@@ -81,7 +81,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [coder encodeFloat:(float)self.lineHeight forKey:MDCTextInputUnderlineLineHeightKey];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCTextInputUnderlineView *copy = [[[self class] alloc] initWithFrame:self.frame];
 
   copy.color = self.color;
