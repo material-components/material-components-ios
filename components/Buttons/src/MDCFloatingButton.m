@@ -62,15 +62,15 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
     switch (_shape) {
       case MDCFloatingButtonShapeDefault:
         self.contentEdgeInsets = UIEdgeInsetsMake(16, 16, 16, 16);
+        break;
       case MDCFloatingButtonShapeMini:
         self.contentEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
+        break;
       case MDCFloatingButtonShapeLargeIcon:
         self.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        break;
     }
 
-    // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
-    // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
-    self.contentEdgeInsets = self.contentEdgeInsets;
     self.hitAreaInsets = [self defaultHitAreaInsets];
   }
   return self;
