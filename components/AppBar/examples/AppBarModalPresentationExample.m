@@ -205,6 +205,10 @@
   return @[ @"App Bar", @"Modal Presentation" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

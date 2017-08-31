@@ -25,10 +25,6 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Editing Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -166,6 +162,16 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
                              layout:(UICollectionViewLayout *)collectionViewLayout
     referenceSizeForHeaderInSection:(NSInteger)section {
   return CGSizeMake(collectionView.bounds.size.width, MDCCellDefaultOneLineHeight);
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Cell Editing Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

@@ -71,10 +71,4 @@
       forControlEvents:UIControlEventTouchUpInside];
 }
 
-// TabBarViewController expect that appBars be inside the tabs, so don't stick
-// an appBar on it.
-- (BOOL)catalogShouldHideNavigation {
-  return YES;
-}
-
 @end

@@ -30,11 +30,6 @@ extension FlexibleHeaderTypicalUseViewControllerSwift {
     return [ "Flexible Header", "Flexible Header (Swift)" ]
   }
 
-  class func catalogDescription() -> String {
-    return "The Flexible Header is a container view whose height and vertical offset react to" +
-           " UIScrollViewDelegate events."
-  }
-
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }

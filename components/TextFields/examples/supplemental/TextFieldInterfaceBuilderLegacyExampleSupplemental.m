@@ -34,4 +34,8 @@
   return @"TextFieldInterfaceBuilderLegacyExample";
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 @end

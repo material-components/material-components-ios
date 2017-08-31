@@ -28,14 +28,6 @@ static NSString *const kReusableIdentifierItem = @"customCell";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Storyboard Example" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"CollectionsStoryboardExample";
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = @"Storyboard Demo";
@@ -74,6 +66,20 @@ static NSString *const kReusableIdentifierItem = @"customCell";
   cell.label.text = _content[indexPath.section][indexPath.item];
 
   return cell;
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Storyboard Example" ];
+}
+
++ (NSString *)catalogStoryboardName {
+  return @"CollectionsStoryboardExample";
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

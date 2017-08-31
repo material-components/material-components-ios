@@ -37,6 +37,10 @@
   return @"ButtonsContentEdgeInsets";
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {

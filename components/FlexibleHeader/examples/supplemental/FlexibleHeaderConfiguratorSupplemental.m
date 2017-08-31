@@ -32,6 +32,10 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   return @[ @"Flexible Header", @"Configurator" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

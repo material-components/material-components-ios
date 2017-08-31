@@ -73,6 +73,10 @@ static NSString * const kCellIdentifier = @"Cell";
   return @[ @"Snackbar", @"Snackbar Overlay View" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 @end
 
 @implementation SnackbarSuspensionExample (CollectionView)
@@ -104,6 +108,10 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Snackbar", @"Snackbar Suspension" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

@@ -25,19 +25,6 @@ static NSString *const reuseIdentifier = @"Cell";
 
 @implementation FeatureHighlightTypicalUseViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Feature Highlight" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Feature Highlight component is used to introduce users to new features and"
-          " functionality at contextually relevant moments.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -88,17 +75,24 @@ static NSString *const reuseIdentifier = @"Cell";
   self.button.frame = (CGRect){location, self.button.frame.size};
 }
 
-@end
-
-@implementation FeatureHighlightColorExample (CatalogByConvention)
+#pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Colors" ];
+  return @[ @"Feature Highlight", @"Feature Highlight" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"The Feature Highlight component is used to introduce users to new features and"
+  " functionality at contextually relevant moments.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return NO;
+  return YES;
 }
+
+@end
+
+@implementation FeatureHighlightColorExample (CatalogByConvention)
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -142,13 +136,19 @@ static NSString *const reuseIdentifier = @"Cell";
   return cell;
 }
 
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Feature Highlight", @"Colors" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 @end
 
 @implementation FeatureHighlightShownViewExample (CatalogByConvention)
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Shown Views" ];
-}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -187,6 +187,16 @@ static NSString *const reuseIdentifier = @"Cell";
       MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
                                      labelSize.width, labelSize.height),
                           [UIScreen mainScreen].scale);
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Feature Highlight", @"Shown Views" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

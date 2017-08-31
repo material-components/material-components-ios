@@ -27,10 +27,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Collections in a Container" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -87,6 +83,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                                                 forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.section][indexPath.item];
   return cell;
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Collections in a Container" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

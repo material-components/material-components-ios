@@ -124,12 +124,8 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   return @[ @"Tab Bar", @"Text Tabs" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
-}
-
 + (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return NO;
 }
 
 - (BOOL)catalogShouldHideNavigation {

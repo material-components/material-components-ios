@@ -95,6 +95,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
@@ -104,6 +105,10 @@
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"App Bar", @"Imagery" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 - (BOOL)catalogShouldHideNavigation {

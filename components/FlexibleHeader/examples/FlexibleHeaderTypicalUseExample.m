@@ -80,16 +80,14 @@
   [self setupExampleViews];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
-  // comment this line:
   [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return UIStatusBarStyleLightContent;
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's

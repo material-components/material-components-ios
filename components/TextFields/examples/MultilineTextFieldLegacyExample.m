@@ -95,8 +95,8 @@
   multilineTextFieldCharMaxDefault.placeholder = @"Inline Placeholder Only";
   multilineTextFieldCharMaxDefault.textView.delegate = self;
 
-  self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerLegacyDefault alloc]
-      initWithTextInput:multilineTextFieldCharMaxDefault];
+  self.textFieldControllerDefaultCharMax =
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
   self.textFieldControllerDefaultCharMax.characterCountMax = 30;
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
@@ -203,12 +203,14 @@
   [self.view endEditing:YES];
 }
 
+#pragma mark - CatalogByConvention
+
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Text Field", @"[Legacy] Multiline (Objective C)" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Simple Legacy MDCMultilineTextField example.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

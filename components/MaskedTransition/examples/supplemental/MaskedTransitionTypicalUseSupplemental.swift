@@ -22,18 +22,17 @@ import MaterialComponents
 
 extension MaskedTransitionTypicalUseSwiftExample {
 
-  // (CatalogByConvention)
+  // MARK: - CatalogByConvention
 
   class func catalogBreadcrumbs() -> [String] {
     return [ "Masked Transition", "Masked Transition (Swift)" ]
   }
 
   class func catalogDescription() -> String {
-    return ""
+    return "Examples of how the Floating Action Button can transition to other on-screen views."
   }
 
   class func catalogIsPrimaryDemo() -> Bool {
-    return false
+    return true
   }
-
 }

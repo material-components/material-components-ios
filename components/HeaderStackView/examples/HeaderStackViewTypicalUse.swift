@@ -38,9 +38,10 @@ open class HeaderStackViewTypicalUseSwiftExample: HeaderStackViewTypicalUse {
 
   override open func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
 
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+  
   override open var prefersStatusBarHidden: Bool {
     return true
   }

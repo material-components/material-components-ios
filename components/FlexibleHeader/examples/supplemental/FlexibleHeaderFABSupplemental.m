@@ -29,6 +29,10 @@
   return @[ @"Flexible Header", @"Floating Action Button" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

@@ -121,6 +121,10 @@
   return @[ @"Navigation Bar", @"Navigation Bar With Icons" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

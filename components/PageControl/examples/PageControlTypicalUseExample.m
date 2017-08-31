@@ -27,19 +27,6 @@
   NSArray *_pages;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Page Control" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"This control is designed to be a drop-in replacement for UIPageControl, with a user"
-          " experience influenced by Material Design.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -135,6 +122,21 @@
   CGPoint offset = _scrollView.contentOffset;
   offset.x = sender.currentPage * _scrollView.bounds.size.width;
   [_scrollView setContentOffset:offset animated:YES];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Page Control", @"Page Control" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"This control is designed to be a drop-in replacement for UIPageControl, with a user"
+  " experience influenced by Material Design.";
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 @end

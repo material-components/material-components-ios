@@ -43,14 +43,10 @@ class PalettesGeneratedExampleViewController: PalettesExampleViewController {
   }
 }
 
-// MARK: Catalog by convention
+// MARK: - Catalog by convention
 extension PalettesGeneratedExampleViewController {
   class func catalogBreadcrumbs() -> [String] {
     return ["Palettes", "Generated Palettes"]
-  }
-
-  class func catalogDescription() -> String {
-    return "The Palettes component provides sets of reference colors that work well together."
   }
 
   class func catalogIsPrimaryDemo() -> Bool {

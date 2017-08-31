@@ -27,20 +27,6 @@ static NSString *const kExampleDetailText =
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collection Cells", @"Cell Text Example" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"Material Collection Cells enables a native collection view cell to have Material "
-          "design layout and styling. It also provides editing and extensive customization "
-          "capabilities.";
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -118,6 +104,22 @@ static NSString *const kExampleDetailText =
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {
   return [_content[indexPath.item][4] floatValue];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collection Cells", @"Cell Text Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
++ (NSString *)catalogDescription {
+  return @"Material Collection Cells enables a native collection view cell to have Material "
+  "design layout and styling. It also provides editing and extensive customization "
+  "capabilities.";
 }
 
 @end

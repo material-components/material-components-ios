@@ -26,10 +26,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Header / Footer Demo" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -132,6 +128,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldHideFooterBackgroundForSection:(NSInteger)section {
   return (section == 2);
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Header / Footer Demo" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

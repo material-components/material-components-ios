@@ -27,6 +27,10 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     return "ButtonsStoryboardAndProgrammatic"
   }
 
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
   let raisedButton = MDCRaisedButton()
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()

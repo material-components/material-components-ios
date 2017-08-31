@@ -18,8 +18,14 @@
 
 @implementation CollectionsEditingManyCellsExample (Supplemental)
 
+#pragma mark - CatalogByConvention
+
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Collections", @"Cell Editing Example (1000+)" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 #pragma mark - <UICollectionViewDataSource>
