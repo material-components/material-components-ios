@@ -40,9 +40,9 @@
 - (nonnull UIBezierPath *)boundingPath;
 
 /** The corner radius of the button. The shadow will follow that path. */
-- (CGFloat)cornerRadius;
+- (CGFloat)cornerRadius __deprecated_msg("Set layer.cornerRadius explicitly");
 
 /** The default content edge insets of the button. They are set at initialization time. */
-- (UIEdgeInsets)defaultContentEdgeInsets;
+- (UIEdgeInsets)defaultContentEdgeInsets __deprecated_msg("Set contentEdgeInsets explicitly");
 
 @end

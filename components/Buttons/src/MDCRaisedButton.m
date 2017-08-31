@@ -17,7 +17,6 @@
 #import "MDCRaisedButton.h"
 
 #import "MaterialShadowElevations.h"
-#import "private/MDCButton+Subclassing.h"
 
 @implementation MDCRaisedButton
 
@@ -26,6 +25,7 @@
                                     forState:UIControlStateNormal];
   [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed
                                     forState:UIControlStateHighlighted];
+  [[MDCRaisedButton appearance] setContentEdgeInsets:MDCButtonDefaultContentEdgeInsets];
 }
 
 @end
