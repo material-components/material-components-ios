@@ -30,7 +30,6 @@ struct Constants {
       static let textOffset: CGFloat = 16.0
       static let circleSize: CGSize = CGSize(width: 48.0, height: 48.0)
    }
-   
 }
 
 class AnimationTimingExample: UIViewController {
@@ -174,5 +173,3 @@ extension AnimationTimingExample {
    }
    
 }
-
-
