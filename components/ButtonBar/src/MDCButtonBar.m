@@ -151,9 +151,8 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     }
     totalWidth += width;
   }
-  // TODO(featherless): Take into account compact/regular sizes rather than the device idiom.
-  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-  CGFloat height = isPad ? kDefaultPadHeight : kDefaultHeight;
+
+  CGFloat height = [self usePadHeight] ? kDefaultPadHeight : kDefaultHeight;
   return CGSizeMake(totalWidth, height);
 }
 
@@ -174,7 +173,30 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   [self updateButtonTitleColors];
 }
 
+// If the horizontal size class changes, check if reloading button views is needed since their
+// horizontal padding may need to change
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+  if (!isPad ||
+      self.traitCollection.horizontalSizeClass == previousTraitCollection.horizontalSizeClass) {
+    return;
+  } else {
+    [self reloadButtonViews];
+  }
+}
+
 #pragma mark - Private
+
+// Used to determine whether or not to apply height relevant for iPad or use smaller iPhone size
+// Only the height is affected so we use the verticalSizeClass
+- (BOOL)usePadHeight {
+  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+  if (isPad && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
+    return YES;
+  }
+  return NO;
+}
 
 - (void)updateButtonTitleColors {
   for (UIView *viewObj in _buttonViews) {
