@@ -21,8 +21,9 @@ Pod::Spec.new do |s|
   #
   # ## Optional properties
   #
-  # resources    		 => If your component has a bundle, add a dictionary mapping from the bundle
-  #                         name to the bundle path. NOTE: Do not use resource_bundle property.
+  # resources        => If your component has a bundle, this property should be an Array 
+  #                     containing the bundle path as a String. 
+  #                     NOTE: Do not use resource_bundle property 
   #
   # # Template subspec
   #
