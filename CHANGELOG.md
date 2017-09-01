@@ -1,3 +1,15 @@
+# 34.0.01
+
+Hotfix: Fixes Feature Highlight configuration.
+
+## Component changes
+
+### FeatureHighlight
+
+#### Changes
+
+* [Fix broken properties (#1938)](https://github.com/material-components/material-components-ios/commit/669e2f7079239edb29d3bf97c66daecbd49f707d) (Sam Morrison)
+
 # 34.0.0
 
 ## API Diffs
