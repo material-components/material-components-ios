@@ -25,7 +25,7 @@ static const CGFloat kMDCFeatureHighlightLineSpacing = 1.0f;
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
-
+@property(nonatomic, strong) MDCFeatureHighlightView *view;
 @end
 
 @implementation MDCFeatureHighlightViewController {
@@ -36,6 +36,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   UIView *_displayedView;
   UIView *_highlightedView;
 }
+
+@dynamic view;
 
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                     andShowView:(nonnull UIView *)displayedView
@@ -185,35 +187,35 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (UIColor *)outerHighlightColor {
-  return _featureHighlightView.outerHighlightColor;
+  return self.view.outerHighlightColor;
 }
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
-  _featureHighlightView.outerHighlightColor = outerHighlightColor;
+  self.view.outerHighlightColor = outerHighlightColor;
 }
 
 - (UIColor *)innerHighlightColor {
-  return _featureHighlightView.innerHighlightColor;
+  return self.view.innerHighlightColor;
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
-  _featureHighlightView.innerHighlightColor = innerHighlightColor;
+  self.view.innerHighlightColor = innerHighlightColor;
 }
 
 - (UIColor *)titleColor {
-  return _featureHighlightView.titleColor;
+  return self.view.titleColor;
 }
 
 - (void)setTitleColor:(UIColor *)titleColor {
-  _featureHighlightView.titleColor = titleColor;
+  self.view.titleColor = titleColor;
 }
 
 - (UIColor *)bodyColor {
-  return _featureHighlightView.bodyColor;
+  return self.view.bodyColor;
 }
 
 - (void)setBodyColor:(UIColor *)bodyColor {
-  _featureHighlightView.bodyColor = bodyColor;
+  self.view.bodyColor = bodyColor;
 }
 
 - (void)acceptFeature {
