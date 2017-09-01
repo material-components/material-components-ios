@@ -1,3 +1,7 @@
+# 34.0.01
+
+Hotfix: Fixes Feature Highlight configuration.
+
 # 34.0.0
 
 ## API Diffs
