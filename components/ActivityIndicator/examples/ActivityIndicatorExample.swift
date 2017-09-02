@@ -1,20 +1,15 @@
 /*
  Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
- 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
  http://www.apache.org/licenses/LICENSE-2.0
- 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- 
  */
-
 
 import UIKit
 import MaterialComponents.MaterialActivityIndicator
@@ -32,11 +27,11 @@ class ActivityIndicatorSwiftController: UIViewController {
       super.viewDidLoad()
       
       view.backgroundColor = .white
-      let w: CGFloat = view.bounds.width / 2
-      let h: CGFloat = view.bounds.height / 2
+      let width: CGFloat = view.bounds.width / 2
+      let height: CGFloat = view.bounds.height / 2
       
       //Initialize single color progress indicator
-      let frame1: CGRect = CGRect(x: w - 16, y: h - 116, width: 32, height: 32)
+      let frame1: CGRect = CGRect(x: width - 16, y: height - 116, width: 32, height: 32)
       let activityIndicator1 = MDCActivityIndicator(frame: frame1)
       view.addSubview(activityIndicator1)
       activityIndicator1.delegate = self
@@ -48,7 +43,7 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator1.startAnimating()
       
       // Initialize indeterminate indicator
-      let frame2: CGRect = CGRect(x: w - 16, y: h - 16, width: 32, height: 32)
+      let frame2: CGRect = CGRect(x: width - 16, y: height - 16, width: 32, height: 32)
       let activityIndicator2 = MDCActivityIndicator(frame: frame2)
       view.addSubview(activityIndicator2)
       activityIndicator2.delegate = self
@@ -57,7 +52,7 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator2.startAnimating()
       
       // Initialize multiple color indicator
-      let frame3: CGRect = CGRect(x: w - 16, y: h + 84, width: 32, height: 32)
+      let frame3: CGRect = CGRect(x: width - 16, y: height + 84, width: 32, height: 32)
       let activityIndicator3 = MDCActivityIndicator(frame: frame3)
       view.addSubview(activityIndicator3)
       // Pass colors you want to indicator to cycle through
@@ -68,7 +63,7 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator3.startAnimating()
       
       // Initialize with different radius and stroke with
-      let frame4: CGRect = CGRect(x: w - 24, y: h + 176, width: 48, height: 48)
+      let frame4: CGRect = CGRect(x: width - 24, y: height + 176, width: 48, height: 48)
       let activityIndicator4 = MDCActivityIndicator(frame: frame4)
       view.addSubview(activityIndicator4)
       activityIndicator4.delegate = self
