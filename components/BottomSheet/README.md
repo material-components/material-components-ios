@@ -10,6 +10,10 @@
 
 # Bottom Sheet 
 
+<div class="article__asset article__asset--screenshot">
+   <img src="docs/assets/bottom_sheet.png" alt="Bottom Sheet" width="375">
+</div>
+
 Bottom sheets slide up from the bottom of the screen to reveal more content. Bottom sheets integrate with the app to display supporting content or present deep-linked content from other apps.
 
 
