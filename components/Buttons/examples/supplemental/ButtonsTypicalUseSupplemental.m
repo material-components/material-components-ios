@@ -103,7 +103,6 @@
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
 
-    [button sizeToFit];
     button.center = CGPointMake(centerX + 20 + (CGRectGetWidth(button.bounds) / 2),
                                 heightSum + (CGRectGetHeight(button.bounds) / 2));
     CGFloat labelOffset = (CGRectGetHeight(button.bounds) - CGRectGetHeight(label.bounds)) / 2;
