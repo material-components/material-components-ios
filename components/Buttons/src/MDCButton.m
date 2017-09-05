@@ -60,9 +60,6 @@ static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
-static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
-const UIEdgeInsets MDCButtonDefaultContentEdgeInsets = {8, 16, 8, 16};
-
 // https://material.io/guidelines/components/buttons.html#buttons-main-buttons
 static const CGFloat MDCButtonDisabledAlpha = 0.12f;
 
@@ -125,10 +122,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 @implementation MDCButton
 
 @dynamic layer;
-
-+ (void)initialize {
-  [[MDCButton appearance] setContentEdgeInsets:MDCButtonDefaultContentEdgeInsets];
-}
 
 + (Class)layerClass {
   return [MDCShadowLayer class];
@@ -261,15 +254,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Set up title label attributes.
   self.titleLabel.font = [MDCTypography buttonFont];
 
-  self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
-
-  // If a subclass is using the deprecated defaultContentEdgeInsets, fetch that value.
-  if ([self checkIfSubclassDidOverrideMethod:@selector(defaultContentEdgeInsets)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    self.contentEdgeInsets = [self defaultContentEdgeInsets];
-#pragma clang diagnostic pop
-  }
+  // Default content insets
+  self.contentEdgeInsets = [self defaultContentEdgeInsets];
 
   MDCShadowLayer *shadowLayer = self.layer;
   shadowLayer.shadowPath = [self boundingPath].CGPath;
@@ -323,15 +309,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if ([self checkIfSubclassDidOverrideMethod:@selector(cornerRadius)]) {
-    self.layer.cornerRadius = [self cornerRadius];
-  }
-#pragma clang diagnostic pop
-
   self.layer.shadowPath = [self boundingPath].CGPath;
+  self.layer.cornerRadius = [self cornerRadius];
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
   if (_inkView.inkStyle == MDCInkStyleUnbounded) {
@@ -720,22 +699,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIBezierPath *)boundingPath {
-  CGFloat cornerRadius = self.layer.cornerRadius;
-  if ([self checkIfSubclassDidOverrideMethod:@selector(cornerRadius)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    cornerRadius = [self cornerRadius];
-#pragma clang diagnostic pop
-  }
-  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
 }
 
 - (CGFloat)cornerRadius {
-  return MDCButtonDefaultCornerRadius;
+  return 2.0f;
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
-  return MDCButtonDefaultContentEdgeInsets;
+  return UIEdgeInsetsMake(8, 16, 8, 16);
 }
 
 - (BOOL)shouldHaveOpaqueBackground {
@@ -836,25 +808,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setUnderlyingColor:(UIColor *)underlyingColor {
   [self setUnderlyingColorHint:underlyingColor];
-}
-
-- (BOOL)checkIfSubclassDidOverrideMethod:(SEL)selector {
-  Class superclass = [self superclass];
-  IMP selfIMP = [self methodForSelector:selector];
-  BOOL isOverriden = NO;
-
-  while (superclass) {
-    isOverriden = [superclass instancesRespondToSelector:selector]
-        && selfIMP != [superclass instanceMethodForSelector:selector];
-
-    if (isOverriden) {
-      break;
-    }
-
-    superclass = [superclass superclass];
-  }
-
-  return isOverriden;
 }
 
 @end
