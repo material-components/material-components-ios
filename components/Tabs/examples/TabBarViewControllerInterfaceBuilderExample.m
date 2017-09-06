@@ -32,7 +32,6 @@
     [self.storyboard instantiateViewControllerWithIdentifier:@"blue"],
     [self.storyboard instantiateViewControllerWithIdentifier:@"green"],
   ];
-  self.tabBar.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 }
 
 @end

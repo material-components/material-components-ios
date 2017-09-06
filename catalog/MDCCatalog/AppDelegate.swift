@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let tree = CBCCreateNavigationTree()
 
     // Some code (like catalog tile images) depend on this property being non-nil
-    prepareScheme()
+    prepareColorScheme()
 
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
 
-  func prepareScheme() {
+  func prepareColorScheme() {
     colorScheme = MDCBasicColorScheme(primaryColor: MDCPalette.lightBlue.tint500,
                                       primaryLightColor: MDCPalette.lightBlue.tint700,
                                       primaryDarkColor: MDCPalette.lightBlue.tint300,
