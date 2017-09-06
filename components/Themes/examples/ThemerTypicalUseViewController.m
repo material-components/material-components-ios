@@ -56,7 +56,7 @@
 
   // Apply color scheme to UIKit components.
   [UISlider appearance].tintColor = self.colorScheme.primaryColor;
-  [UISwitch appearance].tintColor = self.colorScheme.primaryColor;
+  [UISwitch appearance].onTintColor = self.colorScheme.primaryColor;
 
   // Send notification that color scheme has changed so existing components can update if necessary.
   NSDictionary *userInfo = @{ @"colorScheme" : self.colorScheme };
