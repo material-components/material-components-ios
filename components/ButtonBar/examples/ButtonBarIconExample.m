@@ -29,7 +29,6 @@
   [super viewDidLoad];
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
-  buttonBar.tintColor = UIColor.whiteColor;
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;

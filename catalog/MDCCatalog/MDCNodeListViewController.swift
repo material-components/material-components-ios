@@ -84,7 +84,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
-    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: appBar.headerViewController.headerView)
 
     appBar.navigationBar.titleTextAttributes = [
       NSFontAttributeName: appBarFont ]
@@ -369,7 +369,7 @@ extension MDCNodeListViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let colorScheme = appDelegate.colorScheme
-        MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+        MDCFlexibleHeaderColorThemer.apply(colorScheme, to: container.appBar.headerViewController.headerView)
         var contentFrame = container.contentViewController.view.frame
         let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
         contentFrame.origin.y = headerSize.height

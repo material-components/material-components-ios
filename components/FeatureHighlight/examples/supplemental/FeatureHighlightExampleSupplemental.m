@@ -149,7 +149,7 @@ static NSString *const reuseIdentifier = @"Cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   self.infoLabel.text = @"Tap on the button below.";
@@ -159,8 +159,6 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];
-  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1]];
-  [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Action" forState:UIControlStateNormal];
   [self.button sizeToFit];
   [self.button addTarget:self

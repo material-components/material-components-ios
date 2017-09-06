@@ -172,7 +172,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
             forCellWithReuseIdentifier:kReusableIdentifierItem];
 
     self.collectionView.alwaysBounceVertical = YES;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
     // Init the sliders
     _sliders = [[NSMutableArray alloc] init];

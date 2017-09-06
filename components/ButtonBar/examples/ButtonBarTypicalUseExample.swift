@@ -42,13 +42,6 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     )
 
     let items = [actionItem, secondActionItem]
-
-    // Set the title text attributes before assigning to buttonBar.items
-    // because of https://github.com/material-components/material-components-ios/issues/277
-//    for item in items {
-//      item.setTitleTextAttributes(self.itemTitleTextAttributes(), for: UIControlState())
-//    }
-
     buttonBar.items = items
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.

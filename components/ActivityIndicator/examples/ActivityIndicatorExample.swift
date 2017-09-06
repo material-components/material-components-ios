@@ -26,7 +26,7 @@ class ActivityIndicatorSwiftController: UIViewController {
    override func viewDidLoad() {
       super.viewDidLoad()
       
-      view.backgroundColor = .white
+      view.backgroundColor = UIColor(white: 0.9, alpha: 1)
       let width: CGFloat = view.bounds.width / 2
       let height: CGFloat = view.bounds.height / 2
       

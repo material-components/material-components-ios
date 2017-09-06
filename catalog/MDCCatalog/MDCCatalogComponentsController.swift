@@ -52,7 +52,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     layout.minimumLineSpacing = spacing
 
     self.headerViewController = MDCFlexibleHeaderViewController()
-
     super.init(collectionViewLayout: layout)
 
     self.title = "Material Design Components"
@@ -73,6 +72,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       selector: #selector(self.colorThemeChanged),
       name: NSNotification.Name(rawValue: "ColorThemeChangeNotification"),
       object: nil)
+
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    MDCFlexibleHeaderColorThemer.apply(appDelegate.colorScheme, toMDCFlexibleHeaderController: self.headerViewController)
   }
 
   func colorThemeChanged(notification: NSNotification) {

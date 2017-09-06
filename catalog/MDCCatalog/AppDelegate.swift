@@ -32,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let tree = CBCCreateNavigationTree()
 
+    // Some code (like catalog tile images) depend on this property being non-nil
+    prepareScheme()
+
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
 
@@ -41,40 +44,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // problems.
     navigationController.interactivePopGestureRecognizer?.delegate = navigationController
 
-    applyTheme()
-
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
     return true
   }
 
-  func applyTheme() {
+  func prepareScheme() {
     colorScheme = MDCBasicColorScheme(primaryColor: MDCPalette.lightBlue.tint500,
                                       primaryLightColor: MDCPalette.lightBlue.tint700,
                                       primaryDarkColor: MDCPalette.lightBlue.tint300,
                                       secondaryColor: MDCPalette.lime.accent200!,
                                       secondaryLightColor: MDCPalette.lime.accent400!,
                                       secondaryDarkColor: MDCPalette.lime.accent100!)
-
-    // Apply color scheme to material design components using component themers.
-    MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
-    MDCAlertColorThemer.apply(colorScheme)
-    MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
-    MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
-    MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
-    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
-    MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())
-    MDCNavigationBarColorThemer.apply(colorScheme, to: MDCNavigationBar.appearance())
-    MDCPageControlColorThemer.apply(colorScheme, to: MDCPageControl.appearance())
-    MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
-    MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
-    MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
-    MDCTextFieldColorThemer.applyColorScheme(toAllTextInputControllerDefault: colorScheme)
-
-    // Apply color scheme to UIKit components.
-    UISlider.appearance().tintColor = colorScheme?.primaryColor
-    UISwitch.appearance().onTintColor = colorScheme?.primaryColor
   }
 }
 

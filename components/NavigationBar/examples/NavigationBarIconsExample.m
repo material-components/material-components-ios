@@ -37,7 +37,7 @@
   [super viewDidLoad];
 
   self.title = @"Title";
-  self.view.backgroundColor = UIColor.darkGrayColor;
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
