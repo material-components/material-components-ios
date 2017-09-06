@@ -32,7 +32,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white:0.9, alpha:1)
+    view.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     let raisedButton = MDCRaisedButton()
     raisedButton.setElevation(4, for: UIControlState())

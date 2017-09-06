@@ -54,7 +54,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     self.view.addSubview(buttonBar)
 
     // Ensure that the controller's view isn't transparent.
-    view.backgroundColor = UIColor(white:0.9, alpha:1)
+    view.backgroundColor = UIColor(white: 0.9, alpha: 1)
   }
 
   @objc func didTapActionButton(_ sender: Any) {

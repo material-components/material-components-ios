@@ -24,7 +24,7 @@ import UIKit
 extension TextFieldKitchenSinkSwiftExample {
 
   func setupExampleViews() {
-    view.backgroundColor = UIColor(white:0.9, alpha: 1)
+    view.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     title = "Material Text Fields"
 
