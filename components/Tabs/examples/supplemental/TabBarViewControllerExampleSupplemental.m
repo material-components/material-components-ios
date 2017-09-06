@@ -103,8 +103,10 @@
       [TBVCSampleViewController sampleWithTitle:@"One" color:UIColor.redColor];
   UIColor *blue = [UIColor colorWithRed:0x3A / 255. green:0x56 / 255. blue:0xFF / 255. alpha:1];
   UIViewController *child2 = [TBVCSampleViewController sampleWithTitle:@"Two" color:blue];
-  UIImage *starImage =
-      [[UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIImage *starImage = [UIImage imageNamed:@"TabBarDemo_ic_star"
+                                   inBundle:bundle
+             compatibleWithTraitCollection:nil];
+  starImage = [starImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   UIViewController *child3 =
       [TBVCSampleViewController sampleWithTitle:@"Three" color:UIColor.blueColor icon:starImage];
   return @[ child1, child2, child3 ];

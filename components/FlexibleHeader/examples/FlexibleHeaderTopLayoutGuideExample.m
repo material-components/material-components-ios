@@ -85,7 +85,10 @@
   // Create UIView Object
   UIView *constrainedView = [[UIView alloc] init];
   constrainedView.backgroundColor =
-      [UIColor colorWithRed:(CGFloat)(11 / 255.0) green:(CGFloat)(232 / 255.0) blue:(CGFloat)(94 / 255.0) alpha:1];
+      [UIColor colorWithRed:(CGFloat)(11 / 255.0)
+                      green:(CGFloat)(232 / 255.0)
+                       blue:(CGFloat)(94 / 255.0)
+                      alpha:1];
   constrainedView.translatesAutoresizingMaskIntoConstraints = NO;
   self.constrainedView = constrainedView;
   [self.view addSubview:self.constrainedView];

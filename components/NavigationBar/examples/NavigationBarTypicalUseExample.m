@@ -33,12 +33,19 @@
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   self.title = @"Navigation Bar";
-  UIImage *backButtonIcon = [[MDCIcons imageFor_ic_arrow_back] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIImage *backButtonIcon =
+      [[MDCIcons imageFor_ic_arrow_back] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
-  if ([self.view mdc_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft) {
+  UIUserInterfaceLayoutDirection orientation =
+      [self.view mdc_effectiveUserInterfaceLayoutDirection];
+  if (orientation == UIUserInterfaceLayoutDirectionRightToLeft) {
     backButtonIcon = [backButtonIcon mdc_imageFlippedForRightToLeftLayoutDirection];
   }
-  self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonIcon  style:UIBarButtonItemStylePlain target:self action:@selector(didTap:)];
+  self.navigationItem.backBarButtonItem =
+      [[UIBarButtonItem alloc] initWithImage:backButtonIcon
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didTap:)];
   
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];
