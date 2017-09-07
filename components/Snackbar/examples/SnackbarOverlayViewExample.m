@@ -35,10 +35,6 @@ static const CGFloat kBottomBarHeight = 44.0f;
   [self setupExampleViews:@[ @"Show Snackbar", @"Toggle bottom bar" ]];
   self.title = @"Snackbar Overlay View";
 
-  // Make sure we're listening for overlay notifications.
-  MDCOverlayObserver *manager = [MDCOverlayObserver observerForScreen:nil];
-  [manager addTarget:self action:@selector(handleOverlayTransition:)];
-
   self.floatingButton = [[MDCFloatingButton alloc] init];
   [self.floatingButton sizeToFit];
   [self.view addSubview:self.floatingButton];
@@ -67,6 +63,10 @@ static const CGFloat kBottomBarHeight = 44.0f;
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   self.bottomBar.backgroundColor = [UIColor redColor];
   [self.view addSubview:self.bottomBar];
+
+  // Make sure we're listening for overlay notifications.
+  MDCOverlayObserver *manager = [MDCOverlayObserver observerForScreen:nil];
+  [manager addTarget:self action:@selector(handleOverlayTransition:)];
 }
 
 #pragma mark - Event Handling
