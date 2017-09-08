@@ -26,6 +26,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    label.textColor = UIColor(white: 0.2, alpha: 1)
     label.font = MDCTypography.captionFont()
     self.addSubview(label)
     self.clipsToBounds = true

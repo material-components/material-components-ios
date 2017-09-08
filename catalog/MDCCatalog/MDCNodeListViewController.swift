@@ -41,7 +41,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
 
   override func prepareForReuse() {
     super.prepareForReuse()
-    textLabel!.textColor = nil
+    textLabel!.textColor = UIColor.black
     imageView!.image = UIImage(named: "Demo")
   }
 }
@@ -82,12 +82,16 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.addChildViewController(appBar.headerViewController)
     let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
 
-    appBar.navigationBar.titleTextAttributes = [ NSFontAttributeName: appBarFont! ]
-    appBar.navigationBar.titleAlignment = .center
-
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    MDCAppBarColorThemer.apply(appDelegate.colorScheme, to: self.appBar)
-    MDCAppBarTextColorAccessibilityMutator().mutate(self.appBar)
+    let colorScheme = appDelegate.colorScheme
+    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+
+    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.titleTextAttributes = [
+      NSForegroundColorAttributeName: UIColor.white,
+      NSFontAttributeName: appBarFont! ]
+
+    appBar.navigationBar.titleAlignment = .center
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -113,12 +117,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()
-
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.colorThemeChanged),
-      name: NSNotification.Name(rawValue: "ColorThemeChangeNotification"),
-      object: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -129,16 +127,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
-  }
-
-  func colorThemeChanged(notification: NSNotification) {
-    let colorScheme = notification.userInfo?["colorScheme"]
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
-
-    MDCAppBarColorThemer.apply(appDelegate.colorScheme, to: self.appBar)
-    MDCAppBarTextColorAccessibilityMutator().mutate(self.appBar)
-    self.tableView.reloadData()
   }
 }
 
@@ -198,6 +186,7 @@ extension MDCNodeListViewController {
                           viewForHeaderInSection section: Int) -> UIView? {
     var sectionViewFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50)
     let sectionView = UIView(frame: sectionViewFrame)
+    sectionView.backgroundColor = UIColor.white
 
     if section == 1 {
       let lineDivider =
@@ -373,7 +362,9 @@ extension MDCNodeListViewController {
         let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
         container.appBar.navigationBar.titleAlignment = .center
-        container.appBar.navigationBar.titleTextAttributes = [ NSFontAttributeName: appBarFont! ]
+        container.appBar.navigationBar.tintColor = UIColor.white
+        container.appBar.navigationBar.titleTextAttributes =
+            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont! ]
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.
@@ -383,15 +374,18 @@ extension MDCNodeListViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let colorScheme = appDelegate.colorScheme
-        MDCFlexibleHeaderColorThemer.apply(colorScheme, to: container.appBar.headerViewController.headerView)
+        MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+
+        let textColor = UIColor.white
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+          [NSForegroundColorAttributeName: textColor],
+          for: UIControlState())
         var contentFrame = container.contentViewController.view.frame
         let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
         contentFrame.origin.y = headerSize.height
         contentFrame.size.height = self.view.bounds.size.height - headerSize.height
         container.contentViewController.view.frame = contentFrame
 
-        MDCAppBarColorThemer.apply(appDelegate.colorScheme, to: container.appBar)
-        MDCAppBarTextColorAccessibilityMutator().mutate(container.appBar)
         vc = container
       }
     } else {
