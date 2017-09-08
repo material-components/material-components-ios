@@ -458,8 +458,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.actionsScrollView.frame = actionsScrollViewRect;
   } else {
     // Complex layout case : Split the space between the two scrollviews
-    CGFloat maxActionsHeight = CGRectGetHeight(self.view.bounds) * 0.5f;
-    actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
+    if (CGRectGetHeight(contentScrollViewRect) < CGRectGetHeight(self.view.bounds) * 0.5f) {
+      actionsScrollViewRect.size.height = 
+          CGRectGetHeight(self.view.bounds) - contentScrollViewRect.size.height;
+    } else {
+      CGFloat maxActionsHeight = CGRectGetHeight(self.view.bounds) * 0.5f;
+      actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
+    }
     actionsScrollViewRect.origin.y =
         CGRectGetHeight(self.view.bounds) - actionsScrollViewRect.size.height;
     self.actionsScrollView.frame = actionsScrollViewRect;
