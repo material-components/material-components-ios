@@ -45,10 +45,10 @@ static CGFloat randomNumberNotEqualTo(const CGFloat targetNumber) {
 static UIColor *randomColor() {
   switch (arc4random_uniform(5)) {
     case 0:
-      return [UIColor whiteColor];
+      return [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
       break;
     case 1:
-      return [UIColor blackColor];
+      return [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
       break;
     case 2:
       return [UIColor redColor];
@@ -217,6 +217,95 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+#pragma mark - shadowColor:forState:
+
+- (void)testRemovedShadowColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // When
+  [button setShadowColor:nil forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertNil([button shadowColorForState:UIControlStateNormal]);
+  XCTAssertNil([button shadowColorForState:UIControlStateHighlighted]);
+}
+
+- (void)testDefaultShadowColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertNotNil([button shadowColorForState:UIControlStateSelected]);
+}
+
+- (void)testShadowColorForUnspecifiedStateEqualsNormalState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *color = randomColor();
+
+  // When
+  [button setShadowColor:color forState:UIControlStateNormal];
+
+  XCTAssertEqual([button shadowColorForState:UIControlStateHighlighted], color);
+}
+
+- (void)testShadowColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // And given
+    UIColor *color = randomColor();
+
+    // When
+    [button setShadowColor:color forState:controlState];
+
+    // Then
+    XCTAssertEqualObjects([button shadowColorForState:controlState], color);
+  }
+}
+
+- (void)testLayerShadowColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+    NSUInteger effectiveControlState = controlState;
+
+    // And given
+    UIColor *color = randomColor();
+
+    // When
+    [button setShadowColor:color forState:controlState];
+    if ((effectiveControlState & UIControlStateHighlighted) == UIControlStateHighlighted) {
+      button.highlighted = YES;
+    } else {
+      button.highlighted = NO;
+    }
+
+    if ((effectiveControlState & UIControlStateDisabled) == UIControlStateDisabled) {
+      button.enabled = NO;
+      // Disabling a button turns off "highlighted"
+      effectiveControlState = (controlState & ~UIControlStateHighlighted);
+    } else {
+      button.enabled = YES;
+    }
+
+    if ((effectiveControlState & UIControlStateSelected) == UIControlStateSelected) {
+      button.selected = YES;
+    } else {
+      button.selected = NO;
+    }
+
+    // Then
+    UIColor *layerShadowColor = [UIColor colorWithCGColor:button.layer.shadowColor];
+    XCTAssertEqualObjects([button shadowColorForState:effectiveControlState], layerShadowColor);
+  }
+}
+
+#pragma mark - backgroundColor:forState:
+
 - (void)testCurrentBackgroundColorNormal {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
@@ -271,6 +360,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Then
   XCTAssertEqualObjects([button backgroundColor], color);
 }
+
+#pragma mark - elevation:forState:
 
 - (void)testCurrentElevationNormal {
   // Given
@@ -329,6 +420,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualWithAccuracy([button elevationForState:button.state], elevation, kEpsilonAccuracy);
 }
 
+#pragma mark - Ink Color
+
 - (void)testInkColors {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
@@ -361,6 +454,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     [button setBackgroundColor:randomColor() forState:controlState];
     [button setElevation:randomNumber() forState:controlState];
+    [button setShadowColor:randomColor() forState:controlState];
   }
   NSData *data = [NSKeyedArchiver archivedDataWithRootObject:button];
 
@@ -393,6 +487,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
                                kEpsilonAccuracy);
     XCTAssertEqual([button backgroundColorForState:controlState],
                    [unarchivedButton backgroundColorForState:controlState]);
+    XCTAssertEqualObjects([button shadowColorForState:controlState],
+                          [unarchivedButton shadowColorForState:controlState]);
   }
 }
 
