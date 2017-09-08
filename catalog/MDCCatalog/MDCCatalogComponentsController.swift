@@ -130,6 +130,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     self.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     self.headerViewController.headerView.trackingScrollView = self.collectionView
+
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
       let shadowLayer = layer as? MDCShadowLayer
       shadowLayer!.elevation = intensity * MDCShadowElevationAppBar
