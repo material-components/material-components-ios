@@ -35,6 +35,8 @@
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
+
+    [[[MDCAppBarTextColorAccessibilityMutator alloc] init] mutate:_appBar];
   }
   return self;
 }

@@ -20,6 +20,7 @@ import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialTypography
+import MDFTextAccessibility
 
 import UIKit
 
@@ -29,6 +30,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   let inset = CGFloat(16)
   let node: CBCNode
   var headerViewController: MDCFlexibleHeaderViewController
+  var titleLabel : UILabel
   let imageNames = NSMutableArray()
 
   private lazy var inkController: MDCInkTouchController = {
@@ -51,6 +53,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     layout.minimumInteritemSpacing = spacing
     layout.minimumLineSpacing = spacing
 
+    self.titleLabel = UILabel()
+
     self.headerViewController = MDCFlexibleHeaderViewController()
     super.init(collectionViewLayout: layout)
 
@@ -72,15 +76,17 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       selector: #selector(self.colorThemeChanged),
       name: NSNotification.Name(rawValue: "ColorThemeChangeNotification"),
       object: nil)
-
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    MDCFlexibleHeaderColorThemer.apply(appDelegate.colorScheme, toMDCFlexibleHeaderController: self.headerViewController)
   }
 
   func colorThemeChanged(notification: NSNotification) {
     let colorScheme = notification.userInfo?["colorScheme"]
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
+
+     MDCFlexibleHeaderColorThemer.apply(appDelegate.colorScheme, toMDCFlexibleHeaderController: self.headerViewController)
+    if let backgroundColor = self.headerViewController.headerView.backgroundColor {
+      self.titleLabel.textColor = MDFTextAccessibility.textColor(onBackgroundColor: backgroundColor, targetTextAlpha: 1, options: .enhancedContrast)
+    }
 
     collectionView?.collectionViewLayout.invalidateLayout()
     collectionView?.reloadData()
@@ -102,7 +108,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let containerView = UIView(frame: self.headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    let titleLabel = UILabel()
+
     titleLabel.text = self.title!.uppercased()
     titleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
     titleLabel.sizeToFit()
@@ -138,6 +144,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     self.view.addSubview(self.headerViewController.view)
     self.headerViewController.didMove(toParentViewController: self)
+
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    MDCFlexibleHeaderColorThemer.apply(appDelegate.colorScheme, toMDCFlexibleHeaderController: self.headerViewController)
+    if let backgroundColor = self.headerViewController.headerView.backgroundColor {
+      self.titleLabel.textColor = MDFTextAccessibility.textColor(onBackgroundColor: backgroundColor, targetTextAlpha: 1, options: .enhancedContrast)
+    }
 
     self.collectionView?.accessibilityIdentifier = "collectionView"
   }

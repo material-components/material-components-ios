@@ -50,6 +50,8 @@
   self.progressView.center = CGPointMake(self.view.frame.size.width / 2, 320);
   self.floatingButton.center = CGPointMake(self.view.frame.size.width / 2, 400);
   self.textField.center = CGPointMake(self.view.frame.size.width / 2, 480);
+
+  [[[MDCAppBarTextColorAccessibilityMutator alloc] init] mutate:self.appBar];
 }
 
 - (void)setupAppBar {

@@ -29,6 +29,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
+
+    MDCAppBarTextColorAccessibilityMutator().mutate(appBar)
   }
 
   required init?(coder aDecoder: NSCoder) {

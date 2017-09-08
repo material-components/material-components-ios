@@ -82,13 +82,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.addChildViewController(appBar.headerViewController)
     let appBarFont = UIFont.preferredFont(forTextStyle: .subheadline)
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let colorScheme = appDelegate.colorScheme
-    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: appBar.headerViewController.headerView)
-
     appBar.navigationBar.titleTextAttributes = [
       NSFontAttributeName: appBarFont ]
     appBar.navigationBar.titleAlignment = .center
+
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    MDCAppBarColorThemer.apply(appDelegate.colorScheme, to: self.appBar)
+    MDCAppBarTextColorAccessibilityMutator().mutate(self.appBar)
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -114,6 +114,12 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.colorThemeChanged),
+      name: NSNotification.Name(rawValue: "ColorThemeChangeNotification"),
+      object: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -124,6 +130,21 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
+  }
+
+  func colorThemeChanged(notification: NSNotification) {
+    let colorScheme = notification.userInfo?["colorScheme"]
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
+
+    MDCAppBarColorThemer.apply(appDelegate.colorScheme, to: self.appBar)
+    MDCAppBarTextColorAccessibilityMutator().mutate(self.appBar)
+//    if let backgroundColor = self.headerViewController.headerView.backgroundColor {
+//      self.titleLabel.textColor = MDFTextAccessibility.textColor(onBackgroundColor: backgroundColor, targetTextAlpha: 1, options: .enhancedContrast)
+//    }
+
+
+    self.tableView.reloadData()
   }
 }
 
@@ -376,6 +397,8 @@ extension MDCNodeListViewController {
         contentFrame.size.height = self.view.bounds.size.height - headerSize.height
         container.contentViewController.view.frame = contentFrame
 
+        MDCAppBarColorThemer.apply(appDelegate.colorScheme, to: container.appBar)
+        MDCAppBarTextColorAccessibilityMutator().mutate(container.appBar)
         vc = container
       }
     } else {
