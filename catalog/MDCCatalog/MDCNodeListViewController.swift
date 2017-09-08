@@ -80,7 +80,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     // swiftlint:enable force_cast
 
     self.addChildViewController(appBar.headerViewController)
-    let appBarFont = UIFont.preferredFont(forTextStyle: .subheadline)
+    let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
 
     appBar.navigationBar.titleTextAttributes = [
       NSFontAttributeName: appBarFont ]
@@ -376,7 +376,7 @@ extension MDCNodeListViewController {
       if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
         vc = contentVC
       } else {
-        let appBarFont = UIFont.preferredFont(forTextStyle: .headline)
+        let appBarFont =  UIFont(name: "RobotoMono-Regular", size: 16)
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
         container.appBar.navigationBar.titleAlignment = .center
         container.appBar.navigationBar.titleTextAttributes =
