@@ -46,7 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
                                       primaryLightColor: .init(white: 0.7, alpha: 1),
-                                      primaryDarkColor: .init(white: 0, alpha: 1))
+                                      primaryDarkColor: .init(white: 0, alpha: 1),
+                                      secondaryColor: UIColor(white: 0.8, alpha: 1),
+                                      secondaryLightColor: UIColor(white: 0.9, alpha: 1),
+                                      secondaryDarkColor: UIColor(white: 0.7, alpha: 1))
 
     // Apply color scheme to material design components using component themers.
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
