@@ -77,6 +77,7 @@
   self.tabBar = tabBar;
   self.appBar.headerStackView.bottomBar = self.tabBar;
   [self.appBar.headerStackView setNeedsLayout];
+  [[[MDCAppBarTextColorAccessibilityMutator alloc] init] mutate:self.appBar];
 }
 
 - (void)changeAlignment:(id)sender {

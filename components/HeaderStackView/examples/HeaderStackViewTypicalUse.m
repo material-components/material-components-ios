@@ -34,6 +34,10 @@
   self.stackView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   self.stackView.topBar = self.topView;
   self.stackView.bottomBar = self.navBar;
+  if (![MDCHeaderStackView appearance].backgroundColor) {
+    self.stackView.backgroundColor = UIColor.blackColor;
+  }
+
 
   CGRect frame = self.view.bounds;
   self.stackView.frame = frame;

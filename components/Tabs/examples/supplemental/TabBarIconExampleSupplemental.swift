@@ -58,6 +58,7 @@ extension TabBarIconSwiftExample {
 
     appBar.headerStackView.bottomBar = self.tabBar
     appBar.headerStackView.setNeedsLayout()
+    MDCAppBarTextColorAccessibilityMutator().mutate(appBar)
     return appBar
   }
 

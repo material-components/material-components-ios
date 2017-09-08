@@ -28,6 +28,10 @@ open class HeaderStackViewTypicalUseSwiftExample: HeaderStackViewTypicalUse {
     stackView!.autoresizingMask = .flexibleWidth
     stackView!.topBar = topView
     stackView!.bottomBar = navBar
+    // Don't override UIAppearance themes
+    if (MDCHeaderStackView.appearance().backgroundColor == nil) {
+      stackView!.backgroundColor = .black
+    }
 
     let frame = self.view.bounds
     stackView!.frame = frame

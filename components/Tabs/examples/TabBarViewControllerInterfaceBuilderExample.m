@@ -32,6 +32,8 @@
     [self.storyboard instantiateViewControllerWithIdentifier:@"blue"],
     [self.storyboard instantiateViewControllerWithIdentifier:@"green"],
   ];
+  [self.tabBar setSelectedItemTintColor:nil];
+  [self.tabBar setUnselectedItemTintColor:UIColor.blackColor];
 }
 
 @end

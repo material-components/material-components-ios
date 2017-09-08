@@ -38,6 +38,7 @@
   [super viewDidLoad];
   [self loadTabBar];
   self.appBar.headerStackView.bottomBar = self.tabBar;
+  [[[MDCAppBarTextColorAccessibilityMutator alloc] init] mutate:self.appBar];
 }
 
 #pragma mark - Action

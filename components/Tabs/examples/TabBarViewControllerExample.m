@@ -29,6 +29,9 @@
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   [self setupTabBarColors];
   [self loadTabBar];
+  if (![MDCTabBar appearance].backgroundColor) {
+    self.tabBar.backgroundColor = UIColor.blackColor;
+  }
 }
 
 #pragma mark - Action
