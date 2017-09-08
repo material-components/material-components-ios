@@ -379,6 +379,7 @@ extension MDCNodeListViewController {
         UIBarButtonItem.appearance().setTitleTextAttributes(
           [NSForegroundColorAttributeName: textColor],
           for: UIControlState())
+
         var contentFrame = container.contentViewController.view.frame
         let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
         contentFrame.origin.y = headerSize.height
