@@ -54,7 +54,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
 
-    floatingButton.setImage(UIImage.init(named: "Plus"), for: .normal)
+    floatingButton.setImage(UIImage(named: "Plus"), for: .normal)
 
     view.addSubview(floatingButton)
 

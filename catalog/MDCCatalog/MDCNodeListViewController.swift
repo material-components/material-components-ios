@@ -82,8 +82,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.addChildViewController(appBar.headerViewController)
     let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
 
-    appBar.navigationBar.titleTextAttributes = [
-      NSFontAttributeName: appBarFont ]
+    appBar.navigationBar.titleTextAttributes = [ NSFontAttributeName: appBarFont! ]
     appBar.navigationBar.titleAlignment = .center
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -139,11 +138,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     MDCAppBarColorThemer.apply(appDelegate.colorScheme, to: self.appBar)
     MDCAppBarTextColorAccessibilityMutator().mutate(self.appBar)
-//    if let backgroundColor = self.headerViewController.headerView.backgroundColor {
-//      self.titleLabel.textColor = MDFTextAccessibility.textColor(onBackgroundColor: backgroundColor, targetTextAlpha: 1, options: .enhancedContrast)
-//    }
-
-
     self.tableView.reloadData()
   }
 }
@@ -376,11 +370,10 @@ extension MDCNodeListViewController {
       if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
         vc = contentVC
       } else {
-        let appBarFont =  UIFont(name: "RobotoMono-Regular", size: 16)
+        let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
         container.appBar.navigationBar.titleAlignment = .center
-        container.appBar.navigationBar.titleTextAttributes =
-            [ NSFontAttributeName: appBarFont ]
+        container.appBar.navigationBar.titleTextAttributes = [ NSFontAttributeName: appBarFont! ]
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.

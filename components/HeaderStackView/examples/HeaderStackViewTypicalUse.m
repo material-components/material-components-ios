@@ -38,7 +38,6 @@
     self.stackView.backgroundColor = UIColor.blackColor;
   }
 
-
   CGRect frame = self.view.bounds;
   self.stackView.frame = frame;
   [self.stackView sizeToFit];

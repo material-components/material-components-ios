@@ -30,7 +30,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   let inset = CGFloat(16)
   let node: CBCNode
   var headerViewController: MDCFlexibleHeaderViewController
-  var titleLabel : UILabel
+  var titleLabel: UILabel
   let imageNames = NSMutableArray()
 
   private lazy var inkController: MDCInkTouchController = {
@@ -83,9 +83,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
 
-     MDCFlexibleHeaderColorThemer.apply(appDelegate.colorScheme, toMDCFlexibleHeaderController: self.headerViewController)
+    MDCFlexibleHeaderColorThemer.apply(appDelegate.colorScheme,
+                                       toMDCFlexibleHeaderController: self.headerViewController)
     if let backgroundColor = self.headerViewController.headerView.backgroundColor {
-      self.titleLabel.textColor = MDFTextAccessibility.textColor(onBackgroundColor: backgroundColor, targetTextAlpha: 1, options: .enhancedContrast)
+      self.titleLabel.textColor = MDFTextAccessibility.textColor(onBackgroundColor: backgroundColor,
+                                                                 targetTextAlpha: 1,
+                                                                 options: .enhancedContrast)
     }
 
     collectionView?.collectionViewLayout.invalidateLayout()

@@ -151,14 +151,12 @@ static NSString *const kExampleDetailText =
     cell.accessoryType = MDCCollectionViewCellAccessoryCheckmark;
   }
   if (model.circle) {
-    cell.imageView.image =
-    //80CBC4
-        [self imageWithSize:CGSizeMake(40, 40)
-                      color:[UIColor colorWithRed:(CGFloat)(0x80 / 255.0)
-                                            green:(CGFloat)(0xCB / 255.0)
-                                             blue:(CGFloat)(0xC4 / 255.0)
-                                            alpha:1]
-               cornerRadius:20];
+    cell.imageView.image = [self imageWithSize:CGSizeMake(40, 40)
+                                         color:[UIColor colorWithRed:(CGFloat)(0x80 / 255.0)
+                                                               green:(CGFloat)(0xCB / 255.0)
+                                                                blue:(CGFloat)(0xC4 / 255.0)
+                                                               alpha:1]
+                                  cornerRadius:20];
   }
 
   return cell;
