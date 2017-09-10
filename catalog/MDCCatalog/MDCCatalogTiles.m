@@ -2765,7 +2765,7 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, NSObject<MDCColorScheme> *col
       labelStyle.alignment = NSTextAlignmentCenter;
 
       NSDictionary* labelFontAttributes = @{
-        NSFontAttributeName : [UIFont fontWithName:@"Roboto-Medium" size:11],
+        NSFontAttributeName : [UIFont systemFontOfSize:11 weight: UIFontWeightMedium],
         NSForegroundColorAttributeName : textForeground,
         NSParagraphStyleAttributeName : labelStyle
       };
