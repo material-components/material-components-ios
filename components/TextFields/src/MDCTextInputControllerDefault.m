@@ -512,7 +512,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         self.inlinePlaceholderColor;
   }
   self.textInput.placeholderLabel.textColor = placeholderColor;
-  NSLog(@"%@", placeholderColor);
 }
 
 // Sometimes the text field is not showing the correct layout for its values (like when it's created
