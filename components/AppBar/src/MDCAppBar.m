@@ -286,7 +286,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
   // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
   // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCAppBar class]];
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }

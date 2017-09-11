@@ -23,10 +23,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Accessory Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -111,6 +107,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (void)didSwitch:(id)sender {
   UISwitch *switchControl = sender;
   [self.editor setEditing:switchControl.isOn animated:YES];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Cell Accessory Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

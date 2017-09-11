@@ -58,4 +58,8 @@ extension CollectionsSimpleSwiftDemo {
   class func catalogBreadcrumbs() -> [String] {
     return [ "Collections", "Simple Swift Demo"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
 }

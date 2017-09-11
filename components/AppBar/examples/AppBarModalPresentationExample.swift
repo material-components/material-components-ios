@@ -153,6 +153,11 @@ extension AppBarModalPresentationSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Modal Presentation (Swift)"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+  
   func catalogShouldHideNavigation() -> Bool {
     return true
   }

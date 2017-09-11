@@ -198,6 +198,10 @@
   return @[ @"Navigation Bar", @"Navigation Bar Item Layout" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

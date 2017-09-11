@@ -53,10 +53,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Collections À la carte" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -122,6 +118,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   for (NSIndexPath *indexPath in indexPaths) {
     [_content[indexPath.section] removeObjectAtIndex:indexPath.item];
   }
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Collections À la carte" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

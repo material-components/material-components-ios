@@ -11,26 +11,27 @@
  limitations under the License.
  */
 
-
 import UIKit
-import MaterialComponents
-
-struct MDPalette {
-   static let blue: UIColor = UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0)
-   static let red: UIColor = UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0)
-   static let green: UIColor = UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0)
-   static let yellow: UIColor = UIColor(red: 1.0, green: 0.922, blue: 0.231, alpha: 1.0)
-}
+import MaterialComponents.MaterialActivityIndicator
 
 class ActivityIndicatorSwiftController: UIViewController {
    
+   struct MDCPalette {
+      static let blue: UIColor = UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0)
+      static let red: UIColor = UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0)
+      static let green: UIColor = UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0)
+      static let yellow: UIColor = UIColor(red: 1.0, green: 0.922, blue: 0.231, alpha: 1.0)
+   }
+   
    override func viewDidLoad() {
       super.viewDidLoad()
-      // Do any additional setup after loading the view, typically from a nib.
       
+      view.backgroundColor = .white
+      let width: CGFloat = view.bounds.width / 2
+      let height: CGFloat = view.bounds.height / 2
       
       //Initialize single color progress indicator
-      let frame1: CGRect = CGRect(x: view.bounds.width / 2 - 16, y: view.bounds.height / 2 - 116, width: 32, height: 32)
+      let frame1: CGRect = CGRect(x: width - 16, y: height - 116, width: 32, height: 32)
       let activityIndicator1 = MDCActivityIndicator(frame: frame1)
       view.addSubview(activityIndicator1)
       activityIndicator1.delegate = self
@@ -42,7 +43,7 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator1.startAnimating()
       
       // Initialize indeterminate indicator
-      let frame2: CGRect = CGRect(x: view.bounds.width / 2 - 16, y: view.bounds.height / 2 - 16, width: 32, height: 32)
+      let frame2: CGRect = CGRect(x: width - 16, y: height - 16, width: 32, height: 32)
       let activityIndicator2 = MDCActivityIndicator(frame: frame2)
       view.addSubview(activityIndicator2)
       activityIndicator2.delegate = self
@@ -51,18 +52,18 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator2.startAnimating()
       
       // Initialize multiple color indicator
-      let frame3: CGRect = CGRect(x: view.bounds.width / 2 - 16, y: view.bounds.height / 2 + 84, width: 32, height: 32)
+      let frame3: CGRect = CGRect(x: width - 16, y: height + 84, width: 32, height: 32)
       let activityIndicator3 = MDCActivityIndicator(frame: frame3)
       view.addSubview(activityIndicator3)
       // Pass colors you want to indicator to cycle through
-      activityIndicator3.cycleColors = [MDPalette.blue, MDPalette.red, MDPalette.green, MDPalette.yellow]
+      activityIndicator3.cycleColors = [MDCPalette.blue, MDCPalette.red, MDCPalette.green, MDCPalette.yellow]
       activityIndicator3.delegate = self
       activityIndicator3.indicatorMode = .indeterminate
       activityIndicator3.sizeToFit()
       activityIndicator3.startAnimating()
       
       // Initialize with different radius and stroke with
-      let frame4: CGRect = CGRect(x: view.bounds.width / 2 - 24, y: view.bounds.height / 2 + 176, width: 48, height: 48)
+      let frame4: CGRect = CGRect(x: width - 24, y: height + 176, width: 48, height: 48)
       let activityIndicator4 = MDCActivityIndicator(frame: frame4)
       view.addSubview(activityIndicator4)
       activityIndicator4.delegate = self
@@ -74,8 +75,6 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator4.sizeToFit()
       activityIndicator4.startAnimating()
    }
-   
-   
 }
 
 extension ActivityIndicatorSwiftController : MDCActivityIndicatorDelegate {
@@ -86,5 +85,9 @@ extension ActivityIndicatorSwiftController : MDCActivityIndicatorDelegate {
    // MARK: Catalog by convention
    class func catalogBreadcrumbs() -> [String] {
       return ["Activity Indicator", "Activity Indicator (Swift)"]
+   }
+   
+   class func catalogIsPrimaryDemo() -> Bool {
+      return false
    }
 }

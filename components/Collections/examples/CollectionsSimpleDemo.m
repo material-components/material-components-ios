@@ -26,20 +26,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Simple Demo" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"Material Collections enables a native collection view controller to have Material "
-          "design layout and styling. It also provides editing and extensive customization "
-          "capabilities.";
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = @"Simple Demo";
@@ -81,6 +67,22 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                                                 forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.section][indexPath.item];
   return cell;
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Simple Demo" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
++ (NSString *)catalogDescription {
+  return @"Material Collections enables a native collection view controller to have Material "
+  "design layout and styling. It also provides editing and extensive customization "
+  "capabilities.";
 }
 
 @end

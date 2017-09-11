@@ -29,10 +29,6 @@
   UIButton *_decrementButton;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Page Control with animation block" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -174,6 +170,16 @@
                      _scrollView.contentOffset = offset;
                    }
                    completion:nil];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Page Control", @"Page Control with animation block" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

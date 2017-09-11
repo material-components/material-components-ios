@@ -70,6 +70,10 @@ extension AppBarInterfaceBuilderSwiftExample {
     return "AppBarInterfaceBuilderExampleController"
   }
 
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
   func catalogShouldHideNavigation() -> Bool {
     return true
   }

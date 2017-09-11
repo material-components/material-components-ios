@@ -22,10 +22,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Ink Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -79,6 +75,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     return [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.2];
   }
   return nil;
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Cell Ink Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

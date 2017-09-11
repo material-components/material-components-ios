@@ -76,10 +76,6 @@ static NSString *const kExampleDetailText =
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collection Cells", @"Cell Layout Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -230,6 +226,16 @@ static NSString *const kExampleDetailText =
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return image;
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collection Cells", @"Cell Layout Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

@@ -29,6 +29,10 @@
   return @[ @"Flexible Header", @"Horizontal Paging" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

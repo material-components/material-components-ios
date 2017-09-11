@@ -76,8 +76,6 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
-    // we always hide the navigation bar when we're about to appear.
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 }
@@ -87,6 +85,11 @@ extension AppBarTypicalUseSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "App Bar (Swift)"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+  
   func catalogShouldHideNavigation() -> Bool {
     return true
   }

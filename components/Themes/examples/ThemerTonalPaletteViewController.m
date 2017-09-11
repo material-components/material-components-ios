@@ -124,10 +124,6 @@ static NSString *const kReusableIdentifierItem = @"cell";
   return @[ @"Themes", @"Tonal Palette Example" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Tonal palettes applied to a variety of components for theming.";
-}
-
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
 }

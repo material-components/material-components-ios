@@ -22,15 +22,10 @@ import MaterialComponents
 
 extension HeaderStackViewTypicalUseSwiftExample {
 
-  // (CatalogByConvention)
+  // MARK: - CatalogByConvention
 
   class func catalogBreadcrumbs() -> [String] {
     return [ "Header Stack View", "Header Stack View (Swift)" ]
-  }
-
-  class func catalogDescription() -> String {
-    return "The Header Stack View component is a view that coordinates the layout of two" +
-    "vertically-stacked bar views."
   }
 
   class func catalogIsPrimaryDemo() -> Bool {
@@ -40,5 +35,4 @@ extension HeaderStackViewTypicalUseSwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-
 }

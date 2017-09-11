@@ -104,4 +104,8 @@
   return @"TabBarInterfaceBuilderExample";
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 @end

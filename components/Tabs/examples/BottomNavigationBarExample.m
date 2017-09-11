@@ -103,4 +103,8 @@
   return @[ @"Tab Bar", @"Bottom Navigation" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 @end

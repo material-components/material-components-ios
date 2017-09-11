@@ -90,6 +90,11 @@ extension AppBarImagerySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Imagery (Swift)"]
   }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+  
   func catalogShouldHideNavigation() -> Bool {
     return true
   }

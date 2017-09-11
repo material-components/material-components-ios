@@ -24,10 +24,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSMutableArray *_content;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Separator Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -123,6 +119,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldHideHeaderSeparatorForSection:(NSInteger)section {
   return section == 4;
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Cell Separator Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

@@ -36,8 +36,7 @@
   textFieldName.delegate = self;
   textFieldName.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  self.nameController =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:textFieldName];
+  self.nameController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:textFieldName];
 
   textFieldName.frame = CGRectMake(10, 40, CGRectGetWidth(self.view.bounds) - 20, 0);
 
@@ -48,8 +47,7 @@
   textFieldPhone.delegate = self;
   textFieldPhone.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  self.phoneController =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:textFieldPhone];
+  self.phoneController = [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:textFieldPhone];
 
   textFieldPhone.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20,
                                     CGRectGetWidth(self.view.bounds) - 20, 0);
@@ -154,6 +152,10 @@
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Text Field", @"[Legacy] Manual Layout (Objective C)" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

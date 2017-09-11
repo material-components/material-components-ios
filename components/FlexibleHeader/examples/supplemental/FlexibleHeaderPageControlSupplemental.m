@@ -29,6 +29,10 @@
   return @[ @"Flexible Header", @"Page Control in Flexible Header" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

@@ -25,10 +25,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   UIAlertController *_actionController;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Grid Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -149,6 +145,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   for (NSIndexPath *indexPath in indexPaths) {
     [_content[indexPath.section] removeObjectAtIndex:indexPath.item];
   }
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Grid Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

@@ -144,7 +144,7 @@ class TypographyFontListExampleViewController: UITableViewController {
   ]
 }
 
-// MARK: Catalog by convention
+// MARK: - CatalogByConvention
 extension TypographyFontListExampleViewController {
   class func catalogBreadcrumbs() -> [String] {
     return ["Typography and Fonts", "Typography"]

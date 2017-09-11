@@ -1,4 +1,167 @@
-# 34.0.01
+# 34.0.2
+
+## API Changes
+
+None.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Use explicit class for bundle (#1930)](https://github.com/material-components/material-components-ios/commit/695712da63f18441e5d7c4bbde923f232188bd66) (Brian Moore)
+* [[AnimationTiming | ActivityIndicator] Add swift examples (#1944)](https://github.com/material-components/material-components-ios/commit/7f647e0ee62cafb60220ea3315c36f073979892f) (Cody Weaver)
+
+### AnimationTiming
+
+#### Changes
+
+* [[AnimationTiming | ActivityIndicator] Add swift examples (#1944)](https://github.com/material-components/material-components-ios/commit/7f647e0ee62cafb60220ea3315c36f073979892f) (Cody Weaver)
+
+### AppBar
+
+#### Changes
+
+* [[Bundles] Use explicit class in bundleForClass (#1942)](https://github.com/material-components/material-components-ios/commit/7f4c4e18c594b9b31cca126e313e8db26e1553bf) (Robert Moore)
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### ButtonBar
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Buttons
+
+#### Changes
+
+* [Deprecate subclassing to set cornerRadius and contentEdgeInsets (#1896)](https://github.com/material-components/material-components-ios/commit/395177518777a355457dc0829903e47483420984) (Sam Morrison)
+* [Revert  Deprecate subclassing to set cornerRadius and contentEdgeInsets (#1896) (#1948)](https://github.com/material-components/material-components-ios/commit/0e3b57c785f0c95a32515ed47b72d7205037a1db) (Sam Morrison)
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### CollectionCells
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [[Bundles] Use explicit class in bundleForClass (#1942)](https://github.com/material-components/material-components-ios/commit/7f4c4e18c594b9b31cca126e313e8db26e1553bf) (Robert Moore)
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Dialogs
+
+#### Changes
+
+* [[Bundles] Use explicit class in bundleForClass (#1942)](https://github.com/material-components/material-components-ios/commit/7f4c4e18c594b9b31cca126e313e8db26e1553bf) (Robert Moore)
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Fix broken properties (#1938)](https://github.com/material-components/material-components-ios/commit/720c2e360eebd76fae712edc6ccc5cc45cd101e8) (Sam Morrison)
+* [[Bundles] Use explicit class in bundleForClass (#1942)](https://github.com/material-components/material-components-ios/commit/7f4c4e18c594b9b31cca126e313e8db26e1553bf) (Robert Moore)
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### MaskedTransition
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [- Update the setting of edge insets to use size classes and device type, not just device type (#1933)](https://github.com/material-components/material-components-ios/commit/4551b7b2a12cce9e9d62c85d7174b6c2ea103331) (Justin Shephard)
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### PageControl
+
+#### Changes
+
+* [[Bundles] Use explicit class in bundleForClass (#1942)](https://github.com/material-components/material-components-ios/commit/7f4c4e18c594b9b31cca126e313e8db26e1553bf) (Robert Moore)
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Palettes
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### ProgressView
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### ShadowLayer
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Slider
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Snackbar
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Tabs
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Themes
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+### Typography
+
+#### Changes
+
+* [[Catalog] Verify all examples provide CatalogByConvention methods (#1911)](https://github.com/material-components/material-components-ios/commit/8940d77d6d5ed124a466ecd35717b5c26a03106f) (Robert Moore)
+
+
+# 34.0.1
 
 Hotfix: Fixes Feature Highlight configuration.
 

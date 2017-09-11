@@ -18,10 +18,6 @@
 
 @implementation CollectionsSectionInsetsExample (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Custom Section Insets" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = @"Custom Section Insets";
@@ -54,6 +50,16 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   return [self.content[section] count];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Custom Section Insets" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

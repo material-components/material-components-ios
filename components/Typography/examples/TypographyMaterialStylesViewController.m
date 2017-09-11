@@ -127,14 +127,6 @@
 
 #pragma mark - UITableViewDataSource
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Typography and Fonts", @"Material Font Styles" ];
-}
-
-#pragma mark - UITableViewDelegate
-
-#pragma mark - UITableViewDataSource
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return _strings.count;
 }
@@ -166,4 +158,15 @@
 
   return cell;
 }
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Typography and Fonts", @"Material Font Styles" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 @end

@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "34.0.1"
+  s.version      = "34.0.2"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -21,8 +21,9 @@ Pod::Spec.new do |s|
   #
   # ## Optional properties
   #
-  # resources    		 => If your component has a bundle, add a dictionary mapping from the bundle
-  #                         name to the bundle path. NOTE: Do not use resource_bundle property.
+  # resources        => If your component has a bundle, this property should be an Array 
+  #                     containing the bundle path as a String. 
+  #                     NOTE: Do not use resource_bundle property 
   #
   # # Template subspec
   #

@@ -82,6 +82,10 @@
   return @[ @"App Bar", @"Delegate Forwarding" ];
 }
 
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

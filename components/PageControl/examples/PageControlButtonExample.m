@@ -27,10 +27,6 @@
   NSArray *_pages;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Page Control with Next Button" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -147,6 +143,16 @@
   offset.x = nextPage * CGRectGetWidth(_scrollView.frame);
   [_scrollView setContentOffset:offset animated:YES];
   [_pageControl setCurrentPage:nextPage animated:YES];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Page Control", @"Page Control with Next Button" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

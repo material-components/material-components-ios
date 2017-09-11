@@ -71,10 +71,14 @@
   NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
 }
 
-#pragma mark catalg by convention
+#pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Slider", @"MDCSlider and UISlider Compared" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

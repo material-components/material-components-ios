@@ -138,8 +138,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
-  // comment this line:
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 

@@ -23,10 +23,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSArray *_cellBackgroundColors;
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Color Example" ];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -78,6 +74,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (UIColor *)collectionView:(UICollectionView *)collectionView
     cellBackgroundColorAtIndexPath:(NSIndexPath *)indexPath {
   return _cellBackgroundColors[indexPath.item];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Collections", @"Cell Color Example" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end

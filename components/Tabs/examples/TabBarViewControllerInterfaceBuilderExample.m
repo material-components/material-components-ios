@@ -68,9 +68,4 @@
   return NO;
 }
 
-+ (NSString *)catalogDescription {
-  return @"The tab bar controller is a view controller for switching between views of "
-          "grouped content.";
-}
-
 @end
