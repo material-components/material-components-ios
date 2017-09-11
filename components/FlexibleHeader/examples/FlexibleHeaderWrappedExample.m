@@ -69,7 +69,7 @@
   [super viewDidLoad];
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  self.scrollView.backgroundColor = [UIColor whiteColor];
+  self.scrollView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.scrollView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.view addSubview:self.scrollView];
@@ -80,8 +80,6 @@
   self.fhvc.view.frame = self.view.bounds;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
-
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
 
   [self.scrollView setScrollEnabled:YES];
   [self.scrollView addSubview:self.wrappedViewController.view];

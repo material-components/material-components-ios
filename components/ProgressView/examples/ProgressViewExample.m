@@ -93,7 +93,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = @"Progress View";
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   [self setupProgressViews];
   [self setupLabels];

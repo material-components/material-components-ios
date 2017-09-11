@@ -21,10 +21,6 @@
 #import "MaterialActivityIndicator.h"
 #import "MaterialPalettes.h"
 
-#define MDC_CATALOG_BLACK [UIColor colorWithWhite:0.1f alpha:1]
-#define MDC_CATALOG_GREY  [UIColor colorWithWhite:0.9f alpha:1]
-#define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1]
-
 @interface ActivityIndicatorExample ()
 @end
 
@@ -44,7 +40,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor whiteColor];
 
   // Initialize single color progress indicator
   CGRect defaultRect = CGRectMake(0, 0, 32, 32);

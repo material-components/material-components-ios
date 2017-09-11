@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   MDCTextField *textFieldName = [[MDCTextField alloc] init];
   [self.view addSubview:textFieldName];
 

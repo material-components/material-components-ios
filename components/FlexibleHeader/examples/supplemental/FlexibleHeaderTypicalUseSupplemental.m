@@ -54,7 +54,7 @@
       [self.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.scrollView addSubview:self.exampleView];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 }
 
 - (void)viewDidLayoutSubviews {

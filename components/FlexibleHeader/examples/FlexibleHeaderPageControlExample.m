@@ -69,7 +69,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [super viewDidLoad];
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  self.scrollView.backgroundColor = [UIColor whiteColor];
+  self.scrollView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.scrollView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.view addSubview:self.scrollView];
@@ -81,14 +81,12 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
-
   CGFloat boundsWidth = CGRectGetWidth(self.fhvc.headerView.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.fhvc.headerView.bounds);
 
-  NSArray *pageColors = @[ [UIColor colorWithWhite:0.1 alpha:1],
-                           [UIColor colorWithWhite:0.2 alpha:1],
-                           [UIColor colorWithWhite:0.3 alpha:1]];
+  NSArray *pageColors = @[ [UIColor colorWithWhite:(CGFloat)0.1 alpha:1],
+                           [UIColor colorWithWhite:(CGFloat)0.2 alpha:1],
+                           [UIColor colorWithWhite:(CGFloat)0.3 alpha:1]];
 
 
   // Scroll view configuration

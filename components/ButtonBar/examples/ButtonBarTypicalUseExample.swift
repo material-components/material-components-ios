@@ -23,7 +23,6 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     super.viewDidLoad()
 
     let buttonBar = MDCButtonBar()
-    buttonBar.backgroundColor = self.buttonBarBackgroundColor()
 
     // MDCButtonBar ignores the style of UIBarButtonItem.
     let ignored: UIBarButtonItemStyle = .done
@@ -43,13 +42,6 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     )
 
     let items = [actionItem, secondActionItem]
-
-    // Set the title text attributes before assigning to buttonBar.items
-    // because of https://github.com/material-components/material-components-ios/issues/277
-    for item in items {
-      item.setTitleTextAttributes(self.itemTitleTextAttributes(), for: UIControlState())
-    }
-
     buttonBar.items = items
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
@@ -62,7 +54,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     self.view.addSubview(buttonBar)
 
     // Ensure that the controller's view isn't transparent.
-    view.backgroundColor = UIColor(white: 0.9, alpha:1.0)
+    view.backgroundColor = UIColor(white: 0.9, alpha: 1)
   }
 
   @objc func didTapActionButton(_ sender: Any) {
@@ -89,18 +81,5 @@ extension ButtonBarTypicalUseSwiftExample {
 
   class func catalogIsPrimaryDemo() -> Bool {
     return false
-  }
-}
-
-// MARK: - Typical application code (not Material-specific)
-
-extension ButtonBarTypicalUseSwiftExample {
-  func buttonBarBackgroundColor() -> UIColor {
-    return UIColor(white: 0.1, alpha: 1.0)
-  }
-
-  func itemTitleTextAttributes () -> [String: Any] {
-    let textColor = UIColor(white: 1, alpha: 0.8)
-    return [NSForegroundColorAttributeName: textColor]
   }
 }

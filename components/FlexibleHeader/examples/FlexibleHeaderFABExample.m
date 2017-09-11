@@ -66,7 +66,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [super viewDidLoad];
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  self.scrollView.backgroundColor = [UIColor whiteColor];
+  self.scrollView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.scrollView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.view addSubview:self.scrollView];
@@ -77,8 +77,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   self.fhvc.view.frame = self.view.bounds;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
-
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -89,8 +87,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1]
-                                 forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   self.floatingButton.center = CGPointMake(
       self.view.frame.size.width - self.floatingButton.frame.size.width, kFlexibleHeaderMinHeight);

@@ -119,13 +119,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
                          multiplier: 1.0,
                          constant: 0)
     ])
-
-    let titleColor = UIColor.white
-    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
-
     raisedButton.setTitle("Programmatic", for: .normal)
-    raisedButton.setTitleColor(titleColor, for: .normal)
-    raisedButton.backgroundColor = backgroundColor
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
     raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -138,18 +132,15 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(flatButton)
 
+    floatingButton.setImage(UIImage.init(named: "Plus"), for: .normal)
     floatingButton.sizeToFit()
-    floatingButton.backgroundColor = backgroundColor
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
 
-    let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    floatingButton.layer.addSublayer(floatingPlusShapeLayer)
     innerContainerView.addSubview(floatingButton)
 
-    let storyboardPlusShapeLayer =
-      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
+    storyboardFloating.setImage(UIImage.init(named: "Plus"), for: .normal)
+
 
     let views = [
       "raised": raisedButton,

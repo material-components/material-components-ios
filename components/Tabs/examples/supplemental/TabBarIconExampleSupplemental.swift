@@ -54,17 +54,16 @@ extension TabBarIconSwiftExample {
     let appBar = MDCAppBar()
 
     self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.white
     appBar.headerViewController.headerView.minimumHeight = 76 + 72
-    appBar.headerViewController.headerView.tintColor = MDCPalette.blue.tint500
 
     appBar.headerStackView.bottomBar = self.tabBar
     appBar.headerStackView.setNeedsLayout()
+    MDCAppBarTextColorAccessibilityMutator().mutate(appBar)
     return appBar
   }
 
   func setupExampleViews() {
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     appBar.addSubviewsToParent()
 
@@ -87,7 +86,7 @@ extension TabBarIconSwiftExample {
     scrollView.isScrollEnabled = false
     self.view.addSubview(scrollView)
 
-    scrollView.backgroundColor = UIColor.red
+    scrollView.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     let views = ["scrollView": scrollView, "header": self.appBar.headerStackView]
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[header][scrollView]|",
@@ -116,7 +115,7 @@ extension TabBarIconSwiftExample {
 
     let infoLabel = UILabel(frame: CGRect())
     infoLabel.translatesAutoresizingMaskIntoConstraints = false
-    infoLabel.textColor = UIColor.white
+    infoLabel.textColor = UIColor(white: 0.9, alpha: 1)
     infoLabel.numberOfLines = 0
     infoLabel.text = "Tabs enable content organization at a high level,"
         + " such as switching between views"
@@ -185,7 +184,7 @@ extension TabBarIconSwiftExample {
   func setupStarPage() -> UIView {
     let starPage = UIView(frame: CGRect())
     starPage.translatesAutoresizingMaskIntoConstraints = false
-    starPage.backgroundColor = MDCPalette.lightBlue.tint200
+    starPage.backgroundColor = UIColor(white: 0.9, alpha: 1)
     self.scrollView.addSubview(starPage)
 
     return starPage

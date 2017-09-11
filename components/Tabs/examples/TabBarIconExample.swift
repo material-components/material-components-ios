@@ -53,14 +53,7 @@ class TabBarIconSwiftExample: UIViewController {
                     UITabBarItem(title: "Stars", image: star, tag:0)]
     tabBar.items[1].badgeValue = "1"
 
-    let blue = MDCPalette.blue.tint500
-    tabBar.tintColor = blue
-    tabBar.inkColor = blue
-
-    tabBar.barTintColor = UIColor.white
     tabBar.itemAppearance = .titledImages
-    tabBar.selectedItemTintColor = UIColor.black.withAlphaComponent(0.87)
-    tabBar.unselectedItemTintColor = UIColor.black.withAlphaComponent(0.38)
 
     return tabBar
   }()

@@ -24,6 +24,7 @@
 @import MaterialComponents.MaterialButtons;
 @import MaterialComponents.MaterialPalettes;
 @import MaterialComponents.MaterialTabs;
+@import MaterialComponents.MaterialTypography;
 
 // Exposing selectors defined in the main example class
 @interface TabBarIconExample ()
@@ -65,25 +66,21 @@
       .active = YES;
 
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [self.alignmentButton setBackgroundColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [self.alignmentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.alignmentButton addTarget:self
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupAppBar {
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 
-  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
 
   self.appBar.navigationBar.titleTextAttributes = @{
-    NSForegroundColorAttributeName : [UIColor whiteColor],
-    NSFontAttributeName : [UIFont fontWithName:@"RobotoMono-Regular" size:14]
+    NSFontAttributeName : [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton]
   };
 
   [self.appBar addSubviewsToParent];
@@ -95,7 +92,6 @@
                                       action:@selector(incrementDidTouch:)];
 
   self.navigationItem.rightBarButtonItem = badgeIncrementItem;
-  self.appBar.navigationBar.tintColor = UIColor.whiteColor;
 
   self.title = @"Tabs With Icons";
 }
@@ -130,7 +126,7 @@
   UIView *infoPage = [[UIView alloc] initWithFrame:CGRectZero];
   infoPage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:infoPage];
-  infoPage.backgroundColor = [UIColor whiteColor];
+  infoPage.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;

@@ -24,7 +24,7 @@ static NSString * const kCellIdentifier = @"Cell";
 
 - (void)setupExampleViews:(NSArray *)choices {
   self.choices = choices;
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCellIdentifier];
 }
