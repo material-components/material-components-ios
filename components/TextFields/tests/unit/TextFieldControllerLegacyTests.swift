@@ -29,7 +29,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     controller.characterCountViewMode = .always
     controller.disabledColor = .orange
     controller.isFloatingEnabled = false
-    controller.floatingPlaceholderColor = .purple
+    controller.floatingPlaceholderNormalColor = .purple
     controller.floatingPlaceholderScale = 0.1
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
@@ -44,7 +44,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
       XCTAssertEqual(controller.disabledColor, controllerCopy.disabledColor)
       XCTAssertEqual(controller.isFloatingEnabled, controllerCopy.isFloatingEnabled)
-      XCTAssertEqual(controller.floatingPlaceholderColor, controllerCopy.floatingPlaceholderColor)
+      XCTAssertEqual(controller.floatingPlaceholderNormalColor, controllerCopy.floatingPlaceholderNormalColor)
       XCTAssertEqual(controller.floatingPlaceholderScale, controllerCopy.floatingPlaceholderScale)
       XCTAssertEqual(controller.helperText, controllerCopy.helperText)
       XCTAssertEqual(controller.inlinePlaceholderColor, controllerCopy.inlinePlaceholderColor)
@@ -288,7 +288,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     controller.characterCountViewMode = .always
     controller.disabledColor = .yellow
     controller.isFloatingEnabled = false
-    controller.floatingPlaceholderColor = .purple
+    controller.floatingPlaceholderNormalColor = .purple
     controller.floatingPlaceholderScale = 0.1
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
@@ -310,8 +310,8 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
                    unserializedController?.characterCountViewMode)
     XCTAssertEqual(controller.disabledColor, unserializedController?.disabledColor)
     XCTAssertEqual(controller.isFloatingEnabled, unserializedController?.isFloatingEnabled)
-    XCTAssertEqual(controller.floatingPlaceholderColor,
-                   unserializedController?.floatingPlaceholderColor)
+    XCTAssertEqual(controller.floatingPlaceholderNormalColor,
+                   unserializedController?.floatingPlaceholderNormalColor)
     XCTAssertEqual(controller.floatingPlaceholderScale,
                    unserializedController?.floatingPlaceholderScale)
     XCTAssertEqual(controller.helperText, unserializedController?.helperText)

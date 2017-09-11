@@ -30,18 +30,20 @@
 
 /**
  The color applied to the placeholder when floating. However, when in error state, it will be
- colored with the error color. Only relevent when floatingEnabled = true.
+ colored with the error color and when in active state, it will be colored with the active color.
 
- Default is floatingPlaceholderColorDefault.
+ Only relevent when floatingEnabled = true.
+
+ Default is floatingPlaceholderNormalColorDefault.
  */
-@property(nonatomic, null_resettable, strong) UIColor *floatingPlaceholderColor;
+@property(nonatomic, null_resettable, strong) UIColor *floatingPlaceholderNormalColor;
 
 /**
- Default value for floatingPlaceholderColor.
+ Default value for floatingPlaceholderNormalColor.
 
  Default is black with Material Design hint text opacity (textInput's tint).
  */
-@property(class, nonatomic, null_resettable, strong) UIColor *floatingPlaceholderColorDefault;
+@property(class, nonatomic, null_resettable, strong) UIColor *floatingPlaceholderNormalColorDefault;
 
 /**
  The scale of the the floating placeholder label in comparison to the inline placeholder specified

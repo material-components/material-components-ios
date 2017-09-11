@@ -25,12 +25,12 @@
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toTextInputControllerDefault:(MDCTextInputControllerLegacyDefault *)textInputControllerDefault {
-  textInputControllerDefault.floatingPlaceholderColor = colorScheme.primaryColor;
+  textInputControllerDefault.floatingPlaceholderNormalColor = colorScheme.primaryColor;
   textInputControllerDefault.activeColor = colorScheme.primaryColor;
 }
 
 + (void)applyColorSchemeToAllTextInputControllerDefault:(NSObject<MDCColorScheme> *)colorScheme {
-  MDCTextInputControllerLegacyDefault.floatingPlaceholderColorDefault = colorScheme.primaryColor;
+  MDCTextInputControllerLegacyDefault.floatingPlaceholderNormalColorDefault = colorScheme.primaryColor;
   MDCTextInputControllerLegacyDefault.activeColorDefault = colorScheme.primaryColor;
 }
 
