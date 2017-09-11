@@ -30,7 +30,9 @@
 
 /**
  The color applied to the placeholder when floating. However, when in error state, it will be
- colored with the error color. Only relevent when floatingEnabled = true.
+ colored with the error color and when in active state, it will be colored with the active color.
+
+ Only relevent when floatingEnabled = true.
 
  Default is floatingPlaceholderNormalColorDefault.
  */
