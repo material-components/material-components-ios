@@ -458,7 +458,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor forState:(UIControlState)state {
-  if(shadowColor) {
+  if (shadowColor) {
     _shadowColors[@(state)] = shadowColor;
   } else {
     [_shadowColors removeObjectForKey:@(state)];
