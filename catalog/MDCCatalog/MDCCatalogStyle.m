@@ -19,7 +19,7 @@
 @implementation MDCCatalogStyle
 
 + (UIFont *)headerFont {
-  return [UIFont fontWithName:@"RobotoMono-Regular" size:14];
+  return [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
 }
 + (UIColor *)mdcBlack {
   return [UIColor colorWithWhite:0.1f alpha:1];

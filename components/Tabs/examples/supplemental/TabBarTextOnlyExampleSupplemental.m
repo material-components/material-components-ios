@@ -61,7 +61,7 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   
   self.appBar.navigationBar.titleTextAttributes = @{
       NSForegroundColorAttributeName: [UIColor whiteColor],
-      NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
+      NSFontAttributeName: [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular] };
   [self.appBar addSubviewsToParent];
   
   
