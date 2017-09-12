@@ -287,7 +287,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
     if ((effectiveControlState & UIControlStateDisabled) == UIControlStateDisabled) {
       button.enabled = NO;
       // Disabling a button turns off "highlighted"
-      effectiveControlState = (controlState & ~UIControlStateHighlighted);
+      effectiveControlState = (effectiveControlState & ~UIControlStateHighlighted);
     } else {
       button.enabled = YES;
     }
