@@ -481,7 +481,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualWithAccuracy(button.hitAreaInsets.left,
                              unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
-  NSLog(@"\n%@\n%@", button.underlyingColorHint, unarchivedButton.underlyingColorHint);
   XCTAssertEqualObjects(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button elevationForState:controlState],
