@@ -451,6 +451,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
+
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     [button setBackgroundColor:randomColor() forState:controlState];
     [button setElevation:randomNumber() forState:controlState];
@@ -480,12 +481,13 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualWithAccuracy(button.hitAreaInsets.left,
                              unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
-  XCTAssertEqual(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
+  NSLog(@"\n%@\n%@", button.underlyingColorHint, unarchivedButton.underlyingColorHint);
+  XCTAssertEqualObjects(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button elevationForState:controlState],
                                [unarchivedButton elevationForState:controlState],
                                kEpsilonAccuracy);
-    XCTAssertEqual([button backgroundColorForState:controlState],
+    XCTAssertEqualObjects([button backgroundColorForState:controlState],
                    [unarchivedButton backgroundColorForState:controlState]);
     XCTAssertEqualObjects([button shadowColorForState:controlState],
                           [unarchivedButton shadowColorForState:controlState]);
