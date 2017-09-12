@@ -493,6 +493,31 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+- (void)testDecodeOnUpgradeFromVersionWithoutShadowColors {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    [button setShadowColor:randomColor() forState:controlState];
+  }
+
+  // When
+  id shadowColorsValue = [button valueForKey:@"_shadowColors"];
+  [button setValue:nil forKey:@"_shadowColors"];
+
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:button];
+  [button setValue:shadowColorsValue forKey:@"_shadowColors"];
+  MDCButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+
+  // Then
+  UIColor *normalStateShadowColor = [unarchivedButton shadowColorForState:UIControlStateNormal];
+  XCTAssertNotNil(normalStateShadowColor);
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    XCTAssertEqualObjects(normalStateShadowColor,
+                          [unarchivedButton shadowColorForState:controlState]);
+  }
+}
+
 - (void)testPointInsideWithoutHitAreaInsets {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 50)];

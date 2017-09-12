@@ -237,7 +237,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
   [aCoder encodeObject:_borderColors forKey:MDCButtonBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCButtonBorderWidthsKey];
-  [aCoder encodeObject:_shadowColors forKey:MDCButtonShadowColorsKey];
+  if (_shadowColors) {
+    [aCoder encodeObject:_shadowColors forKey:MDCButtonShadowColorsKey];
+  }
 }
 
 - (void)commonMDCButtonInit {
@@ -270,10 +272,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   shadowLayer.shadowColor = [UIColor blackColor].CGColor;
   shadowLayer.elevation = [self elevationForState:self.state];
 
-  if (!_shadowColors) {
-    _shadowColors = [NSMutableDictionary dictionary];
-    _shadowColors[@(UIControlStateNormal)] = [UIColor colorWithCGColor:shadowLayer.shadowColor];
-  }
+  _shadowColors = [NSMutableDictionary dictionary];
+  _shadowColors[@(UIControlStateNormal)] = [UIColor colorWithCGColor:shadowLayer.shadowColor];
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
