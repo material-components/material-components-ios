@@ -3193,11 +3193,10 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label100Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label100FontAttributes = @{
-      NSFontAttributeName : PalettesFontName,
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label100Style
     };
-
     [@"100" drawInRect:label100Rect withAttributes:label100FontAttributes];
 
     CGRect label200Rect = CGRectMake(
@@ -3211,7 +3210,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label200Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label200FontAttributes = @{
-      NSFontAttributeName : PalettesFontName,
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label200Style
     };
@@ -3229,7 +3228,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label300Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label300FontAttributes = @{
-      NSFontAttributeName : PalettesFontName,
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label300Style
     };
@@ -3247,7 +3246,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label400Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label400FontAttributes = @{
-      NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:PalettesFontPointSize weight:UIFontWeightRegular],
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label400Style
     };
@@ -3265,7 +3264,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label500Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label500FontAttributes = @{
-      NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:PalettesFontPointSize weight:UIFontWeightRegular],
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label500Style
     };
@@ -3283,7 +3282,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label600Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label600FontAttributes = @{
-      NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:PalettesFontPointSize weight:UIFontWeightRegular],
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label600Style
     };
@@ -3301,7 +3300,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label700Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label700FontAttributes = @{
-      NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:PalettesFontPointSize weight:UIFontWeightRegular],
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label700Style
     };
@@ -3319,7 +3318,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label800Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label800FontAttributes = @{
-      NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:PalettesFontPointSize weight:UIFontWeightRegular],
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label800Style
     };
@@ -3337,7 +3336,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label900Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label900FontAttributes = @{
-      NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:PalettesFontPointSize weight:UIFontWeightRegular],
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
       NSForegroundColorAttributeName : textLight,
       NSParagraphStyleAttributeName : label900Style
     };
