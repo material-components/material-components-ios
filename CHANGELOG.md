@@ -1,4 +1,14 @@
-# release-candidate TODO: Replace me with version number. 
+# 35.0.0
+
+## API Changes
+
+### PageControl
+
+* [`[MDCPageControl sizeForNumberOfPages:]` method changed from instance method to class method](https://github.com/material-components/material-components-ios/pull/1960) (Cody Weaver)
+
+### TextFields
+
+* [`[MDCTextInputControllerDefault floatingPlaceholderColor]` renamed to `floatingPlaceholderNormalColor`](https://github.com/material-components/material-components-ios/pull/1963), similarly `floatingPlaceholderColorDefault` and the same for `MDCTextInputControllerLegacyDefault`.
 
 # 34.0.2
 
