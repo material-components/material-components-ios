@@ -20,6 +20,8 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 @import MaterialComponents.MaterialAppBar;
 @import MaterialComponents.MaterialButtons;
 @import MaterialComponents.MaterialPalettes;
@@ -80,10 +82,19 @@
 
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
+   
+   UIFont *font;
+   if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") {
+      font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
+   } else {
+      UIFont* font = [UIFont systemFontOfSize:16];
+      UIFontDescriptor *descriptor = [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+      font = [UIFont fontWithDescriptor:descriptor size:0.0];
+   }
 
   self.appBar.navigationBar.titleTextAttributes = @{
     NSForegroundColorAttributeName : [UIColor whiteColor],
-    NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular]
+    NSFontAttributeName : font
   };
 
   [self.appBar addSubviewsToParent];

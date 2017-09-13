@@ -16,10 +16,19 @@
 
 #import "MDCCatalogStyle.h"
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+
 @implementation MDCCatalogStyle
 
 + (UIFont *)headerFont {
-  return [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
+   if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") {
+     return [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
+   } else {
+    UIFont* font = [UIFont systemFontOfSize:16];
+    UIFontDescriptor *descriptor = [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+    return [UIFont fontWithDescriptor:descriptor size:0.0];
+  }
 }
 + (UIColor *)mdcBlack {
   return [UIColor colorWithWhite:0.1f alpha:1];

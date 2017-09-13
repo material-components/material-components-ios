@@ -50,3 +50,4 @@ void MDCCatalogDrawSwitchTile(CGRect frame, NSObject<MDCColorScheme> *colorSchem
 void MDCCatalogDrawTabsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawTypographyTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+
