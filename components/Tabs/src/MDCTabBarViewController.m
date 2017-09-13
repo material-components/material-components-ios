@@ -27,6 +27,12 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 @implementation MDCTabBarViewController {
   /** For showing/hiding, Animation needs to know where it wants to end up. */
   BOOL _tabBarWantsToBeHidden;
+
+  /**
+   A view for wrapping the bottom TabBar so that the background color can extend below the
+   safeAreaInsets.
+   **/
+  UIView *_tabBarWrapperView;
 }
 
 - (void)viewDidLoad {
@@ -41,7 +47,9 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   tabBar.alignment = MDCTabBarAlignmentJustified;
   tabBar.delegate = self;
   self.tabBar = tabBar;
-  [view addSubview:tabBar];
+  _tabBarWrapperView = [[UIView alloc] init];
+  [_tabBarWrapperView addSubview:tabBar];
+  [self.view addSubview:_tabBarWrapperView];
   [self updateTabBarItems];
 }
 
@@ -192,17 +200,39 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   return nil;
 }
 
+- (void)viewSafeAreaInsetsDidChange {
+  // TODO(rsmoore): Remove check once our minimum target is iOS 11
+  if (@available(iOS 11.0, *)) {
+    [super viewSafeAreaInsetsDidChange];
+  }
+  [self updateLayout];
+}
+
 - (void)updateLayout {
   CGRect bounds = self.view.bounds;
-  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForItemAppearance:_tabBar.itemAppearance];
+  CGFloat tabBarWrapperHeight =
+      [[_tabBar class] defaultHeightForItemAppearance:_tabBar.itemAppearance];
   CGRect currentViewFrame = bounds;
-  CGRect tabBarFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
-                                  bounds.size.width, tabBarHeight);
+  CGRect tabBarWrapperFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
+                                         bounds.size.width, tabBarWrapperHeight);
+  CGRect tabBarFrame = CGRectMake(0, 0, tabBarWrapperFrame.size.width, tabBarWrapperHeight);
+
+  // TODO(rsmoore): Replace check when our minimum supported version is iOS 11
+  if (@available(iOS 11.0, *)) {
+    if ([self positionForBar:_tabBar] == UIBarPositionBottom) {
+      UIEdgeInsets safeAreaInsets = [self.view safeAreaInsets];
+      tabBarWrapperHeight += safeAreaInsets.bottom;
+    }
+  }
   if (!_tabBarWantsToBeHidden) {
-    CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarHeight, CGRectMaxYEdge);
+    CGRectDivide(bounds,
+                 &tabBarWrapperFrame, &currentViewFrame,
+                 tabBarWrapperHeight, CGRectMaxYEdge);
   }
   _tabBar.frame = tabBarFrame;
+  _tabBarWrapperView.frame = tabBarWrapperFrame;
   _selectedViewController.view.frame = currentViewFrame;
+  _tabBarWrapperView.backgroundColor = _tabBar.barTintColor;
 }
 
 #pragma mark -  MDCTabBarDelegate
