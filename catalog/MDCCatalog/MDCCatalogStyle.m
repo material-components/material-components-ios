@@ -16,19 +16,22 @@
 
 #import "MDCCatalogStyle.h"
 
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-
+static inline BOOL isRunningiOS9OrGreater() {
+   static NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+   return [processInfo isOperatingSystemAtLeastVersion:iOS9Version];
+}
 
 @implementation MDCCatalogStyle
 
 + (UIFont *)headerFont {
-   if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") {
-     return [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
+   if (isRunningiOS9OrGreater()) {
+      return [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
    } else {
-    UIFont* font = [UIFont systemFontOfSize:16];
-    UIFontDescriptor *descriptor = [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
-    return [UIFont fontWithDescriptor:descriptor size:0.0];
-  }
+      UIFont* font = [UIFont systemFontOfSize:16];
+      UIFontDescriptor *descriptor = [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+      return [UIFont fontWithDescriptor:descriptor size:0.0];
+   }
 }
 + (UIColor *)mdcBlack {
   return [UIColor colorWithWhite:0.1f alpha:1];
@@ -48,6 +51,8 @@
   }
   return shades;
 }
+
+
 
 
 @end

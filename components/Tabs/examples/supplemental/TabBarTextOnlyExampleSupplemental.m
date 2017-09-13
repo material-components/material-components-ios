@@ -25,7 +25,11 @@
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+static inline BOOL isRunningiOS9OrGreater() {
+   static NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+   return [processInfo isOperatingSystemAtLeastVersion:iOS9Version];
+}
 
 static CGFloat const kStatusBarHeight = 20;
 static CGFloat const kAppBarMinHeight = 56;
@@ -62,7 +66,7 @@ static NSString * const kReusableIdentifierItem = @"Cell";
       kStatusBarHeight + kAppBarMinHeight + kTabBarHeight;
   
   UIFont *font;
-  if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") {
+  if (isRunningiOS9OrGreater()) {
     font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
   } else {
     UIFont* font = [UIFont systemFontOfSize:16];

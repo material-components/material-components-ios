@@ -20,7 +20,11 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+static inline BOOL isRunningiOS9OrGreater() {
+   static NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+   return [processInfo isOperatingSystemAtLeastVersion:iOS9Version];
+}
 
 @import MaterialComponents.MaterialAppBar;
 @import MaterialComponents.MaterialButtons;
@@ -84,7 +88,7 @@
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
    
    UIFont *font;
-   if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") {
+   if (isRunningiOS9OrGreater()) {
       font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
    } else {
       UIFont* font = [UIFont systemFontOfSize:16];
