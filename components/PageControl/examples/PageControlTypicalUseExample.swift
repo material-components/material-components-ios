@@ -50,7 +50,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     for (i, pageColor) in pageColors.enumerated() {
       let pageFrame: CGRect = self.view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
       let page = UILabel.init(frame:pageFrame)
-      page.text = String(format: "Page %zd", i + 1)
+      page.text = "Page \(i + 1)"
       page.font = page.font.withSize(50)
       page.textColor = UIColor.init(white: 0, alpha: 0.8)
       page.backgroundColor = pageColor
