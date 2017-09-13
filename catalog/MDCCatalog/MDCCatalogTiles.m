@@ -3221,7 +3221,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
     label200Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* label200FontAttributes = @{
-      NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:PalettesFontPointSize weight:UIFontWeightRegular],
+      NSFontAttributeName : PalettesFont,
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label200Style
     };
@@ -4115,7 +4115,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   
    UIFont *(^PalettesFont)(void) = ^(void){
       if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") {
-         return [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
+         return [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightMedium];
       } else {
          UIFont* font = [UIFont systemFontOfSize:16];
          UIFontDescriptor *descriptor = [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
@@ -4133,7 +4133,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   CGRect textLabelRect = CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.00000 + 0.5), CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.00000 + 0.5), floor(textFieldGroup.size.width * 0.27433 + 0.09) - floor(textFieldGroup.size.width * 0.00000 + 0.5) + 0.41, floor(textFieldGroup.size.height * 0.70270 + 0.5) - floor(textFieldGroup.size.height * 0.00000 + 0.5));
   NSMutableParagraphStyle* textLabelStyle = [[NSMutableParagraphStyle alloc] init];
   textLabelStyle.alignment = NSTextAlignmentLeft;
-  NSDictionary* textLabelFontAttributes = @{NSFontAttributeName: [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightMedium], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: textLabelStyle};
+  NSDictionary* textLabelFontAttributes = @{NSFontAttributeName: PalettesFont, NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: textLabelStyle};
   
   [@"Text" drawInRect: textLabelRect withAttributes: textLabelFontAttributes];
   
