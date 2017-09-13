@@ -10,6 +10,51 @@
 
 * [`[MDCTextInputControllerDefault floatingPlaceholderColor]` renamed to `floatingPlaceholderNormalColor`](https://github.com/material-components/material-components-ios/pull/1963), similarly `floatingPlaceholderColorDefault` and the same for `MDCTextInputControllerLegacyDefault`.
 
+## Component changes
+
+### BottomSheet
+
+#### Changes
+
+* [Added README (#1946)](https://github.com/material-components/material-components-ios/commit/5e8d4b0fbeac8d4656e855a9816adbbf64b497b7) (Cody Weaver)
+
+### ButtonBar
+
+#### Changes
+
+* [- Update setting of insets to use size classes and device type (#1936)](https://github.com/material-components/material-components-ios/commit/03f9eea0169d195234c6195ca7c563d296844176) (Justin Shephard)
+
+### Dialogs
+
+#### Changes
+
+* [[Dialog] Fix alert controller, title and message take half screen even they are nil (#1931)](https://github.com/material-components/material-components-ios/commit/bd55e33beea576ad5a0643eab4e5848de20b8784) (ruizhao)
+
+### PageControl
+
+#### Changes
+
+* [Updated sizeForNumberOfPages to class method (#1960)](https://github.com/material-components/material-components-ios/commit/f2e89e73b87a7b25b9a3960449017c45e113f92d) (Cody Weaver)
+
+### Snackbar
+
+#### Changes
+
+* [[Catalog] Fix SnackbarOverlayViewExample's use of the OverlayObserver (#1955)](https://github.com/material-components/material-components-ios/commit/6a0a5a62e5c43ef24dae480015c29171acbf102b) (Andrés)
+
+### TextFields
+
+#### Changes
+
+* [Fix for placeholders being colored active when isEditing = NO (#1963)](https://github.com/material-components/material-components-ios/commit/c70d720e9b5fe9bfb35ec14a8c178a531131f18d) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [Use onTintColor when styling UISwitch (#1950)](https://github.com/material-components/material-components-ios/commit/33794f7c1f435ff0b6b9553689d46c716d3db289) (Andrés)
+
+
 # 34.0.2
 
 ## API Changes
