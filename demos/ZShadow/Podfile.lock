@@ -1,6 +1,6 @@
 PODS:
-  - MaterialComponents/ShadowElevations (34.0.2)
-  - MaterialComponents/ShadowLayer (34.0.2)
+  - MaterialComponents/ShadowElevations (35.0.0)
+  - MaterialComponents/ShadowLayer (35.0.0)
 
 DEPENDENCIES:
   - MaterialComponents/ShadowElevations (from `../../`)
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 44db9edded1a9b5c3be5af286bd0b1be47b66b74
+  MaterialComponents: c45311601868f5df6dc307feb4ce24db20ca3e9e
 
 PODFILE CHECKSUM: 238ed9ba58d5e4a3638e6cea92b00109641989f8
 
