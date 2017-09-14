@@ -25,6 +25,12 @@
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
+static inline BOOL isRunningiOS9OrGreater() {
+   static NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+   return [processInfo isOperatingSystemAtLeastVersion:iOS9Version];
+}
+
 static CGFloat const kStatusBarHeight = 20;
 static CGFloat const kAppBarMinHeight = 56;
 static CGFloat const kTabBarHeight = 48;
@@ -59,9 +65,19 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   self.appBar.headerViewController.headerView.maximumHeight =
       kStatusBarHeight + kAppBarMinHeight + kTabBarHeight;
   
+  UIFont *font;
+  if (isRunningiOS9OrGreater()) {
+    font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
+  } else {
+    UIFont* font = [UIFont systemFontOfSize:16];
+    UIFontDescriptor *descriptor =
+        [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+    font = [UIFont fontWithDescriptor:descriptor size:0.0];
+  }
+   
   self.appBar.navigationBar.titleTextAttributes = @{
       NSForegroundColorAttributeName: [UIColor whiteColor],
-      NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
+      NSFontAttributeName: font };
   [self.appBar addSubviewsToParent];
   
   

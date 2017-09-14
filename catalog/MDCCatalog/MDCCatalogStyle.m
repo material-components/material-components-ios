@@ -16,10 +16,23 @@
 
 #import "MDCCatalogStyle.h"
 
+static inline BOOL isRunningiOS9OrGreater() {
+   static NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+   return [processInfo isOperatingSystemAtLeastVersion:iOS9Version];
+}
+
 @implementation MDCCatalogStyle
 
 + (UIFont *)headerFont {
-  return [UIFont fontWithName:@"RobotoMono-Regular" size:14];
+   if (isRunningiOS9OrGreater()) {
+      return [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
+   } else {
+      UIFont* font = [UIFont systemFontOfSize:16];
+      UIFontDescriptor *descriptor =
+          [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+      return [UIFont fontWithDescriptor:descriptor size:0.0];
+   }
 }
 + (UIColor *)mdcBlack {
   return [UIColor colorWithWhite:0.1f alpha:1];
