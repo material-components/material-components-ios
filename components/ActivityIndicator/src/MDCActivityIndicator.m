@@ -432,8 +432,13 @@ static const CGFloat kSingleCycleRotation =
 
   [CATransaction begin];
   {
+    __weak typeof(self) weakSelf = self;
     [CATransaction setCompletionBlock:^{
-      [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.03 * NSEC_PER_SEC)),
+                     dispatch_get_main_queue(), ^{
+          MDCActivityIndicator *strongSelf = weakSelf;
+          [strongSelf strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
+                     });
     }];
 
     // Outer 5-point star detent rotation.
