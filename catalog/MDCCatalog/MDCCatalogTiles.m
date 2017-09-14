@@ -19,7 +19,6 @@
 #import "MaterialThemes.h"
 #import "MDCCatalogTiles.h"
 
-
 UIImage* MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDCColorScheme> *colorScheme) {
   CGFloat scale = [UIScreen mainScreen].scale;
   UIGraphicsBeginImageContextWithOptions(frame.size, false, scale);
@@ -4114,7 +4113,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   CGRect textLabelRect = CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.00000 + 0.5), CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.00000 + 0.5), floor(textFieldGroup.size.width * 0.27433 + 0.09) - floor(textFieldGroup.size.width * 0.00000 + 0.5) + 0.41, floor(textFieldGroup.size.height * 0.70270 + 0.5) - floor(textFieldGroup.size.height * 0.00000 + 0.5));
   NSMutableParagraphStyle* textLabelStyle = [[NSMutableParagraphStyle alloc] init];
   textLabelStyle.alignment = NSTextAlignmentLeft;
-  NSDictionary* textLabelFontAttributes = @{NSFontAttributeName: TextFieldFontName, NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: textLabelStyle};
+  NSDictionary* textLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:TextFieldFontName size:16], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: textLabelStyle};
   
   [@"Text" drawInRect: textLabelRect withAttributes: textLabelFontAttributes];
   
@@ -4122,7 +4121,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   CGRect fieldLabelRect = CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.32579 - 0.11) + 0.61, CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.00000 + 0.5), floor(textFieldGroup.size.width * 0.66870 - 0.12) - floor(textFieldGroup.size.width * 0.32579 - 0.11) + 0.01, floor(textFieldGroup.size.height * 0.70270 + 0.5) - floor(textFieldGroup.size.height * 0.00000 + 0.5));
   NSMutableParagraphStyle* fieldLabelStyle = [[NSMutableParagraphStyle alloc] init];
   fieldLabelStyle.alignment = NSTextAlignmentLeft;
-  NSDictionary* fieldLabelFontAttributes = @{NSFontAttributeName: TextFieldFontName, NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: fieldLabelStyle};
+  NSDictionary* fieldLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:TextFieldFontName size:16], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: fieldLabelStyle};
   
   [@"field" drawInRect: fieldLabelRect withAttributes: fieldLabelFontAttributes];
   

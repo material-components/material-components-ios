@@ -29,7 +29,8 @@ static inline BOOL isRunningiOS9OrGreater() {
       return [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
    } else {
       UIFont* font = [UIFont systemFontOfSize:16];
-      UIFontDescriptor *descriptor = [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+      UIFontDescriptor *descriptor =
+          [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
       return [UIFont fontWithDescriptor:descriptor size:0.0];
    }
 }
@@ -51,8 +52,6 @@ static inline BOOL isRunningiOS9OrGreater() {
   }
   return shades;
 }
-
-
 
 
 @end
