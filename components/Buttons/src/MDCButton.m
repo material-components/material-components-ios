@@ -53,6 +53,8 @@ static NSString *const MDCButtonNontransformedTitlesKey = @"MDCButtonAccessibili
 static NSString *const MDCButtonBorderColorsKey = @"MDCButtonBorderColorsKey";
 static NSString *const MDCButtonBorderWidthsKey = @"MDCButtonBorderWidthsKey";
 
+static NSString *const MDCButtonShadowColorsKey = @"MDCButtonShadowColorsKey";
+
 // Specified in Material Guidelines
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
@@ -106,6 +108,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSMutableDictionary<NSNumber *, UIColor *> *_backgroundColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
+  NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
 
   BOOL _hasCustomDisabledTitleColor;
 
@@ -205,6 +208,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     if ([aDecoder containsValueForKey:MDCButtonNontransformedTitlesKey]) {
       _nontransformedTitles = [aDecoder decodeObjectForKey:MDCButtonNontransformedTitlesKey];
     }
+
+    if ([aDecoder containsValueForKey:MDCButtonShadowColorsKey]) {
+      _shadowColors = [aDecoder decodeObjectForKey:MDCButtonShadowColorsKey];
+    }
   }
   return self;
 }
@@ -230,6 +237,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
   [aCoder encodeObject:_borderColors forKey:MDCButtonBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCButtonBorderWidthsKey];
+  if (_shadowColors) {
+    [aCoder encodeObject:_shadowColors forKey:MDCButtonShadowColorsKey];
+  }
 }
 
 - (void)commonMDCButtonInit {
@@ -261,6 +271,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   shadowLayer.shadowPath = [self boundingPath].CGPath;
   shadowLayer.shadowColor = [UIColor blackColor].CGColor;
   shadowLayer.elevation = [self elevationForState:self.state];
+
+  _shadowColors = [NSMutableDictionary dictionary];
+  _shadowColors[@(UIControlStateNormal)] = [UIColor colorWithCGColor:shadowLayer.shadowColor];
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
@@ -415,6 +428,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self animateButtonToHeightForState:self.state];
   [self updateBorderColor];
   [self updateBorderWidth];
+  [self updateShadowColor];
 }
 
 #pragma mark - Title Uppercasing
@@ -437,6 +451,30 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       [self setTitle:title forState:state];
     }
   }
+}
+
+- (void)updateShadowColor {
+  self.layer.shadowColor = [self shadowColorForState:self.state].CGColor;
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor forState:(UIControlState)state {
+  if (shadowColor) {
+    _shadowColors[@(state)] = shadowColor;
+  } else {
+    [_shadowColors removeObjectForKey:@(state)];
+  }
+
+  if (state == self.state) {
+    [self updateShadowColor];
+  }
+}
+
+- (UIColor *)shadowColorForState:(UIControlState)state {
+  UIColor *shadowColor = _shadowColors[@(state)];
+  if (state != UIControlStateNormal && !shadowColor) {
+    shadowColor = _shadowColors[@(UIControlStateNormal)];
+  }
+  return shadowColor;
 }
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state {
