@@ -103,7 +103,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let titleLabel = UILabel()
     titleLabel.text = self.title!.uppercased()
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
-    titleLabel.font = UIFont(name: "RobotoMono-Regular", size: 14)
+    if #available(iOS 9.0, *) {
+        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
+    } else {
+        titleLabel.font = UIFont().withSize(14)
+    }
     titleLabel.sizeToFit()
     if inset + titleLabel.frame.size.width > containerView.frame.size.width {
       titleLabel.font = MDCTypography.body2Font()

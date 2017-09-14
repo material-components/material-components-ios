@@ -3044,10 +3044,10 @@ void MDCCatalogDrawPageControlTile(CGRect frame, NSObject<MDCColorScheme> *color
   CGColorSpaceRelease(colorSpace);
 }
 
-static NSString* const PalettesFontName = @"RobotoMono-Regular";
-
 void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGFloat PalettesFontPointSize = [UIScreen mainScreen].bounds.size.width / 320 * 7;
+   
+   static NSString* const PalettesFontName = @"RobotoMono-Regular";
 
   UIColor* textDark = colorScheme.primaryColor;
   UIColor* textLight = colorScheme.primaryLightColor;
@@ -3196,7 +3196,6 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
       NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label100Style
     };
-
     [@"100" drawInRect:label100Rect withAttributes:label100FontAttributes];
 
     CGRect label200Rect = CGRectMake(
@@ -4098,12 +4097,11 @@ void MDCCatalogDrawTabsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme)
   CGColorSpaceRelease(colorSpace);
 }
 
-static NSString* const TextFieldFontName = @"RobotoMono-Medium";
-
 void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* fillColor = colorScheme.primaryLightColor;
   UIColor* textForeground = colorScheme.primaryColor;
   
+  static NSString* const TextFieldFontName = @"RobotoMono-Medium";
   
   CGRect textFieldGroup = CGRectMake(CGRectGetMinX(frame) + 24, CGRectGetMinY(frame) + 60, floor((frame.size.width - 24) * 0.85366 + 0.5), floor((frame.size.height - 60) * 0.38947 + 0.5));
   
@@ -4115,7 +4113,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   CGRect textLabelRect = CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.00000 + 0.5), CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.00000 + 0.5), floor(textFieldGroup.size.width * 0.27433 + 0.09) - floor(textFieldGroup.size.width * 0.00000 + 0.5) + 0.41, floor(textFieldGroup.size.height * 0.70270 + 0.5) - floor(textFieldGroup.size.height * 0.00000 + 0.5));
   NSMutableParagraphStyle* textLabelStyle = [[NSMutableParagraphStyle alloc] init];
   textLabelStyle.alignment = NSTextAlignmentLeft;
-  NSDictionary* textLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: TextFieldFontName size: 16], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: textLabelStyle};
+  NSDictionary* textLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:TextFieldFontName size:16], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: textLabelStyle};
   
   [@"Text" drawInRect: textLabelRect withAttributes: textLabelFontAttributes];
   
@@ -4123,7 +4121,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   CGRect fieldLabelRect = CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.32579 - 0.11) + 0.61, CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.00000 + 0.5), floor(textFieldGroup.size.width * 0.66870 - 0.12) - floor(textFieldGroup.size.width * 0.32579 - 0.11) + 0.01, floor(textFieldGroup.size.height * 0.70270 + 0.5) - floor(textFieldGroup.size.height * 0.00000 + 0.5));
   NSMutableParagraphStyle* fieldLabelStyle = [[NSMutableParagraphStyle alloc] init];
   fieldLabelStyle.alignment = NSTextAlignmentLeft;
-  NSDictionary* fieldLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: TextFieldFontName size: 16], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: fieldLabelStyle};
+  NSDictionary* fieldLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:TextFieldFontName size:16], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: fieldLabelStyle};
   
   [@"field" drawInRect: fieldLabelRect withAttributes: fieldLabelFontAttributes];
   

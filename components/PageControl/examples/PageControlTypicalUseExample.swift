@@ -29,10 +29,10 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     view.backgroundColor = UIColor.white
 
     let pageColors = [
-      type(of: self).ColorFromRGB(0x55C4f5),
+      type(of: self).ColorFromRGB(0x55C4F5),
       type(of: self).ColorFromRGB(0x35B7F3),
       type(of: self).ColorFromRGB(0x1EAAF1),
-      type(of: self).ColorFromRGB(0x55C4f5),
+      type(of: self).ColorFromRGB(0x55C4F5),
       type(of: self).ColorFromRGB(0x35B7F3),
       type(of: self).ColorFromRGB(0x1EAAF1)
     ]
