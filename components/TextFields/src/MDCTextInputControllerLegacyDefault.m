@@ -62,8 +62,8 @@ static NSString *const MDCTextInputControllerLegacyDefaultErrorTextKey =
     @"MDCTextInputControllerLegacyDefaultErrorTextKey";
 static NSString *const MDCTextInputControllerLegacyDefaultFloatingEnabledKey =
     @"MDCTextInputControllerLegacyDefaultFloatingEnabledKey";
-static NSString *const MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey =
-    @"MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey";
+static NSString *const MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey =
+    @"MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey";
 static NSString *const MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey =
     @"MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey";
 static NSString *const MDCTextInputControllerLegacyDefaultHelperTextKey =
@@ -116,7 +116,7 @@ static CGFloat _floatingPlaceholderScaleDefault =
 static UIColor *_activeColorDefault;
 static UIColor *_disabledColorDefault;
 static UIColor *_errorColorDefault;
-static UIColor *_floatingPlaceholderColorDefault;
+static UIColor *_floatingPlaceholderNormalColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_leadingUnderlineLabelTextColorDefault;
 static UIColor *_normalColorDefault;
@@ -134,7 +134,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIColor *_activeColor;
   UIColor *_disabledColor;
   UIColor *_errorColor;
-  UIColor *_floatingPlaceholderColor;
+  UIColor *_floatingPlaceholderNormalColor;
   UIColor *_inlinePlaceholderColor;
   UIColor *_leadingUnderlineLabelTextColor;
   UIColor *_normalColor;
@@ -153,8 +153,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *previousLeadingText;
-
-@property(nonatomic, strong) UIColor *previousPlaceholderColor;
 
 @property(nonatomic, strong) UIFont *customLeadingFont;
 @property(nonatomic, strong) UIFont *customPlaceholderFont;
@@ -197,8 +195,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultErrorColorKey];
     _floatingEnabled =
         [aDecoder decodeBoolForKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
-    _floatingPlaceholderColor = [aDecoder
-        decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey];
+    _floatingPlaceholderNormalColor = [aDecoder
+        decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
     _floatingPlaceholderScale = [aDecoder
         decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
     _inlinePlaceholderColor =
@@ -245,8 +243,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerLegacyDefaultErrorTextKey];
   [aCoder encodeBool:self.isFloatingEnabled
               forKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
-  [aCoder encodeObject:self.floatingPlaceholderColor
-                forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderColorKey];
+  [aCoder encodeObject:self.floatingPlaceholderNormalColor
+                forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
   [aCoder encodeObject:self.floatingPlaceholderScale
                 forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
   [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerLegacyDefaultHelperTextKey];
@@ -275,14 +273,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   copy.errorColor = self.errorColor;
   copy.errorText = [self.errorText copy];
   copy.floatingEnabled = self.isFloatingEnabled;
-  copy.floatingPlaceholderColor = self.floatingPlaceholderColor;
+  copy.floatingPlaceholderNormalColor = self.floatingPlaceholderNormalColor;
   copy.floatingPlaceholderScale = self.floatingPlaceholderScale;
   copy.helperText = [self.helperText copy];
   copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
   copy.leadingUnderlineLabelTextColor = self.leadingUnderlineLabelTextColor;
   copy.normalColor = self.normalColor;
   copy.previousLeadingText = [self.previousLeadingText copy];
-  copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy
   copy.trailingUnderlineLabelTextColor = self.trailingUnderlineLabelTextColor;
   copy.underlineViewMode = self.underlineViewMode;
@@ -494,10 +491,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 
   if (self.isPlaceholderUp) {
+    UIColor *nonErrorColor = self.textInput.isEditing ? self.activeColor :
+        self.floatingPlaceholderNormalColor;
     self.textInput.placeholderLabel.textColor =
-        (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
-            ? self.errorColor
-            : self.floatingPlaceholderColor;
+    (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
+        ? self.errorColor : nonErrorColor;
   } else {
     self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
   }
@@ -569,27 +567,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                       constant:destination.x];
     self.placeholderAnimationConstraints = @[ top, leading ];
 
-    self.previousPlaceholderColor = self.textInput.placeholderLabel.textColor;
-
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = floatingPlaceholderScaleTransform;
 
-      self.textInput.placeholderLabel.textColor =
-          (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
-              ? self.errorColor
-              : self.floatingPlaceholderColor;
+      [self updatePlaceholder];
       [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
     };
   } else {
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
 
-      if (self.previousPlaceholderColor) {
-        self.textInput.placeholderLabel.textColor = self.previousPlaceholderColor;
-      } else {
-        self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
-      }
-
+      [self updatePlaceholder];
       [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
     };
   }
@@ -826,29 +814,29 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _errorText = [errorText copy];
 }
 
-- (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
-  if (![_floatingPlaceholderColor isEqual:floatingPlaceholderColor]) {
-    _floatingPlaceholderColor = floatingPlaceholderColor;
+- (void)setFloatingPlaceholderNormalColor:(UIColor *)floatingPlaceholderNormalColor {
+  if (![_floatingPlaceholderNormalColor isEqual:floatingPlaceholderNormalColor]) {
+    _floatingPlaceholderNormalColor = floatingPlaceholderNormalColor;
     [self updatePlaceholder];
   }
 }
 
-- (UIColor *)floatingPlaceholderColor {
-  return _floatingPlaceholderColor ? _floatingPlaceholderColor
-                                   : [self class].floatingPlaceholderColorDefault;
+- (UIColor *)floatingPlaceholderNormalColor {
+  return _floatingPlaceholderNormalColor ? _floatingPlaceholderNormalColor
+                                   : [self class].floatingPlaceholderNormalColorDefault;
 }
 
-+ (UIColor *)floatingPlaceholderColorDefault {
-  if (!_floatingPlaceholderColorDefault) {
-    _floatingPlaceholderColorDefault = MDCTextInputControllerLegacyDefaultActiveColorDefault();
++ (UIColor *)floatingPlaceholderNormalColorDefault {
+  if (!_floatingPlaceholderNormalColorDefault) {
+    _floatingPlaceholderNormalColorDefault = [self class].inlinePlaceholderColorDefault;
   }
-  return _floatingPlaceholderColorDefault;
+  return _floatingPlaceholderNormalColorDefault;
 }
 
-+ (void)setFloatingPlaceholderColorDefault:(UIColor *)floatingPlaceholderColorDefault {
-  _floatingPlaceholderColorDefault = floatingPlaceholderColorDefault
-                                         ? floatingPlaceholderColorDefault
-                                         : MDCTextInputControllerLegacyDefaultActiveColorDefault();
++ (void)setFloatingPlaceholderNormalColorDefault:(UIColor *)floatingPlaceholderNormalColorDefault {
+  _floatingPlaceholderNormalColorDefault = floatingPlaceholderNormalColorDefault
+                                         ? floatingPlaceholderNormalColorDefault
+                                         : [self class].inlinePlaceholderColorDefault;
 }
 
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
@@ -995,10 +983,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {
   _previousLeadingText = [previousLeadingText copy];
-}
-
-- (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
-  _previousPlaceholderColor = previousPlaceholderColor;
 }
 
 - (UIRectCorner)roundedCorners {

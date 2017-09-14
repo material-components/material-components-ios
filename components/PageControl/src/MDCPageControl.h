@@ -113,7 +113,7 @@
 
  @param pageCount The number of pages for which an estimated size should be returned.
  */
-- (CGSize)sizeForNumberOfPages:(NSInteger)pageCount;
++ (CGSize)sizeForNumberOfPages:(NSInteger)pageCount;
 
 #pragma mark UIScrollView interface
 

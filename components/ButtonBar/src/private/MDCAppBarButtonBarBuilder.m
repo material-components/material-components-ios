@@ -123,7 +123,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
       contentInsetsForButton:button
                  layoutHints:layoutHints
              layoutDirection:[buttonBar mdc_effectiveUserInterfaceLayoutDirection]
-          userInterfaceIdiom:[[UIDevice currentDevice] userInterfaceIdiom]];
+                                userInterfaceIdiom:[self usePadInsetsForButtonBar:buttonBar] ?
+                                UIUserInterfaceIdiomPad : UIUserInterfaceIdiomPhone];
 
   // Only add padding to the first item of the button bar.
   if (layoutHints == MDCBarButtonItemLayoutHintsIsFirstButton) {
@@ -152,6 +153,16 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
 #pragma mark - Private
 
+// Used to determine whether or not to apply insets relevant for iPad or use smaller iPhone size
+// Because only widths are affected, we use horizontal size class
+- (BOOL)usePadInsetsForButtonBar:(MDCButtonBar *)buttonBar {
+  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+  if (isPad && buttonBar.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+    return YES;
+  }
+  return NO;
+}
+
 + (UIEdgeInsets)contentInsetsForButton:(MDCButton *)button
                            layoutHints:(MDCBarButtonItemLayoutHints)layoutHints
                        layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection
@@ -167,7 +178,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
     return sum;
   };
 
-  const BOOL isPad = userInterfaceIdiom == UIUserInterfaceIdiomPad;
+  BOOL isPad = userInterfaceIdiom == UIUserInterfaceIdiomPad;
 
   if ([[button currentTitle] length]) {  // Text-only buttons.
     contentInsets = addInsets(contentInsets, kTextOnlyButtonInset);

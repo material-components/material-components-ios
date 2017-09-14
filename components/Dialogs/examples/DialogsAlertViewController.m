@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self loadCollectionView:
-    @[ @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Dynamic Alert"]];
+    @[ @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Dynamic Alert", @"Overpopulated Alert"]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -40,8 +40,10 @@
       [self didTapNondismissingAlert:nil];
       break;
     case 3:
-    default:
       [self didTapDynamicAlert:nil];
+      break;
+    case 4:
+      [self didTapOverpopulatedAlert:nil];
       break;
   }
 }
@@ -182,5 +184,89 @@
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
+
+- (IBAction)didTapOverpopulatedAlert:(id)sender {
+  NSString *messageString =
+      @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+      "urna "
+      "ut nulla. Phasellus elementum lorem sit amet sapien dictum, vel cursus est semper. Aenean "
+      "vel turpis maximus, accumsan dui quis, cursus turpis. Nunc a tincidunt nunc, ut tempus "
+      "libero. Morbi ut orci laoreet, luctus neque nec, rhoncus enim. Cras dui erat, blandit ac "
+      "malesuada vitae, fringilla ac ante. Nullam dui diam, condimentum vitae mi et, dictum "
+      "euismod libero. Aliquam commodo urna vitae massa convallis aliquet.";
+
+  MDCAlertController *materialAlertController =
+      [MDCAlertController alertControllerWithTitle:nil message:messageString];
+  materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"OK"
+                                                   handler:^(MDCAlertAction *action) {
+                                                     NSLog(@"%@", @"OK pressed");
+                                                   }];
+  [materialAlertController addAction:action];
+
+  MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"OK - 2"
+                                                   handler:^(MDCAlertAction *action) {
+                                                     NSLog(@"%@", @"OK pressed");
+                                                   }];
+  [materialAlertController addAction:action2];
+
+  MDCAlertAction *action3 = [MDCAlertAction actionWithTitle:@"OK - 3"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action3];
+  
+  MDCAlertAction *action4 = [MDCAlertAction actionWithTitle:@"OK - 4"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action4];
+  
+  MDCAlertAction *action5 = [MDCAlertAction actionWithTitle:@"OK - 5"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action5];
+
+  MDCAlertAction *action6 = [MDCAlertAction actionWithTitle:@"OK - 6"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action6];
+
+  [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
+
 
 @end
