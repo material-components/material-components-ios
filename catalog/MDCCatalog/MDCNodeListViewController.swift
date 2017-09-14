@@ -84,7 +84,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
     if #available(iOS 9.0, *) {
         appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
     } else {
-        appBarFont = UIFont().withSize(16)
+      let attribute: [String: UIFontDescriptorSymbolicTraits] =
+         [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+      let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+      appBarFont = UIFont(descriptor: descriptor, size: 16)
     }
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -367,7 +370,10 @@ extension MDCNodeListViewController {
         if #available(iOS 9.0, *) {
             appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
         } else {
-            appBarFont = UIFont().withSize(16)
+            let attribute: [String: UIFontDescriptorSymbolicTraits] =
+                [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+            let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+            appBarFont = UIFont(descriptor: descriptor, size: 16)
         }
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
         container.appBar.navigationBar.titleAlignment = .center

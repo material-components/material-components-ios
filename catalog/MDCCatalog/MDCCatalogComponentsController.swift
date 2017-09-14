@@ -106,7 +106,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     if #available(iOS 9.0, *) {
         titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
     } else {
-        titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        let attribute: [String: UIFontDescriptorSymbolicTraits] =
+            [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+        let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+        titleLabel.font = UIFont(descriptor: descriptor, size: 14)
     }
     titleLabel.sizeToFit()
     if inset + titleLabel.frame.size.width > containerView.frame.size.width {
