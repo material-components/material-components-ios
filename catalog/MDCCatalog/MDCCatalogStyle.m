@@ -26,9 +26,9 @@ static inline BOOL isRunningiOS9OrGreater() {
 
 + (UIFont *)headerFont {
    if (isRunningiOS9OrGreater()) {
-      return [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
+      return [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
    } else {
-      UIFont* font = [UIFont systemFontOfSize:16];
+      UIFont* font = [UIFont systemFontOfSize:14];
       UIFontDescriptor *descriptor =
           [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
       return [UIFont fontWithDescriptor:descriptor size:0.0];

@@ -67,9 +67,9 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   
   UIFont *font;
   if (isRunningiOS9OrGreater()) {
-    font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
+    font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
   } else {
-    UIFont* font = [UIFont systemFontOfSize:16];
+    UIFont* font = [UIFont systemFontOfSize:14];
     UIFontDescriptor *descriptor =
         [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
     font = [UIFont fontWithDescriptor:descriptor size:0.0];
