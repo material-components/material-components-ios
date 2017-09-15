@@ -215,9 +215,9 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
                     collectionView:(UICollectionView *)collectionView {
   UIEdgeInsets contentInset = collectionView.contentInset;
   // On the iPhone X, we need to offset
-  if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
+  if ([self.view respondsToSelector:@selector(adjustedContentInset)]) {
     NSMethodSignature *adjustedContentInsetSignature =
-        [[UIScrollView class] instanceMethodSignatureForSelector:@selector(safeAreaInsets)];
+        [[UIScrollView class] instanceMethodSignatureForSelector:@selector(adjustedContentInset)];
     NSInvocation *adjustedContentInsetInvocation =
         [NSInvocation invocationWithMethodSignature:adjustedContentInsetSignature];
     [adjustedContentInsetInvocation setSelector:@selector(adjustedContentInset)];
