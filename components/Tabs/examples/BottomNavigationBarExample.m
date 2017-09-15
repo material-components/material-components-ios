@@ -69,7 +69,7 @@
   barFrame.size = [_bottomNavigationBar sizeThatFits:self.view.bounds.size];
 
   // TODO(rsmoore): Remove this check once we drop support for Xcode 7/8
-#ifdef __IPHONE_11_0
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     bounds = UIEdgeInsetsInsetRect(bounds, self.view.safeAreaInsets);
   }
