@@ -201,10 +201,12 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 }
 
 - (void)viewSafeAreaInsetsDidChange {
-  // TODO(rsmoore): Remove check once our minimum target is iOS 11
+  // TODO(rsmoore): Remove check when we drop Xcode 7/8 support
+#ifdef __IPHONE_11_0
   if (@available(iOS 11.0, *)) {
     [super viewSafeAreaInsetsDidChange];
   }
+#endif
   [self updateLayout];
 }
 
@@ -217,13 +219,15 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
                                          bounds.size.width, tabBarWrapperHeight);
   CGRect tabBarFrame = CGRectMake(0, 0, tabBarWrapperFrame.size.width, tabBarWrapperHeight);
 
-  // TODO(rsmoore): Replace check when our minimum supported version is iOS 11
+  // TODO(rsmoore): Remove check when we drop Xcode 7/8 support
+#ifdef __IPHONE_11_0
   if (@available(iOS 11.0, *)) {
     if ([self positionForBar:_tabBar] == UIBarPositionBottom) {
-      UIEdgeInsets safeAreaInsets = [self.view safeAreaInsets];
-      tabBarWrapperHeight += safeAreaInsets.bottom;
+      tabBarWrapperHeight += self.view.safeAreaInsets.bottom;
     }
   }
+#endif
+
   if (!_tabBarWantsToBeHidden) {
     CGRectDivide(bounds,
                  &tabBarWrapperFrame, &currentViewFrame,
