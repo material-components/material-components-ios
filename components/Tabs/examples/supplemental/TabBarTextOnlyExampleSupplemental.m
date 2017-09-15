@@ -26,9 +26,12 @@
 #import "TabBarTextOnlyExampleSupplemental.h"
 
 static inline BOOL isRunningiOS9OrGreater() {
+#if defined(__IPHONE_9_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0)
    static NSOperatingSystemVersion iOS9Version = {9, 0, 0};
    NSProcessInfo *processInfo = [NSProcessInfo processInfo];
    return [processInfo isOperatingSystemAtLeastVersion:iOS9Version];
+#endif
+   return NO;
 }
 
 static CGFloat const kStatusBarHeight = 20;
@@ -65,15 +68,17 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   self.appBar.headerViewController.headerView.maximumHeight =
       kStatusBarHeight + kAppBarMinHeight + kTabBarHeight;
   
-  UIFont *font;
-  if (isRunningiOS9OrGreater()) {
-    font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
-  } else {
-    UIFont* font = [UIFont systemFontOfSize:14];
-    UIFontDescriptor *descriptor =
-        [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
-    font = [UIFont fontWithDescriptor:descriptor size:0.0];
-  }
+   UIFont *font;
+   if (isRunningiOS9OrGreater()) {
+      font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
+   } else {
+      font = [UIFont systemFontOfSize:14];
+      UIFontDescriptor *descriptor =
+      [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+      if (descriptor) {
+         font = [UIFont fontWithDescriptor:descriptor size:0.0];
+      }
+   }
    
   self.appBar.navigationBar.titleTextAttributes = @{
       NSForegroundColorAttributeName: [UIColor whiteColor],
