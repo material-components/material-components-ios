@@ -77,10 +77,13 @@
   self.navigationItem.rightBarButtonItem = trailingButtonItem;
   self.navigationItem.backBarButtonItem = backButtonItem;
 
-  if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
-    UILayoutGuide *layoutGuide = [self.view performSelector:@selector(safeAreaLayoutGuide)];
+  // TODO(rsmoore): Remove this check when we drop support for Xcode 7/8
+#ifdef __IPHONE_11_0
+  if (@available(iOS 11.0, *)) {
+    UILayoutGuide *layoutGuide = self.view.safeAreaLayoutGuide;
     [layoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
   } else {
+#endif
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
                                  relatedBy:NSLayoutRelationEqual
@@ -89,7 +92,9 @@
                                 multiplier:1.0
                                   constant:0]
         .active = YES;
+#ifdef __IPHONE_11_0
   }
+#endif
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar);
 
   [NSLayoutConstraint

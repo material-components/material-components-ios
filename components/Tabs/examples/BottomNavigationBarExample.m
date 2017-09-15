@@ -68,19 +68,12 @@
   CGRect barFrame = CGRectZero;
   barFrame.size = [_bottomNavigationBar sizeThatFits:self.view.bounds.size];
 
-  // On the iPhone X, we need to offset 
-  if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
-    NSMethodSignature *safeAreaSignature =
-        [[UIView class] instanceMethodSignatureForSelector:@selector(safeAreaInsets)];
-    NSInvocation *safeAreaInvocation =
-        [NSInvocation invocationWithMethodSignature:safeAreaSignature];
-    [safeAreaInvocation setSelector:@selector(safeAreaInsets)];
-    [safeAreaInvocation setTarget:self.view];
-    [safeAreaInvocation invoke];
-    UIEdgeInsets safeAreaInsets;
-    [safeAreaInvocation getReturnValue:&safeAreaInsets];
-    bounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
+  // TODO(rsmoore): Remove this check once we drop support for Xcode 7/8
+#ifdef __IPHONE_11_0
+  if (@available(iOS 11.0, *)) {
+    bounds = UIEdgeInsetsInsetRect(bounds, self.view.safeAreaInsets);
   }
+#endif
   barFrame.origin.y = CGRectGetMaxY(bounds) - barFrame.size.height;
   _bottomNavigationBar.frame = barFrame;
 }
