@@ -202,7 +202,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)viewSafeAreaInsetsDidChange {
   // TODO(rsmoore): Remove check when we drop Xcode 7/8 support
-#ifdef __IPHONE_11_0
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [super viewSafeAreaInsetsDidChange];
   }
@@ -220,7 +220,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   CGRect tabBarFrame = CGRectMake(0, 0, tabBarWrapperFrame.size.width, tabBarWrapperHeight);
 
   // TODO(rsmoore): Remove check when we drop Xcode 7/8 support
-#ifdef __IPHONE_11_0
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     if ([self positionForBar:_tabBar] == UIBarPositionBottom) {
       tabBarWrapperHeight += self.view.safeAreaInsets.bottom;
