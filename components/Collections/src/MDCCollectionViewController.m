@@ -214,17 +214,12 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section
                     collectionView:(UICollectionView *)collectionView {
   UIEdgeInsets contentInset = collectionView.contentInset;
-  // On the iPhone X, we need to offset
-  if ([self.view respondsToSelector:@selector(adjustedContentInset)]) {
-    NSMethodSignature *adjustedContentInsetSignature =
-        [[UIScrollView class] instanceMethodSignatureForSelector:@selector(adjustedContentInset)];
-    NSInvocation *adjustedContentInsetInvocation =
-        [NSInvocation invocationWithMethodSignature:adjustedContentInsetSignature];
-    [adjustedContentInsetInvocation setSelector:@selector(adjustedContentInset)];
-    [adjustedContentInsetInvocation setTarget:collectionView];
-    [adjustedContentInsetInvocation invoke];
-    [adjustedContentInsetInvocation getReturnValue:&contentInset];
+// On the iPhone X, we need to use the offset which might take into account the safe area.
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    contentInset = collectionView.adjustedContentInset;
   }
+#endif
 
   CGFloat bounds = CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, contentInset));
   UIEdgeInsets sectionInsets = [self collectionView:collectionView
