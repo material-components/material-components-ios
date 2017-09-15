@@ -449,22 +449,22 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                            alignment:(UIControlContentVerticalAlignment)alignment {
   switch (alignment) {
     case UIControlContentVerticalAlignmentBottom:
-      return CGRectMake(frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height, frame.size.width,
-                        frame.size.height);
+      return CGRectMake(frame.origin.x, CGRectGetMaxY(bounds) - CGRectGetHeight(frame), CGRectGetWidth(frame),
+                        CGRectGetHeight(frame));
 
     case UIControlContentVerticalAlignmentCenter: {
-      CGFloat centeredY = MDCFloor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
-      return CGRectMake(frame.origin.x, centeredY, frame.size.width, frame.size.height);
+      CGFloat centeredY = MDCFloor((bounds.size.height - CGRectGetHeight(frame)) / 2) + bounds.origin.y;
+      return CGRectMake(frame.origin.x, centeredY, CGRectGetWidth(frame), CGRectGetHeight(frame));
     }
 
     case UIControlContentVerticalAlignmentTop: {
       // The title frame is vertically centered with the back button but will stick to the top of
       // the header regardless of the header's height.
       CGFloat navigationBarCenteredY =
-          MDCFloor(([self intrinsicContentSize].height - frame.size.height) / 2);
+          MDCFloor(([self intrinsicContentSize].height - CGRectGetHeight(frame)) / 2);
       navigationBarCenteredY = MAX(0, navigationBarCenteredY);
-      return CGRectMake(frame.origin.x, navigationBarCenteredY, frame.size.width,
-                        frame.size.height);
+      return CGRectMake(frame.origin.x, navigationBarCenteredY, CGRectGetWidth(frame),
+                        CGRectGetHeight(frame));
     }
 
     case UIControlContentVerticalAlignmentFill: {
@@ -510,12 +510,12 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
       // Place the title as close to the center, shifting it slightly in to the side with more space
       if (leftMidSpaceX >= halfFrameWidth) {
         CGFloat frameMaxX = CGRectGetMinX(rightButtonBar.frame) - titleRightInset;
-        return CGRectMake(frameMaxX - frame.size.width, frame.origin.y, frame.size.width,
-                          frame.size.height);
+        return CGRectMake(frameMaxX - CGRectGetWidth(frame), frame.origin.y, CGRectGetWidth(frame),
+                          CGRectGetHeight(frame));
       }
       if (rightMidSpaceX >= halfFrameWidth) {
         CGFloat frameOriginX = CGRectGetMaxX(leftButtonBar.frame) + titleLeftInset;
-        return CGRectMake(frameOriginX, frame.origin.y, frame.size.width, frame.size.height);
+        return CGRectMake(frameOriginX, frame.origin.y, CGRectGetWidth(frame), CGRectGetHeight(frame));
       }
     }
     // Intentional fall through
