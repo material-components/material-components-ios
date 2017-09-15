@@ -30,6 +30,12 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [super viewDidLoad];
   self.title = @"Simple Demo";
 
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
+#endif
+
   // Register cell class.
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
@@ -81,8 +87,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSString *)catalogDescription {
   return @"Material Collections enables a native collection view controller to have Material "
-  "design layout and styling. It also provides editing and extensive customization "
-  "capabilities.";
+          "design layout and styling. It also provides editing and extensive customization "
+          "capabilities.";
 }
 
 @end

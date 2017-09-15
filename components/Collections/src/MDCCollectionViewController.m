@@ -213,8 +213,20 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section
                     collectionView:(UICollectionView *)collectionView {
-  CGFloat bounds =
-      CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, collectionView.contentInset));
+  UIEdgeInsets contentInset = collectionView.contentInset;
+  // On the iPhone X, we need to offset
+  if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
+    NSMethodSignature *adjustedContentInsetSignature =
+        [[UIScrollView class] instanceMethodSignatureForSelector:@selector(safeAreaInsets)];
+    NSInvocation *adjustedContentInsetInvocation =
+        [NSInvocation invocationWithMethodSignature:adjustedContentInsetSignature];
+    [adjustedContentInsetInvocation setSelector:@selector(adjustedContentInset)];
+    [adjustedContentInsetInvocation setTarget:collectionView];
+    [adjustedContentInsetInvocation invoke];
+    [adjustedContentInsetInvocation getReturnValue:&contentInset];
+  }
+
+  CGFloat bounds = CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, contentInset));
   UIEdgeInsets sectionInsets = [self collectionView:collectionView
                                              layout:collectionView.collectionViewLayout
                              insetForSectionAtIndex:section];
@@ -405,8 +417,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)]
-      && [_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath]) {
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)] &&
+      [_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath]) {
     return;
   }
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];

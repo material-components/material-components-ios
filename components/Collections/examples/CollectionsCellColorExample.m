@@ -26,16 +26,23 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
+#endif
+
   // Register cell class.
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Array of cell background colors.
   _cellBackgroundColors = @[
-    [UIColor colorWithWhite:0 alpha:0.2], [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
-                                                          green:(CGFloat)0xA4 / (CGFloat)255
-                                                           blue:(CGFloat)0xDD / (CGFloat)255
-                                                          alpha:1],
+    [UIColor colorWithWhite:0 alpha:0.2],
+    [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
+                    green:(CGFloat)0xA4 / (CGFloat)255
+                     blue:(CGFloat)0xDD / (CGFloat)255
+                    alpha:1],
     [UIColor whiteColor]
   ];
 
