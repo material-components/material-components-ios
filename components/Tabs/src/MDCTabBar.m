@@ -224,7 +224,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setDisplaysUppercaseTitles:(BOOL)displaysUppercaseTitles {
-  _hasDefaultAlignment = NO;
+  _hasDefaultDisplaysUppercaseTitles = NO;
   _displaysUppercaseTitlesOverride = displaysUppercaseTitles;
   [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
 }
