@@ -139,7 +139,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
 
     stateZip.addSubview(zip)
     zip.delegate = self
-    zipController.helperText = "XXX-XXX-XXXX"
+    zipController.helperText = "XXXXX"
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
