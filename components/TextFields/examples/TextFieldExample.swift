@@ -114,6 +114,7 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerDefault(textInput: name)
     name.delegate = self
+    nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
@@ -137,6 +138,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     stateZip.addSubview(zip)
     zip.delegate = self
+    zipController.helperText = "XXXXX"
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
