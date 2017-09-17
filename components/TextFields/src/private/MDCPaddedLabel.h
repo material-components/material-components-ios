@@ -15,14 +15,28 @@
  */
 
 #import <UIKit/UIKit.h>
+/**
+ Deltas for padding.
 
+ horizontal is the dx and vertical is the dy.
+ */
 struct MDCSymmetricPadding {
   CGFloat horizontal;
   CGFloat vertical;
 };
 
+/** A label with in-frame padding. */
 @interface MDCPaddedLabel : UILabel
 
+/**
+ The padding to be applied.
+
+ The padding is applied the same on each side (left and right both get .horizontal and top and
+ bottom both get .vertical.)
+
+ Both the .horizontal and .vertical will result in a label that's 2 * .horizontal wider and
+ 2 * .vertical taller than a plain UILabel.
+ */
 @property (nonatomic, assign) struct MDCSymmetricPadding padding;
 
 @end
