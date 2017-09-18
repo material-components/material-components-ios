@@ -77,13 +77,19 @@
   self.navigationItem.rightBarButtonItem = trailingButtonItem;
   self.navigationItem.backBarButtonItem = backButtonItem;
 
-  // TODO(rsmoore): Remove this check when we drop support for Xcode 7/8
+  // TODO(rsmoore): Remove this check when we drop support for iOS 8 and can use anchors
+  if ([self.topLayoutGuide respondsToSelector:@selector(bottomAnchor)]) {
+    NSLayoutYAxisAnchor *topLayoutAnchor = self.topLayoutGuide.bottomAnchor;
+    // TODO(rsmoore): Remove this check when we drop support for Xcode 7/8
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    UILayoutGuide *layoutGuide = self.view.safeAreaLayoutGuide;
-    [layoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
-  } else {
+    if (@available(iOS 11.0, *)) {
+      if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
+        topLayoutAnchor = self.view.safeAreaLayoutGuide.topAnchor;
+      }
+    }
 #endif
+     [topLayoutAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
+  }  else {
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
                                  relatedBy:NSLayoutRelationEqual
@@ -92,11 +98,9 @@
                                 multiplier:1.0
                                   constant:0]
         .active = YES;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
-#endif
-  NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar);
 
+  NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar);
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_navigationBar]|"
                                                                   options:0
