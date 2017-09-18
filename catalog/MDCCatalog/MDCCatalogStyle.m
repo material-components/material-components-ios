@@ -16,19 +16,10 @@
 
 #import "MDCCatalogStyle.h"
 
-static inline BOOL isRunningiOS9OrGreater() {
-#if defined(__IPHONE_9_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0)
-   static NSOperatingSystemVersion iOS9Version = {9, 0, 0};
-   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-   return [processInfo isOperatingSystemAtLeastVersion:iOS9Version];
-#endif
-   return NO;
-}
-
 @implementation MDCCatalogStyle
 
 + (UIFont *)headerFont {
-   if (isRunningiOS9OrGreater()) {
+   if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
       return [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
    } else {
       UIFont* font = [UIFont systemFontOfSize:14];
