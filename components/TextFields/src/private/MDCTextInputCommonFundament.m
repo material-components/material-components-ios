@@ -225,6 +225,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
   _textInsetsMode = MDCTextInputTextInsetsModeIfContent;
+  _clearButtonMode = UITextFieldViewModeWhileEditing;
 }
 
 - (void)setupClearButton {
