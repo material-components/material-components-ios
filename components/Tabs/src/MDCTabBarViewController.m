@@ -47,7 +47,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   tabBar.alignment = MDCTabBarAlignmentJustified;
   tabBar.delegate = self;
   self.tabBar = tabBar;
-  _tabBarWrapperView = [[UIView alloc] init];
+  _tabBarWrapperView = [[UIView alloc] initWithFrame:CGRectZero];
   [_tabBarWrapperView addSubview:tabBar];
   [self.view addSubview:_tabBarWrapperView];
   [self updateTabBarItems];
@@ -207,7 +207,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     [super viewSafeAreaInsetsDidChange];
   }
 #endif
-  [self updateLayout];
+  [self.view setNeedsLayout];
 }
 
 - (void)updateLayout {
