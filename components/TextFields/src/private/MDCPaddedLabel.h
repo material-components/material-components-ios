@@ -15,28 +15,22 @@
  */
 
 #import <UIKit/UIKit.h>
+
 /**
- Deltas for padding.
+ A label with in-frame padding.
 
- horizontal is the dx and vertical is the dy.
+ @note This label was created for use with auto layout. If you are using manual layout, test it
+ first. You may need to adjust code around sizeThatFits: etc.
  */
-struct MDCSymmetricPadding {
-  CGFloat horizontal;
-  CGFloat vertical;
-};
-
-/** A label with in-frame padding. */
 @interface MDCPaddedLabel : UILabel
 
 /**
  The padding to be applied.
 
- The padding is applied the same on each side (left and right both get .horizontal and top and
- bottom both get .vertical.)
-
- Both the .horizontal and .vertical will result in a label that's 2 * .horizontal wider and
- 2 * .vertical taller than a plain UILabel.
+ The padding is applied the same on each side (left and right both get the value of
+ .horizontalPadding added to them. This will result in a label that's 2 * .horizontalPadding wider
+ than a plain UILabel.
  */
-@property(nonatomic, assign) struct MDCSymmetricPadding padding;
+@property(nonatomic, assign) CGFloat horizontalPadding;
 
 @end

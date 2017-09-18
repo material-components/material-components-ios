@@ -20,8 +20,8 @@
 
 #pragma mark - Setters
 
-- (void)setPadding:(struct MDCSymmetricPadding)padding {
-  _padding = padding;
+- (void)setHorizontalPadding:(CGFloat)horizontalPadding {
+  _horizontalPadding = horizontalPadding;
 
   [self invalidateIntrinsicContentSize];
 }
@@ -29,7 +29,7 @@
 #pragma mark - UILabel Overrides
 
 - (void)drawTextInRect:(CGRect)rect {
-  [super drawTextInRect:CGRectInset(rect, self.padding.horizontal, self.padding.vertical)];
+  [super drawTextInRect:CGRectInset(rect, self.horizontalPadding, 0)];
 }
 
 #pragma mark - UIView Overrides
@@ -37,8 +37,7 @@
 - (CGSize)intrinsicContentSize {
   CGSize size = [super intrinsicContentSize];
 
-  size.width += self.padding.horizontal * 2.f;
-  size.height += self.padding.vertical * 2.f;
+  size.width += self.horizontalPadding * 2.f;
 
   return size;
 }

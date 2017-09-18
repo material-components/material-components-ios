@@ -65,7 +65,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   CGFloat offset = self.textInput.placeholderLabel.font.lineHeight -
                    self.textInput.placeholderLabel.font.xHeight;
   destination.y = -1 * offset;
-  destination.x -= ((MDCPaddedLabel *)self.textInput.placeholderLabel).padding.horizontal;
+  MDCPaddedLabel *placeholderLabel = (MDCPaddedLabel *)self.textInput.placeholderLabel;
+  destination.x -= placeholderLabel.horizontalPadding;
   return destination;
 }
 
@@ -147,9 +148,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   }
   self.placeholderCenterY.constant = placeholderConstant;
 
-  struct MDCSymmetricPadding padding = ((MDCPaddedLabel *)self.textInput.placeholderLabel).padding;
-  padding.horizontal = MDCTextInputTextFieldOutlinedPlaceholderPadding;
-  ((MDCPaddedLabel *)self.textInput.placeholderLabel).padding = padding;
+  MDCPaddedLabel *placeholderLabel = (MDCPaddedLabel *)self.textInput.placeholderLabel;
+  placeholderLabel.horizontalPadding = MDCTextInputTextFieldOutlinedPlaceholderPadding;
 
   if (!self.placeholderLeading) {
     self.placeholderLeading = [NSLayoutConstraint
@@ -159,7 +159,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
                     toItem:self.textInput
                  attribute:NSLayoutAttributeLeading
                 multiplier:1
-                  constant:MDCTextInputTextFieldOutlinedFullPadding - padding.horizontal];
+                  constant:MDCTextInputTextFieldOutlinedFullPadding -
+                               placeholderLabel.horizontalPadding];
     self.placeholderLeading.priority = UILayoutPriorityDefaultHigh;
     self.placeholderLeading.active = YES;
   }
