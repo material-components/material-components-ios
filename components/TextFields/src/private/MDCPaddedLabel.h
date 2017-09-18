@@ -37,6 +37,6 @@ struct MDCSymmetricPadding {
  Both the .horizontal and .vertical will result in a label that's 2 * .horizontal wider and
  2 * .vertical taller than a plain UILabel.
  */
-@property (nonatomic, assign) struct MDCSymmetricPadding padding;
+@property(nonatomic, assign) struct MDCSymmetricPadding padding;
 
 @end
