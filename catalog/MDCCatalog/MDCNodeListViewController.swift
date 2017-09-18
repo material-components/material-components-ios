@@ -62,22 +62,19 @@ class MDCNodeListViewController: CBCNodeListViewController {
   override init(node: CBCNode) {
     super.init(node: node)
 
+    var childrenNodes = node.children.filter { $0.isExample() }
+
     // Make sure that primary demo appears first
-    let orderedNodes = NSMutableArray()
-    for childNode in node.children {
-      if childNode.isExample() {
-        let isPrimaryDemo = childNode.isPrimaryDemo()
-        if isPrimaryDemo {
-          orderedNodes.insert(childNode, at: 0)
-          componentDescription = childNode.exampleDescription()
-        } else {
-          orderedNodes.add(childNode)
-        }
-      }
+    if let primaryDemoNodeIndex = childrenNodes.index(where: { $0.isPrimaryDemo() }),
+        primaryDemoNodeIndex != 0 {
+      let primaryDemoNode = childrenNodes[primaryDemoNodeIndex]
+      childrenNodes.remove(at: primaryDemoNodeIndex)
+      childrenNodes.insert(primaryDemoNode, at: 0)
     }
-    // swiftlint:disable force_cast
-    node.children =  orderedNodes as NSArray as! [CBCNode]
-    // swiftlint:enable force_cast
+
+    node.children = childrenNodes
+
+    componentDescription = childrenNodes.first?.exampleDescription() ?? ""
 
     self.addChildViewController(appBar.headerViewController)
     let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
