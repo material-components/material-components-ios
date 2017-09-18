@@ -16,10 +16,10 @@
 
 #import "MaterialTextFields.h"
 
+#import "MDCPaddedLabel.h"
 #import "MDCTextInputArt.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCommonFundament.h"
-#import "MDCPaddedLabel.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
