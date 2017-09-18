@@ -29,12 +29,12 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     view.backgroundColor = UIColor.white
 
     let pageColors = [
-      type(of: self).ColorFromRGB(0x55C4f5),
-      type(of: self).ColorFromRGB(0x35B7F3),
-      type(of: self).ColorFromRGB(0x1EAAF1),
-      type(of: self).ColorFromRGB(0x55C4f5),
-      type(of: self).ColorFromRGB(0x35B7F3),
-      type(of: self).ColorFromRGB(0x1EAAF1)
+      MDCPalette.cyan.tint300,
+      MDCPalette.cyan.tint500,
+      MDCPalette.cyan.tint700,
+      MDCPalette.cyan.tint300,
+      MDCPalette.cyan.tint500,
+      MDCPalette.cyan.tint700
     ]
 
     scrollView.frame = self.view.bounds
@@ -50,7 +50,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     for (i, pageColor) in pageColors.enumerated() {
       let pageFrame: CGRect = self.view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
       let page = UILabel.init(frame:pageFrame)
-      page.text = String(format: "Page %zd", i + 1)
+      page.text = "Page \(i + 1)"
       page.font = page.font.withSize(50)
       page.textColor = UIColor.init(white: 0, alpha: 0.8)
       page.backgroundColor = pageColor
