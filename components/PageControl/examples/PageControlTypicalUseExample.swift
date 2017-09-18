@@ -20,47 +20,51 @@ import MaterialComponents.MaterialPageControl
 
 class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
 
+  static let pageColors = [
+    MDCPalette.cyan.tint300,
+    MDCPalette.cyan.tint500,
+    MDCPalette.cyan.tint700,
+    MDCPalette.cyan.tint300,
+    MDCPalette.cyan.tint500,
+    MDCPalette.cyan.tint700
+  ]
+
   let pageControl = MDCPageControl()
   let scrollView = UIScrollView()
-  let pages = NSMutableArray()
+  let pages: [UIView] = PageControlSwiftExampleViewController.pageColors.enumerated().map {
+      enumeration in
+    let (i, pageColor) = enumeration
+    let page = UILabel()
+    page.text = "Page \(i + 1)"
+    page.font = page.font.withSize(50)
+    page.textColor = UIColor.init(white: 0, alpha: 0.8)
+    page.backgroundColor = pageColor
+    page.textAlignment = NSTextAlignment.center
+    page.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin]
+    return page
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.white
 
-    let pageColors = [
-      MDCPalette.cyan.tint300,
-      MDCPalette.cyan.tint500,
-      MDCPalette.cyan.tint700,
-      MDCPalette.cyan.tint300,
-      MDCPalette.cyan.tint500,
-      MDCPalette.cyan.tint700
-    ]
-
     scrollView.frame = self.view.bounds
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     scrollView.delegate = self
     scrollView.isPagingEnabled = true
-    scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pageColors.count),
+    scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pages.count),
                                     height: view.bounds.height)
     scrollView.showsHorizontalScrollIndicator = false
     view.addSubview(scrollView)
 
     // Add pages to scrollView.
-    for (i, pageColor) in pageColors.enumerated() {
-      let pageFrame: CGRect = self.view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
-      let page = UILabel.init(frame:pageFrame)
-      page.text = "Page \(i + 1)"
-      page.font = page.font.withSize(50)
-      page.textColor = UIColor.init(white: 0, alpha: 0.8)
-      page.backgroundColor = pageColor
-      page.textAlignment = NSTextAlignment.center
-      page.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin]
+    for (i, page) in pages.enumerated() {
+      let pageFrame = view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
+      page.frame = pageFrame
       scrollView.addSubview(page)
-      pages.add(page)
     }
 
-    pageControl.numberOfPages = pageColors.count
+    pageControl.numberOfPages = pages.count
 
     let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
     pageControl.frame = CGRect(x: 0,
@@ -78,8 +82,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     super.viewWillLayoutSubviews()
     let pageBeforeFrameChange = pageControl.currentPage
     for (i, page) in pages.enumerated() {
-      let pageLabel: UILabel = page as! UILabel
-      pageLabel.frame = view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
+      page.frame = view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
     }
     scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pages.count),
                                     height: view.bounds.height)
