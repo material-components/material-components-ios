@@ -151,6 +151,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
                                                            attribute:NSLayoutAttributeLeading
                                                           multiplier:1
                                                             constant:MDCTextInputTextFieldOutlinedFullPadding - padding.horizontal];
+    self.placeholderLeading.priority = UILayoutPriorityDefaultHigh;
     self.placeholderLeading.active = YES;
   }
 }
