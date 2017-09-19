@@ -44,11 +44,6 @@ static const CGFloat kBottomBarHeight = 44.0f;
   fabFrame.origin.x = CGRectGetMaxX(self.view.bounds) - CGRectGetWidth(fabFrame) - kFABSideOffset;
   fabFrame.origin.y =
       CGRectGetMaxY(self.view.bounds) - CGRectGetHeight(fabFrame) - kFABBottomOffset;
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11 / 255.0f
-                                                          green:232 / 255.0f
-                                                           blue:94 / 255.0f
-                                                          alpha:1]
-                                 forState:UIControlStateNormal];
   self.floatingButton.frame = fabFrame;
   self.floatingButton.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin);

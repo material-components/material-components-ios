@@ -41,7 +41,7 @@
 
   UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero
                                                         collectionViewLayout:_layout];
-  collectionView.backgroundColor = [UIColor whiteColor];
+  collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   [collectionView registerClass:[DummyCollectionViewCell class]
      forCellWithReuseIdentifier:NSStringFromClass([DummyCollectionViewCell class])];
   collectionView.dataSource = self;

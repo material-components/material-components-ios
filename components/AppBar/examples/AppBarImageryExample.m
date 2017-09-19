@@ -43,12 +43,6 @@
   // The header view does not clip to bounds by default so we ensure that the image is clipped.
   imageView.clipsToBounds = YES;
 
-  // We want navigation bar + status bar tint color to be white, so we set tint color here and
-  // implement -preferredStatusBarStyle.
-  self.appBar.navigationBar.tintColor = [UIColor whiteColor];
-  self.appBar.navigationBar.titleTextAttributes =
-      @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
-
   // Make sure navigation bar background color is clear so the image view is visible.
   self.appBar.navigationBar.backgroundColor = [UIColor clearColor];
 

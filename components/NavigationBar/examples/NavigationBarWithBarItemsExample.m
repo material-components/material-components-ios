@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   self.title = @"With Items";
 
@@ -42,7 +42,6 @@
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];
 
-  [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
       [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
   [mutator mutate:self.navBar];

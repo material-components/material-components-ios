@@ -30,7 +30,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   // Create gray view to contain collection view.
   UIView *container =

@@ -80,15 +80,13 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
-
   UILabel *titleLabel = [[UILabel alloc] init];
   CGRect frame = self.fhvc.headerView.bounds;
   frame.origin.y += 20;
   frame.size.height -= 20;
   titleLabel.frame = frame;
   titleLabel.text = self.title;
-  titleLabel.textColor = [UIColor whiteColor];
+  titleLabel.textColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   titleLabel.font = [UIFont systemFontOfSize:22];
   titleLabel.textAlignment = NSTextAlignmentCenter;
   titleLabel.autoresizingMask =
@@ -146,7 +144,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   self.sections = sections;
   self.sectionTitles = sectionTitles;
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 }
 
 - (UIControl *)controlForControlType:(FlexibleHeaderConfiguratorControlType)controlType {

@@ -68,7 +68,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   navBar.shadowImage = [UIImage new];
   navBar.translucent = YES;
   navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  navBar.tintColor = [UIColor whiteColor];
 
   [self.fhvc.headerView addSubview:navBar];
 
@@ -92,7 +91,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.button addTarget:self
                   action:@selector(didTapButton:)
         forControlEvents:UIControlEventTouchUpInside];
-  self.button.tintColor = [UIColor redColor];
   self.button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.fhvc.headerView addSubview:self.button];
 }
@@ -109,7 +107,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [super viewDidLoad];
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  self.scrollView.backgroundColor = [UIColor whiteColor];
+  self.scrollView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.scrollView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.view addSubview:self.scrollView];
@@ -120,8 +118,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   self.fhvc.view.frame = self.view.bounds;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
-
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

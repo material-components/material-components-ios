@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.title = @"Material Text Fields";
 
   [self setupExampleViews];
@@ -117,7 +117,6 @@
   textFieldFullWidth.placeholder = @"Full Width";
   textFieldFullWidth.delegate = self;
   textFieldFullWidth.clearButtonMode = UITextFieldViewModeUnlessEditing;
-  textFieldFullWidth.backgroundColor = [UIColor whiteColor];
 
   self.textFieldControllerFullWidth =
       [[MDCTextInputControllerLegacyFullWidth alloc] initWithTextInput:textFieldFullWidth];

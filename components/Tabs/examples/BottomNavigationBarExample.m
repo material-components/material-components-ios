@@ -33,12 +33,6 @@
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   _bottomNavigationBar.delegate = self;
 
-  _bottomNavigationBar.barTintColor = [UIColor whiteColor];
-  _bottomNavigationBar.selectedItemTintColor = nil;
-  _bottomNavigationBar.unselectedItemTintColor = [UIColor colorWithWhite:0 alpha:0.50];
-  _bottomNavigationBar.tintColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:0.15];
-
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
       [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];

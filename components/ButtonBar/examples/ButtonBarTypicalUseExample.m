@@ -44,13 +44,6 @@
 
   NSArray *items = @[ actionItem, secondActionItem ];
 
-  // Set the title text attributes before assigning to buttonBar.items
-  // because of https://github.com/material-components/material-components-ios/issues/277
-  for (UIBarButtonItem *item in items) {
-    [item setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
-                        forState:UIControlStateNormal];
-  }
-
   buttonBar.items = items;
 
   // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
@@ -64,7 +57,7 @@
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 }
 
 #pragma mark - User actions

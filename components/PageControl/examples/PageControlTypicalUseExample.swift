@@ -26,7 +26,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     let pageColors = [
       MDCPalette.cyan.tint300,
@@ -52,7 +52,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
       let page = UILabel.init(frame:pageFrame)
       page.text = "Page \(i + 1)"
       page.font = page.font.withSize(50)
-      page.textColor = UIColor.init(white: 0, alpha: 0.8)
+      page.textColor = UIColor(white: 0, alpha: 0.8)
       page.backgroundColor = pageColor
       page.textAlignment = NSTextAlignment.center
       page.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin]
