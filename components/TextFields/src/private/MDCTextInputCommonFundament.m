@@ -16,6 +16,7 @@
 
 #import "MaterialTextFields.h"
 
+#import "MDCPaddedLabel.h"
 #import "MDCTextInputArt.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCommonFundament.h"
@@ -303,7 +304,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setupPlaceholderLabel {
-  _placeholderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _placeholderLabel = [[MDCPaddedLabel alloc] initWithFrame:CGRectZero];
   _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
                                                      forAxis:UILayoutConstraintAxisHorizontal];
