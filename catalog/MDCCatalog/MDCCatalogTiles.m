@@ -3046,7 +3046,6 @@ void MDCCatalogDrawPageControlTile(CGRect frame, NSObject<MDCColorScheme> *color
 
 void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGFloat PalettesFontPointSize = [UIScreen mainScreen].bounds.size.width / 320 * 7;
-   
    static NSString* const PalettesFontName = @"RobotoMono-Regular";
 
   UIColor* textDark = colorScheme.primaryColor;
