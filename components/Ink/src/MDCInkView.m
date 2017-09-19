@@ -81,7 +81,10 @@
 }
 
 - (void)setMaxRippleRadius:(CGFloat)radius {
-  self.inkLayer.maxRippleRadius = radius;
+  if (self.inkLayer.maxRippleRadius != radius) {
+    self.inkLayer.maxRippleRadius = radius;
+    [self setNeedsLayout];
+  }
 }
 
 - (BOOL)usesCustomInkCenter {
