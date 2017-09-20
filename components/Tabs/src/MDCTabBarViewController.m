@@ -27,12 +27,6 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 @implementation MDCTabBarViewController {
   /** For showing/hiding, Animation needs to know where it wants to end up. */
   BOOL _tabBarWantsToBeHidden;
-
-  /**
-   A view for wrapping the bottom TabBar so that the background color can extend below the
-   safeAreaInsets.
-   **/
-  UIView *_tabBarWrapperView;
 }
 
 - (void)viewDidLoad {
@@ -47,14 +41,12 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   tabBar.alignment = MDCTabBarAlignmentJustified;
   tabBar.delegate = self;
   self.tabBar = tabBar;
-  _tabBarWrapperView = [[UIView alloc] initWithFrame:CGRectZero];
-  [_tabBarWrapperView addSubview:tabBar];
-  [self.view addSubview:_tabBarWrapperView];
+  [self.view addSubview:_tabBar];
   [self updateTabBarItems];
 }
 
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
   [self updateLayout];
 }
 
@@ -212,31 +204,41 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)updateLayout {
   CGRect bounds = self.view.bounds;
-  CGFloat tabBarWrapperHeight =
-      [[_tabBar class] defaultHeightForItemAppearance:_tabBar.itemAppearance];
-  CGRect currentViewFrame = bounds;
-  CGRect tabBarWrapperFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
-                                         bounds.size.width, tabBarWrapperHeight);
-  CGRect tabBarFrame = CGRectMake(0, 0, tabBarWrapperFrame.size.width, tabBarWrapperHeight);
-
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
   // TODO(rsmoore): Remove check when we drop Xcode 7/8 support
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     if ([self positionForBar:_tabBar] == UIBarPositionBottom) {
-      tabBarWrapperHeight += self.view.safeAreaInsets.bottom;
+      safeAreaInsets = self.view.safeAreaInsets;
     }
   }
 #endif
+  bounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
+
+  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForItemAppearance:_tabBar.itemAppearance];
+  CGRect currentViewFrame = bounds;
+  CGRect tabBarFrame = CGRectMake(CGRectGetMinX(bounds),
+                                  CGRectGetMinY(bounds) + CGRectGetHeight(bounds),
+                                  CGRectGetWidth(bounds),
+                                  tabBarHeight);
+
 
   if (!_tabBarWantsToBeHidden) {
-    CGRectDivide(bounds,
-                 &tabBarWrapperFrame, &currentViewFrame,
-                 tabBarWrapperHeight, CGRectMaxYEdge);
+    CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarHeight, CGRectMaxYEdge);
+    safeAreaInsets.bottom += tabBarHeight;
   }
   _tabBar.frame = tabBarFrame;
-  _tabBarWrapperView.frame = tabBarWrapperFrame;
   _selectedViewController.view.frame = currentViewFrame;
-  _tabBarWrapperView.backgroundColor = _tabBar.barTintColor;
+  self.view.backgroundColor = _tabBar.barTintColor;
+
+  // Update safeAreaInsets for child view controllers
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    for (UIViewController *childViewController in self.childViewControllers) {
+      childViewController.additionalSafeAreaInsets = safeAreaInsets;
+    }
+  }
+#endif
 }
 
 #pragma mark -  MDCTabBarDelegate
