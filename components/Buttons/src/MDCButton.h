@@ -178,6 +178,44 @@
  */
 - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
+/**
+ Sets this button's layer's shadowColor for the specified control state.
+
+ During initialization, the value for @c UIControlStateNormal is set to the value of this button's
+ layer's @c shadowColor. Providing a @c nil value for @c shadowColor will remove the shadow color
+ mapping for the specified state.
+
+ If the color is not set for a specified state, the default behavior is to use the color associated
+ with @c UIControlStateNormal. If the color for @c UIControlStateNormal is not set, then @c nil will
+ be used.
+
+ @param shadowColor The shadow color to use for the specified state.
+ @param state       The state that uses the specified color. The possible values are described in
+                    @c UIControlState.
+ */
+- (void)setShadowColor:(nullable UIColor *)shadowColor
+              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ The color used as this button's layer's @c shadowColor for the specified control state.
+
+ During initialization, the value for @c UIControlStateNormal is set to the value of this view's
+ layer's @c shadowColor.
+
+ If the color is not set for a specified state, the default behavior is to use the color associated
+ with @c UIControlStateNormal. If the color for @c UIControlStateNormal has not been set, then
+ @c nil is returned.
+
+ @param state The state that uses the shadow color. The possible values are described in
+              @c UIControlState.
+ @return      The shadow color for the specified state. If no shadow color has been set for the
+              specific state, this method returns the shadow color associated with the
+              @c UIControlStateNormal state.
+
+ @return The shadow color.
+ */
+- (nullable UIColor *)shadowColorForState:(UIControlState)state;
+
 #pragma mark - UIButton changes
 
 /**

@@ -54,17 +54,35 @@
     [UIColor colorWithRed:0 green:0 blue:0.5 alpha:1]
   ];
 
+  [self.view addSubview:_bottomNavigationBar];
+
+  [self updateDisplay];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
   CGRect bounds = self.view.bounds;
 
   // Place bar at bottom of view
   CGRect barFrame = CGRectZero;
   barFrame.size = [_bottomNavigationBar sizeThatFits:self.view.bounds.size];
+
+  // On the iPhone X, we need to offset 
+  if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
+    NSMethodSignature *safeAreaSignature =
+        [[UIView class] instanceMethodSignatureForSelector:@selector(safeAreaInsets)];
+    NSInvocation *safeAreaInvocation =
+        [NSInvocation invocationWithMethodSignature:safeAreaSignature];
+    [safeAreaInvocation setSelector:@selector(safeAreaInsets)];
+    [safeAreaInvocation setTarget:self.view];
+    [safeAreaInvocation invoke];
+    UIEdgeInsets safeAreaInsets;
+    [safeAreaInvocation getReturnValue:&safeAreaInsets];
+    bounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
+  }
   barFrame.origin.y = CGRectGetMaxY(bounds) - barFrame.size.height;
   _bottomNavigationBar.frame = barFrame;
-
-  [self.view addSubview:_bottomNavigationBar];
-
-  [self updateDisplay];
 }
 
 #pragma mark - MDCTabBarDelegate
