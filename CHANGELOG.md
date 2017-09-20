@@ -6,10 +6,6 @@
 
 * Added support for colored shadows.
 
-# 35.0.0
-
-## API Changes
-
 ## Component changes
 
 ### Buttons
@@ -55,6 +51,9 @@
 * [Padded label for placeholder for outlined style. (#1993)](https://github.com/material-components/material-components-ios/commit/986e6b2d1903289e7361a3e8c80f31aedcbf7bb5) (Will Larche)
 * [Pinning clear button to top of input. (#2003)](https://github.com/material-components/material-components-ios/commit/2149c01149faf7a6bf8c1ef73a501faf1ac10b7a) (Will Larche)
 
+# 35.0.0
+
+## API Changes
 
 ### PageControl
 
