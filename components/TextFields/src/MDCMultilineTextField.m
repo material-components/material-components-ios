@@ -139,7 +139,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.textColor = _fundament.textColor;
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
   self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
-  self.clearButtonMode = UITextFieldViewModeWhileEditing;
 
   self.editable = YES;
 

@@ -29,7 +29,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   let inset = CGFloat(16)
   let node: CBCNode
   var headerViewController: MDCFlexibleHeaderViewController
-  let imageNames = NSMutableArray()
 
   private lazy var inkController: MDCInkTouchController = {
     let controller = MDCInkTouchController(view: self.collectionView!)

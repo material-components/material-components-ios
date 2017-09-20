@@ -16,6 +16,7 @@
 
 #import "MaterialTextFields.h"
 
+#import "MDCPaddedLabel.h"
 #import "MDCTextInputArt.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCommonFundament.h"
@@ -81,6 +82,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
 
+@property(nonatomic, strong) NSLayoutConstraint *clearButtonCenterY;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
 @property(nonatomic, strong) NSLayoutConstraint *leadingUnderlineLeading;
@@ -225,6 +227,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
   _textInsetsMode = MDCTextInputTextInsetsModeIfContent;
+  _clearButtonMode = UITextFieldViewModeWhileEditing;
 }
 
 - (void)setupClearButton {
@@ -263,15 +266,19 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                     constant:MDCTextInputClearButtonImageSquareWidthHeight];
   self.clearButtonWidth.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint *bottom = [NSLayoutConstraint
+  UIEdgeInsets insets = [self textInsets];
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat centerYConstant = insets.top +
+      (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2.f;
+  self.clearButtonCenterY = [NSLayoutConstraint
       constraintWithItem:_clearButton
-               attribute:NSLayoutAttributeBottom
+               attribute:NSLayoutAttributeCenterY
                relatedBy:NSLayoutRelationEqual
-                  toItem:self.underline
+                  toItem:_textInput
                attribute:NSLayoutAttributeTop
               multiplier:1
-                constant:-1 * MDCTextInputHalfPadding + MDCTextInputClearButtonImageBuiltInPadding];
-  bottom.priority = UILayoutPriorityDefaultLow;
+                constant:centerYConstant];
+  self.clearButtonCenterY.priority = UILayoutPriorityDefaultLow;
 
   self.placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                           attribute:NSLayoutAttributeTrailing
@@ -290,11 +297,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                attribute:NSLayoutAttributeTrailing
               multiplier:1
                 constant:-1 *
-                         (MDCTextInputClearButtonImageBuiltInPadding + [self textInsets].right)];
+                         (MDCTextInputClearButtonImageBuiltInPadding + insets.right)];
   self.clearButtonTrailing.priority = UILayoutPriorityDefaultLow;
 
   [NSLayoutConstraint activateConstraints:@[
-    height, self.clearButtonWidth, bottom, self.placeholderLeading, self.clearButtonTrailing
+    height, self.clearButtonWidth, self.clearButtonCenterY, self.placeholderLeading,
+    self.clearButtonTrailing
   ]];
 
   [_clearButton addTarget:self
@@ -303,7 +311,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setupPlaceholderLabel {
-  _placeholderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _placeholderLabel = [[MDCPaddedLabel alloc] initWithFrame:CGRectZero];
   _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
                                                      forAxis:UILayoutConstraintAxisHorizontal];
@@ -533,8 +541,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self.textInput invalidateIntrinsicContentSize];
   }
 
+  UIEdgeInsets insets = [self textInsets];
+  
   self.clearButtonTrailing.constant =
-      MDCTextInputClearButtonImageBuiltInPadding - [self textInsets].right;
+      MDCTextInputClearButtonImageBuiltInPadding - insets.right;
+  CGFloat scale = UIScreen.mainScreen.scale;
+  CGFloat centerYConstant = insets.top +
+      (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2.f;
+  self.clearButtonCenterY.constant = centerYConstant;
 }
 
 - (CGFloat)clearButtonAlpha {
