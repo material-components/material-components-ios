@@ -1,8 +1,60 @@
-# release-candidate TODO: Replace me with version number. 
+# 35.1.0
+
+## API Changes
+
+### Shadows
+
+* Added support for colored shadows.
 
 # 35.0.0
 
 ## API Changes
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Support colored shadows (#1965)](https://github.com/material-components/material-components-ios/commit/d19632cf0feec7cb9df5a86dc13b847c676958c8) (Robert Moore)
+
+### Ink
+
+#### Changes
+
+* [Call setNeedsLayout on max ripple radius change. (#2011)](https://github.com/material-components/material-components-ios/commit/c7bb4319e1b1b59094b59499ac8682baaf277e4b) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Use CGRectGet instead of accessing properties (#1991)](https://github.com/material-components/material-components-ios/commit/78a1b06e589df5b9259f01eaecaa1fd73fd56433) (Cody Weaver)
+
+### PageControl
+
+#### Changes
+
+* [Fix bad indicator state when changing numberOfPages. (#1997)](https://github.com/material-components/material-components-ios/commit/c5988c9e0b5b56764b26166a9869ce7398ba8f95) (Moshe Kolodny)
+* [Switch NSMutableArray to Swift Array. (#1998)](https://github.com/material-components/material-components-ios/commit/9b0a1dbc3cf8ecb2045de7cc4696a8e6d65ad0f6) (Moshe Kolodny)
+* [Update swift example (#1979)](https://github.com/material-components/material-components-ios/commit/397a993ca29b2f64effa48edf0e2a646c7edbd09) (Cody Weaver)
+
+### Tabs
+
+#### Changes
+
+* [[Catalog] Bottom Navigation example should use safeAreaInsets (#1976)](https://github.com/material-components/material-components-ios/commit/601789c8c9ee2ae81fa742dfabfce3a801e5b01b) (Robert Moore)
+* [fix uppercase title override (#1992)](https://github.com/material-components/material-components-ios/commit/688c26cb6a54825f2462a90de4ebce6932bb73cf) (Elliot Schrock)
+
+### TextFields
+
+#### Changes
+
+* [Adding helper text to examples. (#1994)](https://github.com/material-components/material-components-ios/commit/0d227f32119a2da2fb6d5693ca73fd0e8e69e6e6) (Will Larche)
+* [Clear button mode correction. (#2002)](https://github.com/material-components/material-components-ios/commit/f8ee76c23b5980273c419b460abd0452f83384db) (Will Larche)
+* [Objective-c example for outlined (#2001)](https://github.com/material-components/material-components-ios/commit/587ca2e95258602f1669a732d632e37fe900f4af) (Will Larche)
+* [Padded label for placeholder for outlined style. (#1993)](https://github.com/material-components/material-components-ios/commit/986e6b2d1903289e7361a3e8c80f31aedcbf7bb5) (Will Larche)
+* [Pinning clear button to top of input. (#2003)](https://github.com/material-components/material-components-ios/commit/2149c01149faf7a6bf8c1ef73a501faf1ac10b7a) (Will Larche)
+
 
 ### PageControl
 
