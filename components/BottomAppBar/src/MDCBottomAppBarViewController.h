@@ -26,10 +26,10 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 };
 
 /**
- A material design bottom bar.
+ A bottom app bar with an embedded floating button.
 
- The bottom bar is a bar docked at the bottom of the screen. A floating action button is provided
- for a primary action.
+ The bottom app bar is a bar docked at the bottom of the screen. A floating action button is
+ provided for a primary action.
  */
 @interface MDCBottomAppBarViewController : UIViewController
 
