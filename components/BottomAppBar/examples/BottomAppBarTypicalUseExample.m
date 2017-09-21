@@ -88,7 +88,8 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The bottom app bar is a bar docked at the bottom of the screen.";
+  return @"The bottom app bar is a bar docked at the bottom of the screen that has a floating "
+         @"action button and can provide navigation.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
