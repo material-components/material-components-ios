@@ -32,9 +32,9 @@ static inline CGFloat MDCFabs(CGFloat value) {
 
 static inline CGFloat MDCDegreesToRadians(CGFloat degrees) {
 #if CGFLOAT_IS_DOUBLE
-  return degrees * M_PI / 180.0;
+  return degrees * (CGFloat)M_PI / 180.0;
 #else
-  return degrees * M_PI / 180.f;
+  return degrees * (CGFloat)M_PI / 180.f;
 #endif
 }
 
