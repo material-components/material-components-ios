@@ -77,7 +77,15 @@ class MDCNodeListViewController: CBCNodeListViewController {
     componentDescription = childrenNodes.first?.exampleDescription() ?? ""
 
     self.addChildViewController(appBar.headerViewController)
-    let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
+    let appBarFont: UIFont
+    if #available(iOS 9.0, *) {
+        appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+    } else {
+      let attribute: [String: UIFontDescriptorSymbolicTraits] =
+         [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+      let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+      appBarFont = UIFont(descriptor: descriptor, size: 16)
+    }
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
@@ -86,7 +94,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
-      NSFontAttributeName: appBarFont! ]
+      NSFontAttributeName: appBarFont ]
     appBar.navigationBar.titleAlignment = .center
   }
 
@@ -355,12 +363,20 @@ extension MDCNodeListViewController {
       if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
         vc = contentVC
       } else {
-        let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
+        let appBarFont: UIFont
+        if #available(iOS 9.0, *) {
+            appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+        } else {
+            let attribute: [String: UIFontDescriptorSymbolicTraits] =
+                [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+            let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+            appBarFont = UIFont(descriptor: descriptor, size: 16)
+        }
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
         container.appBar.navigationBar.titleAlignment = .center
         container.appBar.navigationBar.tintColor = UIColor.white
         container.appBar.navigationBar.titleTextAttributes =
-            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont! ]
+            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.
