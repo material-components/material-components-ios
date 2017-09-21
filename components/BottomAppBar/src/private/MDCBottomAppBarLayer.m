@@ -27,12 +27,13 @@
   layer.shadowColor = [UIColor blackColor].CGColor;
 
   // TODO(#2018): These shadow attributes will be updated once specs are finalized.
+  CGFloat scale = UIScreen.mainScreen.scale;
   layer.shadowOpacity = 0.4f;
   layer.shadowRadius = 4.f;
   layer.shadowOffset = CGSizeMake(0, 2.f);
   layer.needsDisplayOnBoundsChange = YES;
-  layer.contentsScale = 1.f;
-  layer.rasterizationScale = 1.f;
+  layer.contentsScale = scale;
+  layer.rasterizationScale = scale;
   layer.shouldRasterize = YES;
   return layer;
 }
