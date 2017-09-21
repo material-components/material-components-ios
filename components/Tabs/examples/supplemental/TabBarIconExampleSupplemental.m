@@ -268,7 +268,7 @@
   return UIStatusBarStyleLightContent;
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size
+- (void)viewWillTransitionToSize:(__unused CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [coordinator animateAlongsideTransition:
       ^(__unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
