@@ -80,10 +80,22 @@
 
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
+   
+   UIFont *font;
+   if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
+      font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
+   } else {
+      font = [UIFont systemFontOfSize:14];
+      UIFontDescriptor *descriptor =
+          [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+      if (descriptor) {
+         font = [UIFont fontWithDescriptor:descriptor size:0.0];
+      }
+   }
 
   self.appBar.navigationBar.titleTextAttributes = @{
     NSForegroundColorAttributeName : [UIColor whiteColor],
-    NSFontAttributeName : [UIFont fontWithName:@"RobotoMono-Regular" size:14]
+    NSFontAttributeName : font
   };
 
   [self.appBar addSubviewsToParent];
