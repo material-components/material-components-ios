@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
 
 - (void)setupBottomBarView {
   self.cutView = [[MDCBottomAppBarCutView alloc] initWithFrame:self.bounds];
-  [self addSubview:_cutView];
+  [self addSubview:self.cutView];
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                            UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
@@ -85,11 +85,9 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
 }
 
 - (CGPoint)getFloatingButtonCenterPositionForWidth:(CGFloat)width {
-
   CGPoint floatingButtonPoint = CGPointZero;
   CGFloat halfDefaultDimension = CGRectGetMidX(self.floatingButton.bounds);
   CGFloat midX = width / 2;
-
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
       if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
@@ -168,11 +166,11 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
 - (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag {
   if (flag) {
     [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
-    NSString *animKeyString = [animation valueForKey:kMDCBottomAppBarViewAnimKeyString];
-    if ([animKeyString isEqualToString:kMDCBottomAppBarViewPathString]) {
-      [self.bottomBarLayer removeAllAnimations];
-    } else if ([animKeyString isEqualToString:kMDCBottomAppBarViewPositionString]) {
-      [self.floatingButton.layer removeAllAnimations];
+    NSString *animValueForKeyString = [animation valueForKey:kMDCBottomAppBarViewAnimKeyString];
+    if ([animValueForKeyString isEqualToString:kMDCBottomAppBarViewPathString]) {
+      [self.bottomBarLayer removeAnimationForKey:kMDCBottomAppBarViewPathString];
+    } else if ([animValueForKeyString isEqualToString:kMDCBottomAppBarViewPositionString]) {
+      [self.floatingButton.layer removeAnimationForKey:kMDCBottomAppBarViewPositionString];
     }
   }
 }
