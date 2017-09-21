@@ -3,6 +3,7 @@ PODS:
     - MaterialComponents/ActivityIndicator (= 35.0.0)
     - MaterialComponents/AnimationTiming (= 35.0.0)
     - MaterialComponents/AppBar (= 35.0.0)
+    - MaterialComponents/BottomAppBar (= 35.0.0)
     - MaterialComponents/BottomSheet (= 35.0.0)
     - MaterialComponents/ButtonBar (= 35.0.0)
     - MaterialComponents/Buttons (= 35.0.0)
@@ -58,6 +59,10 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+  - MaterialComponents/BottomAppBar (35.0.0):
+    - MaterialComponents/Buttons/Component
+    - MaterialComponents/private/Math
+    - MaterialComponents/private/RTL
   - MaterialComponents/BottomSheet (35.0.0):
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Math
@@ -316,7 +321,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: c45311601868f5df6dc307feb4ce24db20ca3e9e
+  MaterialComponents: 0f4a75b74e67a9cfd81a813d687816b2c6ed8438
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   MotionAnimator: 9d025cda7572737e5db5ca779eb28c767fe6cf45
   MotionInterchange: 7a7c355ba2ed5d36c5cf2ceb76cacd3d3680dbf5
