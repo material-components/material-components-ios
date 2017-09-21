@@ -4099,10 +4099,11 @@ void MDCCatalogDrawTabsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme)
 }
 
 static NSString* const TextFieldFontName = @"RobotoMono-Medium";
-  
+
 void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* fillColor = colorScheme.primaryLightColor;
   UIColor* textForeground = colorScheme.primaryColor;
+  
   
   CGRect textFieldGroup = CGRectMake(CGRectGetMinX(frame) + 24, CGRectGetMinY(frame) + 60, floor((frame.size.width - 24) * 0.85366 + 0.5), floor((frame.size.height - 60) * 0.38947 + 0.5));
   
