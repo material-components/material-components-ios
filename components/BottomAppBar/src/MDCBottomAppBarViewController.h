@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  Is the floating button on the bottom bar visible.
  Default is YES.
  */
-@property(nonatomic, assign, getter=isFloatingButtonVisible) BOOL floatingButtonVisible;
+@property(nonatomic, assign, getter=isFloatingButtonHidden) BOOL floatingButtonHidden;
 
 /**
  The floating button on the bottom bar. This button is exposed for customizability.
@@ -70,7 +70,8 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 - (nonnull instancetype)initWithViewController:(nonnull UIViewController *)viewController;
 
 /**
- Sets the position of the floating action button.
+ Sets the position of the floating action button. Note, if the set position is the same as the
+ current position there is no change in the position nor animation.
 
  @param animated Enable or disable animation.
  */
@@ -82,6 +83,6 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 
  @param animated Enable or disable animation.
  */
-- (void)setFloatingButtonVisible:(BOOL)floatingButtonVisible animated:(BOOL)animated;
+- (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated;
 
 @end

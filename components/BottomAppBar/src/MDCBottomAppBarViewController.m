@@ -54,13 +54,13 @@
 
 - (void)commonMDCBottomAppBarViewControllerInit {
   [self addFloatingButton];
-  [self setFloatingButtonVisible:YES];
+  [self setFloatingButtonHidden:NO];
   [self setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionCenter];
   [self addBottomBarView];
 }
 
 - (void)addFloatingButton {
-  _floatingButton = [[MDCFloatingButton alloc] initWithFrame:CGRectZero];
+  _floatingButton = [[MDCFloatingButton alloc] init];
 }
 
 - (void)addBottomBarView {
@@ -79,13 +79,15 @@
   _bottomBarView.frame = containerFrame;
 }
 
-- (void)setFloatingButtonVisible:(BOOL)floatingButtonVisible {
-  [self setFloatingButtonVisible:floatingButtonVisible animated:NO];
+#pragma mark - Setters
+
+- (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden {
+  [self setFloatingButtonHidden:floatingButtonHidden animated:NO];
 }
 
-- (void)setFloatingButtonVisible:(BOOL)floatingButtonVisible animated:(BOOL)animated {
-  _floatingButtonVisible = floatingButtonVisible;
-  [_bottomBarView setFloatingButtonVisible:floatingButtonVisible animated:animated];
+- (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated {
+  _floatingButtonHidden = floatingButtonHidden;
+  [_bottomBarView setFloatingButtonHidden:floatingButtonHidden animated:animated];
 }
 
 - (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {

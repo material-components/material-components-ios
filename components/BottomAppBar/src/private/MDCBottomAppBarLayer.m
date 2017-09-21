@@ -26,7 +26,7 @@
   layer.fillColor = [UIColor whiteColor].CGColor;
   layer.shadowColor = [UIColor blackColor].CGColor;
 
-  // TODO(junius): These shadow attributes will be updated once Google Material specs are finalized.
+  // TODO(#2018): These shadow attributes will be updated once specs are finalized.
   layer.shadowOpacity = 0.4f;
   layer.shadowRadius = 4.f;
   layer.shadowOffset = CGSizeMake(0, 2.f);

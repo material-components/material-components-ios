@@ -22,17 +22,17 @@
 
 @interface MDCBottomAppBarView : UIView
 
-@property(nonatomic, assign, getter=isFloatingButtonVisible) BOOL floatingButtonVisible;
+@property(nonatomic, assign, getter=isFloatingButtonHidden) BOOL floatingButtonHidden;
 @property(nonatomic, assign) MDCBottomAppBarFloatingButtonPosition floatingButtonPosition;
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
 
 - (void)setupBottomBarView;
 
-- (void)cutBottomAppBarView:(BOOL)animated;
+- (void)cutBottomAppBarViewAnimated:(BOOL)animated;
 
-- (void)healBottomAppBarView:(BOOL)animated;
+- (void)healBottomAppBarViewAnimated:(BOOL)animated;
 
-- (void)setFloatingButtonVisible:(BOOL)floatingButtonVisible animated:(BOOL)animated;
+- (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated;
 
 - (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
                          animated:(BOOL)animated;

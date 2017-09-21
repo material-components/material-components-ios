@@ -37,7 +37,9 @@
 
 - (void)setupNavBar {
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:self.view.bounds];
-  UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
+  self.navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
+  UINavigationItem *navItem = [[UINavigationItem alloc] init];
   [self.view addSubview:self.navBar];
 
   // Configure the navigation buttons to be shown on the bottom app bar.
@@ -63,11 +65,6 @@
       [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor clearColor]];
   [MDCNavigationBarColorThemer applyColorScheme:clearScheme toNavigationBar:self.navBar];
   self.navBar.tintColor = [UIColor blackColor];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  self.navBar.frame = self.view.bounds;
 }
 
 - (void)didTapLeft:(id)sender {
@@ -96,8 +93,10 @@
 }
 
 - (void)commonBottomBarNavBarExampleInit {
-  self.viewController = [[BottomAppBarExampleTableViewController alloc] init];
-  self.contentViewController = [[BottomAppBarNavBarViewController alloc] init];
+  self.viewController =
+      [[BottomAppBarExampleTableViewController alloc] initWithNibName:nil bundle:nil];
+  self.contentViewController =
+      [[BottomAppBarNavBarViewController alloc] initWithNibName:nil bundle:nil];
   self.floatingButtonPosition = MDCBottomAppBarFloatingButtonPositionCenter;
 
   // Add touch handler to the floating button.
@@ -115,9 +114,14 @@
 }
 
 - (void)didTapFloatingButton:(id)sender {
-  [self setFloatingButtonVisible:NO animated:YES];
+  // Hide the floating button.
+  [self setFloatingButtonHidden:YES animated:YES];
+
+  // Show the floating button again for illustrative purposes to demonstrate the floating button
+  // reappearance animation. In an actual application implementation an action in the application
+  // view would typically cause the floating button to reappear.
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-    [self setFloatingButtonVisible:YES animated:YES];
+    [self setFloatingButtonHidden:NO animated:YES];
   });
 }
 

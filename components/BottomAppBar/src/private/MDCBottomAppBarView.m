@@ -57,7 +57,7 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
                            UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
   self.layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
-  [self setFloatingButtonVisible:YES];
+  [self setFloatingButtonHidden:NO];
   [self addBottomBarLayer];
 }
 
@@ -69,32 +69,25 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   [self.cutView.layer addSublayer:self.bottomBarLayer];
 }
 
-- (void)setFloatingButton:(MDCFloatingButton *)floatingButton {
-  _floatingButton = floatingButton;
-  [self.floatingButton sizeToFit];
-  [self insertSubview:self.floatingButton atIndex:0];
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   self.floatingButton.center =
       [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
-  [self renderPathBasedOnFloatingButtonVisibility:NO];
+  [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
 }
 
-- (void)renderPathBasedOnFloatingButtonVisibility:(BOOL)animated {
-  if (self.floatingButtonVisible) {
-    [self cutBottomAppBarView:animated];
+- (void)renderPathBasedOnFloatingButtonVisibitlityAnimated:(BOOL)animated {
+  if (!self.floatingButtonHidden) {
+    [self cutBottomAppBarViewAnimated:animated];
   } else {
-    [self healBottomAppBarView:animated];
+    [self healBottomAppBarViewAnimated:animated];
   }
 }
 
 - (CGPoint)getFloatingButtonCenterPositionForWidth:(CGFloat)width {
 
   CGPoint floatingButtonPoint = CGPointZero;
-  CGFloat halfDefaultDimension = CGRectGetWidth(self.floatingButton.bounds) / 2;
+  CGFloat halfDefaultDimension = CGRectGetMidX(self.floatingButton.bounds);
   CGFloat midX = width / 2;
 
   switch (self.floatingButtonPosition) {
@@ -128,7 +121,7 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   return floatingButtonPoint;
 }
 
-- (void)cutBottomAppBarView:(BOOL)animated {
+- (void)cutBottomAppBarViewAnimated:(BOOL)animated {
   CGPathRef cutPath =
       [self.bottomBarLayer pathWithCutFromRect:self.bounds
                         floatingButtonPosition:self.floatingButtonPosition
@@ -150,7 +143,7 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   }
 }
 
-- (void)healBottomAppBarView:(BOOL)animated  {
+- (void)healBottomAppBarViewAnimated:(BOOL)animated  {
   CGPathRef withoutCutPath =
       [self.bottomBarLayer pathWithoutCutFromRect:self.bounds
                            floatingButtonPosition:self.floatingButtonPosition
@@ -172,10 +165,10 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   }
 }
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag {
   if (flag) {
-    [self renderPathBasedOnFloatingButtonVisibility:NO];
-    NSString *animKeyString = [anim valueForKey:kMDCBottomAppBarViewAnimKeyString];
+    [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+    NSString *animKeyString = [animation valueForKey:kMDCBottomAppBarViewAnimKeyString];
     if ([animKeyString isEqualToString:kMDCBottomAppBarViewPathString]) {
       [self.bottomBarLayer removeAllAnimations];
     } else if ([animKeyString isEqualToString:kMDCBottomAppBarViewPositionString]) {
@@ -184,30 +177,7 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   }
 }
 
-- (void)setFloatingButtonVisible:(BOOL)floatingButtonVisible {
-  [self setFloatingButtonVisible:floatingButtonVisible animated:NO];
-}
-
-- (void)setFloatingButtonVisible:(BOOL)floatingButtonVisible animated:(BOOL)animated {
-  if (_floatingButtonVisible == floatingButtonVisible) {
-    return;
-  }
-  _floatingButtonVisible = floatingButtonVisible;
-  if (floatingButtonVisible) {
-    self.floatingButton.hidden = NO;
-    [self cutBottomAppBarView:animated];
-    [self.floatingButton expand:animated completion:^{
-      self.floatingButton.hidden = !self.floatingButtonVisible;
-    }];
-  } else {
-    [self healBottomAppBarView:animated];
-    [self.floatingButton collapse:animated completion:^{
-      self.floatingButton.hidden = !self.floatingButtonVisible;
-    }];
-  }
-}
-
-- (void)moveFloatingButtonCenter:(BOOL)animated {
+- (void)moveFloatingButtonCenterAnimated:(BOOL)animated {
   CGPoint endPoint = [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   if (animated) {
     CABasicAnimation *animation =
@@ -225,17 +195,6 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   self.floatingButton.center = endPoint;
 }
 
-- (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {
-  [self setFloatingButtonPosition:floatingButtonPosition animated:NO];
-}
-
-- (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
-                         animated:(BOOL)animated {
-  _floatingButtonPosition = floatingButtonPosition;
-  [self moveFloatingButtonCenter:animated];
-  [self renderPathBasedOnFloatingButtonVisibility:animated];
-}
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 
   // Make sure the floating button can always be tapped.
@@ -245,6 +204,51 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   }
   UIView *view = [super hitTest:point withEvent:event];
   return view;
+}
+
+#pragma mark - Setters
+
+- (void)setFloatingButton:(MDCFloatingButton *)floatingButton {
+  if (_floatingButton == floatingButton) {
+    return;
+  }
+  [_floatingButton removeFromSuperview];
+  _floatingButton = floatingButton;
+  _floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [_floatingButton sizeToFit];
+  [self insertSubview:_floatingButton atIndex:0];
+}
+
+- (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {
+  [self setFloatingButtonPosition:floatingButtonPosition animated:NO];
+}
+
+- (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
+                         animated:(BOOL)animated {
+  _floatingButtonPosition = floatingButtonPosition;
+  [self moveFloatingButtonCenterAnimated:animated];
+  [self renderPathBasedOnFloatingButtonVisibitlityAnimated:animated];
+}
+
+- (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden {
+  [self setFloatingButtonHidden:floatingButtonHidden animated:NO];
+}
+
+- (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated {
+  if (_floatingButtonHidden == floatingButtonHidden) {
+    return;
+  }
+  _floatingButtonHidden = floatingButtonHidden;
+  if (floatingButtonHidden) {
+    [self healBottomAppBarViewAnimated:animated];
+    [_floatingButton collapse:animated completion:^{
+      _floatingButton.hidden = YES;
+    }];
+  } else {
+    _floatingButton.hidden = NO;
+    [self cutBottomAppBarViewAnimated:animated];
+    [_floatingButton expand:animated completion:nil];
+  }
 }
 
 @end

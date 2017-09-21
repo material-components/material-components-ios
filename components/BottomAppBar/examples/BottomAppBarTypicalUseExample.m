@@ -36,7 +36,8 @@
 }
 
 - (void)commonBottomBarTypicalUseExampleInit {
-  self.viewController = [[BottomAppBarExampleTableViewController alloc] init];
+  self.viewController =
+      [[BottomAppBarExampleTableViewController alloc] initWithNibName:nil bundle:nil];
 
   // Add touch handler to the floating button.
   [self.floatingButton addTarget:self
@@ -50,10 +51,6 @@
   MDCBasicColorScheme *colorScheme =
       [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor whiteColor]];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.floatingButton];
-}
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
