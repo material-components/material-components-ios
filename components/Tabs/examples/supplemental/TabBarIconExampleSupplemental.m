@@ -268,6 +268,16 @@
   return UIStatusBarStyleLightContent;
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [coordinator animateAlongsideTransition:
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    // Update the scrollView position so that the selected view is entirely visible
+    [self tabBar:self.tabBar didSelectItem:self.tabBar.selectedItem];
+  } completion:nil];
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+}
+
 @end
 
 @implementation TabBarIconExample (CatalogByConvention)

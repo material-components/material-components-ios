@@ -224,6 +224,15 @@ extension TabBarIconSwiftExample {
   override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
   }
+
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    coordinator.animate(alongsideTransition: { (_) in
+      if let selectedItem = self.tabBar.selectedItem {
+        self.tabBar(self.tabBar, didSelect: selectedItem)
+      }
+    }, completion: nil)
+    super.viewWillTransition(to: size, with: coordinator)
+  }
 }
 
 // MARK: - Catalog by convention
