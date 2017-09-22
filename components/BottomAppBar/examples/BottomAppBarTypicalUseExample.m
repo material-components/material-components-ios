@@ -39,7 +39,7 @@
                               forControlEvents:UIControlEventTouchUpInside];
 
   // Set the image on the floating button.
-  UIImage *addImage = [UIImage imageNamed:@"Add"]
+  UIImage *addImage = [UIImage imageNamed:@"Add"];
   [self.bottomBarView.floatingButton setImage:addImage forState:UIControlStateNormal];
 
   // Theme the floating button.
