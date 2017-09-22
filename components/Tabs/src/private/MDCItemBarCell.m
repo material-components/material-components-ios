@@ -181,6 +181,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   if (style != _style && ![style isEqual:_style]) {
     _style = style;
 
+    [self updateTitleLines];
     [self updateDisplayedTitle];
     [self updateTitleTextColor];
     [self updateInk];
@@ -188,6 +189,18 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     [self updateTitleFont];
     [self updateTransformsAnimated:NO];
     [self setNeedsLayout];
+  }
+}
+
+- (void)updateTitleLines {
+  _titleLabel.numberOfLines = _style.textNumberOfLines;
+  if (_style.textNumberOfLines == 1) {
+    _titleLabel.adjustsFontSizeToFitWidth = NO;
+    _titleLabel.minimumScaleFactor = 1;
+  } else {
+    _titleLabel.adjustsFontSizeToFitWidth = YES;
+    // 0.85 is based on 12sp/14sp guidelines for single- or double-line text
+    _titleLabel.minimumScaleFactor = (CGFloat)0.85;
   }
 }
 
@@ -422,6 +435,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       [self.contentView addSubview:_titleLabel];
 
       // Display title and update color for the new label.
+      [self updateTitleLines];
       [self updateDisplayedTitle];
       [self updateTitleTextColor];
       [self updateTitleFont];

@@ -65,6 +65,9 @@
 /** Padding in points between the title and image components, according to the MD spec. */
 @property(nonatomic) CGFloat titleImagePadding;
 
+/** Maximum number of lines of text allowed. */
+@property(nonatomic, assign) NSInteger textNumberOfLines;
+
 /**
  Indicates if all tab titles should be uppercased for display. If NO, item titles will be
  displayed verbatim.
