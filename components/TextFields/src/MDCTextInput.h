@@ -84,7 +84,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 
  Note: The clear button will never display when there is no entered text.
  */
-@property(nonatomic, assign) UITextFieldViewMode clearButtonMode;
+@property(nonatomic, assign) UITextFieldViewMode clearButtonMode UI_APPEARANCE_SELECTOR;
 
 /** A Boolean value indicating whether the text field is currently in edit mode. */
 @property(nonatomic, assign, readonly, getter=isEditing) BOOL editing;
