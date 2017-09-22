@@ -19,7 +19,6 @@
 #import "MaterialNavigationBar.h"
 #import "MaterialRTL.h"
 #import "MDCNavigationBarColorThemer.h"
-
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
 
