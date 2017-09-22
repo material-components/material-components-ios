@@ -61,7 +61,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 @synthesize expandsOnOverflow = _expandsOnOverflow;
 @synthesize minimumLines = _minimumLines;
-@synthesize trailingView = _trailingView;
 @synthesize trailingViewMode = _trailingViewMode;
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -133,10 +132,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   copy.minimumLines = self.minimumLines;
   copy.placeholder = self.placeholder;
   copy.text = self.text;
-  if ([self.trailingView conformsToProtocol:@protocol(NSCopying)]) {
-    copy.trailingView = [self.trailingView copy];
-  }
   copy.trailingViewMode = self.trailingViewMode;
+
   return copy;
 }
 
@@ -668,13 +665,12 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   return self.fundament.trailingUnderlineLabel;
 }
 
+- (UIView *)trailingView {
+  return self.fundament.trailingView;
+}
+
 - (void)setTrailingView:(UIView *)trailingView {
-  if (_trailingView != trailingView) {
-    [_trailingView removeFromSuperview];
-    [self addSubview:trailingView];
-    _trailingView = trailingView;
-    [self setNeedsUpdateConstraints];
-  }
+  self.fundament.trailingView = trailingView;
 }
 
 - (MDCTextInputUnderlineView *)underline {
