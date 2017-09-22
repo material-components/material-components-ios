@@ -24,7 +24,6 @@
 #import "private/MDCBottomAppBarLayer.h"
 
 static NSString *kMDCBottomAppBarViewAnimKeyString = @"AnimKey";
-static NSString *kMDCBottomAppBarViewEmptyString = @"";
 static NSString *kMDCBottomAppBarViewPathString = @"path";
 static NSString *kMDCBottomAppBarViewPositionString = @"position";
 
