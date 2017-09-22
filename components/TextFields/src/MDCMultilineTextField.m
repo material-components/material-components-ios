@@ -121,13 +121,13 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCMultilineTextField *copy = [[[self class] alloc] initWithFrame:self.frame];
 
+  copy.clearButton.tintColor = self.clearButton.tintColor; 
   copy.expandsOnOverflow = self.expandsOnOverflow;
   copy.fundament = [self.fundament copy];
   copy.layoutDelegate = self.layoutDelegate;
   copy.minimumLines = self.minimumLines;
   copy.placeholder = self.placeholder;
   copy.text = self.text;
-  copy.clearButton.tintColor = self.clearButton.tintColor;
   copy.trailingViewMode = self.trailingViewMode;
 
   return copy;
