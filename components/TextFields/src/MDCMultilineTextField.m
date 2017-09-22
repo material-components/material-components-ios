@@ -121,9 +121,13 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCMultilineTextField *copy = [[[self class] alloc] initWithFrame:self.frame];
 
-  copy.clearButton.tintColor = self.clearButton.tintColor;
   copy.expandsOnOverflow = self.expandsOnOverflow;
+
+  // The .fundament creates a .clearButton so setting the .tintColor must wait for the final
+  // .fundament to be created.
   copy.fundament = [self.fundament copy];
+  copy.clearButton.tintColor = self.clearButton.tintColor;
+
   copy.layoutDelegate = self.layoutDelegate;
   copy.minimumLines = self.minimumLines;
   copy.placeholder = self.placeholder;
