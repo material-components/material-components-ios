@@ -66,7 +66,7 @@
 @property(nonatomic) CGFloat titleImagePadding;
 
 /** Maximum number of lines of text allowed. */
-@property(nonatomic, assign) NSInteger textNumberOfLines;
+@property(nonatomic, assign) NSInteger titleNumberOfLines;
 
 /**
  Indicates if all tab titles should be uppercased for display. If NO, item titles will be

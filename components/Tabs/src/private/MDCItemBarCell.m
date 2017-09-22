@@ -193,8 +193,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateTitleLines {
-  _titleLabel.numberOfLines = _style.textNumberOfLines;
-  if (_style.textNumberOfLines == 1) {
+  _titleLabel.numberOfLines = _style.titleNumberOfLines;
+  if (_style.titleNumberOfLines == 1) {
     _titleLabel.adjustsFontSizeToFitWidth = NO;
     _titleLabel.minimumScaleFactor = 1;
   } else {
