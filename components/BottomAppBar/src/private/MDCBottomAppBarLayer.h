@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBottomAppBarViewController.h"
+#import "MDCBottomAppBarView.h"
 
 @interface MDCBottomAppBarLayer : CAShapeLayer
 

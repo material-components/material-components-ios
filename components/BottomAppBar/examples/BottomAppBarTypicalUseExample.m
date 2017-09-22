@@ -16,13 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BottomAppBarExampleTableViewController.h"
-#import "MaterialBottomAppBar.h"
+#import "BottomAppBarTypicalUseSupplemental.h"
 #import "MDCButtonColorThemer.h"
-
-@interface BottomAppBarTypicalUseExample : MDCBottomAppBarViewController
-
-@end
 
 @implementation BottomAppBarTypicalUseExample
 
@@ -36,65 +31,50 @@
 }
 
 - (void)commonBottomBarTypicalUseExampleInit {
-  self.viewController =
-      [[BottomAppBarExampleTableViewController alloc] initWithNibName:nil bundle:nil];
+  [self setupExampleTableLayout];
 
   // Add touch handler to the floating button.
-  [self.floatingButton addTarget:self
-                          action:@selector(didTapFloatingButton:)
-                forControlEvents:UIControlEventTouchUpInside];
+  [self.bottomBarView.floatingButton addTarget:self
+                                        action:@selector(didTapFloatingButton:)
+                              forControlEvents:UIControlEventTouchUpInside];
 
   // Set the image on the floating button.
-  [self.floatingButton setImage:[self floatingButtonImage] forState:UIControlStateNormal];
+  [self.bottomBarView.floatingButton setImage:[self floatingButtonImage]
+                                     forState:UIControlStateNormal];
 
   // Theme the floating button.
   MDCBasicColorScheme *colorScheme =
       [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor whiteColor]];
-  [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.floatingButton];
-}
+  [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.bottomBarView.floatingButton];
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
+  // Configure the navigation buttons to be shown on the bottom app bar.
+  UIBarButtonItem *barButtonLeadingItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didTapBack:)];
+
+  UIBarButtonItem *barButtonTrailingItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Toggle"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didTapToggle:)];
+
+  [self.bottomBarView setLeadingBarButtonItems:@[ barButtonLeadingItem ]];
+  [self.bottomBarView setTrailingBarButtonItems:@[ barButtonTrailingItem ]];
 }
 
 - (void)didTapFloatingButton:(id)sender {
-  NSLog(@"Floating button tapped.");
-  if (self.floatingButtonPosition == MDCBottomAppBarFloatingButtonPositionCenter) {
-    [self setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionTrailing animated:YES];
-  } else {
-    [self setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionCenter animated:YES];
-  }
+  [self.bottomBarView setFloatingButtonHidden:YES animated:YES];
 }
 
-- (UIImage *)floatingButtonImage {
-  UIImage *plusImage = [UIImage imageNamed:@"Plus"];
-  CIImage *coreImage = [CIImage imageWithCGImage:plusImage.CGImage];
-  CIFilter *filter = [CIFilter filterWithName:@"CIColorInvert"];
-  [filter setValue:coreImage forKey:kCIInputImageKey];
-  CIImage *result = [filter valueForKey:kCIOutputImageKey];
-  return [UIImage imageWithCIImage:result];
+- (void)didTapBack:(id)sender {
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
-@end
-
-@implementation BottomAppBarTypicalUseExample (CatalogByConvention)
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom App Bar", @"Bottom App Bar" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The bottom app bar is a bar docked at the bottom of the screen that has a floating "
-         @"action button and can provide navigation.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-- (BOOL)catalogShouldHideNavigation {
-  return YES;
+- (void)didTapToggle:(id)sender {
+  [self.bottomBarView setFloatingButtonHidden:!self.bottomBarView.floatingButtonHidden
+                                     animated:YES];
 }
 
 @end

@@ -16,9 +16,12 @@
 
 #import "MDCBottomAppBarView.h"
 
-#import "MDCBottomAppBarAttributes.h"
-#import "MDCBottomAppBarLayer.h"
+#import "MaterialNavigationBar.h"
 #import "MaterialRTL.h"
+#import "MDCNavigationBarColorThemer.h"
+
+#import "private/MDCBottomAppBarAttributes.h"
+#import "private/MDCBottomAppBarLayer.h"
 
 static NSString *kMDCBottomAppBarViewAnimKeyString = @"AnimKey";
 static NSString *kMDCBottomAppBarViewEmptyString = @"";
@@ -44,36 +47,69 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
 @property(nonatomic, assign) CGFloat bottomBarHeight;
 @property(nonatomic, strong) MDCBottomAppBarCutView *cutView;
 @property(nonatomic, strong) MDCBottomAppBarLayer *bottomBarLayer;
+@property(nonatomic, strong) MDCNavigationBar *navBar;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @end
 
 @implementation MDCBottomAppBarView
 
-- (void)setupBottomBarView {
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonMDCBottomAppBarViewInit];
+  }
+  return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCBottomAppBarViewInit];
+  }
+  return self;
+}
+
+- (void)commonMDCBottomAppBarViewInit {
   self.cutView = [[MDCBottomAppBarCutView alloc] initWithFrame:self.bounds];
   [self addSubview:self.cutView];
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                            UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
   self.layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
-  [self setFloatingButtonHidden:NO];
+  [self addFloatingButton];
   [self addBottomBarLayer];
+  [self addNavBar];
+}
+
+- (void)addFloatingButton {
+  MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
+  [self setFloatingButton:floatingButton];
+  [self setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionCenter];
+  [self setFloatingButtonHidden:NO];
+}
+
+- (void)addNavBar {
+  CGRect navBarFrame = CGRectMake(0,
+                                  kMDCBottomAppBarYOffset,
+                                  self.bounds.size.width,
+                                  self.bounds.size.height);
+  _navBar = [[MDCNavigationBar alloc] initWithFrame:navBarFrame];
+  _navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  [self addSubview:_navBar];
+
+  MDCBasicColorScheme *clearScheme =
+      [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor clearColor]];
+  [MDCNavigationBarColorThemer applyColorScheme:clearScheme toNavigationBar:_navBar];
+  _navBar.tintColor = [UIColor blackColor];
 }
 
 - (void)addBottomBarLayer {
-  if (self.bottomBarLayer) {
-    [self.bottomBarLayer removeFromSuperlayer];
+  if (_bottomBarLayer) {
+    [_bottomBarLayer removeFromSuperlayer];
   }
-  self.bottomBarLayer = [MDCBottomAppBarLayer layer];
-  [self.cutView.layer addSublayer:self.bottomBarLayer];
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  self.floatingButton.center =
-      [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
-  [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+  _bottomBarLayer = [MDCBottomAppBarLayer layer];
+  [_cutView.layer addSublayer:_bottomBarLayer];
 }
 
 - (void)renderPathBasedOnFloatingButtonVisibitlityAnimated:(BOOL)animated {
@@ -163,17 +199,6 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   }
 }
 
-- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag {
-  if (flag) {
-    [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
-    NSString *animValueForKeyString = [animation valueForKey:kMDCBottomAppBarViewAnimKeyString];
-    if ([animValueForKeyString isEqualToString:kMDCBottomAppBarViewPathString]) {
-      [self.bottomBarLayer removeAnimationForKey:kMDCBottomAppBarViewPathString];
-    } else if ([animValueForKeyString isEqualToString:kMDCBottomAppBarViewPositionString]) {
-      [self.floatingButton.layer removeAnimationForKey:kMDCBottomAppBarViewPositionString];
-    }
-  }
-}
 
 - (void)moveFloatingButtonCenterAnimated:(BOOL)animated {
   CGPoint endPoint = [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
@@ -193,8 +218,37 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   self.floatingButton.center = endPoint;
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+- (void)showBarButtonItemsWithFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {
+  switch (floatingButtonPosition) {
+    case MDCBottomAppBarFloatingButtonPositionCenter:
+      [self.navBar setLeadingBarButtonItems:_leadingBarButtonItems];
+      [self.navBar setTrailingBarButtonItems:_trailingBarButtonItems];
+      break;
+    case MDCBottomAppBarFloatingButtonPositionLeading:
+      [self.navBar setLeadingBarButtonItems:nil];
+      [self.navBar setTrailingBarButtonItems:_trailingBarButtonItems];
+      break;
+    case MDCBottomAppBarFloatingButtonPositionTrailing:
+      [self.navBar setLeadingBarButtonItems:_leadingBarButtonItems];
+      [self.navBar setTrailingBarButtonItems:nil];
+      break;
+    default:
+      break;
+  }
+}
 
+#pragma mark - UIView overrides
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+      self.floatingButton.center =
+  [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
+  [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+}
+
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  
   // Make sure the floating button can always be tapped.
   BOOL contains = CGRectContainsPoint(self.floatingButton.frame, point);
   if (contains) {
@@ -202,6 +256,20 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   }
   UIView *view = [super hitTest:point withEvent:event];
   return view;
+}
+
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag {
+  if (flag) {
+    [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+    NSString *animValueForKeyString = [animation valueForKey:kMDCBottomAppBarViewAnimKeyString];
+    if ([animValueForKeyString isEqualToString:kMDCBottomAppBarViewPathString]) {
+      [self.bottomBarLayer removeAnimationForKey:kMDCBottomAppBarViewPathString];
+    } else if ([animValueForKeyString isEqualToString:kMDCBottomAppBarViewPositionString]) {
+      [self.floatingButton.layer removeAnimationForKey:kMDCBottomAppBarViewPositionString];
+    }
+  }
 }
 
 #pragma mark - Setters
@@ -226,6 +294,7 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   _floatingButtonPosition = floatingButtonPosition;
   [self moveFloatingButtonCenterAnimated:animated];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:animated];
+  [self showBarButtonItemsWithFloatingButtonPosition:floatingButtonPosition];
 }
 
 - (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden {
@@ -247,6 +316,16 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
     [self cutBottomAppBarViewAnimated:animated];
     [_floatingButton expand:animated completion:nil];
   }
+}
+
+- (void)setLeadingBarButtonItems:(NSArray<UIBarButtonItem *> *)leadingBarButtonItems {
+  _leadingBarButtonItems = [leadingBarButtonItems copy];
+  [self showBarButtonItemsWithFloatingButtonPosition:self.floatingButtonPosition];
+}
+
+- (void)setTrailingBarButtonItems:(NSArray<UIBarButtonItem *> *)trailingBarButtonItems {
+  _trailingBarButtonItems = [trailingBarButtonItems copy];
+  [self showBarButtonItemsWithFloatingButtonPosition:self.floatingButtonPosition];
 }
 
 @end

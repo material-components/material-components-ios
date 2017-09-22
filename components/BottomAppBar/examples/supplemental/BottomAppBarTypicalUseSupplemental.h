@@ -14,4 +14,28 @@
  limitations under the License.
  */
 
-#import "MDCBottomAppBarView.h"
+#import <UIKit/UIKit.h>
+
+#import "MaterialBottomAppBar.h"
+#import "BottomAppBarTypicalUseSupplemental.h"
+#import "BottomAppBarTypicalUseViewController.h"
+
+@interface BottomAppBarTypicalUseExample : BottomAppBarTypicalUseViewController
+
+@end
+
+@interface BottomAppBarTypicalUseExample (Supplemental)
+
+- (void)setupExampleTableLayout;
+
+- (UIImage *)floatingButtonImage;
+
+@end
+
+@interface BottomAppBarExampleTableViewController : UITableViewController
+
+@property(nonatomic, strong) MDCBottomAppBarView *bottomBarView;
+
+@property(nonatomic, strong) NSArray *listItems;
+
+@end

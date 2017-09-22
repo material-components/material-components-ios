@@ -26,23 +26,18 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 };
 
 /**
- A bottom app bar with an embedded floating button.
-
+ A bottom app bar view with an embedded floating button.
+ 
  The bottom app bar is a bar docked at the bottom of the screen. A floating action button is
  provided for a primary action.
  */
-@interface MDCBottomAppBarViewController : UIViewController
+@interface MDCBottomAppBarView : UIView
 
 /**
- Is the floating button on the bottom bar visible.
- Default is YES.
+ Is the floating button on the bottom bar hidden.
+ Default is NO.
  */
 @property(nonatomic, assign, getter=isFloatingButtonHidden) BOOL floatingButtonHidden;
-
-/**
- The floating button on the bottom bar. This button is exposed for customizability.
- */
-@property(nonatomic, strong, readonly, nonnull) MDCFloatingButton *floatingButton;
 
 /**
  The position of the floating action button.
@@ -51,38 +46,36 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 @property(nonatomic, assign) MDCBottomAppBarFloatingButtonPosition floatingButtonPosition;
 
 /**
- The embedded view controller that appears behind the bottom app bar. This content is part of the
- application and not visually connected to the bottom app bar.
+ The floating button on the bottom bar. This button is exposed for customizability.
  */
-@property(nonatomic, strong, nonnull) UIViewController *viewController;
+@property(nonatomic, strong, nonnull, readonly) MDCFloatingButton *floatingButton;
 
 /**
- A content view controller that will be embedded in the bottom app bar in the area that contains the
- floating action button.
+ Navigation bar items that precede the floating action button. There is no limit to the number of
+ buttons that can be added, but button bar width overflow is not handled.
  */
-@property(nonatomic, strong, nullable) UIViewController *contentViewController;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *leadingBarButtonItems;
 
 /**
- Creates an instance of the bottom app bar view controller.
-
- @param viewController The embedded view controller to appear behind the bottom app bar.
+ Navigation bar items that trail the floating action button. There is no limit to the number of
+ buttons that can be added, but button bar width overflow is not handled.
  */
-- (nonnull instancetype)initWithViewController:(nonnull UIViewController *)viewController;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *trailingBarButtonItems;
+
+/**
+ Sets the visibility of the floating action button.
+ 
+ @param animated Enable or disable animation.
+ */
+- (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated;
 
 /**
  Sets the position of the floating action button. Note, if the set position is the same as the
  current position there is no change in the position nor animation.
-
+ 
  @param animated Enable or disable animation.
  */
 - (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
                          animated:(BOOL)animated;
-
-/**
- Sets the visibility of the floating action button.
-
- @param animated Enable or disable animation.
- */
-- (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated;
 
 @end

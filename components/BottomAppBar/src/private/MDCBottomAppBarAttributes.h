@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 // The height of the bottom app bar navigation area in collapsed state.
-static const CGFloat kMDCBottomAppBarHeightCollapsed = 96.f;
+static const CGFloat kMDCBottomAppBarHeight = 96.f;
 
 // The offset of the top of the containing view of the bottom app bar and the visible layer of the
 // bottom app bar.
