@@ -18,6 +18,12 @@
 
 #import "MaterialButtons.h"
 
+/** The elevation of the floating action button. */
+typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonElevation) {
+  MDCBottomAppBarFloatingButtonElevationPrimary = 0,
+  MDCBottomAppBarFloatingButtonElevationSecondary = 1
+};
+
 /** The position of the floating action button. */
 typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
   MDCBottomAppBarFloatingButtonPositionCenter = 0,
@@ -38,6 +44,12 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  Default is NO.
  */
 @property(nonatomic, assign, getter=isFloatingButtonHidden) BOOL floatingButtonHidden;
+
+/**
+ The elevation of the floating action button.
+ Default is MDCBottomAppBarFloatingButtonElevationPrimary.
+ */
+@property(nonatomic, assign) MDCBottomAppBarFloatingButtonElevation floatingButtonElevation;
 
 /**
  The position of the floating action button.
@@ -68,6 +80,15 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  @param animated Enable or disable animation.
  */
 - (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated;
+
+/**
+ Sets the elevation of the floating action button. Note, if the set elevation is the same as the
+ current elevation there is no change in the elevation nor animation.
+
+ @param animated Enable or disable animation.
+ */
+- (void)setFloatingButtonElevation:(MDCBottomAppBarFloatingButtonElevation)floatingButtonElevation
+                          animated:(BOOL)animated;
 
 /**
  Sets the position of the floating action button. Note, if the set position is the same as the

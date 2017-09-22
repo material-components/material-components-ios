@@ -28,8 +28,6 @@
 
 - (void)setupExampleTableLayout;
 
-- (UIImage *)floatingButtonImage;
-
 @end
 
 @interface BottomAppBarExampleTableViewController : UITableViewController

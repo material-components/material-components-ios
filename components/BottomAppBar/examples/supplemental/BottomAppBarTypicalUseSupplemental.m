@@ -48,15 +48,6 @@
   self.viewController = tableView;
 }
 
-- (UIImage *)floatingButtonImage {
-  UIImage *plusImage = [UIImage imageNamed:@"Plus"];
-  CIImage *coreImage = [CIImage imageWithCGImage:plusImage.CGImage];
-  CIFilter *filter = [CIFilter filterWithName:@"CIColorInvert"];
-  [filter setValue:coreImage forKey:kCIInputImageKey];
-  CIImage *result = [filter valueForKey:kCIOutputImageKey];
-  return [UIImage imageWithCIImage:result];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
@@ -71,7 +62,10 @@
   if (self) {
     NSArray<NSString *> *listItems = @[ @"Leading Floating Button",
                                         @"Center Floating Button",
-                                        @"Trailing Floating Button" ];
+                                        @"Trailing Floating Button",
+                                        @"Primary Elevation Floating Button",
+                                        @"Secondary Elevation Floating Button",
+                                        @"Toggle Floating Button Visibility" ];
     _listItems = listItems;
   }
   return self;
@@ -119,6 +113,18 @@
     case 2:
       [self.bottomBarView setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionTrailing
                                            animated:YES];
+      break;
+    case 3:
+      [self.bottomBarView setFloatingButtonElevation:MDCBottomAppBarFloatingButtonElevationPrimary
+                                            animated:YES];
+      break;
+    case 4:
+      [self.bottomBarView setFloatingButtonElevation:MDCBottomAppBarFloatingButtonElevationSecondary
+                                            animated:YES];
+      break;
+    case 5:
+      [self.bottomBarView setFloatingButtonHidden:!self.bottomBarView.floatingButtonHidden
+                                         animated:YES];
       break;
     default:
       break;

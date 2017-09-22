@@ -39,8 +39,8 @@
                               forControlEvents:UIControlEventTouchUpInside];
 
   // Set the image on the floating button.
-  [self.bottomBarView.floatingButton setImage:[self floatingButtonImage]
-                                     forState:UIControlStateNormal];
+  UIImage *addImage = [UIImage imageNamed:@"Add"]
+  [self.bottomBarView.floatingButton setImage:addImage forState:UIControlStateNormal];
 
   // Theme the floating button.
   MDCBasicColorScheme *colorScheme =
@@ -49,16 +49,20 @@
 
   // Configure the navigation buttons to be shown on the bottom app bar.
   UIBarButtonItem *barButtonLeadingItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Back"
+      [[UIBarButtonItem alloc] initWithTitle:nil
                                        style:UIBarButtonItemStylePlain
                                       target:self
-                                      action:@selector(didTapBack:)];
+                                      action:@selector(didTapMenu:)];
+  UIImage *menuImage = [UIImage imageNamed:@"Menu"];
+  [barButtonLeadingItem setImage:menuImage];
 
   UIBarButtonItem *barButtonTrailingItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Toggle"
+      [[UIBarButtonItem alloc] initWithTitle:nil
                                        style:UIBarButtonItemStylePlain
                                       target:self
-                                      action:@selector(didTapToggle:)];
+                                      action:@selector(didTapSearch:)];
+  UIImage *searchImage = [UIImage imageNamed:@"Search"];
+  [barButtonTrailingItem setImage:searchImage];
 
   [self.bottomBarView setLeadingBarButtonItems:@[ barButtonLeadingItem ]];
   [self.bottomBarView setTrailingBarButtonItems:@[ barButtonTrailingItem ]];
@@ -68,13 +72,13 @@
   [self.bottomBarView setFloatingButtonHidden:YES animated:YES];
 }
 
-- (void)didTapBack:(id)sender {
+- (void)didTapMenu:(id)sender {
   [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didTapToggle:(id)sender {
-  [self.bottomBarView setFloatingButtonHidden:!self.bottomBarView.floatingButtonHidden
-                                     animated:YES];
+- (void)didTapSearch:(id)sender {
+  [self.bottomBarView setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionTrailing
+                                       animated:YES];
 }
 
 @end

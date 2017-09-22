@@ -25,6 +25,9 @@
 static NSString *kMDCBottomAppBarViewAnimKeyString = @"AnimKey";
 static NSString *kMDCBottomAppBarViewPathString = @"path";
 static NSString *kMDCBottomAppBarViewPositionString = @"position";
+static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationPrimary = 6.f;
+static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4.f;
+static const int kMDCButtonAnimationDuration = 200;
 
 @interface MDCBottomAppBarCutView : UIView
 
@@ -84,6 +87,7 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
   [self setFloatingButton:floatingButton];
   [self setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionCenter];
+  [self setFloatingButtonElevation:MDCBottomAppBarFloatingButtonElevationPrimary];
   [self setFloatingButtonHidden:NO];
 }
 
@@ -246,7 +250,7 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
 
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-  
+
   // Make sure the floating button can always be tapped.
   BOOL contains = CGRectContainsPoint(self.floatingButton.frame, point);
   if (contains) {
@@ -280,7 +284,36 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
   _floatingButton = floatingButton;
   _floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [_floatingButton sizeToFit];
-  [self insertSubview:_floatingButton atIndex:0];
+}
+
+- (void)setFloatingButtonElevation:(MDCBottomAppBarFloatingButtonElevation)floatingButtonElevation {
+  [self setFloatingButtonElevation:floatingButtonElevation animated:NO];
+}
+
+- (void)setFloatingButtonElevation:(MDCBottomAppBarFloatingButtonElevation)floatingButtonElevation
+                          animated:(BOOL)animated {
+  if (_floatingButton.superview == self && _floatingButtonElevation == floatingButtonElevation) {
+    return;
+  }
+  _floatingButtonElevation = floatingButtonElevation;
+
+  CGFloat elevation = kMDCBottomAppBarViewFloatingButtonElevationPrimary;
+  NSInteger subViewIndex = 1;
+  if (floatingButtonElevation == MDCBottomAppBarFloatingButtonElevationSecondary) {
+    elevation = kMDCBottomAppBarViewFloatingButtonElevationSecondary;
+    subViewIndex = 0;
+  }
+  if (animated) {
+    [_floatingButton setElevation:1 forState:UIControlStateNormal];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kMDCButtonAnimationDuration * NSEC_PER_MSEC),
+                   dispatch_get_main_queue(), ^{
+                     [self insertSubview:_floatingButton atIndex:subViewIndex];
+                     [_floatingButton setElevation:elevation forState:UIControlStateNormal];
+                   });
+  } else {
+    [self insertSubview:_floatingButton atIndex:subViewIndex];
+    [_floatingButton setElevation:elevation forState:UIControlStateNormal];
+  }
 }
 
 - (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {
@@ -289,6 +322,9 @@ static NSString *kMDCBottomAppBarViewPositionString = @"position";
 
 - (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
                          animated:(BOOL)animated {
+  if (_floatingButtonPosition == floatingButtonPosition) {
+    return;
+  }
   _floatingButtonPosition = floatingButtonPosition;
   [self moveFloatingButtonCenterAnimated:animated];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:animated];
