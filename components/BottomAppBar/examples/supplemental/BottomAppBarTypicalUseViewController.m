@@ -50,8 +50,8 @@ static const CGFloat kMDCBottomAppBarHeight = 96.f;
 
 - (void)viewWillLayoutSubviews {
   CGRect containerFrame = CGRectMake(0,
-                                     self.view.bounds.size.height - kMDCBottomAppBarHeight,
-                                     self.view.bounds.size.width,
+                                     CGRectGetHeight(self.view.frame) - kMDCBottomAppBarHeight,
+                                     CGRectGetWidth(self.view.frame),
                                      kMDCBottomAppBarHeight);
   _bottomBarView.frame = containerFrame;
 }

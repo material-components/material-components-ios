@@ -36,6 +36,6 @@
 
 @property(nonatomic, strong) MDCBottomAppBarView *bottomBarView;
 
-@property(nonatomic, strong) NSArray *listItems;
+@property(nonatomic, strong) NSArray<NSString *> *listItems;
 
 @end
