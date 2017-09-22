@@ -113,7 +113,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize positioningDelegate = _positioningDelegate;
 @synthesize textColor = _textColor;
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
-@synthesize trailingView = _trailingView;
 @synthesize trailingViewMode = _trailingViewMode;
 @synthesize underline = _underline;
 @synthesize textInsetsMode = _textInsetsMode;
@@ -754,13 +753,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return textInsets;
 }
 
+- (UIView *)trailingView {
+  return self.textInput.trailingView;
+}
+
 - (void)setTrailingView:(UIView *)trailingView {
-  if (_trailingView != trailingView) {
-    [_trailingView removeFromSuperview];
-    [self.textInput addSubview:trailingView];
-    _trailingView = trailingView;
-    [self.textInput setNeedsUpdateConstraints];
-  }
+  self.textInput.trailingView = trailingView;
 }
 
 - (MDCTextInputUnderlineView *)underline {
