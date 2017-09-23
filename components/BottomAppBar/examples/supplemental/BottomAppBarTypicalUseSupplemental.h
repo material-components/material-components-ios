@@ -14,13 +14,26 @@
  limitations under the License.
  */
 
-#import "MDCNavigationBarColorThemer.h"
+#import <UIKit/UIKit.h>
 
-@implementation MDCNavigationBarColorThemer
+#import "MaterialBottomAppBar.h"
+#import "BottomAppBarTypicalUseSupplemental.h"
+#import "BottomAppBarTypicalUseViewController.h"
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-         toNavigationBar:(MDCNavigationBar *)navigationBar {
-  navigationBar.backgroundColor = colorScheme.primaryColor;
-}
+@interface BottomAppBarTypicalUseExample : BottomAppBarTypicalUseViewController
+
+@end
+
+@interface BottomAppBarTypicalUseExample (Supplemental)
+
+- (void)setupExampleTableLayout;
+
+@end
+
+@interface BottomAppBarExampleTableViewController : UITableViewController
+
+@property(nonatomic, strong) MDCBottomAppBarView *bottomBarView;
+
+@property(nonatomic, strong) NSArray<NSString *> *listItems;
 
 @end

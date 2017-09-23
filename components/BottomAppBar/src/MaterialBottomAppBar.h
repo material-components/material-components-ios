@@ -14,13 +14,4 @@
  limitations under the License.
  */
 
-#import "MDCNavigationBarColorThemer.h"
-
-@implementation MDCNavigationBarColorThemer
-
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-         toNavigationBar:(MDCNavigationBar *)navigationBar {
-  navigationBar.backgroundColor = colorScheme.primaryColor;
-}
-
-@end
+#import "MDCBottomAppBarView.h"

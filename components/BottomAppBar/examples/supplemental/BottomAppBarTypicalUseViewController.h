@@ -14,13 +14,22 @@
  limitations under the License.
  */
 
-#import "MDCNavigationBarColorThemer.h"
+#import <UIKit/UIKit.h>
 
-@implementation MDCNavigationBarColorThemer
+#import "MaterialBottomAppBar.h"
+#import "MaterialButtons.h"
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-         toNavigationBar:(MDCNavigationBar *)navigationBar {
-  navigationBar.backgroundColor = colorScheme.primaryColor;
-}
+/**
+ Shows the bottom app bar in the context of a table view.
+ */
+@interface BottomAppBarTypicalUseViewController : UIViewController
+
+@property(nonatomic, strong, nonnull) MDCBottomAppBarView *bottomBarView;
+
+/**
+ The embedded view controller that appears behind the bottom app bar. This content is part of the
+ application and not visually connected to the bottom app bar.
+ */
+@property(nonatomic, strong, nonnull) UIViewController *viewController;
 
 @end

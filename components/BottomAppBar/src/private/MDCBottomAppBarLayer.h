@@ -14,13 +14,18 @@
  limitations under the License.
  */
 
-#import "MDCNavigationBarColorThemer.h"
+#import <UIKit/UIKit.h>
 
-@implementation MDCNavigationBarColorThemer
+#import "MDCBottomAppBarView.h"
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-         toNavigationBar:(MDCNavigationBar *)navigationBar {
-  navigationBar.backgroundColor = colorScheme.primaryColor;
-}
+@interface MDCBottomAppBarLayer : CAShapeLayer
+
+- (CGPathRef)pathWithCutFromRect:(CGRect)rect
+          floatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
+                 layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection;
+
+- (CGPathRef)pathWithoutCutFromRect:(CGRect)rect
+             floatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
+                    layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection;
 
 @end
