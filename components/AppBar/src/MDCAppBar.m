@@ -18,6 +18,7 @@
 
 #import "MDCAppBarContainerViewController.h"
 
+#import "MaterialApplication.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialRTL.h"
@@ -33,7 +34,6 @@ static NSString *const kStatusBarHeightKey = @"statusBarHeight";
 static NSString *const MDCAppBarHeaderViewControllerKey = @"MDCAppBarHeaderViewControllerKey";
 static NSString *const MDCAppBarNavigationBarKey = @"MDCAppBarNavigationBarKey";
 static NSString *const MDCAppBarHeaderStackViewKey = @"MDCAppBarHeaderStackViewKey";
-static const CGFloat kStatusBarHeight = 20;
 
 // The Bundle for string resources.
 static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
@@ -300,7 +300,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   [self.view addSubview:self.headerStackView];
 
   // Bar stack expands vertically, but has a margin above it for the status bar.
-
   NSArray<NSLayoutConstraint *> *horizontalConstraints = [NSLayoutConstraint
       constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|[%@]|", kBarStackKey]
                           options:0
@@ -308,12 +307,13 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
+  CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
   NSArray<NSLayoutConstraint *> *verticalConstraints = [NSLayoutConstraint
       constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[%@]|", kStatusBarHeightKey,
                                                              kBarStackKey]
                           options:0
                           metrics:@{
-                            kStatusBarHeightKey : @(kStatusBarHeight)
+                            kStatusBarHeightKey : @(statusBarHeight)
                           }
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:verticalConstraints];
