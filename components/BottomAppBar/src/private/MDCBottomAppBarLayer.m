@@ -179,11 +179,12 @@
       break;
     }
     case MDCBottomAppBarFloatingButtonPositionCenter: {
+      CGFloat offsetRadiusDiff = kMDCBottomAppBarYOffset - kMDCBottomAppBarFloatingButtonRadius;
       [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(midX - kMDCBottomAppBarFloatingButtonRadius,
+      [bottomBarPath addLineToPoint:CGPointMake(midX - offsetRadiusDiff,
                                                 kMDCBottomAppBarYOffset)];
       [bottomBarPath addLineToPoint:CGPointMake(midX, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(midX + kMDCBottomAppBarFloatingButtonRadius,
+      [bottomBarPath addLineToPoint:CGPointMake(midX + offsetRadiusDiff,
                                                 kMDCBottomAppBarYOffset)];
       [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
       [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + kMDCBottomAppBarYOffset)];
