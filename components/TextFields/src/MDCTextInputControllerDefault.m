@@ -123,6 +123,10 @@ static UIColor *_leadingUnderlineLabelTextColorDefault;
 static UIColor *_normalColorDefault;
 static UIColor *_trailingUnderlineLabelTextColorDefault;
 
+static UIFont *_inlinePlaceholderFont;
+static UIFont *_leadingUnderlineLabelFont;
+static UIFont *_trailingUnderlineLabelFont;
+
 static UIRectCorner _roundedCornersDefault = 0;
 
 static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileEditing;
@@ -143,6 +147,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIColor *_leadingUnderlineLabelTextColor;
   UIColor *_normalColor;
   UIColor *_trailingUnderlineLabelTextColor;
+
+  UIFont *_inlinePlaceholderFont;
+  UIFont *_leadingUnderlineLabelFont;
+  UIFont *_trailingUnderlineLabelFont;
 
   UIRectCorner _roundedCorners;
 }
@@ -935,6 +943,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                        : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
 }
 
+- (UIFont *)inlinePlaceholderFont {
+  return _inlinePlaceholderFont ?: [[self class] inlinePlaceholderFontDefault];
+}
+
++ (UIFont *)inlinePlaceholderFontDefault {
+  return _inlinePlaceholderFontDefault ?: [[self class] placeholderFont];
+}
+
 - (UIColor *)leadingUnderlineLabelTextColor {
   return _leadingUnderlineLabelTextColor ? _leadingUnderlineLabelTextColor
                                          : [self class].leadingUnderlineLabelTextColorDefault;
@@ -962,6 +978,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       leadingUnderlineLabelTextColorDefault
           ? leadingUnderlineLabelTextColorDefault
           : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
+}
+
+- (UIFont *)leadingUnderlineLabelFont {
+  return _leadingUnderlineLabelFont ?: [[self class] leadingUnderlineLabelFontDefault];
+}
+
++ (UIFont *)leadingUnderlineLabelFontDefault {
+  return _leadingUnderlineLabelFontDefault ?: [[self class] underlineLabelsFont];
 }
 
 - (void)setMinimumLines:(NSUInteger)minimumLines {
@@ -1025,6 +1049,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _textInput = textInput;
     [self setupInput];
   }
+}
+
+- (UIFont *)trailingUnderlineLabelFont {
+  return _trailingUnderlineLabelFont ?: [[self class] trailingUnderlineLabelFontDefault];
+}
+
++ (UIFont *)trailingUnderlineLabelFontDefault {
+  return _trailingUnderlineLabelFontDefault ?: [[self class] underlineLabelsFont];
 }
 
 - (UIColor *)trailingUnderlineLabelTextColor {
