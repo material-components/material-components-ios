@@ -216,14 +216,15 @@
 - (UIBezierPath *)pathWithoutCutLeft:(UIBezierPath *)bottomBarPath
                                width:(CGFloat)width
                               height:(CGFloat)height {
+  CGFloat offsetRadiusDiff = kMDCBottomAppBarYOffset - kMDCBottomAppBarFloatingButtonRadius;
   [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(kMDCBottomAppBarFloatingButtonPositionX -
-                                            kMDCBottomAppBarFloatingButtonRadius,
+                                            offsetRadiusDiff,
                                             kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(kMDCBottomAppBarFloatingButtonPositionX,
                                             kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(kMDCBottomAppBarFloatingButtonPositionX +
-                                            kMDCBottomAppBarFloatingButtonRadius,
+                                            offsetRadiusDiff,
                                             kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + kMDCBottomAppBarYOffset)];
@@ -235,14 +236,15 @@
 - (UIBezierPath *)pathWithoutCutRight:(UIBezierPath *)bottomBarPath
                                 width:(CGFloat)width
                                height:(CGFloat)height {
+  CGFloat offsetRadiusDiff = kMDCBottomAppBarYOffset - kMDCBottomAppBarFloatingButtonRadius;
   [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX -
-                                            kMDCBottomAppBarFloatingButtonRadius,
+                                            offsetRadiusDiff,
                                             kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX,
                                             kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX +
-                                            kMDCBottomAppBarFloatingButtonRadius,
+                                            offsetRadiusDiff,
                                             kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + kMDCBottomAppBarYOffset)];
