@@ -19,6 +19,7 @@ import MaterialComponents
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
+  let bottomBarViewHeight = CGFloat(96);
   let appBar = MDCAppBar()
   let bottomBarView = MDCBottomAppBarView()
   
@@ -47,7 +48,6 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {
-    let bottomBarViewHeight = CGFloat(96);
     let frame = CGRect(x: 0,
                        y: self.view.bounds.height - bottomBarViewHeight,
                        width: self.view.bounds.width,
