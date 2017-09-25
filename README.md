@@ -124,7 +124,7 @@ class ViewController: UIViewController {
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  MDCRaisedButton *raisedButton = [MDCRaisedButton new];
+  MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitle:@"Raised Button" forState:UIControlStateNormal];
   [raisedButton sizeToFit];
   [raisedButton addTarget:self

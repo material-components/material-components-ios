@@ -135,7 +135,7 @@ self.view.addSubview(flatButton)
 #### Objective-C
 
 ``` objc
-MDCFlatButton *flatButton = [MDCFlatButton new];
+MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
 [flatButton setTitle:@"Tap Me" forState:UIControlStateNormal];
 [flatButton setCustomTitleColor:[UIColor grayColor]];
 [flatButton sizeToFit];
@@ -169,7 +169,7 @@ self.view.addSubview(raisedButton)
 #### Objective-C
 
 ``` objc
-MDCRaisedButton *raisedButton = [MDCRaisedButton new];
+MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
 // See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
 [raisedButton setElevation:4.0f forState:UIControlStateNormal];
@@ -198,7 +198,7 @@ self.view.addSubview(floatingButton)
 #### Objective-C
 
 ``` objc
-MDCFloatingButton *floatingButton = [MDCFloatingButton new];
+MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
 [floatingButton setTitle:@"+" forState:UIControlStateNormal];
 [floatingButton sizeToFit];
 [floatingButton addTarget:self
