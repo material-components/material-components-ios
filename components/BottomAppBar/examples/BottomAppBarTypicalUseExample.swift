@@ -47,6 +47,13 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {
+    let bottomBarViewHeight = CGFloat(96);
+    let frame = CGRect(x: 0,
+                       y: self.view.bounds.height - bottomBarViewHeight,
+                       width: self.view.bounds.width,
+                       height: bottomBarViewHeight)
+    bottomBarView.frame = frame
+    bottomBarView.autoresizingMask = [ .flexibleWidth, .flexibleTopMargin ]
     view.addSubview(bottomBarView)
 
     // Add touch handler to the floating button.
@@ -93,15 +100,6 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     self.view.backgroundColor = UIColor.white
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-
-  override func viewWillLayoutSubviews() {
-    let bottomBarViewHeight = CGFloat(96);
-    let frame = CGRect(x: 0,
-                       y: self.view.bounds.height - bottomBarViewHeight,
-                       width: self.view.bounds.width,
-                       height: bottomBarViewHeight)
-    bottomBarView.frame = frame
   }
 
 }
