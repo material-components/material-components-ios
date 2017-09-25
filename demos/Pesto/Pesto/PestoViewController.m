@@ -169,7 +169,7 @@ static CGFloat kPestoInset = 5.f;
 #pragma mark - PestoSideViewDelegate
 
 - (void)didSelectSettings {
-  PestoSettingsViewController *settingsVC = [PestoSettingsViewController new];
+  PestoSettingsViewController *settingsVC = [[PestoSettingsViewController alloc] init];
   settingsVC.title = @"Settings";
 
   UIColor *white = [UIColor whiteColor];

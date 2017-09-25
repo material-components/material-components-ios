@@ -55,7 +55,7 @@
 #pragma mark - Private
 
 - (void)loadTabBar {
-  MDCTabBar *tabBar = [MDCTabBar new];
+  MDCTabBar *tabBar = [[MDCTabBar alloc] init];
   tabBar.delegate = self;
   tabBar.alignment = MDCTabBarAlignmentCenterSelected;
 

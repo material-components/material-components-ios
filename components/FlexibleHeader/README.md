@@ -151,7 +151,7 @@ required init?(coder aDecoder: NSCoder) {
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _headerViewController = [MDCFlexibleHeaderViewController new];
+    _headerViewController = [[MDCFlexibleHeaderViewController alloc] init];
     [self addChildViewController:_headerViewController];
   }
   return self;
