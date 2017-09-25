@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode9
+osx_image: xcode8.3
 sudo: false
 
 # Only do a shallow clone of our Git repo.
