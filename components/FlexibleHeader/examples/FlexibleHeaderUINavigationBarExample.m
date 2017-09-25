@@ -64,8 +64,8 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   // Use a standard UINavigationBar in the flexible header.
   CGRect navBarFrame = CGRectMake(0, 0, _fhvc.headerView.frame.size.width, 60);
   UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:navBarFrame];
-  [navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-  navBar.shadowImage = [UIImage new];
+  [navBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+  navBar.shadowImage = [[UIImage alloc] init];
   navBar.translucent = YES;
   navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   navBar.tintColor = [UIColor whiteColor];

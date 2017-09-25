@@ -96,7 +96,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     - (void)viewDidLoad {
       [super viewDidLoad];
 
-      MDCRaisedButton *raisedButton = [MDCRaisedButton new];
+      MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
       [raisedButton setTitle:@"Raised Button" forState:UIControlStateNormal];
       [raisedButton sizeToFit];
       [raisedButton addTarget:self
