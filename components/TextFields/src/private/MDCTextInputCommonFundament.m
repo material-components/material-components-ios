@@ -572,8 +572,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     }
   }
 
-  if (self.textInput.trailingView.superview &&
-      !MDCCGFloatEqual(self.textInput.trailingView.alpha, 0.f)) {
+  if (self.trailingView.superview &&
+      !MDCCGFloatEqual(self.trailingView.alpha, 0.f)) {
     clearButtonAlpha = 0;
   }
 
