@@ -378,7 +378,8 @@ extension MDCNodeListViewController {
         container.appBar.navigationBar.titleAlignment = .center
         container.appBar.navigationBar.tintColor = UIColor.white
         container.appBar.navigationBar.titleTextAttributes =
-         [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white, NSAttributedStringKey.font.rawValue: appBarFont]
+         [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+           NSAttributedStringKey.font.rawValue: appBarFont]
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.
