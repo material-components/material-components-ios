@@ -74,7 +74,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       object: nil)
   }
 
-  func colorThemeChanged(notification: NSNotification) {
+   @objc func colorThemeChanged(notification: NSNotification) {
     let colorScheme = notification.userInfo?["colorScheme"]
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
@@ -103,11 +103,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     titleLabel.text = self.title!.uppercased()
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
     if #available(iOS 9.0, *) {
-        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
+      titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFont.Weight.regular)
     } else {
-        let attribute: [String: UIFontDescriptorSymbolicTraits] =
-            [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
-        let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+      let attributes: [UIFontDescriptor.AttributeName: UIFontDescriptorSymbolicTraits] =
+         [UIFontDescriptor.AttributeName.symbolic:
+            UIFontDescriptorSymbolicTraits(rawValue: UIFontDescriptorSymbolicTraits.traitMonoSpace.rawValue)]
+        let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attributes)
         titleLabel.font = UIFont(descriptor: descriptor, size: 14)
     }
     titleLabel.sizeToFit()

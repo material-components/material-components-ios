@@ -42,7 +42,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
 
     // Then
     let fontColor =
-        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+        appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     let tintColor = appBar.navigationBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.black,
                                                                           targetTextAlpha: 1.0,
@@ -61,7 +61,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
 
     // Then
     let fontColor =
-        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+        appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     let tintColor = appBar.navigationBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.white,
                                                                           targetTextAlpha: 1.0,
@@ -79,7 +79,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
 
     // Then
     let fontColor =
-        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+        appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     let tintColor = appBar.navigationBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.black,
                                                                           targetTextAlpha: 1.0,
@@ -97,7 +97,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
 
     // Then
     let fontColor =
-        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+        appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     let tintColor = appBar.navigationBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.white,
                                                                           targetTextAlpha: 1.0,
@@ -115,7 +115,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
 
     // Then
     let fontColor =
-        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+        appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     let tintColor = appBar.navigationBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: defaultBackgroundColor,
                                                                           targetTextAlpha: 1.0,
@@ -134,7 +134,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
 
     // Then
     let fontColor =
-        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+        appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     let tintColor = appBar.navigationBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.black,
                                                                           targetTextAlpha: 1.0,
