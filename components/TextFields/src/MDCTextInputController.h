@@ -145,6 +145,20 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
 /**
+ The font applied to the leading side underline label.
+
+ Default is leadingUnderlineLabelFontDefault;
+ */
+@property(nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelFont;
+
+/**
+ Default value for leadingUnderlineLabelFont.
+
+ Default is MDCFontTextStyleBody1.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelFontDefault;
+
+/**
  The color applied to the leading side underline label when not in error state.
 
  Default is leadingUnderlineLabelTextColorDefault;

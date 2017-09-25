@@ -89,8 +89,6 @@ static NSString *const MDCTextInputControllerDefaultTrailingUnderlineLabelTextCo
 static NSString *const MDCTextInputControllerDefaultUnderlineViewModeKey =
     @"MDCTextInputControllerDefaultUnderlineViewModeKey";
 
-static NSString *const MDCTextInputControllerDefaultKVOKeyFont = @"font";
-
 static inline UIColor *MDCTextInputDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputDefaultHintTextOpacity];
 }
@@ -150,7 +148,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 @property(nonatomic, assign, readonly) BOOL isPlaceholderUp;
-@property(nonatomic, assign) BOOL isRegisteredForKVO;
 
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 
@@ -402,40 +399,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [defaultCenter removeObserver:self];
 }
 
-- (void)subscribeForKVO {
-  if (!_textInput) {
-    return;
-  }
-  [_textInput.leadingUnderlineLabel addObserver:self
-                                     forKeyPath:MDCTextInputControllerDefaultKVOKeyFont
-                                        options:0
-                                        context:nil];
-  [_textInput.placeholderLabel addObserver:self
-                                forKeyPath:MDCTextInputControllerDefaultKVOKeyFont
-                                   options:0
-                                   context:nil];
-  [_textInput.trailingUnderlineLabel addObserver:self
-                                      forKeyPath:MDCTextInputControllerDefaultKVOKeyFont
-                                         options:0
-                                         context:nil];
-  _isRegisteredForKVO = YES;
-}
-
-- (void)unsubscribeFromKVO {
-  if (!self.textInput || !self.isRegisteredForKVO) {
-    return;
-  }
-  @try {
-    [self.textInput.leadingUnderlineLabel removeObserver:self
-                                              forKeyPath:MDCTextInputControllerDefaultKVOKeyFont];
-    [self.textInput.placeholderLabel removeObserver:self
-                                         forKeyPath:MDCTextInputControllerDefaultKVOKeyFont];
-    [self.textInput.trailingUnderlineLabel removeObserver:self
-                                               forKeyPath:MDCTextInputControllerDefaultKVOKeyFont];
-  } @catch (__unused NSException *exception) {
-  }
-  _isRegisteredForKVO = NO;
-}
 
 #pragma mark - Border Customization
 
