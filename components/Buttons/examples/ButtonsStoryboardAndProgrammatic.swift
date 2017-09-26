@@ -117,7 +117,6 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
 
     addConstraintsToButtons()
-   
   }
   // swiftlint:enable function_body_length
    
