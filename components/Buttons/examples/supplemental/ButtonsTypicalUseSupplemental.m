@@ -120,7 +120,10 @@
   for (NSInteger i = range.location; i < NSMaxRange(range); i++) {
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
-    button.center = CGPointMake(button.center.x, button.center.y + verticalCenterY);
+    button.center = MDCRoundCenterWithBoundsAndScale(CGPointMake(button.center.x,
+                                                                 button.center.y + verticalCenterY),
+                                                     button.bounds,
+                                                     self.view.window.screen.scale);
 
     CGFloat labelWidth = CGRectGetWidth(label.bounds);
     CGFloat labelHeight = CGRectGetHeight(label.bounds);
