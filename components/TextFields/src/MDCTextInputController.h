@@ -170,7 +170,7 @@
 
  Default is MDCFontTextStyleCaption.
  */
-@property(class, nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelFontDefault;
+@property(class, nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFontDefault;
 
 /**
  The color applied to the leading side underline label when not in error state.
@@ -235,7 +235,7 @@
 
  Default is MDCFontTextStyleCaption.
  */
-@property(class, nonatomic, null_resettable, strong) UIColor *trailingUnderlineLabelFontDefault;
+@property(class, nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFontDefault;
 /**
  The color applied to the trailing side underline label when not in error state.
 
