@@ -1,4 +1,16 @@
-# release-candidate TODO: Replace me with version number. 
+# 35.2.0
+
+## API Changes
+
+### Bottom App Bar
+
+* New component: A bottom app bar view with an embedded floating button.
+
+### Text Fields
+
+* `MDCTextField.clearButtonMode` now supports UIAppearance.
+
+
 
 # 35.1.0
 
