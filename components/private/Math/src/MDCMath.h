@@ -125,3 +125,35 @@ static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
                     MDCCeil((CGRectGetWidth(rect) + adjustWidthHeight.width) * scale) / scale,
                     MDCCeil((CGRectGetHeight(rect) + adjustWidthHeight.height) * scale) / scale);
 }
+
+static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
+  if (MDCCGFloatEqual(scale, 0)) {
+    return CGPointZero;
+  }
+
+  return CGPointMake(MDCRound(point.x * scale) / scale, MDCRound(point.y * scale) / scale);
+}
+
+/**
+ Align the centerPoint of a view so that its origin is pixel-aligned to the nearest pixel.
+ Returns @c CGRectZero if @c scale is zero or @c bounds is @c CGRectNull.
+
+ @param center the unaligned center of the view.
+ @param bounds the bounds of the view.
+ @param scale the native scaling factor for pixel alignment.
+
+ @return the center point of the view such that its origin will be pixel-aligned.
+ */
+static inline CGPoint MDCRoundCenterWithBoundsAndScale(CGPoint center,
+                                                       CGRect bounds,
+                                                       CGFloat scale) {
+  if (MDCCGFloatEqual(scale, 0) || CGRectIsNull(bounds)) {
+    return CGPointZero;
+  }
+
+  CGFloat halfWidth = CGRectGetWidth(bounds) / 2;
+  CGFloat halfHeight = CGRectGetHeight(bounds) / 2;
+  CGPoint origin = CGPointMake(center.x - halfWidth, center.y - halfHeight);
+  origin = MDCPointRoundWithScale(origin, scale);
+  return CGPointMake(origin.x + halfWidth, origin.y + halfHeight);
+}
