@@ -18,19 +18,6 @@ import Foundation
 import MaterialComponents
 
 class ButtonsSwiftAndStoryboardController: UIViewController {
-
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Buttons (Swift and Storyboard)"]
-  }
-
-  class func catalogStoryboardName() -> String {
-    return "ButtonsStoryboardAndProgrammatic"
-  }
-
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
   let raisedButton = MDCRaisedButton()
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()
@@ -123,6 +110,18 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
+    programmaticButtonSetup()
+
+    let storyboardPlusShapeLayer =
+      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
+
+    addConstraintsToButtons()
+   
+  }
+  // swiftlint:enable function_body_length
+   
+  private func programmaticButtonSetup() {
     raisedButton.setTitle("Programmatic", for: .normal)
     raisedButton.setTitleColor(titleColor, for: .normal)
     raisedButton.backgroundColor = backgroundColor
@@ -130,33 +129,31 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
     raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(raisedButton)
-
+      
     flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Programmatic", for: .normal)
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(flatButton)
-
+      
     floatingButton.sizeToFit()
     floatingButton.backgroundColor = backgroundColor
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-
+      
     let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     floatingButton.layer.addSublayer(floatingPlusShapeLayer)
     innerContainerView.addSubview(floatingButton)
-
-    let storyboardPlusShapeLayer =
-      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
-
+  }
+   
+  private func addConstraintsToButtons() {
     let views = [
       "raised": raisedButton,
       "flat": flatButton,
       "floating": floatingButton
     ]
-
+   
     view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .leading,
@@ -165,7 +162,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       attribute: .leading,
       multiplier: 1.0,
       constant: 0))
-
+   
     view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .trailing,
@@ -174,7 +171,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       attribute: .trailing,
       multiplier: 1.0,
       constant: 0))
-
+   
     view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .top,
@@ -183,17 +180,30 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       attribute: .top,
       multiplier: 1.0,
       constant: 0))
-
+   
     view.addConstraints(
       NSLayoutConstraint.constraints(withVisualFormat: "V:|[raised]-22-[flat]-22-[floating]|",
-        options: .alignAllCenterX,
-        metrics: nil,
-        views: views))
+                                     options: .alignAllCenterX,
+                                     metrics: nil,
+                                     views: views))
   }
-  // swiftlint:enable function_body_length
 
   @IBAction func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
 
+}
+
+extension ButtonsSwiftAndStoryboardController {
+   class func catalogBreadcrumbs() -> [String] {
+      return ["Buttons", "Buttons (Swift and Storyboard)"]
+   }
+   
+   class func catalogStoryboardName() -> String {
+      return "ButtonsStoryboardAndProgrammatic"
+   }
+   
+   class func catalogIsPrimaryDemo() -> Bool {
+      return false
+   }
 }
