@@ -251,7 +251,7 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     XCTAssertEqual(controller.inlinePlaceholderFont,
                    MDCTextInputControllerLegacyFullWidth.inlinePlaceholderFontDefault)
     XCTAssertEqual(controller.leadingUnderlineLabelFont,
-                   MDCTextInputControllerLegacyFullWidth.leadingUnderlineLabelFontDefault)
+                   nil)
     XCTAssertEqual(controller.trailingUnderlineLabelFont,
                    MDCTextInputControllerLegacyFullWidth.trailingUnderlineLabelFontDefault)
 
@@ -319,7 +319,7 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     XCTAssertEqual(controller.inlinePlaceholderFont,
                    MDCTextInputControllerLegacyFullWidth.inlinePlaceholderFontDefault)
     XCTAssertEqual(controller.leadingUnderlineLabelFont,
-                   MDCTextInputControllerLegacyFullWidth.leadingUnderlineLabelFontDefault)
+                   nil)
     XCTAssertEqual(controller.trailingUnderlineLabelFont,
                    MDCTextInputControllerLegacyFullWidth.trailingUnderlineLabelFontDefault)
   }

@@ -247,7 +247,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
     let textFieldControllerDefaultCustomFont =
       MDCTextInputControllerDefault(textInput: textFieldCustomFont)
-    textFieldCustomFont.placeholderLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+    textFieldControllerDefaultCustomFont.inlinePlaceholderFont = UIFont.preferredFont(forTextStyle: .headline)
     textFieldControllerDefaultCustomFont.isFloatingEnabled = false
 
     let textFieldCustomFontFloating = MDCTextField()
@@ -267,11 +267,11 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldControllerDefaultCustomFontFloating.normalColor = .purple
     textFieldControllerDefaultCustomFontFloating.leadingUnderlineLabelTextColor = .cyan
     textFieldControllerDefaultCustomFontFloating.trailingUnderlineLabelTextColor = .magenta
-    textFieldCustomFontFloating.leadingUnderlineLabel.font =
+    textFieldControllerDefaultCustomFontFloating.leadingUnderlineLabelFont =
       UIFont.preferredFont(forTextStyle: .headline)
-    textFieldCustomFontFloating.placeholderLabel.font =
+    textFieldControllerDefaultCustomFontFloating.inlinePlaceholderFont =
       UIFont.preferredFont(forTextStyle: .headline)
-    textFieldCustomFontFloating.trailingUnderlineLabel.font =
+    textFieldControllerDefaultCustomFontFloating.trailingUnderlineLabelFont =
       UIFont.preferredFont(forTextStyle: .subheadline)
     textFieldCustomFontFloating.clearButton.tintColor = MDCPalette.red.accent400
 

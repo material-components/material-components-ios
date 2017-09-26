@@ -72,8 +72,12 @@ static NSString *const MDCTextInputControllerDefaultFloatingPlaceholderScaleKey 
     @"MDCTextInputControllerDefaultFloatingPlaceholderScaleKey";
 static NSString *const MDCTextInputControllerDefaultHelperTextKey =
     @"MDCTextInputControllerDefaultHelperTextKey";
+static NSString *const MDCTextInputControllerDefaultInlinePlaceholderFontKey =
+    @"MDCTextInputControllerDefaultInlinePlaceholderFontKey";
 static NSString *const MDCTextInputControllerDefaultInlinePlaceholderColorKey =
     @"MDCTextInputControllerDefaultInlinePlaceholderColorKey";
+static NSString *const MDCTextInputControllerDefaultLeadingUnderlineLabelFontKey =
+    @"MDCTextInputControllerDefaultLeadingUnderlineLabelFontKey";
 static NSString *const MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor =
     @"MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor";
 static NSString *const MDCTextInputControllerDefaultMinimumLinesKey =
@@ -84,6 +88,8 @@ static NSString *const MDCTextInputControllerDefaultPresentationStyleKey =
     @"MDCTextInputControllerDefaultPresentationStyleKey";
 static NSString *const MDCTextInputControllerDefaultTextInputKey =
     @"MDCTextInputControllerDefaultTextInputKey";
+static NSString *const MDCTextInputControllerDefaultTrailingUnderlineLabelFontKey =
+    @"MDCTextInputControllerDefaultTrailingUnderlineLabelFontKey";
 static NSString *const MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor =
     @"MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor";
 static NSString *const MDCTextInputControllerDefaultUnderlineViewModeKey =
@@ -148,6 +154,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIColor *_normalColor;
   UIColor *_trailingUnderlineLabelTextColor;
 
+  UIFont *_inlinePlaceholderFont;
+  UIFont *_leadingUnderlineLabelFont;
+  UIFont *_trailingUnderlineLabelFont;
+
   UIRectCorner _roundedCorners;
 }
 
@@ -161,21 +171,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 @property(nonatomic, copy, readwrite) NSString *errorText;
 @property(nonatomic, copy) NSString *previousLeadingText;
 
-@property(nonatomic, strong) UIFont *customLeadingFont;
-@property(nonatomic, strong) UIFont *customPlaceholderFont;
-@property(nonatomic, strong) UIFont *customTrailingFont;
-
 @end
 
 @implementation MDCTextInputControllerDefault
 
 @synthesize characterCountMax = _characterCountMax;
 @synthesize characterCountViewMode = _characterCountViewMode;
-@synthesize inlinePlaceholderFont = _inlinePlaceholderFont;
-@synthesize leadingUnderlineLabelFont = _leadingUnderlineLabelFont;
 @synthesize roundedCorners = _roundedCorners;
 @synthesize textInput = _textInput;
-@synthesize trailingUnderlineLabelFont = _trailingUnderlineLabelFont;
 @synthesize underlineViewMode = _underlineViewMode;
 
 // TODO: (larche): Support in-line auto complete.
@@ -216,11 +219,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultFloatingPlaceholderScaleKey];
     _inlinePlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultInlinePlaceholderColorKey];
+    _inlinePlaceholderFont =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultInlinePlaceholderFontKey];
+    _leadingUnderlineLabelFont =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultLeadingUnderlineLabelFontKey];
     _leadingUnderlineLabelTextColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor];
     _minimumLines = [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultMinimumLinesKey];
     _normalColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultNormalColorKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTextInputKey];
+    _trailingUnderlineLabelFont =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTrailingUnderlineLabelFontKey];
     _trailingUnderlineLabelTextColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor];
     _underlineViewMode = (UITextFieldViewMode)
@@ -268,11 +277,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerDefaultHelperTextKey];
   [aCoder encodeObject:self.inlinePlaceholderColor
                 forKey:MDCTextInputControllerDefaultInlinePlaceholderColorKey];
+  [aCoder encodeObject:self.inlinePlaceholderFont
+                forKey:MDCTextInputControllerDefaultInlinePlaceholderFontKey];
+  [aCoder encodeObject:self.leadingUnderlineLabelFont
+                forKey:MDCTextInputControllerDefaultLeadingUnderlineLabelFontKey];
   [aCoder encodeObject:self.leadingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor];
   [aCoder encodeInteger:self.minimumLines forKey:MDCTextInputControllerDefaultMinimumLinesKey];
   [aCoder encodeObject:self.normalColor forKey:MDCTextInputControllerDefaultNormalColorKey];
   [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerDefaultTextInputKey];
+  [aCoder encodeObject:self.trailingUnderlineLabelFont
+                forKey:MDCTextInputControllerDefaultTrailingUnderlineLabelFontKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor];
   [aCoder encodeInteger:self.underlineViewMode
@@ -298,11 +313,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   copy.floatingPlaceholderScale = self.floatingPlaceholderScale;
   copy.helperText = [self.helperText copy];
   copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
+  copy.inlinePlaceholderFont = self.inlinePlaceholderFont;
+  copy.leadingUnderlineLabelFont = self.leadingUnderlineLabelFont;
   copy.leadingUnderlineLabelTextColor = self.leadingUnderlineLabelTextColor;
   copy.minimumLines = self.minimumLines;
   copy.normalColor = self.normalColor;
   copy.previousLeadingText = [self.previousLeadingText copy];
   copy.textInput = self.textInput;  // Just a pointer value copy
+  copy.trailingUnderlineLabelFont = self.trailingUnderlineLabelFont;
   copy.trailingUnderlineLabelTextColor = self.trailingUnderlineLabelTextColor;
   copy.underlineViewMode = self.underlineViewMode;
 
@@ -451,9 +469,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 #pragma mark - Leading Label Customization
 
 - (void)updateLeadingUnderlineLabel {
-  if (!self.customLeadingFont) {
-    self.textInput.leadingUnderlineLabel.font = [[self class] underlineLabelsFont];
-  }
+  self.textInput.leadingUnderlineLabel.font = self.leadingUnderlineLabelFont;
 
   self.textInput.leadingUnderlineLabel.textColor =
       (self.isDisplayingErrorText || self.isDisplayingCharacterCountError)
@@ -464,9 +480,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 #pragma mark - Placeholder Customization
 
 - (void)updatePlaceholder {
-  if (!self.customPlaceholderFont) {
-    self.textInput.placeholderLabel.font = [[self class] placeholderFont];
-  }
+  self.textInput.placeholderLabel.font = self.inlinePlaceholderFont;
 
   UIColor *placeholderColor;
   if (self.isPlaceholderUp) {
@@ -499,7 +513,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self updateLayout];
 
   [CATransaction commit];
-
 
   self.textInput.hidesPlaceholderOnInput = !self.floatingEnabled;
   [self.textInput layoutIfNeeded];
@@ -608,9 +621,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     self.textInput.trailingUnderlineLabel.text = nil;
   } else {
     self.textInput.trailingUnderlineLabel.text = [self characterCountText];
-    if (!self.customTrailingFont) {
-      self.textInput.trailingUnderlineLabel.font = [[self class] underlineLabelsFont];
-    }
+    self.textInput.trailingUnderlineLabel.font = self.trailingUnderlineLabelFont;
+
   }
 
   UIColor *textColor = self.trailingUnderlineLabelTextColor;
@@ -944,12 +956,38 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return _inlinePlaceholderFont ?: [self class].inlinePlaceholderFontDefault;
 }
 
+- (void)setInlinePlaceholderFont:(UIFont *)inlinePlaceholderFont {
+  if (![_inlinePlaceholderFont isEqual:inlinePlaceholderFont]) {
+    _inlinePlaceholderFont = inlinePlaceholderFont;
+    [self updateLayout];
+  }
+}
+
 + (UIFont *)inlinePlaceholderFontDefault {
   return _inlinePlaceholderFontDefault ?: [[self class] placeholderFont];
 }
 
 + (void)setInlinePlaceholderFontDefault:(UIFont *)inlinePlaceholderFontDefault {
   _inlinePlaceholderFontDefault = inlinePlaceholderFontDefault;
+}
+
+- (UIFont *)leadingUnderlineLabelFont {
+  return _leadingUnderlineLabelFont ?: [self class].leadingUnderlineLabelFontDefault;
+}
+
+- (void)setLeadingUnderlineLabelFont:(UIFont *)leadingUnderlineLabelFont {
+  if (![_leadingUnderlineLabelFont isEqual:leadingUnderlineLabelFont]) {
+    _leadingUnderlineLabelFont = leadingUnderlineLabelFont;
+    [self updateLayout];
+  }
+}
+
++ (UIFont *)leadingUnderlineLabelFontDefault {
+  return _leadingUnderlineLabelFontDefault ?: [[self class] underlineLabelsFont];
+}
+
++ (void)setLeadingUnderlineLabelFontDefault:(UIFont *)leadingUnderlineLabelFontDefault {
+  _leadingUnderlineLabelFontDefault = leadingUnderlineLabelFontDefault;
 }
 
 - (UIColor *)leadingUnderlineLabelTextColor {
@@ -979,18 +1017,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       leadingUnderlineLabelTextColorDefault
           ? leadingUnderlineLabelTextColorDefault
           : MDCTextInputDefaultInlinePlaceholderTextColorDefault();
-}
-
-- (UIFont *)leadingUnderlineLabelFont {
-  return _leadingUnderlineLabelFont ?: [self class].leadingUnderlineLabelFontDefault;
-}
-
-+ (UIFont *)leadingUnderlineLabelFontDefault {
-  return _leadingUnderlineLabelFontDefault ?: [[self class] underlineLabelsFont];
-}
-
-+ (void)setLeadingUnderlineLabelFontDefault:(UIFont *)leadingUnderlineLabelFontDefault {
-  _leadingUnderlineLabelFontDefault = leadingUnderlineLabelFontDefault;
 }
 
 - (void)setMinimumLines:(NSUInteger)minimumLines {
@@ -1057,6 +1083,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIFont *)trailingUnderlineLabelFont {
   return _trailingUnderlineLabelFont ?: [self class].trailingUnderlineLabelFontDefault;
+}
+
+- (void)setTrailingUnderlineLabelFont:(UIFont *)trailingUnderlineLabelFont {
+  if (![_trailingUnderlineLabelFont isEqual:trailingUnderlineLabelFont]) {
+    _trailingUnderlineLabelFont = trailingUnderlineLabelFont;
+    [self updateLayout];
+  }
 }
 
 + (UIFont *)trailingUnderlineLabelFontDefault {
@@ -1283,29 +1316,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     [self movePlaceholderToUp:NO];
   }
   [CATransaction commit];
-}
-
-#pragma mark - KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(__unused NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(__unused void *)context {
-  // Listening to outside setting of custom fonts.
-
-  if (object == _textInput.leadingUnderlineLabel &&
-      ![_textInput.leadingUnderlineLabel.font isEqual:[[self class] underlineLabelsFont]]) {
-    _customLeadingFont = _textInput.leadingUnderlineLabel.font;
-  } else if (object == _textInput.placeholderLabel &&
-             ![_textInput.placeholderLabel.font isEqual:[[self class] placeholderFont]]) {
-    _customPlaceholderFont = _textInput.placeholderLabel.font;
-  } else if (object == _textInput.trailingUnderlineLabel &&
-             ![_textInput.trailingUnderlineLabel.font isEqual:[[self class] underlineLabelsFont]]) {
-    _customTrailingFont = _textInput.trailingUnderlineLabel.font;
-  } else {
-    return;
-  }
-  [self updateLayout];
 }
 
 #pragma mark - Public API

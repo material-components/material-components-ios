@@ -149,7 +149,7 @@
 
  Default is inlinePlaceholderFontDefault;
  */
-@property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderFont;
+@property(nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFont;
 
 /**
  Default value for inlinePlaceholderFont.
@@ -163,7 +163,7 @@
 
  Default is leadingUnderlineLabelFontDefault;
  */
-@property(nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelFont;
+@property(nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFont;
 
 /**
  Default value for leadingUnderlineLabelFont.
@@ -228,7 +228,7 @@
 
  Default is trailingUnderlineLabelFontDefault;
  */
-@property(nonatomic, null_resettable, strong) UIColor *trailingUnderlineLabelFont;
+@property(nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFont;
 
 /**
  Default value for trailingUnderlineLabelFont.
