@@ -23,6 +23,8 @@
 
 @implementation MDCMathTests
 
+#pragma mark - MDCRect
+
 /**
  Basic test for alignment.
  */
@@ -135,6 +137,64 @@
 - (void)testMDCRectAlignScaleZeroScale {
   // Then
   XCTAssertTrue(CGRectIsNull(MDCRectAlignToScale(CGRectZero, 0)));
+}
+
+#pragma mark - MDCPoint
+
+- (void)testMDCPointAlignScale {
+  // Given
+  CGPoint misalignedPoint = CGPointMake(0.7, -1.3);
+  CGPoint alignedScale1Point = CGPointMake(1.0, -1.0);
+  CGPoint alignedScale2Point = CGPointMake(0.5, -1.5);
+  CGPoint alignedScale3Point = CGPointMake((CGFloat)(2.0 / 3.0), (CGFloat)(-4.0 / 3.0));
+
+  // Then
+  XCTAssertTrue(CGPointEqualToPoint(alignedScale1Point, MDCPointAlignToScale(misalignedPoint, 1)));
+  XCTAssertTrue(CGPointEqualToPoint(alignedScale2Point, MDCPointAlignToScale(misalignedPoint, 2)));
+  XCTAssertTrue(CGPointEqualToPoint(alignedScale3Point, MDCPointAlignToScale(misalignedPoint, 3)));
+}
+
+- (void)testMDCPointAlignScaleZeroScale {
+  // Then
+  XCTAssertTrue(CGPointEqualToPoint(CGPointZero, MDCPointAlignToScale(CGPointMake(5.5, 13), 0)));
+}
+
+#pragma mark - MDCCenter
+
+- (void)testMDCAlignCenterWithBoundsAndScale {
+  // Given
+  CGPoint misalignedCenter = CGPointMake(0.7, -1.3);
+  CGRect bounds = CGRectMake(0, 0, 20, 21);
+  CGPoint alignedScale1Center = CGPointMake(1, -1.5);
+  CGPoint alignedScale2Center = CGPointMake(0.5, -1.5);
+  CGPoint alignedScale3Center = CGPointMake((CGFloat)(2.0 / 3.0), (CGFloat)(-7.0 / 6.0));
+
+  // Then
+  CGPoint outputScale1Center = MDCAlignCenterWithBoundsAndScale(misalignedCenter, bounds, 1);
+  XCTAssertTrue(MDCCGFloatEqual(alignedScale1Center.x, outputScale1Center.x));
+  XCTAssertTrue(MDCCGFloatEqual(alignedScale1Center.y, outputScale1Center.y));
+  CGPoint outputScale2Center = MDCAlignCenterWithBoundsAndScale(misalignedCenter, bounds, 2);
+  XCTAssertTrue(MDCCGFloatEqual(alignedScale2Center.x, outputScale2Center.x));
+  XCTAssertTrue(MDCCGFloatEqual(alignedScale2Center.y, outputScale2Center.y));
+  CGPoint outputScale3Center = MDCAlignCenterWithBoundsAndScale(misalignedCenter, bounds, 3);
+  XCTAssertTrue(MDCCGFloatEqual(alignedScale3Center.x, outputScale3Center.x));
+  XCTAssertTrue(MDCCGFloatEqual(alignedScale3Center.y, outputScale3Center.y));
+}
+
+- (void)testMDCAlignCenterWithBoundsAndScaleZero {
+  // Then
+  XCTAssertTrue(CGPointEqualToPoint(CGPointZero,
+                                    MDCAlignCenterWithBoundsAndScale(CGPointMake(-5, 10),
+                                                                     CGRectMake(0, 0, 20, 20),
+                                                                     0)));
+}
+
+- (void)testMDCAlignCenterWithBoundsAndScaleNullBounds {
+  // Then
+  XCTAssertTrue(CGPointEqualToPoint(CGPointZero,
+                                    MDCAlignCenterWithBoundsAndScale(CGPointMake(1, 2),
+                                                                     CGRectNull,
+                                                                     1)));
 }
 
 @end
