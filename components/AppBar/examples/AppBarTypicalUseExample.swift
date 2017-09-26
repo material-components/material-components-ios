@@ -82,7 +82,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "App Bar (Swift)"]
   }
 

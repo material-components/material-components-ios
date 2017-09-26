@@ -218,7 +218,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return cell
   }
 
-  func collectionView(_ collectionView: UICollectionView,
+  @objc func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)

@@ -87,7 +87,7 @@ class AppBarImagerySwiftExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Imagery (Swift)"]
   }
 

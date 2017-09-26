@@ -434,7 +434,7 @@ extension TextFieldKitchenSinkSwiftExample {
 }
 
 extension TextFieldKitchenSinkSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Kitchen Sink"]
   }
 

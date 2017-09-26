@@ -24,7 +24,7 @@ extension MaskedTransitionTypicalUseSwiftExample {
 
   // MARK: - CatalogByConvention
 
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return [ "Masked Transition", "Masked Transition (Swift)" ]
   }
 

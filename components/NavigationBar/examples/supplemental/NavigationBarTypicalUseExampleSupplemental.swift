@@ -26,7 +26,7 @@ extension NavigationBarTypicalUseSwiftExample {
 
   // (CatalogByConvention)
 
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return [ "Navigation Bar", "Navigation Bar (Swift)" ]
   }
 

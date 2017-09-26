@@ -91,7 +91,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
     MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
-
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
