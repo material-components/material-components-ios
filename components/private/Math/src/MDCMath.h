@@ -135,8 +135,8 @@ static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
 }
 
 /**
- Align the centerPoint of a view so that its origin is pixel-aligned. Returns @c CGRectZero if
- @c scale is zero or @c bounds is @c CGRectNull.
+ Align the centerPoint of a view so that its origin is pixel-aligned to the nearest pixel.
+ Returns @c CGRectZero if @c scale is zero or @c bounds is @c CGRectNull.
 
  @param center the unaligned center of the view.
  @param bounds the bounds of the view.
