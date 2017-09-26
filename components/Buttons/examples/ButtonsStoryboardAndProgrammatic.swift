@@ -70,7 +70,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
     view.addSubview(containerView)
 
-    let viewLayoutGuide : Any = {
+    let viewLayoutGuide: Any = {
 #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       return view.safeAreaLayoutGuide
