@@ -156,7 +156,7 @@
 
  Default is MDCFontTextStyleBody1.
  */
-@property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderFontDefault;
+@property(class, nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFontDefault;
 
 /**
  The font applied to the leading side underline label.
