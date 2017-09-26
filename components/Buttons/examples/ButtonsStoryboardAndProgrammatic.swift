@@ -51,12 +51,43 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     super.init(coder: aDecoder)
   }
 
-  // swiftlint:disable function_body_length
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.addSubview(containerView)
 
+    containersSetup()
+   
+    NSLayoutConstraint.activate([
+      NSLayoutConstraint(item: innerContainerView,
+                         attribute: .centerX,
+                         relatedBy: .equal,
+                         toItem: containerView,
+                         attribute: .centerX,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: innerContainerView,
+                         attribute: .centerY,
+                         relatedBy: .equal,
+                         toItem: containerView,
+                         attribute: .centerY,
+                         multiplier: 1.0,
+                         constant: 0)
+      ])
+
+    let titleColor = UIColor.white
+    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+
+    programmaticButtonSetup()
+
+    let storyboardPlusShapeLayer =
+      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
+
+    addConstraintsToButtons()
+  }
+
+  private func containersSetup() {
     NSLayoutConstraint.activate([
       NSLayoutConstraint(item: containerView,
                          attribute: .leading,
@@ -86,39 +117,10 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
                          attribute: .width,
                          multiplier: 0.5,
                          constant: 0)
-    ])
-
+      ])
+   
     containerView.addSubview(innerContainerView)
-
-    NSLayoutConstraint.activate([
-      NSLayoutConstraint(item: innerContainerView,
-                         attribute: .centerX,
-                         relatedBy: .equal,
-                         toItem: containerView,
-                         attribute: .centerX,
-                         multiplier: 1.0,
-                         constant: 0),
-      NSLayoutConstraint(item: innerContainerView,
-                         attribute: .centerY,
-                         relatedBy: .equal,
-                         toItem: containerView,
-                         attribute: .centerY,
-                         multiplier: 1.0,
-                         constant: 0)
-    ])
-
-    let titleColor = UIColor.white
-    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
-
-    programmaticButtonSetup()
-
-    let storyboardPlusShapeLayer =
-      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
-
-    addConstraintsToButtons()
   }
-  // swiftlint:enable function_body_length
    
   private func programmaticButtonSetup() {
     raisedButton.setTitle("Programmatic", for: .normal)
