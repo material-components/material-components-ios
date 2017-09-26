@@ -126,7 +126,7 @@ static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
                     MDCCeil((CGRectGetHeight(rect) + adjustWidthHeight.height) * scale) / scale);
 }
 
-static inline CGPoint MDCPointAlignToScale(CGPoint point, CGFloat scale) {
+static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 0)) {
     return CGPointZero;
   }
@@ -144,7 +144,7 @@ static inline CGPoint MDCPointAlignToScale(CGPoint point, CGFloat scale) {
 
  @return the center point of the view such that its origin will be pixel-aligned.
  */
-static inline CGPoint MDCAlignCenterWithBoundsAndScale(CGPoint center,
+static inline CGPoint MDCRoundCenterWithBoundsAndScale(CGPoint center,
                                                        CGRect bounds,
                                                        CGFloat scale) {
   if (MDCCGFloatEqual(scale, 0) || CGRectIsNull(bounds)) {
@@ -154,6 +154,6 @@ static inline CGPoint MDCAlignCenterWithBoundsAndScale(CGPoint center,
   CGFloat halfWidth = CGRectGetWidth(bounds) / 2;
   CGFloat halfHeight = CGRectGetHeight(bounds) / 2;
   CGPoint origin = CGPointMake(center.x - halfWidth, center.y - halfHeight);
-  origin = MDCPointAlignToScale(origin, scale);
+  origin = MDCPointRoundWithScale(origin, scale);
   return CGPointMake(origin.x + halfWidth, origin.y + halfHeight);
 }
