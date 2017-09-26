@@ -10,7 +10,56 @@
 
 * `MDCTextField.clearButtonMode` now supports UIAppearance.
 
+## Component changes
 
+### BottomAppBar
+
+#### Changes
+
+* [Add bottom app bar component to MDC (#2016)](https://github.com/material-components/material-components-ios/commit/3f5b770f2c72e8347f22dccff3ad1deb4ad047cc) (Junius Gunaratne)
+* [Fix bottom app bar animation (#2034)](https://github.com/material-components/material-components-ios/commit/71c4548b205aa7d06928cebeae5be33b7b6d6158) (Junius Gunaratne)
+* [Fix bottom app bar animation for leading and trailing states. (#2036)](https://github.com/material-components/material-components-ios/commit/e0ce8549b6323a0d0990411b93fc6ed4c091b113) (Junius Gunaratne)
+* [Update the file creation date to the correct year (#2035)](https://github.com/material-components/material-components-ios/commit/e68fee2c677c931e262bb0df3395400daea7b442) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [Replace usage of `new`  with `alloc init` to match the style guide. (#2033)](https://github.com/material-components/material-components-ios/commit/fb32dccf2d0e87427d4c792fe811526a985a49e1) (Adrian Secord)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Replace usage of `new`  with `alloc init` to match the style guide. (#2033)](https://github.com/material-components/material-components-ios/commit/fb32dccf2d0e87427d4c792fe811526a985a49e1) (Adrian Secord)
+
+### Ink
+
+#### Changes
+
+* [Replace usage of `new`  with `alloc init` to match the style guide. (#2033)](https://github.com/material-components/material-components-ios/commit/fb32dccf2d0e87427d4c792fe811526a985a49e1) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [[BottomAppBar] Add bottom app bar component to MDC (#2016)](https://github.com/material-components/material-components-ios/commit/3f5b770f2c72e8347f22dccff3ad1deb4ad047cc) (Junius Gunaratne)
+
+### Tabs
+
+#### Changes
+
+* [Replace usage of `new`  with `alloc init` to match the style guide. (#2033)](https://github.com/material-components/material-components-ios/commit/fb32dccf2d0e87427d4c792fe811526a985a49e1) (Adrian Secord)
+* [[Catalog] Fix Tabs example for rotation (#2019)](https://github.com/material-components/material-components-ios/commit/017f86f134e61eb8aa2de816bc8cc0ce3bd11528) (Robert Moore)
+* [[Catalog] Update all Mono fonts to use system font (#1967)](https://github.com/material-components/material-components-ios/commit/2b160e6a7cbd4dd1991a0b5c002eafbbde593e65) (Cody Weaver)
+
+### TextFields
+
+#### Changes
+
+* [Adding a missing UIAppearance support (#2027)](https://github.com/material-components/material-components-ios/commit/be93066cae09566d978c4fbe36e9de98a2bb1346) (Will Larche)
+* [Improved rtl behavior (#2038)](https://github.com/material-components/material-components-ios/commit/8fe46625dff4ae2b1dd7876ef93ccef9c7d56e9c) (Will Larche)
+* [Improving alphabetization and comments (#2031)](https://github.com/material-components/material-components-ios/commit/91c6226c6c0c4120a75961ebbfcf744fe4820cbd) (Will Larche)
 
 # 35.1.0
 
