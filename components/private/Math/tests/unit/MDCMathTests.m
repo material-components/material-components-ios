@@ -132,11 +132,15 @@
 }
 
 /**
- Test that a scale value of zero returns CGRectNull.
+ Test that a scale value of zero returns the same as a scale of 1.
  */
 - (void)testMDCRectAlignScaleZeroScale {
+  // Given
+  CGRect rectangle = CGRectMake(1.1, 2.2, 3.3, 4.4);
+
   // Then
-  XCTAssertTrue(CGRectIsNull(MDCRectAlignToScale(CGRectZero, 0)));
+  XCTAssertTrue(CGRectEqualToRect(MDCRectAlignToScale(rectangle, 0),
+                                  MDCRectAlignToScale(rectangle, 1)));
 }
 
 #pragma mark - MDCPoint

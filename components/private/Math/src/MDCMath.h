@@ -105,13 +105,23 @@ static inline CGFloat MDCSqrt(CGFloat value) {
 
 /**
  Expand `rect' to the smallest standardized rect containing it with pixel-aligned origin and size.
+ If @c scale is zero, then a scale of 1 will be used instead.
+
+ @param rect the rectangle to align.
+ @param scale the scale factor to use for pixel alignment.
+
+ @return the input rectangle aligned to the nearest pixels using the provided scale factor.
 
  @see CGRectIntegral
  */
 static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
-  if (CGRectIsNull(rect) || MDCCGFloatEqual(scale, 0)) {
+  if (CGRectIsNull(rect)) {
     return CGRectNull;
   }
+  if (MDCCGFloatEqual(scale, 0)) {
+    scale = 1;
+  }
+
   if (MDCCGFloatEqual(scale, 1)) {
     return CGRectIntegral(rect);
   }
