@@ -206,6 +206,9 @@ static const CGFloat kSingleCycleRotation =
 
 - (void)startAnimating {
   if (_animatingOut) {
+    if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+      [_delegate activityIndicatorAnimationDidFinish:self];
+    }
     [self removeAnimations];
   }
 
@@ -780,6 +783,11 @@ static const CGFloat kSingleCycleRotation =
   _animatingOut = NO;
   [_strokeLayer removeAllAnimations];
   [_outerRotationLayer removeAllAnimations];
+
+  // Reset current and latest progress, to ensure addProgressAnimationIfRequired adds a progress animation
+  // when returning from hidden.
+  _currentProgress = 0;
+  _lastProgress = 0;
 
   // Reset cycle count to 0 rather than cycleStart to reflect default starting position (top).
   _cycleCount = 0;
