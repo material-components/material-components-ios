@@ -318,12 +318,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                                             withinBounds:textFrame
                                                alignment:titleVerticalAlignment];
   alignedFrame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
-  CGFloat scale = self.window.screen.scale;
-  if (!MDCCGFloatEqual(0, scale)) {
-    alignedFrame = MDCRectAlignToScale(alignedFrame, scale);
-  }
 
-  _titleLabel.frame = alignedFrame;
+  _titleLabel.frame = MDCRectAlignToScale(alignedFrame, self.window.screen.scale);
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
