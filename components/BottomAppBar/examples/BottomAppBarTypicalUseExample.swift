@@ -19,7 +19,7 @@ import MaterialComponents
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
-  let bottomBarViewHeight = CGFloat(96);
+  let bottomBarViewHeight: CGFloat = 96
   let appBar = MDCAppBar()
   let bottomBarView = MDCBottomAppBarView()
   
@@ -31,7 +31,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
     let color = UIColor(white: 0.2, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.tintColor = .white
     appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
     commonInitBottomAppBarTypicalUseSwiftExample()
   }
@@ -69,7 +69,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     bottomBarView.floatingButtonPosition = .center
 
     // Theme the floating button.
-    let colorScheme = MDCBasicColorScheme(primaryColor: UIColor.white)
+    let colorScheme = MDCBasicColorScheme(primaryColor: .white)
     MDCButtonColorThemer.apply(colorScheme, to: bottomBarView.floatingButton)
 
     // Configure the navigation buttons to be shown on the bottom app bar.
@@ -85,7 +85,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     bottomBarView.trailingBarButtonItems = [ barButtonTrailingItem ]
   }
 
-  func didTapFloatingButton(_ sender : MDCFloatingButton) {
+  @objc func didTapFloatingButton(_ sender : MDCFloatingButton) {
 
     // Example of how to animate position of the floating button.
     if (bottomBarView.floatingButtonPosition == .center) {
@@ -97,7 +97,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.view.backgroundColor = UIColor.white
+    self.view.backgroundColor = .white
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }

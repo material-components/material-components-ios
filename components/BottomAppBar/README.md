@@ -14,13 +14,13 @@ api_doc_root: true
   <img src="docs/assets/bottomappbar.png" alt="Text Fields" width="375">
 </div>
 
-A bottom app bar provides a docked bar at the bottom of the screen for common application actions. The bottom app bar includes a floating button for a primary action and a navigation bar area for secondary actions. Transition animations are provided when the floating button shifts left or right, based on the application navigation state, and when the floating action button changes elevation or is hidden.
+A bottom app bar provides a docked bar at the bottom of the screen for common application actions. The bottom app bar includes a <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">floating button</a> for a primary action and a <a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/">navigation bar</a> area for secondary actions. Transition animations are provided when the floating button shifts left or right, based on the application navigation state, and when the floating action button changes elevation or is hidden.
 
 ## Installation
 
 ### Requirements
 
-- Xcode 7.0 or higher.
+- Xcode 8.0 or higher.
 - iOS SDK version 8.0 or higher.
 
 ### Installation with CocoaPods
@@ -43,7 +43,7 @@ pod install
 
 Bottom app bars follow a recommended Material Design interaction design pattern for providing primary and secondary actions that are easily accessible. With a bottom app bar users are more easily able to use single-handed touch interaction with an application since actions are displayed close to the bottom of the screen within easy reach of a user's thumb.
 
-The bottom app bar includes a floating action button that is intended to provide users with a primary action. Secondary actions are available on a navigation bar that can be customized with several buttons on the left and right sides of the navigation bar. The primary action floating action button is centered on the bottom app bar by default.
+The bottom app bar includes a <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">floating action button</a> that is intended to provide users with a primary action. Secondary actions are available on a <a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/">navigation bar</a> that can be customized with several buttons on the left and right sides of the navigation bar. The primary action floating action button is centered on the bottom app bar by default.
 
 MDCBottomAppBarView should be attached to the bottom of the screen or used in conjunction with an expandable bottom drawer. The MDCBottomAppBarView API includes properties that allow changes to the elevation, position and visibility of the embedded floating action button.
 
@@ -62,15 +62,15 @@ Before using Bottom App Bar, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 import MaterialComponents.MaterialBottomAppBar
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialBottomAppBar.h"
-~~~
+```
 <!--</div>-->
 
 ## Examples
@@ -80,7 +80,7 @@ import MaterialComponents.MaterialBottomAppBar
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let bottomBarView = MDCBottomAppBarView(frame: frame)
 view.addSubview(bottomBarView)
 
@@ -108,11 +108,11 @@ barButtonTrailingItem.image = searchImage
 
 bottomBarView.leadingBarButtonItems = [ barButtonLeadingItem ]
 bottomBarView.trailingBarButtonItems = [ barButtonTrailingItem ]
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCBottomAppBarView *bottomBarView = [[MDCBottomAppBarView alloc] initWithFrame:frame];
 [view addSubview:bottomBarView];
 
@@ -150,7 +150,7 @@ UIImage *searchImage = [UIImage imageNamed:@"Search"];
 
 [bottomBarView setLeadingBarButtonItems:@[ barButtonLeadingItem ]];
 [bottomBarView setTrailingBarButtonItems:@[ barButtonTrailingItem ]];
-~~~
+```
 
 <!--</div>-->
 
