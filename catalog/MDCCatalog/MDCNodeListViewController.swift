@@ -80,22 +80,23 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.addChildViewController(appBar.headerViewController)
     let appBarFont: UIFont
     if #available(iOS 9.0, *) {
-        appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+      appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight.regular)
     } else {
-      let attribute: [String: UIFontDescriptorSymbolicTraits] =
-         [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
-      let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+      let attributes: [UIFontDescriptor.AttributeName: UIFontDescriptorSymbolicTraits] =
+         [UIFontDescriptor.AttributeName.symbolic:
+            UIFontDescriptorSymbolicTraits(rawValue: UIFontDescriptorSymbolicTraits.traitMonoSpace.rawValue)]
+      let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attributes)
       appBarFont = UIFont(descriptor: descriptor, size: 16)
     }
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
     MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
-
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
-      NSForegroundColorAttributeName: UIColor.white,
-      NSFontAttributeName: appBarFont ]
+      NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+      NSAttributedStringKey.font.rawValue: appBarFont
+      ]
     appBar.navigationBar.titleAlignment = .center
   }
 
@@ -273,7 +274,7 @@ extension MDCNodeListViewController {
     }
     if subtitleText != nil {
       if let swiftModuleRange = subtitleText?.range(of: ".") {
-        subtitleText = subtitleText!.substring(from: swiftModuleRange.upperBound)
+        subtitleText = String(subtitleText![swiftModuleRange.upperBound...])
       }
       cell!.detailTextLabel?.text = subtitleText!
     }
@@ -365,10 +366,11 @@ extension MDCNodeListViewController {
       } else {
         let appBarFont: UIFont
         if #available(iOS 9.0, *) {
-            appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+         appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight.regular)
         } else {
-            let attribute: [String: UIFontDescriptorSymbolicTraits] =
-                [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+            let attribute: [UIFontDescriptor.AttributeName: UIFontDescriptorSymbolicTraits] =
+               [UIFontDescriptor.AttributeName.symbolic:
+                  UIFontDescriptorSymbolicTraits(rawValue: UIFontDescriptorSymbolicTraits.traitMonoSpace.rawValue)]
             let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
             appBarFont = UIFont(descriptor: descriptor, size: 16)
         }
@@ -376,7 +378,8 @@ extension MDCNodeListViewController {
         container.appBar.navigationBar.titleAlignment = .center
         container.appBar.navigationBar.tintColor = UIColor.white
         container.appBar.navigationBar.titleTextAttributes =
-            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
+         [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+           NSAttributedStringKey.font.rawValue: appBarFont]
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.
@@ -390,7 +393,7 @@ extension MDCNodeListViewController {
 
         let textColor = UIColor.white
         UIBarButtonItem.appearance().setTitleTextAttributes(
-          [NSForegroundColorAttributeName: textColor],
+          [NSAttributedStringKey.foregroundColor: textColor],
           for: UIControlState())
 
         var contentFrame = container.contentViewController.view.frame

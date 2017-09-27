@@ -33,7 +33,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     let color = UIColor(white: 0.2, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
     appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    appBar.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.white]
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -82,7 +82,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "App Bar (Swift)"]
   }
 

@@ -32,7 +32,7 @@ class AppBarEncodingTests: XCTestCase {
     appBar.navigationBar.backgroundColor = UIColor.black
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.title = "Title"
-    appBar.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName: UIColor.white ]
+    appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white ]
     appBar.navigationBar.titleAlignment = .leading
 
     // When
@@ -65,9 +65,9 @@ class AppBarEncodingTests: XCTestCase {
                    unarchivedAppBar?.navigationBar.title)
 
     let foregroundColor =
-        appBar.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName]
+        appBar.navigationBar.titleTextAttributes?[NSAttributedStringKey.foregroundColor]
     let unarchivedForegroundColor =
-        unarchivedAppBar?.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName]
+        unarchivedAppBar?.navigationBar.titleTextAttributes?[NSAttributedStringKey.foregroundColor]
     XCTAssertEqual(foregroundColor as? UIColor, unarchivedForegroundColor as? UIColor)
 
     XCTAssertEqual(appBar.navigationBar.titleAlignment,

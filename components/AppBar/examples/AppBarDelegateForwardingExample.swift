@@ -31,8 +31,8 @@ class AppBarDelegateForwardingExample: UITableViewController {
     super.init(style: style)
 
     self.appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+    /*appBar.navigationBar.titleTextAttributes =
+      [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white ]*/
 
     self.addChildViewController(appBar.headerViewController)
 
@@ -116,7 +116,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarDelegateForwardingExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Delegate Forwarding (Swift)"]
   }
 
