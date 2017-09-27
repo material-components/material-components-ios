@@ -4,7 +4,7 @@ MDC's text fields are designed to be styled by controllers implementing the `MDC
 
 Some of the classes are marked as "Preferred". These are known, thru extensive UX research, to have big performance gains in usability.
 
-Another two of the classes are "Legacy". They are included to support older designs and avoid breaking changes that come from the new layout and size of new styles.
+Another two of the classes are "Legacy". They are included to support older designs and avoid breaking changes that come from the size of newer styles.
 
 ## MDCTextInputControllerOutlined (Preferred)
 
