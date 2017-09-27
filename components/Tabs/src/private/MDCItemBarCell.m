@@ -20,11 +20,9 @@
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
+#import "MaterialMath.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
-
-/// Padding between the bottom of the cell and its content, in points.
-static const CGFloat kBottomPadding = 20.0f;
 
 /// Size of image in points.
 static const CGSize kImageSize = {24, 24};
@@ -222,15 +220,15 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Image has a fixed size and is horizontally centered, regardless of content style.
   imageBounds.size = kImageSize;
-  imageCenter.x = (float)round(CGRectGetMidX(contentBounds));
+  imageCenter.x = CGRectGetMidX(contentBounds);
 
   CGSize titleSize = [_titleLabel sizeThatFits:contentBounds.size];
   titleSize.width = MIN(titleSize.width, CGRectGetWidth(contentBounds));
 
   // Title is a fixed height based on content and is placed full-width, regardless of content style.
-  titleCenter.x = roundf((float)CGRectGetMidX(contentBounds));
-  titleBounds.size.width = ceilf((float)CGRectGetWidth(contentBounds));
-  titleBounds.size.height = ceilf((float)titleSize.height);
+  titleCenter.x = CGRectGetMidX(contentBounds);
+  titleBounds.size.width = CGRectGetWidth(contentBounds);
+  titleBounds.size.height = titleSize.height;
 
   // Horizontally align the badge.
   CGSize badgeSize = [_badgeLabel sizeThatFits:contentBounds.size];
@@ -238,14 +236,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   badgeBounds.size = badgeSize;
 
   if (_style.shouldDisplayBadge) {
-    CGFloat badgeOffset = ((float)imageBounds.size.width / 2.0f) + ((float)badgeSize.width / 2.0f);
+    CGFloat badgeOffset = (imageBounds.size.width / 2) + (badgeSize.width / 2);
     if (self.mdc_effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
       badgeOffset *= -1;
     }
 
     badgeCenter.x = imageCenter.x + badgeOffset;
-    badgeCenter.y = kBadgeTopPadding + ((float)badgeSize.height / 2.0f);
+    badgeCenter.y = kBadgeTopPadding + (badgeSize.height / 2);
   }
 
   // Place components vertically
@@ -254,36 +252,32 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       // Image and title, center both vertically together.
       const CGFloat padding = _style.titleImagePadding;
       const CGFloat totalHeight = titleSize.height + padding + kImageSize.height;
-      const CGFloat yOrigin = (float)round(CGRectGetMidY(contentBounds) - totalHeight / 2.0f);
-      imageCenter.y = yOrigin + ((float)kImageSize.height / 2.0f);
-      titleCenter.y = yOrigin + kImageSize.height + padding + ((float)titleSize.height / 2.0f);
-      titleCenter.y = roundf((float)titleCenter.y);
+      const CGFloat yOrigin = CGRectGetMidY(contentBounds) - (totalHeight / 2);
+      imageCenter.y = yOrigin + (kImageSize.height / 2);
+      titleCenter.y = yOrigin + kImageSize.height + padding + (titleSize.height / 2);
+      titleCenter.y = titleCenter.y;
 
     } else {
-      // Title only, center vertically.
-      // +1 for slight adjustment to font baseline for centered title labels.
-      const CGFloat centeredTitleYOffset = 1.0f;
-      titleCenter.y = contentBounds.size.height - kBottomPadding - titleSize.height +
-                      centeredTitleYOffset + ((float)titleSize.height / 2.0f);
-      titleCenter.y = roundf((float)titleCenter.y);
+      titleCenter.y = CGRectGetMidY(contentBounds);
     }
   } else {
     if (_style.shouldDisplayImage) {
       // Image only, center image vertically
-      imageCenter.y = (float)round(CGRectGetMidY(contentBounds));
+      imageCenter.y = CGRectGetMidY(contentBounds);
     } else {
       // Nothing: NOP
     }
   }
 
-  _imageView.center = imageCenter;
+  CGFloat scale = self.window.screen.scale;
   _imageView.bounds = imageBounds;
+  _imageView.center = MDCRoundCenterWithBoundsAndScale(imageCenter, _imageView.bounds, scale);
 
-  _badgeLabel.center = badgeCenter;
-  _badgeLabel.bounds = badgeBounds;
+  _badgeLabel.bounds = MDCRectAlignToScale(badgeBounds, scale);
+  _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
 
-  _titleLabel.center = titleCenter;
-  _titleLabel.bounds = titleBounds;
+  _titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
+  _titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter, _titleLabel.bounds, scale);
 }
 
 - (void)tintColorDidChange {
