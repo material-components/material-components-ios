@@ -271,13 +271,13 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   CGFloat scale = self.window.screen.scale;
   _imageView.bounds = imageBounds;
-  _imageView.center = MDCAlignCenterWithBoundsAndScale(imageCenter, _imageView.bounds, scale);
+  _imageView.center = MDCRoundCenterWithBoundsAndScale(imageCenter, _imageView.bounds, scale);
 
   _badgeLabel.bounds = MDCRectAlignToScale(badgeBounds, scale);
-  _badgeLabel.center = MDCAlignCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
+  _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
 
   _titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
-  _titleLabel.center = MDCAlignCenterWithBoundsAndScale(titleCenter, _titleLabel.bounds, scale);
+  _titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter, _titleLabel.bounds, scale);
 }
 
 - (void)tintColorDidChange {
