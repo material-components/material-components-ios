@@ -111,7 +111,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 // The adjustment we've made to account for the scroll view's Safe Area.
 @property(nonatomic) CGFloat topSafeAreaInsetAdjustment;
 
-// Whether or not we've adjust the inset to account for the scroll view's Safe Area.
+// Whether or not we've adjusted the inset to account for the scroll view's Safe Area.
 @property(nonatomic) BOOL hasTopSafeAreaInsetAdjustment;
 
 @end
