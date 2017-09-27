@@ -75,9 +75,6 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
                          constant: 0)
       ])
 
-    let titleColor = UIColor.white
-    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
-
     programmaticButtonSetup()
 
     let storyboardPlusShapeLayer =
@@ -123,6 +120,9 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   }
    
   private func programmaticButtonSetup() {
+    let titleColor = UIColor.white
+    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+   
     raisedButton.setTitle("Programmatic", for: .normal)
     raisedButton.setTitleColor(titleColor, for: .normal)
     raisedButton.backgroundColor = backgroundColor
