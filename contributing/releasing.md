@@ -53,8 +53,9 @@ Run the following command to cut a release:
 You will now have a local `release-candidate` branch and a new section in CHANGELOG.md titled
 "release-candidate".
 
-The `scripts/release/cut` script will output the body of an email you should now send so clients can
-test the release.
+The `scripts/release/cut` script will output the body of an email you should now send to the
+[discussion list](https://groups.google.com/forum/#!forum/material-components-ios-discuss) so
+clients can test the release.
 
 ### Test the release branch
 
@@ -287,7 +288,7 @@ and delete the release branch:
 1. Tag the release "vX.Y.Z".
 1. Select the stable branch.
 1. Title the release "Release X.Y.Z".
-1. In the body of the release notes, paste the text from [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/stable/CHANGELOG.md) for this release.
+1. In the body of the release notes, paste the text from [CHANGELOG.md](https://raw.githubusercontent.com/material-components/material-components-ios/stable/CHANGELOG.md) for this release.
 1. Publish the release.
 
 ## Publish to Cocoapods

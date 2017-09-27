@@ -27,8 +27,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   let spacing = CGFloat(1)
   let inset = CGFloat(16)
+  let headerMinHeight = CGFloat(48)
   let node: CBCNode
   var headerViewController: MDCFlexibleHeaderViewController
+  var titleLabel: UILabel
 
   private lazy var inkController: MDCInkTouchController = {
     let controller = MDCInkTouchController(view: self.collectionView!)
@@ -52,6 +54,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     self.headerViewController = MDCFlexibleHeaderViewController()
 
+    self.titleLabel = UILabel()
+
     super.init(collectionViewLayout: layout)
 
     self.title = "Material Design Components"
@@ -59,7 +63,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.addChildViewController(self.headerViewController)
 
     self.headerViewController.headerView.maximumHeight = 128
-    self.headerViewController.headerView.minimumHeight = 72
+    self.headerViewController.headerView.minimumHeight = headerMinHeight + 20
 
     self.collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
@@ -99,10 +103,16 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let containerView = UIView(frame: self.headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    let titleLabel = UILabel()
     titleLabel.text = self.title!.uppercased()
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
-    titleLabel.font = UIFont(name: "RobotoMono-Regular", size: 14)
+    if #available(iOS 9.0, *) {
+        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
+    } else {
+        let attribute: [String: UIFontDescriptorSymbolicTraits] =
+            [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+        let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+        titleLabel.font = UIFont(descriptor: descriptor, size: 14)
+    }
     titleLabel.sizeToFit()
     if inset + titleLabel.frame.size.width > containerView.frame.size.width {
       titleLabel.font = MDCTypography.body2Font()
@@ -139,6 +149,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.headerViewController.didMove(toParentViewController: self)
 
     self.collectionView?.accessibilityIdentifier = "collectionView"
+#if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      self.collectionView?.contentInsetAdjustmentBehavior = .always
+    }
+#endif
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -155,6 +170,25 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   override var childViewControllerForStatusBarStyle: UIViewController? {
     return self.headerViewController
   }
+
+#if swift(>=3.2)
+  @available(iOS 11, *)
+  override func viewSafeAreaInsetsDidChange() {
+    self.headerViewController.headerView.minimumHeight =
+        headerMinHeight + self.view.safeAreaInsets.top
+
+    // Re-constraint the title label to account for changes in safeAreaInsets's left and right.
+    let titleInsets = UIEdgeInsets(top: 0,
+                                   left: inset + self.view.safeAreaInsets.left,
+                                   bottom: inset,
+                                   right: inset + self.view.safeAreaInsets.right)
+    titleLabel.superview!.removeConstraints(titleLabel.superview!.constraints)
+    constrainLabel(label: titleLabel,
+                   containerView: titleLabel.superview!,
+                   insets: titleInsets,
+                   height: titleLabel.bounds.height)
+  }
+#endif
 
   // MARK: UICollectionViewDataSource
 
@@ -214,9 +248,15 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
-    var cellWidth = (self.view.frame.size.width - 3 * pad) / 2
+    var safeInsets = CGFloat(0)
+#if swift(>=3.2)
+    if #available(iOS 11, *) {
+      safeInsets = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
+    }
+#endif
+    var cellWidth = (self.view.frame.size.width - 3 * pad - safeInsets) / 2
     if self.view.frame.size.width > self.view.frame.size.height {
-      cellWidth = (self.view.frame.size.width - 4 * pad) / 3
+      cellWidth = (self.view.frame.size.width - 4 * pad - safeInsets) / 3
     }
     return CGSize(width: cellWidth, height: cellWidth * 0.825)
   }

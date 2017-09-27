@@ -80,10 +80,22 @@
 
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
+   
+   UIFont *font;
+   if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
+      font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
+   } else {
+      font = [UIFont systemFontOfSize:14];
+      UIFontDescriptor *descriptor =
+          [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+      if (descriptor) {
+         font = [UIFont fontWithDescriptor:descriptor size:0.0];
+      }
+   }
 
   self.appBar.navigationBar.titleTextAttributes = @{
     NSForegroundColorAttributeName : [UIColor whiteColor],
-    NSFontAttributeName : [UIFont fontWithName:@"RobotoMono-Regular" size:14]
+    NSFontAttributeName : font
   };
 
   [self.appBar addSubviewsToParent];
@@ -254,6 +266,16 @@
 - (UIStatusBarStyle)preferredStatusBarStyle {
   // Ensure that our status bar is white.
   return UIStatusBarStyleLightContent;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [coordinator animateAlongsideTransition:
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    // Update the scrollView position so that the selected view is entirely visible
+    [self tabBar:self.tabBar didSelectItem:self.tabBar.selectedItem];
+  } completion:nil];
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 @end

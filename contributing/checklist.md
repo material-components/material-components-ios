@@ -316,10 +316,11 @@ Classes that set ivar values or perform other commands from the initializer, sho
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
 
 
-### UIAppearance Support (If possible)
+### UIAppearance Support
 
+#### UIView or UIBarItem subclasses
 
-We use the UIAppearance proxy with our visible components to allow setting default values of properties and state.
+We use the `UIAppearance` proxy with our visible components to allow setting default values of properties and state.
 
 
 1. Attempt to name properties in line with Apple’s style: `UISlider.thumbTintColor`, `UISlider.maximumTrackTintColor`, `UISwitch.onTintColor`, `UINavigationBar.barTintColor`, etc.
@@ -328,6 +329,17 @@ We use the UIAppearance proxy with our visible components to allow setting defau
 1. Avoid “primary”, “secondary” or “accent” in your property names to avoid confusion with our color schemes.
 1. Enter YES, NO or N/A
 
+#### All other superclasses
+
+We use class properties to pass defaults to instance properties to mimic the functionality of `UIAppearance`.
+
+1. Properties with defaults, that are objects, should be `null_resettable`.
+1. Properties with defaults should also always return the default if their value is nil. 
+1. Class property defaults should be named as `nameOfPropertyItAffects` + `Default`. For example, the class `MDCTextInputControllerDefault` inherits from `NSObject`. Its `borderFillColor` has a `borderFillColorDefault` class property.
+1. Class property default declarations should be placed directly beneath the property they affect's declaration in the `@interface`.
+1. Class property default implementations should be placed directly beneath the property they affect's implementation in the `@implementation`.
+1. The property they affect should have in its header documentation `Default is [class property name]`, the class property should say `Default value for [regular property name]` and `Default is [whatever value is default]`.
+1. Class properties that are primitives should have default values assigned when their static variables are declared and defined and not in any instance code like a common init. For example `static BOOL _floatingEnabledDefault = YES;`.
 
 ### IBDesignable Support for UIView Subclasses (If possible)
 

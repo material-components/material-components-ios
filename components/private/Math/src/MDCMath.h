@@ -30,6 +30,14 @@ static inline CGFloat MDCFabs(CGFloat value) {
 #endif
 }
 
+static inline CGFloat MDCDegreesToRadians(CGFloat degrees) {
+#if CGFLOAT_IS_DOUBLE
+  return degrees * (CGFloat)M_PI / 180.0;
+#else
+  return degrees * (CGFloat)M_PI / 180.f;
+#endif
+}
+
 static inline bool MDCCGFloatEqual(CGFloat a, CGFloat b) {
   const CGFloat constantK = 3;
 #if CGFLOAT_IS_DOUBLE

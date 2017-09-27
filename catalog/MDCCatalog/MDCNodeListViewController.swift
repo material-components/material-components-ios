@@ -52,6 +52,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   let descriptionSectionHeight = CGFloat(100)
   let additionalExamplesSectionHeight = CGFloat(50)
   let rowHeight = CGFloat(50)
+  let padding = CGFloat(20)
   var componentDescription = ""
 
   enum Section: Int {
@@ -77,7 +78,15 @@ class MDCNodeListViewController: CBCNodeListViewController {
     componentDescription = childrenNodes.first?.exampleDescription() ?? ""
 
     self.addChildViewController(appBar.headerViewController)
-    let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
+    let appBarFont: UIFont
+    if #available(iOS 9.0, *) {
+        appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+    } else {
+      let attribute: [String: UIFontDescriptorSymbolicTraits] =
+         [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+      let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+      appBarFont = UIFont(descriptor: descriptor, size: 16)
+    }
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
@@ -86,7 +95,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
-      NSFontAttributeName: appBarFont! ]
+      NSFontAttributeName: appBarFont ]
     appBar.navigationBar.titleAlignment = .center
   }
 
@@ -194,16 +203,17 @@ extension MDCNodeListViewController {
 
     let label = UILabel()
     label.text = sectionNames[section]
-    label.frame =  CGRect(x: 20,
+    label.frame =  CGRect(x: 0,
                           y: 0,
-                          width: tableView.frame.size.width - 20,
+                          width: tableView.frame.size.width,
                           height: additionalExamplesSectionHeight)
     label.font = MDCTypography.body2Font()
     label.translatesAutoresizingMaskIntoConstraints = false
     sectionView.addSubview(label)
-    constrainLabel(label: label,
-                   containerView: sectionView,
-                   height: additionalExamplesSectionHeight)
+    constrainView(view: label,
+                 containerView: sectionView,
+                 height: additionalExamplesSectionHeight,
+                 top: 0)
 
     if section == 0 {
       let textView = UITextView()
@@ -224,30 +234,8 @@ extension MDCNodeListViewController {
       sectionView.frame = sectionViewFrame
       sectionView.addSubview(textView)
       let textViewHeight = ceil(MDCTypography.captionFont().lineHeight * 3)
-      // Use AutoLayout to workaround http://www.openradar.me/25505644.
-      if #available(iOS 9.0, *) {
-        NSLayoutConstraint.activate([
-          textView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: 20),
-          textView.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor,
-                                             constant: -20),
-          textView.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: 40),
-          textView.heightAnchor.constraint(equalToConstant: textViewHeight)
-          ])
-      } else {
-        let horizontalConstraints =
-          NSLayoutConstraint.constraints(withVisualFormat: "H:|-(20)-[textView]-(20)-|",
-                                         options: [], metrics: nil,
-                                         views: ["textView": textView])
-        let verticalConstraints =
-          NSLayoutConstraint.constraints(withVisualFormat: "V:|-(40)-[textView(==h)]",
-                                         options: [],
-                                         metrics: ["h": textViewHeight],
-                                         views: ["textView": textView])
-        sectionView.addConstraints(horizontalConstraints)
-        sectionView.addConstraints(verticalConstraints)
-      }
+      constrainView(view: textView, containerView: sectionView, height: textViewHeight, top: 40)
     }
-
     return sectionView
   }
   // swiftlint:enable function_body_length
@@ -301,42 +289,62 @@ extension MDCNodeListViewController {
   }
 
   // MARK: Private
-  func constrainLabel(label: UILabel, containerView: UIView, height: CGFloat) {
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .leading,
-      multiplier: 1.0,
-      constant: 20).isActive = true
-
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .trailing,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .trailing,
-      multiplier: 1.0,
-      constant: 0).isActive = true
-
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .top,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .top,
-      multiplier: 1.0,
-      constant: 0).isActive = true
-
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .height,
-      relatedBy: .equal,
-      toItem: nil,
-      attribute: .notAnAttribute,
-      multiplier: 1.0,
-      constant: height).isActive = true
+  func constrainView(view: UIView, containerView: UIView, height: CGFloat, top: CGFloat) {
+#if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      let safeAreaLayoutGuide = containerView.safeAreaLayoutGuide;
+      NSLayoutConstraint.activate([
+        view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,
+                                      constant: padding),
+        view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,
+                                       constant: padding),
+        view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: top),
+        view.heightAnchor.constraint(equalToConstant: height)
+      ])
+    return
+  }
+#endif
+    if #available(iOS 9.0, *) {
+      NSLayoutConstraint.activate([
+        view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
+        view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: padding),
+        view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: top),
+        view.heightAnchor.constraint(equalToConstant: height)
+      ])
+    } else {
+      _ = NSLayoutConstraint(
+        item: view,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: containerView,
+        attribute: .leading,
+        multiplier: 1.0,
+        constant: padding).isActive = true
+      _ = NSLayoutConstraint(
+        item: view,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: containerView,
+        attribute: .trailing,
+        multiplier: 1.0,
+        constant: padding).isActive = true
+      _ = NSLayoutConstraint(
+        item: view,
+        attribute: .top,
+        relatedBy: .equal,
+        toItem: containerView,
+        attribute: .top,
+        multiplier: 1.0,
+        constant: top).isActive = true
+      _ = NSLayoutConstraint(
+        item: view,
+        attribute: .height,
+        relatedBy: .equal,
+        toItem: nil,
+        attribute: .notAnAttribute,
+        multiplier: 1.0,
+        constant: height).isActive = true
+    }
   }
 }
 
@@ -355,12 +363,20 @@ extension MDCNodeListViewController {
       if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
         vc = contentVC
       } else {
-        let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
+        let appBarFont: UIFont
+        if #available(iOS 9.0, *) {
+            appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+        } else {
+            let attribute: [String: UIFontDescriptorSymbolicTraits] =
+                [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+            let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+            appBarFont = UIFont(descriptor: descriptor, size: 16)
+        }
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
         container.appBar.navigationBar.titleAlignment = .center
         container.appBar.navigationBar.tintColor = UIColor.white
         container.appBar.navigationBar.titleTextAttributes =
-            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont! ]
+            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.

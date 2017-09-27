@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "35.1.0"
+  s.version      = "35.2.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -21,9 +21,9 @@ Pod::Spec.new do |s|
   #
   # ## Optional properties
   #
-  # resources        => If your component has a bundle, this property should be an Array 
-  #                     containing the bundle path as a String. 
-  #                     NOTE: Do not use resource_bundle property 
+  # resources        => If your component has a bundle, this property should be an Array
+  #                     containing the bundle path as a String.
+  #                     NOTE: Do not use resource_bundle property
   #
   # # Template subspec
   #
@@ -89,6 +89,17 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/AppBar/Component"
       sss.dependency "MaterialComponents/Themes"
     end
+  end
+
+  s.subspec "BottomAppBar" do |ss|
+    ss.ios.deployment_target = '8.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+
+    ss.dependency "MaterialComponents/Buttons"
+    ss.dependency "MaterialComponents/NavigationBar"
+    ss.dependency "MaterialComponents/private/Math"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "BottomSheet" do |ss|
