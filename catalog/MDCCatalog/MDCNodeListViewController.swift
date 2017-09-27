@@ -94,7 +94,8 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
-      NSAttributedStringKey.font.rawValue: appBarFont ]
+      NSAttributedStringKey.font.rawValue: appBarFont
+      ]
     appBar.navigationBar.titleAlignment = .center
   }
 
