@@ -97,7 +97,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     setupExampleViews()
   }
 
-  func setupBoxTextFields() -> [MDCTextInputControllerTextFieldBox] {
+  func setupBoxTextFields() -> [MDCTextInputControllerFilled] {
     let textFieldBox = MDCTextField()
     textFieldBox.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(textFieldBox)
@@ -105,7 +105,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldBox.delegate = self
     textFieldBox.placeholder = "This is a text field box"
 
-    let textFieldControllerBox = MDCTextInputControllerTextFieldBox(textInput: textFieldBox)
+    let textFieldControllerBox = MDCTextInputControllerFilled(textInput: textFieldBox)
     textFieldControllerBox.isFloatingEnabled = false
 
     let textFieldBoxFloating = MDCTextField()
@@ -115,7 +115,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldBoxFloating.delegate = self
     textFieldBoxFloating.placeholder = "This is a box with floating"
 
-    let textFieldControllerBoxFloating = MDCTextInputControllerTextFieldBox(textInput: textFieldBoxFloating)
+    let textFieldControllerBoxFloating = MDCTextInputControllerFilled(textInput: textFieldBoxFloating)
     return [textFieldControllerBox, textFieldControllerBoxFloating]
   }
 
@@ -398,7 +398,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   // MARK: - Multiline
 
-  func setupAreaTextFields() -> [MDCTextInputControllerTextArea] {
+  func setupAreaTextFields() -> [MDCTextInputControllerOutlinedTextArea] {
     let textFieldArea = MDCMultilineTextField()
     textFieldArea.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(textFieldArea)
@@ -406,7 +406,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldArea.textView?.delegate = self
     textFieldArea.placeholder = "This is a text area"
 
-    let textFieldControllerArea = MDCTextInputControllerTextArea(textInput: textFieldArea)
+    let textFieldControllerArea = MDCTextInputControllerOutlinedTextArea(textInput: textFieldArea)
 
     return [textFieldControllerArea]
   }
