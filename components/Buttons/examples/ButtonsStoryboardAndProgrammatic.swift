@@ -70,32 +70,41 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
     view.addSubview(containerView)
 
+    let viewLayoutGuide: Any = {
+#if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      return view.safeAreaLayoutGuide
+    }
+#endif
+      return view
+    }()
+
     NSLayoutConstraint.activate([
       NSLayoutConstraint(item: containerView,
                          attribute: .leading,
                          relatedBy: .equal,
-                         toItem: view,
+                         toItem: viewLayoutGuide,
                          attribute: .leading,
                          multiplier: 1.0,
                          constant: 0),
       NSLayoutConstraint(item: containerView,
                          attribute: .top,
                          relatedBy: .equal,
-                         toItem: view,
+                         toItem: viewLayoutGuide,
                          attribute: .top,
                          multiplier: 1.0,
                          constant: 0),
       NSLayoutConstraint(item: containerView,
                          attribute: .bottom,
                          relatedBy: .equal,
-                         toItem: view,
+                         toItem: viewLayoutGuide,
                          attribute: .bottom,
                          multiplier: 1.0,
                          constant: 0),
       NSLayoutConstraint(item: containerView,
                          attribute: .width,
                          relatedBy: .equal,
-                         toItem: view,
+                         toItem: viewLayoutGuide,
                          attribute: .width,
                          multiplier: 0.5,
                          constant: 0)
