@@ -18,49 +18,49 @@ import Foundation
 import MaterialComponents
 
 class ButtonsSwiftAndStoryboardController: UIViewController {
-  
+
   let raisedButton = MDCRaisedButton()
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()
-  
+
   // UIAppearance colors will overwrite values set in storyboards. In order to see the values set in
   // ButtonsStoryboardAndProgrammatic.storyboard comment out the MDCButtonColorThemer.apply(...)
   // call in AppDelegate.swift.
   @IBOutlet weak var storyboardRaised: MDCRaisedButton!
   @IBOutlet weak var storyboardFlat: MDCFlatButton!
   @IBOutlet weak var storyboardFloating: MDCFloatingButton!
-  
+
   private lazy var containerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    
+
     return view
   }()
-  
+
   private lazy var innerContainerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    
+
     return view
   }()
-  
+
   init() {
     super.init(nibName: nil, bundle: nil)
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     view.addSubview(containerView)
-    
+
     layoutContainer()
-    
+
     containerView.addSubview(innerContainerView)
-    
+
     NSLayoutConstraint.activate([
       NSLayoutConstraint(item: innerContainerView,
                          attribute: .centerX,
@@ -77,20 +77,20 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
                          multiplier: 1.0,
                          constant: 0)
       ])
-    
+
     buttonSetup()
-    
+
     let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     floatingButton.layer.addSublayer(floatingPlusShapeLayer)
     innerContainerView.addSubview(floatingButton)
-    
+
     let storyboardPlusShapeLayer =
       ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
-    
+
     addButtonConstraints()
   }
-  
+
   private func layoutContainer() {
     let viewLayoutGuide: Any = {
       #if swift(>=3.2)
@@ -131,11 +131,11 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
                          constant: 0)
       ])
   }
-  
+
   private func buttonSetup() {
     let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
-    
+
     raisedButton.setTitle("Programmatic", for: .normal)
     raisedButton.setTitleColor(titleColor, for: .normal)
     raisedButton.backgroundColor = backgroundColor
@@ -143,27 +143,27 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
     raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(raisedButton)
-    
+
     flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Programmatic", for: .normal)
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(flatButton)
-    
+
     floatingButton.sizeToFit()
     floatingButton.backgroundColor = backgroundColor
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
   }
-  
+
   private func addButtonConstraints() {
     let views = [
       "raised": raisedButton,
       "flat": flatButton,
       "floating": floatingButton
     ]
-    
+
     view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .leading,
@@ -172,7 +172,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       attribute: .leading,
       multiplier: 1.0,
       constant: 0))
-    
+
     view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .trailing,
@@ -181,7 +181,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       attribute: .trailing,
       multiplier: 1.0,
       constant: 0))
-    
+
     view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .top,
@@ -190,29 +190,29 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       attribute: .top,
       multiplier: 1.0,
       constant: 0))
-    
+
     view.addConstraints(
       NSLayoutConstraint.constraints(withVisualFormat: "V:|[raised]-22-[flat]-22-[floating]|",
                                      options: .alignAllCenterX,
                                      metrics: nil,
                                      views: views))
   }
-  
+
   @IBAction func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
-  
+
 }
 
 extension ButtonsSwiftAndStoryboardController {
   class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Buttons (Swift and Storyboard)"]
   }
-  
+
   class func catalogStoryboardName() -> String {
     return "ButtonsStoryboardAndProgrammatic"
   }
-  
+
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
