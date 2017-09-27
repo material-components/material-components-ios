@@ -27,8 +27,6 @@ This class is intended for single line text fields only. For a visually compatib
 
 ## MDCTextInputControllerOutlinedTextArea (Preferred)
 
-![MDCTextInputControllerOutlinedTextArea](MDCTextInputControllerOutlinedTextArea.gif)
-
 - Stroked border
 - Border-crossing, floating placeholder
 - No fill
@@ -46,8 +44,6 @@ This class is intended for multi-line text fields only. For a visually compatibl
 - "Classic" early Material Design look
 
 ## MDCTextInputControllerFullWidth
-
-![MDCTextInputControllerFullWidth](MDCTextInputControllerFullWidth.gif)
 
 - No border / underline
 - Inline placeholder
@@ -69,8 +65,6 @@ This class is intended for multi-line text fields only. For a visually compatibl
 This class has different layout behavior and sizing than `MDCTextInputControllerDefault` but is included for backwards compatibility.
 
 ## MDCTextInputControllerLegacyFullWidth
-
-![MDCTextInputControllerLegacyFullWidth](MDCTextInputControllerLegacyFullWidth.gif)
 
 - No border / underline
 - Inline placeholder
