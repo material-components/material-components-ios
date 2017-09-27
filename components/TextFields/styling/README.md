@@ -8,7 +8,7 @@ Another two of the classes are "Legacy". They are included to support older desi
 
 ## MDCTextInputControllerOutlined (Preferred)
 
-![MDCTextInputControllerOutlined](MDCTextInputControllerOutlined.gif)
+![MDCTextInputControllerOutlined](docs/assets/MDCTextInputControllerOutlined.gif)
 
 - Stroked border
 - Border-crossing, floating placeholder
@@ -19,7 +19,7 @@ This class is intended for single line text fields only. For a visually compatib
 
 ## MDCTextInputControllerFilled (Preferred)
 
-![MDCTextInputControllerFilled](MDCTextInputControllerFilled.gif)
+![MDCTextInputControllerFilled](docs/assets/MDCTextInputControllerFilled.gif)
 
 - Optionally stroked border / underline
 - Floating placeholder
@@ -36,7 +36,7 @@ This class is intended for multi-line text fields only. For a visually compatibl
 
 ## MDCTextInputControllerDefault
 
-![MDCTextInputControllerDefault](MDCTextInputControllerDefault.gif)
+![MDCTextInputControllerDefault](docs/assets/MDCTextInputControllerDefault.gif)
 
 - Underline
 - Optionally floating placeholder (default is to float)
@@ -53,7 +53,7 @@ This class is intended for multi-line text fields only. For a visually compatibl
 
 ## MDCTextInputControllerLegacyDefault
 
-![MDCTextInputControllerLegacyDefault](MDCTextInputControllerLegacyDefault.gif)
+![MDCTextInputControllerLegacyDefault](docs/assets/MDCTextInputControllerLegacyDefault.gif)
 
 - Underline
 - Optionally floating placeholder (default is to float)
