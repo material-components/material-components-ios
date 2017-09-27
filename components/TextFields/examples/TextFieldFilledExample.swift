@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldBoxSwiftExample: UIViewController {
+final class TextFieldFilledSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -95,7 +95,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Material Text Field Boxes"
+    title = "Material Filled Text Field"
 
     setupScrollView()
     setupTextFields()
@@ -261,7 +261,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldBoxSwiftExample: UITextFieldDelegate {
+extension TextFieldFilledSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -314,7 +314,7 @@ extension TextFieldBoxSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldBoxSwiftExample: UITextViewDelegate {
+extension TextFieldFilledSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -322,7 +322,7 @@ extension TextFieldBoxSwiftExample: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldBoxSwiftExample {
+extension TextFieldFilledSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -354,14 +354,14 @@ extension TextFieldBoxSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldBoxSwiftExample {
+extension TextFieldFilledSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldBoxSwiftExample {
+extension TextFieldFilledSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "TextField Boxes"]
+    return ["Text Field", "Filled Text Fields"]
   }
 }

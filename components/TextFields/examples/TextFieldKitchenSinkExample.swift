@@ -97,26 +97,26 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     setupExampleViews()
   }
 
-  func setupBoxTextFields() -> [MDCTextInputControllerFilled] {
-    let textFieldBox = MDCTextField()
-    textFieldBox.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldBox)
+  func setupFilledTextFields() -> [MDCTextInputControllerFilled] {
+    let textFieldFilled = MDCTextField()
+    textFieldFilled.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldFilled)
 
-    textFieldBox.delegate = self
-    textFieldBox.placeholder = "This is a text field box"
+    textFieldFilled.delegate = self
+    textFieldFilled.placeholder = "This is a filled text field"
 
-    let textFieldControllerBox = MDCTextInputControllerFilled(textInput: textFieldBox)
-    textFieldControllerBox.isFloatingEnabled = false
+    let textFieldControllerFilled = MDCTextInputControllerFilled(textInput: textFieldFilled)
+    textFieldControllerFilled.isFloatingEnabled = false
 
-    let textFieldBoxFloating = MDCTextField()
-    textFieldBoxFloating.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldBoxFloating)
+    let textFieldFilledFloating = MDCTextField()
+    textFieldFilledFloating.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldFilledFloating)
 
-    textFieldBoxFloating.delegate = self
-    textFieldBoxFloating.placeholder = "This is a box with floating"
+    textFieldFilledFloating.delegate = self
+    textFieldFilledFloating.placeholder = "This is filled and floating"
 
-    let textFieldControllerBoxFloating = MDCTextInputControllerFilled(textInput: textFieldBoxFloating)
-    return [textFieldControllerBox, textFieldControllerBoxFloating]
+    let textFieldControllerFilledFloating = MDCTextInputControllerFilled(textInput: textFieldFilledFloating)
+    return [textFieldControllerFilled, textFieldControllerFilledFloating]
   }
 
   func setupDefaultTextFields() -> [MDCTextInputControllerDefault] {
