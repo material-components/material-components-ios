@@ -282,19 +282,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (UIView *)trailingView {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    return self.rightView;
-  } else {
-    return self.leftView;
-  }
+  return self.rightView;
 }
 
 - (void)setTrailingView:(UIView *)trailingView {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    self.rightView = trailingView;
-  } else {
-    self.leftView = trailingView;
-  }
+  self.rightView = trailingView;
 }
 
 - (UITextFieldViewMode)trailingViewMode {
@@ -360,19 +352,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (UIView *)leadingView {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    return self.leftView;
-  } else {
-    return self.rightView;
-  }
+  return self.leftView;
 }
 
 - (void)setLeadingView:(UIView *)leadingView {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    self.leftView = leadingView;
-  } else {
-    self.rightView = leadingView;
-  }
+  self.leftView = leadingView;
 }
 
 - (UITextFieldViewMode)leadingViewMode {
@@ -533,6 +517,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return self.clearButton.frame;
 }
 
+// NOTE: leftViewRectForBounds: and rightViewRectForBounds: should return LTR values regardless of
+// layout direction. Then the OS flips it when it renders it.
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
   CGRect defaultRect = [super leftViewRectForBounds:bounds];
   defaultRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(defaultRect)];

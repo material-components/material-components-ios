@@ -51,8 +51,6 @@ static NSString *const MDCTextInputControllerLegacyFullWidthHelperTextKey =
     @"MDCTextInputControllerLegacyFullWidthHelperTextKey";
 static NSString *const MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey =
     @"MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey";
-static NSString *const MDCTextInputControllerLegacyFullWidthLeadingUnderlineLabelTextColor =
-    @"MDCTextInputControllerLegacyFullWidthLeadingUnderlineLabelTextColor";
 static NSString *const MDCTextInputControllerLegacyFullWidthPresentationStyleKey =
     @"MDCTextInputControllerLegacyFullWidthPresentationStyleKey";
 static NSString *const MDCTextInputControllerLegacyFullWidthTextInputKey =
@@ -85,7 +83,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
   UIColor *_errorColor;
   UIColor *_inlinePlaceholderColor;
-  UIColor *_leadingUnderlineLabelTextColor;
   UIColor *_trailingUnderlineLabelTextColor;
 }
 
@@ -147,8 +144,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthErrorColorKey];
     _inlinePlaceholderColor = [aDecoder
         decodeObjectForKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey];
-    _leadingUnderlineLabelTextColor = [aDecoder
-        decodeObjectForKey:MDCTextInputControllerLegacyFullWidthLeadingUnderlineLabelTextColor];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthTextInputKey];
     _trailingUnderlineLabelTextColor = [aDecoder
         decodeObjectForKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelTextColor];
@@ -182,8 +177,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerLegacyFullWidthHelperTextKey];
   [aCoder encodeObject:self.inlinePlaceholderColor
                 forKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey];
-  [aCoder encodeObject:self.leadingUnderlineLabelTextColor
-                forKey:MDCTextInputControllerLegacyFullWidthLeadingUnderlineLabelTextColor];
   [aCoder encodeConditionalObject:self.textInput
                            forKey:MDCTextInputControllerLegacyFullWidthTextInputKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
@@ -201,7 +194,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   copy.errorText = [self.errorText copy];
   copy.helperText = [self.helperText copy];
   copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
-  copy.leadingUnderlineLabelTextColor = self.leadingUnderlineLabelTextColor;
   copy.previousLeadingText = [self.previousLeadingText copy];
   copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy

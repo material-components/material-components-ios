@@ -189,7 +189,7 @@ inkView.startTouchEndedAnimation(at: touchPoint, completion: nil)
 #### Objective-C
 ``` objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
-MDCInkView *inkView = [MDCInkView new];
+MDCInkView *inkView = [[MDCInkView alloc] init];
 inkView.inkColor = [UIColor redColor];
 [myCustomView addSubview:inkView];
 ...

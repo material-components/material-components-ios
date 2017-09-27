@@ -41,15 +41,15 @@ Text fields allow users to input text into your app. They are a direct connectio
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/TextFields'
-~~~
+```
 
 Then run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -121,15 +121,15 @@ Before using Text Fields, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 import MaterialComponents.MaterialTextFields
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialTextFields.h"
-~~~
+```
 <!--</div>-->
 
 ## Examples - Single Line
@@ -139,7 +139,7 @@ import MaterialComponents.MaterialTextFields
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let textFieldFloating = MDCTextField()
 scrollView.addSubview(textFieldFloating)
 
@@ -147,11 +147,11 @@ textFieldFloating.placeholder = "Full Name"
 textFieldFloating.delegate = self
 
 textFieldControllerFloating = MDCTextInputControllerDefault(input: textFieldFloating) // Hold on as a property
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
 [self.scrollView addSubview:textFieldFloating];
 
@@ -159,7 +159,7 @@ textFieldFloating.placeholder = @"Full Name";
 textFieldFloating.delegate = self;
 
 self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
-~~~
+```
 <!--</div>-->
 
 ### Text Field with Character Count and Inline Placeholder
@@ -167,7 +167,7 @@ self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWi
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 // First the text field component is setup just like a UITextField
 let textFieldDefaultCharMax = MDCTextField()
 scrollView.addSubview(textFieldDefaultCharMax)
@@ -179,11 +179,11 @@ textFieldDefaultCharMax.delegate = self
 textFieldControllerDefaultCharMax = MDCTextInputControllerDefault(input: textFieldDefaultCharMax) // Hold on as a property
 textFieldControllerDefaultCharMax.characterCountMax = 50
 textFieldControllerDefaultCharMax.isFloatingEnabled = false
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 // First the text field component is setup just like a UITextField
 MDCTextField *textFieldDefaultCharMax = [[MDCTextField alloc] init];
 [self.scrollView addSubview:textFieldDefaultCharMax];
@@ -196,7 +196,7 @@ self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerDefault alloc] 
 self.textFieldControllerDefaultCharMax.characterCountMax = 50;
 self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
-~~~
+```
 <!--</div>-->
 
 ## Examples - Multi Line
@@ -206,7 +206,7 @@ self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let textFieldFloating = MDCMultilineTextField()
 scrollView.addSubview(textFieldFloating)
 
@@ -214,11 +214,11 @@ textFieldFloating.placeholder = "Full Name"
 textFieldFloating.delegate = self
 
 textFieldControllerFloating = MDCTextInputControllerDefault(input: textFieldFloating) // Hold on as a property
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCMultilineTextField *textFieldFloating = [[MDCMultilineTextField alloc] init];
 [self.scrollView addSubview:textFieldFloating];
 
@@ -226,7 +226,7 @@ textFieldFloating.placeholder = @"Full Name";
 textFieldFloating.delegate = self;
 
 self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
-~~~
+```
 <!--</div>-->
 
 ### Text Field with Character Count and Inline Placeholder
@@ -234,7 +234,7 @@ self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWi
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 // First the text field component is setup just like a UITextField
 let textFieldDefaultCharMax = MDCMultilineTextField()
 scrollView.addSubview(textFieldDefaultCharMax)
@@ -246,11 +246,11 @@ textFieldDefaultCharMax.delegate = self
 textFieldControllerDefaultCharMax = MDCTextInputControllerDefault(input: textFieldDefaultCharMax) // Hold on as a property
 textFieldControllerDefaultCharMax.characterCountMax = 50
 textFieldControllerDefaultCharMax.isFloatingEnabled = false
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 // First the text field component is setup just like a UITextField
 MDCMultilineTextField *textFieldDefaultCharMax = [[MDCMultilineTextField alloc] init];
 [self.scrollView addSubview:textFieldDefaultCharMax];
@@ -262,6 +262,6 @@ textFieldDefaultCharMax.delegate = self;
 self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerDefault alloc] initWithTextInput: textFieldDefaultCharMax];
 self.textFieldControllerDefaultCharMax.characterCountMax = 50;
 self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
-~~~
+```
 <!--</div>-->
 
