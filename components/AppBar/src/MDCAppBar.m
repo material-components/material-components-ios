@@ -34,6 +34,7 @@ static NSString *const kStatusBarHeightKey = @"statusBarHeight";
 static NSString *const MDCAppBarHeaderViewControllerKey = @"MDCAppBarHeaderViewControllerKey";
 static NSString *const MDCAppBarNavigationBarKey = @"MDCAppBarNavigationBarKey";
 static NSString *const MDCAppBarHeaderStackViewKey = @"MDCAppBarHeaderStackViewKey";
+static const CGFloat kPreIOS11StatusBarHeight = 20;
 
 // The Bundle for string resources.
 static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
@@ -307,7 +308,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
-  CGFloat topMargin = 20;
+  CGFloat topMargin = kPreIOS11StatusBarHeight;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     // Starting from iOS 11, the top margin should be the actual status bar height.
