@@ -1,6 +1,6 @@
 #  Text field styles
 
-MDC's text fields are designed to be styled by controllers implementing the `MDCTextInputController` protocol. The following controllers are included in the text field component and each one is highly customizeable to express your app's branding and styling.
+MDC's text fields are designed to be styled by controllers implementing the `MDCTextInputController` protocol. The following controllers are included in the text field component and each one is highly customizable to express your app's branding and styling.
 
 Some of the classes are marked as "Preferred". These are known, through extensive UX research, to have big performance gains in usability.
 
