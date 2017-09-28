@@ -984,7 +984,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   // Full width text fields have their clear button in the horizontal margin, but because the
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
-  // Full width text boxes have their character count on the text input line
+  // Full width text fields have their character count on the text input line
   if (self.textInput.text.length > 0) {
     switch (textField.clearButtonMode) {
       case UITextFieldViewModeWhileEditing:

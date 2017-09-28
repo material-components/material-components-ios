@@ -18,14 +18,14 @@
 
 @interface TextFieldOutlinedObjectiveCExample : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 
-@property(nonatomic) MDCTextInputControllerOutlinedField *nameController;
-@property(nonatomic) MDCTextInputControllerOutlinedField *addressController;
-@property(nonatomic) MDCTextInputControllerOutlinedField *cityController;
-@property(nonatomic) MDCTextInputControllerOutlinedField *stateController;
-@property(nonatomic) MDCTextInputControllerOutlinedField *zipController;
-@property(nonatomic) MDCTextInputControllerOutlinedField *phoneController;
+@property(nonatomic) MDCTextInputControllerOutlined *nameController;
+@property(nonatomic) MDCTextInputControllerOutlined *addressController;
+@property(nonatomic) MDCTextInputControllerOutlined *cityController;
+@property(nonatomic) MDCTextInputControllerOutlined *stateController;
+@property(nonatomic) MDCTextInputControllerOutlined *zipController;
+@property(nonatomic) MDCTextInputControllerOutlined *phoneController;
 
-@property(nonatomic) MDCTextInputControllerTextArea *messageController;
+@property(nonatomic) MDCTextInputControllerOutlinedTextArea *messageController;
 
 @property(nonatomic) UIScrollView *scrollView;
 
@@ -50,7 +50,7 @@
   textFieldName.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldName.backgroundColor = [UIColor whiteColor];
 
-  self.nameController = [[MDCTextInputControllerOutlinedField alloc] initWithTextInput:textFieldName];
+  self.nameController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldName];
 
   MDCTextField *textFieldAddress = [[MDCTextField alloc] init];
   textFieldAddress.translatesAutoresizingMaskIntoConstraints = NO;
@@ -61,7 +61,7 @@
   textFieldAddress.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldAddress.backgroundColor = [UIColor whiteColor];
 
-  self.addressController = [[MDCTextInputControllerOutlinedField alloc] initWithTextInput:textFieldAddress];
+  self.addressController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldAddress];
 
   MDCTextField *textFieldCity = [[MDCTextField alloc] init];
   textFieldCity.translatesAutoresizingMaskIntoConstraints = NO;
@@ -72,7 +72,7 @@
   textFieldCity.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldCity.backgroundColor = [UIColor whiteColor];
 
-  self.cityController = [[MDCTextInputControllerOutlinedField alloc] initWithTextInput:textFieldCity];
+  self.cityController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldCity];
 
   MDCTextField *textFieldState = [[MDCTextField alloc] init];
   textFieldState.translatesAutoresizingMaskIntoConstraints = NO;
@@ -82,7 +82,7 @@
   textFieldState.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldState.backgroundColor = [UIColor whiteColor];
 
-  self.stateController = [[MDCTextInputControllerOutlinedField alloc] initWithTextInput:textFieldState];
+  self.stateController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldState];
 
   MDCTextField *textFieldZip = [[MDCTextField alloc] init];
   textFieldZip.translatesAutoresizingMaskIntoConstraints = NO;
@@ -92,7 +92,7 @@
   textFieldZip.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldZip.backgroundColor = [UIColor whiteColor];
 
-  self.zipController = [[MDCTextInputControllerOutlinedField alloc] initWithTextInput:textFieldZip];
+  self.zipController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldZip];
 
   UIView *stateZip = [[UIView alloc] initWithFrame:CGRectZero];
   stateZip.translatesAutoresizingMaskIntoConstraints = NO;
@@ -111,7 +111,7 @@
   textFieldPhone.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldPhone.backgroundColor = [UIColor whiteColor];
 
-  self.phoneController = [[MDCTextInputControllerOutlinedField alloc] initWithTextInput:textFieldPhone];
+  self.phoneController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldPhone];
   self.phoneController.helperText = @"XXX-XXX-XXXX";
 
   MDCMultilineTextField *textFieldMessage = [[MDCMultilineTextField alloc] init];
@@ -121,7 +121,7 @@
   textFieldMessage.placeholder = @"Message";
   textFieldMessage.textView.delegate = self;
 
-  self.messageController = [[MDCTextInputControllerTextArea alloc] initWithTextInput:textFieldMessage];
+  self.messageController = [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textFieldMessage];
 
   NSDictionary *views = @{
                          @"name": textFieldName,

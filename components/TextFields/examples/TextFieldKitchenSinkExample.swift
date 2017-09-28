@@ -97,26 +97,26 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     setupExampleViews()
   }
 
-  func setupBoxTextFields() -> [MDCTextInputControllerTextFieldBox] {
-    let textFieldBox = MDCTextField()
-    textFieldBox.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldBox)
+  func setupFilledTextFields() -> [MDCTextInputControllerFilled] {
+    let textFieldFilled = MDCTextField()
+    textFieldFilled.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldFilled)
 
-    textFieldBox.delegate = self
-    textFieldBox.placeholder = "This is a text field box"
+    textFieldFilled.delegate = self
+    textFieldFilled.placeholder = "This is a filled text field"
 
-    let textFieldControllerBox = MDCTextInputControllerTextFieldBox(textInput: textFieldBox)
-    textFieldControllerBox.isFloatingEnabled = false
+    let textFieldControllerFilled = MDCTextInputControllerFilled(textInput: textFieldFilled)
+    textFieldControllerFilled.isFloatingEnabled = false
 
-    let textFieldBoxFloating = MDCTextField()
-    textFieldBoxFloating.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldBoxFloating)
+    let textFieldFilledFloating = MDCTextField()
+    textFieldFilledFloating.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldFilledFloating)
 
-    textFieldBoxFloating.delegate = self
-    textFieldBoxFloating.placeholder = "This is a box with floating"
+    textFieldFilledFloating.delegate = self
+    textFieldFilledFloating.placeholder = "This is filled and floating"
 
-    let textFieldControllerBoxFloating = MDCTextInputControllerTextFieldBox(textInput: textFieldBoxFloating)
-    return [textFieldControllerBox, textFieldControllerBoxFloating]
+    let textFieldControllerFilledFloating = MDCTextInputControllerFilled(textInput: textFieldFilledFloating)
+    return [textFieldControllerFilled, textFieldControllerFilledFloating]
   }
 
   func setupDefaultTextFields() -> [MDCTextInputControllerDefault] {
@@ -398,7 +398,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   // MARK: - Multiline
 
-  func setupAreaTextFields() -> [MDCTextInputControllerTextArea] {
+  func setupAreaTextFields() -> [MDCTextInputControllerOutlinedTextArea] {
     let textFieldArea = MDCMultilineTextField()
     textFieldArea.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(textFieldArea)
@@ -406,7 +406,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldArea.textView?.delegate = self
     textFieldArea.placeholder = "This is a text area"
 
-    let textFieldControllerArea = MDCTextInputControllerTextArea(textInput: textFieldArea)
+    let textFieldControllerArea = MDCTextInputControllerOutlinedTextArea(textInput: textFieldArea)
 
     return [textFieldControllerArea]
   }

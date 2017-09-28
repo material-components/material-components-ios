@@ -48,7 +48,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     city.backgroundColor = .white
     return city
   }()
-  let cityController: MDCTextInputControllerOutlinedField
+  let cityController: MDCTextInputControllerOutlined
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -58,7 +58,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     state.backgroundColor = .white
     return state
   }()
-  let stateController: MDCTextInputControllerOutlinedField
+  let stateController: MDCTextInputControllerOutlined
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -67,7 +67,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     zip.backgroundColor = .white
     return zip
   }()
-  let zipController: MDCTextInputControllerOutlinedField
+  let zipController: MDCTextInputControllerOutlined
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -88,9 +88,9 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
   var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerOutlinedField(textInput: city)
-    stateController = MDCTextInputControllerOutlinedField(textInput: state)
-    zipController = MDCTextInputControllerOutlinedField(textInput: zip)
+    cityController = MDCTextInputControllerOutlined(textInput: city)
+    stateController = MDCTextInputControllerOutlined(textInput: state)
+    zipController = MDCTextInputControllerOutlined(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -113,13 +113,13 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerOutlinedField(textInput: name)
+    let nameController = MDCTextInputControllerOutlined(textInput: name)
     name.delegate = self
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerOutlinedField(textInput: address)
+    let addressController = MDCTextInputControllerOutlined(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -143,12 +143,12 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerOutlinedField(textInput: phone)
+    let phoneController = MDCTextInputControllerOutlined(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerTextArea(textInput: message)
+    let messageController = MDCTextInputControllerOutlinedTextArea(textInput: message)
     message.textView?.delegate = self
     allTextFieldControllers.append(messageController)
 

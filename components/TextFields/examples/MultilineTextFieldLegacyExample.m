@@ -67,16 +67,16 @@
   multilineTextFieldUnstyled.leadingUnderlineLabel.text = @"Leading";
   multilineTextFieldUnstyled.trailingUnderlineLabel.text = @"Trailing";
 
-  MDCMultilineTextField *multilineTextFieldUnstyledBox = [[MDCMultilineTextField alloc] init];
-  [self.scrollView addSubview:multilineTextFieldUnstyledBox];
-  multilineTextFieldUnstyledBox.translatesAutoresizingMaskIntoConstraints = NO;
+  MDCMultilineTextField *multilineTextFieldUnstyledArea = [[MDCMultilineTextField alloc] init];
+  [self.scrollView addSubview:multilineTextFieldUnstyledArea];
+  multilineTextFieldUnstyledArea.translatesAutoresizingMaskIntoConstraints = NO;
 
-  multilineTextFieldUnstyledBox.placeholder = @"No Controller (unstyled) minimum of 3 lines";
-  multilineTextFieldUnstyledBox.textView.delegate = self;
-  multilineTextFieldUnstyledBox.leadingUnderlineLabel.text = @"Leading";
-  multilineTextFieldUnstyledBox.trailingUnderlineLabel.text = @"Trailing";
-  multilineTextFieldUnstyledBox.minimumLines = 3;
-  multilineTextFieldUnstyledBox.expandsOnOverflow = NO;
+  multilineTextFieldUnstyledArea.placeholder = @"No Controller (unstyled) minimum of 3 lines";
+  multilineTextFieldUnstyledArea.textView.delegate = self;
+  multilineTextFieldUnstyledArea.leadingUnderlineLabel.text = @"Leading";
+  multilineTextFieldUnstyledArea.trailingUnderlineLabel.text = @"Trailing";
+  multilineTextFieldUnstyledArea.minimumLines = 3;
+  multilineTextFieldUnstyledArea.expandsOnOverflow = NO;
 
   MDCMultilineTextField *multilineTextFieldFloating = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldFloating];
@@ -114,12 +114,12 @@
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:
-                                  @"V:|-20-[unstyled]-[box]-[floating]-[charMax]-[fullWidth]-|"
+                                  @"V:|-20-[unstyled]-[area]-[floating]-[charMax]-[fullWidth]-|"
                                                   options:0
                                                   metrics:nil
                                                     views:@{
                                                       @"unstyled" : multilineTextFieldUnstyled,
-                                                      @"box" : multilineTextFieldUnstyledBox,
+                                                      @"area" : multilineTextFieldUnstyledArea,
                                                       @"charMax" : multilineTextFieldCharMaxDefault,
                                                       @"floating" : multilineTextFieldFloating,
                                                       @"fullWidth" :
@@ -135,11 +135,11 @@
                                                     }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"H:|-[box]-|"
+                              constraintsWithVisualFormat:@"H:|-[area]-|"
                                                   options:0
                                                   metrics:nil
                                                     views:@{
-                                                      @"box" : multilineTextFieldUnstyledBox
+                                                      @"area" : multilineTextFieldUnstyledArea
                                                     }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
