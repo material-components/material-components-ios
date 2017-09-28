@@ -436,7 +436,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 - (void)safeAreaInsetsDidChange {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    [self fvh_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+    [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
 
     // If the min/max height hasn't been explicitly set, we need to update the layout to reflect
     // the change in the Safe Area insets.
@@ -517,7 +517,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   return info;
 }
 
-- (void)fvh_adjustInsetsForSafeAreaInScrollView:(UIScrollView *)scrollView {
+- (void)fhv_adjustInsetsForSafeAreaInScrollView:(UIScrollView *)scrollView {
   if (!scrollView) {
     return;
   }
@@ -1082,7 +1082,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   }
 
   // Before we update the layout, take into account the scroll view's Safe Area insets.
-  [self fvh_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+  [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
 
   void (^animate)(void) = ^{
     [self fhv_updateLayout];
@@ -1110,7 +1110,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 - (void)trackingScrollViewDidScroll {
   // This could've been triggered by a change in the scroll view's Safe Area, so we need to check
   // if it did. If it didn't, this is a no-op.
-  [self fvh_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+  [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
 
   [self fhv_contentOffsetDidChange];
 }
