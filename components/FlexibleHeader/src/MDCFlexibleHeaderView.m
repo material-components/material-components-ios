@@ -518,6 +518,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (void)fvh_adjustInsetsForSafeAreaInScrollView:(UIScrollView *)scrollView {
+  if (!scrollView) {
+    return;
+  }
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAlways ||
