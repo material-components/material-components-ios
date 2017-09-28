@@ -15,6 +15,7 @@
  */
 
 #import <XCTest/XCTest.h>
+#import "MaterialApplication.h"
 #import "MaterialFlexibleHeader.h"
 
 // Extension to MDCFlexibleHeaderViewController for Tests Only to Expose Private Property
@@ -136,6 +137,10 @@
 }
 
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenKeepStatus {
+  // Given
+  CGFloat statusBarHeight =
+      [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+
   // When
   self.vc.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
   CGRect offScreenScroll =
@@ -144,7 +149,7 @@
   [self.vc.scrollView scrollRectToVisible:offScreenScroll animated:NO];
 
   // Then
-  XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, 20);
+  XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, statusBarHeight);
 }
 
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenHideStatus {
