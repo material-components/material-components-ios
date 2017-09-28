@@ -56,6 +56,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   BOOL _prefersStatusBarHidden;
   MDCStatusBarShifterState _snapshotState;
 
+  // The height of the status bar as it is before we do anything to it.
   CGFloat _originalStatusBarHeight;
 }
 
@@ -223,7 +224,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
     return;
   }
 
-  // Bound the status bar range to [0...statusBarHeight].
+  // Bound the status bar range to [0..._originalStatusBarHeight].
   CGFloat statusOffsetY = MIN(_originalStatusBarHeight, offset);
 
   // Adjust the frame of the status bar.
@@ -260,7 +261,9 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 }
 
 - (BOOL)canUpdateStatusBarFrame {
-  return (![[UIApplication mdc_safeSharedApplication] isStatusBarHidden] || _statusBarReplicaView ||
+  CGRect statusBarFrame = [[UIApplication mdc_safeSharedApplication] statusBarFrame];
+  CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
+  return ((statusBarHeight == _originalStatusBarHeight) || _statusBarReplicaView ||
           _snapshotState == MDCStatusBarShifterStateInvalidSnapshot);
 }
 
