@@ -2,9 +2,9 @@
 
 MDC's text fields are designed to be styled by controllers implementing the `MDCTextInputController` protocol. The following controllers are included in the text field component and each one is highly customizeable to express your app's branding and styling.
 
-Some of the classes are marked as "Preferred". These are known, thru extensive UX research, to have big performance gains in usability.
+Some of the classes are marked as "Preferred". These are known, through extensive UX research, to have big performance gains in usability.
 
-Another two of the classes are "Legacy". They are included to support older designs and avoid breaking changes that come from the size of newer styles.
+Two of the classes include "Legacy" in their names. They are included to support older designs and avoid breaking changes that come from the size of newer styles.
 
 ## MDCTextInputControllerOutlined (Preferred)
 
@@ -15,13 +15,13 @@ Another two of the classes are "Legacy". They are included to support older desi
 - No fill
 
 ### Notes:
-This class is intended for single line text fields only. For a visually compatible multi-line controller, use `MDCTextInputControllerOutlinedTextArea`.
+This class is intended for singleline text fields only. For a visually compatible multiline controller, use `MDCTextInputControllerOutlinedTextArea`.
 
 ## MDCTextInputControllerFilled (Preferred)
 
 ![MDCTextInputControllerFilled](docs/assets/MDCTextInputControllerFilled.gif)
 
-- Optionally stroked border / underline
+- Optional stroked border / underline
 - Floating placeholder
 - Colored fill
 
@@ -32,14 +32,14 @@ This class is intended for single line text fields only. For a visually compatib
 - No fill
 
 ### Notes:
-This class is intended for multi-line text fields only. For a visually compatible single line controller, use `MDCTextInputControllerOutlined`.
+This class is intended for multiline text fields only. For a visually compatible singleline controller, use `MDCTextInputControllerOutlined`.
 
 ## MDCTextInputControllerDefault
 
 ![MDCTextInputControllerDefault](docs/assets/MDCTextInputControllerDefault.gif)
 
 - Underline
-- Optionally floating placeholder (default is to float)
+- Optional floating of placeholder (default is to float)
 - No fill
 - "Classic" early Material Design look
 
@@ -56,13 +56,13 @@ This class is intended for multi-line text fields only. For a visually compatibl
 ![MDCTextInputControllerLegacyDefault](docs/assets/MDCTextInputControllerLegacyDefault.gif)
 
 - Underline
-- Optionally floating placeholder (default is to float)
+- Optional floating of placeholder (default is to float)
 - No fill
 - "Classic" early Material Design look
 - Legacy clear button (X)
 
 ### Notes:
-This class has different layout behavior and sizing than `MDCTextInputControllerDefault` but is included for backwards compatibility.
+This class has different layout behavior and sizing than `MDCTextInputControllerDefault` but is included for backward compatibility.
 
 ## MDCTextInputControllerLegacyFullWidth
 
@@ -74,4 +74,4 @@ This class has different layout behavior and sizing than `MDCTextInputController
 - Legacy clear button (X)
 
 ### Notes:
-This class has different layout behavior and sizing than `MDCTextInputControllerFullWidth` but is included for backwards compatibility.
+This class has different layout behavior and sizing than `MDCTextInputControllerFullWidth` but is included for backward compatibility.

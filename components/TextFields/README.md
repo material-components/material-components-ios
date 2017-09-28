@@ -63,9 +63,9 @@ Text Fields provides both a single-line version based on `UITextField` and a mul
 
 The actual components (`MDCTextField` & `MDCMultilineTextField`) are 'dumb': they do not have styles, animations, or advanced features. They are designed to be controlled from the outside, via very liberal public API, with a text input controller.
 
-Most text input controllers included are based off of `MDCTextInputControllerDefault` which manipulates the exposed elements of the text field to make placeholders float.
+Most text input controllers included are based on `MDCTextInputControllerDefault` which manipulates the exposed elements of the text field to make placeholders float.
 
-There is also a text input controller for full width forms (`MDCTextInputControllerFullWidth`). Like `MDCTextInputControllerDefault`, it also handles errors and character counting.
+There is also a text input controller for full-width forms (`MDCTextInputControllerFullWidth`). Like `MDCTextInputControllerDefault`, it also handles errors and character counting.
 
 Customize the included text input controllers via their parameters or create your own to express your app's brand identity thru typography, color, and animation: if the placeholder should move, add constraints or change the frame. If the trailing label should display validation information, change the text and color it.
 
@@ -75,7 +75,7 @@ This pattern is not a delegation or data source-like relationship but rather a c
 
 #### Text Field
 
-This is a single line text input. It's subclassed from `UITextField` and supports all the features you'd expect from a `UITextField`:
+This is a single-line text input. It's subclassed from `UITextField` and supports all the features you'd expect from a `UITextField`:
 
 * Placeholder
 * Overlay views (left and right / leading and trailing)
@@ -90,9 +90,9 @@ as well as new features:
 * Persistable placeholder
 * Border view
 
-#### Multiline Text Field
+#### Multi-line Text Field
 
-This is a multiline line text input. It's subclassed from `UIView` with an embedded `UITextView`. It supports all the features of the single line text field and `UITextView` plus:
+This is a multi-line text input. It's subclassed from `UIView` with an embedded `UITextView`. It supports all the features of the single-line text field and `UITextView` plus:
 
 * Minimum number of lines
 
@@ -137,7 +137,7 @@ import MaterialComponents.MaterialTextFields
 ```
 <!--</div>-->
 
-## Examples - Single Line
+## Examples - Single-line
 
 ### Text Field with Floating Placeholder
 

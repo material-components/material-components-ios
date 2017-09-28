@@ -164,7 +164,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
       textInsets.top + [self estimatedTextHeight] + [self beneathInputPadding];
   // When floating placeholders are turned off, the underline will drift up unless this is set. Even
   // tho it is redundant when floating is on, we just keep it on always for simplicity.
-  // Note: This is an issue only on singleline text fields.
+  // Note: This is an issue only on single-line text fields.
   if (!self.underlineBottom) {
     if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
       self.underlineBottom =

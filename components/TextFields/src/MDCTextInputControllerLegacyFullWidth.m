@@ -795,7 +795,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
                   constant:-1 * MDCTextInputControllerLegacyFullWidthHorizontalPadding];
   }
 
-  // Multi Line Only
+  // Multi-line Only
   if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
     [self.textInput.leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired
                                                             forAxis:UILayoutConstraintAxisVertical];
@@ -882,7 +882,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
     // A height constraint is not necessary for multiline. Its height is calculated in
     // intrinsicContentSize:
   } else {
-    // Single Line Only
+    // Single-line Only
     // .fullWidth
     if (!self.characterCountY) {
       self.characterCountY =
