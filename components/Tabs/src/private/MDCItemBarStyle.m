@@ -25,7 +25,7 @@
     _displaysUppercaseTitles = YES;
     _shouldDisplayTitle = YES;
     _shouldDisplaySelectionIndicator = YES;
-    _titleNumberOfLines = 1;
+    _textOnlyTitleNumberOfLines = 1;
   }
   return self;
 }
@@ -48,7 +48,7 @@
   newStyle.inkColor = _inkColor;
   newStyle.titleImagePadding = _titleImagePadding;
   newStyle.displaysUppercaseTitles = _displaysUppercaseTitles;
-  newStyle.titleNumberOfLines = _titleNumberOfLines;
+  newStyle.textOnlyTitleNumberOfLines = _textOnlyTitleNumberOfLines;
 
   return newStyle;
 }

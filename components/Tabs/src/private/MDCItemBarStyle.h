@@ -65,8 +65,13 @@
 /** Padding in points between the title and image components, according to the MD spec. */
 @property(nonatomic) CGFloat titleImagePadding;
 
-/** Maximum number of lines of text allowed. */
-@property(nonatomic, assign) NSInteger titleNumberOfLines;
+/**
+ The number of lines used for each item's title label. Material Design guidelines specifies 2 lines
+ for text-only tabs at the top of the view. All other Tabs styles should use a single line of text.
+
+ Default is 1.
+ */
+@property(nonatomic, assign) NSInteger textOnlyTitleNumberOfLines;
 
 /**
  Indicates if all tab titles should be uppercased for display. If NO, item titles will be

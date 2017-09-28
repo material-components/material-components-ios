@@ -193,14 +193,17 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateTitleLines {
-  _titleLabel.numberOfLines = _style.titleNumberOfLines;
-  if (_style.titleNumberOfLines == 1) {
+  // The presence of an image restricts titles to a single line
+  if (_imageView && !_imageView.hidden) {
+    _titleLabel.numberOfLines = 1;
+  } else {
+    _titleLabel.numberOfLines = _style.textOnlyTitleNumberOfLines;
+  }
+  
+  if (_titleLabel.numberOfLines == 1) {
     _titleLabel.adjustsFontSizeToFitWidth = NO;
-    _titleLabel.minimumScaleFactor = 1;
   } else {
     _titleLabel.adjustsFontSizeToFitWidth = YES;
-    // 0.85 is based on 12sp/14sp guidelines for single- or double-line text
-    _titleLabel.minimumScaleFactor = (CGFloat)0.85;
   }
 }
 
@@ -429,7 +432,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       _titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
       _titleLabel.autoresizingMask =
           UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-      _titleLabel.numberOfLines = 1;
+      // 0.85 is based on 12sp/14sp guidelines for single- or double-line text
+      _titleLabel.minimumScaleFactor = (CGFloat)0.85;
       _titleLabel.textAlignment = NSTextAlignmentCenter;
 
       [self.contentView addSubview:_titleLabel];
