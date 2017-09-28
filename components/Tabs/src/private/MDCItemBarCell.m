@@ -194,17 +194,9 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 - (void)updateTitleLines {
   // The presence of an image restricts titles to a single line
-  if (_imageView && !_imageView.hidden) {
-    _titleLabel.numberOfLines = 1;
-  } else {
-    _titleLabel.numberOfLines = _style.textOnlyTitleNumberOfLines;
-  }
-  
-  if (_titleLabel.numberOfLines == 1) {
-    _titleLabel.adjustsFontSizeToFitWidth = NO;
-  } else {
-    _titleLabel.adjustsFontSizeToFitWidth = YES;
-  }
+  _titleLabel.numberOfLines = _style.shouldDisplayImage ? 1 : _style.textOnlyTitleNumberOfLines;
+  // Only permit smaller font sizes for two-line titles
+  _titleLabel.adjustsFontSizeToFitWidth = _titleLabel.numberOfLines == 1 ? NO : YES;
 }
 
 - (void)updateWithItem:(UITabBarItem *)item
