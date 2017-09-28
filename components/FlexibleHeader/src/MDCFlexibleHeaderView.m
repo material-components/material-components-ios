@@ -130,6 +130,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // is interacting with the header or if we're presently animating it.
   BOOL _wantsToBeHidden;
 
+  BOOL _hasExplicitlySetMinHeight;
+  BOOL _hasExplicitlySetMaxHeight;
+
   // Shift behavior state
 
   // Prevents delta calculations on first update pass.
@@ -421,7 +424,33 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (void)safeAreaInsetsDidChange {
-  [self fvh_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [self fvh_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+
+    // If the min/max height hasn't been explicitly set, we need to update the layout to reflect
+    // the change in the Safe Area insets.
+    if (_hasExplicitlySetMinHeight && _hasExplicitlySetMaxHeight) {
+      return;
+    }
+    if (!_hasExplicitlySetMinHeight) {
+      // Edge case for UITableViewController: If we're a subview of _trackingScrollView,
+      // we need to get the Safe Area insets from there and not use ours.
+      if ([self isDescendantOfView:_trackingScrollView]) {
+        _minimumHeight = kFlexibleHeaderDefaultHeight + _trackingScrollView.safeAreaInsets.top;
+      } else {
+        _minimumHeight = kFlexibleHeaderDefaultHeight + self.safeAreaInsets.top;
+      }
+    }
+    if (!_hasExplicitlySetMaxHeight) {
+      _maximumHeight = _minimumHeight;
+    }
+    if (_maximumHeight < _minimumHeight) {
+      _maximumHeight = _minimumHeight;
+    }
+    [self fhv_updateLayout];
+  }
+#endif
 }
 
 #pragma mark - Private (fhv_ prefix)
@@ -1201,6 +1230,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)setMinimumHeight:(CGFloat)minimumHeight {
+  _hasExplicitlySetMinHeight = YES;
   if (_minimumHeight == minimumHeight) {
     return;
   }
@@ -1215,6 +1245,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)setMaximumHeight:(CGFloat)maximumHeight {
+  _hasExplicitlySetMaxHeight = YES;
   if (_maximumHeight == maximumHeight) {
     return;
   }
