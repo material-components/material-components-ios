@@ -23,6 +23,8 @@
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
 #endif
 
+static const CGFloat kPreIOS11ExpectedStatusBarHeight = 20;
+
 // The default maximum height for the header. Does not include the status bar height.
 static const CGFloat kFlexibleHeaderDefaultHeight = 56;
 
@@ -130,6 +132,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // is interacting with the header or if we're presently animating it.
   BOOL _wantsToBeHidden;
 
+  // This will help us track if the size has been explicitly set or if we're using the defaults.
   BOOL _hasExplicitlySetMinHeight;
   BOOL _hasExplicitlySetMaxHeight;
 
@@ -295,8 +298,15 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
   _statusBarHintCanOverlapHeader = YES;
 
-  CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
-  _minimumHeight = kFlexibleHeaderDefaultHeight + statusBarHeight;
+  _minimumHeight = kFlexibleHeaderDefaultHeight + kPreIOS11ExpectedStatusBarHeight;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // Starting from iOS 11, we should adapt the size of this component to take into account
+    // the new status bar sizes and the "no status bar in landscape" functionality.
+    CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+    _minimumHeight = kFlexibleHeaderDefaultHeight + statusBarHeight;
+  }
+#endif
   _maximumHeight = _minimumHeight;
   _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
   _canOverExtend = YES;
