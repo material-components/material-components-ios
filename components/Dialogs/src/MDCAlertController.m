@@ -177,7 +177,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:action.title forState:UIControlStateNormal];
   // TODO(#1726): Determine default text color values for Normal and Disabled
-  [actionButton sizeToFit];
   CGRect buttonRect = actionButton.bounds;
   buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonHeight);
   buttonRect.size.width = MAX(buttonRect.size.width, MDCDialogActionButtonMinimumWidth);
@@ -327,6 +326,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+
+  for (UIButton *button in self.actionButtons) {
+    [button sizeToFit];
+  }
 
   // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
   if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
