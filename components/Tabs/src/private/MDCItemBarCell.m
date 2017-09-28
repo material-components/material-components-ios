@@ -181,11 +181,11 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   if (style != _style && ![style isEqual:_style]) {
     _style = style;
 
+    [self updateTitleLines];
     [self updateDisplayedTitle];
     [self updateTitleTextColor];
     [self updateInk];
     [self updateSubviews];
-    [self updateTitleLines];
     [self updateTitleFont];
     [self updateTransformsAnimated:NO];
     [self setNeedsLayout];
