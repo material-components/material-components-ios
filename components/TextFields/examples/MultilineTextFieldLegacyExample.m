@@ -32,7 +32,7 @@
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
 
-  self.title = @"Legacy Multiline Styles";
+  self.title = @"Legacy Multi-line Styles";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
   [self.view addSubview:self.scrollView];
@@ -206,7 +206,7 @@
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"[Legacy] Multiline (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Multi-line (Objective C)" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {

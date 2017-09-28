@@ -41,7 +41,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
   let singleLabel: UILabel = {
     let singleLabel = UILabel()
     singleLabel.translatesAutoresizingMaskIntoConstraints = false
-    singleLabel.text = "Single Line Text Fields"
+    singleLabel.text = "Single-line Text Fields"
     singleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     singleLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
     singleLabel.numberOfLines = 0
@@ -51,7 +51,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
   let multiLabel: UILabel = {
     let multiLabel = UILabel()
     multiLabel.translatesAutoresizingMaskIntoConstraints = false
-    multiLabel.text = "Multiline Text Fields"
+    multiLabel.text = "Multi-line Text Fields"
     multiLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     multiLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
     multiLabel.numberOfLines = 0
@@ -396,7 +396,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
             textFieldControllerDefaultLeftRightViewFloating]
   }
 
-  // MARK: - Multiline
+  // MARK: - Multi-line
 
   func setupAreaTextFields() -> [MDCTextInputControllerOutlinedTextArea] {
     let textFieldArea = MDCMultilineTextField()
@@ -427,7 +427,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     scrollView.addSubview(multilineTextFieldDefaultPlaceholder)
 
     multilineTextFieldDefaultPlaceholder.placeholder =
-        "This is a multiline text field with placeholder"
+        "This is a multi-line text field with placeholder"
     multilineTextFieldDefaultPlaceholder.textView?.delegate = self
 
     let multilineTextFieldControllerDefaultPlaceholder =
@@ -438,7 +438,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     multilineTextFieldDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(multilineTextFieldDefaultCharMax)
 
-    multilineTextFieldDefaultCharMax.placeholder = "This is a multiline text field with placeholder"
+    multilineTextFieldDefaultCharMax.placeholder = "This is a multi-line text field with placeholder"
     multilineTextFieldDefaultCharMax.textView?.delegate = self
 
     let multilineTextFieldControllerDefaultCharMax =
@@ -457,7 +457,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     multilineTextFieldFullWidth.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(multilineTextFieldFullWidth)
 
-    multilineTextFieldFullWidth.placeholder = "This is a full width multiline text field"
+    multilineTextFieldFullWidth.placeholder = "This is a full width multi-line text field"
     multilineTextFieldFullWidth.textView?.delegate = self
 
     let multilineTextFieldControllerFullWidth =
@@ -468,7 +468,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     scrollView.addSubview(multilineTextFieldFullWidthCharMax)
 
     multilineTextFieldFullWidthCharMax.placeholder =
-        "This is a full width multiline text field with character count"
+        "This is a full width multi-line text field with character count"
     multilineTextFieldFullWidthCharMax.textView?.delegate = self
 
     let multilineTextFieldControllerFullWidthCharMax =
@@ -487,7 +487,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
     multilineTextFieldFloating.textView?.delegate = self
     multilineTextFieldFloating.placeholder =
-        "This is a multiline text field with a floating placeholder"
+        "This is a multi-line text field with a floating placeholder"
 
     let multilineTextFieldControllerFloating =
           MDCTextInputControllerDefault(textInput: multilineTextFieldFloating)
@@ -498,7 +498,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
     multilineTextFieldFloatingCharMax.textView?.delegate = self
     multilineTextFieldFloatingCharMax.placeholder =
-        "This is a multiline text field with a floating placeholder and character count"
+        "This is a multi-line text field with a floating placeholder and character count"
 
     let multilineTextFieldControllerFloatingCharMax =
           MDCTextInputControllerDefault(textInput: multilineTextFieldFloatingCharMax)
@@ -544,7 +544,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     unstyledMultilineTextField.translatesAutoresizingMaskIntoConstraints = false
 
     unstyledMultilineTextField.placeholder =
-        "This multiline text field has no controller (unstyled)"
+        "This multi-line text field has no controller (unstyled)"
     unstyledMultilineTextField.leadingUnderlineLabel.text = "Leading label"
     unstyledMultilineTextField.trailingUnderlineLabel.text = "Trailing label"
     unstyledMultilineTextField.textView?.delegate = self

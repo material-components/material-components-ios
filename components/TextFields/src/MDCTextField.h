@@ -22,7 +22,7 @@
 extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
 /**
-  Material Design compliant single line text input.
+  Material Design compliant single-line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
 @interface MDCTextField : UITextField <MDCTextInput>

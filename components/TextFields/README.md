@@ -14,7 +14,11 @@ api_doc_root: true
   <img src="docs/assets/textfields.png" alt="Text Fields" width="375">
 </div>
 
-Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text, error states, and styles.
+Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to new levels by adding useful animations, character counts, helper text, error states, and styles.
+
+MDC's text fields come in several styles and have a great range of customization. Google's UX research has determined that Outlined and Filled (aka 'text box') styles perform the best by a large margin. So use `MDCTextInputControllerOutlinedField` , `MDCTextInputControllerTextFieldBox`, and `MDCTextInputControllerTextArea` if you can and set colors and fonts that match your company's branding.
+
+For more information on text field styles, and animated images of each style in action, see [Text Field Styles](/styling).
 
 ## Design & API Documentation
 
@@ -34,7 +38,7 @@ Text fields allow users to input text into your app. They are a direct connectio
 
 ### Requirements
 
-- Xcode 7.0 or higher.
+- Xcode 8.0 or higher.
 - iOS SDK version 8.0 or higher.
 
 ### Installation with CocoaPods
@@ -55,13 +59,13 @@ pod install
 
 ### Overview
 
-Text Fields provides both a single-line version based on UITextField and a multi-line version backed by UITextView as well as objects that customize the text fields' behavior and appearance called 'Text Input Controllers'.
+Text Fields provides both a single-line version based on `UITextField` and a multi-line version backed by `UITextView` as well as objects that customize the text fields' behavior and appearance called 'Text Input Controllers'.
 
-The actual components (MDCTextField & MDCMultilineTextField) are 'dumb': they do not have styles, animations, or advanced features. They are designed to be controlled from the outside, via very liberal public API, with a text input controller.
+The actual components (`MDCTextField` & `MDCMultilineTextField`) are 'dumb': they do not have styles, animations, or advanced features. They are designed to be controlled from the outside, via very liberal public API, with a text input controller.
 
-One text input controller is included (MDCTextInputControllerDefault) manipulates the exposed elements of the text field to make placeholders float.
+Most text input controllers included are based on `MDCTextInputControllerDefault` which manipulates the exposed elements of the text field to make placeholders float.
 
-There is also a text input controller for full width forms (MDCTextInputControllerFullWidth). Like MDCTextInputControllerDefault, it also handles errors and character counting.
+There is also a text input controller for full-width forms (`MDCTextInputControllerFullWidth`). Like `MDCTextInputControllerDefault`, it also handles errors and character counting.
 
 Customize the included text input controllers via their parameters or create your own to express your app's brand identity thru typography, color, and animation: if the placeholder should move, add constraints or change the frame. If the trailing label should display validation information, change the text and color it.
 
@@ -71,7 +75,7 @@ This pattern is not a delegation or data source-like relationship but rather a c
 
 #### Text Field
 
-This is a single line text input. It's subclassed from UITextField and supports all the features you'd expect from a UITextField:
+This is a single-line text input. It's subclassed from `UITextField` and supports all the features you'd expect from a `UITextField`:
 
 * Placeholder
 * Overlay views (left and right / leading and trailing)
@@ -84,10 +88,11 @@ as well as new features:
 * Labels below the input
 * Custom layouts
 * Persistable placeholder
+* Border view
 
-#### Multiline Text Field
+#### Multi-line Text Field
 
-This is a multiline line text input. It's subclassed from UIView with an embedded UITextView. It supports all the features of the single line text field and UITextView plus:
+This is a multi-line text input. It's subclassed from `UIView` with an embedded `UITextView`. It supports all the features of the single-line text field and `UITextView` plus:
 
 * Minimum number of lines
 
@@ -110,7 +115,7 @@ Similar to the default text input controller but optimized for full width forms 
 
 ## Usage
 
-A text field that conforms to MDCTextInput can be added to a view hierarchy the same way UITextField and UIView are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol MDCTextInputController must be initialized to manage the text field.
+A text field that conforms to MDCTextInput can be added to a view hierarchy the same way UITextField and UIView are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol `MDCTextInputController` must be initialized to manage the text field.
 
 **NOTE:** Expect to interact with _both the text field_ (for the traditional API) _and the controller_ (for changes affecting the presentation and state).
 
@@ -132,7 +137,7 @@ import MaterialComponents.MaterialTextFields
 ```
 <!--</div>-->
 
-## Examples - Single Line
+## Examples - Single-line
 
 ### Text Field with Floating Placeholder
 
