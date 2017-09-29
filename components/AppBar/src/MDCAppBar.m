@@ -18,6 +18,7 @@
 
 #import "MDCAppBarContainerViewController.h"
 
+#import "MaterialApplication.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialRTL.h"
@@ -33,7 +34,7 @@ static NSString *const kStatusBarHeightKey = @"statusBarHeight";
 static NSString *const MDCAppBarHeaderViewControllerKey = @"MDCAppBarHeaderViewControllerKey";
 static NSString *const MDCAppBarNavigationBarKey = @"MDCAppBarNavigationBarKey";
 static NSString *const MDCAppBarHeaderStackViewKey = @"MDCAppBarHeaderStackViewKey";
-static const CGFloat kStatusBarHeight = 20;
+static const CGFloat kPreIOS11StatusBarHeight = 20;
 
 // The Bundle for string resources.
 static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
@@ -300,7 +301,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   [self.view addSubview:self.headerStackView];
 
   // Bar stack expands vertically, but has a margin above it for the status bar.
-
   NSArray<NSLayoutConstraint *> *horizontalConstraints = [NSLayoutConstraint
       constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|[%@]|", kBarStackKey]
                           options:0
@@ -308,12 +308,21 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
+  CGFloat topMargin = kPreIOS11StatusBarHeight;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // Starting from iOS 11, the top margin should be the actual status bar height.
+    // This is because the flexible header could be smaller in height when in landscape mode
+    // due to the status bar being hidden by default on some devices (like the iPhone X).
+    topMargin = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+  }
+#endif
   NSArray<NSLayoutConstraint *> *verticalConstraints = [NSLayoutConstraint
       constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[%@]|", kStatusBarHeightKey,
                                                              kBarStackKey]
                           options:0
                           metrics:@{
-                            kStatusBarHeightKey : @(kStatusBarHeight)
+                            kStatusBarHeightKey : @(topMargin)
                           }
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:verticalConstraints];

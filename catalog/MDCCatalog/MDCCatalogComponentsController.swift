@@ -171,6 +171,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return self.headerViewController
   }
 
+  override var childViewControllerForStatusBarHidden: UIViewController? {
+    return self.headerViewController
+  }
+
 #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
