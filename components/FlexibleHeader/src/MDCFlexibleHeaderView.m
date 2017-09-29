@@ -825,7 +825,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     // Even if we're not tracking a scroll view, our layout might have changed due to changes
     // to the safe area insets.
     CGRect bounds = self.bounds;
-    bounds.size.height = MAX(_minimumHeight, MIN(_maximumHeight, headerHeight));
+    bounds.size.height = _maximumHeight;
     self.bounds = bounds;
     [self fhv_commitAccumulatorToFrame];
     return;
