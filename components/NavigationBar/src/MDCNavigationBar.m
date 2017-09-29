@@ -281,6 +281,11 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
   CGRect leadingButtonBarFrame =
       CGRectMake(0, CGRectGetMinY(self.bounds), leadingButtonBarSize.width, leadingButtonBarSize.height);
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    leadingButtonBarFrame.origin.x = self.safeAreaInsets.left;
+  }
+#endif
   _leadingButtonBar.frame = MDCRectFlippedForRTL(leadingButtonBarFrame, CGRectGetWidth(self.bounds),
                                                  self.mdc_effectiveUserInterfaceLayoutDirection);
 
@@ -288,6 +293,11 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGRect trailingButtonBarFrame =
       CGRectMake(CGRectGetWidth(self.bounds) - trailingButtonBarSize.width, CGRectGetMinY(self.bounds),
                  trailingButtonBarSize.width, trailingButtonBarSize.height);
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    trailingButtonBarFrame.origin.x -= self.safeAreaInsets.right;
+  }
+#endif
   _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, CGRectGetWidth(self.bounds),
                                                   self.mdc_effectiveUserInterfaceLayoutDirection);
 
@@ -296,6 +306,12 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    textFrame.origin.x += self.safeAreaInsets.left;
+    textFrame.size.width -= self.safeAreaInsets.left + self.safeAreaInsets.right;
+  }
+#endif
 
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
   paraStyle.lineBreakMode = _titleLabel.lineBreakMode;
