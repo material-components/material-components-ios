@@ -202,7 +202,7 @@ final class TextFieldSwiftExample: UIViewController {
                                          toItem: scrollView.contentLayoutGuide,
                                          attribute: .bottomMargin,
                                          multiplier: 1,
-                                         constant: 0)]
+                                         constant: -20)]
     } else {
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
@@ -217,7 +217,7 @@ final class TextFieldSwiftExample: UIViewController {
                                          toItem: scrollView,
                                          attribute: .bottomMargin,
                                          multiplier: 1,
-                                         constant: 0)]
+                                         constant: -20)]
     }
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",

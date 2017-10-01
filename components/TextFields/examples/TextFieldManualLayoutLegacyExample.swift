@@ -105,6 +105,11 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     self.navigationItem.rightBarButtonItem = styleButton
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    scrollView.frame = view.bounds
+  }
+
   func setupTextFields() {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerLegacyDefault(textInput: name)
@@ -147,11 +152,10 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
 
   func setupScrollView() {
     view.addSubview(scrollView)
-    scrollView.frame = view.bounds
 
     scrollView.contentSize =
       CGSize(width: scrollView.bounds.width - 2 * LayoutConstants.largeMargin,
-             height: 372.0)
+             height: 500.0)
   }
 
   func addGestureRecognizer() {
@@ -291,13 +295,18 @@ extension TextFieldManualLayoutLegacySwiftExample {
       object: nil)
     notificationCenter.addObserver(
       self,
+      selector: #selector(keyboardWillShow(notif:)),
+      name: .UIKeyboardWillChangeFrame,
+      object: nil)
+    notificationCenter.addObserver(
+      self,
       selector: #selector(keyboardWillHide(notif:)),
       name: .UIKeyboardWillHide,
       object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,

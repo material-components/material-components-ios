@@ -134,7 +134,7 @@
                          @"message": textFieldMessage
                          };
   NSMutableArray <NSLayoutConstraint *> *constraints = [NSMutableArray arrayWithArray:
-       [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-20-|"
+       [NSLayoutConstraint constraintsWithVisualFormat:@"V:[name]-[address]-[city]-[stateZip]-[phone]-[message]"
 
                                                options:NSLayoutFormatAlignAllLeading |
                                                           NSLayoutFormatAlignAllTrailing
@@ -156,6 +156,34 @@
                                    attribute:NSLayoutAttributeTrailingMargin
                                   multiplier:1
                                     constant:0]];
+  if (@available(iOS 11.0, *)) {
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldName
+                                                                           attribute:NSLayoutAttributeTop
+                                                                           relatedBy:NSLayoutRelationEqual toItem:self.scrollView.contentLayoutGuide
+                                                                           attribute:NSLayoutAttributeTop
+                                                                          multiplier:1
+                                                         constant:20]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldMessage
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual toItem:self.scrollView.contentLayoutGuide
+                                                        attribute:NSLayoutAttributeBottomMargin
+                                                       multiplier:1
+                                                         constant:-20]];
+  } else {
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldName
+                                                                           attribute:NSLayoutAttributeTop
+                                                                           relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                                           attribute:NSLayoutAttributeTop
+                                                                          multiplier:1
+                                                         constant:20]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldMessage
+                                                                                                                       attribute:NSLayoutAttributeBottom
+                                                                                                                       relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                                                                                       attribute:NSLayoutAttributeBottomMargin
+                                                                                                                      multiplier:1
+                                                                                                                        constant:-20]];
+  }
+
   [constraints addObjectsFromArray:
      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[state(80)]-[zip]|"
                                              options:0
@@ -298,6 +326,10 @@ replacementString:(NSString *)string {
   [defaultCenter addObserver:self
                     selector:@selector(keyboardWillShow:)
                         name:UIKeyboardWillShowNotification
+                      object:nil];
+  [defaultCenter addObserver:self
+                    selector:@selector(keyboardWillShow:)
+                        name:UIKeyboardWillChangeFrameNotification
                       object:nil];
   [defaultCenter addObserver:self
                     selector:@selector(keyboardWillHide:)
