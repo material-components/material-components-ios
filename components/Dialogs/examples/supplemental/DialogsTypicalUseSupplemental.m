@@ -91,13 +91,18 @@ static NSString * const kReusableIdentifierItem = @"cell";
   _dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-  [_dismissButton sizeToFit];
   [_dismissButton addTarget:self
                      action:@selector(dismiss:)
            forControlEvents:UIControlEventTouchUpInside];
 
   [self.view addSubview:_dismissButton];
-  _dismissButton.center = self.view.center;
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [_dismissButton sizeToFit];
+  _dismissButton.center = CGPointMake(CGRectGetMidX(self.view.bounds),
+                                      CGRectGetMidY(self.view.bounds));
 }
 
 - (CGSize)preferredContentSize {
