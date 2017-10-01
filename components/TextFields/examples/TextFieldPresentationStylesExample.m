@@ -84,7 +84,7 @@
 
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:|-20-[charMax]-[floating]"
+                              constraintsWithVisualFormat:@"V:[charMax]-[floating]"
                                                   options:NSLayoutFormatAlignAllLeading |
                                                           NSLayoutFormatAlignAllTrailing
                                                   metrics:nil
@@ -108,6 +108,14 @@
                               multiplier:1
                                 constant:0]
       .active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView
+                               attribute:NSLayoutAttributeTrailingMargin
+                              multiplier:1
+                                constant:0]
+  .active = YES;
 
   // Full Width Text Field
   MDCTextField *textFieldFullWidth = [[MDCTextField alloc] init];
