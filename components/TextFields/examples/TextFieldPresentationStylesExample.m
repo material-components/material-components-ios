@@ -240,7 +240,6 @@
                                attribute:NSLayoutAttributeBottomMargin
                               multiplier:1
                                 constant:-20].active = YES;
-
 #endif
 
   //  Flip comments from here down in this method for testing
