@@ -16,7 +16,8 @@
 
 #import "MaterialTextFields.h"
 
-@interface TextFieldOutlinedObjectiveCExample : UIViewController <UITextFieldDelegate, UITextViewDelegate>
+@interface TextFieldOutlinedObjectiveCExample
+    : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 
 @property(nonatomic) MDCTextInputControllerOutlined *nameController;
 @property(nonatomic) MDCTextInputControllerOutlined *addressController;
@@ -61,7 +62,8 @@
   textFieldAddress.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldAddress.backgroundColor = [UIColor whiteColor];
 
-  self.addressController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldAddress];
+  self.addressController =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldAddress];
 
   MDCTextField *textFieldCity = [[MDCTextField alloc] init];
   textFieldCity.translatesAutoresizingMaskIntoConstraints = NO;
@@ -117,88 +119,91 @@
   MDCMultilineTextField *textFieldMessage = [[MDCMultilineTextField alloc] init];
   textFieldMessage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:textFieldMessage];
-  
+
   textFieldMessage.placeholder = @"Message";
   textFieldMessage.textView.delegate = self;
 
-  self.messageController = [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textFieldMessage];
+  self.messageController =
+      [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textFieldMessage];
 
   NSDictionary *views = @{
-                         @"name": textFieldName,
-                         @"address": textFieldAddress,
-                         @"city": textFieldCity,
-                         @"state": textFieldState,
-                         @"zip": textFieldZip,
-                         @"stateZip": stateZip,
-                         @"phone": textFieldPhone,
-                         @"message": textFieldMessage
-                         };
-  NSMutableArray <NSLayoutConstraint *> *constraints = [NSMutableArray arrayWithArray:
-       [NSLayoutConstraint constraintsWithVisualFormat:@"V:[name]-[address]-[city]-[stateZip]-[phone]-[message]"
+    @"name" : textFieldName,
+    @"address" : textFieldAddress,
+    @"city" : textFieldCity,
+    @"state" : textFieldState,
+    @"zip" : textFieldZip,
+    @"stateZip" : stateZip,
+    @"phone" : textFieldPhone,
+    @"message" : textFieldMessage
+  };
+  NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray
+      arrayWithArray:
+          [NSLayoutConstraint
+              constraintsWithVisualFormat:@"V:[name]-[address]-[city]-[stateZip]-[phone]-[message]"
 
-                                               options:NSLayoutFormatAlignAllLeading |
-                                                          NSLayoutFormatAlignAllTrailing
-                                               metrics:nil
-                                                 views:views]];
-  [constraints addObject:
-     [NSLayoutConstraint constraintWithItem:textFieldName
-                                  attribute:NSLayoutAttributeLeading
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.view
-                                  attribute:NSLayoutAttributeLeadingMargin
-                                 multiplier:1
-                                   constant:0]];
-  [constraints addObject:
-      [NSLayoutConstraint constraintWithItem:textFieldName
-                                   attribute:NSLayoutAttributeTrailing
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeTrailingMargin
-                                  multiplier:1
-                                    constant:0]];
+                                  options:NSLayoutFormatAlignAllLeading |
+                                          NSLayoutFormatAlignAllTrailing
+                                  metrics:nil
+                                    views:views]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldName
+                                                      attribute:NSLayoutAttributeLeading
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self.view
+                                                      attribute:NSLayoutAttributeLeadingMargin
+                                                     multiplier:1
+                                                       constant:0]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldName
+                                                      attribute:NSLayoutAttributeTrailing
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self.view
+                                                      attribute:NSLayoutAttributeTrailingMargin
+                                                     multiplier:1
+                                                       constant:0]];
   if (@available(iOS 11.0, *)) {
     [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldName
-                                                                           attribute:NSLayoutAttributeTop
-                                                                           relatedBy:NSLayoutRelationEqual toItem:self.scrollView.contentLayoutGuide
-                                                                           attribute:NSLayoutAttributeTop
-                                                                          multiplier:1
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.scrollView.contentLayoutGuide
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1
                                                          constant:20]];
     [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldMessage
                                                         attribute:NSLayoutAttributeBottom
-                                                        relatedBy:NSLayoutRelationEqual toItem:self.scrollView.contentLayoutGuide
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.scrollView.contentLayoutGuide
                                                         attribute:NSLayoutAttributeBottomMargin
                                                        multiplier:1
                                                          constant:-20]];
   } else {
     [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldName
-                                                                           attribute:NSLayoutAttributeTop
-                                                                           relatedBy:NSLayoutRelationEqual toItem:self.scrollView
-                                                                           attribute:NSLayoutAttributeTop
-                                                                          multiplier:1
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.scrollView
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1
                                                          constant:20]];
     [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldMessage
-                                                                                                                       attribute:NSLayoutAttributeBottom
-                                                                                                                       relatedBy:NSLayoutRelationEqual toItem:self.scrollView
-                                                                                                                       attribute:NSLayoutAttributeBottomMargin
-                                                                                                                      multiplier:1
-                                                                                                                        constant:-20]];
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.scrollView
+                                                        attribute:NSLayoutAttributeBottomMargin
+                                                       multiplier:1
+                                                         constant:-20]];
   }
 
-  [constraints addObjectsFromArray:
-     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[state(80)]-[zip]|"
-                                             options:0
-                                             metrics:nil
-                                               views:views]];
-  [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[state]|"
-                                             options:0
-                                             metrics:nil
-                                               views:views]];
-  [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[zip]|"
-                                             options:0
-                                             metrics:nil
-                                               views:views]];
+  [constraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[state(80)]-[zip]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:views]];
+  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[state]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
+  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[zip]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
   [NSLayoutConstraint activateConstraints:constraints];
 }
 
@@ -207,16 +212,22 @@
   self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.scrollView];
 
-  [NSLayoutConstraint activateConstraints:
-       [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|"
-                                               options:0
-                                               metrics:nil
-                                                 views:@{@"scrollView": self.scrollView}]];
-  [NSLayoutConstraint activateConstraints:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|"
-                                           options:0
-                                           metrics:nil
-                                             views:@{@"scrollView": self.scrollView}]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
   UIEdgeInsets margins = UIEdgeInsetsMake(0, 16, 0, 16);
   self.scrollView.layoutMargins = margins;
 
@@ -224,7 +235,6 @@
       [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidTouch:)];
   [self.scrollView addGestureRecognizer:tapGestureRecognizer];
 }
-
 
 #pragma mark - UITextFieldDelegate
 
@@ -240,10 +250,10 @@
 }
 
 - (BOOL)textField:(UITextField *)textField
-shouldChangeCharactersInRange:(NSRange)range
-replacementString:(NSString *)string {
+    shouldChangeCharactersInRange:(NSRange)range
+                replacementString:(NSString *)string {
   NSString *finishedString =
-  [textField.text stringByReplacingCharactersInRange:range withString:string];
+      [textField.text stringByReplacingCharactersInRange:range withString:string];
 
   if (textField == (UITextField *)self.nameController.textInput) {
     if ([finishedString rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].length &&
@@ -265,25 +275,24 @@ replacementString:(NSString *)string {
   }
 
   if (textField == (UITextField *)self.cityController.textInput) {
-    if ([finishedString rangeOfCharacterFromSet:[[NSCharacterSet letterCharacterSet] invertedSet]].length > 0) {
+    if ([finishedString rangeOfCharacterFromSet:[[NSCharacterSet letterCharacterSet] invertedSet]]
+            .length > 0) {
       [self.cityController setErrorText:@"Error: City can only contain letters"
                 errorAccessibilityValue:nil];
     } else {
-      [self.cityController setErrorText:nil
-                errorAccessibilityValue:nil];
+      [self.cityController setErrorText:nil errorAccessibilityValue:nil];
     }
   }
 
   if (textField == (UITextField *)self.zipController.textInput) {
     if ([finishedString rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].length > 0) {
       [self.zipController setErrorText:@"Error: Zip can only contain numbers"
-                errorAccessibilityValue:nil];
+               errorAccessibilityValue:nil];
     } else if (finishedString.length > 5) {
       [self.zipController setErrorText:@"Error: Zip can only contain five digits"
                errorAccessibilityValue:nil];
     } else {
-      [self.zipController setErrorText:nil
-                errorAccessibilityValue:nil];
+      [self.zipController setErrorText:nil errorAccessibilityValue:nil];
     }
   }
 
