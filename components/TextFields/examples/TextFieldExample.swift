@@ -165,7 +165,7 @@ final class TextFieldSwiftExample: UIViewController {
                   "phone": phone,
                   "message": message ]
     var constraints = NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-|",
+      "V:[name]-[address]-[city]-[stateZip]-[phone]-[message]",
                                                      options: [.alignAllLeading, .alignAllTrailing],
                                                      metrics: nil,
                                                      views: views)
@@ -188,7 +188,37 @@ final class TextFieldSwiftExample: UIViewController {
                                                   options: [],
                                                   metrics: nil,
                                                   views: views)
-
+    if #available(iOSApplicationExtension 11.0, *) {
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: 0)]
+    } else {
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: 0)]
+    }
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
                                                   options: [.alignAllTop],
@@ -336,10 +366,15 @@ extension TextFieldSwiftExample {
       selector: #selector(keyboardWillHide(notif:)),
       name: .UIKeyboardWillHide,
       object: nil)
+    notificationCenter.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(notif:)),
+      name: .UIKeyboardWillChangeFrame,
+      object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
