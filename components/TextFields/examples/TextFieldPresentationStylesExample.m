@@ -191,7 +191,59 @@
                                 constant:0]
       .active = YES;
 
-  //  Uncomment for testing
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView.contentLayoutGuide
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:20].active = YES;
+    [NSLayoutConstraint constraintWithItem:unstyledTextField
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView.contentLayoutGuide
+                                 attribute:NSLayoutAttributeBottomMargin
+                                multiplier:1
+                                  constant:-20].active = YES;
+
+  } else {
+    [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:20].active = YES;
+    [NSLayoutConstraint constraintWithItem:unstyledTextField
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView
+                                 attribute:NSLayoutAttributeBottomMargin
+                                multiplier:1
+                                  constant:-20].active = YES;
+
+  }
+#else
+  [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:20].active = YES;
+  [NSLayoutConstraint constraintWithItem:unstyledTextField
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView
+                               attribute:NSLayoutAttributeBottomMargin
+                              multiplier:1
+                                constant:-20].active = YES;
+
+#endif
+
+  //  Flip comments from here down in this method for testing
   //  UITextField *appleField = [[UITextField alloc] initWithFrame:CGRectZero];
   //  [self.scrollView addSubview:appleField];
   //  appleField.translatesAutoresizingMaskIntoConstraints = NO;
