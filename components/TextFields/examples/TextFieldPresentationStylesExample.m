@@ -115,7 +115,7 @@
                                attribute:NSLayoutAttributeTrailingMargin
                               multiplier:1
                                 constant:0]
-  .active = YES;
+      .active = YES;
 
   // Full Width Text Field
   MDCTextField *textFieldFullWidth = [[MDCTextField alloc] init];
@@ -199,14 +199,16 @@
                                     toItem:self.scrollView.contentLayoutGuide
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1
-                                  constant:20].active = YES;
+                                  constant:20]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:unstyledTextField
                                  attribute:NSLayoutAttributeBottom
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:self.scrollView.contentLayoutGuide
                                  attribute:NSLayoutAttributeBottomMargin
                                 multiplier:1
-                                  constant:-20].active = YES;
+                                  constant:-20]
+        .active = YES;
 
   } else {
     [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
@@ -215,15 +217,16 @@
                                     toItem:self.scrollView
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1
-                                  constant:20].active = YES;
+                                  constant:20]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:unstyledTextField
                                  attribute:NSLayoutAttributeBottom
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:self.scrollView
                                  attribute:NSLayoutAttributeBottomMargin
                                 multiplier:1
-                                  constant:-20].active = YES;
-
+                                  constant:-20]
+        .active = YES;
   }
 #else
   [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
@@ -232,14 +235,16 @@
                                   toItem:self.scrollView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:20].active = YES;
+                                constant:20]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:unstyledTextField
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.scrollView
                                attribute:NSLayoutAttributeBottomMargin
                               multiplier:1
-                                constant:-20].active = YES;
+                                constant:-20]
+      .active = YES;
 #endif
 
   //  Flip comments from here down in this method for testing

@@ -195,21 +195,21 @@
   }
 #else
   [NSLayoutConstraint activateConstraints:@[
-                                            [NSLayoutConstraint constraintWithItem:multilineTextFieldUnstyled
-                                                                         attribute:NSLayoutAttributeTop
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:self.scrollView
-                                                                         attribute:NSLayoutAttributeTop
-                                                                        multiplier:1
-                                                                          constant:20],
-                                            [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
-                                                                         attribute:NSLayoutAttributeBottom
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:self.scrollView
-                                                                         attribute:NSLayoutAttributeBottomMargin
-                                                                        multiplier:1
-                                                                          constant:-20]
-                                            ]];
+    [NSLayoutConstraint constraintWithItem:multilineTextFieldUnstyled
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:20],
+    [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView
+                                 attribute:NSLayoutAttributeBottomMargin
+                                multiplier:1
+                                  constant:-20]
+  ]];
 #endif
 
   [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth

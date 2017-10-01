@@ -189,8 +189,8 @@ final class TextFieldSwiftExample: UIViewController {
                                                   metrics: nil,
                                                   views: views)
 
-
-    if #available(iOS 11.0, *) {
+    #if swift(>=4.0)
+      if #available(iOS 11.0, *) {
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
                                          relatedBy: .equal,
@@ -221,6 +221,23 @@ final class TextFieldSwiftExample: UIViewController {
                                          multiplier: 1,
                                          constant: -20)]
     }
+      #else
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: -20)]
+      #endif
+
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
                                                   options: [.alignAllTop],
