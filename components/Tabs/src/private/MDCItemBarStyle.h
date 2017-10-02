@@ -71,7 +71,7 @@
 
  Default is 1.
  */
-@property(nonatomic, assign) NSInteger textOnlyTitleNumberOfLines;
+@property(nonatomic, assign) NSInteger textOnlyNumberOfLines;
 
 /**
  Indicates if all tab titles should be uppercased for display. If NO, item titles will be

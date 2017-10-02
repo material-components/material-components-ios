@@ -194,7 +194,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 - (void)updateTitleLines {
   // The presence of an image restricts titles to a single line
-  _titleLabel.numberOfLines = _style.shouldDisplayImage ? 1 : _style.textOnlyTitleNumberOfLines;
+  _titleLabel.numberOfLines = _style.shouldDisplayImage ? 1 : _style.textOnlyNumberOfLines;
   // Only permit smaller font sizes for two-line titles
   _titleLabel.adjustsFontSizeToFitWidth = _titleLabel.numberOfLines == 1 ? NO : YES;
 }

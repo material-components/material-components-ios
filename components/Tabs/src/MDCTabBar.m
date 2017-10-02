@@ -312,7 +312,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     style.titleFont = [MDCTypography buttonFont];
     style.inkStyle = MDCInkStyleBounded;
     style.titleImagePadding = (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
-    style.textOnlyTitleNumberOfLines = 2;
+    style.textOnlyNumberOfLines = 2;
   } else {
     // Bottom navigation
     style.shouldDisplaySelectionIndicator = NO;
@@ -321,7 +321,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     style.titleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
     style.inkStyle = MDCInkStyleUnbounded;
     style.titleImagePadding = kBottomNavigationTitleImagePadding;
-    style.textOnlyTitleNumberOfLines = 1;
+    style.textOnlyNumberOfLines = 1;
   }
 
   // Update appearance-dependent style properties.
