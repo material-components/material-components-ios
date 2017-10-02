@@ -185,10 +185,18 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     [self updateTitleTextColor];
     [self updateInk];
     [self updateSubviews];
+    [self updateTitleLines];
     [self updateTitleFont];
     [self updateTransformsAnimated:NO];
     [self setNeedsLayout];
   }
+}
+
+- (void)updateTitleLines {
+  // The presence of an image restricts titles to a single line
+  _titleLabel.numberOfLines = _style.shouldDisplayImage ? 1 : _style.textOnlyNumberOfLines;
+  // Only permit smaller font sizes for two-line titles
+  _titleLabel.adjustsFontSizeToFitWidth = _titleLabel.numberOfLines == 1 ? NO : YES;
 }
 
 - (void)updateWithItem:(UITabBarItem *)item
@@ -416,12 +424,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       _titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
       _titleLabel.autoresizingMask =
           UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-      _titleLabel.numberOfLines = 1;
+      // 0.85 is based on 12sp/14sp guidelines for single- or double-line text
+      _titleLabel.minimumScaleFactor = (CGFloat)0.85;
       _titleLabel.textAlignment = NSTextAlignmentCenter;
 
       [self.contentView addSubview:_titleLabel];
 
       // Display title and update color for the new label.
+      [self updateTitleLines];
       [self updateDisplayedTitle];
       [self updateTitleTextColor];
       [self updateTitleFont];

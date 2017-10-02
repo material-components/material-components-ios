@@ -192,7 +192,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 
 @end
 
-/** Common API for Material Design compliant multiline text inputs. */
+/** Common API for Material Design compliant multi-line text inputs. */
 @protocol MDCMultilineTextInput <MDCTextInput>
 
 /**

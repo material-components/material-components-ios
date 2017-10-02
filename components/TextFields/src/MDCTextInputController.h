@@ -145,6 +145,34 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
 /**
+ The font applied to the placeholder when inline (not floating).
+
+ Default is inlinePlaceholderFontDefault;
+ */
+@property(nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFont;
+
+/**
+ Default value for inlinePlaceholderFont.
+
+ Default is MDCFontTextStyleBody1.
+ */
+@property(class, nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFontDefault;
+
+/**
+ The font applied to the leading side underline label.
+
+ Default is leadingUnderlineLabelFontDefault;
+ */
+@property(nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFont;
+
+/**
+ Default value for leadingUnderlineLabelFont.
+
+ Default is MDCFontTextStyleCaption.
+ */
+@property(class, nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFontDefault;
+
+/**
  The color applied to the leading side underline label when not in error state.
 
  Default is leadingUnderlineLabelTextColorDefault;
@@ -195,6 +223,19 @@
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
 
+/**
+ The font applied to the trailing side underline label.
+
+ Default is trailingUnderlineLabelFontDefault;
+ */
+@property(nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFont;
+
+/**
+ Default value for trailingUnderlineLabelFont.
+
+ Default is MDCFontTextStyleCaption.
+ */
+@property(class, nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFontDefault;
 /**
  The color applied to the trailing side underline label when not in error state.
 

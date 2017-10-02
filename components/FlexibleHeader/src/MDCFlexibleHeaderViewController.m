@@ -16,6 +16,7 @@
 
 #import "MDCFlexibleHeaderViewController.h"
 
+#import "MaterialApplication.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
 #import "MDFTextAccessibility.h"
@@ -145,7 +146,9 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  return (ShouldUseLightStatusBarOnBackgroundColor(_headerView.backgroundColor)
+  UIColor *backgroundColor =
+      [MDCFlexibleHeaderView appearance].backgroundColor ?: _headerView.backgroundColor;
+  return (ShouldUseLightStatusBarOnBackgroundColor(backgroundColor)
               ? UIStatusBarStyleLightContent
               : UIStatusBarStyleDefault);
 }
@@ -223,9 +226,13 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 }
 
 - (CGFloat)headerViewControllerHeight {
+  BOOL shiftEnabledForStatusBar =
+      _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+  CGFloat statusBarHeight =
+      [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
   CGFloat height =
       MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
-          _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ? 0 : 20);
+          shiftEnabledForStatusBar ? 0 : statusBarHeight);
   return height;
 }
 

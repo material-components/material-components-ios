@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerTextFieldBox.h"
+#import "MDCTextInputControllerFilled.h"
 
 #import "private/MDCTextInputArt.h"
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
@@ -29,14 +29,14 @@
 
 #pragma mark - Constants
 
-static const CGFloat MDCTextInputTextFieldBoxClearButtonPaddingAddition = -2.f;
-static const CGFloat MDCTextInputTextFieldBoxFullPadding = 16.f;
+static const CGFloat MDCTextInputFilledClearButtonPaddingAddition = -2.f;
+static const CGFloat MDCTextInputFilledFullPadding = 16.f;
 
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
-static const CGFloat MDCTextInputTextFieldBoxHalfPadding = 8.f;
-static const CGFloat MDCTextInputTextFieldBoxHalfPaddingAddition = 1.f;
-static const CGFloat MDCTextInputTextFieldBoxNormalPlaceholderPadding = 20.f;
+static const CGFloat MDCTextInputFilledHalfPadding = 8.f;
+static const CGFloat MDCTextInputFilledHalfPaddingAddition = 1.f;
+static const CGFloat MDCTextInputFilledNormalPlaceholderPadding = 20.f;
 
 static inline UIColor *MDCTextInputDefaultBorderFillColorDefault() {
   return [UIColor colorWithWhite:0 alpha:.06f];
@@ -48,7 +48,7 @@ static UIColor *_borderFillColorDefault;
 
 static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
-@interface MDCTextInputControllerTextFieldBox ()
+@interface MDCTextInputControllerFilled ()
 
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonBottom;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
@@ -56,7 +56,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 @end
 
-@implementation MDCTextInputControllerTextFieldBox
+@implementation MDCTextInputControllerFilled
 
 #pragma mark - Properties Implementations
 
@@ -88,7 +88,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
  LTR.
 
  The vertical layout is, at most complex (floating), this form:
- MDCTextInputTextFieldBoxHalfPadding +                                // Small padding
+ MDCTextInputFilledHalfPadding +                                // Small padding
  MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +   // Placeholder when up
  MDCTextInputDefaultVerticalHalfPadding +                             // Small padding
  MDCCeil(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder line height
@@ -102,18 +102,18 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
   if (self.isFloatingEnabled) {
     textInsets.top =
-        MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxHalfPaddingAddition +
+        MDCTextInputFilledHalfPadding + MDCTextInputFilledHalfPaddingAddition +
         MDCRint(self.textInput.placeholderLabel.font.lineHeight *
                 (CGFloat)self.floatingPlaceholderScale.floatValue) +
-        MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxHalfPaddingAddition;
+        MDCTextInputFilledHalfPadding + MDCTextInputFilledHalfPaddingAddition;
   } else {
-    textInsets.top = MDCTextInputTextFieldBoxNormalPlaceholderPadding;
+    textInsets.top = MDCTextInputFilledNormalPlaceholderPadding;
   }
 
   textInsets.bottom = [self beneathInputPadding] + [self underlineOffset];
 
-  textInsets.left = MDCTextInputTextFieldBoxFullPadding;
-  textInsets.right = MDCTextInputTextFieldBoxHalfPadding;
+  textInsets.left = MDCTextInputFilledFullPadding;
+  textInsets.right = MDCTextInputFilledHalfPadding;
 
   return textInsets;
 }
@@ -127,7 +127,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
   CGFloat clearButtonConstant =
       -1 * ([self beneathInputPadding] - MDCTextInputClearButtonImageBuiltInPadding +
-            MDCTextInputTextFieldBoxClearButtonPaddingAddition);
+            MDCTextInputFilledClearButtonPaddingAddition);
   if (!self.clearButtonBottom) {
     self.clearButtonBottom = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
                                                           attribute:NSLayoutAttributeBottom
@@ -154,7 +154,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
                                         toItem:self.textInput
                                      attribute:NSLayoutAttributeTop
                                     multiplier:1
-                                      constant:MDCTextInputTextFieldBoxNormalPlaceholderPadding];
+                                      constant:MDCTextInputFilledNormalPlaceholderPadding];
     self.placeholderTop.priority = UILayoutPriorityDefaultHigh;
     self.placeholderTop.active = YES;
   }
@@ -164,7 +164,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
       textInsets.top + [self estimatedTextHeight] + [self beneathInputPadding];
   // When floating placeholders are turned off, the underline will drift up unless this is set. Even
   // tho it is redundant when floating is on, we just keep it on always for simplicity.
-  // Note: This is an issue only on singleline text fields.
+  // Note: This is an issue only on single-line text fields.
   if (!self.underlineBottom) {
     if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
       self.underlineBottom =
@@ -209,7 +209,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   CGFloat underlineOffset = 0;
   switch (self.textInput.textInsetsMode) {
     case MDCTextInputTextInsetsModeAlways:
-      underlineOffset += MAX(leadingOffset, trailingOffset) + MDCTextInputTextFieldBoxHalfPadding;
+      underlineOffset += MAX(leadingOffset, trailingOffset) + MDCTextInputFilledHalfPadding;
       break;
     case MDCTextInputTextInsetsModeIfContent: {
       // contentConditionalOffset will have the estimated text height for the largest underline
@@ -223,7 +223,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
       }
 
       if (!MDCCGFloatEqual(contentConditionalOffset, 0)) {
-        underlineOffset += contentConditionalOffset + MDCTextInputTextFieldBoxHalfPadding;
+        underlineOffset += contentConditionalOffset + MDCTextInputFilledHalfPadding;
       }
     } break;
     case MDCTextInputTextInsetsModeNever:
@@ -242,9 +242,9 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 // The space ABOVE the underline but under the text input area.
 - (CGFloat)beneathInputPadding {
   if (self.isFloatingEnabled) {
-    return MDCTextInputTextFieldBoxHalfPadding + MDCTextInputTextFieldBoxHalfPaddingAddition;
+    return MDCTextInputFilledHalfPadding + MDCTextInputFilledHalfPaddingAddition;
   } else {
-    return MDCTextInputTextFieldBoxNormalPlaceholderPadding;
+    return MDCTextInputFilledNormalPlaceholderPadding;
   }
 }
 

@@ -133,6 +133,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
   override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
   }
+
+  override var childViewControllerForStatusBarHidden: UIViewController? {
+    return appBar.headerViewController
+  }
 }
 
 // MARK: UIScrollViewDelegate
