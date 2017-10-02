@@ -278,12 +278,24 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  UIEdgeInsets rtlFriendlySafeAreaInsets;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    rtlFriendlySafeAreaInsets =
+        MDCInsetsMakeWithLayoutDirection(self.safeAreaInsets.top,
+                                         self.safeAreaInsets.left,
+                                         self.safeAreaInsets.bottom,
+                                         self.safeAreaInsets.right,
+                                         self.mdc_effectiveUserInterfaceLayoutDirection);
+  }
+#endif
+
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
   CGRect leadingButtonBarFrame =
       CGRectMake(0, CGRectGetMinY(self.bounds), leadingButtonBarSize.width, leadingButtonBarSize.height);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    leadingButtonBarFrame.origin.x = self.safeAreaInsets.left;
+    leadingButtonBarFrame.origin.x = rtlFriendlySafeAreaInsets.left;
   }
 #endif
   _leadingButtonBar.frame = MDCRectFlippedForRTL(leadingButtonBarFrame, CGRectGetWidth(self.bounds),
@@ -295,7 +307,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                  trailingButtonBarSize.width, trailingButtonBarSize.height);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    trailingButtonBarFrame.origin.x -= self.safeAreaInsets.right;
+    trailingButtonBarFrame.origin.x -= rtlFriendlySafeAreaInsets.right;
   }
 #endif
   _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, CGRectGetWidth(self.bounds),
