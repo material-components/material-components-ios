@@ -295,7 +295,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
       CGRectMake(0, CGRectGetMinY(self.bounds), leadingButtonBarSize.width, leadingButtonBarSize.height);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    leadingButtonBarFrame.origin.x = rtlFriendlySafeAreaInsets.left;
+    leadingButtonBarFrame.origin.x += rtlFriendlySafeAreaInsets.left;
   }
 #endif
   _leadingButtonBar.frame = MDCRectFlippedForRTL(leadingButtonBarFrame, CGRectGetWidth(self.bounds),
