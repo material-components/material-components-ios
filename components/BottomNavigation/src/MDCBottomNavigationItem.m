@@ -14,12 +14,30 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
 #import "MDCBottomNavigationItem.h"
 
-@interface MDCBottomNavigationView : UIView
+#import "private/MDCBottomNavigationCell.h"
 
-@property(nonatomic, copy, nonnull) NSArray<MDCBottomNavigationItem *> *navBarItems;
+@interface MDCBottomNavigationItem ()
+
+@property(nonatomic, strong) MDCBottomNavigationCell *bottomNavCell;
+
+@end
+
+@implementation MDCBottomNavigationItem
+
+- (instancetype)initWithTitle:(NSString *)title
+                        image:(UIImage *)image
+                    badgeText:(NSString *)badgeText {
+  self = [super initWithTitle:title image:image tag:0];
+  if (self) {
+    _badgeText = badgeText;
+  }
+  return self;
+}
+
+- (void)setBadgeText:(NSString *)badgeText {
+  _badgeText = badgeText;
+}
 
 @end

@@ -16,10 +16,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBottomNavigationItem.h"
+@interface MDCBottomNavigationItem : UITabBarItem
 
-@interface MDCBottomNavigationView : UIView
+@property(nonatomic, copy) NSString *badgeText;
 
-@property(nonatomic, copy, nonnull) NSArray<MDCBottomNavigationItem *> *navBarItems;
+- (instancetype)initWithTitle:(NSString *)title
+                        image:(UIImage *)image
+                    badgeText:(NSString *)badgeText;
 
 @end

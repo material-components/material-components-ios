@@ -31,7 +31,7 @@
 }
 
 - (void)commonBottomNavigationTypicalUseExampleInit {
-  self.view.backgroundColor = [UIColor lightGrayColor];
+  self.view.backgroundColor = [UIColor grayColor];
 
   CGRect frame = CGRectMake(0,
                             self.view.bounds.size.height - 72.f,
@@ -39,11 +39,28 @@
                             72.f);
   MDCBottomNavigationView *bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
   [self.view addSubview:bottomNavView];
-  
-  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Item 1"
-                                                            image:[UIImage imageNamed:@"Search"]
-                                                              tag:0];
-  bottomNavView.items = @[ tabBarItem1 ];
+
+  MDCBottomNavigationItem *tabBarItem1 =
+      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 1"
+                                               image:[UIImage imageNamed:@"Add"]
+                                           badgeText:nil];
+  MDCBottomNavigationItem *tabBarItem2 =
+      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 2"
+                                               image:[UIImage imageNamed:@"Menu"]
+                                           badgeText:@"88"];
+  MDCBottomNavigationItem *tabBarItem3 =
+      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 3"
+                                               image:[UIImage imageNamed:@"Add"]
+                                           badgeText:@"1005"];
+  MDCBottomNavigationItem *tabBarItem4 =
+      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 4"
+                                               image:[UIImage imageNamed:@"Search"]
+                                           badgeText:@"5"];
+  MDCBottomNavigationItem *tabBarItem5 =
+      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 5"
+                                               image:[UIImage imageNamed:@"Add"]
+                                           badgeText:@"New"];
+  bottomNavView.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
 }
 
 @end

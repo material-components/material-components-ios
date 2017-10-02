@@ -16,6 +16,9 @@
 
 #import "MDCBottomNavigationView.h"
 
+#import "MDCBottomNavigationItem.h"
+#import "private/MDCBottomNavigationCell.h"
+
 @implementation MDCBottomNavigationView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -35,7 +38,26 @@
 }
 
 - (void)commonMDCBottomNavigationViewInit {
-  self.backgroundColor = [UIColor whiteColor];
+  self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  NSInteger numItems = self.navBarItems.count;
+  NSInteger i = 0;
+  CGFloat itemWidth = self.bounds.size.width / numItems;
+  for (MDCBottomNavigationItem *tabBarItem in self.navBarItems) {
+    CGRect cellFrame = CGRectMake(i * itemWidth, 0, itemWidth, 72);
+    MDCBottomNavigationCell *bottomNavCell =
+        [[MDCBottomNavigationCell alloc] initWithFrame:cellFrame
+                                                  text:tabBarItem.title
+                                                 image:tabBarItem.image
+                                             badgeText:tabBarItem.badgeText];
+    [self addSubview:bottomNavCell];
+    i++;
+  }
+  self.navBarItems[0].badgeText = @"Ralph";
 }
 
 @end

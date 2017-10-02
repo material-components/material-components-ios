@@ -16,10 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBottomNavigationItem.h"
+@interface MDCBottomNavigationCell : UIView
 
-@interface MDCBottomNavigationView : UIView
-
-@property(nonatomic, copy, nonnull) NSArray<MDCBottomNavigationItem *> *navBarItems;
+- (instancetype)initWithFrame:(CGRect)frame
+                         text:(NSString *)text
+                        image:(UIImage *)image
+                    badgeText:(NSString *)badgeText;
 
 @end
