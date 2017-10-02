@@ -37,6 +37,10 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault = nil
     MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault = nil
 
+    MDCTextInputControllerDefault.inlinePlaceholderFontDefault = nil
+    MDCTextInputControllerDefault.leadingUnderlineLabelFontDefault = nil
+    MDCTextInputControllerDefault.trailingUnderlineLabelFontDefault = nil
+
     MDCTextInputControllerDefault.floatingPlaceholderNormalColorDefault = nil
     MDCTextInputControllerDefault.floatingPlaceholderScaleDefault = 0.75
     MDCTextInputControllerDefault.isFloatingEnabledDefault = true
@@ -51,6 +55,10 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault = nil
     MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault = nil
+
+    MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault = nil
+    MDCTextInputControllerFullWidth.leadingUnderlineLabelFontDefault = nil
+    MDCTextInputControllerFullWidth.trailingUnderlineLabelFontDefault = nil
   }
 
   func testDefault() {
@@ -72,6 +80,13 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerDefault.inlinePlaceholderColorDefault)
     XCTAssertEqual(MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault,
                    MDCTextInputControllerDefault.inlinePlaceholderColorDefault)
+
+    XCTAssertEqual(MDCTextInputControllerDefault.inlinePlaceholderFontDefault,
+                   UIFont.mdc_preferredFont(forMaterialTextStyle: .body1))
+    XCTAssertEqual(MDCTextInputControllerDefault.leadingUnderlineLabelFontDefault,
+                   MDCTextInputControllerDefault.trailingUnderlineLabelFontDefault)
+    XCTAssertEqual(MDCTextInputControllerDefault.leadingUnderlineLabelFontDefault,
+                   UIFont.mdc_preferredFont(forMaterialTextStyle: .caption))
 
     // Default specific properties
     XCTAssertEqual(MDCTextInputControllerDefault.floatingPlaceholderNormalColorDefault,
@@ -99,6 +114,13 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerDefault.leadingUnderlineLabelTextColorDefault)
     XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
                    MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault)
+
+    XCTAssertEqual(controller.inlinePlaceholderFont,
+                   MDCTextInputControllerDefault.inlinePlaceholderFontDefault)
+    XCTAssertEqual(controller.leadingUnderlineLabelFont,
+                   MDCTextInputControllerDefault.leadingUnderlineLabelFontDefault)
+    XCTAssertEqual(controller.trailingUnderlineLabelFont,
+                   MDCTextInputControllerDefault.trailingUnderlineLabelFontDefault)
 
     // Default specific properties
     XCTAssertEqual(controller.floatingPlaceholderNormalColor,
@@ -133,6 +155,18 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault = .white
     XCTAssertEqual(MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault, .white)
 
+    MDCTextInputControllerDefault.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 4)
+    XCTAssertEqual(MDCTextInputControllerDefault.inlinePlaceholderFontDefault,
+                   UIFont.systemFont(ofSize: 4))
+
+    MDCTextInputControllerDefault.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 5)
+    XCTAssertEqual(MDCTextInputControllerDefault.inlinePlaceholderFontDefault,
+                   UIFont.systemFont(ofSize: 5))
+
+    MDCTextInputControllerDefault.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 6)
+    XCTAssertEqual(MDCTextInputControllerDefault.inlinePlaceholderFontDefault,
+                   UIFont.systemFont(ofSize: 6))
+
     // Default specific properties
     MDCTextInputControllerDefault.floatingPlaceholderNormalColorDefault = .red
     XCTAssertEqual(MDCTextInputControllerDefault.floatingPlaceholderNormalColorDefault, .red)
@@ -165,6 +199,13 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
                    MDCTextInputControllerDefault.trailingUnderlineLabelTextColorDefault)
 
+    XCTAssertEqual(controller.inlinePlaceholderFont,
+                   MDCTextInputControllerDefault.inlinePlaceholderFontDefault)
+    XCTAssertEqual(controller.leadingUnderlineLabelFont,
+                   MDCTextInputControllerDefault.leadingUnderlineLabelFontDefault)
+    XCTAssertEqual(controller.trailingUnderlineLabelFont,
+                   MDCTextInputControllerDefault.trailingUnderlineLabelFontDefault)
+
     // Default specific properties
     XCTAssertEqual(controller.floatingPlaceholderNormalColor,
                    MDCTextInputControllerDefault.floatingPlaceholderNormalColorDefault)
@@ -188,6 +229,13 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault,
                    UIColor(white: 0, alpha: CGFloat(Float(0.54))))
 
+    XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault,
+                   UIFont.mdc_preferredFont(forMaterialTextStyle: .body1))
+    XCTAssertEqual(MDCTextInputControllerFullWidth.leadingUnderlineLabelFontDefault,
+                   MDCTextInputControllerFullWidth.trailingUnderlineLabelFontDefault)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.leadingUnderlineLabelFontDefault,
+                   UIFont.mdc_preferredFont(forMaterialTextStyle: .caption))
+
     // Test the use of the class properties.
     let textField = MDCTextField()
     var controller = MDCTextInputControllerFullWidth(textInput: textField)
@@ -208,6 +256,13 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault)
     XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
                    MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault)
+
+    XCTAssertEqual(controller.inlinePlaceholderFont,
+                   MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault)
+    XCTAssertEqual(controller.leadingUnderlineLabelFont,
+                   nil)
+    XCTAssertEqual(controller.trailingUnderlineLabelFont,
+                   MDCTextInputControllerFullWidth.trailingUnderlineLabelFontDefault)
 
     // Test the changes to the class properties.
     MDCTextInputControllerFullWidth.disabledColorDefault = .red
@@ -238,6 +293,18 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault = .cyan
     XCTAssertEqual(MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault, .cyan)
 
+    MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 4)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault,
+                   UIFont.systemFont(ofSize: 4))
+
+    MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 5)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault,
+                   UIFont.systemFont(ofSize: 5))
+
+    MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 6)
+    XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault,
+                   UIFont.systemFont(ofSize: 6))
+
     // Test the changes to the class properties can propogate to an instance.
     controller = MDCTextInputControllerFullWidth(textInput: textField)
 
@@ -257,5 +324,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault)
     XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
                    MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault)
+
+    XCTAssertEqual(controller.inlinePlaceholderFont,
+                   MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault)
+    XCTAssertEqual(controller.leadingUnderlineLabelFont,
+                   nil)
+    XCTAssertEqual(controller.trailingUnderlineLabelFont,
+                   MDCTextInputControllerFullWidth.trailingUnderlineLabelFontDefault)
   }
 }

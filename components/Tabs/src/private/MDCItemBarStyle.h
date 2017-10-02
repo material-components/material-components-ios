@@ -66,6 +66,14 @@
 @property(nonatomic) CGFloat titleImagePadding;
 
 /**
+ The number of lines used for each item's title label. Material Design guidelines specifies 2 lines
+ for text-only tabs at the top of the view. All other Tabs styles should use a single line of text.
+
+ Default is 1.
+ */
+@property(nonatomic, assign) NSInteger textOnlyNumberOfLines;
+
+/**
  Indicates if all tab titles should be uppercased for display. If NO, item titles will be
  displayed verbatim.
 

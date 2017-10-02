@@ -73,6 +73,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/HeaderStackView"
       sss.dependency "MaterialComponents/NavigationBar"
       sss.dependency "MaterialComponents/Typography"
+      sss.dependency "MaterialComponents/private/Application"
 
       # Flexible header + shadow
       sss.dependency "MaterialComponents/FlexibleHeader"
