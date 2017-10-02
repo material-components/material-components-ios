@@ -43,7 +43,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   return (CGFloat)hypot(vector.dx, vector.dy);
 }
 
-@interface MDCMaskedTransition () <MDMTransitionWithPresentation, MDMTransitionWithFallback>
+@interface MDCMaskedTransition () <MDMTransitionWithPresentation, MDMTransitionWithFeasibility>
 @end
 
 @implementation MDCMaskedTransition {
@@ -59,8 +59,8 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   return self;
 }
 
-- (id<MDMTransition>)fallbackTransitionWithContext:(__unused id<MDMTransitionContext>)context {
-  return _shouldSlideWhenCollapsed ? nil : self;
+- (BOOL)canPerformTransitionWithContext:(__unused id<MDMTransitionContext>)context {
+  return _shouldSlideWhenCollapsed ? NO : YES;
 }
 
 #pragma mark - MDMTransitionWithPresentation
