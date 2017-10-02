@@ -94,7 +94,7 @@ let addImage = UIImage(named:"Add")
 bottomBarView.floatingButton.setImage(addImage, for: .normal)
 
 // Theme the floating button (optional).
-let colorScheme = MDCBasicColorScheme(primaryColor: UIColor.white)
+let colorScheme = MDCBasicColorScheme(primaryColor: .white)
 MDCButtonColorThemer.apply(colorScheme, to: bottomBarView.floatingButton)
 
 // Configure the navigation buttons to be shown on the bottom app bar.
