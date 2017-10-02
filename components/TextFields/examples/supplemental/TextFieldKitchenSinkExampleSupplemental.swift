@@ -273,7 +273,8 @@ extension TextFieldKitchenSinkSwiftExample {
     }
 
     // These used to be done in the visual format string but iOS 11 changed that.
-    if #available(iOSApplicationExtension 11.0, *) {
+    #if swift(>=4.0)
+      if #available(iOS 11.0, *) {
       NSLayoutConstraint(item: singleLabel,
                          attribute: .topMargin,
                          relatedBy: .equal,
@@ -304,6 +305,22 @@ extension TextFieldKitchenSinkSwiftExample {
                          multiplier: 1.0,
                          constant: -20).isActive = true
     }
+      #else
+      NSLayoutConstraint(item: singleLabel,
+                         attribute: .topMargin,
+                         relatedBy: .equal,
+                         toItem: scrollView,
+                         attribute: .top,
+                         multiplier: 1.0,
+                         constant: 20).isActive = true
+      NSLayoutConstraint(item: allControls.last,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: scrollView,
+                         attribute: .bottomMargin,
+                         multiplier: 1.0,
+                         constant: -20).isActive = true
+      #endif
 
     registerKeyboardNotifications()
     addGestureRecognizer()
