@@ -822,13 +822,15 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
 - (void)fhv_updateLayout {
   if (!_trackingScrollView) {
-    // Even if we're not tracking a scroll view, our layout might have changed due to changes
-    // to the safe area insets.
-    CGRect bounds = self.bounds;
-    bounds.size.height = _minimumHeight;
-    self.bounds = bounds;
-    [self fhv_commitAccumulatorToFrame];
-    return;
+    // Even if we're not tracking a scroll view, our minimumHeight might have changed due to new
+    // safe area insets.
+    if (_minimumHeight > 0 && self.bounds.size.height != _minimumHeight) {
+      CGRect bounds = self.bounds;
+      bounds.size.height = _minimumHeight;
+      self.bounds = bounds;
+      [self fhv_commitAccumulatorToFrame];
+      return;
+    }
   }
 
   // We use the content offset to calculate the unclamped height of the frame.
