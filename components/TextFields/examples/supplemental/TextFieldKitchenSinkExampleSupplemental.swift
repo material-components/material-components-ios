@@ -282,7 +282,7 @@ extension TextFieldKitchenSinkSwiftExample {
                          attribute: .top,
                          multiplier: 1.0,
                          constant: 20).isActive = true
-      NSLayoutConstraint(item: allControls.last,
+      NSLayoutConstraint(item: allControls.last as Any,
                          attribute: .bottom,
                          relatedBy: .equal,
                          toItem: scrollView.contentLayoutGuide,
@@ -297,7 +297,7 @@ extension TextFieldKitchenSinkSwiftExample {
                          attribute: .top,
                          multiplier: 1.0,
                          constant: 20).isActive = true
-      NSLayoutConstraint(item: allControls.last,
+      NSLayoutConstraint(item: allControls.last as Any,
                          attribute: .bottom,
                          relatedBy: .equal,
                          toItem: scrollView,
@@ -313,7 +313,7 @@ extension TextFieldKitchenSinkSwiftExample {
                          attribute: .top,
                          multiplier: 1.0,
                          constant: 20).isActive = true
-      NSLayoutConstraint(item: allControls.last,
+      NSLayoutConstraint(item: allControls.last as Any,
                          attribute: .bottom,
                          relatedBy: .equal,
                          toItem: scrollView,
