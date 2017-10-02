@@ -308,24 +308,36 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
-  CGFloat topMargin = kPreIOS11StatusBarHeight;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    // Starting from iOS 11, the top margin should be the actual status bar height.
-    // This is because the flexible header could be smaller in height when in landscape mode
-    // due to the status bar being hidden by default on some devices (like the iPhone X).
-    topMargin = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+    NSLayoutYAxisAnchor *topAnchor = self.view.safeAreaLayoutGuide.topAnchor;
+    NSLayoutConstraint *topConstraint =
+        [self.headerStackView.topAnchor constraintEqualToAnchor:topAnchor constant:0];
+    topConstraint.active = YES;
+  } else {
+#endif
+  NSLayoutConstraint *topConstraint =
+      [NSLayoutConstraint constraintWithItem:self.headerStackView
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.view
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:kPreIOS11StatusBarHeight];
+    topConstraint.active = YES;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
 #endif
-  NSArray<NSLayoutConstraint *> *verticalConstraints = [NSLayoutConstraint
-      constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[%@]|", kStatusBarHeightKey,
-                                                             kBarStackKey]
-                          options:0
-                          metrics:@{
-                            kStatusBarHeightKey : @(topMargin)
-                          }
-                            views:@{kBarStackKey : self.headerStackView}];
-  [self.view addConstraints:verticalConstraints];
+
+  NSLayoutConstraint *bottomConstraint =
+      [NSLayoutConstraint constraintWithItem:self.headerStackView
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.view
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1
+                                    constant:0];
+  bottomConstraint.active = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
