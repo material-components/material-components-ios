@@ -188,7 +188,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
                                                   options: [],
                                                   metrics: nil,
                                                   views: views)
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       if #available(iOS 11.0, *) {
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
