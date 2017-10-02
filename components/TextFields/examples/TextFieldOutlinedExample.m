@@ -34,6 +34,10 @@
 
 @implementation TextFieldOutlinedObjectiveCExample
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
