@@ -84,6 +84,10 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
