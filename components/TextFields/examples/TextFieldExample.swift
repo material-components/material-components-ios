@@ -368,12 +368,12 @@ extension TextFieldSwiftExample {
     return ["Text Field", "Typical Use"]
   }
 
-  class func catalogDescription() -> String {
+  @objc class func catalogDescription() -> String {
     // swiftlint:disable:next line_length
     return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
 }

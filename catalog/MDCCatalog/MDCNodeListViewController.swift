@@ -59,8 +59,8 @@ class MDCNodeListViewController: CBCNodeListViewController {
       return [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
                NSAttributedStringKey.font.rawValue: font ]
     #else
-      return [ NSForegroundColorAttributeName.rawValue: UIColor.white,
-               NSFontAttributeName.rawValue: font ]
+      return [ NSForegroundColorAttributeName: UIColor.white,
+               NSFontAttributeName: font ]
     #endif
   }
 
@@ -295,7 +295,11 @@ extension MDCNodeListViewController {
     }
     if subtitleText != nil {
       if let swiftModuleRange = subtitleText?.range(of: ".") {
+        #if swift(>=4.0)
         subtitleText = String(subtitleText![swiftModuleRange.upperBound...])
+        #else
+        subtitleText = subtitleText!.substring(from: swiftModuleRange.upperBound)
+        #endif
       }
       cell!.detailTextLabel?.text = subtitleText!
     }
@@ -421,9 +425,15 @@ extension MDCNodeListViewController {
         MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
 
         let textColor = UIColor.white
+        #if swift(>=4.0)
         UIBarButtonItem.appearance().setTitleTextAttributes(
           [NSAttributedStringKey.foregroundColor: textColor],
           for: UIControlState())
+        #else
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+          [NSForegroundColorAttributeName: textColor],
+          for: UIControlState())
+        #endif
 
         var contentFrame = container.contentViewController.view.frame
         let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
