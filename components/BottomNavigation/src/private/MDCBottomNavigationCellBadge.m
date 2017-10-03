@@ -29,8 +29,9 @@
 }
 
 - (void)commonInitMDCBottomNavigationCellBadge {
+  _badgeColor = [UIColor redColor];
   _badgeLayer = [CAShapeLayer layer];
-  _badgeLayer.fillColor = [UIColor redColor].CGColor;
+  _badgeLayer.fillColor = _badgeColor.CGColor;
   [self.layer addSublayer:_badgeLayer];
 
   _countLabel = [[UILabel alloc] initWithFrame:self.bounds];
@@ -58,16 +59,8 @@
                           _badgeCircleHeight);
 }
 
-- (void)setText:(NSString *)text {
-  _text = text;
-  _countLabel.text = _text;
-  [self sizeBadge];
-  [self drawBadge];
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
-
   [self drawBadge];
 }
 
@@ -77,29 +70,29 @@
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);
   UIBezierPath *path = [UIBezierPath bezierPath];
-  CGFloat startAngle = MDCDegreesToRadians(-90);
-  CGFloat endAngle = MDCDegreesToRadians(90);
+  CGFloat startAngleLeftSide = MDCDegreesToRadians(-90);
+  CGFloat endAngleLeftSide = MDCDegreesToRadians(90);
 
   [path moveToPoint:CGPointMake(badgeRadius, badgeRadius)];
-  CGPoint centerPath = CGPointMake(badgeRadius, badgeRadius);
-  [path addArcWithCenter:centerPath
+  CGPoint centerPathLeftSide = CGPointMake(badgeRadius, badgeRadius);
+  [path addArcWithCenter:centerPathLeftSide
                   radius:badgeRadius
-              startAngle:startAngle
-                endAngle:endAngle
+              startAngle:startAngleLeftSide
+                endAngle:endAngleLeftSide
                clockwise:NO];
 
   CGFloat rectWidth = CGRectGetWidth(self.bounds) - badgeRadius;
   [path addLineToPoint:CGPointMake(badgeRadius, CGRectGetHeight(self.bounds))];
   [path addLineToPoint:CGPointMake(rectWidth, CGRectGetHeight(self.bounds))];
 
-  CGFloat startAngle2 = MDCDegreesToRadians(90);
-  CGFloat endAngle2 = MDCDegreesToRadians(-90);
+  CGFloat startAngleRightSide = MDCDegreesToRadians(90);
+  CGFloat endAngleRightSide = MDCDegreesToRadians(-90);
 
-  CGPoint centerPath2 = CGPointMake(rectWidth, badgeRadius);
-  [path addArcWithCenter:centerPath2
+  CGPoint centerPathRightSide = CGPointMake(rectWidth, badgeRadius);
+  [path addArcWithCenter:centerPathRightSide
                   radius:badgeRadius
-              startAngle:startAngle2
-                endAngle:endAngle2
+              startAngle:startAngleRightSide
+                endAngle:endAngleRightSide
                clockwise:NO];
 
   [path addLineToPoint:CGPointMake(rectWidth, 0)];
@@ -117,6 +110,18 @@
                                 attributes:@{ NSFontAttributeName:font }
                                    context:nil];
   return rect.size;
+}
+
+- (void)setText:(NSString *)text {
+  _text = text;
+  _countLabel.text = _text;
+  [self sizeBadge];
+  [self drawBadge];
+}
+
+- (void)setBadgeColor:(UIColor *)badgeColor {
+  _badgeColor = badgeColor;
+  _badgeLayer.fillColor = _badgeColor.CGColor;
 }
 
 @end

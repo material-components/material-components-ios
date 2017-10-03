@@ -21,6 +21,7 @@
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
+@property(nonatomic, strong) UIColor *badgeColor;
 @property(nonatomic, strong) UIImage *image;
 
 - (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image;

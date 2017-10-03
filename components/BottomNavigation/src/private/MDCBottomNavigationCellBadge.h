@@ -18,9 +18,9 @@
 
 @interface MDCBottomNavigationCellBadge : UIView
 
-@property(nonatomic, copy) NSString *text;
-
 @property(nonatomic, strong) CAShapeLayer *badgeLayer;
+@property(nonatomic, copy) NSString *text;
+@property(nonatomic, strong) UIColor *badgeColor;
 @property(nonatomic, strong) UILabel *countLabel;
 
 @property(nonatomic, assign) CGFloat badgeCircleWidth;

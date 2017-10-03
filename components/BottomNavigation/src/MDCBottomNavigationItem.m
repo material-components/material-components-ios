@@ -55,6 +55,11 @@
   _bottomNavCell.image = image;
 }
 
+- (void)setBadgeColor:(UIColor *)badgeColor {
+  [super setBadgeColor:badgeColor];
+  _bottomNavCell.badgeColor = badgeColor;
+}
+
 - (void)setBadgeValue:(NSString *)badgeValue {
   [super setBadgeValue:badgeValue];
   _bottomNavCell.badgeValue = badgeValue;

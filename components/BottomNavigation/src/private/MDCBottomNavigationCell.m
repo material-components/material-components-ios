@@ -97,6 +97,11 @@
   }
 }
 
+- (void)setBadgeColor:(UIColor *)badgeColor {
+  _badgeColor = badgeColor;
+  _badge.badgeColor = badgeColor;
+}
+
 - (void)setBadgeValue:(NSString *)badgeValue {
   _badgeValue = badgeValue;
   _badge.text = badgeValue;
