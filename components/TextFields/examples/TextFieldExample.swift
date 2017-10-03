@@ -364,7 +364,7 @@ extension TextFieldSwiftExample {
 // MARK: - CatalogByConvention
 
 extension TextFieldSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Typical Use"]
   }
 

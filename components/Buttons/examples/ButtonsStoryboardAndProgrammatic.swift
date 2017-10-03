@@ -93,7 +93,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
   private func layoutContainer() {
     let viewLayoutGuide: Any = {
-      #if swift(>=3.2)
+      #if swift(>=4.0)
         if #available(iOS 11.0, *) {
           return view.safeAreaLayoutGuide
         }
@@ -205,7 +205,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 }
 
 extension ButtonsSwiftAndStoryboardController {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Buttons (Swift and Storyboard)"]
   }
 

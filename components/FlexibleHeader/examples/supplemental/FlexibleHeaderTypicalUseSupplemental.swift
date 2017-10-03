@@ -26,7 +26,7 @@ extension FlexibleHeaderTypicalUseViewControllerSwift {
 
   // (CatalogByConvention)
 
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return [ "Flexible Header", "Flexible Header (Swift)" ]
   }
 

@@ -237,7 +237,7 @@ extension TabBarIconSwiftExample {
 
 // MARK: - Catalog by convention
 extension TabBarIconSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Tab Bar", "Icons and Text (Swift)"]
   }
 

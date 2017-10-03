@@ -24,7 +24,7 @@ extension HeaderStackViewTypicalUseSwiftExample {
 
   // MARK: - CatalogByConvention
 
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return [ "Header Stack View", "Header Stack View (Swift)" ]
   }
 

@@ -83,7 +83,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
 // MARK: Catalog by convention
 extension ButtonBarTypicalUseSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Button Bar", "Button Bar (Swift)"]
   }
 
@@ -99,8 +99,12 @@ extension ButtonBarTypicalUseSwiftExample {
     return UIColor(white: 0.1, alpha: 1.0)
   }
 
-  func itemTitleTextAttributes () -> [String: Any] {
+  func itemTitleTextAttributes () -> [NSAttributedStringKey: Any] {
     let textColor = UIColor(white: 1, alpha: 0.8)
-    return [NSForegroundColorAttributeName: textColor]
+    #if swift(>=4.0)
+      return [ NSAttributedStringKey.foregroundColor.rawValue: textColor ]
+    #else
+      return [ NSForegroundColorAttributeName: textColor ]
+    #endif
   }
 }
