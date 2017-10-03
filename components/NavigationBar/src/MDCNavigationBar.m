@@ -278,6 +278,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  // For pre iOS 11 devices, it's safe to assume that the Safe Area insets' left and right
+  // values are zero. DO NOT use this to get the top or bottom Safe Area insets.
   UIEdgeInsets RTLFriendlySafeAreaInsets = UIEdgeInsetsZero;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -291,25 +293,20 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 #endif
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
-  CGRect leadingButtonBarFrame =
-      CGRectMake(0, CGRectGetMinY(self.bounds), leadingButtonBarSize.width, leadingButtonBarSize.height);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    leadingButtonBarFrame.origin.x += RTLFriendlySafeAreaInsets.left;
-  }
-#endif
+  CGRect leadingButtonBarFrame = CGRectMake(RTLFriendlySafeAreaInsets.left,
+                                            CGRectGetMinY(self.bounds),
+                                            leadingButtonBarSize.width,
+                                            leadingButtonBarSize.height);
   _leadingButtonBar.frame = MDCRectFlippedForRTL(leadingButtonBarFrame, CGRectGetWidth(self.bounds),
                                                  self.mdc_effectiveUserInterfaceLayoutDirection);
 
   CGSize trailingButtonBarSize = [_trailingButtonBar sizeThatFits:self.bounds.size];
-  CGRect trailingButtonBarFrame =
-      CGRectMake(CGRectGetWidth(self.bounds) - trailingButtonBarSize.width, CGRectGetMinY(self.bounds),
-                 trailingButtonBarSize.width, trailingButtonBarSize.height);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    trailingButtonBarFrame.origin.x -= RTLFriendlySafeAreaInsets.right;
-  }
-#endif
+  CGFloat xOrigin =
+      CGRectGetWidth(self.bounds) - RTLFriendlySafeAreaInsets.right - trailingButtonBarSize.width;
+  CGRect trailingButtonBarFrame = CGRectMake(xOrigin,
+                                             CGRectGetMinY(self.bounds),
+                                             trailingButtonBarSize.width,
+                                             trailingButtonBarSize.height);
   _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, CGRectGetWidth(self.bounds),
                                                   self.mdc_effectiveUserInterfaceLayoutDirection);
 
