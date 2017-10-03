@@ -44,16 +44,14 @@ static const CGFloat kMDCBottomAppBarHeight = 96.f;
 }
 
 - (void)commonMDCBottomAppBarViewControllerInit {
-  _bottomBarView = [[MDCBottomAppBarView alloc] initWithFrame:self.view.bounds];
-  [self.view addSubview:_bottomBarView];
-}
-
-- (void)viewWillLayoutSubviews {
   CGRect containerFrame = CGRectMake(0,
                                      CGRectGetHeight(self.view.frame) - kMDCBottomAppBarHeight,
                                      CGRectGetWidth(self.view.frame),
                                      kMDCBottomAppBarHeight);
-  _bottomBarView.frame = containerFrame;
+  _bottomBarView = [[MDCBottomAppBarView alloc] initWithFrame:containerFrame];
+  _bottomBarView.autoresizingMask =
+      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
+  [self.view addSubview:_bottomBarView];
 }
 
 #pragma mark - Setters
