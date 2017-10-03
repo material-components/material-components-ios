@@ -310,34 +310,33 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    NSLayoutYAxisAnchor *topAnchor = self.view.safeAreaLayoutGuide.topAnchor;
-    NSLayoutConstraint *topConstraint =
-        [self.headerStackView.topAnchor constraintEqualToAnchor:topAnchor constant:0];
-    topConstraint.active = YES;
+    [self.headerStackView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor
+                                                   constant:0].active = YES;
   } else {
 #endif
-  NSLayoutConstraint *topConstraint =
-      [NSLayoutConstraint constraintWithItem:self.headerStackView
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:kPreIOS11StatusBarHeight];
-    topConstraint.active = YES;
+  if (@available(iOS 9.0, *)) {
+    [self.headerStackView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor
+                                                   constant:0].active = YES;
+  } else {
+    [NSLayoutConstraint constraintWithItem:self.headerStackView
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:kPreIOS11StatusBarHeight].active = YES;
+  }
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
 #endif
 
-  NSLayoutConstraint *bottomConstraint =
-      [NSLayoutConstraint constraintWithItem:self.headerStackView
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1
-                                    constant:0];
-  bottomConstraint.active = YES;
+  [NSLayoutConstraint constraintWithItem:self.headerStackView
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:0].active = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
