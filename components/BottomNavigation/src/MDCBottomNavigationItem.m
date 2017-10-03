@@ -26,18 +26,47 @@
 
 @implementation MDCBottomNavigationItem
 
-- (instancetype)initWithTitle:(NSString *)title
-                        image:(UIImage *)image
-                    badgeText:(NSString *)badgeText {
-  self = [super initWithTitle:title image:image tag:0];
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag {
+  self = [super initWithTitle:title image:image tag:tag];
   if (self) {
-    _badgeText = badgeText;
+    [self commonMDCBottomNavigationItemInit];
   }
   return self;
 }
 
-- (void)setBadgeText:(NSString *)badgeText {
-  _badgeText = badgeText;
+- (void)commonMDCBottomNavigationItemInit {
+  _bottomNavCell =
+      [[MDCBottomNavigationCell alloc] initWithFrame:_frame title:self.title image:self.image];
+  _selected = NO;
+}
+
+- (void)setFrame:(CGRect)frame {
+  _frame = frame;
+  _bottomNavCell.frame = frame;
+}
+
+- (void)setTitle:(NSString *)title {
+  [super setTitle:title];
+  _bottomNavCell.title = title;
+}
+
+- (void)setImage:(UIImage *)image {
+  [super setImage:image];
+  _bottomNavCell.image = image;
+}
+
+- (void)setBadgeValue:(NSString *)badgeValue {
+  [super setBadgeValue:badgeValue];
+  _bottomNavCell.badgeValue = badgeValue;
+}
+
+- (void)setSelected:(BOOL)selected {
+  _selected = selected;
+  _bottomNavCell.selected = selected;
+}
+
+- (void)addToView:(UIView *)view {
+  [view addSubview:_bottomNavCell];
 }
 
 @end

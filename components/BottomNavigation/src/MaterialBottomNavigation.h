@@ -14,5 +14,5 @@
  limitations under the License.
  */
 
-#import "MDCBottomNavigationItem.h"
 #import "MDCBottomNavigationView.h"
+#import "MDCBottomNavigationItem.h"

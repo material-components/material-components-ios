@@ -49,15 +49,10 @@
   CGFloat itemWidth = self.bounds.size.width / numItems;
   for (MDCBottomNavigationItem *tabBarItem in self.navBarItems) {
     CGRect cellFrame = CGRectMake(i * itemWidth, 0, itemWidth, 72);
-    MDCBottomNavigationCell *bottomNavCell =
-        [[MDCBottomNavigationCell alloc] initWithFrame:cellFrame
-                                                  text:tabBarItem.title
-                                                 image:tabBarItem.image
-                                             badgeText:tabBarItem.badgeText];
-    [self addSubview:bottomNavCell];
+    tabBarItem.frame = cellFrame;
+    [tabBarItem addToView:self];
     i++;
   }
-  self.navBarItems[0].badgeText = @"Ralph";
 }
 
 @end

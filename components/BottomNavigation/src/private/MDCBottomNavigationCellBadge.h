@@ -16,11 +16,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCBottomNavigationItem : UITabBarItem
+@interface MDCBottomNavigationCellBadge : UIView
 
-@property(nonatomic, assign) BOOL selected;
-@property(nonatomic, assign) CGRect frame;
+@property(nonatomic, copy) NSString *text;
 
-- (void)addToView:(UIView *)view;
+@property(nonatomic, strong) CAShapeLayer *badgeLayer;
+@property(nonatomic, strong) UILabel *countLabel;
+
+@property(nonatomic, assign) CGFloat badgeCircleWidth;
+@property(nonatomic, assign) CGFloat badgeCircleHeight;
+@property(nonatomic, assign) CGFloat xPadding;
+@property(nonatomic, assign) CGFloat yPadding;
 
 @end

@@ -15,151 +15,23 @@
  */
 
 #import "MDCBottomNavigationCell.h"
-
-#import "MaterialMath.h"
-
-@interface MDCBottomNavigationCellBadge : UIView
-
-@property(nonatomic, copy) NSString *text;
-
-@property(nonatomic, strong) CAShapeLayer *badgeLayer;
-@property(nonatomic, strong) UILabel *countLabel;
-
-@property(nonatomic) CGFloat badgeCircleWidth;
-@property(nonatomic) CGFloat badgeCircleHeight;
-@property(nonatomic) CGFloat xPadding;
-@property(nonatomic) CGFloat yPadding;
-
-@end
-
-@implementation MDCBottomNavigationCellBadge
-
-- (instancetype)initWithText:(NSString *)text {
-  self = [super initWithFrame:CGRectZero];
-  if (self) {
-    _text = text;
-    [self commonInitMDCBottomNavigationCellBadge];
-  }
-  return self;
-}
-
-- (void)commonInitMDCBottomNavigationCellBadge {
-  _badgeLayer = [CAShapeLayer layer];
-  _badgeLayer.fillColor = [UIColor redColor].CGColor;
-  [self.layer addSublayer:_badgeLayer];
-
-  _countLabel = [[UILabel alloc] initWithFrame:self.bounds];
-  _countLabel.textColor = [UIColor whiteColor];
-  _countLabel.font = [UIFont systemFontOfSize:10];
-  _countLabel.textAlignment = NSTextAlignmentCenter;
-  _countLabel.text = _text;
-  [self addSubview:_countLabel];
-  [self sizeBadge];
-}
-
-- (void)sizeBadge {
-  [_countLabel sizeToFit];
-  _xPadding = 6.f;
-  _yPadding = 2.f;
-  
-  _badgeCircleWidth = _countLabel.bounds.size.width + _xPadding;
-  _badgeCircleHeight = _countLabel.bounds.size.height + _yPadding;
-  
-  if (_badgeCircleWidth < _badgeCircleHeight) {
-    _badgeCircleWidth = _badgeCircleHeight;
-  }
-  self.frame = CGRectMake(self.frame.origin.x,
-                          self.frame.origin.y,
-                          _badgeCircleWidth,
-                          _badgeCircleHeight);
-}
-
-- (void)setText:(NSString *)text {
-  _text = text;
-  [self sizeBadge];
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  [self drawBadge];
-}
-
-- (void)drawBadge {
-
-  self.countLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-
-  CGFloat badgeRadius = CGRectGetMidY(self.bounds);
-  UIBezierPath *path = [UIBezierPath bezierPath];
-  CGFloat startAngle = MDCDegreesToRadians(-90);
-  CGFloat endAngle = MDCDegreesToRadians(90);
-
-  [path moveToPoint:CGPointMake(badgeRadius, badgeRadius)];
-  CGPoint centerPath = CGPointMake(badgeRadius, badgeRadius);
-  [path addArcWithCenter:centerPath
-                  radius:badgeRadius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:NO];
-
-  CGFloat rectWidth = CGRectGetWidth(self.bounds) - badgeRadius;
-  [path addLineToPoint:CGPointMake(badgeRadius, CGRectGetHeight(self.bounds))];
-  [path addLineToPoint:CGPointMake(rectWidth, CGRectGetHeight(self.bounds))];
-
-  CGFloat startAngle2 = MDCDegreesToRadians(90);
-  CGFloat endAngle2 = MDCDegreesToRadians(-90);
-
-  CGPoint centerPath2 = CGPointMake(rectWidth, badgeRadius);
-  [path addArcWithCenter:centerPath2
-                  radius:badgeRadius
-              startAngle:startAngle2
-                endAngle:endAngle2
-               clockwise:NO];
-  
-  [path addLineToPoint:CGPointMake(rectWidth, 0)];
-  [path addLineToPoint:CGPointMake(badgeRadius, 0)];
-
-  [path closePath];
-  self.badgeLayer.path = path.CGPath;
-}
-
-- (void)sizeToFit {
-  [super sizeToFit];
-}
-
-- (CGSize)sizeForText:(NSString *)text
-                 font:(UIFont *)font
-     boundingRectSize:(CGSize)boundingRectSize {
-  CGRect rect = [text boundingRectWithSize:boundingRectSize
-                                   options:NSStringDrawingUsesLineFragmentOrigin
-                                attributes:@{ NSFontAttributeName:font }
-                                   context:nil];
-  return rect.size;
-}
-@end
+#import "MDCBottomNavigationCellBadge.h"
 
 @interface MDCBottomNavigationCell ()
 
-@property(nonatomic, strong) UIImage *image;
+@property(nonatomic, strong) MDCBottomNavigationCellBadge *badge;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
-@property(nonatomic, strong) MDCBottomNavigationCellBadge *badge;
-@property(nonatomic, copy) NSString *text;
-@property(nonatomic, copy) NSString *badgeText;
 
 @end
 
 @implementation MDCBottomNavigationCell
 
-- (instancetype)initWithFrame:(CGRect)frame
-                         text:(NSString *)text
-                        image:(UIImage *)image
-                    badgeText:(NSString *)badgeText {
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image {
   self = [super initWithFrame:frame];
   if (self) {
-    _text = text;
+    _title = title;
     _image = image;
-    _badgeText = badgeText;
     [self commonMDCBottomNavigationCellInit];
   }
   return self;
@@ -183,20 +55,19 @@
 
 - (void)commonMDCBottomNavigationCellInit {
   self.backgroundColor = [UIColor whiteColor];
-  self.iconImageView = [[UIImageView alloc] initWithImage:_image];
-  [self addSubview:self.iconImageView];
+  _iconImageView = [[UIImageView alloc] initWithImage:_image];
+  [self addSubview:_iconImageView];
 
-  self.label = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.label.text = _text;
-  self.label.font = [UIFont systemFontOfSize:12];
-  self.label.textAlignment = NSTextAlignmentCenter;
-  [self addSubview:self.label];
+  _label = [[UILabel alloc] initWithFrame:CGRectZero];
+  _label.text = _title;
+  _label.font = [UIFont systemFontOfSize:12];
+  _label.textAlignment = NSTextAlignmentCenter;
+  [self addSubview:_label];
 
+  _badge = [[MDCBottomNavigationCellBadge alloc] init];
+  [self addSubview:_badge];
   
-  self.badge = [[MDCBottomNavigationCellBadge alloc] initWithText:_badgeText];
-  [self addSubview:self.badge];
-  
-  if (!_badgeText) {
+  if (!_badgeValue) {
     _badge.hidden = YES;
   }
 }
@@ -204,26 +75,41 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  self.iconImageView.center =
-      CGPointMake(CGRectGetMidX(self.bounds),
-                  CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
   self.label.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), 12);
-  self.label.center =
-      CGPointMake(CGRectGetMidX(self.bounds),
-                  CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
-  self.badge.center =
-  CGPointMake(self.iconImageView.frame.origin.x + CGRectGetWidth(self.iconImageView.bounds),
-              self.iconImageView.frame.origin.y);
+  if (self.selected) {
+    self.label.hidden = NO;
+    self.iconImageView.center =
+        CGPointMake(CGRectGetMidX(self.bounds),
+                    CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
+    self.label.center =
+        CGPointMake(CGRectGetMidX(self.bounds),
+                    CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
+    self.badge.center =
+        CGPointMake(self.iconImageView.frame.origin.x + CGRectGetWidth(self.iconImageView.bounds),
+                    self.iconImageView.frame.origin.y);
+  } else {
+    self.label.hidden = YES;
+    self.iconImageView.center =
+        CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    self.badge.center =
+        CGPointMake(self.iconImageView.frame.origin.x + CGRectGetWidth(self.iconImageView.bounds),
+                    self.iconImageView.frame.origin.y);
+  }
 }
 
-- (void)setBadgeText:(NSString *)badgeText {
-  _badgeText = badgeText;
-  _badge.text = badgeText;
-  if (!_badgeText) {
+- (void)setBadgeValue:(NSString *)badgeValue {
+  _badgeValue = badgeValue;
+  _badge.text = badgeValue;
+  if (!_badgeValue) {
     _badge.hidden = YES;
   } else {
     _badge.hidden = NO;
   }
+}
+
+- (void)setTitle:(NSString *)title {
+  _title = title;
+  _label.text = _title;
 }
 
 @end

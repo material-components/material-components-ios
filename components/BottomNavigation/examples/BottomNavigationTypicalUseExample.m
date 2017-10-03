@@ -39,27 +39,32 @@
                             72.f);
   MDCBottomNavigationView *bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
   [self.view addSubview:bottomNavView];
-
+  
   MDCBottomNavigationItem *tabBarItem1 =
       [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 1"
                                                image:[UIImage imageNamed:@"Add"]
-                                           badgeText:nil];
+                                                 tag:0];
   MDCBottomNavigationItem *tabBarItem2 =
       [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 2"
                                                image:[UIImage imageNamed:@"Menu"]
-                                           badgeText:@"88"];
+                                                 tag:0];
+  tabBarItem2.badgeValue = @"5";
+  tabBarItem2.badgeColor = [UIColor blueColor];
+  tabBarItem2.selected = YES;
   MDCBottomNavigationItem *tabBarItem3 =
       [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 3"
                                                image:[UIImage imageNamed:@"Add"]
-                                           badgeText:@"1005"];
+                                                 tag:0];
+  tabBarItem3.badgeValue = @"88";
   MDCBottomNavigationItem *tabBarItem4 =
       [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 4"
                                                image:[UIImage imageNamed:@"Search"]
-                                           badgeText:@"5"];
+                                                 tag:0];
   MDCBottomNavigationItem *tabBarItem5 =
       [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 5"
                                                image:[UIImage imageNamed:@"Add"]
-                                           badgeText:@"New"];
+                                                 tag:0];
+  tabBarItem5.badgeValue = @"New";
   bottomNavView.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
 }
 

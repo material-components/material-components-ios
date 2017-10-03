@@ -18,9 +18,11 @@
 
 @interface MDCBottomNavigationCell : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame
-                         text:(NSString *)text
-                        image:(UIImage *)image
-                    badgeText:(NSString *)badgeText;
+@property(nonatomic, assign) BOOL selected;
+@property(nonatomic, copy) NSString *badgeValue;
+@property(nonatomic, copy) NSString *title;
+@property(nonatomic, strong) UIImage *image;
+
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image;
 
 @end
