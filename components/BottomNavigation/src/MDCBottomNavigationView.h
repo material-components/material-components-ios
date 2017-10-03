@@ -16,10 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBottomNavigationItem.h"
-
 @interface MDCBottomNavigationView : UIView
 
-@property(nonatomic, copy, nonnull) NSArray<MDCBottomNavigationItem *> *navBarItems;
+@property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *navBarItems;
 
 @end

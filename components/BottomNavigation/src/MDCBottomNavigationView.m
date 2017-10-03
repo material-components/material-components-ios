@@ -16,8 +16,14 @@
 
 #import "MDCBottomNavigationView.h"
 
-#import "MDCBottomNavigationItem.h"
 #import "private/MDCBottomNavigationCell.h"
+
+@interface MDCBottomNavigationView ()
+
+@property(nonatomic, strong) NSMutableArray<MDCBottomNavigationCell *> *navBarCells;
+
+@end
+
 
 @implementation MDCBottomNavigationView
 
@@ -39,6 +45,7 @@
 
 - (void)commonMDCBottomNavigationViewInit {
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
+  _navBarCells = [NSMutableArray array];
 }
 
 - (void)layoutSubviews {
@@ -47,21 +54,81 @@
   NSInteger numItems = self.navBarItems.count;
   NSInteger i = 0;
   CGFloat itemWidth = self.bounds.size.width / numItems;
-  for (MDCBottomNavigationItem *tabBarItem in self.navBarItems) {
+  for (MDCBottomNavigationCell *cell in self.navBarCells) {
     CGRect cellFrame = CGRectMake(i * itemWidth, 0, itemWidth, 72);
-    tabBarItem.frame = cellFrame;
-    [tabBarItem addToView:self];
-    [tabBarItem.cellButton addTarget:self
-                              action:@selector(didTapButton:)
-                    forControlEvents:UIControlEventTouchUpInside];
+    cell.frame = cellFrame;
     i++;
   }
 }
 
+- (void)setNavBarItems:(NSArray<UITabBarItem *> *)navBarItems {
+  _navBarItems = navBarItems;
+
+  for (UITabBarItem *tabBarItem in navBarItems) {
+    MDCBottomNavigationCell *bottomNavCell =
+        [[MDCBottomNavigationCell alloc] initWithFrame:CGRectZero];
+    bottomNavCell.title = tabBarItem.title;
+    bottomNavCell.image = tabBarItem.image;
+    bottomNavCell.badgeValue = tabBarItem.badgeValue;
+    bottomNavCell.selected = NO;
+    [bottomNavCell.button addTarget:self
+                             action:@selector(didTapButton:)
+                   forControlEvents:UIControlEventTouchUpInside];
+
+    [tabBarItem addObserver:self
+                 forKeyPath:@"badgeColor"
+                    options:NSKeyValueObservingOptionNew
+                    context:nil];
+    [tabBarItem addObserver:self
+                 forKeyPath:@"badgeValue"
+                    options:NSKeyValueObservingOptionNew
+                    context:nil];
+    [tabBarItem addObserver:self
+                 forKeyPath:@"image"
+                    options:NSKeyValueObservingOptionNew
+                    context:nil];
+    [tabBarItem addObserver:self
+                 forKeyPath:@"title"
+                    options:NSKeyValueObservingOptionNew
+                    context:nil];
+    
+    [_navBarCells addObject:bottomNavCell];
+    [self addSubview:bottomNavCell];
+  }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context {
+  NSInteger i = 0;
+  NSInteger selectedItemNum = 0;
+  for (UITabBarItem *tabBarItem in self.navBarItems) {
+    if (object == tabBarItem) {
+      selectedItemNum = i;
+      break;
+    }
+    i++;
+  }
+
+  MDCBottomNavigationCell *cell = _navBarCells[selectedItemNum];
+  if ([keyPath isEqualToString:@"badgeColor"]) {
+    [cell setBadgeColor:change[@"new"]];
+  } else if ([keyPath isEqualToString:@"badgeValue"]) {
+    [cell setBadgeValue:change[@"new"]];
+  } else if ([keyPath isEqualToString:@"image"]) {
+    [cell setImage:change[@"new"]];
+  } else if ([keyPath isEqualToString:@"title"]) {
+    [cell setTitle:change[@"new"]];
+  }
+
+  NSLog(@"%@", context);
+}
+
 - (void)didTapButton:(UIButton *)button {
-  for (MDCBottomNavigationItem *tabBarItem in self.navBarItems) {
-    if (tabBarItem.cellButton != button) {
-      tabBarItem.selected = NO;
+  for (MDCBottomNavigationCell *cell in self.navBarCells) {
+    if (cell.button != button) {
+      cell.selected = NO;
     }
   }
   MDCBottomNavigationCell *cell = (MDCBottomNavigationCell *)button.superview;

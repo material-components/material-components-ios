@@ -15,4 +15,3 @@
  */
 
 #import "MDCBottomNavigationView.h"
-#import "MDCBottomNavigationItem.h"

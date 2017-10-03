@@ -17,6 +17,12 @@
 #import "MDCBottomNavigationCell.h"
 #import "MDCBottomNavigationCellBadge.h"
 
+// The duration of the enter animation of the path cut, same as floating button enter animation.
+//static const NSTimeInterval kMDCBottomNavigationCellEnterDuration = 0.270f;
+
+// The duration of the exit animation of the path cut, same as floating button exit animation.
+static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
+
 @interface MDCBottomNavigationCell ()
 
 @property(nonatomic, strong) MDCBottomNavigationCellBadge *badge;
@@ -26,16 +32,6 @@
 @end
 
 @implementation MDCBottomNavigationCell
-
-- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image {
-  self = [super initWithFrame:frame];
-  if (self) {
-    _title = title;
-    _image = image;
-    [self commonMDCBottomNavigationCellInit];
-  }
-  return self;
-}
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -55,7 +51,7 @@
 
 - (void)commonMDCBottomNavigationCellInit {
   self.backgroundColor = [UIColor whiteColor];
-  _iconImageView = [[UIImageView alloc] initWithImage:_image];
+  _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
   [self addSubview:_iconImageView];
 
   _label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -66,7 +62,7 @@
 
   _badge = [[MDCBottomNavigationCellBadge alloc] init];
   [self addSubview:_badge];
-  
+
   if (!_badgeValue) {
     _badge.hidden = YES;
   }
@@ -85,25 +81,38 @@
 
 - (void)setSelected:(BOOL)selected {
   _selected = selected;
+  
+  CGPoint iconImageViewCenter = CGPointZero;
+  CGPoint badgeCenter = CGPointZero;
+  CGPoint labelCenter =
+      CGPointMake(CGRectGetMidX(self.bounds),
+                  CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
+  
+  NSLog(@"%@", NSStringFromCGRect(self.iconImageView.frame));
+
   if (_selected) {
     self.label.hidden = NO;
-    self.iconImageView.center =
+    iconImageViewCenter =
         CGPointMake(CGRectGetMidX(self.bounds),
                     CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
-    self.label.center =
-        CGPointMake(CGRectGetMidX(self.bounds),
-                    CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
-    self.badge.center =
+    badgeCenter =
         CGPointMake(self.iconImageView.frame.origin.x + CGRectGetWidth(self.iconImageView.bounds),
-                    self.iconImageView.frame.origin.y);
+                    iconImageViewCenter.y);
   } else {
     self.label.hidden = YES;
-    self.iconImageView.center =
-        CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    self.badge.center =
+    iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    badgeCenter =
         CGPointMake(self.iconImageView.frame.origin.x + CGRectGetWidth(self.iconImageView.bounds),
-                    self.iconImageView.frame.origin.y);
+                    iconImageViewCenter.y);
   }
+
+  self.label.center = labelCenter;
+  
+
+  [UIView animateWithDuration:kMDCBottomNavigationCellTransitionDuration animations:^(void) {
+    self.iconImageView.center = iconImageViewCenter;
+    self.badge.center = badgeCenter;
+  }];
 }
 
 - (void)setBadgeColor:(UIColor *)badgeColor {
@@ -119,6 +128,12 @@
   } else {
     _badge.hidden = NO;
   }
+}
+
+- (void)setImage:(UIImage *)image {
+  _image = image;
+  [_iconImageView setImage:_image];
+  [_iconImageView sizeToFit];
 }
 
 - (void)setTitle:(NSString *)title {

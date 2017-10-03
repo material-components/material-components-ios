@@ -19,6 +19,12 @@
 #import "BottomNavigationTypicalUseSupplemental.h"
 #import "MaterialBottomNavigation.h"
 
+@interface BottomNavigationTypicalUseExample ()
+
+@property(nonatomic, strong) MDCBottomNavigationView *bottomNavView;
+
+@end
+
 @implementation BottomNavigationTypicalUseExample
 
 - (id)init {
@@ -37,35 +43,40 @@
                             self.view.bounds.size.height - 72.f,
                             self.view.bounds.size.width,
                             72.f);
-  MDCBottomNavigationView *bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
-  [self.view addSubview:bottomNavView];
+  _bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
+  [self.view addSubview:_bottomNavView];
   
-  MDCBottomNavigationItem *tabBarItem1 =
-      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 1"
-                                               image:[UIImage imageNamed:@"Add"]
-                                                 tag:0];
-  MDCBottomNavigationItem *tabBarItem2 =
-      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 2"
-                                               image:[UIImage imageNamed:@"Menu"]
-                                                 tag:0];
+  UITabBarItem *tabBarItem1 =
+      [[UITabBarItem alloc] initWithTitle:@"Item 1"
+                                    image:[UIImage imageNamed:@"Add"]
+                                      tag:0];
+  UITabBarItem *tabBarItem2 =
+      [[UITabBarItem alloc] initWithTitle:@"Item 2"
+                                           image:[UIImage imageNamed:@"Menu"]
+                                             tag:0];
   tabBarItem2.badgeValue = @"5";
   tabBarItem2.badgeColor = [UIColor blueColor];
-  tabBarItem2.selected = YES;
-  MDCBottomNavigationItem *tabBarItem3 =
-      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 3"
-                                               image:[UIImage imageNamed:@"Add"]
-                                                 tag:0];
+  UITabBarItem *tabBarItem3 =
+      [[UITabBarItem alloc] initWithTitle:@"Item 3"
+                                    image:[UIImage imageNamed:@"Add"]
+                                      tag:0];
   tabBarItem3.badgeValue = @"88";
-  MDCBottomNavigationItem *tabBarItem4 =
-      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 4"
-                                               image:[UIImage imageNamed:@"Search"]
-                                                 tag:0];
-  MDCBottomNavigationItem *tabBarItem5 =
-      [[MDCBottomNavigationItem alloc] initWithTitle:@"Item 5"
-                                               image:[UIImage imageNamed:@"Add"]
-                                                 tag:0];
+  UITabBarItem *tabBarItem4 =
+      [[UITabBarItem alloc] initWithTitle:@"Item 4"
+                                    image:[UIImage imageNamed:@"Search"]
+                                      tag:0];
+  UITabBarItem *tabBarItem5 =
+      [[UITabBarItem alloc] initWithTitle:@"Item 5"
+                                    image:[UIImage imageNamed:@"Add"]
+                                      tag:0];
   tabBarItem5.badgeValue = @"New";
-  bottomNavView.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
+  _bottomNavView.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
+
+}
+
+- (void)viewWillLayoutSubviews {
+  _bottomNavView.navBarItems[1].badgeValue = @"100";
+  _bottomNavView.navBarItems[2].title = @"Third item";
 }
 
 @end
