@@ -314,18 +314,13 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                                                    constant:0].active = YES;
   } else {
 #endif
-  if (@available(iOS 9.0, *)) {
-    [self.headerStackView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor
-                                                   constant:0].active = YES;
-  } else {
-    [NSLayoutConstraint constraintWithItem:self.headerStackView
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:kPreIOS11StatusBarHeight].active = YES;
-  }
+  [NSLayoutConstraint constraintWithItem:self.headerStackView
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:kPreIOS11StatusBarHeight].active = YES;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
 #endif
