@@ -1,4 +1,85 @@
-# release-candidate TODO: Replace me with version number. 
+# 35.3.0
+
+## API Changes
+
+### Text Fields
+
+* New properties on `MDCTextInputController`:`inlinePlaceholderFont`, `inlinePlaceholderFontDefault`, `leadingUnderlineLabelFont, `leadingUnderlineLabelFontDefault`.
+* New classes `MDCTextInputControllerFilled`, `MDCTextInputControllerOutlined`, `MDCTextInputControllerOutlinedTextArea`.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Adds example using a UITableViewController with sections. (#2051)](https://github.com/material-components/material-components-ios/commit/21e0bed4a2dbc92d590ab48550da6e5d2849667a) (Marc-Antoine Courteau)
+* [Use safeAreaLayoutGuide.topAnchor instead of fixed status bar height (#2078)](https://github.com/material-components/material-components-ios/commit/ad2becaab3fe5e1ec238bcd4a43c0f7f215ce1ce) (Andrés)
+* [[FlexibleHeader] Fixes to support scroll views with Safe Area insets. (#2063)](https://github.com/material-components/material-components-ios/commit/80d054e3a571604b2eb2adbc8a09cd5cfbe674a8) (Andrés)
+
+### BottomSheet
+
+#### Changes
+
+* [[Dialogs] Size action buttons during layout (#2065)](https://github.com/material-components/material-components-ios/commit/a5e28488f915f03ef63eeb7ee356f00b880e42df) (Robert Moore)
+
+### Buttons
+
+#### Changes
+
+* [[Catalog] Fix button examples (#2047)](https://github.com/material-components/material-components-ios/commit/d44164290f5e7fff0058cc8d8410c95c695cc48e) (Robert Moore)
+* [[Swiftlint]Refactor ButtonsStoryboardAndProgrammatic.swift  (#2060)](https://github.com/material-components/material-components-ios/commit/4e4c06fd8dbe745a95dd01cad5645ae7d433f04a) (Cody Weaver)
+
+### Dialogs
+
+#### Changes
+
+* [Size action buttons during layout (#2065)](https://github.com/material-components/material-components-ios/commit/a5e28488f915f03ef63eeb7ee356f00b880e42df) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[TextFields] Adding a doc: menu for styles (#2064)](https://github.com/material-components/material-components-ios/commit/3fc78fd868acac33d9a1ec4d22b0394a65594b0b) (Will Larche)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fixes to support scroll views with Safe Area insets. (#2063)](https://github.com/material-components/material-components-ios/commit/80d054e3a571604b2eb2adbc8a09cd5cfbe674a8) (Andrés)
+
+### MaskedTransition
+
+#### Changes
+
+* [Upgrade to MotionTransitioning v3.3.0. (#2077)](https://github.com/material-components/material-components-ios/commit/b238e8bbf354c88677d5785be624003f8c9df506) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [Fix layoutSubviews to take into account the safe area insets. (#2070)](https://github.com/material-components/material-components-ios/commit/80173864a8b725062084982e5f5054ace1364815) (Andrés)
+* [Pixel-align title (#2043)](https://github.com/material-components/material-components-ios/commit/7f798da56be0bbb2dcdb8b02a3e5d9222158e34f) (Robert Moore)
+
+### Tabs
+
+#### Changes
+
+* [Unit tests for two-line text-only tabs (#2075)](https://github.com/material-components/material-components-ios/commit/e2d79b3c7810607963a5ca67921011ff7c55e5e9) (Robert Moore)
+* [[TabBar] Support 2-line labels for "top" tabs (#2028)](https://github.com/material-components/material-components-ios/commit/c50dec414c77ea0d1bc7d46975b70cb5a0662e2d) (Robert Moore)
+* [[TabBar] Vertically center text tab labels (#2023)](https://github.com/material-components/material-components-ios/commit/6591e941bd28f90fd53275c44e2e68cc954f0891) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Adding a doc: menu for styles (#2064)](https://github.com/material-components/material-components-ios/commit/3fc78fd868acac33d9a1ec4d22b0394a65594b0b) (Will Larche)
+* [Better custom fonts (#2056)](https://github.com/material-components/material-components-ios/commit/f247bae8ba3e5ea409168530ed3f0e0e068bf671) (Will Larche)
+* [Fixing bug of bad intrinsicContentSize. (#2073)](https://github.com/material-components/material-components-ios/commit/41bae7a6320ff9778c323d0d9768e3cbfa976126) (Will Larche)
+* [Removing unused ivar from full width. (#2058)](https://github.com/material-components/material-components-ios/commit/a09a641dc60b2f5490f83ce33acc59f4620c6865) (Will Larche)
+* [Renaming classes to match the MD spec (#2061)](https://github.com/material-components/material-components-ios/commit/cde864f235cc3290ad451f3b53a37ee7f8bef43c) (Will Larche)
+* [Updating markdown syntax. (#2052)](https://github.com/material-components/material-components-ios/commit/e5235ee60343dce77d9338cbc1bcd27273c2d768) (Will Larche)
+* [iOS 11 example bugs fixed (#2071)](https://github.com/material-components/material-components-ios/commit/90e79dd81581ce700ad694f1bd295e0426a48a20) (Will Larche)
 
 # 35.2.0
 
