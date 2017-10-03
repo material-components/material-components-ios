@@ -28,6 +28,10 @@
 
 @implementation MultilineTextFieldLegacyExample
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
@@ -95,8 +99,8 @@
   multilineTextFieldCharMaxDefault.placeholder = @"Inline Placeholder Only";
   multilineTextFieldCharMaxDefault.textView.delegate = self;
 
-  self.textFieldControllerDefaultCharMax =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldCharMaxDefault];
+  self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerLegacyDefault alloc]
+      initWithTextInput:multilineTextFieldCharMaxDefault];
   self.textFieldControllerDefaultCharMax.characterCountMax = 30;
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
@@ -112,19 +116,18 @@
   self.textFieldControllerFullWidth.characterCountMax = 140;
 
   [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:
-                                  @"V:|-20-[unstyled]-[area]-[floating]-[charMax]-[fullWidth]-|"
-                                                  options:0
-                                                  metrics:nil
-                                                    views:@{
-                                                      @"unstyled" : multilineTextFieldUnstyled,
-                                                      @"area" : multilineTextFieldUnstyledArea,
-                                                      @"charMax" : multilineTextFieldCharMaxDefault,
-                                                      @"floating" : multilineTextFieldFloating,
-                                                      @"fullWidth" :
-                                                          multilineTextFieldCharMaxFullWidth
-                                                    }]];
+      activateConstraints:
+          [NSLayoutConstraint
+              constraintsWithVisualFormat:@"V:[unstyled]-[area]-[floating]-[charMax]-[fullWidth]"
+                                  options:0
+                                  metrics:nil
+                                    views:@{
+                                      @"unstyled" : multilineTextFieldUnstyled,
+                                      @"area" : multilineTextFieldUnstyledArea,
+                                      @"charMax" : multilineTextFieldCharMaxDefault,
+                                      @"floating" : multilineTextFieldFloating,
+                                      @"fullWidth" : multilineTextFieldCharMaxFullWidth
+                                    }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|-[unstyled]-|"
@@ -158,6 +161,61 @@
                                                       @"charMax" : multilineTextFieldCharMaxDefault
                                                     }]];
 
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [NSLayoutConstraint activateConstraints:@[
+      [NSLayoutConstraint constraintWithItem:multilineTextFieldUnstyled
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView.contentLayoutGuide
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:20],
+      [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView.contentLayoutGuide
+                                   attribute:NSLayoutAttributeBottomMargin
+                                  multiplier:1
+                                    constant:-20]
+    ]];
+  } else {
+    [NSLayoutConstraint activateConstraints:@[
+      [NSLayoutConstraint constraintWithItem:multilineTextFieldUnstyled
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:20],
+      [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView
+                                   attribute:NSLayoutAttributeBottomMargin
+                                  multiplier:1
+                                    constant:-20]
+    ]];
+  }
+#else
+  [NSLayoutConstraint activateConstraints:@[
+    [NSLayoutConstraint constraintWithItem:multilineTextFieldUnstyled
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:20],
+    [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView
+                                 attribute:NSLayoutAttributeBottomMargin
+                                multiplier:1
+                                  constant:-20]
+  ]];
+#endif
+
   [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
@@ -188,15 +246,7 @@
       [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidTouch)];
   [self.view addGestureRecognizer:tapRecognizer];
 
-  [[NSNotificationCenter defaultCenter]
-      addObserverForName:UIKeyboardWillShowNotification
-                  object:nil
-                   queue:[NSOperationQueue mainQueue]
-              usingBlock:^(NSNotification *_Nonnull note) {
-                CGRect frame =
-                    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-                self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, CGRectGetHeight(frame), 0);
-              }];
+  [self registerKeyboardNotifications];
 }
 
 - (void)tapDidTouch {
@@ -211,6 +261,25 @@
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
+#pragma mark - Keyboard Handling
+
+- (void)registerKeyboardNotifications {
+  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+  [defaultCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+  [defaultCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardDidChangeFrameNotification object:nil];
+  [defaultCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+  CGRect frame =
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, CGRectGetHeight(frame), 0);
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+  self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 @end
