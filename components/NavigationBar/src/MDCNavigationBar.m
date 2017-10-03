@@ -307,7 +307,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                                              CGRectGetMinY(self.bounds),
                                              trailingButtonBarSize.width,
                                              trailingButtonBarSize.height);
-  _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, CGRectGetWidth(self.bounds),
+  _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame,
+                                                  CGRectGetWidth(self.bounds),
                                                   self.mdc_effectiveUserInterfaceLayoutDirection);
 
   UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
