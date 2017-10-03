@@ -20,6 +20,7 @@
 
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) CGRect frame;
+@property(nonatomic, strong, readonly) UIButton *cellButton;
 
 - (void)addToView:(UIView *)view;
 

@@ -70,13 +70,22 @@
   if (!_badgeValue) {
     _badge.hidden = YES;
   }
+
+  _button = [[UIButton alloc] initWithFrame:self.bounds];
+  _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  [self addSubview:_button];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
   self.label.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), 12);
-  if (self.selected) {
+  [self setSelected:self.selected];
+}
+
+- (void)setSelected:(BOOL)selected {
+  _selected = selected;
+  if (_selected) {
     self.label.hidden = NO;
     self.iconImageView.center =
         CGPointMake(CGRectGetMidX(self.bounds),

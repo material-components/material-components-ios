@@ -74,4 +74,8 @@
   [view addSubview:_bottomNavCell];
 }
 
+- (UIButton *)cellButton {
+  return _bottomNavCell.button;
+}
+
 @end

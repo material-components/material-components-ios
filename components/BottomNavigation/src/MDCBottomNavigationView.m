@@ -51,8 +51,21 @@
     CGRect cellFrame = CGRectMake(i * itemWidth, 0, itemWidth, 72);
     tabBarItem.frame = cellFrame;
     [tabBarItem addToView:self];
+    [tabBarItem.cellButton addTarget:self
+                              action:@selector(didTapButton:)
+                    forControlEvents:UIControlEventTouchUpInside];
     i++;
   }
+}
+
+- (void)didTapButton:(UIButton *)button {
+  for (MDCBottomNavigationItem *tabBarItem in self.navBarItems) {
+    if (tabBarItem.cellButton != button) {
+      tabBarItem.selected = NO;
+    }
+  }
+  MDCBottomNavigationCell *cell = (MDCBottomNavigationCell *)button.superview;
+  cell.selected = YES;
 }
 
 @end
