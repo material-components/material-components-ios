@@ -1,5 +1,4 @@
 language: objective-c
-osx_image: xcode8.3
 sudo: false
 
 # Only do a shallow clone of our Git repo.
@@ -19,17 +18,27 @@ env:
   global:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
-  matrix:
-    # The iPhone 7 Plus was chosen because it is a device with a 3x screen and also changes
-    # its size category trait on rotation.
-    # 10.3 was chosen a the latest generally available iOS version.
-    - DESTINATION="platform=iOS Simulator,name=iPhone 7 Plus,OS=10.3.1" SDK="iphonesimulator10.3.1"
-    # The iPhone 5 was chosen because it is a 32-bit device.
-    # 8.1 was chosen because it is the earliest iOS offered here.
-    - DESTINATION="platform=iOS Simulator,name=iPhone 5,OS=8.1" SDK="iphonesimulator8.1"
-    # The iPad Pro 12.9 was chosen because it is the largest resolution we can test on.
-    # 9.3 was chosen to round out the range of iOS versions we are testing on.
-    - DESTINATION="platform=iOS Simulator,name=iPad Pro (12.9-inch),OS=9.3" SDK="iphonesimulator9.3"
+
+matrix:
+  include:
+    - osx_image: xcode9
+      # The iPhone X was chosen because it is a device with a strange screen size and
+      # the 'notch'.
+      # 11.0 was chosen as the latest generally available iOS version.
+      env: DESTINATION="platform=iOS Simulator,name=iPhone X,OS=11.0" SDK="iphonesimulator11.0"
+    - osx_image: xcode9
+      # The iPhone 7 Plus was chosen because it is a device with a 3x screen and also changes
+      # its size category trait on rotation.
+      # 10.3 was chosen to represent iOS 10.
+      env: DESTINATION="platform=iOS Simulator,name=iPhone 7 Plus,OS=10.3.1" SDK="iphonesimulator10.3.1"
+    - osx_image: xcode8.3
+      # The iPad Pro 12.9 was chosen because it is the largest resolution we can test on.
+      # 9.3 was chosen to round out the range of iOS versions we are testing on.
+      env: DESTINATION="platform=iOS Simulator,name=iPad Pro (12.9-inch),OS=9.3" SDK="iphonesimulator9.3"
+    - osx_image: xcode8.3
+      # The iPhone 5 was chosen because it is a 32-bit device.
+      # 8.1 was chosen because it is the earliest iOS offered here.
+      env: DESTINATION="platform=iOS Simulator,name=iPhone 5,OS=8.1" SDK="iphonesimulator8.1
 
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
