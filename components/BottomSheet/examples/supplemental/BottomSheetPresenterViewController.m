@@ -29,15 +29,19 @@
 
   _button = [[MDCButton alloc] initWithFrame:CGRectZero];
   [_button setTitle:@"Show Bottom Sheet" forState:UIControlStateNormal];
-  [_button sizeToFit];
   _button.autoresizingMask =
   UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
   UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   [_button addTarget:self
               action:@selector(presentBottomSheet)
     forControlEvents:UIControlEventTouchUpInside];
-  _button.center = self.view.center;
   [self.view addSubview:_button];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [_button sizeToFit];
+  _button.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 }
 
 - (void)presentBottomSheet {

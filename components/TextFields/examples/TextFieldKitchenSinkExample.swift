@@ -92,6 +92,10 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
   lazy var clearModeButton: MDCButton = self.setupButton()
   lazy var underlineButton: MDCButton = self.setupButton()
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupExampleViews()

@@ -15,6 +15,7 @@
  */
 
 #import "MDCItemBarCell.h"
+#import "MDCItemBarCell+Private.h"
 
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
@@ -52,7 +53,6 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 @implementation MDCItemBarCell {
-  UILabel *_titleLabel;
   UIImageView *_imageView;
   UILabel *_badgeLabel;
   MDCInkTouchController *_inkTouchController;
@@ -185,10 +185,18 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     [self updateTitleTextColor];
     [self updateInk];
     [self updateSubviews];
+    [self updateTitleLines];
     [self updateTitleFont];
     [self updateTransformsAnimated:NO];
     [self setNeedsLayout];
   }
+}
+
+- (void)updateTitleLines {
+  // The presence of an image restricts titles to a single line
+  _titleLabel.numberOfLines = _style.shouldDisplayImage ? 1 : _style.textOnlyNumberOfLines;
+  // Only permit smaller font sizes for two-line titles
+  _titleLabel.adjustsFontSizeToFitWidth = _titleLabel.numberOfLines == 1 ? NO : YES;
 }
 
 - (void)updateWithItem:(UITabBarItem *)item
@@ -222,7 +230,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   imageBounds.size = kImageSize;
   imageCenter.x = CGRectGetMidX(contentBounds);
 
-  CGSize titleSize = [_titleLabel sizeThatFits:contentBounds.size];
+  CGSize titleSize = [self.titleLabel sizeThatFits:contentBounds.size];
   titleSize.width = MIN(titleSize.width, CGRectGetWidth(contentBounds));
 
   // Title is a fixed height based on content and is placed full-width, regardless of content style.
@@ -276,8 +284,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   _badgeLabel.bounds = MDCRectAlignToScale(badgeBounds, scale);
   _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
 
-  _titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
-  _titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter, _titleLabel.bounds, scale);
+  self.titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
+  self.titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter, self.titleLabel.bounds, scale);
 }
 
 - (void)tintColorDidChange {
@@ -416,12 +424,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       _titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
       _titleLabel.autoresizingMask =
           UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-      _titleLabel.numberOfLines = 1;
+      // 0.85 is based on 12sp/14sp guidelines for single- or double-line text
+      _titleLabel.minimumScaleFactor = (CGFloat)0.85;
       _titleLabel.textAlignment = NSTextAlignmentCenter;
 
       [self.contentView addSubview:_titleLabel];
 
       // Display title and update color for the new label.
+      [self updateTitleLines];
       [self updateDisplayedTitle];
       [self updateTitleTextColor];
       [self updateTitleFont];
@@ -492,21 +502,21 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   void (^performAnimations)(void) = ^{
     // Update the title scale and redraw if it'll be ending at a higher scale
     // to minimize aliasing during animation.
-    if (titleContentsScale > _titleLabel.layer.contentsScale) {
-      _titleLabel.layer.contentsScale = titleContentsScale;
-      [_titleLabel setNeedsDisplay];
+    if (titleContentsScale > self.titleLabel.layer.contentsScale) {
+      self.titleLabel.layer.contentsScale = titleContentsScale;
+      [self.titleLabel setNeedsDisplay];
     }
 
     // Set the transforms.
-    _titleLabel.transform = titleTransform;
+    self.titleLabel.transform = titleTransform;
     _badgeLabel.transform = imageTransform;
     _imageView.transform = imageTransform;
   };
   void (^completeAnimations)(BOOL) = ^(__unused BOOL finished) {
-    if (titleContentsScale != _titleLabel.layer.contentsScale) {
+    if (titleContentsScale != self.titleLabel.layer.contentsScale) {
       // Update the title with the final contents scale and redraw.
-      _titleLabel.layer.contentsScale = titleContentsScale;
-      [_titleLabel setNeedsDisplay];
+      self.titleLabel.layer.contentsScale = titleContentsScale;
+      [self.titleLabel setNeedsDisplay];
     }
   };
 
