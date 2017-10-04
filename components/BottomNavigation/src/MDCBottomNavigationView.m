@@ -75,6 +75,9 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
     bottomNavCell.title = tabBarItem.title;
     bottomNavCell.image = tabBarItem.image;
     bottomNavCell.badgeValue = tabBarItem.badgeValue;
+    if (tabBarItem.badgeColor) {
+      bottomNavCell.badgeColor = tabBarItem.badgeColor;
+    }
     bottomNavCell.selected = NO;
     [bottomNavCell.button addTarget:self
                              action:@selector(didTapButton:)

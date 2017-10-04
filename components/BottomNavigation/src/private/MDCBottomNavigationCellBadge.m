@@ -64,7 +64,6 @@
 }
 
 - (void)drawBadge {
-
   self.countLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);
@@ -111,9 +110,9 @@
   return rect.size;
 }
 
-- (void)setText:(NSString *)text {
-  _text = text;
-  _countLabel.text = _text;
+- (void)setBadgeValue:(NSString *)badgeValue {
+  _badgeValue = badgeValue;
+  _countLabel.text = badgeValue;
   [self sizeBadge];
   [self drawBadge];
 }

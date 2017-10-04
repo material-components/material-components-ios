@@ -82,7 +82,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   _selected = selected;
 
-  CGPoint iconImageViewCenter = CGPointZero;
+  CGPoint iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
   if (selected) {
     self.label.hidden = NO;
     iconImageViewCenter =
@@ -90,7 +90,6 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
                     CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
   } else {
     self.label.hidden = YES;
-    iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
   }
   CGPoint badgeCenter =
       CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.iconImageView.bounds) / 2,
@@ -117,7 +116,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 
 - (void)setBadgeValue:(NSString *)badgeValue {
   _badgeValue = badgeValue;
-  _badge.text = badgeValue;
+  _badge.badgeValue = badgeValue;
   if (!_badgeValue) {
     _badge.hidden = YES;
   } else {

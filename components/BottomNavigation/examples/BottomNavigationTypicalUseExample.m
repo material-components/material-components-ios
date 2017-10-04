@@ -53,9 +53,8 @@
                                       tag:0];
   UITabBarItem *tabBarItem2 =
       [[UITabBarItem alloc] initWithTitle:@"Item 2"
-                                           image:[UIImage imageNamed:@"Menu"]
-                                             tag:0];
-  tabBarItem2.badgeValue = @"5";
+                                    image:[UIImage imageNamed:@"Menu"]
+                                      tag:0];
   tabBarItem2.badgeColor = [UIColor blueColor];
   UITabBarItem *tabBarItem3 =
       [[UITabBarItem alloc] initWithTitle:@"Item 3"
@@ -72,7 +71,6 @@
                                       tag:0];
   tabBarItem5.badgeValue = @"New";
   _bottomNavView.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
-
 }
 
 - (void)viewWillLayoutSubviews {
