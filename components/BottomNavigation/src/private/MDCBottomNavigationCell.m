@@ -25,6 +25,8 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 @interface MDCBottomNavigationCell ()
 
 @property(nonatomic, strong) MDCBottomNavigationCellBadge *badge;
+@property(nonatomic, strong) UIImage *selectedImage;
+@property(nonatomic, strong) UIImage *unselectedImage;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
 
@@ -51,6 +53,9 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 - (void)commonMDCBottomNavigationCellInit {
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 
+  _selectedColor = [UIColor blackColor];
+  _unselectedColor = [UIColor grayColor];
+
   _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
   [self addSubview:_iconImageView];
 
@@ -58,6 +63,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
   _label.text = _title;
   _label.font = [UIFont systemFontOfSize:kMDCBottomNavigationCellTitleFontSize];
   _label.textAlignment = NSTextAlignmentCenter;
+  _label.textColor = _selectedColor;
   [self addSubview:_label];
 
   _badge = [[MDCBottomNavigationCellBadge alloc] init];
@@ -75,15 +81,31 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-//  [self.label sizeToFit];
-  NSLog(@"%@, %@", self.label.text, NSStringFromCGRect(self.label.frame));
-  CGFloat labelHeight = self.label.bounds.size.height;
-//      [self.badgeValue boundingRectWithSize:self.label.frame.size
-//                                    options:NSStringDrawingUsesLineFragmentOrigin
-//                                 attributes:@{ NSFontAttributeName:self.label.font }
-//                                    context:nil].size.height;
+  CGFloat labelHeight = [self sizeForText:self.title
+                                     font:self.label.font
+                         boundingRectSize:self.bounds.size].height;
   self.label.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelHeight);
   [self setSelected:self.selected];
+}
+
+- (CGSize)sizeForText:(NSString *)text
+                 font:(UIFont *)font
+     boundingRectSize:(CGSize)boundingRectSize {
+  CGRect rect = [text boundingRectWithSize:boundingRectSize
+                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                attributes:@{ NSFontAttributeName:font }
+                                   context:nil];
+  return rect.size;
+}
+
+- (UIImage *)colorizeImage:(UIImage *)image color:(UIColor *)color {
+  UIImage *newImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIGraphicsBeginImageContextWithOptions(image.size, NO, newImage.scale);
+  [color set];
+  [newImage drawInRect:CGRectMake(0, 0, image.size.width, newImage.size.height)];
+  newImage = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return newImage;
 }
 
 #pragma mark - Setters
@@ -101,8 +123,10 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
     iconImageViewCenter =
         CGPointMake(CGRectGetMidX(self.bounds),
                     CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
+    self.iconImageView.image = self.selectedImage;
   } else {
     self.label.hidden = YES;
+    self.iconImageView.image = self.unselectedImage;
   }
   CGPoint badgeCenter =
       CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.iconImageView.bounds) / 2,
@@ -122,6 +146,17 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
   }
 }
 
+- (void)setSelectedColor:(UIColor *)selectedColor {
+  _selectedColor = selectedColor;
+  self.label.textColor = self.selectedColor;
+  self.selectedImage = [self colorizeImage:self.image color:self.selectedColor];
+}
+
+- (void)setUnselectedColor:(UIColor *)unselectedColor {
+  _unselectedColor = unselectedColor;
+  self.unselectedImage = [self colorizeImage:self.image color:self.unselectedColor];
+}
+
 - (void)setBadgeColor:(UIColor *)badgeColor {
   _badgeColor = badgeColor;
   _badge.badgeColor = badgeColor;
@@ -139,13 +174,18 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 
 - (void)setImage:(UIImage *)image {
   _image = image;
-  [_iconImageView setImage:_image];
+
+  self.selectedImage = [self colorizeImage:image color:self.selectedColor];
+  self.unselectedImage = [self colorizeImage:image color:self.unselectedColor];
+
+  _iconImageView.image = self.unselectedImage;
   [_iconImageView sizeToFit];
 }
 
 - (void)setTitle:(NSString *)title {
   _title = title;
   _label.text = _title;
+  [_label sizeToFit];
 }
 
 @end

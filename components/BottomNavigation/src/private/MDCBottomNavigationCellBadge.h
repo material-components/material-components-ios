@@ -18,13 +18,14 @@
 
 @interface MDCBottomNavigationCellBadge : UIView
 
-@property(nonatomic, strong) CAShapeLayer *badgeLayer;
 @property(nonatomic, assign) CGFloat badgeCircleWidth;
 @property(nonatomic, assign) CGFloat badgeCircleHeight;
 @property(nonatomic, assign) CGFloat xPadding;
 @property(nonatomic, assign) CGFloat yPadding;
+
+@property(nonatomic, strong) CAShapeLayer *badgeLayer;
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, strong) UIColor *badgeColor;
-@property(nonatomic, strong) UILabel *countLabel;
+@property(nonatomic, strong) UILabel *badgeValueLabel;
 
 @end

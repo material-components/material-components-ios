@@ -38,20 +38,20 @@ static const CGFloat kMDCBottomNavigationCellBadgeYPadding = 2.f;
   _badgeLayer.fillColor = _badgeColor.CGColor;
   [self.layer addSublayer:_badgeLayer];
 
-  _countLabel = [[UILabel alloc] initWithFrame:self.bounds];
-  _countLabel.textColor = [UIColor whiteColor];
-  _countLabel.font = [UIFont systemFontOfSize:kMDCBottomNavigationCellBadgeFontSize];
-  _countLabel.textAlignment = NSTextAlignmentCenter;
-  [self addSubview:_countLabel];
+  _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
+  _badgeValueLabel.textColor = [UIColor whiteColor];
+  _badgeValueLabel.font = [UIFont systemFontOfSize:kMDCBottomNavigationCellBadgeFontSize];
+  _badgeValueLabel.textAlignment = NSTextAlignmentCenter;
+  [self addSubview:_badgeValueLabel];
 }
 
 - (void)sizeBadge {
-  [_countLabel sizeToFit];
+  [_badgeValueLabel sizeToFit];
   _xPadding = kMDCBottomNavigationCellBadgeXPadding;
   _yPadding = kMDCBottomNavigationCellBadgeYPadding;
 
-  _badgeCircleWidth = _countLabel.bounds.size.width + _xPadding;
-  _badgeCircleHeight = _countLabel.bounds.size.height + _yPadding;
+  _badgeCircleWidth = _badgeValueLabel.bounds.size.width + _xPadding;
+  _badgeCircleHeight = _badgeValueLabel.bounds.size.height + _yPadding;
 
   if (_badgeCircleWidth < _badgeCircleHeight) {
     _badgeCircleWidth = _badgeCircleHeight;
@@ -69,7 +69,7 @@ static const CGFloat kMDCBottomNavigationCellBadgeYPadding = 2.f;
 }
 
 - (void)drawBadge {
-  self.countLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+  self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);
   UIBezierPath *path = [UIBezierPath bezierPath];
@@ -107,7 +107,7 @@ static const CGFloat kMDCBottomNavigationCellBadgeYPadding = 2.f;
 
 - (void)setBadgeValue:(NSString *)badgeValue {
   _badgeValue = badgeValue;
-  _countLabel.text = badgeValue;
+  _badgeValueLabel.text = badgeValue;
   [self sizeBadge];
   [self drawBadge];
 }

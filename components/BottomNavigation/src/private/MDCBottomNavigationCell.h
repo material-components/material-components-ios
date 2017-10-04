@@ -19,11 +19,16 @@
 @interface MDCBottomNavigationCell : UIView
 
 @property(nonatomic, assign) BOOL selected;
+
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
-@property(nonatomic, strong) UIColor *badgeColor;
+
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIImage *image;
+
+@property(nonatomic, strong) UIColor *badgeColor;
+@property(nonatomic, strong) UIColor *selectedColor;
+@property(nonatomic, strong) UIColor *unselectedColor;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 

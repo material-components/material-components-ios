@@ -39,4 +39,14 @@
  */
 - (void)selectItem:(nonnull UITabBarItem *)item;
 
+/**
+ Color of selected item. Applies color to items' icons and text.
+ */
+@property(nonatomic, strong, nonnull) UIColor *selectedColor;
+
+/**
+ Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
+ */
+@property(nonatomic, strong, nonnull) UIColor *unselectedColor;
+
 @end
