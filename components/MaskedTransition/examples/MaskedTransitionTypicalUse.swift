@@ -94,7 +94,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
   }
 
-  func didTapFab(fab: UIView) {
+  @objc func didTapFab(fab: UIView) {
     let target = targets[tableView.indexPathForSelectedRow!.row]
     let vc = target.viewControllerType.init()
 
@@ -133,7 +133,7 @@ private class ToolbarViewController: UIViewController {
     view.addSubview(toolbar)
   }
 
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }
@@ -159,7 +159,7 @@ private class ModalViewController: UIViewController {
     return .lightContent
   }
 
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }

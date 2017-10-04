@@ -78,7 +78,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       object: nil)
   }
 
-  func colorThemeChanged(notification: NSNotification) {
+  @objc func colorThemeChanged(notification: NSNotification) {
     let colorScheme = notification.userInfo?["colorScheme"]
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
@@ -106,11 +106,22 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     titleLabel.text = self.title!.uppercased()
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
     if #available(iOS 9.0, *) {
+      #if swift(>=4.0)
+        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFont.Weight.regular)
+      #else
         titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
+      #endif
     } else {
+      #if swift(>=4.0)
+        let attribute: [UIFontDescriptor.AttributeName: Any] =
+            [UIFontDescriptor.AttributeName.symbolic:
+                UIFontDescriptorSymbolicTraits(rawValue: UIFontDescriptorSymbolicTraits.traitMonoSpace.rawValue)]
+        let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+      #else
         let attribute: [String: UIFontDescriptorSymbolicTraits] =
             [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
         let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+      #endif
         titleLabel.font = UIFont(descriptor: descriptor, size: 14)
     }
     titleLabel.sizeToFit()
@@ -149,7 +160,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.headerViewController.didMove(toParentViewController: self)
 
     self.collectionView?.accessibilityIdentifier = "collectionView"
-#if swift(>=3.2)
+#if swift(>=4.0)
     if #available(iOS 11.0, *) {
       self.collectionView?.contentInsetAdjustmentBehavior = .always
     }
@@ -175,7 +186,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return self.headerViewController
   }
 
-#if swift(>=3.2)
+#if swift(>=4.0)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     self.headerViewController.headerView.minimumHeight =
@@ -248,12 +259,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return cell
   }
 
-  func collectionView(_ collectionView: UICollectionView,
+  @objc func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
     var safeInsets = CGFloat(0)
-#if swift(>=3.2)
+#if swift(>=4.0)
     if #available(iOS 11, *) {
       safeInsets = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
     }

@@ -19,7 +19,7 @@ import MaterialComponents
 
 class ButtonsDynamicTypeViewController: UIViewController {
 
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Buttons (DynamicType)"]
   }
 

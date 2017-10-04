@@ -24,9 +24,15 @@ import MaterialComponents
 class ButtonBarIssue370Tests: XCTestCase {
 
   var buttonBar: MDCButtonBar!
+  #if swift(>=4.0)
+  let globalAttributes = [NSAttributedStringKey.foregroundColor: UIColor.blue]
+  let directAttributes = [NSAttributedStringKey.foregroundColor: UIColor.blue]
+  let fontAttributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
+  #else
   let globalAttributes = [NSForegroundColorAttributeName: UIColor.blue]
   let directAttributes = [NSForegroundColorAttributeName: UIColor.blue]
   let fontAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 12)]
+  #endif
 
   override func setUp() {
     buttonBar = MDCButtonBar()

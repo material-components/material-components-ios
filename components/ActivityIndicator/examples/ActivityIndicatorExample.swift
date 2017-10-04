@@ -83,7 +83,7 @@ extension ActivityIndicatorSwiftController : MDCActivityIndicatorDelegate {
    }
    
    // MARK: Catalog by convention
-   class func catalogBreadcrumbs() -> [String] {
+   @objc class func catalogBreadcrumbs() -> [String] {
       return ["Activity Indicator", "Activity Indicator (Swift)"]
    }
    
