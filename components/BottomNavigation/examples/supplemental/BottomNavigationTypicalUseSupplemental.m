@@ -25,7 +25,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"";
+  return @"A bottom navigation component stylized according to material design specs.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
