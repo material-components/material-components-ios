@@ -16,8 +16,27 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ A bottom navigation view.
+ 
+ The bottom navigation view is a bar docked at the bottom of the screen with tappable items. Only
+ one item can be selected at once. The selected item's title text is displayed. Title text for
+ unselected items is hidden.
+ */
 @interface MDCBottomNavigationView : UIView
 
+/**
+ An array of UITabBarItems that is used to populate bottom navigation view content. The array must
+ contain a minimum of three items with a maxiumum of up to five items. The first item is selected by
+ default.
+ */
 @property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *navBarItems;
+
+/**
+ Selects an item contained in the bottom navigation view.
+
+ @param item A UITabBarItem to select from navBarItems.
+ */
+- (void)selectItem:(nonnull UITabBarItem *)item;
 
 @end

@@ -15,7 +15,6 @@
  */
 
 #import "MDCBottomNavigationCellBadge.h"
-
 #import "MaterialMath.h"
 
 @implementation MDCBottomNavigationCellBadge
@@ -39,7 +38,6 @@
   _countLabel.font = [UIFont systemFontOfSize:10];
   _countLabel.textAlignment = NSTextAlignmentCenter;
   [self addSubview:_countLabel];
-  [self sizeBadge];
 }
 
 - (void)sizeBadge {
@@ -61,6 +59,7 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+  [self sizeBadge];
   [self drawBadge];
 }
 

@@ -44,6 +44,7 @@
                             self.view.bounds.size.width,
                             72.f);
   _bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
+//  _bottomNavView.backgroundColor = [UIColor blueColor];
   [self.view addSubview:_bottomNavView];
   
   UITabBarItem *tabBarItem1 =
@@ -77,6 +78,8 @@
 - (void)viewWillLayoutSubviews {
   _bottomNavView.navBarItems[1].badgeValue = @"100";
   _bottomNavView.navBarItems[2].title = @"Third item";
+  _bottomNavView.navBarItems[4].badgeColor = [UIColor orangeColor];
+  [_bottomNavView selectItem:_bottomNavView.navBarItems[2]];
 }
 
 @end

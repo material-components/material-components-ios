@@ -33,7 +33,7 @@
 }
 
 - (BOOL)catalogShouldHideNavigation {
-  return YES;
+  return NO;
 }
 
 @end

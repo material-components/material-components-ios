@@ -17,10 +17,7 @@
 #import "MDCBottomNavigationCell.h"
 #import "MDCBottomNavigationCellBadge.h"
 
-// The duration of the enter animation of the path cut, same as floating button enter animation.
-//static const NSTimeInterval kMDCBottomNavigationCellEnterDuration = 0.270f;
-
-// The duration of the exit animation of the path cut, same as floating button exit animation.
+// The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 
 @interface MDCBottomNavigationCell ()
@@ -50,7 +47,6 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 }
 
 - (void)commonMDCBottomNavigationCellInit {
-  self.backgroundColor = [UIColor whiteColor];
   _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
   [self addSubview:_iconImageView];
 
@@ -80,39 +76,38 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 }
 
 - (void)setSelected:(BOOL)selected {
-  _selected = selected;
-  
-  CGPoint iconImageViewCenter = CGPointZero;
-  CGPoint badgeCenter = CGPointZero;
-  CGPoint labelCenter =
-      CGPointMake(CGRectGetMidX(self.bounds),
-                  CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
-  
-  NSLog(@"%@", NSStringFromCGRect(self.iconImageView.frame));
+  [self setSelected:selected animated:NO];
+}
 
-  if (_selected) {
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  _selected = selected;
+
+  CGPoint iconImageViewCenter = CGPointZero;
+  if (selected) {
     self.label.hidden = NO;
     iconImageViewCenter =
         CGPointMake(CGRectGetMidX(self.bounds),
                     CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
-    badgeCenter =
-        CGPointMake(self.iconImageView.frame.origin.x + CGRectGetWidth(self.iconImageView.bounds),
-                    iconImageViewCenter.y);
   } else {
     self.label.hidden = YES;
     iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    badgeCenter =
-        CGPointMake(self.iconImageView.frame.origin.x + CGRectGetWidth(self.iconImageView.bounds),
-                    iconImageViewCenter.y);
   }
+  CGPoint badgeCenter =
+      CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.iconImageView.bounds) / 2,
+                  iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
+  self.label.center =
+      CGPointMake(CGRectGetMidX(self.bounds),
+                  CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
 
-  self.label.center = labelCenter;
-  
-
-  [UIView animateWithDuration:kMDCBottomNavigationCellTransitionDuration animations:^(void) {
+  if (animated) {
+    [UIView animateWithDuration:kMDCBottomNavigationCellTransitionDuration animations:^(void) {
+      self.iconImageView.center = iconImageViewCenter;
+      self.badge.center = badgeCenter;
+    }];
+  } else {
     self.iconImageView.center = iconImageViewCenter;
     self.badge.center = badgeCenter;
-  }];
+  }
 }
 
 - (void)setBadgeColor:(UIColor *)badgeColor {

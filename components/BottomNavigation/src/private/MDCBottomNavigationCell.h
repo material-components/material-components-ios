@@ -25,4 +25,6 @@
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIImage *image;
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated;
+
 @end

@@ -15,15 +15,19 @@
  */
 
 #import "MDCBottomNavigationView.h"
-
 #import "private/MDCBottomNavigationCell.h"
+
+static NSString *const kMDCBottomNavigationViewBadgeColorString = @"badgeColor";
+static NSString *const kMDCBottomNavigationViewBadgeValueString = @"badgeValue";
+static NSString *const kMDCBottomNavigationViewImageString = @"image";
+static NSString *const kMDCBottomNavigationViewTitleString = @"title";
+static NSString *const kMDCBottomNavigationViewNewString = @"new";
 
 @interface MDCBottomNavigationView ()
 
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationCell *> *navBarCells;
 
 @end
-
 
 @implementation MDCBottomNavigationView
 
@@ -44,6 +48,7 @@
 }
 
 - (void)commonMDCBottomNavigationViewInit {
+  self.backgroundColor = [UIColor whiteColor];
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
   _navBarCells = [NSMutableArray array];
 }
@@ -76,24 +81,36 @@
                    forControlEvents:UIControlEventTouchUpInside];
 
     [tabBarItem addObserver:self
-                 forKeyPath:@"badgeColor"
+                 forKeyPath:kMDCBottomNavigationViewBadgeColorString
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     [tabBarItem addObserver:self
-                 forKeyPath:@"badgeValue"
+                 forKeyPath:kMDCBottomNavigationViewBadgeValueString
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     [tabBarItem addObserver:self
-                 forKeyPath:@"image"
+                 forKeyPath:kMDCBottomNavigationViewImageString
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     [tabBarItem addObserver:self
-                 forKeyPath:@"title"
+                 forKeyPath:kMDCBottomNavigationViewTitleString
                     options:NSKeyValueObservingOptionNew
                     context:nil];
-    
-    [_navBarCells addObject:bottomNavCell];
+
+    [self.navBarCells addObject:bottomNavCell];
     [self addSubview:bottomNavCell];
+  }
+
+  // Select the first item by default.
+  [self.navBarCells.firstObject setSelected:YES];
+}
+
+- (void)dealloc {
+  for (UITabBarItem *tabBarItem in self.navBarItems) {
+    [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationViewBadgeColorString];
+    [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationViewBadgeValueString];
+    [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationViewImageString];
+    [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationViewTitleString];
   }
 }
 
@@ -101,38 +118,49 @@
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
                        context:(void *)context {
-  NSInteger i = 0;
-  NSInteger selectedItemNum = 0;
-  for (UITabBarItem *tabBarItem in self.navBarItems) {
-    if (object == tabBarItem) {
-      selectedItemNum = i;
-      break;
+  if (!context) {
+    NSInteger i = 0;
+    NSInteger selectedItemNum = 0;
+    for (UITabBarItem *tabBarItem in self.navBarItems) {
+      if (object == tabBarItem) {
+        selectedItemNum = i;
+        break;
+      }
+      i++;
     }
-    i++;
+    MDCBottomNavigationCell *cell = _navBarCells[selectedItemNum];
+    if ([keyPath isEqualToString:kMDCBottomNavigationViewBadgeColorString]) {
+      [cell setBadgeColor:change[kMDCBottomNavigationViewNewString]];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationViewBadgeValueString]) {
+      [cell setBadgeValue:change[kMDCBottomNavigationViewNewString]];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationViewImageString]) {
+      [cell setImage:change[kMDCBottomNavigationViewNewString]];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationViewTitleString]) {
+      [cell setTitle:change[kMDCBottomNavigationViewNewString]];
+    }
   }
-
-  MDCBottomNavigationCell *cell = _navBarCells[selectedItemNum];
-  if ([keyPath isEqualToString:@"badgeColor"]) {
-    [cell setBadgeColor:change[@"new"]];
-  } else if ([keyPath isEqualToString:@"badgeValue"]) {
-    [cell setBadgeValue:change[@"new"]];
-  } else if ([keyPath isEqualToString:@"image"]) {
-    [cell setImage:change[@"new"]];
-  } else if ([keyPath isEqualToString:@"title"]) {
-    [cell setTitle:change[@"new"]];
-  }
-
-  NSLog(@"%@", context);
 }
 
 - (void)didTapButton:(UIButton *)button {
   for (MDCBottomNavigationCell *cell in self.navBarCells) {
     if (cell.button != button) {
-      cell.selected = NO;
+      [cell setSelected:NO animated:YES];
     }
   }
   MDCBottomNavigationCell *cell = (MDCBottomNavigationCell *)button.superview;
-  cell.selected = YES;
+  [cell setSelected:YES animated:YES];
+}
+
+- (void)selectItem:(UITabBarItem *)item {
+  NSInteger i = 0;
+  for (UITabBarItem *tabBarItem in self.navBarItems) {
+    if (item == tabBarItem) {
+      [self.navBarCells[i] setSelected:YES];
+    } else {
+      [self.navBarCells[i] setSelected:NO];
+    }
+    i++;
+  }
 }
 
 @end
