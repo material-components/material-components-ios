@@ -429,6 +429,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/AnimationTiming"
       sss.dependency "MaterialComponents/Ink"
       sss.dependency "MaterialComponents/Typography"
+      sss.dependency "MaterialComponents/private/Math"
       sss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
