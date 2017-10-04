@@ -23,6 +23,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
 
 @interface BottomNavigationTypicalUseExample ()
 
+@property(nonatomic, assign) int badgeCount;
 @property(nonatomic, strong) MDCBottomNavigationView *bottomNavView;
 
 @end
@@ -33,7 +34,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
   self = [super init];
   if (self) {
     self.title = @"Bottom Navigation";
-     [self commonBottomNavigationTypicalUseExampleInit];
+    [self commonBottomNavigationTypicalUseExampleInit];
   }
   return self;
 }
@@ -48,7 +49,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
                  kBottomNavigationTypicalUseExampleNavHeight);
   _bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
   [self.view addSubview:_bottomNavView];
-  
+
   UITabBarItem *tabBarItem1 =
       [[UITabBarItem alloc] initWithTitle:@"Item 1"
                                     image:[UIImage imageNamed:@"Add"]
@@ -73,15 +74,28 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
                                       tag:0];
   tabBarItem5.badgeValue = @"New";
   _bottomNavView.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
+  [_bottomNavView selectItem:tabBarItem2];
+  [self updateBadgeItemCount];
 }
 
 - (void)viewWillLayoutSubviews {
 
   // Example of changing nav bar item values after the bottom navigation is created.
-  _bottomNavView.navBarItems[1].badgeValue = @"100";
   _bottomNavView.navBarItems[2].title = @"Third item";
   _bottomNavView.navBarItems[4].badgeColor = [UIColor orangeColor];
-  [_bottomNavView selectItem:_bottomNavView.navBarItems[2]];
+}
+
+- (void)updateBadgeItemCount {
+  if (!self.badgeCount) {
+    self.badgeCount = 0;
+  }
+  self.badgeCount++;
+  self.bottomNavView.navBarItems[1].badgeValue =
+     [NSNumber numberWithInt:self.badgeCount].stringValue;
+
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    [self updateBadgeItemCount];
+  });
 }
 
 @end

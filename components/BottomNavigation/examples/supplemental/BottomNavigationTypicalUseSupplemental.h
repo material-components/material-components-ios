@@ -21,5 +21,3 @@
 @interface BottomNavigationTypicalUseExample : UIViewController
 
 @end
-
-

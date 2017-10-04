@@ -18,7 +18,7 @@
 
 /**
  A bottom navigation view.
- 
+
  The bottom navigation view is a bar docked at the bottom of the screen with tappable items. Only
  one item can be selected at once. The selected item's title text is displayed. Title text for
  unselected items is hidden.

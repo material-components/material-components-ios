@@ -17,6 +17,8 @@
 #import "MDCBottomNavigationCell.h"
 #import "MDCBottomNavigationCellBadge.h"
 
+static const CGFloat kMDCBottomNavigationCellTitleFontSize = 12.f;
+
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 
@@ -54,7 +56,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 
   _label = [[UILabel alloc] initWithFrame:CGRectZero];
   _label.text = _title;
-  _label.font = [UIFont systemFontOfSize:12];
+  _label.font = [UIFont systemFontOfSize:kMDCBottomNavigationCellTitleFontSize];
   _label.textAlignment = NSTextAlignmentCenter;
   [self addSubview:_label];
 
@@ -73,9 +75,16 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  self.label.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), 12);
+  CGFloat labelHeight =
+      [self.badgeValue boundingRectWithSize:self.bounds.size
+                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                 attributes:@{ NSFontAttributeName:self.label.font }
+                                    context:nil].size.height;
+  self.label.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelHeight);
   [self setSelected:self.selected];
 }
+
+#pragma mark - Setters
 
 - (void)setSelected:(BOOL)selected {
   [self setSelected:selected animated:NO];

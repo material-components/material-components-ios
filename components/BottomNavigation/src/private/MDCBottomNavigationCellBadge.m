@@ -17,6 +17,11 @@
 #import "MDCBottomNavigationCellBadge.h"
 #import "MaterialMath.h"
 
+static const CGFloat kMDCBottomNavigationCellBadgeAngle = 90.f;
+static const CGFloat kMDCBottomNavigationCellBadgeFontSize = 10.f;
+static const CGFloat kMDCBottomNavigationCellBadgeXPadding = 8.f;
+static const CGFloat kMDCBottomNavigationCellBadgeYPadding = 2.f;
+
 @implementation MDCBottomNavigationCellBadge
 
 - (instancetype)init {
@@ -35,15 +40,15 @@
 
   _countLabel = [[UILabel alloc] initWithFrame:self.bounds];
   _countLabel.textColor = [UIColor whiteColor];
-  _countLabel.font = [UIFont systemFontOfSize:10];
+  _countLabel.font = [UIFont systemFontOfSize:kMDCBottomNavigationCellBadgeFontSize];
   _countLabel.textAlignment = NSTextAlignmentCenter;
   [self addSubview:_countLabel];
 }
 
 - (void)sizeBadge {
   [_countLabel sizeToFit];
-  _xPadding = 6.f;
-  _yPadding = 2.f;
+  _xPadding = kMDCBottomNavigationCellBadgeXPadding;
+  _yPadding = kMDCBottomNavigationCellBadgeYPadding;
 
   _badgeCircleWidth = _countLabel.bounds.size.width + _xPadding;
   _badgeCircleHeight = _countLabel.bounds.size.height + _yPadding;
@@ -68,8 +73,8 @@
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);
   UIBezierPath *path = [UIBezierPath bezierPath];
-  CGFloat startAngleLeftSide = MDCDegreesToRadians(-90);
-  CGFloat endAngleLeftSide = MDCDegreesToRadians(90);
+  CGFloat startAngleLeftSide = MDCDegreesToRadians(-kMDCBottomNavigationCellBadgeAngle);
+  CGFloat endAngleLeftSide = MDCDegreesToRadians(kMDCBottomNavigationCellBadgeAngle);
 
   [path moveToPoint:CGPointMake(badgeRadius, badgeRadius)];
   CGPoint centerPathLeftSide = CGPointMake(badgeRadius, badgeRadius);
@@ -83,8 +88,8 @@
   [path addLineToPoint:CGPointMake(badgeRadius, CGRectGetHeight(self.bounds))];
   [path addLineToPoint:CGPointMake(rectWidth, CGRectGetHeight(self.bounds))];
 
-  CGFloat startAngleRightSide = MDCDegreesToRadians(90);
-  CGFloat endAngleRightSide = MDCDegreesToRadians(-90);
+  CGFloat startAngleRightSide = MDCDegreesToRadians(kMDCBottomNavigationCellBadgeAngle);
+  CGFloat endAngleRightSide = MDCDegreesToRadians(-kMDCBottomNavigationCellBadgeAngle);
 
   CGPoint centerPathRightSide = CGPointMake(rectWidth, badgeRadius);
   [path addArcWithCenter:centerPathRightSide
@@ -98,16 +103,6 @@
 
   [path closePath];
   self.badgeLayer.path = path.CGPath;
-}
-
-- (CGSize)sizeForText:(NSString *)text
-                 font:(UIFont *)font
-     boundingRectSize:(CGSize)boundingRectSize {
-  CGRect rect = [text boundingRectWithSize:boundingRectSize
-                                   options:NSStringDrawingUsesLineFragmentOrigin
-                                attributes:@{ NSFontAttributeName:font }
-                                   context:nil];
-  return rect.size;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {
