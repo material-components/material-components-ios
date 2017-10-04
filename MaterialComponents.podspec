@@ -108,6 +108,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
+    ss.dependency "MaterialComponents/private/Math"
     ss.dependency "MaterialComponents/private/RTL"
   end
 
