@@ -15,6 +15,8 @@
  */
 
 #import "MDCBottomNavigationView.h"
+
+#import "MaterialMath.h"
 #import "private/MDCBottomNavigationCell.h"
 
 static NSString *const kMDCBottomNavigationViewBadgeColorString = @"badgeColor";
@@ -26,6 +28,7 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
 @interface MDCBottomNavigationView ()
 
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationCell *> *navBarCells;
+@property(nonatomic, strong) UIView *navBarContainerView;
 
 @end
 
@@ -50,6 +53,16 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
 - (void)commonMDCBottomNavigationViewInit {
   self.backgroundColor = [UIColor whiteColor];
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
+
+  // Content in bottom navigation always uses the width of the device portrait orientation width.
+  CGSize appSize = [[UIScreen mainScreen] applicationFrame].size;
+  CGFloat minDimension = MIN(appSize.width, appSize.height);
+  CGRect adjustedFrame = CGRectMake(0, 0, minDimension, self.frame.size.height);
+  _navBarContainerView = [[UIView alloc] initWithFrame:adjustedFrame];
+  _navBarContainerView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
+                                           UIViewAutoresizingFlexibleLeftMargin |
+                                           UIViewAutoresizingFlexibleRightMargin );
+  [self addSubview:_navBarContainerView];
   _navBarCells = [NSMutableArray array];
 }
 
@@ -58,10 +71,10 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
 
   NSInteger numItems = self.navBarItems.count;
   NSInteger i = 0;
-  CGFloat itemWidth = self.bounds.size.width / numItems;
+  CGSize navBarSize = self.navBarContainerView.bounds.size;
+  CGFloat itemWidth = navBarSize.width / numItems;
   for (MDCBottomNavigationCell *cell in self.navBarCells) {
-    CGRect cellFrame = CGRectMake(i * itemWidth, 0, itemWidth, 72);
-    cell.frame = cellFrame;
+    cell.frame = CGRectMake(i * itemWidth, 0, itemWidth, navBarSize.height);
     i++;
   }
 }
@@ -101,7 +114,7 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
                     context:nil];
 
     [self.navBarCells addObject:bottomNavCell];
-    [self addSubview:bottomNavCell];
+    [self.navBarContainerView addSubview:bottomNavCell];
   }
 
   // Select the first item by default.

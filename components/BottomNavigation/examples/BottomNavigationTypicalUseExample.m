@@ -19,6 +19,8 @@
 #import "BottomNavigationTypicalUseSupplemental.h"
 #import "MaterialBottomNavigation.h"
 
+static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
+
 @interface BottomNavigationTypicalUseExample ()
 
 @property(nonatomic, strong) MDCBottomNavigationView *bottomNavView;
@@ -39,12 +41,12 @@
 - (void)commonBottomNavigationTypicalUseExampleInit {
   self.view.backgroundColor = [UIColor grayColor];
 
-  CGRect frame = CGRectMake(0,
-                            self.view.bounds.size.height - 72.f,
-                            self.view.bounds.size.width,
-                            72.f);
+  CGRect frame =
+      CGRectMake(0,
+                 self.view.bounds.size.height - kBottomNavigationTypicalUseExampleNavHeight,
+                 self.view.bounds.size.width,
+                 kBottomNavigationTypicalUseExampleNavHeight);
   _bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
-//  _bottomNavView.backgroundColor = [UIColor blueColor];
   [self.view addSubview:_bottomNavView];
   
   UITabBarItem *tabBarItem1 =
@@ -74,6 +76,8 @@
 }
 
 - (void)viewWillLayoutSubviews {
+
+  // Example of changing nav bar item values after the bottom navigation is created.
   _bottomNavView.navBarItems[1].badgeValue = @"100";
   _bottomNavView.navBarItems[2].title = @"Third item";
   _bottomNavView.navBarItems[4].badgeColor = [UIColor orangeColor];

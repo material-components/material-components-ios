@@ -47,6 +47,8 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 }
 
 - (void)commonMDCBottomNavigationCellInit {
+  self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+
   _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
   [self addSubview:_iconImageView];
 

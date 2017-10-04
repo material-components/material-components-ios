@@ -35,7 +35,7 @@
 /**
  Selects an item contained in the bottom navigation view.
 
- @param item A UITabBarItem to select from navBarItems.
+ @param item UITabBarItem to select from the navBarItems array.
  */
 - (void)selectItem:(nonnull UITabBarItem *)item;
 
