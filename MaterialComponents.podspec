@@ -308,7 +308,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
-    ss.dependency "MotionTransitioning", "~> 3.0"
+    ss.dependency "MotionTransitioning", "~> 3.3"
     ss.dependency "MotionAnimator", "~> 1.0"
     ss.dependency "MotionInterchange", "~> 1.0"
   end
@@ -522,6 +522,23 @@ Pod::Spec.new do |s|
       ss.ios.deployment_target = '8.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    end
+
+    pss.subspec "ShapeLibrary" do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+
+      ss.dependency "MaterialComponents/private/Shapes"
+      ss.dependency "MaterialComponents/private/Math"
+    end
+
+    pss.subspec "Shapes" do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+
+      ss.dependency "MaterialComponents/private/Math"
     end
 
     pss.subspec "ThumbTrack" do |ss|

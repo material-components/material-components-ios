@@ -54,6 +54,7 @@ PODS:
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
+    - MaterialComponents/private/Application
     - MaterialComponents/private/Icons/ic_arrow_back
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
@@ -61,6 +62,7 @@ PODS:
     - MaterialComponents/Typography
   - MaterialComponents/BottomAppBar (35.2.0):
     - MaterialComponents/Buttons
+    - MaterialComponents/NavigationBar
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
   - MaterialComponents/BottomSheet (35.2.0):
@@ -186,7 +188,7 @@ PODS:
   - MaterialComponents/MaskedTransition (35.2.0):
     - MotionAnimator (~> 1.0)
     - MotionInterchange (~> 1.0)
-    - MotionTransitioning (~> 3.0)
+    - MotionTransitioning (~> 3.3)
   - MaterialComponents/NavigationBar (35.2.0):
     - MaterialComponents/NavigationBar/ColorThemer (= 35.2.0)
     - MaterialComponents/NavigationBar/Component (= 35.2.0)
@@ -308,24 +310,24 @@ PODS:
   - MaterialComponents/Typography (35.2.0):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
-  - MotionAnimator (1.1.0):
+  - MotionAnimator (1.1.2):
     - MotionInterchange
-  - MotionInterchange (1.0.1)
-  - MotionTransitioning (3.1.0)
+  - MotionInterchange (1.1.0)
+  - MotionTransitioning (3.3.0)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../../
+    :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: a18f4c31dc522f167ec8e006bceab7cfc76c246a
+  MaterialComponents: ae22562792fb39d7fd5fe27775c2544746526b0a
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
-  MotionAnimator: 9d025cda7572737e5db5ca779eb28c767fe6cf45
-  MotionInterchange: 7a7c355ba2ed5d36c5cf2ceb76cacd3d3680dbf5
-  MotionTransitioning: 5a4188866a5b016f7181dd41c1a14f93809688ec
+  MotionAnimator: 5a1893b58fcf7a4664d81d69c9a09a0078c67e06
+  MotionInterchange: b600100244df56c4f462bdacbcd11c44e6305d05
+  MotionTransitioning: caaa488e0469d93f004793b96a2ed04447af808d
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
 
