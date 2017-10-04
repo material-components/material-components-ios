@@ -75,11 +75,13 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat labelHeight =
-      [self.badgeValue boundingRectWithSize:self.bounds.size
-                                    options:NSStringDrawingUsesLineFragmentOrigin
-                                 attributes:@{ NSFontAttributeName:self.label.font }
-                                    context:nil].size.height;
+//  [self.label sizeToFit];
+  NSLog(@"%@, %@", self.label.text, NSStringFromCGRect(self.label.frame));
+  CGFloat labelHeight = self.label.bounds.size.height;
+//      [self.badgeValue boundingRectWithSize:self.label.frame.size
+//                                    options:NSStringDrawingUsesLineFragmentOrigin
+//                                 attributes:@{ NSFontAttributeName:self.label.font }
+//                                    context:nil].size.height;
   self.label.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelHeight);
   [self setSelected:self.selected];
 }

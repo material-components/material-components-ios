@@ -80,6 +80,9 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
 }
 
 - (void)setNavBarItems:(NSArray<UITabBarItem *> *)navBarItems {
+  NSAssert(navBarItems.count > 2, @"Need to have at least 3 items in navBarItems.");
+  NSAssert(navBarItems.count < 6, @"navBarItems has a maximum of 5 items.");
+
   _navBarItems = navBarItems;
 
   for (UITabBarItem *tabBarItem in navBarItems) {
@@ -87,7 +90,9 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
         [[MDCBottomNavigationCell alloc] initWithFrame:CGRectZero];
     bottomNavCell.title = tabBarItem.title;
     bottomNavCell.image = tabBarItem.image;
-    bottomNavCell.badgeValue = tabBarItem.badgeValue;
+    if (tabBarItem.badgeValue) {
+      bottomNavCell.badgeValue = tabBarItem.badgeValue;
+    }
     if (tabBarItem.badgeColor) {
       bottomNavCell.badgeColor = tabBarItem.badgeColor;
     }

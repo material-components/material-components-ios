@@ -51,14 +51,13 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
   [self.view addSubview:_bottomNavView];
 
   UITabBarItem *tabBarItem1 =
-      [[UITabBarItem alloc] initWithTitle:@"Item 1"
+      [[UITabBarItem alloc] initWithTitle:@"Many items"
                                     image:[UIImage imageNamed:@"Add"]
                                       tag:0];
   UITabBarItem *tabBarItem2 =
       [[UITabBarItem alloc] initWithTitle:@"Item 2"
                                     image:[UIImage imageNamed:@"Menu"]
                                       tag:0];
-  tabBarItem2.badgeColor = [UIColor blueColor];
   UITabBarItem *tabBarItem3 =
       [[UITabBarItem alloc] initWithTitle:@"Item 3"
                                     image:[UIImage imageNamed:@"Add"]
@@ -73,6 +72,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
                                     image:[UIImage imageNamed:@"Add"]
                                       tag:0];
   tabBarItem5.badgeValue = @"New";
+  tabBarItem5.badgeColor = [UIColor blackColor];
   _bottomNavView.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   [_bottomNavView selectItem:tabBarItem2];
   [self updateBadgeItemCount];
@@ -82,7 +82,6 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
 
   // Example of changing nav bar item values after the bottom navigation is created.
   _bottomNavView.navBarItems[2].title = @"Third item";
-  _bottomNavView.navBarItems[4].badgeColor = [UIColor orangeColor];
 }
 
 - (void)updateBadgeItemCount {
