@@ -61,7 +61,7 @@ class FlexibleHeaderSizeToFitTests: XCTestCase {
     XCTAssertEqual(view.frame.origin.x, initialFrame.origin.x)
     XCTAssertEqual(view.frame.origin.y, initialFrame.origin.y)
     XCTAssertEqual(view.frame.size.width, initialFrame.size.width)
-    XCTAssertEqual(view.frame.size.height, initialFrame.size.height)
+    XCTAssertEqual(view.frame.size.height, view.minimumHeight)
 
     XCTAssertEqual(bestFitSize.width, possibleSize.width)
     XCTAssertEqual(bestFitSize.height, view.minimumHeight)
