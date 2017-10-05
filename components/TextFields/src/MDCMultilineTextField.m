@@ -474,14 +474,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 #pragma mark - Properties Implementation
 
-- (BOOL)adjustsFontForContentSizeCategory {
-  return self.mdc_adjustsFontForContentSizeCategory;
-}
-
-- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
-  [self mdc_setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
-}
-
 - (NSAttributedString *)attributedPlaceholder {
   return self.fundament.attributedPlaceholder;
 }
