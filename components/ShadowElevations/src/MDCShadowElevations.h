@@ -16,6 +16,12 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
+typedef NS_ENUM(NSInteger, MDCShadowElevation) {
+  MDCShadowElevation1 = 0,
+  MDCShadowElevation2 = 1,
+  MDCShadowElevation3 = 2
+};
+
 /** The shadow elevation of the app bar. */
 CG_EXTERN const CGFloat MDCShadowElevationAppBar;
 
