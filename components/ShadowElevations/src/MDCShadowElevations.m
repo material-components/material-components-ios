@@ -17,6 +17,7 @@
 #import "MDCShadowElevations.h"
 
 const CGFloat MDCShadowElevationAppBar = 4.f;
+const CGFloat MDCShadowElevationBottomNavigationBar = 8.f;
 const CGFloat MDCShadowElevationCardPickedUp = 8.f;
 const CGFloat MDCShadowElevationCardResting = 2.f;
 const CGFloat MDCShadowElevationDialog = 24.f;
@@ -37,4 +38,3 @@ const CGFloat MDCShadowElevationSearchBarResting = 2.f;
 const CGFloat MDCShadowElevationSearchBarScrolled = 3.f;
 const CGFloat MDCShadowElevationSnackbar = 6.f;
 const CGFloat MDCShadowElevationSubMenu = 9.f;
-const CGFloat MDCShadowElevationSwitch = 1.f;
