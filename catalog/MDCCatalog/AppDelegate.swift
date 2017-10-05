@@ -53,6 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCAlertColorThemer.apply(colorScheme)
     MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
     MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
+    let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
+    MDCButtonColorThemer.apply(clearScheme, to:MDCFlatButton.appearance())
     MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
     MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
     MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())
@@ -62,11 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
     MDCTextFieldColorThemer.applyColorScheme(toAllTextInputControllerDefault: colorScheme)
-
-    do {
-      let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
-      MDCButtonColorThemer.apply(clearScheme, to:MDCFlatButton.appearance())
-    }
 
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor
