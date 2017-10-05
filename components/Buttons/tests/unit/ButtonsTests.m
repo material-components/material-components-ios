@@ -455,6 +455,21 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
 }
 
+- (void)testEnabledAlphaNotSetWhileDisabled {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];
+  CGFloat alpha = 0.2;
+
+  // When
+  button.alpha = alpha;
+  button.enabled = NO;
+  button.alpha = 1 - alpha;
+  button.enabled = YES;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
+}
+
 - (void)testDisabledAlpha {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];

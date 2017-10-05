@@ -321,6 +321,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
+- (void)setAlpha:(CGFloat)alpha {
+  if (self.enabled) {
+    _enabledAlpha = alpha;
+  }
+  [super setAlpha:alpha];
+}
+
 - (void)setDisabledAlpha:(CGFloat)disabledAlpha {
   _disabledAlpha = disabledAlpha;
   [self updateAlphaAndBackgroundColorAnimated:NO];
@@ -410,9 +417,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - UIControl methods
 
 - (void)setEnabled:(BOOL)enabled {
-  if (self.enabled && !enabled) {
-    _enabledAlpha = self.alpha;
-  }
   [self setEnabled:enabled animated:NO];
 }
 
