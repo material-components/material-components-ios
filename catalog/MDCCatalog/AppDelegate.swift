@@ -63,6 +63,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
     MDCTextFieldColorThemer.applyColorScheme(toAllTextInputControllerDefault: colorScheme)
 
+    do {
+      let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
+      MDCButtonColorThemer.apply(clearScheme, to:MDCFlatButton.appearance())
+    }
+
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor
     UISwitch.appearance().onTintColor = colorScheme?.primaryColor
