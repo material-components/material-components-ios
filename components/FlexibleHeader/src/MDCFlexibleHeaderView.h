@@ -20,6 +20,27 @@ typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
 typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *_Nonnull shadowLayer,
                                                             CGFloat intensity);
 
+/** This determines how we adjust the height to account for the Safe Area insets. */
+typedef NS_ENUM(NSInteger, MDCFlexibleHeaderHeightSafeAreaAdjustment) {
+
+  /**
+   Only adjust the height to account for the Safe Area if min and max have not been explicitly set.
+
+   In this mode we add safeAreaInsets.top to both the min and the max height only if they haven't
+   been explicitly set. Previously minimumHeight and maximumHeight could've included the status bar
+   height, so for backwards compatibility reasons we only adjust if the default values are being
+   used.
+   */
+  MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy,
+
+  /**
+   Always adjust the height to account for the Safe Area.
+
+   In this mode we add safeAreaInsets.top to both the min and the max height.
+   */
+  MDCFlexibleHeaderHeightSafeAreaAdjustmentAlways,
+};
+
 /**
  The possible translation (shift) behaviors of a flexible header view.
 
@@ -293,6 +314,10 @@ IB_DESIGNABLE
 /**
  The minimum height that this header can shrink to.
 
+ This number should not include the status bar height or the top Safe Area inset and
+ heightSafeAreaAdjustment should be set to MDCFlexibleHeaderHeightSafeAreaAdjustmentAlways. That
+ way the component will take care of adjusting its height to account for changes to the Safe Area.
+
  If you change the value of this property and the maximumHeight of the receiver is below the new
  minimumHeight, maximumHeight will be adjusted to match the new minimum value.
  */
@@ -301,10 +326,22 @@ IB_DESIGNABLE
 /**
  The maximum height that this header can expand to.
 
+ This number should not include the status bar height or the top Safe Area inset and
+ heightSafeAreaAdjustment should be set to MDCFlexibleHeaderHeightSafeAreaAdjustmentAlways. That
+ way the component will take care of adjusting its height to account for changes to the Safe Area.
+
  If you change the value of this property and the minimumHeight of the receiver is above the new
  maximumHeight, minimumHeight will be adjusted to match the new maximumHeight.
  */
 @property(nonatomic) CGFloat maximumHeight;
+
+/**
+ How this view's minimumHeight and maximumHeight should react to changes in the Safe Area.
+
+ Defaults to MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy, where we only adjust if the default
+ values are being used.
+ */
+@property(nonatomic) MDCFlexibleHeaderHeightSafeAreaAdjustment heightSafeAreaAdjustment;
 
 #pragma mark Behaviors
 

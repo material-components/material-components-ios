@@ -95,6 +95,11 @@
     case FlexibleHeaderConfiguratorFieldMaximumHeight:
       headerView.maximumHeight = [self heightDenormalized:[value floatValue]];
       break;
+
+    case FlexibleHeaderConfiguratorFieldHeightSafeAreaAdjustment:
+      headerView.heightSafeAreaAdjustment =
+          ([value boolValue] ? MDCFlexibleHeaderHeightSafeAreaAdjustmentAlways
+                             : MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy);
   }
 }
 
@@ -209,6 +214,9 @@ static const CGFloat kHeightScalar = 300;
 
     case FlexibleHeaderConfiguratorFieldMaximumHeight:
       return @([self normalizedHeight:self.fhvc.headerView.maximumHeight]);
+    case FlexibleHeaderConfiguratorFieldHeightSafeAreaAdjustment:
+      return @(self.fhvc.headerView.heightSafeAreaAdjustment ==
+          MDCFlexibleHeaderHeightSafeAreaAdjustmentAlways);
   }
 }
 
