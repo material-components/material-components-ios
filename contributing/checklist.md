@@ -86,7 +86,7 @@ The [material.io](https://material.io/components) site contains a [list of all c
 1. Enter YES or NO or N/A
 
 
-### Site Icon
+### Site Navigation Comment
 
 The [material.io](https://material.io/components) site's content is generated from the headers of MDC's files using [Jazzy](https://github.com/realm/jazzy) and [Jekyll](https://github.com/jekyll/jekyll). This requires some YAML.
 
