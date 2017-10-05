@@ -1,6 +1,8 @@
 # Component checklist
 
 
+[Checklist status spreadsheet](https://docs.google.com/a/google.com/spreadsheets/d/1VTCyvojFTsl2zR-H9e2DXFN5Piz57A4Y0kfau_oKlxM/edit?usp=sharing)
+
 Over time we have curated a growing checklist of things we feel improve the experience of using a custom UIKit component. Many of these checks are performed by humans but we're now increasing the number of checks that can be performed by scripts.
 
 
