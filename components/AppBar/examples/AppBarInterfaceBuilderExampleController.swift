@@ -67,7 +67,7 @@ extension AppBarInterfaceBuilderSwiftExample {
   }
 
   class func catalogStoryboardName() -> String {
-    return "AppBarInterfaceBuilderExampleController"
+    return "AppBarInterfaceBuilderSwiftExampleController"
   }
 
   class func catalogIsPrimaryDemo() -> Bool {
