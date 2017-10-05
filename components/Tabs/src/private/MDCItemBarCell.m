@@ -15,16 +15,15 @@
  */
 
 #import "MDCItemBarCell.h"
+#import "MDCItemBarCell+Private.h"
 
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
+#import "MaterialMath.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
-
-/// Padding between the bottom of the cell and its content, in points.
-static const CGFloat kBottomPadding = 20.0f;
 
 /// Size of image in points.
 static const CGSize kImageSize = {24, 24};
@@ -54,7 +53,6 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 @implementation MDCItemBarCell {
-  UILabel *_titleLabel;
   UIImageView *_imageView;
   UILabel *_badgeLabel;
   MDCInkTouchController *_inkTouchController;
@@ -187,10 +185,18 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     [self updateTitleTextColor];
     [self updateInk];
     [self updateSubviews];
+    [self updateTitleLines];
     [self updateTitleFont];
     [self updateTransformsAnimated:NO];
     [self setNeedsLayout];
   }
+}
+
+- (void)updateTitleLines {
+  // The presence of an image restricts titles to a single line
+  _titleLabel.numberOfLines = _style.shouldDisplayImage ? 1 : _style.textOnlyNumberOfLines;
+  // Only permit smaller font sizes for two-line titles
+  _titleLabel.adjustsFontSizeToFitWidth = _titleLabel.numberOfLines == 1 ? NO : YES;
 }
 
 - (void)updateWithItem:(UITabBarItem *)item
@@ -222,15 +228,15 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Image has a fixed size and is horizontally centered, regardless of content style.
   imageBounds.size = kImageSize;
-  imageCenter.x = (float)round(CGRectGetMidX(contentBounds));
+  imageCenter.x = CGRectGetMidX(contentBounds);
 
-  CGSize titleSize = [_titleLabel sizeThatFits:contentBounds.size];
+  CGSize titleSize = [self.titleLabel sizeThatFits:contentBounds.size];
   titleSize.width = MIN(titleSize.width, CGRectGetWidth(contentBounds));
 
   // Title is a fixed height based on content and is placed full-width, regardless of content style.
-  titleCenter.x = roundf((float)CGRectGetMidX(contentBounds));
-  titleBounds.size.width = ceilf((float)CGRectGetWidth(contentBounds));
-  titleBounds.size.height = ceilf((float)titleSize.height);
+  titleCenter.x = CGRectGetMidX(contentBounds);
+  titleBounds.size.width = CGRectGetWidth(contentBounds);
+  titleBounds.size.height = titleSize.height;
 
   // Horizontally align the badge.
   CGSize badgeSize = [_badgeLabel sizeThatFits:contentBounds.size];
@@ -238,14 +244,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   badgeBounds.size = badgeSize;
 
   if (_style.shouldDisplayBadge) {
-    CGFloat badgeOffset = ((float)imageBounds.size.width / 2.0f) + ((float)badgeSize.width / 2.0f);
+    CGFloat badgeOffset = (imageBounds.size.width / 2) + (badgeSize.width / 2);
     if (self.mdc_effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
       badgeOffset *= -1;
     }
 
     badgeCenter.x = imageCenter.x + badgeOffset;
-    badgeCenter.y = kBadgeTopPadding + ((float)badgeSize.height / 2.0f);
+    badgeCenter.y = kBadgeTopPadding + (badgeSize.height / 2);
   }
 
   // Place components vertically
@@ -254,36 +260,32 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       // Image and title, center both vertically together.
       const CGFloat padding = _style.titleImagePadding;
       const CGFloat totalHeight = titleSize.height + padding + kImageSize.height;
-      const CGFloat yOrigin = (float)round(CGRectGetMidY(contentBounds) - totalHeight / 2.0f);
-      imageCenter.y = yOrigin + ((float)kImageSize.height / 2.0f);
-      titleCenter.y = yOrigin + kImageSize.height + padding + ((float)titleSize.height / 2.0f);
-      titleCenter.y = roundf((float)titleCenter.y);
+      const CGFloat yOrigin = CGRectGetMidY(contentBounds) - (totalHeight / 2);
+      imageCenter.y = yOrigin + (kImageSize.height / 2);
+      titleCenter.y = yOrigin + kImageSize.height + padding + (titleSize.height / 2);
+      titleCenter.y = titleCenter.y;
 
     } else {
-      // Title only, center vertically.
-      // +1 for slight adjustment to font baseline for centered title labels.
-      const CGFloat centeredTitleYOffset = 1.0f;
-      titleCenter.y = contentBounds.size.height - kBottomPadding - titleSize.height +
-                      centeredTitleYOffset + ((float)titleSize.height / 2.0f);
-      titleCenter.y = roundf((float)titleCenter.y);
+      titleCenter.y = CGRectGetMidY(contentBounds);
     }
   } else {
     if (_style.shouldDisplayImage) {
       // Image only, center image vertically
-      imageCenter.y = (float)round(CGRectGetMidY(contentBounds));
+      imageCenter.y = CGRectGetMidY(contentBounds);
     } else {
       // Nothing: NOP
     }
   }
 
-  _imageView.center = imageCenter;
+  CGFloat scale = self.window.screen.scale;
   _imageView.bounds = imageBounds;
+  _imageView.center = MDCRoundCenterWithBoundsAndScale(imageCenter, _imageView.bounds, scale);
 
-  _badgeLabel.center = badgeCenter;
-  _badgeLabel.bounds = badgeBounds;
+  _badgeLabel.bounds = MDCRectAlignToScale(badgeBounds, scale);
+  _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
 
-  _titleLabel.center = titleCenter;
-  _titleLabel.bounds = titleBounds;
+  self.titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
+  self.titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter, self.titleLabel.bounds, scale);
 }
 
 - (void)tintColorDidChange {
@@ -422,12 +424,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       _titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
       _titleLabel.autoresizingMask =
           UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-      _titleLabel.numberOfLines = 1;
+      // 0.85 is based on 12sp/14sp guidelines for single- or double-line text
+      _titleLabel.minimumScaleFactor = (CGFloat)0.85;
       _titleLabel.textAlignment = NSTextAlignmentCenter;
 
       [self.contentView addSubview:_titleLabel];
 
       // Display title and update color for the new label.
+      [self updateTitleLines];
       [self updateDisplayedTitle];
       [self updateTitleTextColor];
       [self updateTitleFont];
@@ -498,21 +502,21 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   void (^performAnimations)(void) = ^{
     // Update the title scale and redraw if it'll be ending at a higher scale
     // to minimize aliasing during animation.
-    if (titleContentsScale > _titleLabel.layer.contentsScale) {
-      _titleLabel.layer.contentsScale = titleContentsScale;
-      [_titleLabel setNeedsDisplay];
+    if (titleContentsScale > self.titleLabel.layer.contentsScale) {
+      self.titleLabel.layer.contentsScale = titleContentsScale;
+      [self.titleLabel setNeedsDisplay];
     }
 
     // Set the transforms.
-    _titleLabel.transform = titleTransform;
+    self.titleLabel.transform = titleTransform;
     _badgeLabel.transform = imageTransform;
     _imageView.transform = imageTransform;
   };
   void (^completeAnimations)(BOOL) = ^(__unused BOOL finished) {
-    if (titleContentsScale != _titleLabel.layer.contentsScale) {
+    if (titleContentsScale != self.titleLabel.layer.contentsScale) {
       // Update the title with the final contents scale and redraw.
-      _titleLabel.layer.contentsScale = titleContentsScale;
-      [_titleLabel setNeedsDisplay];
+      self.titleLabel.layer.contentsScale = titleContentsScale;
+      [self.titleLabel setNeedsDisplay];
     }
   };
 

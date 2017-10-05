@@ -19,18 +19,6 @@ import MaterialComponents
 
 class ButtonsSwiftAndStoryboardController: UIViewController {
 
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Buttons (Swift and Storyboard)"]
-  }
-
-  class func catalogStoryboardName() -> String {
-    return "ButtonsStoryboardAndProgrammatic"
-  }
-
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
   let raisedButton = MDCRaisedButton()
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()
@@ -64,42 +52,12 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     super.init(coder: aDecoder)
   }
 
-  // swiftlint:disable function_body_length
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.addSubview(containerView)
 
-    NSLayoutConstraint.activate([
-      NSLayoutConstraint(item: containerView,
-                         attribute: .leading,
-                         relatedBy: .equal,
-                         toItem: view,
-                         attribute: .leading,
-                         multiplier: 1.0,
-                         constant: 0),
-      NSLayoutConstraint(item: containerView,
-                         attribute: .top,
-                         relatedBy: .equal,
-                         toItem: view,
-                         attribute: .top,
-                         multiplier: 1.0,
-                         constant: 0),
-      NSLayoutConstraint(item: containerView,
-                         attribute: .bottom,
-                         relatedBy: .equal,
-                         toItem: view,
-                         attribute: .bottom,
-                         multiplier: 1.0,
-                         constant: 0),
-      NSLayoutConstraint(item: containerView,
-                         attribute: .width,
-                         relatedBy: .equal,
-                         toItem: view,
-                         attribute: .width,
-                         multiplier: 0.5,
-                         constant: 0)
-    ])
+    layoutContainer()
 
     containerView.addSubview(innerContainerView)
 
@@ -118,8 +76,63 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
                          attribute: .centerY,
                          multiplier: 1.0,
                          constant: 0)
-    ])
+      ])
 
+    buttonSetup()
+
+    let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    floatingButton.layer.addSublayer(floatingPlusShapeLayer)
+    innerContainerView.addSubview(floatingButton)
+
+    let storyboardPlusShapeLayer =
+      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
+
+    addButtonConstraints()
+  }
+
+  private func layoutContainer() {
+    let viewLayoutGuide: Any = {
+      #if swift(>=3.2)
+        if #available(iOS 11.0, *) {
+          return view.safeAreaLayoutGuide
+        }
+      #endif
+      return view
+    }()
+    NSLayoutConstraint.activate([
+      NSLayoutConstraint(item: containerView,
+                         attribute: .leading,
+                         relatedBy: .equal,
+                         toItem: viewLayoutGuide,
+                         attribute: .leading,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .top,
+                         relatedBy: .equal,
+                         toItem: viewLayoutGuide,
+                         attribute: .top,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: viewLayoutGuide,
+                         attribute: .bottom,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .width,
+                         relatedBy: .equal,
+                         toItem: viewLayoutGuide,
+                         attribute: .width,
+                         multiplier: 0.5,
+                         constant: 0)
+      ])
+  }
+
+  private func buttonSetup() {
     let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
@@ -142,15 +155,9 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     floatingButton.backgroundColor = backgroundColor
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+  }
 
-    let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    floatingButton.layer.addSublayer(floatingPlusShapeLayer)
-    innerContainerView.addSubview(floatingButton)
-
-    let storyboardPlusShapeLayer =
-      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
-
+  private func addButtonConstraints() {
     let views = [
       "raised": raisedButton,
       "flat": flatButton,
@@ -186,14 +193,27 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
     view.addConstraints(
       NSLayoutConstraint.constraints(withVisualFormat: "V:|[raised]-22-[flat]-22-[floating]|",
-        options: .alignAllCenterX,
-        metrics: nil,
-        views: views))
+                                     options: .alignAllCenterX,
+                                     metrics: nil,
+                                     views: views))
   }
-  // swiftlint:enable function_body_length
 
   @IBAction func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
 
+}
+
+extension ButtonsSwiftAndStoryboardController {
+  class func catalogBreadcrumbs() -> [String] {
+    return ["Buttons", "Buttons (Swift and Storyboard)"]
+  }
+
+  class func catalogStoryboardName() -> String {
+    return "ButtonsStoryboardAndProgrammatic"
+  }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
 }

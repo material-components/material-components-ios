@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "35.2.0"
+  s.version      = "35.3.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -73,6 +73,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/HeaderStackView"
       sss.dependency "MaterialComponents/NavigationBar"
       sss.dependency "MaterialComponents/Typography"
+      sss.dependency "MaterialComponents/private/Application"
 
       # Flexible header + shadow
       sss.dependency "MaterialComponents/FlexibleHeader"
@@ -298,7 +299,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
-    ss.dependency "MotionTransitioning", "~> 3.0"
+    ss.dependency "MotionTransitioning", "~> 3.3"
     ss.dependency "MotionAnimator", "~> 1.0"
     ss.dependency "MotionInterchange", "~> 1.0"
   end
@@ -428,6 +429,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/AnimationTiming"
       sss.dependency "MaterialComponents/Ink"
       sss.dependency "MaterialComponents/Typography"
+      sss.dependency "MaterialComponents/private/Math"
       sss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|

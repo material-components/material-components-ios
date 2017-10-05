@@ -49,16 +49,16 @@ static NSString *const MDCTextInputControllerFullWidthHelperTextKey =
     @"MDCTextInputControllerFullWidthHelperTextKey";
 static NSString *const MDCTextInputControllerFullWidthInlinePlaceholderColorKey =
     @"MDCTextInputControllerFullWidthInlinePlaceholderColorKey";
-static NSString *const MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor =
-    @"MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor";
+static NSString *const MDCTextInputControllerFullWidthInlinePlaceholderFontKey =
+    @"MDCTextInputControllerFullWidthInlinePlaceholderFontKey";
 static NSString *const MDCTextInputControllerFullWidthPresentationStyleKey =
     @"MDCTextInputControllerFullWidthPresentationStyleKey";
 static NSString *const MDCTextInputControllerFullWidthTextInputKey =
     @"MDCTextInputControllerFullWidthTextInputKey";
 static NSString *const MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor =
     @"MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor";
-
-static NSString *const MDCTextInputControllerFullWidthKVOKeyFont = @"font";
+static NSString *const MDCTextInputControllerFullWidthTrailingUnderlineLabelFontKey =
+    @"MDCTextInputControllerFullWidthTrailingUnderlineLabelFontKey";
 
 static inline UIColor *MDCTextInputInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputFullWidthHintTextOpacity];
@@ -75,6 +75,9 @@ static UIColor *_errorColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_trailingUnderlineLabelTextColorDefault;
 
+static UIFont *_inlinePlaceholderFontDefault;
+static UIFont *_trailingUnderlineLabelFontDefault;
+
 @interface MDCTextInputControllerFullWidth () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
@@ -82,12 +85,13 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
   UIColor *_errorColor;
   UIColor *_inlinePlaceholderColor;
-  UIColor *_leadingUnderlineLabelTextColor;
   UIColor *_trailingUnderlineLabelTextColor;
+
+  UIFont *_inlinePlaceholderFont;
+  UIFont *_trailingUnderlineLabelFont;
 }
 
 @property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
-@property(nonatomic, assign) BOOL isRegisteredForKVO;
 
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 
@@ -109,8 +113,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 @property(nonatomic, strong) UIColor *previousPlaceholderColor;
 
-@property(nonatomic, strong) UIFont *customPlaceholderFont;
-@property(nonatomic, strong) UIFont *customTrailingFont;
 @end
 
 @implementation MDCTextInputControllerFullWidth
@@ -144,9 +146,11 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthErrorColorKey];
     _inlinePlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
-    _leadingUnderlineLabelTextColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor];
+    _inlinePlaceholderFont =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthInlinePlaceholderFontKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthTextInputKey];
+    _trailingUnderlineLabelFont =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelFontKey];
     _trailingUnderlineLabelTextColor = [aDecoder
         decodeObjectForKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
   }
@@ -179,10 +183,12 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerFullWidthHelperTextKey];
   [aCoder encodeObject:self.inlinePlaceholderColor
                 forKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
-  [aCoder encodeObject:self.leadingUnderlineLabelTextColor
-                forKey:MDCTextInputControllerFullWidthLeadingUnderlineLabelTextColor];
+  [aCoder encodeObject:self.inlinePlaceholderFont
+                forKey:MDCTextInputControllerFullWidthInlinePlaceholderFontKey];
   [aCoder encodeConditionalObject:self.textInput
                            forKey:MDCTextInputControllerFullWidthTextInputKey];
+  [aCoder encodeObject:self.trailingUnderlineLabelFont
+                forKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelFontKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
 }
@@ -198,11 +204,13 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   copy.errorText = [self.errorText copy];
   copy.helperText = [self.helperText copy];
   copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
-  copy.leadingUnderlineLabelTextColor = self.leadingUnderlineLabelTextColor;
+  copy.inlinePlaceholderFont = self.inlinePlaceholderFont;
   copy.previousLeadingText = [self.previousLeadingText copy];
   copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy
+  copy.trailingUnderlineLabelFont = self.trailingUnderlineLabelFont;
   copy.trailingUnderlineLabelTextColor = self.trailingUnderlineLabelTextColor;
+
   copy.activeColor = self.activeColor;
   copy.disabledColor = self.disabledColor;
   copy.normalColor = self.normalColor;
@@ -212,7 +220,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 - (void)dealloc {
   [self unsubscribeFromNotifications];
-  [self unsubscribeFromKVO];
 }
 
 - (void)commonMDCTextInputControllerFullWidthInitialization {
@@ -233,7 +240,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   _textInput.positioningDelegate = self;
 
   [self subscribeForNotifications];
-  [self subscribeForKVO];
   _textInput.underline.color = [UIColor clearColor];
   [self updateLayout];
 }
@@ -285,36 +291,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   [defaultCenter removeObserver:self];
 }
 
-- (void)subscribeForKVO {
-  if (!_textInput) {
-    return;
-  }
-  [_textInput.placeholderLabel addObserver:self
-                                forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont
-                                   options:0
-                                   context:nil];
-  [_textInput.trailingUnderlineLabel addObserver:self
-                                      forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont
-                                         options:0
-                                         context:nil];
-  _isRegisteredForKVO = YES;
-}
-
-- (void)unsubscribeFromKVO {
-  if (!self.textInput || !self.isRegisteredForKVO) {
-    return;
-  }
-  @try {
-    [self.textInput.placeholderLabel removeObserver:self
-                                         forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont];
-    [self.textInput.trailingUnderlineLabel
-        removeObserver:self
-            forKeyPath:MDCTextInputControllerFullWidthKVOKeyFont];
-  } @catch (__unused NSException *exception) {
-  }
-  _isRegisteredForKVO = NO;
-}
-
 #pragma mark - Character Max Implementation
 
 - (NSUInteger)characterCount {
@@ -352,9 +328,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 #pragma mark - Placeholder Customization
 
 - (void)updatePlaceholder {
-  if (!self.customPlaceholderFont) {
-    self.textInput.placeholderLabel.font = [[self class] placeholderFont];
-  }
+  self.textInput.placeholderLabel.font = self.inlinePlaceholderFont;
 
   self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
 }
@@ -366,9 +340,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
     self.textInput.trailingUnderlineLabel.text = nil;
   } else {
     self.textInput.trailingUnderlineLabel.text = [self characterCountText];
-    if (!self.customTrailingFont) {
-      self.textInput.trailingUnderlineLabel.font = [[self class] underlineLabelsFont];
-    }
+    self.textInput.trailingUnderlineLabel.font = self.trailingUnderlineLabelFont;
   }
 
   UIColor *textColor = self.trailingUnderlineLabelTextColor;
@@ -559,12 +531,49 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                        : MDCTextInputInlinePlaceholderTextColorDefault();
 }
 
+- (UIFont *)inlinePlaceholderFont {
+  return _inlinePlaceholderFont ?: [self class].inlinePlaceholderFontDefault;
+}
+
+- (void)setInlinePlaceholderFont:(UIFont *)inlinePlaceholderFont {
+  if (![_inlinePlaceholderFont isEqual:inlinePlaceholderFont]) {
+    _inlinePlaceholderFont = inlinePlaceholderFont;
+    [self updateLayout];
+  }
+}
+
++ (UIFont *)inlinePlaceholderFontDefault {
+  return _inlinePlaceholderFontDefault ?: [[self class] placeholderFont];
+}
+
++ (void)setInlinePlaceholderFontDefault:(UIFont *)inlinePlaceholderFontDefault {
+  _inlinePlaceholderFontDefault = inlinePlaceholderFontDefault;
+}
+
 - (BOOL)isDisplayingCharacterCountError {
   return self.characterCountMax && [self characterCount] > self.characterCountMax;
 }
 
 - (BOOL)isDisplayingErrorText {
   return self.errorText != nil;
+}
+
+- (UIFont *)leadingUnderlineLabelFont {
+  // Not implemented. The leading underline label is never seen.
+  return nil;
+}
+
+- (void)setLeadingUnderlineLabelFont:(__unused UIColor *)leadingUnderlineLabelFont {
+  // Not implemented. The leading underline label is never seen.
+}
+
++ (UIFont *)leadingUnderlineLabelFontDefault {
+  // Implemented only for protocol conformance. The leading underline label is never seen.
+  return [[self class] underlineLabelsFont];
+}
+
++ (void)setLeadingUnderlineLabelFontDefault:(__unused UIFont *)leadingUnderlineLabelFontDefault {
+  // Not implemented. The leading underline label is never seen.
 }
 
 // The leading underline label must always be clear to not obstruct the placeholder and input.
@@ -613,11 +622,29 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
   if (_textInput != textInput) {
     [self unsubscribeFromNotifications];
-    [self unsubscribeFromKVO];
 
     _textInput = textInput;
     [self setupInput];
   }
+}
+
+- (UIFont *)trailingUnderlineLabelFont {
+  return _trailingUnderlineLabelFont ?: [self class].trailingUnderlineLabelFontDefault;
+}
+
+- (void)setTrailingUnderlineLabelFont:(UIFont *)trailingUnderlineLabelFont {
+  if (![_trailingUnderlineLabelFont isEqual:trailingUnderlineLabelFont]) {
+    _trailingUnderlineLabelFont = trailingUnderlineLabelFont;
+    [self updateLayout];
+  }
+}
+
++ (UIFont *)trailingUnderlineLabelFontDefault {
+  return _trailingUnderlineLabelFontDefault ?: [[self class] underlineLabelsFont];
+}
+
++ (void)setTrailingUnderlineLabelFontDefault:(UIFont *)trailingUnderlineLabelFontDefault {
+  _trailingUnderlineLabelFontDefault = trailingUnderlineLabelFontDefault;
 }
 
 - (UIColor *)trailingUnderlineLabelTextColor {
@@ -731,7 +758,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
                                       constant:-1 * MDCTextInputFullWidthHorizontalPadding];
   }
 
-  // Multi Line Only
+  // Multi-line Only
   if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
     [self.textInput.leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired
                                                             forAxis:UILayoutConstraintAxisVertical];
@@ -818,7 +845,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
     // A height constraint is not necessary for multiline. Its height is calculated in
     // intrinsicContentSize:
   } else {
-    // Single Line Only
+    // Single-line Only
     // .fullWidth
     if (!self.characterCountY) {
       self.characterCountY =
@@ -920,7 +947,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
   // Full width text fields have their clear button in the horizontal margin, but because the
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
-  // Full width text boxes have their character count on the text input line
+  // Full width text fields have their character count on the text input line
   if (self.textInput.text.length > 0) {
     switch (textField.clearButtonMode) {
       case UITextFieldViewModeWhileEditing:
@@ -976,29 +1003,6 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 }
 
 - (void)textInputDidEndEditing:(__unused NSNotification *)note {
-  [self updateLayout];
-}
-
-#pragma mark - KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(__unused NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(__unused void *)context {
-  // Listening to outside setting of custom fonts.
-  if (![keyPath isEqualToString:MDCTextInputControllerFullWidthKVOKeyFont]) {
-    return;
-  }
-
-  if (object == _textInput.placeholderLabel &&
-      ![_textInput.placeholderLabel.font isEqual:[[self class] placeholderFont]]) {
-    _customPlaceholderFont = _textInput.placeholderLabel.font;
-  } else if (object == _textInput.trailingUnderlineLabel &&
-             ![_textInput.trailingUnderlineLabel.font isEqual:[[self class] underlineLabelsFont]]) {
-    _customTrailingFont = _textInput.trailingUnderlineLabel.font;
-  } else {
-    return;
-  }
   [self updateLayout];
 }
 

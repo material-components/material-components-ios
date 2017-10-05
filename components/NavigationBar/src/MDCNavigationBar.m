@@ -278,17 +278,37 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  // For pre iOS 11 devices, it's safe to assume that the Safe Area insets' left and right
+  // values are zero. DO NOT use this to get the top or bottom Safe Area insets.
+  UIEdgeInsets RTLFriendlySafeAreaInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    RTLFriendlySafeAreaInsets =
+        MDCInsetsMakeWithLayoutDirection(self.safeAreaInsets.top,
+                                         self.safeAreaInsets.left,
+                                         self.safeAreaInsets.bottom,
+                                         self.safeAreaInsets.right,
+                                         self.mdc_effectiveUserInterfaceLayoutDirection);
+  }
+#endif
+
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
-  CGRect leadingButtonBarFrame =
-      CGRectMake(0, CGRectGetMinY(self.bounds), leadingButtonBarSize.width, leadingButtonBarSize.height);
+  CGRect leadingButtonBarFrame = CGRectMake(RTLFriendlySafeAreaInsets.left,
+                                            CGRectGetMinY(self.bounds),
+                                            leadingButtonBarSize.width,
+                                            leadingButtonBarSize.height);
   _leadingButtonBar.frame = MDCRectFlippedForRTL(leadingButtonBarFrame, CGRectGetWidth(self.bounds),
                                                  self.mdc_effectiveUserInterfaceLayoutDirection);
 
   CGSize trailingButtonBarSize = [_trailingButtonBar sizeThatFits:self.bounds.size];
-  CGRect trailingButtonBarFrame =
-      CGRectMake(CGRectGetWidth(self.bounds) - trailingButtonBarSize.width, CGRectGetMinY(self.bounds),
-                 trailingButtonBarSize.width, trailingButtonBarSize.height);
-  _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, CGRectGetWidth(self.bounds),
+  CGFloat xOrigin =
+      CGRectGetWidth(self.bounds) - RTLFriendlySafeAreaInsets.right - trailingButtonBarSize.width;
+  CGRect trailingButtonBarFrame = CGRectMake(xOrigin,
+                                             CGRectGetMinY(self.bounds),
+                                             trailingButtonBarSize.width,
+                                             trailingButtonBarSize.height);
+  _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame,
+                                                  CGRectGetWidth(self.bounds),
                                                   self.mdc_effectiveUserInterfaceLayoutDirection);
 
   UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
@@ -296,6 +316,12 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    textFrame.origin.x += self.safeAreaInsets.left;
+    textFrame.size.width -= self.safeAreaInsets.left + self.safeAreaInsets.right;
+  }
+#endif
 
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
   paraStyle.lineBreakMode = _titleLabel.lineBreakMode;
@@ -317,8 +343,9 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGRect alignedFrame = [self mdc_frameAlignedVertically:titleFrame
                                             withinBounds:textFrame
                                                alignment:titleVerticalAlignment];
-  _titleLabel.frame =
-      [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
+  alignedFrame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
+
+  _titleLabel.frame = MDCRectAlignToScale(alignedFrame, self.window.screen.scale);
   self.titleView.frame = textFrame;
 
   // Button and title label alignment

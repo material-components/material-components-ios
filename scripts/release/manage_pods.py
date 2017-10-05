@@ -87,8 +87,8 @@ def install_podfile_dir(directory, fast_install):
     fast_install: If True, then skip updating the podspec repo.
   """
   cmd = ['pod', 'install', '--project-directory=%s' % directory]
-  if fast_install:
-    cmd.append("--no-repo-update")
+  if not fast_install:
+    cmd.append("--repo-update")
   subprocess.check_call(cmd)
 
 

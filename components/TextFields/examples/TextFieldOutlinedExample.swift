@@ -48,7 +48,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     city.backgroundColor = .white
     return city
   }()
-  let cityController: MDCTextInputControllerOutlinedField
+  let cityController: MDCTextInputControllerOutlined
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -58,7 +58,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     state.backgroundColor = .white
     return state
   }()
-  let stateController: MDCTextInputControllerOutlinedField
+  let stateController: MDCTextInputControllerOutlined
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -67,7 +67,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     zip.backgroundColor = .white
     return zip
   }()
-  let zipController: MDCTextInputControllerOutlinedField
+  let zipController: MDCTextInputControllerOutlined
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -88,9 +88,9 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
   var allTextFieldControllers = [MDCTextInputControllerDefault]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerOutlinedField(textInput: city)
-    stateController = MDCTextInputControllerOutlinedField(textInput: state)
-    zipController = MDCTextInputControllerOutlinedField(textInput: zip)
+    cityController = MDCTextInputControllerOutlined(textInput: city)
+    stateController = MDCTextInputControllerOutlined(textInput: state)
+    zipController = MDCTextInputControllerOutlined(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -113,13 +113,13 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerOutlinedField(textInput: name)
+    let nameController = MDCTextInputControllerOutlined(textInput: name)
     name.delegate = self
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerOutlinedField(textInput: address)
+    let addressController = MDCTextInputControllerOutlined(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -143,12 +143,12 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerOutlinedField(textInput: phone)
+    let phoneController = MDCTextInputControllerOutlined(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerTextArea(textInput: message)
+    let messageController = MDCTextInputControllerOutlinedTextArea(textInput: message)
     message.textView?.delegate = self
     allTextFieldControllers.append(messageController)
 
@@ -168,7 +168,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
                   "phone": phone,
                   "message": message ]
     var constraints = NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-20-|",
+      "V:[name]-[address]-[city]-[stateZip]-[phone]-[message]",
                                                      options: [.alignAllLeading, .alignAllTrailing],
                                                      metrics: nil,
                                                      views: views)
@@ -191,6 +191,55 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
                                                   options: [],
                                                   metrics: nil,
                                                   views: views)
+
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+               constraints += [NSLayoutConstraint(item: name,
+                                                  attribute: .top,
+                                                  relatedBy: .equal,
+                                                  toItem: scrollView.contentLayoutGuide,
+                                                  attribute: .top,
+                                                  multiplier: 1,
+                                                  constant: 20),
+                               NSLayoutConstraint(item: message,
+                                                  attribute: .bottom,
+                                                  relatedBy: .equal,
+                                                  toItem: scrollView.contentLayoutGuide,
+                                                  attribute: .bottomMargin,
+                                                  multiplier: 1,
+                                                  constant: -20)]
+        } else {
+                constraints += [NSLayoutConstraint(item: name,
+                                                  attribute: .top,
+                                                  relatedBy: .equal,
+                                                  toItem: scrollView,
+                                                  attribute: .top,
+                                                  multiplier: 1,
+                                                  constant: 20),
+                               NSLayoutConstraint(item: message,
+                                                  attribute: .bottom,
+                                                  relatedBy: .equal,
+                                                  toItem: scrollView,
+                                                  attribute: .bottomMargin,
+                                                  multiplier: 1,
+                                                  constant: -20)]
+        }
+      #else
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                        constant: -20)]
+      #endif
 
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
@@ -309,6 +358,11 @@ extension TextFieldOutlinedSwiftExample {
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
+      name: .UIKeyboardWillChangeFrame,
+      object: nil)
+    notificationCenter.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(notif:)),
       name: .UIKeyboardWillShow,
       object: nil)
     notificationCenter.addObserver(
@@ -319,7 +373,7 @@ extension TextFieldOutlinedSwiftExample {
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,

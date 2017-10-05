@@ -30,7 +30,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let textFieldControllersFullWidth = setupFullWidthTextFields()
 
-    allTextFieldControllers = [setupBoxTextFields(), setupDefaultTextFields(),
+    allTextFieldControllers = [setupFilledTextFields(), setupDefaultTextFields(),
                                textFieldControllersFullWidth,
                                setupFloatingTextFields(),
                                setupSpecialTextFields()].flatMap { $0 as! [MDCTextInputController] }
@@ -169,8 +169,8 @@ extension TextFieldKitchenSinkSwiftExample {
     let prefix = "view"
     let concatenatingClosure = {
       (accumulator, object: AnyObject) in
-      accumulator + "[" + self.unique(from: object, with: prefix) +
-        "]" + "-"
+      accumulator + "-[" + self.unique(from: object, with: prefix) +
+        "]"
     }
 
     let allControls = setupControls()
@@ -198,9 +198,9 @@ extension TextFieldKitchenSinkSwiftExample {
       textViews[unique(from: input, with: prefix)] = input
     }
 
-    let visualString = "V:|-20-[singleLabel]-" +
-      textFieldsString + "[unstyledTextField]-20-[multiLabel]-" + textViewsString +
-      "[unstyledTextView]-10-[controlLabel]-" + controlsString + "20-|"
+    let visualString = "V:[singleLabel]" +
+      textFieldsString + "[unstyledTextField]-20-[multiLabel]" + textViewsString +
+      "[unstyledTextView]-10-[controlLabel]" + controlsString
 
     let labels: [String: UIView] = ["controlLabel": controlLabel,
                                     "singleLabel": singleLabel,
@@ -271,6 +271,57 @@ extension TextFieldKitchenSinkSwiftExample {
                          multiplier: 1.0,
                          constant: 0).isActive = true
     }
+
+    // These used to be done in the visual format string but iOS 11 changed that.
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+        NSLayoutConstraint(item: singleLabel,
+                           attribute: .topMargin,
+                           relatedBy: .equal,
+                           toItem: scrollView.contentLayoutGuide,
+                           attribute: .top,
+                           multiplier: 1.0,
+                           constant: 20).isActive = true
+        NSLayoutConstraint(item: allControls.last as Any,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: scrollView.contentLayoutGuide,
+                           attribute: .bottomMargin,
+                           multiplier: 1.0,
+                           constant: -20).isActive = true
+      } else {
+        NSLayoutConstraint(item: singleLabel,
+                           attribute: .topMargin,
+                           relatedBy: .equal,
+                           toItem: scrollView,
+                           attribute: .top,
+                           multiplier: 1.0,
+                           constant: 20).isActive = true
+        NSLayoutConstraint(item: allControls.last as Any,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: scrollView,
+                           attribute: .bottomMargin,
+                           multiplier: 1.0,
+                           constant: -20).isActive = true
+      }
+      #else
+        NSLayoutConstraint(item: singleLabel,
+                           attribute: .topMargin,
+                           relatedBy: .equal,
+                           toItem: scrollView,
+                           attribute: .top,
+                           multiplier: 1.0,
+                           constant: 20).isActive = true
+        NSLayoutConstraint(item: allControls.last as Any,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: scrollView,
+                           attribute: .bottomMargin,
+                           multiplier: 1.0,
+                           constant: -20).isActive = true
+      #endif
+
     registerKeyboardNotifications()
     addGestureRecognizer()
   }
@@ -290,13 +341,18 @@ extension TextFieldKitchenSinkSwiftExample {
       object: nil)
     notificationCenter.addObserver(
       self,
+      selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillShow(notif:)),
+      name: .UIKeyboardWillChangeFrame,
+      object: nil)
+    notificationCenter.addObserver(
+      self,
       selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillHide(notif:)),
       name: .UIKeyboardWillHide,
       object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,

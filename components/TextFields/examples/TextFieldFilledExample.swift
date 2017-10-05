@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldBoxSwiftExample: UIViewController {
+final class TextFieldFilledSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -45,7 +45,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
     city.autocapitalizationType = .words
     return city
   }()
-  let cityController: MDCTextInputControllerTextFieldBox
+  let cityController: MDCTextInputControllerFilled
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -54,7 +54,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
     state.autocapitalizationType = .allCharacters
     return state
   }()
-  let stateController: MDCTextInputControllerTextFieldBox
+  let stateController: MDCTextInputControllerFilled
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
@@ -62,7 +62,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputControllerTextFieldBox
+  let zipController: MDCTextInputControllerFilled
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -78,12 +78,12 @@ final class TextFieldBoxSwiftExample: UIViewController {
     return message
   }()
 
-  var allTextFieldControllers = [MDCTextInputControllerTextFieldBox]()
+  var allTextFieldControllers = [MDCTextInputControllerFilled]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputControllerTextFieldBox(textInput: city)
-    stateController = MDCTextInputControllerTextFieldBox(textInput: state)
-    zipController = MDCTextInputControllerTextFieldBox(textInput: zip)
+    cityController = MDCTextInputControllerFilled(textInput: city)
+    stateController = MDCTextInputControllerFilled(textInput: state)
+    zipController = MDCTextInputControllerFilled(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -91,11 +91,15 @@ final class TextFieldBoxSwiftExample: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
-    title = "Material Text Field Boxes"
+    title = "Material Filled Text Field"
 
     setupScrollView()
     setupTextFields()
@@ -112,13 +116,13 @@ final class TextFieldBoxSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerTextFieldBox(textInput: name)
+    let nameController = MDCTextInputControllerFilled(textInput: name)
     name.delegate = self
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerTextFieldBox(textInput: address)
+    let addressController = MDCTextInputControllerFilled(textInput: address)
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
@@ -142,12 +146,12 @@ final class TextFieldBoxSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerTextFieldBox(textInput: phone)
+    let phoneController = MDCTextInputControllerFilled(textInput: phone)
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerTextFieldBox(textInput: message)
+    let messageController = MDCTextInputControllerFilled(textInput: message)
     message.textView?.delegate = self
     allTextFieldControllers.append(messageController)
 
@@ -165,7 +169,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
                   "phone": phone,
                   "message": message ]
     var constraints = NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-20-[name]-[address]-[city]-[stateZip]-[phone]-[message]-|",
+      "V:[name]-[address]-[city]-[stateZip]-[phone]-[message]",
                                                      options: [.alignAllLeading, .alignAllTrailing],
                                                      metrics: nil,
                                                      views: views)
@@ -188,6 +192,55 @@ final class TextFieldBoxSwiftExample: UIViewController {
                                                   options: [],
                                                   metrics: nil,
                                                   views: views)
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: -20)]
+    } else {
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: -20)]
+    }
+      #else
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: -20)]
+
+      #endif
 
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
@@ -261,7 +314,7 @@ final class TextFieldBoxSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldBoxSwiftExample: UITextFieldDelegate {
+extension TextFieldFilledSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -314,7 +367,7 @@ extension TextFieldBoxSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldBoxSwiftExample: UITextViewDelegate {
+extension TextFieldFilledSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -322,7 +375,7 @@ extension TextFieldBoxSwiftExample: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldBoxSwiftExample {
+extension TextFieldFilledSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -332,13 +385,18 @@ extension TextFieldBoxSwiftExample {
       object: nil)
     notificationCenter.addObserver(
       self,
+      selector: #selector(keyboardWillShow(notif:)),
+      name: .UIKeyboardWillChangeFrame,
+      object: nil)
+    notificationCenter.addObserver(
+      self,
       selector: #selector(keyboardWillHide(notif:)),
       name: .UIKeyboardWillHide,
       object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
@@ -354,14 +412,14 @@ extension TextFieldBoxSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldBoxSwiftExample {
+extension TextFieldFilledSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
 }
 
-extension TextFieldBoxSwiftExample {
+extension TextFieldFilledSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "TextField Boxes"]
+    return ["Text Field", "Filled Text Fields"]
   }
 }

@@ -14,19 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerDefault.h"
+#import "MDCItemBarCell.h"
 
-/**
- Material Design compliant text field with border and border-crossing, floating label from 2017. It
- is intended to be used on single-line text fields.
-
- The placeholder text is laid out inline. It will float above the field when there is content or the
- field is being edited. The character count is below text.
-
- The background is opaque, the corners are rounded, there is a border, there is an underline, and
- the placeholder crosses the border cutting out a space.
- */
-
-@interface MDCTextInputControllerOutlinedField : MDCTextInputControllerDefault
-
+@interface MDCItemBarCell ()
+@property(nonatomic, strong) UILabel *titleLabel;
 @end
