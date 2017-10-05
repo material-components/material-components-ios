@@ -55,7 +55,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   let padding = CGFloat(20)
   var componentDescription = ""
   let textAttributes: (UIFont) -> [String: Any] = { font in
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       return [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
                NSAttributedStringKey.font.rawValue: font ]
     #else
@@ -89,13 +89,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.addChildViewController(appBar.headerViewController)
     let appBarFont: UIFont
     if #available(iOS 9.0, *) {
-      #if swift(>=4.0)
+      #if swift(>=3.2)
         appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight.regular)
       #else
         appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
       #endif
     } else {
-      #if swift(>=4.0)
+      #if swift(>=3.2)
         let attribute: [UIFontDescriptor.AttributeName: Any] =
             [UIFontDescriptor.AttributeName.symbolic:
                 UIFontDescriptorSymbolicTraits(rawValue: UIFontDescriptorSymbolicTraits.traitMonoSpace.rawValue)]
@@ -295,7 +295,7 @@ extension MDCNodeListViewController {
     }
     if subtitleText != nil {
       if let swiftModuleRange = subtitleText?.range(of: ".") {
-        #if swift(>=4.0)
+        #if swift(>=3.2)
         subtitleText = String(subtitleText![swiftModuleRange.upperBound...])
         #else
         subtitleText = subtitleText!.substring(from: swiftModuleRange.upperBound)
@@ -391,13 +391,13 @@ extension MDCNodeListViewController {
       } else {
         let appBarFont: UIFont
         if #available(iOS 9.0, *) {
-          #if swift(>=4.0)
+          #if swift(>=3.2)
             appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight.regular)
           #else
             appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
           #endif
         } else {
-          #if swift(>=4.0)
+          #if swift(>=3.2)
             let attribute: [UIFontDescriptor.AttributeName: Any] =
                 [UIFontDescriptor.AttributeName.symbolic:
                     UIFontDescriptorSymbolicTraits(rawValue: UIFontDescriptorSymbolicTraits.traitMonoSpace.rawValue)]
@@ -425,7 +425,7 @@ extension MDCNodeListViewController {
         MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
 
         let textColor = UIColor.white
-        #if swift(>=4.0)
+        #if swift(>=3.2)
         UIBarButtonItem.appearance().setTitleTextAttributes(
           [NSAttributedStringKey.foregroundColor: textColor],
           for: UIControlState())

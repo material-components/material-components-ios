@@ -45,7 +45,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     // implement -preferredStatusBarStyle.
     appBar.navigationBar.tintColor = UIColor.white
     let attributes: [String: Any] = {
-      #if swift(>=4.0)
+      #if swift(>=3.2)
         return [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white ]
       #else
         return [ NSForegroundColorAttributeName: UIColor.white ]

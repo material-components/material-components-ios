@@ -33,7 +33,7 @@ class AppBarEncodingTests: XCTestCase {
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.title = "Title"
     let attributes: [String: Any] = {
-      #if swift(>=4.0)
+      #if swift(>=3.2)
         return [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.white ]
       #else
         return [ NSForegroundColorAttributeName: UIColor.white ]
@@ -71,7 +71,7 @@ class AppBarEncodingTests: XCTestCase {
     XCTAssertEqual(appBar.navigationBar.title,
                    unarchivedAppBar?.navigationBar.title)
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let foregroundColor =
         appBar.navigationBar.titleTextAttributes?[NSAttributedStringKey.foregroundColor]
     let unarchivedForegroundColor =

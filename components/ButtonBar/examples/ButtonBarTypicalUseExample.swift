@@ -99,7 +99,7 @@ extension ButtonBarTypicalUseSwiftExample {
     return UIColor(white: 0.1, alpha: 1.0)
   }
 
-  #if swift(>=4.0)
+  #if swift(>=3.2)
   func itemTitleTextAttributes() -> [NSAttributedStringKey: Any] {
     let textColor = UIColor(white: 1, alpha: 0.8)
     return [ NSAttributedStringKey.foregroundColor: textColor ]

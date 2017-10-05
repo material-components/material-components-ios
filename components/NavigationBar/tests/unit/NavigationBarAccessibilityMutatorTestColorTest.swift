@@ -40,7 +40,7 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(navBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColor = navBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     #else
     let fontColor = navBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
@@ -62,7 +62,7 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(navBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColor = navBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     #else
     let fontColor = navBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
@@ -77,7 +77,7 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
 
   func testNoBackgroundColor() {
     // Given no background color set
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColorBefore = navBar.titleTextAttributes?[NSAttributedStringKey.foregroundColor] as? UIColor
     #else
     let fontColorBefore = navBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor
@@ -88,7 +88,7 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(navBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColorAfter = navBar.titleTextAttributes?[NSAttributedStringKey.foregroundColor] as? UIColor
     #else
     let fontColorAfter = navBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor

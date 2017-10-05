@@ -41,7 +41,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(appBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColor =
         appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     #else
@@ -65,7 +65,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(appBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColor =
         appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     #else
@@ -88,7 +88,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(appBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColor =
         appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     #else
@@ -111,7 +111,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(appBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColor =
         appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     #else
@@ -134,7 +134,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(appBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColor =
         appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     #else
@@ -158,7 +158,7 @@ class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(appBar)
 
     // Then
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     let fontColor =
         appBar.navigationBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
     #else

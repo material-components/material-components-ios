@@ -106,13 +106,13 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     titleLabel.text = self.title!.uppercased()
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
     if #available(iOS 9.0, *) {
-      #if swift(>=4.0)
+      #if swift(>=3.2)
         titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFont.Weight.regular)
       #else
         titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
       #endif
     } else {
-      #if swift(>=4.0)
+      #if swift(>=3.2)
         let attribute: [UIFontDescriptor.AttributeName: Any] =
             [UIFontDescriptor.AttributeName.symbolic:
                 UIFontDescriptorSymbolicTraits(rawValue: UIFontDescriptorSymbolicTraits.traitMonoSpace.rawValue)]
@@ -160,7 +160,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.headerViewController.didMove(toParentViewController: self)
 
     self.collectionView?.accessibilityIdentifier = "collectionView"
-#if swift(>=4.0)
+#if swift(>=3.2)
     if #available(iOS 11.0, *) {
       self.collectionView?.contentInsetAdjustmentBehavior = .always
     }
@@ -186,7 +186,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return self.headerViewController
   }
 
-#if swift(>=4.0)
+#if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     self.headerViewController.headerView.minimumHeight =
@@ -264,7 +264,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
     var safeInsets = CGFloat(0)
-#if swift(>=4.0)
+#if swift(>=3.2)
     if #available(iOS 11, *) {
       safeInsets = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
     }

@@ -93,7 +93,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
   private func layoutContainer() {
     let viewLayoutGuide: Any = {
-      #if swift(>=4.0)
+      #if swift(>=3.2)
         if #available(iOS 11.0, *) {
           return view.safeAreaLayoutGuide
         }

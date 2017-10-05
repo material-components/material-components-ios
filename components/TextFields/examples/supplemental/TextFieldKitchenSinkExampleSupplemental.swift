@@ -226,7 +226,7 @@ extension TextFieldKitchenSinkSwiftExample {
                                          attribute: .leadingMargin,
                                          multiplier: 1.0,
                                          constant: 0.0)
-        #if swift(>=4.0)
+        #if swift(>=3.2)
         leading.priority = UILayoutPriority(rawValue: 750.0)
         #else
         leading.priority = 750.0
@@ -240,7 +240,7 @@ extension TextFieldKitchenSinkSwiftExample {
                                           attribute: .trailing,
                                           multiplier: 1.0,
                                           constant: 0.0)
-        #if swift(>=4.0)
+        #if swift(>=3.2)
         trailing.priority = UILayoutPriority(rawValue: 750.0)
         #else
         trailing.priority = 750.0
@@ -453,7 +453,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let closure: (MDCTextInputTextInsetsMode, String) -> Void = { mode, title in
       self.allInputControllers.forEach { controller in
-        #if swift(>=4.0)
+        #if swift(>=3.2)
         guard let input = controller.textInput else {
           return
         }
