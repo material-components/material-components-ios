@@ -26,12 +26,6 @@ class CollectionsSimpleSwiftDemo: MDCCollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-#if swift(>=3.2)
-    if #available(iOS 11.0, *) {
-      self.collectionView?.contentInsetAdjustmentBehavior = .always
-    }
-#endif
-
     // Register cell class.
     self.collectionView?.register(MDCCollectionViewTextCell.self,
                                        forCellWithReuseIdentifier: reusableIdentifierItem)

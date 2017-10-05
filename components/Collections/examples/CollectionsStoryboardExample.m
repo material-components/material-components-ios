@@ -32,12 +32,6 @@ static NSString *const kReusableIdentifierItem = @"customCell";
   [super viewDidLoad];
   self.title = @"Storyboard Demo";
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
-  }
-#endif
-
   // Populate content.
   _content = [NSMutableArray array];
   for (NSInteger i = 0; i < kSectionCount; i++) {

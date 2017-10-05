@@ -24,12 +24,6 @@ static const NSInteger kSectionItemCount = 50;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
-  }
-#endif
-
   // Add button to toggle edit mode.
   [self updatedRightBarButtonItem:NO];
 
