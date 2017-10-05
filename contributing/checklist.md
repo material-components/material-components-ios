@@ -174,6 +174,21 @@ See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.co
 1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
 1. Enter YES, NO or N/A
 
+### Dynamic Type Support (If possible)
+
+
+Any component that has text, interacts with text, or lays itself out in relation to text should implement Dynamic Type.
+See Apple's [Building Apps with Dynamic Type video](https://developer.apple.com/videos/play/wwdc2017/245/) for further information.
+
+1. Set fonts with `[UIFont preferredTextForStyle:]` or `[UIFont mdc_perferredTextForMaterialStyle:]`, or via `UIFontMetrics`.
+1. Implement `mdc_adjustsFontForContentSizeCategory` as a `BOOL` property.
+1. Add code that listens to and reacts to the `UIContentSizeCategoryDidChangeNotification`.
+1. Never layout code around text with 'magic numbers'. Instead, use a dynamic layout like Apple's auto layout.
+1. Make sure labels have an appropriate overflow behavior. Usually that will mean setting label's `numberOfLines` to 0.
+1. Add any necessary client code into your examples.
+1. Test all your code with Dynamic Type settings from very small to very large.
+1. Enter YES, NO or N/A
+
 
 ### Scrubbed Comments
 
