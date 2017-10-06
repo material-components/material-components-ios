@@ -93,11 +93,6 @@ class MultilineTextFieldTests: XCTestCase {
 
     textField.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
-
-    if #available(iOS 10, *) {
-      XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
-                     textField.adjustsFontForContentSizeCategory)
-    }
   }
 
   func testSerialization() {
