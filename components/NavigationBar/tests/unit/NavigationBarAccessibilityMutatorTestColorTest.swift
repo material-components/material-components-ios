@@ -40,7 +40,11 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(navBar)
 
     // Then
+    #if swift(>=3.2)
+    let fontColor = navBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
+    #else
     let fontColor = navBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    #endif
     let tintColor = navBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.black,
                                                          targetTextAlpha: 1.0,
@@ -58,7 +62,11 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(navBar)
 
     // Then
+    #if swift(>=3.2)
+    let fontColor = navBar.titleTextAttributes![NSAttributedStringKey.foregroundColor] as! UIColor
+    #else
     let fontColor = navBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    #endif
     let tintColor = navBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.white,
                                                          targetTextAlpha: 1.0,
@@ -69,14 +77,22 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
 
   func testNoBackgroundColor() {
     // Given no background color set
+    #if swift(>=3.2)
+    let fontColorBefore = navBar.titleTextAttributes?[NSAttributedStringKey.foregroundColor] as? UIColor
+    #else
     let fontColorBefore = navBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor
+    #endif
     let tintColorBefore = navBar.tintColor
 
     // When
     mutator.mutate(navBar)
 
     // Then
+    #if swift(>=3.2)
+    let fontColorAfter = navBar.titleTextAttributes?[NSAttributedStringKey.foregroundColor] as? UIColor
+    #else
     let fontColorAfter = navBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor
+    #endif
     let tintColorAfter = navBar.tintColor
     XCTAssertEqual(fontColorBefore, fontColorAfter)
     XCTAssertEqual(tintColorBefore, tintColorAfter)

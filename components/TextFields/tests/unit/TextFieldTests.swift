@@ -35,7 +35,12 @@ class TextFieldTests: XCTestCase {
     let textField = MDCTextField()
 
     for constraint in textField.constraints {
+      #if swift(>=3.2)
+      XCTAssertLessThanOrEqual(constraint.priority, Int(UILayoutPriority.defaultLow.rawValue) + 10,
+                               String(describing: constraint))
+      #else
       XCTAssertLessThanOrEqual(constraint.priority, UILayoutPriorityDefaultLow + 10, String(describing: constraint))
+      #endif
     }
   }
 

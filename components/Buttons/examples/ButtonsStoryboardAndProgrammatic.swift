@@ -205,7 +205,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 }
 
 extension ButtonsSwiftAndStoryboardController {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Buttons (Swift and Storyboard)"]
   }
 

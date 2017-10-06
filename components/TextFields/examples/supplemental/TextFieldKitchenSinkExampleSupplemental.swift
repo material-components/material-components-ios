@@ -226,7 +226,11 @@ extension TextFieldKitchenSinkSwiftExample {
                                          attribute: .leadingMargin,
                                          multiplier: 1.0,
                                          constant: 0.0)
+        #if swift(>=3.2)
+        leading.priority = UILayoutPriority(rawValue: 750.0)
+        #else
         leading.priority = 750.0
+        #endif
         leading.isActive = true
 
         let trailing = NSLayoutConstraint(item: value,
@@ -236,7 +240,11 @@ extension TextFieldKitchenSinkSwiftExample {
                                           attribute: .trailing,
                                           multiplier: 1.0,
                                           constant: 0.0)
+        #if swift(>=3.2)
+        trailing.priority = UILayoutPriority(rawValue: 750.0)
+        #else
         trailing.priority = 750.0
+        #endif
         trailing.isActive = true
       }
     }
@@ -445,12 +453,18 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let closure: (MDCTextInputTextInsetsMode, String) -> Void = { mode, title in
       self.allInputControllers.forEach { controller in
+        #if swift(>=3.2)
+        guard let input = controller.textInput else {
+          return
+        }
+        #else
         guard let input = controller.textInput as? MDCTextInput else {
           return
         }
+        #endif
         input.textInsetsMode = mode
-
-      button.setTitle(title + ": " + self.textInsetsModeName(mode: mode), for: .normal)
+        
+        button.setTitle(title + ": " + self.textInsetsModeName(mode: mode), for: .normal)
       }
     }
 
@@ -490,11 +504,11 @@ extension TextFieldKitchenSinkSwiftExample {
 }
 
 extension TextFieldKitchenSinkSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Kitchen Sink"]
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
 }
