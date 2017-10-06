@@ -19,29 +19,17 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialSlider.h"
+#import "ShadowElevationsPointsLabel.h"
 
 static const CGFloat kShadowElevationsDefault = 8.f;
 static const CGFloat kShadowElevationsMax = 24.f;
 static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 
-@interface ShadowElevationsPointsLabel : UILabel
-@end
-
-@implementation ShadowElevationsPointsLabel
-
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
-}
-
-- (void)setElevation:(CGFloat)points {
-  [(MDCShadowLayer *)self.layer setElevation:points];
-}
-
-@end
-
 @interface ShadowElevationsPointsView : UIView
+
 @property(nonatomic) ShadowElevationsPointsLabel *paper;
 @property(nonatomic) UILabel *elevationLabel;
+
 @end
 
 @implementation ShadowElevationsPointsView
