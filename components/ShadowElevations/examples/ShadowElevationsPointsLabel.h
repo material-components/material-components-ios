@@ -16,8 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowElevations.h"
+
 @interface ShadowElevationsPointsLabel : UILabel
 
-- (void)setElevation:(CGFloat)points;
+- (void)setElevation:(MDCShadowElevation)points;
 
 @end

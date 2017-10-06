@@ -32,8 +32,13 @@ class ShadowElevationsTypicalUseExample: UIViewController {
     appBar.headerViewController.headerView.backgroundColor = color
     appBar.navigationBar.tintColor = .white
     appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
-    
-    paper.setElevation(MDCShadowElevationFABResting)
+
+    let paperDim = CGFloat(200)
+    paper.frame =
+      CGRect(x: (view.frame.width - paperDim) / 2, y: paperDim, width: paperDim, height: paperDim)
+     view.addSubview(paper)
+
+    paper.setElevation(.fabResting)
   }
 
   required init?(coder aDecoder: NSCoder) {
