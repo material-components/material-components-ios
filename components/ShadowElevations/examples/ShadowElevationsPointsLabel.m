@@ -24,8 +24,8 @@
   return [MDCShadowLayer class];
 }
 
-- (void)setElevation:(MDCShadowElevation)points {
-  [(MDCShadowLayer *)self.layer setElevation:points];
+- (void)setElevation:(MDCShadowElevation)elevation {
+  [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 
 @end
