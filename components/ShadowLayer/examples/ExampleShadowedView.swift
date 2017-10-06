@@ -17,6 +17,7 @@ limitations under the License.
 import UIKit
 
 import MaterialComponents.MaterialShadowLayer
+import MaterialComponents.MaterialShadowElevations
 
 class ExampleShadowedView: UIView {
 
@@ -28,7 +29,7 @@ class ExampleShadowedView: UIView {
     return self.layer as! MDCShadowLayer
   }
 
-  func setElevation(_ points: CGFloat) {
+  func setElevation(_ points: ShadowElevation) {
     self.shadowLayer.elevation = points
   }
 
