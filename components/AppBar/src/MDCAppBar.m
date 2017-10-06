@@ -318,7 +318,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
     // Note: We should switch to using self.view.safeAreaLayoutGuide.topAnchor once 11.1 is
     // the min iOS 11 we support. 11.0 has a bug where the Safe Area is incorrectly calculated for
     // this view.
-    topMargin = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+    topMargin = CGRectGetMaxY([UIApplication mdc_safeSharedApplication].statusBarFrame);
   }
 #endif
   _verticalConstraint = [NSLayoutConstraint constraintWithItem:self.headerStackView
@@ -356,7 +356,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
     // We only get the actual status bar height if we're on iOS 11, because previously we were not
     // adjusting the header height to make it smaller when the status bar is hidden.
     _verticalConstraint.constant =
-        [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+        CGRectGetMaxY([UIApplication mdc_safeSharedApplication].statusBarFrame);
   }
 #endif
 }
