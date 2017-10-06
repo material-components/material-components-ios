@@ -23,7 +23,7 @@
  `+[UIView userInterfaceLayoutDirectionForSemanticContentAttribute:relativeToLayoutDirection:]`.
  */
 
-@interface UIView (MaterialRTL)
+@interface UIView (PrivateMaterialRTL)
 
 /**
  A semantic description of the view's contents, used to determine whether the view should be flipped

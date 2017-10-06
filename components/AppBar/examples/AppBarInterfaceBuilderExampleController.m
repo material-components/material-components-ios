@@ -46,6 +46,7 @@
 }
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
+  self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
   UIColor *headerColor = [UIColor colorWithWhite:0.2 alpha:1];
   self.appBar.headerViewController.headerView.backgroundColor = headerColor;
@@ -78,12 +79,12 @@
   return @[ @"App Bar", @"Interface Builder" ];
 }
 
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
 + (NSString *)catalogStoryboardName {
   return @"AppBarInterfaceBuilderExampleController";
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 - (BOOL)catalogShouldHideNavigation {

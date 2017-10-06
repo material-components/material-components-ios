@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+# Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Lists all authors involved in a release.
+#
 
-readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly ROOT_DIR="$SCRIPTS_DIR/.."
+if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
+  echo "Please cut a release first by running scripts/release/cut."
+  exit 1
+fi
 
-# Update CocoaPod's repo for the pods that the library, catalog, or demo apps
-# use.
-pod repo update
-
-# We've already updated the repo once, so don't do it in each directory.
-"$SCRIPTS_DIR"/release/manage_pods.py --fast_pod_install install
+git log origin/stable...release-candidate | grep @ | sort | uniq
