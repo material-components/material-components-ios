@@ -28,10 +28,11 @@
   [super viewDidLoad];
 
   // Create our custom image view and add it to the header view.
-  UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mdc_theme"
-                                                                         inBundle:[NSBundle
-                                                                                   bundleForClass:[AppBarImageryExample class]]
-                                                    compatibleWithTraitCollection:nil]];
+  UIImageView *imageView = [[UIImageView alloc]
+      initWithImage:
+          [UIImage imageNamed:@"mdc_theme"
+                                   inBundle:[NSBundle bundleForClass:[AppBarImageryExample class]]
+              compatibleWithTraitCollection:nil]];
   imageView.frame = self.appBar.headerViewController.headerView.bounds;
 
   // Ensure that the image view resizes in reaction to the header view bounds changing.
