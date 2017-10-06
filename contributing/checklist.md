@@ -218,6 +218,9 @@ See Apple's [Building Apps with Dynamic Type video](https://developer.apple.com/
 1. Test all your code with Dynamic Type settings from very small to very large.
 1. Enter YES, NO or N/A
 
+### Color Themer (If possible)
+
+Any component that has visual elements that can be colorized should include a [color themer](https://github.com/material-components/material-components-ios/tree/develop/components/Themes). A color themer applies a set of colors, known as a color scheme, to a component in a systematic way. The user of the color themer passes a color scheme and component to the color themer and the component is automatically colorized in the correct way.
 
 ### Scrubbed Comments
 
