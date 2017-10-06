@@ -53,10 +53,10 @@ static const NSInteger kSectionItemCount = 50;
 
 - (void)updatedRightBarButtonItem:(BOOL)isEditing {
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithTitle:isEditing ? @"Cancel" : @"Edit"
-                                   style:UIBarButtonItemStyleDone
-                                  target:self
-                                  action:@selector(toggleEditMode:)];
+      [[UIBarButtonItem alloc] initWithTitle:isEditing ? @"Cancel" : @"Edit"
+                                       style:UIBarButtonItemStyleDone
+                                      target:self
+                                      action:@selector(toggleEditMode:)];
 }
 
 - (void)toggleEditMode:(id)sender {

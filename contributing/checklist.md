@@ -79,6 +79,35 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 1. Enter YES or NO
 
 
+### Site Icon
+
+The [material.io](https://material.io/components) site contains a [list of all components](https://material.io/components/ios/catalog/), each with an icon. These icons are created by Google's Material Design department specifically for this purpose. Adding it to the site is done by the core team.
+
+1. Enter YES or NO or N/A
+
+
+### Site Navigation Comment
+
+The [material.io](https://material.io/components) site's content is generated from the headers of MDC's files using [Jazzy](https://github.com/realm/jazzy) and [Jekyll](https://github.com/jekyll/jekyll). This requires some YAML.
+
+1. The root README.md of each component should start with a comment containing specific key-value pairs. Here's an example:
+```
+<!--docs:
+title: "App Bars"
+layout: detail
+section: components
+excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
+iconId: toolbar
+path: /catalog/app-bars/
+api_doc_root: true
+-->
+```
+
+The root of each component should also contain a `.jazzy.yaml` file that's auto-generated during the publishing process.
+1. Enter YES or NO or N/A
+
+
+
 ### License Stanzas in Every Text-based Source File
 
 
@@ -187,6 +216,17 @@ See Apple's [Building Apps with Dynamic Type video](https://developer.apple.com/
 1. Make sure labels have an appropriate overflow behavior. Usually that will mean setting label's `numberOfLines` to 0.
 1. Add any necessary client code into your examples.
 1. Test all your code with Dynamic Type settings from very small to very large.
+1. Enter YES, NO or N/A
+
+
+### Color Themer (If possible)
+
+
+Any component that has visual elements that can be colorized should include a [color themer](https://github.com/material-components/material-components-ios/tree/develop/components/Themes). A color themer applies a set of colors, known as a color scheme, to a component in a systematic way. The user of the color themer passes a color scheme and component to the color themer and the component is automatically colorized in the correct way.
+
+1. Make sure the color themer static method signatures adhere to existing conventions: `applyColorScheme:toComponent`.
+1. Add a `ColorThemer` directory with the color themer to the `src` directory of the component.
+1. Update component entry in `MaterialComponents.podspec` to include the color themer.
 1. Enter YES, NO or N/A
 
 

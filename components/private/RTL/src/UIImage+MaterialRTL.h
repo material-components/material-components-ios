@@ -26,7 +26,7 @@
  https://github.com/material-components/material-components-ios/issues/599
  */
 
-@interface UIImage (MaterialRTL)
+@interface UIImage (PrivateMaterialRTL)
 
 /**
  On iOS 9 and above, returns a copy of the current image, prepared to flip horizontally if it's in a

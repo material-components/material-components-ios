@@ -1,11 +1,11 @@
 <!--docs:
- title: "Bottom Sheet"
- layout: detail
- section: components
- excerpt: "Bottom sheets slide up from the bottom of the screen to reveal more content."
- iconId: animation
- path: /catalog/bottom-sheet/
- -->
+title: "Bottom Sheet"
+layout: detail
+section: components
+excerpt: "Bottom sheets slide up from the bottom of the screen to reveal more content."
+iconId: animation
+path: /catalog/bottom-sheet/
+-->
 
 
 # Bottom Sheet 
