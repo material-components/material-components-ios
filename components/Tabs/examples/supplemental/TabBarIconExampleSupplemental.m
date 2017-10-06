@@ -230,7 +230,7 @@
 
 - (void)addStarCentered:(BOOL)centered {
   UIImage *starImage = [UIImage imageNamed:@"TabBarDemo_ic_star"
-                                  inBundle:[NSBundle bundleForClass:[self class]]
+                                  inBundle:[NSBundle bundleForClass:[TabBarIconExample class]]
              compatibleWithTraitCollection:nil];
 
   UIImageView *starView = [[UIImageView alloc] initWithImage:starImage];
