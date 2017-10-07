@@ -22,6 +22,7 @@
 #import "FlexibleHeaderTopLayoutGuideSupplemental.h"
 
 #import "MaterialFlexibleHeader.h"
+#import "MaterialPalettes.h"
 
 @implementation FlexibleHeaderTopLayoutGuideExample (CatalogByConvention)
 
@@ -46,8 +47,7 @@
 }
 
 - (void)setupScrollViewContent {
-  UIColor *color =
-      [UIColor colorWithRed:(97.0 / 255.0) green:(97.0 / 255.0) blue:(97.0 / 255.0) alpha:1.0];
+  UIColor *color = MDCPalette.greyPalette.tint700;
   UIView *scrollViewContent =
       [[UIView alloc] initWithFrame:CGRectMake(0,
                                                0,
