@@ -23,7 +23,7 @@
 @implementation BottomSheetAutolayoutExample
 
 - (void)presentBottomSheet {
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[BottomSheetAutolayoutExample class]];
   UIStoryboard *storyboard =
       [UIStoryboard storyboardWithName:@"BottomSheetAutolayoutDummyViewController" bundle:bundle];
   NSString *identifier = @"BottomSheetAutolayoutID";

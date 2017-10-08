@@ -59,7 +59,7 @@
   tabBar.delegate = self;
   tabBar.alignment = MDCTabBarAlignmentCenterSelected;
 
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[TabBarIconExample class]];
   UIImage *infoImage =
       [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
   UIImage *starImage =

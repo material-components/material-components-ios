@@ -280,8 +280,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldCustomFontFloating.clearButton.tintColor = MDCPalette.red.accent400
 
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
-    let leftViewImagePath = bundle.path(forResource: "ic_search", ofType: "png")!
-    let leftViewImage = UIImage(contentsOfFile: leftViewImagePath)!
+    let leftViewImage = UIImage(named: "ic_search", in: bundle, compatibleWith: nil)!
 
     let textFieldLeftView = MDCTextField()
     textFieldLeftView.leftViewMode = .always
@@ -312,8 +311,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     let textFieldControllerDefaultLeftViewFloating =
       MDCTextInputControllerDefault(textInput: textFieldLeftViewFloating)
 
-    let rightViewImagePath = bundle.path(forResource: "ic_done", ofType: "png")!
-    let rightViewImage = UIImage(contentsOfFile: rightViewImagePath)!
+    let rightViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil)!
 
     let textFieldRightView = MDCTextField()
     textFieldRightView.rightViewMode = .always
@@ -514,8 +512,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   func setupSpecialMultilineTextFields() -> [MDCTextInputController] {
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
-    let rightViewImagePath = bundle.path(forResource: "ic_done", ofType: "png")!
-    let rightViewImage = UIImage(contentsOfFile: rightViewImagePath)!
+    let rightViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil)!
 
     let multilineTextFieldTrailingView = MDCMultilineTextField()
     multilineTextFieldTrailingView.trailingViewMode = .always
