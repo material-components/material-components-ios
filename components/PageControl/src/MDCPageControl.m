@@ -480,7 +480,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // Add animated indicator that will travel freely across the container. Its transform will be
   // updated by calling its -updateIndicatorTransformX method.
   CGPoint center = CGPointMake(radius, radius);
-  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
+  CGPoint point = _numberOfPages ? [_indicatorPositions[_currentPage] CGPointValue] : CGPointZero;
   _animatedIndicator = [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
   [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
   [_containerView.layer addSublayer:_animatedIndicator];
