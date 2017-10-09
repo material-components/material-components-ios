@@ -134,12 +134,19 @@
   // Given
   MDCPageControl *pageControl = [[MDCPageControl alloc] init];
   pageControl.numberOfPages = 3;
+  NSException *exception;
 
   // When
-  pageControl.numberOfPages = 0;
-  pageControl.currentPage = 0;
+  @try {
+    pageControl.numberOfPages = 0;
+    pageControl.currentPage = 0;
+  }
+  @catch (NSException *e) {
+    exception = e;
+  }
 
-  // Then, no crash
+  // Then
+  XCTAssertNil(exception, @"PageControl crashed with exception: %@", exception);
 }
 
 @end
