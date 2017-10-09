@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCBottomNavigationCell.h"
+#import "MDCBottomNavigationItemView.h"
 #import "MDCBottomNavigationCellBadge.h"
 
 static const CGFloat kMDCBottomNavigationCellTitleFontSize = 12.f;
@@ -22,7 +22,7 @@ static const CGFloat kMDCBottomNavigationCellTitleFontSize = 12.f;
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 
-@interface MDCBottomNavigationCell ()
+@interface MDCBottomNavigationItemView ()
 
 @property(nonatomic, strong) MDCBottomNavigationCellBadge *badge;
 @property(nonatomic, strong) UIImage *selectedImage;
@@ -32,12 +32,12 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 
 @end
 
-@implementation MDCBottomNavigationCell
+@implementation MDCBottomNavigationItemView
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCBottomNavigationCellInit];
+    [self commonMDCBottomNavigationItemViewInit];
   }
   return self;
 }
@@ -45,16 +45,16 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCBottomNavigationCellInit];
+    [self commonMDCBottomNavigationItemViewInit];
   }
   return self;
 }
 
-- (void)commonMDCBottomNavigationCellInit {
+- (void)commonMDCBottomNavigationItemViewInit {
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 
-  _selectedColor = [UIColor blackColor];
-  _unselectedColor = [UIColor grayColor];
+  _selectedItemTintColor = [UIColor blackColor];
+  _unselectedItemTintColor = [UIColor grayColor];
 
   _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
   [self addSubview:_iconImageView];
@@ -63,7 +63,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
   _label.text = _title;
   _label.font = [UIFont systemFontOfSize:kMDCBottomNavigationCellTitleFontSize];
   _label.textAlignment = NSTextAlignmentCenter;
-  _label.textColor = _selectedColor;
+  _label.textColor = _selectedItemTintColor;
   [self addSubview:_label];
 
   _badge = [[MDCBottomNavigationCellBadge alloc] init];
@@ -128,7 +128,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
       self.label.hidden = YES;
       iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     }
-    self.label.textColor = self.selectedColor;
+    self.label.textColor = self.selectedItemTintColor;
     self.iconImageView.image = self.selectedImage;
   } else {
     if (self.titleHideState == MDCBottomNavigationBarTitleHideStateDefault ||
@@ -138,7 +138,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
     } else if (self.titleHideState == MDCBottomNavigationBarTitleHideStateNever) {
       self.label.hidden = NO;
     }
-    self.label.textColor = self.unselectedColor;
+    self.label.textColor = self.unselectedItemTintColor;
     self.iconImageView.image = self.unselectedImage;
   }
   CGPoint badgeCenter =
@@ -158,15 +158,15 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
   }
 }
 
-- (void)setSelectedColor:(UIColor *)selectedColor {
-  _selectedColor = selectedColor;
-  self.label.textColor = self.selectedColor;
-  self.selectedImage = [self colorizeImage:self.image color:self.selectedColor];
+- (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
+  _selectedItemTintColor = selectedItemTintColor;
+  self.label.textColor = self.selectedItemTintColor;
+  self.selectedImage = [self colorizeImage:self.image color:self.selectedItemTintColor];
 }
 
-- (void)setUnselectedColor:(UIColor *)unselectedColor {
-  _unselectedColor = unselectedColor;
-  self.unselectedImage = [self colorizeImage:self.image color:self.unselectedColor];
+- (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
+  _unselectedItemTintColor = unselectedItemTintColor;
+  self.unselectedImage = [self colorizeImage:self.image color:self.unselectedItemTintColor];
 }
 
 - (void)setBadgeColor:(UIColor *)badgeColor {
@@ -187,8 +187,8 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 - (void)setImage:(UIImage *)image {
   _image = image;
 
-  self.selectedImage = [self colorizeImage:image color:self.selectedColor];
-  self.unselectedImage = [self colorizeImage:image color:self.unselectedColor];
+  self.selectedImage = [self colorizeImage:image color:self.selectedItemTintColor];
+  self.unselectedImage = [self colorizeImage:image color:self.unselectedItemTintColor];
 
   _iconImageView.image = self.unselectedImage;
   [_iconImageView sizeToFit];

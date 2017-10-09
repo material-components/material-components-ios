@@ -18,7 +18,7 @@
 
 #import "MDCBottomNavigationBar.h"
 
-@interface MDCBottomNavigationCell : UIView
+@interface MDCBottomNavigationItemView : UIView
 
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
@@ -30,8 +30,8 @@
 @property(nonatomic, strong) UIImage *image;
 
 @property(nonatomic, strong) UIColor *badgeColor;
-@property(nonatomic, strong) UIColor *selectedColor;
-@property(nonatomic, strong) UIColor *unselectedColor;
+@property(nonatomic, strong) UIColor *selectedItemTintColor;
+@property(nonatomic, strong) UIColor *unselectedItemTintColor;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 
