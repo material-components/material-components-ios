@@ -174,6 +174,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/CollectionLayoutAttributes"
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MaterialComponents/Palettes"
     ss.dependency "MaterialComponents/private/Icons/ic_check"
     ss.dependency "MaterialComponents/private/Icons/ic_check_circle"
     ss.dependency "MaterialComponents/private/Icons/ic_chevron_right"
