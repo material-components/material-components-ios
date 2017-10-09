@@ -108,7 +108,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  if (_hidesForSinglePage && [_indicators count] == 1) {
+  if (_numberOfPages == 0 || (_hidesForSinglePage && [_indicators count] == 1)) {
     self.hidden = YES;
     return;
   }
@@ -151,6 +151,10 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   NSInteger previousPage = _currentPage;
   BOOL shouldReverse = (previousPage > currentPage);
   _currentPage = currentPage;
+
+  if (_numberOfPages == 0) {
+    return;
+  }
 
   if (animated) {
     // Draw and extend track.
@@ -456,6 +460,11 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   _indicators = [NSMutableArray arrayWithCapacity:_numberOfPages];
   _indicatorPositions = [NSMutableArray arrayWithCapacity:_numberOfPages];
 
+  if (_numberOfPages == 0) {
+    [self setNeedsLayout];
+    return;
+  }
+
   // Create indicators.
   CGFloat radius = kPageControlIndicatorRadius;
   CGFloat margin = kPageControlIndicatorMargin;
@@ -480,7 +489,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // Add animated indicator that will travel freely across the container. Its transform will be
   // updated by calling its -updateIndicatorTransformX method.
   CGPoint center = CGPointMake(radius, radius);
-  CGPoint point = _numberOfPages ? [_indicatorPositions[_currentPage] CGPointValue] : CGPointZero;
+  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
   _animatedIndicator = [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
   [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
   [_containerView.layer addSublayer:_animatedIndicator];
