@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
  contain a minimum of three items with a maxiumum of up to five items. The first item is selected by
  default.
  */
-@property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *navBarItems;
+@property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *navBarItems;
 
 /**
  Color of selected item. Applies color to items' icons and text.
