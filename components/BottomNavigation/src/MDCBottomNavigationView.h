@@ -16,6 +16,19 @@
 
 #import <UIKit/UIKit.h>
 
+/** States used to configure bottom navigation on when to hide item titles.  */
+typedef NS_ENUM(NSInteger, MDCBottomNavigationViewTitleHideState) {
+
+  // Hide item titles when item is unselected.
+  MDCBottomNavigationViewTitleHideStateUnselect = 0,
+
+  // Item titles are never hidden.
+  MDCBottomNavigationViewTitleHideStateNever = 1,
+
+  // Item titles are always hidden.
+  MDCBottomNavigationViewTitleHideStateAlways = 2
+};
+
 /**
  A bottom navigation view.
 
@@ -26,18 +39,17 @@
 @interface MDCBottomNavigationView : UIView
 
 /**
+ Configures when item titles should be displayed.
+ Default is MDCBottomNavigationViewTitleHideStateUnselect.
+ */
+@property(nonatomic, assign) MDCBottomNavigationViewTitleHideState titleHideState;
+
+/**
  An array of UITabBarItems that is used to populate bottom navigation view content. The array must
  contain a minimum of three items with a maxiumum of up to five items. The first item is selected by
  default.
  */
 @property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *navBarItems;
-
-/**
- Selects an item contained in the bottom navigation view.
-
- @param item UITabBarItem to select from the navBarItems array.
- */
-- (void)selectItem:(nonnull UITabBarItem *)item;
 
 /**
  Color of selected item. Applies color to items' icons and text.
@@ -48,5 +60,12 @@
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  */
 @property(nonatomic, strong, nonnull) UIColor *unselectedColor;
+
+/**
+ Selects an item contained in the bottom navigation view.
+
+ @param item UITabBarItem to select from the navBarItems array.
+ */
+- (void)selectItem:(nonnull UITabBarItem *)item;
 
 @end

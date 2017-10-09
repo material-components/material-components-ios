@@ -59,6 +59,7 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
   _selectedColor = [UIColor blackColor];
   _unselectedColor = [UIColor grayColor];
   _layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
+  _titleHideState = MDCBottomNavigationViewTitleHideStateUnselect;
 
   // Content in bottom navigation always uses the width of the device portrait orientation width.
   CGSize appSize = [[UIScreen mainScreen] applicationFrame].size;
@@ -122,6 +123,7 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
     bottomNavCell.title = tabBarItem.title;
     bottomNavCell.selectedColor = self.selectedColor;
     bottomNavCell.unselectedColor = self.unselectedColor;
+    bottomNavCell.titleHideState = self.titleHideState;
 
     if (tabBarItem.image) {
       bottomNavCell.image = tabBarItem.image;
@@ -252,6 +254,13 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
   _unselectedColor = unselectedColor;
   for (MDCBottomNavigationCell *cell in self.navBarCells) {
     cell.unselectedColor = unselectedColor;
+  }
+}
+
+- (void)setTitleHideState:(MDCBottomNavigationViewTitleHideState)titleHideState {
+  _titleHideState = titleHideState;
+  for (MDCBottomNavigationCell *cell in self.navBarCells) {
+    cell.titleHideState = titleHideState;
   }
 }
 

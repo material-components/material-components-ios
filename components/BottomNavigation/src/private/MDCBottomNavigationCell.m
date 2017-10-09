@@ -117,15 +117,28 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   _selected = selected;
 
-  CGPoint iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+  CGPoint iconImageViewCenter =
+      CGPointMake(CGRectGetMidX(self.bounds),
+                  CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
   if (selected) {
-    self.label.hidden = NO;
-    iconImageViewCenter =
-        CGPointMake(CGRectGetMidX(self.bounds),
-                    CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
+    if (self.titleHideState == MDCBottomNavigationViewTitleHideStateUnselect ||
+        self.titleHideState == MDCBottomNavigationViewTitleHideStateNever) {
+      self.label.hidden = NO;
+    } else if (self.titleHideState == MDCBottomNavigationViewTitleHideStateAlways) {
+      self.label.hidden = YES;
+      iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    }
+    self.label.textColor = self.selectedColor;
     self.iconImageView.image = self.selectedImage;
   } else {
-    self.label.hidden = YES;
+    if (self.titleHideState == MDCBottomNavigationViewTitleHideStateUnselect ||
+        self.titleHideState == MDCBottomNavigationViewTitleHideStateAlways) {
+      self.label.hidden = YES;
+      iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    } else if (self.titleHideState == MDCBottomNavigationViewTitleHideStateNever) {
+      self.label.hidden = NO;
+    }
+    self.label.textColor = self.unselectedColor;
     self.iconImageView.image = self.unselectedImage;
   }
   CGPoint badgeCenter =
@@ -134,7 +147,6 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
   self.label.center =
       CGPointMake(CGRectGetMidX(self.bounds),
                   CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
-
   if (animated) {
     [UIView animateWithDuration:kMDCBottomNavigationCellTransitionDuration animations:^(void) {
       self.iconImageView.center = iconImageViewCenter;
