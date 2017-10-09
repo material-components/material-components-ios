@@ -137,6 +137,7 @@
 
   // When
   pageControl.numberOfPages = 0;
+  pageControl.currentPage = 0;
 
   // Then, no crash
 }
