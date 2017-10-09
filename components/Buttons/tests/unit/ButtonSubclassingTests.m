@@ -54,6 +54,7 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
 }
 
 - (void)testAssignedContentEdgeInsets {
+  // Given
   MDCButton *button = [[MDCButton alloc] init];
   button.contentEdgeInsets = ButtonTestContentEdgeInsets;
 
@@ -71,6 +72,7 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
 }
 
 - (void)testAssignedCornerRadius {
+  // Given
   MDCButton *button = [[MDCButton alloc] init];
   button.layer.cornerRadius = ButtonTestCornerRadius;
 
