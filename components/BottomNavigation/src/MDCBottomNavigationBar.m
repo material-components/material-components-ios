@@ -28,7 +28,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 @interface MDCBottomNavigationBar ()
 
-@property(nonatomic, strong) NSMutableArray<MDCBottomNavigationCell *> *navBarCells;
+@property(nonatomic, strong) NSMutableArray<MDCBottomNavigationCell *> *cells;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, strong) UIView *navBarContainerView;
 
@@ -70,7 +70,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
                                            UIViewAutoresizingFlexibleLeftMargin |
                                            UIViewAutoresizingFlexibleRightMargin );
   [self addSubview:_navBarContainerView];
-  _navBarCells = [NSMutableArray array];
+  _cells = [NSMutableArray array];
 }
 
 - (void)layoutSubviews {
@@ -82,12 +82,12 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 }
 
 - (void)layoutCellsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
-  NSInteger numItems = self.navBarItems.count;
+  NSInteger numItems = self.items.count;
   NSInteger i = 0;
   CGSize navBarSize = self.navBarContainerView.bounds.size;
   CGFloat itemWidth = navBarSize.width / numItems;
   if (layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    for (MDCBottomNavigationCell *cell in self.navBarCells) {
+    for (MDCBottomNavigationCell *cell in self.cells) {
       cell.frame = CGRectMake(navBarSize.width - (i + 1) * itemWidth,
                               0,
                               itemWidth,
@@ -95,7 +95,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
       i++;
     }
   } else {
-    for (MDCBottomNavigationCell *cell in self.navBarCells) {
+    for (MDCBottomNavigationCell *cell in self.cells) {
       cell.frame = CGRectMake(i * itemWidth,
                               0,
                               itemWidth,
@@ -105,46 +105,45 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   }
 }
 
-- (void)setNavBarItems:(NSArray<UITabBarItem *> *)navBarItems {
-  if (_navBarItems == navBarItems) {
+- (void)setItems:(NSArray<UITabBarItem *> *)items {
+  if (_items == items) {
     return;
   }
-  NSAssert(navBarItems.count > 2, @"Need to have at least 3 items in navBarItems.");
-  NSAssert(navBarItems.count < 6, @"navBarItems has a maximum of 5 items.");
+  NSAssert(items.count > 2, @"Need to have at least 3 items in navigation bar.");
+  NSAssert(items.count < 6, @"Navigation bar has a maximum of 5 items.");
 
-  _navBarItems = navBarItems;
-  
+  _items = items;
+
   [self removeBottomNavigationCells];
   [self removeObserversFromTabBarItems];
 
-  for (UITabBarItem *tabBarItem in navBarItems) {
-    MDCBottomNavigationCell *bottomNavCell =
-        [[MDCBottomNavigationCell alloc] initWithFrame:CGRectZero];
-    bottomNavCell.title = tabBarItem.title;
-    bottomNavCell.selectedColor = self.selectedColor;
-    bottomNavCell.unselectedColor = self.unselectedColor;
-    bottomNavCell.titleHideState = self.titleHideState;
+  for (UITabBarItem *item in items) {
+    MDCBottomNavigationCell *cell = [[MDCBottomNavigationCell alloc] initWithFrame:CGRectZero];
+    cell.title = item.title;
+    cell.selectedColor = self.selectedColor;
+    cell.unselectedColor = self.unselectedColor;
+    cell.titleHideState = self.titleHideState;
 
-    if (tabBarItem.image) {
-      bottomNavCell.image = tabBarItem.image;
+    if (item.image) {
+      cell.image = item.image;
     }
-    if (tabBarItem.badgeValue) {
-      bottomNavCell.badgeValue = tabBarItem.badgeValue;
+    if (item.badgeValue) {
+      cell.badgeValue = item.badgeValue;
     }
-    if (tabBarItem.badgeColor) {
-      bottomNavCell.badgeColor = tabBarItem.badgeColor;
+    if (item.badgeColor) {
+      cell.badgeColor = item.badgeColor;
     }
-    bottomNavCell.selected = NO;
-    [bottomNavCell.button addTarget:self
-                             action:@selector(didTapButton:)
-                   forControlEvents:UIControlEventTouchUpInside];
-    [self.navBarCells addObject:bottomNavCell];
-    [self.navBarContainerView addSubview:bottomNavCell];
+    cell.selected = NO;
+    [cell.button addTarget:self
+                    action:@selector(didTapButton:)
+          forControlEvents:UIControlEventTouchUpInside];
+    [self.cells addObject:cell];
+    [self.navBarContainerView addSubview:cell];
   }
   [self addObserversToTabBarItems];
 
   // Select the first item by default.
-  [self.navBarCells.firstObject setSelected:YES];
+  [self.cells.firstObject setSelected:YES];
 }
 
 - (void)dealloc {
@@ -152,33 +151,33 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 }
 
 - (void)addObserversToTabBarItems {
-  for (UITabBarItem *tabBarItem in self.navBarItems) {
-    [tabBarItem addObserver:self
-                 forKeyPath:kMDCBottomNavigationBarBadgeColorString
-                    options:NSKeyValueObservingOptionNew
-                    context:nil];
-    [tabBarItem addObserver:self
-                 forKeyPath:kMDCBottomNavigationBarBadgeValueString
-                    options:NSKeyValueObservingOptionNew
-                    context:nil];
-    [tabBarItem addObserver:self
-                 forKeyPath:kMDCBottomNavigationBarImageString
-                    options:NSKeyValueObservingOptionNew
-                    context:nil];
-    [tabBarItem addObserver:self
-                 forKeyPath:kMDCBottomNavigationBarTitleString
-                    options:NSKeyValueObservingOptionNew
-                    context:nil];
+  for (UITabBarItem *item in self.items) {
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarBadgeColorString
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarBadgeValueString
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarImageString
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarTitleString
+              options:NSKeyValueObservingOptionNew
+              context:nil];
   }
 }
 
 - (void)removeObserversFromTabBarItems {
-  for (UITabBarItem *tabBarItem in self.navBarItems) {
+  for (UITabBarItem *item in self.items) {
     @try {
-      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeColorString];
-      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeValueString];
-      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationBarImageString];
-      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeColorString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeValueString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarImageString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
     }
     @catch (NSException *exception) {
       if (exception) {
@@ -189,7 +188,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 }
 
 - (void)removeBottomNavigationCells {
-  for (MDCBottomNavigationCell *cell in self.navBarCells) {
+  for (MDCBottomNavigationCell *cell in self.cells) {
     [cell removeFromSuperview];
   }
 }
@@ -201,14 +200,14 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   if (!context) {
     NSInteger i = 0;
     NSInteger selectedItemNum = 0;
-    for (UITabBarItem *tabBarItem in self.navBarItems) {
-      if (object == tabBarItem) {
+    for (UITabBarItem *item in self.items) {
+      if (object == item) {
         selectedItemNum = i;
         break;
       }
       i++;
     }
-    MDCBottomNavigationCell *cell = _navBarCells[selectedItemNum];
+    MDCBottomNavigationCell *cell = _cells[selectedItemNum];
     if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeColorString]) {
       [cell setBadgeColor:change[kMDCBottomNavigationBarNewString]];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeValueString]) {
@@ -222,7 +221,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 }
 
 - (void)didTapButton:(UIButton *)button {
-  for (MDCBottomNavigationCell *cell in self.navBarCells) {
+  for (MDCBottomNavigationCell *cell in self.cells) {
     if (cell.button != button) {
       [cell setSelected:NO animated:YES];
     }
@@ -233,11 +232,11 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 - (void)selectItem:(UITabBarItem *)item {
   NSInteger i = 0;
-  for (UITabBarItem *tabBarItem in self.navBarItems) {
+  for (UITabBarItem *tabBarItem in self.items) {
     if (item == tabBarItem) {
-      [self.navBarCells[i] setSelected:YES];
+      [self.cells[i] setSelected:YES];
     } else {
-      [self.navBarCells[i] setSelected:NO];
+      [self.cells[i] setSelected:NO];
     }
     i++;
   }
@@ -245,21 +244,21 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 - (void)setSelectedColor:(UIColor *)selectedColor {
   _selectedColor = selectedColor;
-  for (MDCBottomNavigationCell *cell in self.navBarCells) {
+  for (MDCBottomNavigationCell *cell in self.cells) {
     cell.selectedColor = selectedColor;
   }
 }
 
 - (void)setUnselectedColor:(UIColor *)unselectedColor {
   _unselectedColor = unselectedColor;
-  for (MDCBottomNavigationCell *cell in self.navBarCells) {
+  for (MDCBottomNavigationCell *cell in self.cells) {
     cell.unselectedColor = unselectedColor;
   }
 }
 
 - (void)setTitleHideState:(MDCBottomNavigationBarTitleHideState)titleHideState {
   _titleHideState = titleHideState;
-  for (MDCBottomNavigationCell *cell in self.navBarCells) {
+  for (MDCBottomNavigationCell *cell in self.cells) {
     cell.titleHideState = titleHideState;
   }
 }

@@ -30,11 +30,11 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 };
 
 /**
- A bottom navigation view.
+ A bottom navigation bar.
 
- The bottom navigation view is a bar docked at the bottom of the screen with tappable items. Only
- one item can be selected at at time. The selected item's title text is displayed. Title text for
- unselected items are hidden.
+ The bottom navigation bar is docked at the bottom of the screen with tappable items. Only one item
+ can be selected at at time. The selected item's title text is displayed. Title text for unselected
+ items are hidden.
  */
 @interface MDCBottomNavigationBar : UIView
 
@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
  contain a minimum of three items with a maxiumum of up to five items. The first item is selected by
  default.
  */
-@property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *navBarItems;
+@property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
 
 /**
  Color of selected item. Applies color to items' icons and text.
@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 /**
  Selects an item contained in the bottom navigation view.
 
- @param item UITabBarItem to select from the navBarItems array.
+ @param item UITabBarItem to select from the items array.
  */
 - (void)selectItem:(nonnull UITabBarItem *)item;
 

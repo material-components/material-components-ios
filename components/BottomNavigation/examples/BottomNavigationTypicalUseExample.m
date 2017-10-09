@@ -77,7 +77,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
                                       tag:0];
   tabBarItem5.badgeValue = @"New";
   tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
-  _bottomNavBar.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
+  _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   [_bottomNavBar selectItem:tabBarItem2];
   [self updateBadgeItemCount];
 }
@@ -89,8 +89,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
     self.badgeCount = 0;
   }
   self.badgeCount++;
-  self.bottomNavBar.navBarItems[1].badgeValue =
-     [NSNumber numberWithInt:self.badgeCount].stringValue;
+  self.bottomNavBar.items[1].badgeValue = [NSNumber numberWithInt:self.badgeCount].stringValue;
 
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
     [self updateBadgeItemCount];
