@@ -97,9 +97,9 @@
       break;
 
     case FlexibleHeaderConfiguratorFieldHeightSafeAreaAdjustment:
-      headerView.heightSafeAreaAdjustment =
-          ([value boolValue] ? MDCFlexibleHeaderHeightSafeAreaAdjustmentAlways
-                             : MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy);
+      headerView.safeAreaAdjustsMinMaxHeight =
+          ([value boolValue] ? MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightAlways
+                             : MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults);
   }
 }
 
@@ -215,8 +215,8 @@ static const CGFloat kHeightScalar = 300;
     case FlexibleHeaderConfiguratorFieldMaximumHeight:
       return @([self normalizedHeight:self.fhvc.headerView.maximumHeight]);
     case FlexibleHeaderConfiguratorFieldHeightSafeAreaAdjustment:
-      return @(self.fhvc.headerView.heightSafeAreaAdjustment ==
-          MDCFlexibleHeaderHeightSafeAreaAdjustmentAlways);
+      return @(self.fhvc.headerView.safeAreaAdjustsMinMaxHeight ==
+          MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightAlways);
   }
 }
 

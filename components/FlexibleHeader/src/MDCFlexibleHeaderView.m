@@ -452,10 +452,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     // In Legacy mode we only adjust the min & max height if we're using the default values
     // as we have already internally substracted the previously hardcoded status bar height from
     // these values.
-    if (_heightSafeAreaAdjustment == MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy) {
-      if (_hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight) {
-        return;
-      }
+    if (_safeAreaAdjustsMinMaxHeight == MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults
+        && (_hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight)) {
+      return;
     }
 
     _minHeightIncludingSafeArea = _minimumHeight + [self flexibleHeaderSafeAreaTop];
@@ -1270,7 +1269,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 
   _minimumHeight = minimumHeight;
 
-  if (_heightSafeAreaAdjustment == MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy) {
+  if (_safeAreaAdjustsMinMaxHeight == MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults) {
     _minHeightIncludingSafeArea = _minimumHeight;
   } else {
     _minHeightIncludingSafeArea = _minimumHeight + [self flexibleHeaderSafeAreaTop];
@@ -1294,7 +1293,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 
   _maximumHeight = maximumHeight;
 
-  if (_heightSafeAreaAdjustment == MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy) {
+  if (_safeAreaAdjustsMinMaxHeight == MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults) {
     _maxHeightIncludingSafeArea = _maximumHeight;
   } else {
     _maxHeightIncludingSafeArea = _maximumHeight + [self flexibleHeaderSafeAreaTop];
@@ -1318,13 +1317,14 @@ static BOOL isRunningiOS10_3OrAbove() {
   }
 }
 
-- (void)setHeightSafeAreaAdjustment:(MDCFlexibleHeaderHeightSafeAreaAdjustment)adjustment {
-  if (_heightSafeAreaAdjustment == adjustment) {
+- (void)setSafeAreaAdjustsMinMaxHeight:(MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeight)adjustment {
+  if (_safeAreaAdjustsMinMaxHeight == adjustment) {
     return;
   }
-  _heightSafeAreaAdjustment = adjustment;
+  _safeAreaAdjustsMinMaxHeight = adjustment;
 
-  if (_heightSafeAreaAdjustment == MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy) {
+  if (_safeAreaAdjustsMinMaxHeight == MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults &&
+      (_hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight)) {
     _minHeightIncludingSafeArea = _minimumHeight;
     _maxHeightIncludingSafeArea = _maximumHeight;
   } else {

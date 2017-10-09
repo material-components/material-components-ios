@@ -21,7 +21,7 @@ typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *_Nonnull sh
                                                             CGFloat intensity);
 
 /** This determines how we adjust the height to account for the Safe Area insets. */
-typedef NS_ENUM(NSInteger, MDCFlexibleHeaderHeightSafeAreaAdjustment) {
+typedef NS_ENUM(NSInteger, MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeight) {
 
   /**
    Only adjust the height to account for the Safe Area if min and max have not been explicitly set.
@@ -31,14 +31,14 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderHeightSafeAreaAdjustment) {
    height, so for backwards compatibility reasons we only adjust if the default values are being
    used.
    */
-  MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy,
+  MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults,
 
   /**
    Always adjust the height to account for the Safe Area.
 
    In this mode we add safeAreaInsets.top to both the min and the max height.
    */
-  MDCFlexibleHeaderHeightSafeAreaAdjustmentAlways,
+  MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightAlways,
 };
 
 /**
@@ -341,7 +341,7 @@ IB_DESIGNABLE
  Defaults to MDCFlexibleHeaderHeightSafeAreaAdjustmentLegacy, where we only adjust if the default
  values are being used.
  */
-@property(nonatomic) MDCFlexibleHeaderHeightSafeAreaAdjustment heightSafeAreaAdjustment;
+@property(nonatomic) MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeight safeAreaAdjustsMinMaxHeight;
 
 #pragma mark Behaviors
 
