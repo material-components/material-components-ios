@@ -18,8 +18,9 @@
 
 #import "MaterialMath.h"
 #import "MaterialRTL.h"
-#import "private/MDCBottomNavigationCell.h"
+#import "private/MDCBottomNavigationItemView.h"
 
+static const CGFloat kMDCBottomNavigationBarHeight = 72.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
@@ -28,8 +29,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 @interface MDCBottomNavigationBar ()
 
-@property(nonatomic, strong) NSMutableArray<MDCBottomNavigationCell *> *cells;
-@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
+@property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, strong) UIView *containerView;
 
 @end
@@ -55,52 +55,43 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 - (void)commonMDCBottomNavigationBarInit {
   self.backgroundColor = [UIColor whiteColor];
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
-  
-  _selectedColor = [UIColor blackColor];
-  _unselectedColor = [UIColor grayColor];
-  _layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
+
+  _selectedItemTintColor = [UIColor blackColor];
+  _unselectedItemTintColor = [UIColor grayColor];
   _titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
 
-  // Content in bottom navigation always uses the width of the device portrait orientation width.
+  // The bottom navigation bar always spans the width of the device. However, the container view
+  // that holds the items has a fixed width based on the device's portrait view width. This allows
+  // the items to have a consistent distance from one another independent of device orientation.
   CGSize appSize = [[UIScreen mainScreen] applicationFrame].size;
   CGFloat minDimension = MIN(appSize.width, appSize.height);
-  CGRect adjustedFrame = CGRectMake(0, 0, minDimension, self.frame.size.height);
+  CGRect adjustedFrame = CGRectMake(0, 0, minDimension, kMDCBottomNavigationBarHeight);
   _containerView = [[UIView alloc] initWithFrame:adjustedFrame];
   _containerView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
-                                           UIViewAutoresizingFlexibleLeftMargin |
-                                           UIViewAutoresizingFlexibleRightMargin );
+                                     UIViewAutoresizingFlexibleLeftMargin |
+                                     UIViewAutoresizingFlexibleRightMargin );
   [self addSubview:_containerView];
-  _cells = [NSMutableArray array];
+  _itemViews = [NSMutableArray array];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [self layoutCellsWithLayoutDirection:self.layoutDirection];
-  self.containerView.center = CGPointMake(CGRectGetMidX(self.bounds),
-                                                CGRectGetMidY(self.bounds));
+  [self layoutitemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
+  self.containerView.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
 
-- (void)layoutCellsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
+- (void)layoutitemViewsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
   NSInteger numItems = self.items.count;
-  NSInteger i = 0;
   CGSize navBarSize = self.containerView.bounds.size;
   CGFloat itemWidth = navBarSize.width / numItems;
-  if (layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    for (MDCBottomNavigationCell *cell in self.cells) {
-      cell.frame = CGRectMake(navBarSize.width - (i + 1) * itemWidth,
-                              0,
-                              itemWidth,
-                              navBarSize.height);
-      i++;
-    }
-  } else {
-    for (MDCBottomNavigationCell *cell in self.cells) {
-      cell.frame = CGRectMake(i * itemWidth,
-                              0,
-                              itemWidth,
-                              navBarSize.height);
-      i++;
+  for (NSUInteger i = 0; i < self.itemViews.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      itemView.frame = CGRectMake(i * itemWidth, 0, itemWidth, navBarSize.height);
+    } else {
+      itemView.frame =
+          CGRectMake(navBarSize.width - (i + 1) * itemWidth, 0,  itemWidth, navBarSize.height);
     }
   }
 }
@@ -109,41 +100,39 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   if (_items == items) {
     return;
   }
-  NSAssert(items.count > 2, @"Need to have at least 3 items in navigation bar.");
-  NSAssert(items.count < 6, @"Navigation bar has a maximum of 5 items.");
+  NSAssert(items.count >= 3, @"Need to have at least 3 items in navigation bar.");
+  NSAssert(items.count <= 5, @"Navigation bar has a maximum of 5 items.");
 
   _items = items;
 
-  [self removeBottomNavigationCells];
+  [self removeBottomNavigationitemViews];
   [self removeObserversFromTabBarItems];
 
   for (UITabBarItem *item in items) {
-    MDCBottomNavigationCell *cell = [[MDCBottomNavigationCell alloc] initWithFrame:CGRectZero];
-    cell.title = item.title;
-    cell.selectedColor = self.selectedColor;
-    cell.unselectedColor = self.unselectedColor;
-    cell.titleHideState = self.titleHideState;
+    MDCBottomNavigationItemView *itemView =
+        [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
+    itemView.title = item.title;
+    itemView.selectedItemTintColor = self.selectedItemTintColor;
+    itemView.unselectedItemTintColor = self.unselectedItemTintColor;
+    itemView.titleHideState = self.titleHideState;
 
     if (item.image) {
-      cell.image = item.image;
+      itemView.image = item.image;
     }
     if (item.badgeValue) {
-      cell.badgeValue = item.badgeValue;
+      itemView.badgeValue = item.badgeValue;
     }
     if (item.badgeColor) {
-      cell.badgeColor = item.badgeColor;
+      itemView.badgeColor = item.badgeColor;
     }
-    cell.selected = NO;
-    [cell.button addTarget:self
+    itemView.selected = NO;
+    [itemView.button addTarget:self
                     action:@selector(didTapButton:)
           forControlEvents:UIControlEventTouchUpInside];
-    [self.cells addObject:cell];
-    [self.containerView addSubview:cell];
+    [self.itemViews addObject:itemView];
+    [self.containerView addSubview:itemView];
   }
   [self addObserversToTabBarItems];
-
-  // Select the first item by default.
-  [self.cells.firstObject setSelected:YES];
 }
 
 - (void)dealloc {
@@ -187,9 +176,9 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   }
 }
 
-- (void)removeBottomNavigationCells {
-  for (MDCBottomNavigationCell *cell in self.cells) {
-    [cell removeFromSuperview];
+- (void)removeBottomNavigationitemViews {
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    [itemView removeFromSuperview];
   }
 }
 
@@ -198,36 +187,35 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
                        context:(void *)context {
   if (!context) {
-    NSInteger i = 0;
     NSInteger selectedItemNum = 0;
-    for (UITabBarItem *item in self.items) {
+    for (NSUInteger i = 0; i < self.items.count; i++) {
+      UITabBarItem *item = self.items[i];
       if (object == item) {
         selectedItemNum = i;
         break;
       }
-      i++;
     }
-    MDCBottomNavigationCell *cell = _cells[selectedItemNum];
+    MDCBottomNavigationItemView *itemView = _itemViews[selectedItemNum];
     if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeColorString]) {
-      [cell setBadgeColor:change[kMDCBottomNavigationBarNewString]];
+      [itemView setBadgeColor:change[kMDCBottomNavigationBarNewString]];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeValueString]) {
-      [cell setBadgeValue:change[kMDCBottomNavigationBarNewString]];
+      [itemView setBadgeValue:change[kMDCBottomNavigationBarNewString]];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarImageString]) {
-      [cell setImage:change[kMDCBottomNavigationBarNewString]];
+      [itemView setImage:change[kMDCBottomNavigationBarNewString]];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
-      [cell setTitle:change[kMDCBottomNavigationBarNewString]];
+      [itemView setTitle:change[kMDCBottomNavigationBarNewString]];
     }
   }
 }
 
 - (void)didTapButton:(UIButton *)button {
-  for (MDCBottomNavigationCell *cell in self.cells) {
-    if (cell.button != button) {
-      [cell setSelected:NO animated:YES];
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    if (itemView.button != button) {
+      [itemView setSelected:NO animated:YES];
     }
   }
-  MDCBottomNavigationCell *cell = (MDCBottomNavigationCell *)button.superview;
-  [cell setSelected:YES animated:YES];
+  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
+  [itemView setSelected:YES animated:YES];
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
@@ -235,35 +223,34 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
     return;
   }
   _selectedItem = selectedItem;
-  NSInteger i = 0;
-  for (UITabBarItem *item in self.items) {
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    UITabBarItem *item = self.items[i];
     if (selectedItem == item) {
-      [self.cells[i] setSelected:YES];
+      self.itemViews[i].selected = YES;
     } else {
-      [self.cells[i] setSelected:NO];
+      self.itemViews[i].selected = NO;
     }
-    i++;
   }
 }
 
-- (void)setSelectedColor:(UIColor *)selectedColor {
-  _selectedColor = selectedColor;
-  for (MDCBottomNavigationCell *cell in self.cells) {
-    cell.selectedColor = selectedColor;
+- (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
+  _selectedItemTintColor = selectedItemTintColor;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.selectedItemTintColor = selectedItemTintColor;
   }
 }
 
-- (void)setUnselectedColor:(UIColor *)unselectedColor {
-  _unselectedColor = unselectedColor;
-  for (MDCBottomNavigationCell *cell in self.cells) {
-    cell.unselectedColor = unselectedColor;
+- (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
+  _unselectedItemTintColor = unselectedItemTintColor;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.unselectedItemTintColor = unselectedItemTintColor;
   }
 }
 
 - (void)setTitleHideState:(MDCBottomNavigationBarTitleHideState)titleHideState {
   _titleHideState = titleHideState;
-  for (MDCBottomNavigationCell *cell in self.cells) {
-    cell.titleHideState = titleHideState;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.titleHideState = titleHideState;
   }
 }
 

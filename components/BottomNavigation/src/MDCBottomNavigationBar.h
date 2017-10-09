@@ -46,8 +46,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. The array must
- contain a minimum of three items with a maxiumum of up to five items. The first item is selected by
- default.
+ contain a minimum of three items with a maxiumum of up to five items.
+ Default is nil.
  */
 @property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
 
@@ -59,11 +59,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 /**
  Color of selected item. Applies color to items' icons and text.
  */
-@property(nonatomic, strong, nonnull) UIColor *selectedColor;
+@property (nonatomic, readwrite, copy, nullable) UIColor *selectedItemTintColor
+    NS_AVAILABLE_IOS(10_0) UI_APPEARANCE_SELECTOR;
 
 /**
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  */
-@property(nonatomic, strong, nonnull) UIColor *unselectedColor;
+@property (nonatomic, readwrite, copy, nullable) UIColor *unselectedItemTintColor
+    NS_AVAILABLE_IOS(10_0) UI_APPEARANCE_SELECTOR;
 
 @end

@@ -29,9 +29,9 @@
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIImage *image;
 
-@property(nonatomic, strong) UIColor *badgeColor;
-@property(nonatomic, strong) UIColor *selectedItemTintColor;
-@property(nonatomic, strong) UIColor *unselectedItemTintColor;
+@property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 

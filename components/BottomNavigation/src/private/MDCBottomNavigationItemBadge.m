@@ -14,25 +14,33 @@
  limitations under the License.
  */
 
-#import "MDCBottomNavigationCellBadge.h"
+#import "MDCBottomNavigationItemBadge.h"
 #import "MaterialMath.h"
 
-static const CGFloat kMDCBottomNavigationCellBadgeAngle = 90.f;
-static const CGFloat kMDCBottomNavigationCellBadgeFontSize = 10.f;
-static const CGFloat kMDCBottomNavigationCellBadgeXPadding = 8.f;
-static const CGFloat kMDCBottomNavigationCellBadgeYPadding = 2.f;
+static const CGFloat kMDCBottomNavigationItemBadgeAngle = 90.f;
+static const CGFloat kMDCBottomNavigationItemBadgeFontSize = 10.f;
+static const CGFloat kMDCBottomNavigationItemBadgeXPadding = 8.f;
+static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
 
-@implementation MDCBottomNavigationCellBadge
+@implementation MDCBottomNavigationItemBadge
 
-- (instancetype)init {
-  self = [super initWithFrame:CGRectZero];
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
   if (self) {
-    [self commonInitMDCBottomNavigationCellBadge];
+    [self commonInitMDCBottomNavigationItemBadge];
   }
   return self;
 }
 
-- (void)commonInitMDCBottomNavigationCellBadge {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonInitMDCBottomNavigationItemBadge];
+  }
+  return self;
+}
+
+- (void)commonInitMDCBottomNavigationItemBadge {
   _badgeColor = [UIColor redColor];
   _badgeLayer = [CAShapeLayer layer];
   _badgeLayer.fillColor = _badgeColor.CGColor;
@@ -40,41 +48,38 @@ static const CGFloat kMDCBottomNavigationCellBadgeYPadding = 2.f;
 
   _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
   _badgeValueLabel.textColor = [UIColor whiteColor];
-  _badgeValueLabel.font = [UIFont systemFontOfSize:kMDCBottomNavigationCellBadgeFontSize];
+  _badgeValueLabel.font = [UIFont systemFontOfSize:kMDCBottomNavigationItemBadgeFontSize];
   _badgeValueLabel.textAlignment = NSTextAlignmentCenter;
   [self addSubview:_badgeValueLabel];
-}
-
-- (void)sizeBadge {
-  [_badgeValueLabel sizeToFit];
-  _xPadding = kMDCBottomNavigationCellBadgeXPadding;
-  _yPadding = kMDCBottomNavigationCellBadgeYPadding;
-
-  _badgeCircleWidth = _badgeValueLabel.bounds.size.width + _xPadding;
-  _badgeCircleHeight = _badgeValueLabel.bounds.size.height + _yPadding;
-
-  if (_badgeCircleWidth < _badgeCircleHeight) {
-    _badgeCircleWidth = _badgeCircleHeight;
-  }
-  self.frame = CGRectMake(self.frame.origin.x,
-                          self.frame.origin.y,
-                          _badgeCircleWidth,
-                          _badgeCircleHeight);
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self sizeBadge];
-  [self drawBadge];
 }
 
-- (void)drawBadge {
+- (void)sizeBadge {
+  [_badgeValueLabel sizeToFit];
+  _xPadding = kMDCBottomNavigationItemBadgeXPadding;
+  _yPadding = kMDCBottomNavigationItemBadgeYPadding;
+
+  _badgeCircleWidth = CGRectGetWidth(_badgeValueLabel.bounds) + _xPadding;
+  _badgeCircleHeight = CGRectGetHeight(_badgeValueLabel.bounds) + _yPadding;
+
+  if (_badgeCircleWidth < _badgeCircleHeight) {
+    _badgeCircleWidth = _badgeCircleHeight;
+  }
+  self.frame = CGRectMake(CGRectGetMinX(self.frame),
+                          CGRectGetMinY(self.frame),
+                          _badgeCircleWidth,
+                          _badgeCircleHeight);
+
   self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);
   UIBezierPath *path = [UIBezierPath bezierPath];
-  CGFloat startAngleLeftSide = MDCDegreesToRadians(-kMDCBottomNavigationCellBadgeAngle);
-  CGFloat endAngleLeftSide = MDCDegreesToRadians(kMDCBottomNavigationCellBadgeAngle);
+  CGFloat startAngleLeftSide = MDCDegreesToRadians(-kMDCBottomNavigationItemBadgeAngle);
+  CGFloat endAngleLeftSide = MDCDegreesToRadians(kMDCBottomNavigationItemBadgeAngle);
 
   [path moveToPoint:CGPointMake(badgeRadius, badgeRadius)];
   CGPoint centerPathLeftSide = CGPointMake(badgeRadius, badgeRadius);
@@ -88,8 +93,8 @@ static const CGFloat kMDCBottomNavigationCellBadgeYPadding = 2.f;
   [path addLineToPoint:CGPointMake(badgeRadius, CGRectGetHeight(self.bounds))];
   [path addLineToPoint:CGPointMake(rectWidth, CGRectGetHeight(self.bounds))];
 
-  CGFloat startAngleRightSide = MDCDegreesToRadians(kMDCBottomNavigationCellBadgeAngle);
-  CGFloat endAngleRightSide = MDCDegreesToRadians(-kMDCBottomNavigationCellBadgeAngle);
+  CGFloat startAngleRightSide = MDCDegreesToRadians(kMDCBottomNavigationItemBadgeAngle);
+  CGFloat endAngleRightSide = MDCDegreesToRadians(-kMDCBottomNavigationItemBadgeAngle);
 
   CGPoint centerPathRightSide = CGPointMake(rectWidth, badgeRadius);
   [path addArcWithCenter:centerPathRightSide
@@ -108,8 +113,7 @@ static const CGFloat kMDCBottomNavigationCellBadgeYPadding = 2.f;
 - (void)setBadgeValue:(NSString *)badgeValue {
   _badgeValue = badgeValue;
   _badgeValueLabel.text = badgeValue;
-  [self sizeBadge];
-  [self drawBadge];
+  [self setNeedsLayout];
 }
 
 - (void)setBadgeColor:(UIColor *)badgeColor {

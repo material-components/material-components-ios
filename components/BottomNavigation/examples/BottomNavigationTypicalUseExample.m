@@ -49,8 +49,8 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
                  self.view.bounds.size.width,
                  kBottomNavigationTypicalUseExampleNavHeight);
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:frame];
-  _bottomNavBar.selectedColor = [MDCPalette greyPalette].tint800;
-  _bottomNavBar.unselectedColor = [MDCPalette greyPalette].tint600;
+  _bottomNavBar.selectedItemTintColor = [MDCPalette greyPalette].tint800;
+  _bottomNavBar.unselectedItemTintColor = [MDCPalette greyPalette].tint600;
   _bottomNavBar.titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
   [self.view addSubview:_bottomNavBar];
 
@@ -78,7 +78,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
   tabBarItem5.badgeValue = @"New";
   tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
-  [_bottomNavBar setSelectedItem:tabBarItem2];
+  _bottomNavBar.selectedItem = tabBarItem2;
   [self updateBadgeItemCount];
 }
 

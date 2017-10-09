@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCBottomNavigationCellBadge : UIView
+@interface MDCBottomNavigationItemBadge : UIView
 
 @property(nonatomic, assign) CGFloat badgeCircleWidth;
 @property(nonatomic, assign) CGFloat badgeCircleHeight;
@@ -25,7 +25,7 @@
 
 @property(nonatomic, strong) CAShapeLayer *badgeLayer;
 @property(nonatomic, copy) NSString *badgeValue;
-@property(nonatomic, strong) UIColor *badgeColor;
+@property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UILabel *badgeValueLabel;
 
 @end

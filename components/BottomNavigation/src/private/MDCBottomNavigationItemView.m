@@ -15,16 +15,16 @@
  */
 
 #import "MDCBottomNavigationItemView.h"
-#import "MDCBottomNavigationCellBadge.h"
+#import "MDCBottomNavigationItemBadge.h"
 
-static const CGFloat kMDCBottomNavigationCellTitleFontSize = 12.f;
+static const CGFloat kMDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
-static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
+static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180f;
 
 @interface MDCBottomNavigationItemView ()
 
-@property(nonatomic, strong) MDCBottomNavigationCellBadge *badge;
+@property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @property(nonatomic, strong) UIImage *selectedImage;
 @property(nonatomic, strong) UIImage *unselectedImage;
 @property(nonatomic, strong) UIImageView *iconImageView;
@@ -61,12 +61,12 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
 
   _label = [[UILabel alloc] initWithFrame:CGRectZero];
   _label.text = _title;
-  _label.font = [UIFont systemFontOfSize:kMDCBottomNavigationCellTitleFontSize];
+  _label.font = [UIFont systemFontOfSize:kMDCBottomNavigationItemViewTitleFontSize];
   _label.textAlignment = NSTextAlignmentCenter;
   _label.textColor = _selectedItemTintColor;
   [self addSubview:_label];
 
-  _badge = [[MDCBottomNavigationCellBadge alloc] init];
+  _badge = [[MDCBottomNavigationItemBadge alloc] initWithFrame:CGRectZero];
   [self addSubview:_badge];
 
   if (!_badgeValue) {
@@ -148,7 +148,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
       CGPointMake(CGRectGetMidX(self.bounds),
                   CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
   if (animated) {
-    [UIView animateWithDuration:kMDCBottomNavigationCellTransitionDuration animations:^(void) {
+    [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
       self.iconImageView.center = iconImageViewCenter;
       self.badge.center = badgeCenter;
     }];
