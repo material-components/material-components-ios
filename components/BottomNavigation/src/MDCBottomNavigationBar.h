@@ -17,16 +17,16 @@
 #import <UIKit/UIKit.h>
 
 /** States used to configure bottom navigation on when to hide item titles.  */
-typedef NS_ENUM(NSInteger, MDCBottomNavigationViewTitleHideState) {
+typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 
   // Default behavior is to hide item titles when item is unselected.
-  MDCBottomNavigationViewTitleHideStateDefault = 0,
+  MDCBottomNavigationBarTitleHideStateDefault = 0,
 
   // Item titles are never hidden.
-  MDCBottomNavigationViewTitleHideStateNever = 1,
+  MDCBottomNavigationBarTitleHideStateNever = 1,
 
   // Item titles are always hidden.
-  MDCBottomNavigationViewTitleHideStateAlways = 2
+  MDCBottomNavigationBarTitleHideStateAlways = 2
 };
 
 /**
@@ -36,13 +36,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationViewTitleHideState) {
  one item can be selected at at time. The selected item's title text is displayed. Title text for
  unselected items are hidden.
  */
-@interface MDCBottomNavigationView : UIView
+@interface MDCBottomNavigationBar : UIView
 
 /**
  Configures when item titles should be displayed.
- Default is MDCBottomNavigationViewTitleHideStateUnselect.
+ Default is MDCBottomNavigationBarTitleHideStateUnselect.
  */
-@property(nonatomic, assign) MDCBottomNavigationViewTitleHideState titleHideState;
+@property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation view content. The array must

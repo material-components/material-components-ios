@@ -121,21 +121,21 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
       CGPointMake(CGRectGetMidX(self.bounds),
                   CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
   if (selected) {
-    if (self.titleHideState == MDCBottomNavigationViewTitleHideStateDefault ||
-        self.titleHideState == MDCBottomNavigationViewTitleHideStateNever) {
+    if (self.titleHideState == MDCBottomNavigationBarTitleHideStateDefault ||
+        self.titleHideState == MDCBottomNavigationBarTitleHideStateNever) {
       self.label.hidden = NO;
-    } else if (self.titleHideState == MDCBottomNavigationViewTitleHideStateAlways) {
+    } else if (self.titleHideState == MDCBottomNavigationBarTitleHideStateAlways) {
       self.label.hidden = YES;
       iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     }
     self.label.textColor = self.selectedColor;
     self.iconImageView.image = self.selectedImage;
   } else {
-    if (self.titleHideState == MDCBottomNavigationViewTitleHideStateDefault ||
-        self.titleHideState == MDCBottomNavigationViewTitleHideStateAlways) {
+    if (self.titleHideState == MDCBottomNavigationBarTitleHideStateDefault ||
+        self.titleHideState == MDCBottomNavigationBarTitleHideStateAlways) {
       self.label.hidden = YES;
       iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    } else if (self.titleHideState == MDCBottomNavigationViewTitleHideStateNever) {
+    } else if (self.titleHideState == MDCBottomNavigationBarTitleHideStateNever) {
       self.label.hidden = NO;
     }
     self.label.textColor = self.unselectedColor;

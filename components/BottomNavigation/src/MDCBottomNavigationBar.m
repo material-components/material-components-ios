@@ -14,19 +14,19 @@
  limitations under the License.
  */
 
-#import "MDCBottomNavigationView.h"
+#import "MDCBottomNavigationBar.h"
 
 #import "MaterialMath.h"
 #import "MaterialRTL.h"
 #import "private/MDCBottomNavigationCell.h"
 
-static NSString *const kMDCBottomNavigationViewBadgeColorString = @"badgeColor";
-static NSString *const kMDCBottomNavigationViewBadgeValueString = @"badgeValue";
-static NSString *const kMDCBottomNavigationViewImageString = @"image";
-static NSString *const kMDCBottomNavigationViewTitleString = @"title";
-static NSString *const kMDCBottomNavigationViewNewString = @"new";
+static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
+static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
+static NSString *const kMDCBottomNavigationBarImageString = @"image";
+static NSString *const kMDCBottomNavigationBarTitleString = @"title";
+static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
-@interface MDCBottomNavigationView ()
+@interface MDCBottomNavigationBar ()
 
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationCell *> *navBarCells;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
@@ -34,12 +34,12 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
 
 @end
 
-@implementation MDCBottomNavigationView
+@implementation MDCBottomNavigationBar
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCBottomNavigationViewInit];
+    [self commonMDCBottomNavigationBarInit];
   }
   return self;
 }
@@ -47,19 +47,19 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCBottomNavigationViewInit];
+    [self commonMDCBottomNavigationBarInit];
   }
   return self;
 }
 
-- (void)commonMDCBottomNavigationViewInit {
+- (void)commonMDCBottomNavigationBarInit {
   self.backgroundColor = [UIColor whiteColor];
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
   
   _selectedColor = [UIColor blackColor];
   _unselectedColor = [UIColor grayColor];
   _layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
-  _titleHideState = MDCBottomNavigationViewTitleHideStateDefault;
+  _titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
 
   // Content in bottom navigation always uses the width of the device portrait orientation width.
   CGSize appSize = [[UIScreen mainScreen] applicationFrame].size;
@@ -154,19 +154,19 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
 - (void)addObserversToTabBarItems {
   for (UITabBarItem *tabBarItem in self.navBarItems) {
     [tabBarItem addObserver:self
-                 forKeyPath:kMDCBottomNavigationViewBadgeColorString
+                 forKeyPath:kMDCBottomNavigationBarBadgeColorString
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     [tabBarItem addObserver:self
-                 forKeyPath:kMDCBottomNavigationViewBadgeValueString
+                 forKeyPath:kMDCBottomNavigationBarBadgeValueString
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     [tabBarItem addObserver:self
-                 forKeyPath:kMDCBottomNavigationViewImageString
+                 forKeyPath:kMDCBottomNavigationBarImageString
                     options:NSKeyValueObservingOptionNew
                     context:nil];
     [tabBarItem addObserver:self
-                 forKeyPath:kMDCBottomNavigationViewTitleString
+                 forKeyPath:kMDCBottomNavigationBarTitleString
                     options:NSKeyValueObservingOptionNew
                     context:nil];
   }
@@ -175,10 +175,10 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
 - (void)removeObserversFromTabBarItems {
   for (UITabBarItem *tabBarItem in self.navBarItems) {
     @try {
-      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationViewBadgeColorString];
-      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationViewBadgeValueString];
-      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationViewImageString];
-      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationViewTitleString];
+      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeColorString];
+      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeValueString];
+      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationBarImageString];
+      [tabBarItem removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
     }
     @catch (NSException *exception) {
       if (exception) {
@@ -209,14 +209,14 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
       i++;
     }
     MDCBottomNavigationCell *cell = _navBarCells[selectedItemNum];
-    if ([keyPath isEqualToString:kMDCBottomNavigationViewBadgeColorString]) {
-      [cell setBadgeColor:change[kMDCBottomNavigationViewNewString]];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationViewBadgeValueString]) {
-      [cell setBadgeValue:change[kMDCBottomNavigationViewNewString]];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationViewImageString]) {
-      [cell setImage:change[kMDCBottomNavigationViewNewString]];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationViewTitleString]) {
-      [cell setTitle:change[kMDCBottomNavigationViewNewString]];
+    if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeColorString]) {
+      [cell setBadgeColor:change[kMDCBottomNavigationBarNewString]];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeValueString]) {
+      [cell setBadgeValue:change[kMDCBottomNavigationBarNewString]];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarImageString]) {
+      [cell setImage:change[kMDCBottomNavigationBarNewString]];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
+      [cell setTitle:change[kMDCBottomNavigationBarNewString]];
     }
   }
 }
@@ -257,7 +257,7 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
   }
 }
 
-- (void)setTitleHideState:(MDCBottomNavigationViewTitleHideState)titleHideState {
+- (void)setTitleHideState:(MDCBottomNavigationBarTitleHideState)titleHideState {
   _titleHideState = titleHideState;
   for (MDCBottomNavigationCell *cell in self.navBarCells) {
     cell.titleHideState = titleHideState;

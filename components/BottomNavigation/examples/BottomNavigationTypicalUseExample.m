@@ -25,7 +25,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
 @interface BottomNavigationTypicalUseExample ()
 
 @property(nonatomic, assign) int badgeCount;
-@property(nonatomic, strong) MDCBottomNavigationView *bottomNavView;
+@property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 
 @end
 
@@ -48,11 +48,11 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
                  self.view.bounds.size.height - kBottomNavigationTypicalUseExampleNavHeight,
                  self.view.bounds.size.width,
                  kBottomNavigationTypicalUseExampleNavHeight);
-  _bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
-  _bottomNavView.selectedColor = [MDCPalette greyPalette].tint800;
-  _bottomNavView.unselectedColor = [MDCPalette greyPalette].tint600;
-  _bottomNavView.titleHideState = MDCBottomNavigationViewTitleHideStateDefault;
-  [self.view addSubview:_bottomNavView];
+  _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:frame];
+  _bottomNavBar.selectedColor = [MDCPalette greyPalette].tint800;
+  _bottomNavBar.unselectedColor = [MDCPalette greyPalette].tint600;
+  _bottomNavBar.titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
+  [self.view addSubview:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =
       [[UITabBarItem alloc] initWithTitle:@"Home"
@@ -77,8 +77,8 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
                                       tag:0];
   tabBarItem5.badgeValue = @"New";
   tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
-  _bottomNavView.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
-  [_bottomNavView selectItem:tabBarItem2];
+  _bottomNavBar.navBarItems = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
+  [_bottomNavBar selectItem:tabBarItem2];
   [self updateBadgeItemCount];
 }
 
@@ -89,7 +89,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
     self.badgeCount = 0;
   }
   self.badgeCount++;
-  self.bottomNavView.navBarItems[1].badgeValue =
+  self.bottomNavBar.navBarItems[1].badgeValue =
      [NSNumber numberWithInt:self.badgeCount].stringValue;
 
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{

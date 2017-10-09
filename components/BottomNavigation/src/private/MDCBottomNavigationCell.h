@@ -16,12 +16,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBottomNavigationView.h"
+#import "MDCBottomNavigationBar.h"
 
 @interface MDCBottomNavigationCell : UIView
 
 @property(nonatomic, assign) BOOL selected;
-@property(nonatomic, assign) MDCBottomNavigationViewTitleHideState titleHideState;
+@property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
