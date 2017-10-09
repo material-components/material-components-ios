@@ -184,15 +184,17 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                                        toEndPoint:endPoint
                                        completion:completionBlock];
   } else {
-    // If not animated, simply move indicator to new position and reset track.
-    CGPoint point = [_indicatorPositions[currentPage] CGPointValue];
-    [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
-    [_trackLayer resetAtPoint:point];
+    if ([self currentPageHasValidIndicator]) {
+      // If not animated, simply move indicator to new position and reset track.
+      CGPoint point = [_indicatorPositions[currentPage] CGPointValue];
+      [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
+      [_trackLayer resetAtPoint:point];
 
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [_indicators[previousPage] setHidden:NO];
-    [CATransaction commit];
+      [CATransaction begin];
+      [CATransaction setDisableActions:YES];
+      [_indicators[previousPage] setHidden:NO];
+      [CATransaction commit];
+    }
   }
 }
 
@@ -204,6 +206,10 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (BOOL)isPageIndexValid:(NSInteger)nextPage {
   // Returns YES if next page is within bounds of page control. Otherwise NO.
   return (nextPage >= 0 && nextPage < _numberOfPages);
+}
+
+- (BOOL)currentPageHasValidIndicator {
+  return _currentPage < (int)[_indicatorPositions count];
 }
 
 #pragma mark - UIView(UIViewGeometry)
@@ -477,13 +483,15 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   _containerView.frame = CGRectInset(_containerView.frame, (frameWidth - controlSize.width) / 2, 0);
   _trackLength = CGRectGetWidth(_containerView.frame) - (radius * 2);
 
-  // Add animated indicator that will travel freely across the container. Its transform will be
-  // updated by calling its -updateIndicatorTransformX method.
-  CGPoint center = CGPointMake(radius, radius);
-  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
-  _animatedIndicator = [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
-  [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
-  [_containerView.layer addSublayer:_animatedIndicator];
+  if ([self currentPageHasValidIndicator]) {
+    // Add animated indicator that will travel freely across the container. Its transform will be
+    // updated by calling its -updateIndicatorTransformX method.
+    CGPoint center = CGPointMake(radius, radius);
+    CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
+    _animatedIndicator = [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
+    [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
+    [_containerView.layer addSublayer:_animatedIndicator];
+  }
 
   [self setNeedsLayout];
 }
