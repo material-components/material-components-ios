@@ -193,7 +193,7 @@ extension TabBarIconSwiftExample {
 
   func addStar(centered: Bool) {
     let starImage = UIImage(named:"TabBarDemo_ic_star",
-                            in:Bundle(for: type(of: self)),
+                            in:Bundle(for: TabBarIconSwiftExample.self),
                             compatibleWith:nil)
     let starView = UIImageView(image: starImage)
     starView.translatesAutoresizingMaskIntoConstraints = false

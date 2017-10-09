@@ -105,7 +105,7 @@
 }
 
 - (nonnull NSArray *)constructExampleViewControllers {
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[TabBarViewControllerExample class]];
   UIViewController *child1 =
       [TBVCSampleViewController sampleWithTitle:@"One" color:UIColor.redColor];
   UIColor *blue = [UIColor colorWithRed:0x3A / 255. green:0x56 / 255. blue:0xFF / 255. alpha:1];

@@ -44,7 +44,12 @@
   self.topView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-  UIImageView *imageView = [[UIImageView alloc] initWithImage:[self headerBackgroundImage]];
+  UIImageView *imageView = [[UIImageView alloc]
+      initWithImage:
+          [UIImage imageNamed:@"header_stack_view_theme"
+                                   inBundle:[NSBundle
+                                                bundleForClass:[HeaderStackViewTypicalUse class]]
+              compatibleWithTraitCollection:nil]];
   imageView.frame = self.topView.bounds;
   imageView.contentMode = UIViewContentModeScaleAspectFill;
   imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -86,12 +91,6 @@
                      self.stackView.frame = frame;
                      [self.stackView layoutIfNeeded];
                    }];
-}
-
-- (UIImage *)headerBackgroundImage {
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *imagePath = [bundle pathForResource:@"header_stack_view_theme" ofType:@"png"];
-  return [UIImage imageWithContentsOfFile:imagePath];
 }
 
 - (BOOL)prefersStatusBarHidden {

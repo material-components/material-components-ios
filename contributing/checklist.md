@@ -1,6 +1,8 @@
 # Component checklist
 
 
+[Checklist status spreadsheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vRQLFMuo0Q3xsJp1_TdWvImtfdc8dU0lqX2DTct5pOPAEUIrN9OsuPquvv4aKRAwKK_KItpGs7c4Fok/pubhtml)
+
 Over time we have curated a growing checklist of things we feel improve the experience of using a custom UIKit component. Many of these checks are performed by humans but we're now increasing the number of checks that can be performed by scripts.
 
 
@@ -369,6 +371,15 @@ Classes that set ivar values or perform other commands from the initializer, sho
 #### Articles on Auto Layout:
 [Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
+
+
+### Safe Area Support (if necessary)
+
+All of our components should work as expected on iOS 11, and support new devices like the iPhone X.
+
+1. Make sure your component takes into account the Safe Area and responds to its changes.
+2. Test it both on 11.0 and 11.1, and pay special attention to the iPhone X on landscape.
+2. Enter YES, NO or N/A
 
 
 ### UIAppearance Support
