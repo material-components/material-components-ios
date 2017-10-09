@@ -78,7 +78,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
   tabBarItem5.badgeValue = @"New";
   tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
-  [_bottomNavBar selectItem:tabBarItem2];
+  [_bottomNavBar setSelectedItem:tabBarItem2];
   [self updateBadgeItemCount];
 }
 

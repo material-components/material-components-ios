@@ -45,11 +45,16 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 @property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
 
 /**
- An array of UITabBarItems that is used to populate bottom navigation view content. The array must
+ An array of UITabBarItems that is used to populate bottom navigation bar content. The array must
  contain a minimum of three items with a maxiumum of up to five items. The first item is selected by
  default.
  */
 @property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
+
+/**
+ Selected item in the bottom navigation bar.
+ */
+@property(nonatomic, weak, nullable) UITabBarItem *selectedItem;
 
 /**
  Color of selected item. Applies color to items' icons and text.
@@ -60,12 +65,5 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  */
 @property(nonatomic, strong, nonnull) UIColor *unselectedColor;
-
-/**
- Selects an item contained in the bottom navigation view.
-
- @param item UITabBarItem to select from the items array.
- */
-- (void)selectItem:(nonnull UITabBarItem *)item;
 
 @end

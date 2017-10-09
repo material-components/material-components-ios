@@ -230,10 +230,14 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   [cell setSelected:YES animated:YES];
 }
 
-- (void)selectItem:(UITabBarItem *)item {
+- (void)setSelectedItem:(UITabBarItem *)selectedItem {
+  if (_selectedItem == selectedItem) {
+    return;
+  }
+  _selectedItem = selectedItem;
   NSInteger i = 0;
-  for (UITabBarItem *tabBarItem in self.items) {
-    if (item == tabBarItem) {
+  for (UITabBarItem *item in self.items) {
+    if (selectedItem == item) {
       [self.cells[i] setSelected:YES];
     } else {
       [self.cells[i] setSelected:NO];
