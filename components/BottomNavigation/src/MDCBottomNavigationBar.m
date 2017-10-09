@@ -30,7 +30,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationCell *> *cells;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
-@property(nonatomic, strong) UIView *navBarContainerView;
+@property(nonatomic, strong) UIView *containerView;
 
 @end
 
@@ -65,11 +65,11 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   CGSize appSize = [[UIScreen mainScreen] applicationFrame].size;
   CGFloat minDimension = MIN(appSize.width, appSize.height);
   CGRect adjustedFrame = CGRectMake(0, 0, minDimension, self.frame.size.height);
-  _navBarContainerView = [[UIView alloc] initWithFrame:adjustedFrame];
-  _navBarContainerView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
+  _containerView = [[UIView alloc] initWithFrame:adjustedFrame];
+  _containerView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
                                            UIViewAutoresizingFlexibleLeftMargin |
                                            UIViewAutoresizingFlexibleRightMargin );
-  [self addSubview:_navBarContainerView];
+  [self addSubview:_containerView];
   _cells = [NSMutableArray array];
 }
 
@@ -77,14 +77,14 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   [super layoutSubviews];
 
   [self layoutCellsWithLayoutDirection:self.layoutDirection];
-  self.navBarContainerView.center = CGPointMake(CGRectGetMidX(self.bounds),
+  self.containerView.center = CGPointMake(CGRectGetMidX(self.bounds),
                                                 CGRectGetMidY(self.bounds));
 }
 
 - (void)layoutCellsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
   NSInteger numItems = self.items.count;
   NSInteger i = 0;
-  CGSize navBarSize = self.navBarContainerView.bounds.size;
+  CGSize navBarSize = self.containerView.bounds.size;
   CGFloat itemWidth = navBarSize.width / numItems;
   if (layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     for (MDCBottomNavigationCell *cell in self.cells) {
@@ -138,7 +138,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
                     action:@selector(didTapButton:)
           forControlEvents:UIControlEventTouchUpInside];
     [self.cells addObject:cell];
-    [self.navBarContainerView addSubview:cell];
+    [self.containerView addSubview:cell];
   }
   [self addObserversToTabBarItems];
 
