@@ -23,7 +23,6 @@
 @property(nonatomic, assign) CGFloat xPadding;
 @property(nonatomic, assign) CGFloat yPadding;
 
-@property(nonatomic, strong) CAShapeLayer *badgeLayer;
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UILabel *badgeValueLabel;

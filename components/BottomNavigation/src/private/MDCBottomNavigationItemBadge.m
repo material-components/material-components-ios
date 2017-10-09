@@ -15,9 +15,7 @@
  */
 
 #import "MDCBottomNavigationItemBadge.h"
-#import "MaterialMath.h"
 
-static const CGFloat kMDCBottomNavigationItemBadgeAngle = 90.f;
 static const CGFloat kMDCBottomNavigationItemBadgeFontSize = 10.f;
 static const CGFloat kMDCBottomNavigationItemBadgeXPadding = 8.f;
 static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
@@ -42,9 +40,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
 
 - (void)commonInitMDCBottomNavigationItemBadge {
   _badgeColor = [UIColor redColor];
-  _badgeLayer = [CAShapeLayer layer];
-  _badgeLayer.fillColor = _badgeColor.CGColor;
-  [self.layer addSublayer:_badgeLayer];
+  self.layer.backgroundColor = _badgeColor.CGColor;
 
   _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
   _badgeValueLabel.textColor = [UIColor whiteColor];
@@ -77,37 +73,8 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
   self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);
-  UIBezierPath *path = [UIBezierPath bezierPath];
-  CGFloat startAngleLeftSide = MDCDegreesToRadians(-kMDCBottomNavigationItemBadgeAngle);
-  CGFloat endAngleLeftSide = MDCDegreesToRadians(kMDCBottomNavigationItemBadgeAngle);
-
-  [path moveToPoint:CGPointMake(badgeRadius, badgeRadius)];
-  CGPoint centerPathLeftSide = CGPointMake(badgeRadius, badgeRadius);
-  [path addArcWithCenter:centerPathLeftSide
-                  radius:badgeRadius
-              startAngle:startAngleLeftSide
-                endAngle:endAngleLeftSide
-               clockwise:NO];
-
-  CGFloat rectWidth = CGRectGetWidth(self.bounds) - badgeRadius;
-  [path addLineToPoint:CGPointMake(badgeRadius, CGRectGetHeight(self.bounds))];
-  [path addLineToPoint:CGPointMake(rectWidth, CGRectGetHeight(self.bounds))];
-
-  CGFloat startAngleRightSide = MDCDegreesToRadians(kMDCBottomNavigationItemBadgeAngle);
-  CGFloat endAngleRightSide = MDCDegreesToRadians(-kMDCBottomNavigationItemBadgeAngle);
-
-  CGPoint centerPathRightSide = CGPointMake(rectWidth, badgeRadius);
-  [path addArcWithCenter:centerPathRightSide
-                  radius:badgeRadius
-              startAngle:startAngleRightSide
-                endAngle:endAngleRightSide
-               clockwise:NO];
-
-  [path addLineToPoint:CGPointMake(rectWidth, 0)];
-  [path addLineToPoint:CGPointMake(badgeRadius, 0)];
-
-  [path closePath];
-  self.badgeLayer.path = path.CGPath;
+  self.layer.cornerRadius = badgeRadius;
+  self.layer.backgroundColor = self.badgeColor.CGColor;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {
@@ -118,7 +85,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
 
 - (void)setBadgeColor:(UIColor *)badgeColor {
   _badgeColor = badgeColor;
-  _badgeLayer.fillColor = _badgeColor.CGColor;
+  self.layer.backgroundColor = _badgeColor.CGColor;
 }
 
 @end
