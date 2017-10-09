@@ -15,6 +15,7 @@
  */
 
 #import "CollectionsInkExample.h"
+#import "MaterialPalettes.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
@@ -70,7 +71,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
         inkColorAtIndexPath:(NSIndexPath *)indexPath {
   // Update cell ink colors.
   if (indexPath.item == 1) {
-    return [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
+    return [MDCPalette.lightBluePalette.tint500 colorWithAlphaComponent:0.2f];
   } else if (indexPath.item == 2) {
     return [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.2];
   }

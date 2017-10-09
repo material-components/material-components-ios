@@ -18,6 +18,7 @@
 
 #import "MaterialCollectionLayoutAttributes.h"
 #import "MaterialCollections.h"
+#import "MaterialPalettes.h"
 
 #include <tgmath.h>
 
@@ -123,17 +124,11 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     _cellBackgroundColor = [UIColor whiteColor];
     _cellStyle = MDCCollectionViewCellStyleDefault;
     // Background color is 0xEEEEEE
-    _collectionView.backgroundColor = [UIColor colorWithRed:(CGFloat)(238 / 255.0)
-                                                      green:(CGFloat)(238 / 255.0)
-                                                       blue:(CGFloat)(238 / 255.0)
-                                                      alpha:1];
+    _collectionView.backgroundColor = MDCPalette.greyPalette.tint200;
     _inlaidIndexPathSet = [NSMutableSet set];
 
     // Cell separator defaults.
-    _separatorColor = [UIColor colorWithRed:(CGFloat)(224 / 255.0)
-                                      green:(CGFloat)(224 / 255.0)
-                                       blue:(CGFloat)(224 / 255.0)
-                                      alpha:1];
+    _separatorColor = MDCPalette.greyPalette.tint300;
     _separatorInset = UIEdgeInsetsZero;
     _separatorLineHeight =
         kCollectionViewCellSeparatorDefaultHeightInPixels / [[UIScreen mainScreen] scale];
