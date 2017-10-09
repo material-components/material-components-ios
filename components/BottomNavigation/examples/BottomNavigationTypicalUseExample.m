@@ -51,6 +51,7 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
   _bottomNavView = [[MDCBottomNavigationView alloc] initWithFrame:frame];
   _bottomNavView.selectedColor = [MDCPalette greyPalette].tint800;
   _bottomNavView.unselectedColor = [MDCPalette greyPalette].tint600;
+  _bottomNavView.titleHideState = MDCBottomNavigationViewTitleHideStateDefault;
   [self.view addSubview:_bottomNavView];
 
   UITabBarItem *tabBarItem1 =

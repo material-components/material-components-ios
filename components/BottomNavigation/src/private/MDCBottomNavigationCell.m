@@ -121,7 +121,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
       CGPointMake(CGRectGetMidX(self.bounds),
                   CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
   if (selected) {
-    if (self.titleHideState == MDCBottomNavigationViewTitleHideStateUnselect ||
+    if (self.titleHideState == MDCBottomNavigationViewTitleHideStateDefault ||
         self.titleHideState == MDCBottomNavigationViewTitleHideStateNever) {
       self.label.hidden = NO;
     } else if (self.titleHideState == MDCBottomNavigationViewTitleHideStateAlways) {
@@ -131,7 +131,7 @@ static const NSTimeInterval kMDCBottomNavigationCellTransitionDuration = 0.180f;
     self.label.textColor = self.selectedColor;
     self.iconImageView.image = self.selectedImage;
   } else {
-    if (self.titleHideState == MDCBottomNavigationViewTitleHideStateUnselect ||
+    if (self.titleHideState == MDCBottomNavigationViewTitleHideStateDefault ||
         self.titleHideState == MDCBottomNavigationViewTitleHideStateAlways) {
       self.label.hidden = YES;
       iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));

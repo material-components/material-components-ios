@@ -59,7 +59,7 @@ static NSString *const kMDCBottomNavigationViewNewString = @"new";
   _selectedColor = [UIColor blackColor];
   _unselectedColor = [UIColor grayColor];
   _layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
-  _titleHideState = MDCBottomNavigationViewTitleHideStateUnselect;
+  _titleHideState = MDCBottomNavigationViewTitleHideStateDefault;
 
   // Content in bottom navigation always uses the width of the device portrait orientation width.
   CGSize appSize = [[UIScreen mainScreen] applicationFrame].size;

@@ -19,8 +19,8 @@
 /** States used to configure bottom navigation on when to hide item titles.  */
 typedef NS_ENUM(NSInteger, MDCBottomNavigationViewTitleHideState) {
 
-  // Hide item titles when item is unselected.
-  MDCBottomNavigationViewTitleHideStateUnselect = 0,
+  // Default behavior is to hide item titles when item is unselected.
+  MDCBottomNavigationViewTitleHideStateDefault = 0,
 
   // Item titles are never hidden.
   MDCBottomNavigationViewTitleHideStateNever = 1,
