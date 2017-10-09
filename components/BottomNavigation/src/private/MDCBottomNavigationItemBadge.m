@@ -25,7 +25,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInitMDCBottomNavigationItemBadge];
+    [self commonMDCBottomNavigationItemBadgeInit];
   }
   return self;
 }
@@ -33,12 +33,12 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonInitMDCBottomNavigationItemBadge];
+    [self commonMDCBottomNavigationItemBadgeInit];
   }
   return self;
 }
 
-- (void)commonInitMDCBottomNavigationItemBadge {
+- (void)commonMDCBottomNavigationItemBadgeInit {
   _badgeColor = [UIColor redColor];
   self.layer.backgroundColor = _badgeColor.CGColor;
 
@@ -69,7 +69,6 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
                           CGRectGetMinY(self.frame),
                           _badgeCircleWidth,
                           _badgeCircleHeight);
-
   self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);

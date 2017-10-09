@@ -47,7 +47,6 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. The array must
  contain a minimum of three items with a maxiumum of up to five items.
- Default is nil.
  */
 @property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
 
