@@ -414,6 +414,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextViewTextDidEndEditingNotification
                         object:textField.textView];
+    [defaultCenter addObserver:self
+                      selector:@selector(textInputDidChange:)
+                          name:MDCTextFieldTextDidSetTextNotification
+                        object:_textInput];
   }
 }
 
@@ -1281,7 +1285,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if ([note.name isEqualToString:MDCTextFieldTextDidSetTextNotification]) {
     [CATransaction begin];
     [CATransaction setAnimationDuration:0];
-    [self updatePlaceholderY];
+    [self updateLayout];
     [CATransaction commit];
   } else {
     [self updateLayout];
