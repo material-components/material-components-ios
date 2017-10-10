@@ -194,37 +194,37 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
 
     #if swift(>=3.2)
       if #available(iOS 11.0, *) {
-               constraints += [NSLayoutConstraint(item: name,
-                                                  attribute: .top,
-                                                  relatedBy: .equal,
-                                                  toItem: scrollView.contentLayoutGuide,
-                                                  attribute: .top,
-                                                  multiplier: 1,
-                                                  constant: 20),
-                               NSLayoutConstraint(item: message,
-                                                  attribute: .bottom,
-                                                  relatedBy: .equal,
-                                                  toItem: scrollView.contentLayoutGuide,
-                                                  attribute: .bottomMargin,
-                                                  multiplier: 1,
-                                                  constant: -20)]
-        } else {
-                constraints += [NSLayoutConstraint(item: name,
-                                                  attribute: .top,
-                                                  relatedBy: .equal,
-                                                  toItem: scrollView,
-                                                  attribute: .top,
-                                                  multiplier: 1,
-                                                  constant: 20),
-                               NSLayoutConstraint(item: message,
-                                                  attribute: .bottom,
-                                                  relatedBy: .equal,
-                                                  toItem: scrollView,
-                                                  attribute: .bottomMargin,
-                                                  multiplier: 1,
-                                                  constant: -20)]
-        }
-      #else
+         constraints += [NSLayoutConstraint(item: name,
+                                            attribute: .top,
+                                            relatedBy: .equal,
+                                            toItem: scrollView.contentLayoutGuide,
+                                            attribute: .top,
+                                            multiplier: 1,
+                                            constant: 20),
+                         NSLayoutConstraint(item: message,
+                                            attribute: .bottom,
+                                            relatedBy: .equal,
+                                            toItem: scrollView.contentLayoutGuide,
+                                            attribute: .bottomMargin,
+                                            multiplier: 1,
+                                            constant: -20)]
+      } else {
+        constraints += [NSLayoutConstraint(item: name,
+                                          attribute: .top,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .top,
+                                          multiplier: 1,
+                                          constant: 20),
+                       NSLayoutConstraint(item: message,
+                                          attribute: .bottom,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .bottomMargin,
+                                          multiplier: 1,
+                                          constant: -20)]
+      }
+    #else
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
                                          relatedBy: .equal,
@@ -238,7 +238,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
                                          toItem: scrollView,
                                          attribute: .bottomMargin,
                                          multiplier: 1,
-                        constant: -20)]
+                                         constant: -20)]
       #endif
 
     let stateZipViews = [ "state": state, "zip": zip ]
@@ -334,7 +334,7 @@ extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let index = textField.tag
     if index + 1 < allTextFieldControllers.count,
-      let nextField = allTextFieldControllers[index + 1].textInput as? MDCTextField {
+      let nextField = allTextFieldControllers[index + 1].textInput {
       nextField.becomeFirstResponder()
     } else {
       textField.resignFirstResponder()

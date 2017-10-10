@@ -130,4 +130,23 @@
   XCTAssertEqual(pageControl.currentPage, page);
 }
 
+- (void)testResetNumberOfPagesToZero {
+  // Given
+  MDCPageControl *pageControl = [[MDCPageControl alloc] init];
+  pageControl.numberOfPages = 3;
+  NSException *exception;
+
+  // When
+  @try {
+    pageControl.numberOfPages = 0;
+    pageControl.currentPage = 0;
+  }
+  @catch (NSException *e) {
+    exception = e;
+  }
+
+  // Then
+  XCTAssertNil(exception, @"PageControl crashed with exception: %@", exception);
+}
+
 @end

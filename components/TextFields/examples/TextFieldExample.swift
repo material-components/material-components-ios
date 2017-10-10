@@ -358,7 +358,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let index = textField.tag
     if index + 1 < allTextFieldControllers.count,
-      let nextField = allTextFieldControllers[index + 1].textInput as? MDCTextField {
+      let nextField = allTextFieldControllers[index + 1].textInput {
       nextField.becomeFirstResponder()
     } else {
       textField.resignFirstResponder()

@@ -145,9 +145,9 @@ PODS:
   - MaterialComponents/Dialogs/Component (35.3.0):
     - MaterialComponents/Buttons
     - MaterialComponents/private/KeyboardWatcher
-    - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
+    - MDFInternationalization
   - MaterialComponents/FeatureHighlight (35.3.0):
     - MaterialComponents/FeatureHighlight/ColorThemer (= 35.3.0)
     - MaterialComponents/FeatureHighlight/Component (= 35.3.0)
@@ -218,6 +218,8 @@ PODS:
     - MaterialComponents/private/Math (= 35.3.0)
     - MaterialComponents/private/Overlay (= 35.3.0)
     - MaterialComponents/private/RTL (= 35.3.0)
+    - MaterialComponents/private/ShapeLibrary (= 35.3.0)
+    - MaterialComponents/private/Shapes (= 35.3.0)
     - MaterialComponents/private/ThumbTrack (= 35.3.0)
   - MaterialComponents/private/Application (35.3.0)
   - MaterialComponents/private/Icons (35.3.0):
@@ -249,6 +251,11 @@ PODS:
   - MaterialComponents/private/Math (35.3.0)
   - MaterialComponents/private/Overlay (35.3.0)
   - MaterialComponents/private/RTL (35.3.0)
+  - MaterialComponents/private/ShapeLibrary (35.3.0):
+    - MaterialComponents/private/Math
+    - MaterialComponents/private/Shapes
+  - MaterialComponents/private/Shapes (35.3.0):
+    - MaterialComponents/private/Math
   - MaterialComponents/private/ThumbTrack (35.3.0):
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
@@ -292,6 +299,7 @@ PODS:
   - MaterialComponents/Tabs/Component (35.3.0):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Ink
+    - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
   - MaterialComponents/TextFields (35.3.0):
@@ -309,6 +317,7 @@ PODS:
   - MaterialComponents/Themes (35.3.0)
   - MaterialComponents/Typography (35.3.0):
     - MaterialComponents/private/Application
+  - MDFInternationalization (1.0.1)
   - MDFTextAccessibility (1.2.0)
   - MotionAnimator (1.1.2):
     - MotionInterchange
@@ -323,7 +332,8 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 68d3901561f5738523a629c69f5417381308f171
+  MaterialComponents: b1c251bdf9b158f8801c1c6c00d00d5e7819b279
+  MDFInternationalization: 264e30a0966b36d4f7fe9b7617c316f266837bfb
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   MotionAnimator: 5a1893b58fcf7a4664d81d69c9a09a0078c67e06
   MotionInterchange: b600100244df56c4f462bdacbcd11c44e6305d05
