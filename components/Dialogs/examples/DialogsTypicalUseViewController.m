@@ -72,7 +72,7 @@
 
 - (IBAction)didTapStoryboard:(id)sender {
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[DialogsTypicalUseViewController class]];
   UIStoryboard *storyboard =
       [UIStoryboard storyboardWithName:@"DialogWithPreferredContentSize" bundle:bundle];
   NSString *identifier = @"DialogID";

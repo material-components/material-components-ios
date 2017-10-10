@@ -146,7 +146,7 @@
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  infoLabel.textColor = [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f];
+  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f];
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";
@@ -230,7 +230,7 @@
 
 - (void)addStarCentered:(BOOL)centered {
   UIImage *starImage = [UIImage imageNamed:@"TabBarDemo_ic_star"
-                                  inBundle:[NSBundle bundleForClass:[self class]]
+                                  inBundle:[NSBundle bundleForClass:[TabBarIconExample class]]
              compatibleWithTraitCollection:nil];
 
   UIImageView *starView = [[UIImageView alloc] initWithImage:starImage];

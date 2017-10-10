@@ -38,7 +38,7 @@
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
 
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[DialogsKeyboardViewController class]];
   UIStoryboard *storyboard =
       [UIStoryboard storyboardWithName:@"DialogWithInputField" bundle:bundle];
   NSString *identifier = @"DialogID";

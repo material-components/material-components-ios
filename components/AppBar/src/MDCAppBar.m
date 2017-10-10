@@ -183,7 +183,9 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 @end
 
-@implementation MDCAppBarViewController
+@implementation MDCAppBarViewController {
+  NSLayoutConstraint *_verticalConstraint;
+}
 
 - (MDCHeaderStackView *)headerStackView {
   // Removed call to loadView here as we should never be calling it manually.
@@ -308,22 +310,25 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
+  CGFloat topMargin = kPreIOS11StatusBarHeight;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    [self.headerStackView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor
-                                                   constant:0].active = YES;
-  } else {
-#endif
-  [NSLayoutConstraint constraintWithItem:self.headerStackView
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:kPreIOS11StatusBarHeight].active = YES;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    // We only get the actual status bar height if we're on iOS 11, because previously we were not
+    // adjusting the header height to make it smaller when the status bar is hidden.
+    // Note: We should switch to using self.view.safeAreaLayoutGuide.topAnchor once 11.1 is
+    // the min iOS 11 we support. 11.0 has a bug where the Safe Area is incorrectly calculated for
+    // this view.
+    topMargin = CGRectGetMaxY([UIApplication mdc_safeSharedApplication].statusBarFrame);
   }
 #endif
+  _verticalConstraint = [NSLayoutConstraint constraintWithItem:self.headerStackView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.view
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1
+                                                      constant:topMargin];
+  _verticalConstraint.active = YES;
 
   [NSLayoutConstraint constraintWithItem:self.headerStackView
                                attribute:NSLayoutAttributeBottom
@@ -341,6 +346,19 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   if (backBarButtonItem && !self.navigationBar.backItem) {
     self.navigationBar.backItem = backBarButtonItem;
   }
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // We only get the actual status bar height if we're on iOS 11, because previously we were not
+    // adjusting the header height to make it smaller when the status bar is hidden.
+    _verticalConstraint.constant =
+        CGRectGetMaxY([UIApplication mdc_safeSharedApplication].statusBarFrame);
+  }
+#endif
 }
 
 #pragma mark User actions

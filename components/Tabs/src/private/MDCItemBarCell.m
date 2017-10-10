@@ -285,7 +285,9 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
 
   self.titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
-  self.titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter, self.titleLabel.bounds, scale);
+  self.titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter,
+                                                            self.titleLabel.bounds,
+                                                            scale);
 }
 
 - (void)tintColorDidChange {
@@ -299,6 +301,9 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   if (self.window) {
     [self updateTransformsAnimated:NO];
+
+    // Layout depends on window scale.
+    [self setNeedsLayout];
   }
 }
 

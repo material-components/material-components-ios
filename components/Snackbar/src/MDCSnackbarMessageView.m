@@ -21,12 +21,16 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "private/MaterialSnackbarStrings.h"
+#import "private/MaterialSnackbarStrings_table.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";
-NSString *const MDCSnackbarMessageViewTitleA11yHint = @"Double-tap to dismiss.";
+
+// The Bundle for string resources.
+static NSString *const kMaterialSnackbarBundle = @"MaterialSnackbar.bundle";
 
 static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
   return [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:(a)];
@@ -312,11 +316,19 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [_label setContentHuggingPriority:UILayoutPriorityDefaultLow
                               forAxis:UILayoutConstraintAxisHorizontal];
 
+    NSString *accessibilityHintKey =
+        kMaterialSnackbarStringTable[kStr_MaterialSnackbarMessageViewTitleA11yHint];
+    NSString *accessibilityHint =
+        NSLocalizedStringFromTableInBundle(accessibilityHintKey,
+                                           kMaterialSnackbarStringsTableName,
+                                           [[self class] bundle],
+                                           @"Dismissal accessibility hint for Snackbar");
+
     // For VoiceOver purposes, the label is the primary 'button' for dismissing the snackbar, so
     // we'll make sure the label looks like a button.
     _label.accessibilityTraits = UIAccessibilityTraitButton;
     _label.accessibilityIdentifier = MDCSnackbarMessageTitleAutomationIdentifier;
-    _label.accessibilityHint = MDCSnackbarMessageViewTitleA11yHint;
+    _label.accessibilityHint = accessibilityHint;
 
     // If an accessibility label was set on the message model object, use that instead of the text
     // in the label.
@@ -806,6 +818,27 @@ static const CGFloat kButtonInkRadius = 64.0f;
   [self.buttonView.layer addAnimation:opacityAnimation forKey:@"opacity"];
 
   [CATransaction commit];
+}
+
+#pragma mark - Resource bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialSnackbarBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCSnackbarMessageView class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 @end

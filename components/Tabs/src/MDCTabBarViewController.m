@@ -131,6 +131,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     if (selectedViewController) {
       self.tabBar.selectedItem = selectedViewController.tabBarItem;
     }
+    [self setNeedsStatusBarAppearanceUpdate];
   }
 }
 
@@ -241,5 +242,14 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   }
 }
 
+#pragma mark - UIViewController status bar
+
+- (nullable UIViewController *)childViewControllerForStatusBarStyle {
+  return _selectedViewController;
+}
+
+- (nullable UIViewController *)childViewControllerForStatusBarHidden {
+  return _selectedViewController;
+}
 
 @end

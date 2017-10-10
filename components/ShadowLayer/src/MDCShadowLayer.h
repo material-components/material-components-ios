@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MaterialShadowElevations.h"
 
 /**
  Metrics of the Material shadow effect.
@@ -64,7 +65,7 @@
 
  Negative values act as if zero were specified.
  */
-@property(nonatomic, assign) CGFloat elevation;
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
  Whether to apply the "cutout" shadow layer mask.

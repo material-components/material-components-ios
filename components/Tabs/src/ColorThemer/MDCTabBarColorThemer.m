@@ -20,8 +20,6 @@
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                 toTabBar:(MDCTabBar *)tabBar {
-  tabBar.tintColor = colorScheme.primaryColor;
-  tabBar.barTintColor = colorScheme.primaryColor;
   tabBar.selectedItemTintColor = colorScheme.primaryDarkColor;
   tabBar.unselectedItemTintColor = colorScheme.primaryLightColor;
   tabBar.inkColor = colorScheme.primaryLightColor;

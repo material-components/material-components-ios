@@ -194,52 +194,51 @@ final class TextFieldFilledSwiftExample: UIViewController {
                                                   views: views)
     #if swift(>=3.2)
       if #available(iOS 11.0, *) {
+        constraints += [NSLayoutConstraint(item: name,
+                                           attribute: .top,
+                                           relatedBy: .equal,
+                                           toItem: scrollView.contentLayoutGuide,
+                                           attribute: .top,
+                                           multiplier: 1,
+                                           constant: 20),
+                        NSLayoutConstraint(item: message,
+                                           attribute: .bottom,
+                                           relatedBy: .equal,
+                                           toItem: scrollView.contentLayoutGuide,
+                                           attribute: .bottomMargin,
+                                           multiplier: 1,
+                                           constant: -20)]
+      } else {
+        constraints += [NSLayoutConstraint(item: name,
+                                           attribute: .top,
+                                           relatedBy: .equal,
+                                           toItem: scrollView,
+                                           attribute: .top,
+                                           multiplier: 1,
+                                           constant: 20),
+                        NSLayoutConstraint(item: message,
+                                           attribute: .bottom,
+                                           relatedBy: .equal,
+                                           toItem: scrollView,
+                                           attribute: .bottomMargin,
+                                           multiplier: 1,
+                                           constant: -20)]
+      }
+    #else
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
                                          relatedBy: .equal,
-                                         toItem: scrollView.contentLayoutGuide,
+                                         toItem: scrollView,
                                          attribute: .top,
                                          multiplier: 1,
                                          constant: 20),
                       NSLayoutConstraint(item: message,
                                          attribute: .bottom,
                                          relatedBy: .equal,
-                                         toItem: scrollView.contentLayoutGuide,
-                                         attribute: .bottomMargin,
-                                         multiplier: 1,
-                                         constant: -20)]
-    } else {
-      constraints += [NSLayoutConstraint(item: name,
-                                         attribute: .top,
-                                         relatedBy: .equal,
-                                         toItem: scrollView,
-                                         attribute: .top,
-                                         multiplier: 1,
-                                         constant: 20),
-                      NSLayoutConstraint(item: message,
-                                         attribute: .bottom,
-                                         relatedBy: .equal,
                                          toItem: scrollView,
                                          attribute: .bottomMargin,
                                          multiplier: 1,
                                          constant: -20)]
-    }
-      #else
-      constraints += [NSLayoutConstraint(item: name,
-                                         attribute: .top,
-                                         relatedBy: .equal,
-                                         toItem: scrollView,
-                                         attribute: .top,
-                                         multiplier: 1,
-                                         constant: 20),
-                      NSLayoutConstraint(item: message,
-                                         attribute: .bottom,
-                                         relatedBy: .equal,
-                                         toItem: scrollView,
-                                         attribute: .bottomMargin,
-                                         multiplier: 1,
-                                         constant: -20)]
-
       #endif
 
     let stateZipViews = [ "state": state, "zip": zip ]
@@ -357,7 +356,7 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let index = textField.tag
     if index + 1 < allTextFieldControllers.count,
-      let nextField = allTextFieldControllers[index + 1].textInput as? MDCTextField {
+      let nextField = allTextFieldControllers[index + 1].textInput {
       nextField.becomeFirstResponder()
     } else {
       textField.resignFirstResponder()

@@ -18,7 +18,7 @@ Text fields allow users to input text into your app. They are a direct connectio
 
 MDC's text fields come in several styles and have a great range of customization. Google's UX research has determined that Outlined and Filled (aka 'text box') styles perform the best by a large margin. So use `MDCTextInputControllerOutlinedField` , `MDCTextInputControllerTextFieldBox`, and `MDCTextInputControllerTextArea` if you can and set colors and fonts that match your company's branding.
 
-For more information on text field styles, and animated images of each style in action, see [Text Field Styles](/styling).
+For more information on text field styles, and animated images of each style in action, see [Text Field Styles](./styling).
 
 ## Design & API Documentation
 

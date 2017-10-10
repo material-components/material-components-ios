@@ -28,7 +28,11 @@
   [super viewDidLoad];
 
   // Create our custom image view and add it to the header view.
-  UIImageView *imageView = [[UIImageView alloc] initWithImage:[self headerBackgroundImage]];
+  UIImageView *imageView = [[UIImageView alloc]
+      initWithImage:
+          [UIImage imageNamed:@"mdc_theme"
+                                   inBundle:[NSBundle bundleForClass:[AppBarImageryExample class]]
+              compatibleWithTraitCollection:nil]];
   imageView.frame = self.appBar.headerViewController.headerView.bounds;
 
   // Ensure that the image view resizes in reaction to the header view bounds changing.
@@ -68,13 +72,6 @@
 - (UIStatusBarStyle)preferredStatusBarStyle {
   // Ensure that our status bar is white.
   return UIStatusBarStyleLightContent;
-}
-
-// Typical image loading.
-- (UIImage *)headerBackgroundImage {
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *imagePath = [bundle pathForResource:@"mdc_theme" ofType:@"png"];
-  return [UIImage imageWithContentsOfFile:imagePath];
 }
 
 @end

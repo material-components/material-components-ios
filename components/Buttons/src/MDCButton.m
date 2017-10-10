@@ -42,6 +42,7 @@ static NSString *const MDCButtonUppercaseTitleKey = @"MDCButtonShouldCapitalizeT
 // Previous value kept for backwards compatibility.
 static NSString *const MDCButtonUnderlyingColorHintKey = @"MDCButtonUnderlyingColorKey";
 static NSString *const MDCButtonDisableAlphaKey = @"MDCButtonDisableAlphaKey";
+static NSString *const MDCButtonEnableAlphaKey = @"MDCButtonEnableAlphaKey";
 static NSString *const MDCButtonCustomTitleColorKey = @"MDCButtonCustomTitleColorKey";
 static NSString *const MDCButtonAreaInsetKey = @"MDCButtonAreaInsetKey";
 
@@ -110,6 +111,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
 
+  CGFloat _enabledAlpha;
   BOOL _hasCustomDisabledTitleColor;
 
   // Cached accessibility settings.
@@ -180,6 +182,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       _disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
     }
 
+    if ([aDecoder containsValueForKey:MDCButtonEnableAlphaKey]) {
+      _enabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonEnableAlphaKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonAreaInsetKey]) {
       self.hitAreaInsets = [aDecoder decodeUIEdgeInsetsForKey:MDCButtonAreaInsetKey];
     }
@@ -231,6 +237,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     [aCoder encodeObject:_underlyingColorHint forKey:MDCButtonUnderlyingColorHintKey];
   }
   [aCoder encodeDouble:self.disabledAlpha forKey:MDCButtonDisableAlphaKey];
+  [aCoder encodeDouble:_enabledAlpha forKey:MDCButtonEnableAlphaKey];
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
@@ -244,6 +251,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
+  _enabledAlpha = self.alpha;
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
@@ -311,6 +319,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {
   _underlyingColorHint = underlyingColorHint;
   [self updateAlphaAndBackgroundColorAnimated:NO];
+}
+
+- (void)setAlpha:(CGFloat)alpha {
+  if (self.enabled) {
+    _enabledAlpha = alpha;
+  }
+  [super setAlpha:alpha];
 }
 
 - (void)setDisabledAlpha:(CGFloat)disabledAlpha {
@@ -755,7 +770,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
   void (^animations)(void) = ^{
-    self.alpha = self.enabled ? 1.0f : _disabledAlpha;
+    self.alpha = self.enabled ? _enabledAlpha : _disabledAlpha;
     [self updateBackgroundColor];
   };
 

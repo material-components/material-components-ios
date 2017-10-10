@@ -23,6 +23,7 @@
 #import "private/MDCActivityIndicator+Private.h"
 #import "private/MaterialActivityIndicatorStrings.h"
 #import "private/MaterialActivityIndicatorStrings_table.h"
+#import "MaterialPalettes.h"
 
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
 static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
@@ -206,6 +207,9 @@ static const CGFloat kSingleCycleRotation =
 
 - (void)startAnimating {
   if (_animatingOut) {
+    if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+      [_delegate activityIndicatorAnimationDidFinish:self];
+    }
     [self removeAnimations];
   }
 
@@ -781,6 +785,11 @@ static const CGFloat kSingleCycleRotation =
   [_strokeLayer removeAllAnimations];
   [_outerRotationLayer removeAllAnimations];
 
+  // Reset current and latest progress, to ensure addProgressAnimationIfRequired adds a progress animation
+  // when returning from hidden.
+  _currentProgress = 0;
+  _lastProgress = 0;
+
   // Reset cycle count to 0 rather than cycleStart to reflect default starting position (top).
   _cycleCount = 0;
   // However _animationInProgress represents the CATransaction that hasn't finished, so we leave it
@@ -796,10 +805,10 @@ static const CGFloat kSingleCycleRotation =
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     s_defaultCycleColors =
-    @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-       [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-       [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-       [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
+    @[ MDCPalette.bluePalette.tint500,
+       MDCPalette.redPalette.tint500,
+       MDCPalette.yellowPalette.tint500,
+       MDCPalette.greenPalette.tint500 ];
   });
   return s_defaultCycleColors;
 }

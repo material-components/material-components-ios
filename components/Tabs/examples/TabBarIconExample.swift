@@ -45,7 +45,7 @@ class TabBarIconSwiftExample: UIViewController {
     tabBar.delegate = self
     tabBar.alignment = .centerSelected
 
-    let bundle = Bundle(for: type(of: self))
+    let bundle = Bundle(for: TabBarIconSwiftExample.self)
     let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)
     let star = UIImage.init(named: "TabBarDemo_ic_star", in: bundle, compatibleWith:nil)
 

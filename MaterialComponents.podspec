@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "35.2.0"
+  s.version      = "35.3.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -174,6 +174,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/CollectionLayoutAttributes"
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MaterialComponents/Palettes"
     ss.dependency "MaterialComponents/private/Icons/ic_check"
     ss.dependency "MaterialComponents/private/Icons/ic_check_circle"
     ss.dependency "MaterialComponents/private/Icons/ic_chevron_right"
@@ -217,7 +218,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/ShadowElevations"
       sss.dependency "MaterialComponents/ShadowLayer"
       sss.dependency "MaterialComponents/private/KeyboardWatcher"
-      sss.dependency "MaterialComponents/private/RTL"
+      sss.dependency "MDFInternationalization"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -429,6 +430,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/AnimationTiming"
       sss.dependency "MaterialComponents/Ink"
       sss.dependency "MaterialComponents/Typography"
+      sss.dependency "MaterialComponents/private/Math"
       sss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
