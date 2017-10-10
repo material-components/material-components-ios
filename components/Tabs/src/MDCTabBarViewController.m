@@ -182,6 +182,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   } else {
     self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitles;
   }
+  [self.view bringSubviewToFront:self.tabBar];
 }
 
 - (nullable UIViewController *)controllerWithView:(nullable UIView *)view {

@@ -17,6 +17,8 @@
 #import "MDCTabBar.h"
 
 #import "MaterialInk.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 #import "private/MDCItemBar.h"
 #import "private/MDCItemBarAlignment.h"
@@ -91,6 +93,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 @synthesize displaysUppercaseTitles = _displaysUppercaseTitles;
 @synthesize itemAppearance = _itemAppearance;
 
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
 #pragma mark - Initialization
 
 + (void)initialize {
@@ -133,6 +139,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _itemBar.delegate = self;
   _itemBar.alignment = MDCItemBarAlignmentForTabBarAlignment(_alignment);
   [self addSubview:_itemBar];
+
+  [[self shadowLayer] setElevation:MDCShadowElevationMenu];
 
   [self updateItemBarStyle];
 }
@@ -501,6 +509,12 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.displaysUppercaseTitles = _displaysUppercaseTitles;
 
   [_itemBar applyStyle:style];
+}
+
+#pragma mark - MDC Shadow
+
+- (MDCShadowLayer *)shadowLayer {
+  return (MDCShadowLayer *)self.layer;
 }
 
 @end
