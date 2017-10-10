@@ -63,12 +63,12 @@
       [[UITabBarItem alloc] initWithTitle:@"Search"
                                     image:[UIImage imageNamed:@"Search"]
                                       tag:0];
-  tabBarItem4.badgeValue = @"888";
+  tabBarItem4.badgeValue = @"88";
   UITabBarItem *tabBarItem5 =
       [[UITabBarItem alloc] initWithTitle:@"Birthday"
                                     image:[UIImage imageNamed:@"Cake"]
                                       tag:0];
-  tabBarItem5.badgeValue = @"New";
+  tabBarItem5.badgeValue = @"999+";
   tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;

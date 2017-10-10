@@ -91,15 +91,19 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 - (void)layoutItemViewsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
   NSInteger numItems = self.items.count;
-  CGSize navBarSize = self.containerView.bounds.size;
-  CGFloat itemWidth = navBarSize.width / numItems;
+  if (numItems == 0) {
+    return;
+  }
+  CGFloat navBarWidth = CGRectGetWidth(self.containerView.bounds);
+  CGFloat navBarHeight = CGRectGetHeight(self.containerView.bounds);
+  CGFloat itemWidth = navBarWidth / numItems;
   for (NSUInteger i = 0; i < self.itemViews.count; i++) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-      itemView.frame = CGRectMake(i * itemWidth, 0, itemWidth, navBarSize.height);
+      itemView.frame = CGRectMake(i * itemWidth, 0, itemWidth, navBarHeight);
     } else {
       itemView.frame =
-          CGRectMake(navBarSize.width - (i + 1) * itemWidth, 0,  itemWidth, navBarSize.height);
+          CGRectMake(navBarWidth - (i + 1) * itemWidth, 0,  itemWidth, navBarHeight);
     }
   }
 }
@@ -226,7 +230,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 - (void)didTouchDownButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView setInterimSelected:YES];
+  [itemView setCircleHighlightHidden:NO];
 }
 
 - (void)didTouchUpInsideButton:(UIButton *)button {
@@ -236,13 +240,13 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
     }
   }
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView setInterimSelected:NO];
+  [itemView setCircleHighlightHidden:YES];
   [itemView setSelected:YES animated:YES];
 }
 
 - (void)didTouchUpOutsideButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView setInterimSelected:NO];
+  [itemView setCircleHighlightHidden:YES];
 }
 
 #pragma mark - Setters

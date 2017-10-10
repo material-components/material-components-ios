@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 
 /**
  Configures when item titles should be displayed.
- Default is MDCBottomNavigationBarTitleHideStateUnselect.
+ Default is MDCBottomNavigationBarTitleHideStateDefault.
  */
 @property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
 
