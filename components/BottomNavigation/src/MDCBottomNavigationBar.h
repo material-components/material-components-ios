@@ -51,6 +51,11 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 @property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
 
 /**
+ Display font used for item titles.
+ */
+@property(nonatomic, copy, nullable) UIFont *itemTitleFont;
+
+/**
  Selected item in the bottom navigation bar.
  */
 @property(nonatomic, weak, nullable) UITabBarItem *selectedItem;

@@ -57,6 +57,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 - (void)commonMDCBottomNavigationItemViewInit {
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 
+  _titleBelowIcon = YES;
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
 
@@ -96,41 +97,60 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat labelHeight = [self sizeForText:self.title
+  CGSize labelSize = [self sizeForText:self.title
                                      font:self.label.font
-                         boundingRectSize:self.bounds.size].height;
-  self.label.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelHeight);
-  [self centerIconAnimated:NO];
+                         boundingRectSize:self.bounds.size];
+  self.label.frame = CGRectMake(0, 0, labelSize.width, labelSize.height);
+  [self centerLayoutAnimated:NO];
 }
 
-- (void)centerIconAnimated:(bool)animated {
-  CGPoint iconImageViewCenter =
-      CGPointMake(CGRectGetMidX(self.bounds),
-                  CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
-  BOOL titleHideStateSelectedAways = self.selected &&
-      self.titleHideState == MDCBottomNavigationBarTitleHideStateAlways;
-  BOOL titleHideStateUnselectedDefaultAlways = !self.selected &&
-      (self.titleHideState == MDCBottomNavigationBarTitleHideStateDefault ||
-       self.titleHideState == MDCBottomNavigationBarTitleHideStateAlways);
-  if (titleHideStateSelectedAways) {
-    iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-  } else if (titleHideStateUnselectedDefaultAlways) {
-    iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-  }
-  CGPoint badgeCenter =
-      CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.iconImageView.bounds) / 2,
-                  iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
-  self.label.center =
-      CGPointMake(CGRectGetMidX(self.bounds),
-                  CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
-  if (animated) {
-    [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
+- (void)centerLayoutAnimated:(bool)animated {
+  if (self.titleBelowIcon) {
+    CGPoint iconImageViewCenter =
+        CGPointMake(CGRectGetMidX(self.bounds),
+                    CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
+    BOOL titleHideStateSelectedAways = self.selected &&
+    self.titleHideState == MDCBottomNavigationBarTitleHideStateAlways;
+    BOOL titleHideStateUnselectedDefaultAlways = !self.selected &&
+    (self.titleHideState == MDCBottomNavigationBarTitleHideStateDefault ||
+     self.titleHideState == MDCBottomNavigationBarTitleHideStateAlways);
+    if (titleHideStateSelectedAways) {
+      iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    } else if (titleHideStateUnselectedDefaultAlways) {
+      iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    }
+    CGPoint badgeCenter =
+        CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.iconImageView.bounds) / 2,
+                    iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
+    self.label.center =
+        CGPointMake(CGRectGetMidX(self.bounds),
+                    CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
+    if (animated) {
+      [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
+        self.iconImageView.center = iconImageViewCenter;
+        self.badge.center = badgeCenter;
+      }];
+    } else {
       self.iconImageView.center = iconImageViewCenter;
       self.badge.center = badgeCenter;
-    }];
+    }
+    self.label.textAlignment = NSTextAlignmentCenter;
   } else {
+    CGPoint iconImageViewCenter =
+        CGPointMake(CGRectGetMidX(self.bounds) - CGRectGetWidth(self.bounds) * 0.2f,
+                    CGRectGetMidY(self.bounds));
     self.iconImageView.center = iconImageViewCenter;
+    self.label.center =
+        CGPointMake(iconImageViewCenter.x + CGRectGetWidth(self.iconImageView.bounds) +
+                    CGRectGetWidth(self.label.bounds) / 2,
+                    CGRectGetMidY(self.bounds));
+    
+    CGPoint badgeCenter =
+        CGPointMake(CGRectGetMidX(self.bounds) - CGRectGetWidth(self.bounds) * 0.2f +
+                    CGRectGetWidth(self.iconImageView.bounds) / 2,
+                    iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
     self.badge.center = badgeCenter;
+    self.label.textAlignment = NSTextAlignmentLeft;
   }
 }
 
@@ -193,7 +213,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
         break;
     }
   }
-  [self centerIconAnimated:animated];
+  [self centerLayoutAnimated:animated];
 }
 
 - (void)setCircleHighlightHidden:(BOOL)circleHighlightHidden {
@@ -250,6 +270,12 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 - (void)setTitle:(NSString *)title {
   _title = [title copy];
   self.label.text = _title;
+  [self.label sizeToFit];
+}
+
+- (void)setItemTitleFont:(UIFont *)itemTitleFont {
+  _itemTitleFont = itemTitleFont;
+  self.label.font = itemTitleFont;
   [self.label sizeToFit];
 }
 

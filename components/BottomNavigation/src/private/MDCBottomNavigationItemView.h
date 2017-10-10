@@ -20,11 +20,13 @@
 
 @interface MDCBottomNavigationItemView : UIView
 
+@property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
+@property(nonatomic, copy) UIFont *itemTitleFont;
 
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIImage *image;

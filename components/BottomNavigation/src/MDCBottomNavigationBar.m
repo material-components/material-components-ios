@@ -87,6 +87,14 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
                  CGRectGetWidth(superViewRect) - insets.left - insets.right,
                  kMDCBottomNavigationBarHeight);
   [self layoutItemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
+  
+  BOOL titleBelowIcon = YES;
+  if (CGRectGetWidth(self.superview.bounds) > CGRectGetHeight(self.superview.bounds)) {
+    titleBelowIcon = NO;
+  }
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.titleBelowIcon = titleBelowIcon;
+  }
 }
 
 - (void)layoutItemViewsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
@@ -284,6 +292,13 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   _titleHideState = titleHideState;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.titleHideState = titleHideState;
+  }
+}
+
+- (void)setItemTitleFont:(UIFont *)itemTitleFont {
+  _itemTitleFont = itemTitleFont;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.itemTitleFont = itemTitleFont;
   }
 }
 
