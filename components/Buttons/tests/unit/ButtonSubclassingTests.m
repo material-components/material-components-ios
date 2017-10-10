@@ -80,17 +80,4 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
   XCTAssertEqual(ButtonTestCornerRadius, button.layer.cornerRadius);
 }
 
-- (void)testSubclassBoundingPath {
-  // Given
-  CGRect frame = CGRectMake(0, 0, 50, 30);
-  MDCButton *button = [[ButtonSubclass alloc] initWithFrame:frame];
-
-  // Where
-  UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:frame
-                                                  cornerRadius:ButtonTestCornerRadius];
-
-  // Then
-  XCTAssertEqualObjects(path, button.boundingPath);
-}
-
 @end
