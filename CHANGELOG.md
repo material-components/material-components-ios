@@ -1,14 +1,14 @@
-# 35.3.1
+# 36.0.0
 
 ## API Changes
+
+### Buttons
+
+* Converted elevation methods to use `MDCShadowElevation` type insetad of raw CGFloats.
 
 ### Shadow Elevations
 
 * Introduced the `MDCShadowElevation` typedef for shadow elevation values instead of raw CGFloats.
-
-### Typography
-
-* Fixed docs with respect to nullability.
 
 ## Component changes
 
@@ -43,6 +43,7 @@
 
 #### Changes
 
+* [Change MDCButton to use MDCShadowElevation type instead of CGFloat. Fixes #2105.](https://github.com/material-components/material-components-ios/commit/f49aaa823cfd4efeaee09a970765eb859eb75a43) (Adrian Secord)
 * [Restore alpha when re-enabled (#2095)](https://github.com/material-components/material-components-ios/commit/7d80d4677a4585094e0e202284aef4a73f05af35) (Robert Moore)
 
 ### CollectionCells
@@ -97,6 +98,7 @@
 #### Changes
 
 * [Improve Swift support for shadow elevations (#2116)](https://github.com/material-components/material-components-ios/commit/a9b08ce452d8d46d0f39bc0ef524c634cec1ab48) (Junius Gunaratne)
+* [Partial revert of commit bc582f4 to restore the definition of MDCShadowElevationSwitch .](https://github.com/material-components/material-components-ios/commit/960ec4a8231f4488aa99226a2f6c8aeed1204223) (Adrian Secord)
 * [[MDCShadowElevations] Remove switch elevation, add bottom navigation bar elevation (#2093)](https://github.com/material-components/material-components-ios/commit/bc582f4b143e32dcdc0d7f7afe406536c67414da) (Junius Gunaratne)
 
 ### ShadowLayer
@@ -142,7 +144,6 @@
 
 * [Add example using custom font family (#2130)](https://github.com/material-components/material-components-ios/commit/7de124c318b7f8dd2e2ad35496ceed012e26760d) (Cody Weaver)
 * [Match MDCTypography docs with nullability annotations (#2117)](https://github.com/material-components/material-components-ios/commit/87cb35b13ea6b1d6fcea6279e4dc9af50477eca4) (Sam Morrison)
-
 
 
 # 35.3.0
