@@ -59,6 +59,8 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   _unselectedItemTintColor = [UIColor grayColor];
   _titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
   _containerView = [[UIView alloc] initWithFrame:CGRectZero];
+  _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                     UIViewAutoresizingFlexibleRightMargin);
   [self addSubview:_containerView];
   _itemViews = [NSMutableArray array];
 }
@@ -74,7 +76,6 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
   CGRect superViewRect = self.superview.bounds;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + bottomInset;
-
   self.frame = CGRectMake(0, 0, CGRectGetWidth(superViewRect), heightWithInset);
   self.center = CGPointMake(CGRectGetWidth(superViewRect) / 2,
                             CGRectGetHeight(superViewRect) - heightWithInset / 2);
@@ -84,10 +85,8 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   // the items to have a consistent distance from one another independent of device orientation.
   CGFloat itemContainerWidth = MIN(CGRectGetWidth(superViewRect), CGRectGetHeight(superViewRect));
   CGFloat containerOffsetY = (CGRectGetWidth(self.bounds) - itemContainerWidth) / 2;
-  _containerView.frame =
+  self.containerView.frame =
       CGRectMake(containerOffsetY, 0, itemContainerWidth, kMDCBottomNavigationBarHeight);
-  _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-                                     UIViewAutoresizingFlexibleRightMargin);
 
   [self layoutitemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
 }
