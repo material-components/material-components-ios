@@ -44,6 +44,7 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
+      ss.dependency "MaterialComponents/Palettes"
       ss.dependency "MaterialComponents/private/Application"
       ss.dependency "MaterialComponents/private/RTL"
     end
@@ -387,6 +388,7 @@ Pod::Spec.new do |s|
     ss.ios.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+    ss.dependency "MaterialComponents/ShadowElevations"
   end
 
   s.subspec "Slider" do |ss|
@@ -531,6 +533,7 @@ Pod::Spec.new do |s|
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
 
+      ss.dependency "MaterialComponents/ShadowLayer"
       ss.dependency "MaterialComponents/private/Math"
     end
 
