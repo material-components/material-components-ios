@@ -1,4 +1,17 @@
-# release-candidate TODO: Replace me with version number. 
+# 35.3.1
+
+## API Changes
+
+### Shadow Elevations
+
+* Introduced the `MDCShadowElevation` typedef for shadow elevation values instead of raw CGFloats.
+
+### Typography
+
+* Fixed docs with respect to nullability.
+
+
+
 
 # 35.3.0
 
