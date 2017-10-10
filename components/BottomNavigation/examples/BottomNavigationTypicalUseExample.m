@@ -20,7 +20,7 @@
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 
-static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
+//static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
 
 @interface BottomNavigationTypicalUseExample ()
 
@@ -41,14 +41,9 @@ static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
 }
 
 - (void)commonBottomNavigationTypicalUseExampleInit {
-  self.view.backgroundColor = [UIColor grayColor];
+  self.view.backgroundColor = [UIColor lightGrayColor];
 
-  CGRect frame =
-      CGRectMake(0,
-                 self.view.bounds.size.height - kBottomNavigationTypicalUseExampleNavHeight,
-                 self.view.bounds.size.width,
-                 kBottomNavigationTypicalUseExampleNavHeight);
-  _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:frame];
+  _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
   _bottomNavBar.selectedItemTintColor = [MDCPalette greyPalette].tint800;
   _bottomNavBar.unselectedItemTintColor = [MDCPalette greyPalette].tint600;
   _bottomNavBar.titleHideState = MDCBottomNavigationBarTitleHideStateDefault;

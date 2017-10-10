@@ -55,21 +55,10 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 - (void)commonMDCBottomNavigationBarInit {
   self.backgroundColor = [UIColor whiteColor];
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
-
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
-
-  // The bottom navigation bar always spans the width of the device. However, the container view
-  // that holds the items has a fixed width based on the device's portrait view width. This allows
-  // the items to have a consistent distance from one another independent of device orientation.
-  CGSize appSize = [[UIScreen mainScreen] applicationFrame].size;
-  CGFloat minDimension = MIN(appSize.width, appSize.height);
-  CGRect adjustedFrame = CGRectMake(0, 0, minDimension, kMDCBottomNavigationBarHeight);
-  _containerView = [[UIView alloc] initWithFrame:adjustedFrame];
-  _containerView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
-                                     UIViewAutoresizingFlexibleLeftMargin |
-                                     UIViewAutoresizingFlexibleRightMargin );
+  _containerView = [[UIView alloc] initWithFrame:CGRectZero];
   [self addSubview:_containerView];
   _itemViews = [NSMutableArray array];
 }
@@ -77,8 +66,30 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  // Accommodate bottom inset for iPhone X.
+  CGFloat bottomInset = 0;
+  if (@available(iOS 11.0, *)) {
+    bottomInset = self.safeAreaInsets.bottom;
+  }
+
+  CGRect superViewRect = self.superview.bounds;
+  CGFloat heightWithInset = kMDCBottomNavigationBarHeight + bottomInset;
+
+  self.frame = CGRectMake(0, 0, CGRectGetWidth(superViewRect), heightWithInset);
+  self.center = CGPointMake(CGRectGetWidth(superViewRect) / 2,
+                            CGRectGetHeight(superViewRect) - heightWithInset / 2);
+
+  // The bottom navigation bar always spans the width of the device. However, the container view
+  // that holds the items has a fixed width based on the device's portrait view width. This allows
+  // the items to have a consistent distance from one another independent of device orientation.
+  CGFloat itemContainerWidth = MIN(CGRectGetWidth(superViewRect), CGRectGetHeight(superViewRect));
+  CGFloat containerOffsetY = (CGRectGetWidth(self.bounds) - itemContainerWidth) / 2;
+  _containerView.frame =
+      CGRectMake(containerOffsetY, 0, itemContainerWidth, kMDCBottomNavigationBarHeight);
+  _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                     UIViewAutoresizingFlexibleRightMargin);
+
   [self layoutitemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
-  self.containerView.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
 
 - (void)layoutitemViewsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
