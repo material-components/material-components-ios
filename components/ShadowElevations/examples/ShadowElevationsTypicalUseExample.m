@@ -53,7 +53,9 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     _paper.autoresizingMask =
         (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |
          UIViewAutoresizingFlexibleRightMargin);
-    [_paper setElevation:kShadowElevationsDefault];
+    MDCShadowElevation *elevation = [[MDCShadowElevation alloc] init];
+    elevation.value = kShadowElevationsDefault;
+    [_paper setElevation:elevation];
     [self addSubview:_paper];
 
     CGFloat margin = 20.f;
@@ -75,26 +77,28 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 - (void)sliderValueChanged:(MDCSlider *)slider {
   NSInteger points = (NSInteger)round(slider.value * kShadowElevationsMax);
   _paper.text = [NSString stringWithFormat:@"%ld pt", (long)points];
-  [_paper setElevation:points];
-  if (points == MDCShadowElevationNone) {
+  MDCShadowElevation *elevation = [[MDCShadowElevation alloc] init];
+  elevation.value = points;
+  [_paper setElevation:elevation];
+  if (points == [MDCShadowElevation none]) {
     _elevationLabel.text = @"MDCShadowElevationNone";
-  } else if (points == MDCShadowElevationRaisedButtonResting) {
+  } else if (points == [MDCShadowElevation raisedButtonResting]) {
     _elevationLabel.text = @"MDCShadowElevationRaisedButtonResting";
-  } else if (points == MDCShadowElevationRefresh) {
+  } else if (points == [MDCShadowElevation refresh]) {
     _elevationLabel.text = @"MDCShadowElevationRefresh";
-  } else if (points == MDCShadowElevationAppBar) {
+  } else if (points == [MDCShadowElevation appBar]) {
     _elevationLabel.text = @"MDCShadowElevationAppBar";
-  } else if (points == MDCShadowElevationFABResting) {
+  } else if (points == [MDCShadowElevation fabResting]) {
     _elevationLabel.text = @"MDCShadowElevationFABResting";
-  } else if (points == MDCShadowElevationRaisedButtonPressed) {
+  } else if (points == [MDCShadowElevation raisedButtonPressed]) {
     _elevationLabel.text = @"MDCShadowElevationRaisedButtonPressed";
-  } else if (points == MDCShadowElevationSubMenu) {
+  } else if (points == [MDCShadowElevation subMenu]) {
     _elevationLabel.text = @"MDCShadowElevationSubMenu";
-  } else if (points == MDCShadowElevationFABPressed) {
+  } else if (points == [MDCShadowElevation fabPressed]) {
     _elevationLabel.text = @"MDCShadowElevationFABPressed";
-  } else if (points == MDCShadowElevationNavDrawer) {
+  } else if (points == [MDCShadowElevation navDrawer]) {
     _elevationLabel.text = @"MDCShadowElevationNavDrawer";
-  } else if (points == MDCShadowElevationDialog) {
+  } else if (points == [MDCShadowElevation cardDialog]) {
     _elevationLabel.text = @"MDCShadowElevationDialog";
   } else {
     _elevationLabel.text = @"";

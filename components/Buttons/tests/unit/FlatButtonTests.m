@@ -29,10 +29,10 @@
   MDCFlatButton *button = [MDCFlatButton appearance];
 
   // Then
-  XCTAssertEqual([button elevationForState:UIControlStateNormal], MDCShadowElevationNone);
-  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], MDCShadowElevationNone);
-  XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], MDCShadowElevationNone);
+  XCTAssertEqual([button elevationForState:UIControlStateNormal], [MDCShadowElevation none]);
+  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], [MDCShadowElevation none]);
+  XCTAssertEqual([button elevationForState:UIControlStateDisabled], [MDCShadowElevation none]);
+  XCTAssertEqual([button elevationForState:UIControlStateSelected], [MDCShadowElevation none]);
 }
 
 @end

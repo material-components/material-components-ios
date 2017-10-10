@@ -16,25 +16,80 @@
 
 #import "MDCShadowElevations.h"
 
-const CGFloat MDCShadowElevationAppBar = 4.f;
-const CGFloat MDCShadowElevationBottomNavigationBar = 8.f;
-const CGFloat MDCShadowElevationCardPickedUp = 8.f;
-const CGFloat MDCShadowElevationCardResting = 2.f;
-const CGFloat MDCShadowElevationDialog = 24.f;
-const CGFloat MDCShadowElevationFABPressed = 12.f;
-const CGFloat MDCShadowElevationFABResting = 6.f;
-const CGFloat MDCShadowElevationMenu = 8.f;
-const CGFloat MDCShadowElevationModalBottomSheet = 16.f;
-const CGFloat MDCShadowElevationNavDrawer = 16.f;
-const CGFloat MDCShadowElevationNone = 0;
-const CGFloat MDCShadowElevationPicker = 24.f;
-const CGFloat MDCShadowElevationQuickEntry = 3.f;
-const CGFloat MDCShadowElevationQuickEntryResting = 2.f;
-const CGFloat MDCShadowElevationRaisedButtonPressed = 8.f;
-const CGFloat MDCShadowElevationRaisedButtonResting = 2.f;
-const CGFloat MDCShadowElevationRefresh = 3.f;
-const CGFloat MDCShadowElevationRightDrawer = 16.f;
-const CGFloat MDCShadowElevationSearchBarResting = 2.f;
-const CGFloat MDCShadowElevationSearchBarScrolled = 3.f;
-const CGFloat MDCShadowElevationSnackbar = 6.f;
-const CGFloat MDCShadowElevationSubMenu = 9.f;
+
+@implementation MDCShadowElevation
+
+- (instancetype)init {
+   _value = 0.0f;
+   return self;
+}
+
++ (CGFloat)appBar {
+   return 4.0;
+}
+
++ (CGFloat)cardPickedUp {
+   return 8.0f;
+}
++ (CGFloat)cardResting {
+   return 2.0f;
+}
++ (CGFloat)cardDialog {
+   return 24.0f;
+}
++ (CGFloat)fabPressed {
+   return 12.0f;
+}
++ (CGFloat)fabResting {
+   return 6.0f;
+}
++ (CGFloat)menu {
+   return 8.0f;
+}
++ (CGFloat)modalBottomSheet {
+   return 16.0f;
+}
++ (CGFloat)navDrawer {
+   return 16.0f;
+}
++ (CGFloat)none {
+   return 0.0f;
+}
++ (CGFloat)picker {
+   return 24.0f;
+}
++ (CGFloat)quickEntry {
+   return 3.0f;
+}
++ (CGFloat)quickEntryResting {
+   return 2.0f;
+}
++ (CGFloat)raisedButtonPressed {
+   return 8.0f;
+}
++ (CGFloat)raisedButtonResting {
+   return 2.0f;
+}
++ (CGFloat)refresh {
+   return 3.0f;
+}
++ (CGFloat)rightDrawer {
+   return 16.0f;
+}
++ (CGFloat)searchBarResting {
+   return 2.0f;
+}
++ (CGFloat)searchBarScrolled {
+   return 3.0f;
+}
++ (CGFloat)snackbar {
+   return 6.0f;
+}
++ (CGFloat)subMenu {
+   return 9.0f;
+}
++ (CGFloat)switch {
+   return 1.0f;
+}
+
+@end

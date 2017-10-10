@@ -30,10 +30,10 @@
 
   // Then
   XCTAssertEqual([button elevationForState:UIControlStateNormal],
-                 MDCShadowElevationRaisedButtonResting);
+                 [MDCShadowElevation raisedButtonResting]);
   XCTAssertEqual([button elevationForState:UIControlStateHighlighted],
-                 MDCShadowElevationRaisedButtonPressed);
-  XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
+                 [MDCShadowElevation raisedButtonPressed]);
+  XCTAssertEqual([button elevationForState:UIControlStateDisabled], [MDCShadowElevation none]);
 }
 
 

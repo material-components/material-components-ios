@@ -22,9 +22,9 @@
 @implementation MDCRaisedButton
 
 + (void)initialize {
-  [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonResting
+  [[MDCRaisedButton appearance] setElevation:[MDCShadowElevation raisedButtonResting]
                                     forState:UIControlStateNormal];
-  [[MDCRaisedButton appearance] setElevation:MDCShadowElevationRaisedButtonPressed
+  [[MDCRaisedButton appearance] setElevation:[MDCShadowElevation raisedButtonPressed]
                                     forState:UIControlStateHighlighted];
 }
 

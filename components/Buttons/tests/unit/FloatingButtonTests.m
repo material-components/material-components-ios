@@ -29,10 +29,10 @@
   MDCFloatingButton *button = [MDCFloatingButton appearance];
 
   // Then
-  XCTAssertEqual([button elevationForState:UIControlStateNormal], MDCShadowElevationFABResting);
+  XCTAssertEqual([button elevationForState:UIControlStateNormal], [MDCShadowElevation fabResting]);
   XCTAssertEqual([button elevationForState:UIControlStateHighlighted],
-                 MDCShadowElevationFABPressed);
-  XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
+                 [MDCShadowElevation fabPressed]);
+  XCTAssertEqual([button elevationForState:UIControlStateDisabled], [MDCShadowElevation none]);
 }
 
 - (void)testCollapseExpandRestoresIdentityTransform {

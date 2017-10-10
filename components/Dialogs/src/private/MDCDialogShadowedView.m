@@ -32,7 +32,7 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [[self shadowLayer] setElevation:MDCShadowElevationDialog];
+    [[self shadowLayer] setElevation:[MDCShadowElevation cardDialog]];
   }
   return self;
 }
