@@ -222,11 +222,6 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   }
 }
 
-- (void)safeAreaInsetsDidChange {
-  [super safeAreaInsetsDidChange];
-  [self layoutSubviews];
-}
-
 #pragma mark - Touch handlers
 
 - (void)didTouchDownButton:(UIButton *)button {
