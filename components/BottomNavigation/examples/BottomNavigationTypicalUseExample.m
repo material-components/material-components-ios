@@ -20,8 +20,6 @@
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 
-//static const CGFloat kBottomNavigationTypicalUseExampleNavHeight = 72.f;
-
 @interface BottomNavigationTypicalUseExample ()
 
 @property(nonatomic, assign) int badgeCount;
