@@ -40,8 +40,9 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    self.blueView.setElevation(ShadowElevation(rawValue: kRestingCardElevation))
+   let elevation = MDCShadowElevation()
+   elevation.value = MDCShadowElevation.cardResting()
+   self.blueView.setElevation(elevation)
 
     longPressRecogniser.addTarget(self, action: #selector(longPressedInView))
     longPressRecogniser.minimumPressDuration = 0.0
@@ -52,7 +53,9 @@ class ShadowDragSquareExampleViewController: UIViewController {
     // Elevation of the view is changed to indicate that it has been pressed or released.
     // view.center is changed to follow the touch events.
     if sender.state == .began {
-      self.blueView.setElevation(ShadowElevation(rawValue: kSelectedCardElevation))
+      let elevation = MDCShadowElevation()
+      elevation.value = MDCShadowElevation.cardPickedUp()
+      self.blueView.setElevation(elevation)
 
       let selfPoint = sender.location(in: self.view)
       movingViewOffset.x = selfPoint.x - self.blueView.center.x
@@ -63,7 +66,9 @@ class ShadowDragSquareExampleViewController: UIViewController {
           CGPoint(x: selfPoint.x - movingViewOffset.x, y: selfPoint.y - movingViewOffset.y)
       self.blueView.center = newCenterPoint
     } else if sender.state == .ended {
-      self.blueView.setElevation(ShadowElevation(rawValue: kRestingCardElevation))
+      let elevation = MDCShadowElevation()
+      elevation.value = MDCShadowElevation.cardResting()
+      self.blueView.setElevation(elevation)
 
       movingViewOffset = CGPoint.zero
     }

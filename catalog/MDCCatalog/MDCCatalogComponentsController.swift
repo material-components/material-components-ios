@@ -142,8 +142,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
       let shadowLayer = layer as? MDCShadowLayer
-      let elevation = ShadowElevation.appBar.rawValue
-      shadowLayer!.elevation = ShadowElevation(rawValue: intensity * elevation)
+      let elevation = MDCShadowElevation()
+      elevation.value = MDCShadowElevation.appBar() * intensity
+      shadowLayer!.elevation = elevation.value
     }
 
     self.view.addSubview(self.headerViewController.view)

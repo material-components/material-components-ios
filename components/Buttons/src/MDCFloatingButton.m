@@ -28,9 +28,9 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 }
 
 + (void)initialize {
-  [[MDCFloatingButton appearance] setElevation:MDCShadowElevationFABResting
+  [[MDCFloatingButton appearance] setElevation:[MDCShadowElevation fabResting]
                                       forState:UIControlStateNormal];
-  [[MDCFloatingButton appearance] setElevation:MDCShadowElevationFABPressed
+  [[MDCFloatingButton appearance] setElevation:[MDCShadowElevation fabPressed]
                                       forState:UIControlStateHighlighted];
 }
 

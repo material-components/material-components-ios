@@ -38,7 +38,9 @@ class ShadowElevationsTypicalUseExample: UIViewController {
       CGRect(x: (view.frame.width - paperDim) / 2, y: paperDim, width: paperDim, height: paperDim)
      view.addSubview(paper)
 
-    paper.elevation = .fabResting
+   let elevation = MDCShadowElevation()
+   elevation.value = MDCShadowElevation.fabResting()
+   paper.elevation = elevation
   }
 
   required init?(coder aDecoder: NSCoder) {

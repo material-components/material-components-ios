@@ -135,7 +135,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   MDCFlexibleHeaderView *headerView = _headerViewController.headerView;
   MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
       ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
-        CGFloat elevation = MDCShadowElevationAppBar * intensity;
+        CGFloat elevation = [MDCShadowElevation appBar] * intensity;
         [(MDCShadowLayer *)shadowLayer setElevation:elevation];
       };
   [headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];

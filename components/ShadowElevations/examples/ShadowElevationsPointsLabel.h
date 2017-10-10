@@ -20,6 +20,6 @@
 
 @interface ShadowElevationsPointsLabel : UILabel
 
-@property(nonatomic, assign) MDCShadowElevation elevation;
+@property(nonatomic, assign) MDCShadowElevation* elevation;
 
 @end

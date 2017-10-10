@@ -65,7 +65,7 @@
 
  Negative values act as if zero were specified.
  */
-@property(nonatomic, assign) MDCShadowElevation elevation;
+@property(nonatomic, assign) CGFloat elevation;
 
 /**
  Whether to apply the "cutout" shadow layer mask.
