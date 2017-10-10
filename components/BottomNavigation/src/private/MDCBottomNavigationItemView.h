@@ -35,4 +35,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 
+- (void)setInterimSelected:(BOOL)interimSelected;
+
 @end

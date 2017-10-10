@@ -17,6 +17,9 @@
 #import "MDCBottomNavigationItemView.h"
 #import "MDCBottomNavigationItemBadge.h"
 
+static const CGFloat kMDCBottomNavigationItemViewCircleLayerOffset = -6.f;
+static const CGFloat kMDCBottomNavigationItemViewCircleLayerDimension = 36.f;
+static const CGFloat kMDCBottomNavigationItemViewCircleOpacity = 0.150f;
 static const CGFloat kMDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
@@ -24,6 +27,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 
 @interface MDCBottomNavigationItemView ()
 
+@property(nonatomic, strong) CAShapeLayer *circleLayer;
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @property(nonatomic, strong) UIImage *selectedImage;
 @property(nonatomic, strong) UIImage *unselectedImage;
@@ -72,6 +76,17 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   if (!_badgeValue) {
     _badge.hidden = YES;
   }
+
+  _circleLayer = [CAShapeLayer layer];
+  CGRect circleLayerRect = CGRectMake(kMDCBottomNavigationItemViewCircleLayerOffset,
+                                      kMDCBottomNavigationItemViewCircleLayerOffset,
+                                      kMDCBottomNavigationItemViewCircleLayerDimension,
+                                      kMDCBottomNavigationItemViewCircleLayerDimension);
+  UIBezierPath *bezierPath = [UIBezierPath bezierPathWithOvalInRect:circleLayerRect];
+  _circleLayer.path = bezierPath.CGPath;
+  _circleLayer.fillColor = _selectedItemTintColor.CGColor;
+  _circleLayer.opacity = 0;
+  [_iconImageView.layer addSublayer:_circleLayer];
 
   _button = [[UIButton alloc] initWithFrame:self.bounds];
   _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -158,10 +173,21 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   }
 }
 
+- (void)setInterimSelected:(BOOL)interimSelected {
+  if (interimSelected) {
+    self.circleLayer.opacity = kMDCBottomNavigationItemViewCircleOpacity;
+    self.iconImageView.image = self.selectedImage;
+  } else {
+    self.circleLayer.opacity = 0;
+    self.iconImageView.image = self.unselectedImage;
+  }
+}
+
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
   _selectedItemTintColor = selectedItemTintColor;
   self.label.textColor = self.selectedItemTintColor;
   self.selectedImage = [self colorizeImage:self.image color:self.selectedItemTintColor];
+  self.circleLayer.fillColor = self.selectedItemTintColor.CGColor;
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
@@ -171,16 +197,16 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 
 - (void)setBadgeColor:(UIColor *)badgeColor {
   _badgeColor = badgeColor;
-  _badge.badgeColor = badgeColor;
+  self.badge.badgeColor = badgeColor;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {
   _badgeValue = badgeValue;
-  _badge.badgeValue = badgeValue;
+  self.badge.badgeValue = badgeValue;
   if (!_badgeValue) {
-    _badge.hidden = YES;
+    self.badge.hidden = YES;
   } else {
-    _badge.hidden = NO;
+    self.badge.hidden = NO;
   }
 }
 
@@ -190,14 +216,14 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   self.selectedImage = [self colorizeImage:image color:self.selectedItemTintColor];
   self.unselectedImage = [self colorizeImage:image color:self.unselectedItemTintColor];
 
-  _iconImageView.image = self.unselectedImage;
-  [_iconImageView sizeToFit];
+  self.iconImageView.image = self.unselectedImage;
+  [self.iconImageView sizeToFit];
 }
 
 - (void)setTitle:(NSString *)title {
   _title = title;
-  _label.text = _title;
-  [_label sizeToFit];
+  self.label.text = _title;
+  [self.label sizeToFit];
 }
 
 @end

@@ -42,7 +42,7 @@
   self.view.backgroundColor = [UIColor lightGrayColor];
 
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
-  _bottomNavBar.selectedItemTintColor = [MDCPalette greyPalette].tint800;
+  _bottomNavBar.selectedItemTintColor = [MDCPalette purplePalette].tint700;
   _bottomNavBar.unselectedItemTintColor = [MDCPalette greyPalette].tint600;
   _bottomNavBar.titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
   [self.view addSubview:_bottomNavBar];

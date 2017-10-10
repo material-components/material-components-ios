@@ -68,30 +68,28 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  // Accommodate bottom inset for iPhone X.
-  CGFloat bottomInset = 0;
+  // Accommodate insets for iPhone X.
+  UIEdgeInsets insets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    bottomInset = self.safeAreaInsets.bottom;
+    insets = self.safeAreaInsets;
   }
+#endif
 
   CGRect superViewRect = self.superview.bounds;
-  CGFloat heightWithInset = kMDCBottomNavigationBarHeight + bottomInset;
+  CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
   self.frame = CGRectMake(0, 0, CGRectGetWidth(superViewRect), heightWithInset);
   self.center = CGPointMake(CGRectGetWidth(superViewRect) / 2,
                             CGRectGetHeight(superViewRect) - heightWithInset / 2);
-
-  // The bottom navigation bar always spans the width of the device. However, the container view
-  // that holds the items has a fixed width based on the device's portrait view width. This allows
-  // the items to have a consistent distance from one another independent of device orientation.
-  CGFloat itemContainerWidth = MIN(CGRectGetWidth(superViewRect), CGRectGetHeight(superViewRect));
-  CGFloat containerOffsetY = (CGRectGetWidth(self.bounds) - itemContainerWidth) / 2;
   self.containerView.frame =
-      CGRectMake(containerOffsetY, 0, itemContainerWidth, kMDCBottomNavigationBarHeight);
-
-  [self layoutitemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
+      CGRectMake(insets.left,
+                 0,
+                 CGRectGetWidth(superViewRect) - insets.left - insets.right,
+                 kMDCBottomNavigationBarHeight);
+  [self layoutItemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
 }
 
-- (void)layoutitemViewsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
+- (void)layoutItemViewsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
   NSInteger numItems = self.items.count;
   CGSize navBarSize = self.containerView.bounds.size;
   CGFloat itemWidth = navBarSize.width / numItems;
@@ -137,8 +135,14 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
     }
     itemView.selected = NO;
     [itemView.button addTarget:self
-                    action:@selector(didTapButton:)
-          forControlEvents:UIControlEventTouchUpInside];
+                        action:@selector(didTouchDownButton:)
+              forControlEvents:UIControlEventTouchDown];
+    [itemView.button addTarget:self
+                        action:@selector(didTouchUpInsideButton:)
+              forControlEvents:UIControlEventTouchUpInside];
+    [itemView.button addTarget:self
+                        action:@selector(didTouchUpOutsideButton:)
+              forControlEvents:UIControlEventTouchUpOutside];
     [self.itemViews addObject:itemView];
     [self.containerView addSubview:itemView];
   }
@@ -218,15 +222,35 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   }
 }
 
-- (void)didTapButton:(UIButton *)button {
+- (void)safeAreaInsetsDidChange {
+  [super safeAreaInsetsDidChange];
+  [self layoutSubviews];
+}
+
+#pragma mark - Touch handlers
+
+- (void)didTouchDownButton:(UIButton *)button {
+  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
+  [itemView setInterimSelected:YES];
+}
+
+- (void)didTouchUpInsideButton:(UIButton *)button {
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     if (itemView.button != button) {
       [itemView setSelected:NO animated:YES];
     }
   }
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
+  [itemView setInterimSelected:NO];
   [itemView setSelected:YES animated:YES];
 }
+
+- (void)didTouchUpOutsideButton:(UIButton *)button {
+  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
+  [itemView setInterimSelected:NO];
+}
+
+#pragma mark - Setters
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
   if (_selectedItem == selectedItem) {
