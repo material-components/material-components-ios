@@ -14,7 +14,7 @@ api_doc_root: true
   <img src="docs/assets/shadows.png" alt="Shadows" width="375">
 </div>
 
-A shadow elevation specifies the degree of shadow intensi/Mty to be displayed beneath an object.
+A shadow elevation specifies the degree of shadow intensity to be displayed beneath an object.
 Higher shadow elevations have greater shadow intensities, akin to raising an object above a
 surface resulting in a more prominent, albeit more diffuse, shadow. This component provides commonly
 used Material Design elevations for components.
