@@ -22,6 +22,8 @@
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM NS_TYPED_EXTENSIBLE_ENUM
 #elif defined(CF_TYPED_EXTENSIBLE_ENUM) // What follows is backwards compat for Xcode 8 and below.
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM CF_TYPED_EXTENSIBLE_ENUM
+#elif __has_attribute(swift_wrapper)
+#define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM __attribute__((swift_wrapper(struct)))
 #else
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM
 #endif
