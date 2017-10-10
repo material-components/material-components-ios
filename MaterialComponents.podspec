@@ -218,7 +218,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/ShadowElevations"
       sss.dependency "MaterialComponents/ShadowLayer"
       sss.dependency "MaterialComponents/private/KeyboardWatcher"
-      sss.dependency "MaterialComponents/private/RTL"
+      sss.dependency "MDFInternationalization"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
