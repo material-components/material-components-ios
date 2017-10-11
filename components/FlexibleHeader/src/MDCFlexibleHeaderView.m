@@ -458,7 +458,16 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     if (_maximumHeight < _minimumHeight) {
       _maximumHeight = _minimumHeight;
     }
-    [self fhv_updateLayout];
+
+    // The changes might require us to re-calculate the frame, or update the entire layout.
+    if (!_trackingScrollView) {
+      CGRect bounds = self.bounds;
+      bounds.size.height = _minimumHeight;
+      self.bounds = bounds;
+      [self fhv_commitAccumulatorToFrame];
+    } else {
+      [self fhv_updateLayout];
+    }
   }
 #endif
 }
@@ -822,14 +831,6 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
 - (void)fhv_updateLayout {
   if (!_trackingScrollView) {
-    // Even if we're not tracking a scroll view, our minimumHeight might have changed due to new
-    // safe area insets.
-    if (_minimumHeight > 0 && CGRectGetHeight(self.bounds) != _minimumHeight) {
-      CGRect bounds = self.bounds;
-      bounds.size.height = _minimumHeight;
-      self.bounds = bounds;
-      [self fhv_commitAccumulatorToFrame];
-    }
     return;
   }
 
