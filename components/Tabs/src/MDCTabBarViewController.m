@@ -213,9 +213,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     NSUInteger index = [tabBar.items indexOfObject:item];
     if (index < _viewControllers.count) {
       UIViewController *newSelected = _viewControllers[index];
-      if (newSelected != self.selectedViewController) {
-        return [_delegate tabBarController:self shouldSelectViewController:newSelected];
-      }
+      return [_delegate tabBarController:self shouldSelectViewController:newSelected];
     }
   }
   return YES;
@@ -227,9 +225,9 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     UIViewController *newSelected = _viewControllers[index];
     if (newSelected != self.selectedViewController) {
       self.selectedViewController = newSelected;
-      if ([_delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)]) {
-        [_delegate tabBarController:self didSelectViewController:newSelected];
-      }
+    }
+    if ([_delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)]) {
+      [_delegate tabBarController:self didSelectViewController:newSelected];
     }
   }
 }
