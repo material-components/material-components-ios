@@ -31,7 +31,7 @@ class FlexibleHeaderSizeToFitTests: XCTestCase {
     XCTAssertEqual(view.frame.origin.x, initialFrame.origin.x)
     XCTAssertEqual(view.frame.origin.y, initialFrame.origin.y)
     XCTAssertEqual(view.frame.size.width, initialFrame.size.width)
-    XCTAssertEqual(view.frame.size.height, view.minimumHeight)
+    XCTAssertEqual(view.frame.size.height, view.minimumHeight + self.statusBarHeight())
   }
 
   func testSizeToFitAboveMinimumHeight() {
@@ -45,7 +45,7 @@ class FlexibleHeaderSizeToFitTests: XCTestCase {
     XCTAssertEqual(view.frame.origin.x, initialFrame.origin.x)
     XCTAssertEqual(view.frame.origin.y, initialFrame.origin.y)
     XCTAssertEqual(view.frame.size.width, initialFrame.size.width)
-    XCTAssertEqual(view.frame.size.height, view.minimumHeight)
+    XCTAssertEqual(view.frame.size.height, view.minimumHeight + self.statusBarHeight())
   }
 
   func testSizeThatFitsSideEffects() {
@@ -64,6 +64,21 @@ class FlexibleHeaderSizeToFitTests: XCTestCase {
     XCTAssertEqual(view.frame.size.height, initialFrame.size.height)
 
     XCTAssertEqual(bestFitSize.width, possibleSize.width)
-    XCTAssertEqual(bestFitSize.height, view.minimumHeight)
+    XCTAssertEqual(bestFitSize.height, view.minimumHeight + self.statusBarHeight())
+  }
+
+  private func statusBarHeight() -> CGFloat {
+    var statusBarHeight = CGFloat(20)
+#if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      // Starting from iOS 11, the height depends on the status bar height
+      if !UIApplication.shared.statusBarFrame.isEmpty {
+        statusBarHeight = UIApplication.shared.statusBarFrame.height
+      } else {
+        statusBarHeight = 0
+      }
+    }
+#endif
+    return statusBarHeight
   }
 }

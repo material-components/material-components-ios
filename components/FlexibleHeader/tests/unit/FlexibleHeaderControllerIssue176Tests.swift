@@ -43,7 +43,19 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
     fhvc.didMove(toParentViewController: parentVc)
 
-    XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.minimumHeight)
+    // Before iOS 11, the default height included a hardcoded 20 for the status bar height.
+    var statusBarHeight = CGFloat(20.0)
+#if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      // Starting from iOS 11, the height depends on the status bar height
+      if !UIApplication.shared.statusBarFrame.isEmpty {
+        statusBarHeight = UIApplication.shared.statusBarFrame.height
+      } else {
+        statusBarHeight = 0
+      }
+    }
+#endif
+    XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.minimumHeight + statusBarHeight)
   }
 
   func testWithTrackingScrollView() {
