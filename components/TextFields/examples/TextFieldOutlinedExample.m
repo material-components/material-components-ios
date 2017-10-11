@@ -50,55 +50,55 @@
   textFieldName.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:textFieldName];
 
-  textFieldName.placeholder = @"Full Name";
   textFieldName.delegate = self;
   textFieldName.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldName.backgroundColor = [UIColor whiteColor];
 
   self.nameController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldName];
+  self.nameController.placeholderText = @"Full Name";
 
   MDCTextField *textFieldAddress = [[MDCTextField alloc] init];
   textFieldAddress.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:textFieldAddress];
 
-  textFieldAddress.placeholder = @"Address";
   textFieldAddress.delegate = self;
   textFieldAddress.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldAddress.backgroundColor = [UIColor whiteColor];
 
   self.addressController =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldAddress];
+  self.addressController.placeholderText = @"Address";
 
   MDCTextField *textFieldCity = [[MDCTextField alloc] init];
   textFieldCity.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:textFieldCity];
 
-  textFieldCity.placeholder = @"City";
   textFieldCity.delegate = self;
   textFieldCity.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldCity.backgroundColor = [UIColor whiteColor];
 
   self.cityController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldCity];
+  self.cityController.placeholderText = @"City";
 
   MDCTextField *textFieldState = [[MDCTextField alloc] init];
   textFieldState.translatesAutoresizingMaskIntoConstraints = NO;
 
-  textFieldState.placeholder = @"State";
   textFieldState.delegate = self;
   textFieldState.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldState.backgroundColor = [UIColor whiteColor];
 
   self.stateController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldState];
+  self.stateController.placeholderText = @"State";
 
   MDCTextField *textFieldZip = [[MDCTextField alloc] init];
   textFieldZip.translatesAutoresizingMaskIntoConstraints = NO;
 
-  textFieldZip.placeholder = @"Zip Code";
   textFieldZip.delegate = self;
   textFieldZip.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldZip.backgroundColor = [UIColor whiteColor];
 
   self.zipController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldZip];
+  self.zipController.placeholderText = @"Zip Code";
 
   UIView *stateZip = [[UIView alloc] initWithFrame:CGRectZero];
   stateZip.translatesAutoresizingMaskIntoConstraints = NO;
@@ -112,23 +112,23 @@
   textFieldPhone.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:textFieldPhone];
 
-  textFieldPhone.placeholder = @"Phone Number";
   textFieldPhone.delegate = self;
   textFieldPhone.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldPhone.backgroundColor = [UIColor whiteColor];
 
   self.phoneController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldPhone];
+  self.phoneController.placeholderText = @"Phone Number";
   self.phoneController.helperText = @"XXX-XXX-XXXX";
 
   MDCMultilineTextField *textFieldMessage = [[MDCMultilineTextField alloc] init];
   textFieldMessage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:textFieldMessage];
 
-  textFieldMessage.placeholder = @"Message";
   textFieldMessage.textView.delegate = self;
 
   self.messageController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textFieldMessage];
+  self.messageController.placeholderText = @"Message";
 
   NSDictionary *views = @{
     @"name" : textFieldName,

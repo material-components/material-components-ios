@@ -86,34 +86,34 @@
   [self.scrollView addSubview:multilineTextFieldFloating];
   multilineTextFieldFloating.translatesAutoresizingMaskIntoConstraints = NO;
 
-  multilineTextFieldFloating.placeholder = @"Floating Controller";
   multilineTextFieldFloating.textView.delegate = self;
 
   self.textFieldControllerFloating =
       [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:multilineTextFieldFloating];
+  self.textFieldControllerFloating.placeholderText = @"Floating Controller";
 
   MDCMultilineTextField *multilineTextFieldCharMaxDefault = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldCharMaxDefault];
   multilineTextFieldCharMaxDefault.translatesAutoresizingMaskIntoConstraints = NO;
 
-  multilineTextFieldCharMaxDefault.placeholder = @"Inline Placeholder Only";
   multilineTextFieldCharMaxDefault.textView.delegate = self;
 
   self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerLegacyDefault alloc]
       initWithTextInput:multilineTextFieldCharMaxDefault];
   self.textFieldControllerDefaultCharMax.characterCountMax = 30;
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
+  self.textFieldControllerDefaultCharMax.placeholderText = @"Inline Placeholder Only";
 
   MDCMultilineTextField *multilineTextFieldCharMaxFullWidth = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldCharMaxFullWidth];
   multilineTextFieldCharMaxFullWidth.translatesAutoresizingMaskIntoConstraints = NO;
 
-  multilineTextFieldCharMaxFullWidth.placeholder = @"Full Width Controller";
   multilineTextFieldCharMaxFullWidth.textView.delegate = self;
 
   self.textFieldControllerFullWidth = [[MDCTextInputControllerLegacyFullWidth alloc]
       initWithTextInput:multilineTextFieldCharMaxFullWidth];
   self.textFieldControllerFullWidth.characterCountMax = 140;
+  self.textFieldControllerFullWidth.placeholderText = @"Full Width Controller";
 
   [NSLayoutConstraint
       activateConstraints:
