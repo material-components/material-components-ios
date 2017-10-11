@@ -459,6 +459,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       _maximumHeight = _minimumHeight;
     }
 
+    // Ignore any content offset delta that occured as a result of any safe area insets change.
+    _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+
     // The changes might require us to re-calculate the frame, or update the entire layout.
     if (!_trackingScrollView) {
       CGRect bounds = self.bounds;
