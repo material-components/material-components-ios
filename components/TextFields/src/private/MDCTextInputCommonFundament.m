@@ -900,9 +900,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   self.leadingUnderlineLeading.constant = textInsets.left;
   self.trailingUnderlineTrailing.constant = -1 * textInsets.right;
-
-  [self.leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
-                                                forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 #pragma mark - Text Input Events
