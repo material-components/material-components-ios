@@ -31,4 +31,6 @@
 /** Refreshes the layout and style of the placeholder label. Called within updateLayout. */
 - (void)updatePlaceholder;
 
+- (void)textInputDidChange:(NSNotification *)note;
+- (void)textInputDidEndEditing:(__unused NSNotification *)note;
 @end
