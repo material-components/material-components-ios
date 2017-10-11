@@ -571,25 +571,25 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
     if (!self.placeholderAnimationConstraintLeading) {
       self.placeholderAnimationConstraintLeading =
-      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                   attribute:NSLayoutAttributeLeading
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.textInput
-                                   attribute:NSLayoutAttributeLeading
-                                  multiplier:1
-                                    constant:destination.x];
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:destination.x];
     }
     self.placeholderAnimationConstraintLeading.constant = destination.x;
 
     if (!self.placeholderAnimationConstraintTop) {
       self.placeholderAnimationConstraintTop =
-      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.textInput
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:destination.y];
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput
+                                       attribute:NSLayoutAttributeTop
+                                      multiplier:1
+                                        constant:destination.y];
     }
     self.placeholderAnimationConstraintTop.constant = destination.y;
 
@@ -1073,7 +1073,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)setPlaceholderText:(NSString *)placeholderText {
-  _textInput.placeholder = placeholderText;
+  if ([_textInput.placeholder isEqualToString: placeholderText]) {
+    return;
+  }
+  _textInput.placeholder = [placeholderText copy];
   if (self.isFloatingEnabled && _textInput.text.length > 0) {
     [self updatePlaceholderAnimationConstraints:YES];
   }

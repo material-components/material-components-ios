@@ -1007,7 +1007,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)setPlaceholderText:(NSString *)placeholderText {
-  _textInput.placeholder = placeholderText;
+  if ([_textInput.placeholder isEqualToString: placeholderText]) {
+    return;
+  }
+  _textInput.placeholder = [placeholderText copy];
   if (self.isFloatingEnabled && _textInput.text.length > 0) {
     [self updatePlaceholderAnimationConstraints:YES];
   }

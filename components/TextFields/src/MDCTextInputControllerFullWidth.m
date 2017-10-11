@@ -616,7 +616,10 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 }
 
 - (void)setPlaceholderText:(NSString *)placeholderText {
-  _textInput.placeholder = placeholderText;
+  if ([_textInput.placeholder isEqualToString: placeholderText]) {
+    return;
+  }
+  _textInput.placeholder = [placeholderText copy];
 }
 
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {
