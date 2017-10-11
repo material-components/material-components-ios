@@ -1309,7 +1309,6 @@ static BOOL isRunningiOS10_3OrAbove() {
   [self fhv_removeInsetsFromScrollView:_trackingScrollView];
 
   _maximumHeight = maximumHeight;
-  NSLog(@"%f", _maximumHeight);
 
   if (_minMaxHeightIncludesSafeArea) {
     _maxHeightIncludingSafeArea = _maximumHeight;
