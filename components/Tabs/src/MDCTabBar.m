@@ -17,7 +17,6 @@
 #import "MDCTabBar.h"
 
 #import "MaterialInk.h"
-#import "MaterialShadowElevations.h"
 #import "private/MDCItemBar.h"
 #import "private/MDCItemBarAlignment.h"
 #import "private/MDCItemBarStyle.h"
