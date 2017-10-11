@@ -45,6 +45,8 @@
   _bottomNavBar.selectedItemTintColor = [MDCPalette purplePalette].tint700;
   _bottomNavBar.unselectedItemTintColor = [MDCPalette greyPalette].tint600;
   _bottomNavBar.titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
+  _bottomNavBar.landscapeItemMode = MDCBottomNavigationBarLandscapeItemModeCluster;
+  _bottomNavBar.maxLandscapeContainerWidth = 375.f;
   [self.view addSubview:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =
@@ -73,6 +75,19 @@
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;
   [self updateBadgeItemCount];
+}
+
+- (void)viewWillLayoutSubviews {
+  CGSize size = [_bottomNavBar sizeThatFits:self.view.bounds.size];
+  CGRect bottomNavBarFrame = CGRectMake(0,
+                                        CGRectGetHeight(self.view.bounds) - size.height,
+                                        size.width,
+                                        size.height);
+  _bottomNavBar.frame = bottomNavBarFrame;
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+  [super viewSafeAreaInsetsDidChange];
 }
 
 - (void)updateBadgeItemCount {

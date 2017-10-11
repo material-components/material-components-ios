@@ -21,6 +21,7 @@
 #import "private/MDCBottomNavigationItemView.h"
 
 static const CGFloat kMDCBottomNavigationBarHeight = 72.f;
+static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
@@ -29,6 +30,8 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 @interface MDCBottomNavigationBar ()
 
+@property(nonatomic, assign) BOOL itemsDistributed;
+@property(nonatomic, assign) BOOL titleBelowItem;
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, strong) UIView *containerView;
 
@@ -58,6 +61,10 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
+  _landscapeItemMode = MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles;
+  _itemsDistributed = YES;
+  _titleBelowItem = YES;
+  _maxLandscapeContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
   _containerView = [[UIView alloc] initWithFrame:CGRectZero];
   _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
                                      UIViewAutoresizingFlexibleRightMargin);
@@ -68,32 +75,67 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  // Accommodate insets for iPhone X.
+  CGSize size = self.bounds.size;
+  if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+    [self layoutLandscapeModeWithSize:size width:self.maxLandscapeContainerWidth];
+  } else {
+    [self sizeContainerViewItemsDistributed:YES withSize:size width:size.width];
+    [self showTitleBelowItem:YES];
+  }
+  [self layoutItemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  UIEdgeInsets insets = [self getUIEdgeInsets];
+  CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
+  return CGSizeMake(size.width, heightWithInset);
+}
+
+- (void)layoutLandscapeModeWithSize:(CGSize)size width:(CGFloat)width {
+  switch (self.landscapeItemMode) {
+    case MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles:
+      [self sizeContainerViewItemsDistributed:YES withSize:size width:width];
+      [self showTitleBelowItem:YES];
+      break;
+    case MDCBottomNavigationBarLandscapeItemModeDistributeAdjacentTitles:
+      [self sizeContainerViewItemsDistributed:YES withSize:size width:width];
+      [self showTitleBelowItem:NO];
+      break;
+    case MDCBottomNavigationBarLandscapeItemModeCluster:
+      [self sizeContainerViewItemsDistributed:NO withSize:size width:width];
+      [self showTitleBelowItem:YES];
+      break;
+  }
+}
+
+- (UIEdgeInsets)getUIEdgeInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
+
+    // Accommodate insets for iPhone X.
     insets = self.safeAreaInsets;
   }
 #endif
+  return insets;
+}
 
-  CGRect superViewRect = self.superview.bounds;
-  CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
-  self.frame = CGRectMake(0, 0, CGRectGetWidth(superViewRect), heightWithInset);
-  self.center = CGPointMake(CGRectGetWidth(superViewRect) / 2,
-                            CGRectGetHeight(superViewRect) - heightWithInset / 2);
-  self.containerView.frame =
-      CGRectMake(insets.left,
-                 0,
-                 CGRectGetWidth(superViewRect) - insets.left - insets.right,
-                 kMDCBottomNavigationBarHeight);
-  [self layoutItemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
-  
-  BOOL titleBelowIcon = YES;
-  if (CGRectGetWidth(self.superview.bounds) > CGRectGetHeight(self.superview.bounds)) {
-    titleBelowIcon = NO;
-  }
-  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    itemView.titleBelowIcon = titleBelowIcon;
+- (void)sizeContainerViewItemsDistributed:(BOOL)itemsDistributed
+                                 withSize:(CGSize)size
+                                    width:(CGFloat)width {
+  if (itemsDistributed) {
+    UIEdgeInsets insets = [self getUIEdgeInsets];
+    self.containerView.frame =
+        CGRectMake(insets.left,
+                   0,
+                   size.width - insets.left - insets.right,
+                   kMDCBottomNavigationBarHeight);
+  } else {
+    CGFloat clusteredOffsetX = (size.width - width) / 2;
+    self.containerView.frame = CGRectMake(clusteredOffsetX,
+                                          0,
+                                          width,
+                                          kMDCBottomNavigationBarHeight);
   }
 }
 
@@ -116,49 +158,10 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   }
 }
 
-- (void)setItems:(NSArray<UITabBarItem *> *)items {
-  if (_items == items) {
-    return;
+- (void)showTitleBelowItem:(BOOL)titleBelowIcon {
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.titleBelowIcon = titleBelowIcon;
   }
-  NSAssert(items.count >= 3, @"Need to have at least 3 items in navigation bar.");
-  NSAssert(items.count <= 5, @"Navigation bar has a maximum of 5 items.");
-
-  _items = items;
-
-  [self removeBottomNavigationitemViews];
-  [self removeObserversFromTabBarItems];
-
-  for (UITabBarItem *item in items) {
-    MDCBottomNavigationItemView *itemView =
-        [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
-    itemView.title = item.title;
-    itemView.selectedItemTintColor = self.selectedItemTintColor;
-    itemView.unselectedItemTintColor = self.unselectedItemTintColor;
-    itemView.titleHideState = self.titleHideState;
-
-    if (item.image) {
-      itemView.image = item.image;
-    }
-    if (item.badgeValue) {
-      itemView.badgeValue = item.badgeValue;
-    }
-    if (item.badgeColor) {
-      itemView.badgeColor = item.badgeColor;
-    }
-    itemView.selected = NO;
-    [itemView.button addTarget:self
-                        action:@selector(didTouchDownButton:)
-              forControlEvents:UIControlEventTouchDown];
-    [itemView.button addTarget:self
-                        action:@selector(didTouchUpInsideButton:)
-              forControlEvents:UIControlEventTouchUpInside];
-    [itemView.button addTarget:self
-                        action:@selector(didTouchUpOutsideButton:)
-              forControlEvents:UIControlEventTouchUpOutside];
-    [self.itemViews addObject:itemView];
-    [self.containerView addSubview:itemView];
-  }
-  [self addObserversToTabBarItems];
 }
 
 - (void)dealloc {
@@ -258,6 +261,52 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 }
 
 #pragma mark - Setters
+
+- (void)setItems:(NSArray<UITabBarItem *> *)items {
+  if (_items == items) {
+    return;
+  }
+  NSAssert(items.count >= 3, @"Need to have at least 3 items in navigation bar.");
+  NSAssert(items.count <= 5, @"Navigation bar has a maximum of 5 items.");
+
+  _items = items;
+
+  [self removeBottomNavigationitemViews];
+  [self removeObserversFromTabBarItems];
+
+  for (UITabBarItem *item in items) {
+    MDCBottomNavigationItemView *itemView =
+        [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
+    itemView.title = item.title;
+    itemView.selectedItemTintColor = self.selectedItemTintColor;
+    itemView.unselectedItemTintColor = self.unselectedItemTintColor;
+    itemView.titleHideState = self.titleHideState;
+
+    if (item.image) {
+      itemView.image = item.image;
+    }
+    if (item.badgeValue) {
+      itemView.badgeValue = item.badgeValue;
+    }
+    if (item.badgeColor) {
+      itemView.badgeColor = item.badgeColor;
+    }
+    itemView.selected = NO;
+    [itemView.button addTarget:self
+                        action:@selector(didTouchDownButton:)
+              forControlEvents:UIControlEventTouchDown];
+    [itemView.button addTarget:self
+                        action:@selector(didTouchUpInsideButton:)
+              forControlEvents:UIControlEventTouchUpInside];
+    [itemView.button addTarget:self
+                        action:@selector(didTouchUpOutsideButton:)
+              forControlEvents:UIControlEventTouchUpOutside];
+    [self.itemViews addObject:itemView];
+    [self.containerView addSubview:itemView];
+  }
+  [self addObserversToTabBarItems];
+  [self showTitleBelowItem:self.titleBelowItem];
+}
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
   if (_selectedItem == selectedItem) {

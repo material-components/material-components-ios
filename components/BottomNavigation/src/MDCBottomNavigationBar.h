@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-/** States used to configure bottom navigation on when to hide item titles.  */
+/** States used to configure bottom navigation on when to hide item titles. */
 typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 
   // Default behavior is to hide item titles when item is unselected.
@@ -27,6 +27,24 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 
   // Item titles are always hidden.
   MDCBottomNavigationBarTitleHideStateAlways = 2
+};
+
+/**
+ States used to configure bottom navigation in landscape mode with respect to how items are spaced
+ and item title orientation. Titles will be shown or hidden depending on title hide state.
+ */
+typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLandscapeItemMode) {
+
+  // Items are distributed using the entire landscape mode width of the device. Titles are centered
+  // below icons.
+  MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles = 0,
+
+  // Items are distributed using the entire landscape mode width of the device. Titles are
+  // positioned adjacent to icons.
+  MDCBottomNavigationBarLandscapeItemModeDistributeAdjacentTitles = 1,
+
+  // Items are tightly clustered together. Titles are positioned below icons.
+  MDCBottomNavigationBarLandscapeItemModeCluster = 2
 };
 
 /**
@@ -45,10 +63,22 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 @property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
 
 /**
+ Configures item spacing and title orientation in landscape mode.
+ Default is MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles.
+ */
+@property(nonatomic, assign) MDCBottomNavigationBarLandscapeItemMode landscapeItemMode;
+
+/**
  An array of UITabBarItems that is used to populate bottom navigation bar content. The array must
  contain a minimum of three items with a maxiumum of up to five items.
  */
 @property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
+
+/**
+ The maximum width of the navigation bar item container in landscape mode.
+ Default is 320.
+ */
+@property(nonatomic, assign) CGFloat maxLandscapeContainerWidth;
 
 /**
  Display font used for item titles.
