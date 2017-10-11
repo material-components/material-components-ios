@@ -133,8 +133,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   BOOL _wantsToBeHidden;
 
   // This will help us track if the size has been explicitly set or if we're using the defaults.
-  BOOL _hasExplicitlySetMinHeight;
-  BOOL _hasExplicitlySetMaxHeight;
+  BOOL _hasExplicitlySetMinOrMaxHeight;
 
   // The min and max height values that include the Safe Area insets. These are the numbers that
   // should be used internally.
@@ -303,9 +302,10 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
   _statusBarHintCanOverlapHeader = YES;
 
-  _minimumHeight = kFlexibleHeaderDefaultHeight;
-  _maximumHeight = _minimumHeight;
-  _minHeightIncludingSafeArea = _minimumHeight + kPreIOS11ExpectedStatusBarHeight;
+  _minMaxHeightIncludesSafeArea = YES;
+  _minimumHeight = kFlexibleHeaderDefaultHeight + kPreIOS11ExpectedStatusBarHeight;
+  _minHeightIncludingSafeArea = _minimumHeight;
+
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     // Starting from iOS 11, the default behavior of this component is to adapt its height to
@@ -314,9 +314,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     // calculated by the OS.
     CGFloat statusBarHeight =
         CGRectGetMaxY([UIApplication mdc_safeSharedApplication].statusBarFrame);
-    _minHeightIncludingSafeArea = _minimumHeight + statusBarHeight;
+    _minHeightIncludingSafeArea = kFlexibleHeaderDefaultHeight + statusBarHeight;
+    _minimumHeight = _minHeightIncludingSafeArea;
   }
 #endif
+  _maximumHeight = _minimumHeight;
   _maxHeightIncludingSafeArea = _minHeightIncludingSafeArea;
 
   _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
@@ -449,16 +451,31 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   if (@available(iOS 11.0, *)) {
     [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
 
-    // In Legacy mode we only adjust the min & max height if we're using the default values
-    // as we have already internally substracted the previously hardcoded status bar height from
-    // these values.
-    if (_safeAreaAdjustsMinMaxHeight == MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults
-        && (_hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight)) {
-      return;
-    }
+    CGFloat safeAreaTop = [self flexibleHeaderSafeAreaTop];
 
-    _minHeightIncludingSafeArea = _minimumHeight + [self flexibleHeaderSafeAreaTop];
-    _maxHeightIncludingSafeArea = _maximumHeight + [self flexibleHeaderSafeAreaTop];
+    // If the min or max height have been explicitly set, only adjust if
+    // _minMaxHeightIncludesSafeArea is NO.
+    if (_hasExplicitlySetMinOrMaxHeight) {
+      if (_minMaxHeightIncludesSafeArea) {
+        // No - op.
+        return;
+      } else {
+        // The min/max values don't already include the safe area insets.
+        _minHeightIncludingSafeArea = _minimumHeight + safeAreaTop;
+        _maxHeightIncludingSafeArea = _maximumHeight + safeAreaTop;
+      }
+    } else {
+      // Neither min nor max height have been set, so we use the defaults.
+      _minHeightIncludingSafeArea = kFlexibleHeaderDefaultHeight + safeAreaTop;
+      _maxHeightIncludingSafeArea = kFlexibleHeaderDefaultHeight + safeAreaTop;
+
+      // If _minMaxHeightIncludesSafeArea is YES, we need to also update _minimumHeight and
+      // _maximumHeight.
+      if (_minMaxHeightIncludesSafeArea) {
+        _minimumHeight = _minHeightIncludingSafeArea;
+        _maximumHeight = _maxHeightIncludingSafeArea;
+      }
+    }
 
     // The changes might require us to re-calculate the frame, or update the entire layout.
     if (!_trackingScrollView) {
@@ -1262,14 +1279,14 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)setMinimumHeight:(CGFloat)minimumHeight {
-  _hasExplicitlySetMinHeight = YES;
+  _hasExplicitlySetMinOrMaxHeight = YES;
   if (_minimumHeight == minimumHeight) {
     return;
   }
 
   _minimumHeight = minimumHeight;
 
-  if (_safeAreaAdjustsMinMaxHeight == MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults) {
+  if (_minMaxHeightIncludesSafeArea) {
     _minHeightIncludingSafeArea = _minimumHeight;
   } else {
     _minHeightIncludingSafeArea = _minimumHeight + [self flexibleHeaderSafeAreaTop];
@@ -1283,7 +1300,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)setMaximumHeight:(CGFloat)maximumHeight {
-  _hasExplicitlySetMaxHeight = YES;
+  _hasExplicitlySetMinOrMaxHeight = YES;
   if (_maximumHeight == maximumHeight) {
     return;
   }
@@ -1292,8 +1309,9 @@ static BOOL isRunningiOS10_3OrAbove() {
   [self fhv_removeInsetsFromScrollView:_trackingScrollView];
 
   _maximumHeight = maximumHeight;
+  NSLog(@"%f", _maximumHeight);
 
-  if (_safeAreaAdjustsMinMaxHeight == MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults) {
+  if (_minMaxHeightIncludesSafeArea) {
     _maxHeightIncludingSafeArea = _maximumHeight;
   } else {
     _maxHeightIncludingSafeArea = _maximumHeight + [self flexibleHeaderSafeAreaTop];
@@ -1317,20 +1335,36 @@ static BOOL isRunningiOS10_3OrAbove() {
   }
 }
 
-- (void)setSafeAreaAdjustsMinMaxHeight:(MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeight)adjustment {
-  if (_safeAreaAdjustsMinMaxHeight == adjustment) {
+- (void)setMinMaxHeightIncludesSafeArea:(BOOL)minMaxHeightIncludesSafeArea {
+  if (_minMaxHeightIncludesSafeArea == minMaxHeightIncludesSafeArea) {
     return;
   }
-  _safeAreaAdjustsMinMaxHeight = adjustment;
+  _minMaxHeightIncludesSafeArea = minMaxHeightIncludesSafeArea;
 
-  if (_safeAreaAdjustsMinMaxHeight == MDCFlexibleHeaderSafeAreaAdjustsMinMaxHeightOnlyForDefaults &&
-      (_hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight)) {
-    _minHeightIncludingSafeArea = _minimumHeight;
-    _maxHeightIncludingSafeArea = _maximumHeight;
+  CGFloat safeAreaTop = [self flexibleHeaderSafeAreaTop];
+
+  if (_hasExplicitlySetMinOrMaxHeight) {
+    if (_minMaxHeightIncludesSafeArea) {
+      // We went from min / max not including the safe area to including it.
+      _minimumHeight = _minimumHeight + safeAreaTop;
+      _maximumHeight = _maximumHeight + safeAreaTop;
+    } else {
+      // Min / max used to include the safe area.
+      _minimumHeight = _minimumHeight - safeAreaTop;
+      _maximumHeight = _maximumHeight - safeAreaTop;
+    }
   } else {
-    _minHeightIncludingSafeArea = _minimumHeight + [self flexibleHeaderSafeAreaTop];
-    _maxHeightIncludingSafeArea = _maximumHeight + [self flexibleHeaderSafeAreaTop];
+    // Neither min nor max have been explicitly set.
+    if (_minMaxHeightIncludesSafeArea) {
+      _minimumHeight = kFlexibleHeaderDefaultHeight + safeAreaTop;
+      _maximumHeight = kFlexibleHeaderDefaultHeight + safeAreaTop;
+    } else {
+      // Min / max values do not include the safe area.
+      _minimumHeight = kFlexibleHeaderDefaultHeight;
+      _maximumHeight = kFlexibleHeaderDefaultHeight;
+    }
   }
+
   [self fhv_updateLayout];
 }
 
