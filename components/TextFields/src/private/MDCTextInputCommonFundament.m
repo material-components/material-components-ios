@@ -404,6 +404,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   [NSLayoutConstraint activateConstraints:@[ leadingBottom, trailingBottom ]];
 
+  // When push comes to shove, the leading label is more likely to expand than the trailing.
+  [_leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
+                                                forAxis:UILayoutConstraintAxisHorizontal];
+
   [_trailingUnderlineLabel
       setContentCompressionResistancePriority:UILayoutPriorityRequired
                                       forAxis:UILayoutConstraintAxisHorizontal];
@@ -896,9 +900,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   self.leadingUnderlineLeading.constant = textInsets.left;
   self.trailingUnderlineTrailing.constant = -1 * textInsets.right;
-
-  [self.leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
-                                                forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 #pragma mark - Text Input Events
