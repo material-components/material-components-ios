@@ -265,7 +265,6 @@ static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
       // Newly selected item
       [itemView setSelected:YES animated:YES];
       itemView.circleHighlightHidden = YES;
-      
     } else {
 
       // Deselect all other items
