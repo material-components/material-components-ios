@@ -98,6 +98,7 @@
 
     case FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea:
       headerView.minMaxHeightIncludesSafeArea = [value boolValue];
+      break;
   }
 }
 
