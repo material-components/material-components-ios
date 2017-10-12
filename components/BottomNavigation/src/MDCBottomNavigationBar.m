@@ -18,7 +18,12 @@
 
 #import "MaterialMath.h"
 #import "MaterialRTL.h"
+#import "private/MaterialBottomNavigationStrings.h"
+#import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
+
+// The Bundle for string resources.
+static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
 static const CGFloat kMDCBottomNavigationBarHeight = 72.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
@@ -27,6 +32,7 @@ static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
+static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
 
 @interface MDCBottomNavigationBar ()
 
@@ -286,7 +292,8 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   [self removeBottomNavigationitemViews];
   [self removeObserversFromTabBarItems];
 
-  for (UITabBarItem *item in items) {
+  for (NSUInteger i = 0; i < items.count; i++) {
+    UITabBarItem *item = items[i];
     MDCBottomNavigationItemView *itemView =
         [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
     itemView.title = item.title;
@@ -294,7 +301,21 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
     itemView.titleHideState = self.titleHideState;
     itemView.titleBelowIcon = self.titleBelowItem;
-
+    
+    NSString *key =
+        kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
+    NSString *ofString =
+        NSLocalizedStringFromTableInBundle(key,
+                                           kMaterialBottomNavigationStringsTableName,
+                                           [[self class] bundle],
+                                           @"of");
+    NSString *itemNumString = [NSNumber numberWithInteger:(i + 1)].stringValue;
+    NSString *totalItemsNumString = [NSNumber numberWithInteger:items.count].stringValue;
+    NSString *ofStringSpaces =
+        [[kMDCBottomNavigationBarSpaceString stringByAppendingString:ofString]
+         stringByAppendingString:kMDCBottomNavigationBarSpaceString];
+    itemView.button.accessibilityHint = [[itemNumString stringByAppendingString:ofStringSpaces]
+                                         stringByAppendingString:totalItemsNumString];
     if (item.image) {
       itemView.image = item.image;
     }
@@ -368,6 +389,26 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.itemTitleFont = itemTitleFont;
   }
+}
+
+#pragma mark - Resource bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialBottomNavigationBundle]];
+  });
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCBottomNavigationBar class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 @end

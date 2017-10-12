@@ -70,7 +70,9 @@
                                     image:[UIImage imageNamed:@"Cake"]
                                       tag:0];
   tabBarItem5.badgeValue = @"999+";
-  tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
+  if (@available(iOS 10.0, *)) {
+    tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
+  }
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;
   [self updateBadgeItemCount];

@@ -46,6 +46,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
   _badgeValueLabel.textColor = [UIColor whiteColor];
   _badgeValueLabel.font = [UIFont systemFontOfSize:kMDCBottomNavigationItemBadgeFontSize];
   _badgeValueLabel.textAlignment = NSTextAlignmentCenter;
+  _badgeValueLabel.isAccessibilityElement = NO;
   [self addSubview:_badgeValueLabel];
 }
 

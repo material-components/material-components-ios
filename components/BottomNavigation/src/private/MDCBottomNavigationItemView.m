@@ -67,9 +67,11 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   _label.font = [UIFont systemFontOfSize:kMDCBottomNavigationItemViewTitleFontSize];
   _label.textAlignment = NSTextAlignmentCenter;
   _label.textColor = _selectedItemTintColor;
+  _label.isAccessibilityElement = NO;
   [self addSubview:_label];
 
   _badge = [[MDCBottomNavigationItemBadge alloc] initWithFrame:CGRectZero];
+  _badge.isAccessibilityElement = NO;
   [self addSubview:_badge];
 
   if (!_badgeValue) {
@@ -89,6 +91,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 
   _button = [[UIButton alloc] initWithFrame:self.bounds];
   _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  _button.accessibilityLabel = _title;
   [self addSubview:_button];
 }
 
@@ -237,6 +240,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 - (void)setBadgeValue:(NSString *)badgeValue {
   _badgeValue = badgeValue;
   self.badge.badgeValue = badgeValue;
+  self.button.accessibilityValue = badgeValue;
   if (_badgeValue == nil || _badgeValue.length == 0) {
     self.badge.hidden = YES;
   } else {
@@ -254,6 +258,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 - (void)setTitle:(NSString *)title {
   _title = [title copy];
   self.label.text = _title;
+  self.button.accessibilityLabel = _title;
 }
 
 - (void)setItemTitleFont:(UIFont *)itemTitleFont {
