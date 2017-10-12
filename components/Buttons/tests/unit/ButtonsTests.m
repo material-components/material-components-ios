@@ -438,9 +438,50 @@ static NSString *controlStateDescription(UIControlState controlState) {
  TODO: things to unit test
  (should these even be a thing?)
  - hitAreaInset
- - disabledAlpha
  - underlyingColor (text color)
  */
+
+- (void)testAlphaRestoredWhenReenabled {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];
+  CGFloat alpha = 0.5;
+
+  // When
+  button.alpha = alpha;
+  button.enabled = NO;
+  button.enabled = YES;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
+}
+
+- (void)testEnabledAlphaNotSetWhileDisabled {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];
+  CGFloat alpha = 0.2;
+
+  // When
+  button.alpha = alpha;
+  button.enabled = NO;
+  button.alpha = 1 - alpha;
+  button.enabled = YES;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
+}
+
+- (void)testDisabledAlpha {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];
+  CGFloat alpha = 0.5;
+
+  // When
+  [button setDisabledAlpha:alpha];
+  button.enabled = NO;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
+}
 
 - (void)testEncode {
   // Given
@@ -451,6 +492,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
+  CGFloat buttonAlpha = 0.5;
+  button.alpha = buttonAlpha;
+  button.enabled = NO;
 
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     [button setBackgroundColor:randomColor() forState:controlState];
@@ -482,6 +526,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
   XCTAssertEqualObjects(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
+  XCTAssertEqual(button.enabled, unarchivedButton.enabled);
+  XCTAssertEqualWithAccuracy(button.alpha, unarchivedButton.alpha, 0.0001);
+  unarchivedButton.enabled = YES;
+  XCTAssertEqualWithAccuracy(buttonAlpha, unarchivedButton.alpha, 0.0001);
+
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button elevationForState:controlState],
                                [unarchivedButton elevationForState:controlState],

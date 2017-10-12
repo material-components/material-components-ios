@@ -458,7 +458,16 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     if (_maximumHeight < _minimumHeight) {
       _maximumHeight = _minimumHeight;
     }
-    [self fhv_updateLayout];
+
+    // The changes might require us to re-calculate the frame, or update the entire layout.
+    if (!_trackingScrollView) {
+      CGRect bounds = self.bounds;
+      bounds.size.height = _minimumHeight;
+      self.bounds = bounds;
+      [self fhv_commitAccumulatorToFrame];
+    } else {
+      [self fhv_updateLayout];
+    }
   }
 #endif
 }

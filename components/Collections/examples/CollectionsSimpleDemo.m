@@ -81,8 +81,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSString *)catalogDescription {
   return @"Material Collections enables a native collection view controller to have Material "
-  "design layout and styling. It also provides editing and extensive customization "
-  "capabilities.";
+          "design layout and styling. It also provides editing and extensive customization "
+          "capabilities.";
 }
 
 @end

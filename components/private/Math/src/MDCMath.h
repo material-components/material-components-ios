@@ -14,6 +14,30 @@
  limitations under the License.
  */
 
+static inline CGFloat MDCSin(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return sin(value);
+#else
+  return sinf(value);
+#endif
+}
+
+static inline CGFloat MDCCos(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return cos(value);
+#else
+  return cosf(value);
+#endif
+}
+
+static inline CGFloat MDCAtan2(CGFloat y, CGFloat x) {
+#if CGFLOAT_IS_DOUBLE
+  return atan2(y, x);
+#else
+  return atan2f(y, x);
+#endif
+}
+
 static inline CGFloat MDCCeil(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return ceil(value);

@@ -48,7 +48,7 @@ static inline UIUserInterfaceLayoutDirection
 
 @end
 
-@implementation UIView (MaterialRTL)
+@implementation UIView (PrivateMaterialRTL)
 
 - (UISemanticContentAttribute)mdc_semanticContentAttribute {
 #if MDC_BASE_SDK_EQUAL_OR_ABOVE(9_0)

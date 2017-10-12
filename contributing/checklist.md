@@ -1,6 +1,8 @@
 # Component checklist
 
 
+[Checklist status spreadsheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vRQLFMuo0Q3xsJp1_TdWvImtfdc8dU0lqX2DTct5pOPAEUIrN9OsuPquvv4aKRAwKK_KItpGs7c4Fok/pubhtml)
+
 Over time we have curated a growing checklist of things we feel improve the experience of using a custom UIKit component. Many of these checks are performed by humans but we're now increasing the number of checks that can be performed by scripts.
 
 
@@ -77,6 +79,35 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 
 1. Run the catalog application and look for the component. Make sure the tile shown is specific to the component and not a placeholder nor empty view.
 1. Enter YES or NO
+
+
+### Site Icon
+
+The [material.io](https://material.io/components) site contains a [list of all components](https://material.io/components/ios/catalog/), each with an icon. These icons are created by Google's Material Design department specifically for this purpose. Adding it to the site is done by the core team.
+
+1. Enter YES or NO or N/A
+
+
+### Site Navigation Comment
+
+The [material.io](https://material.io/components) site's content is generated from the headers of MDC's files using [Jazzy](https://github.com/realm/jazzy) and [Jekyll](https://github.com/jekyll/jekyll). This requires some YAML.
+
+1. The root README.md of each component should start with a comment containing specific key-value pairs. Here's an example:
+```
+<!--docs:
+title: "App Bars"
+layout: detail
+section: components
+excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
+iconId: toolbar
+path: /catalog/app-bars/
+api_doc_root: true
+-->
+```
+
+The root of each component should also contain a `.jazzy.yaml` file that's auto-generated during the publishing process.
+1. Enter YES or NO or N/A
+
 
 
 ### License Stanzas in Every Text-based Source File
@@ -172,6 +203,32 @@ Custom controls should support VoiceOver.
 See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/iPhoneAccessibility/Accessibility_on_iPhone/Accessibility_on_iPhone.html) for further information.
 
 1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
+1. Enter YES, NO or N/A
+
+### Dynamic Type Support (If possible)
+
+
+Any component that has text, interacts with text, or lays itself out in relation to text should implement Dynamic Type.
+See Apple's [Building Apps with Dynamic Type video](https://developer.apple.com/videos/play/wwdc2017/245/) for further information.
+
+1. Set fonts with `[UIFont preferredTextForStyle:]` or `[UIFont mdc_perferredTextForMaterialStyle:]`, or via `UIFontMetrics`.
+1. Implement `mdc_adjustsFontForContentSizeCategory` as a `BOOL` property.
+1. Add code that listens to and reacts to the `UIContentSizeCategoryDidChangeNotification`.
+1. Never layout code around text with 'magic numbers'. Instead, use a dynamic layout like Apple's auto layout.
+1. Make sure labels have an appropriate overflow behavior. Usually that will mean setting label's `numberOfLines` to 0.
+1. Add any necessary client code into your examples.
+1. Test all your code with Dynamic Type settings from very small to very large.
+1. Enter YES, NO or N/A
+
+
+### Color Themer (If possible)
+
+
+Any component that has visual elements that can be colorized should include a [color themer](https://github.com/material-components/material-components-ios/tree/develop/components/Themes). A color themer applies a set of colors, known as a color scheme, to a component in a systematic way. The user of the color themer passes a color scheme and component to the color themer and the component is automatically colorized in the correct way.
+
+1. Make sure the color themer static method signatures adhere to existing conventions: `applyColorScheme:toComponent`.
+1. Add a `ColorThemer` directory with the color themer to the `src` directory of the component.
+1. Update component entry in `MaterialComponents.podspec` to include the color themer.
 1. Enter YES, NO or N/A
 
 
@@ -280,9 +337,9 @@ serialize non-view classes. Tip: write a unit test for this.
 ### commonMDCClassInit (If necessary)
 
 
-Classes that set ivar values or perform other commands from the initializer, should avoid duplicate code by writing a `common*MDCClass*init` method to call from all initializers.
+Classes that set ivar values or perform other commands from the initializer, should avoid duplicate code by writing a `common*MDCClass*Init` method to call from all initializers.
 
-1. The method should be named `common` + the name of the class prefixed with MDC + `init`.
+1. The method should be named `common` + the name of the class prefixed with MDC + `Init`.
 1. The method should be called from all initializers (initWithFrame:, initWithCoder:, etc.)
 1. Enter YES, NO or N/A
 
@@ -314,6 +371,15 @@ Classes that set ivar values or perform other commands from the initializer, sho
 #### Articles on Auto Layout:
 [Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
+
+
+### Safe Area Support (if necessary)
+
+All of our components should work as expected on iOS 11, and support new devices like the iPhone X.
+
+1. Make sure your component takes into account the Safe Area and responds to its changes.
+2. Test it both on 11.0 and 11.1, and pay special attention to the iPhone X on landscape.
+2. Enter YES, NO or N/A
 
 
 ### UIAppearance Support

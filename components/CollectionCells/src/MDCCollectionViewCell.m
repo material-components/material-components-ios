@@ -24,6 +24,7 @@
 #import "MaterialIcons+ic_radio_button_unchecked.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialRTL.h"
+#import "MaterialPalettes.h"
 
 static CGFloat kEditingControlAppearanceOffset = 16.0f;
 
@@ -33,18 +34,12 @@ static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
 // Default editing icon colors.
 // Color is 0x626262
 static inline UIColor *MDCCollectionViewCellGreyColor(void) {
-  return [UIColor colorWithRed:(CGFloat)(98 / 255.0)
-                         green:(CGFloat)(98 / 255.0)
-                          blue:(CGFloat)(98 / 255.0)
-                         alpha:1];
+  return MDCPalette.greyPalette.tint700;
 }
 
 // Color is 0xF44336
 static inline UIColor *MDCCollectionViewCellRedColor(void) {
-  return [UIColor colorWithRed:(CGFloat)(244 / 255.0)
-                         green:(CGFloat)(67 / 255.0)
-                          blue:(CGFloat)(54 / 255.0)
-                         alpha:1];
+  return MDCPalette.redPalette.tint500;
 }
 
 // File name of the bundle (without the '.bundle' extension) containing resources.

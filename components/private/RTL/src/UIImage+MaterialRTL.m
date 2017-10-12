@@ -109,7 +109,7 @@ static UIImage *MDCRTLFlippedImage(UIImage *image) {
   return flippedImage;
 }
 
-@implementation UIImage (MaterialRTL)
+@implementation UIImage (PrivateMaterialRTL)
 
 - (UIImage *)mdc_imageFlippedForRightToLeftLayoutDirection {
   // On iOS 9 and above, UIImage supports being prepared for flipping. Otherwise, do the flip

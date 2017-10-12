@@ -1,0 +1,120 @@
+/*
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+import Foundation
+import MaterialComponents
+
+class BottomAppBarTypicalUseSwiftExample: UIViewController {
+
+  let bottomBarViewHeight: CGFloat = 96
+  let appBar = MDCAppBar()
+  let bottomBarView = MDCBottomAppBarView()
+  
+  init() {
+    super.init(nibName: nil, bundle: nil)
+
+    self.title = "Bottom App Bar (Swift)"
+    self.addChildViewController(appBar.headerViewController)
+
+    let color = UIColor(white: 0.2, alpha:1)
+    appBar.headerViewController.headerView.backgroundColor = color
+    appBar.navigationBar.tintColor = .white
+    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    commonInitBottomAppBarTypicalUseSwiftExample()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    commonInitBottomAppBarTypicalUseSwiftExample()
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    appBar.addSubviewsToParent()
+  }
+
+  func commonInitBottomAppBarTypicalUseSwiftExample() {
+    let frame = CGRect(x: 0,
+                       y: self.view.bounds.height - bottomBarViewHeight,
+                       width: self.view.bounds.width,
+                       height: bottomBarViewHeight)
+    bottomBarView.frame = frame
+    bottomBarView.autoresizingMask = [ .flexibleWidth, .flexibleTopMargin ]
+    view.addSubview(bottomBarView)
+
+    // Add touch handler to the floating button.
+    bottomBarView.floatingButton.addTarget(self,
+                                           action: #selector(didTapFloatingButton(_:)),
+                                           for: .touchUpInside)
+
+    // Set the image on the floating button.
+    let addImage = UIImage(named:"Add")
+    bottomBarView.floatingButton.setImage(addImage, for: .normal)
+
+    // Set the position of the floating button.
+    bottomBarView.floatingButtonPosition = .center
+
+    // Theme the floating button.
+    let colorScheme = MDCBasicColorScheme(primaryColor: .white)
+    MDCButtonColorThemer.apply(colorScheme, to: bottomBarView.floatingButton)
+
+    // Configure the navigation buttons to be shown on the bottom app bar.
+    let barButtonLeadingItem = UIBarButtonItem()
+    let menuImage = UIImage(named:"Menu")
+    barButtonLeadingItem.image = menuImage
+
+    let barButtonTrailingItem = UIBarButtonItem()
+    let searchImage = UIImage(named:"Search")
+    barButtonTrailingItem.image = searchImage
+
+    bottomBarView.leadingBarButtonItems = [ barButtonLeadingItem ]
+    bottomBarView.trailingBarButtonItems = [ barButtonTrailingItem ]
+  }
+
+  @objc func didTapFloatingButton(_ sender : MDCFloatingButton) {
+
+    // Example of how to animate position of the floating button.
+    if (bottomBarView.floatingButtonPosition == .center) {
+      bottomBarView.setFloatingButtonPosition(.trailing, animated: true)
+    } else {
+      bottomBarView.setFloatingButtonPosition(.center, animated: true)
+    }
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.view.backgroundColor = .white
+
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
+}
+
+// MARK: Catalog by convention
+extension BottomAppBarTypicalUseSwiftExample {
+  class func catalogBreadcrumbs() -> [String] {
+    return ["Bottom App Bar", "Bottom App Bar (Swift)"]
+  }
+  
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+  
+  func catalogShouldHideNavigation() -> Bool {
+    return true
+  }
+}

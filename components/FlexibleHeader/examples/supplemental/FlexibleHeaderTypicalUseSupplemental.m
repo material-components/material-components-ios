@@ -47,7 +47,7 @@
 @implementation FlexibleHeaderTypicalUseViewController (Supplemental)
 
 - (void)setupExampleViews {
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[FlexibleHeaderTypicalUseViewController class]];
   [bundle loadNibNamed:@"FlexibleHeaderTypicalUseInstructionsView" owner:self options:nil];
 
   self.imageView.image =

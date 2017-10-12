@@ -38,7 +38,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
     let raisedButton = MDCRaisedButton()
     raisedButton.setBackgroundColor(backgroundColor, for: .normal)
-    raisedButton.setElevation(4, for: UIControlState())
+    raisedButton.setElevation(.raisedButtonResting, for: UIControlState())
     raisedButton.setTitle("Tap Me Too", for: UIControlState())
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false

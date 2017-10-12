@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "35.3.0"
+  s.version      = "36.0.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -44,6 +44,7 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
+      ss.dependency "MaterialComponents/Palettes"
       ss.dependency "MaterialComponents/private/Application"
       ss.dependency "MaterialComponents/private/RTL"
     end
@@ -174,6 +175,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/CollectionLayoutAttributes"
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MaterialComponents/Palettes"
     ss.dependency "MaterialComponents/private/Icons/ic_check"
     ss.dependency "MaterialComponents/private/Icons/ic_check_circle"
     ss.dependency "MaterialComponents/private/Icons/ic_chevron_right"
@@ -386,6 +388,7 @@ Pod::Spec.new do |s|
     ss.ios.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+    ss.dependency "MaterialComponents/ShadowElevations"
   end
 
   s.subspec "Slider" do |ss|
@@ -514,6 +517,24 @@ Pod::Spec.new do |s|
       ss.ios.deployment_target = '8.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    end
+
+    pss.subspec "ShapeLibrary" do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+
+      ss.dependency "MaterialComponents/private/Shapes"
+      ss.dependency "MaterialComponents/private/Math"
+    end
+
+    pss.subspec "Shapes" do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+
+      ss.dependency "MaterialComponents/ShadowLayer"
+      ss.dependency "MaterialComponents/private/Math"
     end
 
     pss.subspec "ThumbTrack" do |ss|
