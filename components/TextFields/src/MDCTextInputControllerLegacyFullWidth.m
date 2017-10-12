@@ -646,6 +646,17 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return [UIColor clearColor];
 }
 
+- (NSString *)placeholderText {
+  return _textInput.placeholder;
+}
+
+- (void)setPlaceholderText:(NSString *)placeholderText {
+  if ([_textInput.placeholder isEqualToString: placeholderText]) {
+    return;
+  }
+  _textInput.placeholder = [placeholderText copy];
+}
+
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {
   _previousLeadingText = [previousLeadingText copy];
 }

@@ -31,6 +31,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     controller.isFloatingEnabled = false
     controller.floatingPlaceholderNormalColor = .purple
     controller.floatingPlaceholderScale = 0.1
+    controller.placeholderText = "Placeholder"
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
     controller.activeColor = .blue
@@ -46,6 +47,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
       XCTAssertEqual(controller.isFloatingEnabled, controllerCopy.isFloatingEnabled)
       XCTAssertEqual(controller.floatingPlaceholderNormalColor, controllerCopy.floatingPlaceholderNormalColor)
       XCTAssertEqual(controller.floatingPlaceholderScale, controllerCopy.floatingPlaceholderScale)
+      XCTAssertEqual(controller.placeholderText, controllerCopy.placeholderText)
       XCTAssertEqual(controller.helperText, controllerCopy.helperText)
       XCTAssertEqual(controller.inlinePlaceholderColor, controllerCopy.inlinePlaceholderColor)
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
@@ -67,6 +69,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     controller.characterCountMax = 49
     controller.characterCountViewMode = .always
     controller.disabledColor = .yellow
+    controller.placeholderText = "Placeholder"
     controller.helperText = "Helper"
     controller.inlinePlaceholderColor = .green
     controller.activeColor = .blue
@@ -78,6 +81,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
       XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
       XCTAssertEqual(controller.disabledColor, controllerCopy.disabledColor)
+      XCTAssertEqual(controller.placeholderText, controllerCopy.placeholderText)
       XCTAssertEqual(controller.helperText, controllerCopy.helperText)
       XCTAssertEqual(controller.inlinePlaceholderColor, controllerCopy.inlinePlaceholderColor)
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
@@ -230,6 +234,40 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     XCTAssertNotEqual(.blue, textField.leadingUnderlineLabel.textColor)
     XCTAssertNotEqual(.blue, textField.trailingUnderlineLabel.textColor)
     XCTAssertNotEqual(.blue, textField.underline?.color)
+  }
+
+  func testLabelsLegacyDefault() {
+    let textField = MDCTextField()
+
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
+
+    let placeholderString = "Placeholder"
+    controller.placeholderText = placeholderString
+
+    XCTAssertEqual(controller.placeholderText, placeholderString)
+    XCTAssertEqual(textField.placeholder, controller.placeholderText)
+
+    let helperString = "Helper"
+    controller.helperText = helperString
+
+    XCTAssertEqual(controller.helperText, helperString)
+    XCTAssertEqual(textField.leadingUnderlineLabel.text, controller.helperText)
+  }
+
+  func testLabelsLegacyFullWidth() {
+    let textField = MDCTextField()
+
+    let controller = MDCTextInputControllerLegacyFullWidth(textInput: textField)
+
+    let placeholderString = "Placeholder"
+    controller.placeholderText = placeholderString
+
+    XCTAssertEqual(controller.placeholderText, placeholderString)
+    XCTAssertEqual(textField.placeholder, controller.placeholderText)
+
+    controller.helperText = "Helper"
+
+    XCTAssertEqual(controller.helperText, nil)
   }
 
   func testPresentationLegacyDefault() {
