@@ -449,14 +449,6 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 - (void)safeAreaInsetsDidChange {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
-    if (_isChangingStatusBarVisibility) {
-      // We aren't interest in safe area inset changes due to status bar visibility changes - we're
-      // only interested in hardware-related safe area changes. If we know that we're changing the
-      // status bar visibility then we ignore this safeAreaInsetsDidChange event.
-      return;
-    }
-
     CGFloat safeAreaTop = [self flexibleHeaderSafeAreaTop];
 
     // If the min or max height have been explicitly set, only adjust if
@@ -483,6 +475,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       }
     }
 
+    // The min/max values changed, so we need to re-adjust the scroll view insets.
+    [self fhv_adjustTrackingScrollViewInsets];
+
+    // And also adjust to account for the new safe area insets.
+    [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+
     // Ignore any content offset delta that occured as a result of any safe area insets change.
     _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
 
@@ -504,6 +502,22 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 #pragma mark - Private (fhv_ prefix)
+
+- (void)fhv_adjustTrackingScrollViewInsets {
+  CGPoint originalOffset = _trackingScrollView.contentOffset;
+  [self fhv_removeInsetsFromScrollView:_trackingScrollView];
+  CGPoint stashedOffset = _trackingScrollView.contentOffset;
+  [self fhv_addInsetsToScrollView:_trackingScrollView];
+
+  // Only restore the content offset if UIScrollView didn't decide to update the content offset for
+  // us. Notably, it seems to automatically adjust the content offset in the first runloop in which
+  // the scroll view's been created, but not in any further runloops.
+  if (CGPointEqualToPoint(stashedOffset, _trackingScrollView.contentOffset)) {
+    originalOffset.y = MAX(originalOffset.y, -_trackingScrollView.contentInset.top);
+    _trackingScrollView.contentOffset = originalOffset;
+  }
+
+}
 
 - (void)fhv_removeInsetsFromScrollView:(UIScrollView *)scrollView {
   if (!scrollView) {
@@ -546,8 +560,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   if (!info.hasInjectedTopContentInset) {
     UIEdgeInsets insets = scrollView.contentInset;
-    insets.top += _maxHeightIncludingSafeArea;
-    info.injectedTopContentInset = _maxHeightIncludingSafeArea;
+    insets.top += _maxHeightIncludingSafeArea - info.topSafeAreaInsetAdjustment;
+    info.injectedTopContentInset = _maxHeightIncludingSafeArea - info.topSafeAreaInsetAdjustment;
     info.hasInjectedTopContentInset = YES;
     scrollView.contentInset = insets;
   }
@@ -573,7 +587,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
       // If the injected Safe Area inset hasn't changed, no-op.
       MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
-      if (!info || info.topSafeAreaInsetAdjustment == scrollView.safeAreaInsets.top) {
+      if (!info) {
         return;
       }
 
@@ -1319,9 +1333,6 @@ static BOOL isRunningiOS10_3OrAbove() {
     return;
   }
 
-  CGPoint originalOffset = _trackingScrollView.contentOffset;
-  [self fhv_removeInsetsFromScrollView:_trackingScrollView];
-
   _maximumHeight = maximumHeight;
 
   if (_minMaxHeightIncludesSafeArea) {
@@ -1330,16 +1341,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     _maxHeightIncludingSafeArea = _maximumHeight + [self flexibleHeaderSafeAreaTop];
   }
 
-  CGPoint stashedOffset = _trackingScrollView.contentOffset;
-  [self fhv_addInsetsToScrollView:_trackingScrollView];
-
-  // Only restore the content offset if UIScrollView didn't decide to update the content offset for
-  // us. Notably, it seems to automatically adjust the content offset in the first runloop in which
-  // the scroll view's been created, but not in any further runloops.
-  if (CGPointEqualToPoint(stashedOffset, _trackingScrollView.contentOffset)) {
-    originalOffset.y = MAX(originalOffset.y, -_trackingScrollView.contentInset.top);
-    _trackingScrollView.contentOffset = originalOffset;
-  }
+  [self fhv_adjustTrackingScrollViewInsets];
 
   if (_maximumHeight < _minimumHeight) {
     [self setMinimumHeight:_maximumHeight];
