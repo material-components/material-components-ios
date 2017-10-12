@@ -152,6 +152,7 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerDefault(textInput: message)
     message.textView?.delegate = self
+    message.multilineDelegate = self
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
 
@@ -371,6 +372,12 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 extension TextFieldSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
+  }
+}
+
+extension TextFieldSwiftExample: MDCMultilineTextInputDelegate {
+  func multilineTextFieldShouldClear(_ textField: UIView!) -> Bool {
+    return true
   }
 }
 

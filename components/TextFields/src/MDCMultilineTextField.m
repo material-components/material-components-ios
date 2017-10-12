@@ -31,6 +31,8 @@ static NSString *const MDCMultilineTextFieldFundamentKey = @"MDCMultilineTextFie
 static NSString *const MDCMultilineTextFieldLayoutDelegateKey =
     @"MDCMultilineTextFieldLayoutDelegateKey";
 static NSString *const MDCMultilineTextFieldMinimumLinesKey = @"MDCMultilineTextMinimumLinesKey";
+static NSString *const MDCMultilineTextFieldMultilineDelegateKey =
+    @"MDCMultilineTextFieldMultilineDelegateKey";
 static NSString *const MDCMultilineTextFieldTextViewKey = @"MDCMultilineTextFieldTextViewKey";
 static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     @"MDCMultilineTextFieldTrailingViewModeKey";
@@ -92,6 +94,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldMinimumLinesKey]) {
       _minimumLines = [aDecoder decodeIntegerForKey:MDCMultilineTextFieldMinimumLinesKey];
     }
+    _multilineDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldMultilineDelegateKey];
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
       _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
     } else {
@@ -115,6 +118,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [aCoder encodeConditionalObject:self.layoutDelegate
                            forKey:MDCMultilineTextFieldLayoutDelegateKey];
   [aCoder encodeInteger:self.minimumLines forKey:MDCMultilineTextFieldMinimumLinesKey];
+  [aCoder encodeConditionalObject:self.multilineDelegate
+                           forKey:MDCMultilineTextFieldMultilineDelegateKey];
   [aCoder encodeObject:self.textView forKey:MDCMultilineTextFieldTextViewKey];
   [aCoder encodeInteger:self.trailingViewMode forKey:MDCMultilineTextFieldTrailingViewModeKey];
 }
@@ -131,6 +136,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
   copy.layoutDelegate = self.layoutDelegate;
   copy.minimumLines = self.minimumLines;
+  copy.multilineDelegate = self.multilineDelegate;
   copy.placeholder = self.placeholder;
   copy.text = self.text;
   if ([self.trailingView conformsToProtocol:@protocol(NSCopying)]) {
