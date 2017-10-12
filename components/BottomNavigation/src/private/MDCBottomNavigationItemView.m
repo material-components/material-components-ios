@@ -29,8 +29,6 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 
 @property(nonatomic, strong) CAShapeLayer *circleLayer;
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
-@property(nonatomic, strong) UIImage *selectedImage;
-@property(nonatomic, strong) UIImage *unselectedImage;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
 
@@ -164,16 +162,6 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   return rect.size;
 }
 
-- (UIImage *)colorizeImage:(UIImage *)image color:(UIColor *)color {
-  UIImage *newImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  UIGraphicsBeginImageContextWithOptions(image.size, NO, newImage.scale);
-  [color set];
-  [newImage drawInRect:CGRectMake(0, 0, image.size.width, newImage.size.height)];
-  newImage = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return newImage;
-}
-
 #pragma mark - Setters
 
 - (void)setSelected:(BOOL)selected {
@@ -184,7 +172,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   _selected = selected;
   if (selected) {
     self.label.textColor = self.selectedItemTintColor;
-    self.iconImageView.image = self.selectedImage;
+    self.iconImageView.tintColor = self.selectedItemTintColor;
 
     switch (self.titleHideState) {
       case MDCBottomNavigationBarTitleHideStateDefault:
@@ -199,7 +187,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
     }
   } else {
     self.label.textColor = self.unselectedItemTintColor;
-    self.iconImageView.image = self.unselectedImage;
+    self.iconImageView.tintColor = self.unselectedItemTintColor;
 
     switch (self.titleHideState) {
       case MDCBottomNavigationBarTitleHideStateDefault:
@@ -220,13 +208,13 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   _circleHighlightHidden = circleHighlightHidden;
   if (!circleHighlightHidden) {
     self.circleLayer.opacity = kMDCBottomNavigationItemViewCircleOpacity;
-    self.iconImageView.image = self.selectedImage;
+    self.iconImageView.tintColor = self.selectedItemTintColor;
   } else {
     self.circleLayer.opacity = 0;
     if (self.selected) {
-      self.iconImageView.image = self.selectedImage;
+      self.iconImageView.tintColor = self.selectedItemTintColor;
     } else {
-      self.iconImageView.image = self.unselectedImage;
+      self.iconImageView.tintColor = self.unselectedItemTintColor;
     }
   }
 }
@@ -234,13 +222,11 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
   _selectedItemTintColor = selectedItemTintColor;
   self.label.textColor = self.selectedItemTintColor;
-  self.selectedImage = [self colorizeImage:self.image color:self.selectedItemTintColor];
   self.circleLayer.fillColor = self.selectedItemTintColor.CGColor;
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
   _unselectedItemTintColor = unselectedItemTintColor;
-  self.unselectedImage = [self colorizeImage:self.image color:self.unselectedItemTintColor];
 }
 
 - (void)setBadgeColor:(UIColor *)badgeColor {
@@ -259,12 +245,9 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 }
 
 - (void)setImage:(UIImage *)image {
-  _image = image;
-
-  self.selectedImage = [self colorizeImage:image color:self.selectedItemTintColor];
-  self.unselectedImage = [self colorizeImage:image color:self.unselectedItemTintColor];
-
-  self.iconImageView.image = self.unselectedImage;
+  _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.iconImageView.image = _image;
+  self.iconImageView.tintColor = self.selectedItemTintColor;
   [self.iconImageView sizeToFit];
 }
 
