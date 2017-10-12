@@ -82,14 +82,17 @@
   return cell;
 }
 
-- (NSInteger)collectionView:(nonnull __unused UICollectionView *)collectionView numberOfItemsInSection:(__unused NSInteger)section {
+- (NSInteger)collectionView:(nonnull __unused UICollectionView *)collectionView
+     numberOfItemsInSection:(__unused NSInteger)section {
   return self.data.count;
 }
 
-#pragma mark - CollectionView Delegate
+#pragma mark - CollectionViewFlowLayout
 
-- (CGSize)collectionView:(__unused UICollectionView *)collectionView layout:(__unused UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  CGSize textSize = [self cellSizeForString:self.data[indexPath.item]];
+- (CGSize)collectionView:(__unused UICollectionView *)collectionView
+                  layout:(__unused UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+  CGSize textSize = [self cellSizeForString:self.data[(NSUInteger)indexPath.item]];
 
   return CGSizeMake(self.layoutCell.layoutMargins.left + self.layoutCell.layoutMargins.right * 2 + textSize.width, self.textInput.font.lineHeight);
 }
@@ -97,14 +100,23 @@
 #pragma mark - Working with Paths
 - (NSArray <UIBezierPath*>*)exclusionPaths {
   NSMutableArray *array = [NSMutableArray array];
-  for (NSInteger i = 0; i < [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:0]; ++i) {
-    UICollectionViewLayoutAttributes *attributes = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathWithIndex:i]];
-    CGRect frame = attributes.frame;
-    frame.origin.y = 5;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:frame];
-    [array addObject:path];
+  UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
+
+  CGRect allChips;
+  CGFloat cummulativeWidth = flowLayout.minimumInteritemSpacing;
+  CGSize size;
+  for (NSInteger i = 0; i < [self.collectionView.dataSource collectionView:self.collectionView
+                                                    numberOfItemsInSection:0]; ++i) {
+    size = [(id <UICollectionViewDelegateFlowLayout>)self.collectionView.delegate collectionView:self.collectionView
+                                                                                          layout:flowLayout
+                                                                          sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+    cummulativeWidth += size.width + flowLayout.minimumInteritemSpacing;
   }
 
+  allChips.size.width = cummulativeWidth;
+  allChips.size.height = size.height;
+  UIBezierPath *path = [UIBezierPath bezierPathWithRect:allChips];
+  [array addObject:path];
   return [NSArray arrayWithArray:array];
 }
 
