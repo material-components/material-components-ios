@@ -70,9 +70,9 @@ IB_DESIGNABLE
 
  If you provide this method, you can control whether tapping on a tab bar item actually
  switches to that viewController. If not provided, MDCTabBarViewController will always switch.
-
- The tab bar controller calls this method regardless of whether the selected view controller
- changed.
+ 
+ @note The tab bar controller will call this method even when the tapped tab bar
+ item is the currently-selected tab bar item.
 
  You can also use this method as a willSelectViewController.
  */
@@ -84,8 +84,8 @@ IB_DESIGNABLE
  MDCTabBarViewController will call your delegate once it has responded to the user's tap
  by changing the selected view controller.
 
- The tab bar controller calls this method regardless of whether the selected view controller
- changed.
+ @note The tab bar controller will call this method even when the tapped tab bar
+ item is the currently-selected tab bar item.
  */
 - (void)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
  didSelectViewController:(nonnull UIViewController *)viewController;
