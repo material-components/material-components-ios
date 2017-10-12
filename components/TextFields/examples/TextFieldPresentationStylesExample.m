@@ -49,8 +49,6 @@
   textFieldDefaultCharMax.translatesAutoresizingMaskIntoConstraints = NO;
 
   int defaultMax = 25;
-  textFieldDefaultCharMax.placeholder =
-      [NSString stringWithFormat:@"Enter up to %d characters", defaultMax];
   textFieldDefaultCharMax.delegate = self;
   textFieldDefaultCharMax.clearButtonMode = UITextFieldViewModeAlways;
 
@@ -60,12 +58,13 @@
   self.textFieldControllerDefaultCharMax.characterCountMax = defaultMax;
   [self.textFieldControllerDefaultCharMax mdc_setAdjustsFontForContentSizeCategory:YES];
   self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
+  self.textFieldControllerDefaultCharMax.placeholderText =
+      [NSString stringWithFormat:@"Enter up to %d characters", defaultMax];
 
   MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
   [self.scrollView addSubview:textFieldFloating];
   textFieldFloating.translatesAutoresizingMaskIntoConstraints = NO;
 
-  textFieldFloating.placeholder = @"Floating Placeholder";
   textFieldFloating.delegate = self;
   textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
   NSOperatingSystemVersion iOS10Version = {10, 0, 0};
@@ -79,6 +78,7 @@
 
   self.textFieldControllerFloating =
       [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:textFieldFloating];
+  self.textFieldControllerFloating.placeholderText = @"Floating Placeholder";
 
   [self.textFieldControllerFloating mdc_setAdjustsFontForContentSizeCategory:YES];
 
@@ -122,13 +122,13 @@
   [self.scrollView addSubview:textFieldFullWidth];
   textFieldFullWidth.translatesAutoresizingMaskIntoConstraints = NO;
 
-  textFieldFullWidth.placeholder = @"Full Width";
   textFieldFullWidth.delegate = self;
   textFieldFullWidth.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldFullWidth.backgroundColor = [UIColor whiteColor];
 
   self.textFieldControllerFullWidth =
       [[MDCTextInputControllerLegacyFullWidth alloc] initWithTextInput:textFieldFullWidth];
+  self.textFieldControllerFullWidth.placeholderText = @"Full Width";
 
   [self.textFieldControllerFullWidth mdc_setAdjustsFontForContentSizeCategory:YES];
 
