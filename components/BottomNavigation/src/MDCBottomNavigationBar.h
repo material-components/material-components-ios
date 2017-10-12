@@ -82,7 +82,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLandscapeItemMode) {
 /**
  Display font used for item titles.
  */
-@property(nonatomic, copy, nullable) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
  Color of selected item. Applies color to items' icons and text.
