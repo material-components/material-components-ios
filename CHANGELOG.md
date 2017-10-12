@@ -6,7 +6,50 @@
 
 * Added `placeholderText` property to control the placeholder text.
 
+## Component changes
 
+### ActivityIndicator
+
+#### Changes
+
+* [Resolve issues caused by starting and stopping activitiy indicator quickly (#2053)](https://github.com/material-components/material-components-ios/commit/34f8b4e0af259585df1ea0d307c88c2c6dc15267) (John Detloff)
+
+### Buttons
+
+#### Changes
+
+* [Add tests for MDCButton+Subclassing behaviors (#2136)](https://github.com/material-components/material-components-ios/commit/75e343d0fb830f9db80e7ec75d57e0f1af0b38ff) (Sam Morrison)
+* [Remove test broken on travis (#2147)](https://github.com/material-components/material-components-ios/commit/4ff00d3b2a7e0df990be033d0c466d39af837aab) (Sam Morrison)
+
+### Dialogs
+
+#### Changes
+
+* [Migrate to  MDFInternationalization (#2124)](https://github.com/material-components/material-components-ios/commit/c3379250de3f8d7abb86810c37b7fbb363995a85) (ianegordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix bug where minimumHeight of 0 would result in odd behavior. (#2139)](https://github.com/material-components/material-components-ios/commit/b7cab3bdf0776eb6e98a192e9610d280803582c2) (featherless)
+* [Fix where we adjust the frame if the safe area changes. (#2146)](https://github.com/material-components/material-components-ios/commit/94e625f7817bd68590dbcc3613972eab8fcc1585) (Andrés)
+* [Forward viewWillTransitionToSize events to the flexible header (#2150)](https://github.com/material-components/material-components-ios/commit/863b85a7d4ebdec672036e8411797ef74c7d2e02) (featherless)
+* [Introduce minMaxHeightIncludesSafeArea. (#2123)](https://github.com/material-components/material-components-ios/commit/4a98cdaa32bd443850590610c95d3576cea32847) (Andrés)
+* [Revert "Introduce minMaxHeightIncludesSafeArea. (#2123)" (#2161)](https://github.com/material-components/material-components-ios/commit/dcadf2d19c6986e6303a584c878e295377070a3e) (Andrés)
+
+### TextFields
+
+#### Changes
+
+* [Adding .placeholderText to controllers (#2149)](https://github.com/material-components/material-components-ios/commit/5dae93c6c42ffb3594572a2cace4e63850c97189) (Will Larche)
+* [Fixes clear button not updating the character counter. (#2143)](https://github.com/material-components/material-components-ios/commit/585571e18ad3eb47741f34ded94d2150de0b77df) (Will Larche)
+* [Styling doc gif addition. (#2144)](https://github.com/material-components/material-components-ios/commit/2604acad222b1193599631cf321c6f6c9a844fab) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [[TextFields] Adding .placeholderText to controllers (#2149)](https://github.com/material-components/material-components-ios/commit/5dae93c6c42ffb3594572a2cace4e63850c97189) (Will Larche)
 
 # 36.0.0
 
