@@ -1,4 +1,12 @@
-# release-candidate TODO: Replace me with version number. 
+# 36.1.0
+
+## API Changes
+
+### Text fields
+
+* Added `placeholderText` property to control the placeholder text.
+
+
 
 # 36.0.0
 
