@@ -46,7 +46,6 @@
   _bottomNavBar.unselectedItemTintColor = [MDCPalette greyPalette].tint600;
   _bottomNavBar.titleHideState = MDCBottomNavigationBarTitleHideStateDefault;
   _bottomNavBar.landscapeItemMode = MDCBottomNavigationBarLandscapeItemModeCluster;
-  _bottomNavBar.maxLandscapeContainerWidth = 375.f;
   [self.view addSubview:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =

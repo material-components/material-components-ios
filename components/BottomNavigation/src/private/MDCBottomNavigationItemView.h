@@ -20,13 +20,14 @@
 
 @interface MDCBottomNavigationItemView : UIView
 
+@property(nonatomic, assign) BOOL circleHighlightHidden;
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
-@property(nonatomic, copy) UIFont *itemTitleFont;
+@property(nonatomic, strong) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIImage *image;
@@ -36,7 +37,5 @@
 @property(nonatomic, strong) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
-
-- (void)setCircleHighlightHidden:(BOOL)circleHighlightHidden;
 
 @end

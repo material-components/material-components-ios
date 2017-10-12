@@ -75,31 +75,25 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLandscapeItemMode) {
 @property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
 
 /**
- The maximum width of the navigation bar item container in landscape mode.
- Default is 320.
- */
-@property(nonatomic, assign) CGFloat maxLandscapeContainerWidth;
-
-/**
- Display font used for item titles.
- */
-@property(nonatomic, copy, nullable) UIFont *itemTitleFont;
-
-/**
  Selected item in the bottom navigation bar.
  */
 @property(nonatomic, weak, nullable) UITabBarItem *selectedItem;
 
 /**
+ Display font used for item titles.
+ */
+@property(nonatomic, copy, nullable) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+
+/**
  Color of selected item. Applies color to items' icons and text.
  */
-@property (nonatomic, readwrite, copy, nullable) UIColor *selectedItemTintColor
-    NS_AVAILABLE_IOS(10_0) UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong, readwrite, nullable) UIColor *selectedItemTintColor
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  */
-@property (nonatomic, readwrite, copy, nullable) UIColor *unselectedItemTintColor
-    NS_AVAILABLE_IOS(10_0) UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong, readwrite, nullable) UIColor *unselectedItemTintColor
+    UI_APPEARANCE_SELECTOR;
 
 @end

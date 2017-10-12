@@ -217,6 +217,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 }
 
 - (void)setCircleHighlightHidden:(BOOL)circleHighlightHidden {
+  _circleHighlightHidden = circleHighlightHidden;
   if (!circleHighlightHidden) {
     self.circleLayer.opacity = kMDCBottomNavigationItemViewCircleOpacity;
     self.iconImageView.image = self.selectedImage;
@@ -270,13 +271,12 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 - (void)setTitle:(NSString *)title {
   _title = [title copy];
   self.label.text = _title;
-  [self.label sizeToFit];
 }
 
 - (void)setItemTitleFont:(UIFont *)itemTitleFont {
   _itemTitleFont = itemTitleFont;
   self.label.font = itemTitleFont;
-  [self.label sizeToFit];
+  [self setNeedsLayout];
 }
 
 @end

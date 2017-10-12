@@ -25,6 +25,6 @@
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
-@property(nonatomic, strong) UILabel *badgeValueLabel;
+@property(nonatomic, strong, readonly) UILabel *badgeValueLabel;
 
 @end

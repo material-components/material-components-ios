@@ -32,7 +32,9 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, assign) BOOL titleBelowItem;
+@property(nonatomic, assign) CGFloat maxLandscapeClusterContainerWidth;
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
+@property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
 @property(nonatomic, strong) UIView *containerView;
 
 @end
@@ -64,7 +66,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   _landscapeItemMode = MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles;
   _itemsDistributed = YES;
   _titleBelowItem = YES;
-  _maxLandscapeContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
+  _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
   _containerView = [[UIView alloc] initWithFrame:CGRectZero];
   _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
                                      UIViewAutoresizingFlexibleRightMargin);
@@ -77,69 +79,68 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
   CGSize size = self.bounds.size;
   if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
-    [self layoutLandscapeModeWithSize:size width:self.maxLandscapeContainerWidth];
+    [self layoutLandscapeModeWithBottomNavSize:size
+                                containerWidth:self.maxLandscapeClusterContainerWidth];
   } else {
-    [self sizeContainerViewItemsDistributed:YES withSize:size width:size.width];
-    [self showTitleBelowItem:YES];
+    [self sizeContainerViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
+    self.titleBelowItem = YES;
   }
-  [self layoutItemViewsWithLayoutDirection:self.mdc_effectiveUserInterfaceLayoutDirection];
+  [self layoutItemViews];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  UIEdgeInsets insets = [self getUIEdgeInsets];
+  self.maxLandscapeClusterContainerWidth = MIN(size.width, size.height);
+  UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
-  return CGSizeMake(size.width, heightWithInset);
+  CGSize insetSize = CGSizeMake(size.width, heightWithInset);
+  return insetSize;
 }
 
-- (void)layoutLandscapeModeWithSize:(CGSize)size width:(CGFloat)width {
+- (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
+                              containerWidth:(CGFloat)containerWidth {
   switch (self.landscapeItemMode) {
     case MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles:
-      [self sizeContainerViewItemsDistributed:YES withSize:size width:width];
-      [self showTitleBelowItem:YES];
+      [self sizeContainerViewItemsDistributed:YES
+                            withBottomNavSize:bottomNavSize
+                               containerWidth:containerWidth];
+      self.titleBelowItem = YES;
       break;
     case MDCBottomNavigationBarLandscapeItemModeDistributeAdjacentTitles:
-      [self sizeContainerViewItemsDistributed:YES withSize:size width:width];
-      [self showTitleBelowItem:NO];
+      [self sizeContainerViewItemsDistributed:YES
+                            withBottomNavSize:bottomNavSize
+                               containerWidth:containerWidth];
+      self.titleBelowItem = NO;
       break;
     case MDCBottomNavigationBarLandscapeItemModeCluster:
-      [self sizeContainerViewItemsDistributed:NO withSize:size width:width];
-      [self showTitleBelowItem:YES];
+      [self sizeContainerViewItemsDistributed:NO
+                            withBottomNavSize:bottomNavSize
+                               containerWidth:containerWidth];
+      self.titleBelowItem = YES;
       break;
   }
-}
-
-- (UIEdgeInsets)getUIEdgeInsets {
-  UIEdgeInsets insets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-
-    // Accommodate insets for iPhone X.
-    insets = self.safeAreaInsets;
-  }
-#endif
-  return insets;
 }
 
 - (void)sizeContainerViewItemsDistributed:(BOOL)itemsDistributed
-                                 withSize:(CGSize)size
-                                    width:(CGFloat)width {
+                        withBottomNavSize:(CGSize)bottomNavSize
+                           containerWidth:(CGFloat)containerWidth {
   if (itemsDistributed) {
-    UIEdgeInsets insets = [self getUIEdgeInsets];
+    UIEdgeInsets insets = self.mdc_safeAreaInsets;
     self.containerView.frame =
         CGRectMake(insets.left,
                    0,
-                   size.width - insets.left - insets.right,
+                   bottomNavSize.width - insets.left - insets.right,
                    kMDCBottomNavigationBarHeight);
   } else {
-    CGFloat clusteredOffsetX = (size.width - width) / 2;
+    CGFloat clusteredOffsetX = (bottomNavSize.width - containerWidth) / 2;
     self.containerView.frame = CGRectMake(clusteredOffsetX,
                                           0,
-                                          width,
+                                          containerWidth,
                                           kMDCBottomNavigationBarHeight);
   }
 }
 
-- (void)layoutItemViewsWithLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
+- (void)layoutItemViews {
+  UIUserInterfaceLayoutDirection layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
   NSInteger numItems = self.items.count;
   if (numItems == 0) {
     return;
@@ -155,12 +156,6 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
       itemView.frame =
           CGRectMake(navBarWidth - (i + 1) * itemWidth, 0,  itemWidth, navBarHeight);
     }
-  }
-}
-
-- (void)showTitleBelowItem:(BOOL)titleBelowIcon {
-  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    itemView.titleBelowIcon = titleBelowIcon;
   }
 }
 
@@ -237,6 +232,18 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
   }
 }
 
+- (UIEdgeInsets)mdc_safeAreaInsets {
+  UIEdgeInsets insets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+
+    // Accommodate insets for iPhone X.
+    insets = self.safeAreaInsets;
+  }
+#endif
+  return insets;
+}
+
 #pragma mark - Touch handlers
 
 - (void)didTouchDownButton:(UIButton *)button {
@@ -246,13 +253,17 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 - (void)didTouchUpInsideButton:(UIButton *)button {
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    if (itemView.button != button) {
+    if (itemView.button == button) {
+
+      // Newly selected item
+      [itemView setSelected:YES animated:YES];
+      [itemView setCircleHighlightHidden:YES];
+    } else {
+
+      // De-select all other items
       [itemView setSelected:NO animated:YES];
     }
   }
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView setCircleHighlightHidden:YES];
-  [itemView setSelected:YES animated:YES];
 }
 
 - (void)didTouchUpOutsideButton:(UIButton *)button {
@@ -281,6 +292,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
     itemView.selectedItemTintColor = self.selectedItemTintColor;
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
     itemView.titleHideState = self.titleHideState;
+    itemView.titleBelowIcon = self.titleBelowItem;
 
     if (item.image) {
       itemView.image = item.image;
@@ -305,7 +317,6 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
     [self.containerView addSubview:itemView];
   }
   [self addObserversToTabBarItems];
-  [self showTitleBelowItem:self.titleBelowItem];
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
@@ -320,6 +331,13 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
     } else {
       self.itemViews[i].selected = NO;
     }
+  }
+}
+
+- (void)setTitleBelowItem:(BOOL)titleBelowItem {
+  _titleBelowItem = titleBelowItem;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.titleBelowIcon = titleBelowItem;
   }
 }
 
