@@ -221,13 +221,13 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
     }
     MDCBottomNavigationItemView *itemView = _itemViews[selectedItemNum];
     if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeColorString]) {
-      [itemView setBadgeColor:change[kMDCBottomNavigationBarNewString]];
+      itemView.badgeColor = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeValueString]) {
-      [itemView setBadgeValue:change[kMDCBottomNavigationBarNewString]];
+      itemView.badgeValue = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarImageString]) {
-      [itemView setImage:change[kMDCBottomNavigationBarNewString]];
+      itemView.image = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
-      [itemView setTitle:change[kMDCBottomNavigationBarNewString]];
+      itemView.title = change[kMDCBottomNavigationBarNewString];
     }
   }
 }
@@ -248,7 +248,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 - (void)didTouchDownButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView setCircleHighlightHidden:NO];
+  itemView.circleHighlightHidden = NO;
 }
 
 - (void)didTouchUpInsideButton:(UIButton *)button {
@@ -257,10 +257,11 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
       // Newly selected item
       [itemView setSelected:YES animated:YES];
-      [itemView setCircleHighlightHidden:YES];
+      itemView.circleHighlightHidden = YES;
+      
     } else {
 
-      // De-select all other items
+      // Deselect all other items
       [itemView setSelected:NO animated:YES];
     }
   }
@@ -268,7 +269,7 @@ static NSString *const kMDCBottomNavigationBarNewString = @"new";
 
 - (void)didTouchUpOutsideButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView setCircleHighlightHidden:YES];
+  itemView.circleHighlightHidden = YES;
 }
 
 #pragma mark - Setters
