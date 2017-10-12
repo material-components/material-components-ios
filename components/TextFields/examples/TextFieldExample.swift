@@ -24,7 +24,6 @@ final class TextFieldSwiftExample: UIViewController {
 
   let name: MDCTextField = {
     let name = MDCTextField()
-    name.placeholder = "Name"
     name.translatesAutoresizingMaskIntoConstraints = false
     name.autocapitalizationType = .words
     return name
@@ -32,7 +31,6 @@ final class TextFieldSwiftExample: UIViewController {
 
   let address: MDCTextField = {
     let address = MDCTextField()
-    address.placeholder = "Address"
     address.translatesAutoresizingMaskIntoConstraints = false
     address.autocapitalizationType = .words
     return address
@@ -40,7 +38,6 @@ final class TextFieldSwiftExample: UIViewController {
 
   let city: MDCTextField = {
     let city = MDCTextField()
-    city.placeholder = "City"
     city.translatesAutoresizingMaskIntoConstraints = false
     city.autocapitalizationType = .words
     return city
@@ -49,7 +46,6 @@ final class TextFieldSwiftExample: UIViewController {
 
   let state: MDCTextField = {
     let state = MDCTextField()
-    state.placeholder = "State"
     state.translatesAutoresizingMaskIntoConstraints = false
     state.autocapitalizationType = .allCharacters
     return state
@@ -58,7 +54,6 @@ final class TextFieldSwiftExample: UIViewController {
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
-    zip.placeholder = "Zip code"
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
@@ -66,14 +61,12 @@ final class TextFieldSwiftExample: UIViewController {
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
-    phone.placeholder = "Phone number"
     phone.translatesAutoresizingMaskIntoConstraints = false
     return phone
   }()
 
   let message: MDCMultilineTextField = {
     let message = MDCMultilineTextField()
-    message.placeholder = "Message"
     message.translatesAutoresizingMaskIntoConstraints = false
     return message
   }()
@@ -118,16 +111,19 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerDefault(textInput: name)
     name.delegate = self
+    nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
     let addressController = MDCTextInputControllerDefault(textInput: address)
     address.delegate = self
+    addressController.placeholderText = "Address"
     allTextFieldControllers.append(addressController)
 
     scrollView.addSubview(city)
     city.delegate = self
+    cityController.placeholderText = "City"
     allTextFieldControllers.append(cityController)
 
     // In iOS 9+, you could accomplish this with a UILayoutGuide.
@@ -138,21 +134,25 @@ final class TextFieldSwiftExample: UIViewController {
 
     stateZip.addSubview(state)
     state.delegate = self
+    stateController.placeholderText = "State"
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
     zip.delegate = self
+    zipController.placeholderText = "Zip Code"
     zipController.helperText = "XXXXX"
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
     let phoneController = MDCTextInputControllerDefault(textInput: phone)
     phone.delegate = self
+    phoneController.placeholderText = "Phone Number"
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerDefault(textInput: message)
     message.textView?.delegate = self
+    messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
 
     var tag = 0

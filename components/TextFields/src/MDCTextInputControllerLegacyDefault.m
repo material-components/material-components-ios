@@ -159,6 +159,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 
+@property(nonatomic, strong) NSLayoutConstraint *placeholderAnimationConstraintLeading;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderAnimationConstraintTop;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
 
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
@@ -463,7 +465,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)updatePlaceholder {
   self.textInput.placeholderLabel.font = self.inlinePlaceholderFont;
 
-
   if (self.isPlaceholderUp) {
     UIColor *nonErrorColor = self.textInput.isEditing ? self.activeColor :
         self.floatingPlaceholderNormalColor;
@@ -514,60 +515,70 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGAffineTransform floatingPlaceholderScaleTransform =
       CGAffineTransformMakeScale(scaleFactor, scaleFactor);
 
-  void (^animationBlock)(void);
-
   // The animation is accomplished pretty simply. A constraint for vertical and a constraint for
   // horizontal offset, both with a required priority (1000), are acivated on the placeholderLabel.
   // A simple scale transform is also applied. Then it's animated through the UIView animation API
   // (layoutIfNeeded). If in reverse (isToUp == NO), these things are just removed / deactivated.
 
-  if (isToUp) {
-    CGPoint destination = [self placeholderFloatingPosition];
-    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                                           attribute:NSLayoutAttributeTop
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:self.textInput
-                                                           attribute:NSLayoutAttributeTop
-                                                          multiplier:1
-                                                            constant:destination.y];
-
-    NSLayoutConstraint *leading =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeLeading
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeLeading
-                                    multiplier:1
-                                      constant:destination.x];
-    self.placeholderAnimationConstraints = @[ top, leading ];
-
-    animationBlock = ^{
-      self.textInput.placeholderLabel.transform = floatingPlaceholderScaleTransform;
-
-      [self updatePlaceholder];
-      [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
-    };
-  } else {
-    animationBlock = ^{
-      self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
-
-      [self updatePlaceholder];
-      [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
-    };
-  }
+  CGAffineTransform destinationTransform = isToUp ? floatingPlaceholderScaleTransform : CGAffineTransformIdentity;
 
   // We do this beforehand to flush the layout engine.
   [self.textInput layoutIfNeeded];
   [UIView animateWithDuration:[CATransaction animationDuration]
       animations:^{
-        animationBlock();
+        self.textInput.placeholderLabel.transform = destinationTransform;
+        [self updatePlaceholder];
+        [self updatePlaceholderAnimationConstraints:isToUp];
+
         [self.textInput layoutIfNeeded];
       }
       completion:^(__unused BOOL finished) {
         if (!isToUp) {
-          self.placeholderAnimationConstraints = nil;
+          [self cleanupPlaceholderAnimationConstraints];
         }
       }];
+}
+
+- (void)updatePlaceholderAnimationConstraints:(BOOL)isToUp {
+  if (isToUp) {
+    CGPoint destination = [self placeholderFloatingPosition];
+
+    if (!self.placeholderAnimationConstraintLeading) {
+      self.placeholderAnimationConstraintLeading =
+      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                   attribute:NSLayoutAttributeLeading
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.textInput
+                                   attribute:NSLayoutAttributeLeading
+                                  multiplier:1
+                                    constant:destination.x];
+    }
+    self.placeholderAnimationConstraintLeading.constant = destination.x;
+
+    if (!self.placeholderAnimationConstraintTop) {
+      self.placeholderAnimationConstraintTop =
+      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.textInput
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:destination.y];
+    }
+    self.placeholderAnimationConstraintTop.constant = destination.y;
+
+    self.placeholderAnimationConstraints = @[ self.placeholderAnimationConstraintLeading,
+                                              self.placeholderAnimationConstraintTop ];
+    [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
+  } else {
+    [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
+  }
+}
+
+- (void)cleanupPlaceholderAnimationConstraints {
+  self.placeholderAnimationConstraints = nil;
+  self.placeholderAnimationConstraintLeading = nil;
+  self.placeholderAnimationConstraintTop = nil;
 }
 
 - (CGPoint)placeholderFloatingPosition {
@@ -989,6 +1000,20 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _normalColorDefault = normalColorDefault
                             ? normalColorDefault
                             : MDCTextInputControllerLegacyDefaultNormalUnderlineColorDefault();
+}
+
+- (NSString *)placeholderText {
+  return _textInput.placeholder;
+}
+
+- (void)setPlaceholderText:(NSString *)placeholderText {
+  if ([_textInput.placeholder isEqualToString: placeholderText]) {
+    return;
+  }
+  _textInput.placeholder = [placeholderText copy];
+  if (self.isFloatingEnabled && _textInput.text.length > 0) {
+    [self updatePlaceholderAnimationConstraints:YES];
+  }
 }
 
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {

@@ -27,6 +27,8 @@ This class is intended for singleline text fields only. For a visually compatibl
 
 ## MDCTextInputControllerOutlinedTextArea (Preferred)
 
+![MDCTextInputControllerOutlinedTextArea](docs/assets/MDCTextInputControllerOutlinedTextArea.gif)
+
 - Stroked border
 - Border-crossing, floating placeholder
 - No fill

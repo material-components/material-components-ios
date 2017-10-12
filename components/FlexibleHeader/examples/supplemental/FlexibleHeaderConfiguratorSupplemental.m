@@ -72,7 +72,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.minimumHeaderHeight = self.fhvc.headerView.minimumHeight;
+  self.minimumHeaderHeight = 0;
 
   self.fhvc.headerView.trackingScrollView = self.tableView;
 
@@ -134,7 +134,9 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
   createSection(@"Header height", @[
     sliderItem(@"Minimum", FlexibleHeaderConfiguratorFieldMinimumHeight),
-    sliderItem(@"Maximum", FlexibleHeaderConfiguratorFieldMaximumHeight)
+    sliderItem(@"Maximum", FlexibleHeaderConfiguratorFieldMaximumHeight),
+    switchItem(@"Min / max height includes Safe Area",
+               FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea)
   ]);
 
   NSMutableArray *fillerItems = [NSMutableArray array];
