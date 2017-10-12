@@ -338,7 +338,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: b8c1c51c79d1ff882a7bcbaba6db7a95c2e12d1c
+  MaterialComponents: 8d1645a5666fd2f12aaac6278910d7f3b4ffd75c
   MDFInternationalization: 264e30a0966b36d4f7fe9b7617c316f266837bfb
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   MotionAnimator: 5a1893b58fcf7a4664d81d69c9a09a0078c67e06
