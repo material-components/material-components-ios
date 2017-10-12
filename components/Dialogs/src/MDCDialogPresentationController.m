@@ -198,23 +198,20 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   }
 
   // For pre iOS 11 devices, we are assuming a safeAreaInset of UIEdgeInsetsZero
-  UIEdgeInsets presentingSafeAreaInsets = UIEdgeInsetsZero;
+  UIEdgeInsets containerSafeAreaInsets = UIEdgeInsetsZero;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    // Do not use presentingViewController.additionalSafeAreaInsets since we want to center the
-    // presented view in the 'entire' presenting controller view.
-    // KM : ??? Consider using the application's keyView / UIWindow?
-    presentingSafeAreaInsets = self.presentingViewController.view.safeAreaInsets;
+    containerSafeAreaInsets = self.containerView.safeAreaInsets;
   }
 #endif
 
   // Take the larger of the Safe Area insets and the Material specified insets.
   CGFloat standardWidthInset = MDCDialogEdgeInsets.left + MDCDialogEdgeInsets.right;
-  CGFloat safeAreaWidthInset = presentingSafeAreaInsets.left + presentingSafeAreaInsets.right;
+  CGFloat safeAreaWidthInset = containerSafeAreaInsets.left + containerSafeAreaInsets.right;
   CGFloat widthInset = MAX(standardWidthInset, safeAreaWidthInset);
 
   CGFloat standardHeightInset = MDCDialogEdgeInsets.top + MDCDialogEdgeInsets.bottom;
-  CGFloat safeAreaHeightInset = presentingSafeAreaInsets.top + presentingSafeAreaInsets.bottom;
+  CGFloat safeAreaHeightInset = containerSafeAreaInsets.top + containerSafeAreaInsets.bottom;
   CGFloat heightInset = MAX(standardHeightInset, safeAreaHeightInset);
 
   CGSize maxChildSize;
