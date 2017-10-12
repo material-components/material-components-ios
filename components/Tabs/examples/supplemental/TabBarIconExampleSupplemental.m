@@ -80,7 +80,7 @@
 
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
-   
+
    UIFont *font;
    if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
       font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];

@@ -246,13 +246,13 @@
                                                       NSLog(@"%@", @"OK pressed");
                                                     }];
   [materialAlertController addAction:action3];
-  
+
   MDCAlertAction *action4 = [MDCAlertAction actionWithTitle:@"OK - 4"
                                                     handler:^(MDCAlertAction *action) {
                                                       NSLog(@"%@", @"OK pressed");
                                                     }];
   [materialAlertController addAction:action4];
-  
+
   MDCAlertAction *action5 = [MDCAlertAction actionWithTitle:@"OK - 5"
                                                     handler:^(MDCAlertAction *action) {
                                                       NSLog(@"%@", @"OK pressed");
