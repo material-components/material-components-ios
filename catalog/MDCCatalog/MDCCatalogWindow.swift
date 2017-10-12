@@ -28,6 +28,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
 
   fileprivate let fadeDuration: TimeInterval = 0.2
   fileprivate var views = [Int: UIView]()
+  fileprivate var edgeViews = [UIView]()
 
   override func sendEvent(_ event: UIEvent) {
     if let touches = event.allTouches {
@@ -46,6 +47,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
         case .ended:
           if touch.tapCount == 3 {
             enabled = !enabled
+            updateEdgeInsetViews()
           }
           fallthrough
         case .cancelled:
@@ -56,6 +58,73 @@ class MDCCatalogWindow: MDCOverlayWindow {
     }
 
     super.sendEvent(event)
+  }
+
+  fileprivate func updateEdgeInsetViews() {
+    if enabled { showEdgeInsetViews() }
+    else { removeEdgeInsetViews() }
+  }
+
+  fileprivate func showEdgeInsetViews() {
+    removeEdgeInsetViews()
+
+    for _ in 0...4 {
+      let view = UIView()
+      view.backgroundColor = UIColor.red.withAlphaComponent(0.1)
+      view.isUserInteractionEnabled = false
+      edgeViews.append(view)
+      self.addSubview(view)
+    }
+
+    layoutEdgeInsetViews()
+  }
+
+  fileprivate func layoutEdgeInsetViews() {
+    var safeAreaInsets = UIEdgeInsets.zero
+    if #available(iOS 11, *) {
+      safeAreaInsets = self.safeAreaInsets
+    }
+
+    let width = self.frame.width
+    let height = self.frame.height
+    let insetHeight = height - safeAreaInsets.top - safeAreaInsets.bottom
+
+    // top
+    edgeViews[0].frame = CGRect.init(x: 0, y: 0, width: width, height: safeAreaInsets.top)
+
+    // left
+    edgeViews[1].frame = CGRect.init(x: 0,
+                                     y: safeAreaInsets.top,
+                                     width: safeAreaInsets.left,
+                                     height: insetHeight)
+
+    // bottom
+    edgeViews[2].frame = CGRect.init(x: 0,
+                                     y: height - safeAreaInsets.bottom,
+                                     width: width,
+                                     height: safeAreaInsets.bottom)
+
+    // right
+    edgeViews[3].frame = CGRect.init(x: width - safeAreaInsets.right,
+                                     y: safeAreaInsets.top,
+                                     width: safeAreaInsets.right,
+                                     height: insetHeight)
+  }
+
+  override open func safeAreaInsetsDidChange() {
+    if #available(iOS 11, *) {
+      super.safeAreaInsetsDidChange()
+    }
+    if enabled {
+      layoutEdgeInsetViews()
+    }
+  }
+
+  fileprivate func removeEdgeInsetViews() {
+    for view in edgeViews {
+      view.removeFromSuperview()
+    }
+    edgeViews.removeAll()
   }
 
   fileprivate func beginDisplayingTouch(_ touch: UITouch) {
