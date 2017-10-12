@@ -30,6 +30,7 @@ static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
+static NSString *const kMDCBottomNavigationBarOfString = @"of";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
 static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
@@ -301,14 +302,14 @@ static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
     itemView.titleHideState = self.titleHideState;
     itemView.titleBelowIcon = self.titleBelowItem;
-    
+
     NSString *key =
         kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
     NSString *ofString =
         NSLocalizedStringFromTableInBundle(key,
                                            kMaterialBottomNavigationStringsTableName,
                                            [[self class] bundle],
-                                           @"of");
+                                           kMDCBottomNavigationBarOfString);
     NSString *itemNumString = [NSNumber numberWithInteger:(i + 1)].stringValue;
     NSString *totalItemsNumString = [NSNumber numberWithInteger:items.count].stringValue;
     NSString *ofStringSpaces =
