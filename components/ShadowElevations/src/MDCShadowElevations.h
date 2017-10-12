@@ -45,7 +45,7 @@ FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardPickedUp
 FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardResting NS_SWIFT_NAME(cardResting);
 
 /** The shadow elevation of dialogs. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationDialog NS_SWIFT_NAME(cardDialog);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationDialog NS_SWIFT_NAME(dialog);
 
 /** The shadow elevation of the floating action button in its pressed state. */
 FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationFABPressed NS_SWIFT_NAME(fabPressed);

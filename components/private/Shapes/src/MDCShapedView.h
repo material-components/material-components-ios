@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowElevations.h"
+
 #import "MDCShapeGenerating.h"
 
 /**
@@ -36,7 +38,7 @@
 
  Negative values act as if zero were specified.
  */
-@property(nonatomic, assign) CGFloat elevation;
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
  The shape generator used to generate a new CGPath whenever the view is resized.

@@ -1,3 +1,155 @@
+# 36.0.0
+
+## API Changes
+
+### Buttons
+
+* Converted elevation methods to use `MDCShadowElevation` type insetad of raw CGFloats.
+
+### Palettes
+
+* Palettes require Xcode 8+'s toolchain to compile.
+
+### Shadow Elevations
+
+* Introduced the `MDCShadowElevation` typedef for shadow elevation values instead of raw CGFloats.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Mutliple components] Update components that use colors to use MDCPalette. (#2129)](https://github.com/material-components/material-components-ios/commit/a462a2ac4f10dc5e820b9927b0947655a51aff99) (Cody Weaver)
+
+### AppBar
+
+#### Changes
+
+* [Example corrections. (#2108)](https://github.com/material-components/material-components-ios/commit/03fd5a02ce533bc9ab8fff06531d6c4bbbb39330) (Will Larche)
+* [Fix app bar's top constraint that is buggy on iOS 11.0 (#2103)](https://github.com/material-components/material-components-ios/commit/2aa88ad4a10a4ab6e500d99d63fdd9ba051c2910) (Andrés)
+* [[Catalog] Fixes improper use of Bundle and assets (#2118)](https://github.com/material-components/material-components-ios/commit/96fb533554df78d96a112524a5af43e6ecea6975) (Will Larche)
+
+### BottomAppBar
+
+#### Changes
+
+* [Add readme and Swift example (#2040)](https://github.com/material-components/material-components-ios/commit/49e4ae74c6a0d3be2ed1a25fd83391a5442d1214) (Junius Gunaratne)
+
+### BottomSheet
+
+#### Changes
+
+* [[Bottom Sheet] Remove script-breaking whitespace from README.md preamble.](https://github.com/material-components/material-components-ios/commit/736094fc1a4377828a432dddf0a6dfcac2f79771) (Adrian Secord)
+* [[Catalog] Fixes improper use of Bundle and assets (#2118)](https://github.com/material-components/material-components-ios/commit/96fb533554df78d96a112524a5af43e6ecea6975) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [Change MDCButton to use MDCShadowElevation type instead of CGFloat. Fixes #2105.](https://github.com/material-components/material-components-ios/commit/f49aaa823cfd4efeaee09a970765eb859eb75a43) (Adrian Secord)
+* [Restore alpha when re-enabled (#2095)](https://github.com/material-components/material-components-ios/commit/7d80d4677a4585094e0e202284aef4a73f05af35) (Robert Moore)
+
+### CollectionCells
+
+#### Changes
+
+* [[Mutliple components] Update components that use colors to use MDCPalette. (#2129)](https://github.com/material-components/material-components-ios/commit/a462a2ac4f10dc5e820b9927b0947655a51aff99) (Cody Weaver)
+
+### Collections
+
+#### Changes
+
+* [Modernize Swift in styling readme. (#2133)](https://github.com/material-components/material-components-ios/commit/f9cf78cd0fba03ddd8ecd72ec658eae414ffd2c7) (Martin Petrov)
+* [Update collections to support iPhone X (#1988)](https://github.com/material-components/material-components-ios/commit/cd39384b48ac3907254ee8785774b47d783b471e) (Gauthier Ambard)
+* [[Mutliple components] Update components that use colors to use MDCPalette. (#2129)](https://github.com/material-components/material-components-ios/commit/a462a2ac4f10dc5e820b9927b0947655a51aff99) (Cody Weaver)
+
+### Dialogs
+
+#### Changes
+
+* [[Catalog] Fixes improper use of Bundle and assets (#2118)](https://github.com/material-components/material-components-ios/commit/96fb533554df78d96a112524a5af43e6ecea6975) (Will Larche)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Make sure we update the layout when the safe area changes (#2068)](https://github.com/material-components/material-components-ios/commit/4b2998a670792b5eaa20a105f6efaf4f9be5f81a) (Andrés)
+* [[Catalog] Fixes improper use of Bundle and assets (#2118)](https://github.com/material-components/material-components-ios/commit/96fb533554df78d96a112524a5af43e6ecea6975) (Will Larche)
+* [[Mutliple components] Update components that use colors to use MDCPalette. (#2129)](https://github.com/material-components/material-components-ios/commit/a462a2ac4f10dc5e820b9927b0947655a51aff99) (Cody Weaver)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Catalog] Fixes improper use of Bundle and assets (#2118)](https://github.com/material-components/material-components-ios/commit/96fb533554df78d96a112524a5af43e6ecea6975) (Will Larche)
+* [[Mutliple components] Update components that use colors to use MDCPalette. (#2129)](https://github.com/material-components/material-components-ios/commit/a462a2ac4f10dc5e820b9927b0947655a51aff99) (Cody Weaver)
+
+### NavigationBar
+
+#### Changes
+
+* [[Mutliple components] Update components that use colors to use MDCPalette. (#2129)](https://github.com/material-components/material-components-ios/commit/a462a2ac4f10dc5e820b9927b0947655a51aff99) (Cody Weaver)
+
+### PageControl
+
+#### Changes
+
+* [Fixed crasher when resetting -numberOfPages to 0 (#2132)](https://github.com/material-components/material-components-ios/commit/f7bcc9a7ac40ae6c636251b66463884daaad1045) (Julien Poumailloux)
+
+### ShadowElevations
+
+#### Changes
+
+* [Improve Swift support for shadow elevations (#2116)](https://github.com/material-components/material-components-ios/commit/a9b08ce452d8d46d0f39bc0ef524c634cec1ab48) (Junius Gunaratne)
+* [Partial revert of commit bc582f4 to restore the definition of MDCShadowElevationSwitch .](https://github.com/material-components/material-components-ios/commit/960ec4a8231f4488aa99226a2f6c8aeed1204223) (Adrian Secord)
+* [[MDCShadowElevations] Remove switch elevation, add bottom navigation bar elevation (#2093)](https://github.com/material-components/material-components-ios/commit/bc582f4b143e32dcdc0d7f7afe406536c67414da) (Junius Gunaratne)
+
+### ShadowLayer
+
+#### Changes
+
+* [[ShadowElevations] Improve Swift support for shadow elevations (#2116)](https://github.com/material-components/material-components-ios/commit/a9b08ce452d8d46d0f39bc0ef524c634cec1ab48) (Junius Gunaratne)
+
+### Snackbar
+
+#### Changes
+
+* [Move dismissal accessibility hint to .strings file (#2107)](https://github.com/material-components/material-components-ios/commit/fd166a1ec53aedd50c9c543fca0bae3c6588de9e) (Sam Morrison)
+
+### Tabs
+
+#### Changes
+
+* [Invalidate layout on window change (#2122)](https://github.com/material-components/material-components-ios/commit/5135ecc27a9effaad989f2b568b35b59847be154) (Brian Moore)
+* [MDCTabBarViewController should delegate status bar to children (#2126)](https://github.com/material-components/material-components-ios/commit/a0531c62f9905a7deb9612ad72e4bfc02a1a7e02) (Icycle)
+* [Remove tint color from themer (#2104)](https://github.com/material-components/material-components-ios/commit/881b70a960cfb8605be355a880990ebc36fcc134) (Junius Gunaratne)
+* [[Catalog] Fixes improper use of Bundle and assets (#2118)](https://github.com/material-components/material-components-ios/commit/96fb533554df78d96a112524a5af43e6ecea6975) (Will Larche)
+* [[Mutliple components] Update components that use colors to use MDCPalette. (#2129)](https://github.com/material-components/material-components-ios/commit/a462a2ac4f10dc5e820b9927b0947655a51aff99) (Cody Weaver)
+
+### TextFields
+
+#### Changes
+
+* [Examples bug and formatting (#2137)](https://github.com/material-components/material-components-ios/commit/b438856be2ce9ae796026ad53805def079baefb4) (Will Larche)
+* [Fix broken MDCMultilineTextField build for iOS 10. (#2100)](https://github.com/material-components/material-components-ios/commit/467fdf31a5e3fb06145f2447ae8c68031edf9eb0) (Martin Petrov)
+* [Fixes a broken link. (#2114)](https://github.com/material-components/material-components-ios/commit/51da715c26cefa25f9557abec35f839651d2d870) (Scott Hyndman)
+* [[Catalog] Fixes improper use of Bundle and assets (#2118)](https://github.com/material-components/material-components-ios/commit/96fb533554df78d96a112524a5af43e6ecea6975) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [Add documentation for material themes (#2094)](https://github.com/material-components/material-components-ios/commit/d4b428b43c3506879a644c782297bb6d3192e503) (Junius Gunaratne)
+
+### Typography
+
+#### Changes
+
+* [Add example using custom font family (#2130)](https://github.com/material-components/material-components-ios/commit/7de124c318b7f8dd2e2ad35496ceed012e26760d) (Cody Weaver)
+* [Match MDCTypography docs with nullability annotations (#2117)](https://github.com/material-components/material-components-ios/commit/87cb35b13ea6b1d6fcea6279e4dc9af50477eca4) (Sam Morrison)
+
+
 # 35.3.0
 
 ## API Changes
