@@ -134,9 +134,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
   createSection(@"Header height", @[
     sliderItem(@"Minimum", FlexibleHeaderConfiguratorFieldMinimumHeight),
-    sliderItem(@"Maximum", FlexibleHeaderConfiguratorFieldMaximumHeight),
-    switchItem(@"Min / max height includes Safe Area",
-               FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea)
+    sliderItem(@"Maximum", FlexibleHeaderConfiguratorFieldMaximumHeight)
   ]);
 
   NSMutableArray *fillerItems = [NSMutableArray array];
