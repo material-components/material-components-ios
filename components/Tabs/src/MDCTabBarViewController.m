@@ -50,7 +50,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 }
 
 - (void)commonMDCTabBarShadowViewInitialization {
-  MDCShadowLayer *shadowLayer =  (MDCShadowLayer *)self.layer;
+  MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.layer;
   [shadowLayer setElevation:MDCShadowElevationMenu];
 }
 
