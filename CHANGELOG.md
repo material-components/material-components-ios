@@ -6,6 +6,10 @@
 
 * Converted elevation methods to use `MDCShadowElevation` type insetad of raw CGFloats.
 
+### Palettes
+
+* Palettes require Xcode 8+'s toolchain to compile.
+
 ### Shadow Elevations
 
 * Introduced the `MDCShadowElevation` typedef for shadow elevation values instead of raw CGFloats.
