@@ -176,6 +176,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   if (selected) {
     self.label.textColor = self.selectedItemTintColor;
     self.iconImageView.tintColor = self.selectedItemTintColor;
+    self.button.accessibilityTraits |= UIAccessibilityTraitSelected;
 
     switch (self.titleHideState) {
       case MDCBottomNavigationBarTitleHideStateDefault:
@@ -191,6 +192,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
   } else {
     self.label.textColor = self.unselectedItemTintColor;
     self.iconImageView.tintColor = self.unselectedItemTintColor;
+    self.button.accessibilityTraits &= ~UIAccessibilityTraitSelected;
 
     switch (self.titleHideState) {
       case MDCBottomNavigationBarTitleHideStateDefault:
