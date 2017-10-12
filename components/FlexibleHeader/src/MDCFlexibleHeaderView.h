@@ -293,6 +293,8 @@ IB_DESIGNABLE
 /**
  The minimum height that this header can shrink to.
 
+ See minMaxHeightIncludesSafeArea to learn how this number is used when the Safe Area changes.
+
  If you change the value of this property and the maximumHeight of the receiver is below the new
  minimumHeight, maximumHeight will be adjusted to match the new minimum value.
  */
@@ -301,10 +303,31 @@ IB_DESIGNABLE
 /**
  The maximum height that this header can expand to.
 
+ See minMaxHeightIncludesSafeArea to learn how this number is used when the Safe Area changes.
+
  If you change the value of this property and the minimumHeight of the receiver is above the new
  maximumHeight, minimumHeight will be adjusted to match the new maximumHeight.
  */
 @property(nonatomic) CGFloat maximumHeight;
+
+/**
+ When this is enabled, the flexible header will assume that minimumHeight and maximumHeight both
+ include the Safe Area top inset. For example, a header whose maximum content height should be 200
+ might set 220 (200 + 20) as the maximumHeight. Notice that if this is enabled and you're setting
+ minimumHeight and or maximumHeight, the flexible header won't automatically adjust its size to
+ account for changes to the Safe Area, as the values provided already include a hardcoded inset.
+
+ When this is disabled, the flexible header will assume that the provided minimumHeight and
+ maximumHeight do not include the Safe Area top inset. For example, a header whose maximum content
+ height should be 200 would set 200 as the maximumHeight, and the flexible header will take care
+ of adjusting itself to account for Safe Area changes internally.
+
+ Clients are recommended to set this to NO, and set the min and max heights to values that don't
+ include the status bar or Safe Area insets.
+
+ Default is YES.
+ */
+@property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
 
 #pragma mark Behaviors
 
