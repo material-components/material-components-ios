@@ -467,7 +467,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       CGRect bounds = self.bounds;
       bounds.size.height = _minimumHeight;
       self.bounds = bounds;
-      [self fhv_commitAccumulatorToFrame];
+      CGPoint position = self.center;
+      position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
+      position.y += self.bounds.size.height / 2;
+      self.center = position;
+      [self.delegate flexibleHeaderViewFrameDidChange:self];
     } else {
       [self fhv_updateLayout];
     }
