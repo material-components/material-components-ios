@@ -458,7 +458,19 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     if (_maximumHeight < _minimumHeight) {
       _maximumHeight = _minimumHeight;
     }
-    [self fhv_updateLayout];
+
+    // Ignore any content offset delta that occured as a result of any safe area insets change.
+    _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+
+    // The changes might require us to re-calculate the frame, or update the entire layout.
+    if (!_trackingScrollView) {
+      CGRect bounds = self.bounds;
+      bounds.size.height = _minimumHeight;
+      self.bounds = bounds;
+      [self fhv_commitAccumulatorToFrame];
+    } else {
+      [self fhv_updateLayout];
+    }
   }
 #endif
 }
@@ -824,14 +836,6 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
 - (void)fhv_updateLayout {
   if (!_trackingScrollView) {
-    // Even if we're not tracking a scroll view, our minimumHeight might have changed due to new
-    // safe area insets.
-    if (_minimumHeight > 0 && CGRectGetHeight(self.bounds) != _minimumHeight) {
-      CGRect bounds = self.bounds;
-      bounds.size.height = _minimumHeight;
-      self.bounds = bounds;
-      [self fhv_commitAccumulatorToFrame];
-    }
     return;
   }
 
@@ -1215,6 +1219,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
            NSStringFromClass([self class]), NSStringFromSelector(_cmd),
            NSStringFromSelector(@selector(interfaceOrientationWillChange)));
+  [self fhv_updateLayout];
 }
 
 - (void)interfaceOrientationDidChange {

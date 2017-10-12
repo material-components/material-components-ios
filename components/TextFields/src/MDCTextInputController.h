@@ -220,6 +220,9 @@
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *normalColorDefault;
 
+/** The text displayed in the placeholder label.*/
+@property(nonatomic, nullable, copy) NSString *placeholderText;
+
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
 
