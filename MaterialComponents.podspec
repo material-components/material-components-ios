@@ -255,7 +255,7 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       ss.dependency 'MDFTextAccessibility'
       ss.dependency "MaterialComponents/private/Application"
-      ss.dependency "MaterialComponents/private/UIMetrics"
+      sss.dependency "MaterialComponents/private/UIMetrics"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
