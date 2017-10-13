@@ -143,7 +143,7 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
 
     let switchSize = toggleSwitch.sizeThatFits(contentView.bounds.size)
     toggleSwitch.frame = CGRect(x: width - switchSize.width - 10,
-                                y: (height - switchSize.height)/2.0,
+                                y: (height - switchSize.height) / 2.0,
                                 width: switchSize.width,
                                 height: switchSize.height)
 
