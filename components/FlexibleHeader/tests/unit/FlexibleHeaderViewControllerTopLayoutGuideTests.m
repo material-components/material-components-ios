@@ -180,8 +180,7 @@
   [self.vc.scrollView scrollRectToVisible:initialFrame animated:NO];
 
   // Then
-  XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset,
-                 MIN(self.vc.fhvc.headerView.minimumHeight, randomHeight));
+  XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, randomHeight);
 }
 
 @end
