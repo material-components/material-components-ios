@@ -66,7 +66,7 @@ class MDCCatalogDebugAlert: UICollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.collectionView?.backgroundColor = UIColor.white
+    self.collectionView?.backgroundColor = .white
     self.collectionView?.register(MDCCatalogDebugToggleCell.self,
                                   forCellWithReuseIdentifier: "toggle")
     self.collectionView?.register(MDCCatalogDebugDismissCell.self,
