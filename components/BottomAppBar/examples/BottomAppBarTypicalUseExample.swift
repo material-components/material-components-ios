@@ -22,7 +22,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
   let bottomBarViewHeight: CGFloat = 96
   let appBar = MDCAppBar()
   let bottomBarView = MDCBottomAppBarView()
-  
+
   init() {
     super.init(nibName: nil, bundle: nil)
 
@@ -109,11 +109,11 @@ extension BottomAppBarTypicalUseSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["Bottom App Bar", "Bottom App Bar (Swift)"]
   }
-  
+
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
-  
+
   func catalogShouldHideNavigation() -> Bool {
     return true
   }

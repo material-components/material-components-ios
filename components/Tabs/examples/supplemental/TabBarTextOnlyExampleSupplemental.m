@@ -58,7 +58,7 @@ static NSString * const kReusableIdentifierItem = @"Cell";
       kStatusBarHeight + kTabBarHeight;
   self.appBar.headerViewController.headerView.maximumHeight =
       kStatusBarHeight + kAppBarMinHeight + kTabBarHeight;
-  
+
    UIFont *font;
    if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
       font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
@@ -70,13 +70,13 @@ static NSString * const kReusableIdentifierItem = @"Cell";
          font = [UIFont fontWithDescriptor:descriptor size:0.0];
       }
    }
-   
+
   self.appBar.navigationBar.titleTextAttributes = @{
       NSForegroundColorAttributeName: [UIColor whiteColor],
       NSFontAttributeName: font };
   [self.appBar addSubviewsToParent];
-  
-  
+
+
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 }

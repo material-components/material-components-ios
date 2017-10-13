@@ -128,7 +128,7 @@ UIImage *addImage = [UIImage imageNamed:@"Add"];
 // Theme the floating button (optional).
 MDCBasicColorScheme *colorScheme =
     [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor whiteColor]];
-[MDCButtonColorThemer applyColorScheme:colorScheme 
+[MDCButtonColorThemer applyColorScheme:colorScheme
                               toButton:self.bottomBarView.floatingButton];
 
 // Configure the navigation buttons to be shown on the bottom app bar.

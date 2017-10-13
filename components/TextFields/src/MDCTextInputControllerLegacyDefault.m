@@ -1139,7 +1139,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 /**
  textInsets: is the source of truth for vertical layout. It's used to figure out the proper
  height and also where to place the placeholder / text field.
- 
+
  NOTE: It's applied before the textRect is flipped for RTL. So all calculations are done here à la
  LTR.
 

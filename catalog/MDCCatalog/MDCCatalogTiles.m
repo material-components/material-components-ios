@@ -4103,31 +4103,31 @@ static NSString* const TextFieldFontName = @"RobotoMono-Medium";
 void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* fillColor = colorScheme.primaryLightColor;
   UIColor* textForeground = colorScheme.primaryColor;
-  
-  
+
+
   CGRect textFieldGroup = CGRectMake(CGRectGetMinX(frame) + 24, CGRectGetMinY(frame) + 60, floor((frame.size.width - 24) * 0.85366 + 0.5), floor((frame.size.height - 60) * 0.38947 + 0.5));
-  
+
   UIBezierPath* underlineRectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.00000 + 0.5), CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.89189 + 0.5), floor(textFieldGroup.size.width * 1.00000 + 0.5) - floor(textFieldGroup.size.width * 0.00000 + 0.5), floor(textFieldGroup.size.height * 1.00000 + 0.5) - floor(textFieldGroup.size.height * 0.89189 + 0.5))];
   [fillColor setFill];
   [underlineRectanglePath fill];
-  
-  
+
+
   CGRect textLabelRect = CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.00000 + 0.5), CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.00000 + 0.5), floor(textFieldGroup.size.width * 0.27433 + 0.09) - floor(textFieldGroup.size.width * 0.00000 + 0.5) + 0.41, floor(textFieldGroup.size.height * 0.70270 + 0.5) - floor(textFieldGroup.size.height * 0.00000 + 0.5));
   NSMutableParagraphStyle* textLabelStyle = [[NSMutableParagraphStyle alloc] init];
   textLabelStyle.alignment = NSTextAlignmentLeft;
   NSDictionary* textLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: TextFieldFontName size: 16], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: textLabelStyle};
-  
+
   [@"Text" drawInRect: textLabelRect withAttributes: textLabelFontAttributes];
-  
-  
+
+
   CGRect fieldLabelRect = CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.32579 - 0.11) + 0.61, CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.00000 + 0.5), floor(textFieldGroup.size.width * 0.66870 - 0.12) - floor(textFieldGroup.size.width * 0.32579 - 0.11) + 0.01, floor(textFieldGroup.size.height * 0.70270 + 0.5) - floor(textFieldGroup.size.height * 0.00000 + 0.5));
   NSMutableParagraphStyle* fieldLabelStyle = [[NSMutableParagraphStyle alloc] init];
   fieldLabelStyle.alignment = NSTextAlignmentLeft;
   NSDictionary* fieldLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: TextFieldFontName size: 16], NSForegroundColorAttributeName: textForeground, NSParagraphStyleAttributeName: fieldLabelStyle};
-  
+
   [@"field" drawInRect: fieldLabelRect withAttributes: fieldLabelFontAttributes];
-  
-  
+
+
   UIBezierPath* cursorRectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.66429 + 0.5), CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.08109 + 0.5), floor(textFieldGroup.size.width * 0.67857 + 0.5) - floor(textFieldGroup.size.width * 0.66429 + 0.5), floor(textFieldGroup.size.height * 0.67568 + 0.5) - floor(textFieldGroup.size.height * 0.08109 + 0.5))];
   [fillColor setFill];
   [cursorRectanglePath fill];
@@ -4136,7 +4136,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
 
 void MDCCatalogDrawTypographyTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* fillColor = colorScheme.primaryColor;
-  
+
   UIBezierPath* bezierPath = [UIBezierPath bezierPath];
   [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame) + 0.48184 * CGRectGetWidth(frame),
                                       CGRectGetMinY(frame) + 0.26476 * CGRectGetHeight(frame))];
@@ -4159,7 +4159,7 @@ void MDCCatalogDrawTypographyTile(CGRect frame, NSObject<MDCColorScheme> *colorS
   [bezierPath closePath];
   [fillColor setFill];
   [bezierPath fill];
-  
+
   UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
   [bezier2Path moveToPoint:CGPointMake(CGRectGetMinX(frame) + 0.54987 * CGRectGetWidth(frame),
                                        CGRectGetMinY(frame) + 0.24850 * CGRectGetHeight(frame))];
