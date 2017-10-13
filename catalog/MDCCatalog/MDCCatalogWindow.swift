@@ -202,5 +202,6 @@ class MDCTouchView: UIView {
     self.layer.cornerRadius = touchCircleSize / 2
     self.layer.borderColor = touchCircleBorderColor.cgColor
     self.layer.borderWidth = touchCircleBorderWidth
+    self.isUserInteractionEnabled = false
   }
 }
