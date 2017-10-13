@@ -17,6 +17,7 @@ limitations under the License.
 import UIKit
 
 import MaterialComponents.MaterialOverlayWindow
+import MaterialComponents.MaterialDialogs
 
 /**
  A custom UIWindow that displays the user's touches for recording video or demos.
@@ -24,18 +25,31 @@ import MaterialComponents.MaterialOverlayWindow
  Triple tapping anywhere will toggle the visible touches.
  */
 class MDCCatalogWindow: MDCOverlayWindow {
-  var enabled = false
+  var debugUIEnabled = true
+  var showTouches = false
 
   fileprivate let fadeDuration: TimeInterval = 0.2
-  fileprivate var views = [Int: UIView]()
+  fileprivate var touchViews = [Int: UIView]()
   fileprivate var edgeViews = [UIView]()
+
+  var showSafeAreaEdgeInsets:Bool {
+    set {
+      removeEdgeInsetViews()
+      if newValue {
+        showEdgeInsetViews()
+      }
+    }
+    get {
+      return edgeViews.count == 4
+    }
+  }
 
   override func sendEvent(_ event: UIEvent) {
     if let touches = event.allTouches {
       for touch in touches {
         switch touch.phase {
         case .began:
-          if enabled {
+          if showTouches {
             beginDisplayingTouch(touch)
           }
           continue
@@ -45,9 +59,8 @@ class MDCCatalogWindow: MDCOverlayWindow {
         case .stationary:
           continue
         case .ended:
-          if touch.tapCount == 3 {
-            enabled = !enabled
-            updateEdgeInsetViews()
+          if touch.tapCount == 3 && debugUIEnabled {
+            showDebugSettings()
           }
           fallthrough
         case .cancelled:
@@ -60,9 +73,30 @@ class MDCCatalogWindow: MDCOverlayWindow {
     super.sendEvent(event)
   }
 
-  fileprivate func updateEdgeInsetViews() {
-    if enabled { showEdgeInsetViews() }
-    else { removeEdgeInsetViews() }
+  fileprivate func showDebugSettings() {
+    let touches = MDCCatalogDebugSetting(title: "Show touches")
+    touches.getter = { self.showTouches }
+    touches.setter = { newValue in self.showTouches = newValue }
+
+    let safeAreaInsets = MDCCatalogDebugSetting(title: "Show safeAreaInsets")
+    safeAreaInsets.getter = { self.showSafeAreaEdgeInsets }
+    safeAreaInsets.setter = { newValue in self.showSafeAreaEdgeInsets = newValue }
+
+    let dontShow = MDCCatalogDebugSetting(title: "Don't show this again")
+    dontShow.getter = { !self.debugUIEnabled }
+    dontShow.setter = { newValue in self.debugUIEnabled = !newValue }
+
+    let debugUI = MDCCatalogDebugAlert(settings: [touches, safeAreaInsets, dontShow])
+    self.rootViewController?.present(debugUI, animated: true, completion: nil)
+  }
+
+  override open func safeAreaInsetsDidChange() {
+    if #available(iOS 11, *) {
+      super.safeAreaInsetsDidChange()
+    }
+    if showTouches {
+      layoutEdgeInsetViews()
+    }
   }
 
   fileprivate func showEdgeInsetViews() {
@@ -70,13 +104,20 @@ class MDCCatalogWindow: MDCOverlayWindow {
 
     for _ in 0...4 {
       let view = UIView()
-      view.backgroundColor = UIColor.red.withAlphaComponent(0.1)
+      view.backgroundColor = UIColor.red.withAlphaComponent(0.15)
       view.isUserInteractionEnabled = false
       edgeViews.append(view)
       self.addSubview(view)
     }
 
     layoutEdgeInsetViews()
+  }
+
+  fileprivate func removeEdgeInsetViews() {
+    for view in edgeViews {
+      view.removeFromSuperview()
+    }
+    edgeViews.removeAll()
   }
 
   fileprivate func layoutEdgeInsetViews() {
@@ -88,6 +129,10 @@ class MDCCatalogWindow: MDCOverlayWindow {
     let width = self.frame.width
     let height = self.frame.height
     let insetHeight = height - safeAreaInsets.top - safeAreaInsets.bottom
+
+    if edgeViews.count < 4 {
+      return
+    }
 
     // top
     edgeViews[0].frame = CGRect.init(x: 0, y: 0, width: width, height: safeAreaInsets.top)
@@ -111,44 +156,24 @@ class MDCCatalogWindow: MDCOverlayWindow {
                                      height: insetHeight)
   }
 
-  override open func safeAreaInsetsDidChange() {
-    if #available(iOS 11, *) {
-      super.safeAreaInsetsDidChange()
-    }
-    if enabled {
-      layoutEdgeInsetViews()
-    }
-  }
-
-  fileprivate func removeEdgeInsetViews() {
-    for view in edgeViews {
-      view.removeFromSuperview()
-    }
-    edgeViews.removeAll()
-  }
-
   fileprivate func beginDisplayingTouch(_ touch: UITouch) {
     let view = MDCTouchView()
     view.center = touch.location(in: self)
-    views[touch.hash] = view
+    touchViews[touch.hash] = view
     self.addSubview(view)
   }
 
   fileprivate func updateTouch(_ touch: UITouch) {
-    views[touch.hash]?.center = touch.location(in: self)
+    touchViews[touch.hash]?.center = touch.location(in: self)
   }
 
   fileprivate func endDisplayingTouch(_ touch: UITouch) {
-    let view = views[touch.hash]
-    views[touch.hash] = nil
+    let view = touchViews[touch.hash]
+    touchViews[touch.hash] = nil
 
     UIView.animate(withDuration: fadeDuration,
-                               animations: {
-                                 view?.alpha = 0
-                               },
-                               completion: { _ in
-                                view?.removeFromSuperview()
-                               })
+                   animations: { view?.alpha = 0 },
+                   completion: { _ in view?.removeFromSuperview() })
   }
 }
 
