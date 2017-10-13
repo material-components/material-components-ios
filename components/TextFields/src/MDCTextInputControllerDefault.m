@@ -550,11 +550,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   // We do this beforehand to flush the layout engine.
   [self.textInput layoutIfNeeded];
+  [self updatePlaceholder];
+  [self updatePlaceholderAnimationConstraints:isToUp];
   [UIView animateWithDuration:[CATransaction animationDuration]
       animations:^{
         self.textInput.placeholderLabel.transform = destinationTransform;
-        [self updatePlaceholder];
-        [self updatePlaceholderAnimationConstraints:isToUp];
 
         [self.textInput layoutIfNeeded];
       }
@@ -615,16 +615,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   placeholderY -= self.textInput.placeholderLabel.font.lineHeight *
                   (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
 
-  CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text
-      boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.textInput.placeholderLabel.font.lineHeight)
-                   options:0
-                attributes:@{
-                  NSFontAttributeName : self.textInput.font
-                }
-                   context:nil]));
   CGFloat placeholderX =
-      -1 * estimatedWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
-
+      -1 * CGRectGetWidth(self.textInput.placeholderLabel.bounds) * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+  NSLog(@"%@", NSStringFromCGRect(self.textInput.placeholderLabel.bounds));
   placeholderX += self.textInput.textInsets.left;
 
   return CGPointMake(placeholderX, placeholderY);
