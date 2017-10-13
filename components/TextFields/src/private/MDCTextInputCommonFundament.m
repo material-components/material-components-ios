@@ -16,6 +16,7 @@
 
 #import "MaterialTextFields.h"
 
+#import "MDCMultilineTextInputDelegate.h"
 #import "MDCPaddedLabel.h"
 #import "MDCTextInputArt.h"
 #import "MDCTextInputBorderView.h"
@@ -613,6 +614,22 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)clearButtonDidTouch {
+  if ([self.textInput isKindOfClass:[MDCTextField class]]) {
+    MDCTextField *textField = (MDCTextField *)self.textInput;
+    if ([textField.delegate respondsToSelector:@selector(textFieldShouldClear:)] &&
+        ![textField.delegate textFieldShouldClear:textField]) {
+      return;
+    }
+  }
+
+  if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
+    MDCMultilineTextField *textField = (MDCMultilineTextField *)self.textInput;
+    if ([textField.multilineDelegate respondsToSelector:@selector(multilineTextFieldShouldClear:)] && 
+        ![textField.multilineDelegate multilineTextFieldShouldClear:textField]) {
+      return;
+    }
+  }
+
   self.textInput.text = nil;
 }
 

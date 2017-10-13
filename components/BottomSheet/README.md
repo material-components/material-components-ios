@@ -8,7 +8,7 @@ path: /catalog/bottom-sheet/
 -->
 
 
-# Bottom Sheet 
+# Bottom Sheet
 
 <div class="article__asset article__asset--screenshot">
    <img src="docs/assets/bottom_sheet.png" alt="Bottom Sheet" width="375">
@@ -47,7 +47,7 @@ Then, run the following command:
 pod install
 ```
 
-- - - 
+- - -
 
 ## Usage
 

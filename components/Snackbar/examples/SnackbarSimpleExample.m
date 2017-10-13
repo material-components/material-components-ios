@@ -83,7 +83,7 @@
   [text appendAttributedString:[[NSAttributedString alloc]
                                 initWithString:@" go where no one has gone before."]];
   message.attributedText = text;
-  
+
   [MDCSnackbarManager showMessage:message];
 }
 

@@ -18,6 +18,7 @@ import CatalogByConvention
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
+import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialTypography
 
@@ -142,8 +143,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
       let shadowLayer = layer as? MDCShadowLayer
-      let elevation = ShadowElevation.appBar.rawValue
-      shadowLayer!.elevation = ShadowElevation(rawValue: intensity * elevation)
+      shadowLayer!.elevation = ShadowElevation(intensity * ShadowElevation.appBar.rawValue)
     }
 
     self.view.addSubview(self.headerViewController.view)

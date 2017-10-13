@@ -86,7 +86,7 @@ static NSString * const kCellIdentifier = @"Cell";
   MDCCollectionViewTextCell *cell =
   [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
                                             forIndexPath:indexPath];
-  
+
   cell.textLabel.text = self.choices[indexPath.row];
   if (indexPath.row > 2) {
     UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -98,7 +98,7 @@ static NSString * const kCellIdentifier = @"Cell";
   } else {
     cell.accessoryView = nil;
   }
-  
+
   return cell;
 }
 

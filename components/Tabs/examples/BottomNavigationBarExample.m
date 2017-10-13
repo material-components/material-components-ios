@@ -68,7 +68,7 @@
   CGRect barFrame = CGRectZero;
   barFrame.size = [_bottomNavigationBar sizeThatFits:self.view.bounds.size];
 
-  // On the iPhone X, we need to offset 
+  // On the iPhone X, we need to offset
   if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
     NSMethodSignature *safeAreaSignature =
         [[UIView class] instanceMethodSignatureForSelector:@selector(safeAreaInsets)];

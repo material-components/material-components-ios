@@ -15,21 +15,21 @@ import UIKit
 import MaterialComponents.MaterialActivityIndicator
 
 class ActivityIndicatorSwiftController: UIViewController {
-   
+
    struct MDCPalette {
       static let blue: UIColor = UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0)
       static let red: UIColor = UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0)
       static let green: UIColor = UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0)
       static let yellow: UIColor = UIColor(red: 1.0, green: 0.922, blue: 0.231, alpha: 1.0)
    }
-   
+
    override func viewDidLoad() {
       super.viewDidLoad()
-      
+
       view.backgroundColor = .white
       let width: CGFloat = view.bounds.width / 2
       let height: CGFloat = view.bounds.height / 2
-      
+
       //Initialize single color progress indicator
       let frame1: CGRect = CGRect(x: width - 16, y: height - 116, width: 32, height: 32)
       let activityIndicator1 = MDCActivityIndicator(frame: frame1)
@@ -41,7 +41,7 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator1.indicatorMode = .determinate
       activityIndicator1.sizeToFit()
       activityIndicator1.startAnimating()
-      
+
       // Initialize indeterminate indicator
       let frame2: CGRect = CGRect(x: width - 16, y: height - 16, width: 32, height: 32)
       let activityIndicator2 = MDCActivityIndicator(frame: frame2)
@@ -50,7 +50,7 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator2.indicatorMode = .indeterminate
       activityIndicator2.sizeToFit()
       activityIndicator2.startAnimating()
-      
+
       // Initialize multiple color indicator
       let frame3: CGRect = CGRect(x: width - 16, y: height + 84, width: 32, height: 32)
       let activityIndicator3 = MDCActivityIndicator(frame: frame3)
@@ -61,7 +61,7 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator3.indicatorMode = .indeterminate
       activityIndicator3.sizeToFit()
       activityIndicator3.startAnimating()
-      
+
       // Initialize with different radius and stroke with
       let frame4: CGRect = CGRect(x: width - 24, y: height + 176, width: 48, height: 48)
       let activityIndicator4 = MDCActivityIndicator(frame: frame4)
@@ -81,12 +81,12 @@ extension ActivityIndicatorSwiftController : MDCActivityIndicatorDelegate {
    func activityIndicatorAnimationDidFinish(_ activityIndicator: MDCActivityIndicator) {
       return
    }
-   
+
    // MARK: Catalog by convention
    class func catalogBreadcrumbs() -> [String] {
       return ["Activity Indicator", "Activity Indicator (Swift)"]
    }
-   
+
    class func catalogIsPrimaryDemo() -> Bool {
       return false
    }

@@ -126,7 +126,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  
+
   [self.navigationController setNavigationBarHidden:YES animated:animated];
   self.button.center = CGPointMake(CGRectGetMidX(self.fhvc.headerView.frame),
                                    CGRectGetMidY(self.fhvc.headerView.frame) + 50.f);

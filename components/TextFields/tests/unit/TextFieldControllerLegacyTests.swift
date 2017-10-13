@@ -137,7 +137,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
 
     controller.characterCountMax = 50
 
-    // By setting the folowing text with is 51 characters when the max is set to 50 characters, it 
+    // By setting the folowing text with is 51 characters when the max is set to 50 characters, it
     // should trigger an error state.
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
@@ -167,7 +167,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     let textField = MDCTextField()
     let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
 
-    // Helper text is shown on the leading underline label. Make sure the color and content are as 
+    // Helper text is shown on the leading underline label. Make sure the color and content are as
     // expected.
     let altLeading = "Alternative Helper Test"
     controller.helperText = altLeading
@@ -211,7 +211,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     XCTAssertEqual(.blue, textField.trailingUnderlineLabel.textColor)
     XCTAssertEqual(.blue, textField.underline?.color)
 
-    // If the controller is also in a character max error state, the leading label should still be 
+    // If the controller is also in a character max error state, the leading label should still be
     // showing the text from the error that was set.
     controller.setErrorText(error, errorAccessibilityValue: nil)
     controller.characterCountMax = 50
@@ -228,12 +228,27 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     XCTAssertEqual(.blue, textField.trailingUnderlineLabel.textColor)
     XCTAssertEqual(.blue, textField.underline?.color)
 
-    // Removing the text should remove the error state from character max and therefore remove 
+    // Removing the text should remove the error state from character max and therefore remove
     // anything from showing the error color.
     textField.text = nil
     XCTAssertNotEqual(.blue, textField.leadingUnderlineLabel.textColor)
     XCTAssertNotEqual(.blue, textField.trailingUnderlineLabel.textColor)
     XCTAssertNotEqual(.blue, textField.underline?.color)
+  }
+
+  func testFloatingPlaceholderLegacyDefault() {
+    let textField = MDCTextField()
+
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
+    textField.sizeToFit()
+
+    controller.placeholderText = "Placeholder"
+    textField.text = "Set Text"
+    textField.setNeedsLayout()
+    textField.layoutIfNeeded()
+    
+    let estimatedTextFrame = UIEdgeInsetsInsetRect(textField.bounds, controller.textInsets(UIEdgeInsets()))
+    XCTAssertFalse(textField.placeholderLabel.frame.intersects(estimatedTextFrame))
   }
 
   func testLabelsLegacyDefault() {

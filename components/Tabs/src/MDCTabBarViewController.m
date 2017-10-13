@@ -16,7 +16,45 @@
 
 #import "MDCTabBarViewController.h"
 
+#import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
+
 const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
+
+/**
+ * View to host shadow for the tab bar.
+ */
+@interface MDCTabBarShadowView : UIView
+@end
+
+@implementation MDCTabBarShadowView
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonMDCTabBarShadowViewInitialization];
+  }
+  return self;
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCTabBarShadowViewInitialization];
+  }
+  return self;
+}
+
+- (void)commonMDCTabBarShadowViewInitialization {
+  MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.layer;
+  [shadowLayer setElevation:MDCShadowElevationMenu];
+}
+
+@end
 
 @interface MDCTabBarViewController ()
 
@@ -27,6 +65,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 @implementation MDCTabBarViewController {
   /** For showing/hiding, Animation needs to know where it wants to end up. */
   BOOL _tabBarWantsToBeHidden;
+  MDCTabBarShadowView *_tabBarShadow;
 }
 
 - (void)viewDidLoad {
@@ -41,6 +80,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   tabBar.alignment = MDCTabBarAlignmentJustified;
   tabBar.delegate = self;
   self.tabBar = tabBar;
+  _tabBarShadow = [[MDCTabBarShadowView alloc] initWithFrame:view.bounds];
+  [view addSubview:_tabBarShadow];
   [view addSubview:tabBar];
   [self updateTabBarItems];
 }
@@ -74,6 +115,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
       if (!hidden) {
         // If we are showing, set the state before the animation.
         _tabBar.hidden = hidden;
+        _tabBarShadow.hidden = hidden;
       }
       [UIView animateWithDuration:MDCTabBarViewControllerAnimationDuration
           animations:^{
@@ -82,9 +124,11 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
           completion:^(__unused BOOL finished) {
             // If we are hiding, set the state after the animation.
             _tabBar.hidden = hidden;
+            _tabBarShadow.hidden = hidden;
           }];
     } else {
       _tabBar.hidden = hidden;
+      _tabBarShadow.hidden = hidden;
     }
   }
 }
@@ -182,6 +226,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   } else {
     self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitles;
   }
+  [self.view bringSubviewToFront:_tabBarShadow];
+  [self.view bringSubviewToFront:self.tabBar];
 }
 
 - (nullable UIViewController *)controllerWithView:(nullable UIView *)view {
@@ -203,6 +249,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarHeight, CGRectMaxYEdge);
   }
   _tabBar.frame = tabBarFrame;
+  _tabBarShadow.frame = tabBarFrame;
   _selectedViewController.view.frame = currentViewFrame;
 }
 
@@ -213,9 +260,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     NSUInteger index = [tabBar.items indexOfObject:item];
     if (index < _viewControllers.count) {
       UIViewController *newSelected = _viewControllers[index];
-      if (newSelected != self.selectedViewController) {
-        return [_delegate tabBarController:self shouldSelectViewController:newSelected];
-      }
+      return [_delegate tabBarController:self shouldSelectViewController:newSelected];
     }
   }
   return YES;
@@ -227,9 +272,9 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     UIViewController *newSelected = _viewControllers[index];
     if (newSelected != self.selectedViewController) {
       self.selectedViewController = newSelected;
-      if ([_delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)]) {
-        [_delegate tabBarController:self didSelectViewController:newSelected];
-      }
+    }
+    if ([_delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)]) {
+      [_delegate tabBarController:self didSelectViewController:newSelected];
     }
   }
 }

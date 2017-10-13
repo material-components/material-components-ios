@@ -94,7 +94,7 @@ extension AppBarImagerySwiftExample {
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
-  
+
   func catalogShouldHideNavigation() -> Bool {
     return true
   }

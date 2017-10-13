@@ -33,7 +33,7 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
    // Do any additional setup after loading the view, typically from a nib.
    self.view.backgroundColor = [UIColor whiteColor];
    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-   
+
    self.tableView.rowHeight = UITableViewAutomaticDimension;
    self.tableView.estimatedRowHeight = 50.0;
    _strings = @[
@@ -41,7 +41,7 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
                 @"abcdefghijklmnopqrstuvwxyz",
                 @"0123456789"
                 ];
-   
+
    _styleNames = @[
                    // Common UI fonts.
                    @"Headline Font",
@@ -51,14 +51,14 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
                    @"Body 1 Font",
                    @"Caption Font",
                    @"Button Font",
-                   
+
                    // Display fonts (extra large fonts)
                    @"Display 1 Font",
                    @"Display 2 Font",
                    @"Display 3 Font",
                    @"Display 4 Font"
                    ];
-   
+
    _styleFonts = @[
                    customFont(MDCFontTextStyleHeadline),
                    customFont(MDCFontTextStyleTitle),
@@ -72,7 +72,7 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
                    customFont(MDCFontTextStyleDisplay3),
                    customFont(MDCFontTextStyleDisplay4)
                    ];
-   
+
    _opacities = @[
                   [NSNumber numberWithFloat:[MDCTypography headlineFontOpacity]],
                   [NSNumber numberWithFloat:[MDCTypography titleFontOpacity]],
@@ -86,7 +86,7 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
                   [NSNumber numberWithFloat:[MDCTypography display3FontOpacity]],
                   [NSNumber numberWithFloat:[MDCTypography display4FontOpacity]]
                   ];
-   
+
    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(contentSizeCategoryDidChange:)
                                                 name:UIContentSizeCategoryDidChangeNotification
@@ -108,7 +108,7 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
                    customFont(MDCFontTextStyleDisplay3),
                    customFont(MDCFontTextStyleDisplay4)
                    ];
-   
+
    [self.tableView reloadData];
 }
 
@@ -134,16 +134,16 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
    cell.textLabel.alpha = [_opacities[indexPath.row] floatValue];
    cell.textLabel.numberOfLines = 0;
    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-   
+
    if (cell.textLabel.font.pointSize > 100 && indexPath.section == 0) {
       cell.textLabel.text = @"ABCD";
    }
-   
+
    cell.detailTextLabel.text = _styleNames[indexPath.row];
    cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-   
+
    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-   
+
    return cell;
 }
 

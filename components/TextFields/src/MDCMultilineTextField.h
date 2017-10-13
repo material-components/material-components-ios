@@ -18,6 +18,7 @@
 
 #import "MDCTextInput.h"
 
+@protocol MDCMultilineTextInputDelegate;
 @protocol MDCMultilineTextInputLayoutDelegate;
 
 /**
@@ -28,6 +29,9 @@
 
 /** A mirror of the same property that already exists on UITextField, UITextView, and UILabel. */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategory;
+
+/** An optional delegate for useful methods not included in UITextViewDelegate.*/
+@property(nonatomic, nullable, weak) IBOutlet id<MDCMultilineTextInputDelegate> multilineDelegate;
 
 /**
  The delegate for changes to preferred content size.
