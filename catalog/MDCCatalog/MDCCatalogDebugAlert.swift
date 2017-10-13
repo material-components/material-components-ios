@@ -42,7 +42,7 @@ class MDCCatalogDebugAlert: UICollectionViewController {
   }
 
   override var preferredContentSize: CGSize {
-    get { return CGSize(width: 400, height: self.numberOfRows * 44) }
+    get { return CGSize(width: 400, height: numberOfRows * 44) }
     set { super.preferredContentSize = newValue }
   }
 
@@ -59,29 +59,29 @@ class MDCCatalogDebugAlert: UICollectionViewController {
 
     super.init(collectionViewLayout: layout)
 
-    self.transitioningDelegate = dialogTransitionController
-    self.modalPresentationStyle = .custom
+    transitioningDelegate = dialogTransitionController
+    modalPresentationStyle = .custom
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.collectionView?.backgroundColor = .white
-    self.collectionView?.register(MDCCatalogDebugToggleCell.self,
-                                  forCellWithReuseIdentifier: "toggle")
-    self.collectionView?.register(MDCCatalogDebugDismissCell.self,
-                                  forCellWithReuseIdentifier: "dismiss")
+    collectionView?.backgroundColor = .white
+    collectionView?.register(MDCCatalogDebugToggleCell.self,
+                             forCellWithReuseIdentifier: "toggle")
+    collectionView?.register(MDCCatalogDebugDismissCell.self,
+                             forCellWithReuseIdentifier: "dismiss")
   }
 
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
 
-    layout.itemSize = CGSize(width: self.view.frame.width, height: 44)
+    layout.itemSize = CGSize(width: view.frame.width, height: 44)
   }
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    if indexPath.row == self.dismissCellRow {
+    if indexPath.row == dismissCellRow {
       return collectionView.dequeueReusableCell(withReuseIdentifier: "dismiss", for: indexPath)
     }
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "toggle", for: indexPath)
@@ -93,13 +93,13 @@ class MDCCatalogDebugAlert: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
-    return self.numberOfRows
+    return numberOfRows
   }
 
   override func collectionView(_ collectionView: UICollectionView,
                                didSelectItemAt indexPath: IndexPath) {
-    if indexPath.row == self.dismissCellRow {
-      self.dismiss(animated: true, completion: nil)
+    if indexPath.row == dismissCellRow {
+      dismiss(animated: true, completion: nil)
     }
   }
 }
@@ -138,16 +138,16 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    let width = self.contentView.bounds.width
-    let height = self.contentView.bounds.height
+    let width = contentView.bounds.width
+    let height = contentView.bounds.height
 
-    let switchSize = toggleSwitch.sizeThatFits(self.contentView.bounds.size)
+    let switchSize = toggleSwitch.sizeThatFits(contentView.bounds.size)
     toggleSwitch.frame = CGRect(x: width - switchSize.width - 10,
                                 y: (height - switchSize.height)/2.0,
                                 width: switchSize.width,
                                 height: switchSize.height)
 
-    label.frame = self.contentView.bounds.insetBy(dx: 10, dy: 10)
+    label.frame = contentView.bounds.insetBy(dx: 10, dy: 10)
   }
 
   override func sizeThatFits(_ size: CGSize) -> CGSize {
@@ -171,9 +171,9 @@ fileprivate class MDCCatalogDebugDismissCell: UICollectionViewCell {
     }
     set {
       super.isHighlighted = newValue
-      self.backgroundColor = nil
+      backgroundColor = nil
       if (newValue) {
-        self.backgroundColor = UIColor.init(white: 0, alpha: 0.1)
+        backgroundColor = UIColor.init(white: 0, alpha: 0.1)
       }
     }
   }
@@ -193,7 +193,7 @@ fileprivate class MDCCatalogDebugDismissCell: UICollectionViewCell {
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    label.frame = self.contentView.bounds.insetBy(dx: 10, dy: 10)
+    label.frame = contentView.bounds.insetBy(dx: 10, dy: 10)
   }
 
   override func sizeThatFits(_ size: CGSize) -> CGSize {

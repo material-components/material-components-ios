@@ -87,7 +87,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
     dontShow.setter = { newValue in self.debugUIEnabled = !newValue }
 
     let debugUI = MDCCatalogDebugAlert(settings: [touches, safeAreaInsets, dontShow])
-    self.rootViewController?.present(debugUI, animated: true, completion: nil)
+    rootViewController?.present(debugUI, animated: true, completion: nil)
   }
 
   override open func safeAreaInsetsDidChange() {
@@ -107,7 +107,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
       view.backgroundColor = UIColor.red.withAlphaComponent(0.15)
       view.isUserInteractionEnabled = false
       edgeViews.append(view)
-      self.addSubview(view)
+      addSubview(view)
     }
 
     layoutEdgeInsetViews()
@@ -126,8 +126,8 @@ class MDCCatalogWindow: MDCOverlayWindow {
       safeAreaInsets = self.safeAreaInsets
     }
 
-    let width = self.frame.width
-    let height = self.frame.height
+    let width = frame.width
+    let height = frame.height
     let insetHeight = height - safeAreaInsets.top - safeAreaInsets.bottom
 
     if edgeViews.count < 4 {
@@ -160,7 +160,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
     let view = MDCTouchView()
     view.center = touch.location(in: self)
     touchViews[touch.hash] = view
-    self.addSubview(view)
+    addSubview(view)
   }
 
   fileprivate func updateTouch(_ touch: UITouch) {
@@ -196,12 +196,12 @@ class MDCTouchView: UIView {
   }
 
   fileprivate func commonMDCTouchViewInit() {
-    self.backgroundColor = touchCircleColor
-    self.alpha = touchCircleAlpha
-    self.frame.size = CGSize(width: touchCircleSize, height: touchCircleSize)
-    self.layer.cornerRadius = touchCircleSize / 2
-    self.layer.borderColor = touchCircleBorderColor.cgColor
-    self.layer.borderWidth = touchCircleBorderWidth
-    self.isUserInteractionEnabled = false
+    backgroundColor = touchCircleColor
+    alpha = touchCircleAlpha
+    frame.size = CGSize(width: touchCircleSize, height: touchCircleSize)
+    layer.cornerRadius = touchCircleSize / 2
+    layer.borderColor = touchCircleBorderColor.cgColor
+    layer.borderWidth = touchCircleBorderWidth
+    isUserInteractionEnabled = false
   }
 }
