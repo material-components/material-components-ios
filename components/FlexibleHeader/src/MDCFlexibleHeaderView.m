@@ -322,6 +322,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
 #endif
   _maximumHeight = _minimumHeight;
+
+  // We start with a current Safe Area inset of -1 to signal that is not a valid 0.
   _currentSafeAreaInsetTop = -1;
 
   _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
@@ -1148,7 +1150,6 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (!_sharedWithManyScrollViews || !_trackingInfo) {
     [self fhv_addInsetsToScrollView:_trackingScrollView];
   }
-  // TODO(chuga): Fix shared many scroll views case.
 
   void (^animate)(void) = ^{
     [self fhv_updateLayout];
@@ -1256,7 +1257,6 @@ static BOOL isRunningiOS10_3OrAbove() {
   CGPoint contentOffset = _trackingScrollView.contentOffset;
   contentOffset.y -= delta;  // Keeps the scroll view offset from jumping.
   _trackingScrollView.contentOffset = contentOffset;
-
   _contentInsetsAreChanging = NO;
 }
 
