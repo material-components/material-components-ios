@@ -449,13 +449,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 - (void)safeAreaInsetsDidChange {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
-
     CGFloat safeAreaTop = [self flexibleHeaderSafeAreaTop];
-    if (safeAreaTop == 0) {
+    MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:_trackingScrollView];
+    if (info && info.topSafeAreaInsetAdjustment == safeAreaTop) {
       return;
     }
-    BOOL minMaxIncludingSafeAreaChanged = NO;
 
     // If the min or max height have been explicitly set, only adjust if
     // _minMaxHeightIncludesSafeArea is NO.
@@ -465,25 +463,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
         return;
       } else {
         // The min/max values don't already include the safe area insets.
-        if (_minHeightIncludingSafeArea != _minimumHeight + safeAreaTop) {
-          _minHeightIncludingSafeArea = _minimumHeight + safeAreaTop;
-          minMaxIncludingSafeAreaChanged = YES;
-        }
-        if (_maxHeightIncludingSafeArea != _maximumHeight + safeAreaTop) {
-          _maxHeightIncludingSafeArea = _maximumHeight + safeAreaTop;
-          minMaxIncludingSafeAreaChanged = YES;
-        }
+        _minHeightIncludingSafeArea = _minimumHeight + safeAreaTop;
+        _maxHeightIncludingSafeArea = _maximumHeight + safeAreaTop;
       }
     } else {
       // Neither min nor max height have been set, so we use the defaults.
-      if (_minHeightIncludingSafeArea != kFlexibleHeaderDefaultHeight + safeAreaTop) {
-        _minHeightIncludingSafeArea = kFlexibleHeaderDefaultHeight + safeAreaTop;
-        minMaxIncludingSafeAreaChanged = YES;
-      }
-      if (_maxHeightIncludingSafeArea != kFlexibleHeaderDefaultHeight + safeAreaTop) {
-        _maxHeightIncludingSafeArea = kFlexibleHeaderDefaultHeight + safeAreaTop;
-        minMaxIncludingSafeAreaChanged = YES;
-      }
+      _minHeightIncludingSafeArea = kFlexibleHeaderDefaultHeight + safeAreaTop;
+      _maxHeightIncludingSafeArea = kFlexibleHeaderDefaultHeight + safeAreaTop;
 
       // If _minMaxHeightIncludesSafeArea is YES, we need to also update _minimumHeight and
       // _maximumHeight.
@@ -493,10 +479,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       }
     }
 
-    if (minMaxIncludingSafeAreaChanged) {
-      // The min/max values changed, so we need to re-adjust the scroll view insets.
-      [self fhv_adjustTrackingScrollViewInsets];
-    }
+    [self fhv_adjustTrackingScrollViewInsets];
 
     // Ignore any content offset delta that occured as a result of any safe area insets change.
     _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
@@ -521,18 +504,24 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 #pragma mark - Private (fhv_ prefix)
 
 - (void)fhv_adjustTrackingScrollViewInsets {
-//  CGPoint originalOffset = _trackingScrollView.contentOffset;
+  CGPoint originalOffset = _trackingScrollView.contentOffset;
   [self fhv_removeInsetsFromScrollView:_trackingScrollView];
-//  CGPoint stashedOffset = _trackingScrollView.contentOffset;
+  CGPoint stashedOffset = _trackingScrollView.contentOffset;
   [self fhv_addInsetsToScrollView:_trackingScrollView];
 
-//  // Only restore the content offset if UIScrollView didn't decide to update the content offset for
-//  // us. Notably, it seems to automatically adjust the content offset in the first runloop in which
-//  // the scroll view's been created, but not in any further runloops.
-//  if (CGPointEqualToPoint(stashedOffset, _trackingScrollView.contentOffset)) {
-//    originalOffset.y = MAX(originalOffset.y, -_trackingScrollView.contentInset.top);
-//    _trackingScrollView.contentOffset = originalOffset;
-//  }
+  // Only restore the content offset if UIScrollView didn't decide to update the content offset for
+  // us. Notably, it seems to automatically adjust the content offset in the first runloop in which
+  // the scroll view's been created, but not in any further runloops.
+  if (CGPointEqualToPoint(stashedOffset, _trackingScrollView.contentOffset)) {
+    CGFloat scrollViewAdjustedContentInsetTop = _trackingScrollView.contentInset.top;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      scrollViewAdjustedContentInsetTop = _trackingScrollView.adjustedContentInset.top;
+    }
+#endif
+    originalOffset.y = MAX(originalOffset.y, -scrollViewAdjustedContentInsetTop);
+    _trackingScrollView.contentOffset = originalOffset;
+  }
 }
 
 - (void)fhv_removeInsetsFromScrollView:(UIScrollView *)scrollView {
@@ -574,10 +563,23 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
   }
 
+  CGFloat safeAreaAdjustment = 0;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAlways ||
+        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAutomatic) {
+      if (scrollView.contentInset.top != scrollView.adjustedContentInset.top) {
+        safeAreaAdjustment = scrollView.safeAreaInsets.top;
+      }
+    }
+  }
+#endif
+
   if (!info.hasInjectedTopContentInset) {
     UIEdgeInsets insets = scrollView.contentInset;
-    insets.top += _maxHeightIncludingSafeArea - info.topSafeAreaInsetAdjustment;
-    info.injectedTopContentInset = _maxHeightIncludingSafeArea - info.topSafeAreaInsetAdjustment;
+    insets.top += _maxHeightIncludingSafeArea - safeAreaAdjustment;
+    info.injectedTopContentInset = _maxHeightIncludingSafeArea - safeAreaAdjustment;
+    info.topSafeAreaInsetAdjustment = safeAreaAdjustment;
     info.hasInjectedTopContentInset = YES;
     scrollView.contentInset = insets;
   }
@@ -587,41 +589,41 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   return info;
 }
 
-- (void)fhv_adjustInsetsForSafeAreaInScrollView:(UIScrollView *)scrollView {
-  if (!scrollView) {
-    return;
-  }
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAlways ||
-        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAutomatic) {
-
-      // For Automatic: If contentInset and adjustedContentInset are the same, no-op.
-      if (scrollView.contentInset.top == scrollView.adjustedContentInset.top) {
-        return;
-      }
-
-      // If the injected Safe Area inset hasn't changed, no-op.
-      MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
-      if (!info) {
-        return;
-      }
-
-      UIEdgeInsets insets = scrollView.contentInset;
-      if (info.hasTopSafeAreaInsetAdjustment) {
-        insets.top += info.topSafeAreaInsetAdjustment;
-      }
-      info.topSafeAreaInsetAdjustment = scrollView.safeAreaInsets.top;
-      insets.top -= info.topSafeAreaInsetAdjustment;
-      info.hasTopSafeAreaInsetAdjustment = YES;
-      scrollView.contentInset = insets;
-
-      // Update injectedTopContentInset to account for the scroll view's Safe Area inset.
-      info.injectedTopContentInset = _maxHeightIncludingSafeArea - info.topSafeAreaInsetAdjustment;
-    }
-  }
-#endif
-}
+//- (void)fhv_adjustInsetsForSafeAreaInScrollView:(UIScrollView *)scrollView {
+//  if (!scrollView) {
+//    return;
+//  }
+//#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+//  if (@available(iOS 11.0, *)) {
+//    if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAlways ||
+//        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAutomatic) {
+//
+//      // For Automatic: If contentInset and adjustedContentInset are the same, no-op.
+//      if (scrollView.contentInset.top == scrollView.adjustedContentInset.top) {
+//        return;
+//      }
+//
+//      // If the injected Safe Area inset hasn't changed, no-op.
+//      MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
+//      if (!info) {
+//        return;
+//      }
+//
+//      UIEdgeInsets insets = scrollView.contentInset;
+//      if (info.hasTopSafeAreaInsetAdjustment) {
+////        insets.top += info.topSafeAreaInsetAdjustment;
+//      }
+//      info.topSafeAreaInsetAdjustment = scrollView.safeAreaInsets.top;
+//      insets.top -= info.topSafeAreaInsetAdjustment;
+//      info.hasTopSafeAreaInsetAdjustment = YES;
+//      scrollView.contentInset = insets;
+//
+//      // Update injectedTopContentInset to account for the scroll view's Safe Area inset.
+//      info.injectedTopContentInset = _maxHeightIncludingSafeArea - info.topSafeAreaInsetAdjustment;
+//    }
+//  }
+//#endif
+//}
 
 - (void)fhv_updateShadowPath {
   UIBezierPath *path =
@@ -1159,9 +1161,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (!_sharedWithManyScrollViews || !_trackingInfo) {
     [self fhv_addInsetsToScrollView:_trackingScrollView];
   }
-
-  // Before we update the layout, take into account the scroll view's Safe Area insets.
-  [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+  // TODO(chuga): Fix shared many scroll views case.
 
   void (^animate)(void) = ^{
     [self fhv_updateLayout];
@@ -1189,7 +1189,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 - (void)trackingScrollViewDidScroll {
   // This could've been triggered by a change in the scroll view's Safe Area, so we need to check
   // if it did. If it didn't, this is a no-op.
-  [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+//  [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
 
   [self fhv_contentOffsetDidChange];
 }
@@ -1372,32 +1372,6 @@ static BOOL isRunningiOS10_3OrAbove() {
     return;
   }
   _minMaxHeightIncludesSafeArea = minMaxHeightIncludesSafeArea;
-
-  CGFloat safeAreaTop = [self flexibleHeaderSafeAreaTop];
-
-  if (_hasExplicitlySetMinOrMaxHeight) {
-    if (_minMaxHeightIncludesSafeArea) {
-      // We went from min / max not including the safe area to including it.
-      _minimumHeight = _minimumHeight + safeAreaTop;
-      _maximumHeight = _maximumHeight + safeAreaTop;
-    } else {
-      // Min / max used to include the safe area.
-      _minimumHeight = _minimumHeight - safeAreaTop;
-      _maximumHeight = _maximumHeight - safeAreaTop;
-    }
-  } else {
-    // Neither min nor max have been explicitly set.
-    if (_minMaxHeightIncludesSafeArea) {
-      _minimumHeight = kFlexibleHeaderDefaultHeight + safeAreaTop;
-      _maximumHeight = kFlexibleHeaderDefaultHeight + safeAreaTop;
-    } else {
-      // Min / max values do not include the safe area.
-      _minimumHeight = kFlexibleHeaderDefaultHeight;
-      _maximumHeight = kFlexibleHeaderDefaultHeight;
-    }
-  }
-
-  [self fhv_updateLayout];
 }
 
 - (void)setInFrontOfInfiniteContent:(BOOL)inFrontOfInfiniteContent {
