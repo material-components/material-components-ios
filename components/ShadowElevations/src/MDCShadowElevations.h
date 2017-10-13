@@ -14,17 +14,15 @@
  limitations under the License.
  */
 
-#import <Availability.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
-// This macro is introduced in Xcode 9.
-#ifndef CF_TYPED_ENUM // What follows is backwards compat for Xcode 8 and below.
-#if __has_attribute(swift_wrapper)
-#define CF_TYPED_ENUM __attribute__((swift_wrapper(enum)))
+#ifdef NS_TYPED_EXTENSIBLE_ENUM // This macro is introduced in Xcode 9.
+#define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM NS_TYPED_EXTENSIBLE_ENUM
+#elif __has_attribute(swift_wrapper) // Backwards compatibility for Xcode 8.
+#define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM __attribute__((swift_wrapper(struct)))
 #else
-#define CF_TYPED_ENUM
-#endif
+#define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM
 #endif
 
 /**
@@ -32,76 +30,70 @@
  https://material.io/guidelines/material-design/elevation-shadows.html
  */
 NS_SWIFT_NAME(ShadowElevation)
-typedef CGFloat MDCShadowElevation CF_TYPED_ENUM;
+typedef CGFloat MDCShadowElevation MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM;
 
 /** The shadow elevation of the app bar. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationAppBar NS_SWIFT_NAME(appBar);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationAppBar;
 
 /** The shadow elevation of a card in its picked up state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardPickedUp
-    NS_SWIFT_NAME(cardPickedUp);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardPickedUp;
 
 /** The shadow elevation of a card in its resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardResting NS_SWIFT_NAME(cardResting);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardResting;
 
 /** The shadow elevation of dialogs. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationDialog NS_SWIFT_NAME(dialog);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationDialog;
 
 /** The shadow elevation of the floating action button in its pressed state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationFABPressed NS_SWIFT_NAME(fabPressed);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationFABPressed;
 
 /** The shadow elevation of the floating action button in its resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationFABResting NS_SWIFT_NAME(fabResting);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationFABResting;
 
 /** The shadow elevation of a menu. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationMenu NS_SWIFT_NAME(menu);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationMenu;
 
 /** The shadow elevation of a modal bottom sheet. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationModalBottomSheet
-    NS_SWIFT_NAME(modalBottomSheet);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationModalBottomSheet;
 
 /** The shadow elevation of the navigation drawer. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationNavDrawer NS_SWIFT_NAME(navDrawer);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationNavDrawer;
 
 /** No shadow elevation at all. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationNone NS_SWIFT_NAME(none);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationNone;
 
 /** The shadow elevation of a picker. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationPicker NS_SWIFT_NAME(picker);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationPicker;
 
 /** The shadow elevation of the quick entry in the scrolled state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationQuickEntry NS_SWIFT_NAME(quickEntry);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationQuickEntry;
 
 /** The shadow elevation of the quick entry in the resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationQuickEntryResting
-    NS_SWIFT_NAME(quickEntryResting);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationQuickEntryResting;
 
 /** The shadow elevation of a raised button in the pressed state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRaisedButtonPressed NS_SWIFT_NAME(raisedButtonPressed);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRaisedButtonPressed;
 
 /** The shadow elevation of a raised button in the resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRaisedButtonResting NS_SWIFT_NAME(raisedButtonResting);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRaisedButtonResting;
 
 /** The shadow elevation of a refresh indicator. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRefresh NS_SWIFT_NAME(refresh);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRefresh;
 
 /** The shadow elevation of the right drawer. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRightDrawer NS_SWIFT_NAME(rightDrawer);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRightDrawer;
 
 /** The shadow elevation of the search bar in the resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSearchBarResting
-    NS_SWIFT_NAME(searchBarResting);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSearchBarResting;
 
 /** The shadow elevation of the search bar in the scrolled state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSearchBarScrolled
-    NS_SWIFT_NAME(searchBarScrolled);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSearchBarScrolled;
 
 /** The shadow elevation of the snackbar. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSnackbar NS_SWIFT_NAME(snackbar);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSnackbar;
 
 /** The shadow elevation of a sub menu (+1 for each additional sub menu). */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSubMenu NS_SWIFT_NAME(subMenu);
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSubMenu;
 
 /** The shadow elevation of a switch. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSwitch NS_SWIFT_NAME(switch);
-
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSwitch;
