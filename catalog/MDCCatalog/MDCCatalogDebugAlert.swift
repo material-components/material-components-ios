@@ -173,7 +173,7 @@ fileprivate class MDCCatalogDebugDismissCell: UICollectionViewCell {
       super.isHighlighted = newValue
       backgroundColor = nil
       if (newValue) {
-        backgroundColor = UIColor.init(white: 0, alpha: 0.1)
+        backgroundColor = UIColor(white: 0, alpha: 0.1)
       }
     }
   }
