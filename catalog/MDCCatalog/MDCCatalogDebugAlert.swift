@@ -56,6 +56,7 @@ class MDCCatalogDebugAlert: UICollectionViewController {
 
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
+    layout.itemSize = CGSize(width: 400, height: 44)
 
     super.init(collectionViewLayout: layout)
 
@@ -73,10 +74,13 @@ class MDCCatalogDebugAlert: UICollectionViewController {
                              forCellWithReuseIdentifier: "dismiss")
   }
 
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
 
-    layout.itemSize = CGSize(width: view.frame.width, height: 44)
+    if layout.itemSize.width != view.frame.width {
+      layout.itemSize = CGSize(width: view.frame.width, height: 44)
+      layout.invalidateLayout()
+    }
   }
 
   override func collectionView(_ collectionView: UICollectionView,
