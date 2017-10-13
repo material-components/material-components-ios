@@ -14,6 +14,9 @@
  limitations under the License.
  */
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 /**
  On devices with hardware safe areas, returns the top safe area for the key window. On all other
  devices, returns the fixed status bar height regardless of status bar visibility.
