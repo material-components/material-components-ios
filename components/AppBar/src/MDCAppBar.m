@@ -343,10 +343,9 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    // We only get the actual status bar height if we're on iOS 11, because previously we were not
-    // adjusting the header height to make it smaller when the status bar is hidden.
-    _verticalConstraint.constant =
-        CGRectGetMaxY([UIApplication mdc_safeSharedApplication].statusBarFrame);
+    // We only update the top inset on iOS 11 because previously we were not adjusting the header
+    // height to make it smaller when the status bar is hidden.
+    _verticalConstraint.constant = MDCDeviceTopSafeAreaInset();
   }
 #endif
 }
