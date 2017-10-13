@@ -454,6 +454,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 - (void)safeAreaInsetsDidChange {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
+    if (_isChangingStatusBarVisibility) {
+      // We aren't interest in safe area inset changes due to status bar visibility changes - we're
+      // only interested in hardware-related safe area changes. If we know that we're changing the
+      // status bar visibility then we ignore this safeAreaInsetsDidChange event.
+      return;
+    }
     CGFloat safeAreaTop = [self flexibleHeaderSafeAreaTop];
     if (_currentSafeAreaInsetTop == safeAreaTop) {
       return;
