@@ -42,7 +42,7 @@ class MDCCatalogDebugAlert: UICollectionViewController {
   }
 
   override var preferredContentSize: CGSize {
-    get { return CGSize.init(width: 400, height: self.numberOfRows * 44) }
+    get { return CGSize(width: 400, height: self.numberOfRows * 44) }
     set { super.preferredContentSize = newValue }
   }
 
@@ -75,7 +75,7 @@ class MDCCatalogDebugAlert: UICollectionViewController {
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
 
-    layout.itemSize = CGSize.init(width: self.view.frame.width, height: 44)
+    layout.itemSize = CGSize(width: self.view.frame.width, height: 44)
   }
 
   override func collectionView(_ collectionView: UICollectionView,
@@ -140,16 +140,16 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
     let height = self.contentView.bounds.height
 
     let switchSize = toggleSwitch.sizeThatFits(self.contentView.bounds.size)
-    toggleSwitch.frame = CGRect.init(x: width - switchSize.width - 10,
-                                     y: (height - switchSize.height)/2.0,
-                                     width: switchSize.width,
-                                     height: switchSize.height)
+    toggleSwitch.frame = CGRect(x: width - switchSize.width - 10,
+                                y: (height - switchSize.height)/2.0,
+                                width: switchSize.width,
+                                height: switchSize.height)
 
     label.frame = self.contentView.bounds.insetBy(dx: 10, dy: 10)
   }
 
   override func sizeThatFits(_ size: CGSize) -> CGSize {
-    let paddedSize = CGSize.init(width: size.width - 10 * 2, height: size.height - 10 * 2)
+    let paddedSize = CGSize(width: size.width - 10 * 2, height: size.height - 10 * 2)
     return label.sizeThatFits(paddedSize)
   }
 
@@ -194,7 +194,7 @@ fileprivate class MDCCatalogDebugDismissCell: UICollectionViewCell {
   }
 
   override func sizeThatFits(_ size: CGSize) -> CGSize {
-    let paddedSize = CGSize.init(width: size.width - 10 * 2, height: size.height - 10 * 2)
+    let paddedSize = CGSize(width: size.width - 10 * 2, height: size.height - 10 * 2)
     return label.sizeThatFits(paddedSize)
   }
 }
