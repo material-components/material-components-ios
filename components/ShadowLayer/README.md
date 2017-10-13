@@ -133,13 +133,12 @@ Add the custom button to view:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let button: ShadowButton = ShadowButton.init(type: .system)
+let button = ShadowButton(type: .system)
 button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
 button.setTitle("Button", for: .normal)
 let buttonLayer = button.layer as! MDCShadowLayer
-buttonLayer.elevation = 6.0
+buttonLayer.elevation = ShadowElevation(6)
 addSubview(button)
-
 ```
 
 #### Objective C
@@ -169,8 +168,13 @@ class ShadowedView: UIView {
     return self.layer as! MDCShadowLayer
   }
 
-  func setElevation(points: CGFloat) {
-    self.shadowLayer.elevation = points
+  var elevation: ShadowElevation {
+    get {
+      return self.shadowLayer.elevation
+    }
+    set {
+      self.shadowLayer.elevation = newValue
+    }
   }
 
 }
