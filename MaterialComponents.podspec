@@ -83,6 +83,7 @@ Pod::Spec.new do |s|
 
       sss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
       sss.dependency "MaterialComponents/private/RTL"
+      sss.dependency "MaterialComponents/private/UIMetrics"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
