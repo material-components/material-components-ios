@@ -30,10 +30,10 @@ static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
-static NSString *const kMDCBottomNavigationBarOfString = @"of";
-static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
+static NSString *const kMDCBottomNavigationBarOfString = @"of";
 static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
+static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 @interface MDCBottomNavigationBar ()
 
@@ -207,12 +207,6 @@ static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
   }
 }
 
-- (void)removeBottomNavigationitemViews {
-  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    [itemView removeFromSuperview];
-  }
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
@@ -287,10 +281,13 @@ static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
   NSAssert(items.count >= 3, @"Need to have at least 3 items in navigation bar.");
   NSAssert(items.count <= 5, @"Navigation bar has a maximum of 5 items.");
 
-  _items = items;
-
-  [self removeBottomNavigationitemViews];
+  // Remove existing item views from the bottom navigation so it can be repopulated with new items.
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    [itemView removeFromSuperview];
+  }
   [self removeObserversFromTabBarItems];
+
+  _items = [items copy];
 
   for (NSUInteger i = 0; i < items.count; i++) {
     UITabBarItem *item = items[i];
