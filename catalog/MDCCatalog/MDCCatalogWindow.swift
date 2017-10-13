@@ -30,17 +30,20 @@ class MDCCatalogWindow: MDCOverlayWindow {
 
   fileprivate let fadeDuration: TimeInterval = 0.2
   fileprivate var touchViews = [Int: UIView]()
-  fileprivate var edgeViews = [UIView]()
+  fileprivate var edgeView = MDCDebugSafeAreaInsetsView()
 
   var showSafeAreaEdgeInsets:Bool {
     set {
-      removeEdgeInsetViews()
       if newValue {
-        showEdgeInsetViews()
+        edgeView.frame = bounds
+        edgeView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(edgeView)
+      } else {
+        edgeView.removeFromSuperview()
       }
     }
     get {
-      return edgeViews.count == 4
+      return edgeView.superview == self
     }
   }
 
@@ -88,72 +91,6 @@ class MDCCatalogWindow: MDCOverlayWindow {
 
     let debugUI = MDCCatalogDebugAlert(settings: [touches, safeAreaInsets, dontShow])
     rootViewController?.present(debugUI, animated: true, completion: nil)
-  }
-
-  override open func safeAreaInsetsDidChange() {
-    if #available(iOS 11, *) {
-      super.safeAreaInsetsDidChange()
-    }
-    if showTouches {
-      layoutEdgeInsetViews()
-    }
-  }
-
-  fileprivate func showEdgeInsetViews() {
-    removeEdgeInsetViews()
-
-    for _ in 0...4 {
-      let view = UIView()
-      view.backgroundColor = UIColor.red.withAlphaComponent(0.15)
-      view.isUserInteractionEnabled = false
-      edgeViews.append(view)
-      addSubview(view)
-    }
-
-    layoutEdgeInsetViews()
-  }
-
-  fileprivate func removeEdgeInsetViews() {
-    for view in edgeViews {
-      view.removeFromSuperview()
-    }
-    edgeViews.removeAll()
-  }
-
-  fileprivate func layoutEdgeInsetViews() {
-    var safeAreaInsets = UIEdgeInsets.zero
-    if #available(iOS 11, *) {
-      safeAreaInsets = self.safeAreaInsets
-    }
-
-    let width = frame.width
-    let height = frame.height
-    let insetHeight = height - safeAreaInsets.top - safeAreaInsets.bottom
-
-    if edgeViews.count < 4 {
-      return
-    }
-
-    // top
-    edgeViews[0].frame = CGRect.init(x: 0, y: 0, width: width, height: safeAreaInsets.top)
-
-    // left
-    edgeViews[1].frame = CGRect.init(x: 0,
-                                     y: safeAreaInsets.top,
-                                     width: safeAreaInsets.left,
-                                     height: insetHeight)
-
-    // bottom
-    edgeViews[2].frame = CGRect.init(x: 0,
-                                     y: height - safeAreaInsets.bottom,
-                                     width: width,
-                                     height: safeAreaInsets.bottom)
-
-    // right
-    edgeViews[3].frame = CGRect.init(x: width - safeAreaInsets.right,
-                                     y: safeAreaInsets.top,
-                                     width: safeAreaInsets.right,
-                                     height: insetHeight)
   }
 
   fileprivate func beginDisplayingTouch(_ touch: UITouch) {
