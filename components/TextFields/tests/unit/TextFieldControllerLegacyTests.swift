@@ -236,6 +236,21 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     XCTAssertNotEqual(.blue, textField.underline?.color)
   }
 
+  func testFloatingPlaceholderLegacyDefault() {
+    let textField = MDCTextField()
+
+    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
+    textField.sizeToFit()
+
+    controller.placeholderText = "Placeholder"
+    textField.text = "Set Text"
+    textField.setNeedsLayout()
+    textField.layoutIfNeeded()
+    
+    let estimatedTextFrame = UIEdgeInsetsInsetRect(textField.bounds, controller.textInsets(UIEdgeInsets()))
+    XCTAssertFalse(textField.placeholderLabel.frame.intersects(estimatedTextFrame))
+  }
+
   func testLabelsLegacyDefault() {
     let textField = MDCTextField()
 

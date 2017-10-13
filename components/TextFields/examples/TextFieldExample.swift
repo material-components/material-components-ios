@@ -111,6 +111,7 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerDefault(textInput: name)
     name.delegate = self
+    name.text = "Grace Hopper"
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)

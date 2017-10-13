@@ -109,7 +109,9 @@ final class TextFieldLegacySwiftExample: UIViewController {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerLegacyDefault(textInput: name)
     name.delegate = self
+    name.text = "Grace Hopper"
     nameController.placeholderText = "Name"
+    nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
