@@ -319,8 +319,10 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     if (item.badgeValue) {
       itemView.badgeValue = item.badgeValue;
     }
-    if (item.badgeColor) {
-      itemView.badgeColor = item.badgeColor;
+    if (@available(iOS 10.0, *)) {
+      if (item.badgeColor) {
+        itemView.badgeColor = item.badgeColor;
+      }
     }
     itemView.selected = NO;
     [itemView.button addTarget:self
