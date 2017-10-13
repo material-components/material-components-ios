@@ -448,22 +448,6 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   }
 }
 
-- (UIRectCorner)roundedCorners {
-  return 0;
-}
-
-- (void)setRoundedCorners:(__unused UIRectCorner)roundedCorners {
-  // Not implemented. There are no corners to round.
-}
-
-+ (UIRectCorner)roundedCornersDefault {
-  return 0;
-}
-
-+ (void)setRoundedCornersDefault:(__unused UIRectCorner)roundedCornersDefault {
-  // Not implemented. There are no corners to round.
-}
-
 - (void)setDisabledColor:(__unused UIColor *)disabledColor {
   [self updateUnderline];
 }
@@ -663,6 +647,22 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 - (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
   _previousPlaceholderColor = previousPlaceholderColor;
+}
+
+- (UIRectCorner)roundedCorners {
+  return 0;
+}
+
+- (void)setRoundedCorners:(__unused UIRectCorner)roundedCorners {
+  // Not implemented. There are no corners to round.
+}
+
++ (UIRectCorner)roundedCornersDefault {
+  return 0;
+}
+
++ (void)setRoundedCornersDefault:(__unused UIRectCorner)roundedCornersDefault {
+  // Not implemented. There are no corners to round.
 }
 
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
