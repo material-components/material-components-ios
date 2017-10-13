@@ -400,7 +400,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 #pragma mark - UIView
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return CGSizeMake(size.width, self.computedMinHeightIncludingSafeArea);
+  return CGSizeMake(size.width, self.computedTotalMinHeight);
 }
 
 - (void)layoutSubviews {
@@ -460,20 +460,17 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
     _currentSafeAreaInsetTop = safeAreaTop;
 
-    // If the min or max height have been explicitly set, only adjust if
-    // _minMaxHeightIncludesSafeArea is NO.
-    if (_hasExplicitlySetMinOrMaxHeight) {
-      if (_minMaxHeightIncludesSafeArea) {
-        // No - op.
-        return;
-      }
-    } else {
-      if (_minMaxHeightIncludesSafeArea) {
-        _minimumHeight = kFlexibleHeaderDefaultHeight + [self flexibleHeaderSafeAreaTop];
-        _maximumHeight = kFlexibleHeaderDefaultHeight + [self flexibleHeaderSafeAreaTop];;
-      }
+    // If the min or max height have been explicitly set, don't adjust anything if the values
+    // already include a Safe Area inset.
+    if (_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+      return;
+    } else if (!_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+      // If we're using the defaults we need to update them to account for the new Safe Area inset.
+      _minimumHeight = kFlexibleHeaderDefaultHeight + [self flexibleHeaderSafeAreaTop];
+      _maximumHeight = kFlexibleHeaderDefaultHeight + [self flexibleHeaderSafeAreaTop];;
     }
 
+    // Adjust the scroll view insets to account for the new Safe Area inset.
     [self fhv_adjustTrackingScrollViewInsets];
 
     // Ignore any content offset delta that occured as a result of any safe area insets change.
@@ -482,7 +479,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     // The changes might require us to re-calculate the frame, or update the entire layout.
     if (!_trackingScrollView) {
       CGRect bounds = self.bounds;
-      bounds.size.height = self.computedMinHeightIncludingSafeArea;
+      bounds.size.height = self.computedTotalMinHeight;
       self.bounds = bounds;
       CGPoint position = self.center;
       position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
@@ -555,6 +552,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
   }
 
+  // We need to take into account any Safe Area inset the scroll view might already have.
   CGFloat safeAreaAdjustment = 0;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -569,10 +567,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   if (!info.hasInjectedTopContentInset) {
     UIEdgeInsets insets = scrollView.contentInset;
-    insets.top += self.computedMaxHeightIncludingSafeArea - safeAreaAdjustment;
-    info.injectedTopContentInset = self.computedMaxHeightIncludingSafeArea - safeAreaAdjustment;
-    info.topSafeAreaInsetAdjustment = safeAreaAdjustment;
+    insets.top += self.computedTotalMaxHeight - safeAreaAdjustment;
+    info.injectedTopContentInset = self.computedTotalMaxHeight - safeAreaAdjustment;
     info.hasInjectedTopContentInset = YES;
+    info.topSafeAreaInsetAdjustment = safeAreaAdjustment;
+    info.hasTopSafeAreaInsetAdjustment = YES;
     scrollView.contentInset = insets;
   }
 
@@ -597,7 +596,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
       // If the injected Safe Area inset hasn't changed, no-op.
       MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
-      if (!info || info.topSafeAreaInsetAdjustment == scrollView.safeAreaInsets.top) {
+      if (!info || (info.hasTopSafeAreaInsetAdjustment &&
+                    info.topSafeAreaInsetAdjustment == scrollView.safeAreaInsets.top)) {
         return;
       }
 
@@ -654,8 +654,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 - (CGFloat)fhv_accumulatorMax {
   BOOL shouldCollapseToStatusBar = [self fhv_shouldCollapseToStatusBar];
   CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
-  return (shouldCollapseToStatusBar ? MAX(0, self.computedMinHeightIncludingSafeArea - statusBarHeight) :
-             self.computedMinHeightIncludingSafeArea);
+  return (shouldCollapseToStatusBar ? MAX(0, self.computedTotalMinHeight - statusBarHeight) :
+             self.computedTotalMinHeight);
 }
 
 #pragma mark Logical short forms
@@ -703,8 +703,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   if (frame.origin.y < 0) {
     _scrollPhase = MDCFlexibleHeaderScrollPhaseShifting;
-    _scrollPhaseValue = frame.origin.y + self.computedMinHeightIncludingSafeArea;
-    CGFloat adjustedHeight = self.computedMinHeightIncludingSafeArea;
+    _scrollPhaseValue = frame.origin.y + self.computedTotalMinHeight;
+    CGFloat adjustedHeight = self.computedTotalMinHeight;
     if ([self fhv_shouldCollapseToStatusBar]) {
       CGFloat statusBarHeight =
           [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
@@ -721,12 +721,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   _scrollPhaseValue = frame.size.height;
 
-  if (frame.size.height < self.computedMaxHeightIncludingSafeArea) {
+  if (frame.size.height < self.computedTotalMaxHeight) {
     _scrollPhase = MDCFlexibleHeaderScrollPhaseCollapsing;
 
-    CGFloat heightLength = self.computedMaxHeightIncludingSafeArea - self.computedMinHeightIncludingSafeArea;
+    CGFloat heightLength = self.computedTotalMaxHeight - self.computedTotalMinHeight;
     if (heightLength > 0) {
-      _scrollPhasePercentage = (frame.size.height - self.computedMinHeightIncludingSafeArea) / heightLength;
+      _scrollPhasePercentage = (frame.size.height - self.computedTotalMinHeight) / heightLength;
     } else {
       _scrollPhasePercentage = 0;
     }
@@ -735,9 +735,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
 
   _scrollPhase = MDCFlexibleHeaderScrollPhaseOverExtending;
-  if (self.computedMaxHeightIncludingSafeArea > 0) {
+  if (self.computedTotalMaxHeight > 0) {
     _scrollPhasePercentage = 1 +
-        (frame.size.height - self.computedMaxHeightIncludingSafeArea) / self.computedMaxHeightIncludingSafeArea;
+        (frame.size.height - self.computedTotalMaxHeight) / self.computedTotalMaxHeight;
   } else {
     _scrollPhasePercentage = 0;
   }
@@ -827,7 +827,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
     CGFloat accumulator = MAX(0, MIN(kShadowScaleLength,
-                                     self.computedMinHeightIncludingSafeArea - boundedAccumulator));
+                                     self.computedTotalMinHeight - boundedAccumulator));
     if (self.isInFrontOfInfiniteContent) {
       // When in front of infinite content we only care to hide the shadow when our header is
       // off-screen.
@@ -859,8 +859,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [_statusBarShifter setOffset:boundedAccumulator];
 
   // Small performance improvement to not set the hidden property on every scroll tick.
-  BOOL isShiftedOffscreen = boundedAccumulator >= self.computedMinHeightIncludingSafeArea;
-  BOOL isFullyCollapsed = frame.size.height <= self.computedMinHeightIncludingSafeArea + DBL_EPSILON;
+  BOOL isShiftedOffscreen = boundedAccumulator >= self.computedTotalMinHeight;
+  BOOL isFullyCollapsed = frame.size.height <= self.computedTotalMinHeight + DBL_EPSILON;
   BOOL isHidden = isShiftedOffscreen && isFullyCollapsed;
   if (isHidden != self.hidden) {
     self.hidden = isHidden;
@@ -937,14 +937,14 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       CGFloat previousHeaderHeight = headerHeight + deltaY;
 
       // Overshoot coming in
-      if (headerHeight < self.computedMinHeightIncludingSafeArea &&
-          previousHeaderHeight > self.computedMinHeightIncludingSafeArea) {
-        deltaY = self.computedMinHeightIncludingSafeArea - headerHeight;
+      if (headerHeight < self.computedTotalMinHeight &&
+          previousHeaderHeight > self.computedTotalMinHeight) {
+        deltaY = self.computedTotalMinHeight - headerHeight;
 
         // Overshoot going out
-      } else if (headerHeight > self.computedMinHeightIncludingSafeArea &&
-                 previousHeaderHeight < self.computedMinHeightIncludingSafeArea) {
-        deltaY = (headerHeight + deltaY) - self.computedMinHeightIncludingSafeArea;
+      } else if (headerHeight > self.computedTotalMinHeight &&
+                 previousHeaderHeight < self.computedTotalMinHeight) {
+        deltaY = (headerHeight + deltaY) - self.computedTotalMinHeight;
       }
 
       // Calculate the upper bound of the accumulator based on what phase we're in.
@@ -954,7 +954,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       if (headerHeight < 0) {
         // Header is shifting while detached from content.
         upperBound = [self fhv_accumulatorMax] + [self fhv_anchorLength];
-      } else if (headerHeight < self.computedMinHeightIncludingSafeArea) {
+      } else if (headerHeight < self.computedTotalMinHeight) {
         // Header is shifting while attached to content.
         upperBound = [self fhv_accumulatorMax];
       } else {
@@ -974,11 +974,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   CGRect bounds = self.bounds;
 
   if (_canOverExtend) {
-    bounds.size.height = MAX(self.computedMinHeightIncludingSafeArea, headerHeight);
+    bounds.size.height = MAX(self.computedTotalMinHeight, headerHeight);
 
   } else {
-    bounds.size.height = MAX(self.computedMinHeightIncludingSafeArea,
-                             MIN(self.computedMaxHeightIncludingSafeArea, headerHeight));
+    bounds.size.height = MAX(self.computedTotalMinHeight,
+                             MIN(self.computedTotalMaxHeight, headerHeight));
   }
 
   self.bounds = bounds;
@@ -1344,6 +1344,22 @@ static BOOL isRunningiOS10_3OrAbove() {
   }
 }
 
+- (CGFloat)computedTotalMinHeight {
+  if (_minMaxHeightIncludesSafeArea) {
+    return _minimumHeight;
+  } else {
+    return _minimumHeight + [self flexibleHeaderSafeAreaTop];
+  }
+}
+
+- (CGFloat)computedTotalMaxHeight {
+  if (_minMaxHeightIncludesSafeArea) {
+    return _maximumHeight;
+  } else {
+    return _maximumHeight + [self flexibleHeaderSafeAreaTop];
+  }
+}
+
 - (void)setMinMaxHeightIncludesSafeArea:(BOOL)minMaxHeightIncludesSafeArea {
   if (_minMaxHeightIncludesSafeArea == minMaxHeightIncludesSafeArea) {
     return;
@@ -1382,12 +1398,12 @@ static BOOL isRunningiOS10_3OrAbove() {
     CGFloat flexHeight = -offsetTargetY;
 
     if ([self fhv_canShiftOffscreen] &&
-        (0 < flexHeight && flexHeight < self.computedMinHeightIncludingSafeArea)) {
+        (0 < flexHeight && flexHeight < self.computedTotalMinHeight)) {
       // Don't allow the header to be partially visible.
       if (_wantsToBeHidden) {
         target.y = -[self fhv_rawTopContentInset];
       } else {
-        target.y = -self.computedMinHeightIncludingSafeArea - [self fhv_rawTopContentInset];
+        target.y = -self.computedTotalMinHeight - [self fhv_rawTopContentInset];
       }
       *targetContentOffset = target;
       return YES;
@@ -1457,22 +1473,6 @@ static BOOL isRunningiOS10_3OrAbove() {
   // Translucent content means that the status bar shifter should not use snapshotting. Otherwise,
   // stale visual content under the status bar region may be snapshotted.
   _statusBarShifter.snapshottingEnabled = !contentIsTranslucent;
-}
-
-- (CGFloat)computedMinHeightIncludingSafeArea {
-  if (_minMaxHeightIncludesSafeArea) {
-    return _minimumHeight;
-  } else {
-    return _minimumHeight + [self flexibleHeaderSafeAreaTop];
-  }
-}
-
-- (CGFloat)computedMaxHeightIncludingSafeArea {
-  if (_minMaxHeightIncludesSafeArea) {
-    return _maximumHeight;
-  } else {
-    return _maximumHeight + [self flexibleHeaderSafeAreaTop];
-  }
 }
 
 - (CGFloat)flexibleHeaderSafeAreaTop {
