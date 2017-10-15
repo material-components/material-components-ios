@@ -21,6 +21,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MDCTextInputControllerLegacyDefault.h"
 #import "ThemerTypicalUseSupplemental.h"
 
 @implementation ThemerTypicalUseViewController (Supplemental)
