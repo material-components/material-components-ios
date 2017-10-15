@@ -15,9 +15,9 @@
  */
 
 #import "MDCTextField.h"
-#import "MDCTextInput.h"
 
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInput.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
