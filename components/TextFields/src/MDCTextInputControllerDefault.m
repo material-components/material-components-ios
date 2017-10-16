@@ -1277,6 +1277,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self updateBorder];
 }
 
+- (void)textInputDidUpdateConstraints {
+  if (self.isFloatingEnabled && _textInput.text.length > 0) {
+    [self updatePlaceholderAnimationConstraints:YES];
+  }
+}
+
 #pragma mark - UITextField & UITextView Notification Observation
 
 - (void)textInputDidBeginEditing:(__unused NSNotification *)note {
