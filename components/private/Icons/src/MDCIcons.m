@@ -26,7 +26,7 @@
   dispatch_once(&onceToken, ^{
     bundleCache = [[NSCache alloc] init];
   });
-  
+
   NSBundle *bundle = [bundleCache objectForKey:bundleName];
   if (!bundle) {
     NSBundle *baseBundle = [NSBundle bundleForClass:[MDCIcons class]];

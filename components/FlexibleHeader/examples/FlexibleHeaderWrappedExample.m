@@ -91,7 +91,7 @@
   [super viewWillAppear:animated];
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
-  
+
   self.label.center = CGPointMake(self.wrappedViewController.view.frame.size.width / 2.f, 120.f);
 }
 

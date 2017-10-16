@@ -1,3 +1,122 @@
+# 36.2.0
+
+## API Changes
+
+### Text fields
+
+* `-[MDCTabBarControllerDelegate tabBarController:shouldSelectViewController:]` and `-[MDCTabBarControllerDelegate tabBarController:didSelectViewController:]` will be called for the currently-selected tab if the user taps the tab again (that is, the tab doesn't change). This matches Apple's behavior more closely and allows for custom behaviors.
+* `MDCMultilineTextField` now has a `MDCMultilineTextInputDelegate` for useful methods not included in UITextViewDelegate.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### AnimationTiming
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### AppBar
+
+#### Changes
+
+* [Make use of MDCDeviceTopSafeAreaInset. (#2186)](https://github.com/material-components/material-components-ios/commit/778d9c6b2f7ac4c10a4cc101c8c8fd3c9d500e53) (featherless)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### BottomAppBar
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### BottomSheet
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### Dialogs
+
+#### Changes
+
+* [ Respect safe area insets (#2165)](https://github.com/material-components/material-components-ios/commit/5d0ff9467337de10d414b179440279bd5461ea4f) (ianegordon)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Ignore safe area inset changes if we know that the status bar visibility is changing. (#2160)](https://github.com/material-components/material-components-ios/commit/e28536c27d44bc6cb0b6e10204f8bf192cfd7b9d) (featherless)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### ShadowElevations
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+* [Update ShadowElevations to be extensible. (#2145)](https://github.com/material-components/material-components-ios/commit/49fd0a07eaf0c01aa0f0798f13998fdfb6b68be2) (Martin Petrov)
+* [Update shadow examples (#2174)](https://github.com/material-components/material-components-ios/commit/6639fb4f704854452ff391352fecae5b6be81095) (Martin Petrov)
+
+### ShadowLayer
+
+#### Changes
+
+* [Update shadow examples (#2174)](https://github.com/material-components/material-components-ios/commit/6639fb4f704854452ff391352fecae5b6be81095) (Martin Petrov)
+* [[ShadowElevations] Update ShadowElevations to be extensible. (#2145)](https://github.com/material-components/material-components-ios/commit/49fd0a07eaf0c01aa0f0798f13998fdfb6b68be2) (Martin Petrov)
+
+### Snackbar
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### Tabs
+
+#### Changes
+
+* [Add standard Material Design shadow shadow to MDCTabBar (#2148)](https://github.com/material-components/material-components-ios/commit/660c3fb066097f8fc5a42fbda8448ce195f6499e) (Scott Atwood)
+* [Always call MDCTabBarControllerDelegate methods when a tab is tapped (#2155)](https://github.com/material-components/material-components-ios/commit/d46e3a3fab33581e421db27fb5c1592a68dd9b11) (Scott Atwood)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### TextFields
+
+#### Changes
+
+* [Clear button X value adjustment. (#2176)](https://github.com/material-components/material-components-ios/commit/7c5ef7d03ef78b2f013cbb7912c2ccd2e7b85109) (Will Larche)
+* [Fix text fields overlapping labels (#2163)](https://github.com/material-components/material-components-ios/commit/75cf565fea869bb002a797c86d452704d8365d90) (Will Larche)
+* [Implementing textFieldShouldClear: (#2169)](https://github.com/material-components/material-components-ios/commit/07eea020ca381a34ea8cce264becf1e8a2ba38aa) (Will Larche)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+* [Some alphabetizing. (#2166)](https://github.com/material-components/material-components-ios/commit/9cb8ec36dfeca9ff94385b2c995b0198f0ecee9b) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### Typography
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
 # 36.1.0
 
 ## API Changes

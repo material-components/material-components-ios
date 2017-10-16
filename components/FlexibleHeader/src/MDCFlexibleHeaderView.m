@@ -443,6 +443,14 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     if (_hasExplicitlySetMinHeight && _hasExplicitlySetMaxHeight) {
       return;
     }
+
+    if (_isChangingStatusBarVisibility) {
+      // We aren't interest in safe area inset changes due to status bar visibility changes - we're
+      // only interested in hardware-related safe area changes. If we know that we're changing the
+      // status bar visibility then we ignore this safeAreaInsetsDidChange event.
+      return;
+    }
+
     if (!_hasExplicitlySetMinHeight) {
       // Edge case for UITableViewController: If we're a subview of _trackingScrollView,
       // we need to get the Safe Area insets from there and not use ours.

@@ -344,7 +344,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _underlineViewMode = [self class].underlineViewModeDefault;
   _textInput.hidesPlaceholderOnInput = NO;
 
-  [self updatePlaceholderY];
+  [self forceUpdatePlaceholderY];
 }
 
 - (void)setupInput {
@@ -374,7 +374,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   [self subscribeForNotifications];
   _textInput.underline.color = [self class].normalColorDefault;
-  [self updatePlaceholderY];
+  [self forceUpdatePlaceholderY];
 }
 
 - (void)subscribeForNotifications {
@@ -507,7 +507,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 //
 // Note that this calls updateLayout inside it so it is the only 'update-' method not included in
 // updateLayout.
-- (void)updatePlaceholderY {
+- (void)forceUpdatePlaceholderY {
   BOOL isDirectionToUp = NO;
   if (self.floatingEnabled) {
     isDirectionToUp = self.textInput.text.length >= 1 || self.textInput.isEditing;
@@ -885,7 +885,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
   if (_floatingEnabled != floatingEnabled) {
     _floatingEnabled = floatingEnabled;
-    [self updatePlaceholderY];
+    [self forceUpdatePlaceholderY];
   }
 }
 
@@ -1205,7 +1205,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 /**
  textInsets: is the source of truth for vertical layout. It's used to figure out the proper
  height and also where to place the placeholder / text field.
- 
+
  NOTE: It's applied before the textRect is flipped for RTL. So all calculations are done here à la
  LTR.
 
@@ -1312,6 +1312,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     [CATransaction begin];
     [CATransaction setAnimationDuration:0];
     [self updateLayout];
+    [self forceUpdatePlaceholderY];
     [CATransaction commit];
   } else {
     [self updateLayout];

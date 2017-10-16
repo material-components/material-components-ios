@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "36.1.0"
+  s.version      = "36.2.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -83,6 +83,7 @@ Pod::Spec.new do |s|
 
       sss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
       sss.dependency "MaterialComponents/private/RTL"
+      sss.dependency "MaterialComponents/private/UIMetrics"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -256,6 +257,7 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       ss.dependency 'MDFTextAccessibility'
       ss.dependency "MaterialComponents/private/Application"
+      sss.dependency "MaterialComponents/private/UIMetrics"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -431,6 +433,7 @@ Pod::Spec.new do |s|
 
       sss.dependency "MaterialComponents/AnimationTiming"
       sss.dependency "MaterialComponents/Ink"
+      sss.dependency "MaterialComponents/ShadowElevations"
       sss.dependency "MaterialComponents/Typography"
       sss.dependency "MaterialComponents/private/Math"
       sss.dependency "MaterialComponents/private/RTL"
@@ -549,6 +552,14 @@ Pod::Spec.new do |s|
 
       ss.dependency "MaterialComponents/private/Math"
       ss.dependency "MaterialComponents/private/RTL"
+    end
+
+    pss.subspec "UIMetrics" do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+
+      ss.dependency "MaterialComponents/private/Application"
     end
 
   end

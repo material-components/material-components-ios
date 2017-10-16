@@ -105,7 +105,7 @@ static NSString * const kCell = @"Cell";
   [cell setNeedsDisplay];
 }
 
-#pragma mark - 
+#pragma mark -
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
