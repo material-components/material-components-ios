@@ -165,9 +165,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 
+@property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
+
 @property(nonatomic, strong) NSLayoutConstraint *placeholderAnimationConstraintLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderAnimationConstraintTop;
-@property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderAnimationConstraintTrailing;
 
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, copy, readwrite) NSString *errorText;
@@ -567,8 +569,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)updatePlaceholderAnimationConstraints:(BOOL)isToUp {
   if (isToUp) {
-    CGPoint destination = [self floatingPlaceholderDestination];
+    UIOffset destination = [self floatingPlaceholderOffset];
+    UIEdgeInsets insets = self.textInput.textInsets;
 
+    CGFloat horizontalLeading = insets.left - destination.horizontal;
     if (!self.placeholderAnimationConstraintLeading) {
       self.placeholderAnimationConstraintLeading =
           [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -577,9 +581,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                           toItem:self.textInput
                                        attribute:NSLayoutAttributeLeading
                                       multiplier:1
-                                        constant:destination.x];
+                                        constant:horizontalLeading];
     }
-    self.placeholderAnimationConstraintLeading.constant = destination.x;
+    self.placeholderAnimationConstraintLeading.constant = horizontalLeading;
 
     if (!self.placeholderAnimationConstraintTop) {
       self.placeholderAnimationConstraintTop =
@@ -589,12 +593,27 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                           toItem:self.textInput
                                        attribute:NSLayoutAttributeTop
                                       multiplier:1
-                                        constant:destination.y];
+                                        constant:destination.vertical];
     }
-    self.placeholderAnimationConstraintTop.constant = destination.y;
+    self.placeholderAnimationConstraintTop.constant = destination.vertical;
+
+    CGFloat horizontalTrailing = destination.horizontal - insets.right;
+    if (!self.placeholderAnimationConstraintTrailing) {
+      self.placeholderAnimationConstraintTrailing =
+      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.textInput
+                                   attribute:NSLayoutAttributeTrailing
+                                  multiplier:1
+                                    constant:horizontalTrailing];
+      self.placeholderAnimationConstraintTrailing.priority = UILayoutPriorityDefaultHigh - 1;
+    }
+    self.placeholderAnimationConstraintTrailing.constant = horizontalTrailing;
 
     self.placeholderAnimationConstraints = @[ self.placeholderAnimationConstraintLeading,
-                                              self.placeholderAnimationConstraintTop ];
+                                              self.placeholderAnimationConstraintTop,
+                                              self.placeholderAnimationConstraintTrailing ];
     [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
   } else {
     [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
@@ -607,25 +626,30 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self.placeholderAnimationConstraintTop = nil;
 }
 
-- (CGPoint)floatingPlaceholderDestination {
-  CGFloat placeholderY = MDCTextInputDefaultPadding;
+- (UIOffset)floatingPlaceholderOffset {
+  CGFloat vertical = MDCTextInputDefaultPadding;
 
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because autolayout doesn't play well with anchor points.
-  placeholderY -= self.textInput.placeholderLabel.font.lineHeight *
+  vertical -= self.textInput.placeholderLabel.font.lineHeight *
                   (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
 
-  CGFloat placeholderWidth = CGRectGetWidth(self.textInput.placeholderLabel.bounds);
-  if (MDCCGFloatEqual(placeholderWidth, 0) ) {
-    CGSize intrinsicSize =
-        [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    placeholderWidth = intrinsicSize.width;
-  }
-  CGFloat placeholderX =
-      -1 * placeholderWidth * (1.0f - self.floatingPlaceholderScale.floatValue) * .5f;
-  placeholderX += self.textInput.textInsets.left;
+  UIEdgeInsets insets = self.textInput.textInsets;
+  CGFloat placeholderMaxWidth =
+      CGRectGetWidth(self.textInput.bounds) / self.floatingPlaceholderScale.floatValue - insets.left - insets.right;
 
-  return CGPointMake(placeholderX, placeholderY);
+  // This is the amount negative space we need to compensate for but per side.
+
+  CGFloat placeholderWidth =
+      [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].width;
+  if (placeholderWidth > placeholderMaxWidth) {
+    placeholderWidth = placeholderMaxWidth;
+  }
+
+  CGFloat horizontal =
+      placeholderWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+
+  return UIOffsetMake(horizontal, vertical);
 }
 
 #pragma mark - Trailing Label Customization
@@ -636,7 +660,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   } else {
     self.textInput.trailingUnderlineLabel.text = [self characterCountText];
     self.textInput.trailingUnderlineLabel.font = self.trailingUnderlineLabelFont;
-
   }
 
   UIColor *textColor = self.trailingUnderlineLabelTextColor;

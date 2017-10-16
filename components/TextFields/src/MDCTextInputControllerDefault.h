@@ -74,7 +74,7 @@ extern const CGFloat MDCTextInputDefaultUnderlineActiveHeight;
 /**
  Where the floating placeholder should arrive when floating up.
  */
-@property(nonatomic, readonly) CGPoint floatingPlaceholderDestination;
+@property(nonatomic, readonly) UIOffset floatingPlaceholderOffset;
 
 /**
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
