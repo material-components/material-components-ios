@@ -1,4 +1,11 @@
-# release-candidate TODO: Replace me with version number. 
+# 36.2.0
+
+## API Changes
+
+### Text fields
+
+* `-[MDCTabBarControllerDelegate tabBarController:shouldSelectViewController:]` and `-[MDCTabBarControllerDelegate tabBarController:didSelectViewController:]` will be called for the currently-selected tab if the user taps the tab again (that is, the tab doesn't change). This matches Apple's behavior more closely and allows for custom behaviors.
+* `MDCMultilineTextField` now has a `MDCMultilineTextInputDelegate` for useful methods not included in UITextViewDelegate.
 
 # 36.1.0
 
