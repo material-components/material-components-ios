@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialSnackbar.h"
+#import "MDCSnackbarMessage.h"
 
 /**
  Internal-only methods used by MDCSnackbarMessage and MDCSnackbarManager.
