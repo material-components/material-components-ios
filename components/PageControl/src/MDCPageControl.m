@@ -277,6 +277,11 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                    });
 
   } else if (scrolledPercentage >= 0 && scrolledPercentage <= 1) {
+
+    if (_numberOfPages == 0) {
+      return;
+    }
+
     // Update active indicator position.
     CGFloat transformX = scrolledPercentage * _trackLength;
     if (!_isDeferredScrolling) {
