@@ -611,13 +611,18 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGFloat placeholderY = MDCTextInputDefaultPadding;
 
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
-  // Why no anchor point of (0,0)? Because our users wouldn't expect it.
+  // Why no anchor point of (0,0)? Because autolayout doesn't play well with anchor points.
   placeholderY -= self.textInput.placeholderLabel.font.lineHeight *
                   (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
 
+  CGFloat placeholderWidth = CGRectGetWidth(self.textInput.placeholderLabel.bounds);
+  if (MDCCGFloatEqual(placeholderWidth, 0) ) {
+    CGSize intrinsicSize =
+        [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    placeholderWidth = intrinsicSize.width;
+  }
   CGFloat placeholderX =
-      -1 * CGRectGetWidth(self.textInput.placeholderLabel.bounds) * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
-  NSLog(@"%@", NSStringFromCGRect(self.textInput.placeholderLabel.bounds));
+      -1 * placeholderWidth * (1.0f - self.floatingPlaceholderScale.floatValue) * .5f;
   placeholderX += self.textInput.textInsets.left;
 
   return CGPointMake(placeholderX, placeholderY);
