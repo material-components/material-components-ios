@@ -390,8 +390,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [_fundament didSetText];
 
   if (!self.isFirstResponder) {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
-                                                        object:self];
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:MDCTextFieldTextDidSetTextNotification
+                      object:self];
   }
 }
 

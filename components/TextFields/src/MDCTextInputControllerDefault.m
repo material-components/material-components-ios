@@ -430,7 +430,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [defaultCenter removeObserver:self];
 }
 
-
 #pragma mark - Border Customization
 
 - (void)updateBorder {
@@ -600,20 +599,21 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     CGFloat horizontalTrailing = destination.horizontal - insets.right;
     if (!self.placeholderAnimationConstraintTrailing) {
       self.placeholderAnimationConstraintTrailing =
-      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                   attribute:NSLayoutAttributeTrailing
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.textInput
-                                   attribute:NSLayoutAttributeTrailing
-                                  multiplier:1
-                                    constant:horizontalTrailing];
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeTrailing
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput
+                                       attribute:NSLayoutAttributeTrailing
+                                      multiplier:1
+                                        constant:horizontalTrailing];
       self.placeholderAnimationConstraintTrailing.priority = UILayoutPriorityDefaultHigh - 1;
     }
     self.placeholderAnimationConstraintTrailing.constant = horizontalTrailing;
 
-    self.placeholderAnimationConstraints = @[ self.placeholderAnimationConstraintLeading,
-                                              self.placeholderAnimationConstraintTop,
-                                              self.placeholderAnimationConstraintTrailing ];
+    self.placeholderAnimationConstraints = @[
+      self.placeholderAnimationConstraintLeading, self.placeholderAnimationConstraintTop,
+      self.placeholderAnimationConstraintTrailing
+    ];
     [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
   } else {
     [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
@@ -632,14 +632,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because autolayout doesn't play well with anchor points.
   vertical -= self.textInput.placeholderLabel.font.lineHeight *
-                  (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+              (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
 
   UIEdgeInsets insets = self.textInput.textInsets;
   CGFloat placeholderMaxWidth =
-      CGRectGetWidth(self.textInput.bounds) / self.floatingPlaceholderScale.floatValue - insets.left - insets.right;
+      CGRectGetWidth(self.textInput.bounds) / self.floatingPlaceholderScale.floatValue -
+      insets.left - insets.right;
 
   CGFloat placeholderWidth =
-      [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].width;
+      [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
+          .width;
   if (placeholderWidth > placeholderMaxWidth) {
     placeholderWidth = placeholderMaxWidth;
   }
