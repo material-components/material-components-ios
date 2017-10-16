@@ -1,4 +1,10 @@
-# release-candidate TODO: Replace me with version number. 
+# 36.3.0
+
+## API Changes
+
+### Flexible Header
+
+* Added `minMaxHeightIncludesSafeArea` to inform the component if the `minimumHeight` and `maximumHeight` properties include the safe area inset. 
 
 # 36.2.0
 
