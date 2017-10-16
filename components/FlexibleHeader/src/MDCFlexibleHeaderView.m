@@ -134,7 +134,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   BOOL _wantsToBeHidden;
 
   // This will help us track if the size has been explicitly set or if we're using the defaults.
-  BOOL _hasExplicitlySetMinOrMaxHeight;
+  BOOL _hasExplicitlySetMinHeight;
+  BOOL _hasExplicitlySetMaxHeight;
 
   // Since safeAreaInsetsDidChange might be called more than once for the same top safe area inset,
   // we keep track of the latest one we adjusted for, so that we can ignore any repeated calls with
@@ -459,9 +460,10 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
     // If the min or max height have been explicitly set, don't adjust anything if the values
     // already include a Safe Area inset.
-    if (_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+    BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
+    if (hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
       return;
-    } else if (!_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+    } else if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
       // If we're using the defaults we need to update them to account for the new Safe Area inset.
       _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
       _maximumHeight = _minimumHeight;
@@ -599,9 +601,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
         return;
       }
 
-      if (!_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+      // We update the min and max height if we're still using the defaults.
+      BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
+      if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
         _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
-        _maximumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+        _maximumHeight = _minimumHeight;
       }
 
       [self fhv_adjustTrackingScrollViewInsets];
@@ -1311,7 +1315,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)setMinimumHeight:(CGFloat)minimumHeight {
-  _hasExplicitlySetMinOrMaxHeight = YES;
+  _hasExplicitlySetMinHeight = YES;
   if (_minimumHeight == minimumHeight) {
     return;
   }
@@ -1326,7 +1330,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)setMaximumHeight:(CGFloat)maximumHeight {
-  _hasExplicitlySetMinOrMaxHeight = YES;
+  _hasExplicitlySetMaxHeight = YES;
   if (_maximumHeight == maximumHeight) {
     return;
   }
@@ -1363,12 +1367,19 @@ static BOOL isRunningiOS10_3OrAbove() {
     return;
   }
   _minMaxHeightIncludesSafeArea = minMaxHeightIncludesSafeArea;
-  if (!_hasExplicitlySetMinOrMaxHeight) {
+
+  // Update default values accordingly.
+  if (!_hasExplicitlySetMinHeight) {
     if (_minMaxHeightIncludesSafeArea) {
       _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
-      _maximumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
     } else {
       _minimumHeight = kFlexibleHeaderDefaultHeight;
+    }
+  }
+  if (!_hasExplicitlySetMaxHeight) {
+    if (_minMaxHeightIncludesSafeArea) {
+      _maximumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+    } else {
       _maximumHeight = kFlexibleHeaderDefaultHeight;
     }
   }
