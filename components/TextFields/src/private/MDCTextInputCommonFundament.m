@@ -410,7 +410,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   // When push comes to shove, the leading label is more likely to expand than the trailing.
   [_leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
-                                            forAxis:UILayoutConstraintAxisHorizontal];
+                                                forAxis:UILayoutConstraintAxisHorizontal];
 
   [_trailingUnderlineLabel
       setContentCompressionResistancePriority:UILayoutPriorityRequired
