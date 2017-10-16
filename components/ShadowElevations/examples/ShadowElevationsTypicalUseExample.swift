@@ -36,7 +36,7 @@ class ShadowElevationsTypicalUseExample: UIViewController {
     let paperDim = CGFloat(200)
     paper.frame =
       CGRect(x: (view.frame.width - paperDim) / 2, y: paperDim, width: paperDim, height: paperDim)
-     view.addSubview(paper)
+    view.addSubview(paper)
 
     paper.elevation = .fabResting
   }

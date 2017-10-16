@@ -79,7 +79,7 @@ import MaterialComponents.MaterialThemes
 let colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
                                       primaryLightColor: .init(white: 0.7, alpha: 1),
                                       primaryDarkColor: .init(white: 0, alpha: 1))
-                                      
+
 // Theme all instances of the flexible header, progress view and slider components using a
 // UIAppearance proxy.
 MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())

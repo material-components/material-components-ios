@@ -77,17 +77,37 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 }
 
 - (CGRect)frameOfPresentedViewInContainerView {
+  CGRect containerBounds = CGRectStandardize(self.containerView.bounds);
+
+  // For pre iOS 11 devices, we are assuming a safeAreaInset of UIEdgeInsetsZero
+  UIEdgeInsets containerSafeAreaInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    containerSafeAreaInsets = self.containerView.safeAreaInsets;
+  }
+#endif
+
+  // Take the larger of the Safe Area insets and the Material specified insets.
+  containerSafeAreaInsets.top = MAX(containerSafeAreaInsets.top, MDCDialogEdgeInsets.top);
+  containerSafeAreaInsets.left = MAX(containerSafeAreaInsets.left, MDCDialogEdgeInsets.left);
+  containerSafeAreaInsets.right = MAX(containerSafeAreaInsets.right, MDCDialogEdgeInsets.right);
+  containerSafeAreaInsets.bottom = MAX(containerSafeAreaInsets.bottom, MDCDialogEdgeInsets.bottom);
+
+  // Take into account a visible keyboard
+  CGFloat keyboardHeight = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
+  containerSafeAreaInsets.bottom = MAX(containerSafeAreaInsets.bottom, keyboardHeight);
+
+  // Area that the presented dialog can utilize.
+  CGRect standardPresentableBounds = UIEdgeInsetsInsetRect(containerBounds, containerSafeAreaInsets);
+
   CGRect presentedViewFrame = CGRectZero;
-
-  CGRect containerBounds = self.containerView.bounds;
-  containerBounds.size.height -= [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
-
   presentedViewFrame.size = [self sizeForChildContentContainer:self.presentedViewController
-                                       withParentContainerSize:containerBounds.size];
+                                       withParentContainerSize:standardPresentableBounds.size];
 
-  presentedViewFrame.origin.x = (containerBounds.size.width - presentedViewFrame.size.width) * 0.5f;
+  presentedViewFrame.origin.x =
+    containerSafeAreaInsets.left + (standardPresentableBounds.size.width - presentedViewFrame.size.width) * 0.5f;
   presentedViewFrame.origin.y =
-      (containerBounds.size.height - presentedViewFrame.size.height) * 0.5f;
+    containerSafeAreaInsets.top + (standardPresentableBounds.size.height - presentedViewFrame.size.height) * 0.5f;
 
   presentedViewFrame.origin.x = (CGFloat)floor(presentedViewFrame.origin.x);
   presentedViewFrame.origin.y = (CGFloat)floor(presentedViewFrame.origin.y);
@@ -197,11 +217,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     return CGSizeZero;
   }
 
-  CGSize maxChildSize;
-  maxChildSize.width = parentSize.width - MDCDialogEdgeInsets.left - MDCDialogEdgeInsets.right;
-  maxChildSize.height = parentSize.height - MDCDialogEdgeInsets.top - MDCDialogEdgeInsets.bottom;
-
-  CGSize targetSize = maxChildSize;
+  CGSize targetSize = parentSize;
 
   const CGSize preferredContentSize = container.preferredContentSize;
   if (!CGSizeEqualToSize(preferredContentSize, CGSizeZero)) {
@@ -211,9 +227,9 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     if (0.0f < targetSize.width && targetSize.width < MDCDialogMinimumWidth) {
       targetSize.width = MDCDialogMinimumWidth;
     }
-    // targetSize cannot exceed maxChildSize.
-    targetSize.width = MIN(targetSize.width, maxChildSize.width);
-    targetSize.height = MIN(targetSize.height, maxChildSize.height);
+    // targetSize cannot exceed parentSize.
+    targetSize.width = MIN(targetSize.width, parentSize.width);
+    targetSize.height = MIN(targetSize.height, parentSize.height);
   }
 
   targetSize.width = (CGFloat)ceil(targetSize.width);

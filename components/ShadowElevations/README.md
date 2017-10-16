@@ -75,7 +75,7 @@ class ShadowedView: UIView {
   }
 
   func setDefaultElevation() {
-    self.shadowLayer.elevation = MDCShadowElevationCardResting
+    self.shadowLayer.elevation = .cardResting
   }
 
 }

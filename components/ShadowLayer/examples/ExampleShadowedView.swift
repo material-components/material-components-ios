@@ -29,8 +29,13 @@ class ExampleShadowedView: UIView {
     return self.layer as! MDCShadowLayer
   }
 
-  func setElevation(_ points: ShadowElevation) {
-    self.shadowLayer.elevation = points
+  var elevation: ShadowElevation {
+    get {
+      return self.shadowLayer.elevation
+    }
+    set {
+      self.shadowLayer.elevation = newValue
+    }
   }
 
 }

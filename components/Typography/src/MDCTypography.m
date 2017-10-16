@@ -189,7 +189,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 @interface MDCSystemFontLoader ()
 
 /*
- In collectionView scrolling tests, manually caching UIFonts performs around 4.5 times better 
+ In collectionView scrolling tests, manually caching UIFonts performs around 4.5 times better
  (e.g. 230 ms vs. 1,080 ms in one test) than calling [UIFont systemFontForSize:weight:] every time.
  */
 @property(nonatomic, strong) NSCache *fontCache;
@@ -307,7 +307,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   if (font) {
     return font;
   }
-  
+
   UIFont *regular = [self regularFontOfSize:fontSize];
   UIFontDescriptor * _Nullable descriptor = [regular.fontDescriptor
       fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];

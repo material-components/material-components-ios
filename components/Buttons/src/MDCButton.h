@@ -18,6 +18,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialInk.h"
+#import "MaterialShadowElevations.h"
 
 /**
  A Material flat, raised or floating button.
@@ -135,7 +136,7 @@
  @param state The control state to retrieve the elevation.
  @return The elevation for the requested state.
  */
-- (CGFloat)elevationForState:(UIControlState)state;
+- (MDCShadowElevation)elevationForState:(UIControlState)state;
 
 /**
  Sets the elevation for a particular control state.
@@ -143,7 +144,7 @@
  @param elevation The elevation to set.
  @param state The state to set.
  */
-- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state;
+- (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state;
 
 /**
  A color used as the button's @c borderColor for @c state.

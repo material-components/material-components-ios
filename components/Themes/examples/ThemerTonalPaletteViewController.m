@@ -62,7 +62,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
                                    mainColorIndex:5
                                   lightColorIndex:1
                                    darkColorIndex:7];
-      
+
       NSArray<UIColor *> *secondaryTonalColors = @[ [MDCPalette orangePalette].tint50,
                                                     [MDCPalette orangePalette].tint100,
                                                     [MDCPalette orangePalette].tint200,
@@ -78,7 +78,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
                                     mainColorIndex:5
                                    lightColorIndex:1
                                     darkColorIndex:7];
-      
+
       MDCTonalColorScheme *tonalColorScheme =
            [[MDCTonalColorScheme alloc] initWithPrimaryTonalPalette:primaryTonalPalette
                                               secondaryTonalPalette:secondaryTonalPalette];

@@ -18,7 +18,7 @@
 
 #import "MaterialMath.h"
 
-static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.5f;
+static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.0f;
 
 #pragma mark - Drawing
 

@@ -42,7 +42,7 @@
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 600);
-  
+
   self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, 80);
   self.alertButton.center = CGPointMake(self.view.frame.size.width / 2 - 100, 160);
   self.featureButton.center = CGPointMake(self.view.frame.size.width / 2 + 50, 160);
@@ -123,9 +123,9 @@
 
   self.textField = [[MDCTextField alloc] initWithFrame:CGRectMake(0, 0, 250, 50)];
   [self.scrollView addSubview:self.textField];
-  self.textField.placeholder = @"Text Field";
   self.textInputControllerDefault =
       [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.textField];
+  self.textInputControllerDefault.placeholderText = @"Text Field";
 }
 
 - (void)didTapShowAlert:(id)sender {
