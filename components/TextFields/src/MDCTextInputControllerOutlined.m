@@ -152,15 +152,15 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   placeholderLabel.horizontalPadding = MDCTextInputOutlinedTextFieldPlaceholderPadding;
 
   if (!self.placeholderLeading) {
-    self.placeholderLeading =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeLeading
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeLeading
-                                    multiplier:1
-                                      constant:MDCTextInputOutlinedTextFieldFullPadding -
-                                               placeholderLabel.horizontalPadding];
+    self.placeholderLeading = [NSLayoutConstraint
+        constraintWithItem:self.textInput.placeholderLabel
+                 attribute:NSLayoutAttributeLeading
+                 relatedBy:NSLayoutRelationEqual
+                    toItem:self.textInput
+                 attribute:NSLayoutAttributeLeading
+                multiplier:1
+                  constant:MDCTextInputOutlinedTextFieldFullPadding -
+                               placeholderLabel.horizontalPadding];
     self.placeholderLeading.priority = UILayoutPriorityDefaultHigh;
     self.placeholderLeading.active = YES;
   }
