@@ -16,8 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCAppBar;
-@class MDCFlexibleHeaderViewController;
+#import "MaterialAppBar.h"
 
 /**
  The MDCAppBarContainerViewController controller provides an interface for placing a
