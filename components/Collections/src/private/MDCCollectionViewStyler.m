@@ -16,6 +16,7 @@
 
 #import "MDCCollectionViewStyler.h"
 
+#import "MDCCollectionViewStylingDelegate.h"
 #import "MaterialCollectionLayoutAttributes.h"
 #import "MaterialPalettes.h"
 
