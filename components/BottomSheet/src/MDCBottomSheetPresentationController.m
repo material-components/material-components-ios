@@ -17,7 +17,6 @@
 #import "MDCBottomSheetPresentationController.h"
 
 #import "MDCBottomSheetController.h"
-
 #import "MaterialMath.h"
 #import "private/MDCSheetContainerView.h"
 
