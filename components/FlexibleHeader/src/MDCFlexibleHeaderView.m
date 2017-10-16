@@ -461,7 +461,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     } else if (!_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
       // If we're using the defaults we need to update them to account for the new Safe Area inset.
       _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
-      _maximumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+      _maximumHeight = _minimumHeight;
     }
 
     // Adjust the scroll view insets to account for the new Safe Area inset.
