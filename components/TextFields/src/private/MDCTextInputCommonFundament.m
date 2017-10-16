@@ -316,6 +316,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 2
                                                      forAxis:UILayoutConstraintAxisHorizontal];
+  [_placeholderLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                                       forAxis:UILayoutConstraintAxisHorizontal];
+
   _placeholderLabel.textAlignment = NSTextAlignmentNatural;
 
   _placeholderLabel.userInteractionEnabled = NO;
