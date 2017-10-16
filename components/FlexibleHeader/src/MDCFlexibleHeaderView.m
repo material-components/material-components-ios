@@ -136,6 +136,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // This will help us track if the size has been explicitly set or if we're using the defaults.
   BOOL _hasExplicitlySetMinOrMaxHeight;
 
+  // Since safeAreaInsetsDidChange might be called more than once for the same top safe area inset,
+  // we keep track of the latest one we adjusted for, so that we can ignore any repeated calls with
+  // the same value.
   CGFloat _currentSafeAreaInsetTop;
 
   // Shift behavior state
