@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialButtons.h"
+#import "MDCButton.h"
 
 @class MDCInkView;
 
