@@ -32,7 +32,6 @@
   MDCTextField *textFieldName = [[MDCTextField alloc] init];
   [self.view addSubview:textFieldName];
 
-  textFieldName.placeholder = @"Full Name";
   textFieldName.delegate = self;
   textFieldName.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
@@ -41,10 +40,11 @@
 
   textFieldName.frame = CGRectMake(10, 40, CGRectGetWidth(self.view.bounds) - 20, 0);
 
+  self.nameController.placeholderText = @"Full Name";
+
   MDCTextField *textFieldPhone = [[MDCTextField alloc] init];
   [self.view addSubview:textFieldPhone];
 
-  textFieldPhone.placeholder = @"Phone Number";
   textFieldPhone.delegate = self;
   textFieldPhone.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
@@ -54,6 +54,7 @@
   textFieldPhone.frame = CGRectMake(10, CGRectGetMaxY(self.nameController.textInput.frame) + 20,
                                     CGRectGetWidth(self.view.bounds) - 20, 0);
 
+  self.phoneController.placeholderText = @"Phone Number";
   self.phoneController.helperText = @"XXX-XXX-XXXX";
 }
 

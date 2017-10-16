@@ -459,12 +459,19 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       _maximumHeight = _minimumHeight;
     }
 
+    // Ignore any content offset delta that occured as a result of any safe area insets change.
+    _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+
     // The changes might require us to re-calculate the frame, or update the entire layout.
     if (!_trackingScrollView) {
       CGRect bounds = self.bounds;
       bounds.size.height = _minimumHeight;
       self.bounds = bounds;
-      [self fhv_commitAccumulatorToFrame];
+      CGPoint position = self.center;
+      position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
+      position.y += self.bounds.size.height / 2;
+      self.center = position;
+      [self.delegate flexibleHeaderViewFrameDidChange:self];
     } else {
       [self fhv_updateLayout];
     }
@@ -604,7 +611,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 - (CGFloat)fhv_accumulatorMax {
   BOOL shouldCollapseToStatusBar = [self fhv_shouldCollapseToStatusBar];
   CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
-  return (shouldCollapseToStatusBar ? _minimumHeight - statusBarHeight : _minimumHeight);
+  return (shouldCollapseToStatusBar ? MAX(0, _minimumHeight - statusBarHeight) : _minimumHeight);
 }
 
 #pragma mark Logical short forms
@@ -806,7 +813,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [_statusBarShifter setOffset:boundedAccumulator];
 
   // Small performance improvement to not set the hidden property on every scroll tick.
-  BOOL isHidden = boundedAccumulator >= _minimumHeight;
+  BOOL isShiftedOffscreen = boundedAccumulator >= _minimumHeight;
+  BOOL isFullyCollapsed = frame.size.height <= _minimumHeight + DBL_EPSILON;
+  BOOL isHidden = isShiftedOffscreen && isFullyCollapsed;
   if (isHidden != self.hidden) {
     self.hidden = isHidden;
   }
@@ -1214,6 +1223,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
            NSStringFromClass([self class]), NSStringFromSelector(_cmd),
            NSStringFromSelector(@selector(interfaceOrientationWillChange)));
+  [self fhv_updateLayout];
 }
 
 - (void)interfaceOrientationDidChange {

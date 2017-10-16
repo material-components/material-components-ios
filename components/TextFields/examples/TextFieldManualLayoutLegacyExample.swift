@@ -34,39 +34,37 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
 
   let name: MDCTextField = {
     let name = MDCTextField()
-    name.placeholder = "Name"
+    name.autocapitalizationType = .words
     return name
   }()
 
   let address: MDCTextField = {
     let address = MDCTextField()
-    address.placeholder = "Address"
+    address.autocapitalizationType = .words
     return address
   }()
 
   let city: MDCTextField = {
     let city = MDCTextField()
-    city.placeholder = "City"
+    city.autocapitalizationType = .words
     return city
   }()
   let cityController: MDCTextInputControllerLegacyDefault
 
   let state: MDCTextField = {
     let state = MDCTextField()
-    state.placeholder = "State"
+    state.autocapitalizationType = .allCharacters
     return state
   }()
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
-    zip.placeholder = "Zip code"
     return zip
   }()
   let zipController: MDCTextInputControllerLegacyDefault
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
-    phone.placeholder = "Phone number"
     return phone
   }()
 
@@ -118,15 +116,18 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerLegacyDefault(textInput: name)
     name.delegate = self
+    nameController.placeholderText = "Name"
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
     let addressController = MDCTextInputControllerLegacyDefault(textInput: address)
     address.delegate = self
+    addressController.placeholderText = "Address"
     allTextFieldControllers.append(addressController)
 
     scrollView.addSubview(city)
     city.delegate = self
+    cityController.placeholderText = "City"
     allTextFieldControllers.append(cityController)
 
     scrollView.addSubview(stateZip)
@@ -134,15 +135,19 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     stateZip.addSubview(state)
     let stateController = MDCTextInputControllerLegacyDefault(textInput: state)
     state.delegate = self
+    stateController.placeholderText = "State"
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
     zip.delegate = self
+    zipController.placeholderText = "Zip Code"
+    zipController.helperText = "XXXXX"
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
     let phoneController = MDCTextInputControllerLegacyDefault(textInput: phone)
     phone.delegate = self
+    phoneController.placeholderText = "Phone Number"
     allTextFieldControllers.append(phoneController)
 
     var tag = 0
