@@ -17,13 +17,12 @@
 #import "MDCFlexibleHeaderView.h"
 
 #import "MaterialApplication.h"
+#import "MaterialUIMetrics.h"
 #import "private/MDCStatusBarShifter.h"
 
 #if TARGET_IPHONE_SIMULATOR
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
 #endif
-
-static const CGFloat kPreIOS11ExpectedStatusBarHeight = 20;
 
 // The default maximum height for the header. Does not include the status bar height.
 static const CGFloat kFlexibleHeaderDefaultHeight = 56;
@@ -67,6 +66,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 static NSString *const MDCFlexibleHeaderMinimumHeightKey = @"MDCFlexibleHeaderMinimumHeightKey";
 static NSString *const MDCFlexibleHeaderMaximumHeightKey = @"MDCFlexibleHeaderMaximumHeightKey";
+static NSString *const MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey =
+    @"MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey";
 static NSString *const MDCFlexibleHeaderShiftBehaviorKey = @"MDCFlexibleHeaderShiftBehaviorKey";
 static NSString *const MDCFlexibleHeaderContentImportanceKey =
     @"MDCFlexibleHeaderContentImportanceKey";
@@ -133,8 +134,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   BOOL _wantsToBeHidden;
 
   // This will help us track if the size has been explicitly set or if we're using the defaults.
-  BOOL _hasExplicitlySetMinHeight;
-  BOOL _hasExplicitlySetMaxHeight;
+  BOOL _hasExplicitlySetMinOrMaxHeight;
+
+  // Since safeAreaInsetsDidChange might be called more than once for the same top safe area inset,
+  // we keep track of the latest one we adjusted for, so that we can ignore any repeated calls with
+  // the same value.
+  CGFloat _currentSafeAreaInsetTop;
 
   // Shift behavior state
 
@@ -208,6 +213,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       _maximumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMaximumHeightKey];
     }
 
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey]) {
+      _minMaxHeightIncludesSafeArea =
+          [aDecoder decodeBoolForKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderShiftBehaviorKey]) {
       _shiftBehavior = [aDecoder decodeIntegerForKey:MDCFlexibleHeaderShiftBehaviorKey];
     }
@@ -260,6 +270,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   [aCoder encodeDouble:self.minimumHeight forKey:MDCFlexibleHeaderMinimumHeightKey];
   [aCoder encodeDouble:self.maximumHeight forKey:MDCFlexibleHeaderMaximumHeightKey];
+  [aCoder encodeBool:self.minMaxHeightIncludesSafeArea
+              forKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey];
   [aCoder encodeInteger:self.shiftBehavior forKey:MDCFlexibleHeaderShiftBehaviorKey];
   [aCoder encodeInteger:self.headerContentImportance forKey:MDCFlexibleHeaderContentImportanceKey];
   [aCoder encodeBool:self.canOverExtend forKey:MDCFlexibleHeaderCanOverExtendKey];
@@ -298,16 +310,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
   _statusBarHintCanOverlapHeader = YES;
 
-  _minimumHeight = kFlexibleHeaderDefaultHeight + kPreIOS11ExpectedStatusBarHeight;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    // Starting from iOS 11, we should adapt the size of this component to take into account
-    // the new status bar sizes and the "no status bar in landscape" functionality.
-    CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
-    _minimumHeight = kFlexibleHeaderDefaultHeight + statusBarHeight;
-  }
-#endif
+  _minMaxHeightIncludesSafeArea = YES;
+  _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
   _maximumHeight = _minimumHeight;
+
+  // We start with a current Safe Area inset of -1 to signal that is not a valid 0.
+  _currentSafeAreaInsetTop = -1;
+
   _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
   _canOverExtend = YES;
 
@@ -382,7 +391,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 #pragma mark - UIView
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return CGSizeMake(size.width, _minimumHeight);
+  return CGSizeMake(size.width, self.computedMinimumHeight);
 }
 
 - (void)layoutSubviews {
@@ -436,36 +445,30 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 - (void)safeAreaInsetsDidChange {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
-
-    // If the min/max height hasn't been explicitly set, we need to update the layout to reflect
-    // the change in the Safe Area insets.
-    if (_hasExplicitlySetMinHeight && _hasExplicitlySetMaxHeight) {
-      return;
-    }
-
     if (_isChangingStatusBarVisibility) {
       // We aren't interest in safe area inset changes due to status bar visibility changes - we're
       // only interested in hardware-related safe area changes. If we know that we're changing the
       // status bar visibility then we ignore this safeAreaInsetsDidChange event.
       return;
     }
+    CGFloat safeAreaTop = MDCDeviceTopSafeAreaInset();
+    if (_currentSafeAreaInsetTop == safeAreaTop) {
+      return;
+    }
+    _currentSafeAreaInsetTop = safeAreaTop;
 
-    if (!_hasExplicitlySetMinHeight) {
-      // Edge case for UITableViewController: If we're a subview of _trackingScrollView,
-      // we need to get the Safe Area insets from there and not use ours.
-      if ([self isDescendantOfView:_trackingScrollView]) {
-        _minimumHeight = kFlexibleHeaderDefaultHeight + _trackingScrollView.safeAreaInsets.top;
-      } else {
-        _minimumHeight = kFlexibleHeaderDefaultHeight + self.safeAreaInsets.top;
-      }
-    }
-    if (!_hasExplicitlySetMaxHeight) {
+    // If the min or max height have been explicitly set, don't adjust anything if the values
+    // already include a Safe Area inset.
+    if (_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+      return;
+    } else if (!_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+      // If we're using the defaults we need to update them to account for the new Safe Area inset.
+      _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
       _maximumHeight = _minimumHeight;
     }
-    if (_maximumHeight < _minimumHeight) {
-      _maximumHeight = _minimumHeight;
-    }
+
+    // Adjust the scroll view insets to account for the new Safe Area inset.
+    [self fhv_adjustTrackingScrollViewInsets];
 
     // Ignore any content offset delta that occured as a result of any safe area insets change.
     _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
@@ -473,7 +476,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     // The changes might require us to re-calculate the frame, or update the entire layout.
     if (!_trackingScrollView) {
       CGRect bounds = self.bounds;
-      bounds.size.height = _minimumHeight;
+      bounds.size.height = self.computedMinimumHeight;
       self.bounds = bounds;
       CGPoint position = self.center;
       position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
@@ -489,12 +492,30 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
 #pragma mark - Private (fhv_ prefix)
 
+- (void)fhv_adjustTrackingScrollViewInsets {
+  CGPoint originalOffset = _trackingScrollView.contentOffset;
+  [self fhv_removeInsetsFromScrollView:_trackingScrollView];
+  CGPoint stashedOffset = _trackingScrollView.contentOffset;
+  [self fhv_addInsetsToScrollView:_trackingScrollView];
+
+  // Only restore the content offset if UIScrollView didn't decide to update the content offset for
+  // us. Notably, it seems to automatically adjust the content offset in the first runloop in which
+  // the scroll view's been created, but not in any further runloops.
+  if (CGPointEqualToPoint(stashedOffset, _trackingScrollView.contentOffset)) {
+    CGFloat scrollViewAdjustedContentInsetTop = _trackingScrollView.contentInset.top;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      scrollViewAdjustedContentInsetTop = _trackingScrollView.adjustedContentInset.top;
+    }
+#endif
+    originalOffset.y = MAX(originalOffset.y, -scrollViewAdjustedContentInsetTop);
+    _trackingScrollView.contentOffset = originalOffset;
+  }
+}
+
 - (void)fhv_removeInsetsFromScrollView:(UIScrollView *)scrollView {
   if (!scrollView) {
     return;
-  }
-  if (_sharedWithManyScrollViews) {
-    return;  // Never remove our insets from scroll views while the header is being shared.
   }
 
   MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
@@ -528,11 +549,27 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
   }
 
+  // We need to take into account any Safe Area inset the scroll view might already have.
+  CGFloat safeAreaAdjustment = 0;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAlways ||
+        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAutomatic) {
+      if (scrollView.contentInset.top != scrollView.adjustedContentInset.top) {
+        // Only adjust for safe area insets if the content inset of it is affected by it.
+        safeAreaAdjustment = MDCDeviceTopSafeAreaInset();
+      }
+    }
+  }
+#endif
+
   if (!info.hasInjectedTopContentInset) {
     UIEdgeInsets insets = scrollView.contentInset;
-    insets.top += _maximumHeight;
-    info.injectedTopContentInset = _maximumHeight;
+    insets.top += self.computedMaximumHeight - safeAreaAdjustment;
+    info.injectedTopContentInset = self.computedMaximumHeight - safeAreaAdjustment;
     info.hasInjectedTopContentInset = YES;
+    info.topSafeAreaInsetAdjustment = safeAreaAdjustment;
+    info.hasTopSafeAreaInsetAdjustment = YES;
     scrollView.contentInset = insets;
   }
 
@@ -557,21 +594,17 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
       // If the injected Safe Area inset hasn't changed, no-op.
       MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
-      if (!info || info.topSafeAreaInsetAdjustment == scrollView.safeAreaInsets.top) {
+      if (!info || (info.hasTopSafeAreaInsetAdjustment &&
+                    info.topSafeAreaInsetAdjustment == MDCDeviceTopSafeAreaInset())) {
         return;
       }
 
-      UIEdgeInsets insets = scrollView.contentInset;
-      if (info.hasTopSafeAreaInsetAdjustment) {
-        insets.top += info.topSafeAreaInsetAdjustment;
+      if (!_hasExplicitlySetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+        _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+        _maximumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
       }
-      info.topSafeAreaInsetAdjustment = scrollView.safeAreaInsets.top;
-      insets.top -= info.topSafeAreaInsetAdjustment;
-      info.hasTopSafeAreaInsetAdjustment = YES;
-      scrollView.contentInset = insets;
 
-      // Update injectedTopContentInset to account for the scroll view's Safe Area inset.
-      info.injectedTopContentInset = _maximumHeight - info.topSafeAreaInsetAdjustment;
+      [self fhv_adjustTrackingScrollViewInsets];
     }
   }
 #endif
@@ -619,7 +652,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 - (CGFloat)fhv_accumulatorMax {
   BOOL shouldCollapseToStatusBar = [self fhv_shouldCollapseToStatusBar];
   CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
-  return (shouldCollapseToStatusBar ? MAX(0, _minimumHeight - statusBarHeight) : _minimumHeight);
+  return (shouldCollapseToStatusBar ? MAX(0, self.computedMinimumHeight - statusBarHeight) :
+             self.computedMinimumHeight);
 }
 
 #pragma mark Logical short forms
@@ -667,8 +701,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   if (frame.origin.y < 0) {
     _scrollPhase = MDCFlexibleHeaderScrollPhaseShifting;
-    _scrollPhaseValue = frame.origin.y + _minimumHeight;
-    CGFloat adjustedHeight = _minimumHeight;
+    _scrollPhaseValue = frame.origin.y + self.computedMinimumHeight;
+    CGFloat adjustedHeight = self.computedMinimumHeight;
     if ([self fhv_shouldCollapseToStatusBar]) {
       CGFloat statusBarHeight =
           [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
@@ -685,12 +719,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   _scrollPhaseValue = frame.size.height;
 
-  if (frame.size.height < _maximumHeight) {
+  if (frame.size.height < self.computedMaximumHeight) {
     _scrollPhase = MDCFlexibleHeaderScrollPhaseCollapsing;
 
-    CGFloat heightLength = _maximumHeight - _minimumHeight;
+    CGFloat heightLength = self.computedMaximumHeight - self.computedMinimumHeight;
     if (heightLength > 0) {
-      _scrollPhasePercentage = (frame.size.height - _minimumHeight) / heightLength;
+      _scrollPhasePercentage = (frame.size.height - self.computedMinimumHeight) / heightLength;
     } else {
       _scrollPhasePercentage = 0;
     }
@@ -699,8 +733,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
 
   _scrollPhase = MDCFlexibleHeaderScrollPhaseOverExtending;
-  if (_maximumHeight > 0) {
-    _scrollPhasePercentage = 1 + (frame.size.height - _maximumHeight) / _maximumHeight;
+  if (self.computedMaximumHeight > 0) {
+    _scrollPhasePercentage = 1 +
+        (frame.size.height - self.computedMaximumHeight) / self.computedMaximumHeight;
   } else {
     _scrollPhasePercentage = 0;
   }
@@ -789,7 +824,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   if (self.hidesStatusBarWhenCollapsed) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
-    CGFloat accumulator = MAX(0, MIN(kShadowScaleLength, _minimumHeight - boundedAccumulator));
+    CGFloat accumulator = MAX(0, MIN(kShadowScaleLength,
+                                     self.computedMinimumHeight - boundedAccumulator));
     if (self.isInFrontOfInfiniteContent) {
       // When in front of infinite content we only care to hide the shadow when our header is
       // off-screen.
@@ -821,8 +857,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [_statusBarShifter setOffset:boundedAccumulator];
 
   // Small performance improvement to not set the hidden property on every scroll tick.
-  BOOL isShiftedOffscreen = boundedAccumulator >= _minimumHeight;
-  BOOL isFullyCollapsed = frame.size.height <= _minimumHeight + DBL_EPSILON;
+  BOOL isShiftedOffscreen = boundedAccumulator >= self.computedMinimumHeight;
+  BOOL isFullyCollapsed = frame.size.height <= self.computedMinimumHeight + DBL_EPSILON;
   BOOL isHidden = isShiftedOffscreen && isFullyCollapsed;
   if (isHidden != self.hidden) {
     self.hidden = isHidden;
@@ -836,7 +872,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // If on iOS 11, take into account the scroll view's Safe Area insets.
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    _trackingInfo.injectedTopScrollIndicatorInset -= _trackingScrollView.safeAreaInsets.top;
+    _trackingInfo.injectedTopScrollIndicatorInset -= MDCDeviceTopSafeAreaInset();
   }
 #endif
 
@@ -899,25 +935,28 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       CGFloat previousHeaderHeight = headerHeight + deltaY;
 
       // Overshoot coming in
-      if (headerHeight < _minimumHeight && previousHeaderHeight > _minimumHeight) {
-        deltaY = _minimumHeight - headerHeight;
+      if (headerHeight < self.computedMinimumHeight &&
+          previousHeaderHeight > self.computedMinimumHeight) {
+        deltaY = self.computedMinimumHeight - headerHeight;
 
         // Overshoot going out
-      } else if (headerHeight > _minimumHeight && previousHeaderHeight < _minimumHeight) {
-        deltaY = (headerHeight + deltaY) - _minimumHeight;
+      } else if (headerHeight > self.computedMinimumHeight &&
+                 previousHeaderHeight < self.computedMinimumHeight) {
+        deltaY = (headerHeight + deltaY) - self.computedMinimumHeight;
       }
 
       // Calculate the upper bound of the accumulator based on what phase we're in.
 
       CGFloat upperBound;
 
-      if (headerHeight < 0) {  // Header is shifting while detached from content.
+      if (headerHeight < 0) {
+        // Header is shifting while detached from content.
         upperBound = [self fhv_accumulatorMax] + [self fhv_anchorLength];
-
-      } else if (headerHeight < _minimumHeight) {  // Header is shifting while attached to content.
+      } else if (headerHeight < self.computedMinimumHeight) {
+        // Header is shifting while attached to content.
         upperBound = [self fhv_accumulatorMax];
-
-      } else {  // Header is not shifting.
+      } else {
+        // Header is not shifting.
         upperBound = 0;
       }
 
@@ -933,10 +972,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   CGRect bounds = self.bounds;
 
   if (_canOverExtend) {
-    bounds.size.height = MAX(_minimumHeight, headerHeight);
+    bounds.size.height = MAX(self.computedMinimumHeight, headerHeight);
 
   } else {
-    bounds.size.height = MAX(_minimumHeight, MIN(_maximumHeight, headerHeight));
+    bounds.size.height = MAX(self.computedMinimumHeight,
+                             MIN(self.computedMaximumHeight, headerHeight));
   }
 
   self.bounds = bounds;
@@ -1092,7 +1132,9 @@ static BOOL isRunningiOS10_3OrAbove() {
 
   // If this header is shared by many scroll views then we leave the insets when switching the
   // tracking scroll view.
-  [self fhv_removeInsetsFromScrollView:_trackingScrollView];
+  if (!_sharedWithManyScrollViews) {
+    [self fhv_removeInsetsFromScrollView:_trackingScrollView];
+  }
 
   BOOL wasTrackingScrollView = _trackingScrollView != nil;
 
@@ -1106,9 +1148,6 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (!_sharedWithManyScrollViews || !_trackingInfo) {
     [self fhv_addInsetsToScrollView:_trackingScrollView];
   }
-
-  // Before we update the layout, take into account the scroll view's Safe Area insets.
-  [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
 
   void (^animate)(void) = ^{
     [self fhv_updateLayout];
@@ -1136,7 +1175,9 @@ static BOOL isRunningiOS10_3OrAbove() {
 - (void)trackingScrollViewDidScroll {
   // This could've been triggered by a change in the scroll view's Safe Area, so we need to check
   // if it did. If it didn't, this is a no-op.
-  [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+  if (!_interfaceOrientationIsChanging) {
+    [self fhv_adjustInsetsForSafeAreaInScrollView:_trackingScrollView];
+  }
 
   [self fhv_contentOffsetDidChange];
 }
@@ -1270,7 +1311,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)setMinimumHeight:(CGFloat)minimumHeight {
-  _hasExplicitlySetMinHeight = YES;
+  _hasExplicitlySetMinOrMaxHeight = YES;
   if (_minimumHeight == minimumHeight) {
     return;
   }
@@ -1285,32 +1326,51 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)setMaximumHeight:(CGFloat)maximumHeight {
-  _hasExplicitlySetMaxHeight = YES;
+  _hasExplicitlySetMinOrMaxHeight = YES;
   if (_maximumHeight == maximumHeight) {
     return;
   }
 
-  CGPoint originalOffset = _trackingScrollView.contentOffset;
-
-  [self fhv_removeInsetsFromScrollView:_trackingScrollView];
-
   _maximumHeight = maximumHeight;
 
-  CGPoint stashedOffset = _trackingScrollView.contentOffset;
-  [self fhv_addInsetsToScrollView:_trackingScrollView];
-
-  // Only restore the content offset if UIScrollView didn't decide to update the content offset for
-  // us. Notably, it seems to automatically adjust the content offset in the first runloop in which
-  // the scroll view's been created, but not in any further runloops.
-  if (CGPointEqualToPoint(stashedOffset, _trackingScrollView.contentOffset)) {
-    originalOffset.y = MAX(originalOffset.y, -_trackingScrollView.contentInset.top);
-    _trackingScrollView.contentOffset = originalOffset;
-  }
+  [self fhv_adjustTrackingScrollViewInsets];
 
   if (_maximumHeight < _minimumHeight) {
     [self setMinimumHeight:_maximumHeight];
   } else {
     [self fhv_updateLayout];
+  }
+}
+
+- (CGFloat)computedMinimumHeight {
+  if (_minMaxHeightIncludesSafeArea) {
+    return _minimumHeight;
+  } else {
+    return _minimumHeight + MDCDeviceTopSafeAreaInset();
+  }
+}
+
+- (CGFloat)computedMaximumHeight {
+  if (_minMaxHeightIncludesSafeArea) {
+    return _maximumHeight;
+  } else {
+    return _maximumHeight + MDCDeviceTopSafeAreaInset();
+  }
+}
+
+- (void)setMinMaxHeightIncludesSafeArea:(BOOL)minMaxHeightIncludesSafeArea {
+  if (_minMaxHeightIncludesSafeArea == minMaxHeightIncludesSafeArea) {
+    return;
+  }
+  _minMaxHeightIncludesSafeArea = minMaxHeightIncludesSafeArea;
+  if (!_hasExplicitlySetMinOrMaxHeight) {
+    if (_minMaxHeightIncludesSafeArea) {
+      _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+      _maximumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+    } else {
+      _minimumHeight = kFlexibleHeaderDefaultHeight;
+      _maximumHeight = kFlexibleHeaderDefaultHeight;
+    }
   }
 }
 
@@ -1335,12 +1395,13 @@ static BOOL isRunningiOS10_3OrAbove() {
     CGFloat offsetTargetY = target.y + [self fhv_rawTopContentInset];
     CGFloat flexHeight = -offsetTargetY;
 
-    if ([self fhv_canShiftOffscreen] && (0 < flexHeight && flexHeight < _minimumHeight)) {
+    if ([self fhv_canShiftOffscreen] &&
+        (0 < flexHeight && flexHeight < self.computedMinimumHeight)) {
       // Don't allow the header to be partially visible.
       if (_wantsToBeHidden) {
         target.y = -[self fhv_rawTopContentInset];
       } else {
-        target.y = -_minimumHeight - [self fhv_rawTopContentInset];
+        target.y = -self.computedMinimumHeight - [self fhv_rawTopContentInset];
       }
       *targetContentOffset = target;
       return YES;
