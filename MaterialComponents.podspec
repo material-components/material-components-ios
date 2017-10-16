@@ -434,6 +434,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/AnimationTiming"
       sss.dependency "MaterialComponents/Ink"
       sss.dependency "MaterialComponents/ShadowElevations"
+      sss.dependency "MaterialComponents/ShadowLayer"
       sss.dependency "MaterialComponents/Typography"
       sss.dependency "MaterialComponents/private/Math"
       sss.dependency "MaterialComponents/private/RTL"
