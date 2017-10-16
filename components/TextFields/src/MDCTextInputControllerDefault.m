@@ -638,8 +638,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGFloat placeholderMaxWidth =
       CGRectGetWidth(self.textInput.bounds) / self.floatingPlaceholderScale.floatValue - insets.left - insets.right;
 
-  // This is the amount negative space we need to compensate for but per side.
-
   CGFloat placeholderWidth =
       [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].width;
   if (placeholderWidth > placeholderMaxWidth) {
