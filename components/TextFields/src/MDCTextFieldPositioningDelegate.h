@@ -47,4 +47,7 @@
 /** Called from the end of the input's layoutSubviews. */
 - (void)textInputDidLayoutSubviews;
 
+/** Called from the end of the input's updateConstraints. */
+- (void)textInputDidUpdateConstraints;
+
 @end

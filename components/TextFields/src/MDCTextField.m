@@ -597,6 +597,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   [self updateUnderlinePosition];
   [super updateConstraints];
+  if ([self.positioningDelegate respondsToSelector:@selector(textInputDidUpdateConstraints)]) {
+    [self.positioningDelegate textInputDidUpdateConstraints];
+  }
 }
 
 + (BOOL)requiresConstraintBasedLayout {
