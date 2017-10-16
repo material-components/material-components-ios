@@ -16,8 +16,6 @@
 
 #import "MDCAppBarContainerViewController.h"
 
-#import "MDCAppBar.h"
-
 #import "MaterialFlexibleHeader.h"
 
 @implementation MDCAppBarContainerViewController {
