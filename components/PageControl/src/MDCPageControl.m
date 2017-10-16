@@ -276,12 +276,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                                                mediaTimingFunction:animation.timingFunction];
                    });
 
-  } else if (scrolledPercentage >= 0 && scrolledPercentage <= 1) {
-
-    if (_numberOfPages == 0) {
-      return;
-    }
-
+  } else if (scrolledPercentage >= 0 && scrolledPercentage <= 1 && _numberOfPages > 0) {
     // Update active indicator position.
     CGFloat transformX = scrolledPercentage * _trackLength;
     if (!_isDeferredScrolling) {
