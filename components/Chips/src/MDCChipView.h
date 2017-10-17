@@ -1,0 +1,169 @@
+/*
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+#import <UIKit/UIKit.h>
+
+@interface MDCChipView : UIControl
+
+/*
+ A UIImageView that leads the title label.
+
+ Only visible when the image is non-nil.
+ */
+@property(nonatomic, readonly, nonnull) UIImageView *imageView;
+
+/*
+ A UIImageView that leads the title label. Appears above the imageView.
+
+ Only visible when the chip is selected and the image is non-nil.
+ */
+@property(nonatomic, readonly, nonnull) UIImageView *selectedImageView;
+
+/*
+ A UIView that trails the title label.
+
+ It will be given a size based on the value returned from sizeThatFits:.
+ */
+@property(nonatomic, strong, nullable) UIView *accessoryView;
+
+/*
+ The title label.
+
+ @note The title color is controlled by setTitleColor:forState:.
+ */
+@property(nonatomic, readonly, nonnull) UILabel *titleLabel;
+
+/*
+ Padding around the image view. Only used if the image view has a non-nil image.
+
+ Defaults to (0, 0, 0, 0).
+ */
+@property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;
+
+/*
+ Padding around the accessory view. Only used if the accessory view is non-nil.
+
+ Defaults to (0, 0, 0, 0).
+ */
+@property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;
+
+/*
+ Padding around the title.
+
+ Defaults to (8, 12, 8, 12).
+ */
+@property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;
+
+/*
+ Indicates whether the chip should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ If set to YES, this button will base its text font on MDCFontTextStyleButton.
+
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
+/*
+ A color used as the chip's @c backgroundColor for @c state.
+
+ @param state The state.
+ @return The background color.
+ */
+- (nullable UIColor *)backgroundColorForState:(UIControlState)state;
+
+/*
+ A color used as the chip's @c backgroundColor.
+
+ If left unset or reset to nil for a particular control state, then a default blue color is used.
+
+ @param backgroundColor The background color.
+ @param state The state.
+ */
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/*
+ Returns the border color for a particular control state.
+
+ @param state The control state to retrieve the elevation.
+ @return The border color for the requested state.
+ */
+- (nullable UIColor *)borderColorForState:(UIControlState)state;
+
+/*
+ Sets the border color for a particular control state.
+
+ @param borderColor The border color.
+ @param state The state.
+ */
+- (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/*
+ Returns the border width for a particular control state.
+
+ @param state The control state to retrieve the elevation.
+ @return The border width for the requested state.
+ */
+- (CGFloat)borderWidthForState:(UIControlState)state;
+
+/*
+ Sets the border width for a particular control state.
+
+ @param borderWidth The border width.
+ @param state The state.
+ */
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/*
+ Returns the elevation for a particular control state.
+
+ @param state The control state to retrieve the elevation.
+ @return The elevation for the requested state.
+ */
+- (CGFloat)elevationForState:(UIControlState)state;
+
+/*
+ Sets the elevation for a particular control state.
+
+ @param elevation The elevation to set.
+ @param state The state to set.
+ */
+- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/*
+ Returns the title color for a particular control state.
+
+ @param state The control state to retrieve the elevation.
+ @return The title color for the requested state.
+ */
+- (nullable UIColor *)titleColorForState:(UIControlState)state;
+
+/*
+ Sets the title color for a particular control state.
+
+ @param titleColor The title color.
+ @param state The state.
+ */
+- (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+@end
