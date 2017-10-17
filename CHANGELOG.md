@@ -1,3 +1,20 @@
+# 36.3.0
+
+## API Changes
+
+### Flexible Header
+
+* Added `minMaxHeightIncludesSafeArea` to inform the component if the `minimumHeight` and `maximumHeight` properties include the safe area inset. 
+
+## Component changes
+
+### FlexibleHeader
+
+#### Changes
+
+* [Introduce minMaxHeightIncludesSafeArea and fix rotation bugs. (#2184)](https://github.com/material-components/material-components-ios/commit/100d18816b7574f4c210df9c7c3afa716f661b78) (Andrés)
+* [Split _hasExplicitlySetMinOrMaxHeight into two. (#2196)](https://github.com/material-components/material-components-ios/commit/1c754aee3b1dda7166babc97306c315c4d7b901d) (Andrés)
+
 # 36.2.0
 
 ## API Changes
