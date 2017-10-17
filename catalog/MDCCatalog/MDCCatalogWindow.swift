@@ -17,6 +17,7 @@ limitations under the License.
 import UIKit
 
 import MaterialComponents.MaterialOverlayWindow
+import MaterialComponents.MaterialDialogs
 
 /**
  A custom UIWindow that displays the user's touches for recording video or demos.
@@ -24,17 +25,34 @@ import MaterialComponents.MaterialOverlayWindow
  Triple tapping anywhere will toggle the visible touches.
  */
 class MDCCatalogWindow: MDCOverlayWindow {
-  var enabled = false
+  var debugUIEnabled = true
+  var showTouches = false
 
   fileprivate let fadeDuration: TimeInterval = 0.2
-  fileprivate var views = [Int: UIView]()
+  fileprivate var touchViews = [Int: UIView]()
+  fileprivate var edgeView = MDCDebugSafeAreaInsetsView()
+
+  var showSafeAreaEdgeInsets:Bool {
+    set {
+      if newValue {
+        edgeView.frame = bounds
+        edgeView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(edgeView)
+      } else {
+        edgeView.removeFromSuperview()
+      }
+    }
+    get {
+      return edgeView.superview == self
+    }
+  }
 
   override func sendEvent(_ event: UIEvent) {
     if let touches = event.allTouches {
       for touch in touches {
         switch touch.phase {
         case .began:
-          if enabled {
+          if showTouches {
             beginDisplayingTouch(touch)
           }
           continue
@@ -44,8 +62,8 @@ class MDCCatalogWindow: MDCOverlayWindow {
         case .stationary:
           continue
         case .ended:
-          if touch.tapCount == 3 {
-            enabled = !enabled
+          if touch.tapCount == 3 && debugUIEnabled {
+            showDebugSettings()
           }
           fallthrough
         case .cancelled:
@@ -58,28 +76,41 @@ class MDCCatalogWindow: MDCOverlayWindow {
     super.sendEvent(event)
   }
 
+  fileprivate func showDebugSettings() {
+    let touches = MDCCatalogDebugSetting(title: "Show touches")
+    touches.getter = { self.showTouches }
+    touches.setter = { newValue in self.showTouches = newValue }
+
+    let safeAreaInsets = MDCCatalogDebugSetting(title: "Show safeAreaInsets")
+    safeAreaInsets.getter = { self.showSafeAreaEdgeInsets }
+    safeAreaInsets.setter = { newValue in self.showSafeAreaEdgeInsets = newValue }
+
+    let dontShow = MDCCatalogDebugSetting(title: "Don't show this again")
+    dontShow.getter = { !self.debugUIEnabled }
+    dontShow.setter = { newValue in self.debugUIEnabled = !newValue }
+
+    let debugUI = MDCCatalogDebugAlert(settings: [touches, safeAreaInsets, dontShow])
+    rootViewController?.present(debugUI, animated: true, completion: nil)
+  }
+
   fileprivate func beginDisplayingTouch(_ touch: UITouch) {
     let view = MDCTouchView()
     view.center = touch.location(in: self)
-    views[touch.hash] = view
-    self.addSubview(view)
+    touchViews[touch.hash] = view
+    addSubview(view)
   }
 
   fileprivate func updateTouch(_ touch: UITouch) {
-    views[touch.hash]?.center = touch.location(in: self)
+    touchViews[touch.hash]?.center = touch.location(in: self)
   }
 
   fileprivate func endDisplayingTouch(_ touch: UITouch) {
-    let view = views[touch.hash]
-    views[touch.hash] = nil
+    let view = touchViews[touch.hash]
+    touchViews[touch.hash] = nil
 
     UIView.animate(withDuration: fadeDuration,
-                               animations: {
-                                 view?.alpha = 0
-                               },
-                               completion: { _ in
-                                view?.removeFromSuperview()
-                               })
+                   animations: { view?.alpha = 0 },
+                   completion: { _ in view?.removeFromSuperview() })
   }
 }
 
@@ -102,11 +133,12 @@ class MDCTouchView: UIView {
   }
 
   fileprivate func commonMDCTouchViewInit() {
-    self.backgroundColor = touchCircleColor
-    self.alpha = touchCircleAlpha
-    self.frame.size = CGSize(width: touchCircleSize, height: touchCircleSize)
-    self.layer.cornerRadius = touchCircleSize / 2
-    self.layer.borderColor = touchCircleBorderColor.cgColor
-    self.layer.borderWidth = touchCircleBorderWidth
+    backgroundColor = touchCircleColor
+    alpha = touchCircleAlpha
+    frame.size = CGSize(width: touchCircleSize, height: touchCircleSize)
+    layer.cornerRadius = touchCircleSize / 2
+    layer.borderColor = touchCircleBorderColor.cgColor
+    layer.borderWidth = touchCircleBorderWidth
+    isUserInteractionEnabled = false
   }
 }
