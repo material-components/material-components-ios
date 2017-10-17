@@ -130,7 +130,7 @@ override func viewDidLoad() {
   let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
   pageControl.frame = CGRect(x: 0, y: view.bounds.height - pageControlSize.height, width: view.bounds.width, height: pageControlSize.height)
 
-  pageControl.addTarget(self, action: "didChangePage:", for: .valueChanged)
+  pageControl.addTarget(self, action: #selector(didChangePage), for: .valueChanged)
   pageControl.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
   view.addSubview(pageControl)
 }

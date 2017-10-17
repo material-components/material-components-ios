@@ -120,18 +120,18 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     class MDCBuildTestViewController: UIViewController {
 
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            let raiseButton = MDCRaisedButton.init();
-            raiseButton.setTitle("Raised Button", forState: .Normal);
-            raiseButton.sizeToFit();
-            raiseButton.addTarget(self, action: "tapped:", forControlEvents: .TouchUpInside);
-            self.view.addSubview(raiseButton);
-        }
+      override func viewDidLoad() {
+        super.viewDidLoad()
+        let raisedButton = MDCRaisedButton()
+        raisedButton.setTitle("Raised Button", for: .normal)
+        raisedButton.sizeToFit()
+        raisedButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        self.view.addSubview(raisedButton)
+      }
 
-        func tapped(sender: UIButton!){
-            NSLog("Button was tapped!");
-        }
+      func tapped(sender: UIButton?){
+        print("Button was tapped!")
+      }
 
     }
     ```
