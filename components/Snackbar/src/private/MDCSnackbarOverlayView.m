@@ -303,6 +303,7 @@ static const CGFloat kMaximumHeight = 80.0f;
       _snackbarOffscreenConstraint.active = YES;
       [container addConstraint:_snackbarOffscreenConstraint];
 
+      // Always limit the height of the snackbar.
       self.maximumHeightConstraint =
           [NSLayoutConstraint constraintWithItem:snackbarView
                                        attribute:NSLayoutAttributeHeight
@@ -312,7 +313,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                                       multiplier:1.0
                                         constant:self.maximumHeight];
 
-      // Always limit the height of the snackbar.
       [container addConstraint:self.maximumHeightConstraint];
     }
   }
@@ -359,7 +359,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (self.anchoredToScreenEdge) {
     if (@available(iOS 11.0, *)) {
-      maximumHeight += self.window.safeAreaInsets.bottom;
+      maximumHeight += self.safeAreaInsets.bottom;
     }
   }
 #endif
@@ -373,6 +373,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 #pragma mark - Safe Area Insets
 
 - (void)safeAreaInsetsDidChange {
+  self.maximumHeightConstraint.constant = self.maximumHeight;
   [self triggerSnackbarLayoutChange];
 }
 

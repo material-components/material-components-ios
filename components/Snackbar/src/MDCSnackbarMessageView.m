@@ -479,7 +479,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kTopMargin" : @(kContentMargin.top),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
-    @"kContentSafeBottomInset" : @(kBorderWidth +  [self contentSafeBottomInset]),
+    @"kContentSafeBottomInset" : @(kBorderWidth +  self.contentSafeBottomInset),
   };
   NSDictionary *views = @{
     @"container" : self.containerView,
@@ -746,7 +746,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
 - (CGFloat)contentSafeBottomInset {
   // If a bottom offset has been set to raise the HUD, e.g. above a tab bar, we should ignore
   // any safeAreaInsets, since it is no longer 'anchored' to the bottom of the screen. This is set
-  // by the GOOHUDOverlayView whenever the bottomOffset is non-zero.
+  // by the MDCSnackbarOverlayView whenever the bottomOffset is non-zero.
   if (!self.anchoredToScreenEdge) {
     return 0;
   }
