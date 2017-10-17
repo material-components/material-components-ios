@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "36.2.0"
+  s.version      = "36.3.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -434,6 +434,7 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/AnimationTiming"
       sss.dependency "MaterialComponents/Ink"
       sss.dependency "MaterialComponents/ShadowElevations"
+      sss.dependency "MaterialComponents/ShadowLayer"
       sss.dependency "MaterialComponents/Typography"
       sss.dependency "MaterialComponents/private/Math"
       sss.dependency "MaterialComponents/private/RTL"
