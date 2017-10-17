@@ -522,7 +522,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // A simple scale transform is also applied. Then it's animated through the UIView animation API
   // (layoutIfNeeded). If in reverse (isToUp == NO), these things are just removed / deactivated.
 
-  CGAffineTransform scaleTransform = isToUp ? floatingPlaceholderScaleTransform : CGAffineTransformIdentity;
+  CGAffineTransform scaleTransform =
+      isToUp ? floatingPlaceholderScaleTransform : CGAffineTransformIdentity;
 
   // We do this beforehand to flush the layout engine.
   [self.textInput layoutIfNeeded];
@@ -550,45 +551,46 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     CGFloat horizontalLeading = insets.left - offset.horizontal;
     if (!self.placeholderAnimationConstraintLeading) {
       self.placeholderAnimationConstraintLeading =
-      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                   attribute:NSLayoutAttributeLeading
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.textInput
-                                   attribute:NSLayoutAttributeLeading
-                                  multiplier:1
-                                    constant:horizontalLeading];
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:horizontalLeading];
     }
     self.placeholderAnimationConstraintLeading.constant = horizontalLeading;
 
     if (!self.placeholderAnimationConstraintTop) {
       self.placeholderAnimationConstraintTop =
-      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.textInput
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:offset.vertical];
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput
+                                       attribute:NSLayoutAttributeTop
+                                      multiplier:1
+                                        constant:offset.vertical];
     }
     self.placeholderAnimationConstraintTop.constant = offset.vertical;
 
     CGFloat horizontalTrailing = offset.horizontal - insets.right;
     if (!self.placeholderAnimationConstraintTrailing) {
       self.placeholderAnimationConstraintTrailing =
-      [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                   attribute:NSLayoutAttributeTrailing
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.textInput
-                                   attribute:NSLayoutAttributeTrailing
-                                  multiplier:1
-                                    constant:horizontalTrailing];
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeTrailing
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput
+                                       attribute:NSLayoutAttributeTrailing
+                                      multiplier:1
+                                        constant:horizontalTrailing];
       self.placeholderAnimationConstraintTrailing.priority = UILayoutPriorityDefaultHigh - 1;
     }
     self.placeholderAnimationConstraintTrailing.constant = horizontalTrailing;
 
-    self.placeholderAnimationConstraints = @[ self.placeholderAnimationConstraintLeading,
-                                              self.placeholderAnimationConstraintTop,       self.placeholderAnimationConstraintTrailing
- ];
+    self.placeholderAnimationConstraints = @[
+      self.placeholderAnimationConstraintLeading, self.placeholderAnimationConstraintTop,
+      self.placeholderAnimationConstraintTrailing
+    ];
     [NSLayoutConstraint activateConstraints:self.placeholderAnimationConstraints];
   } else {
     [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
@@ -617,7 +619,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   CGFloat placeholderWidth =
       [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
-  .width;
+          .width;
   if (placeholderWidth > placeholderMaxWidth) {
     placeholderWidth = placeholderMaxWidth;
   }
