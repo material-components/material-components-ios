@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCAppBar.h"
+@class MDCAppBar;
 
 /**
  The MDCAppBarContainerViewController controller provides an interface for placing a
