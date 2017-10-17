@@ -14,9 +14,8 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
-
 #import "AnimationTimingExampleSupplemental.h"
+
 #import "MaterialTypography.h"
 
 const CGFloat kTopMargin = 16.f;

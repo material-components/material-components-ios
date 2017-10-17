@@ -18,8 +18,7 @@
 
 #import "MaterialThemes.h"
 #import "MaterialPalettes.h"
-
-#import "ThemerTypicalUseSupplemental.h"
+#import "supplemental/ThemerTypicalUseSupplemental.h"
 
 @import MaterialComponents.MaterialCollections;
 

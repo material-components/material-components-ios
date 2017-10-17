@@ -19,8 +19,7 @@
 #import "MaterialButtons.h"
 #import "MaterialSlider.h"
 #import "MaterialTabs.h"
-
-#import "TabBarViewControllerExampleSupplemental.h"
+#import "supplemental/TabBarViewControllerExampleSupplemental.h"
 
 @implementation TabBarViewControllerExample
 

@@ -16,9 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderTopLayoutGuideSupplemental.h"
-
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderTopLayoutGuideSupplemental.h"
 
 @interface FlexibleHeaderTopLayoutGuideExample () <MDCFlexibleHeaderViewLayoutDelegate,
                                                    UIScrollViewDelegate>

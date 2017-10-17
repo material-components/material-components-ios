@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "CollectionsEditingExample.h"
+#import "supplemental/CollectionsEditingExample.h"
 
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 5;

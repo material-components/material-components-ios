@@ -14,9 +14,8 @@
  limitations under the License.
  */
 
-#import "CollectionCellsTextExample.h"
-
 #import "MaterialTypography.h"
+#import "supplemental/CollectionCellsTextExample.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
