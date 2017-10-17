@@ -61,13 +61,13 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 }
 
 - (UIOffset)floatingPlaceholderOffset {
-  UIOffset destination = [super floatingPlaceholderOffset];
-  CGFloat offset = self.textInput.placeholderLabel.font.lineHeight -
+  UIOffset offset = [super floatingPlaceholderOffset];
+  CGFloat textVerticalOffset = self.textInput.placeholderLabel.font.lineHeight -
                    self.textInput.placeholderLabel.font.xHeight;
-  destination.vertical = -1 * offset;
+  offset.vertical = -1 * textVerticalOffset;
   MDCPaddedLabel *placeholderLabel = (MDCPaddedLabel *)self.textInput.placeholderLabel;
-  destination.horizontal += placeholderLabel.horizontalPadding;
-  return destination;
+  offset.horizontal += placeholderLabel.horizontalPadding;
+  return offset;
 }
 
 + (UIRectCorner)roundedCornersDefault {
