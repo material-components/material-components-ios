@@ -63,7 +63,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 - (UIOffset)floatingPlaceholderOffset {
   UIOffset offset = [super floatingPlaceholderOffset];
   CGFloat textVerticalOffset = self.textInput.placeholderLabel.font.lineHeight -
-                   self.textInput.placeholderLabel.font.xHeight;
+                               self.textInput.placeholderLabel.font.xHeight;
   offset.vertical = -1 * textVerticalOffset;
   MDCPaddedLabel *placeholderLabel = (MDCPaddedLabel *)self.textInput.placeholderLabel;
   offset.horizontal += placeholderLabel.horizontalPadding;
