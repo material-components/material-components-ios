@@ -469,7 +469,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       _maximumHeight = _minimumHeight;
     }
 
-    // We avoid modififying the scroll view insets during rotation because doing so can cause
+    // We avoid modifying the scroll view insets during rotation because doing so can cause
     // collection views to crash during rotation.
     if (!_interfaceOrientationIsChanging) {
       // Adjust the scroll view insets to account for the new Safe Area inset.
