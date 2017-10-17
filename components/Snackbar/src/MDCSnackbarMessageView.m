@@ -345,7 +345,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                                              : kMaximumViewWidth_iPhone;
 
     // Take into account the content padding.
-    availableTextWidth -= (kContentMargin.left + kContentMargin.right);
+    availableTextWidth -= (self.safeContentMargin.left + self.safeContentMargin.right);
 
     // If there are buttons, account for the padding between the title and the buttons.
     if (message.action) {
@@ -473,11 +473,11 @@ static const CGFloat kButtonInkRadius = 64.0f;
 - (NSArray *)containerViewConstraints {
   NSDictionary *metrics = @{
     @"kBorderMargin" : @(kBorderWidth),
-    @"kBottomMargin" : @(kContentMargin.bottom),
-    @"kLeftMargin" : @(kContentMargin.left),
-    @"kRightMargin" : @(kContentMargin.right),
+    @"kBottomMargin" : @(self.safeContentMargin.bottom),
+    @"kLeftMargin" : @(self.safeContentMargin.left),
+    @"kRightMargin" : @(self.safeContentMargin.right),
     @"kTitleImagePadding" : @(kTitleImagePadding),
-    @"kTopMargin" : @(kContentMargin.top),
+    @"kTopMargin" : @(self.safeContentMargin.top),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
     @"kContentSafeBottomInset" : @(kBorderWidth +  self.contentSafeBottomInset),
   };
@@ -573,11 +573,11 @@ static const CGFloat kButtonInkRadius = 64.0f;
  */
 - (NSArray *)contentViewConstraints {
   NSDictionary *metrics = @{
-    @"kBottomMargin" : @(kContentMargin.bottom),
-    @"kLeftMargin" : @(kContentMargin.left),
-    @"kRightMargin" : @(kContentMargin.right),
+    @"kBottomMargin" : @(self.safeContentMargin.bottom),
+    @"kLeftMargin" : @(self.safeContentMargin.left),
+    @"kRightMargin" : @(self.safeContentMargin.right),
     @"kTitleImagePadding" : @(kTitleImagePadding),
-    @"kTopMargin" : @(kContentMargin.top),
+    @"kTopMargin" : @(self.safeContentMargin.top),
   };
 
   NSMutableDictionary *views = [NSMutableDictionary dictionary];
@@ -645,10 +645,10 @@ static const CGFloat kButtonInkRadius = 64.0f;
   NSMutableArray *constraints = [NSMutableArray array];
 
   NSDictionary *metrics = @{
-    @"kLeftMargin" : @(kContentMargin.left),
-    @"kRightMargin" : @(kContentMargin.right),
-    @"kTopMargin" : @(kContentMargin.top),
-    @"kBottomMargin" : @(kContentMargin.bottom),
+    @"kLeftMargin" : @(self.safeContentMargin.left),
+    @"kRightMargin" : @(self.safeContentMargin.right),
+    @"kTopMargin" : @(self.safeContentMargin.top),
+    @"kBottomMargin" : @(self.safeContentMargin.bottom),
     @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kBorderMargin" : @(kBorderWidth),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
@@ -734,7 +734,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   height = MAX(height, self.label.intrinsicContentSize.height);
 
   // Make sure that content margins are included in our calculation.
-  height += kContentMargin.top + kContentMargin.bottom;
+  height += self.safeContentMargin.top + self.safeContentMargin.bottom;
 
   // Make sure that the height of the image and text is larger than the minimum height;
   height = MAX(kMinimumHeight, height);
@@ -756,6 +756,24 @@ static const CGFloat kButtonInkRadius = 64.0f;
   }
 #endif
   return 0;
+}
+
+- (UIEdgeInsets)safeContentMargin {
+  UIEdgeInsets contentMargin = kContentMargin;
+
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    safeAreaInsets = self.window.safeAreaInsets;
+  }
+#endif
+
+  // We only take the left and right safeAreaInsets in to account because the bottom is
+  // handled by contentSafeBottomInset and we will never overlap the top inset.
+  contentMargin.left = MAX(contentMargin.left, safeAreaInsets.left);
+  contentMargin.right = MAX(contentMargin.right, safeAreaInsets.right);
+
+  return contentMargin;
 }
 
 #pragma mark - Event Handlers
