@@ -22,6 +22,7 @@
 #import <Foundation/Foundation.h>
 
 #import "DialogsTypicalUseSupplemental.h"
+#import "MaterialApplication.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
@@ -86,7 +87,7 @@ static NSString * const kReusableIdentifierItem = @"cell";
   self.view.backgroundColor = [UIColor whiteColor];
 
   _dismissButton = [[MDCFlatButton alloc] init];
-  [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [_dismissButton setTitle:@"www.material.io" forState:UIControlStateNormal];
   [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
@@ -110,7 +111,8 @@ static NSString * const kReusableIdentifierItem = @"cell";
 }
 
 - (IBAction)dismiss:(id)sender {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+  NSURL *testURL = [NSURL URLWithString:@"https://www.material.io"];
+  [[UIApplication mdc_safeSharedApplication] performSelector:@selector(openURL:) withObject:testURL];
 }
 
 @end
