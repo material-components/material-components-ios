@@ -469,8 +469,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       _maximumHeight = _minimumHeight;
     }
 
-    // Adjust the scroll view insets to account for the new Safe Area inset.
-    [self fhv_adjustTrackingScrollViewInsets];
+    // We avoid modifying the scroll view insets during rotation because doing so can cause
+    // collection views to crash during rotation.
+    if (!_interfaceOrientationIsChanging) {
+      // Adjust the scroll view insets to account for the new Safe Area inset.
+      [self fhv_adjustTrackingScrollViewInsets];
+    }
 
     // Ignore any content offset delta that occured as a result of any safe area insets change.
     _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
