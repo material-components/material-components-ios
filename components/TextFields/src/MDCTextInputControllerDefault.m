@@ -547,7 +547,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // A simple scale transform is also applied. Then it's animated through the UIView animation API
   // (layoutIfNeeded). If in reverse (isToUp == NO), these things are just removed / deactivated.
 
-  CGAffineTransform scaleTransform = isToUp ? floatingPlaceholderScaleTransform : CGAffineTransformIdentity;
+  CGAffineTransform scaleTransform =
+      isToUp ? floatingPlaceholderScaleTransform : CGAffineTransformIdentity;
 
   // We do this beforehand to flush the layout engine.
   [self.textInput layoutIfNeeded];
