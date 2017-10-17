@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "HeaderStackViewTypicalUseSupplemental.h"
 #import "MaterialHeaderStackView.h"
+#import "supplemental/HeaderStackViewTypicalUseSupplemental.h"
 
 @interface HeaderStackViewTypicalUse ()
 

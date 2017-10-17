@@ -16,10 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderUINavigationBarSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderUINavigationBarSupplemental.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 

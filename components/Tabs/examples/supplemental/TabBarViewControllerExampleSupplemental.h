@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTabBarViewController.h"
+#import "MaterialTabs.h"
 
 @interface TabBarViewControllerExample : MDCTabBarViewController
 

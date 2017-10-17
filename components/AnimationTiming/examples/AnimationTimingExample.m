@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "AnimationTimingExampleSupplemental.h"
 #import "MaterialAnimationTiming.h"
+#import "supplemental/AnimationTimingExampleSupplemental.h"
 
 const NSTimeInterval kAnimationTimeInterval = 1.0f;
 const NSTimeInterval kAnimationTimeDelay = 0.5f;

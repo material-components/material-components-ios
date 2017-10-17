@@ -16,7 +16,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TextFieldInterfaceBuilderExampleSupplemental.h"
+#import "supplemental/TextFieldInterfaceBuilderLegacyExampleSupplemental.h"
 
 @import MaterialComponents.MaterialTextFields;
 
