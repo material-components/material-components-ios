@@ -35,8 +35,7 @@
                 action:@selector(didChangeMDCSliderValue:)
       forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:slider];
-  slider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                              CGRectGetMidY(self.view.bounds) - 2 * slider.frame.size.height);
+  slider.center = CGPointMake(CGRectGetMidX(self.view.bounds), 46);
 
   UILabel *label = [[UILabel alloc] init];
   label.text = @"MDCSlider";
@@ -51,8 +50,7 @@
                 action:@selector(didChangeUISliderValue:)
       forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:uiSlider];
-  uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                                CGRectGetMidY(self.view.bounds) + 4 * uiSlider.frame.size.height);
+  uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds), 184);
 
   UILabel *uiSliderLabel = [[UILabel alloc] init];
   uiSliderLabel.text = @"UISlider";
