@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCCornerTreatment.h"
+#import "MaterialShapes.h"
 
 /**
  A rounded corner treatment.
