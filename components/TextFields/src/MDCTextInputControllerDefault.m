@@ -624,6 +624,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self.placeholderAnimationConstraints = nil;
   self.placeholderAnimationConstraintLeading = nil;
   self.placeholderAnimationConstraintTop = nil;
+  self.placeholderAnimationConstraintTrailing = nil;
 }
 
 - (UIOffset)floatingPlaceholderOffset {
