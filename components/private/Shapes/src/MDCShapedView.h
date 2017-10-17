@@ -18,7 +18,7 @@
 
 #import "MaterialShadowElevations.h"
 
-#import "MDCShapeGenerating.h"
+@protocol MDCShapeGenerating;
 
 /**
  MDCShapedView is a primitive view class which makes it easy to style the shape
