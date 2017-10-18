@@ -84,7 +84,7 @@
 /*
  A color used as the chip's @c backgroundColor for @c state.
 
- @param state The state.
+ @param state The control state.
  @return The background color.
  */
 - (nullable UIColor *)backgroundColorForState:(UIControlState)state;
@@ -95,7 +95,7 @@
  If left unset or reset to nil for a particular control state, then a default blue color is used.
 
  @param backgroundColor The background color.
- @param state The state.
+ @param state The control state.
  */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
     UI_APPEARANCE_SELECTOR;
@@ -103,7 +103,7 @@
 /*
  Returns the border color for a particular control state.
 
- @param state The control state to retrieve the elevation.
+ @param state The control state.
  @return The border color for the requested state.
  */
 - (nullable UIColor *)borderColorForState:(UIControlState)state;
@@ -112,7 +112,7 @@
  Sets the border color for a particular control state.
 
  @param borderColor The border color.
- @param state The state.
+ @param state The control state.
  */
 - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state
     UI_APPEARANCE_SELECTOR;
@@ -120,7 +120,7 @@
 /*
  Returns the border width for a particular control state.
 
- @param state The control state to retrieve the elevation.
+ @param state The control state.
  @return The border width for the requested state.
  */
 - (CGFloat)borderWidthForState:(UIControlState)state;
@@ -129,30 +129,31 @@
  Sets the border width for a particular control state.
 
  @param borderWidth The border width.
- @param state The state.
+ @param state The control state.
  */
 - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the elevation for a particular control state.
 
- @param state The control state to retrieve the elevation.
+ @param state The control state.
  @return The elevation for the requested state.
  */
-- (CGFloat)elevationForState:(UIControlState)state;
+- (MDCShadowElevation)elevationForState:(UIControlState)state;
 
 /*
  Sets the elevation for a particular control state.
 
- @param elevation The elevation to set.
- @param state The state to set.
+ @param elevation The elevation.
+ @param state The control state.
  */
-- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the title color for a particular control state.
 
- @param state The control state to retrieve the elevation.
+ @param state The control state.
  @return The title color for the requested state.
  */
 - (nullable UIColor *)titleColorForState:(UIControlState)state;
@@ -161,7 +162,7 @@
  Sets the title color for a particular control state.
 
  @param titleColor The title color.
- @param state The state.
+ @param state The control state.
  */
 - (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state
     UI_APPEARANCE_SELECTOR;
