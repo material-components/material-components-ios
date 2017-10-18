@@ -1391,7 +1391,12 @@ static BOOL isRunningiOS10_3OrAbove() {
   }
   _inFrontOfInfiniteContent = inFrontOfInfiniteContent;
 
-  [self fhv_updateLayout];
+  if (!_trackingScrollView) {
+    // Change the opacity directly as fhv_updateLayout is a no-op when _trackingScrollView is nil.
+    self.layer.shadowOpacity = _inFrontOfInfiniteContent ? _visibleShadowOpacity : 0;
+  } else {
+    [self fhv_updateLayout];
+  }
 }
 
 - (BOOL)trackingScrollViewWillEndDraggingWithVelocity:(__unused CGPoint)velocity
