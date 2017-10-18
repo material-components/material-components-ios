@@ -739,7 +739,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   // Make sure that the height of the image and text is larger than the minimum height;
   height = MAX(kMinimumHeight, height);
 
-  height = MAX(kMinimumHeight, height) + [self contentSafeBottomInset];
+  height = MAX(kMinimumHeight, height) + self.contentSafeBottomInset;
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
