@@ -1,4 +1,11 @@
-# release-candidate TODO: Replace me with version number. 
+# 37.0.0
+
+## API Changes
+
+### Text Fields
+
+* Added `[MDCTextFieldPositioningDelegate textInputDidUpdateConstraints]`, called after the input's `updateConstraints`.
+* `MDCTextInputControllerDefault`'s `floatingPlaceholderDestination` property is replaced with `floatingPlaceholderOffset` and is a `UIOffset`, not `CGPoint`.
 
 # 36.3.0
 
