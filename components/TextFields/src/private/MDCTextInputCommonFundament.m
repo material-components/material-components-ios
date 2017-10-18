@@ -314,8 +314,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)setupPlaceholderLabel {
   _placeholderLabel = [[MDCPaddedLabel alloc] initWithFrame:CGRectZero];
   _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
+  [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 2
                                                      forAxis:UILayoutConstraintAxisHorizontal];
+  [_placeholderLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                                       forAxis:UILayoutConstraintAxisHorizontal];
+
   _placeholderLabel.textAlignment = NSTextAlignmentNatural;
 
   _placeholderLabel.userInteractionEnabled = NO;

@@ -384,12 +384,16 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [self.fundament setPlaceholder:placeholder];
 }
 
-// Note: this is also called by the internals of UITextField when editing ends.
+// Note: this is also called by the internals of UITextField when editing ends (iOS 8 to 10).
 - (void)setText:(NSString *)text {
   [super setText:text];
   [_fundament didSetText];
-  [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
-                                                      object:self];
+
+  if (!self.isFirstResponder) {
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:MDCTextFieldTextDidSetTextNotification
+                      object:self];
+  }
 }
 
 #pragma mark - UITextField Overrides
@@ -594,6 +598,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   [self updateUnderlinePosition];
   [super updateConstraints];
+  if ([self.positioningDelegate respondsToSelector:@selector(textInputDidUpdateConstraints)]) {
+    [self.positioningDelegate textInputDidUpdateConstraints];
+  }
 }
 
 + (BOOL)requiresConstraintBasedLayout {
