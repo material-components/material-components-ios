@@ -555,8 +555,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   CGFloat safeAreaAdjustment = 0;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAlways ||
-        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAutomatic) {
+    if (scrollView.contentInsetAdjustmentBehavior != UIScrollViewContentInsetAdjustmentNever) {
       if (scrollView.contentInset.top != scrollView.adjustedContentInset.top) {
         // Only adjust for safe area insets if the content inset of it is affected by it.
         safeAreaAdjustment = MDCDeviceTopSafeAreaInset();
@@ -586,8 +585,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAlways ||
-        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentAutomatic) {
+    if (scrollView.contentInsetAdjustmentBehavior != UIScrollViewContentInsetAdjustmentNever) {
 
       // For Automatic: If contentInset and adjustedContentInset are the same, no-op.
       if (scrollView.contentInset.top == scrollView.adjustedContentInset.top) {
