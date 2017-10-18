@@ -87,6 +87,49 @@ static NSString * const kReusableIdentifierItem = @"cell";
   self.view.backgroundColor = [UIColor whiteColor];
 
   _dismissButton = [[MDCFlatButton alloc] init];
+  [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  _dismissButton.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+  [_dismissButton addTarget:self
+                     action:@selector(dismiss:)
+           forControlEvents:UIControlEventTouchUpInside];
+
+  [self.view addSubview:_dismissButton];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [_dismissButton sizeToFit];
+  _dismissButton.center = CGPointMake(CGRectGetMidX(self.view.bounds),
+                                      CGRectGetMidY(self.view.bounds));
+}
+
+- (CGSize)preferredContentSize {
+  return CGSizeMake(200.0, 140.0);
+}
+
+- (IBAction)dismiss:(id)sender {
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+@end
+
+@interface OpenURLViewController ()
+
+@property(nonatomic, strong) MDCFlatButton *dismissButton;
+
+@end
+
+@implementation OpenURLViewController
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.view.backgroundColor = [UIColor whiteColor];
+
+  _dismissButton = [[MDCFlatButton alloc] init];
   [_dismissButton setTitle:@"www.material.io" forState:UIControlStateNormal];
   [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _dismissButton.autoresizingMask =
@@ -112,6 +155,7 @@ static NSString * const kReusableIdentifierItem = @"cell";
 
 - (IBAction)dismiss:(id)sender {
   NSURL *testURL = [NSURL URLWithString:@"https://www.material.io"];
+  // Use mdc_safeSharedApplication to avoid a compiler warning about extensions
   [[UIApplication mdc_safeSharedApplication] performSelector:@selector(openURL:) withObject:testURL];
 }
 

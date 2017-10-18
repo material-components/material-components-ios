@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self loadCollectionView:@[@"Programmatic", @"Storyboard", @"Modal"]];
+  [self loadCollectionView:@[@"Programmatic", @"Storyboard", @"Modal", @"Open URL"]];
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
@@ -43,6 +43,8 @@
     [self didTapStoryboard:nil];
   } else if (indexPath.row == 2) {
     [self didTapModalProgrammatic:nil];
+  } else if (indexPath.row == 3) {
+    [self didTapOpenURL:nil];
   }
 }
 
@@ -68,6 +70,15 @@
   if (presentationController) {
     presentationController.dismissOnBackgroundTap = NO;
   }
+}
+
+- (IBAction)didTapOpenURL:(id)sender {
+  UIViewController *viewController =
+    [[OpenURLViewController alloc] initWithNibName:nil bundle:nil];
+  viewController.modalPresentationStyle = UIModalPresentationCustom;
+  viewController.transitioningDelegate = self.transitionController;
+
+  [self presentViewController:viewController animated:YES completion:NULL];
 }
 
 - (IBAction)didTapStoryboard:(id)sender {
