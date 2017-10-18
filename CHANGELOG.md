@@ -7,6 +7,54 @@
 * Added `[MDCTextFieldPositioningDelegate textInputDidUpdateConstraints]`, called after the input's `updateConstraints`.
 * `MDCTextInputControllerDefault`'s `floatingPlaceholderDestination` property is replaced with `floatingPlaceholderOffset` and is a `UIOffset`, not `CGPoint`.
 
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Update layout constraint to offset buttons by 20pt upwards, move catalog functions into extension (#2194)](https://github.com/material-components/material-components-ios/commit/1c7c9cd541efbb22ef55c049305c21a984d2a42e) (Cody Weaver)
+* [use modern selectors (#2207)](https://github.com/material-components/material-components-ios/commit/3762aecee3d850a8d097f27fdec9528d18b20068) (Martin Petrov)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Update contentInsetAdjustmentBehavior check to include ScrollableAxes (#2223)](https://github.com/material-components/material-components-ios/commit/5f5988f0023614e6f38382bafbe5f73c1bdff0a5) (Andrés)
+* [inFrontOfInfiniteContent working when !trackingScrollView (#2221)](https://github.com/material-components/material-components-ios/commit/fa464bad13f88669777a593f798ab47386177c98) (Andrés)
+
+### PageControl
+
+#### Changes
+
+* [Fix bug with OOB array lookup when calling scrollViewDidScroll. (#2197)](https://github.com/material-components/material-components-ios/commit/ab6aae7158e66d90e7899321c71b6b95af7fd1e3) (Moshe Kolodny)
+* [use modern selectors (#2207)](https://github.com/material-components/material-components-ios/commit/3762aecee3d850a8d097f27fdec9528d18b20068) (Martin Petrov)
+
+### Slider
+
+#### Changes
+
+* [Fix layout positions so UISlider isn't cropped on iPhone 4s. (#2216)](https://github.com/material-components/material-components-ios/commit/d190b646c7252621cf069393bf6937ddbc2a99ec) (Cody Weaver)
+
+### Snackbar
+
+#### Changes
+
+* [Update to support safeAreaInsets (#2212)](https://github.com/material-components/material-components-ios/commit/5beada0e8dc4975979d9a1b78e44568be6a66ade) (Sam Morrison)
+
+### Tabs
+
+#### Changes
+
+* [Fix a bug that where an item cell title can be missing (#2202)](https://github.com/material-components/material-components-ios/commit/5797b17934e6c021f7a942026efee1cf0c3adaa9) (Chris Silverberg)
+
+### TextFields
+
+#### Changes
+
+* [Corrects cheap floating placeholder layout (2nd PR) (#2210)](https://github.com/material-components/material-components-ios/commit/17e962fb35c3f56aebd47b7720bcb6a227ced8f4) (Will Larche)
+
+
 # 36.3.0
 
 ## API Changes
