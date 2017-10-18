@@ -395,17 +395,16 @@ extension MDCNodeListViewController {
         contentVC.title = node.title
 
         let headerView = container.appBar.headerViewController.headerView
-        if contentVC.isKind(of: MDCCollectionViewController.self) {
-          let collectionVC = contentVC as! MDCCollectionViewController
+        if let collectionVC = contentVC as? MDCCollectionViewController {
           headerView.trackingScrollView = collectionVC.collectionView
-        } else if contentVC.view.isKind(of: UIScrollView.self) {
-          headerView.trackingScrollView = contentVC.view as? UIScrollView
+        } else if let scrollView = contentVC.view as? UIScrollView {
+          headerView.trackingScrollView = scrollView
         } else {
           // TODO(chuga): This is bad. We should be adjusting for Safe Area changes.
           var contentFrame = container.contentViewController.view.frame
           let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
           contentFrame.origin.y = headerSize.height
-          contentFrame.size.height = self.view.bounds.size.height - headerSize.height
+          contentFrame.size.height = self.view.bounds.height - headerSize.height
           container.contentViewController.view.frame = contentFrame
         }
 
