@@ -23,6 +23,6 @@
  */
 @interface MDCChipCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic, nonnull, strong, readonly) MDCChipView *chip;
+@property(nonatomic, nonnull, strong, readonly) MDCChipView *chipView;
 
 @end

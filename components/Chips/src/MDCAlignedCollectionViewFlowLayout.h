@@ -16,12 +16,12 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSInteger, MDCCollectionHorizontalAlignment) {
   MDCCollectionHorizontalAlignmentLeading,
   MDCCollectionHorizontalAlignmentTrailing,
   MDCCollectionHorizontalAlignmentLeft,
   MDCCollectionHorizontalAlignmentRight
-} MDCCollectionHorizontalAlignment;
+};
 
 /*
  MDCAlignedCollectionViewFlowLayout is an aligned version of UICollectionViewFlowLayout.
