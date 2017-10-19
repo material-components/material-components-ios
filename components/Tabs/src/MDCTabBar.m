@@ -118,6 +118,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 - (void)commonMDCTabBarInit {
   self.clipsToBounds = YES;
+  self.translatesAutoresizingMaskIntoConstraints = NO;
+
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
   _hasDefaultAlignment = YES;
@@ -293,7 +295,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 - (void)safeAreaInsetsDidChange {
   [super safeAreaInsetsDidChange];
+
   [self invalidateIntrinsicContentSize];
+  [self updateConstraintsIfNeeded];
 }
 
 - (void)didMoveToWindow {

@@ -29,8 +29,6 @@
   [super viewDidLoad];
 
   _bottomNavigationBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
-  _bottomNavigationBar.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   _bottomNavigationBar.delegate = self;
 
   _bottomNavigationBar.barTintColor = [UIColor whiteColor];
@@ -55,21 +53,29 @@
   ];
 
   [self.view addSubview:_bottomNavigationBar];
-
   [self updateDisplay];
-}
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  CGRect bounds = self.view.bounds;
-
-  // Place bar at bottom of view
-  CGRect barFrame = CGRectZero;
-  barFrame.size = [_bottomNavigationBar sizeThatFits:self.view.bounds.size];
-
-  barFrame.origin.y = CGRectGetMaxY(bounds) - barFrame.size.height;
-  _bottomNavigationBar.frame = barFrame;
+  [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
+                               attribute:NSLayoutAttributeLeft
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeLeft
+                              multiplier:1
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
+                               attribute:NSLayoutAttributeRight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeRight
+                              multiplier:1
+                                constant:0].active = YES;
 }
 
 #pragma mark - MDCTabBarDelegate

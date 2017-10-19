@@ -71,6 +71,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   /// Size of the view at last layout, for deduplicating changes.
   CGSize _lastSize;
 
+  /// Width of the collection view accounting for Safe Area insets at last layout.
   CGFloat _lastAdjustedCollectionViewWidth;
 
   /// Horizontal size class at the last item metrics update. Used to calculate deltas.
