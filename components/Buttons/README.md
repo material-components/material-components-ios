@@ -128,7 +128,7 @@ let flatButton = MDCFlatButton()
 flatButton.customTitleColor = UIColor.gray
 flatButton.setTitle("Tap me", for: .normal)
 flatButton.sizeToFit()
-flatButton.addTarget(self, action: "tap:", for: .touchUpInside)
+flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
 self.view.addSubview(flatButton)
 ```
 
@@ -162,7 +162,7 @@ let raisedButton = MDCRaisedButton()
 raisedButton.setElevation(4, for: .normal)
 raisedButton.setTitle("Tap Me Too", for: .normal)
 raisedButton.sizeToFit()
-raisedButton.addTarget(self, action: "tap:", for: .touchUpInside)
+raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
 self.view.addSubview(raisedButton)
 ```
 
@@ -191,7 +191,7 @@ MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
 let floatingButton = MDCFloatingButton()
 floatingButton.setTitle("+", for: .normal)
 floatingButton.sizeToFit()
-floatingButton.addTarget(self, action: "tap:", for: .touchUpInside)
+floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
 self.view.addSubview(floatingButton)
 ```
 

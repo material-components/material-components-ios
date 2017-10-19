@@ -20,15 +20,7 @@ import MaterialComponents
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
   let floatingButtonPlusDimension = CGFloat(24)
-
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Buttons (Swift)"]
-  }
-
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -81,7 +73,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
   // MARK: Private
 
-  func centerView(view: UIView, onView: UIView) {
+  private func centerView(view: UIView, onView: UIView) {
     onView.addConstraint(NSLayoutConstraint(
       item: view,
       attribute: .centerX,
@@ -98,11 +90,21 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
       toItem: onView,
       attribute: .centerY,
       multiplier: 1.0,
-      constant: 0.0))
+      constant: -20.0))
   }
 
   @objc func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
 
+}
+
+extension ButtonsSimpleExampleSwiftViewController {
+   class func catalogBreadcrumbs() -> [String] {
+      return ["Buttons", "Buttons (Swift)"]
+   }
+   
+   class func catalogIsPrimaryDemo() -> Bool {
+      return false
+   }
 }

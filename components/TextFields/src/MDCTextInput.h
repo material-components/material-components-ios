@@ -149,7 +149,11 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 /** The color of the text in the input. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
-/** Insets used to calculate the spacing of subviews. */
+/**
+ Insets used to calculate the spacing of subviews.
+
+ NOTE: This is always in LTR. It's automatically flipped when used in RTL.
+ */
 @property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
 
 /**
