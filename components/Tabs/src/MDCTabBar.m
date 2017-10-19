@@ -117,6 +117,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)commonMDCTabBarInit {
+  self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
   _hasDefaultAlignment = YES;
@@ -129,12 +130,18 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
-  _itemBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _itemBar.delegate = self;
   _itemBar.alignment = MDCItemBarAlignmentForTabBarAlignment(_alignment);
   [self addSubview:_itemBar];
 
   [self updateItemBarStyle];
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  CGSize sizeThatFits = [_itemBar sizeThatFits:self.bounds.size];
+  _itemBar.frame = CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height);
 }
 
 #pragma mark - Public
@@ -177,7 +184,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     _barTintColor = barTintColor;
 
     // Update background color.
-    _itemBar.backgroundColor = barTintColor;
+    self.backgroundColor = barTintColor;
   }
 }
 
@@ -265,11 +272,28 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (CGSize)intrinsicContentSize {
-  return _itemBar.intrinsicContentSize;
+  CGSize size = _itemBar.intrinsicContentSize;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    size.height += self.safeAreaInsets.bottom;
+  }
+#endif
+  return size;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return [_itemBar sizeThatFits:size];
+  size = [_itemBar sizeThatFits:size];
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    size.height += self.safeAreaInsets.bottom;
+  }
+#endif
+  return size;
+}
+
+- (void)safeAreaInsetsDidChange {
+  [super safeAreaInsetsDidChange];
+  [self invalidateIntrinsicContentSize];
 }
 
 - (void)didMoveToWindow {

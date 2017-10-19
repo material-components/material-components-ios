@@ -91,6 +91,11 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   [self updateLayout];
 }
 
+- (void)viewSafeAreaInsetsDidChange {
+  [super viewSafeAreaInsetsDidChange];
+  [self.view setNeedsLayout];
+}
+
 #pragma mark - Properties
 
 - (BOOL)tabBarHidden {
@@ -241,12 +246,12 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)updateLayout {
   CGRect bounds = self.view.bounds;
-  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForItemAppearance:_tabBar.itemAppearance];
   CGRect currentViewFrame = bounds;
+  CGSize tabBarSize = [_tabBar sizeThatFits:currentViewFrame.size];
   CGRect tabBarFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
-                                  bounds.size.width, tabBarHeight);
+                                  bounds.size.width, tabBarSize.height);
   if (!_tabBarWantsToBeHidden) {
-    CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarHeight, CGRectMaxYEdge);
+    CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarSize.height, CGRectMaxYEdge);
   }
   _tabBar.frame = tabBarFrame;
   _tabBarShadow.frame = tabBarFrame;
