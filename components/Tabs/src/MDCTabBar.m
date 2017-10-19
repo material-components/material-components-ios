@@ -297,7 +297,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   [super safeAreaInsetsDidChange];
 
   [self invalidateIntrinsicContentSize];
-  [self updateConstraintsIfNeeded];
+
+  // TODO(chuga): Figure out why this is needed.
+  [self updateConstraints];
 }
 
 - (void)didMoveToWindow {
