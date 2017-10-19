@@ -49,6 +49,12 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  Convenience pointer to the message used to create the view.
  */
 @property(nonatomic, nullable, readonly, strong) MDCSnackbarMessage *message;
+
+/**
+ If the snackbar view should be anchored to the bottom of the screen. Default is YES.
+ */
+@property(nonatomic) BOOL anchoredToScreenEdge;
+
 /**
  Creates a snackbar view to display @c message.
 

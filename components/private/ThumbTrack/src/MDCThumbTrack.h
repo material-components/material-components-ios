@@ -24,7 +24,7 @@
 /** The delegate for the thumb track. */
 @property(nullable, nonatomic, weak) id<MDCThumbTrackDelegate> delegate;
 
-/** The color of the thumb on and left track. */
+/** The color of the thumb and left track. */
 @property(nullable, nonatomic, strong) UIColor *primaryColor;
 
 /** The color of the thumb off color. */

@@ -149,4 +149,23 @@
   XCTAssertNil(exception, @"PageControl crashed with exception: %@", exception);
 }
 
+- (void)testScrollViewDidScrollWithZeroPages {
+  // Given
+  MDCPageControl *pageControl = [[MDCPageControl alloc] init];
+  pageControl.numberOfPages = 0;
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  NSException *exception;
+
+  // When
+  @try {
+    [pageControl scrollViewDidScroll:scrollView];
+  }
+  @catch (NSException *e) {
+    exception = e;
+  }
+
+  // Then
+  XCTAssertNil(exception, @"PageControl crashed with exception: %@", exception);
+}
+
 @end

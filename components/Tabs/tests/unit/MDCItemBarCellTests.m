@@ -39,12 +39,12 @@
   style.shouldDisplayTitle = YES;
 
   // When
-  [cellWithImageAndText setImage:[UIImage imageNamed:@"TabBarDemo_ic_info"]];
-  [cellWithImageOnly setImage:[UIImage imageNamed:@"TabBarDemo_ic_info"]];
+  cellWithImageAndText.image = [UIImage imageNamed:@"TabBarDemo_ic_info"];
+  cellWithImageOnly.image = [UIImage imageNamed:@"TabBarDemo_ic_info"];
 
-  [cellWithImageAndText setTitle:@"A title"];
-  [cellWithTextAndMissingImage setTitle:@"A title"];
-  [cellWithTextOnly setTitle:@"A title"];
+  cellWithImageAndText.title = @"A title";
+  cellWithTextAndMissingImage.title = @"A title";
+  cellWithTextOnly.title = @"A title";
 
   [cellWithImageAndText applyStyle:style];
   [cellWithImageOnly applyStyle:style];
@@ -57,6 +57,31 @@
   XCTAssertEqual(cellWithImageOnly.titleLabel.numberOfLines, 1);
   XCTAssertEqual(cellWithTextAndMissingImage.titleLabel.numberOfLines, 1);
   XCTAssertEqual(cellWithTextOnly.titleLabel.numberOfLines, 2);
+}
+
+/// Tests that a cell that was initially configured as image-only style, and then changed to
+/// image-and-title style, will result in the correct title text.
+- (void)testTitleAfterStyleChange {
+  MDCItemBarStyle *iconOnlyStyle = [[MDCItemBarStyle alloc] init];
+  iconOnlyStyle.shouldDisplayImage = YES;
+  iconOnlyStyle.shouldDisplayTitle = NO;
+
+  MDCItemBarStyle *iconAndTextStyle = [[MDCItemBarStyle alloc] init];
+  iconAndTextStyle.shouldDisplayImage = YES;
+  iconAndTextStyle.shouldDisplayTitle = YES;
+
+  // Create a cell and set the style before settting the image/title. That is the order items will
+  // be configured in the app runtime.
+  MDCItemBarCell *cell = [[MDCItemBarCell alloc] initWithFrame:CGRectZero];
+  [cell applyStyle:iconOnlyStyle];
+  cell.image = [UIImage imageNamed:@"TabBarDemo_ic_info"];
+  cell.title = @"A title";
+  XCTAssertEqual(cell.titleLabel.hidden, YES);
+
+  // Change the style to show image-and-title.
+  [cell applyStyle:iconAndTextStyle];
+  XCTAssertEqual(cell.titleLabel.hidden, NO);
+  XCTAssertEqualObjects(cell.titleLabel.text, @"A TITLE");
 }
 
 @end

@@ -69,6 +69,10 @@ static const CGFloat kBottomBarHeight = 44.0f;
   [manager addTarget:self action:@selector(handleOverlayTransition:)];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+  [MDCSnackbarManager setBottomOffset:0];
+}
+
 #pragma mark - Event Handling
 
 - (void)collectionView:(UICollectionView *)collectionView

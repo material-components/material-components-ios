@@ -563,9 +563,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateDisplayedTitle {
-  if (!_titleLabel.hidden) {
-    _titleLabel.text = [[self class] displayedTitleForTitle:_title style:_style];
-  }
+  _titleLabel.text = [[self class] displayedTitleForTitle:_title style:_style];
 }
 
 @end
