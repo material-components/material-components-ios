@@ -70,7 +70,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _landscapeItemMode = MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles;
+  _distribution = MDCBottomNavigationBarDistributionEqual;
   _itemsDistributed = YES;
   _titleBelowItem = YES;
   _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
@@ -105,20 +105,20 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 - (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
                               containerWidth:(CGFloat)containerWidth {
-  switch (self.landscapeItemMode) {
-    case MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles:
+  switch (self.distribution) {
+    case MDCBottomNavigationBarDistributionEqual:
       [self sizeContainerViewItemsDistributed:YES
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
-    case MDCBottomNavigationBarLandscapeItemModeDistributeAdjacentTitles:
+    case MDCBottomNavigationBarDistributionEqualAdjacentTitles:
       [self sizeContainerViewItemsDistributed:YES
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
       self.titleBelowItem = NO;
       break;
-    case MDCBottomNavigationBarLandscapeItemModeCluster:
+    case MDCBottomNavigationBarDistributionCluster:
       [self sizeContainerViewItemsDistributed:NO
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];

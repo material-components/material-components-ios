@@ -33,18 +33,17 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleVisibility) {
  States used to configure bottom navigation in landscape mode with respect to how items are spaced
  and item title orientation. Titles will be shown or hidden depending on title hide state.
  */
-typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLandscapeItemMode) {
+typedef NS_ENUM(NSInteger, MDCBottomNavigationBarDistribution) {
 
-  // Items are distributed using the entire landscape mode width of the device. Titles are centered
-  // below icons.
-  MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles = 0,
+  // Items are distributed using the entire width of the device. Titles are centered below icons.
+  MDCBottomNavigationBarDistributionEqual = 0,
 
-  // Items are distributed using the entire landscape mode width of the device. Titles are
-  // positioned adjacent to icons.
-  MDCBottomNavigationBarLandscapeItemModeDistributeAdjacentTitles = 1,
+  // Items are distributed using the entire width of the device. Titles are positioned adjacent to
+  // icons.
+  MDCBottomNavigationBarDistributionEqualAdjacentTitles = 1,
 
   // Items are tightly clustered together. Titles are positioned below icons.
-  MDCBottomNavigationBarLandscapeItemModeCluster = 2
+  MDCBottomNavigationBarDistributionCluster = 2
 };
 
 /**
@@ -63,35 +62,40 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLandscapeItemMode) {
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 
 /**
- Configures item spacing and title orientation in landscape mode.
- Default is MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles.
+ Configures item space distribution and title orientation in landscape mode.
+ Default is MDCBottomNavigationBarDistributionEqual.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarLandscapeItemMode landscapeItemMode;
+@property(nonatomic, assign) MDCBottomNavigationBarDistribution distribution;
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. It is strongly
- recommended the array contain at least three items and no more than five items.
+ recommended the array contain at least three items and no more than five items -- appearance may
+ degrade outside of this range.
  */
-@property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
+@property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *items;
 
 /**
  Selected item in the bottom navigation bar.
+ Default is no item selected.
  */
 @property(nonatomic, weak, nullable) UITabBarItem *selectedItem;
 
 /**
  Display font used for item titles.
+ Default is system font.
  */
 @property(nonatomic, strong, nullable) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
  Color of selected item. Applies color to items' icons and text.
+ Default color is black.
  */
 @property (nonatomic, strong, readwrite, nullable) UIColor *selectedItemTintColor
     UI_APPEARANCE_SELECTOR;
 
 /**
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
+ Default color is dark gray.
  */
 @property (nonatomic, strong, readwrite, nullable) UIColor *unselectedItemTintColor
     UI_APPEARANCE_SELECTOR;
