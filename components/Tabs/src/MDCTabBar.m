@@ -83,6 +83,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   MDCTabBarAlignment _alignmentOverride;
   MDCTabBarItemAppearance _itemAppearanceOverride;
   BOOL _displaysUppercaseTitlesOverride;
+
+  // Keep track of the Safe Area bottom inset to prevent unnecessary layout calls.
+  CGFloat _bottomSafeAreaInset;
 }
 // Inherit UIView's tintColor logic.
 @dynamic tintColor;
@@ -300,9 +303,12 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 #endif
 
-  [self invalidateIntrinsicContentSize];
+  if (self.safeAreaInsets.bottom == _bottomSafeAreaInset) {
+    return;
+  }
+  _bottomSafeAreaInset = self.safeAreaInsets.bottom;
 
-  // TODO(chuga): Figure out why this is needed.
+  [self invalidateIntrinsicContentSize];
   [self updateConstraints];
 }
 
