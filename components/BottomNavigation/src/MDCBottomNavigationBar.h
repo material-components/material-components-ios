@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLandscapeItemMode) {
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. The array must
- contain a minimum of three items with a maxiumum of up to five items.
+ contain a minimum of three items with a maximum of up to five items.
  */
 @property(nonatomic, copy, nullable) NSArray<UITabBarItem *> *items;
 
