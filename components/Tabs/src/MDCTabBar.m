@@ -294,7 +294,11 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)safeAreaInsetsDidChange {
-  [super safeAreaInsetsDidChange];
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [super safeAreaInsetsDidChange];
+  }
+#endif
 
   [self invalidateIntrinsicContentSize];
 
