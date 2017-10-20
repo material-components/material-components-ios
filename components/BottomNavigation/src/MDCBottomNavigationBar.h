@@ -59,13 +59,15 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarDistribution) {
  Configures when item titles should be displayed.
  Default is MDCBottomNavigationBarTitleVisibilitySelected.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
+@property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Configures item space distribution and title orientation in landscape mode.
  Default is MDCBottomNavigationBarDistributionEqual.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarDistribution distribution;
+@property(nonatomic, assign) MDCBottomNavigationBarDistribution distribution
+    UI_APPEARANCE_SELECTOR;
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. It is strongly
