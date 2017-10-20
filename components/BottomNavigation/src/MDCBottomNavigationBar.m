@@ -26,6 +26,7 @@
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
 static const CGFloat kMDCBottomNavigationBarHeight = 72.f;
+static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 60.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
@@ -99,6 +100,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self.maxLandscapeClusterContainerWidth = MIN(size.width, size.height);
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
+  if (self.distribution == MDCBottomNavigationBarDistributionEqualAdjacentTitles) {
+    heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
+  }
   CGSize insetSize = CGSizeMake(size.width, heightWithInset);
   return insetSize;
 }
@@ -130,19 +134,17 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 - (void)sizeContainerViewItemsDistributed:(BOOL)itemsDistributed
                         withBottomNavSize:(CGSize)bottomNavSize
                            containerWidth:(CGFloat)containerWidth {
+  CGFloat barHeight = kMDCBottomNavigationBarHeight;
+  if (self.distribution == MDCBottomNavigationBarDistributionEqualAdjacentTitles) {
+    barHeight = kMDCBottomNavigationBarHeightAdjacentTitles;
+  }
   if (itemsDistributed) {
     UIEdgeInsets insets = self.mdc_safeAreaInsets;
     self.containerView.frame =
-        CGRectMake(insets.left,
-                   0,
-                   bottomNavSize.width - insets.left - insets.right,
-                   kMDCBottomNavigationBarHeight);
+        CGRectMake(insets.left, 0, bottomNavSize.width - insets.left - insets.right, barHeight);
   } else {
     CGFloat clusteredOffsetX = (bottomNavSize.width - containerWidth) / 2;
-    self.containerView.frame = CGRectMake(clusteredOffsetX,
-                                          0,
-                                          containerWidth,
-                                          kMDCBottomNavigationBarHeight);
+    self.containerView.frame = CGRectMake(clusteredOffsetX, 0, containerWidth, barHeight);
   }
 }
 
