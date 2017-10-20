@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /** States used to configure bottom navigation on when to show item titles. */
-typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
+typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleVisibility) {
 
   // Default behavior is to show title when item is selected, hide otherwise.
   MDCBottomNavigationBarTitleVisibilitySelected = 0,
