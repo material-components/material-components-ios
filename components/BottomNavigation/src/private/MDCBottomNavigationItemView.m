@@ -113,10 +113,10 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
         CGPointMake(CGRectGetMidX(self.bounds),
                     CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
     BOOL titleHideStateSelectedAways = self.selected &&
-    self.titleHideState == MDCBottomNavigationBarTitleHideStateAlways;
+    self.titleHideState == MDCBottomNavigationBarTitleVisibilityNever;
     BOOL titleHideStateUnselectedDefaultAlways = !self.selected &&
-    (self.titleHideState == MDCBottomNavigationBarTitleHideStateDefault ||
-     self.titleHideState == MDCBottomNavigationBarTitleHideStateAlways);
+    (self.titleHideState == MDCBottomNavigationBarTitleVisibilitySelected ||
+     self.titleHideState == MDCBottomNavigationBarTitleVisibilityNever);
     if (titleHideStateSelectedAways) {
       iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     } else if (titleHideStateUnselectedDefaultAlways) {
@@ -196,13 +196,13 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
     self.button.accessibilityTraits |= UIAccessibilityTraitSelected;
 
     switch (self.titleHideState) {
-      case MDCBottomNavigationBarTitleHideStateDefault:
+      case MDCBottomNavigationBarTitleVisibilitySelected:
         self.label.hidden = NO;
         break;
-      case MDCBottomNavigationBarTitleHideStateNever:
+      case MDCBottomNavigationBarTitleVisibilityAlways:
         self.label.hidden = NO;
         break;
-      case MDCBottomNavigationBarTitleHideStateAlways:
+      case MDCBottomNavigationBarTitleVisibilityNever:
         self.label.hidden = YES;
         break;
     }
@@ -212,13 +212,13 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
     self.button.accessibilityTraits &= ~UIAccessibilityTraitSelected;
 
     switch (self.titleHideState) {
-      case MDCBottomNavigationBarTitleHideStateDefault:
+      case MDCBottomNavigationBarTitleVisibilitySelected:
         self.label.hidden = YES;
         break;
-      case MDCBottomNavigationBarTitleHideStateNever:
+      case MDCBottomNavigationBarTitleVisibilityAlways:
         self.label.hidden = NO;
         break;
-      case MDCBottomNavigationBarTitleHideStateAlways:
+      case MDCBottomNavigationBarTitleVisibilityNever:
         self.label.hidden = YES;
         break;
     }

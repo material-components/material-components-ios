@@ -16,17 +16,17 @@
 
 #import <UIKit/UIKit.h>
 
-/** States used to configure bottom navigation on when to hide item titles. */
+/** States used to configure bottom navigation on when to show item titles. */
 typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleHideState) {
 
-  // Default behavior is to hide item titles when item is unselected.
-  MDCBottomNavigationBarTitleHideStateDefault = 0,
+  // Default behavior is to show title when item is selected, hide otherwise.
+  MDCBottomNavigationBarTitleVisibilitySelected = 0,
 
-  // Item titles are never hidden.
-  MDCBottomNavigationBarTitleHideStateNever = 1,
+  // Item titles are always visible.
+  MDCBottomNavigationBarTitleVisibilityAlways = 1,
 
-  // Item titles are always hidden.
-  MDCBottomNavigationBarTitleHideStateAlways = 2
+  // Item titles are never visible.
+  MDCBottomNavigationBarTitleVisibilityNever = 2
 };
 
 /**
@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLandscapeItemMode) {
 
 /**
  Configures when item titles should be displayed.
- Default is MDCBottomNavigationBarTitleHideStateDefault.
+ Default is MDCBottomNavigationBarTitleVisibilitySelected.
  */
 @property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
 
