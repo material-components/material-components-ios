@@ -66,8 +66,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 }
 
 - (void)commonMDCBottomNavigationBarInit {
-  self.backgroundColor = [UIColor whiteColor];
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
+  self.backgroundColor = [UIColor whiteColor];
+  self.isAccessibilityElement = NO;
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
