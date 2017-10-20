@@ -104,8 +104,13 @@ IB_DESIGNABLE
  Setting this property will render an NSAttributedString with the assigned attributes across the
  entire text.
  */
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+#else
 @property(nonatomic, copy, nullable)
     NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+#endif
 
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
