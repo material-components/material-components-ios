@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLandscapeItemMode) {
  Configures when item titles should be displayed.
  Default is MDCBottomNavigationBarTitleVisibilitySelected.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
+@property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 
 /**
  Configures item spacing and title orientation in landscape mode.

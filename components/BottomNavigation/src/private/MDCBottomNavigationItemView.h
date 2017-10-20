@@ -23,7 +23,7 @@
 @property(nonatomic, assign) BOOL circleHighlightHidden;
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
-@property(nonatomic, assign) MDCBottomNavigationBarTitleHideState titleHideState;
+@property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;

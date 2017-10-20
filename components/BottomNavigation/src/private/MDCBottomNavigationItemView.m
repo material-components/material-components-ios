@@ -112,14 +112,14 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
     CGPoint iconImageViewCenter =
         CGPointMake(CGRectGetMidX(self.bounds),
                     CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
-    BOOL titleHideStateSelectedAways = self.selected &&
-    self.titleHideState == MDCBottomNavigationBarTitleVisibilityNever;
-    BOOL titleHideStateUnselectedDefaultAlways = !self.selected &&
-    (self.titleHideState == MDCBottomNavigationBarTitleVisibilitySelected ||
-     self.titleHideState == MDCBottomNavigationBarTitleVisibilityNever);
-    if (titleHideStateSelectedAways) {
+    BOOL titleVisibilityNever = self.selected &&
+        self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever;
+    BOOL titleVisibilitySelectedNever = !self.selected &&
+        (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected ||
+         self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever);
+    if (titleVisibilityNever) {
       iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    } else if (titleHideStateUnselectedDefaultAlways) {
+    } else if (titleVisibilitySelectedNever) {
       iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     }
     CGPoint badgeCenter =
@@ -195,7 +195,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
     self.iconImageView.tintColor = self.selectedItemTintColor;
     self.button.accessibilityTraits |= UIAccessibilityTraitSelected;
 
-    switch (self.titleHideState) {
+    switch (self.titleVisibility) {
       case MDCBottomNavigationBarTitleVisibilitySelected:
         self.label.hidden = NO;
         break;
@@ -211,7 +211,7 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
     self.iconImageView.tintColor = self.unselectedItemTintColor;
     self.button.accessibilityTraits &= ~UIAccessibilityTraitSelected;
 
-    switch (self.titleHideState) {
+    switch (self.titleVisibility) {
       case MDCBottomNavigationBarTitleVisibilitySelected:
         self.label.hidden = YES;
         break;

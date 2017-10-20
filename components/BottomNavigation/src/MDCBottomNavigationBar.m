@@ -69,7 +69,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
-  _titleHideState = MDCBottomNavigationBarTitleVisibilitySelected;
+  _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _landscapeItemMode = MDCBottomNavigationBarLandscapeItemModeDistributeCenteredTitles;
   _itemsDistributed = YES;
   _titleBelowItem = YES;
@@ -296,7 +296,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     itemView.title = item.title;
     itemView.selectedItemTintColor = self.selectedItemTintColor;
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
-    itemView.titleHideState = self.titleHideState;
+    itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
 
     NSString *key =
@@ -376,10 +376,10 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   }
 }
 
-- (void)setTitleHideState:(MDCBottomNavigationBarTitleHideState)titleHideState {
-  _titleHideState = titleHideState;
+- (void)setTitleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility {
+  _titleVisibility = titleVisibility;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    itemView.titleHideState = titleHideState;
+    itemView.titleVisibility = titleVisibility;
   }
 }
 
