@@ -78,10 +78,10 @@ class AppBarImagerySwiftExample: UITableViewController {
     super.init(coder: aDecoder)
   }
 
-  func headerBackgroundImage() -> UIImage {
-    let bundle = Bundle(for: AppBarImagerySwiftExample.self)
-    let imagePath = bundle.path(forResource: "mdc_theme", ofType: "png")!
-    return UIImage(contentsOfFile: imagePath)!
+  func headerBackgroundImage() -> UIImage? {
+    return UIImage(named: "mdc_theme",
+                   in: Bundle(for: AppBarImagerySwiftExample.self),
+                   compatibleWith: nil)
   }
 }
 
