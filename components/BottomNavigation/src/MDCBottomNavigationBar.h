@@ -86,20 +86,20 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarDistribution) {
  Display font used for item titles.
  Default is system font.
  */
-@property(nonatomic, strong, nullable) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nonnull) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
  Color of selected item. Applies color to items' icons and text.
  Default color is black.
  */
-@property (nonatomic, strong, readwrite, nullable) UIColor *selectedItemTintColor
+@property (nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTintColor
     UI_APPEARANCE_SELECTOR;
 
 /**
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  Default color is dark gray.
  */
-@property (nonatomic, strong, readwrite, nullable) UIColor *unselectedItemTintColor
+@property (nonatomic, strong, readwrite, nonnull) UIColor *unselectedItemTintColor
     UI_APPEARANCE_SELECTOR;
 
 @end
