@@ -18,15 +18,15 @@
 
 #import "MDCAppBarContainerViewController.h"
 
+#import "MDFInternationalization.h"
+#import "MDFTextAccessibility.h"
 #import "MaterialApplication.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialIcons+ic_arrow_back.h"
-#import "MaterialRTL.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 #import "MaterialUIMetrics.h"
-#import "MDFTextAccessibility.h"
 #import "private/MaterialAppBarStrings.h"
 #import "private/MaterialAppBarStrings_table.h"
 
@@ -253,9 +253,9 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   if (!backBarButtonItem) {
     UIImage *backButtonImage = [MDCIcons imageFor_ic_arrow_back];
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    if (self.navigationBar.mdc_effectiveUserInterfaceLayoutDirection ==
+    if (self.navigationBar.mdf_effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
-      backButtonImage = [backButtonImage mdc_imageFlippedForRightToLeftLayoutDirection];
+      backButtonImage = [backButtonImage mdf_imageWithHorizontallyFlippedOrientation];
     }
     backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone
