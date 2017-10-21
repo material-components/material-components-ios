@@ -16,8 +16,8 @@
 
 #import "MDCButtonBar.h"
 
+#import "MDFInternationalization.h"
 #import "MaterialButtons.h"
-#import "MaterialRTL.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
 static const CGFloat kDefaultHeight = 56;
@@ -108,7 +108,7 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   CGFloat totalWidth = 0;
 
   CGFloat edge;
-  switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
+  switch (self.mdf_effectiveUserInterfaceLayoutDirection) {
     case UIUserInterfaceLayoutDirectionLeftToRight:
       edge = 0;
       break;
@@ -126,7 +126,7 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
 
   for (UIView *view in positionedButtonViews) {
     CGFloat width = view.frame.size.width;
-    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
+    switch (self.mdf_effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         break;
       case UIUserInterfaceLayoutDirectionRightToLeft:
@@ -142,7 +142,7 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
         }
       }
     }
-    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
+    switch (self.mdf_effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         edge += width;
         break;
@@ -392,8 +392,8 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   }
 }
 
-- (void)mdc_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
-  [super mdc_setSemanticContentAttribute:semanticContentAttribute];
+- (void)mdf_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  [super mdf_setSemanticContentAttribute:semanticContentAttribute];
   [self reloadButtonViews];
 }
 
