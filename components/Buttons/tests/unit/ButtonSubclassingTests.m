@@ -29,10 +29,6 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
 
 @implementation ButtonSubclass
 
-- (UIEdgeInsets)defaultContentEdgeInsets {
-  return ButtonTestContentEdgeInsets;
-}
-
 - (CGFloat)cornerRadius {
   return ButtonTestCornerRadius;
 }
@@ -43,15 +39,6 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
 @end
 
 @implementation ButtonSubclassingTests
-
-- (void)testSubclassContentEdgeInsets {
-  // Given
-  MDCButton *button = [[ButtonSubclass alloc] init];
-
-  // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(ButtonTestContentEdgeInsets,
-                                              button.contentEdgeInsets));
-}
 
 - (void)testAssignedContentEdgeInsets {
   // Given

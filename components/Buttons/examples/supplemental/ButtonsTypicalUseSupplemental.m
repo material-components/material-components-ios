@@ -101,6 +101,7 @@
 
   for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
     MDCButton *button = self.buttons[i];
+    [button sizeToFit];
     UILabel *label = self.labels[i];
 
     button.center = CGPointMake(centerX + 20 + (CGRectGetWidth(button.bounds) / 2),

@@ -39,6 +39,13 @@
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [self.floatingButton sizeToFit];
+  [self.alertButton sizeToFit];
+  [self.featureButton sizeToFit];
+}
+
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 600);
@@ -90,7 +97,6 @@
 
   self.alertButton = [[MDCRaisedButton alloc] init];
   [self.alertButton setTitle:@"Alert" forState:UIControlStateNormal];
-  [self.alertButton sizeToFit];
   self.alertButton.center = CGPointMake(100, 100);
   [self.scrollView addSubview:self.alertButton];
   [self.alertButton addTarget:self
@@ -99,7 +105,6 @@
 
   self.featureButton = [[MDCRaisedButton alloc] init];
   [self.featureButton setTitle:@"Feature Highlight" forState:UIControlStateNormal];
-  [self.featureButton sizeToFit];
   self.featureButton.center = CGPointMake(100, 100);
   [self.scrollView addSubview:self.featureButton];
   [self.featureButton addTarget:self
@@ -118,7 +123,6 @@
 
   self.floatingButton =
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
-  [self.floatingButton sizeToFit];
   [self.scrollView addSubview:self.floatingButton];
 
   self.textField = [[MDCTextField alloc] initWithFrame:CGRectMake(0, 0, 250, 50)];

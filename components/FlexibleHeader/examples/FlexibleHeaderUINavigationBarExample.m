@@ -88,7 +88,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
   self.button = [[UIButton alloc] init];
   [self.button setTitle:@"UIButton" forState:UIControlStateNormal];
-  [self.button sizeToFit];
   [self.button addTarget:self
                   action:@selector(didTapButton:)
         forControlEvents:UIControlEventTouchUpInside];
@@ -126,6 +125,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [self.button sizeToFit];
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
   self.button.center = CGPointMake(CGRectGetMidX(self.fhvc.headerView.frame),

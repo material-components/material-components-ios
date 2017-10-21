@@ -22,6 +22,11 @@
 
 #import "TabBarViewControllerExampleSupplemental.h"
 
+@interface TabBarViewControllerExample ()
+@property(nonatomic, weak) MDCRaisedButton *pushAndHideButton;
+@property(nonatomic, weak) MDCRaisedButton *toggleTabBarButton;
+@end
+
 @implementation TabBarViewControllerExample
 
 - (void)viewDidLoad {
@@ -56,6 +61,7 @@
   [button setTitle:@"Push and Hide Tab" forState:UIControlStateNormal];
   [button sizeToFit];
   [child1.view addSubview:button];
+  self.pushAndHideButton = button;
   [button addTarget:self
                 action:@selector(pushHidesNavigation)
       forControlEvents:UIControlEventTouchUpInside];
@@ -66,9 +72,16 @@
   [button setTitle:@"Toggle Tab Bar" forState:UIControlStateNormal];
   [button sizeToFit];
   [child2.view addSubview:button];
+  self.toggleTabBarButton = button;
   [button addTarget:self
                 action:@selector(toggleTabBar)
       forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [self.pushAndHideButton sizeToFit];
+  [self.toggleTabBarButton sizeToFit];
 }
 
 @end
