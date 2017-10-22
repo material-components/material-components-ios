@@ -63,10 +63,13 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
     switch (_shape) {
       case MDCFloatingButtonShapeDefault:
         self.contentEdgeInsets = UIEdgeInsetsMake(16, 16, 16, 16);
+        break;
       case MDCFloatingButtonShapeMini:
         self.contentEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
+        break;
       case MDCFloatingButtonShapeLargeIcon:
         self.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        break;
     }
     self.hitAreaInsets = [self defaultHitAreaInsets];
   }
