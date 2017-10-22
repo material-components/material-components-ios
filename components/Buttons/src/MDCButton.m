@@ -356,7 +356,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.layer.shadowPath = [self boundingPath].CGPath;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if ([self checkIfSubclassDidOverrideMethod:@selector(cornerRadius)]) {
+  if ([self didOverrideMethod:@selector(cornerRadius)]) {
     self.layer.cornerRadius = [self cornerRadius];
   }
 #pragma clang diagnostic pop
@@ -793,7 +793,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   CGFloat cornerRadius = self.layer.cornerRadius;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if ([self checkIfSubclassDidOverrideMethod:@selector(cornerRadius)]) {
+  if ([self didOverrideMethod:@selector(cornerRadius)]) {
     cornerRadius = [self cornerRadius];
   }
 #pragma clang diagnostic pop
@@ -810,7 +810,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return !isFlatButton;
 }
 
-- (BOOL)checkIfSubclassDidOverrideMethod:(SEL)selector {
+- (BOOL)didOverrideMethod:(SEL)selector {
   Class superclass = [self superclass];
   IMP selfIMP = [self methodForSelector:selector];
   BOOL isOverriden = NO;
