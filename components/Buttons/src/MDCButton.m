@@ -282,7 +282,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Default content insets
   // If a subclass is using the deprecated defaultContentEdgeInsets, fetch that value.
-  if ([self checkIfSubclassDidOverrideMethod:@selector(defaultContentEdgeInsets)]) {
+  if ([self didOverrideMethod:@selector(defaultContentEdgeInsets)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     self.contentEdgeInsets = [self defaultContentEdgeInsets];
@@ -778,7 +778,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return !isFlatButton;
 }
 
-- (BOOL)checkIfSubclassDidOverrideMethod:(SEL)selector {
+- (BOOL)didOverrideMethod:(SEL)selector {
   Class superclass = [self superclass];
   IMP selfIMP = [self methodForSelector:selector];
   BOOL isOverriden = NO;
