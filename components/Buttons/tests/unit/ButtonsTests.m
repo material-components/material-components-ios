@@ -856,4 +856,64 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              @"Font size should be equal to MDCFontTextStyleButton's.");
 }
 
+#pragma mark - Size-related tests
+
+- (void)testSizeThatFitsWithMinimumOnly {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) + 15,
+                                    CGRectGetHeight(button.frame) + 21);
+
+  // When
+  button.minimumSize = expectedFrame.size;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
+- (void)testSizeThatFitsWithMaximumOnly {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) - 7,
+                                    CGRectGetHeight(button.frame) - 3);
+
+  // When
+  button.maximumSize = expectedFrame.size;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
+- (void)testSizeThatFitsWithMinimumAndMaximum {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) + 21,
+                                    CGRectGetHeight(button.frame) - 4);
+
+  // When
+  button.maximumSize = CGSizeMake(0, CGRectGetHeight(expectedFrame)); // Only bound max height
+  button.minimumSize = CGSizeMake(CGRectGetWidth(expectedFrame), 0); // Only bound min width
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
 @end
