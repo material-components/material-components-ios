@@ -62,6 +62,7 @@ static NSString *const MDCButtonShadowColorsKey = @"MDCButtonShadowColorsKey";
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
 static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
+static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -289,6 +290,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _minimumSize = CGSizeZero;
   _maximumSize = CGSizeZero;
 
+  self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
   MDCShadowLayer *shadowLayer = self.layer;
   shadowLayer.shadowPath = [self boundingPath].CGPath;
   shadowLayer.shadowColor = [UIColor blackColor].CGColor;
@@ -352,7 +354,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)layoutSubviews {
   [super layoutSubviews];
   self.layer.shadowPath = [self boundingPath].CGPath;
-  self.layer.cornerRadius = [self cornerRadius];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  if ([self checkIfSubclassDidOverrideMethod:@selector(cornerRadius)]) {
+    self.layer.cornerRadius = [self cornerRadius];
+  }
+#pragma clang diagnostic pop
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
   if (_inkView.inkStyle == MDCInkStyleUnbounded) {
@@ -783,11 +790,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIBezierPath *)boundingPath {
-  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
-}
+  CGFloat cornerRadius = self.layer.cornerRadius;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  if ([self checkIfSubclassDidOverrideMethod:@selector(cornerRadius)]) {
+    cornerRadius = [self cornerRadius];
+  }
+#pragma clang diagnostic pop
 
-- (CGFloat)cornerRadius {
-  return 2.0f;
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
@@ -797,6 +808,25 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (BOOL)shouldHaveOpaqueBackground {
   BOOL isFlatButton = MDCCGFloatIsExactlyZero([self elevationForState:UIControlStateNormal]);
   return !isFlatButton;
+}
+
+- (BOOL)checkIfSubclassDidOverrideMethod:(SEL)selector {
+  Class superclass = [self superclass];
+  IMP selfIMP = [self methodForSelector:selector];
+  BOOL isOverriden = NO;
+
+  while (superclass) {
+    isOverriden = [superclass instancesRespondToSelector:selector]
+        && selfIMP != [superclass instanceMethodForSelector:selector];
+
+    if (isOverriden) {
+      break;
+    }
+
+    superclass = [superclass superclass];
+  }
+
+  return isOverriden;
 }
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {

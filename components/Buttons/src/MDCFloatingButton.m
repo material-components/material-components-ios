@@ -105,15 +105,13 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
   }
 }
 
+- (void)layoutSubviews {
+  // We have to set cornerRadius before laying out subviews so that the boundingPath is correct.
+  self.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
+  [super layoutSubviews];
+}
+
 #pragma mark - Subclassing
-
-- (UIBezierPath *)boundingPath {
-  return [UIBezierPath bezierPathWithOvalInRect:self.bounds];
-}
-
-- (CGFloat)cornerRadius {
-  return CGRectGetWidth(self.bounds) / 2;
-}
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
   switch (_shape) {
