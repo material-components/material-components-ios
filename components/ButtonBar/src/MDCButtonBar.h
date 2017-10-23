@@ -136,6 +136,7 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
 
  @seealso MDCBarButtonItemLayoutHints
  */
+__deprecated_msg("This API will be removed without replacement.")
 @protocol MDCButtonBarDelegate <NSObject>
 @required
 
