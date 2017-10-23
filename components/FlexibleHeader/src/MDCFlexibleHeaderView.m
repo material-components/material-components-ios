@@ -452,7 +452,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       // status bar visibility then we ignore this safeAreaInsetsDidChange event.
       return;
     }
-    _currentSafeAreaInsetTop = MDCDeviceTopSafeAreaInset();
+    CGFloat safeAreaTop = MDCDeviceTopSafeAreaInset();
+    if (_currentSafeAreaInsetTop == safeAreaTop
+        && (self.trackingScrollView.isTracking || self.trackingScrollView.isDecelerating) ) {
+      return;
+    }
+    _currentSafeAreaInsetTop = safeAreaTop;
 
     // If the min or max height have been explicitly set, don't adjust anything if the values
     // already include a Safe Area inset.
