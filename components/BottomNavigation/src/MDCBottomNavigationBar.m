@@ -35,7 +35,6 @@ static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
 static NSString *const kMDCBottomNavigationBarOfString = @"of";
-static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 @interface MDCBottomNavigationBar ()
@@ -74,7 +73,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _distribution = MDCBottomNavigationBarDistributionEqual;
+  _alignment = MDCBottomNavigatioBarAlignmentJustified;
   _itemsDistributed = YES;
   _titleBelowItem = YES;
   _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
@@ -104,7 +103,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self.maxLandscapeClusterContainerWidth = MIN(size.width, size.height);
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
-  if (self.distribution == MDCBottomNavigationBarDistributionEqualAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigatioBarAlignmentJustifiedAdjacentTitles) {
     heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
   }
   CGSize insetSize = CGSizeMake(size.width, heightWithInset);
@@ -121,20 +120,20 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 - (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
                               containerWidth:(CGFloat)containerWidth {
-  switch (self.distribution) {
-    case MDCBottomNavigationBarDistributionEqual:
+  switch (self.alignment) {
+    case MDCBottomNavigatioBarAlignmentJustified:
       [self sizeContainerViewItemsDistributed:YES
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
-    case MDCBottomNavigationBarDistributionEqualAdjacentTitles:
+    case MDCBottomNavigatioBarAlignmentJustifiedAdjacentTitles:
       [self sizeContainerViewItemsDistributed:YES
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
       self.titleBelowItem = NO;
       break;
-    case MDCBottomNavigationBarDistributionCluster:
+    case MDCBottomNavigatioBarAlignmentCentered:
       [self sizeContainerViewItemsDistributed:NO
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
@@ -147,7 +146,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
                         withBottomNavSize:(CGSize)bottomNavSize
                            containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
-  if (self.distribution == MDCBottomNavigationBarDistributionEqualAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigatioBarAlignmentJustifiedAdjacentTitles) {
     barHeight = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
   if (itemsDistributed) {
@@ -313,18 +312,14 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
     NSString *key =
         kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
-    NSString *ofString =
+    NSString *itemOfTotalString =
         NSLocalizedStringFromTableInBundle(key,
                                            kMaterialBottomNavigationStringsTableName,
                                            [[self class] bundle],
                                            kMDCBottomNavigationBarOfString);
-    NSString *itemNumString = [NSNumber numberWithInteger:(i + 1)].stringValue;
-    NSString *totalItemsNumString = [NSNumber numberWithInteger:items.count].stringValue;
-    NSString *ofStringSpaces =
-        [[kMDCBottomNavigationBarSpaceString stringByAppendingString:ofString]
-         stringByAppendingString:kMDCBottomNavigationBarSpaceString];
-    itemView.button.accessibilityHint = [[itemNumString stringByAppendingString:ofStringSpaces]
-                                         stringByAppendingString:totalItemsNumString];
+   NSString *localizedPosition =
+        [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
+    itemView.button.accessibilityHint = localizedPosition;
     if (item.image) {
       itemView.image = item.image;
     }

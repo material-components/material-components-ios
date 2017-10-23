@@ -33,17 +33,19 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleVisibility) {
  States used to configure bottom navigation in landscape mode with respect to how items are spaced
  and item title orientation. Titles will be shown or hidden depending on title hide state.
  */
-typedef NS_ENUM(NSInteger, MDCBottomNavigationBarDistribution) {
+typedef NS_ENUM(NSInteger, MDCBottomNavigatioBarAlignment) {
 
-  // Items are distributed using the entire width of the device. Titles are centered below icons.
-  MDCBottomNavigationBarDistributionEqual = 0,
+  // Items are distributed using the entire width of the device, justified. Titles are centered
+  // below icons.
+  MDCBottomNavigatioBarAlignmentJustified = 0,
 
-  // Items are distributed using the entire width of the device. Titles are positioned adjacent to
-  // icons.
-  MDCBottomNavigationBarDistributionEqualAdjacentTitles = 1,
+  // Items are distributed using the entire width of the device, justified. Titles are positioned
+  // adjacent to icons.
+  MDCBottomNavigatioBarAlignmentJustifiedAdjacentTitles = 1,
 
-  // Items are tightly clustered together. Titles are positioned below icons.
-  MDCBottomNavigationBarDistributionCluster = 2
+  // Items are tightly clustered together and centered on the navigation bar. Titles are positioned
+  // below icons.
+  MDCBottomNavigatioBarAlignmentCentered = 2
 };
 
 /**
@@ -66,8 +68,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarDistribution) {
  Configures item space distribution and title orientation in landscape mode.
  Default is MDCBottomNavigationBarDistributionEqual.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarDistribution distribution
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) MDCBottomNavigatioBarAlignment alignment UI_APPEARANCE_SELECTOR;
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. It is strongly

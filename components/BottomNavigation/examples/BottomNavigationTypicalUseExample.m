@@ -45,7 +45,7 @@
   _bottomNavBar.selectedItemTintColor = [MDCPalette purplePalette].tint700;
   _bottomNavBar.unselectedItemTintColor = [MDCPalette greyPalette].tint600;
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _bottomNavBar.distribution = MDCBottomNavigationBarDistributionCluster;
+  _bottomNavBar.alignment = MDCBottomNavigatioBarAlignmentJustified;
   [self.view addSubview:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =

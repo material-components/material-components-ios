@@ -61,8 +61,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)commonMDCBottomNavigationItemViewInit {
-  self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-
   _titleBelowIcon = YES;
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
@@ -83,7 +81,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   _badge.isAccessibilityElement = NO;
   [self addSubview:_badge];
 
-  if (!_badgeValue) {
+  if (!_badge.badgeValue) {
     _badge.hidden = YES;
   }
 
@@ -108,9 +106,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGSize labelSize = [self sizeForText:self.title
-                                     font:self.label.font
-                         boundingRectSize:self.bounds.size];
+  CGSize labelSize = [self.title boundingRectWithSize:self.bounds.size
+                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                           attributes:@{ NSFontAttributeName:self.label.font }
+                                              context:nil].size;
   self.label.frame = CGRectMake(0, 0, labelSize.width, labelSize.height);
   [self centerLayoutAnimated:NO];
 }
@@ -180,23 +179,12 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 }
 
-- (CGSize)sizeForText:(NSString *)text
-                 font:(UIFont *)font
-     boundingRectSize:(CGSize)boundingRectSize {
-  CGRect rect = [text boundingRectWithSize:boundingRectSize
-                                   options:NSStringDrawingUsesLineFragmentOrigin
-                                attributes:@{ NSFontAttributeName:font }
-                                   context:nil];
-  return rect.size;
-}
-
 - (NSString *)accessibilityLabelWithTitle:(NSString *)title {
   NSMutableArray *labelComponents = [NSMutableArray array];
 
   // Use untransformed title as accessibility label to ensure accurate reading.
-  NSString *titleComponent = title;
-  if (titleComponent.length > 0) {
-    [labelComponents addObject:titleComponent];
+  if (title.length > 0) {
+    [labelComponents addObject:title];
   }
 
   NSString *key =
@@ -286,11 +274,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   self.badge.badgeColor = badgeColor;
 }
 
+- (NSString *)badgeValue {
+  return self.badge.badgeValue;
+}
+
 - (void)setBadgeValue:(NSString *)badgeValue {
-  _badgeValue = badgeValue;
   self.badge.badgeValue = badgeValue;
   self.button.accessibilityValue = badgeValue;
-  if (_badgeValue == nil || _badgeValue.length == 0) {
+  if (badgeValue == nil || badgeValue.length == 0) {
     self.badge.hidden = YES;
   } else {
     self.badge.hidden = NO;
