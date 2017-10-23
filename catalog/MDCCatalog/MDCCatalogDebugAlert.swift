@@ -16,6 +16,7 @@
 
 import UIKit
 
+import MDFInternationalization
 import MaterialComponents.MaterialDialogs
 
 class MDCCatalogDebugSetting {
@@ -146,10 +147,14 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
     let height = contentView.bounds.height
 
     let switchSize = toggleSwitch.sizeThatFits(contentView.bounds.size)
-    toggleSwitch.frame = CGRect(x: width - switchSize.width - 10,
-                                y: (height - switchSize.height) / 2.0,
-                                width: switchSize.width,
-                                height: switchSize.height)
+    var toggleSwitchFrame = CGRect(x: width - switchSize.width - 10,
+                                   y: (height - switchSize.height) / 2.0,
+                                   width: switchSize.width,
+                                   height: switchSize.height)
+    if (self.mdf_effectiveUserInterfaceLayoutDirection == .rightToLeft) {
+      toggleSwitchFrame = MDFRectFlippedHorizontally(toggleSwitchFrame, width)
+    }
+    toggleSwitch.frame = toggleSwitchFrame
 
     label.frame = contentView.bounds.insetBy(dx: 10, dy: 10)
   }
