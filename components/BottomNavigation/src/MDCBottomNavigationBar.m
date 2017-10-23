@@ -18,6 +18,7 @@
 
 #import "MaterialMath.h"
 #import "MaterialRTL.h"
+#import "MaterialShadowLayer.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -28,6 +29,7 @@ static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigat
 static const CGFloat kMDCBottomNavigationBarHeight = 72.f;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 60.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
+static const MDCShadowElevation kMDCBottomNavigationBarElevation = 6.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
@@ -80,6 +82,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
                                      UIViewAutoresizingFlexibleRightMargin);
   [self addSubview:_containerView];
+  [self setElevation:kMDCBottomNavigationBarElevation];
   _itemViews = [NSMutableArray array];
 }
 
@@ -106,6 +109,14 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   }
   CGSize insetSize = CGSizeMake(size.width, heightWithInset);
   return insetSize;
+}
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 
 - (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
