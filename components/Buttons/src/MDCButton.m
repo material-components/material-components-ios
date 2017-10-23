@@ -63,6 +63,10 @@ static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
+// Need to set Material padding values
+// https://material.io/guidelines/components/buttons.html#buttons-style
+const UIEdgeInsets MDCButtonDefaultContentEdgeInsets = {8, 16, 8, 16};
+
 // https://material.io/guidelines/components/buttons.html#buttons-main-buttons
 static const CGFloat MDCButtonDisabledAlpha = 0.12f;
 
@@ -130,6 +134,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 + (Class)layerClass {
   return [MDCShadowLayer class];
+}
+
++ (void)initialize {
+  [MDCButton appearance].contentEdgeInsets = MDCButtonDefaultContentEdgeInsets;
 }
 
 - (instancetype)init {
@@ -273,7 +281,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.titleLabel.font = [MDCTypography buttonFont];
 
   // Default content insets
-  self.contentEdgeInsets = [self defaultContentEdgeInsets];
+  // If a subclass is using the deprecated defaultContentEdgeInsets, fetch that value.
+  if ([self didOverrideMethod:@selector(defaultContentEdgeInsets)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    self.contentEdgeInsets = [self defaultContentEdgeInsets];
+#pragma clang diagnostic pop
+  }
 
   MDCShadowLayer *shadowLayer = self.layer;
   shadowLayer.shadowPath = [self boundingPath].CGPath;
@@ -759,13 +773,28 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return 2.0f;
 }
 
-- (UIEdgeInsets)defaultContentEdgeInsets {
-  return UIEdgeInsetsMake(8, 16, 8, 16);
-}
-
 - (BOOL)shouldHaveOpaqueBackground {
   BOOL isFlatButton = MDCCGFloatIsExactlyZero([self elevationForState:UIControlStateNormal]);
   return !isFlatButton;
+}
+
+- (BOOL)didOverrideMethod:(SEL)selector {
+  Class superclass = [self superclass];
+  IMP selfIMP = [self methodForSelector:selector];
+  BOOL isOverriden = NO;
+
+  while (superclass) {
+    isOverriden = [superclass instancesRespondToSelector:selector]
+        && selfIMP != [superclass instanceMethodForSelector:selector];
+
+    if (isOverriden) {
+      break;
+    }
+
+    superclass = [superclass superclass];
+  }
+
+  return isOverriden;
 }
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {

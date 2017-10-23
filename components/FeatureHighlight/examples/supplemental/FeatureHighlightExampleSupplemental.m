@@ -41,7 +41,6 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.button setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Action" forState:UIControlStateNormal];
-  [self.button sizeToFit];
   [self.button addTarget:self
                   action:@selector(didTapButton:)
         forControlEvents:UIControlEventTouchUpInside];
@@ -166,7 +165,6 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.button setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Action" forState:UIControlStateNormal];
-  [self.button sizeToFit];
   [self.button addTarget:self
                   action:@selector(didTapButton:)
         forControlEvents:UIControlEventTouchUpInside];

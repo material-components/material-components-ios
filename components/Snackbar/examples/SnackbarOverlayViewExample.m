@@ -69,8 +69,14 @@ static const CGFloat kBottomBarHeight = 44.0f;
   [manager addTarget:self action:@selector(handleOverlayTransition:)];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self.floatingButton sizeToFit];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
   [MDCSnackbarManager setBottomOffset:0];
+  [super viewWillDisappear:animated];
 }
 
 #pragma mark - Event Handling

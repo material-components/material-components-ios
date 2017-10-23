@@ -242,6 +242,7 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+  [self.floatingButton sizeToFit];
       self.floatingButton.center =
   [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];

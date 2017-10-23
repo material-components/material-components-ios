@@ -42,7 +42,10 @@
 /** The corner radius of the button. The shadow will follow that path. */
 - (CGFloat)cornerRadius;
 
-/** The default content edge insets of the button. They are set at initialization time. */
-- (UIEdgeInsets)defaultContentEdgeInsets;
+/**
+ Previously used to set the default content edge insets of the button. This has been deprecated and
+ contentEdgeInsets should be set directly instead.
+ */
+- (UIEdgeInsets)defaultContentEdgeInsets __deprecated_msg("Set contentEdgeInsets explicitly");
 
 @end

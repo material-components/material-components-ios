@@ -115,6 +115,8 @@
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+  [_incrementButton sizeToFit];
+  [_decrementButton sizeToFit];
   NSInteger pageBeforeFrameChange = _pageControl.currentPage;
   NSInteger pageCount = _pages.count;
   CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
