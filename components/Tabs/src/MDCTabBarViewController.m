@@ -71,12 +71,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 - (void)viewDidLoad {
   [super viewDidLoad];
   UIView *view = self.view;
-  view.clipsToBounds = YES;
-  view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth |
-                          UIViewAutoresizingFlexibleRightMargin |
-                          UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight |
-                          UIViewAutoresizingFlexibleBottomMargin;
   MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:view.bounds];
+  tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   tabBar.alignment = MDCTabBarAlignmentJustified;
   tabBar.delegate = self;
   self.tabBar = tabBar;
@@ -89,6 +85,14 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   [self updateLayout];
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+  [super viewSafeAreaInsetsDidChange];
+  [self.view setNeedsLayout];
+
+//  [self.tabBar invalidateIntrinsicContentSize];
+//  [self.tabBar updateConstraintsIfNeeded];
 }
 
 #pragma mark - Properties
@@ -241,12 +245,12 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)updateLayout {
   CGRect bounds = self.view.bounds;
-  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForItemAppearance:_tabBar.itemAppearance];
   CGRect currentViewFrame = bounds;
+  CGSize tabBarSize = [_tabBar sizeThatFits:currentViewFrame.size];
   CGRect tabBarFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
-                                  bounds.size.width, tabBarHeight);
+                                  bounds.size.width, tabBarSize.height);
   if (!_tabBarWantsToBeHidden) {
-    CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarHeight, CGRectMaxYEdge);
+    CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarSize.height, CGRectMaxYEdge);
   }
   _tabBar.frame = tabBarFrame;
   _tabBarShadow.frame = tabBarFrame;
