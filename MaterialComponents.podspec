@@ -320,8 +320,8 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/ButtonBar/Component"
       sss.dependency "MaterialComponents/Typography"
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/private/Math"
-      sss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
