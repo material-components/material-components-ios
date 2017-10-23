@@ -453,7 +453,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       return;
     }
     _currentSafeAreaInsetTop = MDCDeviceTopSafeAreaInset();
-    
+
     // If the min or max height have been explicitly set, don't adjust anything if the values
     // already include a Safe Area inset.
     BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
