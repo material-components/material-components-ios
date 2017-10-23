@@ -1,2 +1,3 @@
 /* Accessibility hint preposition for item number i of n. */
 "MaterialBottomNavigationItemCountAccessibilityHint" = "of";
+"MaterialBottomNavigationTabElementAccessibilityLabel" = "tab";

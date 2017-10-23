@@ -17,6 +17,8 @@
 #import "MDCBottomNavigationItemView.h"
 
 #import "MaterialRTL.h"
+#import "MaterialBottomNavigationStrings.h"
+#import "MaterialBottomNavigationStrings_table.h"
 #import "MDCBottomNavigationItemBadge.h"
 
 static const CGFloat kMDCBottomNavigationItemViewCircleLayerOffset = -6.f;
@@ -26,6 +28,10 @@ static const CGFloat kMDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180f;
+
+// The Bundle for string resources.
+static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
+static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 @interface MDCBottomNavigationItemView ()
 
@@ -94,7 +100,8 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 
   _button = [[UIButton alloc] initWithFrame:self.bounds];
   _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  _button.accessibilityLabel = _title;
+  _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
+  _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
   [self addSubview:_button];
 }
 
@@ -181,6 +188,28 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
                                 attributes:@{ NSFontAttributeName:font }
                                    context:nil];
   return rect.size;
+}
+
+- (NSString *)accessibilityLabelWithTitle:(NSString *)title {
+  NSMutableArray *labelComponents = [NSMutableArray array];
+
+  // Use untransformed title as accessibility label to ensure accurate reading.
+  NSString *titleComponent = title;
+  if (titleComponent.length > 0) {
+    [labelComponents addObject:titleComponent];
+  }
+
+  NSString *key =
+      kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationTabElementAccessibilityLabel];
+  NSString *tabString =
+      NSLocalizedStringFromTableInBundle(key,
+                                         kMaterialBottomNavigationStringsTableName,
+                                         [[self class] bundle],
+                                         kMDCBottomNavigationItemViewTabString);
+  [labelComponents addObject:tabString];
+
+  // Speak components with a pause in between.
+  return [labelComponents componentsJoinedByString:@", "];
 }
 
 #pragma mark - Setters
@@ -278,13 +307,33 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 - (void)setTitle:(NSString *)title {
   _title = [title copy];
   self.label.text = _title;
-  self.button.accessibilityLabel = _title;
+  self.button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
 }
 
 - (void)setItemTitleFont:(UIFont *)itemTitleFont {
   _itemTitleFont = itemTitleFont;
   self.label.font = itemTitleFont;
   [self setNeedsLayout];
+}
+
+#pragma mark - Resource bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialBottomNavigationBundle]];
+  });
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCBottomNavigationBar class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 @end

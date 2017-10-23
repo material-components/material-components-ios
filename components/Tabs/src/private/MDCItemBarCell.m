@@ -205,7 +205,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   self.title = item.title;
   self.image = item.image;
   self.badgeValue = item.badgeValue;
-  self.accessibilityIdentifier = item.accessibilityIdentifier;
+  //self.accessibilityIdentifier = item.accessibilityIdentifier;
 
   _itemIndex = itemIndex;
   _itemCount = itemCount;
