@@ -28,7 +28,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   let spacing = CGFloat(1)
   let inset = CGFloat(16)
-  let headerMinHeight = CGFloat(48)
   let node: CBCNode
   var headerViewController: MDCFlexibleHeaderViewController
   var titleLabel: UILabel
@@ -63,8 +62,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     self.addChildViewController(self.headerViewController)
 
-    self.headerViewController.headerView.maximumHeight = 128
-    self.headerViewController.headerView.minimumHeight = headerMinHeight + 20
+    self.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    self.headerViewController.headerView.maximumHeight = 108
 
     self.collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
@@ -179,9 +178,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
-    self.headerViewController.headerView.minimumHeight =
-        headerMinHeight + self.view.safeAreaInsets.top
-
     // Re-constraint the title label to account for changes in safeAreaInsets's left and right.
     let titleInsets = UIEdgeInsets(top: 0,
                                    left: inset + self.view.safeAreaInsets.left,

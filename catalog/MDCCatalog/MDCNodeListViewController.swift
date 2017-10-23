@@ -301,7 +301,7 @@ extension MDCNodeListViewController {
         view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,
                                       constant: padding),
         view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,
-                                       constant: padding),
+                                       constant: -padding),
         view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: top),
         view.heightAnchor.constraint(equalToConstant: height)
       ])
@@ -311,7 +311,7 @@ extension MDCNodeListViewController {
     if #available(iOS 9.0, *) {
       NSLayoutConstraint.activate([
         view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-        view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: padding),
+        view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
         view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: top),
         view.heightAnchor.constraint(equalToConstant: height)
       ])
@@ -331,7 +331,7 @@ extension MDCNodeListViewController {
         toItem: containerView,
         attribute: .trailing,
         multiplier: 1.0,
-        constant: padding).isActive = true
+        constant: -padding).isActive = true
       _ = NSLayoutConstraint(
         item: view,
         attribute: .top,
@@ -382,26 +382,31 @@ extension MDCNodeListViewController {
         container.appBar.navigationBar.titleTextAttributes =
             [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
 
-        // TODO(featherless): Remove once
-        // https://github.com/material-components/material-components-ios/issues/367 is resolved.
-        contentVC.title = node.title
-
-        let headerView = container.appBar.headerViewController.headerView
-
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let colorScheme = appDelegate.colorScheme
         MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
-
         let textColor = UIColor.white
         UIBarButtonItem.appearance().setTitleTextAttributes(
           [NSForegroundColorAttributeName: textColor],
           for: UIControlState())
 
-        var contentFrame = container.contentViewController.view.frame
-        let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
-        contentFrame.origin.y = headerSize.height
-        contentFrame.size.height = self.view.bounds.size.height - headerSize.height
-        container.contentViewController.view.frame = contentFrame
+        // TODO(featherless): Remove once
+        // https://github.com/material-components/material-components-ios/issues/367 is resolved.
+        contentVC.title = node.title
+
+        let headerView = container.appBar.headerViewController.headerView
+        if let collectionVC = contentVC as? MDCCollectionViewController {
+          headerView.trackingScrollView = collectionVC.collectionView
+        } else if let scrollView = contentVC.view as? UIScrollView {
+          headerView.trackingScrollView = scrollView
+        } else {
+          // TODO(chuga): This is bad. We should be adjusting for Safe Area changes.
+          var contentFrame = container.contentViewController.view.frame
+          let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
+          contentFrame.origin.y = headerSize.height
+          contentFrame.size.height = self.view.bounds.height - headerSize.height
+          container.contentViewController.view.frame = contentFrame
+        }
 
         vc = container
       }

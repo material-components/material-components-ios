@@ -18,9 +18,6 @@
 
 #import "MDCBottomAppBarView.h"
 
-// The height of the bottom app bar navigation area in collapsed state.
-static const CGFloat kMDCBottomAppBarHeight = 96.f;
-
 @interface BottomAppBarTypicalUseViewController ()
 
 @end
@@ -44,14 +41,19 @@ static const CGFloat kMDCBottomAppBarHeight = 96.f;
 }
 
 - (void)commonMDCBottomAppBarViewControllerInit {
-  CGRect containerFrame = CGRectMake(0,
-                                     CGRectGetHeight(self.view.frame) - kMDCBottomAppBarHeight,
-                                     CGRectGetWidth(self.view.frame),
-                                     kMDCBottomAppBarHeight);
-  _bottomBarView = [[MDCBottomAppBarView alloc] initWithFrame:containerFrame];
+  _bottomBarView = [[MDCBottomAppBarView alloc] initWithFrame:CGRectZero];
   _bottomBarView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
   [self.view addSubview:_bottomBarView];
+}
+
+- (void)viewWillLayoutSubviews {
+  CGSize size = [_bottomBarView sizeThatFits:self.view.bounds.size];
+  CGRect bottomBarViewFrame = CGRectMake(0,
+                                         CGRectGetHeight(self.view.bounds) - size.height,
+                                         size.width,
+                                         size.height);
+  _bottomBarView.frame = bottomBarViewFrame;
 }
 
 #pragma mark - Setters

@@ -201,7 +201,6 @@ static const int kMDCButtonAnimationDuration = 200;
   }
 }
 
-
 - (void)moveFloatingButtonCenterAnimated:(BOOL)animated {
   CGPoint endPoint = [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   if (animated) {
@@ -248,6 +247,24 @@ static const int kMDCButtonAnimationDuration = 200;
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
 }
 
+- (UIEdgeInsets)mdc_safeAreaInsets {
+  UIEdgeInsets insets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+
+    // Accommodate insets for iPhone X.
+    insets = self.safeAreaInsets;
+  }
+#endif
+  return insets;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  UIEdgeInsets insets = self.mdc_safeAreaInsets;
+  CGFloat heightWithInset = kMDCBottomAppBarHeight + insets.bottom;
+  CGSize insetSize = CGSizeMake(size.width, heightWithInset);
+  return insetSize;
+}
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 

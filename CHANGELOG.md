@@ -1,3 +1,249 @@
+# 37.0.0
+
+## API Changes
+
+### Text Fields
+
+* Added `[MDCTextFieldPositioningDelegate textInputDidUpdateConstraints]`, called after the input's `updateConstraints`.
+* `MDCTextInputControllerDefault`'s `floatingPlaceholderDestination` property is replaced with `floatingPlaceholderOffset` and is a `UIOffset`, not `CGPoint`.
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Update layout constraint to offset buttons by 20pt upwards, move catalog functions into extension (#2194)](https://github.com/material-components/material-components-ios/commit/1c7c9cd541efbb22ef55c049305c21a984d2a42e) (Cody Weaver)
+* [use modern selectors (#2207)](https://github.com/material-components/material-components-ios/commit/3762aecee3d850a8d097f27fdec9528d18b20068) (Martin Petrov)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Update contentInsetAdjustmentBehavior check to include ScrollableAxes (#2223)](https://github.com/material-components/material-components-ios/commit/5f5988f0023614e6f38382bafbe5f73c1bdff0a5) (Andrés)
+* [inFrontOfInfiniteContent working when !trackingScrollView (#2221)](https://github.com/material-components/material-components-ios/commit/fa464bad13f88669777a593f798ab47386177c98) (Andrés)
+
+### PageControl
+
+#### Changes
+
+* [Fix bug with OOB array lookup when calling scrollViewDidScroll. (#2197)](https://github.com/material-components/material-components-ios/commit/ab6aae7158e66d90e7899321c71b6b95af7fd1e3) (Moshe Kolodny)
+* [use modern selectors (#2207)](https://github.com/material-components/material-components-ios/commit/3762aecee3d850a8d097f27fdec9528d18b20068) (Martin Petrov)
+
+### Slider
+
+#### Changes
+
+* [Fix layout positions so UISlider isn't cropped on iPhone 4s. (#2216)](https://github.com/material-components/material-components-ios/commit/d190b646c7252621cf069393bf6937ddbc2a99ec) (Cody Weaver)
+
+### Snackbar
+
+#### Changes
+
+* [Update to support safeAreaInsets (#2212)](https://github.com/material-components/material-components-ios/commit/5beada0e8dc4975979d9a1b78e44568be6a66ade) (Sam Morrison)
+
+### Tabs
+
+#### Changes
+
+* [Fix a bug that where an item cell title can be missing (#2202)](https://github.com/material-components/material-components-ios/commit/5797b17934e6c021f7a942026efee1cf0c3adaa9) (Chris Silverberg)
+
+### TextFields
+
+#### Changes
+
+* [Corrects cheap floating placeholder layout (2nd PR) (#2210)](https://github.com/material-components/material-components-ios/commit/17e962fb35c3f56aebd47b7720bcb6a227ced8f4) (Will Larche)
+
+
+# 36.3.0
+
+## API Changes
+
+### Flexible Header
+
+* Added `minMaxHeightIncludesSafeArea` to inform the component if the `minimumHeight` and `maximumHeight` properties include the safe area inset. 
+
+## Component changes
+
+### FlexibleHeader
+
+#### Changes
+
+* [Introduce minMaxHeightIncludesSafeArea and fix rotation bugs. (#2184)](https://github.com/material-components/material-components-ios/commit/100d18816b7574f4c210df9c7c3afa716f661b78) (Andrés)
+* [Split _hasExplicitlySetMinOrMaxHeight into two. (#2196)](https://github.com/material-components/material-components-ios/commit/1c754aee3b1dda7166babc97306c315c4d7b901d) (Andrés)
+
+# 36.2.0
+
+## API Changes
+
+### Text fields
+
+* `-[MDCTabBarControllerDelegate tabBarController:shouldSelectViewController:]` and `-[MDCTabBarControllerDelegate tabBarController:didSelectViewController:]` will be called for the currently-selected tab if the user taps the tab again (that is, the tab doesn't change). This matches Apple's behavior more closely and allows for custom behaviors.
+* `MDCMultilineTextField` now has a `MDCMultilineTextInputDelegate` for useful methods not included in UITextViewDelegate.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### AnimationTiming
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### AppBar
+
+#### Changes
+
+* [Make use of MDCDeviceTopSafeAreaInset. (#2186)](https://github.com/material-components/material-components-ios/commit/778d9c6b2f7ac4c10a4cc101c8c8fd3c9d500e53) (featherless)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### BottomAppBar
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### BottomSheet
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### Dialogs
+
+#### Changes
+
+* [ Respect safe area insets (#2165)](https://github.com/material-components/material-components-ios/commit/5d0ff9467337de10d414b179440279bd5461ea4f) (ianegordon)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Ignore safe area inset changes if we know that the status bar visibility is changing. (#2160)](https://github.com/material-components/material-components-ios/commit/e28536c27d44bc6cb0b6e10204f8bf192cfd7b9d) (featherless)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### ShadowElevations
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+* [Update ShadowElevations to be extensible. (#2145)](https://github.com/material-components/material-components-ios/commit/49fd0a07eaf0c01aa0f0798f13998fdfb6b68be2) (Martin Petrov)
+* [Update shadow examples (#2174)](https://github.com/material-components/material-components-ios/commit/6639fb4f704854452ff391352fecae5b6be81095) (Martin Petrov)
+
+### ShadowLayer
+
+#### Changes
+
+* [Update shadow examples (#2174)](https://github.com/material-components/material-components-ios/commit/6639fb4f704854452ff391352fecae5b6be81095) (Martin Petrov)
+* [[ShadowElevations] Update ShadowElevations to be extensible. (#2145)](https://github.com/material-components/material-components-ios/commit/49fd0a07eaf0c01aa0f0798f13998fdfb6b68be2) (Martin Petrov)
+
+### Snackbar
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### Tabs
+
+#### Changes
+
+* [Add standard Material Design shadow shadow to MDCTabBar (#2148)](https://github.com/material-components/material-components-ios/commit/660c3fb066097f8fc5a42fbda8448ce195f6499e) (Scott Atwood)
+* [Always call MDCTabBarControllerDelegate methods when a tab is tapped (#2155)](https://github.com/material-components/material-components-ios/commit/d46e3a3fab33581e421db27fb5c1592a68dd9b11) (Scott Atwood)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### TextFields
+
+#### Changes
+
+* [Clear button X value adjustment. (#2176)](https://github.com/material-components/material-components-ios/commit/7c5ef7d03ef78b2f013cbb7912c2ccd2e7b85109) (Will Larche)
+* [Fix text fields overlapping labels (#2163)](https://github.com/material-components/material-components-ios/commit/75cf565fea869bb002a797c86d452704d8365d90) (Will Larche)
+* [Implementing textFieldShouldClear: (#2169)](https://github.com/material-components/material-components-ios/commit/07eea020ca381a34ea8cce264becf1e8a2ba38aa) (Will Larche)
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+* [Some alphabetizing. (#2166)](https://github.com/material-components/material-components-ios/commit/9cb8ec36dfeca9ff94385b2c995b0198f0ecee9b) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+### Typography
+
+#### Changes
+
+* [Remove trailing whitespace everywhere. (#2168)](https://github.com/material-components/material-components-ios/commit/479f7b1141db4d80963f30ecf4fe9096ad5973f0) (Adrian Secord)
+
+# 36.1.0
+
+## API Changes
+
+### Text fields
+
+* Added `placeholderText` property to control the placeholder text.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Resolve issues caused by starting and stopping activitiy indicator quickly (#2053)](https://github.com/material-components/material-components-ios/commit/34f8b4e0af259585df1ea0d307c88c2c6dc15267) (John Detloff)
+
+### Buttons
+
+#### Changes
+
+* [Add tests for MDCButton+Subclassing behaviors (#2136)](https://github.com/material-components/material-components-ios/commit/75e343d0fb830f9db80e7ec75d57e0f1af0b38ff) (Sam Morrison)
+* [Remove test broken on travis (#2147)](https://github.com/material-components/material-components-ios/commit/4ff00d3b2a7e0df990be033d0c466d39af837aab) (Sam Morrison)
+
+### Dialogs
+
+#### Changes
+
+* [Migrate to  MDFInternationalization (#2124)](https://github.com/material-components/material-components-ios/commit/c3379250de3f8d7abb86810c37b7fbb363995a85) (ianegordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix bug where minimumHeight of 0 would result in odd behavior. (#2139)](https://github.com/material-components/material-components-ios/commit/b7cab3bdf0776eb6e98a192e9610d280803582c2) (featherless)
+* [Fix where we adjust the frame if the safe area changes. (#2146)](https://github.com/material-components/material-components-ios/commit/94e625f7817bd68590dbcc3613972eab8fcc1585) (Andrés)
+* [Forward viewWillTransitionToSize events to the flexible header (#2150)](https://github.com/material-components/material-components-ios/commit/863b85a7d4ebdec672036e8411797ef74c7d2e02) (featherless)
+* [Introduce minMaxHeightIncludesSafeArea. (#2123)](https://github.com/material-components/material-components-ios/commit/4a98cdaa32bd443850590610c95d3576cea32847) (Andrés)
+* [Revert "Introduce minMaxHeightIncludesSafeArea. (#2123)" (#2161)](https://github.com/material-components/material-components-ios/commit/dcadf2d19c6986e6303a584c878e295377070a3e) (Andrés)
+
+### TextFields
+
+#### Changes
+
+* [Adding .placeholderText to controllers (#2149)](https://github.com/material-components/material-components-ios/commit/5dae93c6c42ffb3594572a2cace4e63850c97189) (Will Larche)
+* [Fixes clear button not updating the character counter. (#2143)](https://github.com/material-components/material-components-ios/commit/585571e18ad3eb47741f34ded94d2150de0b77df) (Will Larche)
+* [Styling doc gif addition. (#2144)](https://github.com/material-components/material-components-ios/commit/2604acad222b1193599631cf321c6f6c9a844fab) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [[TextFields] Adding .placeholderText to controllers (#2149)](https://github.com/material-components/material-components-ios/commit/5dae93c6c42ffb3594572a2cace4e63850c97189) (Will Larche)
+
 # 36.0.0
 
 ## API Changes

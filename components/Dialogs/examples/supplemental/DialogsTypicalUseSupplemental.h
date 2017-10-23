@@ -35,3 +35,6 @@
 
 @interface ProgrammaticViewController : UIViewController
 @end
+
+@interface OpenURLViewController : UIViewController
+@end
