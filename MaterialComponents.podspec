@@ -431,13 +431,13 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/AnimationTiming"
       sss.dependency "MaterialComponents/Ink"
       sss.dependency "MaterialComponents/ShadowElevations"
       sss.dependency "MaterialComponents/ShadowLayer"
       sss.dependency "MaterialComponents/Typography"
       sss.dependency "MaterialComponents/private/Math"
-      sss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
