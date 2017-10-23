@@ -200,6 +200,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return [labelComponents componentsJoinedByString:@", "];
 }
 
+- (NSString *)badgeValue {
+  return self.badge.badgeValue;
+}
+
 #pragma mark - Setters
 
 - (void)setSelected:(BOOL)selected {
@@ -272,10 +276,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)setBadgeColor:(UIColor *)badgeColor {
   _badgeColor = badgeColor;
   self.badge.badgeColor = badgeColor;
-}
-
-- (NSString *)badgeValue {
-  return self.badge.badgeValue;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {
