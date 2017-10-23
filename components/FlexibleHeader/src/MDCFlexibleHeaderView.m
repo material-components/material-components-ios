@@ -453,7 +453,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       return;
     }
     CGFloat safeAreaTop = MDCDeviceTopSafeAreaInset();
-    if (_currentSafeAreaInsetTop == safeAreaTop) {
+    if (_currentSafeAreaInsetTop == safeAreaTop
+        && (self.trackingScrollView.isTracking || self.trackingScrollView.isDecelerating) ) {
       return;
     }
     _currentSafeAreaInsetTop = safeAreaTop;
