@@ -280,7 +280,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   CGSize size = _itemBar.intrinsicContentSize;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    size.height += self.safeAreaInsets.bottom;
+    size.height += self.window.safeAreaInsets.bottom;
   }
 #endif
   return size;
@@ -290,7 +290,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   size = [_itemBar sizeThatFits:size];
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    size.height += self.safeAreaInsets.bottom;
+    size.height += self.window.safeAreaInsets.bottom;
   }
 #endif
   return size;
@@ -303,13 +303,15 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 #endif
 
-  if (self.safeAreaInsets.bottom == _bottomSafeAreaInset) {
-    return;
-  }
-  _bottomSafeAreaInset = self.safeAreaInsets.bottom;
+  [self setNeedsLayout];
 
-  [self invalidateIntrinsicContentSize];
-  [self updateConstraints];
+//  if (self.safeAreaInsets.bottom == _bottomSafeAreaInset) {
+//    return;
+//  }
+//  _bottomSafeAreaInset = self.safeAreaInsets.bottom;
+
+//  [self invalidateIntrinsicContentSize];
+//  [self updateConstraintsIfNeeded];
 }
 
 - (void)didMoveToWindow {

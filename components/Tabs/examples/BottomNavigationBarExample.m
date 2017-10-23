@@ -28,14 +28,15 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _bottomNavigationBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
+  _bottomNavigationBar = [[MDCTabBar alloc] initWithFrame:self.view.bounds];
+  _bottomNavigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   _bottomNavigationBar.delegate = self;
 
   _bottomNavigationBar.barTintColor = [UIColor whiteColor];
-  _bottomNavigationBar.selectedItemTintColor = nil;
+//  _bottomNavigationBar.selectedItemTintColor = nil;
   _bottomNavigationBar.unselectedItemTintColor = [UIColor colorWithWhite:0 alpha:0.50];
   _bottomNavigationBar.tintColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:0.15];
+//  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:0.15];
 
   NSBundle *bundle = [NSBundle bundleForClass:[BottomNavigationBarExample class]];
   UIImage *infoImage =
@@ -76,6 +77,13 @@
                                attribute:NSLayoutAttributeRight
                               multiplier:1
                                 constant:0].active = YES;
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  [_bottomNavigationBar invalidateIntrinsicContentSize];
+  [_bottomNavigationBar updateConstraintsIfNeeded];
 }
 
 #pragma mark - MDCTabBarDelegate

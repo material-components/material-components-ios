@@ -71,12 +71,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 - (void)viewDidLoad {
   [super viewDidLoad];
   UIView *view = self.view;
-  view.clipsToBounds = YES;
-  view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth |
-                          UIViewAutoresizingFlexibleRightMargin |
-                          UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight |
-                          UIViewAutoresizingFlexibleBottomMargin;
   MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:view.bounds];
+  tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   tabBar.alignment = MDCTabBarAlignmentJustified;
   tabBar.delegate = self;
   self.tabBar = tabBar;
@@ -94,6 +90,9 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 - (void)viewSafeAreaInsetsDidChange {
   [super viewSafeAreaInsetsDidChange];
   [self.view setNeedsLayout];
+
+//  [self.tabBar invalidateIntrinsicContentSize];
+//  [self.tabBar updateConstraintsIfNeeded];
 }
 
 #pragma mark - Properties
