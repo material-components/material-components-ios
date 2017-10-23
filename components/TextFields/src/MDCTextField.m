@@ -19,8 +19,8 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "private/MDCTextInputCommonFundament.h"
 
+#import "MDFInternationalization.h"
 #import "MaterialMath.h"
-#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
@@ -290,7 +290,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (UITextFieldViewMode)trailingViewMode {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
     return self.rightViewMode;
   } else {
     return self.leftViewMode;
@@ -298,7 +298,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
     self.rightViewMode = trailingViewMode;
   } else {
     self.leftViewMode = trailingViewMode;
@@ -360,7 +360,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (UITextFieldViewMode)leadingViewMode {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
     return self.leftViewMode;
   } else {
     return self.rightViewMode;
@@ -368,7 +368,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
     self.leftViewMode = leadingViewMode;
   } else {
     self.rightViewMode = leadingViewMode;
@@ -415,11 +415,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   // and .rightView gets the value for rightViewRectForBounds.
 
   CGFloat leftViewWidth =
-      self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
           ? CGRectGetWidth([self rightViewRectForBounds:bounds])
           : CGRectGetWidth([self leftViewRectForBounds:bounds]);
   CGFloat rightViewWidth =
-      self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
           ? CGRectGetWidth([self leftViewRectForBounds:bounds])
           : CGRectGetWidth([self rightViewRectForBounds:bounds]);
 
@@ -458,10 +458,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   actualY = textInsets.top - actualY;
   textRect.origin.y = actualY;
 
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     // Now that the text field is laid out as if it were LTR, we can flip it if necessary.
-    textRect = MDCRectFlippedForRTL(textRect, CGRectGetWidth(bounds),
-                                    UIUserInterfaceLayoutDirectionRightToLeft);
+    textRect = MDFRectFlippedHorizontally(textRect, CGRectGetWidth(bounds));
   }
 
   return textRect;
@@ -472,9 +471,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   CGRect editingRect = [self textRectForBounds:bounds];
 
   // The textRect comes to us flipped for RTL (if RTL) so we flip it back before adjusting.
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds),
-                                       UIUserInterfaceLayoutDirectionRightToLeft);
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    editingRect = MDFRectFlippedHorizontally(editingRect, CGRectGetWidth(bounds));
   }
 
   // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
@@ -503,9 +501,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     }
   }
 
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds),
-                                       UIUserInterfaceLayoutDirectionRightToLeft);
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    editingRect = MDFRectFlippedHorizontally(editingRect, CGRectGetWidth(bounds));
   }
 
   if ([self.fundament.positioningDelegate
