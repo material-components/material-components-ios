@@ -1,8 +1,10 @@
-# 37.0.1
+# 38.0.0
 
 ## API Changes
 
-No API changes in this release.
+## Navigation Bar
+
+* (Swift only) `titleTextAttributes` uses a dictionary with keys of type `NSAttributedStringKey` instead of `NSString *` so, for example, `.font` should be used intead of `NSAttributedStringKey.font.rawValue`.
 
 ## Component changes
 
@@ -99,7 +101,7 @@ No API changes in this release.
 
 ### Flexible Header
 
-* Added `minMaxHeightIncludesSafeArea` to inform the component if the `minimumHeight` and `maximumHeight` properties include the safe area inset. 
+* Added `minMaxHeightIncludesSafeArea` to inform the component if the `minimumHeight` and `maximumHeight` properties include the safe area inset.
 
 ## Component changes
 
@@ -1987,7 +1989,7 @@ Hotfix: Cherry picked: [[Buttons] Call designated initializer in init methods](h
 
 Hotfix: Added implementation for accessibilityElementForItem: for MDCTabBar
 
-# 25.0.0 
+# 25.0.0
 
 ## API diffs
 
