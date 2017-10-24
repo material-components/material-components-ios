@@ -858,7 +858,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // Safe area insets is often called as part of the UIWindow makeKeyAndVisible callstack, meaning
   // MDCDeviceTopSafeAreaInset returns an incorrect "best guess" value and we end up storing an
   // incorrect min/max height. In order to update min/max to the correct heights we need to update
-  // our dimensions sometime after the window has been been made key, so the next best place is here.
+  // our dimensions sometime after the window has been been made key, so the next best place is
+  // here.
   BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
   if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
     _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
