@@ -852,7 +852,15 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   // If the status bar changes without us knowing then this ensures that our content insets
   // are up-to-date before we process the content offset.
-  [self fhv_enforceInsetsForScrollView:_trackingScrollView];
+  CGFloat insetDelta = [self fhv_enforceInsetsForScrollView:_trackingScrollView];
+  if (insetDelta != 0) {
+    // Update the min and max height if we're still using the defaults.
+    BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
+    if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+      _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+      _maximumHeight = _minimumHeight;
+    }
+  }
 
   // We use the content offset to calculate the unclamped height of the frame.
   CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
