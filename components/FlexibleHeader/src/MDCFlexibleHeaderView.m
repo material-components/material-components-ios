@@ -852,8 +852,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   // If the status bar changes without us knowing then this ensures that our content insets
   // are up-to-date before we process the content offset.
-  CGFloat insetDelta = [self fhv_enforceInsetsForScrollView:_trackingScrollView];
+  [self fhv_enforceInsetsForScrollView:_trackingScrollView];
+
   // Update the min and max height if we're still using the defaults.
+  // Safe area insets is often called as part of the UIWindow makeKeyAndVisible callstack, meaning
+  // MDCDeviceTopSafeAreaInset returns an incorrect "best guess" value and we end up storing an
+  // incorrect min/max height. In order to update min/max to the correct heights we need to update
+  // our dimensions sometime after the window has been been made key, so the next best place is here.
   BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
   if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
     _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
