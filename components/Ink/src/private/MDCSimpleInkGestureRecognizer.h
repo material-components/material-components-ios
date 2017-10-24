@@ -15,7 +15,12 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <UIKit/UIGestureRecognizerSubclass.h>
 
 @interface MDCSimpleInkGestureRecognizer : UIGestureRecognizer
+
+@property(nonatomic, assign) BOOL cancelOnDragOut;
+@property(nonatomic, assign) CGPoint touchStartLocation;
+@property(nonatomic, assign) CGPoint touchCurrentLocation;
 
 @end

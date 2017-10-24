@@ -24,4 +24,8 @@
 @property(nonatomic, assign) CGFloat initialRadius;
 @property(nonatomic, strong) UIColor *inkColor;
 
+- (void)start:(CGPoint)point;
+
+- (void)end;
+
 @end

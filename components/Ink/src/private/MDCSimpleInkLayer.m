@@ -18,12 +18,36 @@
 
 @implementation MDCSimpleInkLayer
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCSimpleInkLayerInit];
+  }
+  return self;
+}
+
+- (instancetype)initWithLayer:(id)layer {
+  self = [super initWithLayer:layer];
+  if (self) {
+    [self commonMDCSimpleInkLayerInit];
+  }
+  return self;
+}
+
+- (void)commonMDCSimpleInkLayerInit {
+  _initialRadius = 0;
+  _finalRadius = 0;
+  _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
+  _startAnimActive = NO;
+  _endAnimDelay = 0;
+}
+
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
   self.initialRadius = (sqrt(frame.size.height * frame.size.height +
-                             frame.size.width * frame.size.width) / 2) * 0.6;
+                             frame.size.width * frame.size.width) / 2) * 0.6f;
   self.finalRadius = sqrt(frame.size.height * frame.size.height +
-                          frame.size.width * frame.size.width) / 2 + 10;
+                          frame.size.width * frame.size.width) / 2 + 10.f;
 }
 
 - (void)start:(CGPoint)point {
@@ -49,14 +73,14 @@
 
   CAKeyframeAnimation *scaleAnim = [[CAKeyframeAnimation alloc] init];
   [scaleAnim setKeyPath:@"transform.scale"];
-  scaleAnim.keyTimes = @[ @0, @1.0 ];
-  scaleAnim.values = @[ @0.6, @1.0 ];
+  scaleAnim.keyTimes = @[ @0, @1.0f ];
+  scaleAnim.values = @[ @0.6f, @1.0f ];
   scaleAnim.duration = 0.333f;
   scaleAnim.beginTime = 0.083f;
-  scaleAnim.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.4:0:0.2:1];
+  scaleAnim.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
   scaleAnim.fillMode = kCAFillModeForwards;
   scaleAnim.removedOnCompletion = NO;
-  
+
   UIBezierPath *centerPath = [UIBezierPath bezierPath];
   CGPoint startPoint = point;
   CGPoint endPoint = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
@@ -67,35 +91,36 @@
   CAKeyframeAnimation *positionAnim = [[CAKeyframeAnimation alloc] init];
   [positionAnim setKeyPath:@"position"];
   positionAnim.path = centerPath.CGPath;
-  positionAnim.keyTimes = @[ @0, @1.0 ];
-  positionAnim.values = @[ @0, @1.0 ];
+  positionAnim.keyTimes = @[ @0, @1.0f ];
+  positionAnim.values = @[ @0, @1.0f ];
   positionAnim.duration = 0.333f;
   positionAnim.beginTime = 0.083f;
-  positionAnim.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.4:0:0.2:1];
+  positionAnim.timingFunction =
+      [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
   positionAnim.fillMode = kCAFillModeForwards;
   positionAnim.removedOnCompletion = NO;
 
   CAKeyframeAnimation *fadeInAnim = [[CAKeyframeAnimation alloc] init];
   [fadeInAnim setKeyPath:@"opacity"];
-  fadeInAnim.keyTimes = @[ @0, @1.0 ];
-  fadeInAnim.values = @[ @0, @1.0 ];
+  fadeInAnim.keyTimes = @[ @0, @1.0f ];
+  fadeInAnim.values = @[ @0, @1.0f ];
   fadeInAnim.duration = 0.083f;
   fadeInAnim.beginTime = 0.083f;
   fadeInAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeInAnim.fillMode = kCAFillModeForwards;
   fadeInAnim.removedOnCompletion = NO;
-  
+
   CAKeyframeAnimation *fadeHalfAnim = [[CAKeyframeAnimation alloc] init];
   [fadeHalfAnim setKeyPath:@"opacity"];
-  fadeHalfAnim.keyTimes = @[ @0, @1.0 ];
-  fadeHalfAnim.values = @[ @1.0, @0.5 ];
+  fadeHalfAnim.keyTimes = @[ @0, @1.0f ];
+  fadeHalfAnim.values = @[ @1.0f, @0.5f ];
   fadeHalfAnim.duration = 0.25f;
   fadeHalfAnim.beginTime = 0.167f;
   fadeHalfAnim.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeHalfAnim.fillMode = kCAFillModeForwards;
   fadeHalfAnim.removedOnCompletion = NO;
-  
+
   [CATransaction begin];
   CAAnimationGroup *animGroup = [[CAAnimationGroup alloc] init];
   animGroup.animations = @[ scaleAnim, positionAnim, fadeInAnim, fadeHalfAnim ];
@@ -113,23 +138,25 @@
   if (self.startAnimActive) {
     self.endAnimDelay = 0.25f;
   }
-  
-//  var currOpacity = (presentation()?.value(forKeyPath: "opacity") as AnyObject).doubleValue
-//  if (currOpacity < 0.5) {
-//    currOpacity = 0.5
-//  } else if (currOpacity == 0.0) {
-//    currOpacity = 1.0
-//  }
-//
-//  let fadeOutAnim = CAKeyframeAnimation(keyPath: "opacity")
-//  fadeOutAnim.keyTimes = [ 0, 1.0 ]
-//  fadeOutAnim.values = [ currOpacity!, 0 ]
-//  fadeOutAnim.duration = 0.25
-//  fadeOutAnim.beginTime = CACurrentMediaTime() + endAnimDelay
-//  fadeOutAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-//  fadeOutAnim.fillMode = kCAFillModeForwards
-//  fadeOutAnim.isRemovedOnCompletion = false
-//  add(fadeOutAnim, forKey: nil)
+  NSNumber *currOpacityNumber = [self.presentationLayer valueForKeyPath:@"opacity"];
+  CGFloat currOpacity = currOpacityNumber.floatValue;
+  if (currOpacity < 0.5f) {
+    currOpacity = 0.5f;
+  } else if (currOpacity == 0.0) {
+    currOpacity = 1.0f;
+  }
+
+  CAKeyframeAnimation *fadeOutAnim = [[CAKeyframeAnimation alloc] init];
+  [fadeOutAnim setKeyPath:@"opacity"];
+  fadeOutAnim.keyTimes = @[ @0, @1.0f ];
+  fadeOutAnim.values = @[ [NSNumber numberWithFloat:(float)currOpacity], @0 ];
+  fadeOutAnim.duration = 0.25f;
+  fadeOutAnim.beginTime = CACurrentMediaTime() + self.endAnimDelay;
+  fadeOutAnim.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  fadeOutAnim.fillMode = kCAFillModeForwards;
+  fadeOutAnim.removedOnCompletion = NO;
+  [self addAnimation:fadeOutAnim forKey:nil];
 }
 
 @end

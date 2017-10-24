@@ -15,7 +15,66 @@
  */
 
 #import "MDCSimpleInkView.h"
+#import "MDCSimpleInkGestureRecognizer.h"
 
 @implementation MDCSimpleInkView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonMDCSimpleInkViewInit];
+  }
+  return self;
+}
+
+- (void)commonMDCSimpleInkViewInit {
+  MDCSimpleInkGestureRecognizer *tapGesture =
+      [[MDCSimpleInkGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+  [self addGestureRecognizer:tapGesture];
+}
+
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+  self.inkLayer.frame = frame;
+}
+
+- (void)startInk:(CGPoint)point {
+  self.inkLayer = [MDCSimpleInkLayer layer];
+  self.inkLayer.opacity = 0;
+  self.inkLayer.frame = self.bounds;
+  [self.layer addSublayer:self.inkLayer];
+  [self.inkLayer start:point];
+}
+
+- (void)endInk {
+  [self.inkLayer end];
+}
+
+- (void)endInkNow {
+  self.inkLayer.endAnimDelay = 0;
+  [self.inkLayer end];
+}
+
+- (void)didTap:(MDCSimpleInkGestureRecognizer *)recognizer {
+  CGPoint point = [recognizer locationInView:self];
+  switch (recognizer.state) {
+    case UIGestureRecognizerStatePossible:
+      break;
+    case UIGestureRecognizerStateBegan:
+      [self.delegate didTouchDown];
+      [self startInk:point];
+      break;
+    case UIGestureRecognizerStateChanged:
+      break;
+    case UIGestureRecognizerStateEnded:
+      [self.delegate didTouchUp];
+      [self endInk];
+      break;
+    case UIGestureRecognizerStateCancelled:
+      break;
+    case UIGestureRecognizerStateFailed:
+      break;
+  }
+}
 
 @end

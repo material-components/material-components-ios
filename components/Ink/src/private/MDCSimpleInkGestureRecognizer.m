@@ -18,4 +18,54 @@
 
 @implementation MDCSimpleInkGestureRecognizer
 
+- (instancetype)initWithTarget:(id)target action:(SEL)action {
+  self = [super initWithTarget:target action:action];
+  if (self) {
+    [self commonMDCSimpleInkGestureRecognizerInit];
+  }
+  return self;
+}
+
+- (void)commonMDCSimpleInkGestureRecognizerInit {
+  self.cancelsTouchesInView = NO;
+  self.delaysTouchesEnded = NO;
+  _touchStartLocation = CGPointZero;
+  _touchCurrentLocation = CGPointZero;
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesBegan:touches withEvent:event];
+  if (touches.count == 1) {
+    self.state = UIGestureRecognizerStateBegan;
+    UITouch *touch = [touches anyObject];
+    self.touchStartLocation = [touch locationInView:nil];
+    self.touchCurrentLocation = self.touchStartLocation;
+  } else {
+    self.state = UIGestureRecognizerStateCancelled;
+  }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesMoved:touches withEvent:event];
+  if (self.state == UIGestureRecognizerStateFailed) {
+    return;
+  }
+  UITouch *touch = [touches anyObject];
+  self.touchCurrentLocation = [touch locationInView:nil];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesEnded:touches withEvent:event];
+  self.state = UIGestureRecognizerStateEnded;
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesCancelled:touches withEvent:event];
+  self.state = UIGestureRecognizerStateCancelled;
+}
+
+- (void)reset {
+  [super reset];
+}
+
 @end
