@@ -4,7 +4,37 @@
 
 No API changes in this release.
 
+## Component changes
 
+### AppBar
+
+#### Changes
+
+* [[AppBarExample] Load image assets using UIImage(named:in:compatibleWith:) (#2233)](https://github.com/material-components/material-components-ios/commit/0601a77200aae7f8c3b3d4e346a3a3195bcd8816) (Yurii Samsoniuk)
+
+### BottomAppBar
+
+#### Changes
+
+* [Update bottom app bar for iPhone X (#2234)](https://github.com/material-components/material-components-ios/commit/9f44d52984f97263b9c85c339fc944cbdf201102) (Junius Gunaratne)
+
+### Collections
+
+#### Changes
+
+* [Don't inset sections when there is a safe area inset. (#2258)](https://github.com/material-components/material-components-ios/commit/67825350b275b242e46a7e33c4a068063c44fadd) (Andrés)
+
+### Dialogs
+
+#### Changes
+
+* [Set Dialog example button to open material.io (#2214)](https://github.com/material-components/material-components-ios/commit/53929d85941168a2fc27ffd486e6073f9f4e4b15) (ianegordon)
+
+### NavigationBar
+
+#### Changes
+
+* [Swift 4/iOS 11 Compatibility: Updated MDCNavigationBar's titleTextAttributes property. (#2213)](https://github.com/material-components/material-components-ios/commit/cb85c9b311c26f65af978b26debf155289fec98a) (Kirk Spaziani)
 
 # 37.0.0
 
