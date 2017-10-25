@@ -93,7 +93,6 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)addNavBar {
   _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
-  _navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self addSubview:_navBar];
 
   MDCBasicColorScheme *clearScheme =
