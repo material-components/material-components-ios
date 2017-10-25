@@ -516,6 +516,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     existingContentInsetAdjustment = (scrollView.adjustedContentInset.top
                                       - scrollView.contentInset.top);
   }
+#else
+  (void)scrollView; // To silence unused variable warnings.
 #endif
 
   return existingContentInsetAdjustment;
