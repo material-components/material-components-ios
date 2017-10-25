@@ -19,9 +19,9 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "private/MDCTextInputCommonFundament.h"
 
-#import "MDFInternationalization.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "MDFInternationalization.h"
 
 static NSString *const MDCTextFieldCursorColorKey = @"MDCTextFieldCursorColorKey";
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
@@ -121,7 +121,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     copy.trailingView = [self.trailingView copy];
   }
   copy.trailingViewMode = self.trailingViewMode;
-
 
   return copy;
 }
