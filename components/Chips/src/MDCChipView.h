@@ -28,6 +28,10 @@
 /*
  A UIImageView that leads the title label. Appears above the imageView.
 
+ This image view is typically used to show some icon that denotes the chip as selected, such as a
+ tick. If imageView has no image then the chip will require resizing when selected or deselected to
+ account for the changing visibility of selectedImageView.
+
  Only visible when the chip is selected and the image is non-nil.
  */
 @property(nonatomic, readonly, nonnull) UIImageView *selectedImageView;
@@ -92,7 +96,7 @@
 /*
  A color used as the chip's @c backgroundColor.
 
- If left unset or reset to nil for a particular control state, then a default blue color is used.
+ Defaults to blue.
 
  @param backgroundColor The background color.
  @param state The control state.
