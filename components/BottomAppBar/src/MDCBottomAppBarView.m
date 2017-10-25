@@ -92,11 +92,7 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)addNavBar {
-  CGRect navBarFrame = CGRectMake(0,
-                                  kMDCBottomAppBarYOffset,
-                                  self.bounds.size.width,
-                                  self.bounds.size.height);
-  _navBar = [[MDCNavigationBar alloc] initWithFrame:navBarFrame];
+  _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   _navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self addSubview:_navBar];
 
@@ -245,6 +241,12 @@ static const int kMDCButtonAnimationDuration = 200;
       self.floatingButton.center =
   [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+
+  CGRect navBarFrame = CGRectMake(0,
+                                  kMDCBottomAppBarYOffset,
+                                  CGRectGetWidth(self.bounds),
+                                  kMDCBottomAppBarHeight - kMDCBottomAppBarYOffset);
+  self.navBar.frame = navBarFrame;
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
