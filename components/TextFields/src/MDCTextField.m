@@ -307,26 +307,36 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (UIView *)trailingView {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.leftView;
+  }
   return self.rightView;
 }
 
 - (void)setTrailingView:(UIView *)trailingView {
-  self.rightView = trailingView;
-}
-
-- (UITextFieldViewMode)trailingViewMode {
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    return self.rightViewMode;
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.leftView = trailingView;
   } else {
-    return self.leftViewMode;
+    self.rightView = trailingView;
   }
 }
 
+- (UITextFieldViewMode)trailingViewMode {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.leftViewMode;
+  }
+    return self.rightViewMode;
+}
+
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    self.rightViewMode = trailingViewMode;
-  } else {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     self.leftViewMode = trailingViewMode;
+  } else {
+    self.rightViewMode = trailingViewMode;
   }
 }
 
@@ -377,26 +387,36 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (UIView *)leadingView {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.rightView;
+  }
   return self.leftView;
 }
 
 - (void)setLeadingView:(UIView *)leadingView {
-  self.leftView = leadingView;
-}
-
-- (UITextFieldViewMode)leadingViewMode {
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    return self.leftViewMode;
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.rightView = leadingView;
   } else {
-    return self.rightViewMode;
+    self.leftView = leadingView;
   }
 }
 
+- (UITextFieldViewMode)leadingViewMode {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.rightViewMode;
+  }
+  return self.leftViewMode;
+}
+
 - (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    self.leftViewMode = leadingViewMode;
-  } else {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     self.rightViewMode = leadingViewMode;
+  } else {
+    self.leftViewMode = leadingViewMode;
   }
 }
 
@@ -642,6 +662,23 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (void)textFieldDidEndEditing:(__unused NSNotification *)note {
   [_fundament didEndEditing];
+}
+
+#pragma mark - RTL
+
+// TODO: (larche) remove when we drop iOS 8
+// Prior to iOS 9 RTL was not automatically applied, so we need to apply fixes manually.
+- (BOOL)shouldManuallyEnforceRightToLeftLayoutForOverlayViews {
+  BOOL manuallyEnforceRTL = YES;
+
+  NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
+      [processInfo isOperatingSystemAtLeastVersion:iOS9Version]) {
+      manuallyEnforceRTL = NO;
+  }
+
+  return manuallyEnforceRTL;
 }
 
 #pragma mark - Accessibility
