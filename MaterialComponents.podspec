@@ -551,8 +551,8 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/ShadowLayer"
       ss.dependency "MaterialComponents/Typography"
 
+      ss.dependency "MDFInternationalization"
       ss.dependency "MaterialComponents/private/Math"
-      ss.dependency "MaterialComponents/private/RTL"
     end
 
     pss.subspec "UIMetrics" do |ss|
