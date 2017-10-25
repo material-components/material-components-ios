@@ -25,4 +25,12 @@
 
 @property(nonatomic, nonnull, strong, readonly) MDCChipView *chipView;
 
+/*
+ Animates the chip view every time the bounds change. Defaults to NO.
+
+ Set this to YES to animate chip view when it resizes. If the chip view changes size upon selection
+ this should be set to YES.
+ */
+@property(nonatomic, assign) BOOL alwaysAnimateCellResize;
+
 @end
