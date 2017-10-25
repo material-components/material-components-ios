@@ -249,11 +249,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 - (UIEdgeInsets)mdc_safeAreaInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-
-    // Accommodate insets for iPhone X.
-    insets = self.safeAreaInsets;
-  }
+  // Accommodate insets for iPhone X.
+  insets = self.safeAreaInsets;
 #endif
   return insets;
 }
@@ -327,10 +324,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
       itemView.badgeValue = item.badgeValue;
     }
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-    if (@available(iOS 10.0, *)) {
-      if (item.badgeColor) {
-        itemView.badgeColor = item.badgeColor;
-      }
+    if (item.badgeColor) {
+      itemView.badgeColor = item.badgeColor;
     }
 #endif
     itemView.selected = NO;
