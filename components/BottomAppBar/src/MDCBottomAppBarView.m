@@ -238,8 +238,8 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-      self.floatingButton.center =
-  [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
+  self.floatingButton.center =
+      [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
 
   CGRect navBarFrame = CGRectMake(0,
