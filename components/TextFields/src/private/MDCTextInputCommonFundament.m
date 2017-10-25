@@ -639,7 +639,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       MDCMultilineTextField *textField = (MDCMultilineTextField *)self.textInput;
       [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification
                                                           object:textField.textView];
-    } else {
+    } else if ([self.textInput isKindOfClass:[UITextField class]]) {
       [[NSNotificationCenter defaultCenter] postNotificationName:UITextFieldTextDidChangeNotification
                                                           object:self.textInput];
     }
