@@ -63,6 +63,8 @@
 /*
  Padding around the image view. Only used if the image view has a non-nil image.
 
+ The chip uses this property to determine intrinsicContentSize and sizeThatFits.
+
  Defaults to (0, 0, 0, 0).
  */
 @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;
@@ -70,12 +72,16 @@
 /*
  Padding around the accessory view. Only used if the accessory view is non-nil.
 
+ The chip uses this property to determine intrinsicContentSize and sizeThatFits.
+
  Defaults to (0, 0, 0, 0).
  */
 @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;
 
 /*
  Padding around the title.
+
+ The chip uses this property to determine intrinsicContentSize and sizeThatFits.
 
  Defaults to (8, 12, 8, 12).
  */
