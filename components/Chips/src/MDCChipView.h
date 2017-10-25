@@ -33,7 +33,7 @@
 
  Only visible when the image is non-nil.
  */
-@property(nonatomic, readonly, nonnull) UIImageView *imageView;
+@property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;
 
 /*
  A UIImageView that leads the title label. Appears above the imageView.
@@ -44,21 +44,21 @@
 
  Only visible when the chip is selected and the image is non-nil.
  */
-@property(nonatomic, readonly, nonnull) UIImageView *selectedImageView;
+@property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;
 
 /*
  A UIView that trails the title label.
 
  It will be given a size based on the value returned from sizeThatFits:.
  */
-@property(nonatomic, strong, nullable) UIView *accessoryView;
+@property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;
 
 /*
  The title label.
 
  @note The title color is controlled by setTitleColor:forState:.
  */
-@property(nonatomic, readonly, nonnull) UILabel *titleLabel;
+@property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;
 
 /*
  Padding around the image view. Only used if the image view has a non-nil image.
