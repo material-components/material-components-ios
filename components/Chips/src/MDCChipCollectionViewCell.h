@@ -23,6 +23,11 @@
  */
 @interface MDCChipCollectionViewCell : UICollectionViewCell
 
+/*
+ The chip view.
+
+ The chip's bounds will be set to fill the collection view cell.
+ */
 @property(nonatomic, nonnull, strong, readonly) MDCChipView *chipView;
 
 /*

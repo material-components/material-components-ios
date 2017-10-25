@@ -16,6 +16,16 @@
 
 #import <UIKit/UIKit.h>
 
+/*
+ A Material chip.
+
+ @see https://material.io/guidelines/components/sliders.html for full details.
+
+ Chips are compact elements that represent an attribute, text, entity, or action.
+
+ Chips contain an optional leading image, a title label and an optional trailing accessory view.
+ They can also contain a leading image that appears only when the chip is selected.
+ */
 @interface MDCChipView : UIControl
 
 /*
