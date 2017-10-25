@@ -16,26 +16,15 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, MDCCollectionHorizontalAlignment) {
-  MDCCollectionHorizontalAlignmentLeading,
-  MDCCollectionHorizontalAlignmentTrailing,
-  MDCCollectionHorizontalAlignmentLeft,
-  MDCCollectionHorizontalAlignmentRight
-};
-
 /*
- MDCAlignedCollectionViewFlowLayout is an aligned version of UICollectionViewFlowLayout.
+ MDCChipCollectionViewFlowLayout is a collection view layout suitable for Chips.
+
+ UICollectionViewFlowLayout is a justified alignment. MDCChipCollectionViewFlowLayout aligns cells
+ to the leading edge of the collection view.
 
  Use exactly as you would a standard UICollectionViewLayout. Set minimumInteritemSpacing to control
  spacing between cells.
  */
-@interface MDCAlignedCollectionViewFlowLayout : UICollectionViewFlowLayout
-
-/*
- The horizontal alignment of the layout.
-
- Defaults to MDCCollectionHorizontalAlignmentLeading.
-*/
-@property(nonatomic, assign) MDCCollectionHorizontalAlignment horizontalAlignment;
+@interface MDCChipCollectionViewFlowLayout : UICollectionViewFlowLayout
 
 @end
