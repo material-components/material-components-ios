@@ -280,102 +280,102 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldCustomFontFloating.clearButton.tintColor = MDCPalette.red.accent400
 
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
-    let leftViewImage = UIImage(named: "ic_search", in: bundle, compatibleWith: nil)!
+    let leadingViewImage = UIImage(named: "ic_search", in: bundle, compatibleWith: nil)!
 
-    let textFieldLeftView = MDCTextField()
-    textFieldLeftView.leftViewMode = .always
-    textFieldLeftView.leftView = UIImageView(image:leftViewImage)
+    let textFieldLeadingView = MDCTextField()
+    textFieldLeadingView.leadingViewMode = .always
+    textFieldLeadingView.leadingView = UIImageView(image:leadingViewImage)
 
-    textFieldLeftView.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldLeftView)
+    textFieldLeadingView.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldLeadingView)
 
-    textFieldLeftView.delegate = self
-    textFieldLeftView.clearButtonMode = .whileEditing
+    textFieldLeadingView.delegate = self
+    textFieldLeadingView.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultLeftView =
-      MDCTextInputControllerDefault(textInput: textFieldLeftView)
-    textFieldControllerDefaultLeftView.isFloatingEnabled = false
-    textFieldControllerDefaultLeftView.placeholderText = "This has a left view"
+    let textFieldControllerDefaultLeadingView =
+      MDCTextInputControllerDefault(textInput: textFieldLeadingView)
+    textFieldControllerDefaultLeadingView.isFloatingEnabled = false
+    textFieldControllerDefaultLeadingView.placeholderText = "This has a leading view"
 
-    let textFieldLeftViewFloating = MDCTextField()
-    textFieldLeftViewFloating.leftViewMode = .always
-    textFieldLeftViewFloating.leftView = UIImageView(image:leftViewImage)
+    let textFieldLeadingViewFloating = MDCTextField()
+    textFieldLeadingViewFloating.leadingViewMode = .always
+    textFieldLeadingViewFloating.leadingView = UIImageView(image:leadingViewImage)
 
-    textFieldLeftViewFloating.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldLeftViewFloating)
+    textFieldLeadingViewFloating.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldLeadingViewFloating)
 
-    textFieldLeftViewFloating.delegate = self
-    textFieldLeftViewFloating.clearButtonMode = .whileEditing
+    textFieldLeadingViewFloating.delegate = self
+    textFieldLeadingViewFloating.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultLeftViewFloating =
-      MDCTextInputControllerDefault(textInput: textFieldLeftViewFloating)
-    textFieldControllerDefaultLeftViewFloating.placeholderText = "This has a left view and floats"
+    let textFieldControllerDefaultLeadingViewFloating =
+      MDCTextInputControllerDefault(textInput: textFieldLeadingViewFloating)
+    textFieldControllerDefaultLeadingViewFloating.placeholderText = "This has a leading view and floats"
 
-    let rightViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil)!
+    let trailingViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil)!
 
-    let textFieldRightView = MDCTextField()
-    textFieldRightView.rightViewMode = .always
-    textFieldRightView.rightView = UIImageView(image:rightViewImage)
+    let textFieldTrailingView = MDCTextField()
+    textFieldTrailingView.trailingViewMode = .always
+    textFieldTrailingView.trailingView = UIImageView(image:trailingViewImage)
 
-    textFieldRightView.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldRightView)
+    textFieldTrailingView.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldTrailingView)
 
-    textFieldRightView.delegate = self
-    textFieldRightView.clearButtonMode = .whileEditing
+    textFieldTrailingView.delegate = self
+    textFieldTrailingView.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultRightView =
-      MDCTextInputControllerDefault(textInput: textFieldRightView)
-    textFieldControllerDefaultRightView.isFloatingEnabled = false
-    textFieldControllerDefaultRightView.placeholderText = "This has a right view"
+    let textFieldControllerDefaultTrailingView =
+      MDCTextInputControllerDefault(textInput: textFieldTrailingView)
+    textFieldControllerDefaultTrailingView.isFloatingEnabled = false
+    textFieldControllerDefaultTrailingView.placeholderText = "This has a trailing view"
 
-    let textFieldRightViewFloating = MDCTextField()
-    textFieldRightViewFloating.rightViewMode = .always
-    textFieldRightViewFloating.rightView = UIImageView(image:rightViewImage)
+    let textFieldTrailingViewFloating = MDCTextField()
+    textFieldTrailingViewFloating.trailingViewMode = .always
+    textFieldTrailingViewFloating.trailingView = UIImageView(image:trailingViewImage)
 
-    textFieldRightViewFloating.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldRightViewFloating)
+    textFieldTrailingViewFloating.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldTrailingViewFloating)
 
-    textFieldRightViewFloating.delegate = self
-    textFieldRightViewFloating.clearButtonMode = .whileEditing
+    textFieldTrailingViewFloating.delegate = self
+    textFieldTrailingViewFloating.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultRightViewFloating =
-      MDCTextInputControllerDefault(textInput: textFieldRightViewFloating)
-    textFieldControllerDefaultRightViewFloating.placeholderText = "This has a right view and floats"
+    let textFieldControllerDefaultTrailingViewFloating =
+      MDCTextInputControllerDefault(textInput: textFieldTrailingViewFloating)
+    textFieldControllerDefaultTrailingViewFloating.placeholderText = "This has a trailing view and floats"
 
-    let textFieldLeftRightView = MDCTextField()
-    textFieldLeftRightView.leftViewMode = .whileEditing
-    textFieldLeftRightView.leftView = UIImageView(image: leftViewImage)
-    textFieldLeftRightView.rightViewMode = .unlessEditing
-    textFieldLeftRightView.rightView = UIImageView(image:rightViewImage)
+    let textFieldLeadingTrailingView = MDCTextField()
+    textFieldLeadingTrailingView.leadingViewMode = .whileEditing
+    textFieldLeadingTrailingView.leadingView = UIImageView(image: leadingViewImage)
+    textFieldLeadingTrailingView.trailingViewMode = .unlessEditing
+    textFieldLeadingTrailingView.trailingView = UIImageView(image:trailingViewImage)
 
-    textFieldLeftRightView.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldLeftRightView)
+    textFieldLeadingTrailingView.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldLeadingTrailingView)
 
-    textFieldLeftRightView.delegate = self
-    textFieldLeftRightView.clearButtonMode = .whileEditing
+    textFieldLeadingTrailingView.delegate = self
+    textFieldLeadingTrailingView.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultLeftRightView =
-      MDCTextInputControllerDefault(textInput: textFieldLeftRightView)
-    textFieldControllerDefaultLeftRightView.isFloatingEnabled = false
-    textFieldControllerDefaultLeftRightView.placeholderText =
-      "This has left & right views and a very long placeholder that should be truncated"
+    let textFieldControllerDefaultLeadingTrailingView =
+      MDCTextInputControllerDefault(textInput: textFieldLeadingTrailingView)
+    textFieldControllerDefaultLeadingTrailingView.isFloatingEnabled = false
+    textFieldControllerDefaultLeadingTrailingView.placeholderText =
+      "This has leading & trailing views and a very long placeholder that should be truncated"
 
-    let textFieldLeftRightViewFloating = MDCTextField()
-    textFieldLeftRightViewFloating.leftViewMode = .always
-    textFieldLeftRightViewFloating.leftView = UIImageView(image: leftViewImage)
-    textFieldLeftRightViewFloating.rightViewMode = .whileEditing
-    textFieldLeftRightViewFloating.rightView = UIImageView(image:rightViewImage)
+    let textFieldLeadingTrailingViewFloating = MDCTextField()
+    textFieldLeadingTrailingViewFloating.leadingViewMode = .always
+    textFieldLeadingTrailingViewFloating.leadingView = UIImageView(image: leadingViewImage)
+    textFieldLeadingTrailingViewFloating.trailingViewMode = .whileEditing
+    textFieldLeadingTrailingViewFloating.trailingView = UIImageView(image:trailingViewImage)
 
-    textFieldLeftRightViewFloating.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(textFieldLeftRightViewFloating)
+    textFieldLeadingTrailingViewFloating.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(textFieldLeadingTrailingViewFloating)
 
-    textFieldLeftRightViewFloating.delegate = self
-    textFieldLeftRightViewFloating.clearButtonMode = .whileEditing
+    textFieldLeadingTrailingViewFloating.delegate = self
+    textFieldLeadingTrailingViewFloating.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultLeftRightViewFloating =
-      MDCTextInputControllerDefault(textInput: textFieldLeftRightViewFloating)
-    textFieldControllerDefaultLeftRightViewFloating.placeholderText =
-      "This has left & right views and floats and a very long placeholder that should be truncated"
+    let textFieldControllerDefaultLeadingTrailingViewFloating =
+      MDCTextInputControllerDefault(textInput: textFieldLeadingTrailingViewFloating)
+    textFieldControllerDefaultLeadingTrailingViewFloating.placeholderText =
+      "This has leading & trailing views and floats and a very long placeholder that should be truncated"
 
     unstyledTextField.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(unstyledTextField)
@@ -385,17 +385,17 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     unstyledTextField.trailingUnderlineLabel.text = "Trailing label"
     unstyledTextField.delegate = self
     unstyledTextField.clearButtonMode = .whileEditing
-    unstyledTextField.leftView = UIImageView(image: leftViewImage)
-    unstyledTextField.leftViewMode = .always
-    unstyledTextField.rightView = UIImageView(image: rightViewImage)
-    unstyledTextField.rightViewMode = .always
+    unstyledTextField.leadingView = UIImageView(image: leadingViewImage)
+    unstyledTextField.leadingViewMode = .always
+    unstyledTextField.trailingView = UIImageView(image: trailingViewImage)
+    unstyledTextField.trailingViewMode = .always
 
     return [textFieldControllerDefaultDisabled,
             textFieldControllerDefaultCustomFont, textFieldControllerDefaultCustomFontFloating,
-            textFieldControllerDefaultLeftView, textFieldControllerDefaultLeftViewFloating,
-            textFieldControllerDefaultRightView, textFieldControllerDefaultRightViewFloating,
-            textFieldControllerDefaultLeftRightView,
-            textFieldControllerDefaultLeftRightViewFloating]
+            textFieldControllerDefaultLeadingView, textFieldControllerDefaultLeadingViewFloating,
+            textFieldControllerDefaultTrailingView, textFieldControllerDefaultTrailingViewFloating,
+            textFieldControllerDefaultLeadingTrailingView,
+            textFieldControllerDefaultLeadingTrailingViewFloating]
   }
 
   // MARK: - Multi-line
@@ -514,11 +514,11 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   func setupSpecialMultilineTextFields() -> [MDCTextInputController] {
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
-    let rightViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil)!
+    let trailingViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil)!
 
     let multilineTextFieldTrailingView = MDCMultilineTextField()
     multilineTextFieldTrailingView.trailingViewMode = .always
-    multilineTextFieldTrailingView.trailingView = UIImageView(image:rightViewImage)
+    multilineTextFieldTrailingView.trailingView = UIImageView(image:trailingViewImage)
 
     multilineTextFieldTrailingView.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(multilineTextFieldTrailingView)
