@@ -650,8 +650,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return _fundament.mdc_adjustsFontForContentSizeCategory;
 }
 
+// TODO: (larche) remove when we drop iOS 9
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  // Prior to iOS 9 RTL was not automatically applied, so we don't need to apply any fixes.
+  // Prior to iOS 10 dynamic type was not automatically applied.
   if ([super respondsToSelector:@selector(setAdjustsFontForContentSizeCategory:)]) {
     [super setAdjustsFontForContentSizeCategory:adjusts];
   }
