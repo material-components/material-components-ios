@@ -87,10 +87,6 @@
   _bottomNavBar.frame = bottomNavBarFrame;
 }
 
-- (void)viewSafeAreaInsetsDidChange {
-  [super viewSafeAreaInsetsDidChange];
-}
-
 - (void)updateBadgeItemCount {
 
   // Example of badge with increasing count.
