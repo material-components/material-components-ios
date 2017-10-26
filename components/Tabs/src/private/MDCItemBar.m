@@ -119,7 +119,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+    collectionView.contentInsetAdjustmentBehavior =
+        UIScrollViewContentInsetAdjustmentScrollableAxes;
   }
 #endif
 
@@ -755,7 +756,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 @end
 
-#pragma mark -
+#pragma mark - MDCItemBarFlowLayout
 
 @implementation MDCItemBarFlowLayout {
   /// Map from item index paths to RTL-corrected layout attributes. If no RTL correction is in
@@ -812,7 +813,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // Apply global content size padding.
   if (shouldPadContentSizeForRTL) {
     _isPaddingCollectionViewContentSize = YES;
-    _paddedCollectionViewContentSize = self.collectionView.bounds.size;
+    _paddedCollectionViewContentSize = self.adjustedCollectionViewBounds.size;
   } else {
     _isPaddingCollectionViewContentSize = NO;
   }
@@ -954,7 +955,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // on the left to prevent the layout from "jumping" to the origin under various situations.
   // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
-  CGRect scrollBounds = self.collectionView.bounds;
+  CGRect scrollBounds = self.adjustedCollectionViewBounds;
   return contentSize.width < CGRectGetWidth(scrollBounds);
 }
 
@@ -962,7 +963,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         (UICollectionViewLayoutAttributes *)attributes {
   // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
-  CGRect scrollBounds = self.collectionView.bounds;
+  CGRect scrollBounds = self.adjustedCollectionViewBounds;
 
   CGFloat leftPadding = CGRectGetWidth(scrollBounds) - contentSize.width;
 
@@ -975,6 +976,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   newAttributes.frame = itemFrame;
 
   return newAttributes;
+}
+
+- (CGRect)adjustedCollectionViewBounds {
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    return UIEdgeInsetsInsetRect(self.collectionView.bounds,
+                                 self.collectionView.adjustedContentInset);
+  }
+#endif
+  return self.collectionView.bounds;
 }
 
 @end
