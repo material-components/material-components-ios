@@ -239,6 +239,9 @@ go-ahead from the following clients:
 Send the release-candidate branch out for review by opening [a pull request from `release-candidate`
 to
 `stable`](https://github.com/material-components/material-components-ios/compare/stable...release-candidate).
+Use the [new CHANGELOG.md
+contents](https://raw.githubusercontent.com/material-components/material-components-ios/release-candidate/CHANGELOG.md)
+as the description.
 
 Get a reviewer to approve the change.
 
