@@ -71,7 +71,9 @@
                                       tag:0];
   tabBarItem5.badgeValue = @"999+";
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-  tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
+  if (@available(iOS 10.0, *)) {
+    tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
+  }
 #endif
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;
