@@ -152,8 +152,8 @@ Pod::Spec.new do |s|
       sss.public_header_files = "components/#{ss.base_name}/src/*.h"
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
+      ss.dependency "MDFInternationalization"
       ss.dependency "MaterialComponents/Buttons"
-      ss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
