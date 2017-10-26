@@ -103,7 +103,19 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 - (void)willMoveToParentViewController:(UIViewController *)parent {
   [super willMoveToParentViewController:parent];
 
-  parent.automaticallyAdjustsScrollViewInsets = NO;
+  BOOL shouldDisableAutomaticInsetting = YES;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  // Prior to iOS 11 there was no way to know whether UIKit had injected insets into our
+  // UIScrollView, so we disable automatic insetting on these devices. iOS 11 provides
+  // the adjustedContentInset API which allows us to respond to changes in the safe area
+  // insets, so on iOS 11 we actually expect iOS to manage the safe area insets.
+  if (@available(iOS 11.0, *)) {
+    shouldDisableAutomaticInsetting = NO;
+  }
+#endif
+  if (shouldDisableAutomaticInsetting) {
+    parent.automaticallyAdjustsScrollViewInsets = NO;
+  }
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
