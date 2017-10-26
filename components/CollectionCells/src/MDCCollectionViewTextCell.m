@@ -16,8 +16,8 @@
 
 #import "MDCCollectionViewTextCell.h"
 
+#import "MDFInternationalization.h"
 #import "MaterialMath.h"
-#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 #include <tgmath.h>
@@ -122,19 +122,20 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
   _contentWrapper.autoresizingMask =
       UIViewAutoresizingFlexibleWidth |
-      MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
+      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+          self.mdf_effectiveUserInterfaceLayoutDirection);
   _contentWrapper.clipsToBounds = YES;
   [self.contentView addSubview:_contentWrapper];
 
   // Text label.
   _textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _textLabel.autoresizingMask =
-      MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
+  _textLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+      self.mdf_effectiveUserInterfaceLayoutDirection);
 
   // Detail text label.
   _detailTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _detailTextLabel.autoresizingMask =
-      MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
+  _detailTextLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+      self.mdf_effectiveUserInterfaceLayoutDirection);
 
   [self resetMDCCollectionViewTextCellLabelProperties];
 
@@ -143,8 +144,8 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
 
   // Image view.
   _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-  _imageView.autoresizingMask =
-      MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
+  _imageView.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+      self.mdf_effectiveUserInterfaceLayoutDirection);
   [self.contentView addSubview:_imageView];
 }
 
@@ -170,8 +171,8 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   CGFloat leadingPadding =
       _imageView.image ? kCellTextWithImagePaddingLeading : kCellTextNoImagePaddingLeading;
   CGFloat trailingPadding = kCellTextNoImagePaddingTrailing;
-  UIEdgeInsets insets = MDCInsetsMakeWithLayoutDirection(
-      0, leadingPadding, 0, trailingPadding, self.mdc_effectiveUserInterfaceLayoutDirection);
+  UIEdgeInsets insets = MDFInsetsMakeWithLayoutDirection(
+      0, leadingPadding, 0, trailingPadding, self.mdf_effectiveUserInterfaceLayoutDirection);
   return UIEdgeInsetsInsetRect(self.contentView.bounds, insets);
 }
 
@@ -234,15 +235,19 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
       detailFrame.origin.y = (boundsHeight / 2) - (detailFrame.size.height / 2);
     }
   }
-  _textLabel.frame =
-      MDCRectFlippedForRTL(AlignRectToUpperPixel(textFrame), CGRectGetWidth(_contentWrapper.bounds),
-                           self.mdc_effectiveUserInterfaceLayoutDirection);
-  _detailTextLabel.frame = MDCRectFlippedForRTL(AlignRectToUpperPixel(detailFrame),
-                                                CGRectGetWidth(_contentWrapper.bounds),
-                                                self.mdc_effectiveUserInterfaceLayoutDirection);
-  _imageView.frame = MDCRectFlippedForRTL(AlignRectToUpperPixel(imageFrame),
-                                          CGRectGetWidth(self.contentView.bounds),
-                                          self.mdc_effectiveUserInterfaceLayoutDirection);
+  textFrame = AlignRectToUpperPixel(textFrame);
+  detailFrame = AlignRectToUpperPixel(detailFrame);
+  imageFrame = AlignRectToUpperPixel(imageFrame);
+
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    textFrame = MDFRectFlippedHorizontally(textFrame, CGRectGetWidth(_contentWrapper.bounds));
+    detailFrame = MDFRectFlippedHorizontally(detailFrame, CGRectGetWidth(_contentWrapper.bounds));
+    imageFrame = MDFRectFlippedHorizontally(imageFrame, CGRectGetWidth(self.contentView.bounds));
+  }
+
+  _textLabel.frame = textFrame;
+  _detailTextLabel.frame = detailFrame;
+  _imageView.frame = imageFrame;
 }
 
 - (CGSize)frameSizeForLabel:(UILabel *)label {

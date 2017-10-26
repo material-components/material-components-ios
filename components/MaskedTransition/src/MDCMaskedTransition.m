@@ -185,12 +185,12 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   [animator animateWithTiming:motion.iconFade
                       toLayer:_sourceView.layer
                    withValues:@[ @1, @0 ]
-                      keyPath:@"opacity"];
+                      keyPath:MDMKeyPathOpacity];
 
   [animator animateWithTiming:motion.contentFade
                       toLayer:context.foreViewController.view.layer
                    withValues:@[ @0, @1 ]
-                      keyPath:@"opacity"];
+                      keyPath:MDMKeyPathOpacity];
 
   // TODO(featherless): Support shadow + elevation changes. May need companion transition for this?
 
@@ -231,13 +231,13 @@ static inline CGFloat LengthOfVector(CGVector vector) {
                       toLayer:maskedView.layer
                    withValues:@[ @(CGRectGetMidX(initialMaskedFrame)),
                                  @(CGRectGetMidX(finalMaskedFrame)) ]
-                      keyPath:@"position.x"];
+                      keyPath:MDMKeyPathX];
 
   [animator animateWithTiming:motion.verticalMovement
                       toLayer:maskedView.layer
                    withValues:@[ @(CGRectGetMidY(initialMaskedFrame)),
                                  @(CGRectGetMidY(finalMaskedFrame)) ]
-                      keyPath:@"position.y"];
+                      keyPath:MDMKeyPathY];
 
   [CATransaction commit];
 }
