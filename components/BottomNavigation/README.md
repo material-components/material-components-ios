@@ -58,7 +58,7 @@ MDCBottomNavigationBar can be added to a view hierarchy like any UIView. Materia
 
 Title visibility can be configured in three ways: only show the title of the selected item, always show title regardless of selection state of an item, and never show title of any item. The default behavior of bottom navigation is to only show the title for an item that is selected.
 
-In landscape orientation, items displayed in the bottom navigation can be configured to be justified to fit the width of the screen or to be clustered together compactly. When items are justified, they can have their titles shown below their respective icons or adajacent to their respective icons.
+In landscape orientation, items displayed in the bottom navigation can be configured to be justified to fit the width of the screen or to be compactly clustered together. When items are justified, they can have their titles shown below their respective icons or adajacent to their respective icons.
 
 ### Importing
 
@@ -85,9 +85,15 @@ import MaterialComponents.MaterialBottomNavigation
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
+Define a MDCBottomNavigationBar.
+
 ``` swift
 // Create a bottom navigation bar to add to a view.
 let bottomNavBar = MDCBottomNavigationBar()
+```
+Add the bottom navigation to the parent view and populate its contents.
+
+```
 view.addSubview(bottomNavBar)
 
 // Set the item title visibility (optional).
@@ -123,43 +129,54 @@ override func viewWillLayoutSubviews() {
 ```
 
 #### Objective-C
+Define a MDCBottomNavigationBar.
 
 ``` objc
-MDCBottomNavigationBar *bottomNavBar =
-    [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
-bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-bottomNavBar.alignment = MDCBottomNavigatioBarAlignmentJustified;
-  [self.view addSubview:_bottomNavBar];
+@property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
+```
+Add the bottom navigation to the parent view and populate its contents.
 
-  UITabBarItem *tabBarItem1 =
-      [[UITabBarItem alloc] initWithTitle:@"Home"
-                                    image:[UIImage imageNamed:@"Home"]
-                                      tag:0];
-  UITabBarItem *tabBarItem2 =
-      [[UITabBarItem alloc] initWithTitle:@"Messages"
-                                    image:[UIImage imageNamed:@"Email"]
-                                      tag:0];
-  UITabBarItem *tabBarItem3 =
-      [[UITabBarItem alloc] initWithTitle:@"Favorites"
-                                    image:[UIImage imageNamed:@"Favorite"]
-                                      tag:0];
-  UITabBarItem *tabBarItem4 =
-      [[UITabBarItem alloc] initWithTitle:@"Search"
-                                    image:[UIImage imageNamed:@"Search"]
-                                      tag:0];
-  tabBarItem4.badgeValue = @"88";
-  UITabBarItem *tabBarItem5 =
-      [[UITabBarItem alloc] initWithTitle:@"Birthday"
-                                    image:[UIImage imageNamed:@"Cake"]
-                                      tag:0];
-  tabBarItem5.badgeValue = @"999+";
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-  if (@available(iOS 10.0, *)) {
-    tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
-  }
-#endif
-  _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
-  _bottomNavBar.selectedItem = tabBarItem2;
+```
+// Create a bottom navigation bar to add to a view.
+self.bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
+[self.view addSubview:bottomNavBar];
+
+// Set the item title visibility (optional).
+self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+
+// Set the alignment of items (optional).
+self.bottomNavBar.alignment = MDCBottomNavigatioBarAlignmentJustified;
+
+UITabBarItem *tabBarItem1 =
+    [[UITabBarItem alloc] initWithTitle:@"Home"
+                                  image:[UIImage imageNamed:@"Home"]
+                                    tag:0];
+UITabBarItem *tabBarItem2 =
+    [[UITabBarItem alloc] initWithTitle:@"Messages"
+                                  image:[UIImage imageNamed:@"Email"]
+                                    tag:0];
+UITabBarItem *tabBarItem3 =
+    [[UITabBarItem alloc] initWithTitle:@"Favorites"
+                                  image:[UIImage imageNamed:@"Favorite"]
+                                    tag:0];
+
+self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3 ];
+
+// Select an item (optional).
+self.bottomNavBar.selectedItem = tabBarItem2;
+```
+When layoutSubviews (UIView) or viewWillLayoutSubviews (UIViewController) is called make sure the frame of the bottom navigation bar is set correctly within the parent view.
+
+```
+override func viewWillLayoutSubviews() {
+  CGSize size = [self.bottomNavBar sizeThatFits:self.view.bounds.size];
+  CGRect bottomNavBarFrame =
+      CGRectMake(0,
+                 CGRectGetHeight(self.view.bounds) - size.height,
+                 size.width,
+                 size.height);
+  self.bottomNavBar.frame = bottomNavBarFrame;
+}
 ```
 
 <!--</div>-->
