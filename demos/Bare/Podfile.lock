@@ -35,17 +35,17 @@ PODS:
     - MaterialComponents/ActivityIndicator/Component (= 38.0.1)
     - MaterialComponents/Palettes
     - MaterialComponents/private/Application
-    - MaterialComponents/private/RTL
+    - MDFInternationalization
   - MaterialComponents/ActivityIndicator/ColorThemer (38.0.1):
     - MaterialComponents/ActivityIndicator/Component
     - MaterialComponents/Palettes
     - MaterialComponents/private/Application
-    - MaterialComponents/private/RTL
     - MaterialComponents/Themes
+    - MDFInternationalization
   - MaterialComponents/ActivityIndicator/Component (38.0.1):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Application
-    - MaterialComponents/private/RTL
+    - MDFInternationalization
   - MaterialComponents/AnimationTiming (38.0.1)
   - MaterialComponents/AppBar (38.0.1):
     - MaterialComponents/AppBar/ColorThemer (= 38.0.1)
@@ -59,16 +59,16 @@ PODS:
     - MaterialComponents/NavigationBar
     - MaterialComponents/private/Application
     - MaterialComponents/private/Icons/ic_arrow_back
-    - MaterialComponents/private/RTL
     - MaterialComponents/private/UIMetrics
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/BottomAppBar (38.0.1):
     - MaterialComponents/Buttons
     - MaterialComponents/NavigationBar
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
+    - MDFInternationalization
   - MaterialComponents/BottomSheet (38.0.1):
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Math
@@ -76,16 +76,16 @@ PODS:
     - MaterialComponents/ButtonBar/ColorThemer (= 38.0.1)
     - MaterialComponents/ButtonBar/Component (= 38.0.1)
     - MaterialComponents/Buttons
-    - MaterialComponents/private/RTL
+    - MDFInternationalization
   - MaterialComponents/ButtonBar/ColorThemer (38.0.1):
     - MaterialComponents/ButtonBar/Component
     - MaterialComponents/Buttons
     - MaterialComponents/NavigationBar/Component
-    - MaterialComponents/private/RTL
     - MaterialComponents/Themes
+    - MDFInternationalization
   - MaterialComponents/ButtonBar/Component (38.0.1):
     - MaterialComponents/Buttons
-    - MaterialComponents/private/RTL
+    - MDFInternationalization
   - MaterialComponents/Buttons (38.0.1):
     - MaterialComponents/Buttons/ColorThemer (= 38.0.1)
     - MaterialComponents/Buttons/Component (= 38.0.1)
@@ -131,8 +131,8 @@ PODS:
     - MaterialComponents/private/Icons/ic_radio_button_unchecked
     - MaterialComponents/private/Icons/ic_reorder
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/CollectionLayoutAttributes (38.0.1)
   - MaterialComponents/Collections (38.0.1):
     - MaterialComponents/CollectionCells
@@ -190,7 +190,7 @@ PODS:
   - MaterialComponents/MaskedTransition (38.0.1):
     - MotionAnimator (~> 1.0)
     - MotionInterchange (~> 1.0)
-    - MotionTransitioning (~> 3.3)
+    - MotionTransitioning (~> 4.0)
   - MaterialComponents/NavigationBar (38.0.1):
     - MaterialComponents/NavigationBar/ColorThemer (= 38.0.1)
     - MaterialComponents/NavigationBar/Component (= 38.0.1)
@@ -200,8 +200,8 @@ PODS:
   - MaterialComponents/NavigationBar/Component (38.0.1):
     - MaterialComponents/ButtonBar/Component
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+    - MDFInternationalization
     - MDFTextAccessibility
   - MaterialComponents/OverlayWindow (38.0.1):
     - MaterialComponents/private/Application
@@ -326,12 +326,12 @@ PODS:
   - MaterialComponents/Themes (38.0.1)
   - MaterialComponents/Typography (38.0.1):
     - MaterialComponents/private/Application
-  - MDFInternationalization (1.0.1)
+  - MDFInternationalization (1.0.2)
   - MDFTextAccessibility (1.2.0)
   - MotionAnimator (1.1.3):
     - MotionInterchange
   - MotionInterchange (1.1.1)
-  - MotionTransitioning (3.3.0)
+  - MotionTransitioning (4.0.1)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -341,12 +341,12 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 75268ea1677745df63e23ed1f0d53c6d3b7ae2fb
-  MDFInternationalization: 264e30a0966b36d4f7fe9b7617c316f266837bfb
+  MaterialComponents: 2ba6c272c4aeb82d1138eb0e9d79d6b5fb5ee4fa
+  MDFInternationalization: 51b5f3889aca8bc13385e9a6c363eb0b0f257cf9
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   MotionAnimator: f241c4acd49dea603c3a2ea131727d57853a281b
   MotionInterchange: 3556642f403549449a49f05653da3bd932a5e072
-  MotionTransitioning: caaa488e0469d93f004793b96a2ed04447af808d
+  MotionTransitioning: 277501a1a1e6121c0ab523e6a3e00d64659c3367
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
 
