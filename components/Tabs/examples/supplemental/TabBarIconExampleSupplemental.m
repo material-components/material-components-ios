@@ -82,17 +82,17 @@
   self.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBar.headerViewController.headerView.minimumHeight = 56 + 72;
 
-   UIFont *font;
-   if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
-      font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
-   } else {
-      font = [UIFont systemFontOfSize:14];
-      UIFontDescriptor *descriptor =
-          [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
-      if (descriptor) {
-         font = [UIFont fontWithDescriptor:descriptor size:0.0];
-      }
-   }
+  UIFont *font;
+  if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
+    font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
+  } else {
+    font = [UIFont systemFontOfSize:14];
+    UIFontDescriptor *descriptor =
+        [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+    if (descriptor) {
+      font = [UIFont fontWithDescriptor:descriptor size:0.0];
+    }
+  }
 
   self.appBar.navigationBar.titleTextAttributes = @{
     NSForegroundColorAttributeName : [UIColor whiteColor],
