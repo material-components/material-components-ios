@@ -1,3 +1,33 @@
+# 38.0.1
+
+## API Changes
+
+None for this release.
+
+## Component changes
+
+### BottomAppBar
+
+#### Changes
+
+* [Remove unnecessary autoresizing mask (#2273)](https://github.com/material-components/material-components-ios/commit/f2463399eb626e477a9be480f3f94285a7cd59bd) (Junius Gunaratne)
+* [Set nav bar frame on layout (#2272)](https://github.com/material-components/material-components-ios/commit/b3667a712f05ece21fd750e1a2d7cdae90f18c89) (Junius Gunaratne)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Disable content inset adjustments in the horizontal pager scroll view example's horizontal scroll view. (#2264)](https://github.com/material-components/material-components-ios/commit/b0b2a96ce40b3031d675aa2c2ea2963bd0fa33d6) (featherless)
+* [Only disable automaticallyAdjustsScrollViewInsets on the parent controller when the device is running an OS older than iOS 11. (#2265)](https://github.com/material-components/material-components-ios/commit/67a810e98304b6627f61d340eebbfe08b7f374e0) (featherless)
+* [[Flexible Header] Rework our enforcement of content insets. (#2263)](https://github.com/material-components/material-components-ios/commit/9c6e78fe11c66561296e281b2dda88a84dc231cc) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Updating kitchen sink example to use trailing and leading views. (#2266)](https://github.com/material-components/material-components-ios/commit/035b9b4cae4eab6b36c902deb3894332fcb02223) (Will Larche)
+
+
 # 38.0.0
 
 ## API Changes
