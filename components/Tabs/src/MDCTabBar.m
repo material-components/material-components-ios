@@ -301,7 +301,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     [super safeAreaInsetsDidChange];
   }
 #endif
+  // The intrinsic content size depends on the Safe Area insets so we invalidate it when it changes.
   [self invalidateIntrinsicContentSize];
+
   [self setNeedsLayout];
   [self setNeedsUpdateConstraints];
 }

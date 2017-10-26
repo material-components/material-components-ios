@@ -21,7 +21,6 @@
 
 @implementation BottomNavigationBarExample {
   MDCTabBar *_bottomNavigationBar;
-  NSLayoutConstraint *_heightConstraint;
   NSArray<UIColor *> *_colors;
 }
 
@@ -77,22 +76,15 @@
                                attribute:NSLayoutAttributeRight
                               multiplier:1
                                 constant:0].active = YES;
-
-  CGFloat defaultHeight = [_bottomNavigationBar sizeThatFits:self.view.bounds.size].height;
-  _heightConstraint = [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
-                                                   attribute:NSLayoutAttributeHeight
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:nil
-                                                   attribute:NSLayoutAttributeNotAnAttribute
-                                                  multiplier:1
-                                                    constant:defaultHeight];
-  _heightConstraint.active = YES;
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  _heightConstraint.constant = [_bottomNavigationBar sizeThatFits:self.view.bounds.size].height;
+  // Even though the intrinsic size of the tab bar has changed to account for the Safe Area,
+  // we have to call this for it to actually update. UITabBar is "broken" in the same way, and
+  // we expect it to be fixed.
+  [_bottomNavigationBar updateConstraintsIfNeeded];
 }
 
 #pragma mark - MDCTabBarDelegate
