@@ -30,6 +30,8 @@
 @property(nonatomic, strong) MDCTextInputControllerLegacyDefault *address1Controller;
 @property(weak, nonatomic) IBOutlet MDCTextField *address2TextField;
 @property(nonatomic, strong) MDCTextInputControllerLegacyDefault *address2Controller;
+@property(weak, nonatomic) IBOutlet MDCMultilineTextField *messageTextField;
+@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *messageController;
 
 @end
 
@@ -50,6 +52,8 @@
       [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address1TextField];
   self.address2Controller =
       [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address2TextField];
+  self.messageController =
+      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.messageTextField];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
