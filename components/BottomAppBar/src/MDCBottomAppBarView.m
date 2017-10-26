@@ -16,9 +16,9 @@
 
 #import "MDCBottomAppBarView.h"
 
-#import "MaterialNavigationBar.h"
-#import "MaterialRTL.h"
 #import "MDCNavigationBarColorThemer.h"
+#import "MDFInternationalization.h"
+#import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
 
@@ -77,7 +77,7 @@ static const int kMDCButtonAnimationDuration = 200;
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                            UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
-  self.layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   [self addFloatingButton];
   [self addBottomBarLayer];
   [self addNavBar];

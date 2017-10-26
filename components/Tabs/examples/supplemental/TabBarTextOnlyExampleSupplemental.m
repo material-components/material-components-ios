@@ -25,7 +25,6 @@
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
-static CGFloat const kStatusBarHeight = 20;
 static CGFloat const kAppBarMinHeight = 56;
 static CGFloat const kTabBarHeight = 48;
 
@@ -54,10 +53,9 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
   self.appBar.navigationBar.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.minimumHeight =
-      kStatusBarHeight + kTabBarHeight;
-  self.appBar.headerViewController.headerView.maximumHeight =
-      kStatusBarHeight + kAppBarMinHeight + kTabBarHeight;
+  self.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+  self.appBar.headerViewController.headerView.minimumHeight = kTabBarHeight;
+  self.appBar.headerViewController.headerView.maximumHeight = kAppBarMinHeight + kTabBarHeight;
 
    UIFont *font;
    if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {

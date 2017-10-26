@@ -73,7 +73,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _alignment = MDCBottomNavigatioBarAlignmentJustified;
+  _alignment = MDCBottomNavigationBarAlignmentJustified;
   _itemsDistributed = YES;
   _titleBelowItem = YES;
   _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
@@ -103,7 +103,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self.maxLandscapeClusterContainerWidth = MIN(size.width, size.height);
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
-  if (self.alignment == MDCBottomNavigatioBarAlignmentJustifiedAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles) {
     heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
   }
   CGSize insetSize = CGSizeMake(size.width, heightWithInset);
@@ -121,19 +121,19 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 - (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
                               containerWidth:(CGFloat)containerWidth {
   switch (self.alignment) {
-    case MDCBottomNavigatioBarAlignmentJustified:
+    case MDCBottomNavigationBarAlignmentJustified:
       [self sizeContainerViewItemsDistributed:YES
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
-    case MDCBottomNavigatioBarAlignmentJustifiedAdjacentTitles:
+    case MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles:
       [self sizeContainerViewItemsDistributed:YES
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
       self.titleBelowItem = NO;
       break;
-    case MDCBottomNavigatioBarAlignmentCentered:
+    case MDCBottomNavigationBarAlignmentCentered:
       [self sizeContainerViewItemsDistributed:NO
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
@@ -146,7 +146,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
                         withBottomNavSize:(CGSize)bottomNavSize
                            containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
-  if (self.alignment == MDCBottomNavigatioBarAlignmentJustifiedAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles) {
     barHeight = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
   if (itemsDistributed) {

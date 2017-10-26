@@ -12,14 +12,14 @@ PODS:
     - MaterialComponents/NavigationBar
     - MaterialComponents/private/Application
     - MaterialComponents/private/Icons/ic_arrow_back
-    - MaterialComponents/private/RTL
     - MaterialComponents/private/UIMetrics
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/ButtonBar/Component (38.0.1):
     - MaterialComponents/Buttons
-    - MaterialComponents/private/RTL
+    - MDFInternationalization
   - MaterialComponents/Buttons (38.0.1):
     - MaterialComponents/Buttons/ColorThemer (= 38.0.1)
     - MaterialComponents/Buttons/Component (= 38.0.1)
@@ -65,8 +65,8 @@ PODS:
     - MaterialComponents/private/Icons/ic_radio_button_unchecked
     - MaterialComponents/private/Icons/ic_reorder
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/CollectionLayoutAttributes (38.0.1)
   - MaterialComponents/Collections (38.0.1):
     - MaterialComponents/CollectionCells
@@ -108,8 +108,8 @@ PODS:
   - MaterialComponents/NavigationBar/Component (38.0.1):
     - MaterialComponents/ButtonBar/Component
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+    - MDFInternationalization
     - MDFTextAccessibility
   - MaterialComponents/Palettes (38.0.1)
   - MaterialComponents/private/Application (38.0.1)
@@ -129,7 +129,6 @@ PODS:
   - MaterialComponents/private/Icons/ic_reorder (38.0.1):
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/Math (38.0.1)
-  - MaterialComponents/private/RTL (38.0.1)
   - MaterialComponents/private/UIMetrics (38.0.1):
     - MaterialComponents/private/Application
   - MaterialComponents/ShadowElevations (38.0.1)
@@ -138,6 +137,7 @@ PODS:
   - MaterialComponents/Themes (38.0.1)
   - MaterialComponents/Typography (38.0.1):
     - MaterialComponents/private/Application
+  - MDFInternationalization (1.0.2)
   - MDFTextAccessibility (1.2.0)
 
 DEPENDENCIES:
@@ -155,7 +155,8 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 75268ea1677745df63e23ed1f0d53c6d3b7ae2fb
+  MaterialComponents: 2ba6c272c4aeb82d1138eb0e9d79d6b5fb5ee4fa
+  MDFInternationalization: 51b5f3889aca8bc13385e9a6c363eb0b0f257cf9
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: cdec7a9b5bf338e8f41916eb1ec5588703a9dc16
