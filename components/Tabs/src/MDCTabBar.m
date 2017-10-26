@@ -303,6 +303,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 #endif
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
+  [self setNeedsUpdateConstraints];
 }
 
 - (void)didMoveToWindow {
