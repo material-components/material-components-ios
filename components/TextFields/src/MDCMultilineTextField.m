@@ -164,10 +164,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                         forAxis:UILayoutConstraintAxisVertical];
 }
 
-- (BOOL)becomeFirstResponder {
-  return [self.textView becomeFirstResponder];
-}
-
 - (void)subscribeForNotifications {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
@@ -182,6 +178,16 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                     selector:@selector(textViewDidChange:)
                         name:UITextViewTextDidChangeNotification
                       object:self.textView];
+}
+
+#pragma mark - UIResponder Overrides
+
+- (BOOL)becomeFirstResponder {
+  return [self.textView becomeFirstResponder];
+}
+
+- (BOOL)isFirstResponder {
+  return self.textView.isFirstResponder;
 }
 
 #pragma mark - TextView Implementation
