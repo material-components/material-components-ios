@@ -61,7 +61,7 @@ static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
 const CGFloat MDCTextInputFullPadding = 16.f;
 const CGFloat MDCTextInputHalfPadding = 8.f;
 
-static inline UIColor *_Nonnull MDCTextInputCursorColor() {
+UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette bluePalette].accent700;
 }
 
@@ -137,7 +137,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self setupClearButton];
     [self setupUnderlineLabels];
 
-    [self updateColors];
+    [self updateTextColor];
     [self mdc_setAdjustsFontForContentSizeCategory:NO];
 
     [self setupBorder];
@@ -225,7 +225,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)commonMDCTextInputCommonFundamentInit {
-  _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
   _textInsetsMode = MDCTextInputTextInsetsModeIfContent;
   _clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -506,7 +505,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self.textInput setNeedsUpdateConstraints];
   }
 
-  [self updateColors];
+  [self updateTextColor];
   [self updateClearButton];
 }
 
@@ -690,6 +689,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updateClearButton];
 }
 
+- (UIColor *)cursorColor {
+  return self.textInput.cursorColor;
+}
+
+- (void)setCursorColor:(UIColor *)cursorColor {
+  self.textInput.cursorColor = cursorColor;
+}
+
 - (void)setEnabled:(BOOL)enabled {
   _enabled = enabled;
   self.underline.enabled = enabled;
@@ -744,7 +751,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   if (_textColor != textColor) {
     _textColor = textColor;
-    [self updateColors];
+    [self updateTextColor];
   }
 }
 
@@ -808,8 +815,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 #pragma mark - Layout
 
-- (void)updateColors {
-  self.textInput.tintColor = self.cursorColor;
+- (void)updateTextColor {
   self.textInput.textColor = self.textColor;
 }
 
@@ -976,7 +982,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     if (!self.underline.color) {
       self.underline.color = MDCTextInputUnderlineColor();
     }
-    [self updateColors];
   } else if ([keyPath isEqualToString:MDCTextInputUnderlineKVOKeyLineHeight]) {
     [self.textInput setNeedsUpdateConstraints];
   } else {
