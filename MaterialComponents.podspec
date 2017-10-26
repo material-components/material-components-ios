@@ -81,8 +81,8 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/ShadowElevations"
       sss.dependency "MaterialComponents/ShadowLayer"
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
-      sss.dependency "MaterialComponents/private/RTL"
       sss.dependency "MaterialComponents/private/UIMetrics"
     end
     ss.subspec "ColorThemer" do |sss|
