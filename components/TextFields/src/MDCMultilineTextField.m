@@ -83,6 +83,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
+      _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
+      [self setupTextView];
+    } else if (!_textView) {
+      // It's expected that this will be created by the fundament above. This is a catch.
+      _textView = [[UITextView alloc] initWithFrame:CGRectZero];
+      [self setupTextView];
+    }
 
     MDCTextInputCommonFundament *fundament =
         [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
@@ -100,11 +108,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
       _minimumLines = [aDecoder decodeIntegerForKey:MDCMultilineTextFieldMinimumLinesKey];
     }
     _multilineDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldMultilineDelegateKey];
-    if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
-      _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
-    } else {
-      _textView = [[UITextView alloc] initWithFrame:CGRectZero];
-    }
+
     _trailingViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCMultilineTextFieldTrailingViewModeKey];
   }
@@ -674,15 +678,18 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if (!_textView) {
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
     [self setupTextView];
+    [self setupUnderlineConstraints];
   }
   return _textView;
 }
 
 - (void)setTextView:(UITextView *)textView {
-  if (![textView isEqual:textView]) {
+  if (![_textView isEqual:textView]) {
+    [_textView removeFromSuperview];
     _textView = textView;
     if (textView) {
       [self setupTextView];
+      [self setupUnderlineConstraints];
     }
   }
 }
