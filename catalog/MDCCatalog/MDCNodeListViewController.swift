@@ -301,7 +301,7 @@ extension MDCNodeListViewController {
         view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,
                                       constant: padding),
         view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,
-                                       constant: padding),
+                                       constant: -padding),
         view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: top),
         view.heightAnchor.constraint(equalToConstant: height)
       ])
@@ -311,7 +311,7 @@ extension MDCNodeListViewController {
     if #available(iOS 9.0, *) {
       NSLayoutConstraint.activate([
         view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-        view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: padding),
+        view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
         view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: top),
         view.heightAnchor.constraint(equalToConstant: height)
       ])
@@ -331,7 +331,7 @@ extension MDCNodeListViewController {
         toItem: containerView,
         attribute: .trailing,
         multiplier: 1.0,
-        constant: padding).isActive = true
+        constant: -padding).isActive = true
       _ = NSLayoutConstraint(
         item: view,
         attribute: .top,
