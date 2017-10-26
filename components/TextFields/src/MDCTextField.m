@@ -305,6 +305,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return _fundament.trailingUnderlineLabel;
 }
 
+// In iOS 8, .leftView and .rightView are not swapped in RTL so we have to do that manually.
 - (UIView *)trailingView {
   if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
@@ -385,6 +386,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   _fundament.enabled = enabled;
 }
 
+// In iOS 8, .leftView and .rightView are not swapped in RTL so we have to do that manually.
 - (UIView *)leadingView {
   if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
