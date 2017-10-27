@@ -31,12 +31,13 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     self.addChildViewController(appBar.headerViewController)
     let color = UIColor(white: 0.2, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.tintColor = .white
     appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
-    
+
     commonBottomNavigationTypicalUseSwiftExampleInit()
   }
 
+  @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
@@ -52,18 +53,21 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     bottomNavBar.alignment = .centered
 
     // Add items to the bottom navigation bar.
-    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage.init(named: "Home"), tag: 0)
+    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
     let tabBarItem2 =
-      UITabBarItem(title: "Messages", image: UIImage.init(named: "Email"), tag: 0)
+      UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
     let tabBarItem3 =
-      UITabBarItem(title: "Favorites", image: UIImage.init(named: "Favorite"), tag: 0)
+      UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 0)
     bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
+
+    // Select a bottom navigation bar item.
+    bottomNavBar.selectedItem = tabBarItem2;
   }
 
   override func viewWillLayoutSubviews() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
     let bottomNavBarFrame = CGRect(x: 0,
-                                   y: self.view.bounds.size.height - size.height,
+                                   y: view.bounds.height - size.height,
                                    width: size.width,
                                    height: size.height)
     bottomNavBar.frame = bottomNavBarFrame
