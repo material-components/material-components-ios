@@ -55,7 +55,7 @@
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                        mdc_imageFlippedForRightToLeftLayoutDirection]
+                        mdf_imageFlippedForRightToLeftLayoutDirection]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:self
