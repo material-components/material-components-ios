@@ -42,6 +42,7 @@ class MultilineTextFieldTests: XCTestCase {
     textField.borderView?.borderStrokeColor = .green
     textField.clearButton.tintColor = .red
     textField.clearButtonMode = .always
+    textField.cursorColor = .white
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
@@ -65,6 +66,7 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
+      XCTAssertEqual(textField.cursorColor, textFieldCopy.cursorColor)
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
@@ -99,6 +101,7 @@ class MultilineTextFieldTests: XCTestCase {
     let textField = MDCMultilineTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
+    textField.cursorColor = .red
 
     let controller = MDCTextInputControllerDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
@@ -119,6 +122,7 @@ class MultilineTextFieldTests: XCTestCase {
                    unserializedInput?.translatesAutoresizingMaskIntoConstraints)
     XCTAssertEqual(textField.text,
                    unserializedInput?.text)
+    XCTAssertEqual(textField.cursorColor, unserializedInput?.cursorColor)
 
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)
