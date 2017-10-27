@@ -18,8 +18,8 @@
 
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
+#import "MDFInternationalization.h"
 #import "MaterialAnimationTiming.h"
-#import "MaterialRTL.h"
 
 /// Height in points of the bar shown under selected items.
 static const CGFloat kSelectionIndicatorHeight = 2.0f;
@@ -832,8 +832,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Must call super here to ensure we have the original collection bounds.
   CGRect collectionBounds = {CGPointZero, [super collectionViewContentSize]};
-  newAttributes.frame = MDCRectFlippedForRTL(itemFrame, CGRectGetWidth(collectionBounds),
-                                             UIUserInterfaceLayoutDirectionRightToLeft);
+  newAttributes.frame = MDFRectFlippedHorizontally(itemFrame, CGRectGetWidth(collectionBounds));
 
   return newAttributes;
 }
@@ -846,7 +845,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
   if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
       [processInfo isOperatingSystemAtLeastVersion:iOS9Version]) {
-    if (self.collectionView.mdc_effectiveUserInterfaceLayoutDirection ==
+    if (self.collectionView.mdf_effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
       enforceRTL = YES;
     }
