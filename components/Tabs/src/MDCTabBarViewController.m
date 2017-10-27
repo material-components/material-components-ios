@@ -91,11 +91,6 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   [self updateLayout];
 }
 
-- (void)viewSafeAreaInsetsDidChange {
-  [super viewSafeAreaInsetsDidChange];
-  [self.view setNeedsLayout];
-}
-
 #pragma mark - Properties
 
 - (BOOL)tabBarHidden {
