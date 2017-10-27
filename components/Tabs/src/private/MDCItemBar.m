@@ -301,8 +301,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (CGSize)intrinsicContentSize {
-  CGFloat height =  [[self class] defaultHeightForStyle:_style];
-  return CGSizeMake(UIViewNoIntrinsicMetric, height);
+  return CGSizeMake(UIViewNoIntrinsicMetric, [[self class] defaultHeightForStyle:_style]);
 }
 
 - (void)safeAreaInsetsDidChange {

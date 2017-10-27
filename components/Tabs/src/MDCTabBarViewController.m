@@ -246,7 +246,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)updateLayout {
   CGRect bounds = self.view.bounds;
-  CGFloat tabBarHeight = [_tabBar sizeThatFits:bounds.size].height;
+  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForItemAppearance:_tabBar.itemAppearance];
   CGRect currentViewFrame = bounds;
   CGRect tabBarFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
                                   bounds.size.width, tabBarHeight);
