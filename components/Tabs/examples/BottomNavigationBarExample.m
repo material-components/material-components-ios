@@ -78,15 +78,6 @@
                                 constant:0].active = YES;
 }
 
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-
-  // Even though the intrinsic size of the tab bar has changed to account for the Safe Area,
-  // we have to call this for it to actually update. UITabBar is "broken" in the same way, and
-  // we expect it to be fixed.
-  [_bottomNavigationBar updateConstraintsIfNeeded];
-}
-
 #pragma mark - MDCTabBarDelegate
 
 - (void)tabBar:(MDCTabBar *)tabBar didSelectItem:(UITabBarItem *)item {

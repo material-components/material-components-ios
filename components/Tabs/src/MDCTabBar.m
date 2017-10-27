@@ -272,40 +272,11 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (CGSize)intrinsicContentSize {
-  CGSize size = _itemBar.intrinsicContentSize;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    if (![[self class] isTopTabsForPosition:_barPosition]) {
-      size.height += self.safeAreaInsets.bottom;
-    }
-  }
-#endif
-  return size;
+  return _itemBar.intrinsicContentSize;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  size = [_itemBar sizeThatFits:size];
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    if (![[self class] isTopTabsForPosition:_barPosition]) {
-      size.height += self.safeAreaInsets.bottom;
-    }
-  }
-#endif
-  return size;
-}
-
-- (void)safeAreaInsetsDidChange {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    [super safeAreaInsetsDidChange];
-  }
-#endif
-  // The intrinsic content size depends on the Safe Area insets so we invalidate it when it changes.
-  [self invalidateIntrinsicContentSize];
-
-  [self setNeedsLayout];
-  [self setNeedsUpdateConstraints];
+  return [_itemBar sizeThatFits:size];
 }
 
 - (void)didMoveToWindow {
