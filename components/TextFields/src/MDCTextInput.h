@@ -86,6 +86,15 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
  */
 @property(nonatomic, assign) UITextFieldViewMode clearButtonMode UI_APPEARANCE_SELECTOR;
 
+/**
+ The color of the blinking cursor (in the text).
+
+ Applied via .tintColor on the UITextField or UITextView instance.
+
+ Default is [MDCPalette bluePalette].accent700.
+ */
+@property(nonatomic, nullable, strong) UIColor *cursorColor UI_APPEARANCE_SELECTOR;
+
 /** A Boolean value indicating whether the text field is currently in edit mode. */
 @property(nonatomic, assign, readonly, getter=isEditing) BOOL editing;
 
