@@ -58,7 +58,7 @@ MDCBottomNavigationBar can be added to a view hierarchy like any UIView. Materia
 
 Title visibility can be configured in three ways: only show the title of the selected item, always show title regardless of selection state of an item, and never show title of any item. The default behavior of bottom navigation is to only show the title for an item that is selected.
 
-In landscape orientation, items displayed in the bottom navigation can be configured to be justified to fit the width of the screen or to be compactly clustered together. When items are justified, they can have their titles shown below their respective icons or adajacent to their respective icons.
+In landscape orientation, items displayed in the bottom navigation can be configured to be justified to fit the width of the screen or to be compactly clustered together. When items are justified, they can have their titles shown below their respective icons or adjacent to their respective icons.
 
 ### Importing
 
