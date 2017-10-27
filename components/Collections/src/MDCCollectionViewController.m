@@ -254,6 +254,16 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   if (isCardStyle) {
     insets.left = inset;
     insets.right = inset;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      if (collectionView.contentInsetAdjustmentBehavior
+          == UIScrollViewContentInsetAdjustmentAlways) {
+        // We don't need section insets if there are already safe area insets.
+        insets.left = MAX(0, insets.left - collectionView.safeAreaInsets.left);
+        insets.right = MAX(0, insets.right - collectionView.safeAreaInsets.right);
+      }
+    }
+#endif
   }
   // Set top/bottom insets.
   if (isCardStyle || isGroupedStyle) {

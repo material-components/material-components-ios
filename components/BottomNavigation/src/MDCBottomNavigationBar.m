@@ -18,6 +18,7 @@
 
 #import "MaterialMath.h"
 #import "MaterialRTL.h"
+#import "MaterialShadowLayer.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -28,12 +29,12 @@ static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigat
 static const CGFloat kMDCBottomNavigationBarHeight = 72.f;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 60.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
+static const MDCShadowElevation kMDCBottomNavigationBarElevation = 6.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
 static NSString *const kMDCBottomNavigationBarOfString = @"of";
-static NSString *const kMDCBottomNavigationBarSpaceString = @" ";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 @interface MDCBottomNavigationBar ()
@@ -66,12 +67,13 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 }
 
 - (void)commonMDCBottomNavigationBarInit {
-  self.backgroundColor = [UIColor whiteColor];
   self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
+  self.backgroundColor = [UIColor whiteColor];
+  self.isAccessibilityElement = NO;
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _distribution = MDCBottomNavigationBarDistributionEqual;
+  _alignment = MDCBottomNavigationBarAlignmentJustified;
   _itemsDistributed = YES;
   _titleBelowItem = YES;
   _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
@@ -79,6 +81,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
                                      UIViewAutoresizingFlexibleRightMargin);
   [self addSubview:_containerView];
+  [self setElevation:kMDCBottomNavigationBarElevation];
   _itemViews = [NSMutableArray array];
 }
 
@@ -100,29 +103,37 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self.maxLandscapeClusterContainerWidth = MIN(size.width, size.height);
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
-  if (self.distribution == MDCBottomNavigationBarDistributionEqualAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles) {
     heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
   }
   CGSize insetSize = CGSizeMake(size.width, heightWithInset);
   return insetSize;
 }
 
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  [(MDCShadowLayer *)self.layer setElevation:elevation];
+}
+
 - (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
                               containerWidth:(CGFloat)containerWidth {
-  switch (self.distribution) {
-    case MDCBottomNavigationBarDistributionEqual:
+  switch (self.alignment) {
+    case MDCBottomNavigationBarAlignmentJustified:
       [self sizeContainerViewItemsDistributed:YES
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
-    case MDCBottomNavigationBarDistributionEqualAdjacentTitles:
+    case MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles:
       [self sizeContainerViewItemsDistributed:YES
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
       self.titleBelowItem = NO;
       break;
-    case MDCBottomNavigationBarDistributionCluster:
+    case MDCBottomNavigationBarAlignmentCentered:
       [self sizeContainerViewItemsDistributed:NO
                             withBottomNavSize:bottomNavSize
                                containerWidth:containerWidth];
@@ -135,7 +146,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
                         withBottomNavSize:(CGSize)bottomNavSize
                            containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
-  if (self.distribution == MDCBottomNavigationBarDistributionEqualAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles) {
     barHeight = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
   if (itemsDistributed) {
@@ -239,7 +250,6 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   UIEdgeInsets insets = UIEdgeInsetsZero;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-
     // Accommodate insets for iPhone X.
     insets = self.safeAreaInsets;
   }
@@ -301,29 +311,25 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
     NSString *key =
         kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
-    NSString *ofString =
+    NSString *itemOfTotalString =
         NSLocalizedStringFromTableInBundle(key,
                                            kMaterialBottomNavigationStringsTableName,
                                            [[self class] bundle],
                                            kMDCBottomNavigationBarOfString);
-    NSString *itemNumString = [NSNumber numberWithInteger:(i + 1)].stringValue;
-    NSString *totalItemsNumString = [NSNumber numberWithInteger:items.count].stringValue;
-    NSString *ofStringSpaces =
-        [[kMDCBottomNavigationBarSpaceString stringByAppendingString:ofString]
-         stringByAppendingString:kMDCBottomNavigationBarSpaceString];
-    itemView.button.accessibilityHint = [[itemNumString stringByAppendingString:ofStringSpaces]
-                                         stringByAppendingString:totalItemsNumString];
+   NSString *localizedPosition =
+        [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
+    itemView.button.accessibilityHint = localizedPosition;
     if (item.image) {
       itemView.image = item.image;
     }
     if (item.badgeValue) {
       itemView.badgeValue = item.badgeValue;
     }
-    if (@available(iOS 10.0, *)) {
-      if (item.badgeColor) {
-        itemView.badgeColor = item.badgeColor;
-      }
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+    if (item.badgeColor) {
+      itemView.badgeColor = item.badgeColor;
     }
+#endif
     itemView.selected = NO;
     [itemView.button addTarget:self
                         action:@selector(didTouchDownButton:)

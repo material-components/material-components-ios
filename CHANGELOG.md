@@ -1,3 +1,73 @@
+# 38.0.1
+
+## API Changes
+
+None for this release.
+
+## Component changes
+
+### BottomAppBar
+
+#### Changes
+
+* [Remove unnecessary autoresizing mask (#2273)](https://github.com/material-components/material-components-ios/commit/f2463399eb626e477a9be480f3f94285a7cd59bd) (Junius Gunaratne)
+* [Set nav bar frame on layout (#2272)](https://github.com/material-components/material-components-ios/commit/b3667a712f05ece21fd750e1a2d7cdae90f18c89) (Junius Gunaratne)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Disable content inset adjustments in the horizontal pager scroll view example's horizontal scroll view. (#2264)](https://github.com/material-components/material-components-ios/commit/b0b2a96ce40b3031d675aa2c2ea2963bd0fa33d6) (featherless)
+* [Only disable automaticallyAdjustsScrollViewInsets on the parent controller when the device is running an OS older than iOS 11. (#2265)](https://github.com/material-components/material-components-ios/commit/67a810e98304b6627f61d340eebbfe08b7f374e0) (featherless)
+* [[Flexible Header] Rework our enforcement of content insets. (#2263)](https://github.com/material-components/material-components-ios/commit/9c6e78fe11c66561296e281b2dda88a84dc231cc) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Updating kitchen sink example to use trailing and leading views. (#2266)](https://github.com/material-components/material-components-ios/commit/035b9b4cae4eab6b36c902deb3894332fcb02223) (Will Larche)
+
+
+# 38.0.0
+
+## API Changes
+
+## Navigation Bar
+
+* (Swift only) `titleTextAttributes` uses a dictionary with keys of type `NSAttributedStringKey` instead of `NSString *` so, for example, `.font` should be used intead of `NSAttributedStringKey.font.rawValue`.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [[AppBarExample] Load image assets using UIImage(named:in:compatibleWith:) (#2233)](https://github.com/material-components/material-components-ios/commit/0601a77200aae7f8c3b3d4e346a3a3195bcd8816) (Yurii Samsoniuk)
+
+### BottomAppBar
+
+#### Changes
+
+* [Update bottom app bar for iPhone X (#2234)](https://github.com/material-components/material-components-ios/commit/9f44d52984f97263b9c85c339fc944cbdf201102) (Junius Gunaratne)
+
+### Collections
+
+#### Changes
+
+* [Don't inset sections when there is a safe area inset. (#2258)](https://github.com/material-components/material-components-ios/commit/67825350b275b242e46a7e33c4a068063c44fadd) (Andrés)
+
+### Dialogs
+
+#### Changes
+
+* [Set Dialog example button to open material.io (#2214)](https://github.com/material-components/material-components-ios/commit/53929d85941168a2fc27ffd486e6073f9f4e4b15) (ianegordon)
+
+### NavigationBar
+
+#### Changes
+
+* [Swift 4/iOS 11 Compatibility: Updated MDCNavigationBar's titleTextAttributes property. (#2213)](https://github.com/material-components/material-components-ios/commit/cb85c9b311c26f65af978b26debf155289fec98a) (Kirk Spaziani)
+
 # 37.0.0
 
 ## API Changes
@@ -61,7 +131,7 @@
 
 ### Flexible Header
 
-* Added `minMaxHeightIncludesSafeArea` to inform the component if the `minimumHeight` and `maximumHeight` properties include the safe area inset. 
+* Added `minMaxHeightIncludesSafeArea` to inform the component if the `minimumHeight` and `maximumHeight` properties include the safe area inset.
 
 ## Component changes
 
@@ -1949,7 +2019,7 @@ Hotfix: Cherry picked: [[Buttons] Call designated initializer in init methods](h
 
 Hotfix: Added implementation for accessibilityElementForItem: for MDCTabBar
 
-# 25.0.0 
+# 25.0.0
 
 ## API diffs
 

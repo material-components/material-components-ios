@@ -55,7 +55,8 @@ extension TabBarIconSwiftExample {
 
     self.addChildViewController(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = UIColor.white
-    appBar.headerViewController.headerView.minimumHeight = 76 + 72
+    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBar.headerViewController.headerView.minimumHeight = 56 + 72
     appBar.headerViewController.headerView.tintColor = MDCPalette.blue.tint500
 
     appBar.headerStackView.bottomBar = self.tabBar

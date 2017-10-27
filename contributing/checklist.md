@@ -462,6 +462,12 @@ Material Components for iOS is built primarily for adoption with CocoaPods. Ther
 1. Enter YES or NO
 
 
+### Use umbrella header between components
+
+
+Material Components should always use umbrella headers to access API of other components.
+
+
 ## Running the checklist
 
 We have automated some of the above checks in a set of scripts. To run all the checks against every component, run:

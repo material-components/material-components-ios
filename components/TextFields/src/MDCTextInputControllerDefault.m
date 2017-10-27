@@ -27,7 +27,6 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
-#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 #pragma mark - Constants

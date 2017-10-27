@@ -46,7 +46,7 @@
 
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _bottomNavBar.distribution = MDCBottomNavigationBarDistributionCluster;
+  _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
   [self.view addSubview:_bottomNavBar];
 
   MDCBasicColorScheme *scheme =
@@ -76,9 +76,9 @@
                                     image:[UIImage imageNamed:@"Cake"]
                                       tag:0];
   tabBarItem5.badgeValue = @"999+";
-  if (@available(iOS 10.0, *)) {
-    tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
-  }
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+  tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
+#endif
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;
   [self updateBadgeItemCount];
@@ -91,10 +91,6 @@
                                         size.width,
                                         size.height);
   _bottomNavBar.frame = bottomNavBarFrame;
-}
-
-- (void)viewSafeAreaInsetsDidChange {
-  [super viewSafeAreaInsetsDidChange];
 }
 
 - (void)updateBadgeItemCount {
