@@ -19,11 +19,10 @@
 //
 //
 
+#import "MDFInternationalization.h"
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
-#import "UIImage+MaterialRTL.h"
-#import "UIView+MaterialRTL.h"
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
 
