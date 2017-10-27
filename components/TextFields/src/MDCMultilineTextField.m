@@ -22,7 +22,6 @@
 #import "private/MDCTextInputCommonFundament.h"
 
 #import "MaterialMath.h"
-#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 static NSString *const MDCMultilineTextFieldExpandsOnOverflowKey =
