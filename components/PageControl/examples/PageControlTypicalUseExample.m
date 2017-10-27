@@ -91,10 +91,10 @@
   for (NSInteger i = 0; i < pageCount; i++) {
     UILabel *page = [_pages objectAtIndex:i];
     page.frame =
-      CGRectOffset(self.view.bounds, i * CGRectGetWidth(standardizedFrame), 0);
+        CGRectOffset(self.view.bounds, i * CGRectGetWidth(standardizedFrame), 0);
   }
   _scrollView.contentSize =
-    CGSizeMake(CGRectGetWidth(standardizedFrame) * pageCount, CGRectGetHeight(standardizedFrame));
+      CGSizeMake(CGRectGetWidth(standardizedFrame) * pageCount, CGRectGetHeight(standardizedFrame));
   CGPoint offset = _scrollView.contentOffset;
   offset.x = pageBeforeFrameChange * CGRectGetWidth(standardizedFrame);
   // This non-anmiated change of offset ensures we keep the same page
@@ -111,9 +111,9 @@
   }
 #endif
   CGFloat yOffset =
-    CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
+      CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
   _pageControl.frame =
-    CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
+      CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
 }
 
 #pragma mark - UIScrollViewDelegate

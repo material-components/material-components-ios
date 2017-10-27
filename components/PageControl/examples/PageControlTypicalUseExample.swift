@@ -95,7 +95,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
     let yOffset = self.view.bounds.height - pageControlSize.height - 8 - edgeInsets.bottom;
     pageControl.frame =
-      CGRect(x: 0, y: yOffset, width: view.bounds.width, height: pageControlSize.height)
+        CGRect(x: 0, y: yOffset, width: view.bounds.width, height: pageControlSize.height)
   }
 
   // MARK: - UIScrollViewDelegate

@@ -123,13 +123,13 @@
   }
 #endif
   CGFloat yOffset =
-  CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
+      CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
   _pageControl.frame =
-    CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
+      CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
 
   [_nextButton sizeToFit];
   CGFloat buttonCenterX =
-    boundsWidth - CGRectGetWidth(_nextButton.frame) / 2 - 16 - edgeInsets.right;
+      boundsWidth - CGRectGetWidth(_nextButton.frame) / 2 - 16 - edgeInsets.right;
   _nextButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
 }
 
