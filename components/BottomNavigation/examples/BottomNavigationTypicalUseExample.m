@@ -19,13 +19,9 @@
 #import "BottomNavigationTypicalUseSupplemental.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
-
-<<<<<<< HEAD
 #import "MaterialThemes.h"
 #import "MDCBottomNavigationBarColorThemer.h"
 
-=======
->>>>>>> 58ecc3e8e1ac6a14e447d3ceacc752e56d26afa4
 @interface BottomNavigationTypicalUseExample ()
 
 @property(nonatomic, assign) int badgeCount;
