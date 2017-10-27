@@ -1,0 +1,13 @@
+/*
+ Accessibility label component describing a tab's position in a list (e.g. "2 of 5").
+ The first format parameter is the tab's position as a number, and the second parameter is the
+ number of tabs.
+ */
+"MaterialBottomNavigationItemCountAccessibilityHint" = "%1$d of %2$d";
+
+/*
+ Bottom navigation provides quick navigation between top-level views of an app.
+
+ @see https://material.io/guidelines/components/bottom-navigation.html
+ */
+"MaterialBottomNavigationTabElementAccessibilityLabel" = "tab";
