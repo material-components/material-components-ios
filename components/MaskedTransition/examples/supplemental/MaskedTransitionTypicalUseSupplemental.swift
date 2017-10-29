@@ -24,15 +24,15 @@ extension MaskedTransitionTypicalUseSwiftExample {
 
   // MARK: - CatalogByConvention
 
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return [ "Masked Transition", "Masked Transition (Swift)" ]
   }
 
-  class func catalogDescription() -> String {
+  @objc class func catalogDescription() -> String {
     return "Examples of how the Floating Action Button can transition to other on-screen views."
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
 }

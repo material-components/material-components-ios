@@ -160,11 +160,11 @@ extension AnimationTimingExample {
       scrollView.addSubview(materialEaseInView)
    }
 
-   class func catalogBreadcrumbs() -> [String] {
+   @objc class func catalogBreadcrumbs() -> [String] {
       return ["Animation Timing", "Animation Timing (Swift)"]
    }
 
-   class func catalogIsPrimaryDemo() -> Bool {
+   @objc class func catalogIsPrimaryDemo() -> Bool {
       return false
    }
 

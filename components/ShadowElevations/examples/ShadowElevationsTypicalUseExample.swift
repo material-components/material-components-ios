@@ -62,11 +62,11 @@ class ShadowElevationsTypicalUseExample: UIViewController {
 
 // MARK: Catalog by convention
 extension ShadowElevationsTypicalUseExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Shadow", "Shadow Elevations (Swift)"]
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
 

@@ -205,15 +205,15 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 }
 
 extension ButtonsSwiftAndStoryboardController {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Buttons (Swift and Storyboard)"]
   }
 
-  class func catalogStoryboardName() -> String {
+  @objc class func catalogStoryboardName() -> String {
     return "ButtonsStoryboardAndProgrammatic"
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
 }
