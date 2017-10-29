@@ -22,8 +22,7 @@
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
-#import "UIImage+MaterialRTL.h"
-#import "UIView+MaterialRTL.h"
+#import "MDFInternationalization.h"
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
 
@@ -56,7 +55,7 @@
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                        mdc_imageFlippedForRightToLeftLayoutDirection]
+                        mdf_imageWithHorizontallyFlippedOrientation]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:self
