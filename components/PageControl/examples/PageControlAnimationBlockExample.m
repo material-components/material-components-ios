@@ -89,8 +89,6 @@
   _incrementButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [_incrementButton setTitle:@"+2 Pages" forState:UIControlStateNormal];
   [_incrementButton sizeToFit];
-  _incrementButton.center =
-      CGPointMake(boundsWidth - _incrementButton.frame.size.width / 2 - 16, _pageControl.center.y);
   _incrementButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
   [_incrementButton addTarget:self
@@ -100,9 +98,6 @@
 
   _decrementButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [_decrementButton setTitle:@"-2 Pages" forState:UIControlStateNormal];
-  [_decrementButton sizeToFit];
-  _decrementButton.center =
-      CGPointMake(_decrementButton.frame.size.width / 2 + 16, _pageControl.center.y);
   _decrementButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
   [_decrementButton addTarget:self
@@ -117,8 +112,8 @@
   [super viewWillLayoutSubviews];
   NSInteger pageBeforeFrameChange = _pageControl.currentPage;
   NSInteger pageCount = _pages.count;
-  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
-  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  CGFloat boundsWidth = CGRectGetWidth(self.view.frame);
+  CGFloat boundsHeight = CGRectGetHeight(self.view.frame);
   for (NSInteger i = 0; i < pageCount; i++) {
     UILabel *page = [_pages objectAtIndex:i];
     page.frame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
@@ -128,6 +123,31 @@
   offset.x = pageBeforeFrameChange * boundsWidth;
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
+
+  // We want the page control to span the bottom of the screen.
+  CGRect standardizedFrame = CGRectStandardize(self.view.frame);
+  [_pageControl sizeThatFits:standardizedFrame.size];
+  UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // Accommodate insets for iPhone X.
+    edgeInsets = self.view.safeAreaInsets;
+  }
+#endif
+  CGFloat yOffset =
+      CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
+  _pageControl.frame =
+      CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
+
+  CGFloat buttonCenterX;
+
+  [_incrementButton sizeToFit];
+  buttonCenterX = boundsWidth - CGRectGetWidth(_incrementButton.frame) / 2 - 16 - edgeInsets.right;
+  _incrementButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
+
+  [_decrementButton sizeToFit];
+  buttonCenterX = CGRectGetWidth(_decrementButton.frame) / 2 + 16 + edgeInsets.left;
+  _decrementButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
 }
 
 #pragma mark - UIScrollViewDelegate
