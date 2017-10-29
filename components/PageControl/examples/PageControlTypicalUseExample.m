@@ -30,8 +30,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
-  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  CGRect standardizedFrame = CGRectStandardize(self.view.frame);
+  CGFloat boundsWidth = CGRectGetWidth(standardizedFrame);
+  CGFloat boundsHeight = CGRectGetHeight(standardizedFrame);
 
   NSArray *pageColors = @[
       [UIColor colorWithWhite:0.9 alpha:1.0],
@@ -67,13 +68,8 @@
   _pages = [pages copy];
 
   // Page control configuration.
-  _pageControl = [[MDCPageControl alloc] init];
+  _pageControl = [[MDCPageControl alloc] initWithFrame:CGRectZero];
   _pageControl.numberOfPages = pageColors.count;
-
-  // We want the page control to span the bottom of the screen.
-  CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
-  _pageControl.frame =
-      CGRectMake(0, boundsHeight - pageControlSize.height, boundsWidth, pageControlSize.height);
 
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)
@@ -81,6 +77,8 @@
   _pageControl.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_pageControl];
+
+  [self.view setNeedsLayout];
 }
 
 #pragma mark - Frame changes
@@ -89,17 +87,33 @@
   [super viewWillLayoutSubviews];
   NSInteger pageBeforeFrameChange = _pageControl.currentPage;
   NSInteger pageCount = _pages.count;
-  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
-  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  CGRect standardizedFrame = CGRectStandardize(self.view.frame);
   for (NSInteger i = 0; i < pageCount; i++) {
     UILabel *page = [_pages objectAtIndex:i];
-    page.frame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
+    page.frame =
+        CGRectOffset(self.view.bounds, i * CGRectGetWidth(standardizedFrame), 0);
   }
-  _scrollView.contentSize = CGSizeMake(boundsWidth * pageCount, boundsHeight);
+  _scrollView.contentSize =
+      CGSizeMake(CGRectGetWidth(standardizedFrame) * pageCount, CGRectGetHeight(standardizedFrame));
   CGPoint offset = _scrollView.contentOffset;
-  offset.x = pageBeforeFrameChange * boundsWidth;
+  offset.x = pageBeforeFrameChange * CGRectGetWidth(standardizedFrame);
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
+  _scrollView.frame = self.view.bounds;
+
+  // We want the page control to span the bottom of the screen.
+	[_pageControl sizeThatFits:standardizedFrame.size];
+  UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // Accommodate insets for iPhone X.
+    edgeInsets = self.view.safeAreaInsets;
+  }
+#endif
+  CGFloat yOffset =
+      CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
+  _pageControl.frame =
+      CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
 }
 
 #pragma mark - UIScrollViewDelegate

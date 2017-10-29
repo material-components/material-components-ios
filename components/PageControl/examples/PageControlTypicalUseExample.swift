@@ -66,11 +66,6 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
     pageControl.numberOfPages = pageLabels.count
 
-    let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
-    pageControl.frame = CGRect(x: 0,
-                               y: view.bounds.height - pageControlSize.height,
-                               width: view.bounds.width,
-                               height: pageControlSize.height)
     pageControl.addTarget(self, action: #selector(didChangePage), for: .valueChanged)
     pageControl.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
     view.addSubview(pageControl)
@@ -90,6 +85,17 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     offset.x = CGFloat(pageBeforeFrameChange) * view.bounds.width
     // This non-anmiated change of offset ensures we keep the same page
     scrollView.contentOffset = offset
+
+    var edgeInsets = UIEdgeInsets.zero;
+    #if swift(>=3.2)
+      if #available(iOS 11, *) {
+        edgeInsets = self.view.safeAreaInsets
+      }
+    #endif
+    let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
+    let yOffset = self.view.bounds.height - pageControlSize.height - 8 - edgeInsets.bottom;
+    pageControl.frame =
+        CGRect(x: 0, y: yOffset, width: view.bounds.width, height: pageControlSize.height)
   }
 
   // MARK: - UIScrollViewDelegate
