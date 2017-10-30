@@ -20,7 +20,7 @@
 
 // TODO: (larche) Cite spec article.
 /**
- A controller for scrubbable scrolling (aka dragging) vertical pan gesture-based mnodal transitions
+ A controller for scrubbable scrolling (aka dragging) vertical pan gesture-based modal transitions
  from the bottom of the screen initiated in an MDCBottomAppBarView.
  */
 @interface MDCBottomDrawerTransitionController: UIPercentDrivenInteractiveTransition
