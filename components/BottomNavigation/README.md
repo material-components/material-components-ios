@@ -16,14 +16,9 @@ api_doc_root: true
 
 <a href="https://material.io/guidelines/components/bottom-navigation.html">Bottom navigation</a> makes it easy to explore and switch between top-level views in a single tap. Tapping on a bottom navigation icon takes you directly to the associated view or refreshes the currently active view.
 
-Bottom navigation should be used for: Three to five top-level destinations of similar importance. Destinations requiring direct access from anywhere in the app.
+Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app. 
 
-The bottom navigation bar exposes the three to five top-level destinations of an app.
-If there are fewer than three destinations, consider using tabs instead.
-
-If your top-level navigation has more than six destinations, provide access to destinations not covered in bottom navigation through alternative locations, such as a navigation drawer.
-
-Be cautious when combining bottom navigation with tabs, as the combination may cause confusion when navigating an app. For example, tapping across both tabs and bottom navigation could display a mixture of different transitions across the same content.
+Be cautious when combining bottom navigation with similar navigation placed at the bottom of the screen (e.g. a bottom tab bar), as the combination may cause confusion when navigating an app. For example, tapping across both bottom tabs and bottom navigation could display a mixture of different transitions across the same content.
 
 ## Installation
 
@@ -48,17 +43,15 @@ pod install
 
 - - -
 
-### Overview
-
-Bottom navigation provides quick navigation between top-level views of an app. It provides a docked bar at the bottom of the screen with items to navigate between views.
-
 ## Usage
 
 MDCBottomNavigationBar can be added to a view hierarchy like any UIView. Material Design guidelines recommend always placing bottom navigation at the bottom of the screen.
 
-Title visibility can be configured in three ways: only show the title of the selected item, always show title regardless of selection state of an item, and never show title of any item. The default behavior of bottom navigation is to only show the title for an item that is selected.
+It is recommended that three to five items are used to populate the content of the bottom navigation bar. If there are fewer than three destinations, consider using tabs instead. If your top-level navigation has more than six destinations, provide access to destinations not covered in bottom navigation through alternative locations, such as a navigation drawer.
 
-In landscape orientation, items displayed in the bottom navigation can be configured to be justified to fit the width of the screen or to be compactly clustered together. When items are justified, they can have their titles shown below their respective icons or adjacent to their respective icons.
+Title visibility can be configured in three ways: only show the title of the *selected* item, always show title regardless of any item's selection state, and never show title regardless of any item's selection state. The default behavior of bottom navigation is to only show the title for an item that is *selected*.
+
+In landscape orientation, items can be configured to be justified or compactly clustered together. When items are justified the bottom navigation bar is fitted to the width of the device. Justified items can have their titles shown below their respective icons or adjacent to their respective icons.
 
 ### Importing
 
@@ -77,10 +70,6 @@ import MaterialComponents.MaterialBottomNavigation
 #import "MaterialBottomNavigation.h"
 ```
 <!--</div>-->
-
-## Examples
-
-### Bottom Navigation
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
