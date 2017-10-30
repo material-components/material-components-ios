@@ -113,7 +113,6 @@ Pod::Spec.new do |s|
 
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
-    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "BottomSheet" do |ss|
@@ -527,12 +526,6 @@ Pod::Spec.new do |s|
       ss.ios.deployment_target = '8.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
-    end
-
-    pss.subspec "RTL" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
     end
 
     pss.subspec "ShapeLibrary" do |ss|
