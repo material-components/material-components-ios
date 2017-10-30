@@ -8,6 +8,17 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/src/*.{h,m}"
     end
 
+    iss.subspec "ic_add" do |ss|
+      ss.public_header_files = "components/private/Icons/icons/ic_add/src/*.h"
+      ss.source_files = "components/private/Icons/icons/ic_add/src/*.{h,m}"
+      ss.resource_bundles = {
+        "MaterialIcons_ic_add" => [
+          "components/private/Icons/icons/ic_add/src/MaterialIcons_ic_add.bundle/*.png",
+        ]
+      }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
+    end
+
     iss.subspec "ic_arrow_back" do |ss|
       ss.public_header_files = "components/private/Icons/icons/ic_arrow_back/src/*.h"
       ss.source_files = "components/private/Icons/icons/ic_arrow_back/src/*.{h,m}"
