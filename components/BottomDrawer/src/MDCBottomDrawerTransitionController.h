@@ -16,12 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCBottomAppBarView;
-
 // TODO: (larche) Cite spec article.
 /**
  A controller for scrubbable scrolling (aka dragging) vertical pan gesture-based modal transitions
- from the bottom of the screen initiated in an MDCBottomAppBarView.
+ from the bottom of the screen (initiated, perhaps, in an MDCBottomAppBarView).
  */
 @interface MDCBottomDrawerTransitionController: UIPercentDrivenInteractiveTransition
     <UIViewControllerTransitioningDelegate>
