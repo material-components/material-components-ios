@@ -326,8 +326,10 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
       itemView.badgeValue = item.badgeValue;
     }
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-    if (item.badgeColor) {
-      itemView.badgeColor = item.badgeColor;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
+      if (item.badgeColor) {
+        itemView.badgeColor = item.badgeColor;
+      }
     }
 #endif
     itemView.selected = NO;
