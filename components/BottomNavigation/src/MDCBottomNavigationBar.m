@@ -17,8 +17,8 @@
 #import "MDCBottomNavigationBar.h"
 
 #import "MaterialMath.h"
-#import "MaterialRTL.h"
 #import "MaterialShadowLayer.h"
+#import "MDFInternationalization.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -160,7 +160,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 }
 
 - (void)layoutItemViews {
-  UIUserInterfaceLayoutDirection layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
+  UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   NSInteger numItems = self.items.count;
   if (numItems == 0) {
     return;
