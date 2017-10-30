@@ -24,7 +24,7 @@
  Also provides a dark, translucent scrim for easy dismissal and free rounding of corners on the
  presented view that "heal" if the presented view is full screen.
  */
-@interface MDCBottomDrawerPresentationController: NSObject
+@interface MDCBottomDrawerPresentationController: UIPresentationController
     <UIAdaptivePresentationControllerDelegate>
 
 /** Is the presented view full screen? */
