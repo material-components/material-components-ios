@@ -44,8 +44,8 @@
  The MDCAppBar class creates and configures the constellation of components required to represent a
  Material App Bar.
 
- A Material App Bar consists of a Flexible View with a shadow, a Navigation Bar, and space for
- flexible content such as a photo.
+ A Material App Bar consists of a Flexible Header View with a shadow, a Navigation Bar, and space
+ for flexible content such as a photo.
 
  Learn more at the [Material
  spec](https://material.io/guidelines/patterns/scrolling-techniques.html)
