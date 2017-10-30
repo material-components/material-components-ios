@@ -26,15 +26,4 @@
 @interface MDCBottomDrawerTransitionController: UIPercentDrivenInteractiveTransition
     <UIViewControllerTransitioningDelegate>
 
-/**
- Initializes the controller and adds a pan gesture recognizer to the bottom app bar.
-
- @param bottomAppBar The bottom app bar that initiates and reacts to the presentation of the
- drawer.
- */
-- (nonnull instancetype)initWithBottomAppBar:(nonnull MDCBottomAppBarView *)bottomAppBar
-    NS_DESIGNATED_INITIALIZER;
-
-- (nonnull instancetype)init NS_UNAVAILABLE;
-
 @end
