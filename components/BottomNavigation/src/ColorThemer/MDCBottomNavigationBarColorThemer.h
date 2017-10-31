@@ -18,7 +18,8 @@
 #import "MaterialBottomNavigation.h"
 
 /**
- Used to apply a color scheme to theme MDCBottomNavigationBar.
+ Used to apply a color scheme to theme MDCBottomNavigationBar. Affects item selected and unselected
+ tint colors as well as the background color of the bottom navigation bar.
  */
 @interface MDCBottomNavigationBarColorThemer : NSObject
 
@@ -30,6 +31,6 @@
  @param bottomNavigationBar A MDCBottomNavigationBar instance to apply a color scheme.
  */
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-   toBottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar;
+    toBottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar;
 
 @end
