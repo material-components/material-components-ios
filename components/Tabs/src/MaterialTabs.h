@@ -18,3 +18,4 @@
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
 #import "MDCTabBarViewController.h"
+#import "MDCTabBarSelectionIndicatorTemplate.h"
