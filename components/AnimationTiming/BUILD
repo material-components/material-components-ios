@@ -32,3 +32,19 @@ strict_warnings_objc_library(
     includes = ["src"],
     visibility = ["//visibility:public"],
 )
+
+objc_library(
+    name = "UnitTestsLib",
+    deps = [":AnimationTiming"],
+    visibility = ["//visibility:private"],
+)
+
+ios_unit_test(
+    name = "UnitTests",
+    deps = [
+      ":UnitTestsLib",
+    ],
+    minimum_os_version = "8.0",
+    timeout = "short",
+    visibility = ["//visibility:private"],
+)
