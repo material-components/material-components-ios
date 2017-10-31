@@ -1,4 +1,16 @@
-# release-candidate TODO: Replace me with version number. 
+# 38.1.0
+
+## API Changes
+
+### Bottom Navigation
+
+* New component: Bottom Navigation makes it easy to explore and switch between top-level views in a single tap, similar to a UITabBar.
+
+### Text Fields
+
+* `MDCTextInput.cursorColor` controls the color of the blinking cursor (in the text).
+
+
 
 # 38.0.1
 
