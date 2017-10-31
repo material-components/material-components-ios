@@ -116,11 +116,11 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarDelegateForwardingExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Delegate Forwarding (Swift)"]
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
 

@@ -76,11 +76,11 @@ class DialogsLongAlertViewController: UIViewController {
 
 // MARK: Catalog by convention
 extension DialogsLongAlertViewController {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return [ "Dialogs", "Swift Alert Demo"]
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
 }

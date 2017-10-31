@@ -17,8 +17,8 @@
 #import "MDCBottomNavigationBar.h"
 
 #import "MaterialMath.h"
-#import "MaterialRTL.h"
 #import "MaterialShadowLayer.h"
+#import "MDFInternationalization.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -160,7 +160,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 }
 
 - (void)layoutItemViews {
-  UIUserInterfaceLayoutDirection layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
+  UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   NSInteger numItems = self.items.count;
   if (numItems == 0) {
     return;
@@ -326,8 +326,10 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
       itemView.badgeValue = item.badgeValue;
     }
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-    if (item.badgeColor) {
-      itemView.badgeColor = item.badgeColor;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
+      if (item.badgeColor) {
+        itemView.badgeColor = item.badgeColor;
+      }
     }
 #endif
     itemView.selected = NO;

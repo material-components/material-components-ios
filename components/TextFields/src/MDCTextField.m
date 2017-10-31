@@ -19,9 +19,9 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "private/MDCTextInputCommonFundament.h"
 
-#import "MDFInternationalization.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "MDFInternationalization.h"
 
 static NSString *const MDCTextFieldCursorColorKey = @"MDCTextFieldCursorColorKey";
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
@@ -121,7 +121,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     copy.trailingView = [self.trailingView copy];
   }
   copy.trailingViewMode = self.trailingViewMode;
-
 
   return copy;
 }
@@ -306,27 +305,38 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return _fundament.trailingUnderlineLabel;
 }
 
+// In iOS 8, .leftView and .rightView are not swapped in RTL so we have to do that manually.
 - (UIView *)trailingView {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.leftView;
+  }
   return self.rightView;
 }
 
 - (void)setTrailingView:(UIView *)trailingView {
-  self.rightView = trailingView;
-}
-
-- (UITextFieldViewMode)trailingViewMode {
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    return self.rightViewMode;
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.leftView = trailingView;
   } else {
-    return self.leftViewMode;
+    self.rightView = trailingView;
   }
 }
 
+- (UITextFieldViewMode)trailingViewMode {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.leftViewMode;
+  }
+    return self.rightViewMode;
+}
+
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    self.rightViewMode = trailingViewMode;
-  } else {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     self.leftViewMode = trailingViewMode;
+  } else {
+    self.rightViewMode = trailingViewMode;
   }
 }
 
@@ -376,27 +386,38 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   _fundament.enabled = enabled;
 }
 
+// In iOS 8, .leftView and .rightView are not swapped in RTL so we have to do that manually.
 - (UIView *)leadingView {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.rightView;
+  }
   return self.leftView;
 }
 
 - (void)setLeadingView:(UIView *)leadingView {
-  self.leftView = leadingView;
-}
-
-- (UITextFieldViewMode)leadingViewMode {
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    return self.leftViewMode;
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.rightView = leadingView;
   } else {
-    return self.rightViewMode;
+    self.leftView = leadingView;
   }
 }
 
+- (UITextFieldViewMode)leadingViewMode {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.rightViewMode;
+  }
+  return self.leftViewMode;
+}
+
 - (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    self.leftViewMode = leadingViewMode;
-  } else {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     self.rightViewMode = leadingViewMode;
+  } else {
+    self.leftViewMode = leadingViewMode;
   }
 }
 
@@ -644,14 +665,32 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   [_fundament didEndEditing];
 }
 
+#pragma mark - RTL
+
+// TODO: (larche) remove when we drop iOS 8
+// Prior to iOS 9 RTL was not automatically applied, so we need to apply fixes manually.
+- (BOOL)shouldManuallyEnforceRightToLeftLayoutForOverlayViews {
+  BOOL manuallyEnforceRTL = YES;
+
+  NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
+      [processInfo isOperatingSystemAtLeastVersion:iOS9Version]) {
+      manuallyEnforceRTL = NO;
+  }
+
+  return manuallyEnforceRTL;
+}
+
 #pragma mark - Accessibility
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _fundament.mdc_adjustsFontForContentSizeCategory;
 }
 
+// TODO: (larche) remove when we drop iOS 9
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  // Prior to iOS 9 RTL was not automatically applied, so we don't need to apply any fixes.
+  // Prior to iOS 10 dynamic type was not automatically applied.
   if ([super respondsToSelector:@selector(setAdjustsFontForContentSizeCategory:)]) {
     [super setAdjustsFontForContentSizeCategory:adjusts];
   }

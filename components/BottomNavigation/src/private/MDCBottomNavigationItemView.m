@@ -16,10 +16,10 @@
 
 #import "MDCBottomNavigationItemView.h"
 
-#import "MaterialRTL.h"
 #import "MaterialBottomNavigationStrings.h"
 #import "MaterialBottomNavigationStrings_table.h"
 #import "MDCBottomNavigationItemBadge.h"
+#import "MDFInternationalization.h"
 
 static const CGFloat kMDCBottomNavigationItemViewCircleLayerOffset = -6.f;
 static const CGFloat kMDCBottomNavigationItemViewCircleLayerDimension = 36.f;
@@ -146,7 +146,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     }
     self.label.textAlignment = NSTextAlignmentCenter;
   } else {
-    UIUserInterfaceLayoutDirection layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
+    UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
       CGPoint iconImageViewCenter =
           CGPointMake(CGRectGetMidX(self.bounds) - CGRectGetWidth(self.bounds) * 0.2f,
