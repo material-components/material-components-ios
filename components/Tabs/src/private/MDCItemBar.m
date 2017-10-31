@@ -71,7 +71,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   /// Size of the view at last layout, for deduplicating changes.
   CGSize _lastSize;
 
-  /// Width of the collection view accounting for Safe Area insets at last layout.
+  /// Width of the collection view accounting for SafeAreaInsets at last layout.
   CGFloat _lastAdjustedCollectionViewWidth;
 
   /// Horizontal size class at the last item metrics update. Used to calculate deltas.
@@ -285,14 +285,14 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Update collection metrics if the size has changed.
   if (!CGSizeEqualToSize(bounds.size, _lastSize) ||
-      self.adjustedCollectionViewWidth != _lastAdjustedCollectionViewWidth) {
+      [self adjustedCollectionViewWidth] != _lastAdjustedCollectionViewWidth) {
     [self updateFlowLayoutMetrics];
 
     // Ensure selected item is aligned properly on resize.
     [self selectItemAtIndex:[self indexForItem:_selectedItem] animated:NO];
   }
   _lastSize = bounds.size;
-  _lastAdjustedCollectionViewWidth = self.adjustedCollectionViewWidth;
+  _lastAdjustedCollectionViewWidth = [self adjustedCollectionViewWidth];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -414,7 +414,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // Divide justified items evenly across the view.
   if (_alignment == MDCItemBarAlignmentJustified) {
     NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
-    size.width = self.adjustedCollectionViewWidth / MAX(count, 1);
+    size.width = [self adjustedCollectionViewWidth] / MAX(count, 1);
   }
 
   // Constrain to style-based width if necessary.
@@ -423,7 +423,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 
   // Constrain to view width
-  size.width = MIN(size.width, self.adjustedCollectionViewWidth);
+  size.width = MIN(size.width, [self adjustedCollectionViewWidth]);
 
   // Force height to our height.
   size.height = itemHeight;
@@ -677,16 +677,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (UIEdgeInsets)justifiedInsets {
   // Center items, which will be at most the width of the view.
   CGFloat itemWidths = [self totalWidthOfAllItems];
-  CGFloat sideInsets = floorf((float)(self.adjustedCollectionViewWidth - itemWidths) / 2.0f);
+  CGFloat sideInsets = floorf((float)([self adjustedCollectionViewWidth] - itemWidths) / 2.0f);
   return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
 }
 
 - (UIEdgeInsets)centeredInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
   CGFloat itemWidths = [self totalWidthOfAllItems];
-  CGFloat viewWidth = self.adjustedCollectionViewWidth;
+  CGFloat viewWidth = [self adjustedCollectionViewWidth];
   UIEdgeInsets insets = [self leadingAlignedInsetsForHorizontalSizeClass:sizeClass];
   if (itemWidths <= (viewWidth - insets.left - insets.right)) {
-    CGFloat sideInsets = (self.adjustedCollectionViewWidth - itemWidths) / 2.0f;
+    CGFloat sideInsets = ([self adjustedCollectionViewWidth] - itemWidths) / 2.0f;
     return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
   }
   return insets;
@@ -697,7 +697,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
   if (count > 0) {
-    CGFloat halfBoundsWidth = self.adjustedCollectionViewWidth / 2.0f;
+    CGFloat halfBoundsWidth = [self adjustedCollectionViewWidth] / 2.0f;
 
     CGSize firstSize = [self collectionView:_collectionView
                                      layout:_flowLayout
@@ -812,7 +812,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // Apply global content size padding.
   if (shouldPadContentSizeForRTL) {
     _isPaddingCollectionViewContentSize = YES;
-    _paddedCollectionViewContentSize = self.adjustedCollectionViewBounds.size;
+    _paddedCollectionViewContentSize = [self adjustedCollectionViewBounds].size;
   } else {
     _isPaddingCollectionViewContentSize = NO;
   }
@@ -954,7 +954,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // on the left to prevent the layout from "jumping" to the origin under various situations.
   // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
-  CGRect scrollBounds = self.adjustedCollectionViewBounds;
+  CGRect scrollBounds = [self adjustedCollectionViewBounds];
   return contentSize.width < CGRectGetWidth(scrollBounds);
 }
 
@@ -962,7 +962,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         (UICollectionViewLayoutAttributes *)attributes {
   // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
-  CGRect scrollBounds = self.adjustedCollectionViewBounds;
+  CGRect scrollBounds = [self adjustedCollectionViewBounds];
 
   CGFloat leftPadding = CGRectGetWidth(scrollBounds) - contentSize.width;
 
