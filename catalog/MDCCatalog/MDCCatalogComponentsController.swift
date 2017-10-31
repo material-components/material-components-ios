@@ -15,12 +15,16 @@ limitations under the License.
 */
 
 import CatalogByConvention
+
 import MaterialComponents.MaterialFlexibleHeader
-import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
+import MaterialComponents.MaterialThemes
 import MaterialComponents.MaterialTypography
+import MaterialComponents.MaterialIcons_ic_arrow_back
+
+import MDCCatalog.MDCInkTouchController
 
 import UIKit
 
@@ -249,7 +253,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
-    var safeInsets = CGFloat(0)
+    let safeInsets = CGFloat(0)
 #if swift(>=3.2)
     if #available(iOS 11, *) {
       safeInsets = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right

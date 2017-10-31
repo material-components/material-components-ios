@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import <MaterialComponents/MaterialInk.h>
+#import "MaterialInk.h"
 
 @interface MDCInkTouchController (ManyInkViews)
 

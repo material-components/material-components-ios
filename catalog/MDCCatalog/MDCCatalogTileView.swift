@@ -16,7 +16,7 @@ limitations under the License.
 
 import UIKit
 
-import MaterialComponents
+import MDCCatalog.MDCCatalogTiles
 
 class MDCCatalogTileView: UIView {
 

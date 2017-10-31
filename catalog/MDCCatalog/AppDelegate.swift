@@ -17,7 +17,21 @@ limitations under the License.
 import UIKit
 
 import CatalogByConvention
-import MaterialComponents
+
+import MaterialComponents.MaterialActivityIndicator.ColorThemer
+import MaterialComponents.MaterialButtonBar.ColorThemer
+import MaterialComponents.MaterialButtons.ColorThemer
+import MaterialComponents.MaterialDialogs.ColorThemer
+import MaterialComponents.MaterialFeatureHighlight.ColorThemer
+import MaterialComponents.MaterialFlexibleHeader.ColorThemer
+import MaterialComponents.MaterialHeaderStackView.ColorThemer
+import MaterialComponents.MaterialNavigationBar.ColorThemer
+import MaterialComponents.MaterialPageControl.ColorThemer
+import MaterialComponents.MaterialProgressView.ColorThemer
+import MaterialComponents.MaterialSlider.ColorThemer
+import MaterialComponents.MaterialTabs.ColorThemer
+import MaterialComponents.MaterialTextFields.ColorThemer
+import MaterialComponents.MaterialThemes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
