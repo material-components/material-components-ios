@@ -56,5 +56,6 @@ popd
 fix_bazel_imports
 
 ./.kokoro-ios-runner/bazel.sh test //components/ActivityIndicator:UnitTests 8.1.0
+./.kokoro-ios-runner/bazel.sh build //components/AnimationTiming:UnitTests 8.1.0
 
 echo "Success!"
