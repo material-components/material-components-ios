@@ -10,7 +10,159 @@
 
 * `MDCTextInput.cursorColor` controls the color of the blinking cursor (in the text).
 
+## Component changes
 
+### ActivityIndicator
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [Migrated to MDFi18n. (#2246)](https://github.com/material-components/material-components-ios/commit/58ad191297559f089951cf3c0c43a0f38d77ea7d) (Yurii Samsoniuk)
+
+### AnimationTiming
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+
+### AppBar
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [Migrated to MDFi18n. (#2243)](https://github.com/material-components/material-components-ios/commit/ddafafc7b1d19ac0e7e1714d35feea3e6fde742b) (Yurii Samsoniuk)
+
+### BottomAppBar
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [Migrated to MDFi18n. (#2244)](https://github.com/material-components/material-components-ios/commit/351bb832cc14ec3edeba81be8b91299035d1e144) (Yurii Samsoniuk)
+
+### BottomNavigation
+
+#### Changes
+
+* [Adding bottom navigation component (#2088)](https://github.com/material-components/material-components-ios/commit/58ecc3e8e1ac6a14e447d3ceacc752e56d26afa4) (Junius Gunaratne)
+* [Create Bottom Navigation Swift example (#2288)](https://github.com/material-components/material-components-ios/commit/1f8f13f151d9a5eaca594b2e35b46182e1c0f41c) (Junius Gunaratne)
+* [[BotteomNavigation] Migrated to MDFi18n. (#2306)](https://github.com/material-components/material-components-ios/commit/26bf3a36dcd7200ba392ff06e1b3be1bbb2f5ad4) (Yurii Samsoniuk)
+
+### ButtonBar
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [[BottomBar] Migrated to MDFi18n. (#2245)](https://github.com/material-components/material-components-ios/commit/06671d1889c6791dc0f462cf7f7b120f50be9a2d) (Yurii Samsoniuk)
+
+### Buttons
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+
+### CollectionCells
+
+#### Changes
+
+* [Migrated to MDFi18n. (#2248)](https://github.com/material-components/material-components-ios/commit/6f5fb72de07d7e192ee85067916ff7110e72e9bc) (Yurii Samsoniuk)
+
+### Collections
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+
+### Dialogs
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+
+### FlexibleHeader
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [Update the min/max height before enforcing content insets. (#2312)](https://github.com/material-components/material-components-ios/commit/96cef4fd9ebb29792f5c8fa4c0f7c0fc97b68b67) (featherless)
+
+### HeaderStackView
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+
+### MaskedTransition
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [Fix bug where transitions wouldn't complete. (#2293)](https://github.com/material-components/material-components-ios/commit/7d1f3aed00675c25ab049e5ec3ec05e7762d014f) (featherless)
+* [Use the provided key path consts from MotionAnimator. (#2294)](https://github.com/material-components/material-components-ios/commit/c4b7bce94eaa04c790b6957d908d0fcde8c9a101) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [Migrated to MDFi18n (#2280)](https://github.com/material-components/material-components-ios/commit/fd639afac18be2f52d8b30edb631212e0db7e361) (Yurii Samsoniuk)
+* [[NavigationBarExamples] Swapped private/RTL with MDFi18n (#2300)](https://github.com/material-components/material-components-ios/commit/524e78705bbdc5c52b09dad326ec57830ad4571c) (Yurii Samsoniuk)
+
+### PageControl
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [safeArea fixes (#2301)](https://github.com/material-components/material-components-ios/commit/2ed1139d691baacb6b62ff06b8f6a2326cdf5ffe) (ianegordon)
+
+### Palettes
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+
+### ProgressView
+
+#### Changes
+
+* [[ProgressBar] Migrated to MDFi18n (#2281)](https://github.com/material-components/material-components-ios/commit/752b7af6f5fd4c88a45648c78a2409ae42e9a88e) (Yurii Samsoniuk)
+
+### ShadowElevations
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+
+### ShadowLayer
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+
+### Tabs
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [Internal fixes to account for the Safe Area insets. (#2261)](https://github.com/material-components/material-components-ios/commit/2d8a51e5d5d473d0753929133d54c7cbccc34eb1) (Andrés)
+* [Migrated to MDFi18n (#2282)](https://github.com/material-components/material-components-ios/commit/639941a3f554127a76a1806fe0a1fc62e11da801) (Yurii Samsoniuk)
+* [[Catalog] De-hardcode the status bar height from a couple of examples. (#2292)](https://github.com/material-components/material-components-ios/commit/cdfbaacec457973d7f3c144183afb931bfac8a9b) (Andrés)
+* [[TabBar] Add safeAreaInsets.bottom to tabBarHeight in MDCTabBarViewController. (#2315)](https://github.com/material-components/material-components-ios/commit/ecf0e815c69f3776c81fa83f63dba044bcf7bdd0) (Andrés)
+
+### TextFields
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
+* [Adds cursor color as parameter (#2297)](https://github.com/material-components/material-components-ios/commit/463a2831a0cf40a77ad299d9622643ef617231b8) (Will Larche)
+* [Fixes clear button not reseting character count (#2277)](https://github.com/material-components/material-components-ios/commit/327c3f5ef6d92ddd4aa7214bdef49e7bbc65ff92) (Will Larche)
+* [Major improvements to RTL (#2274)](https://github.com/material-components/material-components-ios/commit/e411f38259f9f9229e30a5ac42a54787e26b4b21) (Will Larche)
+* [Migrated to MDFi18n (#2283)](https://github.com/material-components/material-components-ios/commit/582ddaad1d305e922444dbdeefda2c3ab1e0467c) (Yurii Samsoniuk)
+
+### Typography
+
+#### Changes
+
+* [@objc annoaing catalog by convention (#2305)](https://github.com/material-components/material-components-ios/commit/f98a9d42ed6d713460db20f3e08316df153b375d) (Martin Petrov)
 
 # 38.0.1
 
