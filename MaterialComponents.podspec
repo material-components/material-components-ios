@@ -111,6 +111,7 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
+    ss.dependency "MDFInternationalization"
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
   end
