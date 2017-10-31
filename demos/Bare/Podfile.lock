@@ -4,6 +4,7 @@ PODS:
     - MaterialComponents/AnimationTiming (= 38.0.1)
     - MaterialComponents/AppBar (= 38.0.1)
     - MaterialComponents/BottomAppBar (= 38.0.1)
+    - MaterialComponents/BottomNavigation (= 38.0.1)
     - MaterialComponents/BottomSheet (= 38.0.1)
     - MaterialComponents/ButtonBar (= 38.0.1)
     - MaterialComponents/Buttons (= 38.0.1)
@@ -69,6 +70,9 @@ PODS:
     - MaterialComponents/NavigationBar
     - MaterialComponents/private/Math
     - MDFInternationalization
+  - MaterialComponents/BottomNavigation (38.0.1):
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
   - MaterialComponents/BottomSheet (38.0.1):
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Math
@@ -219,7 +223,6 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher (= 38.0.1)
     - MaterialComponents/private/Math (= 38.0.1)
     - MaterialComponents/private/Overlay (= 38.0.1)
-    - MaterialComponents/private/RTL (= 38.0.1)
     - MaterialComponents/private/ShapeLibrary (= 38.0.1)
     - MaterialComponents/private/Shapes (= 38.0.1)
     - MaterialComponents/private/ThumbTrack (= 38.0.1)
@@ -253,7 +256,6 @@ PODS:
     - MaterialComponents/private/Application
   - MaterialComponents/private/Math (38.0.1)
   - MaterialComponents/private/Overlay (38.0.1)
-  - MaterialComponents/private/RTL (38.0.1)
   - MaterialComponents/private/ShapeLibrary (38.0.1):
     - MaterialComponents/private/Math
     - MaterialComponents/private/Shapes
@@ -263,10 +265,10 @@ PODS:
   - MaterialComponents/private/ThumbTrack (38.0.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/private/UIMetrics (38.0.1):
     - MaterialComponents/private/Application
   - MaterialComponents/ProgressView (38.0.1):
@@ -277,7 +279,7 @@ PODS:
     - MaterialComponents/Themes
   - MaterialComponents/ProgressView/Component (38.0.1):
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
+    - MDFInternationalization
   - MaterialComponents/ShadowElevations (38.0.1)
   - MaterialComponents/ShadowLayer (38.0.1):
     - MaterialComponents/ShadowElevations
@@ -307,10 +309,10 @@ PODS:
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/TextFields (38.0.1):
     - MaterialComponents/TextFields/ColorThemer (= 38.0.1)
     - MaterialComponents/TextFields/Component (= 38.0.1)
@@ -321,8 +323,8 @@ PODS:
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
-    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/Themes (38.0.1)
   - MaterialComponents/Typography (38.0.1):
     - MaterialComponents/private/Application
@@ -330,7 +332,7 @@ PODS:
   - MDFTextAccessibility (1.2.0)
   - MotionAnimator (1.1.3):
     - MotionInterchange
-  - MotionInterchange (1.1.1)
+  - MotionInterchange (1.2.0)
   - MotionTransitioning (4.0.1)
 
 DEPENDENCIES:
@@ -341,11 +343,11 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 2ba6c272c4aeb82d1138eb0e9d79d6b5fb5ee4fa
+  MaterialComponents: ffe69a8bf9bb66a685454cbbbe97ffa043f5ee32
   MDFInternationalization: 51b5f3889aca8bc13385e9a6c363eb0b0f257cf9
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   MotionAnimator: f241c4acd49dea603c3a2ea131727d57853a281b
-  MotionInterchange: 3556642f403549449a49f05653da3bd932a5e072
+  MotionInterchange: 499c98e7628a8a078905749734dbfedbfae54cca
   MotionTransitioning: 277501a1a1e6121c0ab523e6a3e00d64659c3367
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
