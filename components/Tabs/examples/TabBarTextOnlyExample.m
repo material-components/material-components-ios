@@ -23,6 +23,22 @@
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
+@interface MDCCustomTabIndicatorTemplate: NSObject <MDCTabBarSelectionIndicatorTemplate>
+@end
+
+@implementation MDCCustomTabIndicatorTemplate
+
+- (MDCTabBarSelectionIndicatorAttributes *)
+    selectionIndicatorAttributesForItemAttributes:(MDCTabBarItemAttributes *)attributes {
+  MDCTabBarSelectionIndicatorAttributes *indicatorAttributes = [MDCTabBarSelectionIndicatorAttributes new];
+  indicatorAttributes.path = [self pathForBounds:attributes.bounds contentFrame:attributes.contentFrame];
+  return indicatorAttributes;
+}
+
+- (UIBezierPath *)pathForBounds:(CGRect)bounds contentFrame:(CGRect)contentFrame {
+  return [UIBezierPath bezierPathWithOvalInRect:CGRectInset(contentFrame, -8, -8)];
+}
+@end
 
 @implementation TabBarTextOnlyExample
 
@@ -72,6 +88,7 @@
   // rely on the UIAppearance proxy.
   self.tabBar.selectedItemTintColor = [UIColor whiteColor];
   self.tabBar.tintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
+  self.tabBar.selectionIndicatorTemplate = [MDCCustomTabIndicatorTemplate new];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;

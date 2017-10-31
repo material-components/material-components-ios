@@ -17,5 +17,4 @@
 #import "MDCItemBarCell.h"
 
 @interface MDCItemBarCell ()
-@property(nonatomic, strong) UILabel *titleLabel;
 @end
