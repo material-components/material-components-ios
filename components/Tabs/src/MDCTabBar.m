@@ -117,6 +117,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)commonMDCTabBarInit {
+  self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
   _hasDefaultAlignment = YES;
@@ -135,6 +136,13 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   [self addSubview:_itemBar];
 
   [self updateItemBarStyle];
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  CGSize sizeThatFits = [_itemBar sizeThatFits:self.bounds.size];
+  _itemBar.frame = CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height);
 }
 
 #pragma mark - Public
@@ -177,7 +185,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     _barTintColor = barTintColor;
 
     // Update background color.
-    _itemBar.backgroundColor = barTintColor;
+    self.backgroundColor = barTintColor;
   }
 }
 
