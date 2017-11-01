@@ -20,7 +20,7 @@
 @class MDCTabBarIndicatorContext;
 
 /*
- Template for tab bar content which defines how the indicator changes appearance in response to
+ Template for indicator content which defines how the indicator changes appearance in response to
  changes in its context.
  */
 @protocol MDCTabBarIndicatorTemplate <NSObject>
