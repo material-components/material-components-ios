@@ -233,6 +233,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 #pragma mark - Underline View Implementation
 
 - (void)setupUnderlineConstraints {
+  if (!self.underline) {
+    return;
+  }
   NSLayoutConstraint *underlineLeading =
       [NSLayoutConstraint constraintWithItem:self.underline
                                    attribute:NSLayoutAttributeLeading
@@ -587,6 +590,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 }
 
 - (UIFont *)font {
+  if (_textView) {
+    return _textView.font;
+  }
   return self.textView.font;
 }
 
