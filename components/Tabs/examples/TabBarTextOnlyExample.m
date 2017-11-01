@@ -23,16 +23,15 @@
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
-@interface MDCCustomTabIndicatorTemplate: NSObject <MDCTabBarSelectionIndicatorTemplate>
+@interface MDCCustomTabIndicatorTemplate: NSObject <MDCTabBarIndicatorTemplate>
 @end
 
 @implementation MDCCustomTabIndicatorTemplate
 
-- (MDCTabBarSelectionIndicatorAttributes *)
-    selectionIndicatorAttributesForItemAttributes:(MDCTabBarItemAttributes *)attributes {
-  MDCTabBarSelectionIndicatorAttributes *indicatorAttributes = [MDCTabBarSelectionIndicatorAttributes new];
-  indicatorAttributes.path = [self pathForBounds:attributes.bounds contentFrame:attributes.contentFrame];
-  return indicatorAttributes;
+- (MDCTabBarIndicatorAttributes *)indicatorAttributesForContext:(MDCTabBarIndicatorContext *)context {
+  MDCTabBarIndicatorAttributes *attributes = [MDCTabBarIndicatorAttributes new];
+  attributes.path = [self pathForBounds:context.bounds contentFrame:context.contentFrame];
+  return attributes;
 }
 
 - (UIBezierPath *)pathForBounds:(CGRect)bounds contentFrame:(CGRect)contentFrame {

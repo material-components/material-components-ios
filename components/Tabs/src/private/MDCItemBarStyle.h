@@ -18,7 +18,7 @@
 
 #import "MaterialInk.h"
 
-@protocol MDCTabBarSelectionIndicatorTemplate;
+@protocol MDCTabBarIndicatorTemplate;
 
 /** Describes the visual style of individual items in an item bar. */
 @interface MDCItemBarStyle : NSObject <NSCopying>
@@ -32,7 +32,7 @@
 /** Color used for the selection indicator bar which indicates the selected item. */
 @property(nonatomic, strong, nullable) UIColor *selectionIndicatorColor;
 
-@property(nonatomic, nonnull) id<MDCTabBarSelectionIndicatorTemplate> selectionIndicatorTemplate;
+@property(nonatomic, nonnull) id<MDCTabBarIndicatorTemplate> selectionIndicatorTemplate;
 
 /** The maximum width for individual items within the bar. If zero, items have no maximum width. */
 @property(nonatomic) CGFloat maximumItemWidth;

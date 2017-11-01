@@ -14,11 +14,12 @@
  limitations under the License.
  */
 
-#import "MDCTabBar.h"
-#import "MDCTabBarAlignment.h"
-#import "MDCTabBarItemAppearance.h"
-#import "MDCTabBarViewController.h"
-#import "MDCTabBarIndicatorTemplate.h"
-#import "MDCTabBarIndicatorAttributes.h"
-#import "MDCTabBarIndicatorContext.h"
-#import "MDCTabBarUnderlineIndicatorTemplate.h"
+#import <UIKit/UIKit.h>
+
+/** Defines how a tab bar indicator should appear in a specific context. */
+@interface MDCTabBarIndicatorAttributes : NSObject <NSCopying>
+
+/** If non-nil, a path that should be filled with the indicator tint color. */
+@property(nonatomic, nullable) UIBezierPath *path;
+
+@end
