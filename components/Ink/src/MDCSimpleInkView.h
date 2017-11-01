@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCSimpleInkLayer.h"
-
 @protocol MDCSimpleInkViewDelegate <NSObject>
 
 @optional
@@ -31,7 +29,5 @@
 @interface MDCSimpleInkView : UIView
 
 @property(nonatomic, weak) id<MDCSimpleInkViewDelegate> delegate;
-
-@property(nonatomic, strong) MDCSimpleInkLayer *inkLayer;
 
 @end

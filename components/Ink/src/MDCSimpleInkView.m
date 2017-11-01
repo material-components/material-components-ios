@@ -16,6 +16,13 @@
 
 #import "MDCSimpleInkView.h"
 #import "MDCSimpleInkGestureRecognizer.h"
+#import "private/MDCSimpleInkLayer.h"
+
+@interface MDCSimpleInkView ()
+
+@property(nonatomic, strong) MDCSimpleInkLayer *inkLayer;
+
+@end
 
 @implementation MDCSimpleInkView
 
