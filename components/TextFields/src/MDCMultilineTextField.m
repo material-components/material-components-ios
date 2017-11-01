@@ -101,7 +101,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     _cursorColor = [aDecoder decodeObjectForKey:MDCMultilineTextFieldCursorColorKey];
 
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldExpandsOnOverflowKey]) {
-      _expandsOnOverflow = [aDecoder decodeBoolForKey:MDCMultilineTextFieldExpandsOnOverflowKey];
+      self.expandsOnOverflow = [aDecoder decodeBoolForKey:MDCMultilineTextFieldExpandsOnOverflowKey];
     }
     _layoutDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldLayoutDelegateKey];
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldMinimumLinesKey]) {
@@ -169,7 +169,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
   self.editable = YES;
 
-  _expandsOnOverflow = YES;
+  self.expandsOnOverflow = YES;
   _minimumLines = 1;
 
   [self setupUnderlineConstraints];
@@ -209,7 +209,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (void)setupTextView {
   [self insertSubview:self.textView atIndex:0];
   self.textView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.textView.scrollEnabled = NO;
+  self.textView.scrollEnabled = !_expandsOnOverflow;
 
   [self.textView setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
                                    forAxis:UILayoutConstraintAxisHorizontal];
