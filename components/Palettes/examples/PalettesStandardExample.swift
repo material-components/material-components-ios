@@ -45,15 +45,15 @@ class PalettesStandardExampleViewController: PalettesExampleViewController {
 
 // MARK: - Catalog by convention
 extension PalettesStandardExampleViewController {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Palettes", "Standard Palettes"]
   }
 
-  class func catalogDescription() -> String {
+  @objc class func catalogDescription() -> String {
     return "The Palettes component provides sets of reference colors that work well together."
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
 }
