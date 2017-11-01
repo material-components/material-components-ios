@@ -16,12 +16,16 @@
 
 @import UIKit;
 
-@interface TextFieldInterfaceBuilderLegacyExample : UIViewController
+@interface TextFieldInterfaceBuilderExample : UIViewController
 
 @end
 
-@interface TextFieldInterfaceBuilderLegacyExample (Supplemental)
+@interface TextFieldInterfaceBuilderExample (Supplemental)
 
 - (void)setupExampleViews;
+
+@end
+
+@interface TextFieldInterfaceBuilderLegacyExample : TextFieldInterfaceBuilderExample
 
 @end

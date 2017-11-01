@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Text Field Interface Builder Legacy Example-->
+        <!--Text Field Interface Builder Example-->
         <scene sceneID="DdG-mX-4KR">
             <objects>
-                <viewController id="1F7-Hr-r85" customClass="TextFieldInterfaceBuilderLegacyExample" sceneMemberID="viewController">
+                <viewController id="1F7-Hr-r85" customClass="TextFieldInterfaceBuilderExample" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ut5-Wj-cOI"/>
                         <viewControllerLayoutGuide type="bottom" id="NTa-4i-lt3"/>
