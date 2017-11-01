@@ -1,4 +1,4 @@
-# Copyright 2017-present The Material Foundation Authors. All Rights Reserved.
+# Copyright 2017-present The Material Components for iOS Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,6 +26,6 @@ git_repository(
 
 git_repository(
     name = "material_internationalization_ios",
-    remote = "https://github.com/jverkoey/material-internationalization-ios.git",
-    commit = "c4cf7da8fed60c4b7287e50f00db79fa96198dc6",
+    remote = "https://github.com/material-foundation/material-internationalization-ios.git",
+    commit = "fef1a31313a4a8aa0234cce416e1615c7054cf9d",
 )

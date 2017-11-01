@@ -1,4 +1,4 @@
-# Copyright 2017-present The Material Foundation Authors. All Rights Reserved.
+# Copyright 2017-present The Material Components for iOS Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,6 +35,10 @@ strict_warnings_objc_library(
 
 objc_library(
     name = "UnitTestsLib",
+    srcs = glob([
+        "tests/unit/*.h",
+        "tests/unit/*.m",
+    ]),
     deps = [":AnimationTiming"],
     visibility = ["//visibility:private"],
 )
