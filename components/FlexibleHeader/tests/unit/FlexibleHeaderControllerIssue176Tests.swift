@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
 
 // Tests confirming that the flexible header view's frame correctly reflects the target scroll
 // view's position immediately after being registered.
