@@ -14,11 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCTabBar.h"
-#import "MDCTabBarAlignment.h"
-#import "MDCTabBarItemAppearance.h"
-#import "MDCTabBarViewController.h"
-#import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorAttributes.h"
-#import "MDCTabBarIndicatorContext.h"
-#import "MDCTabBarUnderlineIndicatorTemplate.h"
+
+@implementation MDCTabBarIndicatorAttributes
+
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
+  MDCTabBarIndicatorAttributes *attributes = [[[self class] alloc] init];
+  attributes.path = _path;
+  return attributes;
+}
+
+@end

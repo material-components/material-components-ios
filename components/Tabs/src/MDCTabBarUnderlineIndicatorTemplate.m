@@ -14,11 +14,19 @@
  limitations under the License.
  */
 
-#import "MDCTabBar.h"
-#import "MDCTabBarAlignment.h"
-#import "MDCTabBarItemAppearance.h"
-#import "MDCTabBarViewController.h"
-#import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarUnderlineIndicatorTemplate.h"
+
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorContext.h"
-#import "MDCTabBarUnderlineIndicatorTemplate.h"
+
+@implementation MDCTabBarUnderlineIndicatorTemplate
+
+- (MDCTabBarIndicatorAttributes *)
+    indicatorAttributesForContext:(MDCTabBarIndicatorContext *)context {
+  CGRect bounds = context.bounds;
+  MDCTabBarIndicatorAttributes *attributes = [[MDCTabBarIndicatorAttributes alloc] init];
+  attributes.path = [UIBezierPath bezierPathWithRect:CGRectMake(CGRectGetMinX(bounds), CGRectGetMaxY(bounds) - 2,CGRectGetWidth(bounds), 2)];
+  return attributes;
+}
+
+@end

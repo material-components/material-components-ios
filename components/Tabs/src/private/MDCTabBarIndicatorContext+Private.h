@@ -14,11 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCTabBar.h"
-#import "MDCTabBarAlignment.h"
-#import "MDCTabBarItemAppearance.h"
-#import "MDCTabBarViewController.h"
-#import "MDCTabBarIndicatorTemplate.h"
-#import "MDCTabBarIndicatorAttributes.h"
+#import <UIKit/UIKit.h>
+
 #import "MDCTabBarIndicatorContext.h"
-#import "MDCTabBarUnderlineIndicatorTemplate.h"
+
+@interface MDCTabBarIndicatorContext (Private)
+
+- (nonnull instancetype)initWithItem:(nonnull UITabBarItem *)item
+                              bounds:(CGRect)bounds
+                        contentFrame:(CGRect)contentFrame;
+@end
+

@@ -14,18 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCTabBarSelectionIndicatorTemplate.h"
+#import "MDCTabBarIndicatorContext.h"
 
-@implementation MDCTabBarSelectionIndicatorAttributes
+#import "private/MDCTabBarIndicatorContext+Private.h"
 
-// TODO: NSCOPYING
-
-@end
-
-@interface MDCTabBarItemAttributes ()
-@end
-
-@implementation MDCTabBarItemAttributes
+@implementation MDCTabBarIndicatorContext
 
 - (instancetype)initWithItem:(UITabBarItem *)item
                       bounds:(CGRect)bounds
@@ -40,18 +33,5 @@
 }
 
 // TODO: NSOBJECT
-
-@end
-
-@implementation MDCRectangleTabBarSelectionIndicatorTemplate
-
-- (MDCTabBarSelectionIndicatorAttributes *)
-    selectionIndicatorAttributesForItemAttributes:(MDCTabBarItemAttributes *)attributes {
-  CGRect bounds = attributes.bounds;
-  MDCTabBarSelectionIndicatorAttributes *indicatorAttributes =
-      [[MDCTabBarSelectionIndicatorAttributes alloc] init];
-  indicatorAttributes.path = [UIBezierPath bezierPathWithRect:CGRectMake(CGRectGetMinX(bounds), CGRectGetMaxY(bounds) - 2,CGRectGetWidth(bounds), 2)];
-  return indicatorAttributes;
-}
 
 @end

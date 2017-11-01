@@ -14,11 +14,12 @@
  limitations under the License.
  */
 
-#import "MDCTabBar.h"
-#import "MDCTabBarAlignment.h"
-#import "MDCTabBarItemAppearance.h"
-#import "MDCTabBarViewController.h"
+#import <UIKit/UIKit.h>
+
 #import "MDCTabBarIndicatorTemplate.h"
-#import "MDCTabBarIndicatorAttributes.h"
-#import "MDCTabBarIndicatorContext.h"
-#import "MDCTabBarUnderlineIndicatorTemplate.h"
+
+/*
+ Default indicator template which produces a fixed-height solid line underneath the selected tab.
+ */
+@interface MDCTabBarUnderlineIndicatorTemplate : NSObject <MDCTabBarIndicatorTemplate>
+@end

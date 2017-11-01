@@ -20,7 +20,9 @@
 #import "MDCItemBarStyle.h"
 #import "MDFInternationalization.h"
 #import "MaterialAnimationTiming.h"
-#import "MDCTabBarSelectionIndicatorTemplate.h"
+#import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarIndicatorAttributes.h"
+#import "MDCTabBarIndicatorContext+Private.h"
 
 /// Height in points of the bar shown under selected items.
 //static const CGFloat kSelectionIndicatorHeight = 2.0f;
@@ -58,7 +60,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 @interface MDCSelectionIndicatorView : UIView
 
-- (void)applySelectionIndicatorAttributes:(MDCTabBarSelectionIndicatorAttributes *)attributes;
+- (void)applySelectionIndicatorAttributes:(MDCTabBarIndicatorAttributes *)attributes;
 
 @end
 
@@ -94,7 +96,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 @implementation MDCSelectionIndicatorView
 
-- (void)applySelectionIndicatorAttributes:(__unused MDCTabBarSelectionIndicatorAttributes *)attributes {
+- (void)applySelectionIndicatorAttributes:(__unused MDCTabBarIndicatorAttributes *)attributes {
   // Base class does nothing.
 }
 
@@ -118,7 +120,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   return self;
 }
 
-- (void)applySelectionIndicatorAttributes:(MDCTabBarSelectionIndicatorAttributes *)attributes {
+- (void)applySelectionIndicatorAttributes:(MDCTabBarIndicatorAttributes *)attributes {
   _trackingView.path = attributes.path;
 }
 
@@ -644,15 +646,15 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Use layout attributes as the cell may not be visible or loaded yet.
   NSIndexPath *indexPath = [self indexPathForItemAtIndex:index];
-  UICollectionViewLayoutAttributes *attributes =
+  UICollectionViewLayoutAttributes *layoutAttributes =
       [_flowLayout layoutAttributesForItemAtIndexPath:indexPath];
 
   // Size selection indicator to a fixed height, equal in width to the selected item's cell.
-  CGRect selectionIndicatorBounds = attributes.bounds;
+  CGRect selectionIndicatorBounds = layoutAttributes.bounds;
 //  selectionIndicatorBounds.size.height = kSelectionIndicatorHeight;
 
   // Center selection indicator under cell.
-  CGPoint selectionIndicatorCenter = attributes.center;
+  CGPoint selectionIndicatorCenter = layoutAttributes.center;
 //  selectionIndicatorCenter.y =
 //      CGRectGetMaxY(_collectionView.bounds) - (kSelectionIndicatorHeight / 2.0f);
 
@@ -667,10 +669,14 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     contentFrame = [cell convertRect:titleLabel.bounds fromView:titleLabel];
   }
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
-  MDCTabBarItemAttributes *itemAttributes = [[MDCTabBarItemAttributes alloc] initWithItem:item bounds:selectionIndicatorBounds contentFrame:contentFrame];
+  MDCTabBarIndicatorContext *context =
+      [[MDCTabBarIndicatorContext alloc] initWithItem:item
+                                               bounds:selectionIndicatorBounds
+                                         contentFrame:contentFrame];
 
-  id<MDCTabBarSelectionIndicatorTemplate> template = _style.selectionIndicatorTemplate;
-  MDCTabBarSelectionIndicatorAttributes *indicatorAttributes = [template selectionIndicatorAttributesForItemAttributes:itemAttributes];
+  id<MDCTabBarIndicatorTemplate> template = _style.selectionIndicatorTemplate;
+  MDCTabBarIndicatorAttributes *indicatorAttributes =
+      [template indicatorAttributesForContext:context];
 
   [_selectionIndicator applySelectionIndicatorAttributes:indicatorAttributes];
   [_selectionIndicator layoutIfNeeded];
