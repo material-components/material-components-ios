@@ -14,7 +14,31 @@
  limitations under the License.
  */
 
-#import "TextFieldInterfaceBuilderLegacyExampleSupplemental.h"
+#import "TextFieldInterfaceBuilderExampleSupplemental.h"
+
+@implementation TextFieldInterfaceBuilderExample (Supplemental)
+
+- (void)setupExampleViews {
+  self.title = @"Text Fields";
+}
+
+@end
+
+@implementation TextFieldInterfaceBuilderExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Text Field", @"Storyboard (Objective C)" ];
+}
+
++ (NSString *)catalogStoryboardName {
+  return @"TextFieldInterfaceBuilderExample";
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+@end
 
 @implementation TextFieldInterfaceBuilderLegacyExample (Supplemental)
 
@@ -31,7 +55,7 @@
 }
 
 + (NSString *)catalogStoryboardName {
-  return @"TextFieldInterfaceBuilderLegacyExample";
+  return @"TextFieldInterfaceBuilderExample";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

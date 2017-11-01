@@ -20,22 +20,22 @@
 
 @import MaterialComponents.MaterialTextFields;
 
-@interface TextFieldInterfaceBuilderLegacyExample () <UITextFieldDelegate>
+@interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTextField *firstTextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *firstController;
+@property(nonatomic, strong) MDCTextInputControllerFilled *firstController;
 @property(weak, nonatomic) IBOutlet MDCTextField *lastTextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *lastController;
+@property(nonatomic, strong) MDCTextInputControllerFilled *lastController;
 @property(weak, nonatomic) IBOutlet MDCTextField *address1TextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *address1Controller;
+@property(nonatomic, strong) MDCTextInputControllerFilled *address1Controller;
 @property(weak, nonatomic) IBOutlet MDCTextField *address2TextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *address2Controller;
+@property(nonatomic, strong) MDCTextInputControllerFilled *address2Controller;
 @property(weak, nonatomic) IBOutlet MDCMultilineTextField *messageTextField;
-@property(nonatomic, strong) MDCTextInputControllerLegacyDefault *messageController;
+@property(nonatomic, strong) MDCTextInputControllerFilled *messageController;
 
 @end
 
-@implementation TextFieldInterfaceBuilderLegacyExample
+@implementation TextFieldInterfaceBuilderExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -43,19 +43,19 @@
   [self setupExampleViews];
 
   self.firstController =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.firstTextField];
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.firstTextField];
   self.lastController =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.lastTextField];
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.lastTextField];
   self.address1Controller =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address1TextField];
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.address1TextField];
   self.address2Controller =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address2TextField];
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.address2TextField];
 
   // This will cause the text field to expand on overflow. This is because the default
   // for MDCTextInputControllerFilled is to do so. This overrides any choices in the
   // storyboard because it happens after the storyboard is awoken.
   self.messageController =
-      [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.messageTextField];
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.messageTextField];
   self.messageTextField.minimumLines = 10;
 }
 
