@@ -144,7 +144,15 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   BOOL _interfaceOrientationIsChanging;
   BOOL _contentInsetsAreChanging;
+
+  // _isChangingStatusBarVisibility documents whether we know that we're adjusting the status bar
+  // visibility, while _wasStatusBarHidden allows us to detect whether someone else has adjusted
+  // the status bar visibility. In either case, we need to counteract any content offsets
+  // adjustments made by UIKit so that our header doesn't shrink/expand in reaction to the status
+  // bar visibility changing.
   BOOL _isChangingStatusBarVisibility;
+  BOOL _wasStatusBarHiddenIsValid;
+  BOOL _wasStatusBarHidden;
 
   MDCStatusBarShifter *_statusBarShifter;
 
@@ -403,6 +411,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
 }
 
+- (void)willMoveToWindow:(UIWindow *)newWindow {
+  [super willMoveToWindow:newWindow];
+
+  _wasStatusBarHiddenIsValid = NO;
+}
+
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *hitView = [super hitTest:point withEvent:event];
 
@@ -573,6 +587,20 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   if (!UIEdgeInsetsEqualToEdgeInsets(scrollView.contentInset, insets)) {
     scrollView.contentInset = insets;
   }
+
+  BOOL statusBarIsHidden = [UIApplication mdc_safeSharedApplication].statusBarHidden;
+  if (_wasStatusBarHiddenIsValid && _wasStatusBarHidden != statusBarIsHidden
+      && !_isChangingStatusBarVisibility) {
+    // Our status bar state has changed without our knowledge. UIKit will have already adjusted our
+    // content offset by now, so we want to counteract this. This logic is similar to that found in
+    // statusBarShifterNeedsStatusBarAppearanceUpdate:
+    CGPoint contentOffset = scrollView.contentOffset;
+    contentOffset.y -= topInsetAdjustment;
+    scrollView.contentOffset = contentOffset;
+  }
+
+  _wasStatusBarHidden = statusBarIsHidden;
+  _wasStatusBarHiddenIsValid = YES;
 
   return topInsetAdjustment;
 }
