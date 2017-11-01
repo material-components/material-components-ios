@@ -39,8 +39,6 @@
 /** Text displayed in upper-right corner of the tab. Uses title color. */
 @property(nonatomic, copy, nullable) NSString *badgeValue;
 
-@property(nonatomic, strong, nonnull) UILabel *titleLabel;
-
 /** Updates the cell to use the given style properties. */
 - (void)applyStyle:(nonnull MDCItemBarStyle *)itemStyle;
 

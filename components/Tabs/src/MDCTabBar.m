@@ -21,8 +21,6 @@
 #import "private/MDCItemBar.h"
 #import "private/MDCItemBarAlignment.h"
 #import "private/MDCItemBarStyle.h"
-#import "MDCTabBarIndicatorTemplate.h"
-#import "MDCTabBarUnderlineIndicatorTemplate.h"
 
 /// Padding between image and title in points, according to the spec.
 static const CGFloat kImageTitleSpecPadding = 10;
@@ -100,7 +98,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   [[[self class] appearance] setUnselectedItemTintColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
   [[[self class] appearance] setInkColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
   [[[self class] appearance] setBarTintColor:nil];
-  [[[self class] appearance] setSelectionIndicatorTemplate:[MDCTabBarUnderlineIndicatorTemplate new]];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -230,11 +227,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _hasDefaultDisplaysUppercaseTitles = NO;
   _displaysUppercaseTitlesOverride = displaysUppercaseTitles;
   [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
-}
-
-- (void)setSelectionIndicatorTemplate:(id<MDCTabBarIndicatorTemplate>)selectionIndicatorTemplate {
-  _selectionIndicatorTemplate = selectionIndicatorTemplate;
-  [self updateItemBarStyle];
 }
 
 #pragma mark - MDCAccessibility
@@ -502,7 +494,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   style = [[self class] defaultStyleForPosition:_barPosition itemAppearance:_itemAppearance];
 
-  style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
   style.selectedTitleColor = (_selectedItemTintColor ? _selectedItemTintColor : self.tintColor);

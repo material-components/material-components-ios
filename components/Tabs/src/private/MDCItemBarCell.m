@@ -235,7 +235,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Title is a fixed height based on content and is placed full-width, regardless of content style.
   titleCenter.x = CGRectGetMidX(contentBounds);
-  titleBounds.size.width = titleSize.width;
+  titleBounds.size.width = CGRectGetWidth(contentBounds);
   titleBounds.size.height = titleSize.height;
 
   // Horizontally align the badge.
