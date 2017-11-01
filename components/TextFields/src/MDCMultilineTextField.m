@@ -83,6 +83,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
+      _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
+      [self setupTextView];
+    } else if (!_textView) {
+      // It's expected that this will be created by the fundament above. This is a catch.
+      _textView = [[UITextView alloc] initWithFrame:CGRectZero];
+      [self setupTextView];
+    }
 
     MDCTextInputCommonFundament *fundament =
         [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
@@ -93,18 +101,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     _cursorColor = [aDecoder decodeObjectForKey:MDCMultilineTextFieldCursorColorKey];
 
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldExpandsOnOverflowKey]) {
-      _expandsOnOverflow = [aDecoder decodeBoolForKey:MDCMultilineTextFieldExpandsOnOverflowKey];
+      self.expandsOnOverflow = [aDecoder decodeBoolForKey:MDCMultilineTextFieldExpandsOnOverflowKey];
     }
     _layoutDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldLayoutDelegateKey];
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldMinimumLinesKey]) {
       _minimumLines = [aDecoder decodeIntegerForKey:MDCMultilineTextFieldMinimumLinesKey];
     }
     _multilineDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldMultilineDelegateKey];
-    if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
-      _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
-    } else {
-      _textView = [[UITextView alloc] initWithFrame:CGRectZero];
-    }
+
     _trailingViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCMultilineTextFieldTrailingViewModeKey];
   }
@@ -165,7 +169,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
   self.editable = YES;
 
-  _expandsOnOverflow = YES;
+  self.expandsOnOverflow = YES;
   _minimumLines = 1;
 
   [self setupUnderlineConstraints];
@@ -205,7 +209,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (void)setupTextView {
   [self insertSubview:self.textView atIndex:0];
   self.textView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.textView.scrollEnabled = NO;
+  self.textView.scrollEnabled = !_expandsOnOverflow;
 
   [self.textView setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
                                    forAxis:UILayoutConstraintAxisHorizontal];
@@ -229,6 +233,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 #pragma mark - Underline View Implementation
 
 - (void)setupUnderlineConstraints {
+  if (!self.underline) {
+    return;
+  }
   NSLayoutConstraint *underlineLeading =
       [NSLayoutConstraint constraintWithItem:self.underline
                                    attribute:NSLayoutAttributeLeading
@@ -578,10 +585,14 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if (_expandsOnOverflow != expandsOnOverflow) {
     _expandsOnOverflow = expandsOnOverflow;
     self.textView.scrollEnabled = !expandsOnOverflow;
+    [self setNeedsUpdateConstraints];
   }
 }
 
 - (UIFont *)font {
+  if (_textView) {
+    return _textView.font;
+  }
   return self.textView.font;
 }
 
@@ -674,15 +685,18 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if (!_textView) {
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
     [self setupTextView];
+    [self setupUnderlineConstraints];
   }
   return _textView;
 }
 
 - (void)setTextView:(UITextView *)textView {
-  if (![textView isEqual:textView]) {
+  if (![_textView isEqual:textView]) {
+    [_textView removeFromSuperview];
     _textView = textView;
     if (textView) {
       [self setupTextView];
+      [self setupUnderlineConstraints];
     }
   }
 }
