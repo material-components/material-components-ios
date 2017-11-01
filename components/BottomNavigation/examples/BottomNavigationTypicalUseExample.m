@@ -19,6 +19,8 @@
 #import "BottomNavigationTypicalUseSupplemental.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
+#import "MaterialThemes.h"
+#import "MDCBottomNavigationBarColorThemer.h"
 
 @interface BottomNavigationTypicalUseExample ()
 
@@ -42,11 +44,14 @@
   self.view.backgroundColor = [UIColor lightGrayColor];
 
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
-  _bottomNavBar.selectedItemTintColor = [MDCPalette purplePalette].tint700;
-  _bottomNavBar.unselectedItemTintColor = [MDCPalette greyPalette].tint600;
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
   [self.view addSubview:_bottomNavBar];
+
+  MDCBasicColorScheme *scheme =
+      [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette purplePalette].tint700
+                                         secondaryColor:[UIColor whiteColor]];
+  [MDCBottomNavigationBarColorThemer applyColorScheme:scheme toBottomNavigationBar:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =
       [[UITabBarItem alloc] initWithTitle:@"Home"

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
 
 // Tests confirming that the flexible header view is always in front of other views when the
 // flexible header view is a subview of its tracking scroll view.

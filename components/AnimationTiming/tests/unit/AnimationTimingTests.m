@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,14 +14,17 @@
  limitations under the License.
  */
 
-@import UIKit;
+#import <XCTest/XCTest.h>
+#import "MaterialAnimationTiming.h"
 
-@interface TextFieldInterfaceBuilderLegacyExample : UIViewController
+@interface AnimationTimingTests : XCTestCase
 
 @end
 
-@interface TextFieldInterfaceBuilderLegacyExample (Supplemental)
+@implementation AnimationTimingTests
 
-- (void)setupExampleViews;
+- (void)testNoop {
+  XCTAssertTrue(YES);
+}
 
 @end

@@ -24,6 +24,8 @@ class MultilineTextFieldTests: XCTestCase {
   func testAttributedSetters() {
     let textField = MDCMultilineTextField()
 
+    XCTAssertNotNil(textField.textView);
+
     let string = "attributed"
     textField.attributedPlaceholder = NSAttributedString(string: string)
     XCTAssertEqual(textField.attributedPlaceholder?.string, string)
