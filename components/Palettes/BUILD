@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl", "mdc_public_objc_library")
+load("//:material_components_ios.bzl",
+     "mdc_public_objc_library",
+     "mdc_objc_library")
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 
@@ -23,31 +25,30 @@ mdc_public_objc_library(
 )
 
 swift_library(
-    name = "UnitTestsSwiftLib",
-    srcs = glob([
-        "tests/unit/*.swift",
-    ]),
+    name = "unit_test_swift_sources",
+    srcs = glob(["tests/unit/*.swift"]),
     deps = [":Palettes"],
     visibility = ["//visibility:private"],
 )
 
-objc_library(
-    name = "UnitTestsLib",
-    srcs = glob([
-        "tests/unit/*.h",
-        "tests/unit/*.m",
-    ]),
+mdc_objc_library(
+    name = "unit_test_sources",
+    srcs = glob(["tests/unit/*.m"]),
+    hdrs = glob(["tests/unit/*.h"]),
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
+    ],
     deps = [":Palettes"],
     visibility = ["//visibility:private"],
 )
 
 ios_unit_test(
-    name = "UnitTests",
+    name = "unit_tests",
     deps = [
-      ":UnitTestsLib",
-      ":UnitTestsSwiftLib"
+      ":unit_test_sources",
+      ":unit_test_swift_sources",
     ],
     minimum_os_version = "8.0",
-    timeout = "short",
     visibility = ["//visibility:private"],
 )
