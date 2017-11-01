@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
 
 // Tests confirming that setting the flexible header view's min or max height will bound the
 // corresponding value.

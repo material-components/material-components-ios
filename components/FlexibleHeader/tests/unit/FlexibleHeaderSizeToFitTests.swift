@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
 
 // Testing the contract for sizeToFit
 class FlexibleHeaderSizeToFitTests: XCTestCase {

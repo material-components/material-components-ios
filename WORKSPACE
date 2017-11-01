@@ -29,3 +29,9 @@ git_repository(
     remote = "https://github.com/material-foundation/material-internationalization-ios.git",
     commit = "fef1a31313a4a8aa0234cce416e1615c7054cf9d",
 )
+
+git_repository(
+    name = "material_text_accessibility_ios",
+    remote = "https://github.com/material-foundation/material-text-accessibility-ios.git",
+    commit = "fd570d71ae0124c75ad5af00e6b8b4b1668d5e40",
+)
