@@ -50,6 +50,10 @@
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.address1TextField];
   self.address2Controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.address2TextField];
+
+  // This will cause the text field to expand on overflow. This is because the default
+  // for MDCTextInputControllerFilled is to do so. This overrides any choices in the
+  // storyboard because it happens after the storyboard is awoken.
   self.messageController =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.messageTextField];
   self.messageTextField.minimumLines = 10;
