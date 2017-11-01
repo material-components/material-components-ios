@@ -54,6 +54,7 @@
       [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.address2TextField];
   self.messageController =
       [[MDCTextInputControllerLegacyDefault alloc] initWithTextInput:self.messageTextField];
+  self.messageTextField.minimumLines = 10;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
