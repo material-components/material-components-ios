@@ -12,30 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
+load("//:material_components_ios.bzl", "mdc_public_objc_library")
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 
 licenses(["notice"])  # Apache 2.0
 
-strict_warnings_objc_library(
+mdc_public_objc_library(
     name = "ActivityIndicator",
-    srcs = glob([
-        "src/*.m",
-        "src/private/*.m",
-    ]),
-    hdrs = glob([
-        "src/*.h",
-        "src/private/*.h",
-    ]),
     deps = [
       "//components/Palettes",
       "//components/private/Application",
       "@material_internationalization_ios//:MDFInternationalization",
     ],
-    enable_modules = 1,
-    includes = ["src"],
-    visibility = ["//visibility:public"],
 )
 
 swift_library(
@@ -50,8 +39,10 @@ swift_library(
 objc_library(
     name = "UnitTestsLib",
     srcs = glob([
-        "tests/unit/*.h",
         "tests/unit/*.m",
+    ]),
+    hdrs = glob([
+        "tests/unit/*.h",
     ]),
     deps = [":ActivityIndicator"],
     visibility = ["//visibility:private"],
