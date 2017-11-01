@@ -582,6 +582,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if (_expandsOnOverflow != expandsOnOverflow) {
     _expandsOnOverflow = expandsOnOverflow;
     self.textView.scrollEnabled = !expandsOnOverflow;
+    [self setNeedsUpdateConstraints];
   }
 }
 
