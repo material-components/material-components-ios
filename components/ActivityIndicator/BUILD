@@ -22,6 +22,7 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "ActivityIndicator",
+    bundles = [":Bundle"],
     sdk_frameworks = [
         "QuartzCore",
         "UIKit",
@@ -31,6 +32,18 @@ mdc_public_objc_library(
       "//components/private/Application",
       "@material_internationalization_ios//:MDFInternationalization",
     ],
+)
+
+filegroup(
+    name = "BundleFiles",
+    srcs = glob([
+        "src/MaterialActivityIndicator.bundle/**",
+    ]),
+)
+
+objc_bundle(
+    name = "Bundle",
+    bundle_imports = [":BundleFiles"],
 )
 
 swift_library(

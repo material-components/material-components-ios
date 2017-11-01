@@ -1,4 +1,4 @@
-"""Baze macros for building MDC component libraries."""
+"""Bazel macros for building MDC component libraries."""
 
 load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
 
