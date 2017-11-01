@@ -6,7 +6,7 @@ def mdc_objc_library(
     name,
     copts = [],
     **kwargs):
-  """Declare an Objective-C library with MDC's common warning flags."""
+  """Declare an Objective-C library with strict_warnings_objc_library."""
   strict_warnings_objc_library(
       name = name,
       copts = copts,
