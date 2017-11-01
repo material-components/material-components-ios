@@ -24,7 +24,6 @@ def mdc_public_objc_library(
   The conventions for an MDC component are:
   - The public implementation lives inside of src.
   - The private implementation lives inside of src/private.
-  - Headers are imported relative to src.
 
   The default visibility of "//visibility:public" can be overridden, for
   example, "//some/package:__subpackages__".
