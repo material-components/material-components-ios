@@ -55,6 +55,6 @@ popd
 
 fix_bazel_imports
 
-./.kokoro-ios-runner/bazel.sh test //components/... 8.1.0
+./.kokoro-ios-runner/bazel.sh test //components/... 8.2.0
 
 echo "Success!"
