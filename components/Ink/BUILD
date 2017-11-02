@@ -29,6 +29,21 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    deps = [":Ink"],
+    includes = ["src/private"],
+    visibility = [":test_targets"],
+)
+
+package_group(
+    name = "test_targets",
+    packages = [
+        "//components/Ink/...",
+    ],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
@@ -37,7 +52,10 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":Ink"],
+    deps = [
+        ":Ink",
+        ":private"
+    ],
     visibility = ["//visibility:private"],
 )
 
