@@ -14,8 +14,9 @@
  limitations under the License.
  */
 
-@import XCTest;
-#import "MDCInkLayer+Testing.h"
+#import <XCTest/XCTest.h>
+#import "MaterialInk.h"
+#import "private/MDCInkLayer+Testing.h"
 
 #pragma mark - Property exposure
 
