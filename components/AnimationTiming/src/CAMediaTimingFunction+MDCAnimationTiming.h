@@ -52,11 +52,11 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
   /**
    Aliases for various specific timing curve recommendations.
    */
-  MDCAnimationTimingFunctionTranslate = MDCAnimationTimingFunctionEaseInOut,
-  MDCAnimationTimingFunctionTranslateOnScreen = MDCAnimationTimingFunctionEaseOut,
-  MDCAnimationTimingFunctionTranslateOffScreen = MDCAnimationTimingFunctionEaseIn,
-  MDCAnimationTimingFunctionFadeIn = MDCAnimationTimingFunctionEaseOut,
-  MDCAnimationTimingFunctionFadeOut = MDCAnimationTimingFunctionEaseIn,
+  MDCAnimationTimingFunctionTranslate = MDCAnimationTimingFunctionStandard,
+  MDCAnimationTimingFunctionTranslateOnScreen = MDCAnimationTimingFunctionDeceleration,
+  MDCAnimationTimingFunctionTranslateOffScreen = MDCAnimationTimingFunctionAcceleration,
+  MDCAnimationTimingFunctionFadeIn = MDCAnimationTimingFunctionDeceleration,
+  MDCAnimationTimingFunctionFadeOut = MDCAnimationTimingFunctionAcceleration,
 };
 
 /**
