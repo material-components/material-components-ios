@@ -16,9 +16,9 @@
 
 #import "MDCBottomAppBarView.h"
 
-#import "MaterialNavigationBar.h"
-#import "MaterialRTL.h"
 #import "MDCNavigationBarColorThemer.h"
+#import "MDFInternationalization.h"
+#import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
 
@@ -77,7 +77,7 @@ static const int kMDCButtonAnimationDuration = 200;
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                            UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
-  self.layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   [self addFloatingButton];
   [self addBottomBarLayer];
   [self addNavBar];
@@ -92,12 +92,7 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)addNavBar {
-  CGRect navBarFrame = CGRectMake(0,
-                                  kMDCBottomAppBarYOffset,
-                                  self.bounds.size.width,
-                                  self.bounds.size.height);
-  _navBar = [[MDCNavigationBar alloc] initWithFrame:navBarFrame];
-  _navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self addSubview:_navBar];
 
   MDCBasicColorScheme *clearScheme =
@@ -201,7 +196,6 @@ static const int kMDCButtonAnimationDuration = 200;
   }
 }
 
-
 - (void)moveFloatingButtonCenterAnimated:(BOOL)animated {
   CGPoint endPoint = [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   if (animated) {
@@ -243,11 +237,35 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-      self.floatingButton.center =
-  [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
+  self.floatingButton.center =
+      [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+
+  CGRect navBarFrame = CGRectMake(0,
+                                  kMDCBottomAppBarYOffset,
+                                  CGRectGetWidth(self.bounds),
+                                  kMDCBottomAppBarHeight - kMDCBottomAppBarYOffset);
+  self.navBar.frame = navBarFrame;
 }
 
+- (UIEdgeInsets)mdc_safeAreaInsets {
+  UIEdgeInsets insets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+
+    // Accommodate insets for iPhone X.
+    insets = self.safeAreaInsets;
+  }
+#endif
+  return insets;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  UIEdgeInsets insets = self.mdc_safeAreaInsets;
+  CGFloat heightWithInset = kMDCBottomAppBarHeight + insets.bottom;
+  CGSize insetSize = CGSizeMake(size.width, heightWithInset);
+  return insetSize;
+}
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 

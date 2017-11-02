@@ -19,7 +19,6 @@ import MaterialComponents
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
-  let bottomBarViewHeight: CGFloat = 96
   let appBar = MDCAppBar()
   let bottomBarView = MDCBottomAppBarView()
 
@@ -48,11 +47,6 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {
-    let frame = CGRect(x: 0,
-                       y: self.view.bounds.height - bottomBarViewHeight,
-                       width: self.view.bounds.width,
-                       height: bottomBarViewHeight)
-    bottomBarView.frame = frame
     bottomBarView.autoresizingMask = [ .flexibleWidth, .flexibleTopMargin ]
     view.addSubview(bottomBarView)
 
@@ -101,16 +95,25 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
+  
+  override func viewWillLayoutSubviews() {
+    let size = bottomBarView.sizeThatFits(view.bounds.size)
+    let bottomBarViewFrame = CGRect(x: 0,
+                                    y: view.bounds.size.height - size.height,
+                                    width: size.width,
+                                    height: size.height)
+    bottomBarView.frame = bottomBarViewFrame
+  }
 
 }
 
 // MARK: Catalog by convention
 extension BottomAppBarTypicalUseSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Bottom App Bar", "Bottom App Bar (Swift)"]
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
 

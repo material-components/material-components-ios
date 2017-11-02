@@ -101,10 +101,17 @@
     [context.containerView addSubview:self.scrimView];
   }
 
+  [CATransaction begin];
+  [CATransaction setCompletionBlock:^{
+    [context transitionDidEnd];
+  }];
+
   [animator animateWithTiming:motion.scrimFade
                       toLayer:self.scrimView.layer
                    withValues:@[ @0, @1 ]
                       keyPath:@"opacity"];
+
+  [CATransaction commit];
 }
 
 @end

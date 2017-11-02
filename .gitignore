@@ -1,3 +1,6 @@
+bazel-*
+.kokoro-ios-runner
+
 # MDC
 
 build_tests/CocoapodsObjCApp/CocoapodsObjCApp.xcworkspace
