@@ -492,6 +492,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
+  button.minimumSize = CGSizeMake(15, 33);
+  button.maximumSize = CGSizeMake(17, 41);
   CGFloat buttonAlpha = 0.5;
   button.alpha = buttonAlpha;
   button.enabled = NO;
@@ -526,6 +528,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
   XCTAssertEqualObjects(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
+  XCTAssertTrue(CGSizeEqualToSize(button.minimumSize, unarchivedButton.minimumSize));
+  XCTAssertTrue(CGSizeEqualToSize(button.maximumSize, unarchivedButton.maximumSize));
   XCTAssertEqual(button.enabled, unarchivedButton.enabled);
   XCTAssertEqualWithAccuracy(button.alpha, unarchivedButton.alpha, 0.0001);
   unarchivedButton.enabled = YES;
