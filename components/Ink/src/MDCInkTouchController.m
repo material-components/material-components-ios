@@ -223,6 +223,25 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
   return YES;
 }
 
+#pragma mark
+
++ (MDCInkView *)injectedInkViewForView:(UIView *)view {
+  MDCInkView *foundInkView = nil;
+  for (MDCInkView *subview in view.subviews) {
+    if ([subview isKindOfClass:[MDCInkView class]]) {
+      foundInkView = subview;
+      break;
+    }
+  }
+  if (!foundInkView) {
+    foundInkView = [[MDCInkView alloc] initWithFrame:view.bounds];
+    foundInkView.autoresizingMask =
+    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [view addSubview:foundInkView];
+  }
+  return foundInkView;
+}
+
 #pragma mark - Deprecations
 
 - (MDCInkView *)inkView {
