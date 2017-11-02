@@ -37,7 +37,8 @@ errors to allow the normal deprecation process to work:
 
 ### Xcode
 
-The core team uses **Xcode 8 and Swift 3.0**
+The core team tests against **Xcode 8.3.3, Xcode 9.0.1, Xcode 9.1 and Swift 3.2**. 
+Swift 4 support is added whenever possible and will be the standard when Xcode 8 support is dropped in 2018.
 
 ### iOS
 
@@ -45,7 +46,7 @@ Our components currently support **iOS 8.0 and up**.
 
 ### CocoaPods
 
-We are using CocoaPods 1.2.
+We are using CocoaPods 1.3.1.
 
 ### Ruby
 
