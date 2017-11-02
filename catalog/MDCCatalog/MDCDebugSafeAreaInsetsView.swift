@@ -47,7 +47,7 @@ class MDCDebugSafeAreaInsetsView: UIView {
 #endif
 
   override func layoutSubviews() {
-    let safeAreaInsets = UIEdgeInsets.zero
+    var safeAreaInsets = UIEdgeInsets.zero
 #if swift(>=3.2)
     if #available(iOS 11, *) {
       safeAreaInsets = self.safeAreaInsets

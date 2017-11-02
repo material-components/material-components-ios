@@ -24,8 +24,6 @@ import MaterialComponents.MaterialThemes
 import MaterialComponents.MaterialTypography
 import MaterialComponents.MaterialIcons_ic_arrow_back
 
-import MDCCatalog.MDCInkTouchController
-
 import UIKit
 
 class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
@@ -253,7 +251,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
-    let safeInsets = CGFloat(0)
+    var safeInsets = CGFloat(0)
 #if swift(>=3.2)
     if #available(iOS 11, *) {
       safeInsets = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
