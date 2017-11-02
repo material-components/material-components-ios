@@ -20,12 +20,14 @@
 
 + (CAMediaTimingFunction *)mdc_functionWithType:(MDCAnimationTimingFunction)type {
   switch (type) {
-    case MDCAnimationTimingFunctionEaseInOut:
+    case MDCAnimationTimingFunctionStandard:
       return [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.2f:1.0f];
-    case MDCAnimationTimingFunctionEaseOut:
+    case MDCAnimationTimingFunctionDeceleration:
       return [[CAMediaTimingFunction alloc] initWithControlPoints:0.0f:0.0f:0.2f:1.0f];
-    case MDCAnimationTimingFunctionEaseIn:
+    case MDCAnimationTimingFunctionAcceleration:
       return [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:1.0f:1.0f];
+    case MDCAnimationTimingFunctionSharp:
+      return [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.6f:1.0f];
   }
   NSAssert(NO, @"Invalid MDCAnimationTimingFunction value %i.", (int)type);
   // Reasonable default to use in Release mode for garbage input.
