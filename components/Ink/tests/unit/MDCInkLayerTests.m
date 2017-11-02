@@ -14,7 +14,8 @@
  limitations under the License.
  */
 
-@import XCTest;
+#import <XCTest/XCTest.h>
+#import "MaterialInk.h"
 #import "MDCInkLayer+Testing.h"
 
 #pragma mark - Property exposure
@@ -128,7 +129,7 @@
   self.inkLayer = [[MDCInkLayer alloc] init];
   MDCInkLayerForegroundRipple *foregroundRipple = [[MDCInkLayerForegroundRipple alloc] init];
   foregroundRipple.animationDelegate = self;
-  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0,
+  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0U,
                  @"There should be no foreground ripples at the start of the test.");
   [self.inkLayer.foregroundRipples addObject:foregroundRipple];
   self.expectation = [self expectationWithDescription:@"Background ripple completion"];
@@ -138,7 +139,7 @@
 
   // Then
   [self waitForExpectationsWithTimeout:5 handler:nil];
-  XCTAssertEqual(self.inkLayer.foregroundRipples.count, 0,
+  XCTAssertEqual(self.inkLayer.foregroundRipples.count, 0U,
                  @"After exiting the only foreround ripple, the array should be empty.");
 }
 
@@ -147,7 +148,7 @@
   self.inkLayer = [[MDCInkLayer alloc] init];
   MDCInkLayerBackgroundRipple *backgroundRipple = [[MDCInkLayerBackgroundRipple alloc] init];
   backgroundRipple.animationDelegate = self;
-  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0,
+  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0U,
                  @"There should be no background ripples at the start of the test.");
   [self.inkLayer.backgroundRipples addObject:backgroundRipple];
   self.expectation = [self expectationWithDescription:@"Background ripple completion"];
@@ -157,7 +158,7 @@
 
   // Then
   [self waitForExpectationsWithTimeout:5 handler:nil];
-  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0,
+  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0U,
                  @"After exiting the only foreround ripple, the array should be empty.");
 }
 
