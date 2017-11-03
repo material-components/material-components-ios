@@ -159,7 +159,7 @@ static NSString * const kCell = @"Cell";
       break;
     case 3:
       cell.accessoryView = self.modeSwitch;
-      cell.textLabel.text = @"Show determinate";
+      cell.textLabel.text = @"Show Determinate";
       break;
     default:
       break;
