@@ -39,6 +39,7 @@ static const CGFloat kActivityInitialProgress = 0.6f;
 
 @property(nonatomic, strong) UISlider *slider;
 @property(nonatomic, strong) UISwitch *onSwitch;
+@property(nonatomic, strong) UISwitch *modeSwitch;
 
 @end
 
