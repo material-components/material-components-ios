@@ -621,22 +621,22 @@ static const CGFloat kSingleCycleRotation =
   [_animator animateWithTiming:timing.outerRotation
                        toLayer:_outerRotationLayer
                     withValues:outerRotation
-                       keyPath:@"transform.rotation.z"];
+                       keyPath:MDMKeyPathRotation];
 
   [_animator animateWithTiming:timing.innerRotation
                        toLayer:_strokeLayer
                     withValues:innerRotation
-                       keyPath:@"transform.rotation.z"];
+                       keyPath:MDMKeyPathRotation];
 
   [_animator animateWithTiming:timing.strokeStart
                        toLayer:_strokeLayer
                     withValues:strokeStart
-                       keyPath:@"strokeStart"];
+                       keyPath:MDMKeyPathStrokeStart];
 
   [_animator animateWithTiming:timing.strokeEnd
                        toLayer:_strokeLayer
                     withValues:strokeEnd
-                       keyPath:@"strokeEnd"];
+                       keyPath:MDMKeyPathStrokeEnd];
 
   [CATransaction commit];
 }
