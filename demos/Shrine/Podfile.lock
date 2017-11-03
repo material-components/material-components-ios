@@ -125,7 +125,7 @@ EXTERNAL SOURCES:
     :path: ../supplemental
 
 SPEC CHECKSUMS:
-  MaterialComponents: 246309fe020b2782255df4b9e3b485cd65da1f4f
+  MaterialComponents: 9eb7099be71146f85915eae81dc21edf2b2d480c
   MDFInternationalization: 51b5f3889aca8bc13385e9a6c363eb0b0f257cf9
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   RemoteImageServiceForMDCDemos: 5bd6eaf45ef796b0fcf744aff0175db37c272ce0

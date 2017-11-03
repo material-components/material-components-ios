@@ -71,6 +71,12 @@ PODS:
     - MaterialComponents/private/Math
     - MDFInternationalization
   - MaterialComponents/BottomNavigation (38.1.1):
+    - MaterialComponents/BottomNavigation/ColorThemer (= 38.1.1)
+    - MaterialComponents/BottomNavigation/Component (= 38.1.1)
+  - MaterialComponents/BottomNavigation/ColorThemer (38.1.1):
+    - MaterialComponents/BottomNavigation/Component
+    - MaterialComponents/Themes
+  - MaterialComponents/BottomNavigation/Component (38.1.1):
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
@@ -194,7 +200,7 @@ PODS:
     - MaterialComponents/Themes
   - MaterialComponents/Ink/Component (38.1.1)
   - MaterialComponents/MaskedTransition (38.1.1):
-    - MotionAnimator (~> 1.0)
+    - MotionAnimator (~> 2.0)
     - MotionInterchange (~> 1.0)
     - MotionTransitioning (~> 4.0)
   - MaterialComponents/NavigationBar (38.1.1):
@@ -332,7 +338,7 @@ PODS:
     - MaterialComponents/private/Application
   - MDFInternationalization (1.0.2)
   - MDFTextAccessibility (1.2.0)
-  - MotionAnimator (1.1.3):
+  - MotionAnimator (2.0.0):
     - MotionInterchange
   - MotionInterchange (1.2.0)
   - MotionTransitioning (4.0.1)
@@ -345,10 +351,10 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 246309fe020b2782255df4b9e3b485cd65da1f4f
+  MaterialComponents: 9eb7099be71146f85915eae81dc21edf2b2d480c
   MDFInternationalization: 51b5f3889aca8bc13385e9a6c363eb0b0f257cf9
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
-  MotionAnimator: f241c4acd49dea603c3a2ea131727d57853a281b
+  MotionAnimator: 38933cf4bdfe0183ba3ed1f8a8963b98e83a4bca
   MotionInterchange: 499c98e7628a8a078905749734dbfedbfae54cca
   MotionTransitioning: 277501a1a1e6121c0ab523e6a3e00d64659c3367
 
