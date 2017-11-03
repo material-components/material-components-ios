@@ -17,7 +17,10 @@ limitations under the License.
 import UIKit
 
 import CatalogByConvention
+
 import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialCollections
+import MaterialComponents.MDCFlexibleHeaderColorThemer
 import MaterialComponents.MaterialTypography
 
 class NodeViewTableViewDemoCell: UITableViewCell {
