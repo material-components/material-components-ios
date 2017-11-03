@@ -407,7 +407,7 @@ extension TextFieldLegacySwiftExample {
 }
 
 extension TextFieldLegacySwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "[Legacy] Typical Use"]
   }
 

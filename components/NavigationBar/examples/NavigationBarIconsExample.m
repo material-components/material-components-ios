@@ -17,12 +17,11 @@
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
+#import "MDFInternationalization.h"
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialNavigationBar.h"
-#import "UIImage+MaterialRTL.h"
-#import "UIView+MaterialRTL.h"
 
 @interface NavigationBarIconsExample ()
 
@@ -47,7 +46,7 @@
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                        mdc_imageFlippedForRightToLeftLayoutDirection]
+                        mdf_imageWithHorizontallyFlippedOrientation]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:self

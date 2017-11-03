@@ -55,7 +55,8 @@ extension TabBarIconSwiftExample {
 
     self.addChildViewController(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = UIColor.white
-    appBar.headerViewController.headerView.minimumHeight = 76 + 72
+    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBar.headerViewController.headerView.minimumHeight = 56 + 72
     appBar.headerViewController.headerView.tintColor = MDCPalette.blue.tint500
 
     appBar.headerStackView.bottomBar = self.tabBar
@@ -237,11 +238,11 @@ extension TabBarIconSwiftExample {
 
 // MARK: - Catalog by convention
 extension TabBarIconSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Tab Bar", "Icons and Text (Swift)"]
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
 

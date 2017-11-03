@@ -21,6 +21,7 @@ class TextInputTests: XCTestCase {
   func testMDCTextInputProtocolConformanceSingleline() {
     let textField = MDCTextField()
 
+    XCTAssertNotNil(textField.cursorColor)
     XCTAssertNotNil(textField.leadingUnderlineLabel)
     XCTAssertNotNil(textField.trailingUnderlineLabel)
     XCTAssertNotNil(textField.placeholderLabel)
@@ -37,6 +38,9 @@ class TextInputTests: XCTestCase {
 
     textField.clearButton.tintColor = .red
     XCTAssertEqual(textField.clearButton.tintColor, .red)
+
+    textField.cursorColor = .yellow
+    XCTAssertEqual(textField.cursorColor, .yellow)
 
     textField.borderView?.borderFillColor = nil
     XCTAssertNotEqual(textField.borderView?.borderFillColor, .purple)
@@ -103,6 +107,12 @@ class TextInputTests: XCTestCase {
 
     textField.borderView?.borderStrokeColor = nil
     XCTAssertNotEqual(textField.borderView?.borderStrokeColor, .orange)
+
+    textField.clearButton.tintColor = .red
+    XCTAssertEqual(textField.clearButton.tintColor, .red)
+
+    textField.cursorColor = .yellow
+    XCTAssertEqual(textField.cursorColor, .yellow)
 
     let gray = UIColor.gray
 

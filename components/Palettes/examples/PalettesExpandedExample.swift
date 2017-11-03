@@ -45,11 +45,11 @@ class PalettesGeneratedExampleViewController: PalettesExampleViewController {
 
 // MARK: - Catalog by convention
 extension PalettesGeneratedExampleViewController {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Palettes", "Generated Palettes"]
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
 }
