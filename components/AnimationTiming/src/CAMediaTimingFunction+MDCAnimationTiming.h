@@ -45,7 +45,9 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
   MDCAnimationTimingFunctionEaseIn,
 
   /**
-   This curve should be used for motion when elements quickly accelerate and decelerate. It is used by exiting elements that may return to the screen at any time. The deceleration is faster than the standard curve since it doesn't follow an exact path to the off-screen point.
+   This curve should be used for motion when elements quickly accelerate and decelerate. It is
+   used by exiting elements that may return to the screen at any time. The deceleration is
+   faster than the standard curve since it doesn't follow an exact path to the off-screen point.
    */
   MDCAnimationTimingFunctionSharp,
 
