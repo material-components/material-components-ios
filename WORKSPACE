@@ -35,3 +35,15 @@ git_repository(
     remote = "https://github.com/material-foundation/material-text-accessibility-ios.git",
     commit = "fd570d71ae0124c75ad5af00e6b8b4b1668d5e40",
 )
+
+git_repository(
+    name = "motion_interchange_objc",
+    remote = "https://github.com/material-motion/motion-interchange-objc.git",
+    tag = "v1.2.0",
+)
+
+git_repository(
+    name = "motion_animator_objc",
+    remote = "https://github.com/material-motion/motion-animator-objc.git",
+    commit = "0f081454f5cea39a51e1575d9b961b4a9c7488c0",
+)
