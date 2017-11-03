@@ -73,20 +73,6 @@
 @property(nonatomic, assign) UITextFieldViewMode characterCountViewMode;
 
 /**
- The corners to be rounded in the border area.
-
- Default is roundedCornersDefault.
- */
-@property(nonatomic, assign) UIRectCorner roundedCorners;
-
-/**
- Default for roundedCorners.
-
- Default is top right and top left.
- */
-@property(class, nonatomic, assign) UIRectCorner roundedCornersDefault;
-
-/**
  Color for decorations that indicates the input is not enabled / not accepting touch.
 
  Default is disabledColorDefault.
@@ -222,6 +208,20 @@
 
 /** The text displayed in the placeholder label.*/
 @property(nonatomic, nullable, copy) NSString *placeholderText;
+
+/**
+ The corners to be rounded in the border area.
+
+ Default is roundedCornersDefault.
+ */
+@property(nonatomic, assign) UIRectCorner roundedCorners;
+
+/**
+ Default for roundedCorners.
+
+ Default is top right and top left.
+ */
+@property(class, nonatomic, assign) UIRectCorner roundedCornersDefault;
 
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
