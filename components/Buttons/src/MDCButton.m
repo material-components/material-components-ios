@@ -125,8 +125,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 @property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, readonly, strong) MDCShadowLayer *layer;
-@property(nonatomic, assign, getter=ismdc_layerCornerRadiusAssigned)
-    BOOL mdc_layerCornerRadiusAssigned;
+@property(nonatomic, assign, getter=isLayerCornerRadiusAssigned) BOOL layerCornerRadiusAssigned;
 @end
 
 @implementation MDCButton
@@ -216,8 +215,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonLayerCornerRadiusKey]) {
-      _mdc_layerCornerRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonLayerCornerRadiusKey];
-      _mdc_layerCornerRadiusAssigned = YES;
+      _layerCornerRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonLayerCornerRadiusKey];
+      _layerCornerRadiusAssigned = YES;
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBackgroundColorsKey]) {
@@ -264,8 +263,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
   [aCoder encodeObject:_borderColors forKey:MDCButtonBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCButtonBorderWidthsKey];
-  if (self.ismdc_layerCornerRadiusAssigned) {
-    [aCoder encodeDouble:self.mdc_layerCornerRadius forKey:MDCButtonLayerCornerRadiusKey];
+  if (self.isLayerCornerRadiusAssigned) {
+    [aCoder encodeDouble:self.layerCornerRadius forKey:MDCButtonLayerCornerRadiusKey];
   }
   if (_shadowColors) {
     [aCoder encodeObject:_shadowColors forKey:MDCButtonShadowColorsKey];
@@ -797,15 +796,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
 }
 
-- (void)setMdc_layerCornerRadius:(CGFloat)mdc_layerCornerRadius {
-  self.mdc_layerCornerRadiusAssigned = YES;
-  _mdc_layerCornerRadius = mdc_layerCornerRadius;
+- (void)setLayerCornerRadius:(CGFloat)layerCornerRadius {
+  self.layerCornerRadiusAssigned = YES;
+  _layerCornerRadius = layerCornerRadius;
   [self setNeedsLayout];
 }
 
 - (CGFloat)cornerRadius {
-  if (self.ismdc_layerCornerRadiusAssigned) {
-    return self.mdc_layerCornerRadius;
+  if (self.isLayerCornerRadiusAssigned) {
+    return self.layerCornerRadius;
   }
   return 2;
 }

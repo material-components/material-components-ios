@@ -102,7 +102,7 @@
  */
 // See https://github.com/material-components/material-components-ios/pull/2256 for a discussion on
 // why the button needs to be layed-out after setting the cornerRadius.
-@property(nonatomic, assign) CGFloat mdc_layerCornerRadius;
+@property(nonatomic, assign) CGFloat layerCornerRadius;
 
 /**
  The apparent background color as seen by the user, i.e. the color of the view behind the button.

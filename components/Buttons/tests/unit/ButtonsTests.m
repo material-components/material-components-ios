@@ -86,15 +86,17 @@ static NSString *controlStateDescription(UIControlState controlState) {
 static const CGFloat MDCButtonTestingSubclassRadius = 9;
 
 /*
- A simple testing subclass used to verify the behavior of mdc_layerCornerRadius.
+ A simple testing subclass used to verify the behavior of layerCornerRadius.
  */
 @interface MDCButtonTestingSubclass : MDCButton
 @end
 
 @implementation MDCButtonTestingSubclass
+
 - (CGFloat)cornerRadius {
   return MDCButtonTestingSubclassRadius;
 }
+
 @end
 
 @interface ButtonsTests : XCTestCase
@@ -509,7 +511,7 @@ static const CGFloat MDCButtonTestingSubclassRadius = 9;
   button.underlyingColorHint = randomColor();
   button.minimumSize = CGSizeMake(15, 33);
   button.maximumSize = CGSizeMake(17, 41);
-  button.mdc_layerCornerRadius = 5;
+  button.layerCornerRadius = 5;
   CGFloat buttonAlpha = 0.5;
   button.alpha = buttonAlpha;
   button.enabled = NO;
@@ -560,8 +562,8 @@ static const CGFloat MDCButtonTestingSubclassRadius = 9;
     XCTAssertEqualObjects([button shadowColorForState:controlState],
                           [unarchivedButton shadowColorForState:controlState]);
   }
-  XCTAssertEqualWithAccuracy(unarchivedButton.mdc_layerCornerRadius,
-                             button.mdc_layerCornerRadius,
+  XCTAssertEqualWithAccuracy(unarchivedButton.layerCornerRadius,
+                             button.layerCornerRadius,
                              0.0001);
 }
 
@@ -939,7 +941,7 @@ static const CGFloat MDCButtonTestingSubclassRadius = 9;
                 NSStringFromCGRect(button.frame));
 }
 
-#pragma mark - mdc_layerCornerRadius
+#pragma mark - layerCornerRadius
 
 - (void)testSettingMdcLayerCornerRadiusDoesNotImpactSubclasses {
   // Given
@@ -948,7 +950,7 @@ static const CGFloat MDCButtonTestingSubclassRadius = 9;
   XCTAssertEqualWithAccuracy(button.layer.cornerRadius, MDCButtonTestingSubclassRadius, 0.0001);
 
   // When
-  button.mdc_layerCornerRadius = MDCButtonTestingSubclassRadius + 2;
+  button.layerCornerRadius = MDCButtonTestingSubclassRadius + 2;
   [button layoutIfNeeded];
 
   // Then
@@ -964,7 +966,7 @@ static const CGFloat MDCButtonTestingSubclassRadius = 9;
 
   // When
   CGFloat expectedRadius = button.layer.cornerRadius + 1.5;
-  button.mdc_layerCornerRadius = expectedRadius;
+  button.layerCornerRadius = expectedRadius;
   [button layoutIfNeeded];
 
   // Then
