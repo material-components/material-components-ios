@@ -57,6 +57,7 @@ static NSString *const MDCButtonBorderColorsKey = @"MDCButtonBorderColorsKey";
 static NSString *const MDCButtonBorderWidthsKey = @"MDCButtonBorderWidthsKey";
 
 static NSString *const MDCButtonShadowColorsKey = @"MDCButtonShadowColorsKey";
+static NSString *const MDCButtonLayerCornerRadiusKey = @"MDCButtonLayerCornerRadiusKey";
 
 // Specified in Material Guidelines
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
@@ -124,6 +125,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 @property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, readonly, strong) MDCShadowLayer *layer;
+@property(nonatomic, assign, getter=isLayerCornerRadiusAssigned) BOOL layerCornerRadiusAssigned;
 @end
 
 @implementation MDCButton
@@ -212,6 +214,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       _borderWidths = [aDecoder decodeObjectForKey:MDCButtonBorderWidthsKey];
     }
 
+    if ([aDecoder containsValueForKey:MDCButtonLayerCornerRadiusKey]) {
+      _layerCornerRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonLayerCornerRadiusKey];
+      _layerCornerRadiusAssigned = YES;
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonBackgroundColorsKey]) {
       _backgroundColors = [aDecoder decodeObjectForKey:MDCButtonBackgroundColorsKey];
     } else {
@@ -256,6 +263,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
   [aCoder encodeObject:_borderColors forKey:MDCButtonBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCButtonBorderWidthsKey];
+  if (self.isLayerCornerRadiusAssigned) {
+    [aCoder encodeDouble:self.layerCornerRadius forKey:MDCButtonLayerCornerRadiusKey];
+  }
   if (_shadowColors) {
     [aCoder encodeObject:_shadowColors forKey:MDCButtonShadowColorsKey];
   }
@@ -786,8 +796,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
 }
 
+- (void)setLayerCornerRadius:(CGFloat)layerCornerRadius {
+  self.layerCornerRadiusAssigned = YES;
+  _layerCornerRadius = layerCornerRadius;
+  [self setNeedsLayout];
+}
+
 - (CGFloat)cornerRadius {
-  return 2.0f;
+  if (self.isLayerCornerRadiusAssigned) {
+    return self.layerCornerRadius;
+  }
+  return 2;
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {

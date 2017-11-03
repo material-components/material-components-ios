@@ -16,6 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCButton+Subclassing.h"
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
@@ -81,6 +82,22 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
   return [string copy];
 }
+
+static const CGFloat MDCButtonTestingSubclassRadius = 9;
+
+/*
+ A simple testing subclass used to verify the behavior of layerCornerRadius.
+ */
+@interface MDCButtonTestingSubclass : MDCButton
+@end
+
+@implementation MDCButtonTestingSubclass
+
+- (CGFloat)cornerRadius {
+  return MDCButtonTestingSubclassRadius;
+}
+
+@end
 
 @interface ButtonsTests : XCTestCase
 @end
@@ -494,6 +511,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.underlyingColorHint = randomColor();
   button.minimumSize = CGSizeMake(15, 33);
   button.maximumSize = CGSizeMake(17, 41);
+  button.layerCornerRadius = 5;
   CGFloat buttonAlpha = 0.5;
   button.alpha = buttonAlpha;
   button.enabled = NO;
@@ -544,6 +562,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
     XCTAssertEqualObjects([button shadowColorForState:controlState],
                           [unarchivedButton shadowColorForState:controlState]);
   }
+  XCTAssertEqualWithAccuracy(unarchivedButton.layerCornerRadius,
+                             button.layerCornerRadius,
+                             0.0001);
 }
 
 - (void)testDecodeOnUpgradeFromVersionWithoutShadowColors {
@@ -918,6 +939,38 @@ static NSString *controlStateDescription(UIControlState controlState) {
                 @"\nE: %@\nA: %@",
                 NSStringFromCGRect(expectedFrame),
                 NSStringFromCGRect(button.frame));
+}
+
+#pragma mark - layerCornerRadius
+
+- (void)testSettingMdcLayerCornerRadiusDoesNotImpactSubclasses {
+  // Given
+  MDCButtonTestingSubclass *button = [[MDCButtonTestingSubclass alloc] initWithFrame:CGRectZero];
+  [button layoutIfNeeded];
+  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, MDCButtonTestingSubclassRadius, 0.0001);
+
+  // When
+  button.layerCornerRadius = MDCButtonTestingSubclassRadius + 2;
+  [button layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, MDCButtonTestingSubclassRadius, 0.0001);
+}
+
+- (void)testSettingCornerRadius {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button layoutIfNeeded];
+  XCTAssertNotEqualWithAccuracy(button.layer.cornerRadius, 0, 0.0001);
+  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, [button cornerRadius], 0.0001);
+
+  // When
+  CGFloat expectedRadius = button.layer.cornerRadius + 1.5;
+  button.layerCornerRadius = expectedRadius;
+  [button layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(expectedRadius, button.layer.cornerRadius, 0.0001);
 }
 
 @end
