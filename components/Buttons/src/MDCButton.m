@@ -354,12 +354,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)layoutSubviews {
   [super layoutSubviews];
   self.layer.shadowPath = [self boundingPath].CGPath;
+  if ([self respondsToSelector:@selector(cornerRadius)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if ([self didOverrideMethod:@selector(cornerRadius)]) {
     self.layer.cornerRadius = [self cornerRadius];
-  }
 #pragma clang diagnostic pop
+  }
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
   if (_inkView.inkStyle == MDCInkStyleUnbounded) {
@@ -791,12 +791,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (UIBezierPath *)boundingPath {
   CGFloat cornerRadius = self.layer.cornerRadius;
+
+  if ([self respondsToSelector:@selector(cornerRadius)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if ([self didOverrideMethod:@selector(cornerRadius)]) {
     cornerRadius = [self cornerRadius];
-  }
 #pragma clang diagnostic pop
+  }
+
 
   return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
@@ -808,25 +810,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (BOOL)shouldHaveOpaqueBackground {
   BOOL isFlatButton = MDCCGFloatIsExactlyZero([self elevationForState:UIControlStateNormal]);
   return !isFlatButton;
-}
-
-- (BOOL)didOverrideMethod:(SEL)selector {
-  Class superclass = [self superclass];
-  IMP selfIMP = [self methodForSelector:selector];
-  BOOL isOverriden = NO;
-
-  while (superclass) {
-    isOverriden = [superclass instancesRespondToSelector:selector]
-        && selfIMP != [superclass instanceMethodForSelector:selector];
-
-    if (isOverriden) {
-      break;
-    }
-
-    superclass = [superclass superclass];
-  }
-
-  return isOverriden;
 }
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {

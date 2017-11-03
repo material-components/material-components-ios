@@ -33,6 +33,10 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
   return ButtonTestContentEdgeInsets;
 }
 
+- (CGFloat)cornerRadius {
+  return ButtonTestCornerRadius;
+}
+
 @end
 
 @interface ButtonSubclassingTests : XCTestCase
@@ -59,13 +63,25 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
                                               button.contentEdgeInsets));
 }
 
+- (void)testSubclassCornerRadius {
+  // Given
+  MDCButton *button = [[ButtonSubclass alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  [button layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(ButtonTestCornerRadius, button.layer.cornerRadius, 0.0001);
+}
+
 - (void)testAssignedCornerRadius {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
   button.layer.cornerRadius = ButtonTestCornerRadius;
+  [button sizeToFit];
+  [button layoutIfNeeded];
 
   // Then
-  XCTAssertEqual(ButtonTestCornerRadius, button.layer.cornerRadius);
+  XCTAssertEqualWithAccuracy(ButtonTestCornerRadius, button.layer.cornerRadius, 0.0001);
 }
 
 @end
