@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "38.0.1"
+  s.version      = "38.1.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -44,9 +44,9 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
+      ss.dependency "MDFInternationalization"
       ss.dependency "MaterialComponents/Palettes"
       ss.dependency "MaterialComponents/private/Application"
-      ss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -81,8 +81,8 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/ShadowElevations"
       sss.dependency "MaterialComponents/ShadowLayer"
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
-      sss.dependency "MaterialComponents/private/RTL"
       sss.dependency "MaterialComponents/private/UIMetrics"
     end
     ss.subspec "ColorThemer" do |sss|
@@ -99,10 +99,21 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
+    ss.dependency "MDFInternationalization"
     ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/NavigationBar"
     ss.dependency "MaterialComponents/private/Math"
-    ss.dependency "MaterialComponents/private/RTL"
+  end
+
+  s.subspec "BottomNavigation" do |ss|
+    ss.ios.deployment_target = '8.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+
+    ss.dependency "MDFInternationalization"
+    ss.dependency "MaterialComponents/ShadowElevations"
+    ss.dependency "MaterialComponents/ShadowLayer"
   end
 
   s.subspec "BottomSheet" do |ss|
@@ -152,8 +163,8 @@ Pod::Spec.new do |s|
       sss.public_header_files = "components/#{ss.base_name}/src/*.h"
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
+      ss.dependency "MDFInternationalization"
       ss.dependency "MaterialComponents/Buttons"
-      ss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -173,6 +184,7 @@ Pod::Spec.new do |s|
 
     ss.framework = "CoreGraphics", "QuartzCore"
 
+    ss.dependency "MDFInternationalization"
     ss.dependency "MaterialComponents/CollectionLayoutAttributes"
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/Typography"
@@ -184,7 +196,6 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
     ss.dependency "MaterialComponents/private/Icons/ic_reorder"
     ss.dependency "MaterialComponents/private/Math"
-    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "CollectionLayoutAttributes" do |ss|
@@ -303,7 +314,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
-    ss.dependency "MotionTransitioning", "~> 3.3"
+    ss.dependency "MotionTransitioning", "~> 4.0"
     ss.dependency "MotionAnimator", "~> 1.0"
     ss.dependency "MotionInterchange", "~> 1.0"
   end
@@ -320,8 +331,8 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/ButtonBar/Component"
       sss.dependency "MaterialComponents/Typography"
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/private/Math"
-      sss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -368,8 +379,8 @@ Pod::Spec.new do |s|
       sss.public_header_files = "components/#{ss.base_name}/src/*.h"
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/private/Math"
-      sss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -431,13 +442,13 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/AnimationTiming"
       sss.dependency "MaterialComponents/Ink"
       sss.dependency "MaterialComponents/ShadowElevations"
       sss.dependency "MaterialComponents/ShadowLayer"
       sss.dependency "MaterialComponents/Typography"
       sss.dependency "MaterialComponents/private/Math"
-      sss.dependency "MaterialComponents/private/RTL"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -458,8 +469,9 @@ Pod::Spec.new do |s|
       sss.dependency "MaterialComponents/Palettes"
       sss.dependency "MaterialComponents/Typography"
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/private/Math"
-      sss.dependency "MaterialComponents/private/RTL"
+      sss.dependency "MDFInternationalization"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -517,12 +529,6 @@ Pod::Spec.new do |s|
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
     end
 
-    pss.subspec "RTL" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
-    end
-
     pss.subspec "ShapeLibrary" do |ss|
       ss.ios.deployment_target = '8.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
@@ -551,8 +557,8 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/ShadowLayer"
       ss.dependency "MaterialComponents/Typography"
 
+      ss.dependency "MDFInternationalization"
       ss.dependency "MaterialComponents/private/Math"
-      ss.dependency "MaterialComponents/private/RTL"
     end
 
     pss.subspec "UIMetrics" do |ss|

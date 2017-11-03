@@ -215,6 +215,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Bare/Pods-Bare-resources.sh",
 				"${PODS_ROOT}/../../../components/ActivityIndicator/src/MaterialActivityIndicator.bundle",
 				"${PODS_ROOT}/../../../components/AppBar/src/MaterialAppBar.bundle",
+				"${PODS_ROOT}/../../../components/BottomNavigation/src/MaterialBottomNavigation.bundle",
 				"${PODS_ROOT}/../../../components/CollectionCells/src/MaterialCollectionCells.bundle",
 				"${PODS_ROOT}/../../../components/Collections/src/MaterialCollections.bundle",
 				"${PODS_ROOT}/../../../components/Dialogs/src/MaterialDialogs.bundle",

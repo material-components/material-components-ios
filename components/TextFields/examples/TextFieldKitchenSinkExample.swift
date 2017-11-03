@@ -261,6 +261,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldCustomFontFloating.font = UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFontFloating.delegate = self
     textFieldCustomFontFloating.clearButtonMode = .whileEditing
+    textFieldCustomFontFloating.cursorColor = .orange
 
     let textFieldControllerDefaultCustomFontFloating =
       MDCTextInputControllerDefault(textInput: textFieldCustomFontFloating)
