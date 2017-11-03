@@ -89,6 +89,20 @@
  */
 @property(nonatomic, assign) CGSize maximumSize UI_APPEARANCE_SELECTOR;
 
+/**
+ When set, overrides the value returned by |-cornerRadius| and will become the
+ value of the button's layer's cornerRadius. If unset, |-cornerRadius| will return
+ a default value.
+
+ If changing the value of this property while the button is on-screen, it is important to layout
+ the button so that its shadowPath can be updated with the new value.
+
+ @note Do not override the implementation of this property. It will be removed in a future version of
+ MDCButton and clients will need to migrate to setting CALayer's |cornerRadius| property directly.
+ */
+// See https://github.com/material-components/material-components-ios/pull/2256 for a discussion on
+// why the button needs to be layed-out after setting the cornerRadius.
+@property(nonatomic, assign) CGFloat mdc_layerCornerRadius;
 
 /**
  The apparent background color as seen by the user, i.e. the color of the view behind the button.
