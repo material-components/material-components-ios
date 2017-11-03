@@ -1,11 +1,11 @@
 PODS:
-  - MaterialComponents/AppBar (38.1.0):
-    - MaterialComponents/AppBar/ColorThemer (= 38.1.0)
-    - MaterialComponents/AppBar/Component (= 38.1.0)
-  - MaterialComponents/AppBar/ColorThemer (38.1.0):
+  - MaterialComponents/AppBar (38.1.1):
+    - MaterialComponents/AppBar/ColorThemer (= 38.1.1)
+    - MaterialComponents/AppBar/Component (= 38.1.1)
+  - MaterialComponents/AppBar/ColorThemer (38.1.1):
     - MaterialComponents/AppBar/Component
     - MaterialComponents/Themes
-  - MaterialComponents/AppBar/Component (38.1.0):
+  - MaterialComponents/AppBar/Component (38.1.1):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -16,20 +16,20 @@ PODS:
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFInternationalization
-  - MaterialComponents/ButtonBar/Component (38.1.0):
+  - MaterialComponents/ButtonBar/Component (38.1.1):
     - MaterialComponents/Buttons
     - MDFInternationalization
-  - MaterialComponents/Buttons (38.1.0):
-    - MaterialComponents/Buttons/ColorThemer (= 38.1.0)
-    - MaterialComponents/Buttons/Component (= 38.1.0)
-    - MaterialComponents/Buttons/TitleColorAccessibilityMutator (= 38.1.0)
+  - MaterialComponents/Buttons (38.1.1):
+    - MaterialComponents/Buttons/ColorThemer (= 38.1.1)
+    - MaterialComponents/Buttons/Component (= 38.1.1)
+    - MaterialComponents/Buttons/TitleColorAccessibilityMutator (= 38.1.1)
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/Buttons/ColorThemer (38.1.0):
+  - MaterialComponents/Buttons/ColorThemer (38.1.1):
     - MaterialComponents/Buttons/Component
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
@@ -38,14 +38,14 @@ PODS:
     - MaterialComponents/Themes
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/Buttons/Component (38.1.0):
+  - MaterialComponents/Buttons/Component (38.1.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/Buttons/TitleColorAccessibilityMutator (38.1.0):
+  - MaterialComponents/Buttons/TitleColorAccessibilityMutator (38.1.1):
     - MaterialComponents/Buttons/Component
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
@@ -53,65 +53,65 @@ PODS:
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (38.1.0):
-    - MaterialComponents/FlexibleHeader/ColorThemer (= 38.1.0)
-    - MaterialComponents/FlexibleHeader/Component (= 38.1.0)
-  - MaterialComponents/FlexibleHeader/ColorThemer (38.1.0):
+  - MaterialComponents/FlexibleHeader (38.1.1):
+    - MaterialComponents/FlexibleHeader/ColorThemer (= 38.1.1)
+    - MaterialComponents/FlexibleHeader/Component (= 38.1.1)
+  - MaterialComponents/FlexibleHeader/ColorThemer (38.1.1):
     - MaterialComponents/FlexibleHeader/Component
     - MaterialComponents/Themes
-  - MaterialComponents/FlexibleHeader/Component (38.1.0):
+  - MaterialComponents/FlexibleHeader/Component (38.1.1):
     - MaterialComponents/private/Application
     - MaterialComponents/private/UIMetrics
     - MDFTextAccessibility
-  - MaterialComponents/HeaderStackView (38.1.0):
-    - MaterialComponents/HeaderStackView/ColorThemer (= 38.1.0)
-    - MaterialComponents/HeaderStackView/Component (= 38.1.0)
-  - MaterialComponents/HeaderStackView/ColorThemer (38.1.0):
+  - MaterialComponents/HeaderStackView (38.1.1):
+    - MaterialComponents/HeaderStackView/ColorThemer (= 38.1.1)
+    - MaterialComponents/HeaderStackView/Component (= 38.1.1)
+  - MaterialComponents/HeaderStackView/ColorThemer (38.1.1):
     - MaterialComponents/HeaderStackView/Component
     - MaterialComponents/Themes
-  - MaterialComponents/HeaderStackView/Component (38.1.0)
-  - MaterialComponents/Ink (38.1.0):
-    - MaterialComponents/Ink/ColorThemer (= 38.1.0)
-    - MaterialComponents/Ink/Component (= 38.1.0)
-  - MaterialComponents/Ink/ColorThemer (38.1.0):
+  - MaterialComponents/HeaderStackView/Component (38.1.1)
+  - MaterialComponents/Ink (38.1.1):
+    - MaterialComponents/Ink/ColorThemer (= 38.1.1)
+    - MaterialComponents/Ink/Component (= 38.1.1)
+  - MaterialComponents/Ink/ColorThemer (38.1.1):
     - MaterialComponents/Ink/Component
     - MaterialComponents/Themes
-  - MaterialComponents/Ink/Component (38.1.0)
-  - MaterialComponents/NavigationBar (38.1.0):
-    - MaterialComponents/NavigationBar/ColorThemer (= 38.1.0)
-    - MaterialComponents/NavigationBar/Component (= 38.1.0)
-  - MaterialComponents/NavigationBar/ColorThemer (38.1.0):
+  - MaterialComponents/Ink/Component (38.1.1)
+  - MaterialComponents/NavigationBar (38.1.1):
+    - MaterialComponents/NavigationBar/ColorThemer (= 38.1.1)
+    - MaterialComponents/NavigationBar/Component (= 38.1.1)
+  - MaterialComponents/NavigationBar/ColorThemer (38.1.1):
     - MaterialComponents/NavigationBar/Component
     - MaterialComponents/Themes
-  - MaterialComponents/NavigationBar/Component (38.1.0):
+  - MaterialComponents/NavigationBar/Component (38.1.1):
     - MaterialComponents/ButtonBar/Component
     - MaterialComponents/private/Math
     - MaterialComponents/Typography
     - MDFInternationalization
     - MDFTextAccessibility
-  - MaterialComponents/PageControl (38.1.0):
-    - MaterialComponents/PageControl/ColorThemer (= 38.1.0)
-    - MaterialComponents/PageControl/Component (= 38.1.0)
-  - MaterialComponents/PageControl/ColorThemer (38.1.0):
+  - MaterialComponents/PageControl (38.1.1):
+    - MaterialComponents/PageControl/ColorThemer (= 38.1.1)
+    - MaterialComponents/PageControl/Component (= 38.1.1)
+  - MaterialComponents/PageControl/ColorThemer (38.1.1):
     - MaterialComponents/PageControl/Component
     - MaterialComponents/Themes
-  - MaterialComponents/PageControl/Component (38.1.0)
-  - MaterialComponents/private/Application (38.1.0)
-  - MaterialComponents/private/Icons/Base (38.1.0)
-  - MaterialComponents/private/Icons/ic_arrow_back (38.1.0):
+  - MaterialComponents/PageControl/Component (38.1.1)
+  - MaterialComponents/private/Application (38.1.1)
+  - MaterialComponents/private/Icons/Base (38.1.1)
+  - MaterialComponents/private/Icons/ic_arrow_back (38.1.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Math (38.1.0)
-  - MaterialComponents/private/UIMetrics (38.1.0):
+  - MaterialComponents/private/Math (38.1.1)
+  - MaterialComponents/private/UIMetrics (38.1.1):
     - MaterialComponents/private/Application
-  - MaterialComponents/ShadowElevations (38.1.0)
-  - MaterialComponents/ShadowLayer (38.1.0):
+  - MaterialComponents/ShadowElevations (38.1.1)
+  - MaterialComponents/ShadowLayer (38.1.1):
     - MaterialComponents/ShadowElevations
-  - MaterialComponents/Themes (38.1.0)
-  - MaterialComponents/Typography (38.1.0):
+  - MaterialComponents/Themes (38.1.1)
+  - MaterialComponents/Typography (38.1.1):
     - MaterialComponents/private/Application
   - MDFInternationalization (1.0.2)
   - MDFTextAccessibility (1.2.0)
-  - RemoteImageServiceForMDCDemos (38.1.0)
+  - RemoteImageServiceForMDCDemos (38.1.1)
 
 DEPENDENCIES:
   - MaterialComponents/AppBar (from `../../`)
@@ -125,10 +125,10 @@ EXTERNAL SOURCES:
     :path: ../supplemental
 
 SPEC CHECKSUMS:
-  MaterialComponents: e07d7505518a647dac30af8a8aa85efbf8945fc9
+  MaterialComponents: 246309fe020b2782255df4b9e3b485cd65da1f4f
   MDFInternationalization: 51b5f3889aca8bc13385e9a6c363eb0b0f257cf9
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
-  RemoteImageServiceForMDCDemos: 067c46bc1f112f935d356d41e47b18777972069e
+  RemoteImageServiceForMDCDemos: 5bd6eaf45ef796b0fcf744aff0175db37c272ce0
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
 
