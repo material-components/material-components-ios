@@ -97,8 +97,7 @@
  If changing the value of this property while the button is on-screen, it is important to layout
  the button so that its shadowPath can be updated with the new value.
 
- @note Do not override the implementation of this property. It will be removed in a future version of
- MDCButton and clients will need to migrate to setting CALayer's |cornerRadius| property directly.
+ @note Do not override the implementation of this property.
  */
 // See https://github.com/material-components/material-components-ios/pull/2256 for a discussion on
 // why the button needs to be layed-out after setting the cornerRadius.
