@@ -7,6 +7,7 @@ target "MDCCatalog" do
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
+  pod 'MDCCatalogObjectiveC', :path => 'MDCCatalogObjectiveC/'
 
   use_frameworks!
 end
