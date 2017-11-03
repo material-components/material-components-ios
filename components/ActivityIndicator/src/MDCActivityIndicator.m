@@ -25,25 +25,25 @@
 #import "private/MaterialActivityIndicatorStrings_table.h"
 #import "MaterialPalettes.h"
 
-static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
-static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
-static const NSTimeInterval kMDCActivityIndicatorPointCycleDuration = 4.0f / 3.0f;
-static const NSTimeInterval kMDCActivityIndicatorPointCycleMinimumVariableDuration =
-    kMDCActivityIndicatorPointCycleDuration / 8;
+static const NSInteger kTotalDetentCount = 5;
+static const NSTimeInterval kAnimateOutDuration = 0.1f;
+static const NSTimeInterval kPointCycleDuration = 4.0f / 3.0f;
+static const NSTimeInterval kPointCycleMinimumVariableDuration =
+    kPointCycleDuration / 8;
 static const CGFloat kCycleRotation = 3.0f / 2.0f;
 static const CGFloat kOuterRotationIncrement =
-    (1.0f / kMDCActivityIndicatorTotalDetentCount) * (CGFloat)M_PI;
+    (1.0f / kTotalDetentCount) * (CGFloat)M_PI;
 static const CGFloat kSpinnerRadius = 12.f;
 static const CGFloat kStrokeLength = 0.75f;
 
 // The Bundle for string resources.
-static NSString *const kMaterialActivityIndicatorBundle = @"MaterialActivityIndicator.bundle";
+static NSString *const kBundle = @"MaterialActivityIndicator.bundle";
 
 /**
  Total rotation (outer rotation + stroke rotation) per _cycleCount. One turn is 2.0f.
  */
 static const CGFloat kSingleCycleRotation =
-    2 * kStrokeLength + kCycleRotation + 1.0f / kMDCActivityIndicatorTotalDetentCount;
+    2 * kStrokeLength + kCycleRotation + 1.0f / kTotalDetentCount;
 
 @interface MDCActivityIndicator ()
 
@@ -443,7 +443,7 @@ static const CGFloat kSingleCycleRotation =
     // Outer 5-point star detent rotation.
     CABasicAnimation *outerRotationAnimation =
         [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    outerRotationAnimation.duration = kMDCActivityIndicatorPointCycleDuration;
+    outerRotationAnimation.duration = kPointCycleDuration;
     outerRotationAnimation.fromValue = @(kOuterRotationIncrement * _cycleCount);
     outerRotationAnimation.toValue = @(kOuterRotationIncrement * (_cycleCount + 1));
     outerRotationAnimation.fillMode = kCAFillModeForwards;
@@ -456,7 +456,7 @@ static const CGFloat kSingleCycleRotation =
 
     CABasicAnimation *strokeRotationAnimation =
         [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    strokeRotationAnimation.duration = kMDCActivityIndicatorPointCycleDuration;
+    strokeRotationAnimation.duration = kPointCycleDuration;
     strokeRotationAnimation.fromValue = @(startRotation);
     strokeRotationAnimation.toValue = @(endRotation);
     strokeRotationAnimation.fillMode = kCAFillModeForwards;
@@ -466,11 +466,11 @@ static const CGFloat kSingleCycleRotation =
     // Stroke start.
     CABasicAnimation *strokeStartPathAnimation =
         [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-    strokeStartPathAnimation.duration = kMDCActivityIndicatorPointCycleDuration / 2;
+    strokeStartPathAnimation.duration = kPointCycleDuration / 2;
     // It is always critical to convertTime:fromLayer: for animations, since changes to layer.speed
     // on this layer or parent layers will alter the offset of beginTime.
     CFTimeInterval currentTime = [_strokeLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-    strokeStartPathAnimation.beginTime = currentTime + kMDCActivityIndicatorPointCycleDuration / 2;
+    strokeStartPathAnimation.beginTime = currentTime + kPointCycleDuration / 2;
     strokeStartPathAnimation.fromValue = @(0.0f);
     strokeStartPathAnimation.toValue = @(kStrokeLength);
     strokeStartPathAnimation.timingFunction = [self materialEaseInOut];
@@ -481,7 +481,7 @@ static const CGFloat kSingleCycleRotation =
     // Stroke end.
     CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     strokeEndPathAnimation.duration =
-        kMDCActivityIndicatorPointCycleDuration * ABS(_lastProgress - _currentProgress);
+        kPointCycleDuration * ABS(_lastProgress - _currentProgress);
     // Ensure the stroke never completely disappears on start by animating from non-zero start and
     // to a value slightly larger than the strokeStart's final value.
     strokeEndPathAnimation.fromValue = @(_minStrokeDifference);
@@ -504,7 +504,7 @@ static const CGFloat kSingleCycleRotation =
   NSInteger nearestCycle = 0;
   CGFloat nearestDistance = CGFLOAT_MAX;
   const CGFloat normalizedProgress = MAX(_lastProgress - _minStrokeDifference, 0.0f);
-  for (NSInteger cycle = 0; cycle < kMDCActivityIndicatorTotalDetentCount; cycle++) {
+  for (NSInteger cycle = 0; cycle < kTotalDetentCount; cycle++) {
     const CGFloat currentRotation = [self normalizedRotationForCycle:cycle];
     if (currentRotation >= normalizedProgress) {
       if (nearestDistance >= (currentRotation - normalizedProgress)) {
@@ -528,14 +528,14 @@ static const CGFloat kSingleCycleRotation =
     targetRotation = 1.0f;
   }
   CGFloat normalizedDuration = 2 * (targetRotation + _currentProgress) / kSingleCycleRotation *
-                               (CGFloat)kMDCActivityIndicatorPointCycleDuration;
+                               (CGFloat)kPointCycleDuration;
   CGFloat strokeEndTravelDistance = targetRotation - _currentProgress + _minStrokeDifference;
   CGFloat totalDistance = targetRotation + strokeEndTravelDistance;
   CGFloat strokeStartDuration =
       MAX(normalizedDuration * targetRotation / totalDistance,
-          (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
+          (CGFloat)kPointCycleMinimumVariableDuration);
   CGFloat strokeEndDuration = MAX(normalizedDuration * strokeEndTravelDistance / totalDistance,
-                                  (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
+                                  (CGFloat)kPointCycleMinimumVariableDuration);
 
   [CATransaction begin];
   {
@@ -594,9 +594,9 @@ static const CGFloat kSingleCycleRotation =
 
     // Change the duration relative to the distance in order to keep same relative speed.
     CGFloat duration = 2.0f * (rotationDelta + _currentProgress) / kSingleCycleRotation *
-                       (CGFloat)kMDCActivityIndicatorPointCycleDuration;
+                       (CGFloat)kPointCycleDuration;
 
-    duration = MAX(duration, (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
+    duration = MAX(duration, (CGFloat)kPointCycleMinimumVariableDuration);
     [CATransaction begin];
     {
       [CATransaction setCompletionBlock:^{
@@ -684,7 +684,7 @@ static const CGFloat kSingleCycleRotation =
 
     // Stroke end.
     CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration = kMDCActivityIndicatorPointCycleDuration / 2;
+    strokeEndPathAnimation.duration = kPointCycleDuration / 2;
     strokeEndPathAnimation.fromValue = @(_lastProgress);
     strokeEndPathAnimation.toValue = @(_currentProgress);
     strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
@@ -710,7 +710,7 @@ static const CGFloat kSingleCycleRotation =
       self.cycleColorsIndex = (self.cycleColorsIndex + 1) % self.cycleColors.count;
       [self updateStrokeColor];
     }
-    _cycleCount = (_cycleCount + 1) % kMDCActivityIndicatorTotalDetentCount;
+    _cycleCount = (_cycleCount + 1) % kTotalDetentCount;
   }
 
   switch (_indicatorMode) {
@@ -771,7 +771,7 @@ static const CGFloat kSingleCycleRotation =
       }
     }
   }];
-  [CATransaction setAnimationDuration:kMDCActivityIndicatorAnimateOutDuration];
+  [CATransaction setAnimationDuration:kAnimateOutDuration];
 
   _strokeLayer.lineWidth = 0;
   _trackLayer.lineWidth = 0;
@@ -829,7 +829,7 @@ static const CGFloat kSingleCycleRotation =
   static NSBundle *bundle = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialActivityIndicatorBundle]];
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kBundle]];
   });
 
   return bundle;
