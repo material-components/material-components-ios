@@ -36,6 +36,14 @@ static const CGFloat kOuterRotationIncrement =
 static const CGFloat kSpinnerRadius = 12.f;
 static const CGFloat kStrokeLength = 0.75f;
 
+#ifndef CGFLOAT_EPSILON
+#if CGFLOAT_IS_DOUBLE
+#define CGFLOAT_EPSILON DBL_EPSILON
+#else
+#define CGFLOAT_EPSILON FLT_EPSILON
+#endif
+#endif
+
 // The Bundle for string resources.
 static NSString *const kBundle = @"MaterialActivityIndicator.bundle";
 
@@ -480,8 +488,12 @@ static const CGFloat kSingleCycleRotation =
 
     // Stroke end.
     CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration =
-        kPointCycleDuration * ABS(_lastProgress - _currentProgress);
+    strokeEndPathAnimation.duration = kPointCycleDuration;
+    // These values may be equal if we've never received a progress. In this case we don't want our
+    // duration to become zero.
+    if (fabs(_lastProgress - _currentProgress) > CGFLOAT_EPSILON) {
+      strokeEndPathAnimation.duration *= ABS(_lastProgress - _currentProgress);
+    }
     // Ensure the stroke never completely disappears on start by animating from non-zero start and
     // to a value slightly larger than the strokeStart's final value.
     strokeEndPathAnimation.fromValue = @(_minStrokeDifference);
