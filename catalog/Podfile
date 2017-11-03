@@ -7,7 +7,7 @@ target "MDCCatalog" do
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
-  pod 'MDCCatalogObjectiveC', :path => 'MDCCatalogObjectiveC/'
+  pod 'MaterialCatalog', :path => 'MDCCatalogObjectiveC/'
 
   use_frameworks!
 end
@@ -18,6 +18,7 @@ target "MDCUnitTests" do
   pod 'MaterialComponentsUnitTests', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
+  pod 'MaterialCatalog', :path => 'MDCCatalogObjectiveC/'
 
   use_frameworks!
 end
@@ -28,6 +29,7 @@ target "MDCActionExtension" do
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
+  pod 'MaterialCatalog', :path => 'MDCCatalogObjectiveC/'
 
   use_frameworks!
 end

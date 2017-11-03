@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "MDCCatalogObjectiveC"
+  s.name         = "MaterialCatalog"
   s.version      = "38.0.1"
   s.summary      = "A helper objective c classs for the MDC catalog."
   s.description  = "This spec is made for use in the MDC Catalog."
