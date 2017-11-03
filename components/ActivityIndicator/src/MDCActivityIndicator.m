@@ -537,11 +537,11 @@ static const CGFloat kSingleCycleRotation =
     }];
     [CATransaction setDisableActions:YES];
 
-    _outerRotationLayer.transform = CATransform3DIdentity;
-    _strokeLayer.transform = CATransform3DIdentity;
-
     struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate timing =
         kMotionSpec.transitionToIndeterminate;
+
+    _outerRotationLayer.transform = CATransform3DIdentity;
+    _strokeLayer.transform = CATransform3DIdentity;
 
     timing.strokeStart.duration = strokeStartDuration;
     timing.strokeStart.delay = strokeEndDuration;
@@ -593,14 +593,14 @@ static const CGFloat kSingleCycleRotation =
       [CATransaction setDisableActions:YES];
       [CATransaction mdm_setTimeScaleFactor:@(duration)];
 
-      _strokeLayer.strokeStart = 0;
-
       CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
       CGFloat endRotation = startRotation + rotationDelta * 2.0f * (CGFloat)M_PI;
       [_animator animateWithTiming:kMotionSpec.transitionToDeterminate.innerRotation
                            toLayer:_strokeLayer
                         withValues:@[@(startRotation), @(endRotation)]
                            keyPath:MDMKeyPathRotation];
+
+      _strokeLayer.strokeStart = 0;
 
       [_animator animateWithTiming:kMotionSpec.transitionToDeterminate.strokeEnd
                            toLayer:_strokeLayer
