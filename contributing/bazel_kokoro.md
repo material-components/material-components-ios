@@ -45,10 +45,8 @@ import statements and the bazel-supported import statements.
 > Note that the kokoro script can only translate import statements that specify the component name.
 > Import statements like the following will need to be updated to use the more specific
 > `MaterialComponents.Material<component>` pattern:
-
-```swift
-import MaterialComponents
-```
+> 
+>     import MaterialComponents
 
 ## BUILD files
 
@@ -104,6 +102,17 @@ ios_unit_test(
 )
 ```
 
+### Adding dependencies
+
+Dependencies are added as paths relative to the root of the MDC iOS repo:
+
+```
+mdc_public_objc_library(
+    name = "ComponentName",
++    deps = ["//components/Palettes"],
+)
+
+```
 
 ### Adding a Bundle
 
