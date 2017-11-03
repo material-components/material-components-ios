@@ -114,6 +114,7 @@ Pod::Spec.new do |s|
     ss.dependency "MDFInternationalization"
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
+    ss.dependency "MaterialComponents/private/Math"
   end
 
   s.subspec "BottomSheet" do |ss|
