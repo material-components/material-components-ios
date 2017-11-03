@@ -451,23 +451,37 @@ static const CGFloat kSingleCycleRotation =
     [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
   }];
 
-  MDCActivityIndicatorTiming timing = kMotionSpec.indeterminate;
+  struct MDCActivityIndicatorMotionSpecIndeterminate timing = kMotionSpec.indeterminate;
   // These values may be equal if we've never received a progress. In this case we don't want our
   // duration to become zero.
   if (fabs(_lastProgress - _currentProgress) > CGFLOAT_EPSILON) {
     timing.strokeEnd.duration *= ABS(_lastProgress - _currentProgress);
   }
 
+  [_animator animateWithTiming:timing.outerRotation
+                       toLayer:_outerRotationLayer
+                    withValues:@[@(kOuterRotationIncrement * _cycleCount),
+                                 @(kOuterRotationIncrement * (_cycleCount + 1))]
+                       keyPath:MDMKeyPathRotation];
+
   CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
   CGFloat endRotation = startRotation + kCycleRotation * (CGFloat)M_PI;
-  [self animateWithTiming:timing
-            outerRotation:@[@(kOuterRotationIncrement * _cycleCount),
-                            @(kOuterRotationIncrement * (_cycleCount + 1))]
-            innerRotation:@[@(startRotation), @(endRotation)]
-              strokeStart:@[@0, @(kStrokeLength)]
-   // Ensure the stroke never completely disappears on start by animating from non-zero start and
-   // to a value slightly larger than the strokeStart's final value.
-                strokeEnd:@[@(_minStrokeDifference), @(kStrokeLength + _minStrokeDifference)]];
+  [_animator animateWithTiming:timing.innerRotation
+                       toLayer:_strokeLayer
+                    withValues:@[@(startRotation), @(endRotation)]
+                       keyPath:MDMKeyPathRotation];
+
+  [_animator animateWithTiming:timing.strokeStart
+                       toLayer:_strokeLayer
+                    withValues:@[@0, @(kStrokeLength)]
+                       keyPath:MDMKeyPathStrokeStart];
+
+  // Ensure the stroke never completely disappears on start by animating from non-zero start and
+  // to a value slightly larger than the strokeStart's final value.
+  [_animator animateWithTiming:timing.strokeEnd
+                       toLayer:_strokeLayer
+                    withValues:@[@(_minStrokeDifference), @(kStrokeLength + _minStrokeDifference)]
+                       keyPath:MDMKeyPathStrokeEnd];
 
   [CATransaction commit];
 
@@ -521,17 +535,27 @@ static const CGFloat kSingleCycleRotation =
       [self
           strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
     }];
+    [CATransaction setDisableActions:YES];
 
-    MDCActivityIndicatorTiming timing = kMotionSpec.transitionToIndeterminate;
+    _outerRotationLayer.transform = CATransform3DIdentity;
+    _strokeLayer.transform = CATransform3DIdentity;
+
+    struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate timing =
+        kMotionSpec.transitionToIndeterminate;
+
     timing.strokeStart.duration = strokeStartDuration;
     timing.strokeStart.delay = strokeEndDuration;
+    [_animator animateWithTiming:timing.strokeStart
+                         toLayer:_strokeLayer
+                      withValues:@[@0, @(targetRotation)]
+                         keyPath:MDMKeyPathStrokeStart];
+
     timing.strokeEnd.duration = strokeEndDuration;
     timing.strokeEnd.delay = 0;
-    [self animateWithTiming:timing
-              outerRotation:@[@0, @0]
-              innerRotation:@[@0, @0]
-                strokeStart:@[@0, @(targetRotation)]
-                  strokeEnd:@[@(_currentProgress), @(targetRotation + _minStrokeDifference)]];
+    [_animator animateWithTiming:timing.strokeEnd
+                         toLayer:_strokeLayer
+                      withValues:@[@(_currentProgress), @(targetRotation + _minStrokeDifference)]
+                         keyPath:MDMKeyPathStrokeEnd];
   }
   [CATransaction commit];
 
@@ -566,17 +590,22 @@ static const CGFloat kSingleCycleRotation =
         [self
             strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
       }];
-
+      [CATransaction setDisableActions:YES];
       [CATransaction mdm_setTimeScaleFactor:@(duration)];
+
+      _strokeLayer.strokeStart = 0;
 
       CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
       CGFloat endRotation = startRotation + rotationDelta * 2.0f * (CGFloat)M_PI;
-      [self animateWithTiming:kMotionSpec.transitionToDeterminate
-                outerRotation:@[@(kOuterRotationIncrement * _cycleCount),
-                                @(kOuterRotationIncrement * _cycleCount)]
-                innerRotation:@[@(startRotation), @(endRotation)]
-                  strokeStart:@[@0, @0]
-                    strokeEnd:@[@(_minStrokeDifference), @(_currentProgress)]];
+      [_animator animateWithTiming:kMotionSpec.transitionToDeterminate.innerRotation
+                           toLayer:_strokeLayer
+                        withValues:@[@(startRotation), @(endRotation)]
+                           keyPath:MDMKeyPathRotation];
+
+      [_animator animateWithTiming:kMotionSpec.transitionToDeterminate.strokeEnd
+                           toLayer:_strokeLayer
+                        withValues:@[@(_minStrokeDifference), @(_currentProgress)]
+                           keyPath:MDMKeyPathStrokeEnd];
     }
     [CATransaction commit];
 
@@ -597,48 +626,22 @@ static const CGFloat kSingleCycleRotation =
     [CATransaction setCompletionBlock:^{
       [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateDeterminate];
     }];
+    [CATransaction setDisableActions:YES];
 
-    [self animateWithTiming:kMotionSpec.progress
-              outerRotation:@[@0, @0]
-              innerRotation:@[@0, @0]
-                strokeStart:@[@0, @0]
-                  strokeEnd:@[@(_lastProgress), @(_currentProgress)]];
+    _outerRotationLayer.transform = CATransform3DIdentity;
+    _strokeLayer.transform = CATransform3DIdentity;
+    _strokeLayer.strokeStart = 0;
+
+    [_animator animateWithTiming:kMotionSpec.progress.strokeEnd
+                         toLayer:_strokeLayer
+                      withValues:@[@(_lastProgress), @(_currentProgress)]
+                         keyPath:MDMKeyPathStrokeEnd];
   }
 
   [CATransaction commit];
 
   _lastProgress = _currentProgress;
   _animationInProgress = YES;
-}
-
-- (void)animateWithTiming:(MDCActivityIndicatorTiming)timing
-            outerRotation:(NSArray *)outerRotation
-            innerRotation:(NSArray *)innerRotation
-              strokeStart:(NSArray *)strokeStart
-                strokeEnd:(NSArray *)strokeEnd {
-  [CATransaction begin];
-
-  [_animator animateWithTiming:timing.outerRotation
-                       toLayer:_outerRotationLayer
-                    withValues:outerRotation
-                       keyPath:MDMKeyPathRotation];
-
-  [_animator animateWithTiming:timing.innerRotation
-                       toLayer:_strokeLayer
-                    withValues:innerRotation
-                       keyPath:MDMKeyPathRotation];
-
-  [_animator animateWithTiming:timing.strokeStart
-                       toLayer:_strokeLayer
-                    withValues:strokeStart
-                       keyPath:MDMKeyPathStrokeStart];
-
-  [_animator animateWithTiming:timing.strokeEnd
-                       toLayer:_strokeLayer
-                    withValues:strokeEnd
-                       keyPath:MDMKeyPathStrokeEnd];
-
-  [CATransaction commit];
 }
 
 - (void)strokeRotationCycleFinishedFromState:(MDCActivityIndicatorState)state {

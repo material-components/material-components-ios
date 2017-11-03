@@ -19,7 +19,7 @@
 const NSTimeInterval kPointCycleDuration = 4.0f / 3.0f;
 const NSTimeInterval kPointCycleMinimumVariableDuration = kPointCycleDuration / 8;
 
-struct MDCActivityIndicatorMotionSpec kMotionSpec = {
+const struct MDCActivityIndicatorMotionSpec kMotionSpec = {
   .indeterminate = {
     .outerRotation = {
       .duration = kPointCycleDuration, .curve = _MDMBezier(0, 0, 1, 1),
@@ -40,14 +40,8 @@ struct MDCActivityIndicatorMotionSpec kMotionSpec = {
   .transitionToDeterminate = {
     // Transition timing is calculated at runtime - any duration/delay values provided here will
     // by scaled by the calculated duration.
-    .outerRotation = {
-      .duration = 1, .curve = _MDMBezier(0, 0, 1, 1),
-    },
     .innerRotation = {
       .duration = 1, .curve = _MDMBezier(0, 0, 1, 1),
-    },
-    .strokeStart = {
-      .duration = 1, .curve = _MDMBezier(0.4f, 0.0f, 0.2f, 1.0f),
     },
     .strokeEnd = {
       .duration = 1, .curve = _MDMBezier(0.4f, 0.0f, 0.2f, 1.0f),
@@ -66,6 +60,7 @@ struct MDCActivityIndicatorMotionSpec kMotionSpec = {
     .strokeEnd = {
       .duration = kPointCycleDuration / 2,
       .curve = _MDMBezier(0.4f, 0.0f, 0.2f, 1.0f),
-    },
+    }
   }
 };
+

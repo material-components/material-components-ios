@@ -18,24 +18,32 @@
 
 #import "MotionInterchange.h"
 
-struct MDCActivityIndicatorTiming {
-  MDMMotionTiming outerRotation;
-  MDMMotionTiming innerRotation;
-  MDMMotionTiming strokeStart;
-  MDMMotionTiming strokeEnd;
-};
-typedef struct MDCActivityIndicatorTiming MDCActivityIndicatorTiming;
-
 struct MDCActivityIndicatorMotionSpec {
-  MDCActivityIndicatorTiming indeterminate;
-  MDCActivityIndicatorTiming transitionToDeterminate;
-  MDCActivityIndicatorTiming transitionToIndeterminate;
-  MDCActivityIndicatorTiming progress;
+  struct MDCActivityIndicatorMotionSpecIndeterminate {
+    MDMMotionTiming outerRotation;
+    MDMMotionTiming innerRotation;
+    MDMMotionTiming strokeStart;
+    MDMMotionTiming strokeEnd;
+  } indeterminate;
+
+  struct MDCActivityIndicatorMotionSpecTransitionToDeterminate {
+    MDMMotionTiming innerRotation;
+    MDMMotionTiming strokeEnd;
+  } transitionToDeterminate;
+
+  struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate {
+    MDMMotionTiming strokeStart;
+    MDMMotionTiming strokeEnd;
+  } transitionToIndeterminate;
+
+  struct MDCActivityIndicatorMotionSpecProgress {
+    MDMMotionTiming strokeEnd;
+  } progress;
 };
 typedef struct MDCActivityIndicatorMotionSpec MDCActivityIndicatorMotionSpec;
 
 FOUNDATION_EXPORT const NSTimeInterval kPointCycleDuration;
 FOUNDATION_EXPORT const NSTimeInterval kPointCycleMinimumVariableDuration;
 
-// The complete motion spec for the activity indicator.
-FOUNDATION_EXPORT struct MDCActivityIndicatorMotionSpec kMotionSpec;
+FOUNDATION_EXPORT const struct MDCActivityIndicatorMotionSpec kMotionSpec;
+
