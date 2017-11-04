@@ -570,8 +570,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (isToUp) {
     UIOffset offset = [self floatingPlaceholderOffset];
     UIEdgeInsets insets = self.textInput.textInsets;
-
-    CGFloat horizontalLeading = insets.left - offset.horizontal;
+    CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
+                                                                                   offset:offset];
     if (!self.placeholderAnimationConstraintLeading) {
       self.placeholderAnimationConstraintLeading =
           [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -580,9 +580,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                           toItem:self.textInput
                                        attribute:NSLayoutAttributeLeading
                                       multiplier:1
-                                        constant:horizontalLeading];
+                                        constant:leadingConstant];
     }
-    self.placeholderAnimationConstraintLeading.constant = horizontalLeading;
+    self.placeholderAnimationConstraintLeading.constant = leadingConstant;
 
     if (!self.placeholderAnimationConstraintTop) {
       self.placeholderAnimationConstraintTop =
@@ -596,7 +596,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     }
     self.placeholderAnimationConstraintTop.constant = offset.vertical;
 
-    CGFloat horizontalTrailing = offset.horizontal - insets.right;
+    CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
+                                                                                     offset:offset];
     if (!self.placeholderAnimationConstraintTrailing) {
       self.placeholderAnimationConstraintTrailing =
           [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -605,10 +606,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                           toItem:self.textInput
                                        attribute:NSLayoutAttributeTrailing
                                       multiplier:1
-                                        constant:horizontalTrailing];
+                                        constant:trailingConstant];
       self.placeholderAnimationConstraintTrailing.priority = UILayoutPriorityDefaultHigh - 1;
     }
-    self.placeholderAnimationConstraintTrailing.constant = horizontalTrailing;
+    self.placeholderAnimationConstraintTrailing.constant = trailingConstant;
 
     self.placeholderAnimationConstraints = @[
       self.placeholderAnimationConstraintLeading, self.placeholderAnimationConstraintTop,
@@ -618,6 +619,22 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   } else {
     [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
   }
+}
+
+- (BOOL)needsUpdatePlaceholderAnimationConstraintsToUp {
+  if (![self isPlaceholderUp]) {
+    return NO;
+  }
+  UIEdgeInsets insets = self.textInput.textInsets;
+  UIOffset offset = [self floatingPlaceholderOffset];
+
+  CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
+                                                                                 offset:offset];
+  CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
+                                                                                   offset:offset];
+
+  return self.placeholderAnimationConstraintLeading.constant != leadingConstant &&
+      self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
 }
 
 - (void)cleanupPlaceholderAnimationConstraints {
@@ -653,6 +670,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return UIOffsetMake(horizontal, vertical);
 }
 
+- (CGFloat)floatingPlaceholderAnimationConstraintLeadingConstant:(UIEdgeInsets)textInsets
+                                                          offset:(UIOffset)offset {
+  CGFloat constant = textInsets.left - offset.horizontal;
+  return constant;
+}
+
+- (CGFloat)floatingPlaceholderAnimationConstraintTrailingConstant:(UIEdgeInsets)textInsets
+                                                          offset:(UIOffset)offset {
+  CGFloat constant = offset.horizontal - textInsets.right;
+  return constant;
+}
 #pragma mark - Trailing Label Customization
 
 - (void)updateTrailingUnderlineLabel {
@@ -1299,6 +1327,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)textInputDidLayoutSubviews {
   [self updateBorder];
+
+  if ([self needsUpdatePlaceholderAnimationConstraintsToUp]) {
+    [self updatePlaceholderAnimationConstraints:YES];
+  }
 }
 
 - (void)textInputDidUpdateConstraints {
