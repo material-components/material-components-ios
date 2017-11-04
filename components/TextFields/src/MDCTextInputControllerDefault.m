@@ -524,12 +524,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self.textInput layoutIfNeeded];
 }
 
-- (BOOL)isPlaceholderUp {
-  return self.placeholderAnimationConstraints.count > 0 &&
-         !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
-                                            CGAffineTransformIdentity);
-}
-
 #pragma mark - Placeholder Animation
 
 - (void)movePlaceholderToUp:(BOOL)isToUp {
@@ -564,6 +558,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           [self cleanupPlaceholderAnimationConstraints];
         }
       }];
+}
+
+- (BOOL)isPlaceholderUp {
+  return self.placeholderAnimationConstraints.count > 0 &&
+  !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
+                                     CGAffineTransformIdentity);
 }
 
 - (void)updatePlaceholderAnimationConstraints:(BOOL)isToUp {
