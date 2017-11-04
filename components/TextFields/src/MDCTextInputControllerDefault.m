@@ -633,7 +633,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
                                                                                    offset:offset];
 
-  return self.placeholderAnimationConstraintLeading.constant != leadingConstant &&
+  return self.placeholderAnimationConstraintLeading.constant != leadingConstant ||
+      self.placeholderAnimationConstraintTop.constant != offset.vertical ||
       self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
 }
 
