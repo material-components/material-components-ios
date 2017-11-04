@@ -384,6 +384,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
+  [defaultCenter addObserver:self
+                    selector:@selector(textInputDidChange:)
+                        name:MDCTextFieldTextDidSetTextNotification
+                      object:_textInput];
+
   if ([_textInput isKindOfClass:[UITextField class]]) {
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidBeginEditing:)
@@ -396,10 +401,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextFieldTextDidEndEditingNotification
-                        object:_textInput];
-    [defaultCenter addObserver:self
-                      selector:@selector(textInputDidChange:)
-                          name:MDCTextFieldTextDidSetTextNotification
                         object:_textInput];
   }
 
@@ -417,10 +418,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextViewTextDidEndEditingNotification
                         object:textField.textView];
-    [defaultCenter addObserver:self
-                      selector:@selector(textInputDidChange:)
-                          name:MDCTextFieldTextDidSetTextNotification
-                        object:_textInput];
   }
 }
 
@@ -547,6 +544,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self.textInput layoutIfNeeded];
   [self updatePlaceholder];
   [self updatePlaceholderAnimationConstraints:isToUp];
+
   [UIView animateWithDuration:[CATransaction animationDuration]
       animations:^{
         self.textInput.placeholderLabel.transform = scaleTransform;
@@ -570,6 +568,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (isToUp) {
     UIOffset offset = [self floatingPlaceholderOffset];
     UIEdgeInsets insets = self.textInput.textInsets;
+
     CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
                                                                                    offset:offset];
     if (!self.placeholderAnimationConstraintLeading) {
@@ -682,6 +681,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGFloat constant = offset.horizontal - textInsets.right;
   return constant;
 }
+
 #pragma mark - Trailing Label Customization
 
 - (void)updateTrailingUnderlineLabel {
