@@ -152,6 +152,7 @@ final class TextFieldLegacySwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerLegacyDefault(textInput: message)
     message.textView?.delegate = self
+    message.text = "This is where you could put a multi-line message like an email."
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
 
