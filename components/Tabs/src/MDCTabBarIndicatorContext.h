@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /** Information about the context in which a tab bar indicator will be displayed. */
-@interface MDCTabBarIndicatorContext : NSObject
+@protocol MDCTabBarIndicatorContext <NSObject>
 
 /** The tab bar item for the indicated tab. */
 @property(nonatomic, readonly, nonnull) UITabBarItem *item;

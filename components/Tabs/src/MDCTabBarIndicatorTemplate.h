@@ -27,10 +27,8 @@
 
 /**
  Returns an attributes object that describes how the indicator should appear in a given context.
-
- If unimplemented, the default is an empty attributes object.
  */
 - (nonnull MDCTabBarIndicatorAttributes *)
-    indicatorAttributesForContext:(nonnull MDCTabBarIndicatorContext *)context;
+    indicatorAttributesForContext:(nonnull id<MDCTabBarIndicatorContext>)context;
 
 @end
