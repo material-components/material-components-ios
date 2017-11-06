@@ -336,6 +336,31 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   XCTAssertEqualObjects(actualColor, expectedColor);
 }
 
+- (void)testDisabledColor {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+
+  // When
+  UIColor *actualColor = slider.disabledColor;
+
+  // Then
+  UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
+  XCTAssertEqualObjects(actualColor, expectedColor);
+}
+
+- (void)testDisabledColorNullRestable {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+
+  // When
+  slider.trackBackgroundColor = nil;
+
+  // Then
+  UIColor *actualColor = slider.trackBackgroundColor;
+  UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
+  XCTAssertEqualObjects(actualColor, expectedColor);
+}
+
 #pragma mark numeric value label
 
 - (void)testNumericValueLabelString {
