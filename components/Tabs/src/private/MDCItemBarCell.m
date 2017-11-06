@@ -178,7 +178,20 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (CGRect)contentFrame {
-  return [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+  if (_style.shouldDisplayTitle) {
+    if (_style.shouldDisplayImage) {
+      // Title and image.
+      CGRect titleFrame = [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+      CGRect imageFrame = [self convertRect:_imageView.bounds fromView:_imageView];
+      return CGRectUnion(titleFrame, imageFrame);
+    } else {
+      // Only title.
+      return [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+    }
+  } else {
+    // Only image.
+    return [self convertRect:_imageView.bounds fromView:_imageView];
+  }
 }
 
 - (void)applyStyle:(MDCItemBarStyle *)style {
