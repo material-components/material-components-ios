@@ -153,7 +153,11 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerDefault(textInput: message)
     message.textView?.delegate = self
-    message.text = "This is where you could put a multi-line message like an email."
+    message.text = """
+    This is where you could put a multi-line message like an email.
+
+    It can even handle new lines.
+    """
     message.multilineDelegate = self
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
