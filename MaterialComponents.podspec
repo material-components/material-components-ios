@@ -226,6 +226,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/CollectionCells"
     component.dependency "MaterialComponents/CollectionLayoutAttributes"
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
