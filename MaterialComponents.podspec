@@ -390,6 +390,7 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
 
       sss.dependency "MDFInternationalization"
+      sss.dependency "MaterialComponents/Palettes"
       sss.dependency "MaterialComponents/private/Math"
     end
     ss.subspec "ColorThemer" do |sss|
