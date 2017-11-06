@@ -17,15 +17,13 @@
 #import "MDCItemBar.h"
 
 #import "MDCItemBarCell.h"
+#import "MDCTabBarIndicatorView.h"
 #import "MDCItemBarStyle.h"
-#import "MDFInternationalization.h"
-#import "MaterialAnimationTiming.h"
-#import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorContext+Private.h"
-
-/// Height in points of the bar shown under selected items.
-//static const CGFloat kSelectionIndicatorHeight = 2.0f;
+#import "MDCTabBarIndicatorTemplate.h"
+#import "MDFInternationalization.h"
+#import "MaterialAnimationTiming.h"
 
 /// Cell reuse identifier for item bar cells.
 static NSString *const kItemReuseID = @"MDCItem";
@@ -58,75 +56,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 @interface MDCItemBarFlowLayout : UICollectionViewFlowLayout
 @end
 
-@interface MDCSelectionIndicatorView : UIView
-
-- (void)applySelectionIndicatorAttributes:(MDCTabBarIndicatorAttributes *)attributes;
-
-@end
-
-@interface MDCShapeView: UIView
-@property(nonatomic) UIBezierPath *path;
-@end
-
-@implementation MDCShapeView
-
-+ (Class)layerClass { return [CAShapeLayer class]; }
-
-- (void)setPath:(UIBezierPath *)path {
-  _path = path;
-  CAShapeLayer *shapeLayer = (CAShapeLayer *)self.layer;
-  shapeLayer.path = path.CGPath;
-}
-
-- (void)tintColorDidChange {
-  [super tintColorDidChange];
-
-  CAShapeLayer *shapeLayer = (CAShapeLayer *)self.layer;
-  shapeLayer.fillColor = self.tintColor.CGColor;
-}
-
-- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
-  id<CAAction> action = [super actionForLayer:layer forKey:event];
-  if ((!action || action == [NSNull null]) && (layer == self.layer) && [event isEqual:@"path"]) {
-    return [CABasicAnimation animationWithKeyPath:event];
-  }
-  return action;
-}
-@end
-
-@implementation MDCSelectionIndicatorView
-
-- (void)applySelectionIndicatorAttributes:(__unused MDCTabBarIndicatorAttributes *)attributes {
-  // Base class does nothing.
-}
-
-@end
-
-@interface MDCShapeSelectionIndicatorView: MDCSelectionIndicatorView
-@end
-
-@implementation MDCShapeSelectionIndicatorView {
-  MDCShapeView *_trackingView;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-  if (self) {
-    _trackingView = [[MDCShapeView alloc] initWithFrame:self.bounds];
-    _trackingView.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleWidth;
-    [self addSubview:_trackingView];
-  }
-  return self;
-}
-
-- (void)applySelectionIndicatorAttributes:(MDCTabBarIndicatorAttributes *)attributes {
-  _trackingView.path = attributes.path;
-}
-
-@end
-
-
 #pragma mark -
 
 @interface MDCItemBar () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
@@ -138,7 +67,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UICollectionViewFlowLayout *_flowLayout;
 
   /// Underline displayed under the active item.
-  MDCSelectionIndicatorView *_selectionIndicator;
+  MDCTabBarIndicatorView *_selectionIndicator;
 
   /// Size of the view at last layout, for deduplicating changes.
   CGSize _lastSize;
@@ -204,7 +133,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   [self addSubview:_collectionView];
 
   // Configure the selection indicator view.
-  _selectionIndicator = [[MDCShapeSelectionIndicatorView alloc] initWithFrame:CGRectZero];
+  _selectionIndicator = [[MDCTabBarIndicatorView alloc] initWithFrame:CGRectZero];
   [_collectionView addSubview:_selectionIndicator];
 
   // Set initial properties.

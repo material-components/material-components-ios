@@ -19,13 +19,20 @@
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorContext.h"
 
+/// Height in points of the underline shown under selected items.
+static const CGFloat kUnderlineIndicatorHeight = 2.0f;
+
 @implementation MDCTabBarUnderlineIndicatorTemplate
 
 - (MDCTabBarIndicatorAttributes *)
     indicatorAttributesForContext:(id<MDCTabBarIndicatorContext>)context {
   CGRect bounds = context.bounds;
   MDCTabBarIndicatorAttributes *attributes = [[MDCTabBarIndicatorAttributes alloc] init];
-  attributes.path = [UIBezierPath bezierPathWithRect:CGRectMake(CGRectGetMinX(bounds), CGRectGetMaxY(bounds) - 2,CGRectGetWidth(bounds), 2)];
+  CGRect underlineFrame = CGRectMake(CGRectGetMinX(bounds),
+                                     CGRectGetMaxY(bounds) - kUnderlineIndicatorHeight,
+                                     CGRectGetWidth(bounds),
+                                     kUnderlineIndicatorHeight);
+  attributes.path = [UIBezierPath bezierPathWithRect:underlineFrame];
   return attributes;
 }
 
