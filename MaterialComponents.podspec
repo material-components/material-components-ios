@@ -47,6 +47,7 @@ Pod::Spec.new do |s|
       ss.dependency "MDFInternationalization"
       ss.dependency "MaterialComponents/Palettes"
       ss.dependency "MaterialComponents/private/Application"
+      ss.dependency "MotionAnimator", "~> 2.0"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'

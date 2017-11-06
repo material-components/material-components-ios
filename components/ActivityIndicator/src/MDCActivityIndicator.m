@@ -20,6 +20,8 @@
 
 #import "MDFInternationalization.h"
 #import "MaterialApplication.h"
+#import "MotionAnimator.h"
+#import "private/MDCActivityIndicatorMotionSpec.h"
 #import "private/MDCActivityIndicator+Private.h"
 #import "private/MaterialActivityIndicatorStrings.h"
 #import "private/MaterialActivityIndicatorStrings_table.h"
@@ -27,9 +29,6 @@
 
 static const NSInteger kTotalDetentCount = 5;
 static const NSTimeInterval kAnimateOutDuration = 0.1f;
-static const NSTimeInterval kPointCycleDuration = 4.0f / 3.0f;
-static const NSTimeInterval kPointCycleMinimumVariableDuration =
-    kPointCycleDuration / 8;
 static const CGFloat kCycleRotation = 3.0f / 2.0f;
 static const CGFloat kOuterRotationIncrement =
     (1.0f / kTotalDetentCount) * (CGFloat)M_PI;
@@ -106,6 +105,8 @@ static const CGFloat kSingleCycleRotation =
   BOOL _cycleInProgress;
   CGFloat _currentProgress;
   CGFloat _lastProgress;
+
+  MDMMotionAnimator *_animator;
 }
 
 #pragma mark - Init
@@ -162,6 +163,9 @@ static const CGFloat kSingleCycleRotation =
   // The activity indicator reflects the passage of time (a spatial semantic context) and so
   // will not be mirrored in RTL languages.
   self.mdf_semanticContentAttribute = UISemanticContentAttributeSpatial;
+
+  _animator = [[MDMMotionAnimator alloc] init];
+  _animator.additive = NO;
 
   _cycleStartIndex = 0;
   _indicatorMode = MDCActivityIndicatorModeIndeterminate;
@@ -443,66 +447,42 @@ static const CGFloat kSingleCycleRotation =
   }
 
   [CATransaction begin];
-  {
-    [CATransaction setCompletionBlock:^{
-      [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
-    }];
+  [CATransaction setCompletionBlock:^{
+    [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
+  }];
 
-    // Outer 5-point star detent rotation.
-    CABasicAnimation *outerRotationAnimation =
-        [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    outerRotationAnimation.duration = kPointCycleDuration;
-    outerRotationAnimation.fromValue = @(kOuterRotationIncrement * _cycleCount);
-    outerRotationAnimation.toValue = @(kOuterRotationIncrement * (_cycleCount + 1));
-    outerRotationAnimation.fillMode = kCAFillModeForwards;
-    outerRotationAnimation.removedOnCompletion = NO;
-    [_outerRotationLayer addAnimation:outerRotationAnimation forKey:@"transform.rotation.z"];
-
-    // Stroke rotation.
-    CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
-    CGFloat endRotation = startRotation + kCycleRotation * (CGFloat)M_PI;
-
-    CABasicAnimation *strokeRotationAnimation =
-        [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    strokeRotationAnimation.duration = kPointCycleDuration;
-    strokeRotationAnimation.fromValue = @(startRotation);
-    strokeRotationAnimation.toValue = @(endRotation);
-    strokeRotationAnimation.fillMode = kCAFillModeForwards;
-    strokeRotationAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeRotationAnimation forKey:@"transform.rotation.z"];
-
-    // Stroke start.
-    CABasicAnimation *strokeStartPathAnimation =
-        [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-    strokeStartPathAnimation.duration = kPointCycleDuration / 2;
-    // It is always critical to convertTime:fromLayer: for animations, since changes to layer.speed
-    // on this layer or parent layers will alter the offset of beginTime.
-    CFTimeInterval currentTime = [_strokeLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-    strokeStartPathAnimation.beginTime = currentTime + kPointCycleDuration / 2;
-    strokeStartPathAnimation.fromValue = @(0.0f);
-    strokeStartPathAnimation.toValue = @(kStrokeLength);
-    strokeStartPathAnimation.timingFunction = [self materialEaseInOut];
-    strokeStartPathAnimation.fillMode = kCAFillModeBoth;
-    strokeStartPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeStartPathAnimation forKey:@"strokeStart"];
-
-    // Stroke end.
-    CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration = kPointCycleDuration;
-    // These values may be equal if we've never received a progress. In this case we don't want our
-    // duration to become zero.
-    if (fabs(_lastProgress - _currentProgress) > CGFLOAT_EPSILON) {
-      strokeEndPathAnimation.duration *= ABS(_lastProgress - _currentProgress);
-    }
-    // Ensure the stroke never completely disappears on start by animating from non-zero start and
-    // to a value slightly larger than the strokeStart's final value.
-    strokeEndPathAnimation.fromValue = @(_minStrokeDifference);
-    strokeEndPathAnimation.toValue = @(kStrokeLength + _minStrokeDifference);
-    strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
-    strokeEndPathAnimation.fillMode = kCAFillModeBoth;
-    strokeEndPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeEndPathAnimation forKey:@"strokeEnd"];
+  struct MDCActivityIndicatorMotionSpecIndeterminate timing = kMotionSpec.indeterminate;
+  // These values may be equal if we've never received a progress. In this case we don't want our
+  // duration to become zero.
+  if (fabs(_lastProgress - _currentProgress) > CGFLOAT_EPSILON) {
+    timing.strokeEnd.duration *= ABS(_lastProgress - _currentProgress);
   }
+
+  [_animator animateWithTiming:timing.outerRotation
+                       toLayer:_outerRotationLayer
+                    withValues:@[@(kOuterRotationIncrement * _cycleCount),
+                                 @(kOuterRotationIncrement * (_cycleCount + 1))]
+                       keyPath:MDMKeyPathRotation];
+
+  CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
+  CGFloat endRotation = startRotation + kCycleRotation * (CGFloat)M_PI;
+  [_animator animateWithTiming:timing.innerRotation
+                       toLayer:_strokeLayer
+                    withValues:@[@(startRotation), @(endRotation)]
+                       keyPath:MDMKeyPathRotation];
+
+  [_animator animateWithTiming:timing.strokeStart
+                       toLayer:_strokeLayer
+                    withValues:@[@0, @(kStrokeLength)]
+                       keyPath:MDMKeyPathStrokeStart];
+
+  // Ensure the stroke never completely disappears on start by animating from non-zero start and
+  // to a value slightly larger than the strokeStart's final value.
+  [_animator animateWithTiming:timing.strokeEnd
+                       toLayer:_strokeLayer
+                    withValues:@[@(_minStrokeDifference), @(kStrokeLength + _minStrokeDifference)]
+                       keyPath:MDMKeyPathStrokeEnd];
+
   [CATransaction commit];
 
   _animationInProgress = YES;
@@ -555,32 +535,27 @@ static const CGFloat kSingleCycleRotation =
       [self
           strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
     }];
+    [CATransaction setDisableActions:YES];
 
-    // Stroke start.
-    CABasicAnimation *strokeStartPathAnimation =
-        [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-    strokeStartPathAnimation.duration = strokeStartDuration;
-    CFTimeInterval currentTime = [_strokeLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-    strokeStartPathAnimation.beginTime = currentTime + strokeEndDuration;
-    strokeStartPathAnimation.fromValue = @(0.0f);
-    strokeStartPathAnimation.toValue = @(targetRotation);
-    strokeStartPathAnimation.timingFunction = [self materialEaseInOut];
-    ;
-    strokeStartPathAnimation.fillMode = kCAFillModeBoth;
-    strokeStartPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeStartPathAnimation forKey:@"strokeStart"];
+    struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate timing =
+        kMotionSpec.transitionToIndeterminate;
 
-    // Stroke end.
-    CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration = strokeEndDuration;
-    // Ensure the stroke never completely disappears on start by animating from non-zero start and
-    // to a value slightly larger than the strokeStart's final value.
-    strokeEndPathAnimation.fromValue = @(_currentProgress);
-    strokeEndPathAnimation.toValue = @(targetRotation + _minStrokeDifference);
-    strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
-    strokeEndPathAnimation.fillMode = kCAFillModeBoth;
-    strokeEndPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeEndPathAnimation forKey:@"strokeEnd"];
+    _outerRotationLayer.transform = CATransform3DIdentity;
+    _strokeLayer.transform = CATransform3DIdentity;
+
+    timing.strokeStart.duration = strokeStartDuration;
+    timing.strokeStart.delay = strokeEndDuration;
+    [_animator animateWithTiming:timing.strokeStart
+                         toLayer:_strokeLayer
+                      withValues:@[@0, @(targetRotation)]
+                         keyPath:MDMKeyPathStrokeStart];
+
+    timing.strokeEnd.duration = strokeEndDuration;
+    timing.strokeEnd.delay = 0;
+    [_animator animateWithTiming:timing.strokeEnd
+                         toLayer:_strokeLayer
+                      withValues:@[@(_currentProgress), @(targetRotation + _minStrokeDifference)]
+                         keyPath:MDMKeyPathStrokeEnd];
   }
   [CATransaction commit];
 
@@ -607,78 +582,36 @@ static const CGFloat kSingleCycleRotation =
     // Change the duration relative to the distance in order to keep same relative speed.
     CGFloat duration = 2.0f * (rotationDelta + _currentProgress) / kSingleCycleRotation *
                        (CGFloat)kPointCycleDuration;
-
     duration = MAX(duration, (CGFloat)kPointCycleMinimumVariableDuration);
+
     [CATransaction begin];
     {
       [CATransaction setCompletionBlock:^{
         [self
             strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
       }];
+      [CATransaction setDisableActions:YES];
+      [CATransaction mdm_setTimeScaleFactor:@(duration)];
 
-      // Outer 5-point star detent rotation. Required for passing from transitionToIndeterminate to
-      // transitionToDeterminate.
-      CABasicAnimation *outerRotationAnimation =
-          [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-      outerRotationAnimation.duration = duration;
-      outerRotationAnimation.fromValue = @(kOuterRotationIncrement * _cycleCount);
-      outerRotationAnimation.toValue = @(kOuterRotationIncrement * _cycleCount);
-      outerRotationAnimation.fillMode = kCAFillModeForwards;
-      outerRotationAnimation.removedOnCompletion = NO;
-      [_outerRotationLayer addAnimation:outerRotationAnimation forKey:@"transform.rotation.z"];
-
-      // Stroke rotation.
       CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
       CGFloat endRotation = startRotation + rotationDelta * 2.0f * (CGFloat)M_PI;
+      [_animator animateWithTiming:kMotionSpec.transitionToDeterminate.innerRotation
+                           toLayer:_strokeLayer
+                        withValues:@[@(startRotation), @(endRotation)]
+                           keyPath:MDMKeyPathRotation];
 
-      CABasicAnimation *strokeRotationAnimation =
-          [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-      strokeRotationAnimation.duration = duration;
-      strokeRotationAnimation.fromValue = @(startRotation);
-      strokeRotationAnimation.toValue = @(endRotation);
-      strokeRotationAnimation.fillMode = kCAFillModeForwards;
-      strokeRotationAnimation.removedOnCompletion = NO;
-      [_strokeLayer addAnimation:strokeRotationAnimation forKey:@"transform.rotation.z"];
+      _strokeLayer.strokeStart = 0;
 
-      // Stroke start.
-      CABasicAnimation *strokeStartPathAnimation =
-          [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-      strokeStartPathAnimation.duration = duration;
-      // It is always critical to convertTime:fromLayer: for animations, since changes to
-      // layer.speed on this layer or parent layers will alter the offset of beginTime.
-      CFTimeInterval currentTime = [_strokeLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-      strokeStartPathAnimation.beginTime = currentTime;
-      strokeStartPathAnimation.fromValue = @(0.0f);
-      strokeStartPathAnimation.toValue = @(0.0f);
-      strokeStartPathAnimation.timingFunction = [self materialEaseInOut];
-      strokeStartPathAnimation.fillMode = kCAFillModeBoth;
-      strokeStartPathAnimation.removedOnCompletion = NO;
-      [_strokeLayer addAnimation:strokeStartPathAnimation forKey:@"strokeStart"];
-
-      // Stroke end.
-      CABasicAnimation *strokeEndPathAnimation =
-          [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-      strokeEndPathAnimation.duration = duration;
-      // Ensure the stroke never completely disappears on start by animating from non-zero start and
-      // to a value slightly larger than the strokeStart's final value.
-      strokeEndPathAnimation.fromValue = @(_minStrokeDifference);
-      strokeEndPathAnimation.toValue = @(_currentProgress);
-      strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
-      strokeEndPathAnimation.fillMode = kCAFillModeBoth;
-      strokeEndPathAnimation.removedOnCompletion = NO;
-      [_strokeLayer addAnimation:strokeEndPathAnimation forKey:@"strokeEnd"];
+      [_animator animateWithTiming:kMotionSpec.transitionToDeterminate.strokeEnd
+                           toLayer:_strokeLayer
+                        withValues:@[@(_minStrokeDifference), @(_currentProgress)]
+                           keyPath:MDMKeyPathStrokeEnd];
     }
     [CATransaction commit];
 
     _animationInProgress = YES;
     _lastProgress = _currentProgress;
   }
-}
-
-- (CAMediaTimingFunction *)materialEaseInOut {
-  // This curve is slow both at the beginning and end.
-  // Visualization of curve  http://cubic-bezier.com/#.4,0,.2,1
-  return [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.2f:1.0f];
 }
 
 - (void)addProgressAnimation {
@@ -693,16 +626,16 @@ static const CGFloat kSingleCycleRotation =
     [CATransaction setCompletionBlock:^{
       [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateDeterminate];
     }];
+    [CATransaction setDisableActions:YES];
 
-    // Stroke end.
-    CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration = kPointCycleDuration / 2;
-    strokeEndPathAnimation.fromValue = @(_lastProgress);
-    strokeEndPathAnimation.toValue = @(_currentProgress);
-    strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
-    strokeEndPathAnimation.fillMode = kCAFillModeBoth;
-    strokeEndPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeEndPathAnimation forKey:@"strokeEnd"];
+    _outerRotationLayer.transform = CATransform3DIdentity;
+    _strokeLayer.transform = CATransform3DIdentity;
+    _strokeLayer.strokeStart = 0;
+
+    [_animator animateWithTiming:kMotionSpec.progress.strokeEnd
+                         toLayer:_strokeLayer
+                      withValues:@[@(_lastProgress), @(_currentProgress)]
+                         keyPath:MDMKeyPathStrokeEnd];
   }
 
   [CATransaction commit];
