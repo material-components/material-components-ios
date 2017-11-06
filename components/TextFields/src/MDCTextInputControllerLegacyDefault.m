@@ -932,6 +932,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
             : [NSNumber numberWithFloat:(float)[self class].floatingPlaceholderScaleDefault];
 
     [self updatePlaceholder];
+    [self.textInput setNeedsUpdateConstraints];
   }
 }
 
