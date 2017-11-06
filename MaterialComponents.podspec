@@ -1,16 +1,16 @@
 load 'scripts/generated/icons.rb'
 
-Pod::Spec.new do |s|
-  s.name         = "MaterialComponents"
-  s.version      = "38.1.1"
-  s.authors      = "The Material Components authors."
-  s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
-  s.homepage     = "https://github.com/material-components/material-components-ios"
-  s.license      = "Apache 2.0"
-  s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{s.version}" }
-  s.platform     = :ios
-  s.requires_arc = true
-  s.ios.deployment_target = '8.0'
+Pod::Spec.new do |mdc|
+  mdc.name         = "MaterialComponents"
+  mdc.version      = "38.1.1"
+  mdc.authors      = "The Material Components authors."
+  mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
+  mdc.homepage     = "https://github.com/material-components/material-components-ios"
+  mdc.license      = "Apache 2.0"
+  mdc.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{mdc.version}" }
+  mdc.platform     = :ios
+  mdc.requires_arc = true
+  mdc.ios.deployment_target = '8.0'
 
   # # Subspec explanation
   #
@@ -27,557 +27,557 @@ Pod::Spec.new do |s|
   #
   # # Template subspec
   #
-  #  s.subspec "ComponentName" do |ss|
-  #    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-  #    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  #  mdc.subspec "ComponentName" do |component|
+  #    component.public_header_files = "components/#{component.base_name}/src/*.h"
+  #    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
   #
   #    # Only if you have a resource bundle
-  #    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  #    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
   #
   #  end
   #
 
-  s.subspec "ActivityIndicator" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  mdc.subspec "ActivityIndicator" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
-      sss.dependency "MDFInternationalization"
-      sss.dependency "MaterialComponents/Palettes"
-      sss.dependency "MaterialComponents/private/Application"
-      sss.dependency "MotionAnimator", "~> 2.0"
+      spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/Palettes"
+      spec.dependency "MaterialComponents/private/Application"
+      spec.dependency "MotionAnimator", "~> 2.0"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/ActivityIndicator/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/ActivityIndicator/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "AnimationTiming" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "AnimationTiming" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
   end
 
-  s.subspec "AppBar" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  mdc.subspec "AppBar" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
       # Navigation bar contents
-      sss.dependency "MaterialComponents/HeaderStackView"
-      sss.dependency "MaterialComponents/NavigationBar"
-      sss.dependency "MaterialComponents/Typography"
-      sss.dependency "MaterialComponents/private/Application"
+      spec.dependency "MaterialComponents/HeaderStackView"
+      spec.dependency "MaterialComponents/NavigationBar"
+      spec.dependency "MaterialComponents/Typography"
+      spec.dependency "MaterialComponents/private/Application"
 
       # Flexible header + shadow
-      sss.dependency "MaterialComponents/FlexibleHeader"
-      sss.dependency "MaterialComponents/ShadowElevations"
-      sss.dependency "MaterialComponents/ShadowLayer"
+      spec.dependency "MaterialComponents/FlexibleHeader"
+      spec.dependency "MaterialComponents/ShadowElevations"
+      spec.dependency "MaterialComponents/ShadowLayer"
 
-      sss.dependency "MDFInternationalization"
-      sss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
-      sss.dependency "MaterialComponents/private/UIMetrics"
+      spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/private/Icons/ic_arrow_back"
+      spec.dependency "MaterialComponents/private/UIMetrics"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}", "components/#{ss.base_name}/src/#{sss.base_name}/private/*.{h,m}"
-      sss.dependency "MaterialComponents/AppBar/Component"
-      sss.dependency "MaterialComponents/Themes"
-    end
-  end
-
-  s.subspec "BottomAppBar" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.dependency "MDFInternationalization"
-    ss.dependency "MaterialComponents/Buttons"
-    ss.dependency "MaterialComponents/NavigationBar"
-    ss.dependency "MaterialComponents/private/Math"
-  end
-
-  s.subspec "BottomNavigation" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
-
-      sss.dependency "MDFInternationalization"
-      sss.dependency "MaterialComponents/ShadowElevations"
-      sss.dependency "MaterialComponents/ShadowLayer"
-      sss.dependency "MaterialComponents/private/Math"
-    end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/BottomNavigation/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}", "components/#{component.base_name}/src/#{spec.base_name}/private/*.{h,m}"
+      spec.dependency "MaterialComponents/AppBar/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "BottomSheet" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "BottomAppBar" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
-    ss.dependency "MaterialComponents/private/KeyboardWatcher"
-    ss.dependency "MaterialComponents/private/Math"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/NavigationBar"
+    component.dependency "MaterialComponents/private/Math"
   end
 
-  s.subspec "Buttons" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "BottomNavigation" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
-      ss.dependency 'MDFTextAccessibility'
-      ss.dependency "MaterialComponents/Ink"
-      ss.dependency "MaterialComponents/ShadowElevations"
-      ss.dependency "MaterialComponents/ShadowLayer"
-      ss.dependency "MaterialComponents/Typography"
-
-      ss.dependency "MaterialComponents/private/Math"
+      spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/ShadowElevations"
+      spec.dependency "MaterialComponents/ShadowLayer"
+      spec.dependency "MaterialComponents/private/Math"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}", "components/#{ss.base_name}/src/#{sss.base_name}/private/*.{h,m}"
-      sss.dependency "MaterialComponents/Buttons/Component"
-      sss.dependency "MaterialComponents/Themes"
-    end
-    ss.subspec "TitleColorAccessibilityMutator" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}", "components/#{ss.base_name}/src/#{sss.base_name}/private/*.{h,m}"
-
-      sss.dependency 'MDFTextAccessibility'
-      sss.dependency "MaterialComponents/Buttons/Component"
-    end
-
-  end
-
-  s.subspec "ButtonBar" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-      ss.dependency "MDFInternationalization"
-      ss.dependency "MaterialComponents/Buttons"
-    end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/ButtonBar/Component"
-      sss.dependency "MaterialComponents/NavigationBar/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/BottomNavigation/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "CollectionCells" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  mdc.subspec "BottomSheet" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
-    ss.framework = "CoreGraphics", "QuartzCore"
-
-    ss.dependency "MDFInternationalization"
-    ss.dependency "MaterialComponents/CollectionLayoutAttributes"
-    ss.dependency "MaterialComponents/Ink"
-    ss.dependency "MaterialComponents/Typography"
-    ss.dependency "MaterialComponents/Palettes"
-    ss.dependency "MaterialComponents/private/Icons/ic_check"
-    ss.dependency "MaterialComponents/private/Icons/ic_check_circle"
-    ss.dependency "MaterialComponents/private/Icons/ic_chevron_right"
-    ss.dependency "MaterialComponents/private/Icons/ic_info"
-    ss.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
-    ss.dependency "MaterialComponents/private/Icons/ic_reorder"
-    ss.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/KeyboardWatcher"
+    component.dependency "MaterialComponents/private/Math"
   end
 
-  s.subspec "CollectionLayoutAttributes" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-  end
+  mdc.subspec "Buttons" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
-  s.subspec "Collections" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+      spec.dependency 'MDFTextAccessibility'
+      spec.dependency "MaterialComponents/Ink"
+      spec.dependency "MaterialComponents/ShadowElevations"
+      spec.dependency "MaterialComponents/ShadowLayer"
+      spec.dependency "MaterialComponents/Typography"
 
-    ss.framework = "CoreGraphics", "QuartzCore"
-
-    ss.dependency "MaterialComponents/CollectionCells"
-    ss.dependency "MaterialComponents/CollectionLayoutAttributes"
-    ss.dependency "MaterialComponents/Ink"
-    ss.dependency "MaterialComponents/ShadowElevations"
-    ss.dependency "MaterialComponents/ShadowLayer"
-    ss.dependency "MaterialComponents/Typography"
-  end
-
-  s.subspec "Dialogs" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
-
-      sss.dependency "MaterialComponents/Buttons"
-      sss.dependency "MaterialComponents/ShadowElevations"
-      sss.dependency "MaterialComponents/ShadowLayer"
-      sss.dependency "MaterialComponents/private/KeyboardWatcher"
-      sss.dependency "MDFInternationalization"
+      component.dependency "MaterialComponents/private/Math"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/Dialogs/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}", "components/#{component.base_name}/src/#{spec.base_name}/private/*.{h,m}"
+      spec.dependency "MaterialComponents/Buttons/Component"
+      spec.dependency "MaterialComponents/Themes"
+    end
+    component.subspec "TitleColorAccessibilityMutator" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}", "components/#{component.base_name}/src/#{spec.base_name}/private/*.{h,m}"
+
+      spec.dependency 'MDFTextAccessibility'
+      spec.dependency "MaterialComponents/Buttons/Component"
+    end
+
+  end
+
+  mdc.subspec "ButtonBar" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+      component.dependency "MDFInternationalization"
+      component.dependency "MaterialComponents/Buttons"
+    end
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/ButtonBar/Component"
+      spec.dependency "MaterialComponents/NavigationBar/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "FeatureHighlight" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
-      sss.dependency "MaterialComponents/private/Math"
-      sss.dependency "MaterialComponents/Typography"
-      sss.dependency "MDFTextAccessibility"
+  mdc.subspec "CollectionCells" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+    component.framework = "CoreGraphics", "QuartzCore"
+
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/CollectionLayoutAttributes"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/private/Icons/ic_check"
+    component.dependency "MaterialComponents/private/Icons/ic_check_circle"
+    component.dependency "MaterialComponents/private/Icons/ic_chevron_right"
+    component.dependency "MaterialComponents/private/Icons/ic_info"
+    component.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
+    component.dependency "MaterialComponents/private/Icons/ic_reorder"
+    component.dependency "MaterialComponents/private/Math"
+  end
+
+  mdc.subspec "CollectionLayoutAttributes" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+  end
+
+  mdc.subspec "Collections" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+    component.framework = "CoreGraphics", "QuartzCore"
+
+    component.dependency "MaterialComponents/CollectionCells"
+    component.dependency "MaterialComponents/CollectionLayoutAttributes"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+  end
+
+  mdc.subspec "Dialogs" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+      spec.dependency "MaterialComponents/Buttons"
+      spec.dependency "MaterialComponents/ShadowElevations"
+      spec.dependency "MaterialComponents/ShadowLayer"
+      spec.dependency "MaterialComponents/private/KeyboardWatcher"
+      spec.dependency "MDFInternationalization"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/FeatureHighlight/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/Dialogs/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "FlexibleHeader" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-      sss.dependency 'MDFTextAccessibility'
-      sss.dependency "MaterialComponents/private/Application"
-      sss.dependency "MaterialComponents/private/UIMetrics"
+  mdc.subspec "FeatureHighlight" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+      spec.dependency "MaterialComponents/private/Math"
+      spec.dependency "MaterialComponents/Typography"
+      spec.dependency "MDFTextAccessibility"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/FlexibleHeader/Component"
-      sss.dependency "MaterialComponents/Themes"
-    end
-  end
-
-  s.subspec "HeaderStackView" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/HeaderStackView/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/FeatureHighlight/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "Ink" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "FlexibleHeader" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.dependency 'MDFTextAccessibility'
+      spec.dependency "MaterialComponents/private/Application"
+      spec.dependency "MaterialComponents/private/UIMetrics"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/Ink/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/FlexibleHeader/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "MaskedTransition" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.dependency "MotionTransitioning", "~> 4.0"
-    ss.dependency "MotionAnimator", "~> 2.0"
-    ss.dependency "MotionInterchange", "~> 1.0"
+  mdc.subspec "HeaderStackView" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}"
+    end
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/HeaderStackView/Component"
+      spec.dependency "MaterialComponents/Themes"
+    end
   end
 
-  s.subspec "NavigationBar" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+  mdc.subspec "Ink" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    end
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/Ink/Component"
+      spec.dependency "MaterialComponents/Themes"
+    end
+  end
+
+  mdc.subspec "MaskedTransition" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MotionTransitioning", "~> 4.0"
+    component.dependency "MotionAnimator", "~> 2.0"
+    component.dependency "MotionInterchange", "~> 1.0"
+  end
+
+  mdc.subspec "NavigationBar" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
       # Accessibility Configurator
-      sss.dependency "MDFTextAccessibility"
+      spec.dependency "MDFTextAccessibility"
 
-      sss.dependency "MaterialComponents/ButtonBar/Component"
-      sss.dependency "MaterialComponents/Typography"
+      spec.dependency "MaterialComponents/ButtonBar/Component"
+      spec.dependency "MaterialComponents/Typography"
 
-      sss.dependency "MDFInternationalization"
-      sss.dependency "MaterialComponents/private/Math"
+      spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/private/Math"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/NavigationBar/Component"
-      sss.dependency "MaterialComponents/Themes"
-    end
-  end
-
-  s.subspec "OverlayWindow" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.dependency "MaterialComponents/private/Application"
-  end
-
-  s.subspec "PageControl" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
-    end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/PageControl/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/NavigationBar/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "Palettes" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "OverlayWindow" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/private/Application"
   end
 
-  s.subspec "ProgressView" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-
-      sss.dependency "MDFInternationalization"
-      sss.dependency "MaterialComponents/private/Math"
+  mdc.subspec "PageControl" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/ProgressView/Component"
-      sss.dependency "MaterialComponents/Themes"
-    end
-  end
-
-  s.subspec "ShadowElevations" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-  end
-
-  s.subspec "ShadowLayer" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.dependency "MaterialComponents/ShadowElevations"
-  end
-
-  s.subspec "Slider" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-      sss.dependency "MaterialComponents/private/ThumbTrack"
-    end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/Slider/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/PageControl/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "Snackbar" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.dependency "MaterialComponents/AnimationTiming"
-    ss.dependency "MaterialComponents/Buttons"
-    ss.dependency "MaterialComponents/OverlayWindow"
-    ss.dependency "MaterialComponents/Typography"
-    ss.dependency "MaterialComponents/private/Application"
-    ss.dependency "MaterialComponents/private/KeyboardWatcher"
-    ss.dependency "MaterialComponents/private/Overlay"
+  mdc.subspec "Palettes" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
   end
 
-  s.subspec "Tabs" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  mdc.subspec "ProgressView" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
-      sss.dependency "MDFInternationalization"
-      sss.dependency "MaterialComponents/AnimationTiming"
-      sss.dependency "MaterialComponents/Ink"
-      sss.dependency "MaterialComponents/ShadowElevations"
-      sss.dependency "MaterialComponents/ShadowLayer"
-      sss.dependency "MaterialComponents/Typography"
-      sss.dependency "MaterialComponents/private/Math"
+      spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/private/Math"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/Tabs/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/ProgressView/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "TextFields" do |ss|
-    ss.subspec "Component" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "ShadowElevations" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+  end
 
-      sss.dependency "MaterialComponents/AnimationTiming"
-      sss.dependency "MaterialComponents/Palettes"
-      sss.dependency "MaterialComponents/Typography"
+  mdc.subspec "ShadowLayer" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+    component.dependency "MaterialComponents/ShadowElevations"
+  end
 
-      sss.dependency "MDFInternationalization"
-      sss.dependency "MaterialComponents/private/Math"
-      sss.dependency "MDFInternationalization"
+  mdc.subspec "Slider" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+      spec.dependency "MaterialComponents/private/ThumbTrack"
     end
-    ss.subspec "ColorThemer" do |sss|
-      sss.ios.deployment_target = '8.0'
-      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
-      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}"
-      sss.dependency "MaterialComponents/TextFields/Component"
-      sss.dependency "MaterialComponents/Themes"
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/Slider/Component"
+      spec.dependency "MaterialComponents/Themes"
     end
   end
 
-  s.subspec "Themes" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "Snackbar" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/OverlayWindow"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Application"
+    component.dependency "MaterialComponents/private/KeyboardWatcher"
+    component.dependency "MaterialComponents/private/Overlay"
   end
 
-  s.subspec "Typography" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "Tabs" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
-    ss.dependency "MaterialComponents/private/Application"
+      spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/AnimationTiming"
+      spec.dependency "MaterialComponents/Ink"
+      spec.dependency "MaterialComponents/ShadowElevations"
+      spec.dependency "MaterialComponents/ShadowLayer"
+      spec.dependency "MaterialComponents/Typography"
+      spec.dependency "MaterialComponents/private/Math"
+    end
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/Tabs/Component"
+      spec.dependency "MaterialComponents/Themes"
+    end
   end
 
-  s.subspec "private" do |pss|
+  mdc.subspec "TextFields" do |component|
+    component.subspec "Component" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/*.h"
+      spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+      spec.dependency "MaterialComponents/AnimationTiming"
+      spec.dependency "MaterialComponents/Palettes"
+      spec.dependency "MaterialComponents/Typography"
+
+      spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/private/Math"
+      spec.dependency "MDFInternationalization"
+    end
+    component.subspec "ColorThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/TextFields/Component"
+      spec.dependency "MaterialComponents/Themes"
+    end
+  end
+
+  mdc.subspec "Themes" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+  end
+
+  mdc.subspec "Typography" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/private/Application"
+  end
+
+  mdc.subspec "private" do |private_spec|
 
     # Pull in icon dependencies
     # The implementation of this method is generated by running scripts/sync_icons.sh
     # and defined in scripts/generated/icons.rb
-    registerIcons(pss)
+    registerIcons(private_spec)
 
-    pss.subspec "Application" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "Application" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
     end
 
-    pss.subspec "KeyboardWatcher" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "KeyboardWatcher" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
-      ss.dependency "MaterialComponents/private/Application"
+      component.dependency "MaterialComponents/private/Application"
     end
 
-    pss.subspec "Math" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "Math" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
     end
 
-    pss.subspec "Overlay" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+    private_spec.subspec "Overlay" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
     end
 
-    pss.subspec "ShapeLibrary" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+    private_spec.subspec "ShapeLibrary" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
 
-      ss.dependency "MaterialComponents/private/Shapes"
-      ss.dependency "MaterialComponents/private/Math"
+      component.dependency "MaterialComponents/private/Shapes"
+      component.dependency "MaterialComponents/private/Math"
     end
 
-    pss.subspec "Shapes" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+    private_spec.subspec "Shapes" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
 
-      ss.dependency "MaterialComponents/ShadowLayer"
-      ss.dependency "MaterialComponents/private/Math"
+      component.dependency "MaterialComponents/ShadowLayer"
+      component.dependency "MaterialComponents/private/Math"
     end
 
-    pss.subspec "ThumbTrack" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "ThumbTrack" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
-      ss.dependency "MaterialComponents/Ink"
-      ss.dependency "MaterialComponents/ShadowElevations"
-      ss.dependency "MaterialComponents/ShadowLayer"
-      ss.dependency "MaterialComponents/Typography"
+      component.dependency "MaterialComponents/Ink"
+      component.dependency "MaterialComponents/ShadowElevations"
+      component.dependency "MaterialComponents/ShadowLayer"
+      component.dependency "MaterialComponents/Typography"
 
-      ss.dependency "MDFInternationalization"
-      ss.dependency "MaterialComponents/private/Math"
+      component.dependency "MDFInternationalization"
+      component.dependency "MaterialComponents/private/Math"
     end
 
-    pss.subspec "UIMetrics" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+    private_spec.subspec "UIMetrics" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
 
-      ss.dependency "MaterialComponents/private/Application"
+      component.dependency "MaterialComponents/private/Application"
     end
 
   end
