@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 @class MDCTabBarIndicatorAttributes;
-@class MDCTabBarIndicatorContext;
+@protocol MDCTabBarIndicatorContext;
 
 /*
  Template for indicator content which defines how the indicator changes appearance in response to

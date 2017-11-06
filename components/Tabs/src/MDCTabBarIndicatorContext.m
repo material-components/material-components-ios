@@ -19,6 +19,9 @@
 #import "private/MDCTabBarIndicatorContext+Private.h"
 
 @implementation MDCTabBarIndicatorContext
+@synthesize bounds = _bounds;
+@synthesize contentFrame = _contentFrame;
+@synthesize item = _item;
 
 - (instancetype)initWithItem:(UITabBarItem *)item
                       bounds:(CGRect)bounds
