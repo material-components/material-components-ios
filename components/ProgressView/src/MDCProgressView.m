@@ -73,7 +73,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   _progressView = [[UIView alloc] initWithFrame:CGRectZero];
   [self addSubview:_progressView];
 
-  _progressView.backgroundColor = [[self class] defaultProgressTintColor];
+  _progressView.backgroundColor = MDCProgressViewDefaultTintColor();
   _trackView.backgroundColor =
       [[self class] defaultTrackTintColorForProgressTintColor:_progressView.backgroundColor];
 }
@@ -99,7 +99,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
 - (void)setProgressTintColor:(UIColor *)progressTintColor {
   if (progressTintColor == nil) {
-    progressTintColor = [[self class] defaultProgressTintColor];
+    progressTintColor = MDCProgressViewDefaultTintColor();
   }
   self.progressView.backgroundColor = progressTintColor;
 }
@@ -256,10 +256,6 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   // Since the animation is fake, using a linear interpolation avoids the speeding up and slowing
   // down that repeated easing in and out causes.
   return UIViewAnimationOptionCurveLinear;
-}
-
-+ (UIColor *)defaultProgressTintColor {
-  return MDCProgressViewDefaultTintColor();
 }
 
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
