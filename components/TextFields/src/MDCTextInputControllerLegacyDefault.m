@@ -154,7 +154,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 @property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
 @property(nonatomic, assign, readonly) BOOL isDisplayingErrorText;
-@property(nonatomic, assign, readonly) BOOL isPlaceholderUp;
 
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 
@@ -466,7 +465,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)updatePlaceholder {
   self.textInput.placeholderLabel.font = self.inlinePlaceholderFont;
 
-  if (self.isPlaceholderUp) {
+  if ([self isPlaceholderUp]) {
     UIColor *nonErrorColor = self.textInput.isEditing ? self.activeColor :
         self.floatingPlaceholderNormalColor;
     self.textInput.placeholderLabel.textColor =
@@ -477,38 +476,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
-// Sometimes the text field is not showing the correct layout for its values (like when it's created
-// with .text already entered) so we make sure it's in the right place always.
-//
-// Note that this calls updateLayout inside it so it is the only 'update-' method not included in
-// updateLayout.
-- (void)forceUpdatePlaceholderY {
-  BOOL isDirectionToUp = NO;
-  if (self.floatingEnabled) {
-    isDirectionToUp = self.textInput.text.length >= 1 || self.textInput.isEditing;
-  }
+#pragma mark - Placeholder Floating
 
-  [CATransaction begin];
-  [CATransaction setDisableActions:YES];
-  [self movePlaceholderToUp:isDirectionToUp];
-  [CATransaction commit];
-
-  [self updateLayout];
-
-  self.textInput.hidesPlaceholderOnInput = !self.floatingEnabled;
-  [self.textInput layoutIfNeeded];
-}
-
-- (BOOL)isPlaceholderUp {
-  return self.placeholderAnimationConstraints.count > 0 &&
-         !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
-                                            CGAffineTransformIdentity);
-}
-
-#pragma mark - Placeholder Animation
+// 'Up' in these methods always means the placeholder is floating; it's .y is smaller and it's not
+// 'inline' with the text input. The placeholder also doesn't disappear when you type since it's
+// functioning as a title label when 'up'.
 
 - (void)movePlaceholderToUp:(BOOL)isToUp {
-  if (self.isPlaceholderUp == isToUp) {
+  if ([self isPlaceholderUp] == isToUp) {
     return;
   }
 
@@ -542,6 +517,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       }];
 }
 
+- (BOOL)isPlaceholderUp {
+  return self.placeholderAnimationConstraints.count > 0 &&
+  !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
+                                     CGAffineTransformIdentity);
+}
+
+// Sometimes we set up the animation constraints for floating up before we have a width for the text
+// field. Since there is math that needs to compensate for the transform in relation to the width,
+// we update the constants on the constraints.
+//
+// Note: this method is not called inside updateLayout.
 - (void)updatePlaceholderAnimationConstraints:(BOOL)isToUp {
   if (isToUp) {
     UIOffset offset = [self floatingPlaceholderOffset];
@@ -596,11 +582,51 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
+// Sometimes we set up the animation constraints for floating up before we have a width for the text
+// field. Since there is math that needs to compensate for the transform in relation to the width,
+// we check to see if the constraints still have the correct constants.
+- (BOOL)needsUpdatePlaceholderAnimationConstraintsToUp {
+  if (![self isPlaceholderUp]) {
+    return NO;
+  }
+  UIEdgeInsets insets = self.textInput.textInsets;
+  UIOffset offset = [self floatingPlaceholderOffset];
+
+  CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
+                                                                                 offset:offset];
+  CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
+                                                                                   offset:offset];
+
+  return self.placeholderAnimationConstraintLeading.constant != leadingConstant &&
+  self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
+}
+
 - (void)cleanupPlaceholderAnimationConstraints {
   self.placeholderAnimationConstraints = nil;
   self.placeholderAnimationConstraintLeading = nil;
   self.placeholderAnimationConstraintTop = nil;
   self.placeholderAnimationConstraintTrailing = nil;
+}
+
+// Sometimes the text field is not showing the correct layout for its values (like when it's created
+// with .text already entered) so we make sure it's in the right place always.
+//
+// Note that this calls updateLayout inside it so it is not included in updateLayout.
+- (void)forceUpdatePlaceholderY {
+  BOOL isDirectionToUp = NO;
+  if (self.floatingEnabled) {
+    isDirectionToUp = self.textInput.text.length >= 1 || self.textInput.isEditing;
+  }
+
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
+  [self movePlaceholderToUp:isDirectionToUp];
+  [CATransaction commit];
+
+  [self updateLayout];
+
+  self.textInput.hidesPlaceholderOnInput = !self.floatingEnabled;
+  [self.textInput layoutIfNeeded];
 }
 
 - (UIOffset)floatingPlaceholderOffset {
@@ -627,6 +653,18 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       placeholderWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
 
   return UIOffsetMake(horizontal, vertical);
+}
+
+- (CGFloat)floatingPlaceholderAnimationConstraintLeadingConstant:(UIEdgeInsets)textInsets
+                                                          offset:(UIOffset)offset {
+  CGFloat constant = textInsets.left - offset.horizontal;
+  return constant;
+}
+
+- (CGFloat)floatingPlaceholderAnimationConstraintTrailingConstant:(UIEdgeInsets)textInsets
+                                                           offset:(UIOffset)offset {
+  CGFloat constant = offset.horizontal - textInsets.right;
+  return constant;
 }
 
 #pragma mark - Trailing Label Customization
