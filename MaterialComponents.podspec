@@ -393,6 +393,7 @@ Pod::Spec.new do |mdc|
       spec.dependency "MDFInternationalization"
       spec.dependency "MaterialComponents/Palettes"
       spec.dependency "MaterialComponents/private/Math"
+      spec.dependency "MotionAnimator", "~> 2.0"
     end
     component.subspec "ColorThemer" do |spec|
       spec.ios.deployment_target = '8.0'
