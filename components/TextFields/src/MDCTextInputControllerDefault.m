@@ -395,10 +395,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextFieldTextDidEndEditingNotification
                         object:_textInput];
-    [defaultCenter addObserver:self
-                      selector:@selector(textInputDidChange:)
-                          name:MDCTextFieldTextDidSetTextNotification
-                        object:_textInput];
   }
 
   if ([_textInput isKindOfClass:[MDCMultilineTextField class]]) {
@@ -415,11 +411,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextViewTextDidEndEditingNotification
                         object:textField.textView];
-    [defaultCenter addObserver:self
-                      selector:@selector(textInputDidChange:)
-                          name:MDCTextFieldTextDidSetTextNotification
-                        object:_textInput];
   }
+
+  [defaultCenter addObserver:self
+                    selector:@selector(textInputDidChange:)
+                        name:MDCTextFieldTextDidSetTextNotification
+                      object:_textInput];
 }
 
 - (void)unsubscribeFromNotifications {
@@ -554,7 +551,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)updatePlaceholderAnimationConstraints:(BOOL)isToUp {
   if (isToUp) {
     UIOffset offset = [self floatingPlaceholderOffset];
+
+    // Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
+    // See MDCTextInputController.h.
     UIEdgeInsets insets = self.textInput.textInsets;
+
     CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
                                                                                    offset:offset];
     if (!self.placeholderAnimationConstraintLeading) {
@@ -613,7 +614,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (![self isPlaceholderUp]) {
     return NO;
   }
+
+  // Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
+  // See MDCTextInputController.h.
   UIEdgeInsets insets = self.textInput.textInsets;
+
   UIOffset offset = [self floatingPlaceholderOffset];
 
   CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
@@ -661,7 +666,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   vertical -= self.textInput.placeholderLabel.font.lineHeight *
               (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
 
+  // Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
+  // See MDCTextInputController.h.
   UIEdgeInsets insets = self.textInput.textInsets;
+
   CGFloat placeholderMaxWidth =
       CGRectGetWidth(self.textInput.bounds) / self.floatingPlaceholderScale.floatValue -
       insets.left - insets.right;
@@ -679,12 +687,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return UIOffsetMake(horizontal, vertical);
 }
 
+// Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
+// See MDCTextInputController.h.
 - (CGFloat)floatingPlaceholderAnimationConstraintLeadingConstant:(UIEdgeInsets)textInsets
                                                           offset:(UIOffset)offset {
   CGFloat constant = textInsets.left - offset.horizontal;
   return constant;
 }
 
+// Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
+// See MDCTextInputController.h.
 - (CGFloat)floatingPlaceholderAnimationConstraintTrailingConstant:(UIEdgeInsets)textInsets
                                                           offset:(UIOffset)offset {
   CGFloat constant = offset.horizontal - textInsets.right;
