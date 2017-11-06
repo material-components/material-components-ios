@@ -18,10 +18,14 @@
 
 #import "MDCTabBarIndicatorContext.h"
 
-@interface MDCTabBarIndicatorContext (Private)
+/// Concrete implementation of a tab indicator context.
+@interface MDCTabBarIndicatorContext : NSObject <MDCTabBarIndicatorContext>
 
+- (null_unspecified instancetype)init NS_UNAVAILABLE;
+
+/// Designated initializer which creates a context from members.
 - (nonnull instancetype)initWithItem:(nonnull UITabBarItem *)item
                               bounds:(CGRect)bounds
-                        contentFrame:(CGRect)contentFrame;
-@end
+                        contentFrame:(CGRect)contentFrame NS_DESIGNATED_INITIALIZER;
 
+@end

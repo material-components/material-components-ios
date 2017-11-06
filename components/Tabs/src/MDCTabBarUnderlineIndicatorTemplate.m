@@ -22,7 +22,7 @@
 @implementation MDCTabBarUnderlineIndicatorTemplate
 
 - (MDCTabBarIndicatorAttributes *)
-    indicatorAttributesForContext:(MDCTabBarIndicatorContext *)context {
+    indicatorAttributesForContext:(id<MDCTabBarIndicatorContext>)context {
   CGRect bounds = context.bounds;
   MDCTabBarIndicatorAttributes *attributes = [[MDCTabBarIndicatorAttributes alloc] init];
   attributes.path = [UIBezierPath bezierPathWithRect:CGRectMake(CGRectGetMinX(bounds), CGRectGetMaxY(bounds) - 2,CGRectGetWidth(bounds), 2)];
