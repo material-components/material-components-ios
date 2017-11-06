@@ -539,11 +539,15 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (void)didSelectItemAtIndex:(NSInteger)index animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
     [self updateSelectionIndicatorToIndex:index];
+
+    // Force layout so any changes to the selection indicator are captured by the animation block.
+    [_selectionIndicator layoutIfNeeded];
   };
 
   if (animate) {
     CAMediaTimingFunction *easeInOutFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+    // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
     [CATransaction begin];
     [CATransaction setAnimationDuration:kDefaultAnimationDuration];
     [CATransaction setAnimationTimingFunction:easeInOutFunction];
@@ -578,37 +582,34 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UICollectionViewLayoutAttributes *layoutAttributes =
       [_flowLayout layoutAttributesForItemAtIndexPath:indexPath];
 
-  // Size selection indicator to a fixed height, equal in width to the selected item's cell.
+  // Place selection indicator under the item's cell.
   CGRect selectionIndicatorBounds = layoutAttributes.bounds;
-//  selectionIndicatorBounds.size.height = kSelectionIndicatorHeight;
-
-  // Center selection indicator under cell.
   CGPoint selectionIndicatorCenter = layoutAttributes.center;
-//  selectionIndicatorCenter.y =
-//      CGRectGetMaxY(_collectionView.bounds) - (kSelectionIndicatorHeight / 2.0f);
-
   _selectionIndicator.bounds = selectionIndicatorBounds;
   _selectionIndicator.center = selectionIndicatorCenter;
 
+  // Extract content frame from cell.
   CGRect contentFrame = selectionIndicatorBounds;
   UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
   if ([cell isKindOfClass:[MDCItemBarCell class]]) {
     MDCItemBarCell *itemBarCell = (MDCItemBarCell *)cell;
-    UILabel *titleLabel = itemBarCell.titleLabel;
-    contentFrame = [cell convertRect:titleLabel.bounds fromView:titleLabel];
+    contentFrame = [cell convertRect:itemBarCell.contentFrame fromView:cell];
   }
+
+  // Construct a context object describing the selected tab.
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
   MDCTabBarIndicatorContext *context =
       [[MDCTabBarIndicatorContext alloc] initWithItem:item
                                                bounds:selectionIndicatorBounds
                                          contentFrame:contentFrame];
 
+  // Ask the template for attributes.
   id<MDCTabBarIndicatorTemplate> template = _style.selectionIndicatorTemplate;
   MDCTabBarIndicatorAttributes *indicatorAttributes =
       [template indicatorAttributesForContext:context];
 
+  // Update the selection indicator.
   [_selectionIndicator applySelectionIndicatorAttributes:indicatorAttributes];
-  [_selectionIndicator layoutIfNeeded];
 }
 
 - (void)updateFlowLayoutMetricsAnimated:(BOOL)animate {
@@ -679,6 +680,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   NSAssert(_collectionView.window, @"Collection view must be in a window to update layout");
   [_collectionView setCollectionViewLayout:_flowLayout animated:NO];
 
+  // Force immediate layout so the selection indicator can be placed accurately.
   [_collectionView layoutIfNeeded];
 
   // Update selection indicator to potentially new location and size

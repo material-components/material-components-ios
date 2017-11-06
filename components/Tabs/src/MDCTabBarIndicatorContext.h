@@ -34,7 +34,7 @@
 
  For title-only tabs, this is the frame of the title text.
  For image-only tabs, this is the frame of the primary image.
- For title-and-image tabs, it is the union of the title and primary image.
+ For title-and-image tabs, it is the union of the title and primary image's frames.
  */
 @property(nonatomic, readonly) CGRect contentFrame;
 

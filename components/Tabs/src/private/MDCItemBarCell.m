@@ -177,6 +177,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [self setNeedsLayout];
 }
 
+- (CGRect)contentFrame {
+  return [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+}
+
 - (void)applyStyle:(MDCItemBarStyle *)style {
   if (style != _style && ![style isEqual:_style]) {
     _style = style;
