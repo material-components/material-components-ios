@@ -28,7 +28,8 @@
 
 @implementation MDCCustomTabIndicatorTemplate
 
-- (MDCTabBarIndicatorAttributes *)indicatorAttributesForContext:(MDCTabBarIndicatorContext *)context {
+- (MDCTabBarIndicatorAttributes *)
+    indicatorAttributesForContext:(id<MDCTabBarIndicatorContext>)context {
   MDCTabBarIndicatorAttributes *attributes = [MDCTabBarIndicatorAttributes new];
   attributes.path = [self pathForBounds:context.bounds contentFrame:context.contentFrame];
   return attributes;
