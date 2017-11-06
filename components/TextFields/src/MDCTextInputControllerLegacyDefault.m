@@ -519,8 +519,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (BOOL)isPlaceholderUp {
   return self.placeholderAnimationConstraints.count > 0 &&
-  !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
-                                     CGAffineTransformIdentity);
+      !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
+                                         CGAffineTransformIdentity);
 }
 
 // Sometimes we set up the animation constraints for floating up before we have a width for the text
