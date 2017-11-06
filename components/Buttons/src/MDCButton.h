@@ -73,6 +73,24 @@
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
 
 /**
+ The minimum size of the button’s alignment rect. If either the height or width are non-positive
+ (negative or zero), they will be ignored and that axis will adjust to its content size.
+
+ Defaults to CGSizeZero.
+ */
+@property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;
+
+/**
+ The maximum size of the button’s alignment rect. If either the height or width are non-positive
+ (negative or zero), they will be ignored and that axis will adjust to its content size. Setting a
+ maximum size may result in image clipping or text truncation.
+
+ Defaults to CGSizeZero.
+ */
+@property(nonatomic, assign) CGSize maximumSize UI_APPEARANCE_SELECTOR;
+
+
+/**
  The apparent background color as seen by the user, i.e. the color of the view behind the button.
 
  The underlying color hint is used by buttons to calculate accessible title text colors when in

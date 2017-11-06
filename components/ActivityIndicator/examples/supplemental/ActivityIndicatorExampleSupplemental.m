@@ -49,7 +49,6 @@ static NSString * const kCell = @"Cell";
 @implementation ActivityIndicatorExample (Supplemental)
 
 - (void)setupExampleViews {
-
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCell];
 
@@ -76,12 +75,20 @@ static NSString * const kCell = @"Cell";
                     action:@selector(didChangeOnSwitch:)
           forControlEvents:UIControlEventValueChanged];
 
+  self.modeSwitch = [[UISwitch alloc] init];
+  [self.modeSwitch addTarget:self
+                      action:@selector(didChangeModeSwitch:)
+            forControlEvents:UIControlEventValueChanged];
+
   CGRect sliderFrame = CGRectMake(0, 0, 160, 27);
   self.slider = [[UISlider alloc] initWithFrame:sliderFrame];
   self.slider.value = kActivityInitialProgress;
   [self.slider addTarget:self
                   action:@selector(didChangeSliderValue:)
         forControlEvents:UIControlEventValueChanged];
+
+  self.activityIndicator2.progress = self.slider.value;
+  self.activityIndicator3.progress = self.slider.value;
 }
 
 - (void)didChangeOnSwitch:(UISwitch *)onSwitch {
@@ -96,8 +103,20 @@ static NSString * const kCell = @"Cell";
   }
 }
 
+- (void)didChangeModeSwitch:(UISwitch *)switchControl {
+  if (switchControl.on) {
+    self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeDeterminate;
+    self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  } else {
+    self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeIndeterminate;
+    self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeIndeterminate;
+  }
+}
+
 - (void)didChangeSliderValue:(UISlider *)slider {
   self.activityIndicator1.progress = slider.value;
+  self.activityIndicator2.progress = slider.value;
+  self.activityIndicator3.progress = slider.value;
   MDCCollectionViewTextCell *cell =
       (MDCCollectionViewTextCell *)[self.collectionView cellForItemAtIndexPath:
                                         [NSIndexPath indexPathForRow:1 inSection:0]];
@@ -110,7 +129,7 @@ static NSString * const kCell = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 3;
+  return 4;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
@@ -137,6 +156,10 @@ static NSString * const kCell = @"Cell";
     case 2:
       cell.accessoryView = self.onSwitch;
       cell.textLabel.text = @"Show Indicator";
+      break;
+    case 3:
+      cell.accessoryView = self.modeSwitch;
+      cell.textLabel.text = @"Show Determinate";
       break;
     default:
       break;

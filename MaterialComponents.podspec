@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "38.0.1"
+  s.version      = "38.1.1"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -47,6 +47,7 @@ Pod::Spec.new do |s|
       ss.dependency "MDFInternationalization"
       ss.dependency "MaterialComponents/Palettes"
       ss.dependency "MaterialComponents/private/Application"
+      ss.dependency "MotionAnimator", "~> 2.0"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -112,8 +113,10 @@ Pod::Spec.new do |s|
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
       sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
+      sss.dependency "MDFInternationalization"
       sss.dependency "MaterialComponents/ShadowElevations"
       sss.dependency "MaterialComponents/ShadowLayer"
+      sss.dependency "MaterialComponents/private/Math"
     end
     ss.subspec "ColorThemer" do |sss|
       sss.ios.deployment_target = '8.0'
@@ -323,7 +326,7 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
     ss.dependency "MotionTransitioning", "~> 4.0"
-    ss.dependency "MotionAnimator", "~> 1.0"
+    ss.dependency "MotionAnimator", "~> 2.0"
     ss.dependency "MotionInterchange", "~> 1.0"
   end
 

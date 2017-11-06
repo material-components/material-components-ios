@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
 
 // Tests confirming contract with a tracking scroll view that isn't scrolling
 class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {

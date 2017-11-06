@@ -21,37 +21,22 @@ load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "ActivityIndicator",
-    bundles = [":Bundle"],
+    name = "FlexibleHeader",
     sdk_frameworks = [
         "QuartzCore",
         "UIKit",
     ],
     deps = [
-      "//components/Palettes",
       "//components/private/Application",
-      "@material_internationalization_ios//:MDFInternationalization",
-      "@motion_interchange_objc//:MotionInterchange",
-      "@motion_animator_objc//:MotionAnimator",
+      "//components/private/UIMetrics",
+      "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
-)
-
-filegroup(
-    name = "BundleFiles",
-    srcs = glob([
-        "src/MaterialActivityIndicator.bundle/**",
-    ]),
-)
-
-objc_bundle(
-    name = "Bundle",
-    bundle_imports = [":BundleFiles"],
 )
 
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
-    deps = [":ActivityIndicator"],
+    deps = [":FlexibleHeader"],
     visibility = ["//visibility:private"],
 )
 
@@ -64,7 +49,7 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":ActivityIndicator"],
+    deps = [":FlexibleHeader"],
     visibility = ["//visibility:private"],
 )
 
