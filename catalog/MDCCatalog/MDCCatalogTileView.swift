@@ -16,6 +16,8 @@ limitations under the License.
 
 import UIKit
 
+import MaterialCatalog
+
 class MDCCatalogTileView: UIView {
 
   fileprivate var componentNameString = "Misc"
