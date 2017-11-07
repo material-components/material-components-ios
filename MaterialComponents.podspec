@@ -390,9 +390,9 @@ Pod::Spec.new do |mdc|
       spec.public_header_files = "components/#{component.base_name}/src/*.h"
       spec.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
-      sss.dependency "MDFInternationalization"
-      sss.dependency "MaterialComponents/Palettes"
-      sss.dependency "MaterialComponents/private/Math"
+      spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/Palettes"
+      spec.dependency "MaterialComponents/private/Math"
     end
     component.subspec "ColorThemer" do |spec|
       spec.ios.deployment_target = '8.0'
