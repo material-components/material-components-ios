@@ -121,14 +121,14 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @optional
 
 /**
- Called before the selected item changes by user action. Return YES to allow the selection.
- If not implemented all items changes are allowed.
+ Called before the selected item changes. Return YES to allow the selection. If not implemented all
+ items changes are allowed.
  */
 - (BOOL)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
            shouldSelectItem:(nonnull UITabBarItem *)item;
 
 /**
- Called when the selected item changes by user action.
+ Called when the selected item changes.
  */
 - (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
               didSelectItem:(nonnull UITabBarItem *)item;
