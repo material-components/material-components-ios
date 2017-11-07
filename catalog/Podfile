@@ -4,7 +4,7 @@ project 'MDCCatalog.xcodeproj'
 target "MDCCatalog" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
-  pod 'MaterialComponentsCatalog', :path => '../'
+  pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
 
@@ -24,7 +24,7 @@ end
 target "MDCActionExtension" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
-  pod 'MaterialComponentsCatalog', :path => '../'
+  pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
 
