@@ -265,16 +265,12 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 }
 
 - (void)didTouchUpInsideButton:(UIButton *)button {
-  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    UITabBarItem *item = self.items[i];
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (itemView.button == button) {
-
-      // Newly selected item
-      [itemView setSelected:YES animated:YES];
+      [self setSelectedItem:item animated:YES];
       itemView.circleHighlightHidden = YES;
-    } else {
-
-      // Deselect all other items
-      [itemView setSelected:NO animated:YES];
     }
   }
 }
@@ -349,16 +345,30 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
+  [self setSelectedItem:selectedItem animated:NO];
+}
+
+- (void)setSelectedItem:(UITabBarItem *)selectedItem animated:(BOOL)animated {
   if (_selectedItem == selectedItem) {
     return;
   }
   _selectedItem = selectedItem;
   for (NSUInteger i = 0; i < self.items.count; i++) {
     UITabBarItem *item = self.items[i];
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (selectedItem == item) {
-      self.itemViews[i].selected = YES;
+      BOOL shouldSelect = YES;
+      if ([self.delegate respondsToSelector:@selector(bottomNavigationBar:shouldSelectItem:)]) {
+        shouldSelect = [self.delegate bottomNavigationBar:self shouldSelectItem:item];
+      }
+      if (shouldSelect) {
+        [itemView setSelected:YES animated:animated];
+        if ([self.delegate respondsToSelector:@selector(bottomNavigationBar:didSelectItem:)]) {
+          [self.delegate bottomNavigationBar:self didSelectItem:item];
+        }
+      }
     } else {
-      self.itemViews[i].selected = NO;
+      [itemView setSelected:NO animated:animated];
     }
   }
 }
