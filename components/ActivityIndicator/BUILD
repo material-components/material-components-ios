@@ -31,6 +31,8 @@ mdc_public_objc_library(
       "//components/Palettes",
       "//components/private/Application",
       "@material_internationalization_ios//:MDFInternationalization",
+      "@motion_interchange_objc//:MotionInterchange",
+      "@motion_animator_objc//:MotionAnimator",
     ],
 )
 
