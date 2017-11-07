@@ -29,7 +29,20 @@
  @param colorScheme The color scheme to apply to MDCSlider.
  @param slider A MDCSlider instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-                toSlider:(MDCSlider *)slider;
++ (void)applyColorScheme:(nonnull NSObject<MDCColorScheme> *)colorScheme
+                toSlider:(nonnull MDCSlider *)slider;
+
+/**
+ * A default color scheme for sliders displayed on light backgrounds. The primary color is blue and
+ * the primary light and primary dark are gray.
+ */
++ (nonnull MDCBasicColorScheme *)defaultSliderLightColorScheme;
+
+/**
+ * A default color scheme for sliders displayed on dark backgrounds. The primary color is blue and
+ * the primary light and primary dark are white.
+ */
++ (nonnull MDCBasicColorScheme *)defaultSliderDarkColorScheme;
+
 
 @end
