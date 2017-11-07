@@ -18,9 +18,9 @@
 
 #import <MotionAnimator/MotionAnimator.h>
 
-#import "MDCMaskedPresentationController.h"
-#import "MDCMaskedTransitionMotionForContext.h"
-#import "MDCMaskedTransitionMotionSpec.h"
+#import "private/MDCMaskedPresentationController.h"
+#import "private/MDCMaskedTransitionMotionForContext.h"
+#import "private/MDCMaskedTransitionMotionSpec.h"
 
 // Math utilities
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
 
 // Tests verifying contentOffset side effect behavior when changing contentInset.
 class ScrollViewContentOffsetSideEffectTests: XCTestCase {

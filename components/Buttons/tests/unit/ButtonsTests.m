@@ -492,6 +492,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
+  button.minimumSize = CGSizeMake(15, 33);
+  button.maximumSize = CGSizeMake(17, 41);
   CGFloat buttonAlpha = 0.5;
   button.alpha = buttonAlpha;
   button.enabled = NO;
@@ -526,6 +528,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
   XCTAssertEqualObjects(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
+  XCTAssertTrue(CGSizeEqualToSize(button.minimumSize, unarchivedButton.minimumSize));
+  XCTAssertTrue(CGSizeEqualToSize(button.maximumSize, unarchivedButton.maximumSize));
   XCTAssertEqual(button.enabled, unarchivedButton.enabled);
   XCTAssertEqualWithAccuracy(button.alpha, unarchivedButton.alpha, 0.0001);
   unarchivedButton.enabled = YES;
@@ -854,6 +858,66 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
+}
+
+#pragma mark - Size-related tests
+
+- (void)testSizeThatFitsWithMinimumOnly {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) + 15,
+                                    CGRectGetHeight(button.frame) + 21);
+
+  // When
+  button.minimumSize = expectedFrame.size;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
+- (void)testSizeThatFitsWithMaximumOnly {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) - 7,
+                                    CGRectGetHeight(button.frame) - 3);
+
+  // When
+  button.maximumSize = expectedFrame.size;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
+- (void)testSizeThatFitsWithMinimumAndMaximum {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) + 21,
+                                    CGRectGetHeight(button.frame) - 4);
+
+  // When
+  button.maximumSize = CGSizeMake(0, CGRectGetHeight(expectedFrame)); // Only bound max height
+  button.minimumSize = CGSizeMake(CGRectGetWidth(expectedFrame), 0); // Only bound min width
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
 }
 
 @end
