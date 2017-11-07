@@ -288,7 +288,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       [self adjustedCollectionViewWidth] != _lastAdjustedCollectionViewWidth) {
     [self updateFlowLayoutMetrics];
 
-    // Ensure selected item is aligned properly on resize.
+    // Ensure selected item is aligned properly on resize, forcing the new layout to take effect.
     [_collectionView layoutIfNeeded];
     [self selectItemAtIndex:[self indexForItem:_selectedItem] animated:NO];
   }

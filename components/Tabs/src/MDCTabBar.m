@@ -132,7 +132,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _alignment = [self computedAlignment];
   _displaysUppercaseTitles = [self computedDisplaysUppercaseTitles];
   _itemAppearance = [self computedItemAppearance];
-  _selectionIndicatorTemplate = [MDCTabBar defaultMDCTabBarSelectionIndicatorTemplate];
+  _selectionIndicatorTemplate = [MDCTabBar defaultSelectionIndicatorTemplate];
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
@@ -246,7 +246,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)setSelectionIndicatorTemplate:(id<MDCTabBarIndicatorTemplate>)selectionIndicatorTemplate {
   id<MDCTabBarIndicatorTemplate> template = selectionIndicatorTemplate;
   if (!template) {
-    template = [MDCTabBar defaultMDCTabBarSelectionIndicatorTemplate];
+    template = [MDCTabBar defaultSelectionIndicatorTemplate];
   }
   _selectionIndicatorTemplate = template;
   [self updateItemBarStyle];
@@ -446,7 +446,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
-+ (id<MDCTabBarIndicatorTemplate>)defaultMDCTabBarSelectionIndicatorTemplate {
++ (id<MDCTabBarIndicatorTemplate>)defaultSelectionIndicatorTemplate {
   return [[MDCTabBarUnderlineIndicatorTemplate alloc] init];
 }
 
