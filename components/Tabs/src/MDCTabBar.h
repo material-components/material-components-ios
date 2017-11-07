@@ -115,7 +115,7 @@ IB_DESIGNABLE
 
  The default indicator template is a fixed-height rectangular bar under the selected tab.
  */
-@property(nonatomic, nonnull) id<MDCTabBarIndicatorTemplate> selectionIndicatorTemplate
+@property(nonatomic, null_resettable) id<MDCTabBarIndicatorTemplate> selectionIndicatorTemplate
     UI_APPEARANCE_SELECTOR;
 
 /**
@@ -176,4 +176,3 @@ IB_DESIGNABLE
 - (void)tabBar:(nonnull MDCTabBar *)tabBar didSelectItem:(nonnull UITabBarItem *)item;
 
 @end
-

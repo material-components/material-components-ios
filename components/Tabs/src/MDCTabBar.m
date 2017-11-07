@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 
 #import "MDCTabBar.h"
 
+#import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarUnderlineIndicatorTemplate.h"
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
 #import "private/MDCItemBar.h"
 #import "private/MDCItemBarAlignment.h"
 #import "private/MDCItemBarStyle.h"
-#import "MDCTabBarIndicatorTemplate.h"
-#import "MDCTabBarUnderlineIndicatorTemplate.h"
 
 /// Padding between image and title in points, according to the spec.
 static const CGFloat kImageTitleSpecPadding = 10;
@@ -132,6 +132,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _alignment = [self computedAlignment];
   _displaysUppercaseTitles = [self computedDisplaysUppercaseTitles];
   _itemAppearance = [self computedItemAppearance];
+  _selectionIndicatorTemplate = [MDCTabBar defaultMDCTabBarSelectionIndicatorTemplate];
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
@@ -243,7 +244,11 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setSelectionIndicatorTemplate:(id<MDCTabBarIndicatorTemplate>)selectionIndicatorTemplate {
-  _selectionIndicatorTemplate = selectionIndicatorTemplate;
+  id<MDCTabBarIndicatorTemplate> template = selectionIndicatorTemplate;
+  if (!template) {
+    template = [MDCTabBar defaultMDCTabBarSelectionIndicatorTemplate];
+  }
+  _selectionIndicatorTemplate = template;
   [self updateItemBarStyle];
 }
 
@@ -439,6 +444,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
       NSAssert(NO, @"MDCTabBar does not support UIBarPositionTopAttached");
       return YES;
   }
+}
+
++ (id<MDCTabBarIndicatorTemplate>)defaultMDCTabBarSelectionIndicatorTemplate {
+  return [[MDCTabBarUnderlineIndicatorTemplate alloc] init];
 }
 
 - (MDCTabBarAlignment)computedAlignment {
