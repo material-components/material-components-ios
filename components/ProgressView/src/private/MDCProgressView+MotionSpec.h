@@ -19,8 +19,8 @@
 #import "MotionInterchange.h"
 
 struct MDCProgressViewMotionSpec {
-  MDMMotionTiming changeProgress;
-  MDMMotionTiming visibility;
+  MDMMotionTiming setProgress;
+  MDMMotionTiming setHidden;
 };
 typedef struct MDCProgressViewMotionSpec MDCProgressViewMotionSpec;
 

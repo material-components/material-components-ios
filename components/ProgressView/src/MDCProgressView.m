@@ -152,7 +152,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     [self updateProgressView];
 
   } else {
-    MDMMotionTiming timing = kMDCProgressViewMotionSpec.changeProgress;
+    MDMMotionTiming timing = kMDCProgressViewMotionSpec.setProgress;
     [_animator animateWithTiming:timing animations:^{
       [self updateProgressView];
     } completion:^{
@@ -208,7 +208,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   }
 
   if (animated) {
-    MDMMotionTiming timing = kMDCProgressViewMotionSpec.visibility;
+    MDMMotionTiming timing = kMDCProgressViewMotionSpec.setHidden;
     [_animator animateWithTiming:timing animations:animations completion:^{
       if (hidden) {
         self.animatingHide = NO;

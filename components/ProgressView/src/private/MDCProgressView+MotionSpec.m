@@ -17,10 +17,10 @@
 #import "MDCProgressView+MotionSpec.h"
 
 const struct MDCProgressViewMotionSpec kMDCProgressViewMotionSpec = {
-  .changeProgress = {
+  .setProgress = {
     .duration = 0.250, .curve = _MDMBezier(0, 0, 1, 1),
   },
-  .visibility = {
+  .setHidden = {
     .duration = 0.250, .curve = _MDMBezier(0, 0, 1, 1),
   }
 };
