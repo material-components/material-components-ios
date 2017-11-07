@@ -205,7 +205,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   }
 
   func inkViewForView(_ view: UIView) -> MDCInkView {
-    let foundInkView = MDCInkTouchController.injectedInkView(for: view)
+    let foundInkView = MDCInkView.injectedInkView(for: view)
     foundInkView.inkStyle = .unbounded
     foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
     return foundInkView
@@ -242,7 +242,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     }
 
     // Ensure that ink animations aren't recycled.
-    MDCInkTouchController.injectedInkView(for: view).cancelAllAnimations(animated: false)
+    MDCInkView.injectedInkView(for: view).cancelAllAnimations(animated: false)
 
     return cell
   }

@@ -26,7 +26,6 @@
 		664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
 		664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */; };
-		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
 		7D6BB3DC630E39F27A3BA3F6 /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -138,8 +137,6 @@
 		664524BD1C6BA62A001ADBF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		664524C01C6BA62A001ADBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		664524C21C6BA62A001ADBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		66519B051CCA97E100E5423E /* MDCInkTouchController+Injection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDCInkTouchController+Injection.h"; sourceTree = "<group>"; };
-		66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCInkTouchController+Injection.m"; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
 		6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileView.swift; sourceTree = "<group>"; };
 		88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCActionExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,8 +251,6 @@
 				6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */,
 				0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */,
 				64F6D8821F915CA600AA4B24 /* MDCDebugSafeAreaInsetsView.swift */,
-				66519B051CCA97E100E5423E /* MDCInkTouchController+Injection.h */,
-				66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */,
 				664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */,
 				665A34DE1C6BDAE700962055 /* Resources */,
 			);
@@ -675,7 +670,6 @@
 				64F6D8811F91522A00AA4B24 /* MDCCatalogDebugAlert.swift in Sources */,
 				0BE1D27E1DD276D000F8544B /* MDCCatalogTiles.m in Sources */,
 				64F6D8831F915CA600AA4B24 /* MDCDebugSafeAreaInsetsView.swift in Sources */,
-				66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */,
 				664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */,
 				DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */,
 			);
