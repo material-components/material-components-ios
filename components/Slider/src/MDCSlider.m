@@ -98,11 +98,21 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
   _thumbTrack.trackOffColor =
       trackBackgroundColor ? trackBackgroundColor : [[self class] defaultTrackOffColor];
-  ;
 }
 
 - (UIColor *)trackBackgroundColor {
   return _thumbTrack.trackOffColor;
+}
+
+- (void)setDisabledColor:(UIColor *)disabledColor {
+  _thumbTrack.trackDisabledColor =
+      disabledColor ?: [[self class] defaultDisabledColor];
+  _thumbTrack.thumbDisabledColor =
+      disabledColor ?: [[self class] defaultDisabledColor];
+}
+
+- (UIColor *)disabledColor {
+  return _thumbTrack.trackDisabledColor;
 }
 
 - (void)setColor:(UIColor *)color {

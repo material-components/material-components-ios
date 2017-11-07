@@ -427,6 +427,7 @@ Pod::Spec.new do |mdc|
       spec.ios.deployment_target = '8.0'
       spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
       spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/Palettes"
       spec.dependency "MaterialComponents/Slider/Component"
       spec.dependency "MaterialComponents/Themes"
     end
