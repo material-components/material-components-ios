@@ -34,19 +34,14 @@ PODS:
   - MaterialComponents/ActivityIndicator (38.1.1):
     - MaterialComponents/ActivityIndicator/ColorThemer (= 38.1.1)
     - MaterialComponents/ActivityIndicator/Component (= 38.1.1)
-    - MaterialComponents/Palettes
-    - MaterialComponents/private/Application
-    - MDFInternationalization
   - MaterialComponents/ActivityIndicator/ColorThemer (38.1.1):
     - MaterialComponents/ActivityIndicator/Component
-    - MaterialComponents/Palettes
-    - MaterialComponents/private/Application
     - MaterialComponents/Themes
-    - MDFInternationalization
   - MaterialComponents/ActivityIndicator/Component (38.1.1):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Application
     - MDFInternationalization
+    - MotionAnimator (~> 2.0)
   - MaterialComponents/AnimationTiming (38.1.1)
   - MaterialComponents/AppBar (38.1.1):
     - MaterialComponents/AppBar/ColorThemer (= 38.1.1)
@@ -102,21 +97,11 @@ PODS:
     - MaterialComponents/Buttons/ColorThemer (= 38.1.1)
     - MaterialComponents/Buttons/Component (= 38.1.1)
     - MaterialComponents/Buttons/TitleColorAccessibilityMutator (= 38.1.1)
-    - MaterialComponents/Ink
     - MaterialComponents/private/Math
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
-    - MaterialComponents/Typography
-    - MDFTextAccessibility
   - MaterialComponents/Buttons/ColorThemer (38.1.1):
     - MaterialComponents/Buttons/Component
-    - MaterialComponents/Ink
     - MaterialComponents/private/Math
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
     - MaterialComponents/Themes
-    - MaterialComponents/Typography
-    - MDFTextAccessibility
   - MaterialComponents/Buttons/Component (38.1.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
@@ -126,11 +111,7 @@ PODS:
     - MDFTextAccessibility
   - MaterialComponents/Buttons/TitleColorAccessibilityMutator (38.1.1):
     - MaterialComponents/Buttons/Component
-    - MaterialComponents/Ink
     - MaterialComponents/private/Math
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
-    - MaterialComponents/Typography
     - MDFTextAccessibility
   - MaterialComponents/CollectionCells (38.1.1):
     - MaterialComponents/CollectionLayoutAttributes
@@ -338,7 +319,7 @@ PODS:
     - MaterialComponents/private/Application
   - MDFInternationalization (1.0.2)
   - MDFTextAccessibility (1.2.0)
-  - MotionAnimator (2.0.0):
+  - MotionAnimator (2.0.2):
     - MotionInterchange
   - MotionInterchange (1.2.0)
   - MotionTransitioning (4.0.1)
@@ -351,10 +332,10 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 9eb7099be71146f85915eae81dc21edf2b2d480c
+  MaterialComponents: be5478bb84ea3d9ca794c5a0267366bc98c02376
   MDFInternationalization: 51b5f3889aca8bc13385e9a6c363eb0b0f257cf9
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
-  MotionAnimator: 38933cf4bdfe0183ba3ed1f8a8963b98e83a4bca
+  MotionAnimator: 6f4aafa5d28fbd528f96bd088867587a7a543e1b
   MotionInterchange: 499c98e7628a8a078905749734dbfedbfae54cca
   MotionTransitioning: 277501a1a1e6121c0ab523e6a3e00d64659c3367
 
