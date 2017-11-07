@@ -114,7 +114,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 
 /**
  Delegate protocol for MDCBottomNavigationBar. Clients may implement this protocol to receive
- notifications of selection changes in the navigation bar.
+ notifications of selection changes in the bottom navigation bar.
  */
 @protocol MDCBottomNavigationBarDelegate <UINavigationBarDelegate>
 
