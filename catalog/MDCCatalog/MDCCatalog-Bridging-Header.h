@@ -15,4 +15,3 @@
  */
 
 #import "MDCCatalogTiles.h"
-#import "MDCInkTouchController+Injection.h"
