@@ -22,6 +22,8 @@
 /*
  Template for indicator content which defines how the indicator changes appearance in response to
  changes in its context.
+
+ Template objects are expected to be immutable once set on a tab bar.
  */
 @protocol MDCTabBarIndicatorTemplate <NSObject>
 
