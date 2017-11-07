@@ -114,21 +114,21 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 
 /**
  Delegate protocol for MDCBottomNavigationBar. Clients may implement this protocol to receive
- notifications of selection changes in the bottom navigation bar.
+ notifications of selection changes by user action in the bottom navigation bar.
  */
 @protocol MDCBottomNavigationBarDelegate <UINavigationBarDelegate>
 
 @optional
 
 /**
- Called before the selected item changes. Return YES to allow the selection. If not implemented all
- items changes are allowed.
+ Called before the selected item changes by user action. Return YES to allow the selection. If not
+ implemented all items changes are allowed.
  */
 - (BOOL)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
            shouldSelectItem:(nonnull UITabBarItem *)item;
 
 /**
- Called when the selected item changes.
+ Called when the selected item changes by user action.
  */
 - (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
               didSelectItem:(nonnull UITabBarItem *)item;
