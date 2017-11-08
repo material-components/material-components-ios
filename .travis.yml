@@ -10,7 +10,6 @@ git:
 branches:
   only:
     - develop
-    - stable
     - /^feature-.*$/
     - release-candidate
 
