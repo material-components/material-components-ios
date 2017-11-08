@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MDCBottomNavigationBarDelegate;
+
 /** States used to configure bottom navigation on when to show item titles. */
 typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleVisibility) {
 
@@ -56,6 +58,9 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  items are hidden.
  */
 @interface MDCBottomNavigationBar : UIView
+
+/** The bottom navigation bar delegate. */
+@property(nonatomic, weak, nullable) id<MDCBottomNavigationBarDelegate> delegate;
 
 /**
  Configures when item titles should be displayed.
@@ -102,5 +107,30 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  */
 @property (nonatomic, strong, readwrite, nonnull) UIColor *unselectedItemTintColor
     UI_APPEARANCE_SELECTOR;
+
+@end
+
+#pragma mark - MDCBottomNavigationBarDelegate
+
+/**
+ Delegate protocol for MDCBottomNavigationBar. Clients may implement this protocol to receive
+ notifications of selection changes by user action in the bottom navigation bar.
+ */
+@protocol MDCBottomNavigationBarDelegate <UINavigationBarDelegate>
+
+@optional
+
+/**
+ Called before the selected item changes by user action. Return YES to allow the selection. If not
+ implemented all items changes are allowed.
+ */
+- (BOOL)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
+           shouldSelectItem:(nonnull UITabBarItem *)item;
+
+/**
+ Called when the selected item changes by user action.
+ */
+- (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
+              didSelectItem:(nonnull UITabBarItem *)item;
 
 @end
