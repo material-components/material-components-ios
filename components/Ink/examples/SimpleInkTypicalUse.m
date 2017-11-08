@@ -41,6 +41,10 @@
                                    UIViewAutoresizingFlexibleBottomMargin |
                                    UIViewAutoresizingFlexibleLeftMargin |
                                    UIViewAutoresizingFlexibleRightMargin);
+  self.inkView.completionBlock = ^{
+    NSLog(@"Ink spread ended");
+  };
+  [self.inkView addInkGestureRecognizer];
   [self.view addSubview:self.inkView];
 }
 

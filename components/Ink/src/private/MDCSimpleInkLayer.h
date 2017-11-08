@@ -16,16 +16,19 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "MDCSimpleInkView.h"
+
 @interface MDCSimpleInkLayer : CAShapeLayer
 
-@property(nonatomic, assign) BOOL startAnimActive;
-@property(nonatomic, assign) CGFloat endAnimDelay;
+@property(nonatomic, assign) BOOL startAnimationActive;
+@property(nonatomic, assign) CGFloat endAnimationDelay;
 @property(nonatomic, assign) CGFloat finalRadius;
 @property(nonatomic, assign) CGFloat initialRadius;
 @property(nonatomic, strong) UIColor *inkColor;
+@property(nonatomic, strong) MDCSimpleInkCompletionBlock completionBlock;
 
-- (void)start:(CGPoint)point;
+- (void)startAnimationAtPoint:(CGPoint)point;
 
-- (void)end;
+- (void)endAnimation;
 
 @end

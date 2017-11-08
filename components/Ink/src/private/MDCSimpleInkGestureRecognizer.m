@@ -21,16 +21,12 @@
 - (instancetype)initWithTarget:(id)target action:(SEL)action {
   self = [super initWithTarget:target action:action];
   if (self) {
-    [self commonMDCSimpleInkGestureRecognizerInit];
+    self.cancelsTouchesInView = NO;
+    self.delaysTouchesEnded = NO;
+    _touchStartLocation = CGPointZero;
+    _touchCurrentLocation = CGPointZero;
   }
   return self;
-}
-
-- (void)commonMDCSimpleInkGestureRecognizerInit {
-  self.cancelsTouchesInView = NO;
-  self.delaysTouchesEnded = NO;
-  _touchStartLocation = CGPointZero;
-  _touchCurrentLocation = CGPointZero;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

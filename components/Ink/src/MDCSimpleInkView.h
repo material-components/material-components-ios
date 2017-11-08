@@ -16,6 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
+/** Completion block signature for all ink animations. */
+typedef void (^MDCSimpleInkCompletionBlock)(void);
+
 @protocol MDCSimpleInkViewDelegate;
 
 /**
@@ -23,7 +26,21 @@
  */
 @interface MDCSimpleInkView : UIView
 
-@property(nonatomic, weak) id<MDCSimpleInkViewDelegate> delegate;
+/**
+ The ink view delegate.
+ */
+@property(nonatomic, weak, nullable) id<MDCSimpleInkViewDelegate> delegate;
+
+/**
+ Completion block fired when ink animation ends after touch up.
+ */
+@property(nonatomic, strong, nullable) MDCSimpleInkCompletionBlock completionBlock;
+
+/**
+ Color of the ink ripple.
+ Default color is black with alpha of 0.08.
+ */
+@property(nonatomic, strong, nonnull) UIColor *inkColor;
 
 /*
  Adds a MDCSimpleInkGestureRecognizer gesture recognizer to ink view so ink will spread on touch
@@ -34,17 +51,13 @@
 /*
  The starting point where ink will begin its spread animation.
  */
-- (void)startInkAtPoint:(CGPoint)point;
+- (void)startInkAtPoint:(CGPoint)point
+             completion:(nullable MDCSimpleInkCompletionBlock)completionBlock;
 
 /*
- Causes the ink spread animation to evaporate gradually before ending.
+ Ends the ink spread.
  */
-- (void)endInk;
-
-/*
- Immediately ends the ink spread animation without an evaporation animation.
- */
-- (void)endInkNow;
+- (void)endInkAnimated:(BOOL)animated;
 
 @end
 
@@ -59,11 +72,11 @@
 /**
  Called when the ink touch down event is triggered and ink begins to spread.
  */
-- (void)inkView:(MDCSimpleInkView *)inkView didTouchDownAtPoint:(CGPoint)point;
+- (void)inkView:(nonnull MDCSimpleInkView *)inkView didTouchDownAtPoint:(CGPoint)point;
 
 /**
  Called when the ink touch up event is triggered and ink begins to dissipate.
  */
-- (void)inkView:(MDCSimpleInkView *)inkView didTouchUpFromPoint:(CGPoint)point;
+- (void)inkView:(nonnull MDCSimpleInkView *)inkView didTouchUpFromPoint:(CGPoint)point;
 
 @end

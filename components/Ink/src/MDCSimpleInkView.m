@@ -26,26 +26,35 @@
 
 @implementation MDCSimpleInkView
 
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
+  }
+  return self;
+}
+
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
   self.inkLayer.frame = frame;
 }
 
-- (void)startInkAtPoint:(CGPoint)point {
+- (void)startInkAtPoint:(CGPoint)point
+             completion:(MDCSimpleInkCompletionBlock)completionBlock {
   self.inkLayer = [MDCSimpleInkLayer layer];
+  self.inkLayer.inkColor = self.inkColor;
+  self.inkLayer.completionBlock = completionBlock;
   self.inkLayer.opacity = 0;
   self.inkLayer.frame = self.bounds;
   [self.layer addSublayer:self.inkLayer];
-  [self.inkLayer start:point];
+  [self.inkLayer startAnimationAtPoint:point];
 }
 
-- (void)endInk {
-  [self.inkLayer end];
-}
-
-- (void)endInkNow {
-  self.inkLayer.endAnimDelay = 0;
-  [self.inkLayer end];
+- (void)endInkAnimated:(BOOL)animated {
+  if (!animated) {
+    self.inkLayer.endAnimationDelay = 0;
+  }
+  [self.inkLayer endAnimation];
 }
 
 - (void)addInkGestureRecognizer {
@@ -61,19 +70,24 @@
       break;
     case UIGestureRecognizerStateBegan:
       [self.delegate inkView:self didTouchDownAtPoint:point];
-      [self startInkAtPoint:point];
+      [self startInkAtPoint:point completion:self.completionBlock];
       break;
     case UIGestureRecognizerStateChanged:
       break;
     case UIGestureRecognizerStateEnded:
       [self.delegate inkView:self didTouchUpFromPoint:point];
-      [self endInk];
+      [self endInkAnimated:YES];
       break;
     case UIGestureRecognizerStateCancelled:
       break;
     case UIGestureRecognizerStateFailed:
       break;
   }
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  _inkColor = inkColor;
+  self.inkLayer.inkColor = inkColor;
 }
 
 @end
