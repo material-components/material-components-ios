@@ -16,18 +16,54 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MDCSimpleInkViewDelegate;
+
+/**
+ A UIView that draws and animates the Material Design ink effect for touch interactions.
+ */
+@interface MDCSimpleInkView : UIView
+
+@property(nonatomic, weak) id<MDCSimpleInkViewDelegate> delegate;
+
+/*
+ Adds a MDCSimpleInkGestureRecognizer gesture recognizer to ink view so ink will spread on touch
+ down and evaporate on touch up.
+ */
+- (void)addInkGestureRecognizer;
+
+/*
+ The starting point where ink will begin its spread animation.
+ */
+- (void)startInkAtPoint:(CGPoint)point;
+
+/*
+ Causes the ink spread animation to evaporate gradually before ending.
+ */
+- (void)endInk;
+
+/*
+ Immediately ends the ink spread animation without an evaporation animation.
+ */
+- (void)endInkNow;
+
+@end
+
+/**
+ Delegate protocol for MDCSimpleInkView. Clients may implement this protocol to receive
+ notifications of when ink touch down and touch up events occur.
+ */
 @protocol MDCSimpleInkViewDelegate <NSObject>
 
 @optional
 
-- (void)didTouchDown;
+/**
+ Called when the ink touch down event is triggered and ink begins to spread.
+ */
+- (void)inkView:(MDCSimpleInkView *)inkView didTouchDownAtPoint:(CGPoint)point;
 
-- (void)didTouchUp;
-
-@end
-
-@interface MDCSimpleInkView : UIView
-
-@property(nonatomic, weak) id<MDCSimpleInkViewDelegate> delegate;
+/**
+ Called when the ink touch up event is triggered and ink begins to dissipate.
+ */
+- (void)inkView:(MDCSimpleInkView *)inkView didTouchUpFromPoint:(CGPoint)point;
 
 @end
