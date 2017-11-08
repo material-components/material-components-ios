@@ -391,6 +391,7 @@ Pod::Spec.new do |mdc|
       spec.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
       spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/Palettes"
       spec.dependency "MaterialComponents/private/Math"
     end
     component.subspec "ColorThemer" do |spec|
