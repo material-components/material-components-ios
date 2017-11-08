@@ -46,6 +46,7 @@
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+  _bottomNavBar.delegate = self;
   [self.view addSubview:_bottomNavBar];
 
   MDCBasicColorScheme *scheme =
@@ -104,6 +105,13 @@
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
     [self updateBadgeItemCount];
   });
+}
+
+#pragma mark - MDCBottomNavigationBarDelegate
+
+- (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
+              didSelectItem:(nonnull UITabBarItem *)item {
+  NSLog(@"Selected Item: %@", item.title);
 }
 
 @end
