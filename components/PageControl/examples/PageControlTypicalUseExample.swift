@@ -120,15 +120,6 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     scrollView.setContentOffset(offset, animated: true)
   }
 
-  // Creates a UIColor from a 24-bit RGB color encoded as an integer.
-  // Pass in hex color values like so: ColorFromRGB(0x1EAAF1).
-  class func ColorFromRGB(_ rgbValue: UInt32) -> UIColor {
-    return UIColor.init(red: ((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255,
-        green: ((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255,
-        blue: ((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255,
-        alpha: 1)
-  }
-
   // MARK: - CatalogByConvention
 
   @objc class func catalogBreadcrumbs() -> [String] {
