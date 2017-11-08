@@ -463,6 +463,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 #pragma mark - Placeholder Customization
 
+// This updates the placeholder's visual characteristics and not its layout. See the section
+// "Placeholder Floating" for methods that update the layout.
 - (void)updatePlaceholder {
   self.textInput.placeholderLabel.font = self.inlinePlaceholderFont;
 
@@ -608,6 +610,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
 }
 
+// When placeholder is not up, it just uses the layout code that comes for free from the text field
+// itself. That means these constraints need go away. So, we can use the existence of them as a
+// way to check if the placeholder is floating up. See isPlacehodlerUp.
 - (void)cleanupPlaceholderAnimationConstraints {
   self.placeholderAnimationConstraints = nil;
   self.placeholderAnimationConstraintLeading = nil;
@@ -636,6 +641,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self.textInput layoutIfNeeded];
 }
 
+// The placeholder has a simple scale transform on it. The default is to reduce the size by 25%.
+// Unfortunately, auto layout has no concept of compensating for transforms and it keeps the same
+// alignmentRect as if it weren't transformed at all. That gives the impression the placeholder,
+// when floating up, is too far to the trailing side. This offset is part of a compensation for
+// that. It calculates the amount of space between the alignmentRect's sides and the actual shrunken
+// placeholder label.
 - (UIOffset)floatingPlaceholderOffset {
   CGFloat vertical = MDCTextInputControllerLegacyDefaultVerticalPadding;
 
