@@ -480,6 +480,15 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
 #pragma mark - Private (fhv_ prefix)
 
+- (void)fhv_setContentOffset:(CGPoint)contentOffset {
+  _trackingScrollView.contentOffset = contentOffset;
+
+  // When we manually set our content offset it's because we're trying to avoid any sort of content
+  // jumping behavior, so we ignore immediate content offset delta by resetting the shift
+  // accumulator last content offset to the new content offset:
+  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+}
+
 - (void)fhv_adjustTrackingScrollViewInsets {
   CGPoint offsetPriorToInsetAdjustment = _trackingScrollView.contentOffset;
   [self fhv_enforceInsetsForScrollView:_trackingScrollView];
@@ -496,7 +505,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 #endif
     offsetPriorToInsetAdjustment.y = MAX(offsetPriorToInsetAdjustment.y,
                                          -scrollViewAdjustedContentInsetTop);
-    _trackingScrollView.contentOffset = offsetPriorToInsetAdjustment;
+    [self fhv_setContentOffset:offsetPriorToInsetAdjustment];
   }
 }
 
@@ -596,7 +605,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     // statusBarShifterNeedsStatusBarAppearanceUpdate:
     CGPoint contentOffset = scrollView.contentOffset;
     contentOffset.y -= topInsetAdjustment;
-    scrollView.contentOffset = contentOffset;
+    [self fhv_setContentOffset:contentOffset];
   }
 
   _wasStatusBarHidden = statusBarIsHidden;
@@ -1106,7 +1115,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   [self.delegate flexibleHeaderViewNeedsStatusBarAppearanceUpdate:self];
   [self fhv_enforceInsetsForScrollView:_trackingScrollView];
   [UIView performWithoutAnimation:^{
-    _trackingScrollView.contentOffset = stashedContentOffset;
+    [self fhv_setContentOffset:stashedContentOffset];
   }];
   _isChangingStatusBarVisibility = NO;
 }
@@ -1257,7 +1266,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   CGFloat delta = _trackingScrollView.contentInset.top - previousInsets.top;
   CGPoint contentOffset = _trackingScrollView.contentOffset;
   contentOffset.y -= delta;  // Keeps the scroll view offset from jumping.
-  _trackingScrollView.contentOffset = contentOffset;
+  [self fhv_setContentOffset:contentOffset];
   _contentInsetsAreChanging = NO;
 }
 

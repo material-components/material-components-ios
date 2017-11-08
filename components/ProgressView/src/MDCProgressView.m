@@ -20,20 +20,14 @@
 
 #import "MDFInternationalization.h"
 #import "MaterialMath.h"
+#import "MaterialPalettes.h"
 
-// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
-static const uint32_t MDCProgressViewDefaultTintColor = 0x2196F3;
+static inline UIColor *MDCProgressViewDefaultTintColor(void) {
+  return MDCPalette.bluePalette.tint500;
+}
 
 // The ratio by which to desaturate the progress tint color to obtain the default track tint color.
 static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
-
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
-}
 
 static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
@@ -79,7 +73,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   _progressView = [[UIView alloc] initWithFrame:CGRectZero];
   [self addSubview:_progressView];
 
-  _progressView.backgroundColor = [[self class] defaultProgressTintColor];
+  _progressView.backgroundColor = MDCProgressViewDefaultTintColor();
   _trackView.backgroundColor =
       [[self class] defaultTrackTintColorForProgressTintColor:_progressView.backgroundColor];
 }
@@ -105,7 +99,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
 - (void)setProgressTintColor:(UIColor *)progressTintColor {
   if (progressTintColor == nil) {
-    progressTintColor = [[self class] defaultProgressTintColor];
+    progressTintColor = MDCProgressViewDefaultTintColor();
   }
   self.progressView.backgroundColor = progressTintColor;
 }
@@ -262,10 +256,6 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   // Since the animation is fake, using a linear interpolation avoids the speeding up and slowing
   // down that repeated easing in and out causes.
   return UIViewAnimationOptionCurveLinear;
-}
-
-+ (UIColor *)defaultProgressTintColor {
-  return MDCColorFromRGB(MDCProgressViewDefaultTintColor);
 }
 
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {

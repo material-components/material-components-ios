@@ -222,7 +222,8 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 - (void)setAccessoryType:(MDCCollectionViewCellAccessoryType)accessoryType {
   _accessoryType = accessoryType;
 
-  UIImageView *accessoryImageView = nil;
+  UIImageView *accessoryImageView =
+      [_accessoryView isKindOfClass:[UIImageView class]] ? (UIImageView *)_accessoryView : nil;
   if (!_accessoryView && accessoryType != MDCCollectionViewCellAccessoryNone) {
     // Add accessory view.
     accessoryImageView = [[MDCAccessoryTypeImageView alloc] initWithFrame:CGRectZero];
