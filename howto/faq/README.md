@@ -37,7 +37,7 @@ We completely agree about coherent UI; Apple's components are a great starting p
 
 ### We don't want our iOS app to stand out as looking like a Google app.
 
-Google's own use of Material Design is customized to give the experience of a "Google app." Your use of Material Design shluld provide an experience unique to your brand and identity.
+Google's own use of Material Design is customized to give the experience of a "Google app." Your use of Material Design should provide an experience unique to your brand and identity.
 
 ### What happens when Apple implements new features in iOS in general and UIKit in particular? How long will it take for Google to support the new features / adjust to any breaking APIs?
 
