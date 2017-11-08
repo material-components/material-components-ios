@@ -215,6 +215,11 @@ static const CGFloat kSingleCycleRotation =
   return CGSizeMake(edge, edge);
 }
 
+- (CGSize)sizeThatFits:(CGSize)size {
+  CGFloat edge = 2 * _radius + _strokeWidth;
+  return CGSizeMake(edge, edge);
+}
+
 #pragma mark - Public methods
 
 - (void)startAnimating {
