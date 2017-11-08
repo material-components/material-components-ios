@@ -1481,6 +1481,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
     // Clear out saved state.
     self.previousLeadingText = nil;
+   
+    [self updatePlaceholder];
   }
 
   self.errorText = errorText;
