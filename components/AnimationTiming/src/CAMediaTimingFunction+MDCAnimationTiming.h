@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
    */
   MDCAnimationTimingFunctionEaseInOut = MDCAnimationTimingFunctionStandard,
   MDCAnimationTimingFunctionEaseOut = MDCAnimationTimingFunctionDeceleration,
-  MDCAnimationTimingFunctionEaseIn = MDCAnimationTimingAcceleration,
+  MDCAnimationTimingFunctionEaseIn = MDCAnimationTimingFunctionAcceleration,
 
   /**
    Aliases for various specific timing curve recommendations.
