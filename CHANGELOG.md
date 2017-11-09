@@ -1,4 +1,32 @@
-# release-candidate TODO: Replace me with version number. 
+# 39.0.0
+
+## API Changes
+
+### Animation Timing'
+
+* Added the `MDCAnimationTimingFunctionSharp` timing function [from the spec](https://material.io/guidelines/motion/duration-easing.html#duration-easing-natural-easing-curves).
+
+### Bottom Navigation
+
+* Added `MDCBottomNavigationBarDelegate` with controls on selecting items.
+
+### Button
+
+* Added `minimumSize` and `maximumSize` properties.
+
+### Ink
+
+* Added `injectedInkViewForView` convenience function to find an ink view in a view hierarchy.
+
+### Slider
+
+* Added `disabledColor` property.
+
+### Text Fields
+
+* Added `MDCMultilineTextField` `expandsOnOverflow` and `placeholder` text properties.
+* The `MDCTextInput` `expandsOnOverflow` property is no longer IBInspectable.
+
 
 # 38.1.1
 
