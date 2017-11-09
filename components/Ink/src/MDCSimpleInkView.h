@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-/** Completion block signature for all ink animations. */
+/** Completion block signature. */
 typedef void (^MDCSimpleInkCompletionBlock)(void);
 
 @protocol MDCSimpleInkViewDelegate;
@@ -29,18 +29,18 @@ typedef void (^MDCSimpleInkCompletionBlock)(void);
 /**
  The ink view delegate.
  */
-@property(nonatomic, weak, nullable) id<MDCSimpleInkViewDelegate> delegate;
+@property(nonatomic, weak, nullable) IBOutlet id<MDCSimpleInkViewDelegate> delegate;
 
 /**
  Completion block fired when ink animation ends after touch up.
  */
-@property(nonatomic, strong, nullable) MDCSimpleInkCompletionBlock completionBlock;
+@property(nonatomic, copy, nullable) MDCSimpleInkCompletionBlock completionBlock;
 
 /**
  Color of the ink ripple.
  Default color is black with alpha of 0.08.
  */
-@property(nonatomic, strong, nonnull) UIColor *inkColor;
+@property(nonatomic, strong, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /*
  Adds a MDCSimpleInkGestureRecognizer gesture recognizer to ink view so ink will spread on touch
@@ -49,7 +49,8 @@ typedef void (^MDCSimpleInkCompletionBlock)(void);
 - (void)addInkGestureRecognizer;
 
 /*
- The starting point where ink will begin its spread animation.
+ The starting point where ink will begin its spread animation. Completion block is called when the
+ ink animation ends after |endInkAnimated| is called.
  */
 - (void)startInkAtPoint:(CGPoint)point
              completion:(nullable MDCSimpleInkCompletionBlock)completionBlock;
@@ -62,8 +63,8 @@ typedef void (^MDCSimpleInkCompletionBlock)(void);
 @end
 
 /**
- Delegate protocol for MDCSimpleInkView. Clients may implement this protocol to receive
- notifications of when ink touch down and touch up events occur.
+ Delegate protocol for MDCSimpleInkView. Implement protocol to respond to ink touch down and touch
+ up events.
  */
 @protocol MDCSimpleInkViewDelegate <NSObject>
 
@@ -77,6 +78,6 @@ typedef void (^MDCSimpleInkCompletionBlock)(void);
 /**
  Called when the ink touch up event is triggered and ink begins to dissipate.
  */
-- (void)inkView:(nonnull MDCSimpleInkView *)inkView didTouchUpFromPoint:(CGPoint)point;
+- (void)inkView:(nonnull MDCSimpleInkView *)inkView didTouchUpAtPoint:(CGPoint)point;
 
 @end

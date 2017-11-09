@@ -75,12 +75,14 @@
     case UIGestureRecognizerStateChanged:
       break;
     case UIGestureRecognizerStateEnded:
-      [self.delegate inkView:self didTouchUpFromPoint:point];
+      [self.delegate inkView:self didTouchUpAtPoint:point];
       [self endInkAnimated:YES];
       break;
     case UIGestureRecognizerStateCancelled:
+      [self endInkAnimated:YES];
       break;
     case UIGestureRecognizerStateFailed:
+      [self endInkAnimated:YES];
       break;
   }
 }

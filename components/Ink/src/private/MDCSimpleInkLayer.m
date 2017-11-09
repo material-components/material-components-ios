@@ -146,6 +146,7 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
   [CATransaction setCompletionBlock:^{
     if (self.completionBlock) {
       self.completionBlock();
+      [self removeFromSuperlayer];
     }
   }];
   [self addAnimation:fadeOutAnim forKey:nil];

@@ -60,8 +60,4 @@
   self.state = UIGestureRecognizerStateCancelled;
 }
 
-- (void)reset {
-  [super reset];
-}
-
 @end
