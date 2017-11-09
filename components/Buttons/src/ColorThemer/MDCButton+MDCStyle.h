@@ -22,33 +22,33 @@
 @interface MDCButton (MDCStyle)
 
 /**
- Creates a new MDCButton styled as a "default size" floating action button. If @c colorScheme is
- provided, it will be applied to the button.
+ Returns a new MDCButton styled as a "default size" floating action button. If @c colorScheme is
+ provided, it will be applied to the button. The button is 56 points in diameter and supports a
+ 24-point square icon.
 
- @param colorScheme The color scheme to apply to the created button. May be nil.
- @return A newly created MDCButton styled as a floating action button and with the color scheme
-         applied.
+ @param colorScheme The color scheme to apply. May be nil.
+ @return An MDCButton styled as a floating action button with the color scheme applied.
  */
 + (nonnull MDCButton *)floatingButtonWithScheme:(nullable NSObject<MDCColorScheme> *)colorScheme;
 
 /**
- Creates a new MDCButton styled as a "mini size" floating action button. If @c colorScheme is
- provided, it will be applied to the button.
+ Returns a new MDCButton styled as a "mini size" floating action button. If @c colorScheme is
+ provided, it will be applied to the button. The button is 40 points in diameter and supports a
+ 24-point square icon.
 
- @param colorScheme The color scheme to apply to the created button. May be nil.
- @return A newly created MDCButton styled as a floating action button and with the color scheme
-         applied.
+ @param colorScheme The color scheme to apply. May be nil.
+ @return An MDCButton styled as a floating action button with the color scheme applied.
  */
 + (nonnull MDCButton *)miniFloatingButtonWithScheme:
     (nullable NSObject<MDCColorScheme> *)colorScheme;
 
 /**
- Creates a new MDCButton styled as a "default size" floating action button with a large (36 point)
- icon. If @c colorScheme is provided, it will be applied to the button.
+ Returns a new MDCButton styled as a "default size" floating action button with a large (36 point)
+ icon. If @c colorScheme is provided, it will be applied to the button. The button is 56 points in
+ diameter and supports a 24-point square icon.
 
- @param colorScheme The color scheme to apply to the created button. May be nil.
- @return A newly created MDCButton styled as a floating action button and with the color scheme
-         applied.
+ @param colorScheme The color scheme to apply. May be nil.
+ @return An MDCButton styled as a floating action button with the color scheme applied.
  */
 + (nonnull MDCButton *)largeIconFloatingButtonWithScheme:
     (nullable NSObject<MDCColorScheme> *)colorScheme;

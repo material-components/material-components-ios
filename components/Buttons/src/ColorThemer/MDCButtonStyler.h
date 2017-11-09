@@ -18,21 +18,34 @@
 
 @class MDCButton;
 
+/**
+ MDCButtonStyler is a utility class providing methods to style MDCButtons to match different
+ Material Design button styles. The focus is on the shape, elevation, and size of the button.
+ Colors, fonts, and content are left unchanged.
+
+ @Note Some methods change properties not proxied by UIAppearance.
+ */
 @interface MDCButtonStyler : NSObject
 
 /**
  Styles the button to appear as a "default size" Floating Action Button.
+
+ @note Not compatible with UIAppearance.
  */
 + (void)styleAsFloatingButton:(MDCButton *)button;
 
 /**
  Styles the button to appear as a "mini size" Floating Action Button.
+
+ @note Not compatible with UIAppearance.
  */
 + (void)styleAsMiniFloatingButton:(MDCButton *)button;
 
 /**
  Styles the button to appear as a "default size" Floating Action Button that supports large (36 pt)
  icons.
+
+ @note Not compatible with UIAppearance.
  */
 + (void)styleAsLargeIconFloatingButton:(MDCButton *)button;
 
