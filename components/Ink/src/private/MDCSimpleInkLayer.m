@@ -43,8 +43,8 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
 
 - (void)startAnimationAtPoint:(CGPoint)point {
   CGFloat radius = self.finalRadius;
-  CGRect ovalRect = CGRectMake(CGRectGetWidth(self.frame) / 2 - radius,
-                               CGRectGetHeight(self.frame) / 2 - radius,
+  CGRect ovalRect = CGRectMake(CGRectGetWidth(self.bounds) / 2 - radius,
+                               CGRectGetHeight(self.bounds) / 2 - radius,
                                radius * 2,
                                radius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
@@ -70,7 +70,7 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
 
   UIBezierPath *centerPath = [UIBezierPath bezierPath];
   CGPoint startPoint = point;
-  CGPoint endPoint = CGPointMake(CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame) / 2);
+  CGPoint endPoint = CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2);
   [centerPath moveToPoint:startPoint];
   [centerPath addLineToPoint:endPoint];
   [centerPath closePath];
