@@ -23,7 +23,7 @@
 @property(nonatomic, readonly, nonnull) UITabBarItem *item;
 
 /**
- The full bounds of the tab's environment.
+ The full bounds of the tab's view.
 
  Any paths should be created relative to this coordinate space.
  */

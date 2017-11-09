@@ -37,7 +37,7 @@
     // Fill the indicator with the shape.
     _shapeView = [[MDCTabBarIndicatorShapeView alloc] initWithFrame:self.bounds];
     _shapeView.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleWidth;
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:_shapeView];
   }
   return self;
