@@ -20,28 +20,44 @@
 
 @interface MDCSimpleInkLayer : CAShapeLayer
 
-// The start ink ripple spread animation has started and is active.
+/**
+ The start ink ripple spread animation has started and is active.
+ */
 @property(nonatomic, assign) BOOL startAnimationActive;
 
-// Delay time in milliseconds before the end ink ripple spread animation begins.
+/**
+ Delay time in milliseconds before the end ink ripple spread animation begins.
+ */
 @property(nonatomic, assign) CGFloat endAnimationDelay;
 
-// The radius the ink ripple grows to when ink ripple ends.
+/**
+ The radius the ink ripple grows to when ink ripple ends.
+ */
 @property(nonatomic, assign) CGFloat finalRadius;
 
-// The radius the ink ripple starts to grow from when the ink ripple begins.
+/**
+ The radius the ink ripple starts to grow from when the ink ripple begins.
+ */
 @property(nonatomic, assign) CGFloat initialRadius;
 
-// The color of the ink ripple.
+/**
+ The color of the ink ripple.
+ */
 @property(nonatomic, strong) UIColor *inkColor;
 
-// Completion block that's called when the ink ripple end animation completes.
+/**
+ Completion block that's called when the ink ripple end animation completes.
+ */
 @property(nonatomic, strong) MDCSimpleInkCompletionBlock completionBlock;
 
-// Starts the ink ripple animation at a specified point.
+/**
+ Starts the ink ripple animation at a specified point.
+ */
 - (void)startAnimationAtPoint:(CGPoint)point;
 
-// Ends the ink ripple animation.
+/**
+ Ends the ink ripple animation.
+ */
 - (void)endAnimation;
 
 @end
