@@ -51,7 +51,7 @@ xcuserdata
 #
 Pods/
 demos/**/Pods/
-catalog/Podfile.lock
+Podfile.lock
 
 # Carthage
 #
