@@ -273,7 +273,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 #pragma mark Private
 
 + (UIColor *)defaultProgressTintColor {
-  return MDCColorFromRGB(MDCProgressViewDefaultTintColor);
+  return MDCProgressViewDefaultTintColor();
 }
 
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
