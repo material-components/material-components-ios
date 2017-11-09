@@ -32,9 +32,9 @@
 
   CGRect inkViewRect = CGRectMake(0, 0, 200, 200);
   self.inkView = [[MDCSimpleInkView alloc] initWithFrame:inkViewRect];
+  self.inkView.center = self.view.center;
   self.inkView.backgroundColor = [UIColor whiteColor];
   self.inkView.clipsToBounds = YES;
-  self.inkView.center = self.view.center;
   self.inkView.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin |
                                    UIViewAutoresizingFlexibleBottomMargin |
                                    UIViewAutoresizingFlexibleLeftMargin |
