@@ -10,7 +10,7 @@ api_doc_root: true
 
 # Chips
 
-Chips represent complex entities in small blocks, such as a contact.
+Chips represent complex entities, such as a contact, in small blocks.
 
 ## Design & API Documentation
 

@@ -154,7 +154,7 @@ static UIButton *DeleteButton() {
 }
 
 + (NSString *)catalogDescription {
-  return @"Chips!";
+  return @"Chips represent complex entities, such as a contact, in small blocks.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
