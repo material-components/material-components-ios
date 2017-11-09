@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
+@protocol MDCTabBarIndicatorTemplate;
 
 /**
  A material tab bar for switching between views of grouped content.
@@ -108,6 +109,14 @@ IB_DESIGNABLE
  The default value is based on the position and is recommended for most applications.
  */
 @property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
+
+/**
+ Template that defines the appearance of the selection indicator.
+
+ The default indicator template is a fixed-height rectangular bar under the selected tab.
+ */
+@property(nonatomic, nonnull) id<MDCTabBarIndicatorTemplate> selectionIndicatorTemplate
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Select an item with optional animation. Setting to nil will clear the selection.

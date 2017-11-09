@@ -14,11 +14,21 @@
  limitations under the License.
  */
 
-#import "MDCTabBar.h"
-#import "MDCTabBarAlignment.h"
-#import "MDCTabBarIndicatorAttributes.h"
-#import "MDCTabBarIndicatorContext.h"
-#import "MDCTabBarIndicatorTemplate.h"
-#import "MDCTabBarItemAppearance.h"
-#import "MDCTabBarUnderlineIndicatorTemplate.h"
-#import "MDCTabBarViewController.h"
+#import <UIKit/UIKit.h>
+
+@class MDCTabBarIndicatorAttributes;
+@protocol MDCTabBarIndicatorContext;
+
+/*
+ Template for indicator content which defines how the indicator changes appearance in response to
+ changes in its context.
+ */
+@protocol MDCTabBarIndicatorTemplate <NSObject>
+
+/**
+ Returns an attributes object that describes how the indicator should appear in a given context.
+ */
+- (nonnull MDCTabBarIndicatorAttributes *)
+    indicatorAttributesForContext:(nonnull id<MDCTabBarIndicatorContext>)context;
+
+@end
