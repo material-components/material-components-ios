@@ -21,7 +21,7 @@ Roboto is not required for Material Design. The Typography component defaults to
 
 ### Will we risk not being featured by Apple anymore?
 
-Apple features good products with good design. Using Material Design itself is not a reason for an app to be barred from promotion.
+Apple features good products with good design and apps using MDC-iOS have been featured.
 
 ### What’s the benefit for us if we implement Material Components for iOS on our app?
 
@@ -37,7 +37,7 @@ We completely agree about coherent UI; Apple's components are a great starting p
 
 ### We don't want our iOS app to stand out as looking like a Google app.
 
-Google's own use of Material Design is customized to give the experience of a "Google app." Your use of Material Design can also provide an experience unique to your brand and identity.
+Google's own use of Material Design is customized to give the experience of a "Google app." Your use of Material Design should provide an experience unique to your brand and identity.
 
 ### What happens when Apple implements new features in iOS in general and UIKit in particular? How long will it take for Google to support the new features / adjust to any breaking APIs?
 
@@ -49,4 +49,4 @@ If you import all the components, the size of your app will increase by about 5.
 
 ### Can we use Material Components for iOS with storyboards?
 
-Yes! Storyboards and nibs/xibs are great places to use Material Components for iOS. Almost every component has support for Interface Builder development that includes IBDesignable. **Note:** IBInspectable support is not supported as it conflicts with UIAppearance support.
+Yes! Storyboards and nibs/xibs are great places to use Material Components for iOS. Almost every component has support for Interface Builder development that includes IBDesignable. **Note:** IBInspectable support is not where it conflicts with UIAppearance support.
