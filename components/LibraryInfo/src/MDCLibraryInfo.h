@@ -25,6 +25,6 @@
  - Y is the minor version number of the library.
  - Z is the patch version number of the library.
 */
-@property(class, nonatomic, nonnull, readonly) NSString *version;
+@property(class, nonnull, readonly) NSString *versionString;
 
 @end
