@@ -18,7 +18,7 @@
 
 #import "MaterialInk.h"
 
-@interface InkComparisonViewController : UIViewController <MDCInkTouchControllerDelegate>
+@interface InkComparisonViewController : UIViewController
 
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @property(nonatomic, strong) MDCSimpleInkView *simpleInkView;
@@ -43,7 +43,6 @@
   self.inkView = [[UIView alloc] initWithFrame:inkFrame];
   self.inkView.backgroundColor = [UIColor whiteColor];
   self.inkTouchController = [[MDCInkTouchController alloc] initWithView:self.inkView];
-  self.inkTouchController.delegate = self;
   [self.inkTouchController addInkView];
   [self.view addSubview:self.inkView];
 
@@ -58,13 +57,6 @@
   [inkLabel sizeToFit];
   inkLabel.center = self.inkView.center;
   [self.inkView addSubview:inkLabel];
-}
-
-- (void)inkTouchController:(MDCInkTouchController *)inkTouchController
-         didProcessInkView:(MDCInkView *)inkView
-           atTouchLocation:(CGPoint)location {
-  NSLog(@"InkTouchController %p did process ink view: %p at touch location: %@", inkTouchController,
-        inkView, NSStringFromCGPoint(location));
 }
 
 - (void)viewWillLayoutSubviews {
