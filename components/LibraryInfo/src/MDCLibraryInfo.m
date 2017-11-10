@@ -21,6 +21,7 @@
 + (NSString *)versionString {
   NSBundle *bundle = [NSBundle bundleForClass:self.class];
   NSString *value = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+
   if (value) {
     return value;
   } else {
