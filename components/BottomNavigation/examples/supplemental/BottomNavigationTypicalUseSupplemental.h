@@ -18,6 +18,6 @@
 
 #import "MaterialBottomNavigation.h"
 
-@interface BottomNavigationTypicalUseExample : UIViewController
+@interface BottomNavigationTypicalUseExample : UIViewController <MDCBottomNavigationBarDelegate>
 
 @end

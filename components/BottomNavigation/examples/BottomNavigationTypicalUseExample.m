@@ -19,6 +19,8 @@
 #import "BottomNavigationTypicalUseSupplemental.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
+#import "MaterialThemes.h"
+#import "MDCBottomNavigationBarColorThemer.h"
 
 @interface BottomNavigationTypicalUseExample ()
 
@@ -42,11 +44,15 @@
   self.view.backgroundColor = [UIColor lightGrayColor];
 
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
-  _bottomNavBar.selectedItemTintColor = [MDCPalette purplePalette].tint700;
-  _bottomNavBar.unselectedItemTintColor = [MDCPalette greyPalette].tint600;
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+  _bottomNavBar.delegate = self;
   [self.view addSubview:_bottomNavBar];
+
+  MDCBasicColorScheme *scheme =
+      [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette purplePalette].tint700
+                                         secondaryColor:[UIColor whiteColor]];
+  [MDCBottomNavigationBarColorThemer applyColorScheme:scheme toBottomNavigationBar:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =
       [[UITabBarItem alloc] initWithTitle:@"Home"
@@ -71,7 +77,12 @@
                                       tag:0];
   tabBarItem5.badgeValue = @"999+";
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-  tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+  if ([tabBarItem5 respondsToSelector:@selector(badgeColor)]) {
+    tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
+  }
+#pragma clang diagnostic pop
 #endif
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;
@@ -99,6 +110,13 @@
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
     [self updateBadgeItemCount];
   });
+}
+
+#pragma mark - MDCBottomNavigationBarDelegate
+
+- (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
+              didSelectItem:(nonnull UITabBarItem *)item {
+  NSLog(@"Selected Item: %@", item.title);
 }
 
 @end

@@ -15,7 +15,7 @@
  */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
 
 // Testing status bar-related functionality.
 class FlexibleHeaderStatusBarTests: XCTestCase {

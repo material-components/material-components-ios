@@ -45,6 +45,8 @@ static NSString *const MDCButtonDisableAlphaKey = @"MDCButtonDisableAlphaKey";
 static NSString *const MDCButtonEnableAlphaKey = @"MDCButtonEnableAlphaKey";
 static NSString *const MDCButtonCustomTitleColorKey = @"MDCButtonCustomTitleColorKey";
 static NSString *const MDCButtonAreaInsetKey = @"MDCButtonAreaInsetKey";
+static NSString *const MDCButtonMinimumSizeKey = @"MDCButtonMinimumSizeKey";
+static NSString *const MDCButtonMaximumSizeKey = @"MDCButtonMaximumSizeKey";
 
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
 static NSString *const MDCButtonBackgroundColorsKey = @"MDCButtonBackgroundColorsKey";
@@ -60,6 +62,7 @@ static NSString *const MDCButtonShadowColorsKey = @"MDCButtonShadowColorsKey";
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
 static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
+static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -190,6 +193,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       self.hitAreaInsets = [aDecoder decodeUIEdgeInsetsForKey:MDCButtonAreaInsetKey];
     }
 
+    if ([aDecoder containsValueForKey:MDCButtonMinimumSizeKey]) {
+      self.minimumSize = [aDecoder decodeCGSizeForKey:MDCButtonMinimumSizeKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonMaximumSizeKey]) {
+      self.maximumSize = [aDecoder decodeCGSizeForKey:MDCButtonMaximumSizeKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
       _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
     }
@@ -239,6 +250,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeDouble:self.disabledAlpha forKey:MDCButtonDisableAlphaKey];
   [aCoder encodeDouble:_enabledAlpha forKey:MDCButtonEnableAlphaKey];
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
+  [aCoder encodeCGSize:self.minimumSize forKey:MDCButtonMinimumSizeKey];
+  [aCoder encodeCGSize:self.maximumSize forKey:MDCButtonMaximumSizeKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
   [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
@@ -274,7 +287,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
+  _minimumSize = CGSizeZero;
+  _maximumSize = CGSizeZero;
 
+  self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
   MDCShadowLayer *shadowLayer = self.layer;
   shadowLayer.shadowPath = [self boundingPath].CGPath;
   shadowLayer.shadowColor = [UIColor blackColor].CGColor;
@@ -338,7 +354,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)layoutSubviews {
   [super layoutSubviews];
   self.layer.shadowPath = [self boundingPath].CGPath;
-  self.layer.cornerRadius = [self cornerRadius];
+  if ([self respondsToSelector:@selector(cornerRadius)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    self.layer.cornerRadius = [self cornerRadius];
+#pragma clang diagnostic pop
+  }
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
   if (_inkView.inkStyle == MDCInkStyleUnbounded) {
@@ -384,6 +405,23 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
   [self.inkView cancelAllAnimationsAnimated:NO];
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  CGSize superSize = [super sizeThatFits:size];
+  if (self.minimumSize.height > 0) {
+    superSize.height = MAX(self.minimumSize.height, superSize.height);
+  }
+  if (self.maximumSize.height > 0) {
+    superSize.height = MIN(self.maximumSize.height, superSize.height);
+  }
+  if (self.minimumSize.width > 0) {
+    superSize.width = MAX(self.minimumSize.width, superSize.width);
+  }
+  if (self.maximumSize.width > 0) {
+    superSize.width = MIN(self.maximumSize.width, superSize.width);
+  }
+  return superSize;
 }
 
 #pragma mark - UIResponder
@@ -752,11 +790,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIBezierPath *)boundingPath {
-  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
-}
+  CGFloat cornerRadius = self.layer.cornerRadius;
 
-- (CGFloat)cornerRadius {
-  return 2.0f;
+  if ([self respondsToSelector:@selector(cornerRadius)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    cornerRadius = [self cornerRadius];
+#pragma clang diagnostic pop
+  }
+
+
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {

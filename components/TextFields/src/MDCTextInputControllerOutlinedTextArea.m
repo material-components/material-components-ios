@@ -59,20 +59,20 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 #pragma mark - Properties Implementations
 
-+ (UIRectCorner)roundedCornersDefault {
-  return _roundedCornersDefault;
-}
-
-+ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
-  _roundedCornersDefault = roundedCornersDefault;
-}
-
 - (BOOL)isFloatingEnabled {
   return YES;
 }
 
 - (void)setFloatingEnabled:(__unused BOOL)floatingEnabled {
   // Unused. Floating is always enabled.
+}
+
++ (UIRectCorner)roundedCornersDefault {
+  return _roundedCornersDefault;
+}
+
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  _roundedCornersDefault = roundedCornersDefault;
 }
 
 #pragma mark - MDCTextInputPositioningDelegate

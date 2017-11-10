@@ -108,4 +108,19 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  */
 - (void)cancelAllAnimationsAnimated:(BOOL)animated;
 
+/**
+ Enumerates the given view's subviews for an instance of MDCInkView and returns it if found, or
+ creates and adds a new instance of MDCInkView if not.
+
+ This method is a convenience method for adding ink to an arbitrary view without needing to subclass
+ the target view. Use this method in situations where you expect there to be many distinct ink views
+ in existence for a single ink touch controller. Example scenarios include:
+
+ - Adding ink to individual collection view/table view cells
+
+ This method can be used in your MDCInkTouchController delegate's
+ -inkTouchController:inkViewAtTouchLocation; implementation.
+ */
++ (nonnull MDCInkView *)injectedInkViewForView:(nonnull UIView *)view;
+
 @end
