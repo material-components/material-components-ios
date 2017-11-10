@@ -75,7 +75,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     super.init(collectionViewLayout: layout)
 
-    title = "Material Components"
+    self.title = "Material Components for iOS v\(MDCLibraryInfo.versionString)"
 
     addChildViewController(headerViewController)
 
