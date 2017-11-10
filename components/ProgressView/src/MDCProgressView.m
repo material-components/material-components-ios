@@ -264,10 +264,6 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
 
 #pragma mark Private
 
-+ (UIColor *)defaultProgressTintColor {
-  return MDCProgressViewDefaultTintColor();
-}
-
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
   CGFloat hue, saturation, brightness, alpha;
   if ([progressTintColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
