@@ -56,14 +56,22 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   self = [super initWithFrame:frame];
   if (self) {
     _sheetState = MDCSheetStatePreferred;
-    _sheet = [[MDCDraggableView alloc] initWithFrame:self.bounds scrollView:scrollView];
+
+    // Don't set the frame yet because we're going to change the anchor point.
+    _sheet = [[MDCDraggableView alloc] initWithFrame:CGRectZero scrollView:scrollView];
     _sheet.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     _sheet.delegate = self;
+    _sheet.backgroundColor = contentView.backgroundColor;
+
+    // Adjust the anchor point so all positions relate to the top edge rather than the actual
+    // center.
+    _sheet.layer.anchorPoint = CGPointMake(0.5f, 0.f);
+    _sheet.frame = self.bounds;
+
     _contentView = contentView;
     _contentView.autoresizingMask =
         UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    _sheet.backgroundColor = contentView.backgroundColor;
     [_sheet addSubview:_contentView];
     [self addSubview:_sheet];
 
@@ -181,10 +189,6 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   sheetRect.size.height += kSheetBounceBuffer;
 
   self.sheet.frame = sheetRect;
-
-  // Adjust the anchor point so all positions relate to the top edge rather than the actual center.
-  // This makes -targetPoint calculations simpler and based on the desired sheet height.
-  self.sheet.layer.anchorPoint = CGPointMake(0.5f, 0.f);
 
   CGRect contentFrame = self.sheet.bounds;
   contentFrame.size.height -= kSheetBounceBuffer;
