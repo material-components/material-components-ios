@@ -16,7 +16,8 @@
 
 #import "ButtonsTypicalUseSupplemental.h"
 
-#import "MDCButton+MDCStyle.h"
+#import "MDCButtonColorThemer.h"
+#import "MDCButtonStyler.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
@@ -114,7 +115,8 @@
 
   // Floating action button
 
-  self.floatingButton = [MDCButton floatingButtonWithScheme:nil];
+  self.floatingButton = [[MDCButton alloc] init];
+  [MDCButtonStyler styleAsFloatingButton:self.floatingButton];
   [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   [self.floatingButton addTarget:self
