@@ -599,10 +599,14 @@ static const CGFloat kSingleCycleRotation =
       [CATransaction setDisableActions:YES];
       [CATransaction mdm_setTimeScaleFactor:@(duration)];
 
-      CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
-      CGFloat endRotation = startRotation + rotationDelta * 2.0f * (CGFloat)M_PI;
       struct MDCActivityIndicatorMotionSpecTransitionToDeterminate spec =
           kMDCActivityIndicatorMotionSpec.transitionToDeterminate;
+
+      _outerRotationLayer.transform =
+          CATransform3DMakeRotation(kOuterRotationIncrement * _cycleCount, 0, 0, 1);
+
+      CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
+      CGFloat endRotation = startRotation + rotationDelta * 2.0f * (CGFloat)M_PI;
       [_animator animateWithTiming:spec.innerRotation
                            toLayer:_strokeLayer
                         withValues:@[@(startRotation), @(endRotation)]
