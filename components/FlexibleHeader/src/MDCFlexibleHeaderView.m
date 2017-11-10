@@ -144,7 +144,15 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   BOOL _interfaceOrientationIsChanging;
   BOOL _contentInsetsAreChanging;
+
+  // _isChangingStatusBarVisibility documents whether we know that we're adjusting the status bar
+  // visibility, while _wasStatusBarHidden allows us to detect whether someone else has adjusted
+  // the status bar visibility. In either case, we need to counteract any content offsets
+  // adjustments made by UIKit so that our header doesn't shrink/expand in reaction to the status
+  // bar visibility changing.
   BOOL _isChangingStatusBarVisibility;
+  BOOL _wasStatusBarHiddenIsValid;
+  BOOL _wasStatusBarHidden;
 
   MDCStatusBarShifter *_statusBarShifter;
 
@@ -403,6 +411,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
 }
 
+- (void)willMoveToWindow:(UIWindow *)newWindow {
+  [super willMoveToWindow:newWindow];
+
+  _wasStatusBarHiddenIsValid = NO;
+}
+
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *hitView = [super hitTest:point withEvent:event];
 
@@ -466,6 +480,15 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
 #pragma mark - Private (fhv_ prefix)
 
+- (void)fhv_setContentOffset:(CGPoint)contentOffset {
+  _trackingScrollView.contentOffset = contentOffset;
+
+  // When we manually set our content offset it's because we're trying to avoid any sort of content
+  // jumping behavior, so we ignore immediate content offset delta by resetting the shift
+  // accumulator last content offset to the new content offset:
+  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+}
+
 - (void)fhv_adjustTrackingScrollViewInsets {
   CGPoint offsetPriorToInsetAdjustment = _trackingScrollView.contentOffset;
   [self fhv_enforceInsetsForScrollView:_trackingScrollView];
@@ -482,7 +505,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 #endif
     offsetPriorToInsetAdjustment.y = MAX(offsetPriorToInsetAdjustment.y,
                                          -scrollViewAdjustedContentInsetTop);
-    _trackingScrollView.contentOffset = offsetPriorToInsetAdjustment;
+    [self fhv_setContentOffset:offsetPriorToInsetAdjustment];
   }
 }
 
@@ -573,6 +596,20 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   if (!UIEdgeInsetsEqualToEdgeInsets(scrollView.contentInset, insets)) {
     scrollView.contentInset = insets;
   }
+
+  BOOL statusBarIsHidden = [UIApplication mdc_safeSharedApplication].statusBarHidden;
+  if (_wasStatusBarHiddenIsValid && _wasStatusBarHidden != statusBarIsHidden
+      && !_isChangingStatusBarVisibility) {
+    // Our status bar state has changed without our knowledge. UIKit will have already adjusted our
+    // content offset by now, so we want to counteract this. This logic is similar to that found in
+    // statusBarShifterNeedsStatusBarAppearanceUpdate:
+    CGPoint contentOffset = scrollView.contentOffset;
+    contentOffset.y -= topInsetAdjustment;
+    [self fhv_setContentOffset:contentOffset];
+  }
+
+  _wasStatusBarHidden = statusBarIsHidden;
+  _wasStatusBarHiddenIsValid = YES;
 
   return topInsetAdjustment;
 }
@@ -1078,7 +1115,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   [self.delegate flexibleHeaderViewNeedsStatusBarAppearanceUpdate:self];
   [self fhv_enforceInsetsForScrollView:_trackingScrollView];
   [UIView performWithoutAnimation:^{
-    _trackingScrollView.contentOffset = stashedContentOffset;
+    [self fhv_setContentOffset:stashedContentOffset];
   }];
   _isChangingStatusBarVisibility = NO;
 }
@@ -1229,7 +1266,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   CGFloat delta = _trackingScrollView.contentInset.top - previousInsets.top;
   CGPoint contentOffset = _trackingScrollView.contentOffset;
   contentOffset.y -= delta;  // Keeps the scroll view offset from jumping.
-  _trackingScrollView.contentOffset = contentOffset;
+  [self fhv_setContentOffset:contentOffset];
   _contentInsetsAreChanging = NO;
 }
 

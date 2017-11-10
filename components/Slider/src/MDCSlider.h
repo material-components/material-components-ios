@@ -48,6 +48,13 @@ IB_DESIGNABLE
  */
 @property(nonatomic, strong, null_resettable) UIColor *color;
 
+/**
+ The color of the cursor (thumb) and track while the slider is disabled.
+
+ Default color is gray.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *disabledColor;
+
 /*
  The color of the unfilled track that the cursor moves along (right side).
 

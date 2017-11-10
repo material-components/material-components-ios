@@ -15,7 +15,7 @@
  */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialActivityIndicator
 
 class ActivityIndicatorTests: XCTestCase {
 

@@ -213,7 +213,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 
  Default is YES.
  */
-@property(nonatomic, assign) IBInspectable BOOL expandsOnOverflow;
+@property(nonatomic, assign) BOOL expandsOnOverflow;
 
 /**
  The minimum number of lines to use for rendering text.

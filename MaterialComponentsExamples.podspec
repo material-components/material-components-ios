@@ -1,8 +1,9 @@
 Pod::Spec.new do |s|
-  s.name         = "MaterialComponentsCatalog"
-  s.version      = "38.1.1"
+  s.name         = "MaterialComponentsExamples"
+  s.version      = "39.0.0"
   s.authors      = "The Material Components authors."
-  s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
+  s.summary      = "This spec is an aggregate of all the Material Components examples."
+  s.description  = "This spec is made for use in the MDC Catalog. Used in conjunction with CatalogByConvention we create our Material Catalog."
   s.homepage     = "https://github.com/material-components/material-components-ios"
   s.license      = 'Apache 2.0'
   s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{s.version}" }
