@@ -30,6 +30,11 @@ static const CGFloat kFlexibleHeaderDefaultHeight = 56;
 // The maximum default opacity of the shadow.
 static const float kDefaultVisibleShadowOpacity = 0.4f;
 
+// The threshold in which the _viewsToHideWhenShifted should be fully hidden. 0.5 means the views
+// are completely hidden when the header has shifted half of its content height upwards. This should
+// never be 0.
+static const float kContentHidingThreshold = 0.5f;
+
 // This length defines the moment at which the shadow will be fully visible as the header shifts
 // on-screen.
 static const CGFloat kShadowScaleLength = 8;
@@ -118,6 +123,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // events for a view that's been removed from the header view. If we held a strong reference here
   // then the removed view would never be deallocated.
   NSHashTable *_forwardingViews;  // [UIView]
+
+  // Views that should be hidden during shifting. These views are kept as weak references.
+  NSHashTable *_viewsToHideWhenShifted;  // [UIView]
 
   // A weak reference map of scroll views to info that have been tracked by this header view.
   NSMapTable *_trackedScrollViews;  // {UIScrollView:MDCFlexibleHeaderScrollViewInfo}
@@ -298,6 +306,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   NSPointerFunctionsOptions options =
       (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
   _forwardingViews = [NSHashTable hashTableWithOptions:options];
+  _viewsToHideWhenShifted = [NSHashTable hashTableWithOptions:options];
 
   NSPointerFunctionsOptions keyOptions =
       (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
@@ -813,7 +822,6 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   if (!_trackingScrollView) {
     // Set the shadow opacity directly.
     self.layer.shadowOpacity = _visibleShadowOpacity;
-
     return;
   }
 
@@ -821,8 +829,16 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   CGFloat frameBottomEdge = [self fhv_projectedHeaderBottomEdge];
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
-
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
+
+  if (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled) {
+    CGFloat contentHeight = self.computedMinimumHeight - MDCDeviceTopSafeAreaInset();
+    CGFloat hideThreshold = kContentHidingThreshold;
+    CGFloat alpha = MAX(contentHeight - boundedAccumulator / hideThreshold, 0) / contentHeight;
+    for (UIView *view in _viewsToHideWhenShifted) {
+      view.alpha = alpha;
+    }
+  }
 
   CGFloat shadowIntensity;
   if (self.hidesStatusBarWhenCollapsed) {
@@ -840,14 +856,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       // top of our content.
       shadowIntensity = MAX(0, MIN(1, MIN(accumulator, frameBottomEdge) / kShadowScaleLength));
     }
-
   } else if (self.isInFrontOfInfiniteContent) {
     shadowIntensity = 1;
-
   } else {
     // Adjust the opacity as the bottom edge of the header increasingly overlaps the contents
     shadowIntensity = frameBottomEdge / kShadowScaleLength;
   }
+
   if (_defaultShadowLayer.hidden && _customShadowLayer.hidden) {
     self.layer.shadowOpacity = (float)(_visibleShadowOpacity * shadowIntensity);
   } else {
@@ -1312,6 +1327,14 @@ static BOOL isRunningiOS10_3OrAbove() {
       completion:^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         [self interfaceOrientationDidChange];
       }];
+}
+
+- (void)hideViewWhenShifted:(UIView *)view {
+  [_viewsToHideWhenShifted addObject:view];
+}
+
+- (void)stopHidingViewWhenShifted:(UIView *)view {
+  [_viewsToHideWhenShifted removeObject:view];
 }
 
 - (void)forwardTouchEventsForView:(UIView *)view {
