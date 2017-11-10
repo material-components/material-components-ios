@@ -489,8 +489,6 @@ static const CGFloat kSingleCycleRotation =
                     withValues:@[@(_minStrokeDifference), @(kStrokeLength + _minStrokeDifference)]
                        keyPath:MDMKeyPathStrokeEnd];
 
-  [CATransaction setDisableActions:YES];
-
   [CATransaction commit];
 
   _animationInProgress = YES;
