@@ -79,57 +79,57 @@ class MDCCatalogTileView: UIView {
 
     switch componentNameString {
     case "Activity Indicator":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawActivityIndicatorTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawActivityIndicatorTile($0, $1) }, colorScheme)
     case "Animation Timing":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawAnimationTimingTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawAnimationTimingTile($0, $1) }, colorScheme)
     case "App Bar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawAppBarTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawAppBarTile($0, $1) }, colorScheme)
     case "Button Bar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawButtonBarTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawButtonBarTile($0, $1) }, colorScheme)
     case "Buttons":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawButtonsTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawButtonsTile($0, $1) }, colorScheme)
     case "Collection Cells":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawCollectionCellsTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawCollectionCellsTile($0, $1) }, colorScheme)
     case "Collections":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawCollectionsTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawCollectionsTile($0, $1) }, colorScheme)
     case "Dialogs":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawDialogsTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawDialogsTile($0, $1) }, colorScheme)
     case "Feature Highlight":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawFeatureHighlightTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawFeatureHighlightTile($0, $1) }, colorScheme)
     case "Flexible Header":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawFlexibleHeaderTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawFlexibleHeaderTile($0, $1) }, colorScheme)
     case "Header Stack View":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawHeaderStackViewTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawHeaderStackViewTile($0, $1) }, colorScheme)
     case "Ink":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawInkTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawInkTile($0, $1) }, colorScheme)
     case "Navigation Bar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawNavigationBarTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawNavigationBarTile($0, $1) }, colorScheme)
     case "Misc":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawMiscTile($0, $1) }, colorScheme)
     case "Overlay Window":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawOverlayWindow, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawOverlayWindow($0, $1) }, colorScheme)
     case "Page Control":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPageControlTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawPageControlTile($0, $1) }, colorScheme)
     case "Palettes":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPalettesTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawPalettesTile($0, $1) }, colorScheme)
     case "Progress View":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawProgressViewTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawProgressViewTile($0, $1) }, colorScheme)
     case "Shadow":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawShadowLayerTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawShadowLayerTile($0, $1) }, colorScheme)
     case "Slider":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSliderTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawSliderTile($0, $1) }, colorScheme)
     case "Snackbar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSnackbarTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawSnackbarTile($0, $1) }, colorScheme)
     case "Switch":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSwitchTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawSwitchTile($0, $1) }, colorScheme)
     case "Tab Bar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTabsTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawTabsTile($0, $1) }, colorScheme)
     case "Text Field":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTextFieldTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawTextFieldTile($0, $1) }, colorScheme)
     case "Typography and Fonts":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTypographyTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawTypographyTile($0, $1) }, colorScheme)
     default:
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile, colorScheme)
+      newImage = MDCDrawImage(defaultSize, { MDCCatalogDrawMiscTile($0, $1) }, colorScheme)
     }
     imageCache.setObject(newImage, forKey: componentNameString as AnyObject)
     return newImage
