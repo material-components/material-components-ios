@@ -20,6 +20,7 @@ import MaterialCatalog
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
+import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialThemes
