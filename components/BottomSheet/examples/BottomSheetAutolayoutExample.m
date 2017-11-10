@@ -30,9 +30,8 @@
   UIViewController *viewController =
       [storyboard instantiateViewControllerWithIdentifier:identifier];
 
-  MDCBottomSheetController *bottomSheet =
-      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
-  [self presentViewController:bottomSheet animated:YES completion:nil];
+  viewController.mdm_transitionController.transition = [[MDCBottomSheetTransition alloc] init];
+  [self presentViewController:viewController animated:YES completion:nil];
 }
 
 @end

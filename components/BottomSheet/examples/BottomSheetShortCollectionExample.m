@@ -26,10 +26,10 @@
   BottomSheetDummyCollectionViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:6];
 
-  MDCBottomSheetController *bottomSheet =
-      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
-  bottomSheet.trackingScrollView = viewController.collectionView;
-  [self presentViewController:bottomSheet animated:YES completion:nil];
+  MDCBottomSheetTransition *transition = [[MDCBottomSheetTransition alloc] init];
+  transition.trackingScrollView = viewController.collectionView;
+  viewController.mdm_transitionController.transition = transition;
+  [self presentViewController:viewController animated:YES completion:nil];
 }
 
 @end

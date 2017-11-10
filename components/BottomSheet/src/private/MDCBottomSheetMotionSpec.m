@@ -14,8 +14,30 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetController.h"
-#import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetTransition.h"
-#import "MDCBottomSheetTransitionController.h"
-#import "UIViewController+MaterialBottomSheet.h"
+#import "MDCBottomSheetMotionSpec.h"
+
+#define EaseInOut _MDMBezier(0.42, 0.0, 0.58, 1.0)
+
+@implementation MDCBottomSheetMotionSpec
+
++ (MDMMotionCurve)easeInOut {
+  return _MDMBezier(0.42, 0.0, 0.58, 1.0);
+}
+
++ (MDMMotionTiming)scrimAppearance {
+  return (MDMMotionTiming){
+    .duration = 0.250, .curve = [self easeInOut]
+  };
+}
+
++ (MDMMotionTiming)scrimDisappearance {
+  return (MDMMotionTiming){
+    .duration = 0.250, .curve = [self easeInOut]
+  };
+}
+
++ (MDMMotionTiming)onDragRelease {
+  return (MDMMotionTiming)MDMModalMovementTiming;
+}
+
+@end
