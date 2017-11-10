@@ -21,12 +21,19 @@ import XCTest
 class LibraryInfoTests: XCTestCase {
   func testVersionFormat() {
     // Given
+
+    // This regex pattern does the following:
+    // Accept: "42.0.0", etc.
+    // Reject: "0.0.0", "1.2", "1", "-1.2.3", "Hi, I'm a version 1.2.3", "1.2.3 is my version", etc.
+    //
+    // Note the major version must be >= 1 since "0.0.0" is used as the version when something goes
+    // wrong in the underlying code and we're in Release mode.
     let pattern = "^[1-9]+\\.[0-9]+\\.[0-9]+$"
-    let version = MDCLibraryInfo.version()
-    
+
     // When
-    
+    let version = MDCLibraryInfo.versionString
+
     // Then
-    XCTAssertNotNil(version.range(of: pattern, options: [.regularExpression, .anchored]))
+    XCTAssertNotNil(version.range(of: pattern, options: .regularExpression))
   }
 }
