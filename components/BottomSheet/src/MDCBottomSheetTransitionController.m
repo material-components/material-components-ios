@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-#import "MaterialBottomSheet.h"
+#import "MDCBottomSheetTransitionController.h"
+
+#import "MDCBottomSheetPresentationController.h"
 
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
