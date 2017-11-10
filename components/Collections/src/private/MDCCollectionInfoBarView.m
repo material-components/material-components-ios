@@ -72,11 +72,11 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   self.backgroundColor = [UIColor clearColor];
   self.userInteractionEnabled = NO;
   _backgroundView = [[ShadowedView alloc] initWithFrame:self.bounds];
-  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _backgroundView.autoresizingMask =
+      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _backgroundView.hidden = YES;
 
-  _titleLabel = [[UILabel alloc]
-      initWithFrame:CGRectInset(self.bounds, MDCCollectionInfoBarLabelHorizontalPadding, 0)];
+  _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _titleLabel.backgroundColor = [UIColor clearColor];
   _titleLabel.textAlignment = NSTextAlignmentCenter;
   _titleLabel.font = [MDCTypography body1Font];
@@ -92,6 +92,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  UIEdgeInsets collectionViewSafeAreaInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      if (self.superview) {
+        collectionViewSafeAreaInsets = self.superview.safeAreaInsets;
+      }
+    }
+#endif
+  CGFloat leftInset = MAX(MDCCollectionInfoBarLabelHorizontalPadding,
+                          collectionViewSafeAreaInsets.left);
+  CGFloat rightInset = MAX(MDCCollectionInfoBarLabelHorizontalPadding,
+                           collectionViewSafeAreaInsets.right);
+  CGFloat height = [_kind isEqualToString:MDCCollectionInfoBarKindHeader] ?
+      MDCCollectionInfoBarHeaderHeight : MDCCollectionInfoBarFooterHeight;
+  _titleLabel.frame =
+      CGRectMake(leftInset, 0, CGRectGetWidth(self.bounds) - (leftInset + rightInset), height);
+
   if (_shouldApplyBackgroundViewShadow) {
     [self setShouldApplyBackgroundViewShadow:_shouldApplyBackgroundViewShadow];
   }
@@ -121,10 +139,9 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 - (void)setKind:(NSString *)kind {
   _kind = kind;
+  _backgroundTransformY = CGRectGetHeight(self.bounds);
   if ([kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
-    _backgroundTransformY = -MDCCollectionInfoBarHeaderHeight;
-  } else {
-    _backgroundTransformY = MDCCollectionInfoBarFooterHeight;
+    _backgroundTransformY *= -1.0;
   }
   _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
 }
@@ -178,7 +195,9 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)showAnimated:(BOOL)animated {
+  [self layoutIfNeeded];
   _backgroundView.hidden = NO;
+
   // Notify delegate.
   if ([_delegate respondsToSelector:@selector(infoBar:willShowAnimated:willAutoDismiss:)]) {
     [_delegate infoBar:self willShowAnimated:animated willAutoDismiss:[self shouldAutoDismiss]];
