@@ -14,14 +14,15 @@
  limitations under the License.
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
+
 #import "MaterialButtons.h"
 
 @interface ButtonsContentEdgeInsetsExample : UIViewController
 @property(weak, nonatomic) IBOutlet MDCFlatButton *flatButton;
 @property(weak, nonatomic) IBOutlet MDCRaisedButton *raisedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
-@property (weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
+@property(weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
 
 @end
 
