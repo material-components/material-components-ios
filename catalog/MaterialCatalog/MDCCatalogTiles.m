@@ -19,7 +19,7 @@
 #import "MaterialThemes.h"
 #import "MDCCatalogTiles.h"
 
-UIImage* MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDCColorScheme> *colorScheme) {
+UIImage* _Nullable MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDCColorScheme> *colorScheme) {
   CGFloat scale = [UIScreen mainScreen].scale;
   UIGraphicsBeginImageContextWithOptions(frame.size, false, scale);
   drawFunc(frame, colorScheme);
