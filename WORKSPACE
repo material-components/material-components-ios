@@ -21,7 +21,7 @@ git_repository(
 git_repository(
     name = "bazel_ios_warnings",
     remote = "https://github.com/material-foundation/bazel_ios_warnings.git",
-    tag = "v1.0.1",
+    tag = "v2.0.0",
 )
 
 git_repository(

@@ -206,7 +206,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     [animator animateWithTiming:motion.floodBackgroundColor
                         toLayer:floodFillView.layer
                      withValues:@[ initialColor, finalColor ]
-                        keyPath:@"backgroundColor"];
+                        keyPath:MDMKeyPathBackgroundColor];
   }
 
   {
@@ -223,7 +223,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     [animator animateWithTiming:motion.maskTransformation
                         toLayer:shapeLayer
                      withValues:@[ @1, @(finalScale) ]
-                        keyPath:@"transform.scale.xy"
+                        keyPath:MDMKeyPathScale
                      completion:completion];
   }
 

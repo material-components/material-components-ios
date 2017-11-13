@@ -153,8 +153,27 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 #pragma mark - Public
 
++ (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position
+                        itemAppearance:(MDCTabBarItemAppearance)appearance {
+  if ([self isTopTabsForPosition:position]) {
+    switch (appearance) {
+      case MDCTabBarItemAppearanceTitledImages:
+        return kTitledImageBarHeight;
+
+      case MDCTabBarItemAppearanceTitles:
+        return kTitleOnlyBarHeight;
+
+      case MDCTabBarItemAppearanceImages:
+        return kImageOnlyBarHeight;
+    }
+  } else {
+    // Bottom navigation has a fixed height.
+    return kBottomNavigationBarHeight;
+  }
+}
+
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance {
-  return [self defaultHeightForPosition:UIBarPositionAny itemAppearance:appearance];
+  return [self defaultHeightForBarPosition:UIBarPositionAny itemAppearance:appearance];
 }
 
 - (void)setDelegate:(id<MDCTabBarDelegate>)delegate {
@@ -304,25 +323,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 #pragma mark - Private
 
-+ (CGFloat)defaultHeightForPosition:(UIBarPosition)position
-                     itemAppearance:(MDCTabBarItemAppearance)appearance {
-  if ([self isTopTabsForPosition:position]) {
-    switch (appearance) {
-      case MDCTabBarItemAppearanceTitledImages:
-        return kTitledImageBarHeight;
-
-      case MDCTabBarItemAppearanceTitles:
-        return kTitleOnlyBarHeight;
-
-      case MDCTabBarItemAppearanceImages:
-        return kImageOnlyBarHeight;
-    }
-  } else {
-    // Bottom navigation has a fixed height.
-    return kBottomNavigationBarHeight;
-  }
-}
-
 + (MDCItemBarStyle *)defaultStyleForPosition:(UIBarPosition)position
                               itemAppearance:(MDCTabBarItemAppearance)appearance {
   MDCItemBarStyle *style = [[MDCItemBarStyle alloc] init];
@@ -373,7 +373,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.shouldDisplayTitle = displayTitle;
 
   // Update default height
-  CGFloat defaultHeight = [self defaultHeightForPosition:position itemAppearance:appearance];
+  CGFloat defaultHeight = [self defaultHeightForBarPosition:position itemAppearance:appearance];
   if (defaultHeight == 0) {
     NSAssert(0, @"Missing default height for %zd", appearance);
     defaultHeight = kTitleOnlyBarHeight;
@@ -529,6 +529,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.displaysUppercaseTitles = _displaysUppercaseTitles;
 
   [_itemBar applyStyle:style];
+
+  // Layout depends on -[MDCItemBar sizeThatFits], which depends on the style.
+  [self setNeedsLayout];
 }
 
 @end

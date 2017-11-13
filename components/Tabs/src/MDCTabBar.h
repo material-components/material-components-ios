@@ -36,6 +36,10 @@
 IB_DESIGNABLE
 @interface MDCTabBar : UIView <UIBarPositioning>
 
+/** The default height for the tab bar with a given position and item appearance. */
++ (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position
+                        itemAppearance:(MDCTabBarItemAppearance)appearance;
+
 /** The default height for the tab bar in the top position, given an item appearance. */
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance;
 

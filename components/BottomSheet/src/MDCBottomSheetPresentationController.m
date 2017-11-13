@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-#import "MaterialBottomSheet.h"
+#import "MDCBottomSheetPresentationController.h"
+
+#import "MDCBottomSheetController.h"
 
 #import "MaterialMath.h"
 #import "private/MDCSheetContainerView.h"

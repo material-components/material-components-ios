@@ -16,30 +16,19 @@
 
 #import "MDCDraggableView.h"
 
-@interface UIGestureRecognizer (Cancelling)
-// Cancels an active gesture.
-- (void)mdc_cancel;
-@end
-
-@implementation UIGestureRecognizer (Cancelling)
-
-- (void)mdc_cancel {
-  if (self.enabled) {
+static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
+  if (gesture.enabled) {
     // Setting enabled to NO while a gesture recognizer is currently recognizing a gesture will
     // transition it to a cancelled state.
-    self.enabled = NO;
-    self.enabled = YES;
+    gesture.enabled = NO;
+    gesture.enabled = YES;
   }
 }
-
-@end
-
 
 @interface MDCDraggableView ()<UIGestureRecognizerDelegate>
 @property(nonatomic) UIPanGestureRecognizer *dragRecognizer;
 @property(nonatomic, strong) UIScrollView *scrollView;
 @end
-
 
 @implementation MDCDraggableView
 
@@ -96,7 +85,7 @@
 
   if ([self.delegate draggableView:self shouldBeginDraggingWithVelocity:velocity]) {
     // If dragging the pane, don't allow the content to scroll at the same time.
-    [self.scrollView.panGestureRecognizer mdc_cancel];
+    CancelGestureRecognizer(self.scrollView.panGestureRecognizer);
     return YES;
   } else {
     return NO;
