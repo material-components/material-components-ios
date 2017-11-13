@@ -17,11 +17,12 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
+#import "MaterialSlider.h"
 
 @implementation ChipsSizingExampleViewController {
   MDCChipView *_chipView;
-  UISlider *_widthSlider;
-  UISlider *_heightSlider;
+  MDCSlider *_widthSlider;
+  MDCSlider *_heightSlider;
 }
 
 - (void)viewDidLoad {
@@ -38,7 +39,7 @@
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = (CGRect) { CGPointMake(20, 20), chipSize };
 
-  _widthSlider = [[UISlider alloc] initWithFrame:CGRectZero];
+  _widthSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
   _widthSlider.maximumValue = 200;
   _widthSlider.value = _chipView.frame.size.width;
   [_widthSlider addTarget:self
@@ -46,7 +47,7 @@
          forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:_widthSlider];
 
-  _heightSlider = [[UISlider alloc] initWithFrame:CGRectZero];
+  _heightSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
   _heightSlider.maximumValue = 100;
   _heightSlider.value = _chipView.frame.size.height;
   [_heightSlider addTarget:self
@@ -64,14 +65,14 @@
       CGRectMake(20, 140 + sliderSize.height + 20, self.view.bounds.size.width - 40, sliderSize.height);
 }
 
-- (void)widthSliderChanged:(UISlider *)slider {
+- (void)widthSliderChanged:(MDCSlider *)slider {
   CGRect frame = _chipView.frame;
   frame.size.width = slider.value;
   _chipView.frame = frame;
   [_chipView layoutIfNeeded];
 }
 
-- (void)heightSliderChanged:(UISlider *)slider {
+- (void)heightSliderChanged:(MDCSlider *)slider {
   CGRect frame = _chipView.frame;
   frame.size.height = slider.value;
   _chipView.frame = frame;
