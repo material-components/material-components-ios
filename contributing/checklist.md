@@ -62,7 +62,7 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 
 #### To convert a raw asset to Core Graphics:
 
-1. Set the canvass size to 82 x 82.
+1. Set the canvas size to 82 x 82.
 1. Import the file (.svg or .ai) into PaintCode.
 1. Massage values until it matches the original (colors, gradients, spacing, etc).
 1. Make sure all shapes are enclosed in a group named Component Name Group.
