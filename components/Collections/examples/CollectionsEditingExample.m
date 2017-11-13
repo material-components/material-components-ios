@@ -64,9 +64,11 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 }
 
 - (void)toggleEditMode:(id)sender {
-  BOOL isEditing = self.editor.isEditing;
-  [self updatedRightBarButtonItem:!isEditing];
-  [self.editor setEditing:!isEditing animated:YES];
+  if ([sender isEqual:self.navigationItem.rightBarButtonItem]) {
+    BOOL isEditing = self.editor.isEditing;
+    [self updatedRightBarButtonItem:!isEditing];
+    [self.editor setEditing:!isEditing animated:YES];
+  }
 }
 
 #pragma mark - <UICollectionViewDataSource>
