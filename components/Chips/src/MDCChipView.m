@@ -22,11 +22,15 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
 
-#define RGBCOLOR(r, g, b) \
-    [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
-#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
+// Creates a UIColor from a 24-bit RGB color encoded as an integer.
+static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
+  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
+                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
+                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
+                         alpha:1];
+}
 
-static const NSInteger MDCChipBackgroundColor = 0xEBEBEB;
+static const uint32_t MDCChipBackgroundColor = 0xEBEBEB;
 static const CGFloat MDCChipSelectedDarkenPercent = 0.16f;
 static const CGFloat MDCChipDisabledLightenPercent = 0.38f;
 static const CGFloat MDCChipTitleColorWhite = 0.13f;
@@ -115,7 +119,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)commonMDCChipViewInit {
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
-    UIColor *normal = HEXCOLOR(MDCChipBackgroundColor);
+    UIColor *normal = MDCColorFromRGB(MDCChipBackgroundColor);
     UIColor *disabled = [normal lighten:MDCChipDisabledLightenPercent];
     UIColor *selected = [normal darken:MDCChipSelectedDarkenPercent];
 
