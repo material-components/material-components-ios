@@ -1,17 +1,17 @@
 {
     "images": [
         {
-            "filename": "ic_check_circle_18pt.png",
+            "filename": "ic_cancel.png",
             "idiom": "universal",
             "scale": "1x"
         },
         {
-            "filename": "ic_check_circle_18pt_2x.png",
+            "filename": "ic_cancel_2x.png",
             "idiom": "universal",
             "scale": "2x"
         },
         {
-            "filename": "ic_check_circle_18pt_3x.png",
+            "filename": "ic_cancel_3x.png",
             "idiom": "universal",
             "scale": "3x"
         }

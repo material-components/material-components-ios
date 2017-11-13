@@ -28,7 +28,7 @@ static UIImage *DoneImage() {
 
 static UIImage *FaceImage() {
   NSBundle *bundle = [NSBundle bundleForClass:[ChipsTypicalUseViewController class]];
-  UIImage *image = [UIImage imageNamed:@"ic_face"
+  UIImage *image = [UIImage imageNamed:@"ic_mask"
                               inBundle:bundle
          compatibleWithTraitCollection:nil];
   return image;
@@ -36,7 +36,7 @@ static UIImage *FaceImage() {
 
 static UIButton *DeleteButton() {
   NSBundle *bundle = [NSBundle bundleForClass:[ChipsTypicalUseViewController class]];
-  UIImage *image = [UIImage imageNamed:@"ic_check_circle_18pt"
+  UIImage *image = [UIImage imageNamed:@"ic_cancel"
                               inBundle:bundle
          compatibleWithTraitCollection:nil];
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
