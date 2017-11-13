@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-// Information about the Material Components library.
+/**
+ Information about the Material Components library.
+ */
 @interface MDCLibraryInfo: NSObject
 
 /**
