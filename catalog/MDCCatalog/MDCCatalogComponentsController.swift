@@ -250,18 +250,18 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-    let pad = CGFloat(1)
-    var safeInsets = CGFloat(0)
+    let centerDividerWidth: CGFloat = 1
+    var safeInsets: CGFloat = 0
 #if swift(>=3.2)
     if #available(iOS 11, *) {
       safeInsets = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
     }
 #endif
-    var cellWidth = (self.view.frame.size.width - 3 * pad - safeInsets) / 2
+    var cellWidthHeight = (self.view.frame.size.width - 3 * centerDividerWidth - safeInsets) / 2
     if self.view.frame.size.width > self.view.frame.size.height {
-      cellWidth = (self.view.frame.size.width - 4 * pad - safeInsets) / 3
+      cellWidthHeight = (self.view.frame.size.width - 4 * centerDividerWidth - safeInsets) / 3
     }
-    return CGSize(width: cellWidth, height: cellWidth * 0.825)
+    return CGSize(width: cellWidthHeight, height: cellWidthHeight)
   }
 
   override func collectionView(_ collectionView: UICollectionView,
