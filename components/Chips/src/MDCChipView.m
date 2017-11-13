@@ -455,13 +455,13 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)frameForImageView:(UIImageView *)imageView visible:(BOOL)visible {
-  CGRect frame = CGRectMake(self.contentRect.origin.x, CGRectGetMidY(self.contentRect), 0, 0);
+  CGRect frame = CGRectMake(CGRectGetMinX(self.contentRect), CGRectGetMidY(self.contentRect), 0, 0);
   if (visible) {
     CGSize availableSize = CGSizeShrinkWithInsets(self.contentRect.size, self.imagePadding);
     CGSize selectedSize = [imageView sizeThatFits:availableSize];
     frame = MDCChipBuildFrame(_imagePadding,
                               selectedSize,
-                              self.contentRect.origin.x,
+                              CGRectGetMinX(self.contentRect),
                               CGRectGetHeight(self.frame));
   }
   return frame;
