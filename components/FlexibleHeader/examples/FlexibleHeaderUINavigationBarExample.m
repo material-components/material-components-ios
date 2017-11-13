@@ -98,7 +98,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 }
 
 - (void)didTapButton:(id)sender {
-  NSLog(@"Button Tapped");
+  NSLog(@"Button Tapped: %@", sender);
 }
 
 - (void)doneAction:(id)sender {
