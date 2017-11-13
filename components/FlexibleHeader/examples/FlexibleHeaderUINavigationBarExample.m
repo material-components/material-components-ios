@@ -27,6 +27,8 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic) UIButton *button;
+@property(nonatomic) UIBarButtonItem *backItem;
+@property(nonatomic) UIBarButtonItem *doneItem;
 
 @end
 
@@ -72,18 +74,18 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
   [self.fhvc.headerView addSubview:navBar];
 
-  UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+  self.backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
                                                               action:@selector(doneAction:)];
-  UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+  self.doneItem = [[UIBarButtonItem alloc] initWithTitle:@"Done"
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
                                                               action:@selector(doneAction:)];
 
   UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"UINavigationBar"];
-  [navItem setLeftBarButtonItem:backItem animated:YES];
-  [navItem setRightBarButtonItem:doneItem animated:YES];
+  [navItem setLeftBarButtonItem:self.backItem animated:YES];
+  [navItem setRightBarButtonItem:self.doneItem animated:YES];
   [navBar setItems:[NSArray arrayWithObject:navItem] animated:YES];
 
   self.button = [[UIButton alloc] init];
@@ -102,7 +104,9 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 }
 
 - (void)doneAction:(id)sender {
-  [super.navigationController popViewControllerAnimated:YES];
+  if ([sender isEqual:self.doneItem] || [sender isEqual:self.backItem]) {
+    [super.navigationController popViewControllerAnimated:YES];
+  }
 }
 
 - (void)viewDidLoad {
