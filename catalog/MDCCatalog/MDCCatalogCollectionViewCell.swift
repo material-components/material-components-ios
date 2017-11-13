@@ -26,13 +26,17 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     static let yPadding: CGFloat = 16
   }
 
-  private lazy var label = UILabel()
+  private lazy var label: UILabel = {
+    let label = UILabel()
+    label.textColor = UIColor(white: 0, alpha: MDCTypography.buttonFontOpacity())
+    label.font = MDCTypography.buttonFont()
+
+    return label
+  }()
   private lazy var tile = MDCCatalogTileView(frame: CGRect.zero)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    label.textColor = UIColor(white: 0, alpha: MDCTypography.buttonFontOpacity())
-    label.font = MDCTypography.buttonFont()
     contentView.addSubview(label)
     contentView.clipsToBounds = true
     contentView.addSubview(tile)
