@@ -118,6 +118,9 @@
 /*
  A color used as the chip's @c backgroundColor for @c state.
 
+ If no background color has been set for a given state, the returned value will fall back to the
+ value set for UIControlStateNormal.
+
  @param state The control state.
  @return The background color.
  */
@@ -137,6 +140,9 @@
 /*
  Returns the border color for a particular control state.
 
+ If no border width has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
  @param state The control state.
  @return The border color for the requested state.
  */
@@ -154,6 +160,9 @@
 /*
  Returns the border width for a particular control state.
 
+ If no border width has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
  @param state The control state.
  @return The border width for the requested state.
  */
@@ -169,6 +178,9 @@
 
 /*
  Returns the elevation for a particular control state.
+
+ If no elevation has been set for a given state, the returned value will fall back to the value set
+ for UIControlStateNormal.
 
  @param state The control state.
  @return The elevation for the requested state.
@@ -186,6 +198,9 @@
 
 /*
  Returns the title color for a particular control state.
+
+ If no title color has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
 
  @param state The control state.
  @return The title color for the requested state.
