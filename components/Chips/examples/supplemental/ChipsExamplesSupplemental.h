@@ -24,18 +24,18 @@
 
 @interface ChipsChoiceExampleViewController : UIViewController
     <UICollectionViewDelegate, UICollectionViewDataSource>
-@property(nonatomic, strong) NSMutableArray<NSString *> *titles;
+@property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) UICollectionView *collectionView;
 @end
 
 @interface ChipsCollectionExampleViewController : ExampleChipCollectionViewController
     <UICollectionViewDelegate, UICollectionViewDataSource>
-@property(nonatomic, strong) NSMutableArray<NSString *> *titles;
+@property(nonatomic, strong) NSArray<NSString *> *titles;
 @end
 
 @interface ChipsFilterExampleViewController : UIViewController
     <UICollectionViewDelegate, UICollectionViewDataSource>
-@property(nonatomic, strong) NSMutableArray<NSString *> *titles;
+@property(nonatomic, strong) NSArray<NSString *> *titles;
 @end
 
 @interface ChipsFilterExampleViewController (Supplemental)

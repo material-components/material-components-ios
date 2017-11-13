@@ -55,9 +55,9 @@
   return cell;
 }
 
-- (NSMutableArray *)titles {
+- (NSArray *)titles {
   if (!_titles) {
-    _titles = [NSMutableArray arrayWithArray:@[
+    _titles = @[
       @"Truffaut",
       @"Farm-to-table",
       @"XOXO",
@@ -91,7 +91,7 @@
       @"Irony",
       @"Gastropub",
       @"Truffaut"
-    ]];
+    ];
   }
   return _titles;
 }

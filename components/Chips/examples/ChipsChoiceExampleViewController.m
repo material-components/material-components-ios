@@ -48,8 +48,7 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  CGFloat height = 33;
-  _collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), height);
+  _collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 33);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -65,15 +64,15 @@
   return cell;
 }
 
-- (NSMutableArray *)titles {
+- (NSArray *)titles {
   if (!_titles) {
-    _titles = [NSMutableArray arrayWithArray:@[
+    _titles = @[
       @"The Bronx",
       @"Brooklyn",
       @"Manhattan",
       @"Queens",
       @"Staten Island",
-    ]];
+    ];
   }
   return _titles;
 }

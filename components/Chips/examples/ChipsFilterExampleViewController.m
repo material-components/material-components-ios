@@ -85,9 +85,9 @@
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
-- (NSMutableArray *)titles {
+- (NSArray *)titles {
   if (!_titles) {
-    _titles = [NSMutableArray arrayWithArray:@[
+    _titles = @[
       @"Doorman",
       @"Elevator",
       @"Garage Parking",
@@ -99,7 +99,7 @@
       @"Pied-a-Terre Allowed",
       @"Swimming Pool",
       @"Smoke-free",
-    ]];
+    ];
   }
   return _titles;
 }
