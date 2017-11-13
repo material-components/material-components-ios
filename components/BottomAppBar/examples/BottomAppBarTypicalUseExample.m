@@ -69,16 +69,22 @@
 }
 
 - (void)didTapFloatingButton:(id)sender {
-  [self.bottomBarView setFloatingButtonHidden:YES animated:YES];
+  if ([sender isEqual: self.bottomBarView.floatingButton]) {
+    [self.bottomBarView setFloatingButtonHidden:YES animated:YES];
+  }
 }
 
 - (void)didTapMenu:(id)sender {
-  [self.navigationController popViewControllerAnimated:YES];
+  if ([sender isEqual:self.bottomBarView.leadingBarButtonItems.firstObject]) {
+    [self.navigationController popViewControllerAnimated:YES];
+  }
 }
 
 - (void)didTapSearch:(id)sender {
-  [self.bottomBarView setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionTrailing
-                                       animated:YES];
+  if ([sender isEqual:self.bottomBarView.trailingBarButtonItems.lastObject]) {
+    [self.bottomBarView setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionTrailing
+                                         animated:YES];
+  }
 }
 
 @end
