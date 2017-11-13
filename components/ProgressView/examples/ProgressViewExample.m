@@ -71,7 +71,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   _backwardProgressResetView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_backwardProgressResetView];
   // Have a non-zero progress at setup time.
-  _backwardProgressResetView.progress = 0.33;
+  _backwardProgressResetView.progress = 0.33f;
 
   _backwardProgressAnimateView = [[MDCProgressView alloc] init];
   _backwardProgressAnimateView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -79,7 +79,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
       MDCProgressViewBackwardAnimationModeAnimate;
   [self.view addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
-  _backwardProgressAnimateView.progress = 0.33;
+  _backwardProgressAnimateView.progress = 0.33f;
 }
 
 @end
@@ -206,9 +206,11 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [progressView setHidden:NO
                  animated:YES
                completion:^(BOOL finished) {
-                 [self performSelector:@selector(animateStep2:)
-                            withObject:weakProgressView
-                            afterDelay:MDCProgressViewAnimationDuration];
+                 if (finished) {
+                   [self performSelector:@selector(animateStep2:)
+                              withObject:weakProgressView
+                              afterDelay:MDCProgressViewAnimationDuration];
+                 }
                }];
 }
 
@@ -231,9 +233,11 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [progressView setHidden:YES
                  animated:YES
                completion:^(BOOL finished) {
-                 [self performSelector:@selector(animateStep1:)
-                            withObject:weakProgressView
-                            afterDelay:MDCProgressViewAnimationDuration];
+                 if (finished) {
+                   [self performSelector:@selector(animateStep1:)
+                              withObject:weakProgressView
+                              afterDelay:MDCProgressViewAnimationDuration];
+                 }
                }];
 }
 
@@ -243,10 +247,12 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [_backwardProgressResetView setProgress:1 - _backwardProgressResetView.progress
                                  animated:YES
                                completion:^(BOOL finished) {
-                                 [weakSelf
-                                     performSelector:@selector(animateBackwardProgressResetView)
-                                          withObject:nil
-                                          afterDelay:MDCProgressViewAnimationDuration];
+                                 if (finished) {
+                                     [weakSelf
+                                         performSelector:@selector(animateBackwardProgressResetView)
+                                              withObject:nil
+                                              afterDelay:MDCProgressViewAnimationDuration];
+                                 }
                                }];
 }
 
@@ -256,10 +262,12 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [_backwardProgressAnimateView setProgress:1 - _backwardProgressResetView.progress
                                    animated:YES
                                  completion:^(BOOL finished) {
-                                   [weakSelf
-                                       performSelector:@selector(animateBackwardProgressAnimateView)
-                                            withObject:nil
-                                            afterDelay:MDCProgressViewAnimationDuration];
+                                   if (finished) {
+                                       [weakSelf
+                                          performSelector:@selector(animateBackwardProgressAnimateView)
+                                               withObject:nil
+                                               afterDelay:MDCProgressViewAnimationDuration];
+                                   }
                                  }];
 }
 

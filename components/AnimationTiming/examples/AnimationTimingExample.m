@@ -73,14 +73,16 @@ const NSTimeInterval kAnimationTimeDelay = 0.5f;
         view.transform = transform;
       }
       completion:^(BOOL finished) {
-        [UIView mdc_animateWithTimingFunction:timingFunction
-                                     duration:kAnimationTimeInterval
-                                        delay:kAnimationTimeDelay
-                                      options:0
-                                   animations:^{
-                                     view.transform = CGAffineTransformIdentity;
-                                   }
-                                   completion:nil];
+        if (finished) {
+          [UIView mdc_animateWithTimingFunction:timingFunction
+                                       duration:kAnimationTimeInterval
+                                          delay:kAnimationTimeDelay
+                                        options:0
+                                     animations:^{
+                                       view.transform = CGAffineTransformIdentity;
+                                     }
+                                     completion:nil];
+        }
       }];
 }
 

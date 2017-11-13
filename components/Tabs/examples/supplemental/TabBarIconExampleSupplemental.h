@@ -29,11 +29,11 @@
 
 @interface TabBarIconExample : UIViewController <MDCTabBarDelegate>
 
-@property MDCTabBar *_Nullable tabBar;
-@property MDCRaisedButton *_Nullable alignmentButton;
-@property MDCAppBar *_Nullable appBar;
-@property UIScrollView *_Nullable scrollView;
-@property UIView *_Nullable starPage;
+@property(nonatomic) MDCTabBar *_Nullable tabBar;
+@property(nonatomic) MDCRaisedButton *_Nullable alignmentButton;
+@property(nonatomic) MDCAppBar *_Nullable appBar;
+@property(nonatomic) UIScrollView *_Nullable scrollView;
+@property(nonatomic) UIView *_Nullable starPage;
 
 @end
 

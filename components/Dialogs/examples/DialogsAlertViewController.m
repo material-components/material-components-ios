@@ -114,11 +114,11 @@
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
 
-  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"OK"
                                                    handler:^(MDCAlertAction *action) {
+  MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
                                                      NSLog(@"%@", @"OK pressed");
                                                    }];
-  [materialAlertController addAction:action];
+  [materialAlertController addAction:okAction];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
@@ -229,11 +229,11 @@
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 
-  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"OK"
                                                    handler:^(MDCAlertAction *action) {
+  MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
                                                      NSLog(@"%@", @"OK pressed");
                                                    }];
-  [materialAlertController addAction:action];
+  [materialAlertController addAction:okAction];
 
   MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"OK - 2"
                                                    handler:^(MDCAlertAction *action) {
