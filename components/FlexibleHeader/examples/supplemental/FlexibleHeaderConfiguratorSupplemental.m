@@ -49,7 +49,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 }
 
 - (instancetype)initWithStyle:(UITableViewStyle)style {
-  self = [super initWithStyle:kStyle];
+  self = [super initWithStyle:style];
   if (self) {
     self.fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
     [self addChildViewController:self.fhvc];
