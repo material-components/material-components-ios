@@ -40,8 +40,8 @@
  chip is selected.
 
  This image view is typically used to show some icon that denotes the chip as selected, such as a
- tick. If imageView has no image then the chip will require resizing when selected or deselected to
- account for the changing visibility of selectedImageView.
+ check mark. If imageView has no image then the chip will require resizing when selected or
+ deselected to account for the changing visibility of selectedImageView.
  */
 @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;
 
