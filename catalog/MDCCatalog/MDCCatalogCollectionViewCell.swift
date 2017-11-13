@@ -21,7 +21,7 @@ import MaterialComponents.MaterialTypography
 class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   fileprivate struct Constants {
-    static let imagePadding: CGFloat = 50
+    static let imageWidthHeight: CGFloat = 80
   }
 
   var label = UILabel()
@@ -56,7 +56,10 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
       width: frame.width - xPadding * 2,
       height: label.frame.height
     )
-    tile.bounds = CGRect(x: 0, y: 0, width: tileWidthHeight(), height: tileWidthHeight())
+    tile.bounds = CGRect(x: 0,
+                         y: 0,
+                         width: Constants.imageWidthHeight,
+                         height: Constants.imageWidthHeight)
     tile.center = CGPoint(x: contentView.bounds.width / 2,
                           y: label.frame.minY / 2 )
   }
@@ -70,10 +73,5 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     label.text = componentName
     tile.componentName = componentName
     accessibilityIdentifier = componentName
-  }
-
-  func tileWidthHeight() -> CGFloat {
-    let widthHeight = frame.width - 2 * Constants.imagePadding
-    return widthHeight
   }
 }

@@ -250,16 +250,24 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-    let centerDividerWidth: CGFloat = 1
+    let dividerWidth: CGFloat = 1
     var safeInsets: CGFloat = 0
 #if swift(>=3.2)
     if #available(iOS 11, *) {
       safeInsets = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
     }
 #endif
-    var cellWidthHeight = (self.view.frame.size.width - 3 * centerDividerWidth - safeInsets) / 2
-    if self.view.frame.size.width > self.view.frame.size.height {
-      cellWidthHeight = (self.view.frame.size.width - 4 * centerDividerWidth - safeInsets) / 3
+    var cellWidthHeight: CGFloat
+
+    // iPhones have 2 columns in portrait and 3 in landscape
+    if UI_USER_INTERFACE_IDIOM() == .phone {
+      cellWidthHeight = (self.view.frame.size.width - 3 * dividerWidth - safeInsets) / 2
+      if self.view.frame.size.width > self.view.frame.size.height {
+        cellWidthHeight = (self.view.frame.size.width - 4 * dividerWidth - safeInsets) / 3
+      }
+    } else {
+      // iPads have 4 columns
+      cellWidthHeight = (self.view.frame.size.width - 5 * dividerWidth - safeInsets) / 4
     }
     return CGSize(width: cellWidthHeight, height: cellWidthHeight)
   }
