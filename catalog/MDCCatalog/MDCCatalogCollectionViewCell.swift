@@ -20,22 +20,25 @@ import MaterialComponents.MaterialTypography
 
 class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
+  fileprivate struct Constants {
+    static let imagePadding: CGFloat = 50
+  }
+
   var label = UILabel()
-  let pad = CGFloat(14)
+  let xPadding = CGFloat(14)
+  let yPadding = CGFloat(16)
   let tile = MDCCatalogTileView(frame: CGRect.zero)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    label.textColor = UIColor(white: 0.2, alpha: 1)
-    label.font = MDCTypography.captionFont()
-    self.addSubview(label)
-    self.clipsToBounds = true
-
-    tile.frame = self.bounds
-    tile.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    self.addSubview(tile)
+    label.textColor = UIColor(white: 0, alpha: MDCTypography.buttonFontOpacity())
+    label.font = MDCTypography.buttonFont()
+    contentView.addSubview(label)
+    contentView.clipsToBounds = true
+    contentView.addSubview(tile)
   }
 
+  @available(*, unavailable)
   required init(coder: NSCoder) {
     super.init(coder: coder)!
   }
@@ -48,11 +51,14 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     super.layoutSubviews()
     label.sizeToFit()
     label.frame = CGRect(
-      x: pad,
-      y: frame.height - label.frame.height - pad,
-      width: frame.width - pad * 2,
+      x: xPadding,
+      y: frame.height - label.frame.height - yPadding,
+      width: frame.width - xPadding * 2,
       height: label.frame.height
     )
+    tile.bounds = CGRect(x: 0, y: 0, width: tileWidthHeight(), height: tileWidthHeight())
+    tile.center = CGPoint(x: contentView.bounds.width / 2,
+                          y: label.frame.minY / 2 )
   }
 
   override func prepareForReuse() {
@@ -66,4 +72,8 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     accessibilityIdentifier = componentName
   }
 
+  func tileWidthHeight() -> CGFloat {
+    let widthHeight = frame.width - 2 * Constants.imagePadding
+    return widthHeight
+  }
 }

@@ -36,7 +36,6 @@ class MDCCatalogTileView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = UIColor.clear
-    imageView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     self.addSubview(imageView)
   }
 
@@ -45,7 +44,12 @@ class MDCCatalogTileView: UIView {
   }
 
   override func layoutSubviews() {
+    super.layoutSubviews()
+    guard !bounds.isEmpty else {
+      return
+    }
     imageView.image = getImage(componentNameString)
+    imageView.frame = bounds
   }
 
   func getImage(_ key: String) -> UIImage {
