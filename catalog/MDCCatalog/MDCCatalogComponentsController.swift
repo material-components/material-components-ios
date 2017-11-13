@@ -20,6 +20,7 @@ import MaterialCatalog
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
+import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialThemes
@@ -74,7 +75,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     super.init(collectionViewLayout: layout)
 
-    title = "Material Components"
+    self.title = "Material Components for iOS v\(MDCLibraryInfo.versionString)"
 
     addChildViewController(headerViewController)
 
@@ -120,7 +121,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let containerView = UIView(frame: headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    titleLabel.text = title!
+    titleLabel.text = self.title!
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
     titleLabel.font = UIFont.mdc_preferredFont(forMaterialTextStyle: .title)
     if #available(iOS 9.0, *) {
