@@ -22,6 +22,22 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
 
+static NSString *const MDCChipImageViewKey = @"MDCChipImageViewKey";
+static NSString *const MDCChipSelectedImageViewKey = @"MDCChipSelectedImageViewKey";
+static NSString *const MDCChipAccessoryViewKey = @"MDCChipAccessoryViewKey";
+static NSString *const MDCChipTitleLabelKey = @"MDCChipTitleLabelKey";
+static NSString *const MDCChipContentPaddingKey = @"MDCChipContentPaddingKey";
+static NSString *const MDCChipImagePaddingKey = @"MDCChipImagePaddingKey";
+static NSString *const MDCChipAccessoryPaddingKey = @"MDCChipAccessoryPaddingKey";
+static NSString *const MDCChipTitlePaddingKey = @"MDCChipTitlePaddingKey";
+static NSString *const MDCChipInkViewKey = @"MDCChipInkViewKey";
+static NSString *const MDCChipAdjustsFontForContentSizeKey = @"MDCChipAdjustsFontForContentSizeKey";
+static NSString *const MDCChipBackgroundColorsKey = @"MDCChipBackgroundColorsKey";
+static NSString *const MDCChipBorderColorsKey = @"MDCChipBorderColorsKey";
+static NSString *const MDCChipBorderWidthsKey = @"MDCChipBorderWidthsKey";
+static NSString *const MDCChipElevationsKey = @"MDCChipElevationsKey";
+static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
+
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
@@ -103,67 +119,97 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (instancetype)init {
-  if (self = [super initWithFrame:CGRectZero]) {
+  return [self initWithFrame:CGRectZero];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  if (self = [super initWithFrame:frame]) {
+    if (!_backgroundColors) {
+      // _backgroundColors may have already been initialized by setting the backgroundColor setter.
+      UIColor *normal = MDCColorFromRGB(MDCChipBackgroundColor);
+      UIColor *disabled = [normal lighten:MDCChipDisabledLightenPercent];
+      UIColor *selected = [normal darken:MDCChipSelectedDarkenPercent];
+
+      _backgroundColors = [NSMutableDictionary dictionary];
+      _backgroundColors[@(UIControlStateNormal)] = normal;
+      _backgroundColors[@(UIControlStateDisabled)] = disabled;
+      _backgroundColors[@(UIControlStateSelected)] = selected;
+    }
+    _borderColors = [NSMutableDictionary dictionary];
+    _borderWidths = [NSMutableDictionary dictionary];
+
+    _elevations = [NSMutableDictionary dictionary];
+    _elevations[@(UIControlStateNormal)] = @(0);
+    _elevations[@(UIControlStateHighlighted)] = @(MDCShadowElevationRaisedButtonPressed);
+    _elevations[@(UIControlStateHighlighted | UIControlStateSelected)] =
+    @(MDCShadowElevationRaisedButtonPressed);
+
+    UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1.0f];
+    _titleColors = [NSMutableDictionary dictionary];
+    _titleColors[@(UIControlStateNormal)] = titleColor;
+    _titleColors[@(UIControlStateDisabled)] =
+        [titleColor lighten:MDCChipTitleColorDisabledLightenPercent];
+
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.inkStyle = MDCInkStyleBounded;
+    _inkView.inkColor = [UIColor colorWithWhite:0 alpha:MDCChipInkAlpha];
+    [self addSubview:_inkView];
+
+    _imageView = [[UIImageView alloc] init];
+    [self addSubview:_imageView];
+
+    _selectedImageView = [[UIImageView alloc] init];
+    [self addSubview:_selectedImageView];
+
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.font = [MDCTypography buttonFont];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_titleLabel];
+
+    _contentPadding = MDCChipContentPadding;
+    _imagePadding = MDCChipImagePadding;
+    _titlePadding = MDCChipTitlePadding;
+    _accessoryPadding = MDCChipAccessoryPadding;
+
     [self commonMDCChipViewInit];
   }
   return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  if (self = [super initWithFrame:frame]) {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  if (self = [super initWithCoder:aDecoder]) {
+    _imageView = [aDecoder decodeObjectForKey:MDCChipImageViewKey];
+    _selectedImageView = [aDecoder decodeObjectForKey:MDCChipSelectedImageViewKey];
+    _titleLabel = [aDecoder decodeObjectForKey:MDCChipTitleLabelKey];
+    _accessoryView = [aDecoder decodeObjectForKey:MDCChipAccessoryViewKey];
+
+    _contentPadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipContentPaddingKey];
+    _imagePadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipImagePaddingKey];
+    _titlePadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipTitlePaddingKey];
+    _accessoryPadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipAccessoryPaddingKey];
+
+    _inkView = [aDecoder decodeObjectForKey:MDCChipInkViewKey];
+
+    _backgroundColors = [aDecoder decodeObjectForKey:MDCChipBackgroundColorsKey];
+    _borderColors = [aDecoder decodeObjectForKey:MDCChipBorderColorsKey];
+    _borderWidths = [aDecoder decodeObjectForKey:MDCChipBorderWidthsKey];
+    _elevations = [aDecoder decodeObjectForKey:MDCChipElevationsKey];
+    _titleColors = [aDecoder decodeObjectForKey:MDCChipTitleColorsKey];
+
+    [self addSubview:_inkView];
+    [self addSubview:_imageView];
+    [self addSubview:_selectedImageView];
+    [self addSubview:_titleLabel];
+
+    self.mdc_adjustsFontForContentSizeCategory =
+        [aDecoder decodeBoolForKey:MDCChipAdjustsFontForContentSizeKey];
+
     [self commonMDCChipViewInit];
   }
   return self;
 }
 
 - (void)commonMDCChipViewInit {
-  if (!_backgroundColors) {
-    // _backgroundColors may have already been initialized by setting the backgroundColor setter.
-    UIColor *normal = MDCColorFromRGB(MDCChipBackgroundColor);
-    UIColor *disabled = [normal lighten:MDCChipDisabledLightenPercent];
-    UIColor *selected = [normal darken:MDCChipSelectedDarkenPercent];
-
-    _backgroundColors = [NSMutableDictionary dictionary];
-    _backgroundColors[@(UIControlStateNormal)] = normal;
-    _backgroundColors[@(UIControlStateDisabled)] = disabled;
-    _backgroundColors[@(UIControlStateSelected)] = selected;
-  }
-  _borderColors = [NSMutableDictionary dictionary];
-  _borderWidths = [NSMutableDictionary dictionary];
-
-  _elevations = [NSMutableDictionary dictionary];
-  _elevations[@(UIControlStateNormal)] = @(0);
-  _elevations[@(UIControlStateHighlighted)] = @(MDCShadowElevationRaisedButtonPressed);
-  _elevations[@(UIControlStateHighlighted | UIControlStateSelected)] =
-      @(MDCShadowElevationRaisedButtonPressed);
-
-  UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1.0f];
-  _titleColors = [NSMutableDictionary dictionary];
-  _titleColors[@(UIControlStateNormal)] = titleColor;
-  _titleColors[@(UIControlStateDisabled)] =
-      [titleColor lighten:MDCChipTitleColorDisabledLightenPercent];
-
-  _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-  _inkView.inkStyle = MDCInkStyleBounded;
-  _inkView.inkColor = [UIColor colorWithWhite:0 alpha:MDCChipInkAlpha];
-  [self addSubview:_inkView];
-
-  _imageView = [[UIImageView alloc] init];
-  [self addSubview:_imageView];
-
-  _selectedImageView = [[UIImageView alloc] init];
-  [self addSubview:_selectedImageView];
-
-  _titleLabel = [[UILabel alloc] init];
-  _titleLabel.font = [MDCTypography buttonFont];
-  _titleLabel.textAlignment = NSTextAlignmentCenter;
-  [self addSubview:_titleLabel];
-
-  _contentPadding = MDCChipContentPadding;
-  _imagePadding = MDCChipImagePadding;
-  _titlePadding = MDCChipTitlePadding;
-  _accessoryPadding = MDCChipAccessoryPadding;
-
   [self updateBackgroundColor];
   self.layer.elevation = [self elevationForState:UIControlStateNormal];
 
@@ -176,6 +222,26 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self addTarget:self
            action:@selector(touchDragExit:forEvent:)
  forControlEvents:UIControlEventTouchDragExit];
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+
+  [aCoder encodeObject:_imageView forKey:MDCChipImageViewKey];
+  [aCoder encodeObject:_selectedImageView forKey:MDCChipSelectedImageViewKey];
+  [aCoder encodeObject:_titleLabel forKey:MDCChipTitleLabelKey];
+  [aCoder encodeObject:_accessoryView forKey:MDCChipAccessoryViewKey];
+  [aCoder encodeUIEdgeInsets:_contentPadding forKey:MDCChipContentPaddingKey];
+  [aCoder encodeUIEdgeInsets:_imagePadding forKey:MDCChipImagePaddingKey];
+  [aCoder encodeUIEdgeInsets:_titlePadding forKey:MDCChipTitlePaddingKey];
+  [aCoder encodeUIEdgeInsets:_accessoryPadding forKey:MDCChipTitlePaddingKey];
+  [aCoder encodeObject:_inkView forKey:MDCChipInkViewKey];
+  [aCoder encodeBool:_mdc_adjustsFontForContentSizeCategory forKey:MDCChipAdjustsFontForContentSizeKey];
+  [aCoder encodeObject:_backgroundColors forKey:MDCChipBackgroundColorsKey];
+  [aCoder encodeObject:_borderColors forKey:MDCChipBorderColorsKey];
+  [aCoder encodeObject:_borderWidths forKey:MDCChipBorderWidthsKey];
+  [aCoder encodeObject:_elevations forKey:MDCChipElevationsKey];
+  [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
 }
 
 - (void)dealloc {
