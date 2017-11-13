@@ -18,16 +18,9 @@
 
 #import "MaterialChips.h"
 
-#import "MDCChipView+Private.h"
+#import "private/MDCChipView+Private.h"
 
 @implementation MDCChipCollectionViewCell
-
-- (instancetype)init {
-  if (self = [super init]) {
-    [self commonMDCChipCollectionViewCellInit];
-  }
-  return self;
-}
 
 - (instancetype)initWithFrame:(CGRect)rect {
   if (self = [super initWithFrame:rect]) {
@@ -39,6 +32,8 @@
 - (void)setBounds:(CGRect)bounds {
   [super setBounds:bounds];
 
+  // We update selected state here in the event that the MDCChipView will resize upon selection.
+  // This way any layout changes on selection can be animated.
   _chipView.selected = self.selected;
 }
 
@@ -84,6 +79,8 @@
   [super setSelected:selected];
 
   if (self.alwaysAnimateCellResize && [_chipView willChangeSizeWithSelectedValue:selected]) {
+    // Since MDCChipView can resize when it is selected, if a resize will occur we need to delay our
+    // selected state update until our next layout.
     [self setNeedsLayout];
   } else {
     _chipView.selected = selected;
