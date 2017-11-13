@@ -177,7 +177,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                        attribute: .leading,
                        multiplier: 1,
                        constant: 0).isActive = true
-    
+
     NSLayoutConstraint(item: logo,
                        attribute: .width,
                        relatedBy: .equal,
