@@ -166,7 +166,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
     CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
     scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width,
-                                      self.frame.size.height - self.safeAreaInsets.top);
+                                      CGRectGetHeight(self.frame) - self.safeAreaInsets.top);
     self.sheet.scrollView.frame = scrollViewFrame;
   }
 #endif
