@@ -70,8 +70,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     addChildViewController(headerViewController)
 
-    self.headerViewController.headerView.maximumHeight = 108
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    headerViewController.headerView.maximumHeight = 128
+    headerViewController.headerView.minimumHeight = 56
 
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
@@ -113,8 +114,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     titleLabel.text = title!
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
+    titleLabel.font = UIFont.mdc_preferredFont(forMaterialTextStyle: .title)
     if #available(iOS 9.0, *) {
-        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
+        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFontWeightRegular)
     } else {
         let attribute: [String: UIFontDescriptorSymbolicTraits] =
             [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
