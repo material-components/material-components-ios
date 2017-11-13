@@ -103,7 +103,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (instancetype)init {
-  if (self = [super init]) {
+  if (self = [super initWithFrame:CGRectZero]) {
     [self commonMDCChipViewInit];
   }
   return self;
