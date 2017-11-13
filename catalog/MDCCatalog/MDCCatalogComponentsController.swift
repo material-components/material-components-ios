@@ -29,7 +29,8 @@ import UIKit
 
 class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
 
-  private struct Constants {
+  fileprivate struct Constants {
+    static let headerScrollThreshold: CGFloat = 50
     static let inset: CGFloat = 16
     static let logoTitleVerticalSpacing: CGFloat = 32
     static let logoWidthHeight: CGFloat = 40
@@ -378,6 +379,14 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       multiplier: 1.0,
       constant: height).isActive = true
   }
+
+  func adjustLogoForScrollView(_ scrollView: UIScrollView) {
+    let offset = scrollView.contentOffset.y
+    let inset = scrollView.contentInset.top
+    let relativeOffset = inset + offset
+
+    logo.alpha = 1 - (relativeOffset / Constants.headerScrollThreshold)
+  }
 }
 
 // UIScrollViewDelegate
@@ -386,6 +395,7 @@ extension MDCCatalogComponentsController {
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidScroll()
+      adjustLogoForScrollView(scrollView)
     }
   }
 
