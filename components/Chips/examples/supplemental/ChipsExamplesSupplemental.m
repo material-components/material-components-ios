@@ -78,8 +78,8 @@ static UIButton *DeleteButton() {
   return @[ @"Chips", @"Choice" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Use chips to choose from a set of items.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end
@@ -93,8 +93,8 @@ static UIButton *DeleteButton() {
   return @[ @"Chips", @"Collections" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Showcases chips in UICollectionViews";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 @end
@@ -105,8 +105,8 @@ static UIButton *DeleteButton() {
   return @[ @"Chips", @"Filter" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Use chips to filter a list.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 - (UIImage *)doneImage {
@@ -124,8 +124,8 @@ static UIButton *DeleteButton() {
   return @[ @"Chips", @"Sizing" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Show how chips behave with assigned sizes.";
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
 }
 
 - (UIImage *)faceImage {
@@ -151,10 +151,6 @@ static UIButton *DeleteButton() {
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Chips", @"Chips" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Chips represent complex entities, such as a contact, in small blocks.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
