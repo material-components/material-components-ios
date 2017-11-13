@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import CatalogByConvention
+import MaterialCatalog
 
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialIcons_ic_arrow_back
@@ -30,6 +31,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   private struct Constants {
     static let inset: CGFloat = 16
+    static let logoTitleVerticalSpacing: CGFloat = 32
+    static let logoWidthHeight: CGFloat = 40
     static let spacing: CGFloat = 1
   }
 
@@ -39,18 +42,22 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let controller = MDCInkTouchController(view: self.collectionView!)
     controller.delaysInkSpread = true
     controller.delegate = self
-
     return controller
   }()
 
   private lazy var logo: UIImageView = {
     let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.contentMode = .scaleAspectFit
     return imageView
   }()
 
   private let node: CBCNode
-  private lazy var titleLabel: UILabel = UILabel()
+  private lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel()
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    return titleLabel
+  }()
 
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
@@ -133,13 +140,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                                    bottom: Constants.inset,
                                    right: Constants.inset)
     let titleSize = titleLabel.sizeThatFits(containerView.bounds.size)
-    titleLabel.frame = CGRect(
-      x: titleInsets.left,
-      y: containerView.bounds.size.height - titleSize.height - titleInsets.bottom,
-      width: containerView.bounds.size.width,
-      height: titleSize.height)
-    titleLabel.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
     containerView.addSubview(titleLabel)
     constrainLabel(label: titleLabel,
@@ -149,6 +149,48 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     headerViewController.headerView.addSubview(containerView)
     headerViewController.headerView.forwardTouchEvents(for: containerView)
+
+    headerViewController.headerView.addSubview(logo)
+
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+    let image = MDCDrawImage(CGRect(x:0,
+                                    y:0,
+                                    width: Constants.logoWidthHeight,
+                                    height: Constants.logoWidthHeight),
+                             MDCCatalogDrawMDCLogoLight,
+                             appDelegate.colorScheme)
+    logo.image = image
+
+    NSLayoutConstraint(item: logo,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: titleLabel,
+                       attribute: .top,
+                       multiplier: 1,
+                       constant: -1 * Constants.logoTitleVerticalSpacing).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .leading,
+                       relatedBy: .equal,
+                       toItem: titleLabel,
+                       attribute: .leading,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: logo,
+                       attribute: .height,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: nil,
+                       attribute: .notAnAttribute,
+                       multiplier: 1,
+                       constant: Constants.logoWidthHeight).isActive = true
 
     headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     headerViewController.headerView.trackingScrollView = collectionView
