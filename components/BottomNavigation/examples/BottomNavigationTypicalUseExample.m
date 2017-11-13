@@ -45,7 +45,7 @@
 
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+  _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   _bottomNavBar.delegate = self;
   [self.view addSubview:_bottomNavBar];
 
