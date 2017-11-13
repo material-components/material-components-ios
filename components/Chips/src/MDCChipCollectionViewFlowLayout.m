@@ -57,7 +57,7 @@ static inline CGRect CGRectLeftAlign(CGRect rect) {
     [customLayoutAttributes addObject:attrs];
   }
 
-  return customLayoutAttributes;
+  return [customLayoutAttributes copy];
 }
 
 @end
