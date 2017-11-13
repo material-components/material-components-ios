@@ -68,7 +68,6 @@
       @"Cleanse",
       @"Small",
       @"Batch",
-      @"Salvia",
       @"Church-key",
       @"Biodiesel",
       @"Subway",
