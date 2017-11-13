@@ -16,11 +16,19 @@
 
 #import "MDCChipCollectionViewFlowLayout.h"
 
-static inline CGRect CGRectAlignToRect(CGRect rect, CGRect staticRect, CGFloat padding) {
+/* Left aligns one rect to another with a given padding */
+static inline CGRect CGRectLeftAlignToRect(CGRect rect, CGRect staticRect, CGFloat padding) {
   return CGRectMake(CGRectGetMaxX(staticRect) + padding,
                     CGRectGetMinY(rect),
-                    rect.size.width,
-                    rect.size.height);
+                    CGRectGetWidth(rect),
+                    CGRectGetHeight(rect));
+}
+
+static inline CGRect CGRectLeftAlign(CGRect rect) {
+  return CGRectMake(0,
+                    CGRectGetMinY(rect),
+                    CGRectGetWidth(rect),
+                    CGRectGetHeight(rect));
 }
 
 @implementation MDCChipCollectionViewFlowLayout
@@ -31,7 +39,8 @@ static inline CGRect CGRectAlignToRect(CGRect rect, CGRect staticRect, CGFloat p
       [NSMutableArray arrayWithCapacity:layoutAttributes.count];
 
   if (layoutAttributes.count > 0) {
-    UICollectionViewLayoutAttributes *attrs = layoutAttributes[0];
+    UICollectionViewLayoutAttributes *attrs = [layoutAttributes[0] copy];
+    attrs.frame = CGRectLeftAlign(attrs.frame);
     [customLayoutAttributes addObject:attrs];
   }
 
@@ -40,7 +49,10 @@ static inline CGRect CGRectAlignToRect(CGRect rect, CGRect staticRect, CGFloat p
     UICollectionViewLayoutAttributes *prevAttrs = customLayoutAttributes[i - 1];
 
     if (CGRectGetMinY(prevAttrs.frame) == CGRectGetMinY(attrs.frame)) {
-      attrs.frame = CGRectAlignToRect(attrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
+      attrs.frame =
+          CGRectLeftAlignToRect(attrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
+    } else {
+      attrs.frame = CGRectLeftAlign(attrs.frame);
     }
     [customLayoutAttributes addObject:attrs];
   }
