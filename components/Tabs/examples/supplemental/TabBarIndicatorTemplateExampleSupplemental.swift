@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,52 +14,34 @@
  limitations under the License.
  */
 
-// swiftlint:disable function_body_length
-// swiftlint:disable line_length
-
 import UIKit
 
 import MaterialComponents.MaterialButtons
 
 extension TabBarIndicatorTemplateExample {
 
-  func setupAlignmentButton() -> MDCRaisedButton {
-    let alignmentButton = MDCRaisedButton()
-
-    alignmentButton.setTitle("Change Alignment", for: .normal)
-    alignmentButton.setTitleColor(.white, for: .normal)
-
-    self.view.addSubview(alignmentButton)
-    alignmentButton.translatesAutoresizingMaskIntoConstraints = false
-
-    NSLayoutConstraint(item: alignmentButton,
-                       attribute: .centerX,
-                       relatedBy: .equal,
-                       toItem: self.view,
-                       attribute: .centerX,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: alignmentButton,
-                       attribute: .bottom,
-                       relatedBy: .equal,
-                       toItem: self.view,
-                       attribute: .bottom,
-                       multiplier: 1,
-                       constant: -40).isActive = true
-
-    return alignmentButton
+  func makeAlignmentButton() -> MDCRaisedButton {
+    let button = MDCRaisedButton()
+    button.setTitle("Change Alignment", for: .normal)
+    return button
   }
 
-  func setupAppBar() -> MDCAppBar {
+  func makeAppearanceButton() -> MDCRaisedButton {
+    let button = MDCRaisedButton()
+    button.setTitle("Change Appearance", for: .normal)
+    return button
+  }
+
+  func makeAppBar() -> MDCAppBar {
     let appBar = MDCAppBar()
 
     self.addChildViewController(appBar.headerViewController)
     appBar.navigationBar.backgroundColor = UIColor.white
-
     appBar.headerViewController.headerView.backgroundColor = UIColor.white
+
+    // Give the tab bar enough height to accomodate all possible item appearances.
     appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    appBar.headerViewController.headerView.minimumHeight = 56 + 72
-    appBar.headerViewController.headerView.tintColor = MDCPalette.blue.tint500
+    appBar.headerViewController.headerView.minimumHeight = 128
 
     appBar.headerStackView.bottomBar = self.tabBar
     appBar.headerStackView.setNeedsLayout()
@@ -68,8 +50,55 @@ extension TabBarIndicatorTemplateExample {
 
   func setupExampleViews() {
     view.backgroundColor = UIColor.white
-
     appBar.addSubviewsToParent()
+
+    // Set up buttons
+    alignmentButton.translatesAutoresizingMaskIntoConstraints = false
+    appearanceButton.translatesAutoresizingMaskIntoConstraints = false
+    self.view.addSubview(alignmentButton)
+    self.view.addSubview(appearanceButton)
+
+    // Buttons are laid out relative to the safe area, if available.
+    let alignmentGuide: Any
+    if #available(iOSApplicationExtension 11.0, *) {
+      alignmentGuide = view.safeAreaLayoutGuide
+    } else {
+      alignmentGuide = view
+    }
+
+    NSLayoutConstraint.activate([
+      // Center alignment button
+      NSLayoutConstraint(item: alignmentButton,
+                         attribute: .centerX,
+                         relatedBy: .equal,
+                         toItem: self.view,
+                         attribute: .centerX,
+                         multiplier: 1,
+                         constant: 0),
+      NSLayoutConstraint(item: alignmentButton,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: alignmentGuide,
+                         attribute: .bottom,
+                         multiplier: 1,
+                         constant: -40),
+
+      // Place appearance button above
+      NSLayoutConstraint(item: appearanceButton,
+                         attribute: .centerX,
+                         relatedBy: .equal,
+                         toItem: self.view,
+                         attribute: .centerX,
+                         multiplier: 1,
+                         constant: 0),
+      NSLayoutConstraint(item: appearanceButton,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: alignmentButton,
+                         attribute: .top,
+                         multiplier: 1,
+                         constant: -8),
+    ])
 
     self.title = "Custom Selection Indicator"
   }

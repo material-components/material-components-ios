@@ -33,32 +33,42 @@ class TabBarIndicatorTemplateExample: UIViewController {
     }
   }
 
-  lazy var alignmentButton: MDCRaisedButton = self.setupAlignmentButton()
+  var itemAppearance: MDCTabBarItemAppearance {
+    get {
+      return tabBar.itemAppearance
+    }
+    set {
+      tabBar.itemAppearance = newValue
 
-  lazy var appBar: MDCAppBar = self.setupAppBar()
+      // itemAppearance affects the height of the tab bar.
+      appBar.headerStackView.setNeedsLayout()
+    }
+  }
+
+  lazy var alignmentButton: MDCRaisedButton = self.makeAlignmentButton()
+  lazy var appearanceButton: MDCRaisedButton = self.makeAppearanceButton()
+  lazy var appBar: MDCAppBar = self.makeAppBar()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
     tabBar.alignment = .justified
 
+    let bundle = Bundle(for: TabBarIndicatorTemplateExample.self)
+    let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)
+    let star = UIImage.init(named: "TabBarDemo_ic_star", in: bundle, compatibleWith:nil)
     tabBar.items = [
-      UITabBarItem(title: "Fly", image: nil, tag:0),
-      UITabBarItem(title: "Sleep", image: nil, tag:0),
-      UITabBarItem(title: "Eat", image: nil, tag:0),
+      UITabBarItem(title: "Fly", image: info, tag:0),
+      UITabBarItem(title: "Sleep", image: star, tag:0),
+      UITabBarItem(title: "Eat", image: info, tag:0),
     ]
 
-    let blue = MDCPalette.blue.tint500
-    tabBar.tintColor = blue
-    tabBar.inkColor = blue.withAlphaComponent(0.15)
+    // Set lighter ink so the indicator animation is more visible.
+    tabBar.inkColor = UIColor.white.withAlphaComponent(0.15)
 
-    tabBar.barTintColor = UIColor.white
     tabBar.itemAppearance = .titles
-    tabBar.selectedItemTintColor = UIColor.black.withAlphaComponent(0.87)
-    tabBar.unselectedItemTintColor = UIColor.black.withAlphaComponent(0.38)
 
     // Configure custom indicator template
     tabBar.selectionIndicatorTemplate = IndicatorTemplate()
-
     return tabBar
   }()
 
@@ -68,9 +78,14 @@ class TabBarIndicatorTemplateExample: UIViewController {
 
     setupExampleViews()
 
-    alignmentButton.addTarget(self,
-                              action:#selector(changeAlignmentDidTouch(sender:)),
-                              for: .touchUpInside)
+    alignmentButton.addTarget(
+      self,
+      action:#selector(changeAlignmentDidTouch(sender:)),
+      for: .touchUpInside)
+    appearanceButton.addTarget(
+      self,
+      action: #selector(changeAppearance),
+      for: .touchUpInside)
   }
 
   @objc func changeAlignmentDidTouch(sender: UIButton) {
@@ -86,6 +101,20 @@ class TabBarIndicatorTemplateExample: UIViewController {
     }))
     sheet.addAction(UIAlertAction(title: "Selected Center", style: .default, handler: { _ in
       self.alignment = .centerSelected
+    }))
+    present(sheet, animated: true, completion:nil)
+  }
+
+  @objc func changeAppearance(fromSender sender: UIButton) {
+    let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    sheet.addAction(UIAlertAction(title: "Titles", style: .default, handler: { _ in
+      self.itemAppearance = .titles
+    }))
+    sheet.addAction(UIAlertAction(title: "Images", style: .default, handler: { _ in
+      self.itemAppearance = .images
+    }))
+    sheet.addAction(UIAlertAction(title: "Titled Images", style: .default, handler: { _ in
+      self.itemAppearance = .titledImages
     }))
     present(sheet, animated: true, completion:nil)
   }
