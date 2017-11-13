@@ -53,7 +53,7 @@ Before using Chips, you'll need to import them:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-import MaterialComponents
+import MaterialComponents.MaterialChips
 ```
 
 #### Objective-C
@@ -63,7 +63,7 @@ import MaterialComponents
 ```
 <!--</div>-->
 
-### Ink splash animation
+### Ink ripple animation
 Chips display animated ink splashes when the user presses the chip. Keep in mind this will appear on
 top of your 'highlighted' backgroundColor.
 
@@ -101,7 +101,6 @@ chips.
 #### Swift
 ``` swift
 let chipView = MDCChipView()
-chipView.customTitleColor = UIColor.gray
 chipView.title = "Tap me"
 chipView.setTitleColor(UIColor.red, for: .selected)
 chipView.sizeToFit()
