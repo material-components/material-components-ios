@@ -36,12 +36,12 @@ UIImage* _Nullable MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDC
 #pragma clang diagnostic ignored "-Wassign-enum"
 #pragma clang diagnostic ignored "-Wconversion"
 
-void MDCCatalogDrawMDCLogoDark(CGRect frame) {
+void MDCCatalogDrawMDCLogoDark(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* green = [UIColor colorWithRed: 0 green: 0.902 blue: 0.463 alpha: 1];
   UIColor* lightGreen = [UIColor colorWithRed: 0.698 green: 1 blue: 0.349 alpha: 1];
   UIColor* fillColor = [UIColor colorWithRed: 0.129 green: 0.129 blue: 0.129 alpha: 1];
 
-  CGRect logoDarkGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 2.37037 + 0.5), floor((frame.size.height - 1) * 2.37037 + 0.5));
+  CGRect logoDarkGroup = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame) + 1, floor((frame.size.width) * 1.00000 + 0.5), floor((frame.size.height - 1) * 1.00000 + 0.5));
   {
     UIBezierPath* squarePath = [UIBezierPath bezierPath];
     [squarePath moveToPoint: CGPointMake(CGRectGetMinX(logoDarkGroup) + 0.00000 * logoDarkGroup.size.width, CGRectGetMinY(logoDarkGroup) + 0.66667 * logoDarkGroup.size.height)];
@@ -54,8 +54,6 @@ void MDCCatalogDrawMDCLogoDark(CGRect frame) {
     [fillColor setFill];
     [squarePath fill];
 
-
-    //// Circle Drawing
     UIBezierPath* circlePath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(CGRectGetMinX(logoDarkGroup) + floor(logoDarkGroup.size.width * 0.33333 + 0.5), CGRectGetMinY(logoDarkGroup) + floor(logoDarkGroup.size.height * 0.33333 + 0.5), floor(logoDarkGroup.size.width * 1.00000 + 0.5) - floor(logoDarkGroup.size.width * 0.33333 + 0.5), floor(logoDarkGroup.size.height * 1.00000 + 0.5) - floor(logoDarkGroup.size.height * 0.33333 + 0.5))];
     [lightGreen setFill];
     [circlePath fill];
@@ -72,12 +70,12 @@ void MDCCatalogDrawMDCLogoDark(CGRect frame) {
   }
 }
 
-void MDCCatalogDrawMDCLogoLight(CGRect frame) {
+void MDCCatalogDrawMDCLogoLight(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* white = [UIColor whiteColor];
   UIColor* green = [UIColor colorWithRed: 0 green: 0.902 blue: 0.463 alpha: 1];
   UIColor* lightGreen = [UIColor colorWithRed: 0.698 green: 1 blue: 0.349 alpha: 1];
 
-  CGRect logoLightGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 2.37037 + 0.5), floor((frame.size.height - 1) * 2.37037 + 0.5));
+  CGRect logoLightGroup = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), floor((frame.size.width) * 1.00000 + 0.5), floor((frame.size.height) * 1.00000 + 0.5));
   {
     UIBezierPath* squarePath = [UIBezierPath bezierPath];
     [squarePath moveToPoint: CGPointMake(CGRectGetMinX(logoLightGroup) + 0.00000 * logoLightGroup.size.width, CGRectGetMinY(logoLightGroup) + 0.66667 * logoLightGroup.size.height)];

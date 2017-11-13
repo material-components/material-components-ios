@@ -25,8 +25,8 @@ typedef void (*MDCDrawFunc)(CGRect frame, NSObject<MDCColorScheme> *colorScheme)
 UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDCColorScheme> *colorScheme);
 
 /* Draw logo. */
-void MDCCatalogDrawMDCLogoDark(CGRect frame);
-void MDCCatalogDrawMDCLogoLight(CGRect frame);
+void MDCCatalogDrawMDCLogoDark(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+void MDCCatalogDrawMDCLogoLight(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 
 /* Draw various tiles. */
 void MDCCatalogDrawActivityIndicatorTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
