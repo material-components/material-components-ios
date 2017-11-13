@@ -253,7 +253,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 // Returns the maximum allowable height that the sheet can be dragged to.
 - (CGFloat)maximumSheetHeight {
-  CGFloat boundsHeight = self.bounds.size.height;
+  CGFloat boundsHeight = CGRectGetHeight(self.bounds);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     boundsHeight -= self.safeAreaInsets.top;
