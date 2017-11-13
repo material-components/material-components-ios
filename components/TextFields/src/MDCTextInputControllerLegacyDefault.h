@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputController.h"
+#import "MDCTextInputControllerFloatingPlaceholder.h"
 
 /**
  Material Design compliant text field from 2016. The logic for 'automagic' error states changes:

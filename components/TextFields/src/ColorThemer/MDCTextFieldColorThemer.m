@@ -14,24 +14,43 @@
  limitations under the License.
  */
 
+#import <objc/runtime.h>
+
 #import "MDCTextFieldColorThemer.h"
+
+#import "MaterialThemes.h"
+#import "MDCTextInputController.h"
+#import "MDCTextInputControllerFloatingPlaceholder.h"
 
 @implementation MDCTextFieldColorThemer
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toTextInputController:(NSObject<MDCTextInputController> *)textInputController {
   textInputController.activeColor = colorScheme.primaryColor;
+
+  if ([textInputController conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+    id <MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
+        (id <MDCTextInputControllerFloatingPlaceholder>)textInputController;
+
+    if ([textInputControllerFloatingPlaceholder respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
+      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor =
+          colorScheme.primaryColor;
+    }
+  }
 }
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-    toTextInputControllerDefault:(MDCTextInputControllerLegacyDefault *)textInputControllerDefault {
-  textInputControllerDefault.floatingPlaceholderNormalColor = colorScheme.primaryColor;
-  textInputControllerDefault.activeColor = colorScheme.primaryColor;
-}
+toAllTextInputControllersOfClass:(Class <MDCTextInputController>)textInputControllerClass {
 
-+ (void)applyColorSchemeToAllTextInputControllerDefault:(NSObject<MDCColorScheme> *)colorScheme {
-  MDCTextInputControllerLegacyDefault.floatingPlaceholderNormalColorDefault = colorScheme.primaryColor;
-  MDCTextInputControllerLegacyDefault.activeColorDefault = colorScheme.primaryColor;
+  if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
+    [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
+  }
+
+  if ([textInputControllerClass conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+    Class <MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
+        (Class <MDCTextInputControllerFloatingPlaceholder>) textInputControllerClass;
+    [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderNormalColorDefault: colorScheme.primaryColor];
+  }
 }
 
 @end

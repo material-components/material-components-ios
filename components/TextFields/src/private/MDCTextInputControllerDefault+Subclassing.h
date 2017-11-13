@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialTextFields.h"
+#import "MDCTextInputControllerDefault.h"
 
 @interface MDCTextInputControllerDefault (Subclassing)
 
