@@ -381,7 +381,7 @@ func barButtonDidTap(sender: UIBarButtonItem) {
   navigationItem.rightBarButtonItem = UIBarButtonItem(title: buttonTitle,
                                                       style: .plain,
                                                       target: self,
-                                                      action: #selector(ViewController.barButtonDidTap))
+                                                      action: #selector(ViewController.barButtonDidTap(_:)))
 }
 ```
 
@@ -410,7 +410,7 @@ override func viewDidLoad() {
   navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit",
                                                       style: .plain,
                                                       target: self,
-                                                      action: #selector(ViewController.barButtonDidTap))
+                                                      action: #selector(ViewController.barButtonDidTap(_:)))
 }
 ```
 
