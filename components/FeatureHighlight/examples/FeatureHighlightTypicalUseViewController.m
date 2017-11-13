@@ -21,13 +21,15 @@
 @implementation FeatureHighlightTypicalUseViewController
 
 - (void)didTapButton:(id)sender {
-  MDCFeatureHighlightViewController *vc =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
-  vc.mdc_adjustsFontForContentSizeCategory = YES;
+  if ([sender isEqual:self.button]) {
+    MDCFeatureHighlightViewController *vc =
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
+    vc.mdc_adjustsFontForContentSizeCategory = YES;
 
-  vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
-  vc.bodyText = @"This is the description of the feature highlight view controller.";
-  [self presentViewController:vc animated:YES completion:nil];
+    vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
+    vc.bodyText = @"This is the description of the feature highlight view controller.";
+    [self presentViewController:vc animated:YES completion:nil];
+  }
 }
 
 @end

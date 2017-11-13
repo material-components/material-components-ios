@@ -22,25 +22,27 @@
 @implementation FeatureHighlightShownViewExample
 
 - (void)didTapButton:(id)sender {
-  MDCFloatingButton *fab =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
-  [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
-  [fab sizeToFit];
-  fab.backgroundColor = UIColor.orangeColor;
-  fab.center = _button.center;
+  if ([sender isEqual:self.button]) {
+    MDCFloatingButton *fab =
+        [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+    [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+    [fab sizeToFit];
+    fab.backgroundColor = UIColor.orangeColor;
+    fab.center = _button.center;
 
-  MDCFeatureHighlightViewController *vc =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
-                                                             andShowView:fab
-                                                              completion:^(BOOL accepted) {
-                                                                if (accepted) {
-                                                                  [self fabDidTap:fab];
-                                                                }
-                                                              }];
+    MDCFeatureHighlightViewController *vc =
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
+                                                               andShowView:fab
+                                                                completion:^(BOOL accepted) {
+                                                                  if (accepted) {
+                                                                    [self fabDidTap:fab];
+                                                                  }
+                                                                }];
 
-  vc.titleText = @"Shown views can be interactive";
-  vc.bodyText = @"The shown button has custom tap animations.";
-  [self presentViewController:vc animated:YES completion:nil];
+    vc.titleText = @"Shown views can be interactive";
+    vc.bodyText = @"The shown button has custom tap animations.";
+    [self presentViewController:vc animated:YES completion:nil];
+  }
 }
 
 - (void)fabDidTap:(MDCFloatingButton *)sender {
