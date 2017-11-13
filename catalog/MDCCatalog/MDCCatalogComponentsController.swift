@@ -60,7 +60,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     super.init(collectionViewLayout: layout)
 
-    self.title = "Material Design Components"
+    title = "Material Components"
 
     self.addChildViewController(self.headerViewController)
 
@@ -105,7 +105,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let containerView = UIView(frame: self.headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    titleLabel.text = self.title!.uppercased()
+    titleLabel.text = title!
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
     if #available(iOS 9.0, *) {
         titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
