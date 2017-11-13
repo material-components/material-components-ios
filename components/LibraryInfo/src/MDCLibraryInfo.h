@@ -14,9 +14,18 @@
  limitations under the License.
  */
 
+#ifndef MDC_SUBCLASSING_RESTRICTED
+#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
+#define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
+#else
+#define MDC_SUBCLASSING_RESTRICTED
+#endif
+#endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
+
 /**
  Information about the Material Components library.
  */
+MDC_SUBCLASSING_RESTRICTED
 @interface MDCLibraryInfo: NSObject
 
 /**
@@ -26,7 +35,7 @@
  - X is the major version number of the library.
  - Y is the minor version number of the library.
  - Z is the patch version number of the library.
-*/
+ */
 @property(class, nonnull, readonly) NSString *versionString;
 
 @end
