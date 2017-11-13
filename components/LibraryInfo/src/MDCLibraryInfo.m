@@ -19,7 +19,7 @@
 @implementation MDCLibraryInfo
 
 + (NSString *)versionString {
-  NSBundle *bundle = [NSBundle bundleForClass:self.class];
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCLibraryInfo class]];
   NSString *value = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 
   if (value) {

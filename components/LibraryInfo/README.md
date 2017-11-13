@@ -2,24 +2,11 @@
 title: "Library Info"
 layout: detail
 section: components
-excerpt: "LibraryInfo contains programmtic access to information about the Material Components library."
+excerpt: "LibraryInfo contains programmatic access to information about the Material Components library."
 iconId: misc
 path: /catalog/library-info/
 api_doc_root: true
 -->
-
-# Library information
-
-## Design & API Documentation
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar Structure</a></li>
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">API: MDCAppBar</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">API: MDCAppBarContainerViewController</a></li>
-</ul>
-
-- - -
 
 ## Installation
 
@@ -56,7 +43,7 @@ this binary.
 
 ### Importing
 
-Before using App Bar, you'll need to import it:
+Before using LibraryInfo, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
