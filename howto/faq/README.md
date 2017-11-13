@@ -45,12 +45,12 @@ We learn about upcoming API breakages in UIKit as early as everyone else through
 
 ### How large is the upload size of the library?
 
-The size of different components vary from a just a few kibibytes (KiB) to a
-few hundred kibibytes.  If you import all the components, the size of your app
-will increase by less than 3 mebibytes. However, you don't have to add the
+The size of different components vary from a just a few to a few hundred
+kilobytes.  If you import all the components, the size of your app
+will increase by less than 3 megabytes. However, you don't have to add the
 entire library!  You can add as many or as few of the 25+ individual
 components as you like. The average (arithmetic mean) of all public components
-is around 200 KiB.
+is a little over 200 KB (about 200 KiB).
 
 ### Can we use Material Components for iOS with storyboards?
 
