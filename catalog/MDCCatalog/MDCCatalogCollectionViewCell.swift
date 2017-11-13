@@ -22,12 +22,12 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   fileprivate struct Constants {
     static let imageWidthHeight: CGFloat = 80
+    static let xPadding: CGFloat = 14
+    static let yPadding: CGFloat = 16
   }
 
-  var label = UILabel()
-  let xPadding = CGFloat(14)
-  let yPadding = CGFloat(16)
-  let tile = MDCCatalogTileView(frame: CGRect.zero)
+  private lazy var label = UILabel()
+  private lazy var tile = MDCCatalogTileView(frame: CGRect.zero)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -51,9 +51,9 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     super.layoutSubviews()
     label.sizeToFit()
     label.frame = CGRect(
-      x: xPadding,
-      y: frame.height - label.frame.height - yPadding,
-      width: frame.width - xPadding * 2,
+      x: Constants.xPadding,
+      y: frame.height - label.frame.height - Constants.yPadding,
+      width: frame.width - Constants.xPadding * 2,
       height: label.frame.height
     )
     tile.bounds = CGRect(x: 0,

@@ -20,7 +20,7 @@ import MaterialCatalog
 
 class MDCCatalogTileView: UIView {
 
-  fileprivate var componentNameString = "Misc"
+  private var componentNameString = "Misc"
   var componentName: String {
     get {
       return componentNameString
@@ -30,8 +30,8 @@ class MDCCatalogTileView: UIView {
       imageView.image = getImage(componentNameString)
     }
   }
-  let imageView = UIImageView()
-  let imageCache = NSCache<AnyObject, UIImage>()
+  private lazy var imageView = UIImageView()
+  private let imageCache = NSCache<AnyObject, UIImage>()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
