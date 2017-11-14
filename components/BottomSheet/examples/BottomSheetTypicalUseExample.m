@@ -24,7 +24,7 @@
 
 - (void)presentBottomSheet {
   BottomSheetDummyCollectionViewController *viewController =
-      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:100];
+      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
   viewController.preferredContentSize = CGSizeMake(500, 200);
 
   MDCBottomSheetController *bottomSheet =
