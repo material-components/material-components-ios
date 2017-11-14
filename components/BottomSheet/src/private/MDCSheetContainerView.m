@@ -357,11 +357,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   if ([self canExtend]) {
     CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
     if (currentSheetHeight >= self.preferredSheetHeight) {
-      if (velocity.y >= 2000) { // Hard toss to close.
-        targetState = MDCSheetStateClosed;
-      } else {
-        targetState = (velocity.y >= 0 ? MDCSheetStatePreferred : MDCSheetStateExtended);
-      }
+      targetState = (velocity.y >= 0 ? MDCSheetStatePreferred : MDCSheetStateExtended);
     } else {
       targetState = (velocity.y >= 0 ? MDCSheetStateClosed : MDCSheetStatePreferred);
     }
