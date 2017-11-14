@@ -429,6 +429,7 @@ Pod::Spec.new do |mdc|
       spec.public_header_files = "components/#{component.base_name}/src/*.h"
       spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
+      spec.dependency "MaterialComponents/Palettes"
       spec.dependency "MaterialComponents/private/ThumbTrack"
     end
     component.subspec "ColorThemer" do |spec|
