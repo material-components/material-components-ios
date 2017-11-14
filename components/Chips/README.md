@@ -84,7 +84,8 @@ in action.
 There are 4 `padding` properties which control how a chip is laid out. One for each of the chip's
 subviews (`imageView` and `selectedImageView` share one padding property), and one which wraps all
 the others (`contentPadding`). This is useful so that you can set each of the padding properties to
-ensure your chips look correct whether or not they have an image and/or accessory view.
+ensure your chips look correct whether or not they have an image and/or accessory view. The chip
+uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
 ### Collections of Chips
 It is easiest to show large groups of Chips by containing them in a UICollectionView. Use
