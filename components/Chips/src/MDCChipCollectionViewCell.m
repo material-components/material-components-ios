@@ -41,7 +41,7 @@
   [super layoutSubviews];
 
   BOOL animated = NO;
-  if (self.alwaysAnimateCellResize) {
+  if (self.alwaysAnimateResize) {
     BOOL isFrameNonzero = !CGRectIsEmpty(_chipView.frame) && !CGRectIsEmpty(self.bounds);
     BOOL isFrameDifferent = !CGRectEqualToRect(_chipView.frame, self.bounds);
 
@@ -78,7 +78,7 @@
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
 
-  if (self.alwaysAnimateCellResize && [_chipView willChangeSizeWithSelectedValue:selected]) {
+  if (self.alwaysAnimateResize && [_chipView willChangeSizeWithSelectedValue:selected]) {
     // Since MDCChipView can resize when it is selected, if a resize will occur we need to delay our
     // selected state update until our next layout.
     [self setNeedsLayout];

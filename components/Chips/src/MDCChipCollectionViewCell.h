@@ -36,7 +36,7 @@
  Set this to YES to animate chip view when it resizes. If the chip view changes size upon selection
  this should be set to YES.
  */
-@property(nonatomic, assign) BOOL alwaysAnimateCellResize;
+@property(nonatomic, assign) BOOL alwaysAnimateResize;
 
 /*
  Creates an MDCChipView for use in the collection view cell.

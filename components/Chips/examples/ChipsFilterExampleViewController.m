@@ -61,7 +61,7 @@
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   cell.chipView.selectedImageView.image = [self doneImage];
-  cell.alwaysAnimateCellResize = YES;
+  cell.alwaysAnimateResize = YES;
   return cell;
 }
 

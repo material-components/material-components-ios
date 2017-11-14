@@ -65,7 +65,7 @@
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  cell.alwaysAnimateCellResize = YES;
+  cell.alwaysAnimateResize = YES;
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
