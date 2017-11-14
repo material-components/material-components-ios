@@ -23,7 +23,7 @@
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color and when in active state, it will be colored with the active color.
 
- Only relevent when floatingEnabled = true.
+ Only relevent when floatingEnabled is true.
 
  Default is floatingPlaceholderNormalColorDefault.
  */
@@ -45,7 +45,7 @@
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
  as a value from 0.0 to 1.0. Only relevent when floatingEnabled = true.
 
- If null, the floatingPlaceholderScale is @(floatingPlaceholderScaleDefault).
+ If nil, the floatingPlaceholderScale is @(floatingPlaceholderScaleDefault).
  */
 @property(nonatomic, null_resettable, strong) NSNumber *floatingPlaceholderScale;
 
