@@ -8,7 +8,6 @@ target "MDCCatalog" do
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
-  pod 'MotionTransitioning', :path => '../../odeon/motion-transitioning-objc/'
 
   use_frameworks!
 end
