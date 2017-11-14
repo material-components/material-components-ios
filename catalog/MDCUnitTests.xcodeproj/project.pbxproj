@@ -172,7 +172,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F9D78476FD8A80F052AA9626 /* [CP] Embed Pods Frameworks */ = {
@@ -181,7 +181,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests-frameworks.sh",
+				"${SRCROOT}/../Pods/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CatalogByConvention/CatalogByConvention.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
@@ -206,7 +206,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

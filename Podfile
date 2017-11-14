@@ -4,21 +4,21 @@ project 'MDCCatalog.xcodeproj'
 target "MDCCatalog" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
-  pod 'MaterialComponentsExamples', :path => '../'
-  pod 'MaterialComponents', :path => '../'
+  pod 'MaterialComponentsExamples', :path => './'
+  pod 'MaterialComponents', :path => './'
   pod 'CatalogByConvention'
-  pod 'MaterialCatalog', :path => 'MaterialCatalog/'
+  pod 'MaterialCatalog', :path => 'catalog/MaterialCatalog/'
 
   use_frameworks!
 end
 
 target "MDCUnitTests" do
   platform :ios, '8.0'
-  project 'MDCUnitTests.xcodeproj'
-  pod 'MaterialComponentsUnitTests', :path => '../'
-  pod 'MaterialComponents', :path => '../'
+  project 'catalog/MDCUnitTests.xcodeproj'
+  pod 'MaterialComponentsUnitTests', :path => './'
+  pod 'MaterialComponents', :path => './'
   pod 'CatalogByConvention'
-  pod 'MaterialCatalog', :path => 'MaterialCatalog/'
+  pod 'MaterialCatalog', :path => 'catalog/MaterialCatalog/'
 
   use_frameworks!
 end
@@ -26,10 +26,10 @@ end
 target "MDCActionExtension" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
-  pod 'MaterialComponentsExamples', :path => '../'
-  pod 'MaterialComponents', :path => '../'
+  pod 'MaterialComponentsExamples', :path => './'
+  pod 'MaterialComponents', :path => './'
   pod 'CatalogByConvention'
-  pod 'MaterialCatalog', :path => 'MaterialCatalog/'
+  pod 'MaterialCatalog', :path => 'catalog/MaterialCatalog/'
 
   use_frameworks!
 end
@@ -41,10 +41,10 @@ SCHEME_FILE = 'MDCEarlGreyTests.xcscheme'
 
 target TEST_TARGET do
   platform :ios, '8.0'
-  project PROJECT_NAME
+  project 'MDCCatalog'
   inherit! :search_paths
   pod 'EarlGrey', '<2'
-  pod 'MaterialComponentsEarlGreyTests', :path => '../'
+  pod 'MaterialComponentsEarlGreyTests', :path => './'
 
   use_frameworks!
 end
@@ -65,13 +65,13 @@ post_install do |installer|
   # https://pewpewthespells.com/blog/xcconfig_guide.html
   mdc_xcconfigs.each do |mdc_xcconfig|
     new_xcconfig = File.read(mdc_xcconfig)
-    new_xcconfig << "\n#include \"../../../MaterialComponentsWarnings.xcconfig\""
+    new_xcconfig << "\n#include \"../../../catalog/MaterialComponentsWarnings.xcconfig\""
     File.write(mdc_xcconfig, new_xcconfig)
   end
 
   # EarlGrey configuration
-  earl_grey_dir = "#{File.dirname(__FILE__)}/third_party/EarlGrey"
+  earl_grey_dir = "#{File.dirname(__FILE__)}/catalog/third_party/EarlGrey"
   `git submodule update --init #{earl_grey_dir}`
-  load "#{earl_grey_dir}/gem/lib/earlgrey/configure_earlgrey.rb"
+  load "#{earl_grey_dir}/gem/lib/earlgrey/configure_earlgrey.rb"  
   configure_for_earlgrey(installer, PROJECT_NAME, TEST_TARGET, SCHEME_FILE)
 end

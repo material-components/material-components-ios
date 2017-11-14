@@ -31,10 +31,10 @@ Our [catalog](catalog/) showcases Material Components. You can use the `pod try`
 pod try MaterialComponents
 ```
 
-In case you have already checked out the repo, run the following command:
+In case you have already checked out the repo, run the following command from the root of the repo:
 
 ``` bash
-pod install --project-directory=catalog/
+pod install
 ```
 
 If you want to take a look at the implementation of the components, you can find the code inside the `Development Pods` folder.
