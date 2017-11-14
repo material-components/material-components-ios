@@ -39,8 +39,14 @@
   }
 }
 
+// TODO: (larche) Drop this if defined and the pragmas when we drop Xcode 8 support.
+// This is to silence a warning that doesn't appear in Xcode 9 when you use Class as an object.
+#if !defined(__IPHONE_11_0)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-method-access"
+#endif
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+  toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
     [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
   }
@@ -53,5 +59,8 @@
         setFloatingPlaceholderNormalColorDefault:colorScheme.primaryColor];
   }
 }
+#if !defined(__IPHONE_11_0)
+#pragma clang diagnostic pop
+#endif
 
 @end
