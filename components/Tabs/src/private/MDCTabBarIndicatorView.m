@@ -34,11 +34,15 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    // Fill the indicator with the shape.
-    _shapeView = [[MDCTabBarIndicatorShapeView alloc] initWithFrame:self.bounds];
-    _shapeView.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self addSubview:_shapeView];
+    [self commonMDCTabBarIndicatorViewInit];
+  }
+  return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCTabBarIndicatorViewInit];
   }
   return self;
 }
@@ -47,6 +51,16 @@
 
 - (void)applySelectionIndicatorAttributes:(MDCTabBarIndicatorAttributes *)attributes {
   _shapeView.path = attributes.path;
+}
+
+#pragma mark - Private
+
+- (void)commonMDCTabBarIndicatorViewInit {
+  // Fill the indicator with the shape.
+  _shapeView = [[MDCTabBarIndicatorShapeView alloc] initWithFrame:self.bounds];
+  _shapeView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self addSubview:_shapeView];
 }
 
 @end
