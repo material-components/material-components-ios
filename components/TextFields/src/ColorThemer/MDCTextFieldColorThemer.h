@@ -25,8 +25,8 @@
 /**
  Applies a color scheme to theme MDCTextField in MDCTextInputController.
 
- Performs introspection to set properties of known implementations of MDCTextInputControllerDefault
- like .floatingPlaceholderNormalColor.
+ Performs introspection to determine if class passed conforms to
+ MDCTextInputControllerFloatingPlaceholder to set properties like .floatingPlaceholderNormalColor.
 
  @param colorScheme The color scheme to apply.
  @param textInputController A MDCTextInputController instance to apply a color scheme.
@@ -38,8 +38,9 @@
  Applies a color scheme to MDCTextField for all instances of the class
  using the default color class properties.
 
- Performs introspection to set properties of passed classes conforming to
- MDCTextInputControllerDefault like .floatingPlaceholderNormalColorDefault.
+ Performs introspection to determine if class passed conforms to
+ MDCTextInputControllerFloatingPlaceholder to set properties like
+ .floatingPlaceholderNormalColorDefault.
 
  @param colorScheme The color scheme to apply.
  @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
