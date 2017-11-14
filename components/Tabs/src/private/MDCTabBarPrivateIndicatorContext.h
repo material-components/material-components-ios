@@ -19,7 +19,7 @@
 #import "MDCTabBarIndicatorContext.h"
 
 /// Concrete implementation of a tab indicator context.
-@interface MDCTabBarIndicatorContext : NSObject <MDCTabBarIndicatorContext>
+@interface MDCTabBarPrivateIndicatorContext : NSObject <MDCTabBarIndicatorContext>
 
 - (null_unspecified instancetype)init NS_UNAVAILABLE;
 

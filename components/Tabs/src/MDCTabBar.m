@@ -96,13 +96,13 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 #pragma mark - Initialization
 
 + (void)initialize {
-  [[[self class] appearance] setSelectedItemTintColor:[UIColor whiteColor]];
-  [[[self class] appearance] setUnselectedItemTintColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
-  [[[self class] appearance] setInkColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
-  [[[self class] appearance] setBarTintColor:nil];
+  [MDCTabBar appearance].selectedItemTintColor = [UIColor whiteColor];
+  [MDCTabBar appearance].unselectedItemTintColor = [UIColor colorWithWhite:1.0 alpha:0.7f];
+  [MDCTabBar appearance].inkColor = [UIColor colorWithWhite:1.0 alpha:0.7f];
+  [MDCTabBar appearance].barTintColor = nil;
 
   id<MDCTabBarIndicatorTemplate> template = [[MDCTabBarUnderlineIndicatorTemplate alloc] init];
-  [[[self class] appearance] setSelectionIndicatorTemplate:template];
+  [MDCTabBar appearance].selectionIndicatorTemplate = template;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -190,7 +190,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
-  [_itemBar setItems:items];
+  _itemBar.items = items;
 }
 
 - (UITabBarItem *)selectedItem {
@@ -198,7 +198,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
-  [_itemBar setSelectedItem:selectedItem];
+  _itemBar.selectedItem = selectedItem;
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem animated:(BOOL)animated {

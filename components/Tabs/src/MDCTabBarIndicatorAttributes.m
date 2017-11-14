@@ -39,7 +39,7 @@
 
   MDCTabBarIndicatorAttributes *otherAttributes = object;
 
-  if ((_path != otherAttributes.path) && ![_path isEqual:otherAttributes]) {
+  if ((_path != otherAttributes.path) && ![_path isEqual:otherAttributes.path]) {
     return NO;
   }
 

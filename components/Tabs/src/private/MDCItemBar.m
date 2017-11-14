@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 #import "MDCItemBar.h"
 
 #import "MDCItemBarCell.h"
-#import "MDCTabBarIndicatorView.h"
 #import "MDCItemBarStyle.h"
 #import "MDCTabBarIndicatorAttributes.h"
-#import "MDCTabBarIndicatorContext+Private.h"
 #import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarIndicatorView.h"
+#import "MDCTabBarPrivateIndicatorContext.h"
 #import "MDFInternationalization.h"
 #import "MaterialAnimationTiming.h"
 
@@ -281,7 +281,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   const CGRect bounds = self.bounds;
 
   _collectionView.frame = bounds;
-  [_collectionView sendSubviewToBack:_selectionIndicator];
 
   // Update collection metrics if the size has changed.
   if (!CGSizeEqualToSize(bounds.size, _lastSize) ||
@@ -290,10 +289,14 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
     // Ensure selected item is aligned properly on resize, forcing the new layout to take effect.
     [_collectionView layoutIfNeeded];
+
     [self selectItemAtIndex:[self indexForItem:_selectedItem] animated:NO];
   }
   _lastSize = bounds.size;
   _lastAdjustedCollectionViewWidth = [self adjustedCollectionViewWidth];
+
+  // The selection indicator must be behind all cells, regardless of the collection view's layout.
+  [_collectionView sendSubviewToBack:_selectionIndicator];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -598,10 +601,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Construct a context object describing the selected tab.
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
-  MDCTabBarIndicatorContext *context =
-      [[MDCTabBarIndicatorContext alloc] initWithItem:item
-                                               bounds:selectionIndicatorBounds
-                                         contentFrame:contentFrame];
+  MDCTabBarPrivateIndicatorContext *context =
+      [[MDCTabBarPrivateIndicatorContext alloc] initWithItem:item
+                                                      bounds:selectionIndicatorBounds
+                                                contentFrame:contentFrame];
 
   // Ask the template for attributes.
   id<MDCTabBarIndicatorTemplate> template = _style.selectionIndicatorTemplate;

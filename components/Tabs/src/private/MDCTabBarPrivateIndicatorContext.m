@@ -16,9 +16,9 @@
 
 #import "MDCTabBarIndicatorContext.h"
 
-#import "MDCTabBarIndicatorContext+Private.h"
+#import "MDCTabBarPrivateIndicatorContext.h"
 
-@implementation MDCTabBarIndicatorContext
+@implementation MDCTabBarPrivateIndicatorContext
 @synthesize bounds = _bounds;
 @synthesize contentFrame = _contentFrame;
 @synthesize item = _item;
@@ -50,7 +50,7 @@
     return NO;
   }
 
-  MDCTabBarIndicatorContext *otherContext = object;
+  MDCTabBarPrivateIndicatorContext *otherContext = object;
 
   if ((_item != otherContext.item) && ![_item isEqual:otherContext.item]) {
     return NO;
