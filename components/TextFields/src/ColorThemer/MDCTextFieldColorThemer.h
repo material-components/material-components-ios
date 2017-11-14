@@ -45,5 +45,5 @@
  @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
  */
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-toAllTextInputControllersOfClass:(Class <MDCTextInputController>)textInputControllerClass NS_SWIFT_NAME(apply(colorScheme: toAllControllers ofClass:)); 
+toAllTextInputControllersOfClass:(Class <MDCTextInputController>)textInputControllerClass NS_SWIFT_NAME( apply(_:toAllControllersOfClass:) ); 
 @end

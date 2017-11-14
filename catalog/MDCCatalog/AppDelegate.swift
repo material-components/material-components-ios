@@ -78,11 +78,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
 
-//    MDCTextFieldColorThemer.apply(colorScheme, toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
-//    [MDCTextFieldColorThemer applyColorScheme:colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
-//    [MDCTextFieldColorThemer applyColorScheme:colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerFilled class]];
-//    [MDCTextFieldColorThemer applyColorScheme:colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerOutlined class]];
-//    [MDCTextFieldColorThemer applyColorScheme:colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerOutlinedTextArea class]];
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerLegacyDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerFilled.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlined.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlinedTextArea.self)
 
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor

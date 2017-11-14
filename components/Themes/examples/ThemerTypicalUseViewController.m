@@ -51,6 +51,7 @@
                                 toProgressView:[MDCProgressView appearance]];
   [MDCSliderColorThemer applyColorScheme:self.colorScheme toSlider:[MDCSlider appearance]];
   [MDCTabBarColorThemer applyColorScheme:self.colorScheme toTabBar:[MDCTabBar appearance]];
+  
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerFilled class]];
