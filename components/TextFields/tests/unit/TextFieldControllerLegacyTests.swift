@@ -19,6 +19,8 @@
 
 import XCTest
 import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialMath
+import MaterialComponents.MaterialPalettes
 
 class TextFieldControllerDefaultLegacyTests: XCTestCase {
   func testCopyingLegacyDefault() {
