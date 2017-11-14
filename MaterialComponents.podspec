@@ -321,11 +321,16 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  mdc.subspec "LibraryInfo" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+  end
+
   mdc.subspec "MaskedTransition" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
-
     component.dependency "MotionTransitioning", "~> 4.0"
     component.dependency "MotionAnimator", "~> 2.0"
     component.dependency "MotionInterchange", "~> 1.0"
