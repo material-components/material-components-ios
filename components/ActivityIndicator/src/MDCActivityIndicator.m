@@ -20,7 +20,7 @@
 
 #import "MDFInternationalization.h"
 #import "MaterialApplication.h"
-#import "MotionAnimator.h"
+#import <MotionAnimator/MotionAnimator.h>
 #import "private/MDCActivityIndicatorMotionSpec.h"
 #import "private/MDCActivityIndicator+Private.h"
 #import "private/MaterialActivityIndicatorStrings.h"

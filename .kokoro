@@ -29,16 +29,22 @@ fix_bazel_imports() {
     tests_dir_prefix="github/repo/"
   fi
   
-  rewrite_source() {
+  rewrite_tests() {
     find "${stashed_dir}${tests_dir_prefix}"components/*/tests/unit -type f -name '*.swift' -exec sed -i '' -E "$1" {} + || true
+  }
+  rewrite_source() {
+    find "${stashed_dir}${tests_dir_prefix}"components/*/src -type f -name '*.h' -exec sed -i '' -E "$1" {} + || true
+    find "${stashed_dir}${tests_dir_prefix}"components/*/src -type f -name '*.m' -exec sed -i '' -E "$1" {} + || true
   }
 
   stashed_dir=""
-  rewrite_source "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   stashed_dir="$(pwd)/"
   reset_imports() {
     # Undoes our source changes from above.
-    rewrite_source "s/import components_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_tests "s/import components_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
   }
   trap reset_imports EXIT
 }
