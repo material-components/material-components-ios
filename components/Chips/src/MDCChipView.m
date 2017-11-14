@@ -118,10 +118,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   return [MDCShadowLayer class];
 }
 
-- (instancetype)init {
-  return [self initWithFrame:CGRectZero];
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
     if (!_backgroundColors) {
