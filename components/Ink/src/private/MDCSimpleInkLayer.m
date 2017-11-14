@@ -26,11 +26,19 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
 - (instancetype)initWithLayer:(id)layer {
   self = [super initWithLayer:layer];
   if (self) {
-    _initialRadius = 0;
+    _endAnimationDelay = 0;
     _finalRadius = 0;
+    _initialRadius = 0;
     _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
     _startAnimationActive = NO;
-    _endAnimationDelay = 0;
+    if ([layer isKindOfClass:[MDCSimpleInkLayer class]]) {
+      MDCSimpleInkLayer *inkLayer = (MDCSimpleInkLayer *)layer;
+      _endAnimationDelay = inkLayer.endAnimationDelay;
+      _finalRadius = inkLayer.finalRadius;
+      _initialRadius = inkLayer.initialRadius;
+      _inkColor = inkLayer.inkColor;
+      _startAnimationActive = NO;
+    }
   }
   return self;
 }
@@ -52,10 +60,6 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
   self.fillColor = self.inkColor.CGColor;
   self.opacity = 0;
   self.position = point;
-  [self startAnimation:point];
-}
-
-- (void)startAnimation:(CGPoint)point {
   self.startAnimationActive = YES;
 
   CAKeyframeAnimation *scaleAnim = [[CAKeyframeAnimation alloc] init];
@@ -119,6 +123,9 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
   }];
   [self addAnimation:animGroup forKey:nil];
   [CATransaction commit];
+  if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidStart:)]) {
+    [self.animationDelegate inkLayerAnimationDidStart:self];
+  }
 }
 
 - (void)endAnimation {
@@ -146,7 +153,9 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
   [CATransaction setCompletionBlock:^{
     if (self.completionBlock) {
       self.completionBlock();
-      [self removeFromSuperlayer];
+    }
+    if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidEnd:)]) {
+      [self.animationDelegate inkLayerAnimationDidEnd:self];
     }
   }];
   [self addAnimation:fadeOutAnim forKey:nil];

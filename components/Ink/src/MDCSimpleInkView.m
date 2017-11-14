@@ -18,9 +18,10 @@
 #import "MDCSimpleInkGestureRecognizer.h"
 #import "private/MDCSimpleInkLayer.h"
 
-@interface MDCSimpleInkView ()
+@interface MDCSimpleInkView () <MDCSimpleInkLayerDelegate>
 
-@property(nonatomic, strong) MDCSimpleInkLayer *inkLayer;
+@property(nonatomic, strong) MDCSimpleInkLayer *activeInkLayer;
+@property(nonatomic, strong) NSMutableArray<MDCSimpleInkLayer *> *inkLayers;
 
 @end
 
@@ -34,27 +35,42 @@
   return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
+  }
+  return self;
+}
+
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
-  self.inkLayer.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
+  self.activeInkLayer.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
 }
 
 - (void)startInkAtPoint:(CGPoint)point
              completion:(MDCSimpleInkCompletionBlock)completionBlock {
-  self.inkLayer = [MDCSimpleInkLayer layer];
-  self.inkLayer.inkColor = self.inkColor;
-  self.inkLayer.completionBlock = completionBlock;
-  self.inkLayer.opacity = 0;
-  self.inkLayer.frame = self.bounds;
-  [self.layer addSublayer:self.inkLayer];
-  [self.inkLayer startAnimationAtPoint:point];
+  MDCSimpleInkLayer *inkLayer = [MDCSimpleInkLayer layer];
+  inkLayer.animationDelegate = self;
+  inkLayer.inkColor = self.inkColor;
+  inkLayer.completionBlock = completionBlock;
+  inkLayer.opacity = 0;
+  inkLayer.frame = self.bounds;
+  [self.layer addSublayer:inkLayer];
+  [self.inkLayers addObject:inkLayer];
+  [inkLayer startAnimationAtPoint:point];
+  self.activeInkLayer = inkLayer;
 }
 
 - (void)endInkAnimated:(BOOL)animated {
+  [self endInk:self.activeInkLayer animated:animated];
+}
+
+- (void)endInk:(MDCSimpleInkLayer *)inkLayer animated:(BOOL)animated {
   if (!animated) {
-    self.inkLayer.endAnimationDelay = 0;
+    inkLayer.endAnimationDelay = 0;
   }
-  [self.inkLayer endAnimation];
+  [inkLayer endAnimation];
 }
 
 - (void)addInkGestureRecognizer {
@@ -89,7 +105,13 @@
 
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
-  self.inkLayer.inkColor = inkColor;
+  self.activeInkLayer.inkColor = inkColor;
+}
+
+#pragma mark - MDCSimpleInkLayerDelegate
+
+- (void)inkLayerAnimationDidEnd:(MDCSimpleInkLayer *)inkLayer {
+  [inkLayer removeFromSuperlayer];
 }
 
 @end

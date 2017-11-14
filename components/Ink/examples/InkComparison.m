@@ -63,7 +63,7 @@
   CGFloat offset = 8;
   CGFloat shapeDimension = 200;
   CGFloat spacing = 16;
-  if (self.view.frame.size.height > self.view.frame.size.width) {
+  if (CGRectGetHeight(self.view.frame) > CGRectWidth(self.view.frame)) {
     self.simpleInkView.center =
         CGPointMake(self.view.center.x, self.view.center.y - shapeDimension - offset);
     self.inkView.center =
@@ -72,7 +72,7 @@
     self.simpleInkView.center = CGPointMake(self.view.center.x - shapeDimension / 2 - spacing * 2,
                                             self.view.center.y / 2 + spacing * 2);
     self.inkView.center = CGPointMake(self.view.center.x + shapeDimension / 2 + spacing * 2,
-                                             self.view.center.y / 2 + spacing * 2);
+                                      self.view.center.y / 2 + spacing * 2);
   }
 }
 

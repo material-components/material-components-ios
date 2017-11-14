@@ -40,7 +40,7 @@ typedef void (^MDCSimpleInkCompletionBlock)(void);
  Color of the ink ripple.
  Default color is black with alpha of 0.08.
  */
-@property(nonatomic, strong, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /*
  Adds a MDCSimpleInkGestureRecognizer gesture recognizer to ink view so ink will spread on touch

@@ -18,7 +18,14 @@
 
 #import "MDCSimpleInkView.h"
 
+@protocol MDCSimpleInkLayerDelegate;
+
 @interface MDCSimpleInkLayer : CAShapeLayer
+
+/**
+ Ink layer animation delegate.
+ */
+@property(nonatomic, weak) id<MDCSimpleInkLayerDelegate> animationDelegate;
 
 /**
  The start ink ripple spread animation has started and is active.
@@ -59,5 +66,28 @@
  Ends the ink ripple animation.
  */
 - (void)endAnimation;
+
+@end
+
+/**
+ Delegate protocol for the MDCSimpleInkLayer.
+ */
+@protocol MDCSimpleInkLayerDelegate <CALayerDelegate>
+
+@optional
+
+/**
+ Called when the ink ripple animation begins.
+ 
+ @param inkLayer The MDCSimpleInkLayer that starts animating.
+ */
+- (void)inkLayerAnimationDidStart:(MDCSimpleInkLayer *)inkLayer;
+
+/**
+ Called when the ink ripple animation ends.
+ 
+ @param inkLayer The MDCSimpleInkLayer that ends animating.
+ */
+- (void)inkLayerAnimationDidEnd:(MDCSimpleInkLayer *)inkLayer;
 
 @end
