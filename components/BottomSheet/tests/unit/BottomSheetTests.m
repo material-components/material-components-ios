@@ -14,12 +14,17 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import <XCTest/XCTest.h>
+#import "MaterialBottomSheet.h"
 
-@interface BottomSheetDummyCollectionViewController : UICollectionViewController
-- (instancetype)initWithNumItems:(NSInteger)numItems NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout NS_UNAVAILABLE;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-NS_UNAVAILABLE;
+@interface BottomSheetTests : XCTestCase
+
+@end
+
+@implementation BottomSheetTests
+
+- (void)testNoop {
+  XCTAssertTrue(YES);
+}
+
 @end

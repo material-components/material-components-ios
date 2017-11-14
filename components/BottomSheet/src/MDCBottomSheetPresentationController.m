@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-#import "MaterialBottomSheet.h"
+#import "MDCBottomSheetPresentationController.h"
+
+#import "MDCBottomSheetController.h"
 
 #import "MaterialMath.h"
 #import "private/MDCSheetContainerView.h"
@@ -85,7 +87,10 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _dimmingView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-  UIScrollView *scrollView = MDCBottomSheetGetPrimaryScrollView(self.presentedViewController);
+  UIScrollView *scrollView = self.trackingScrollView;
+  if (scrollView == nil) {
+    scrollView = MDCBottomSheetGetPrimaryScrollView(self.presentedViewController);
+  }
   CGRect sheetFrame = [self frameOfPresentedViewInContainerView];
   _sheetView = [[MDCSheetContainerView alloc] initWithFrame:sheetFrame
                                                 contentView:self.presentedViewController.view

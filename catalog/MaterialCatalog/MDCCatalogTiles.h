@@ -24,10 +24,17 @@ typedef void (*MDCDrawFunc)(CGRect frame, NSObject<MDCColorScheme> *colorScheme)
 /** Render the drawing operations in @c drawFunc into a new image. */
 UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDCColorScheme> *colorScheme);
 
+/* Draw logo. */
+void MDCCatalogDrawMDCLogoDark(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+void MDCCatalogDrawMDCLogoLight(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+
 /* Draw various tiles. */
 void MDCCatalogDrawActivityIndicatorTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawAnimationTimingTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawAppBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+void MDCCatalogDrawBottomAppBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+void MDCCatalogDrawBottomNavTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+void MDCCatalogDrawBottomSheetTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawButtonBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawButtonsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawCollectionCellsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
@@ -37,6 +44,7 @@ void MDCCatalogDrawFeatureHighlightTile(CGRect frame, NSObject<MDCColorScheme> *
 void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawHeaderStackViewTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawInkTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+void MDCCatalogDrawMaskedTransitionTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawMiscTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawNavigationBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawOverlayWindow(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
@@ -46,7 +54,8 @@ void MDCCatalogDrawProgressViewTile(CGRect frame, NSObject<MDCColorScheme> *colo
 void MDCCatalogDrawShadowLayerTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawSliderTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawSnackbarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
-void MDCCatalogDrawSwitchTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawTabsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+void MDCCatalogDrawThemesTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 void MDCCatalogDrawTypographyTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
+void MDCCatalogDrawTypographyCustomFontsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme);

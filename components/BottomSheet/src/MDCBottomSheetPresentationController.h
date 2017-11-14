@@ -51,6 +51,14 @@
 @interface MDCBottomSheetPresentationController : UIPresentationController
 
 /**
+ Interactions with the tracking scroll view will affect the bottom sheet's drag behavior.
+
+ If no trackingScrollView is provided, then one will be inferred from the associated view
+ controller.
+ */
+@property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
+/**
  Delegate to tell the presenter when to dismiss.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomSheetPresentationControllerDelegate> delegate;

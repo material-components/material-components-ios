@@ -14,7 +14,11 @@
  limitations under the License.
  */
 
-#import "MaterialBottomSheet.h"
+#import "MDCBottomSheetController.h"
+
+#import "MDCBottomSheetPresentationController.h"
+#import "MDCBottomSheetTransitionController.h"
+#import "UIViewController+MaterialBottomSheet.h"
 
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
 @end
@@ -70,6 +74,14 @@
 
 - (void)setPreferredContentSize:(CGSize)preferredContentSize {
   self.contentViewController.preferredContentSize = preferredContentSize;
+}
+
+- (UIScrollView *)trackingScrollView {
+  return _transitionController.trackingScrollView;
+}
+
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _transitionController.trackingScrollView = trackingScrollView;
 }
 
 /* Disable setter. Always use internal transition controller */

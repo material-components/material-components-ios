@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
-    colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
+    colorScheme = MDCBasicColorScheme(primaryColor: .init(white: 33 / 255.0, alpha: 1),
                                       primaryLightColor: .init(white: 0.7, alpha: 1),
                                       primaryDarkColor: .init(white: 0, alpha: 1))
 
