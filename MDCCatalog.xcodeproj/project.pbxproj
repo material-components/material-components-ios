@@ -927,7 +927,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MDCCatalog/MDCCatalog-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "catalog/MDCCatalog/MDCCatalog-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -946,7 +946,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MDCCatalog/MDCCatalog-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "catalog/MDCCatalog/MDCCatalog-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
