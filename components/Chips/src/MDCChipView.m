@@ -46,6 +46,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+// TODO(samnm): Pull background color from MDCPalette
 static const uint32_t MDCChipBackgroundColor = 0xEBEBEB;
 static const CGFloat MDCChipSelectedDarkenPercent = 0.16f;
 static const CGFloat MDCChipDisabledLightenPercent = 0.38f;
