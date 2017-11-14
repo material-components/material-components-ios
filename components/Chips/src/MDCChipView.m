@@ -46,6 +46,22 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+static inline UIColor *MDCColorDarken(UIColor *color, CGFloat percent) {
+  CGFloat hue;
+  CGFloat saturation;
+  CGFloat brightness;
+  CGFloat alpha;
+  [color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
+
+  brightness = MIN(1, MAX(0, brightness - percent));
+
+  return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
+}
+
+static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
+  return MDCColorDarken(color, -percent);
+}
+
 // TODO(samnm): Pull background color from MDCPalette
 static const uint32_t MDCChipBackgroundColor = 0xEBEBEB;
 static const CGFloat MDCChipSelectedDarkenPercent = 0.16f;
@@ -58,11 +74,6 @@ static const UIEdgeInsets MDCChipContentPadding = {4, 4, 4, 4};
 static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};
 static const UIEdgeInsets MDCChipTitlePadding = {3, 8, 4, 8};
 static const UIEdgeInsets MDCChipAccessoryPadding = {0, 0, 0, 0};
-
-@interface UIColor (MDCChipView)
-- (UIColor *)darken:(CGFloat)percent;
-- (UIColor *)lighten:(CGFloat)percent;
-@end
 
 static CGRect CGRectVerticallyCentered(CGRect rect, UIEdgeInsets padding, CGFloat height) {
   CGFloat viewHeight = CGRectGetHeight(rect) + padding.top + padding.bottom;
@@ -125,8 +136,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     if (!_backgroundColors) {
       // _backgroundColors may have already been initialized by setting the backgroundColor setter.
       UIColor *normal = MDCColorFromRGB(MDCChipBackgroundColor);
-      UIColor *disabled = [normal lighten:MDCChipDisabledLightenPercent];
-      UIColor *selected = [normal darken:MDCChipSelectedDarkenPercent];
+      UIColor *disabled = MDCColorLighten(normal, MDCChipDisabledLightenPercent);
+      UIColor *selected = MDCColorDarken(normal, MDCChipSelectedDarkenPercent);
 
       _backgroundColors = [NSMutableDictionary dictionary];
       _backgroundColors[@(UIControlStateNormal)] = normal;
@@ -146,7 +157,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _titleColors = [NSMutableDictionary dictionary];
     _titleColors[@(UIControlStateNormal)] = titleColor;
     _titleColors[@(UIControlStateDisabled)] =
-        [titleColor lighten:MDCChipTitleColorDisabledLightenPercent];
+        MDCColorLighten(titleColor, MDCChipTitleColorDisabledLightenPercent);
 
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
     _inkView.inkStyle = MDCInkStyleBounded;
@@ -589,26 +600,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   BOOL hasSelectedImage = self.selectedImageView.image != nil;
 
   return !hasImage && hasSelectedImage;
-}
-
-@end
-
-@implementation UIColor (MDCChipView)
-
-- (UIColor *)darken:(CGFloat)percent {
-  CGFloat hue;
-  CGFloat saturation;
-  CGFloat brightness;
-  CGFloat alpha;
-  [self getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
-
-  brightness = MIN(1, MAX(0, brightness - percent));
-
-  return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
-}
-
-- (UIColor *)lighten:(CGFloat)percent {
-  return [self darken:-percent];
 }
 
 @end
