@@ -425,10 +425,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)contentRect {
-  return CGRectMake(self.contentPadding.left,
-                    self.contentPadding.top,
-                    self.bounds.size.width - UIEdgeInsetsHorizontal(self.contentPadding),
-                    self.bounds.size.height - UIEdgeInsetsVertical(self.contentPadding));
+  return UIEdgeInsetsInsetRect(self.bounds, self.contentPadding);
 }
 
 - (CGRect)imageViewFrame {
