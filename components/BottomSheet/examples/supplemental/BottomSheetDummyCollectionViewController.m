@@ -28,27 +28,29 @@
 }
 
 - (instancetype)initWithNumItems:(NSInteger)numItems {
-  if (self = [super initWithNibName:nil bundle:nil]) {
+  UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+  layout.minimumInteritemSpacing = 0;
+  layout.minimumLineSpacing = 0;
+  if (self = [super initWithCollectionViewLayout:layout]) {
+    _layout = layout;
+
     _numItems = numItems;
   }
   return self;
 }
 
-- (void)loadView {
-  _layout = [[UICollectionViewFlowLayout alloc] init];
-  _layout.minimumInteritemSpacing = 0;
-  _layout.minimumLineSpacing = 0;
+- (void)viewDidLoad {
+  [super viewDidLoad];
 
-  UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero
-                                                        collectionViewLayout:_layout];
-  collectionView.backgroundColor = [UIColor whiteColor];
-  [collectionView registerClass:[DummyCollectionViewCell class]
-     forCellWithReuseIdentifier:NSStringFromClass([DummyCollectionViewCell class])];
-  collectionView.dataSource = self;
-  self.view = collectionView;
+  self.collectionView.backgroundColor = [UIColor whiteColor];
+
+  [self.collectionView registerClass:[DummyCollectionViewCell class]
+          forCellWithReuseIdentifier:NSStringFromClass([DummyCollectionViewCell class])];
 }
 
 - (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
   CGFloat s = self.view.frame.size.width / 3;
   _layout.itemSize = CGSizeMake(s, s);
 }

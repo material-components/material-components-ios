@@ -28,8 +28,11 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
                                 sourceViewController:(__unused UIViewController *)source {
-  return [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                              presentingViewController:presenting];
+  MDCBottomSheetPresentationController *presentationController =
+      [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
+                                                           presentingViewController:presenting];
+  presentationController.trackingScrollView = self.trackingScrollView;
+  return presentationController;
 }
 
 - (nullable id <UIViewControllerAnimatedTransitioning>)
