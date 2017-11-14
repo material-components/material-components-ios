@@ -181,7 +181,8 @@
 				36683DC91EF3262F002EF2E6 /* MDCEarlGreyTests.swift */,
 				36683DC21EF3212B002EF2E6 /* Info.plist */,
 			);
-			path = MDCEarlGreyTests;
+			name = MDCEarlGreyTests;
+			path = catalog/MDCEarlGreyTests;
 			sourceTree = "<group>";
 		};
 		5D090E331C9AEB8C0061344A /* Localizable */ = {
@@ -199,7 +200,8 @@
 				64307B3B1DF74FEF004AE4AC /* MDCActionViewController.m */,
 				64307B481DF76170004AE4AC /* Resources */,
 			);
-			path = MDCActionExtension;
+			name = MDCActionExtension;
+			path = catalog/MDCActionExtension;
 			sourceTree = "<group>";
 		};
 		64307B481DF76170004AE4AC /* Resources */ = {
@@ -249,7 +251,8 @@
 				664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */,
 				665A34DE1C6BDAE700962055 /* Resources */,
 			);
-			path = MDCCatalog;
+			name = MDCCatalog;
+			path = catalog/MDCCatalog;
 			sourceTree = "<group>";
 		};
 		665A34DE1C6BDAE700962055 /* Resources */ = {
@@ -758,7 +761,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				INFOPLIST_FILE = MDCEarlGreyTests/Info.plist;
+				INFOPLIST_FILE = catalog/MDCEarlGreyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCEarlGreyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -779,7 +782,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				INFOPLIST_FILE = MDCEarlGreyTests/Info.plist;
+				INFOPLIST_FILE = catalog/MDCEarlGreyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCEarlGreyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -799,7 +802,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
-				INFOPLIST_FILE = MDCActionExtension/Info.plist;
+				INFOPLIST_FILE = catalog/MDCActionExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.google.mdc-catalog.MDCActionExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -819,7 +822,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
-				INFOPLIST_FILE = MDCActionExtension/Info.plist;
+				INFOPLIST_FILE = catalog/MDCActionExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.google.mdc-catalog.MDCActionExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -920,7 +923,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
-				INFOPLIST_FILE = MDCCatalog/Info.plist;
+				INFOPLIST_FILE = catalog/MDCCatalog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -939,7 +942,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
-				INFOPLIST_FILE = MDCCatalog/Info.plist;
+				INFOPLIST_FILE = catalog/MDCCatalog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalog;
 				PRODUCT_NAME = "$(TARGET_NAME)";

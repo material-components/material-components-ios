@@ -65,7 +65,7 @@ post_install do |installer|
   # https://pewpewthespells.com/blog/xcconfig_guide.html
   mdc_xcconfigs.each do |mdc_xcconfig|
     new_xcconfig = File.read(mdc_xcconfig)
-    new_xcconfig << "\n#include \"../../MaterialComponentsWarnings.xcconfig\""
+    new_xcconfig << "\n#include \"../../../catalog/MaterialComponentsWarnings.xcconfig\""
     File.write(mdc_xcconfig, new_xcconfig)
   end
 
