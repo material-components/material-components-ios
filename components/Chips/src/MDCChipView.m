@@ -167,7 +167,18 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _titlePadding = MDCChipTitlePadding;
     _accessoryPadding = MDCChipAccessoryPadding;
 
-    [self commonMDCChipViewInit];
+    [self updateBackgroundColor];
+    self.layer.elevation = [self elevationForState:UIControlStateNormal];
+
+    // UIControl has a drag enter/exit boundary that is outside of the frame of the button itself.
+    // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
+    // change ink state. So instead we fall back on adding target/actions for these specific events.
+    [self addTarget:self
+             action:@selector(touchDragEnter:forEvent:)
+   forControlEvents:UIControlEventTouchDragEnter];
+    [self addTarget:self
+             action:@selector(touchDragExit:forEvent:)
+   forControlEvents:UIControlEventTouchDragExit];
   }
   return self;
 }
@@ -192,32 +203,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _elevations = [aDecoder decodeObjectForKey:MDCChipElevationsKey];
     _titleColors = [aDecoder decodeObjectForKey:MDCChipTitleColorsKey];
 
-    [self addSubview:_inkView];
-    [self addSubview:_imageView];
-    [self addSubview:_selectedImageView];
-    [self addSubview:_titleLabel];
-
     self.mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCChipAdjustsFontForContentSizeKey];
-
-    [self commonMDCChipViewInit];
   }
   return self;
-}
-
-- (void)commonMDCChipViewInit {
-  [self updateBackgroundColor];
-  self.layer.elevation = [self elevationForState:UIControlStateNormal];
-
-  // UIControl has a drag enter/exit boundary that is outside of the frame of the button itself.
-  // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
-  // change ink state. So instead we fall back on adding target/actions for these specific events.
-  [self addTarget:self
-           action:@selector(touchDragEnter:forEvent:)
- forControlEvents:UIControlEventTouchDragEnter];
-  [self addTarget:self
-           action:@selector(touchDragExit:forEvent:)
- forControlEvents:UIControlEventTouchDragExit];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
