@@ -27,8 +27,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic) UIButton *button;
-@property(nonatomic) UIBarButtonItem *backItem;
-@property(nonatomic) UIBarButtonItem *doneItem;
 
 @end
 
@@ -74,19 +72,19 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
   [self.fhvc.headerView addSubview:navBar];
 
-  self.backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+  UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
                                                               action:@selector(doneAction:)];
-  self.doneItem = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+  UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"Done"
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
                                                               action:@selector(doneAction:)];
 
-  UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"UINavigationBar"];
-  [navItem setLeftBarButtonItem:self.backItem animated:YES];
-  [navItem setRightBarButtonItem:self.doneItem animated:YES];
-  [navBar setItems:[NSArray arrayWithObject:navItem] animated:YES];
+
+  [self.navigationItem setLeftBarButtonItem:backItem animated:YES];
+  [self.navigationItem setRightBarButtonItem:doneItem animated:YES];
+  [navBar setItems:[NSArray arrayWithObject:self.navigationItem] animated:YES];
 
   self.button = [[UIButton alloc] init];
   [self.button setTitle:@"UIButton" forState:UIControlStateNormal];
@@ -104,7 +102,8 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 }
 
 - (void)doneAction:(id)sender {
-  if ([sender isEqual:self.doneItem] || [sender isEqual:self.backItem]) {
+  if ([sender isEqual:self.navigationItem.rightBarButtonItem] ||
+      [sender isEqual:self.navigationItem.leftBarButtonItem]) {
     [super.navigationController popViewControllerAnimated:YES];
   }
 }
