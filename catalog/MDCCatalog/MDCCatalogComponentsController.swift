@@ -20,6 +20,7 @@ import MaterialCatalog
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
+import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialThemes
@@ -74,7 +75,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     super.init(collectionViewLayout: layout)
 
-    title = "Material Components"
+    title = "Material Components for iOS v\(MDCLibraryInfo.versionString)"
 
     addChildViewController(headerViewController)
 
