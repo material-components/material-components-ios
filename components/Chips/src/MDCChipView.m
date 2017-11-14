@@ -277,7 +277,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
   self.titleLabel.font = font;
-  [self sizeToFit];
+  [self setNeedsLayout];
 }
 
 - (void)setAccessoryView:(UIView *)accessoryView {
