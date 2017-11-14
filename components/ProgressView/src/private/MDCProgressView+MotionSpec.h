@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MotionInterchange.h"
+#import <MotionInterchange/MotionInterchange.h>
 
 struct MDCProgressViewMotionSpec {
   MDMMotionTiming setProgress;
