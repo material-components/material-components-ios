@@ -14,8 +14,6 @@
  limitations under the License.
  */
 
-#import <objc/runtime.h>
-
 #import "MDCTextFieldColorThemer.h"
 
 #import "MaterialThemes.h"
