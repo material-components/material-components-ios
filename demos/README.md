@@ -15,10 +15,10 @@ You can use the `pod try` command from anywhere on your machine to try the compo
 pod try MaterialComponents
 ```
 
-In case you have already checked out the repo, run the following command:
+In case you have already checked out the repo, run the following command from the root of the repo:
 
 ``` bash
-pod install --project-directory=catalog/
+pod install
 ```
 
 - - -
