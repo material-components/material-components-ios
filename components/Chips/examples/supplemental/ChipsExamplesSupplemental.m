@@ -110,10 +110,7 @@ static UIButton *DeleteButton() {
 }
 
 - (UIImage *)doneImage {
-  UIImage *image = [UIImage imageNamed:@"ic_done"
-                              inBundle:[NSBundle bundleForClass:[self class]]
-         compatibleWithTraitCollection:nil];
-  return image;
+  return DoneImage();
 }
 
 @end
@@ -133,16 +130,7 @@ static UIButton *DeleteButton() {
 }
 
 - (UIButton *)deleteButton {
-  UIImage *image = [UIImage imageNamed:@"ic_check_circle_18pt"
-                              inBundle:[NSBundle bundleForClass:[self class]]
-         compatibleWithTraitCollection:nil];
-  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
-  UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
-  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7];
-  [button setImage:image forState:UIControlStateNormal];
-
-  return button;
+  return DeleteButton();
 }
 
 @end
