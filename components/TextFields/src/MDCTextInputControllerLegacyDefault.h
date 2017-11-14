@@ -26,6 +26,7 @@
  Design guidelines call this 'Floating inline labels.'
  https://material.io/guidelines/components/text-fields.html#text-fields-labels
 */
-@interface MDCTextInputControllerLegacyDefault : NSObject <MDCTextInputControllerFloatingPlaceholder>
+@interface MDCTextInputControllerLegacyDefault
+    : NSObject <MDCTextInputControllerFloatingPlaceholder>
 
 @end

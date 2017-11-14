@@ -51,12 +51,17 @@
                                 toProgressView:[MDCProgressView appearance]];
   [MDCSliderColorThemer applyColorScheme:self.colorScheme toSlider:[MDCSlider appearance]];
   [MDCTabBarColorThemer applyColorScheme:self.colorScheme toTabBar:[MDCTabBar appearance]];
-  
-  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
-  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
-  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerFilled class]];
-  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerOutlined class]];
-  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme toAllTextInputControllersOfClass:[MDCTextInputControllerOutlinedTextArea class]];
+
+  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
+  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
+  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerFilled class]];
+  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerOutlined class]];
+  [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerOutlinedTextArea class]];
 
   // Apply color scheme to UIKit components.
   [UISlider appearance].tintColor = self.colorScheme.primaryColor;
