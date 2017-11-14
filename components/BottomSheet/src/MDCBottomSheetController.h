@@ -28,11 +28,6 @@
  MDCBottomSheetController automatically sets the appropriate presentation style and
  transitioningDelegate for the bottom sheet behavior.
  */
-// TODO( https://github.com/material-components/material-components-ios/issues/2418 ):
-// Enable deprecation once internal clients have migrated to the new APIs or until a reasonable
-// period of time has passed.
-//__deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
-//                 "mdm_transitionController.transition instead.")
 @interface MDCBottomSheetController : UIViewController
 
 /**
@@ -68,8 +63,6 @@
 /**
  Delegate for MDCBottomSheetController.
  */
-__deprecated_msg("Make your presented view controller invoke a delegate in its viewDidDisappear "
-                 "instead.")
 @protocol MDCBottomSheetControllerDelegate <NSObject>
 
 /**
