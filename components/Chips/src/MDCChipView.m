@@ -138,7 +138,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _elevations[@(UIControlStateNormal)] = @(0);
     _elevations[@(UIControlStateHighlighted)] = @(MDCShadowElevationRaisedButtonPressed);
     _elevations[@(UIControlStateHighlighted | UIControlStateSelected)] =
-    @(MDCShadowElevationRaisedButtonPressed);
+        @(MDCShadowElevationRaisedButtonPressed);
 
     UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1.0f];
     _titleColors = [NSMutableDictionary dictionary];
