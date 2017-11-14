@@ -100,6 +100,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, readonly, strong) MDCShadowLayer *layer;
 @property(nonatomic, readonly) BOOL showImageView;
 @property(nonatomic, readonly) BOOL showSelectedImageView;
+@property(nonatomic, readonly) BOOL showAccessoryView;
 @property(nonatomic, strong) MDCInkView *inkView;
 @end
 
@@ -450,11 +451,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)accessoryViewFrame {
-  if (!_accessoryView) {
-    return CGRectZero;
+  CGSize size = CGSizeZero;
+  if (self.showAccessoryView) {
+    CGSize availableSize = CGSizeShrinkWithInsets(self.contentRect.size, self.accessoryPadding);
+    size = [_accessoryView sizeThatFits:availableSize];
   }
-  CGSize availableSize = CGSizeShrinkWithInsets(self.contentRect.size, self.accessoryPadding);
-  CGSize size = [_accessoryView sizeThatFits:availableSize];
   CGFloat xOffset = CGRectGetMaxX(self.contentRect) - size.width - _accessoryPadding.right;
   return MDCChipBuildFrame(_accessoryPadding, size, xOffset, CGRectGetHeight(self.frame));
 }
@@ -463,7 +464,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   CGRect imageFrame = CGRectUnion(_imageView.frame, _selectedImageView.frame);
   CGFloat maximumTitleWidth = CGRectGetWidth(self.contentRect) - CGRectGetWidth(imageFrame)
       - UIEdgeInsetsHorizontal(_titlePadding) + UIEdgeInsetsHorizontal(_imagePadding);
-  if (_accessoryView) {
+  if (self.showAccessoryView) {
     maximumTitleWidth -= CGRectGetWidth(_accessoryView.frame) +
         UIEdgeInsetsHorizontal(_accessoryPadding);
   }
@@ -526,6 +527,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (BOOL)showSelectedImageView {
   return self.selected && self.selectedImageView.image != nil;
+}
+
+- (BOOL)showAccessoryView {
+  return self.accessoryView && !self.accessoryView.hidden;
 }
 
 #pragma mark - Ink Touches
