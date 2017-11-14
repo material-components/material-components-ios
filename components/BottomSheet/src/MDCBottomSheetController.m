@@ -76,6 +76,14 @@
   self.contentViewController.preferredContentSize = preferredContentSize;
 }
 
+- (UIScrollView *)trackingScrollView {
+  return _transitionController.trackingScrollView;
+}
+
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _transitionController.trackingScrollView = trackingScrollView;
+}
+
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
     (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
