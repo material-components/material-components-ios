@@ -374,6 +374,8 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 - (void)draggableViewBeganDragging:(__unused MDCDraggableView *)view {
   self.isDragging = YES;
+
+  [_animator stopAllAnimations];
 }
 
 @end

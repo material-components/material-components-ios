@@ -8,6 +8,7 @@ target "MDCCatalog" do
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
+  pod 'MotionAnimator', :path => '../../odeon/motion-animator-objc/'
 
   use_frameworks!
 end
