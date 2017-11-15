@@ -212,7 +212,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 - (void)updateSheetFrame {
   CGRect sheetRect = self.bounds;
   CGPoint targetPoint = [self targetPointForState:self.sheetState];
-  sheetRect.origin.x = targetPoint.x - sheetRect.size.width * self.sheet.layer.anchorPoint.x;
+  sheetRect.origin.x = targetPoint.x - CGRectGetWidth(sheetRect) * self.sheet.layer.anchorPoint.x;
   sheetRect.origin.y = (targetPoint.y
                         - [self truncatedPreferredSheetHeight] * self.sheet.layer.anchorPoint.y);
   sheetRect.size.height += kSheetBounceBuffer;
