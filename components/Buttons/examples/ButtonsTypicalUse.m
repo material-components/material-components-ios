@@ -134,14 +134,19 @@
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
-    [self.floatingButton
-          collapse:YES
-        completion:^{
-          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                         dispatch_get_main_queue(), ^{
-                           [self.floatingButton expand:YES completion:nil];
-                         });
-        }];
+    [UIView animateWithDuration:0.25 animations:^{
+      self.floatingButton.shape += 1;
+      if (self.floatingButton.shape > MDCFloatingButtonShapeExtendedTrailingIcon) {
+        self.floatingButton.shape = 0;
+      }
+      if (self.floatingButton.shape >= MDCFloatingButtonShapeExtendedLeadingIcon) {
+        [self.floatingButton setTitle:@"Extended" forState:UIControlStateNormal];
+      } else {
+        [self.floatingButton setTitle:nil forState:UIControlStateNormal];
+      }
+      [self.floatingButton sizeToFit];
+    }];
+
   }
 }
 

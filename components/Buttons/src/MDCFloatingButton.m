@@ -19,6 +19,8 @@
 #import "MaterialShadowElevations.h"
 #import "private/MDCButton+Subclassing.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 static const CGFloat MDCFloatingButtonDefaultDimension = 56.0f;
 static const CGFloat MDCFloatingButtonMiniDimension = 40.0f;
 static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
@@ -112,6 +114,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
       = [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(-4, -4, -4, -4)];
   super.contentEdgeInsets = [self defaultContentEdgeInsets];
   super.hitAreaInsets = [self defaultHitAreaInsets];
+  _imageTitlePadding = 8;
 }
 
 #pragma mark - NSCoding
@@ -161,15 +164,130 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
     case MDCFloatingButtonShapeLargeIcon:
       return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
     case MDCFloatingButtonShapeExtendedTrailingIcon:
-    case MDCFloatingButtonShapeExtendedLeadingIcon:
-      return [super intrinsicContentSize];
+    case MDCFloatingButtonShapeExtendedLeadingIcon: {
+      const CGSize intrinsicTitleSize
+          = [self.titleLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+      const CGSize intrinsicImageSize
+          = [self.imageView sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+      CGFloat intrinsicWidth = intrinsicTitleSize.width + intrinsicImageSize.width
+          + self.imageTitlePadding + self.contentEdgeInsets.left + self.contentEdgeInsets.right;
+      CGFloat intrinsicHeight = MAX(intrinsicTitleSize.height, intrinsicImageSize.height)
+          + self.contentEdgeInsets.top + self.contentEdgeInsets.bottom;
+      return CGSizeMake(intrinsicWidth, intrinsicHeight);
+    }
   }
 }
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  switch(self.shape) {
+    case MDCFloatingButtonShapeDefault:
+    case MDCFloatingButtonShapeMini:
+    case MDCFloatingButtonShapeLargeIcon:
+      return [super sizeThatFits:size];
+    case MDCFloatingButtonShapeExtendedLeadingIcon:
+    case MDCFloatingButtonShapeExtendedTrailingIcon: {
+      // UIButton will compute the size basically the same as MDCFloatingButton,
+      // but without the |imageTitlePadding|
+      const CGSize superSize = [super sizeThatFits:size];
+      return CGSizeMake(superSize.width + self.imageTitlePadding, superSize.height);
+    }
+  }
+}
+
+/*
+- (CGSize)sizeThatFits:(__unused CGSize)size {
+  const CGSize intrinsicSize = [self intrinsicContentSize];
+  CGSize finalSize = intrinsicSize;
+  if (self.minimumSize.height > 0) {
+    finalSize.height = MAX(self.minimumSize.height, finalSize.height);
+  }
+  if (self.maximumSize.height > 0) {
+    finalSize.height = MIN(self.maximumSize.height, finalSize.height);
+  }
+  if (self.minimumSize.width > 0) {
+    finalSize.width = MAX(self.minimumSize.width, finalSize.width);
+  }
+  if (self.maximumSize.width > 0) {
+    finalSize.width = MIN(self.maximumSize.width, finalSize.width);
+  }
+  return finalSize;
+}
+ */
 
 - (void)layoutSubviews {
   // We have to set cornerRadius before laying out subviews so that the boundingPath is correct.
   self.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
   [super layoutSubviews];
+
+  if (self.shape == MDCFloatingButtonShapeDefault
+      || self.shape == MDCFloatingButtonShapeMini
+      || self.shape == MDCFloatingButtonShapeLargeIcon) {
+    return;
+  }
+
+
+  // Position the imageView and titleView
+  //
+  // +------------------------------------+
+  // |    |  |  |  CEI TOP            |   |
+  // |CEI +--+  |       +-----+       |CEI|
+  // | LT ||SP|-- A --|Title|-- A --|RGT|
+  // |    +--+  |       +-----+       |   |
+  // |    |  |  |  CEI BOT            |   |
+  // +------------------------------------+
+  //
+  // (A) The same spacing on either side of the label.
+  // (SP) The spacing between the image and title
+  // (CEI) Content Edge Insets
+  //
+  // The diagram above assumes an LTR user interface orientation
+  // and a .leadingIcon shape for this button.
+
+  const CGRect insetBounds = UIEdgeInsetsInsetRect(self.bounds, self.contentEdgeInsets);
+  const CGFloat imageViewWidth = CGRectGetWidth(self.imageView.bounds);
+  const CGFloat boundsCenterY = CGRectGetMidY(insetBounds);
+  CGFloat titleWidthAvailable = CGRectGetWidth(insetBounds);
+  titleWidthAvailable -= imageViewWidth;
+  titleWidthAvailable -= self.imageTitlePadding;
+
+  const CGFloat availableHeight = CGRectGetHeight(insetBounds);
+  CGSize titleIntrinsicSize
+      = [self.titleLabel sizeThatFits:CGSizeMake(titleWidthAvailable, availableHeight)];
+
+  const CGSize titleSize = CGSizeMake(MIN(titleIntrinsicSize.width, titleWidthAvailable),
+                                      MIN(titleIntrinsicSize.height, availableHeight));
+
+  BOOL isRTL = self.mdf_effectiveUserInterfaceLayoutDirection
+      == UIUserInterfaceLayoutDirectionRightToLeft;
+  BOOL isLeadingIcon = self.shape == MDCFloatingButtonShapeExtendedLeadingIcon;
+
+  CGPoint titleCenter;
+  CGPoint imageCenter;
+  // isRTL && isLeadingIcon => icon to right of text
+  // !isRTL && !isLeadingIcon => icon to right of text
+  // isRTL && !isLeadingIcon => icon to left of text
+  // !isRTL && isLeadingIcon => icon to left of text
+  if (isRTL == isLeadingIcon) {
+    const CGFloat imageCenterX
+        = CGRectGetMaxX(insetBounds) - (imageViewWidth / 2);
+    const CGFloat titleCenterX = CGRectGetMinX(insetBounds) + (titleWidthAvailable / 2);
+    imageCenter = CGPointMake(imageCenterX, boundsCenterY);
+    titleCenter = CGPointMake(titleCenterX, boundsCenterY);
+  } else {
+    const CGFloat imageCenterX
+        = CGRectGetMinX(insetBounds) + (imageViewWidth / 2);
+    const CGFloat titleCenterX
+        = CGRectGetMaxX(insetBounds) - (titleWidthAvailable / 2);
+    titleCenter = CGPointMake(titleCenterX, boundsCenterY);
+    imageCenter = CGPointMake(imageCenterX, boundsCenterY);
+  }
+
+  self.imageView.center = imageCenter;
+  self.imageView.frame = UIEdgeInsetsInsetRect(self.imageView.frame, self.imageEdgeInsets);
+  self.titleLabel.center = titleCenter;
+  self.titleLabel.bounds = (CGRect){CGRectStandardize(self.titleLabel.bounds).origin, titleSize};
+  self.titleLabel.frame = UIEdgeInsetsInsetRect(self.titleLabel.frame, self.titleEdgeInsets);
+
 }
 
 #pragma mark - Subclassing
@@ -269,20 +387,20 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
 }
 
 - (UIEdgeInsets)insetsForShape:(MDCFloatingButtonShape)shape {
-  NSValue *insetsValue = self.shapeToContentEdgeInsets[@(self.shape)];
-  if (!insetsValue && self.shape != MDCFloatingButtonShapeDefault) {
+  NSValue *insetsValue = self.shapeToContentEdgeInsets[@(shape)];
+  if (!insetsValue && shape != MDCFloatingButtonShapeDefault) {
     insetsValue = self.shapeToContentEdgeInsets[@(MDCFloatingButtonShapeDefault)];
   }
 
   if (insetsValue) {
     return insetsValue.UIEdgeInsetsValue;
   } else {
-    return = UIEdgeInsetsZero;
+    return UIEdgeInsetsZero;
   }
 }
 
 - (void)updateContentEdgeInsets {
-
+  super.contentEdgeInsets = [self insetsForShape:self.shape];
 }
 
 - (void)updateHitAreaInsets {
