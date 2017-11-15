@@ -268,17 +268,21 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   }
 }
 
-- (void)updateContentEdgeInsets {
+- (UIEdgeInsets)insetsForShape:(MDCFloatingButtonShape)shape {
   NSValue *insetsValue = self.shapeToContentEdgeInsets[@(self.shape)];
   if (!insetsValue && self.shape != MDCFloatingButtonShapeDefault) {
     insetsValue = self.shapeToContentEdgeInsets[@(MDCFloatingButtonShapeDefault)];
   }
 
   if (insetsValue) {
-    super.contentEdgeInsets = insetsValue.UIEdgeInsetsValue;
+    return insetsValue.UIEdgeInsetsValue;
   } else {
-    super.contentEdgeInsets = UIEdgeInsetsZero;
+    return = UIEdgeInsetsZero;
   }
+}
+
+- (void)updateContentEdgeInsets {
+
 }
 
 - (void)updateHitAreaInsets {
