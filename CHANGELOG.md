@@ -1,6 +1,6 @@
 # 40.0.1
 
-
+* [Catalog] Added Import to catalog’s AppDelegate.
 
 # 40.0.0
 
