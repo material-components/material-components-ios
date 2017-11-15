@@ -60,11 +60,15 @@ extension TabBarIndicatorTemplateExample {
 
     // Buttons are laid out relative to the safe area, if available.
     let alignmentGuide: Any
-    if #available(iOSApplicationExtension 11.0, *) {
-      alignmentGuide = view.safeAreaLayoutGuide
-    } else {
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+        alignmentGuide = view.safeAreaLayoutGuide
+      } else {
+        alignmentGuide = view
+      }
+    #else
       alignmentGuide = view
-    }
+    #endif
 
     NSLayoutConstraint.activate([
       // Center alignment button
