@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputController.h"
+#import "MDCTextInputControllerFloatingPlaceholder.h"
 
 extern const CGFloat MDCTextInputDefaultBorderRadius;
 extern const CGFloat MDCTextInputDefaultUnderlineActiveHeight;
@@ -29,7 +29,7 @@ extern const CGFloat MDCTextInputDefaultUnderlineActiveHeight;
  Design guidelines call this 'Floating inline labels.'
  https://material.io/guidelines/components/text-fields.html#text-fields-labels
 */
-@interface MDCTextInputControllerDefault : NSObject <MDCTextInputController>
+@interface MDCTextInputControllerDefault : NSObject <MDCTextInputControllerFloatingPlaceholder>
 
 /**
  The color behind the input and label that defines the preferred tap zone.
@@ -53,58 +53,6 @@ extern const CGFloat MDCTextInputDefaultUnderlineActiveHeight;
  Default is YES.
  */
 @property(nonatomic, assign) BOOL expandsOnOverflow;
-
-/**
- The color applied to the placeholder when floating. However, when in error state, it will be
- colored with the error color and when in active state, it will be colored with the active color.
-
- Only relevent when floatingEnabled = true.
-
- Default is floatingPlaceholderNormalColorDefault.
- */
-@property(nonatomic, null_resettable, strong) UIColor *floatingPlaceholderNormalColor;
-
-/**
- Default value for floatingPlaceholderNormalColor.
-
- Default is black with Material Design hint text opacity (textInput's tint).
- */
-@property(class, nonatomic, null_resettable, strong) UIColor *floatingPlaceholderNormalColorDefault;
-
-/**
- When the placeholder floats up, constraints are created that use this value for constants.
- */
-@property(nonatomic, readonly) UIOffset floatingPlaceholderOffset;
-
-/**
- The scale of the the floating placeholder label in comparison to the inline placeholder specified
- as a value from 0.0 to 1.0. Only relevent when floatingEnabled = true.
-
- If null, the floatingPlaceholderScale is @(floatingPlaceholderScaleDefault).
- */
-@property(nonatomic, null_resettable, strong) NSNumber *floatingPlaceholderScale;
-
-/**
- Default value for the floating placeholder scale.
-
- Default is 0.75.
- */
-@property(class, nonatomic, assign) CGFloat floatingPlaceholderScaleDefault;
-
-/**
- If enabled, the inline placeholder label will float above the input when there is inputted text or
- the field is being edited.
-
- Default is floatingEnabledDefault.
- */
-@property(nonatomic, assign, getter=isFloatingEnabled) BOOL floatingEnabled;
-
-/**
- Default value for floatingEnabled.
-
- Default is YES.
- */
-@property(class, nonatomic, assign, getter=isFloatingEnabledDefault) BOOL floatingEnabledDefault;
 
 /**
  The minimum number of lines the controller's .textInput should use for rendering text.

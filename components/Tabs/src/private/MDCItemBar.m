@@ -74,9 +74,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   /// Width of the collection view accounting for SafeAreaInsets at last layout.
   CGFloat _lastAdjustedCollectionViewWidth;
 
-  /// Horizontal size class at the last item metrics update. Used to calculate deltas.
-  UIUserInterfaceSizeClass _horizontalSizeClassAtLastMetricsUpdate;
-
   /// Current style properties.
   MDCItemBarStyle *_style;
 }
@@ -105,7 +102,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   _alignment = MDCItemBarAlignmentLeading;
   _style = [[MDCItemBarStyle alloc] init];
   _items = @[];
-  _horizontalSizeClassAtLastMetricsUpdate = UIUserInterfaceSizeClassUnspecified;
 
   // Configure the collection view.
   _flowLayout = [self generatedFlowLayout];
@@ -632,14 +628,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       break;
   }
 
-  UIEdgeInsets oldSectionInset = _flowLayout.sectionInset;
-  if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset) &&
-      _alignment != MDCItemBarAlignmentJustified) {
-    // No change - can bail early, except when the item alignment is "justified". When justified,
-    // the layout metrics need updating due to change in view size or orientation.
-    return;
-  }
-
   // Rather than just updating the sectionInset on the existing flowLayout, a new layout object
   // is created. This gives more control over whether the change is animated or not - as there is
   // no control when updating flow layout sectionInset (it's always animated).
@@ -656,8 +644,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // Update selection indicator to potentially new location and size
   // Not animated for the same reason as mentioned above.
   [self updateSelectionIndicatorToIndex:[self indexForItem:_selectedItem]];
-
-  _horizontalSizeClassAtLastMetricsUpdate = horizontalSizeClass;
 }
 
 - (UIEdgeInsets)leadingAlignedInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {

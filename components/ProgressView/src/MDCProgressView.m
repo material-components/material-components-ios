@@ -21,7 +21,7 @@
 #import "MDFInternationalization.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
-#import "MotionAnimator.h"
+#import <MotionAnimator/MotionAnimator.h>
 #import "private/MDCProgressView+MotionSpec.h"
 
 static inline UIColor *MDCProgressViewDefaultTintColor(void) {
