@@ -16,7 +16,7 @@ and at least one version of Xcode.
 Run the following command from the root of your MDC-iOS repo to run the presubmits:
 
 ```
-.kokoro
+./.kokoro
 ```
 
 The presubmit script will build and run unit tests against every version of Xcode installed on your

@@ -16,7 +16,12 @@
 
 #import "MDCTextInputControllerOutlined.h"
 
+#import "MDCTextInput.h"
 #import "MDCTextInputBorderView.h"
+#import "MDCTextInputController.h"
+#import "MDCTextInputControllerDefault.h"
+#import "MDCTextInputControllerFloatingPlaceholder.h"
+#import "MDCTextInputUnderlineView.h"
 #import "private/MDCPaddedLabel.h"
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
 

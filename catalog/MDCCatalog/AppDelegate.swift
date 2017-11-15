@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
-    colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
+    colorScheme = MDCBasicColorScheme(primaryColor: .init(white: 33 / 255.0, alpha: 1),
                                       primaryLightColor: .init(white: 0.7, alpha: 1),
                                       primaryDarkColor: .init(white: 0, alpha: 1))
 
@@ -77,7 +77,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
     MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
-    MDCTextFieldColorThemer.applyColorScheme(toAllTextInputControllerDefault: colorScheme)
+
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerLegacyDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerFilled.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlined.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlinedTextArea.self)
 
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor

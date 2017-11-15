@@ -57,7 +57,7 @@
   self.appBar.navigationBar.backgroundColor = [UIColor clearColor];
 
   // Allow the header to show more of the image.
-  self.appBar.headerViewController.headerView.maximumHeight = 200;
+  self.appBar.headerViewController.headerView.maximumHeight = 300;
 
   // Typical use
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;

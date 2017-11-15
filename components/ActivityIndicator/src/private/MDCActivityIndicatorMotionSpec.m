@@ -19,7 +19,7 @@
 const NSTimeInterval kPointCycleDuration = 4.0f / 3.0f;
 const NSTimeInterval kPointCycleMinimumVariableDuration = kPointCycleDuration / 8;
 
-const struct MDCActivityIndicatorMotionSpec kMotionSpec = {
+const struct MDCActivityIndicatorMotionSpec kMDCActivityIndicatorMotionSpec = {
   .indeterminate = {
     .outerRotation = {
       .duration = kPointCycleDuration, .curve = _MDMBezier(0, 0, 1, 1),

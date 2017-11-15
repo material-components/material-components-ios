@@ -23,6 +23,7 @@
 
 #import "MaterialAppBar.h"
 #import "MaterialThemes.h"
+#import "MaterialTextFields.h"
 
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"

@@ -28,6 +28,7 @@
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+  bottomSheet.trackingScrollView = viewController.collectionView;
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 

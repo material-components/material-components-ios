@@ -20,7 +20,7 @@ import MaterialCatalog
 
 class MDCCatalogTileView: UIView {
 
-  fileprivate var componentNameString = "Misc"
+  private var componentNameString = "Misc"
   var componentName: String {
     get {
       return componentNameString
@@ -30,13 +30,12 @@ class MDCCatalogTileView: UIView {
       imageView.image = getImage(componentNameString)
     }
   }
-  let imageView = UIImageView()
-  let imageCache = NSCache<AnyObject, UIImage>()
+  private lazy var imageView = UIImageView()
+  private let imageCache = NSCache<AnyObject, UIImage>()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = UIColor.clear
-    imageView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     self.addSubview(imageView)
   }
 
@@ -45,7 +44,12 @@ class MDCCatalogTileView: UIView {
   }
 
   override func layoutSubviews() {
+    super.layoutSubviews()
+    guard !bounds.isEmpty else {
+      return
+    }
     imageView.image = getImage(componentNameString)
+    imageView.frame = bounds
   }
 
   func getImage(_ key: String) -> UIImage {
@@ -67,73 +71,74 @@ class MDCCatalogTileView: UIView {
   // dictionary, but Swift's dictionaries can't seem to handle C function pointers.
   // swiftlint:disable function_body_length
   func createImage() -> UIImage {
-    var newImage = UIImage()
-
-    let defaultSize = CGRect(x: 0, y: 0, width: 188, height: 155)
-    let left = (self.frame.width - defaultSize.width) / 2
-    let top = (self.frame.height - defaultSize.height) / 2
-    imageView.frame = CGRect(x: left, y: top, width: defaultSize.width, height: defaultSize.height)
+    var newImage: UIImage?
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
 
     switch componentNameString {
     case "Activity Indicator":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawActivityIndicatorTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawActivityIndicatorTile, colorScheme)
     case "Animation Timing":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawAnimationTimingTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawAnimationTimingTile, colorScheme)
     case "App Bar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawAppBarTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawAppBarTile, colorScheme)
+    case "Bottom App Bar":
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawBottomAppBarTile, colorScheme)
+    case "Bottom Navigation":
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawBottomNavTile, colorScheme)
+    case "Bottom Sheet":
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawBottomSheetTile, colorScheme)
     case "Button Bar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawButtonBarTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawButtonBarTile, colorScheme)
     case "Buttons":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawButtonsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawButtonsTile, colorScheme)
     case "Collection Cells":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawCollectionCellsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawCollectionCellsTile, colorScheme)
     case "Collections":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawCollectionsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawCollectionsTile, colorScheme)
     case "Dialogs":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawDialogsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawDialogsTile, colorScheme)
     case "Feature Highlight":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawFeatureHighlightTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawFeatureHighlightTile, colorScheme)
     case "Flexible Header":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawFlexibleHeaderTile, colorScheme)
-    case "Header Stack View":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawHeaderStackViewTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawFlexibleHeaderTile, colorScheme)
     case "Ink":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawInkTile, colorScheme)
-    case "Navigation Bar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawNavigationBarTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawInkTile, colorScheme)
+    case "Masked Transition":
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawMaskedTransitionTile, colorScheme)
     case "Misc":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile, colorScheme)
-    case "Overlay Window":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawOverlayWindow, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawMiscTile, colorScheme)
     case "Page Control":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPageControlTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawPageControlTile, colorScheme)
     case "Palettes":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPalettesTile, colorScheme)
-    case "Progress View":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawProgressViewTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawPalettesTile, colorScheme)
     case "Shadow":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawShadowLayerTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawShadowLayerTile, colorScheme)
     case "Slider":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSliderTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawSliderTile, colorScheme)
     case "Snackbar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSnackbarTile, colorScheme)
-    case "Switch":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSwitchTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawSnackbarTile, colorScheme)
     case "Tab Bar":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTabsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawTabsTile, colorScheme)
     case "Text Field":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTextFieldTile, colorScheme)
-    case "Typography and Fonts":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTypographyTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawTextFieldTile, colorScheme)
+    case "Themes":
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawThemesTile, colorScheme)
+    case "Typography Custom Fonts":
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawTypographyCustomFontsTile, colorScheme)
     default:
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile, colorScheme)
+      newImage = MDCDrawImage(bounds, MDCCatalogDrawMiscTile, colorScheme)
     }
-    imageCache.setObject(newImage, forKey: componentNameString as AnyObject)
-    return newImage
+
+    guard let unwrappedImage = newImage else {
+      let emptyImage = UIImage()
+      imageCache.setObject(emptyImage, forKey: componentNameString as AnyObject)
+      return emptyImage
+    }
+
+    imageCache.setObject(unwrappedImage, forKey: componentNameString as AnyObject)
+    return unwrappedImage
   }
   // swiftlint:enable function_body_length
-
 }

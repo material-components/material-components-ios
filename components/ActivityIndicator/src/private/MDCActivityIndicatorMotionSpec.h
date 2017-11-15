@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MotionInterchange.h"
+#import <MotionInterchange/MotionInterchange.h>
 
 struct MDCActivityIndicatorMotionSpec {
   struct MDCActivityIndicatorMotionSpecIndeterminate {
@@ -45,5 +45,5 @@ typedef struct MDCActivityIndicatorMotionSpec MDCActivityIndicatorMotionSpec;
 FOUNDATION_EXPORT const NSTimeInterval kPointCycleDuration;
 FOUNDATION_EXPORT const NSTimeInterval kPointCycleMinimumVariableDuration;
 
-FOUNDATION_EXPORT const struct MDCActivityIndicatorMotionSpec kMotionSpec;
+FOUNDATION_EXPORT const struct MDCActivityIndicatorMotionSpec kMDCActivityIndicatorMotionSpec;
 
