@@ -77,7 +77,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
     MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
-    MDCTextFieldColorThemer.applyColorScheme(toAllTextInputControllerDefault: colorScheme)
+
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerLegacyDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerFilled.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlined.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlinedTextArea.self)
 
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor
