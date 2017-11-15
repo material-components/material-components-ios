@@ -17,24 +17,26 @@
 #import "MDCBottomSheetController.h"
 
 #import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetTransitionController.h"
+#import "MDCBottomSheetTransition.h"
 #import "UIViewController+MaterialBottomSheet.h"
+
+#import <MotionTransitioning/MotionTransitioning.h>
 
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
 @end
 
 @implementation MDCBottomSheetController {
-  MDCBottomSheetTransitionController *_transitionController;
+  MDCBottomSheetTransition *_transition;
 }
 
 - (nonnull instancetype)initWithContentViewController:
     (nonnull UIViewController *)contentViewController {
-  if (self = [super initWithNibName:nil bundle:nil]) {
+  self = [super initWithNibName:nil bundle:nil];
+  if (self) {
     _contentViewController = contentViewController;
-    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
 
-    super.transitioningDelegate = _transitionController;
-    super.modalPresentationStyle = UIModalPresentationCustom;
+    _transition = [[MDCBottomSheetTransition alloc] init];
+    self.mdm_transitionController.transition = _transition;
   }
   return self;
 }
@@ -77,24 +79,11 @@
 }
 
 - (UIScrollView *)trackingScrollView {
-  return _transitionController.trackingScrollView;
+  return _transition.trackingScrollView;
 }
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
-  _transitionController.trackingScrollView = trackingScrollView;
-}
-
-/* Disable setter. Always use internal transition controller */
-- (void)setTransitioningDelegate:
-    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
-  NSAssert(NO, @"MDCBottomSheetController.transitioningDelegate cannot be changed.");
-  return;
-}
-
-/* Disable setter. Always use custom presentation style */
-- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
-  NSAssert(NO, @"MDCBottomSheetController.modalPresentationStyle cannot be changed.");
-  return;
+  _transition.trackingScrollView = trackingScrollView;
 }
 
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:

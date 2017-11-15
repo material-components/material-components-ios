@@ -65,8 +65,8 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   }
 
   UIViewController *toViewController =
-  [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-      UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
+      [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
   if (toView == nil) {
     toView = toViewController.view;
   }

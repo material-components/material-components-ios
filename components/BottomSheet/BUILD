@@ -29,6 +29,9 @@ mdc_public_objc_library(
     deps = [
       "//components/private/KeyboardWatcher",
       "//components/private/Math",
+      "@motion_animator_objc//:MotionAnimator",
+      "@motion_interchange_objc//:MotionInterchange",
+      "@motion_transitioning_objc//:MotionTransitioning",
     ],
 )
 
