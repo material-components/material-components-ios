@@ -16,9 +16,8 @@
 
 #import "MDCTextFieldColorThemer.h"
 
+#import "MaterialTextFields.h"
 #import "MaterialThemes.h"
-#import "MDCTextInputController.h"
-#import "MDCTextInputControllerFloatingPlaceholder.h"
 
 @implementation MDCTextFieldColorThemer
 
