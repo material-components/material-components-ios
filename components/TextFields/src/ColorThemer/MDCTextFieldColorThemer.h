@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialTextFields.h"
-#import "MaterialThemes.h"
+@protocol MDCColorScheme;
+@protocol MDCTextInputController;
 
 /**
  Used to apply a color scheme to theme MDCTextField within MDCTextInputController.
@@ -25,6 +25,9 @@
 /**
  Applies a color scheme to theme MDCTextField in MDCTextInputController.
 
+ Performs introspection to determine if class passed conforms to
+ MDCTextInputControllerFloatingPlaceholder to set properties like .floatingPlaceholderNormalColor.
+
  @param colorScheme The color scheme to apply.
  @param textInputController A MDCTextInputController instance to apply a color scheme.
  */
@@ -32,22 +35,17 @@
     toTextInputController:(NSObject<MDCTextInputController> *)textInputController;
 
 /**
- Applies a color scheme to theme MDCTextField in MDCTextInputControllerLegacyDefault.
+ Applies a color scheme to MDCTextField for all instances of the class
+ using the default color class properties.
+
+ Performs introspection to determine if class passed conforms to
+ MDCTextInputControllerFloatingPlaceholder to set properties like
+ .floatingPlaceholderNormalColorDefault.
 
  @param colorScheme The color scheme to apply.
- @param textInputControllerDefault A MDCTextInputControllerLegacyDefault instance to apply a color
- scheme.
+ @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
  */
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-    toTextInputControllerDefault:(MDCTextInputControllerLegacyDefault *)textInputControllerDefault;
-
-/**
- Applies a color scheme to MDCTextField for all instances of MDCTextInputControllerLegacyDefault
- using the
- default color class properties.
-
- @param colorScheme The color scheme to apply.
- */
-+ (void)applyColorSchemeToAllTextInputControllerDefault:(NSObject<MDCColorScheme> *)colorScheme;
-
+    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass
+    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 @end

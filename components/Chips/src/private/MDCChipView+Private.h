@@ -14,21 +14,12 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerDefault.h"
+#import "MDCChipView.h"
 
-@interface MDCTextInputControllerDefault (Subclassing)
+@interface MDCChipView (Private)
 
-@property(nonatomic, assign, readonly, getter=isDisplayingCharacterCountError)
-    BOOL displayingCharacterCountError;
-@property(nonatomic, assign, readonly, getter=isDisplayingErrorText) BOOL displayingErrorText;
-
-/** Refreshes the layout and style of the border view. Called within updateLayout. */
-- (void)updateBorder;
-
-/** Refreshes the geometry and style of the component. */
-- (void)updateLayout;
-
-/** Refreshes the layout and style of the placeholder label. Called within updateLayout. */
-- (void)updatePlaceholder;
+- (void)startTouchBeganAnimationAtPoint:(CGPoint)point;
+- (void)startTouchEndedAnimationAtPoint:(CGPoint)point;
+- (BOOL)willChangeSizeWithSelectedValue:(BOOL)selected;
 
 @end
