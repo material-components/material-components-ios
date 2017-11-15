@@ -30,6 +30,7 @@ import MaterialComponents.MDCPageControlColorThemer
 import MaterialComponents.MDCProgressViewColorThemer
 import MaterialComponents.MDCSliderColorThemer
 import MaterialComponents.MDCTabBarColorThemer
+import MaterialComponents.MaterialTextFields
 import MaterialComponents.MDCTextFieldColorThemer
 import MaterialComponents.MaterialThemes
 
