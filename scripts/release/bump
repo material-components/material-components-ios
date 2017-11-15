@@ -181,7 +181,7 @@ def main():
     sys.exit(-1)
 
   # Set the official version.
-  set_version(verbose_printer, args.version, version_file)
+  set_version(verbose_printer, version_file, args.version)
 
   # Find all podspecs files.
   podspecs = find_podspecs(args.directory)
