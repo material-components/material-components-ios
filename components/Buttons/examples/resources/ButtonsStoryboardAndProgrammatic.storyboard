@@ -93,9 +93,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="tf2-SG-2uQ"/>
-                        <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="AIX-u6-JAL"/>
-                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="5z9-aK-IJ5"/>
+                        <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="ymC-xl-wu5"/>
+                        <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="a1m-x5-Gq7"/>
+                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="LQt-fl-9az"/>
                     </connections>
                 </viewController>
             </objects>
