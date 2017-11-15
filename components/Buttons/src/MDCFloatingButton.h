@@ -67,6 +67,13 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
 @property(nonatomic, assign) MDCFloatingButtonShape shape;
 
 /**
+ The horizontal padding between the |imageView| and |titleLabel| when the button has an "extended"
+ shape (.extendedLeadingIcon and .extendedTrailingIcon).  If set to a negative value, the imageView
+ and titleLabel may overlap.
+ */
+@property(nonatomic, assign) CGFloat imageTitlePadding UI_APPEARANCE_SELECTOR;
+
+/**
  Returns a MDCFloatingButton with default colors and the given @c shape.
 
  @param shape Button shape.
