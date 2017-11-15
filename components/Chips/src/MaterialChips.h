@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,14 +14,6 @@
  limitations under the License.
  */
 
-#import "MDCTextInputCharacterCounter.h"
-
-#import "MDCTextInput.h"
-
-@implementation MDCTextInputAllCharactersCounter
-
-- (NSUInteger)characterCountForTextInput:(UIView<MDCTextInput> *)textInput {
-  return textInput.text.length;
-}
-
-@end
+#import "MDCChipCollectionViewFlowLayout.h"
+#import "MDCChipCollectionViewCell.h"
+#import "MDCChipView.h"
