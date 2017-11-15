@@ -28,6 +28,8 @@ static NSString *const MDCFloatingButtonMaximumSizeDictionaryKey
     = @"MDCFloatingButtonMaximumSizeDictionaryKey";
 static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
     = @"MDCFloatingButtonContentEdgeInsetsDictionaryKey";
+static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
+    = @"MDCFloatingButtonHitAreaInsetsDictionaryKey";
 
 @interface MDCFloatingButton ()
 @property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSValue *> *shapeToHitAreaInsets;
@@ -71,8 +73,6 @@ static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
     _shape = shape;
     // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
     // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
-    super.contentEdgeInsets = [self defaultContentEdgeInsets];
-    super.hitAreaInsets = [self defaultHitAreaInsets];
     [self commonMDCFloatingButtonInit];
     [self updateShape];
   }
@@ -110,6 +110,8 @@ static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
       = [NSValue valueWithUIEdgeInsets:UIEdgeInsetsZero];
   self.shapeToHitAreaInsets[@(MDCFloatingButtonShapeMini)]
       = [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(-4, -4, -4, -4)];
+  super.contentEdgeInsets = [self defaultContentEdgeInsets];
+  super.hitAreaInsets = [self defaultHitAreaInsets];
 }
 
 #pragma mark - NSCoding
@@ -117,6 +119,7 @@ static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    [self commonMDCFloatingButtonInit];
     _shape = [aDecoder decodeIntegerForKey:MDCFloatingButtonShapeKey];
     if ([aDecoder containsValueForKey:MDCFloatingButtonMinimumSizeDictionaryKey]) {
       _shapeToMinimumSize = [aDecoder decodeObjectForKey:MDCFloatingButtonMinimumSizeDictionaryKey];
@@ -127,6 +130,10 @@ static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
     if ([aDecoder containsValueForKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey]) {
       _shapeToContentEdgeInsets
           = [aDecoder decodeObjectForKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
+    }
+    if ([aDecoder containsValueForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey]) {
+      _shapeToHitAreaInsets
+          = [aDecoder decodeObjectForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
     }
   }
   return self;
@@ -139,6 +146,8 @@ static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
   [aCoder encodeObject:self.shapeToMaximumSize forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
   [aCoder encodeObject:self.shapeToContentEdgeInsets
                 forKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
+  [aCoder encodeObject:self.shapeToHitAreaInsets
+                forKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
 }
 
 #pragma mark - UIView
