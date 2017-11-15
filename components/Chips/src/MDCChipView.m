@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCChipView+Private.h"
+#import "private/MDCChipView+Private.h"
 
 #import "MaterialInk.h"
 #import "MaterialMath.h"
