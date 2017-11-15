@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCButton.
  @param button A MDCButton instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toButton:(MDCButton *)button;
 
 @end
