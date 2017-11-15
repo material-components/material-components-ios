@@ -26,8 +26,8 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-      "//components/private/Application",
-      "@material_internationalization_ios//:MDFInternationalization"
+        "//components/private/Application",
+        "@material_internationalization_ios//:MDFInternationalization"
       ],
 )
 

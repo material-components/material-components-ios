@@ -27,10 +27,10 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-      "//components/AnimationTiming",
-      "//components/private/Math",
-      "//components/Palettes",
-      "//components/Typography"
+        "//components/AnimationTiming",
+        "//components/private/Math",
+        "//components/Palettes",
+        "//components/Typography"
       ],
 )
 
@@ -50,9 +50,9 @@ swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
     deps = [
-      ":TextFields",
-      "//components/private/Math",
-      "//components/Palettes",
+        ":TextFields",
+        "//components/private/Math",
+        "//components/Palettes",
       ],
     visibility = ["//visibility:private"],
 )
