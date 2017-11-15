@@ -16,9 +16,12 @@
 
 #import "MDCMultilineTextField.h"
 
+#import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInputController.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
+#import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputCommonFundament.h"
 
 #import "MaterialMath.h"
