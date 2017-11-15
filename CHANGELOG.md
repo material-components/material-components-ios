@@ -22,6 +22,110 @@
 
 * Refactored [color theming support](https://github.com/material-components/material-components-ios/pull/2416).
 
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Fix bug where outer rotation was incorrect in determinate state. (#2390)](https://github.com/material-components/material-components-ios/commit/c25d6e32485ea3837d5a333c79ce3ba18fc899a3) (featherless)
+* [Prefix the motion spec with the API name. (#2387)](https://github.com/material-components/material-components-ios/commit/13b0631515888140172ac8b923a40a541492a9fe) (featherless)
+* [Replace Motion relative imports with framework imports throughout the repo. (#2424)](https://github.com/material-components/material-components-ios/commit/30c9fcb84116ef47ec1d5e629dee06b85962f1aa) (featherless)
+* [[ProgressView|ActivityIndicator] Fix build (#2385)](https://github.com/material-components/material-components-ios/commit/114b2e28cd03218a0196663a2ba6ce937d0b8df8) (Brian Moore)
+
+### AppBar
+
+#### Changes
+
+* [[FlexibleHeader] Add hideViewWhenShifted API. (#2317)](https://github.com/material-components/material-components-ios/commit/f11269ad6b15cb50f9b137a4a0ff7512058166da) (Andrés)
+
+### BottomNavigation
+
+#### Changes
+
+* [Update bottom navigation bar defaults to match native component height and orientation behavior (#2411)](https://github.com/material-components/material-components-ios/commit/106de4a6bf8a719e9b1aa6f48e1a58da84af5f16) (Junius Gunaratne)
+
+### BottomSheet
+
+#### Changes
+
+* [Add BUILD file for kokoro + bazel support. (#2396)](https://github.com/material-components/material-components-ios/commit/5c87a3fd9a43cfdf57e14be69e743f3d3f27e351) (featherless)
+* [Add a trackingScrollView API to the bottom sheet controller. (#2420)](https://github.com/material-components/material-components-ios/commit/d30b396671021a9b540158c0ca446b8d174046d6) (featherless)
+* [Don't set the frame on the draggable view until we've set the anchor point. (#2399)](https://github.com/material-components/material-components-ios/commit/4907310d3453d7ff8768cc826c9abfe0312ef01a) (featherless)
+* [Remove umbrella imports from source files. (#2397)](https://github.com/material-components/material-components-ios/commit/dbeb67977f2615686a07095e42fa6d35aa0ca476) (featherless)
+* [Replace mdc_cancel category method with a C function. (#2398)](https://github.com/material-components/material-components-ios/commit/607b128566577bfd6974d9efe71d1e70b7b1b75d) (featherless)
+* [Safe Area fixes (#2392)](https://github.com/material-components/material-components-ios/commit/c6e8803c86ceb90bd48571408fb15b02caa9a891) (Andrés)
+
+### Chips
+
+#### Changes
+
+* [Chip component (#2389)](https://github.com/material-components/material-components-ios/commit/7c8131b672e9aa296f2dcde47d36d5faace268ee) (Sam Morrison)
+
+### Collections
+
+#### Changes
+
+* [Support SafeAreaInsets in MDCCollectionInfoBarView. (#2378)](https://github.com/material-components/material-components-ios/commit/8cda30a778236df51ae9da5a067476abc67f4862) (Andrés)
+* [Use MDCPalettes for info bar colors (#2364)](https://github.com/material-components/material-components-ios/commit/2f1921b64e6aed760fea68491a8ea5a2591713b6) (Yurii Samsoniuk)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add hideViewWhenShifted API. (#2317)](https://github.com/material-components/material-components-ios/commit/f11269ad6b15cb50f9b137a4a0ff7512058166da) (Andrés)
+
+### LibraryInfo
+
+#### Changes
+
+* [Add new LibraryInfo component (attempt #2) (#2412)](https://github.com/material-components/material-components-ios/commit/1a24b7cb9ed93f2e0196d0839e0e5fa11674a40f) (Adrian Secord)
+
+### MaskedTransition
+
+#### Changes
+
+* [Update the component with MotionAnimator v2 APIs. (#2386)](https://github.com/material-components/material-components-ios/commit/655712a616129dd4253091687e30892c47ffd814) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [Corrected comment that references file name of the strings file. (#2394)](https://github.com/material-components/material-components-ios/commit/e63e9ad595a2f87e2d965c44ede89b0a81ff1904) (Randall Li)
+
+### ProgressView
+
+#### Changes
+
+* [Replace Motion relative imports with framework imports throughout the repo. (#2424)](https://github.com/material-components/material-components-ios/commit/30c9fcb84116ef47ec1d5e629dee06b85962f1aa) (featherless)
+* [[ProgressView|ActivityIndicator] Fix build (#2385)](https://github.com/material-components/material-components-ios/commit/114b2e28cd03218a0196663a2ba6ce937d0b8df8) (Brian Moore)
+
+### Slider
+
+#### Changes
+
+* [Correct colors for slider default light color scheme (#2409)](https://github.com/material-components/material-components-ios/commit/74d700e466155aa3475241a83ae37c1973cb65cb) (John Detloff)
+* [Use MDCPalettes for default thumb track color (#2369)](https://github.com/material-components/material-components-ios/commit/f437e8187a405c9e320b647e66ca0b110e5ff8df) (Yurii Samsoniuk)
+
+### Tabs
+
+#### Changes
+
+* [Remove incorrect layout optimization (#2422)](https://github.com/material-components/material-components-ios/commit/c1397792ccca4f403ff51fbb026df64b44492228) (Brian Moore)
+* [Use bottom position when determining the bottom tab bar's height (#2375)](https://github.com/material-components/material-components-ios/commit/ba097149c4f4c1dd6f2161ca7f7994829273ba40) (Brian Moore)
+
+### TextFields
+
+#### Changes
+
+* [Complete theming of controllers (#2416)](https://github.com/material-components/material-components-ios/commit/93cc72187f8f376cf36747c06d6ecec328533bcb) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [[TextFields] Complete theming of controllers (#2416)](https://github.com/material-components/material-components-ios/commit/93cc72187f8f376cf36747c06d6ecec328533bcb) (Will Larche)
+
 # 39.0.0
 
 ## API Changes
