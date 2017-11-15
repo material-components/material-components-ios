@@ -160,7 +160,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                                     y:0,
                                     width: Constants.logoWidthHeight,
                                     height: Constants.logoWidthHeight),
-                             MDCCatalogDrawMDCLogoLight,
+                             { MDCCatalogDrawMDCLogoLight($0, $1) },
                              appDelegate.colorScheme)
     logo.image = image
 
