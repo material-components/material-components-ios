@@ -19,7 +19,7 @@
 #import "MaterialBottomNavigationStrings.h"
 #import "MaterialBottomNavigationStrings_table.h"
 #import "MDCBottomNavigationItemBadge.h"
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
 static const CGFloat kMDCBottomNavigationItemViewCircleLayerOffset = -6.f;
 static const CGFloat kMDCBottomNavigationItemViewCircleLayerDimension = 36.f;

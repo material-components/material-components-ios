@@ -17,7 +17,7 @@
 #import "MDCAlertController.h"
 
 #import "MDCDialogTransitionController.h"
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "private/MaterialDialogsStrings.h"

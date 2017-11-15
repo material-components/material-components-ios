@@ -18,7 +18,7 @@
 
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialAnimationTiming.h"
 
 /// Height in points of the bar shown under selected items.

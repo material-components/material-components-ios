@@ -16,7 +16,7 @@
 
 #import "MDCNavigationBar.h"
 
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MDFTextAccessibility.h"
 #import "MaterialButtonBar.h"
 #import "MaterialMath.h"

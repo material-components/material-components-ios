@@ -18,7 +18,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialApplication.h"
 #import <MotionAnimator/MotionAnimator.h>
 #import "private/MDCActivityIndicatorMotionSpec.h"

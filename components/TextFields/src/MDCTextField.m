@@ -25,7 +25,7 @@
 
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
 static NSString *const MDCTextFieldCursorColorKey = @"MDCTextFieldCursorColorKey";
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";

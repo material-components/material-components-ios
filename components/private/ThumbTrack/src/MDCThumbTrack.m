@@ -18,7 +18,7 @@
 
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 

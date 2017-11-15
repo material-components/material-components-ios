@@ -18,7 +18,7 @@
 
 #include <tgmath.h>
 
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import <MotionAnimator/MotionAnimator.h>
