@@ -64,6 +64,10 @@ run_cocoapods() {
     cd github/repo
   fi
 
+  export DEVELOPER_DIR=/Applications/Xcode_8.2.app/Contents/Developer
+  sudo xcode-select --switch /Applications/Xcode_8.2.app/Contents/Developer
+  xcodebuild -version
+
   scripts/prep_all
   scripts/build_all --verbose
   scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
