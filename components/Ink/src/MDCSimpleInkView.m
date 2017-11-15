@@ -62,6 +62,10 @@
   self.activeInkLayer = inkLayer;
 }
 
+- (void)changeInkAtPoint:(CGPoint)point {
+  [self.activeInkLayer changeAnimationAtPoint:point];
+}
+
 - (void)endInkAnimated:(BOOL)animated {
   [self endInk:self.activeInkLayer animated:animated];
 }
@@ -89,6 +93,7 @@
       [self startInkAtPoint:point completion:self.completionBlock];
       break;
     case UIGestureRecognizerStateChanged:
+      [self changeInkAtPoint:point];
       break;
     case UIGestureRecognizerStateEnded:
       [self.delegate inkView:self didTouchUpAtPoint:point];

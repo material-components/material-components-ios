@@ -128,6 +128,25 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
   }
 }
 
+- (void)changeAnimationAtPoint:(CGPoint)point {
+  CGFloat opacity = 0;
+  CGFloat currentOpacity = self.presentationLayer.opacity;
+  if (CGRectContainsPoint(self.frame, point)) {
+    opacity = 1.f;
+  }
+  NSLog(@"changeAnimationAtPoint: %f %f", opacity, currentOpacity);
+  CAKeyframeAnimation *changeAnim = [[CAKeyframeAnimation alloc] init];
+  [changeAnim setKeyPath:kMDCSimpleInkLayerOpacityString];
+  changeAnim.keyTimes = @[ @0, @1.0f ];
+  changeAnim.values = @[ @(currentOpacity), @(opacity) ];
+  changeAnim.duration = 0.083f;
+  changeAnim.beginTime = 0.083f;
+  changeAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  changeAnim.fillMode = kCAFillModeForwards;
+  changeAnim.removedOnCompletion = NO;
+  [self addAnimation:changeAnim forKey:nil];
+}
+
 - (void)endAnimation {
   if (self.startAnimationActive) {
     self.endAnimationDelay = 0.25f;
