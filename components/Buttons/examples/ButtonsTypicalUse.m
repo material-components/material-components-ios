@@ -16,11 +16,13 @@
 
 #import "ButtonsTypicalUseSupplemental.h"
 
+#import "MDCButtonColorThemer.h"
+#import "MDCButtonStyler.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
 @interface ButtonsTypicalUseViewController ()
-@property(nonatomic, strong) MDCFloatingButton *floatingButton;
+@property(nonatomic, strong) MDCButton *floatingButton;
 @end
 
 @implementation ButtonsTypicalUseViewController
@@ -113,7 +115,8 @@
 
   // Floating action button
 
-  self.floatingButton = [[MDCFloatingButton alloc] init];
+  self.floatingButton = [[MDCButton alloc] init];
+  [MDCButtonStyler styleAsFloatingButton:self.floatingButton];
   [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   [self.floatingButton addTarget:self
@@ -134,30 +137,30 @@
 
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
-  if (sender == self.floatingButton) {
-    [self.floatingButton
-          collapse:YES
-        completion:^{
-          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                         dispatch_get_main_queue(), ^{
-                           [self.floatingButton expand:YES completion:nil];
-                         });
-        }];
-  }
+//  if (sender == self.floatingButton) {
+//    [self.floatingButton
+//          collapse:YES
+//        completion:^{
+//          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+//                         dispatch_get_main_queue(), ^{
+//                           [self.floatingButton expand:YES completion:nil];
+//                         });
+//        }];
+//  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  if (animated) {
-    [self.floatingButton collapse:NO completion:nil];
-  }
+//  if (animated) {
+//    [self.floatingButton collapse:NO completion:nil];
+//  }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  if (animated) {
-    [self.floatingButton expand:YES completion:nil];
-  }
+//  if (animated) {
+//    [self.floatingButton expand:YES completion:nil];
+//  }
 }
 
 @end
