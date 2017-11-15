@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 import CatalogByConvention
+import MaterialCatalog
 
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
+import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialThemes
@@ -28,48 +30,62 @@ import UIKit
 
 class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
 
-  let spacing = CGFloat(1)
-  let inset = CGFloat(16)
-  let node: CBCNode
-  var headerViewController: MDCFlexibleHeaderViewController
-  var titleLabel: UILabel
+  fileprivate struct Constants {
+    static let headerScrollThreshold: CGFloat = 50
+    static let inset: CGFloat = 16
+    static let logoTitleVerticalSpacing: CGFloat = 32
+    static let logoWidthHeight: CGFloat = 40
+    static let spacing: CGFloat = 1
+  }
+
+  fileprivate lazy var headerViewController = MDCFlexibleHeaderViewController()
 
   private lazy var inkController: MDCInkTouchController = {
     let controller = MDCInkTouchController(view: self.collectionView!)
     controller.delaysInkSpread = true
     controller.delegate = self
-
     return controller
+  }()
+
+  private lazy var logo: UIImageView = {
+    let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.contentMode = .scaleAspectFit
+    return imageView
+  }()
+
+  private let node: CBCNode
+  private lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel()
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    return titleLabel
   }()
 
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
 
     let layout = UICollectionViewFlowLayout()
-    let sectionInset: CGFloat = spacing
+    let sectionInset: CGFloat = Constants.spacing
     layout.sectionInset = UIEdgeInsets(top: sectionInset,
                                        left: sectionInset,
                                        bottom: sectionInset,
                                        right: sectionInset)
-    layout.minimumInteritemSpacing = spacing
-    layout.minimumLineSpacing = spacing
-
-    self.headerViewController = MDCFlexibleHeaderViewController()
-
-    self.titleLabel = UILabel()
+    layout.minimumInteritemSpacing = Constants.spacing
+    layout.minimumLineSpacing = Constants.spacing
 
     super.init(collectionViewLayout: layout)
 
-    self.title = "Material Design Components"
+    title = "Material Components for iOS v\(MDCLibraryInfo.versionString)"
 
-    self.addChildViewController(self.headerViewController)
+    addChildViewController(headerViewController)
 
-    self.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    self.headerViewController.headerView.maximumHeight = 108
+    headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    headerViewController.headerView.maximumHeight = 128
+    headerViewController.headerView.minimumHeight = 56
 
-    self.collectionView?.register(MDCCatalogCollectionViewCell.self,
+    collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
-    self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+    collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
 
@@ -102,13 +118,14 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     inkController.addInkView()
 
-    let containerView = UIView(frame: self.headerViewController.headerView.bounds)
+    let containerView = UIView(frame: headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    titleLabel.text = self.title!.uppercased()
+    titleLabel.text = title!
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
+    titleLabel.font = UIFont.mdc_preferredFont(forMaterialTextStyle: .title)
     if #available(iOS 9.0, *) {
-        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: UIFontWeightRegular)
+        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFontWeightRegular)
     } else {
         let attribute: [String: UIFontDescriptorSymbolicTraits] =
             [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
@@ -116,19 +133,15 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
         titleLabel.font = UIFont(descriptor: descriptor, size: 14)
     }
     titleLabel.sizeToFit()
-    if inset + titleLabel.frame.size.width > containerView.frame.size.width {
+    if Constants.inset + titleLabel.frame.size.width > containerView.frame.size.width {
       titleLabel.font = MDCTypography.body2Font()
     }
 
-    let titleInsets = UIEdgeInsets(top: 0, left: inset, bottom: inset, right: inset)
+    let titleInsets = UIEdgeInsets(top: 0,
+                                   left: Constants.inset,
+                                   bottom: Constants.inset,
+                                   right: Constants.inset)
     let titleSize = titleLabel.sizeThatFits(containerView.bounds.size)
-    titleLabel.frame = CGRect(
-      x: titleInsets.left,
-      y: containerView.bounds.size.height - titleSize.height - titleInsets.bottom,
-      width: containerView.bounds.size.width,
-      height: titleSize.height)
-    titleLabel.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
     containerView.addSubview(titleLabel)
     constrainLabel(label: titleLabel,
@@ -136,45 +149,87 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                    insets: titleInsets,
                    height: titleSize.height)
 
-    self.headerViewController.headerView.addSubview(containerView)
-    self.headerViewController.headerView.forwardTouchEvents(for: containerView)
+    headerViewController.headerView.addSubview(containerView)
+    headerViewController.headerView.forwardTouchEvents(for: containerView)
 
-    self.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
-    self.headerViewController.headerView.trackingScrollView = self.collectionView
+    headerViewController.headerView.addSubview(logo)
 
-    self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+    let image = MDCDrawImage(CGRect(x:0,
+                                    y:0,
+                                    width: Constants.logoWidthHeight,
+                                    height: Constants.logoWidthHeight),
+                             MDCCatalogDrawMDCLogoLight,
+                             appDelegate.colorScheme)
+    logo.image = image
+
+    NSLayoutConstraint(item: logo,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: titleLabel,
+                       attribute: .top,
+                       multiplier: 1,
+                       constant: -1 * Constants.logoTitleVerticalSpacing).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .leading,
+                       relatedBy: .equal,
+                       toItem: titleLabel,
+                       attribute: .leading,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: logo,
+                       attribute: .height,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: nil,
+                       attribute: .notAnAttribute,
+                       multiplier: 1,
+                       constant: Constants.logoWidthHeight).isActive = true
+
+    headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    headerViewController.headerView.trackingScrollView = collectionView
+
+    headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
       let shadowLayer = layer as? MDCShadowLayer
       shadowLayer!.elevation = ShadowElevation(intensity * ShadowElevation.appBar.rawValue)
     }
 
-    self.view.addSubview(self.headerViewController.view)
-    self.headerViewController.didMove(toParentViewController: self)
+    view.addSubview(headerViewController.view)
+    headerViewController.didMove(toParentViewController: self)
 
-    self.collectionView?.accessibilityIdentifier = "collectionView"
+    collectionView?.accessibilityIdentifier = "collectionView"
 #if swift(>=3.2)
     if #available(iOS 11.0, *) {
-      self.collectionView?.contentInsetAdjustmentBehavior = .always
+      collectionView?.contentInsetAdjustmentBehavior = .always
     }
 #endif
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.collectionView?.collectionViewLayout.invalidateLayout()
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    collectionView?.collectionViewLayout.invalidateLayout()
+    navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
   override func willAnimateRotation(
     to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-    self.collectionView?.collectionViewLayout.invalidateLayout()
+    collectionView?.collectionViewLayout.invalidateLayout()
   }
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return self.headerViewController
+    return headerViewController
   }
 
   override var childViewControllerForStatusBarHidden: UIViewController? {
-    return self.headerViewController
+    return headerViewController
   }
 
 #if swift(>=3.2)
@@ -182,9 +237,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   override func viewSafeAreaInsetsDidChange() {
     // Re-constraint the title label to account for changes in safeAreaInsets's left and right.
     let titleInsets = UIEdgeInsets(top: 0,
-                                   left: inset + self.view.safeAreaInsets.left,
-                                   bottom: inset,
-                                   right: inset + self.view.safeAreaInsets.right)
+                                   left: Constants.inset + view.safeAreaInsets.left,
+                                   bottom: Constants.inset,
+                                   right: Constants.inset + view.safeAreaInsets.right)
     titleLabel.superview!.removeConstraints(titleLabel.superview!.constraints)
     constrainLabel(label: titleLabel,
                    containerView: titleLabel.superview!,
@@ -222,7 +277,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                           inkViewAtTouchLocation location: CGPoint) -> MDCInkView? {
     if let indexPath = self.collectionView!.indexPathForItem(at: location) {
       let cell = self.collectionView!.cellForItem(at: indexPath)
-      return self.inkViewForView(cell!)
+      return inkViewForView(cell!)
     }
     return MDCInkView()
   }
@@ -236,7 +291,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                                            for: indexPath)
     cell.backgroundColor = UIColor.white
 
-    let componentName = self.node.children[indexPath.row].title
+    let componentName = node.children[indexPath.row].title
     if let catalogCell = cell as? MDCCatalogCollectionViewCell {
       catalogCell.populateView(componentName)
     }
@@ -250,18 +305,26 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-    let pad = CGFloat(1)
-    var safeInsets = CGFloat(0)
+    let dividerWidth: CGFloat = 1
+    var safeInsets: CGFloat = 0
 #if swift(>=3.2)
     if #available(iOS 11, *) {
-      safeInsets = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
+      safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
     }
 #endif
-    var cellWidth = (self.view.frame.size.width - 3 * pad - safeInsets) / 2
-    if self.view.frame.size.width > self.view.frame.size.height {
-      cellWidth = (self.view.frame.size.width - 4 * pad - safeInsets) / 3
+    var cellWidthHeight: CGFloat
+
+    // iPhones have 2 columns in portrait and 3 in landscape
+    if UI_USER_INTERFACE_IDIOM() == .phone {
+      cellWidthHeight = (view.frame.size.width - 3 * dividerWidth - safeInsets) / 2
+      if view.frame.size.width > view.frame.size.height {
+        cellWidthHeight = (view.frame.size.width - 4 * dividerWidth - safeInsets) / 3
+      }
+    } else {
+      // iPads have 4 columns
+      cellWidthHeight = (view.frame.size.width - 5 * dividerWidth - safeInsets) / 4
     }
-    return CGSize(width: cellWidth, height: cellWidth * 0.825)
+    return CGSize(width: cellWidthHeight, height: cellWidthHeight)
   }
 
   override func collectionView(_ collectionView: UICollectionView,
@@ -317,28 +380,37 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       multiplier: 1.0,
       constant: height).isActive = true
   }
+
+  func adjustLogoForScrollView(_ scrollView: UIScrollView) {
+    let offset = scrollView.contentOffset.y
+    let inset = scrollView.contentInset.top
+    let relativeOffset = inset + offset
+
+    logo.alpha = 1 - (relativeOffset / Constants.headerScrollThreshold)
+  }
 }
 
 // UIScrollViewDelegate
 extension MDCCatalogComponentsController {
 
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == self.headerViewController.headerView.trackingScrollView {
+    if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidScroll()
+      adjustLogoForScrollView(scrollView)
     }
   }
 
   override func scrollViewDidEndDragging(
       _ scrollView: UIScrollView,
       willDecelerate decelerate: Bool) {
-    let headerView = self.headerViewController.headerView
+    let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
     }
   }
 
   override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == self.headerViewController.headerView.trackingScrollView {
+    if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
@@ -347,7 +419,7 @@ extension MDCCatalogComponentsController {
       _ scrollView: UIScrollView,
       withVelocity velocity: CGPoint,
       targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let headerView = self.headerViewController.headerView
+    let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollWillEndDragging(
         withVelocity: velocity,

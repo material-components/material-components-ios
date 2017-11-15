@@ -62,17 +62,19 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 
 #### To convert a raw asset to Core Graphics:
 
-1. Set the canvass size to 188 x 155.
+1. Set the canvas size to 82 x 82.
 1. Import the file (.svg or .ai) into PaintCode.
 1. Massage values until it matches the original (colors, gradients, spacing, etc).
 1. Make sure all shapes are enclosed in a group named Component Name Group.
-1. Enclose the group in a frame with the same bounds and origin as the canvas.
+1. Set the group's origin to (1,1) and size to 80 X 80
+1. Enclose the group in a frame with the same bounds and origin as the canvas, not the group.
 1. Set the group's springs and struts to:
   1. Top and Left pinned
   1. All others resize
 1. In `catalog/MDCCCatalog/MDCCatalogTiles.h`, declare a function for the new component.
 1. In `catalog/MDCCCatalog/MDCCatalogTiles.m`, add that function (empty.)
 1. Copy and paste the generated iOS Objc code into the function.
+1. Replace color variable values with values taken from the passed MDCColorScheme if possible.
 1. In `catalog/MDCCatalog/MDCCatalogTileView.swift`, add a new case for the new component and have it create `newImage` from the new function.
 
 #### Verify a tile exists:

@@ -16,6 +16,12 @@
 
 #import "MDCTextInputControllerFilled.h"
 
+#import "MDCMultilineTextField.h"
+#import "MDCTextInput.h"
+#import "MDCTextInputBorderView.h"
+#import "MDCTextInputController.h"
+#import "MDCTextInputControllerDefault.h"
+#import "MDCTextInputControllerFloatingPlaceholder.h"
 #import "private/MDCTextInputArt.h"
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
 

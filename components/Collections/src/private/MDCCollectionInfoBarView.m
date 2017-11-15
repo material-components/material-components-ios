@@ -16,6 +16,7 @@
 
 #import "MDCCollectionInfoBarView.h"
 
+#import "MaterialPalettes.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
@@ -25,16 +26,12 @@ const CGFloat MDCCollectionInfoBarFooterHeight = 48.0f;
 
 static const CGFloat MDCCollectionInfoBarLabelHorizontalPadding = 16.0f;
 
-// Colors derived from https://material.io/guidelines/style/color.html#color-color-palette .
-static const uint32_t kCollectionInfoBarBlueColor = 0x448AFF;  // Blue A200
-static const uint32_t kCollectionInfoBarRedColor = 0xF44336;   // Red 500
+static inline UIColor *CollectionInfoBarBlueColor(void) {
+  return MDCPalette.bluePalette.accent200;
+}
 
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
+static inline UIColor *CollectionInfoBarRedColor(void) {
+  return MDCPalette.redPalette.tint500;
 }
 
 @interface ShadowedView : UIView
@@ -72,11 +69,11 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   self.backgroundColor = [UIColor clearColor];
   self.userInteractionEnabled = NO;
   _backgroundView = [[ShadowedView alloc] initWithFrame:self.bounds];
-  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _backgroundView.autoresizingMask =
+      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _backgroundView.hidden = YES;
 
-  _titleLabel = [[UILabel alloc]
-      initWithFrame:CGRectInset(self.bounds, MDCCollectionInfoBarLabelHorizontalPadding, 0)];
+  _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _titleLabel.backgroundColor = [UIColor clearColor];
   _titleLabel.textAlignment = NSTextAlignmentCenter;
   _titleLabel.font = [MDCTypography body1Font];
@@ -92,6 +89,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  UIEdgeInsets collectionViewSafeAreaInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      if (self.superview) {
+        collectionViewSafeAreaInsets = self.superview.safeAreaInsets;
+      }
+    }
+#endif
+  CGFloat leftInset = MAX(MDCCollectionInfoBarLabelHorizontalPadding,
+                          collectionViewSafeAreaInsets.left);
+  CGFloat rightInset = MAX(MDCCollectionInfoBarLabelHorizontalPadding,
+                           collectionViewSafeAreaInsets.right);
+  CGFloat height = [_kind isEqualToString:MDCCollectionInfoBarKindHeader] ?
+      MDCCollectionInfoBarHeaderHeight : MDCCollectionInfoBarFooterHeight;
+  _titleLabel.frame =
+      CGRectMake(leftInset, 0, CGRectGetWidth(self.bounds) - (leftInset + rightInset), height);
+
   if (_shouldApplyBackgroundViewShadow) {
     [self setShouldApplyBackgroundViewShadow:_shouldApplyBackgroundViewShadow];
   }
@@ -121,10 +136,9 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 - (void)setKind:(NSString *)kind {
   _kind = kind;
+  _backgroundTransformY = CGRectGetHeight(self.bounds);
   if ([kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
-    _backgroundTransformY = -MDCCollectionInfoBarHeaderHeight;
-  } else {
-    _backgroundTransformY = MDCCollectionInfoBarFooterHeight;
+    _backgroundTransformY *= -1.0;
   }
   _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
 }
@@ -146,7 +160,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
     self.allowsTap = NO;
     self.shouldApplyBackgroundViewShadow = NO;
     self.textAlignment = NSTextAlignmentLeft;
-    self.tintColor = ColorFromRGB(kCollectionInfoBarBlueColor);
+    self.tintColor = CollectionInfoBarBlueColor();
     self.titleLabel.textColor = [UIColor whiteColor];
     self.autoDismissAfterDuration = 1.0f;
     self.backgroundView.alpha = 0.9f;
@@ -155,7 +169,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
     self.shouldApplyBackgroundViewShadow = YES;
     self.textAlignment = NSTextAlignmentCenter;
     self.tintColor = [UIColor whiteColor];
-    self.titleLabel.textColor = ColorFromRGB(kCollectionInfoBarRedColor);
+    self.titleLabel.textColor = CollectionInfoBarRedColor();
     self.autoDismissAfterDuration = 0.0f;
     self.backgroundView.alpha = 1.0f;
     self.isAccessibilityElement = YES;
@@ -178,7 +192,9 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)showAnimated:(BOOL)animated {
+  [self layoutIfNeeded];
   _backgroundView.hidden = NO;
+
   // Notify delegate.
   if ([_delegate respondsToSelector:@selector(infoBar:willShowAnimated:willAutoDismiss:)]) {
     [_delegate infoBar:self willShowAnimated:animated willAutoDismiss:[self shouldAutoDismiss]];

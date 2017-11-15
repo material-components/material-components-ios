@@ -20,7 +20,7 @@
 
 #import "MDFInternationalization.h"
 #import "MaterialApplication.h"
-#import "MotionAnimator.h"
+#import <MotionAnimator/MotionAnimator.h>
 #import "private/MDCActivityIndicatorMotionSpec.h"
 #import "private/MDCActivityIndicator+Private.h"
 #import "private/MaterialActivityIndicatorStrings.h"
@@ -215,7 +215,7 @@ static const CGFloat kSingleCycleRotation =
   return CGSizeMake(edge, edge);
 }
 
-- (CGSize)sizeThatFits:(__unused CGSize) size {
+- (CGSize)sizeThatFits:(__unused CGSize)size {
   CGFloat edge = 2 * _radius + _strokeWidth;
   return CGSizeMake(edge, edge);
 }
@@ -456,7 +456,8 @@ static const CGFloat kSingleCycleRotation =
     [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
   }];
 
-  struct MDCActivityIndicatorMotionSpecIndeterminate timing = kMotionSpec.indeterminate;
+  struct MDCActivityIndicatorMotionSpecIndeterminate timing =
+      kMDCActivityIndicatorMotionSpec.indeterminate;
   // These values may be equal if we've never received a progress. In this case we don't want our
   // duration to become zero.
   if (fabs(_lastProgress - _currentProgress) > CGFLOAT_EPSILON) {
@@ -543,7 +544,7 @@ static const CGFloat kSingleCycleRotation =
     [CATransaction setDisableActions:YES];
 
     struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate timing =
-        kMotionSpec.transitionToIndeterminate;
+        kMDCActivityIndicatorMotionSpec.transitionToIndeterminate;
 
     _outerRotationLayer.transform = CATransform3DIdentity;
     _strokeLayer.transform = CATransform3DIdentity;
@@ -598,16 +599,22 @@ static const CGFloat kSingleCycleRotation =
       [CATransaction setDisableActions:YES];
       [CATransaction mdm_setTimeScaleFactor:@(duration)];
 
+      struct MDCActivityIndicatorMotionSpecTransitionToDeterminate spec =
+          kMDCActivityIndicatorMotionSpec.transitionToDeterminate;
+
+      _outerRotationLayer.transform =
+          CATransform3DMakeRotation(kOuterRotationIncrement * _cycleCount, 0, 0, 1);
+
       CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
       CGFloat endRotation = startRotation + rotationDelta * 2.0f * (CGFloat)M_PI;
-      [_animator animateWithTiming:kMotionSpec.transitionToDeterminate.innerRotation
+      [_animator animateWithTiming:spec.innerRotation
                            toLayer:_strokeLayer
                         withValues:@[@(startRotation), @(endRotation)]
                            keyPath:MDMKeyPathRotation];
 
       _strokeLayer.strokeStart = 0;
 
-      [_animator animateWithTiming:kMotionSpec.transitionToDeterminate.strokeEnd
+      [_animator animateWithTiming:spec.strokeEnd
                            toLayer:_strokeLayer
                         withValues:@[@(_minStrokeDifference), @(_currentProgress)]
                            keyPath:MDMKeyPathStrokeEnd];
@@ -637,7 +644,7 @@ static const CGFloat kSingleCycleRotation =
     _strokeLayer.transform = CATransform3DIdentity;
     _strokeLayer.strokeStart = 0;
 
-    [_animator animateWithTiming:kMotionSpec.progress.strokeEnd
+    [_animator animateWithTiming:kMDCActivityIndicatorMotionSpec.progress.strokeEnd
                          toLayer:_strokeLayer
                       withValues:@[@(_lastProgress), @(_currentProgress)]
                          keyPath:MDMKeyPathStrokeEnd];

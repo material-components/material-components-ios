@@ -26,8 +26,8 @@
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
-static const CGFloat kMDCBottomNavigationBarHeight = 72.f;
-static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 60.f;
+static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
+static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static const MDCShadowElevation kMDCBottomNavigationBarElevation = 6.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
@@ -103,7 +103,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self.maxLandscapeClusterContainerWidth = MIN(size.width, size.height);
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
-  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
+      UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
     heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
   }
   CGSize insetSize = CGSizeMake(size.width, heightWithInset);
@@ -146,7 +147,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
                         withBottomNavSize:(CGSize)bottomNavSize
                            containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
-  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
+      UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
     barHeight = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
   if (itemsDistributed) {

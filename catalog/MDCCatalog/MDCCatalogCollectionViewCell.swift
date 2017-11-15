@@ -20,22 +20,29 @@ import MaterialComponents.MaterialTypography
 
 class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
-  var label = UILabel()
-  let pad = CGFloat(14)
-  let tile = MDCCatalogTileView(frame: CGRect.zero)
+  fileprivate struct Constants {
+    static let imageWidthHeight: CGFloat = 80
+    static let xPadding: CGFloat = 14
+    static let yPadding: CGFloat = 16
+  }
+
+  private lazy var label: UILabel = {
+    let label = UILabel()
+    label.textColor = UIColor(white: 0, alpha: MDCTypography.buttonFontOpacity())
+    label.font = MDCTypography.buttonFont()
+
+    return label
+  }()
+  private lazy var tile = MDCCatalogTileView(frame: CGRect.zero)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    label.textColor = UIColor(white: 0.2, alpha: 1)
-    label.font = MDCTypography.captionFont()
-    self.addSubview(label)
-    self.clipsToBounds = true
-
-    tile.frame = self.bounds
-    tile.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    self.addSubview(tile)
+    contentView.addSubview(label)
+    contentView.clipsToBounds = true
+    contentView.addSubview(tile)
   }
 
+  @available(*, unavailable)
   required init(coder: NSCoder) {
     super.init(coder: coder)!
   }
@@ -48,11 +55,17 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     super.layoutSubviews()
     label.sizeToFit()
     label.frame = CGRect(
-      x: pad,
-      y: frame.height - label.frame.height - pad,
-      width: frame.width - pad * 2,
+      x: Constants.xPadding,
+      y: frame.height - label.frame.height - Constants.yPadding,
+      width: frame.width - Constants.xPadding * 2,
       height: label.frame.height
     )
+    tile.bounds = CGRect(x: 0,
+                         y: 0,
+                         width: Constants.imageWidthHeight,
+                         height: Constants.imageWidthHeight)
+    tile.center = CGPoint(x: contentView.bounds.width / 2,
+                          y: label.frame.minY / 2 )
   }
 
   override func prepareForReuse() {
@@ -65,5 +78,4 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     tile.componentName = componentName
     accessibilityIdentifier = componentName
   }
-
 }

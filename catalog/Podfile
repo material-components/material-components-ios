@@ -43,7 +43,7 @@ target TEST_TARGET do
   platform :ios, '8.0'
   project PROJECT_NAME
   inherit! :search_paths
-  pod 'EarlGrey', '>= 1.9.3'
+  pod 'EarlGrey', '<2'
   pod 'MaterialComponentsEarlGreyTests', :path => '../'
 
   use_frameworks!
