@@ -28,7 +28,7 @@ mdc_public_objc_library(
     deps = [
         "//components/private/Application",
         "@material_internationalization_ios//:MDFInternationalization"
-      ],
+    ],
 )
 
 mdc_objc_library(

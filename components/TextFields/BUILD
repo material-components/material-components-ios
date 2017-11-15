@@ -31,7 +31,7 @@ mdc_public_objc_library(
         "//components/private/Math",
         "//components/Palettes",
         "//components/Typography"
-      ],
+    ],
 )
 
 mdc_objc_library(
@@ -53,7 +53,7 @@ swift_library(
         ":TextFields",
         "//components/private/Math",
         "//components/Palettes",
-      ],
+    ],
     visibility = ["//visibility:private"],
 )
 
