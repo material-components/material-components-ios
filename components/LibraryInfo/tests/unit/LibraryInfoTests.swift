@@ -28,7 +28,7 @@ class LibraryInfoTests: XCTestCase {
     //
     // Note the major version must be >= 1 since "0.0.0" is used as the version when something goes
     // wrong in the underlying code and we're in Release mode.
-    let pattern = "^[1-9]+\\.[0-9]+\\.[0-9]+$"
+    let pattern = "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$"
 
     // When
     let version = MDCLibraryInfo.versionString
