@@ -37,7 +37,15 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   /**
    A 56-point circular button surrounding a 36-point square icon or short text.
    */
-  MDCFloatingButtonShapeLargeIcon = 2
+  MDCFloatingButtonShapeLargeIcon = 2,
+  /**
+   An Extended FAB with a 24-point square icon on the leading side of the text.
+   */
+  MDCFloatingButtonShapeExtendedLeadingIcon = 3,
+  /**
+   An Extended FAB with a 24-point square icon on the trailing side of the text.
+   */
+  MDCFloatingButtonShapeExtendedTrailingIcon = 4
 };
 
 /**
@@ -50,6 +58,13 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
  @see https://material.io/guidelines/components/buttons.html#buttons-main-buttons
  */
 @interface MDCFloatingButton : MDCButton
+
+/**
+ The shape of this floating button.
+
+ Changing this value will effect how the title and image are positioned.
+ */
+@property(nonatomic, assign) MDCFloatingButtonShape shape;
 
 /**
  Returns a MDCFloatingButton with default colors and the given @c shape.
@@ -95,6 +110,26 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
 - (nonnull instancetype)init;
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+- (void)setMinimumSize:(CGSize)minimumSize NS_UNAVAILABLE;
+
+- (void)setMinimumSize:(CGSize)minimumSize forShape:(MDCFloatingButtonShape)shape
+    UI_APPEARANCE_SELECTOR;
+
+- (void)setMaximumSize:(CGSize)maximumSize NS_UNAVAILABLE;
+
+- (void)setMaximumSize:(CGSize)maximumSize forShape:(MDCFloatingButtonShape)shape
+    UI_APPEARANCE_SELECTOR;
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets NS_UNAVAILABLE;
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets forShape:(MDCFloatingButtonShape)shape
+    UI_APPEARANCE_SELECTOR;
+
+- (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets NS_UNAVAILABLE;
+
+- (void)setHitAreaInsets:(UIEdgeInsets)insets forShape:(MDCFloatingButtonShape)shape
+    UI_APPEARANCE_SELECTOR;
 
 #pragma mark - Deprecations
 
