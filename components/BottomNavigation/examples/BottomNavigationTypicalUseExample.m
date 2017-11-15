@@ -17,14 +17,17 @@
 #import <UIKit/UIKit.h>
 
 #import "BottomNavigationTypicalUseSupplemental.h"
+
+#import "MaterialAppBar.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 #import "MaterialThemes.h"
 #import "MDCBottomNavigationBarColorThemer.h"
 
-@interface BottomNavigationTypicalUseExample ()
+@interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
 
 @property(nonatomic, assign) int badgeCount;
+@property(nonatomic, strong) MDCAppBar *appBar;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 
 @end
@@ -41,7 +44,7 @@
 }
 
 - (void)commonBottomNavigationTypicalUseExampleInit {
-  self.view.backgroundColor = [UIColor lightGrayColor];
+  [self setupAppBar];
 
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
@@ -89,6 +92,11 @@
   [self updateBadgeItemCount];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self.appBar addSubviewsToParent];
+}
+
 - (void)viewWillLayoutSubviews {
   CGSize size = [_bottomNavBar sizeThatFits:self.view.bounds.size];
   CGRect bottomNavBarFrame = CGRectMake(0,
@@ -96,6 +104,12 @@
                                         size.width,
                                         size.height);
   _bottomNavBar.frame = bottomNavBarFrame;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)updateBadgeItemCount {
@@ -117,6 +131,30 @@
 - (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
               didSelectItem:(nonnull UITabBarItem *)item {
   NSLog(@"Selected Item: %@", item.title);
+}
+
+#pragma mark - Configure MDCAppBar for navigation
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return self.appBar.headerViewController;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.appBar.headerViewController;
+}
+
+- (void)setupAppBar {
+  _appBar = [[MDCAppBar alloc] init];
+  [self addChildViewController:_appBar.headerViewController];
+  UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
+  _appBar.headerViewController.headerView.backgroundColor = color;
+  _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+  [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
+
+  _appBar.navigationBar.tintColor = [UIColor whiteColor];
+  _appBar.navigationBar.titleTextAttributes =
+      @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+  self.view.backgroundColor = [UIColor lightGrayColor];
 }
 
 @end
