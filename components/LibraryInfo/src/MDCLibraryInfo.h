@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <Foundation/Foundation.h>
+
 #ifndef MDC_SUBCLASSING_RESTRICTED
 #if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
 #define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
