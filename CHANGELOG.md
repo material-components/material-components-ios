@@ -1,10 +1,32 @@
-# release-candidate TODO: Replace me with version number. 
+# 40.0.0
+
+## API Changes
+
+### Bottom Sheet
+
+* Added `trackingScrollView` property to support better dragging.
+
+### Chips (new)
+
+* Added [Chips](https://material.io/guidelines/components/chips.html).
+
+### LibraryInfo (new)
+
+* Added LibraryInfo for accessing information about the MDC library itself.
+
+### Tabs
+
+* Added `[MDCTabBar defaultHeightForBarPosition:itemAppearance:]`.
+
+### Text Fields
+
+* Refactored [color theming support](https://github.com/material-components/material-components-ios/pull/2416).
 
 # 39.0.0
 
 ## API Changes
 
-### Animation Timing'
+### Animation Timing
 
 * Added the `MDCAnimationTimingFunctionSharp` timing function [from the spec](https://material.io/guidelines/motion/duration-easing.html#duration-easing-natural-easing-curves).
 
