@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "CollectionsCellAccessoryExample.h"
+#import "supplemental/CollectionsCellAccessoryExample.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 

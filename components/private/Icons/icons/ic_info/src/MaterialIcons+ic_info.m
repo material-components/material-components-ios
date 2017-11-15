@@ -19,8 +19,6 @@
 
 #import "MaterialIcons+ic_info.h"
 
-#import "MaterialIcons.h"
-
 static NSString *const kBundleName = @"MaterialIcons_ic_info";
 static NSString *const kIconName = @"ic_info";
 

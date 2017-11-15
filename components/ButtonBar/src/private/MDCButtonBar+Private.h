@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialButtonBar.h"
+#import "MDCButtonBar.h"
 
 @interface MDCButtonBar (Builder)
 

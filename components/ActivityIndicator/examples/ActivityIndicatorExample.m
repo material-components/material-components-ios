@@ -16,10 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ActivityIndicatorExampleSupplemental.h"
-
 #import "MaterialActivityIndicator.h"
 #import "MaterialPalettes.h"
+#import "supplemental/ActivityIndicatorExampleSupplemental.h"
 
 #define MDC_CATALOG_BLACK [UIColor colorWithWhite:0.1f alpha:1]
 #define MDC_CATALOG_GREY  [UIColor colorWithWhite:0.9f alpha:1]

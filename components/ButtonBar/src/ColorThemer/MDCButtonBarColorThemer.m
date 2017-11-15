@@ -15,7 +15,7 @@
  */
 
 #import "MDCButtonBarColorThemer.h"
-#import "MaterialButtonBar.h"
+
 #import "MaterialNavigationBar.h"
 
 @implementation MDCButtonBarColorThemer

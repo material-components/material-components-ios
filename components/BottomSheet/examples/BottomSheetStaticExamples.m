@@ -16,9 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BottomSheetDummyStaticViewController.h"
-#import "BottomSheetSupplemental.h"
 #import "MaterialBottomSheet.h"
+#import "supplemental/BottomSheetDummyStaticViewController.h"
+#import "supplemental/BottomSheetSupplemental.h"
 
 @implementation BottomSheetSimpleExample
 

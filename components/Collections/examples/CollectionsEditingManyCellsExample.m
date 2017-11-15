@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "CollectionsEditingManyCellsExampleSupplemental.h"
+#import "supplemental/CollectionsEditingManyCellsExampleSupplemental.h"
 
 static const NSInteger kSectionCount = 25;
 static const NSInteger kSectionItemCount = 50;

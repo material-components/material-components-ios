@@ -17,7 +17,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCColorScheme.h"
-#import "MDCTonalPalette.h"
+
+@class MDCTonalPalette;
 
 /**
  A tonal color scheme is a color scheme based on a primary tonal color palette and secondary tonal

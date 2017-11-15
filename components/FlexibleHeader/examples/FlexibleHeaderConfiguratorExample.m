@@ -17,8 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialFlexibleHeader.h"
-
-#import "FlexibleHeaderConfiguratorSupplemental.h"
+#import "supplemental/FlexibleHeaderConfiguratorSupplemental.h"
 
 @interface FlexibleHeaderConfiguratorExample () <MDCFlexibleHeaderViewLayoutDelegate>
 @property(nonatomic) BOOL overrideStatusBarHidden;

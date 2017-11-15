@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialDialogs.h"
 #import "MaterialThemes.h"
 
 /**

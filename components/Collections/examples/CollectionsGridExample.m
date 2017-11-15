@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "CollectionsGridExample.h"
+#import "supplemental/CollectionsGridExample.h"
 
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 4;

@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "TextFieldPresentationStylesLegacyExampleSupplemental.h"
+#import "supplemental/TextFieldPresentationStylesLegacyExampleSupplemental.h"
 
 @import MaterialComponents.MaterialTextFields;
 
