@@ -47,7 +47,7 @@
   [self.view addSubview:_bottomBarView];
 }
 
-- (void)viewWillLayoutSubviews {
+- (void)layoutBottomAppBar {
   CGSize size = [_bottomBarView sizeThatFits:self.view.bounds.size];
   CGRect bottomBarViewFrame = CGRectMake(0,
                                          CGRectGetHeight(self.view.bounds) - size.height,
@@ -55,6 +55,20 @@
                                          size.height);
   _bottomBarView.frame = bottomBarViewFrame;
 }
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [self layoutBottomAppBar];
+}
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+- (void)viewSafeAreaInsetsDidChange {
+  if (@available(iOS 11.0, *)) {
+    [super viewSafeAreaInsetsDidChange];
+  }
+  [self layoutBottomAppBar];
+}
+#endif
 
 #pragma mark - Setters
 
