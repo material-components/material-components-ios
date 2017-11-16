@@ -21,9 +21,10 @@
 @property(nonatomic, strong) NSTimer *animationLoop;
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UIView *linearView;
-@property(nonatomic, strong) UIView *materialEaseInOutView;
-@property(nonatomic, strong) UIView *materialEaseOutView;
-@property(nonatomic, strong) UIView *materialEaseInView;
+@property(nonatomic, strong) UIView *materialStandardView;
+@property(nonatomic, strong) UIView *materialDecelerationView;
+@property(nonatomic, strong) UIView *materialAccelerationView;
+@property(nonatomic, strong) UIView *materialSharpView;
 
 @end
 
