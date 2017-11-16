@@ -18,11 +18,11 @@
 #import "MaterialButtons.h"
 
 /**
- An example Floating Button themer that makes them slightly smaller/thinner than the defaults.
+ An example Floating Button themer that makes them slightly taller and less wide than the defaults.
  */
 @interface ExampleFloatingButtonThemer : NSObject
 
 + (void)applyToButton:(nonnull MDCFloatingButton *)button
-      withColorScheme:(nullable id<MDCColorScheme>)colorScheme;
+      withColorScheme:(nullable NSObject<MDCColorScheme> *)colorScheme;
 
 @end
