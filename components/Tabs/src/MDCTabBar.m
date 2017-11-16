@@ -16,6 +16,8 @@
 
 #import "MDCTabBar.h"
 
+#import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarUnderlineIndicatorTemplate.h"
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
 #import "private/MDCItemBar.h"
@@ -94,10 +96,13 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 #pragma mark - Initialization
 
 + (void)initialize {
-  [[[self class] appearance] setSelectedItemTintColor:[UIColor whiteColor]];
-  [[[self class] appearance] setUnselectedItemTintColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
-  [[[self class] appearance] setInkColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
-  [[[self class] appearance] setBarTintColor:nil];
+  [MDCTabBar appearance].selectedItemTintColor = [UIColor whiteColor];
+  [MDCTabBar appearance].unselectedItemTintColor = [UIColor colorWithWhite:1.0 alpha:0.7f];
+  [MDCTabBar appearance].inkColor = [UIColor colorWithWhite:1.0 alpha:0.7f];
+  [MDCTabBar appearance].barTintColor = nil;
+
+  id<MDCTabBarIndicatorTemplate> template = [[MDCTabBarUnderlineIndicatorTemplate alloc] init];
+  [MDCTabBar appearance].selectionIndicatorTemplate = template;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -127,6 +132,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _alignment = [self computedAlignment];
   _displaysUppercaseTitles = [self computedDisplaysUppercaseTitles];
   _itemAppearance = [self computedItemAppearance];
+  _selectionIndicatorTemplate = [MDCTabBar defaultSelectionIndicatorTemplate];
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
@@ -184,7 +190,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
-  [_itemBar setItems:items];
+  _itemBar.items = items;
 }
 
 - (UITabBarItem *)selectedItem {
@@ -192,7 +198,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
-  [_itemBar setSelectedItem:selectedItem];
+  _itemBar.selectedItem = selectedItem;
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem animated:(BOOL)animated {
@@ -254,6 +260,15 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _hasDefaultDisplaysUppercaseTitles = NO;
   _displaysUppercaseTitlesOverride = displaysUppercaseTitles;
   [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
+}
+
+- (void)setSelectionIndicatorTemplate:(id<MDCTabBarIndicatorTemplate>)selectionIndicatorTemplate {
+  id<MDCTabBarIndicatorTemplate> template = selectionIndicatorTemplate;
+  if (!template) {
+    template = [MDCTabBar defaultSelectionIndicatorTemplate];
+  }
+  _selectionIndicatorTemplate = template;
+  [self updateItemBarStyle];
 }
 
 #pragma mark - MDCAccessibility
@@ -431,6 +446,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
++ (id<MDCTabBarIndicatorTemplate>)defaultSelectionIndicatorTemplate {
+  return [[MDCTabBarUnderlineIndicatorTemplate alloc] init];
+}
+
 - (MDCTabBarAlignment)computedAlignment {
   if (_hasDefaultAlignment) {
     return [[self class] defaultAlignmentForPosition:_barPosition];
@@ -502,6 +521,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   style = [[self class] defaultStyleForPosition:_barPosition itemAppearance:_itemAppearance];
 
+  style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
   style.selectedTitleColor = (_selectedItemTintColor ? _selectedItemTintColor : self.tintColor);

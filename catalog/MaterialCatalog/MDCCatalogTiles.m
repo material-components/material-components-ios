@@ -19,7 +19,7 @@
 #import "MaterialThemes.h"
 #import "MDCCatalogTiles.h"
 
-UIImage* _Nullable MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDCColorScheme> *colorScheme) {
+UIImage* _Nullable MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, id<MDCColorScheme> colorScheme) {
   if (CGRectIsEmpty(frame)) {
     return nil;
   }
@@ -36,7 +36,7 @@ UIImage* _Nullable MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDC
 #pragma clang diagnostic ignored "-Wassign-enum"
 #pragma clang diagnostic ignored "-Wconversion"
 
-void MDCCatalogDrawMDCLogoDark(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawMDCLogoDark(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* green = [UIColor colorWithRed: 0 green: 0.902 blue: 0.463 alpha: 1];
   UIColor* lightGreen = [UIColor colorWithRed: 0.698 green: 1 blue: 0.349 alpha: 1];
   UIColor* fillColor = [UIColor colorWithRed: 0.129 green: 0.129 blue: 0.129 alpha: 1];
@@ -70,7 +70,7 @@ void MDCCatalogDrawMDCLogoDark(CGRect frame, NSObject<MDCColorScheme> *colorSche
   }
 }
 
-void MDCCatalogDrawMDCLogoLight(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawMDCLogoLight(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* white = [UIColor whiteColor];
   UIColor* green = [UIColor colorWithRed: 0 green: 0.902 blue: 0.463 alpha: 1];
   UIColor* lightGreen = [UIColor colorWithRed: 0.698 green: 1 blue: 0.349 alpha: 1];
@@ -104,7 +104,7 @@ void MDCCatalogDrawMDCLogoLight(CGRect frame, NSObject<MDCColorScheme> *colorSch
   }
 }
 
-void MDCCatalogDrawActivityIndicatorTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawActivityIndicatorTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect activityIndicatorGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 7.67) * 0.89686 + 7.83) - 7.33);
   {
@@ -126,7 +126,7 @@ void MDCCatalogDrawActivityIndicatorTile(CGRect frame, NSObject<MDCColorScheme> 
   }
 }
 
-void MDCCatalogDrawAnimationTimingTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawAnimationTimingTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect animationGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -172,7 +172,7 @@ void MDCCatalogDrawAnimationTimingTile(CGRect frame, NSObject<MDCColorScheme> *c
   }
 }
 
-void MDCCatalogDrawAppBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawAppBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect appBarGroup = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), floor((frame.size.width) * 1.00000 + 0.5), floor((frame.size.height) * 1.00000 + 0.5));
   {
@@ -200,7 +200,7 @@ void MDCCatalogDrawAppBarTile(CGRect frame, NSObject<MDCColorScheme> *colorSchem
   }
 }
 
-void MDCCatalogDrawBottomAppBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawBottomAppBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect bottomAppBarGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -242,7 +242,7 @@ void MDCCatalogDrawBottomAppBarTile(CGRect frame, NSObject<MDCColorScheme> *colo
   }
 }
 
-void MDCCatalogDrawBottomNavTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawBottomNavTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect bottomNavGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -270,7 +270,7 @@ void MDCCatalogDrawBottomNavTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   }
 }
 
-void MDCCatalogDrawBottomSheetTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawBottomSheetTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect bottomSheetGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -294,7 +294,7 @@ void MDCCatalogDrawBottomSheetTile(CGRect frame, NSObject<MDCColorScheme> *color
   }
 }
 
-void MDCCatalogDrawButtonBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawButtonBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 
   UIColor* fillColor = colorScheme.primaryDarkColor;
   UIColor* fillColor2 = [UIColor whiteColor];
@@ -325,7 +325,7 @@ void MDCCatalogDrawButtonBarTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   }
 }
 
-void MDCCatalogDrawButtonsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawButtonsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
 
   CGRect buttonsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
@@ -366,7 +366,7 @@ void MDCCatalogDrawButtonsTile(CGRect frame, NSObject<MDCColorScheme> *colorSche
   }
 }
 
-void MDCCatalogDrawCollectionCellsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawCollectionCellsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect collectionCellsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -420,7 +420,7 @@ void MDCCatalogDrawCollectionCellsTile(CGRect frame, NSObject<MDCColorScheme> *c
   }
 }
 
-void MDCCatalogDrawCollectionsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawCollectionsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect collectionsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -459,7 +459,7 @@ void MDCCatalogDrawCollectionsTile(CGRect frame, NSObject<MDCColorScheme> *color
   }
 }
 
-void MDCCatalogDrawDialogsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawDialogsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect dialogsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -486,7 +486,7 @@ void MDCCatalogDrawDialogsTile(CGRect frame, NSObject<MDCColorScheme> *colorSche
   }
 }
 
-void MDCCatalogDrawFeatureHighlightTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect featureHighlightGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -523,7 +523,7 @@ void MDCCatalogDrawFeatureHighlightTile(CGRect frame, NSObject<MDCColorScheme> *
   }
 }
 
-void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect flexibleHeaderGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98354 + 0.83) - 0.33, floor((frame.size.height - 1) * 0.98354 + 0.83) - 0.33);
   {
@@ -545,7 +545,7 @@ void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, NSObject<MDCColorScheme> *co
   }
 }
 
-void MDCCatalogDrawHeaderStackViewTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawHeaderStackViewTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -682,7 +682,7 @@ void MDCCatalogDrawHeaderStackViewTile(CGRect frame, NSObject<MDCColorScheme> *c
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawInkTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawInkTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect inkGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -707,7 +707,7 @@ void MDCCatalogDrawInkTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) 
   }
 }
 
-void MDCCatalogDrawMaskedTransitionTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawMaskedTransitionTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect maskedTransitionsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -741,7 +741,7 @@ void MDCCatalogDrawMaskedTransitionTile(CGRect frame, NSObject<MDCColorScheme> *
   }
 }
 
-void MDCCatalogDrawMiscTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawMiscTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect miscGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 7.67) * 0.89686 + 7.83) - 7.33);
   {
@@ -779,7 +779,7 @@ void MDCCatalogDrawMiscTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme)
   }
 }
 
-void MDCCatalogDrawNavigationBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawNavigationBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -969,7 +969,7 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, NSObject<MDCColorScheme> *col
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawOverlayWindow(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawOverlayWindow(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryLightColor;
   UIColor* fillColor2 = colorScheme.primaryColor;
   UIColor* fillColor3 = [UIColor colorWithWhite:0.5 alpha:1.0];
@@ -1086,7 +1086,7 @@ void MDCCatalogDrawOverlayWindow(CGRect frame, NSObject<MDCColorScheme> *colorSc
   [overlapRectanglePath fill];
 }
 
-void MDCCatalogDrawPageControlTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawPageControlTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect pageControlGroup = CGRectMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame) + 34.5, floor((frame.size.width - 8) * 0.89189 + 0.5), floor((frame.size.height - 34.5) * 0.27368 + 0.5));
   {
@@ -1147,7 +1147,7 @@ void MDCCatalogDrawPageControlTile(CGRect frame, NSObject<MDCColorScheme> *color
   }
 }
 
-void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawPalettesTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect palettesGroup = CGRectMake(CGRectGetMinX(frame) + 7.65, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.65) * 0.89688 + 7.82) - 7.32, floor((frame.size.height - 7.67) * 0.85202 + 8.17) - 7.67);
   {
@@ -1184,7 +1184,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
   }
 }
 
-void MDCCatalogDrawProgressViewTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawProgressViewTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -1266,7 +1266,7 @@ void MDCCatalogDrawProgressViewTile(CGRect frame, NSObject<MDCColorScheme> *colo
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawShadowLayerTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawShadowLayerTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect shadowGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -1300,7 +1300,7 @@ void MDCCatalogDrawShadowLayerTile(CGRect frame, NSObject<MDCColorScheme> *color
   }
 }
 
-void MDCCatalogDrawSliderTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawSliderTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect sliderGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 31, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 31) * 0.39216 + 0.5));
   {
@@ -1325,7 +1325,7 @@ void MDCCatalogDrawSliderTile(CGRect frame, NSObject<MDCColorScheme> *colorSchem
   }
 }
 
-void MDCCatalogDrawSnackbarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawSnackbarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect snackbarGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 7.67) * 0.89686 + 7.83) - 7.33);
   {
@@ -1347,7 +1347,7 @@ void MDCCatalogDrawSnackbarTile(CGRect frame, NSObject<MDCColorScheme> *colorSch
   }
 }
 
-void MDCCatalogDrawTabsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawTabsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect tabBarGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 7.67) * 0.89686 + 7.83) - 7.33);
   {
@@ -1375,7 +1375,7 @@ void MDCCatalogDrawTabsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme)
   }
 }
 
-void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawTextFieldTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect textFieldGroup = CGRectMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame) + 11, floor((frame.size.width - 8) * 0.89189 + 0.5), floor((frame.size.height - 11) * 0.84507 + 0.5));
   {
@@ -1408,7 +1408,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorSc
   }
 }
 
-void MDCCatalogDrawThemesTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawThemesTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
   CGRect themesGroup = CGRectMake(CGRectGetMinX(frame) + 11, CGRectGetMinY(frame) + 8, floor((frame.size.width - 11) * 0.88732 + 0.5), floor((frame.size.height - 8) * 0.89189 + 0.5));
   {
@@ -1463,7 +1463,7 @@ void MDCCatalogDrawThemesTile(CGRect frame, NSObject<MDCColorScheme> *colorSchem
   }
 }
 
-void MDCCatalogDrawTypographyTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawTypographyTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryColor;
 
   UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -1556,7 +1556,7 @@ void MDCCatalogDrawTypographyTile(CGRect frame, NSObject<MDCColorScheme> *colorS
   [bezier2Path fill];
 }
 
-void MDCCatalogDrawTypographyCustomFontsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
+void MDCCatalogDrawTypographyCustomFontsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryDarkColor;
 
   CGRect typographyCustomFontGroup = CGRectMake(CGRectGetMinX(frame) + 8.02, CGRectGetMinY(frame) + 8, floor((frame.size.width - 8.02) * 0.89213 + 0.5), floor((frame.size.height - 8) * 0.89189 + 0.5));

@@ -104,6 +104,12 @@ def install_all_podfile_dirs(directory, fast_install, blacklist):
   for d in dirs:
     install_podfile_dir(d, fast_install)
 
+    # If `fast_install` is not specified, we will do `pod update` again and
+    # again, even though it is a global operation and not a per-Podfile
+    # operation. Disable it after the first invocation to save time.
+    if not fast_install:
+      fast_install = True
+
 
 def list_all_podfile_dirs(directory, blacklist):
   """Print all directories containing a Podfile.

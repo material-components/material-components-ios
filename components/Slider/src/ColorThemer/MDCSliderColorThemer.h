@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCSlider.
  @param slider A MDCSlider instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(nonnull NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
                 toSlider:(nonnull MDCSlider *)slider;
 
 /**

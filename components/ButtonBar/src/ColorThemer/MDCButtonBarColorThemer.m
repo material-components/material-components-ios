@@ -20,7 +20,7 @@
 
 @implementation MDCButtonBarColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
              toButtonBar:(MDCButtonBar *)buttonBar {
   buttonBar.backgroundColor = colorScheme.primaryColor;
 
