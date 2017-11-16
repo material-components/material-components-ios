@@ -457,7 +457,7 @@ static const CGFloat kSingleCycleRotation =
   }];
 
   MDCActivityIndicatorMotionSpecIndeterminate timing =
-      [MDCActivityIndicatorMotionSpec loopIndeterminate];
+      MDCActivityIndicatorMotionSpec.loopIndeterminate;
   // These values may be equal if we've never received a progress. In this case we don't want our
   // duration to become zero.
   if (fabs(_lastProgress - _currentProgress) > CGFLOAT_EPSILON) {
@@ -525,9 +525,9 @@ static const CGFloat kSingleCycleRotation =
   if (targetRotation <= 0.001f) {
     targetRotation = 1.0f;
   }
-  CGFloat pointCycleDuration = (CGFloat)[MDCActivityIndicatorMotionSpec pointCycleDuration];
+  CGFloat pointCycleDuration = (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleDuration;
   CGFloat pointCycleMinimumVariableDuration =
-      (CGFloat)[MDCActivityIndicatorMotionSpec pointCycleMinimumVariableDuration];
+      (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleMinimumVariableDuration;
   CGFloat normalizedDuration = 2 * (targetRotation + _currentProgress) / kSingleCycleRotation *
                                pointCycleDuration;
   CGFloat strokeEndTravelDistance = targetRotation - _currentProgress + _minStrokeDifference;
@@ -546,7 +546,7 @@ static const CGFloat kSingleCycleRotation =
     [CATransaction setDisableActions:YES];
 
     MDCActivityIndicatorMotionSpecTransitionToIndeterminate timing =
-        [MDCActivityIndicatorMotionSpec willChangeToIndeterminate];
+        MDCActivityIndicatorMotionSpec.willChangeToIndeterminate;
 
     _outerRotationLayer.transform = CATransform3DIdentity;
     _strokeLayer.transform = CATransform3DIdentity;
@@ -588,9 +588,9 @@ static const CGFloat kSingleCycleRotation =
     CGFloat rotationDelta = 1.0f - [self normalizedRotationForCycle:_cycleCount];
 
     // Change the duration relative to the distance in order to keep same relative speed.
-    CGFloat pointCycleDuration = (CGFloat)[MDCActivityIndicatorMotionSpec pointCycleDuration];
+    CGFloat pointCycleDuration = (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleDuration;
     CGFloat pointCycleMinimumVariableDuration =
-        (CGFloat)[MDCActivityIndicatorMotionSpec pointCycleMinimumVariableDuration];
+        (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleMinimumVariableDuration;
     CGFloat duration = 2.0f * (rotationDelta + _currentProgress) / kSingleCycleRotation *
                        pointCycleDuration;
     duration = MAX(duration, pointCycleMinimumVariableDuration);
@@ -605,7 +605,7 @@ static const CGFloat kSingleCycleRotation =
       [CATransaction mdm_setTimeScaleFactor:@(duration)];
 
       MDCActivityIndicatorMotionSpecTransitionToDeterminate spec =
-          [MDCActivityIndicatorMotionSpec willChangeToDeterminate];
+          MDCActivityIndicatorMotionSpec.willChangeToDeterminate;
 
       _outerRotationLayer.transform =
           CATransform3DMakeRotation(kOuterRotationIncrement * _cycleCount, 0, 0, 1);
@@ -649,7 +649,7 @@ static const CGFloat kSingleCycleRotation =
     _strokeLayer.transform = CATransform3DIdentity;
     _strokeLayer.strokeStart = 0;
 
-    [_animator animateWithTiming:[MDCActivityIndicatorMotionSpec willChangeProgress].strokeEnd
+    [_animator animateWithTiming:MDCActivityIndicatorMotionSpec.willChangeProgress.strokeEnd
                          toLayer:_strokeLayer
                       withValues:@[@(_lastProgress), @(_currentProgress)]
                          keyPath:MDMKeyPathStrokeEnd];

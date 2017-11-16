@@ -19,15 +19,15 @@
 @implementation MDCActivityIndicatorMotionSpec
 
 + (NSTimeInterval)pointCycleDuration {
-  return 4.0f / 3.0f;
+  return 4.0 / 3.0;
 }
 
 + (NSTimeInterval)pointCycleMinimumVariableDuration {
-  return [self pointCycleDuration] / 8;
+  return self.pointCycleDuration / 8;
 }
 
 + (MDCActivityIndicatorMotionSpecIndeterminate)loopIndeterminate {
-  NSTimeInterval pointCycleDuration = [self pointCycleDuration];
+  NSTimeInterval pointCycleDuration = self.pointCycleDuration;
   MDMMotionCurve linear = MDMMotionCurveMakeBezier(0, 0, 1, 1);
   return (MDCActivityIndicatorMotionSpecIndeterminate){
     .outerRotation = {
@@ -77,7 +77,7 @@
 + (MDCActivityIndicatorMotionSpecProgress)willChangeProgress {
   return (MDCActivityIndicatorMotionSpecProgress){
     .strokeEnd = {
-      .duration = [self pointCycleDuration] / 2,
+      .duration = self.pointCycleDuration / 2,
       .curve = MDMMotionCurveMakeBezier(0.4f, 0.0f, 0.2f, 1.0f),
     }
   };
