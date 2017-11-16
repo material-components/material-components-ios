@@ -22,6 +22,9 @@ set -x
 
 KOKORO_RUNNER_VERSION="v3.*"
 
+# Kokoro only supports up to 8.2 for now. Once 8.3 support is introduced we will bump this version.
+XCODE_MINIMUM_VERSION="8.2.0"
+
 fix_bazel_imports() {
   if [ -z "$KOKORO_BUILD_NUMBER" ]; then
     tests_dir_prefix=""
@@ -49,6 +52,59 @@ fix_bazel_imports() {
   trap reset_imports EXIT
 }
 
+version_as_number() {
+  padded_version="${1%.}" # Strip any trailing dots
+  # Pad with .0 until we get a M.m.p version string.
+  while [ $(grep -o "\." <<< "$padded_version" | wc -l) -lt "2" ]; do
+    padded_version=${padded_version}.0
+  done
+  echo "${padded_version//.}"
+}
+
+run_bazel() {
+  fix_bazel_imports
+
+  ./.kokoro-ios-runner/bazel.sh test //components/... $XCODE_MINIMUM_VERSION
+}
+
+run_cocoapods() {
+  gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+  pod --version
+
+  xcode_min_version_as_number="$(version_as_number $XCODE_MINIMUM_VERSION)"
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    cd github/repo
+  fi
+
+  ls /Applications/ | grep "Xcode" | while read -r xcode_path; do
+    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
+      | grep "CFBundleShortVersionString" -A1 \
+      | grep string \
+      | cut -d'>' -f2 \
+      | cut -d'<' -f1)
+    if [ -n "$xcode_min_version_as_number" ]; then
+      xcode_version_as_number="$(version_as_number $xcode_version)"
+
+      if [ "$xcode_version_as_number" -lt "$xcode_min_version_as_number" ]; then
+        continue
+      fi
+    fi
+
+    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
+    xcodebuild -version
+
+    # Resolves the following crash when switching Xcode versions:
+    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
+    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
+
+    scripts/prep_all
+    scripts/build_all --verbose
+    scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+  done
+}
+
 if [ ! -d .kokoro-ios-runner ]; then
   git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
 fi
@@ -59,8 +115,11 @@ TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
 git checkout "$TAG" > /dev/null
 popd
 
-fix_bazel_imports
+case "$DEPENDENCY_SYSTEM" in
+  "bazel")      run_bazel ;;
+  "cocoapods")  run_cocoapods ;;
 
-./.kokoro-ios-runner/bazel.sh test //components/... 8.2.0
+  *)            run_bazel ;;
+esac
 
 echo "Success!"
