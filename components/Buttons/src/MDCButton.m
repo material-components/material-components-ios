@@ -676,7 +676,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
   _userElevations[@(state)] = @(elevation);
-  self.layer.elevation = [self elevationForState:self.state];
+  if (self.state == state) {
+    self.layer.elevation = [self elevationForState:self.state];
+  }
 
   // The elevation of the normal state controls whether this button is flat or not, and flat buttons
   // have different background color requirements than raised buttons.
