@@ -16,8 +16,6 @@
 
 #import "BottomAppBarTypicalUseViewController.h"
 
-#import "MDCBottomAppBarView.h"
-
 @interface BottomAppBarTypicalUseViewController ()
 
 @end

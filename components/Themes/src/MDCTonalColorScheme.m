@@ -16,6 +16,8 @@
 
 #import "MDCTonalColorScheme.h"
 
+#import "MDCTonalPalette.h"
+
 @interface MDCTonalColorScheme ()
 
 @property (nonatomic, strong, nonnull) MDCTonalPalette *primaryTonalPalette;

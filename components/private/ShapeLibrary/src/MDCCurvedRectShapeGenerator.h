@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCShapeGenerating.h"
+#import "MaterialShapes.h"
 
 /**
  A curved rectangle shape generator.

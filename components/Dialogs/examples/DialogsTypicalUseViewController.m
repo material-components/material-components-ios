@@ -14,10 +14,8 @@
  limitations under the License.
  */
 
-#import "DialogsTypicalUseSupplemental.h"
-
-#import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "supplemental/DialogsTypicalUseSupplemental.h"
 
 @interface DialogsTypicalUseViewController ()
 

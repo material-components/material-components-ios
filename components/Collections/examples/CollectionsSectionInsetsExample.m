@@ -13,7 +13,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-#import "CollectionsSectionInsetsExampleSupplemental.h"
+
+#import "supplemental/CollectionsSectionInsetsExampleSupplemental.h"
 
 @implementation CollectionsSectionInsetsExample
 
