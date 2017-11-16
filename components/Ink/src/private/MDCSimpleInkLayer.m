@@ -129,27 +129,64 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
 }
 
 - (void)changeAnimationAtPoint:(CGPoint)point {
-  CGFloat opacity = 0;
-  CGFloat currentOpacity = self.presentationLayer.opacity;
-  if (CGRectContainsPoint(self.frame, point)) {
-    opacity = 1.f;
+  
+  CGFloat animationDelay = 0;
+  if (self.startAnimationActive) {
+    animationDelay = 0.25f + 0.167f;
   }
-  NSLog(@"changeAnimationAtPoint: %f %f", opacity, currentOpacity);
-  CAKeyframeAnimation *changeAnim = [[CAKeyframeAnimation alloc] init];
-  [changeAnim setKeyPath:kMDCSimpleInkLayerOpacityString];
-  changeAnim.keyTimes = @[ @0, @1.0f ];
-  changeAnim.values = @[ @(currentOpacity), @(opacity) ];
-  changeAnim.duration = 0.083f;
-  changeAnim.beginTime = 0.083f;
-  changeAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-  changeAnim.fillMode = kCAFillModeForwards;
-  changeAnim.removedOnCompletion = NO;
-  [self addAnimation:changeAnim forKey:nil];
+  
+  BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
+  CGFloat currOpacity = self.presentationLayer.opacity;
+  CGFloat updatedOpacity = 0;
+  if (viewContainsPoint) {
+    updatedOpacity = 0.5f;
+  }
+  
+  NSLog(@"updatedOpacity: %f", updatedOpacity);
+  
+  if (!self.startAnimationActive) {
+    NSLog(@"changeAnimationAtPoint: %f", currOpacity);
+    [CATransaction begin];
+    CAKeyframeAnimation *changeAnim = [[CAKeyframeAnimation alloc] init];
+    [changeAnim setKeyPath:kMDCSimpleInkLayerOpacityString];
+    changeAnim.keyTimes = @[ @0, @1.0f ];
+    changeAnim.values = @[ @(currOpacity), @(updatedOpacity) ];
+    changeAnim.duration = 0.083f;
+    changeAnim.beginTime = CACurrentMediaTime() + animationDelay;
+    changeAnim.timingFunction =
+    [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    changeAnim.fillMode = kCAFillModeForwards;
+    changeAnim.removedOnCompletion = NO;
+    [CATransaction setCompletionBlock:^{
+      
+    }];
+    [self addAnimation:changeAnim forKey:nil];
+    [CATransaction commit];
+  } else {
+    [CATransaction begin];
+    CAKeyframeAnimation *changeAnim = [[CAKeyframeAnimation alloc] init];
+    [changeAnim setKeyPath:kMDCSimpleInkLayerOpacityString];
+    changeAnim.keyTimes = @[ @0, @1.0f ];
+    changeAnim.values = @[ @(currOpacity), @(updatedOpacity) ];
+    changeAnim.duration = 0.083f;
+    changeAnim.beginTime = CACurrentMediaTime() + animationDelay;
+    changeAnim.timingFunction =
+    [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    changeAnim.fillMode = kCAFillModeForwards;
+    changeAnim.removedOnCompletion = NO;
+    [CATransaction setCompletionBlock:^{
+      
+    }];
+    [self addAnimation:changeAnim forKey:nil];
+    [CATransaction commit];
+  }
 }
 
-- (void)endAnimation {
+- (void)endAnimationAtPoint:(CGPoint)point {
+  NSLog(@"endAnimation");
+
   if (self.startAnimationActive) {
-    self.endAnimationDelay = 0.25f;
+    self.endAnimationDelay = 0.25f + 0.167f;
   }
   CGFloat currOpacity = self.presentationLayer.opacity;
   if (currOpacity < 0.5f) {
@@ -158,11 +195,16 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
     currOpacity = 1.0f;
   }
 
+  BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
+  if (!viewContainsPoint) {
+    currOpacity = 0;
+  }
+
   [CATransaction begin];
   CAKeyframeAnimation *fadeOutAnim = [[CAKeyframeAnimation alloc] init];
   [fadeOutAnim setKeyPath:kMDCSimpleInkLayerOpacityString];
   fadeOutAnim.keyTimes = @[ @0, @1.0f ];
-  fadeOutAnim.values = @[ [NSNumber numberWithFloat:(float)currOpacity], @0 ];
+  fadeOutAnim.values = @[ @(currOpacity), @0 ];
   fadeOutAnim.duration = 0.25f;
   fadeOutAnim.beginTime = CACurrentMediaTime() + self.endAnimationDelay;
   fadeOutAnim.timingFunction =
@@ -176,6 +218,7 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
     if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidEnd:)]) {
       [self.animationDelegate inkLayerAnimationDidEnd:self];
     }
+    [self removeFromSuperlayer];
   }];
   [self addAnimation:fadeOutAnim forKey:nil];
   [CATransaction commit];

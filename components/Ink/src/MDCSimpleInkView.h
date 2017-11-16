@@ -58,7 +58,7 @@ typedef void (^MDCSimpleInkCompletionBlock)(void);
 /*
  Ends the ink spread.
  */
-- (void)endInkAnimated:(BOOL)animated;
+- (void)endInkAtPoint:(CGPoint)point animated:(BOOL)animated;
 
 @end
 

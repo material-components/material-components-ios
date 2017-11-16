@@ -22,6 +22,7 @@
 
 @property(nonatomic, strong) MDCSimpleInkLayer *activeInkLayer;
 @property(nonatomic, strong) NSMutableArray<MDCSimpleInkLayer *> *inkLayers;
+@property(nonatomic, assign) BOOL touchInsideView;
 
 @end
 
@@ -30,7 +31,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
+    [self commonMDCSimpleInkViewInit];
   }
   return self;
 }
@@ -38,9 +39,14 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
+    [self commonMDCSimpleInkViewInit];
   }
   return self;
+}
+
+- (void)commonMDCSimpleInkViewInit {
+  _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
+  _touchInsideView = YES;
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -62,19 +68,24 @@
   self.activeInkLayer = inkLayer;
 }
 
-- (void)changeInkAtPoint:(CGPoint)point {
-  [self.activeInkLayer changeAnimationAtPoint:point];
+- (void)changeInk:(MDCSimpleInkLayer *)inkLayer point:(CGPoint)point {
+  BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
+  if (viewContainsPoint == self.touchInsideView) {
+    return;
+  }
+  self.touchInsideView = viewContainsPoint;
+  [inkLayer changeAnimationAtPoint:point];
 }
 
-- (void)endInkAnimated:(BOOL)animated {
-  [self endInk:self.activeInkLayer animated:animated];
+- (void)endInkAtPoint:(CGPoint)point animated:(BOOL)animated {
+  [self endInk:self.activeInkLayer point:point animated:animated];
 }
 
-- (void)endInk:(MDCSimpleInkLayer *)inkLayer animated:(BOOL)animated {
+- (void)endInk:(MDCSimpleInkLayer *)inkLayer point:(CGPoint)point animated:(BOOL)animated {
   if (!animated) {
     inkLayer.endAnimationDelay = 0;
   }
-  [inkLayer endAnimation];
+  [inkLayer endAnimationAtPoint:point];
 }
 
 - (void)addInkGestureRecognizer {
@@ -93,17 +104,17 @@
       [self startInkAtPoint:point completion:self.completionBlock];
       break;
     case UIGestureRecognizerStateChanged:
-      [self changeInkAtPoint:point];
+      [self changeInk:self.activeInkLayer point:point];
       break;
     case UIGestureRecognizerStateEnded:
       [self.delegate inkView:self didTouchUpAtPoint:point];
-      [self endInkAnimated:YES];
+      [self endInk:self.activeInkLayer point:point animated:YES];
       break;
     case UIGestureRecognizerStateCancelled:
-      [self endInkAnimated:YES];
+      [self endInk:self.activeInkLayer point:point animated:YES];
       break;
     case UIGestureRecognizerStateFailed:
-      [self endInkAnimated:YES];
+      [self endInk:self.activeInkLayer point:point animated:YES];
       break;
   }
 }
