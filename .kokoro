@@ -17,10 +17,7 @@
 # Fail on any error.
 set -e
 
-# Display commands to stderr.
-set -x
-
-KOKORO_RUNNER_VERSION="v3.*"
+KOKORO_RUNNER_VERSION="v4.*"
 
 # Kokoro only supports up to 8.2 for now. Once 8.3 support is introduced we will bump this version.
 XCODE_MINIMUM_VERSION="8.2.0"
@@ -62,12 +59,20 @@ version_as_number() {
 }
 
 run_bazel() {
+  echo "Running bazel builds..."
+
   fix_bazel_imports
 
-  ./.kokoro-ios-runner/bazel.sh test //components/... $XCODE_MINIMUM_VERSION
+  if [ -n "$VERBOSE_OUTPUT" ]; then
+    extra_args="-v"
+  fi
+
+  ./.kokoro-ios-runner/bazel.sh test //components/... --min-xcode-version $XCODE_MINIMUM_VERSION $extra_args
 }
 
 run_cocoapods() {
+  echo "Running cocoapods builds..."
+
   gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
   pod --version
 
@@ -104,6 +109,33 @@ run_cocoapods() {
     scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
   done
 }
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  key="$1"
+
+  case $key in
+  -v|--verbose)
+    VERBOSE_OUTPUT="1"
+    shift
+    ;;
+  *)
+    POSITIONAL+=("$1")
+    shift
+    ;;
+  esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  # Always enable verbose output on kokoro runs.
+  VERBOSE_OUTPUT=1
+fi
+
+if [ -n "$VERBOSE_OUTPUT" ]; then
+  # Display commands to stderr.
+  set -x
+fi
 
 if [ ! -d .kokoro-ios-runner ]; then
   git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
