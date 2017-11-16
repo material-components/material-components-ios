@@ -323,15 +323,19 @@ static const int kMDCButtonAnimationDuration = 200;
     subViewIndex = 0;
   }
   if (animated) {
-    [_floatingButton setElevation:1 forState:UIControlStateNormal];
+    [_floatingButton setElevation:1 forState:UIControlStateNormal shape:_floatingButton.shape];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kMDCButtonAnimationDuration * NSEC_PER_MSEC),
                    dispatch_get_main_queue(), ^{
                      [self insertSubview:_floatingButton atIndex:subViewIndex];
-                     [_floatingButton setElevation:elevation forState:UIControlStateNormal];
+                     [_floatingButton setElevation:elevation
+                                          forState:UIControlStateNormal
+                                             shape:_floatingButton.shape];
                    });
   } else {
     [self insertSubview:_floatingButton atIndex:subViewIndex];
-    [_floatingButton setElevation:elevation forState:UIControlStateNormal];
+    [_floatingButton setElevation:elevation
+                         forState:UIControlStateNormal
+                            shape:_floatingButton.shape];
   }
 }
 
