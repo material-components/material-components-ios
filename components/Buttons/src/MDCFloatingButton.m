@@ -454,8 +454,8 @@ static NSString *const MDCFloatingButtonElevationDictionaryKey
                shape:(MDCFloatingButtonShape)shape {
   NSMutableDictionary *shapeElevations = self.shapeToStateToElevation[@(shape)];
   shapeElevations[@(state)] = @(elevation);
-  if (shape == self.shape) {
-    [self updateShape];
+  if (shape == self.shape && self.state == state) {
+    [self updateElevation];
   }
 }
 
