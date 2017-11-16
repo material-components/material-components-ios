@@ -29,6 +29,6 @@
  
  @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme;
 
 @end
