@@ -19,7 +19,7 @@
 
 @implementation MDCAlertColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {
   #if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
   [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
       setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];

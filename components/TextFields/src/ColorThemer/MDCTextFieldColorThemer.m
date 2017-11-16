@@ -22,8 +22,8 @@
 
 @implementation MDCTextFieldColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-    toTextInputController:(NSObject<MDCTextInputController> *)textInputController {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
+    toTextInputController:(id<MDCTextInputController>)textInputController {
   textInputController.activeColor = colorScheme.primaryColor;
 
   if ([textInputController
@@ -45,7 +45,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
   toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
     [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];

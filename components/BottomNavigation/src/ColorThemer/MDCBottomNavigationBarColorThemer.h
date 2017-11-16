@@ -30,7 +30,7 @@
  @param colorScheme The color scheme to apply to MDCBottomNavigationBar.
  @param bottomNavigationBar A MDCBottomNavigationBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
     toBottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar;
 
 @end
