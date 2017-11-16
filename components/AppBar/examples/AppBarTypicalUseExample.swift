@@ -28,8 +28,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     self.addChildViewController(appBar.headerViewController)
 
-    let mutator = MDCAppBarTextColorAccessibilityMutator()
-    mutator.mutate(appBar)
+    // Note: You could use MDCAppBarTextColorAccessibilityMutator instead of doing this manually.
+    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
   }
 
   required init?(coder aDecoder: NSCoder) {
