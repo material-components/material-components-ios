@@ -17,6 +17,8 @@
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
@@ -25,7 +27,6 @@
 
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 static NSString *const MDCTextFieldCursorColorKey = @"MDCTextFieldCursorColorKey";
 static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
