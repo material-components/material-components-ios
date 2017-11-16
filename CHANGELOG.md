@@ -1,4 +1,6 @@
-# release-candidate TODO: Replace me with version number. 
+# 40.0.2
+
+* Fix missing step from 40.0.1: update version numbers throughout library.
 
 # 40.0.1
 
