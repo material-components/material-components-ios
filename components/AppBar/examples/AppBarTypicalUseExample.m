@@ -32,20 +32,15 @@
   if (self) {
     self.title = @"App Bar";
 
-    // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
     _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
     [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
 
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes = @{
-                                            NSForegroundColorAttributeName : [UIColor whiteColor],
-                                            };
+    MDCAppBarTextColorAccessibilityMutator *mutator =
+        [[MDCAppBarTextColorAccessibilityMutator alloc] init];
+    [mutator mutate:_appBar];
   }
   return self;
 }

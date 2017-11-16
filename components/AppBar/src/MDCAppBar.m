@@ -47,7 +47,13 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   UIColor *backgroundColor = appBar.navigationBar.backgroundColor ?:
       appBar.headerViewController.headerView.backgroundColor;
   if (!backgroundColor) {
-    return;
+    // It might be possible that the views haven't received their background colors if we're using
+    // UIAppearance to style them. That's why we check their appearance before giving up.
+    backgroundColor = [[MDCNavigationBar appearance] backgroundColor] ?:
+        [[MDCFlexibleHeaderView appearance] backgroundColor];
+    if (!backgroundColor) {
+      return;
+    }
   }
 
   // Update title label color based on navigationBar/headerView backgroundColor
