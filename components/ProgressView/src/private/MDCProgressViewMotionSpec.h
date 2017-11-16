@@ -15,13 +15,14 @@
  */
 
 #import <Foundation/Foundation.h>
-
 #import <MotionInterchange/MotionInterchange.h>
 
-struct MDCProgressViewMotionSpec {
-  MDMMotionTiming setProgress;
-  MDMMotionTiming setHidden;
-};
-typedef struct MDCProgressViewMotionSpec MDCProgressViewMotionSpec;
+@interface MDCProgressViewMotionSpec: NSObject
 
-FOUNDATION_EXPORT const struct MDCProgressViewMotionSpec kMDCProgressViewMotionSpec;
++ (MDMMotionTiming)willChangeProgress;
++ (MDMMotionTiming)willChangeHidden;
+
+// This object is not meant to be instantiated.
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
