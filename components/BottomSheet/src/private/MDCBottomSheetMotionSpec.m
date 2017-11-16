@@ -16,12 +16,10 @@
 
 #import "MDCBottomSheetMotionSpec.h"
 
-#define EaseInOut _MDMBezier(0.42, 0.0, 0.58, 1.0)
-
 @implementation MDCBottomSheetMotionSpec
 
 + (MDMMotionCurve)easeInOut {
-  return _MDMBezier(0.42, 0.0, 0.58, 1.0);
+  return MDMMotionCurveMakeBezier(0.42f, 0.00f, 0.58f, 1.00f);
 }
 
 + (MDMMotionTiming)scrimAppearance {
