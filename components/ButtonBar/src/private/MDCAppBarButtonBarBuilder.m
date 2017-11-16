@@ -19,8 +19,8 @@
 #import <objc/runtime.h>
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCButtonBar+Private.h"
 #import "MaterialButtons.h"
+#import "MDCButtonBar+Private.h"
 
 static const CGFloat kMinimumItemWidth = 36.f;
 
