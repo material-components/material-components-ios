@@ -20,7 +20,7 @@
 
 const CGFloat kTopMargin = 16.f;
 const CGFloat kLeftGutter = 16.f;
-const CGFloat kTextOffset = 24.f;
+const CGFloat kTextOffset = 16.f;
 
 // Size of the circle we animate.
 static const CGSize kAnimationCircleSize = {48.f, 48.f};
@@ -52,11 +52,12 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   self.scrollView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-  self.scrollView.contentSize = self.view.frame.size;
+  self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame),
+                                           CGRectGetHeight(self.view.frame) + kTopMargin);
   self.scrollView.clipsToBounds = YES;
   [self.view addSubview:self.scrollView];
 
-  CGFloat lineSpace = (self.view.frame.size.height - 50.f) / 4.f;
+  CGFloat lineSpace = (CGRectGetHeight(self.view.frame) - 50.f) / 5.f;
   UILabel *linearLabel = [AnimationTimingExample curveLabelWithTitle:@"Linear"];
   linearLabel.frame =
       CGRectMake(kLeftGutter, kTopMargin, linearLabel.frame.size.width, linearLabel.frame.size.height);
@@ -70,7 +71,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   [self.scrollView addSubview:self.linearView];
 
   UILabel *materialEaseInOutLabel =
-      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionEaseInOut"];
+      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionStandard"];
   materialEaseInOutLabel.frame =
       CGRectMake(kLeftGutter, lineSpace, materialEaseInOutLabel.frame.size.width,
                  materialEaseInOutLabel.frame.size.height);
@@ -79,10 +80,10 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   CGRect materialEaseInOutViewFrame =
       CGRectMake(kLeftGutter, lineSpace + kTextOffset, kAnimationCircleSize.width,
                  kAnimationCircleSize.height);
-  self.materialEaseInOutView = [[UIView alloc] initWithFrame:materialEaseInOutViewFrame];
-  self.materialEaseInOutView.backgroundColor = [AnimationTimingExample defaultColors][1];
-  self.materialEaseInOutView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
-  [self.scrollView addSubview:self.materialEaseInOutView];
+  self.materialStandardView = [[UIView alloc] initWithFrame:materialEaseInOutViewFrame];
+  self.materialStandardView.backgroundColor = [AnimationTimingExample defaultColors][1];
+  self.materialStandardView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+  [self.scrollView addSubview:self.materialStandardView];
 
   UILabel *materialEaseOutLabel =
       [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionEaseOut"];
@@ -91,13 +92,13 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
                  materialEaseOutLabel.frame.size.height);
   [self.scrollView addSubview:materialEaseOutLabel];
 
-  CGRect materialEaseOutViewFrame =
+  CGRect materialDecelerationViewFrame =
       CGRectMake(kLeftGutter, lineSpace * 2.f + kTextOffset, kAnimationCircleSize.width,
                  kAnimationCircleSize.height);
-  self.materialEaseOutView = [[UIView alloc] initWithFrame:materialEaseOutViewFrame];
-  self.materialEaseOutView.backgroundColor = [AnimationTimingExample defaultColors][2];
-  self.materialEaseOutView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
-  [self.scrollView addSubview:self.materialEaseOutView];
+  self.materialDecelerationView = [[UIView alloc] initWithFrame:materialDecelerationViewFrame];
+  self.materialDecelerationView.backgroundColor = [AnimationTimingExample defaultColors][2];
+  self.materialDecelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+  [self.scrollView addSubview:self.materialDecelerationView];
 
   UILabel *materialEaseInLabel =
       [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionEaseIn"];
@@ -106,13 +107,26 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
                  materialEaseInLabel.frame.size.height);
   [self.scrollView addSubview:materialEaseInLabel];
 
-  CGRect materialEaseInViewFrame =
+  CGRect materialAccelerationViewFrame =
       CGRectMake(kLeftGutter, lineSpace * 3.f + kTextOffset, kAnimationCircleSize.width,
                  kAnimationCircleSize.height);
-  self.materialEaseInView = [[UIView alloc] initWithFrame:materialEaseInViewFrame];
-  self.materialEaseInView.backgroundColor = [AnimationTimingExample defaultColors][3];
-  self.materialEaseInView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
-  [self.scrollView addSubview:self.materialEaseInView];
+  self.materialAccelerationView = [[UIView alloc] initWithFrame:materialAccelerationViewFrame];
+  self.materialAccelerationView.backgroundColor = [AnimationTimingExample defaultColors][3];
+  self.materialAccelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+  [self.scrollView addSubview:self.materialAccelerationView];
+   
+   UILabel *materialSharpLabel =
+       [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionSharp"];
+   materialSharpLabel.frame =
+       CGRectMake(kLeftGutter, lineSpace * 4.f, CGRectGetWidth(materialSharpLabel.frame),
+                  CGRectGetHeight(materialSharpLabel.frame));
+   [self.scrollView addSubview:materialSharpLabel];
+   
+   CGRect materialSharpViewFrame = CGRectMake(kLeftGutter, lineSpace * 4.f + kTextOffset, kAnimationCircleSize.width, kAnimationCircleSize.height);
+   self.materialSharpView = [[UIView alloc] initWithFrame:materialSharpViewFrame];
+   self.materialSharpView.backgroundColor = [AnimationTimingExample defaultColors][4];
+   self.materialSharpView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+   [self.scrollView addSubview:self.materialSharpView];
 }
 
 + (UILabel *)curveLabelWithTitle:(NSString *)text {
@@ -131,8 +145,9 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
     UIColor *primaryColor = [UIColor darkGrayColor];
     defaultColors = @[
       [primaryColor colorWithAlphaComponent:0.8],
-      [primaryColor colorWithAlphaComponent:0.6],
-      [primaryColor colorWithAlphaComponent:0.4],
+      [primaryColor colorWithAlphaComponent:0.65],
+      [primaryColor colorWithAlphaComponent:0.5],
+      [primaryColor colorWithAlphaComponent:0.35],
       [primaryColor colorWithAlphaComponent:0.2]
     ];
   });
