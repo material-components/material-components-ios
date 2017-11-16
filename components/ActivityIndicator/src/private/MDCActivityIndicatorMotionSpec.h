@@ -15,35 +15,41 @@
  */
 
 #import <Foundation/Foundation.h>
-
 #import <MotionInterchange/MotionInterchange.h>
 
-struct MDCActivityIndicatorMotionSpec {
-  struct MDCActivityIndicatorMotionSpecIndeterminate {
-    MDMMotionTiming outerRotation;
-    MDMMotionTiming innerRotation;
-    MDMMotionTiming strokeStart;
-    MDMMotionTiming strokeEnd;
-  } indeterminate;
+typedef struct MDCActivityIndicatorMotionSpecIndeterminate {
+  MDMMotionTiming outerRotation;
+  MDMMotionTiming innerRotation;
+  MDMMotionTiming strokeStart;
+  MDMMotionTiming strokeEnd;
+} MDCActivityIndicatorMotionSpecIndeterminate;
 
-  struct MDCActivityIndicatorMotionSpecTransitionToDeterminate {
-    MDMMotionTiming innerRotation;
-    MDMMotionTiming strokeEnd;
-  } transitionToDeterminate;
+typedef struct MDCActivityIndicatorMotionSpecTransitionToDeterminate {
+  MDMMotionTiming innerRotation;
+  MDMMotionTiming strokeEnd;
+} MDCActivityIndicatorMotionSpecTransitionToDeterminate;
 
-  struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate {
-    MDMMotionTiming strokeStart;
-    MDMMotionTiming strokeEnd;
-  } transitionToIndeterminate;
+typedef struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate {
+  MDMMotionTiming strokeStart;
+  MDMMotionTiming strokeEnd;
+} MDCActivityIndicatorMotionSpecTransitionToIndeterminate;
 
-  struct MDCActivityIndicatorMotionSpecProgress {
-    MDMMotionTiming strokeEnd;
-  } progress;
-};
-typedef struct MDCActivityIndicatorMotionSpec MDCActivityIndicatorMotionSpec;
+typedef struct MDCActivityIndicatorMotionSpecProgress {
+  MDMMotionTiming strokeEnd;
+} MDCActivityIndicatorMotionSpecProgress;
 
-FOUNDATION_EXPORT const NSTimeInterval kPointCycleDuration;
-FOUNDATION_EXPORT const NSTimeInterval kPointCycleMinimumVariableDuration;
+@interface MDCActivityIndicatorMotionSpec: NSObject
 
-FOUNDATION_EXPORT const struct MDCActivityIndicatorMotionSpec kMDCActivityIndicatorMotionSpec;
++ (NSTimeInterval)pointCycleDuration;
++ (NSTimeInterval)pointCycleMinimumVariableDuration;
+
++ (MDCActivityIndicatorMotionSpecIndeterminate)loopIndeterminate;
++ (MDCActivityIndicatorMotionSpecTransitionToDeterminate)willChangeToDeterminate;
++ (MDCActivityIndicatorMotionSpecTransitionToIndeterminate)willChangeToIndeterminate;
++ (MDCActivityIndicatorMotionSpecProgress)willChangeProgress;
+
+// This object is not meant to be instantiated.
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
 
