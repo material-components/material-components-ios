@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 #import <MotionInterchange/MotionInterchange.h>
 
-struct MDCMaskedTransitionMotionTiming {
+typedef struct MDCMaskedTransitionMotionTiming {
   MDMMotionTiming iconFade;
   MDMMotionTiming contentFade;
   MDMMotionTiming floodBackgroundColor;
@@ -25,18 +25,23 @@ struct MDCMaskedTransitionMotionTiming {
   MDMMotionTiming horizontalMovement;
   MDMMotionTiming verticalMovement;
   MDMMotionTiming scrimFade;
-};
-typedef struct MDCMaskedTransitionMotionTiming MDCMaskedTransitionMotionTiming;
+} MDCMaskedTransitionMotionTiming;
 
-struct MDCMaskedTransitionMotionSpec {
+typedef struct MDCMaskedTransitionMotionSpecContext {
   MDCMaskedTransitionMotionTiming expansion;
   MDCMaskedTransitionMotionTiming collapse;
   BOOL shouldSlideWhenCollapsed;
   BOOL isCentered;
-};
-typedef struct MDCMaskedTransitionMotionSpec MDCMaskedTransitionMotionSpec;
+} MDCMaskedTransitionMotionSpecContext;
 
-FOUNDATION_EXPORT struct MDCMaskedTransitionMotionSpec fullscreen;
-FOUNDATION_EXPORT struct MDCMaskedTransitionMotionSpec bottomSheet;
-FOUNDATION_EXPORT struct MDCMaskedTransitionMotionSpec bottomCard;
-FOUNDATION_EXPORT struct MDCMaskedTransitionMotionSpec toolbar;
+@interface MDCMaskedTransitionMotionSpec: NSObject
+
++ (MDCMaskedTransitionMotionSpecContext)fullscreen;
++ (MDCMaskedTransitionMotionSpecContext)bottomSheet;
++ (MDCMaskedTransitionMotionSpecContext)bottomCard;
++ (MDCMaskedTransitionMotionSpecContext)toolbar;
+
+// This object is not meant to be instantiated.
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
