@@ -10,7 +10,7 @@ script is the `.kokoro` script in the root of the repo.
 
 ## Running kokoro presubmits locally
 
-First, ensure that you have installed [bazel](https://docs.bazel.build/versions/master/install-os-x.html)
+First, ensure that you have [installed bazel](https://docs.bazel.build/versions/master/install-os-x.html)
 and at least one version of Xcode.
 
 Run the following command from the root of your MDC-iOS repo to run the presubmits:
@@ -45,7 +45,7 @@ import statements and the bazel-supported import statements.
 > Note that the kokoro script can only translate import statements that specify the component name.
 > Import statements like the following will need to be updated to use the more specific
 > `MaterialComponents.Material<component>` pattern:
-> 
+>
 >     import MaterialComponents
 
 ## BUILD files
