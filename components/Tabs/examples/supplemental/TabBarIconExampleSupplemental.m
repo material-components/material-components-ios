@@ -20,10 +20,7 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialButtons;
 @import MaterialComponents.MaterialPalettes;
-@import MaterialComponents.MaterialTabs;
 
 // Exposing selectors defined in the main example class
 @interface TabBarIconExample ()

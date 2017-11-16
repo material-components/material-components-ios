@@ -14,9 +14,8 @@
  limitations under the License.
  */
 
-#import "DialogsKeyboardViewControllerSupplemental.h"
-
 #import "MaterialDialogs.h"
+#import "supplemental/DialogsKeyboardViewControllerSupplemental.h"
 
 @interface DialogsKeyboardViewController ()
 

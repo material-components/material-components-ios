@@ -19,8 +19,6 @@
 
 #import "MaterialIcons+ic_reorder.h"
 
-#import "MaterialIcons.h"
-
 static NSString *const kBundleName = @"MaterialIcons_ic_reorder";
 static NSString *const kIconName = @"ic_reorder";
 

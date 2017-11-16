@@ -26,6 +26,9 @@
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCommonFundament.h"
 #import "MDCTextInputUnderlineView.h"
+#import "MDCTextField.h"
+#import "MDCMultilineTextField.h"
+#import "MDCTextFieldPositioningDelegate.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"

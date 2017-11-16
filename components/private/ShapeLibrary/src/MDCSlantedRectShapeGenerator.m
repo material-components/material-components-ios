@@ -16,8 +16,6 @@
 
 #import "MDCSlantedRectShapeGenerator.h"
 
-#import "MDCRectangleShapeGenerator.h"
-
 static NSString *const MDCSlantedRectShapeGeneratorSlantKey =
     @"MDCSlantedRectShapeGeneratorSlantKey";
 

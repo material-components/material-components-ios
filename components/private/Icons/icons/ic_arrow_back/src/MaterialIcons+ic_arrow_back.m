@@ -19,8 +19,6 @@
 
 #import "MaterialIcons+ic_arrow_back.h"
 
-#import "MaterialIcons.h"
-
 static NSString *const kBundleName = @"MaterialIcons_ic_arrow_back";
 static NSString *const kIconName = @"ic_arrow_back";
 static NSString *const kNewIconName = @"ic_arrow_back_ios";

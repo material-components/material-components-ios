@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCPageControl.h"
+#import "MaterialPageControl.h"
 
 @interface PageControlAnimationBlockExample : UIViewController <UIScrollViewDelegate>
 @end

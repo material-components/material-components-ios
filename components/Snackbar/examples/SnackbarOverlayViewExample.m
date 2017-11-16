@@ -18,7 +18,7 @@
 
 #import "MaterialOverlay.h"
 #import "MaterialSnackbar.h"
-#import "SnackbarExampleSupplemental.h"
+#import "supplemental/SnackbarExampleSupplemental.h"
 
 static const CGFloat kFABBottomOffset = 24.0f;
 static const CGFloat kFABSideOffset = 24.0f;

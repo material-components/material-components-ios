@@ -16,11 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ThemerTypicalUseSupplemental.h"
-
 #import "MaterialFlexibleHeader.h"
 #import "MaterialPalettes.h"
 #import "MaterialProgressView.h"
+#import "supplemental/ThemerTypicalUseSupplemental.h"
 
 @interface ThemerTypicalUseViewController ()
 

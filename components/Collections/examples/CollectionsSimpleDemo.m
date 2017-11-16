@@ -14,9 +14,8 @@
  limitations under the License.
  */
 
-#import "CollectionsSimpleDemo.h"
-
 #import "MaterialTypography.h"
+#import "supplemental/CollectionsSimpleDemo.h"
 
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 5;

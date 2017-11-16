@@ -16,7 +16,7 @@
 
 #import "SliderAutolayoutExampleViewController.h"
 
-#import "MDCSlider.h"
+#import "MaterialSlider.h"
 
 @interface SliderAutolayoutExampleViewController ()
 @property(weak, nonatomic) IBOutlet MDCSlider *materialSlider;

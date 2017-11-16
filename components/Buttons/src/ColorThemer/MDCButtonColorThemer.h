@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialButtons.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCTabBar.
