@@ -48,17 +48,21 @@ const NSTimeInterval kAnimationTimeDelay = 0.5f;
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   [self applyAnimationToView:_linearView withTimingFunction:linearTimingCurve];
 
-  CAMediaTimingFunction *materialEaseInOutCurve =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-  [self applyAnimationToView:_materialEaseInOutView withTimingFunction:materialEaseInOutCurve];
+  CAMediaTimingFunction *materialStandardCurve =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
+  [self applyAnimationToView:_materialStandardView withTimingFunction:materialStandardCurve];
 
-  CAMediaTimingFunction *materialEaseOutCurve =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseOut];
-  [self applyAnimationToView:_materialEaseOutView withTimingFunction:materialEaseOutCurve];
+  CAMediaTimingFunction *materialDecelerationCurve =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionDeceleration];
+  [self applyAnimationToView:_materialDecelerationView withTimingFunction:materialDecelerationCurve];
 
-  CAMediaTimingFunction *materialEaseInCurve =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseIn];
-  [self applyAnimationToView:_materialEaseInView withTimingFunction:materialEaseInCurve];
+  CAMediaTimingFunction *materialAccelerationCurve =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionAcceleration];
+  [self applyAnimationToView:_materialAccelerationView withTimingFunction:materialAccelerationCurve];
+   
+  CAMediaTimingFunction *materialSharpCurve =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionSharp];
+   [self applyAnimationToView:_materialSharpView withTimingFunction:materialSharpCurve];
 }
 
 - (void)applyAnimationToView:(UIView *)view
