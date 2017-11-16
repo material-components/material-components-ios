@@ -1,3 +1,5 @@
+# release-candidate TODO: Replace me with version number. 
+
 # 40.0.1
 
 * [Catalog] Added Import to catalog’s AppDelegate.
