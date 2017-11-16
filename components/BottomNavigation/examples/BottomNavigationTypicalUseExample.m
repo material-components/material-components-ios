@@ -92,12 +92,7 @@
   [self updateBadgeItemCount];
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  [self.appBar addSubviewsToParent];
-}
-
-- (void)viewWillLayoutSubviews {
+- (void)layoutBottomNavBar {
   CGSize size = [_bottomNavBar sizeThatFits:self.view.bounds.size];
   CGRect bottomNavBarFrame = CGRectMake(0,
                                         CGRectGetHeight(self.view.bounds) - size.height,
@@ -105,6 +100,25 @@
                                         size.height);
   _bottomNavBar.frame = bottomNavBarFrame;
 }
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self.appBar addSubviewsToParent];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [self layoutBottomNavBar];
+}
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+- (void)viewSafeAreaInsetsDidChange {
+  if (@available(iOS 11.0, *)) {
+    [super viewSafeAreaInsetsDidChange];
+  }
+  [self layoutBottomNavBar];
+}
+#endif
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
