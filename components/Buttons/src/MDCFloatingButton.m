@@ -156,6 +156,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
 #pragma mark - UIView
 
 - (CGSize)intrinsicContentSize {
+  NSLog(@"intrinsicContentSize");
   switch (_shape) {
     case MDCFloatingButtonShapeDefault:
       return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
@@ -178,24 +179,25 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   }
 }
 
-- (CGSize)sizeThatFits:(CGSize)size {
-  switch(self.shape) {
-    case MDCFloatingButtonShapeDefault:
-    case MDCFloatingButtonShapeMini:
-    case MDCFloatingButtonShapeLargeIcon:
-      return [super sizeThatFits:size];
-    case MDCFloatingButtonShapeExtendedLeadingIcon:
-    case MDCFloatingButtonShapeExtendedTrailingIcon: {
-      // UIButton will compute the size basically the same as MDCFloatingButton,
-      // but without the |imageTitlePadding|
-      const CGSize superSize = [super sizeThatFits:size];
-      return CGSizeMake(superSize.width + self.imageTitlePadding, superSize.height);
-    }
-  }
-}
+//- (CGSize)sizeThatFits:(CGSize)size {
+//  switch(self.shape) {
+//    case MDCFloatingButtonShapeDefault:
+//    case MDCFloatingButtonShapeMini:
+//    case MDCFloatingButtonShapeLargeIcon:
+//      return [super sizeThatFits:size];
+//    case MDCFloatingButtonShapeExtendedLeadingIcon:
+//    case MDCFloatingButtonShapeExtendedTrailingIcon: {
+//      // UIButton will compute the size basically the same as MDCFloatingButton,
+//      // but without the |imageTitlePadding|
+//      const CGSize superSize = [super sizeThatFits:size];
+//      return CGSizeMake(superSize.width + self.imageTitlePadding, superSize.height);
+//    }
+//  }
+//}
 
-/*
+
 - (CGSize)sizeThatFits:(__unused CGSize)size {
+  NSLog(@"sizeThaTFits:");
   const CGSize intrinsicSize = [self intrinsicContentSize];
   CGSize finalSize = intrinsicSize;
   if (self.minimumSize.height > 0) {
@@ -212,9 +214,10 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   }
   return finalSize;
 }
- */
+
 
 - (void)layoutSubviews {
+  NSLog(@"Layout");
   // We have to set cornerRadius before laying out subviews so that the boundingPath is correct.
   self.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
   [super layoutSubviews];
@@ -360,30 +363,44 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   [self updateShape];
 }
 
-- (void)updateMinimumSize {
+- (BOOL)updateMinimumSize {
   NSValue *sizeValue = self.shapeToMinimumSize[@(self.shape)];
   if (!sizeValue && self.shape != MDCFloatingButtonShapeDefault) {
     sizeValue = self.shapeToMinimumSize[@(MDCFloatingButtonShapeDefault)];
   }
 
+  CGSize newSize = CGSizeZero;
   if (sizeValue) {
-    super.minimumSize = [sizeValue CGSizeValue];
-  } else {
-    super.minimumSize = CGSizeZero;
+    newSize = [sizeValue CGSizeValue];
   }
+
+  BOOL sizeChanged = (newSize.width > self.minimumSize.width)
+      || (newSize.height > self.minimumSize.height);
+  super.minimumSize = newSize;
+  if (sizeChanged) {
+    [self invalidateIntrinsicContentSize];
+  }
+  return sizeChanged;
 }
 
-- (void)updateMaximumSize {
+- (BOOL)updateMaximumSize {
   NSValue *sizeValue = self.shapeToMaximumSize[@(self.shape)];
   if (!sizeValue && self.shape != MDCFloatingButtonShapeDefault) {
     sizeValue = self.shapeToMaximumSize[@(MDCFloatingButtonShapeDefault)];
   }
 
+  CGSize newSize = CGSizeZero;
   if (sizeValue) {
-    super.maximumSize = [sizeValue CGSizeValue];
-  } else {
-    super.maximumSize = CGSizeZero;
+    newSize = [sizeValue CGSizeValue];
   }
+
+  BOOL sizeChanged = !CGSizeEqualToSize(newSize, CGSizeZero)
+      && ((newSize.width < self.maximumSize.width) || (newSize.height < self.maximumSize.height));
+  super.maximumSize = newSize;
+  if (sizeChanged) {
+    [self invalidateIntrinsicContentSize];
+  }
+  return sizeChanged;
 }
 
 - (UIEdgeInsets)insetsForShape:(MDCFloatingButtonShape)shape {
@@ -415,9 +432,13 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
 }
 
 - (void)updateShape {
-  [self updateMinimumSize];
-  [self updateMaximumSize];
+  BOOL needsLayout = [self updateMinimumSize];
+  needsLayout |= [self updateMaximumSize];
   [self updateContentEdgeInsets];
+  [self updateHitAreaInsets];
+  if (needsLayout) {
+    [self sizeToFit];
+  }
 }
 
 #pragma mark - Deprecations

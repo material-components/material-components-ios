@@ -11,7 +11,7 @@
 @implementation ExampleFloatingButtonThemer
 
 + (void)applyToButton:(nonnull MDCFloatingButton *)button
-      withColorScheme:(nullable id<MDCColorScheme>)colorScheme {
+      withColorScheme:(nullable NSObject<MDCColorScheme> *)colorScheme {
   if (colorScheme) {
     [MDCButtonColorThemer applyColorScheme:colorScheme toButton:button];
   }

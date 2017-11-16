@@ -17,6 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
+#import "ExampleFloatingButtonThemer.h"
 
 @interface ButtonsTypicalUseViewController ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
@@ -138,6 +139,13 @@
       self.floatingButton.shape += 1;
       if (self.floatingButton.shape > MDCFloatingButtonShapeExtendedTrailingIcon) {
         self.floatingButton.shape = 0;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+          MDCBasicColorScheme *scheme = [[MDCBasicColorScheme alloc] initWithPrimaryColor:UIColor.purpleColor
+                                                                           secondaryColor:UIColor.orangeColor];
+          [ExampleFloatingButtonThemer applyToButton:self.floatingButton withColorScheme:scheme];
+        });
+
       }
       if (self.floatingButton.shape >= MDCFloatingButtonShapeExtendedLeadingIcon) {
         [self.floatingButton setTitle:@"Extended" forState:UIControlStateNormal];
