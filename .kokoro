@@ -64,10 +64,14 @@ run_bazel() {
   fix_bazel_imports
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
-    extra_args="-v"
+    verbosity_args="-v"
   fi
 
-  ./.kokoro-ios-runner/bazel.sh test //components/... --min-xcode-version $XCODE_MINIMUM_VERSION $extra_args
+  ./.kokoro-ios-runner/bazel.sh test //components/... \
+      --min-xcode-version $XCODE_MINIMUM_VERSION \
+      $verbosity_args \
+      --ios_minimum_os=8.0 \
+      --ios_multi_cpus=i386,x86_64
 }
 
 run_cocoapods() {
