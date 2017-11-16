@@ -23,6 +23,7 @@
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialNavigationBar.h"
+#import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarIconsExample ()
 

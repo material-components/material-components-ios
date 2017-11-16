@@ -14,13 +14,21 @@
  limitations under the License.
  */
 
-#import "MDCProgressView+MotionSpec.h"
+#import "MDCProgressViewMotionSpec.h"
 
-const struct MDCProgressViewMotionSpec kMDCProgressViewMotionSpec = {
-  .setProgress = {
-    .duration = 0.250, .curve = _MDMBezier(0, 0, 1, 1),
-  },
-  .setHidden = {
-    .duration = 0.250, .curve = _MDMBezier(0, 0, 1, 1),
-  }
-};
+@implementation MDCProgressViewMotionSpec
+
++ (MDMMotionTiming)willChangeProgress {
+  return (MDMMotionTiming){
+    .duration = 0.250, .curve = MDMMotionCurveMakeBezier(0, 0, 1, 1),
+  };
+}
+
++ (MDMMotionTiming)willChangeHidden {
+  return (MDMMotionTiming){
+    .duration = 0.250, .curve = MDMMotionCurveMakeBezier(0, 0, 1, 1),
+  };
+}
+
+@end
+

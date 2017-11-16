@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "CollectionsCellSeparatorExample.h"
+#import "supplemental/CollectionsCellSeparatorExample.h"
 
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 3;

@@ -18,8 +18,7 @@
 
 #import "MDCFlexibleHeaderColorThemer.h"
 #import "MaterialFlexibleHeader.h"
-
-#import "FlexibleHeaderTypicalUseSupplemental.h"
+#import "supplemental/FlexibleHeaderTypicalUseSupplemental.h"
 
 @interface FlexibleHeaderTypicalUseViewController ()
 

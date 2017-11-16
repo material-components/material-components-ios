@@ -25,7 +25,7 @@
 #import "private/MDCPaddedLabel.h"
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
 
-#import "MDCMath.h"
+#import "MaterialMath.h"
 
 #pragma mark - Class Properties
 
