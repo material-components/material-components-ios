@@ -21,4 +21,4 @@
 
 FOUNDATION_EXPORT
 MDCMaskedTransitionMotionSpecContext
-    MDCMaskedTransitionMotionSpecForContext(NSObject<MDMTransitionContext> *context);
+    MDCMaskedTransitionMotionSpecForContext(id<MDMTransitionContext> context);

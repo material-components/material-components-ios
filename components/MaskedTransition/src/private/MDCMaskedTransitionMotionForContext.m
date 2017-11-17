@@ -17,7 +17,7 @@
 #import "MDCMaskedTransitionMotionForContext.h"
 
 MDCMaskedTransitionMotionSpecContext
-    MDCMaskedTransitionMotionSpecForContext(NSObject<MDMTransitionContext> *context) {
+    MDCMaskedTransitionMotionSpecForContext(id<MDMTransitionContext> context) {
   const CGRect foreBounds = context.foreViewController.view.bounds;
   const CGRect foreFrame = context.foreViewController.view.frame;
   const CGRect containerBounds = context.containerView.bounds;
