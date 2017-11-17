@@ -36,10 +36,10 @@ typedef struct MDCMaskedTransitionMotionSpecContext {
 
 @interface MDCMaskedTransitionMotionSpec: NSObject
 
-+ (MDCMaskedTransitionMotionSpecContext)fullscreen;
-+ (MDCMaskedTransitionMotionSpecContext)bottomSheet;
-+ (MDCMaskedTransitionMotionSpecContext)bottomCard;
-+ (MDCMaskedTransitionMotionSpecContext)toolbar;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext fullscreen;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext bottomSheet;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext bottomCard;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext toolbar;
 
 // This object is not meant to be instantiated.
 - (instancetype)init NS_UNAVAILABLE;
