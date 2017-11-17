@@ -78,8 +78,8 @@ run_bazel() {
       $verbosity_args \
       --ios_minimum_os=8.0 \
       --ios_multi_cpus=i386,x86_64 \
-      --ios_simulator_device='iPad Pro (12.9-inch)' \
-      --ios_simulator_version='9.3'
+      "--ios_simulator_device='iPad Pro (12.9-inch)'" \
+      "--ios_simulator_version='9.3'"
 
   # The iPhone 5 was chosen because it is a 32-bit device.
   # 8.1 was chosen because it is the earliest iOS offered here.
@@ -88,8 +88,8 @@ run_bazel() {
       $verbosity_args \
       --ios_minimum_os=8.0 \
       --ios_multi_cpus=i386,x86_64 \
-      --ios_simulator_device='iPhone 5' \
-      --ios_simulator_version='8.1'
+      "--ios_simulator_device='iPhone 5'" \
+      "--ios_simulator_version='8.1'"
 }
 
 run_cocoapods() {
