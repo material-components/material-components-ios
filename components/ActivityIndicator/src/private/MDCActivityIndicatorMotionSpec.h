@@ -49,13 +49,15 @@ typedef struct MDCActivityIndicatorMotionSpecProgress {
 MDC_SUBCLASSING_RESTRICTED
 @interface MDCActivityIndicatorMotionSpec: NSObject
 
-+ (NSTimeInterval)pointCycleDuration;
-+ (NSTimeInterval)pointCycleMinimumVariableDuration;
+@property(nonatomic, class, readonly) NSTimeInterval pointCycleDuration;
+@property(nonatomic, class, readonly) NSTimeInterval pointCycleMinimumVariableDuration;
 
-+ (MDCActivityIndicatorMotionSpecIndeterminate)loopIndeterminate;
-+ (MDCActivityIndicatorMotionSpecTransitionToDeterminate)willChangeToDeterminate;
-+ (MDCActivityIndicatorMotionSpecTransitionToIndeterminate)willChangeToIndeterminate;
-+ (MDCActivityIndicatorMotionSpecProgress)willChangeProgress;
+@property(nonatomic, class, readonly) MDCActivityIndicatorMotionSpecIndeterminate loopIndeterminate;
+@property(nonatomic, class, readonly)
+    MDCActivityIndicatorMotionSpecTransitionToDeterminate willChangeToDeterminate;
+@property(nonatomic, class, readonly)
+    MDCActivityIndicatorMotionSpecTransitionToIndeterminate willChangeToIndeterminate;
+@property(nonatomic, class, readonly) MDCActivityIndicatorMotionSpecProgress willChangeProgress;
 
 // This object is not meant to be instantiated.
 - (instancetype)init NS_UNAVAILABLE;
