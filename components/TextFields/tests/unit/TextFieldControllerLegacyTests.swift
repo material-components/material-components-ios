@@ -18,6 +18,8 @@
 // swiftlint:disable type_body_length
 
 import XCTest
+import MaterialComponents.MaterialMath
+import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTextFields
 
 class TextFieldControllerDefaultLegacyTests: XCTestCase {
