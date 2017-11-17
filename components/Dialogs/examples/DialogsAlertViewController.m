@@ -14,9 +14,7 @@
  limitations under the License.
  */
 
-#import "DialogsAlertViewControllerSupplemental.h"
-
-#import "MaterialButtons.h"
+#import "supplemental/DialogsAlertViewControllerSupplemental.h"
 #import "MaterialDialogs.h"
 
 @implementation DialogsAlertViewController

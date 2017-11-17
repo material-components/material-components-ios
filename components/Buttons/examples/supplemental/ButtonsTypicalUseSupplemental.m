@@ -19,9 +19,8 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import <Foundation/Foundation.h>
-
 #import "ButtonsTypicalUseSupplemental.h"
+
 #import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"

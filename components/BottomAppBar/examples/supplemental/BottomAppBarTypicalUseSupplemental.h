@@ -16,9 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomAppBar.h"
-#import "BottomAppBarTypicalUseSupplemental.h"
 #import "BottomAppBarTypicalUseViewController.h"
+#import "MaterialBottomAppBar.h"
 
 @interface BottomAppBarTypicalUseExample : BottomAppBarTypicalUseViewController
 

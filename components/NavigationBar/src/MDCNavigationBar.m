@@ -605,6 +605,16 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   if ([_observedNavigationItem.titleView isKindOfClass:[MDCNavigationBarSandbagView class]]) {
     return;
   }
+
+  // Swap in the sandbag (so that UINavigationController won't steal our view). It's important that
+  // we do this before we add titleView as a subview, because starting from iOS 11 the navigation
+  // item will call |removeFromSuperview| on the old titleView when we replace it.
+  if (titleView) {
+    _observedNavigationItem.titleView = [[MDCNavigationBarSandbagView alloc] init];
+  } else if (_observedNavigationItem.titleView) {
+    _observedNavigationItem.titleView = nil;
+  }
+
   [self.titleView removeFromSuperview];
   _titleView = titleView;
   [self addSubview:_titleView];
@@ -612,13 +622,6 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   _titleLabel.hidden = _titleView != nil;
 
   [self setNeedsLayout];
-
-  // Swap in the sandbag (so that UINavigationController won't steal our view)
-  if (titleView) {
-    _observedNavigationItem.titleView = [[MDCNavigationBarSandbagView alloc] init];
-  } else if (_observedNavigationItem.titleView) {
-    _observedNavigationItem.titleView = nil;
-  }
 }
 
 - (void)setTitleTextAttributes:(NSDictionary<NSString *, id> *)titleTextAttributes {

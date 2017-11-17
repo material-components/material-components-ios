@@ -80,7 +80,7 @@ be used in an animation.
 #### Swift
 
 ``` swift
-let materialCurve = MDCAnimationTimingFunction.easeOut
+let materialCurve = MDCAnimationTimingFunction.deceleration
 let timingFunction = CAMediaTimingFunction.mdc_function(withType: materialCurve)
 
 let animation = CABasicAnimation(keyPath:"transform.translation.x")
@@ -90,7 +90,7 @@ animation.timingFunction = timingFunction
 #### Objc
 
 ``` objc
-MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
+MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionDeceleration;
 CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
 
 CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];

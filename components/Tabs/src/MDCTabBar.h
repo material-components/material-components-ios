@@ -21,6 +21,7 @@
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
+@protocol MDCTabBarIndicatorTemplate;
 
 /**
  A material tab bar for switching between views of grouped content.
@@ -112,6 +113,14 @@ IB_DESIGNABLE
  The default value is based on the position and is recommended for most applications.
  */
 @property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
+
+/**
+ Template that defines the appearance of the selection indicator.
+
+ The default indicator template is a fixed-height rectangular bar under the selected tab.
+ */
+@property(nonatomic, null_resettable) id<MDCTabBarIndicatorTemplate> selectionIndicatorTemplate
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Select an item with optional animation. Setting to nil will clear the selection.

@@ -36,9 +36,10 @@ class AnimationTimingExample: UIViewController {
 
    fileprivate let scrollView: UIScrollView = UIScrollView()
    fileprivate let linearView: UIView = UIView()
-   fileprivate let materialEaseInOutView: UIView = UIView()
-   fileprivate let materialEaseOutView: UIView = UIView()
-   fileprivate let materialEaseInView: UIView = UIView()
+   fileprivate let materialStandardView: UIView = UIView()
+   fileprivate let materialDecelerationView: UIView = UIView()
+   fileprivate let materialAccelerationView: UIView = UIView()
+   fileprivate let materialSharpView: UIView = UIView()
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -61,24 +62,29 @@ class AnimationTimingExample: UIViewController {
       let linearCurve: CAMediaTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
       applyAnimation(toView: linearView, withTimingFunction: linearCurve)
 
-      if let materialEaseInOut = CAMediaTimingFunction.mdc_function(withType: .easeInOut) {
-         applyAnimation(toView: materialEaseInOutView, withTimingFunction: materialEaseInOut)
+      if let materialStandard = CAMediaTimingFunction.mdc_function(withType: .standard) {
+         applyAnimation(toView: materialStandardView, withTimingFunction: materialStandard)
       } else {
-         materialEaseInOutView.removeFromSuperview()
+         materialStandardView.removeFromSuperview()
       }
 
-      if let materialEaseOut = CAMediaTimingFunction.mdc_function(withType: .easeOut) {
-         applyAnimation(toView: materialEaseOutView, withTimingFunction: materialEaseOut)
+      if let materialDeceleration = CAMediaTimingFunction.mdc_function(withType: .deceleration) {
+         applyAnimation(toView: materialDecelerationView, withTimingFunction: materialDeceleration)
       } else {
-         materialEaseOutView.removeFromSuperview()
+         materialDecelerationView.removeFromSuperview()
       }
 
-      if let materialEaseIn = CAMediaTimingFunction.mdc_function(withType: .easeIn) {
-         applyAnimation(toView: materialEaseInView, withTimingFunction: materialEaseIn)
+      if let materialAcceleration = CAMediaTimingFunction.mdc_function(withType: .acceleration) {
+         applyAnimation(toView: materialAccelerationView, withTimingFunction: materialAcceleration)
       } else {
-         materialEaseInView.removeFromSuperview()
+         materialAccelerationView.removeFromSuperview()
       }
-
+    
+      if let materialSharp = CAMediaTimingFunction.mdc_function(withType: .sharp) {
+         applyAnimation(toView: materialSharpView, withTimingFunction: materialSharp)
+      } else {
+         materialSharpView.removeFromSuperview()
+      }
    }
 
    func applyAnimation(toView view: UIView, withTimingFunction timingFunction : CAMediaTimingFunction) {
@@ -107,17 +113,19 @@ extension AnimationTimingExample {
       }
 
       let defaultColors: [UIColor] = [UIColor.darkGray.withAlphaComponent(0.8),
-                                      UIColor.darkGray.withAlphaComponent(0.6),
-                                      UIColor.darkGray.withAlphaComponent(0.4),
+                                      UIColor.darkGray.withAlphaComponent(0.65),
+                                      UIColor.darkGray.withAlphaComponent(0.5),
+                                      UIColor.darkGray.withAlphaComponent(0.35),
                                       UIColor.darkGray.withAlphaComponent(0.2)]
 
       scrollView.frame = view.bounds
       scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      scrollView.contentSize = view.frame.size
+      scrollView.contentSize = CGSize(width: view.frame.width,
+                                      height: view.frame.height + Constants.Sizes.topMargin)
       scrollView.clipsToBounds = true
       view.addSubview(scrollView)
 
-      let lineSpace: CGFloat = (view.frame.size.height - 50.0) / 4.0
+      let lineSpace: CGFloat = (view.frame.size.height - 50.0) / 5.0
       let linearLabel: UILabel = curveLabel("Linear")
       linearLabel.frame = CGRect(x: Constants.Sizes.leftGutter, y: Constants.Sizes.topMargin, width: linearLabel.frame.size.width, height: linearLabel.frame.size.height)
       scrollView.addSubview(linearLabel)
@@ -133,31 +141,41 @@ extension AnimationTimingExample {
       scrollView.addSubview(materialEaseInOutLabel)
 
       let materialEaseInOutViewFrame: CGRect = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace + Constants.Sizes.textOffset, width: Constants.Sizes.circleSize.width, height: Constants.Sizes.circleSize.height)
-      materialEaseInOutView.frame = materialEaseInOutViewFrame
-      materialEaseInOutView.backgroundColor = defaultColors[1]
-      materialEaseInOutView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
-      scrollView.addSubview(materialEaseInOutView)
+      materialStandardView.frame = materialEaseInOutViewFrame
+      materialStandardView.backgroundColor = defaultColors[1]
+      materialStandardView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
+      scrollView.addSubview(materialStandardView)
 
       let materialEaseOutLabel: UILabel = curveLabel("MDCAnimationTimingFunctionEaseOut")
       materialEaseOutLabel.frame = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace * 2.0, width: materialEaseOutLabel.frame.size.width, height: materialEaseOutLabel.frame.size.height)
       scrollView.addSubview(materialEaseOutLabel)
 
       let materialEaseOutViewFrame: CGRect = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace * 2.0 + Constants.Sizes.textOffset, width: Constants.Sizes.circleSize.width, height: Constants.Sizes.circleSize.height)
-      materialEaseOutView.frame = materialEaseOutViewFrame
-      materialEaseOutView.backgroundColor = defaultColors[2]
-      materialEaseOutView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
-      scrollView.addSubview(materialEaseOutView)
+      materialDecelerationView.frame = materialEaseOutViewFrame
+      materialDecelerationView.backgroundColor = defaultColors[2]
+      materialDecelerationView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
+      scrollView.addSubview(materialDecelerationView)
 
       let materialEaseInLabel: UILabel = curveLabel("MDCAnimationTimingFunctionEaseIn")
       materialEaseInLabel.frame = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace * 3.0, width: materialEaseInLabel.frame.size.width, height: materialEaseInLabel.frame.size.height)
       scrollView.addSubview(materialEaseInLabel)
 
       let materialEaseInViewFrame: CGRect = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace * 3.0 + Constants.Sizes.textOffset, width: Constants.Sizes.circleSize.width, height: Constants.Sizes.circleSize.height)
-      materialEaseInView.frame = materialEaseInViewFrame
-      materialEaseInView.backgroundColor = defaultColors[3]
-      materialEaseInView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
-
-      scrollView.addSubview(materialEaseInView)
+      materialAccelerationView.frame = materialEaseInViewFrame
+      materialAccelerationView.backgroundColor = defaultColors[3]
+      materialAccelerationView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
+      scrollView.addSubview(materialAccelerationView)
+    
+      let materialSharpLabel: UILabel = curveLabel("MDCAnimationTimingSharp")
+      materialSharpLabel.frame = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace * 4.0, width: materialSharpLabel.frame.size.width, height: materialSharpLabel.frame.size.height)
+      scrollView.addSubview(materialSharpLabel)
+      
+      let materialSharpViewFrame: CGRect = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace * 4.0 +
+         Constants.Sizes.textOffset, width: Constants.Sizes.circleSize.width, height: Constants.Sizes.circleSize.height)
+      materialSharpView.frame = materialSharpViewFrame
+      materialSharpView.backgroundColor = defaultColors[4]
+      materialSharpView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
+      scrollView.addSubview(materialSharpView)
    }
 
    @objc class func catalogBreadcrumbs() -> [String] {
@@ -167,5 +185,4 @@ extension AnimationTimingExample {
    @objc class func catalogIsPrimaryDemo() -> Bool {
       return false
    }
-
 }

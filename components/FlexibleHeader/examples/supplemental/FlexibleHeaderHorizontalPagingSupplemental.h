@@ -21,7 +21,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCFlexibleHeaderViewController;
+#import "MaterialFlexibleHeader.h"
 
 @interface FlexibleHeaderHorizontalPagingViewController : UIViewController
 

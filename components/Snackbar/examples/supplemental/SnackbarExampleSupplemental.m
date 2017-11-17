@@ -14,8 +14,6 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
 #import "SnackbarExampleSupplemental.h"
 
 static NSString * const kCellIdentifier = @"Cell";

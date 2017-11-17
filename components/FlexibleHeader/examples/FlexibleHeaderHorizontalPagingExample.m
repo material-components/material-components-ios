@@ -14,9 +14,8 @@
  limitations under the License.
  */
 
-#import "FlexibleHeaderHorizontalPagingSupplemental.h"
-
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderHorizontalPagingSupplemental.h"
 
 static UIColor *HexColor(uint32_t hex) {
   return [UIColor colorWithRed:(CGFloat)((uint8_t)(hex >> 16)) / (CGFloat)255

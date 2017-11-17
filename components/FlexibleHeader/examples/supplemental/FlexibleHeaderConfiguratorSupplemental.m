@@ -22,7 +22,6 @@
 #import "FlexibleHeaderConfiguratorSupplemental.h"
 
 #import "FlexibleHeaderConfiguratorControlItem.h"
-#import "MaterialFlexibleHeader.h"
 
 static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 

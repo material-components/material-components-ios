@@ -31,5 +31,10 @@
  */
 @property(nonatomic, nullable, readonly)
     MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController;
+// TODO( https://github.com/material-components/material-components-ios/issues/2418 ):
+// Enable deprecation once internal clients have migrated to the new APIs or until a reasonable
+// period of time has passed.
+//    __deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
+//                     "mdm_transitionController.transition instead.");
 
 @end

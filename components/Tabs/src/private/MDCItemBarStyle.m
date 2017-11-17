@@ -36,6 +36,7 @@
   newStyle.defaultHeight = _defaultHeight;
   newStyle.shouldDisplaySelectionIndicator = _shouldDisplaySelectionIndicator;
   newStyle.selectionIndicatorColor = _selectionIndicatorColor;
+  newStyle.selectionIndicatorTemplate = _selectionIndicatorTemplate;
   newStyle.maximumItemWidth = _maximumItemWidth;
   newStyle.shouldDisplayTitle = _shouldDisplayTitle;
   newStyle.shouldDisplayImage = _shouldDisplayImage;

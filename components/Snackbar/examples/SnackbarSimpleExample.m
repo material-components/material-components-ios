@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialSnackbar.h"
-#import "SnackbarExampleSupplemental.h"
+#import "supplemental/SnackbarExampleSupplemental.h"
 
 @implementation SnackbarSimpleExample
 

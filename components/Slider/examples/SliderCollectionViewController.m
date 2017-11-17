@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-#import "MDCSlider.h"
-#import "MDCTypography.h"
 #import "MaterialCollections.h"
-#import "SliderCollectionSupplemental.h"
+#import "MaterialSlider.h"
+#import "MaterialTypography.h"
+#import "supplemental/SliderCollectionSupplemental.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16.f;

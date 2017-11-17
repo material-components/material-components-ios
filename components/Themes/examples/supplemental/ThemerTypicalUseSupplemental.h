@@ -52,14 +52,14 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 @property(nonatomic, strong) MDCSlider *slider;
 @property(nonatomic, strong) MDCTextField *textField;
 @property(nonatomic, strong) MDCTextInputControllerLegacyDefault *textInputControllerDefault;
-@property(nonatomic, strong) NSObject<MDCColorScheme> *colorScheme;
+@property(nonatomic, strong) id<MDCColorScheme> colorScheme;
 @property(nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
 @interface ThemerTypicalUseViewController (Supplemental)
 
-- (instancetype)initWithColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
+- (instancetype)initWithColorScheme:(id<MDCColorScheme>)colorScheme;
 
 - (void)setupExampleViews;
 
