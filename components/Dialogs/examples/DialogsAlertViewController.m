@@ -114,8 +114,8 @@
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
 
-                                                   handler:^(MDCAlertAction *action) {
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
+                                                     handler:^(MDCAlertAction *action) {
                                                      NSLog(@"%@", @"OK pressed");
                                                    }];
   [materialAlertController addAction:okAction];
