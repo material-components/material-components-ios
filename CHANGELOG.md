@@ -1,4 +1,6 @@
-# release-candidate TODO: Replace me with version number. 
+# 40.0.3
+
+* [Chips] Fix private header import (#2434)
 
 # 40.0.2
 
