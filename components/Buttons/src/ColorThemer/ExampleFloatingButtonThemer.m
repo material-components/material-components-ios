@@ -23,11 +23,9 @@
   UIEdgeInsets hitAreaCompactMini = UIEdgeInsetsMake(-16, -16, -16, -16);
 
   CGSize sizeCompactDefault = CGSizeMake(50, 50);
-  CGSize sizeExtendedMinimum = CGSizeMake(32, 72);
-
-  [button setContentEdgeInsets:compactInsets forShape:MDCFloatingButtonShapeDefault];
-  [button setContentEdgeInsets:compactInsets forShape:MDCFloatingButtonShapeMini];
-  [button setContentEdgeInsets:compactInsets forShape:MDCFloatingButtonShapeLargeIcon];
+  CGSize sizeExtendedMinimum = [CGSizeMake(32, 72);
+                                
+[button setContentEdgeInsets:expandedLeadingInsets forType:<#(MDCFloatingButtonType)#> mode:<#(MDCFloatingButtonMode)#>]
   [button setContentEdgeInsets:expandedLeadingInsets
                       forShape:MDCFloatingButtonShapeExtendedLeadingIcon];
   [button setContentEdgeInsets:expandedTrailingInsets
