@@ -151,7 +151,7 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapDynamicAlert{
+- (IBAction)didTapDynamicAlert {
   // The following strings are extra verbose to better demonstrate the dynamic handling of an alert.
   NSString *titleString = @"This alert supports Dynamic Type font sizing.";
   NSString *messageString =
@@ -185,7 +185,7 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapOverpopulatedAlert{
+- (IBAction)didTapOverpopulatedAlert {
   NSString *messageString =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
@@ -231,8 +231,8 @@
 
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
                                                      handler:^(MDCAlertAction *action) {
-                                                     NSLog(@"%@", @"OK pressed");
-                                                   }];
+                                                       NSLog(@"%@", @"OK pressed");
+                                                     }];
   [materialAlertController addAction:okAction];
 
   MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"OK - 2"

@@ -84,7 +84,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
   [self.navigationItem setLeftBarButtonItem:backItem animated:YES];
   [self.navigationItem setRightBarButtonItem:doneItem animated:YES];
-  [navBar setItems:[NSArray arrayWithObject:self.navigationItem] animated:YES];
+  [navBar setItems:@[self.navigationItem] animated:YES];
 
   self.button = [[UIButton alloc] init];
   [self.button setTitle:@"UIButton" forState:UIControlStateNormal];
