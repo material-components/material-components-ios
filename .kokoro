@@ -114,6 +114,8 @@ run_cocoapods() {
     scripts/build_all --verbose
     scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
   done
+
+  bash <(curl -s https://codecov.io/bash)
 }
 
 POSITIONAL=()
