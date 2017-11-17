@@ -77,13 +77,11 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
 }
 
 - (void)commonMDCFloatingButtonInit {
-  NSMutableDictionary *miniTypeMinimumSizeDictionary
-      = [NSMutableDictionary dictionaryWithCapacity:2];
   const CGSize miniSizeNormal = CGSizeMake(40, 40);
   const CGSize defaultSizeNormal = CGSizeMake(56, 56);
   const CGSize defaultSizeExtendedMinimum = CGSizeMake(132, 48);
   const CGSize defaultSizeExtendedMaximum = CGSizeMake(328, 0);
-  miniTypeMinimumSizeDictionary[@(MDCFloatingButtonModeNormal)] =
+
 
   _typetoModeToMinimumSize = [NSMutableDictionary dictionaryWithCapacity:2];
   _typetoModeToMinimumSize
@@ -107,6 +105,20 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   _typeToModeToMaximumSize = [NSMutableDictionary dictionaryWithCapacity:2];
   _typeToModeToMaximumSize[@(MDCFloatingButtonTypeDefault)] = defaultMaxSizes;
   _typeToModeToMaximumSize[@(MDCFloatingButtonTypeMini)] = miniMaxSizes;
+
+  NSMutableDictionary *miniContentEdgeInsets
+      = [@{
+           @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:UIEdgeInsetsZero]
+           } mutableCopy];
+  NSMutableDictionary *defaultContentEdgeInsets
+      = [@{
+           @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:UIEdgeInsetsZero],
+           @(MDCFloatingButtonModeExtended) :
+             [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, 16, 0, 24)],
+           } mutableCopy];
+  _typeToModeToContentEdgeInsets = [@{ @(MDCFloatingButtonTypeMini) : miniContentEdgeInsets,
+                                       @(MDCFloatingButtonTypeDefault) : defaultContentEdgeInsets,
+                                       } mutableCopy];
 
 
   _shapeToMinimumSize = [NSMutableDictionary dictionaryWithCapacity:5];
