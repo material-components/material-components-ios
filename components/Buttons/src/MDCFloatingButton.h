@@ -138,12 +138,6 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
 - (void)setHitAreaInsets:(UIEdgeInsets)insets forShape:(MDCFloatingButtonShape)shape
     UI_APPEARANCE_SELECTOR;
 
-- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state NS_UNAVAILABLE;
-
-- (void)setElevation:(CGFloat)elevation
-            forState:(UIControlState)state
-               shape:(MDCFloatingButtonShape)shape UI_APPEARANCE_SELECTOR;
-
 #pragma mark - Deprecations
 
 + (nonnull instancetype)buttonWithShape:(MDCFloatingButtonShape)shape

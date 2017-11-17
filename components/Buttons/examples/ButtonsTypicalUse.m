@@ -148,9 +148,11 @@
 
       }
       if (self.floatingButton.shape >= MDCFloatingButtonShapeExtendedLeadingIcon) {
+        [self.floatingButton setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
         [self.floatingButton setTitle:@"Extended" forState:UIControlStateNormal];
-      } else {
-        [self.floatingButton setTitle:nil forState:UIControlStateNormal];
+      }  else {
+        [self.floatingButton setImage:nil forState:UIControlStateNormal];
+        [self.floatingButton setTitle:@"New" forState:UIControlStateNormal];
       }
       [self.floatingButton sizeToFit];
     }];
