@@ -79,21 +79,19 @@
 }
 
 - (void)didTapToggleButton:(id)sender {
-  if ([self.navBar.rightBarButtonItem isEqual:sender]) {
-    self.toggled = !self.toggled;
+  self.toggled = !self.toggled;
 
-    [UIView animateWithDuration:0.4
-                     animations:^{
-                       CGRect frame = self.stackView.frame;
-                       if (self.toggled) {
-                         frame.size.height = 200;
-                       } else {
-                         frame.size = [self.stackView sizeThatFits:self.stackView.bounds.size];
-                       }
-                       self.stackView.frame = frame;
-                       [self.stackView layoutIfNeeded];
-                     }];
-  }
+  [UIView animateWithDuration:0.4
+                   animations:^{
+                     CGRect frame = self.stackView.frame;
+                     if (self.toggled) {
+                       frame.size.height = 200;
+                     } else {
+                       frame.size = [self.stackView sizeThatFits:self.stackView.bounds.size];
+                     }
+                     self.stackView.frame = frame;
+                     [self.stackView layoutIfNeeded];
+                   }];
 }
 
 - (BOOL)prefersStatusBarHidden {

@@ -60,11 +60,9 @@ static const NSInteger kSectionItemCount = 50;
 }
 
 - (void)toggleEditMode:(id)sender {
-  if ([sender isEqual:self.navigationItem.rightBarButtonItem]) {
-    BOOL isEditing = self.editor.isEditing;
-    [self updatedRightBarButtonItem:!isEditing];
-    [self.editor setEditing:!isEditing animated:YES];
-  }
+  BOOL isEditing = self.editor.isEditing;
+  [self updatedRightBarButtonItem:!isEditing];
+  [self.editor setEditing:!isEditing animated:YES];
 }
 
 @end
