@@ -19,7 +19,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <objc/runtime.h>
 
-#import "MDFTextAccessibility.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MaterialButtonBar.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"

@@ -19,7 +19,7 @@
 #import "MDCAppBarContainerViewController.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import "MDFTextAccessibility.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MaterialApplication.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialIcons+ic_arrow_back.h"
