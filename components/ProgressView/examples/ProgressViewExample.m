@@ -206,11 +206,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [progressView setHidden:NO
                  animated:YES
                completion:^(BOOL finished) {
-                 if (finished) {
-                   [self performSelector:@selector(animateStep2:)
-                              withObject:weakProgressView
-                              afterDelay:MDCProgressViewAnimationDuration];
-                 }
+                 [self performSelector:@selector(animateStep2:)
+                            withObject:weakProgressView
+                            afterDelay:MDCProgressViewAnimationDuration];
                }];
 }
 
@@ -233,11 +231,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [progressView setHidden:YES
                  animated:YES
                completion:^(BOOL finished) {
-                 if (finished) {
-                   [self performSelector:@selector(animateStep1:)
-                              withObject:weakProgressView
-                              afterDelay:MDCProgressViewAnimationDuration];
-                 }
+                 [self performSelector:@selector(animateStep1:)
+                            withObject:weakProgressView
+                            afterDelay:MDCProgressViewAnimationDuration];
                }];
 }
 
@@ -247,12 +243,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [_backwardProgressResetView setProgress:1 - _backwardProgressResetView.progress
                                  animated:YES
                                completion:^(BOOL finished) {
-                                 if (finished) {
-                                     [weakSelf
-                                         performSelector:@selector(animateBackwardProgressResetView)
-                                              withObject:nil
-                                              afterDelay:MDCProgressViewAnimationDuration];
-                                 }
+                                 [weakSelf
+                                     performSelector:@selector(animateBackwardProgressResetView)
+                                          withObject:nil
+                                          afterDelay:MDCProgressViewAnimationDuration];
                                }];
 }
 
@@ -262,12 +256,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [_backwardProgressAnimateView setProgress:1 - _backwardProgressResetView.progress
                                    animated:YES
                                  completion:^(BOOL finished) {
-                                   if (finished) {
-                                       [weakSelf
-                                          performSelector:@selector(animateBackwardProgressAnimateView)
-                                               withObject:nil
-                                               afterDelay:MDCProgressViewAnimationDuration];
-                                   }
+                                   [weakSelf
+                                       performSelector:@selector(animateBackwardProgressAnimateView)
+                                            withObject:nil
+                                            afterDelay:MDCProgressViewAnimationDuration];
                                  }];
 }
 

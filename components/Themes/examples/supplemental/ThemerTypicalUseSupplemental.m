@@ -161,11 +161,9 @@
   [progressView setHidden:NO
                  animated:YES
                completion:^(BOOL finished) {
-                 if (finished) {
-                   [self performSelector:@selector(animateStep2:)
-                              withObject:weakProgressView
-                              afterDelay:MDCProgressViewAnimationDuration];
-                 }
+                 [self performSelector:@selector(animateStep2:)
+                            withObject:weakProgressView
+                            afterDelay:MDCProgressViewAnimationDuration];
                }];
 }
 
@@ -188,11 +186,9 @@
   [progressView setHidden:YES
                  animated:YES
                completion:^(BOOL finished) {
-                 if (finished) {
-                   [self performSelector:@selector(animateStep1:)
-                              withObject:weakProgressView
-                              afterDelay:MDCProgressViewAnimationDuration];
-                 }
+                 [self performSelector:@selector(animateStep1:)
+                            withObject:weakProgressView
+                            afterDelay:MDCProgressViewAnimationDuration];
                }];
 }
 
