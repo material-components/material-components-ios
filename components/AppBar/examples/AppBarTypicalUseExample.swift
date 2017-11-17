@@ -19,7 +19,6 @@ import MaterialComponents
 
 class AppBarTypicalUseSwiftExample: UITableViewController {
 
-  // Step 1: Create and initialize an App Bar.
   let appBar = MDCAppBar()
 
   init() {
@@ -27,11 +26,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     self.title = "App Bar (Swift)"
 
-    // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
 
-    let color = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
+    // Note: You could use MDCAppBarTextColorAccessibilityMutator instead of doing this manually.
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
   }
