@@ -62,6 +62,10 @@
  */
 - (void)startAnimationAtPoint:(CGPoint)point;
 
+/**
+ Changes the opacity of the ink ripple depending on if touch point is contained within or
+ outside of the ink layer.
+ */
 - (void)changeAnimationAtPoint:(CGPoint)point;
 
 /**

@@ -135,7 +135,6 @@ static NSString *const kMDCSimpleInkLayerScaleString = @"transform.scale";
 }
 
 - (void)changeAnimationAtPoint:(CGPoint)point {
-
   CGFloat animationDelay = 0;
   if (self.startAnimationActive) {
     animationDelay = kMDCSimpleInkLayerStartFadeHalfBeginTimeFadeOutDuration +
