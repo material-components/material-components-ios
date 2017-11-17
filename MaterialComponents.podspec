@@ -133,8 +133,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -172,16 +172,16 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}", "components/#{component_name}/src/#{component_name}/private/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}", "components/#{component_name}/src/ColorThemer/private/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
     end
     spec.subspec "TitleColorAccessibilityMutator" do |mutator|
       mutator.ios.deployment_target = '8.0'
-      mutator.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      mutator.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}", "components/#{component_name}/src/#{component_name}/private/*.{h,m}"
+      mutator.public_header_files = "components/#{component_name}/src/#{mutator.base_name}/*.h"
+      mutator.source_files = "components/#{component_name}/src/#{mutator.base_name}/*.{h,m}", "components/#{component_name}/src/#{mutator.base_name}/private/*.{h,m}"
 
       mutator.dependency 'MDFTextAccessibility'
       mutator.dependency "MaterialComponents/Buttons/Component"
@@ -202,8 +202,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/NavigationBar/Component"
@@ -292,8 +292,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -314,8 +314,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -335,8 +335,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -353,8 +353,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -371,8 +371,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -417,8 +417,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -446,8 +446,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -477,8 +477,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -516,8 +516,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Palettes"
@@ -560,8 +560,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
@@ -586,8 +586,8 @@ Pod::Spec.new do |mdc|
     end
     spec.subspec "ColorThemer" do |colorthemer|
       colorthemer.ios.deployment_target = '8.0'
-      colorthemer.public_header_files = "components/#{component_name}/src/#{component_name}/*.h"
-      colorthemer.source_files = "components/#{component_name}/src/#{component_name}/*.{h,m}"
+      colorthemer.public_header_files = "components/#{component_name}/src/ColorThemer/*.h"
+      colorthemer.source_files = "components/#{component_name}/src/ColorThemer/*.{h,m}"
 
       colorthemer.dependency "MaterialComponents/#{component_name}/Component"
       colorthemer.dependency "MaterialComponents/Themes"
