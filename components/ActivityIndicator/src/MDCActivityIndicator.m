@@ -17,15 +17,15 @@
 #import "MDCActivityIndicator.h"
 
 #import <QuartzCore/QuartzCore.h>
-
-#import "MDFInternationalization.h"
-#import "MaterialApplication.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import <MotionAnimator/MotionAnimator.h>
+
+#import "MaterialApplication.h"
+#import "MaterialPalettes.h"
 #import "private/MDCActivityIndicatorMotionSpec.h"
 #import "private/MDCActivityIndicator+Private.h"
 #import "private/MaterialActivityIndicatorStrings.h"
 #import "private/MaterialActivityIndicatorStrings_table.h"
-#import "MaterialPalettes.h"
 
 static const NSInteger kTotalDetentCount = 5;
 static const NSTimeInterval kAnimateOutDuration = 0.1f;

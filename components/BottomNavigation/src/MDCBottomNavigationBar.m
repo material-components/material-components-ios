@@ -16,9 +16,10 @@
 
 #import "MDCBottomNavigationBar.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
-#import "MDFInternationalization.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"

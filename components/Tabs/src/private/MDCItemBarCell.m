@@ -17,9 +17,10 @@
 #import "MDCItemBarCell.h"
 #import "MDCItemBarCell+Private.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
-#import "MDFInternationalization.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
