@@ -66,8 +66,8 @@ Pod::Spec.new do |mdc|
     component_name="#{component.base_name}"
 
     component.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.public_header_files = "components/#{component_name}/src/*.h"
+    component.source_files = "components/#{component_name}/src/*.{h,m}", "components/#{component_name}/src/private/*.{h,m}"
   end
 
   mdc.subspec "AppBar" do |spec|
@@ -108,8 +108,8 @@ Pod::Spec.new do |mdc|
     component_name="#{component.base_name}"
 
     component.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.public_header_files = "components/#{component_name}/src/*.h"
+    component.source_files = "components/#{component_name}/src/*.{h,m}", "components/#{component_name}/src/private/*.{h,m}"
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Buttons"
