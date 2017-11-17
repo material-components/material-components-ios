@@ -16,26 +16,27 @@
 
 #import "MDCMaskedTransitionMotionForContext.h"
 
-MDCMaskedTransitionMotionSpec motionForContext(NSObject<MDMTransitionContext> *context) {
+MDCMaskedTransitionMotionSpecContext
+    MDCMaskedTransitionMotionSpecForContext(id<MDMTransitionContext> context) {
   const CGRect foreBounds = context.foreViewController.view.bounds;
   const CGRect foreFrame = context.foreViewController.view.frame;
   const CGRect containerBounds = context.containerView.bounds;
 
   if (CGRectEqualToRect(context.foreViewController.view.frame, containerBounds)) {
-    return fullscreen;
+    return MDCMaskedTransitionMotionSpec.fullscreen;
 
   } else if (foreBounds.size.width == containerBounds.size.width
              && CGRectGetMaxY(foreFrame) == CGRectGetMaxY(containerBounds)) {
     if (foreFrame.size.height > 100) {
-      return bottomSheet;
+      return MDCMaskedTransitionMotionSpec.bottomSheet;
 
     } else {
-      return toolbar;
+      return MDCMaskedTransitionMotionSpec.toolbar;
     }
 
   } else if (foreBounds.size.width < containerBounds.size.width) {
-    return bottomCard;
+    return MDCMaskedTransitionMotionSpec.bottomCard;
   }
 
-  return fullscreen;
+  return MDCMaskedTransitionMotionSpec.fullscreen;
 }
