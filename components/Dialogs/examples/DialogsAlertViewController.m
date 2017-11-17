@@ -229,8 +229,8 @@
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 
-                                                   handler:^(MDCAlertAction *action) {
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
+                                                     handler:^(MDCAlertAction *action) {
                                                      NSLog(@"%@", @"OK pressed");
                                                    }];
   [materialAlertController addAction:okAction];
