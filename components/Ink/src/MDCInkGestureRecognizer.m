@@ -55,7 +55,6 @@ static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
     UITouch *touch = [touches anyObject];
     self.touchStartLocation = [touch locationInView:nil];
     self.touchCurrentLocation = self.touchStartLocation;
-    NSLog(@"%@", NSStringFromCGPoint(self.touchCurrentLocation));
   } else {
     self.state = UIGestureRecognizerStateCancelled;
   }
@@ -66,23 +65,16 @@ static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
   if (self.state == UIGestureRecognizerStateFailed) {
     return;
   }
+  
+  // Cancel the gesture if it is too far away.
+  if (_cancelOnDragOut && ![self isTouchWithinTargetBounds]) {
+    self.state = UIGestureRecognizerStateCancelled;
+  } else {
+    self.state = UIGestureRecognizerStateChanged;
+  }
   UITouch *touch = [touches anyObject];
   self.touchCurrentLocation = [touch locationInView:nil];
 }
-
-//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-//  [super touchesMoved:touches withEvent:event];
-//  if (self.state == UIGestureRecognizerStateFailed) {
-//    return;
-//  }
-//
-//  // Cancel the gesture if it is too far away.
-//  if (_cancelOnDragOut && ![self isTouchWithinTargetBounds]) {
-//    self.state = UIGestureRecognizerStateCancelled;
-//  } else {
-//    self.state = UIGestureRecognizerStateChanged;
-//  }
-//}
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
