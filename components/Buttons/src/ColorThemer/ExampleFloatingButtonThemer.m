@@ -44,10 +44,10 @@
   [button setMinimumSize:sizeExtendedMinimum forShape:MDCFloatingButtonShapeExtendedLeadingIcon];
   [button setMinimumSize:sizeExtendedMinimum forShape:MDCFloatingButtonShapeExtendedTrailingIcon];
 
-  [button setElevation:3 forState:UIControlStateNormal shape:MDCFloatingButtonShapeMini];
-  [button setElevation:6 forState:UIControlStateHighlighted shape:MDCFloatingButtonShapeMini];
-  [button setElevation:3 forState:UIControlStateNormal shape:MDCFloatingButtonShapeExtendedLeadingIcon];
-  [button setElevation:6 forState:UIControlStateHighlighted shape:MDCFloatingButtonShapeExtendedLeadingIcon];
+  [button setElevation:3 forState:UIControlStateNormal];
+  [button setElevation:6 forState:UIControlStateHighlighted];
+  [button setElevation:3 forState:UIControlStateNormal];
+  [button setElevation:6 forState:UIControlStateHighlighted];
 
   [button setImageTitlePadding:4];
 }

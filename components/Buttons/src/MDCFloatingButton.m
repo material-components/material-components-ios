@@ -32,15 +32,12 @@ static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
     = @"MDCFloatingButtonContentEdgeInsetsDictionaryKey";
 static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
     = @"MDCFloatingButtonHitAreaInsetsDictionaryKey";
-static NSString *const MDCFloatingButtonElevationDictionaryKey
-    = @"MDCFloatingButtonElevationDictionaryKey";
 
 @interface MDCFloatingButton ()
 @property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSValue *> *shapeToHitAreaInsets;
 @property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSValue *> *shapeToMinimumSize;
 @property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSValue *> *shapeToMaximumSize;
 @property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSValue *> *shapeToContentEdgeInsets;
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSNumber *> *> *shapeToStateToElevation;
 @end
 
 @implementation MDCFloatingButton
@@ -108,26 +105,6 @@ static NSString *const MDCFloatingButtonElevationDictionaryKey
       = [NSValue valueWithUIEdgeInsets:UIEdgeInsetsZero];
   self.shapeToHitAreaInsets[@(MDCFloatingButtonShapeMini)]
       = [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(-4, -4, -4, -4)];
-  _shapeToStateToElevation = [NSMutableDictionary dictionary];
-  NSMutableDictionary *defaultElevations = [NSMutableDictionary dictionary];
-  NSMutableDictionary *miniElevations = [NSMutableDictionary dictionary];
-  NSMutableDictionary *largeIconElevations = [NSMutableDictionary dictionary];
-  NSMutableDictionary *extendedLeadingElevations = [NSMutableDictionary dictionary];
-  NSMutableDictionary *extendedTrailingElevations = [NSMutableDictionary dictionary];
-  NSArray *dictionaries = @[defaultElevations, miniElevations, largeIconElevations,
-                            extendedLeadingElevations, extendedTrailingElevations];
-  for (NSMutableDictionary *dictionary in dictionaries) {
-    dictionary[@(UIControlStateNormal)] = @(MDCShadowElevationFABResting);
-    dictionary[@(UIControlStateHighlighted)] = @(MDCShadowElevationFABPressed);
-  }
-
-  self.shapeToStateToElevation[@(MDCFloatingButtonShapeDefault)] = defaultElevations;
-  self.shapeToStateToElevation[@(MDCFloatingButtonShapeMini)] = miniElevations;
-  self.shapeToStateToElevation[@(MDCFloatingButtonShapeLargeIcon)] = largeIconElevations;
-  self.shapeToStateToElevation[@(MDCFloatingButtonShapeExtendedLeadingIcon)]
-      = extendedLeadingElevations;
-  self.shapeToStateToElevation[@(MDCFloatingButtonShapeExtendedTrailingIcon)]
-      = extendedTrailingElevations;
 
   super.contentEdgeInsets = [self defaultContentEdgeInsets];
   super.hitAreaInsets = [self defaultHitAreaInsets];
@@ -449,40 +426,11 @@ static NSString *const MDCFloatingButtonElevationDictionaryKey
   }
 }
 
-- (void)setElevation:(CGFloat)elevation
-            forState:(UIControlState)state
-               shape:(MDCFloatingButtonShape)shape {
-  NSMutableDictionary *shapeElevations = self.shapeToStateToElevation[@(shape)];
-  shapeElevations[@(state)] = @(elevation);
-  if (shape == self.shape && self.state == state) {
-    [self updateElevation];
-  }
-}
-
-- (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
-  [self setElevation:elevation forState:state shape:self.shape];
-}
-
-- (NSDictionary *)elevationsForShape:(MDCFloatingButtonShape)shape {
-  NSMutableDictionary<NSNumber *, NSNumber *> *shapeElevations
-      = self.shapeToStateToElevation[@(shape)];
-  return [shapeElevations copy];
-}
-
-- (void)updateElevation {
-  NSDictionary<NSNumber *, NSNumber *> *elevations = [self elevationsForShape:self.shape];
-
-  for (NSNumber *stateValue in [elevations allKeys]) {
-    [super setElevation:(MDCShadowElevation)elevations[stateValue].doubleValue forState:stateValue.integerValue];
-  }
-}
-
 - (void)updateShape {
   BOOL needsLayout = [self updateMinimumSize];
   needsLayout |= [self updateMaximumSize];
   [self updateContentEdgeInsets];
   [self updateHitAreaInsets];
-  [self updateElevation];
   if (needsLayout) {
     [self sizeToFit];
   }
