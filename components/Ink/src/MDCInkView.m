@@ -19,14 +19,19 @@
 #import "private/MDCInkLayer.h"
 
 @interface MDCInkView ()
-@property(nonatomic, readonly) MDCInkLayer *inkLayer;
+//@property(nonatomic, readonly) MDCInkLayer *inkLayer;
+
+@property(nonatomic, strong) MDCInkLayer *activeInkLayer;
+@property(nonatomic, strong) NSMutableArray<MDCInkLayer *> *inkLayers;
+@property(nonatomic, assign) BOOL touchInsideView;
+
 @end
 
 @implementation MDCInkView
 
-+ (Class)layerClass {
-  return [MDCInkLayer class];
-}
+//+ (Class)layerClass {
+//  return [MDCInkLayer class];
+//}
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -49,76 +54,110 @@
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.inkColor = self.defaultInkColor;
+  _touchInsideView = YES;
 }
 
-- (void)setInkStyle:(MDCInkStyle)inkStyle {
-  _inkStyle = inkStyle;
-  switch (inkStyle) {
-    case MDCInkStyleBounded:
-      self.inkLayer.masksToBounds = YES;
-      self.inkLayer.bounded = YES;
-      break;
-    case MDCInkStyleUnbounded:
-      self.inkLayer.masksToBounds = NO;
-      self.inkLayer.bounded = NO;
-      break;
-  }
+//- (void)setInkStyle:(MDCInkStyle)inkStyle {
+//  _inkStyle = inkStyle;
+//  switch (inkStyle) {
+//    case MDCInkStyleBounded:
+//      self.inkLayer.masksToBounds = YES;
+//      self.inkLayer.bounded = YES;
+//      break;
+//    case MDCInkStyleUnbounded:
+//      self.inkLayer.masksToBounds = NO;
+//      self.inkLayer.bounded = NO;
+//      break;
+//  }
+//}
+
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+  self.activeInkLayer.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
 }
 
-- (void)setInkColor:(UIColor *)inkColor {
-  if (inkColor == nil) {
-    return;
-  }
-  self.inkLayer.inkColor = inkColor;
-}
+//- (void)setInkColor:(UIColor *)inkColor {
+//  if (inkColor == nil) {
+//    return;
+//  }
+//  _inkColor = inkColor;
+//}
+//
+//- (UIColor *)inkColor {
+//  return self.inkColor;
+//}
 
-- (UIColor *)inkColor {
-  return self.inkLayer.inkColor;
-}
+//- (CGFloat)maxRippleRadius {
+//  return self.inkLayer.maxRippleRadius;
+//}
+//
+//- (void)setMaxRippleRadius:(CGFloat)radius {
+//  if (self.inkLayer.maxRippleRadius != radius) {
+//    self.inkLayer.maxRippleRadius = radius;
+//    [self setNeedsLayout];
+//  }
+//}
+//
+//- (BOOL)usesCustomInkCenter {
+//  return self.inkLayer.useCustomInkCenter;
+//}
+//
+//- (void)setUsesCustomInkCenter:(BOOL)usesCustomInkCenter {
+//  self.inkLayer.useCustomInkCenter = usesCustomInkCenter;
+//}
+//
+//- (CGPoint)customInkCenter {
+//  return self.inkLayer.customInkCenter;
+//}
+//
+//- (void)setCustomInkCenter:(CGPoint)customInkCenter {
+//  self.inkLayer.customInkCenter = customInkCenter;
+//}
 
-- (CGFloat)maxRippleRadius {
-  return self.inkLayer.maxRippleRadius;
-}
-
-- (void)setMaxRippleRadius:(CGFloat)radius {
-  if (self.inkLayer.maxRippleRadius != radius) {
-    self.inkLayer.maxRippleRadius = radius;
-    [self setNeedsLayout];
-  }
-}
-
-- (BOOL)usesCustomInkCenter {
-  return self.inkLayer.useCustomInkCenter;
-}
-
-- (void)setUsesCustomInkCenter:(BOOL)usesCustomInkCenter {
-  self.inkLayer.useCustomInkCenter = usesCustomInkCenter;
-}
-
-- (CGPoint)customInkCenter {
-  return self.inkLayer.customInkCenter;
-}
-
-- (void)setCustomInkCenter:(CGPoint)customInkCenter {
-  self.inkLayer.customInkCenter = customInkCenter;
-}
-
-- (MDCInkLayer *)inkLayer {
-  return (MDCInkLayer *)self.layer;
-}
+//- (MDCInkLayer *)inkLayer {
+//  return (MDCInkLayer *)self.layer;
+//}
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer spreadFromPoint:point completion:completionBlock];
+  MDCInkLayer *inkLayer = [MDCInkLayer layer];
+//  inkLayer.animationDelegate = self;
+//  inkLayer.inkColor = self.inkColor;
+  inkLayer.inkColor = self.inkColor;
+  
+  switch (self.inkStyle) {
+    case MDCInkStyleBounded:
+      self.clipsToBounds = YES;
+      break;
+    case MDCInkStyleUnbounded:
+      self.clipsToBounds = NO;
+      break;
+  }
+
+  inkLayer.completionBlock = completionBlock;
+  inkLayer.opacity = 0;
+  inkLayer.frame = self.bounds;
+  [self.layer addSublayer:inkLayer];
+  [self.inkLayers addObject:inkLayer];
+  [inkLayer startAnimationAtPoint:point];
+  self.activeInkLayer = inkLayer;
+//  [self.inkLayer spreadFromPoint:point completion:completionBlock];
 }
 
-- (void)startTouchEndedAnimationAtPoint:(__unused CGPoint)point
+- (void)startTouchEndedAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer evaporateWithCompletion:completionBlock];
+  if (completionBlock) {
+    
+  }
+  [self.activeInkLayer endAnimationAtPoint:point];
+//  [self.inkLayer evaporateWithCompletion:completionBlock];
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  [self.inkLayer resetAllInk:animated];
+//  [self.inkLayer resetAllInk:animated];
+  if (animated) {
+    
+  }
 }
 
 - (UIColor *)defaultInkColor {
