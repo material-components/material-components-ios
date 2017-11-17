@@ -16,13 +16,14 @@
 
 #import "MDCItemBar.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorView.h"
 #import "MDCTabBarPrivateIndicatorContext.h"
-#import "MDFInternationalization.h"
 #import "MaterialAnimationTiming.h"
 
 /// Cell reuse identifier for item bar cells.

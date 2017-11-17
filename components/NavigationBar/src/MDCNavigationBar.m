@@ -16,13 +16,14 @@
 
 #import "MDCNavigationBar.h"
 
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
+#import <objc/runtime.h>
+
 #import "MDFTextAccessibility.h"
 #import "MaterialButtonBar.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-#import <objc/runtime.h>
 
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarPadDefaultHeight = 64;
