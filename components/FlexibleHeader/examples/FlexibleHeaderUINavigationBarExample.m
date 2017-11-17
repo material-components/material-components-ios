@@ -102,10 +102,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 }
 
 - (void)doneAction:(id)sender {
-  if ([sender isEqual:self.navigationItem.rightBarButtonItem] ||
-      [sender isEqual:self.navigationItem.leftBarButtonItem]) {
-    [super.navigationController popViewControllerAnimated:YES];
-  }
+  [super.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {
