@@ -1,3 +1,7 @@
+# 40.0.3
+
+* [Chips] Fix private header import (#2434)
+
 # 40.0.2
 
 * Fix missing step from 40.0.1: update version numbers throughout library.
