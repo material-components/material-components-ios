@@ -48,7 +48,7 @@
   }
 }
 
-- (IBAction)didTapShowAlert{
+- (IBAction)didTapShowAlert {
 
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
@@ -71,7 +71,7 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapShowLongAlert{
+- (IBAction)didTapShowLongAlert {
   NSString *messageString =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
        "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
@@ -123,7 +123,7 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapNondismissingAlert{
+- (IBAction)didTapNondismissingAlert {
   NSString *titleString = @"This alert requires an action.";
   NSString *messageString = @"You can't dismiss it by tapping the background. You must choose "
                              "one of the actions available.";
