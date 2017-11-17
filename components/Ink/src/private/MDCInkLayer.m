@@ -67,7 +67,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   self.opacity = 0;
   self.position = point;
   self.startAnimationActive = YES;
-  
+
   CAKeyframeAnimation *scaleAnim = [[CAKeyframeAnimation alloc] init];
   [scaleAnim setKeyPath:kMDCInkLayerScaleString];
   scaleAnim.keyTimes = @[ @0, @1.0f ];
@@ -77,14 +77,14 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   scaleAnim.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
   scaleAnim.fillMode = kCAFillModeForwards;
   scaleAnim.removedOnCompletion = NO;
-  
+
   UIBezierPath *centerPath = [UIBezierPath bezierPath];
   CGPoint startPoint = point;
   CGPoint endPoint = CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2);
   [centerPath moveToPoint:startPoint];
   [centerPath addLineToPoint:endPoint];
   [centerPath closePath];
-  
+
   CAKeyframeAnimation *positionAnim = [[CAKeyframeAnimation alloc] init];
   [positionAnim setKeyPath:kMDCInkLayerPositionString];
   positionAnim.path = centerPath.CGPath;
@@ -96,7 +96,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
   positionAnim.fillMode = kCAFillModeForwards;
   positionAnim.removedOnCompletion = NO;
-  
+
   CAKeyframeAnimation *fadeInAnim = [[CAKeyframeAnimation alloc] init];
   [fadeInAnim setKeyPath:kMDCInkLayerOpacityString];
   fadeInAnim.keyTimes = @[ @0, @1.0f ];
@@ -106,7 +106,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   fadeInAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeInAnim.fillMode = kCAFillModeForwards;
   fadeInAnim.removedOnCompletion = NO;
-  
+
   CAKeyframeAnimation *fadeHalfAnim = [[CAKeyframeAnimation alloc] init];
   [fadeHalfAnim setKeyPath:kMDCInkLayerOpacityString];
   fadeHalfAnim.keyTimes = @[ @0, @1.0f ];
@@ -114,10 +114,10 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   fadeHalfAnim.duration = kMDCInkLayerStartFadeHalfDuration;
   fadeHalfAnim.beginTime = kMDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   fadeHalfAnim.timingFunction =
-  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeHalfAnim.fillMode = kCAFillModeForwards;
   fadeHalfAnim.removedOnCompletion = NO;
-  
+
   [CATransaction begin];
   CAAnimationGroup *animGroup = [[CAAnimationGroup alloc] init];
   animGroup.animations = @[ scaleAnim, positionAnim, fadeInAnim, fadeHalfAnim ];
@@ -135,20 +135,19 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
 }
 
 - (void)changeAnimationAtPoint:(CGPoint)point {
-  
   CGFloat animationDelay = 0;
   if (self.startAnimationActive) {
     animationDelay = kMDCInkLayerStartFadeHalfBeginTimeFadeOutDuration +
     kMDCInkLayerStartFadeHalfDuration;
   }
-  
+
   BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
   CGFloat currOpacity = self.presentationLayer.opacity;
   CGFloat updatedOpacity = 0;
   if (viewContainsPoint) {
     updatedOpacity = 0.5f;
   }
-  
+
   CAKeyframeAnimation *changeAnim = [[CAKeyframeAnimation alloc] init];
   [changeAnim setKeyPath:kMDCInkLayerOpacityString];
   changeAnim.keyTimes = @[ @0, @1.0f ];
@@ -173,12 +172,12 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   } else if (currOpacity == 0.0) {
     currOpacity = 1.0f;
   }
-  
+
   BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
   if (!viewContainsPoint) {
     currOpacity = 0;
   }
-  
+
   [CATransaction begin];
   CAKeyframeAnimation *fadeOutAnim = [[CAKeyframeAnimation alloc] init];
   [fadeOutAnim setKeyPath:kMDCInkLayerOpacityString];
@@ -191,13 +190,10 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   fadeOutAnim.fillMode = kCAFillModeForwards;
   fadeOutAnim.removedOnCompletion = NO;
   [CATransaction setCompletionBlock:^{
-    if (self.completionBlock) {
-      self.completionBlock();
-    }
     if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidEnd:)]) {
       [self.animationDelegate inkLayerAnimationDidEnd:self];
     }
-//    [self removeFromSuperlayer];
+    [self removeFromSuperlayer];
   }];
   [self addAnimation:fadeOutAnim forKey:nil];
   [CATransaction commit];

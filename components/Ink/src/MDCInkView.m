@@ -19,7 +19,6 @@
 #import "private/MDCInkLayer.h"
 
 @interface MDCInkView ()
-//@property(nonatomic, readonly) MDCInkLayer *inkLayer;
 
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
 @property(nonatomic, strong) NSMutableArray<MDCInkLayer *> *inkLayers;
@@ -28,10 +27,6 @@
 @end
 
 @implementation MDCInkView
-
-//+ (Class)layerClass {
-//  return [MDCInkLayer class];
-//}
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -57,72 +52,14 @@
   _touchInsideView = YES;
 }
 
-//- (void)setInkStyle:(MDCInkStyle)inkStyle {
-//  _inkStyle = inkStyle;
-//  switch (inkStyle) {
-//    case MDCInkStyleBounded:
-//      self.inkLayer.masksToBounds = YES;
-//      self.inkLayer.bounded = YES;
-//      break;
-//    case MDCInkStyleUnbounded:
-//      self.inkLayer.masksToBounds = NO;
-//      self.inkLayer.bounded = NO;
-//      break;
-//  }
-//}
-
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
   self.activeInkLayer.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
 }
 
-//- (void)setInkColor:(UIColor *)inkColor {
-//  if (inkColor == nil) {
-//    return;
-//  }
-//  _inkColor = inkColor;
-//}
-//
-//- (UIColor *)inkColor {
-//  return self.inkColor;
-//}
-
-//- (CGFloat)maxRippleRadius {
-//  return self.inkLayer.maxRippleRadius;
-//}
-//
-//- (void)setMaxRippleRadius:(CGFloat)radius {
-//  if (self.inkLayer.maxRippleRadius != radius) {
-//    self.inkLayer.maxRippleRadius = radius;
-//    [self setNeedsLayout];
-//  }
-//}
-//
-//- (BOOL)usesCustomInkCenter {
-//  return self.inkLayer.useCustomInkCenter;
-//}
-//
-//- (void)setUsesCustomInkCenter:(BOOL)usesCustomInkCenter {
-//  self.inkLayer.useCustomInkCenter = usesCustomInkCenter;
-//}
-//
-//- (CGPoint)customInkCenter {
-//  return self.inkLayer.customInkCenter;
-//}
-//
-//- (void)setCustomInkCenter:(CGPoint)customInkCenter {
-//  self.inkLayer.customInkCenter = customInkCenter;
-//}
-
-//- (MDCInkLayer *)inkLayer {
-//  return (MDCInkLayer *)self.layer;
-//}
-
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
-                             completion:(MDCInkCompletionBlock)completionBlock {
+                             completion:(__unused MDCInkCompletionBlock)completionBlock {
   MDCInkLayer *inkLayer = [MDCInkLayer layer];
-//  inkLayer.animationDelegate = self;
-//  inkLayer.inkColor = self.inkColor;
   inkLayer.inkColor = self.inkColor;
   
   switch (self.inkStyle) {
@@ -134,30 +71,21 @@
       break;
   }
 
-  inkLayer.completionBlock = completionBlock;
   inkLayer.opacity = 0;
   inkLayer.frame = self.bounds;
   [self.layer addSublayer:inkLayer];
   [self.inkLayers addObject:inkLayer];
   [inkLayer startAnimationAtPoint:point];
   self.activeInkLayer = inkLayer;
-//  [self.inkLayer spreadFromPoint:point completion:completionBlock];
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point
-                             completion:(MDCInkCompletionBlock)completionBlock {
-  if (completionBlock) {
-    
-  }
+                             completion:(__unused MDCInkCompletionBlock)completionBlock {
   [self.activeInkLayer endAnimationAtPoint:point];
-//  [self.inkLayer evaporateWithCompletion:completionBlock];
 }
 
-- (void)cancelAllAnimationsAnimated:(BOOL)animated {
-//  [self.inkLayer resetAllInk:animated];
-  if (animated) {
-    
-  }
+- (void)cancelAllAnimationsAnimated:(__unused BOOL)animated {
+  [self.activeInkLayer endAnimationAtPoint:CGPointZero];
 }
 
 - (UIColor *)defaultInkColor {

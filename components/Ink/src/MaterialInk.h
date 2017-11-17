@@ -17,4 +17,3 @@
 #import "MDCInkGestureRecognizer.h"
 #import "MDCInkTouchController.h"
 #import "MDCInkView.h"
-#import "MDCSimpleInkView.h"
