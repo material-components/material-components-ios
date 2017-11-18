@@ -21,8 +21,8 @@
 @implementation FeatureHighlightShownViewExample
 
 - (void)didTapButton:(id)sender {
-  MDCFloatingButton *fab =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  MDCFloatingButton *fab = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
+                                                               type:MDCFloatingButtonTypeDefault];
   [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
   [fab sizeToFit];
   fab.backgroundColor = UIColor.orangeColor;

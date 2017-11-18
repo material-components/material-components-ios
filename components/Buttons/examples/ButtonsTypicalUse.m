@@ -17,9 +17,11 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
+#import "ExampleFloatingButtonThemer.h"
 
 @interface ButtonsTypicalUseViewController ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
+@property(nonatomic, assign) BOOL styleChanged;
 @end
 
 @implementation ButtonsTypicalUseViewController
@@ -134,14 +136,39 @@
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
-    [self.floatingButton
-          collapse:YES
-        completion:^{
-          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                         dispatch_get_main_queue(), ^{
-                           [self.floatingButton expand:YES completion:nil];
-                         });
-        }];
+    [UIView animateWithDuration:0.25 animations:^{
+      self.floatingButton.mode += 1;
+      if (self.floatingButton.mode > MDCFloatingButtonModeExtended) {
+        self.floatingButton.mode = 0;
+        self.floatingButton.imagePosition += 1;
+        if (self.floatingButton.imagePosition > MDCFloatingButtonImagePositionTrailing) {
+          self.floatingButton.imagePosition = 0;
+          self.floatingButton.contentEdgeInsetsFlippedForTrailingImagePosition
+            = !self.floatingButton.contentEdgeInsetsFlippedForTrailingImagePosition;
+        }
+
+        if (!self.styleChanged) {
+//          MDCBasicColorScheme *scheme = [[MDCBasicColorScheme alloc] initWithPrimaryColor:UIColor.purpleColor
+//                                                                           secondaryColor:UIColor.orangeColor];
+//          [ExampleFloatingButtonThemer applyToButton:self.floatingButton withColorScheme:scheme];
+          self.styleChanged = YES;
+        }
+      }
+      NSLog(@"Mode: %ld, Pos: %ld, Flip: %d\nCEI: %@",
+            self.floatingButton.mode,
+            self.floatingButton.imagePosition,
+            self.floatingButton.contentEdgeInsetsFlippedForTrailingImagePosition,
+            NSStringFromUIEdgeInsets(self.floatingButton.contentEdgeInsets));
+      if (self.floatingButton.mode == MDCFloatingButtonModeExtended) {
+        [self.floatingButton setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+        [self.floatingButton setTitle:@"Default" forState:UIControlStateNormal];
+      } else {
+        [self.floatingButton setImage:nil forState:UIControlStateNormal];
+        [self.floatingButton setTitle:@"New" forState:UIControlStateNormal];
+      }
+      [self.floatingButton sizeToFit];
+    }];
+
   }
 }
 
