@@ -21,6 +21,7 @@
 
 @interface ButtonsTypicalUseViewController ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
+@property(nonatomic, assign) BOOL styleChanged;
 @end
 
 @implementation ButtonsTypicalUseViewController
@@ -136,18 +137,29 @@
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
     [UIView animateWithDuration:0.25 animations:^{
-      self.floatingButton.shape += 1;
-      if (self.floatingButton.shape > MDCFloatingButtonShapeExtendedTrailingIcon) {
-        self.floatingButton.shape = 0;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
+      self.floatingButton.mode += 1;
+      if (self.floatingButton.mode > MDCFloatingButtonModeExtended) {
+        self.floatingButton.mode = 0;
+        self.floatingButton.imagePosition += 1;
+        if (self.floatingButton.imagePosition > MDCFloatingButtonImagePositionTrailing) {
+          self.floatingButton.imagePosition = 0;
+          self.floatingButton.contentEdgeInsetsFlippedForTrailingImagePosition
+            = !self.floatingButton.contentEdgeInsetsFlippedForTrailingImagePosition;
+        }
+
+        if (!self.styleChanged) {
           MDCBasicColorScheme *scheme = [[MDCBasicColorScheme alloc] initWithPrimaryColor:UIColor.purpleColor
                                                                            secondaryColor:UIColor.orangeColor];
           [ExampleFloatingButtonThemer applyToButton:self.floatingButton withColorScheme:scheme];
-        });
-
+          self.styleChanged = YES;
+        }
       }
-      if (self.floatingButton.shape >= MDCFloatingButtonShapeExtendedLeadingIcon) {
+      NSLog(@"Mode: %ld, Pos: %ld, Flip: %d\nCEI: %@",
+            self.floatingButton.mode,
+            self.floatingButton.imagePosition,
+            self.floatingButton.contentEdgeInsetsFlippedForTrailingImagePosition,
+            NSStringFromUIEdgeInsets(self.floatingButton.contentEdgeInsets));
+      if (self.floatingButton.mode == MDCFloatingButtonModeExtended) {
         [self.floatingButton setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
         [self.floatingButton setTitle:@"Extended" forState:UIControlStateNormal];
       }  else {

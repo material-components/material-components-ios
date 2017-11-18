@@ -116,8 +116,8 @@
   [self.scrollView addSubview:self.progressView];
   [self animateStep1:self.progressView];
 
-  self.floatingButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  self.floatingButton = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
+                                                            type:MDCFloatingButtonTypeDefault];
   [self.floatingButton sizeToFit];
   [self.scrollView addSubview:self.floatingButton];
 

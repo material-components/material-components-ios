@@ -78,14 +78,24 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
 
  The default value is @c .normal .
  */
-@property(nonatomic, assign) MDCFloatingButtonMode mode;
+@property(nonatomic, assign) MDCFloatingButtonMode mode UI_APPEARANCE_SELECTOR;
 
 /**
  The position of the image relative to the title.
 
  The default value is @c .leading .
  */
-@property(nonatomic, assign) MDCFloatingButtonImagePosition imagePosition;
+@property(nonatomic, assign) MDCFloatingButtonImagePosition imagePosition UI_APPEARANCE_SELECTOR;
+
+/**
+ If @c YES, any values for @c contentEdgeInsets:forType:mode: will be flipped when the FAB is
+ in @c MDCFloatingButtonModeExtended and its @c imagePosition is
+ @c MDCFloatingButtonImagePositionTrailing.
+
+ The default value is NO.
+ */
+@property(nonatomic, assign) BOOL contentEdgeInsetsFlippedForTrailingImagePosition
+    UI_APPEARANCE_SELECTOR;
 
 /**
  The horizontal padding between the |imageView| and |titleLabel| when the button is in its
