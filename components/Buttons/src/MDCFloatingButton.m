@@ -23,13 +23,13 @@
 
 static const CGFloat MDCFloatingButtonDefaultDimension = 56.0f;
 static const CGFloat MDCFloatingButtonMiniDimension = 40.0f;
+static const UIEdgeInsets internalLayoutSpacingInsets = (UIEdgeInsets){0, 16, 0, 24};
+
 static NSString *const MDCFloatingButtonTypeKey = @"MDCFloatingButtonTypeKey";
 static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
 static NSString *const MDCFloatingButtonImagePositionKey = @"MDCFloatingButtonImagePositionKey";
 static NSString *const MDCFloatingImageTitlePaddingKey = @"MDCFloatingImageTitlePaddingKey";
 
-/* Only used to decode previous versions. */
-static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey
     = @"MDCFloatingButtonMinimumSizeDictionaryKey";
 static NSString *const MDCFloatingButtonMaximumSizeDictionaryKey
@@ -38,6 +38,13 @@ static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
     = @"MDCFloatingButtonContentEdgeInsetsDictionaryKey";
 static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
     = @"MDCFloatingButtonHitAreaInsetsDictionaryKey";
+
+/* Only used to decode previous versions. */
+static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
+
+static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
+  return UIEdgeInsetsMake(insets.top, insets.right, insets.bottom, insets.left);
+}
 
 @interface MDCFloatingButton ()
 @property(nonatomic, assign) MDCFloatingButtonType type;
@@ -120,16 +127,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
            @(MDCFloatingButtonTypeDefault) : defaultMaxSizes,
            } mutableCopy];
 
-  NSMutableDictionary *miniContentEdgeInsets
-      = [@{
-           @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:UIEdgeInsetsZero]
-           } mutableCopy];
-  NSMutableDictionary *defaultContentEdgeInsets
-      = [@{
-           @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:UIEdgeInsetsZero],
-           @(MDCFloatingButtonModeExtended) :
-             [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, 16, 0, 24)],
-           } mutableCopy];
+  NSMutableDictionary *miniContentEdgeInsets = [@{} mutableCopy];
+  NSMutableDictionary *defaultContentEdgeInsets = [@{} mutableCopy];
   _typeToModeToContentEdgeInsets = [@{ @(MDCFloatingButtonTypeMini) : miniContentEdgeInsets,
                                        @(MDCFloatingButtonTypeDefault) : defaultContentEdgeInsets,
                                        } mutableCopy];
@@ -298,15 +297,16 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   // The diagram above assumes an LTR user interface orientation
   // and a .leadingIcon shape for this button.
 
-  const UIEdgeInsets originalContentEdgeInsets = [self contentEdgeInsetsForMode:self.mode];
-  const UIEdgeInsets adjustedContentEdgeInsets
-      = self.contentEdgeInsetsFlippedForTrailingImagePosition
-          ? UIEdgeInsetsMake(originalContentEdgeInsets.top,
-                             originalContentEdgeInsets.right,
-                             originalContentEdgeInsets.bottom,
-                             originalContentEdgeInsets.left)
-          : originalContentEdgeInsets;
-  const CGRect insetBounds = UIEdgeInsetsInsetRect(self.bounds, adjustedContentEdgeInsets);
+  UIEdgeInsets adjustedLayoutInsets = internalLayoutSpacingInsets;
+  UIEdgeInsets adjustedContentEdgeInsets = self.contentEdgeInsets;
+  if (self.contentEdgeInsetsFlippedForTrailingImagePosition
+      && self.imagePosition == MDCFloatingButtonImagePositionTrailing)  {
+    adjustedLayoutInsets = UIEdgeInsetsFlippedHorizonally(internalLayoutSpacingInsets);
+    adjustedContentEdgeInsets = UIEdgeInsetsFlippedHorizonally(self.contentEdgeInsets);
+  }
+  const CGRect insetBounds = UIEdgeInsetsInsetRect(UIEdgeInsetsInsetRect(self.bounds,
+                                                                         adjustedLayoutInsets),
+                                                   adjustedContentEdgeInsets);
   NSLog(@"\nBounds: %@\nInBnds: %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(insetBounds));
   const CGFloat imageViewWidth = CGRectGetWidth(self.imageView.bounds);
   const CGFloat boundsCenterY = CGRectGetMidY(insetBounds);

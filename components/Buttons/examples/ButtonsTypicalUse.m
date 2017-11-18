@@ -148,9 +148,9 @@
         }
 
         if (!self.styleChanged) {
-          MDCBasicColorScheme *scheme = [[MDCBasicColorScheme alloc] initWithPrimaryColor:UIColor.purpleColor
-                                                                           secondaryColor:UIColor.orangeColor];
-          [ExampleFloatingButtonThemer applyToButton:self.floatingButton withColorScheme:scheme];
+//          MDCBasicColorScheme *scheme = [[MDCBasicColorScheme alloc] initWithPrimaryColor:UIColor.purpleColor
+//                                                                           secondaryColor:UIColor.orangeColor];
+//          [ExampleFloatingButtonThemer applyToButton:self.floatingButton withColorScheme:scheme];
           self.styleChanged = YES;
         }
       }
@@ -161,8 +161,8 @@
             NSStringFromUIEdgeInsets(self.floatingButton.contentEdgeInsets));
       if (self.floatingButton.mode == MDCFloatingButtonModeExtended) {
         [self.floatingButton setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
-        [self.floatingButton setTitle:@"Extended" forState:UIControlStateNormal];
-      }  else {
+        [self.floatingButton setTitle:@"Default" forState:UIControlStateNormal];
+      } else {
         [self.floatingButton setImage:nil forState:UIControlStateNormal];
         [self.floatingButton setTitle:@"New" forState:UIControlStateNormal];
       }
