@@ -225,12 +225,26 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 }
 
 - (CGSize)intrinsicContentSize {
+  CGSize contentSize = CGSizeZero;
   if (self.mode == MDCFloatingButtonModeNormal) {
-    return [self intrinsicContentSizeForModeNormal];
+    contentSize = [self intrinsicContentSizeForModeNormal];
   } else if (self.mode == MDCFloatingButtonModeExtended) {
-    return [self intrinsicContentSizeForModeExtended];
+    contentSize = [self intrinsicContentSizeForModeExtended];
   }
-  return [super intrinsicContentSize];
+
+  if (self.minimumSize.height > 0) {
+    contentSize.height = MAX(self.minimumSize.height, contentSize.height);
+  }
+  if (self.maximumSize.height > 0) {
+    contentSize.height = MIN(self.maximumSize.height, contentSize.height);
+  }
+  if (self.minimumSize.width > 0) {
+    contentSize.width = MAX(self.minimumSize.width, contentSize.width);
+  }
+  if (self.maximumSize.width > 0) {
+    contentSize.width = MIN(self.maximumSize.width, contentSize.width);
+  }
+  return contentSize;
 }
 
 //- (CGSize)sizeThatFits:(CGSize)size {
@@ -552,6 +566,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   [self updateContentEdgeInsets];
   [self updateHitAreaInsets];
   if (needsLayout) {
+    [self invalidateIntrinsicContentSize];
     [self sizeToFit];
   }
 }

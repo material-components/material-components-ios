@@ -173,8 +173,23 @@
   }
 }
 
+- (void)updateFABExtendedMode:(UITraitCollection *)traits {
+  BOOL useExtendedMode = traits.horizontalSizeClass == UIUserInterfaceSizeClassRegular
+      && traits.verticalSizeClass == UIUserInterfaceSizeClassRegular;
+  if (useExtendedMode) {
+    [self.floatingButton setTitle:@"Button" forState:UIControlStateNormal];
+    self.floatingButton.mode = MDCFloatingButtonModeExtended;
+
+  } else {
+    [self.floatingButton setTitle:nil forState:UIControlStateNormal];
+    self.floatingButton.mode = MDCFloatingButtonTypeDefault;
+
+  }
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [self updateFABExtendedMode:self.traitCollection];
   if (animated) {
     [self.floatingButton collapse:NO completion:nil];
   }
@@ -184,6 +199,16 @@
   [super viewDidAppear:animated];
   if (animated) {
     [self.floatingButton expand:YES completion:nil];
+  }
+}
+
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection
+              withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  UITraitCollection *currentTraits = self.traitCollection;
+  BOOL traitsChange = currentTraits.horizontalSizeClass != newCollection.horizontalSizeClass ||
+  currentTraits.verticalSizeClass != newCollection.verticalSizeClass;
+  if (traitsChange) {
+    [self updateFABExtendedMode:newCollection];
   }
 }
 

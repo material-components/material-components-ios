@@ -94,9 +94,13 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   func updateFloatingButtons(to mode: MDCFloatingButtonMode) {
     if (floatingButton.mode != mode) {
       floatingButton.mode = mode
+      NSLog("Prog: %@", String(describing: self.floatingButton.frame))
+
     }
     if (storyboardFloating.mode != mode) {
       storyboardFloating.mode = mode
+      NSLog("Story: %@", String(describing: self.storyboardFloating.frame))
+
     }
   }
 
@@ -226,12 +230,12 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     super.willTransition(to: newCollection, with: coordinator)
     let currentTraits = self.traitCollection;
     let sizeClassChanged
-      = traitCollection.horizontalSizeClass != currentTraits.horizontalSizeClass
-        || traitCollection.verticalSizeClass != currentTraits.verticalSizeClass
+      = newCollection.horizontalSizeClass != currentTraits.horizontalSizeClass
+        || newCollection.verticalSizeClass != currentTraits.verticalSizeClass
     if (sizeClassChanged) {
       let willBeRegularRegular
-        = traitCollection.horizontalSizeClass == .regular
-          && traitCollection.verticalSizeClass == .regular
+        = newCollection.horizontalSizeClass == .regular
+          && newCollection.verticalSizeClass == .regular
 
 
       coordinator.animate(alongsideTransition:{ (_) in
@@ -241,9 +245,11 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
         } else {
           if (self.floatingButton.mode != .normal) {
             self.floatingButton.mode = .normal
+            NSLog("Prog: %@", String(describing: self.floatingButton.frame))
           }
           if (self.storyboardFloating.mode != .normal) {
             self.storyboardFloating.mode = .normal
+            NSLog("Story: %@", String(describing: self.storyboardFloating.frame))
           }
         }
       }, completion: nil)
