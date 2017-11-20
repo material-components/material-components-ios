@@ -137,6 +137,7 @@
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
     [UIView animateWithDuration:0.25 animations:^{
+
       self.floatingButton.mode += 1;
       if (self.floatingButton.mode > MDCFloatingButtonModeExtended) {
         self.floatingButton.mode = 0;
