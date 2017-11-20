@@ -23,6 +23,8 @@
 
 static const CGFloat MDCFloatingButtonDefaultDimension = 56.0f;
 static const CGFloat MDCFloatingButtonMiniDimension = 40.0f;
+static const UIEdgeInsets internalLayoutSpacingInsets = (UIEdgeInsets){0, 16, 0, 24};
+
 static NSString *const MDCFloatingButtonTypeKey = @"MDCFloatingButtonTypeKey";
 static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
 static NSString *const MDCFloatingButtonImagePositionKey = @"MDCFloatingButtonImagePositionKey";
@@ -39,6 +41,10 @@ static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey
 static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
     = @"MDCFloatingButtonHitAreaInsetsDictionaryKey";
 
+static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
+  return UIEdgeInsetsMake(insets.top, insets.right, insets.bottom, insets.left);
+}
+
 @interface MDCFloatingButton ()
 @property(nonatomic, assign) MDCFloatingButtonType type;
 @property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *typeToModeToHitAreaInsets;
@@ -48,6 +54,13 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
 @end
 
 @implementation MDCFloatingButton
+
++ (void)initialize {
+  [[MDCFloatingButton appearance] setElevation:MDCShadowElevationFABResting
+                                      forState:UIControlStateNormal];
+  [[MDCFloatingButton appearance] setElevation:MDCShadowElevationFABPressed
+                                      forState:UIControlStateHighlighted];
+}
 
 + (CGFloat)defaultDimension {
   return MDCFloatingButtonDefaultDimension;
@@ -113,16 +126,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
            @(MDCFloatingButtonTypeDefault) : defaultMaxSizes,
            } mutableCopy];
 
-  NSMutableDictionary *miniContentEdgeInsets
-      = [@{
-           @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:UIEdgeInsetsZero]
-           } mutableCopy];
-  NSMutableDictionary *defaultContentEdgeInsets
-      = [@{
-           @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:UIEdgeInsetsZero],
-           @(MDCFloatingButtonModeExtended) :
-             [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, 16, 0, 24)],
-           } mutableCopy];
+  NSMutableDictionary *miniContentEdgeInsets = [@{} mutableCopy];
+  NSMutableDictionary *defaultContentEdgeInsets = [@{} mutableCopy];
   _typeToModeToContentEdgeInsets = [@{ @(MDCFloatingButtonTypeMini) : miniContentEdgeInsets,
                                        @(MDCFloatingButtonTypeDefault) : defaultContentEdgeInsets,
                                        } mutableCopy];
@@ -269,7 +274,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   self.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
   [super layoutSubviews];
 
-  if (self.type == MDCFloatingButtonModeNormal) {
+  if (self.mode == MDCFloatingButtonModeNormal) {
     return;
   }
 
@@ -291,7 +296,17 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   // The diagram above assumes an LTR user interface orientation
   // and a .leadingIcon shape for this button.
 
-  const CGRect insetBounds = UIEdgeInsetsInsetRect(self.bounds, self.contentEdgeInsets);
+  UIEdgeInsets adjustedLayoutInsets = internalLayoutSpacingInsets;
+  UIEdgeInsets adjustedContentEdgeInsets = self.contentEdgeInsets;
+  if (self.contentEdgeInsetsFlippedForTrailingImagePosition
+      && self.imagePosition == MDCFloatingButtonImagePositionTrailing)  {
+    adjustedLayoutInsets = UIEdgeInsetsFlippedHorizonally(internalLayoutSpacingInsets);
+    adjustedContentEdgeInsets = UIEdgeInsetsFlippedHorizonally(self.contentEdgeInsets);
+  }
+  const CGRect insetBounds = UIEdgeInsetsInsetRect(UIEdgeInsetsInsetRect(self.bounds,
+                                                                         adjustedLayoutInsets),
+                                                   adjustedContentEdgeInsets);
+  NSLog(@"\nBounds: %@\nInBnds: %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(insetBounds));
   const CGFloat imageViewWidth = CGRectGetWidth(self.imageView.bounds);
   const CGFloat boundsCenterY = CGRectGetMidY(insetBounds);
   CGFloat titleWidthAvailable = CGRectGetWidth(insetBounds);
@@ -302,8 +317,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
   CGSize titleIntrinsicSize
       = [self.titleLabel sizeThatFits:CGSizeMake(titleWidthAvailable, availableHeight)];
 
-  const CGSize titleSize = CGSizeMake(MIN(titleIntrinsicSize.width, titleWidthAvailable),
-                                      MIN(titleIntrinsicSize.height, availableHeight));
+  const CGSize titleSize = CGSizeMake(MAX(0, MIN(titleIntrinsicSize.width, titleWidthAvailable)),
+                                      MAX(0, MIN(titleIntrinsicSize.height, availableHeight)));
 
   BOOL isRTL = self.mdf_effectiveUserInterfaceLayoutDirection
       == UIUserInterfaceLayoutDirectionRightToLeft;
@@ -332,9 +347,16 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey
 
   self.imageView.center = imageCenter;
   self.imageView.frame = UIEdgeInsetsInsetRect(self.imageView.frame, self.imageEdgeInsets);
+  CGRect oldBounds = self.titleLabel.bounds;
   self.titleLabel.center = titleCenter;
-  self.titleLabel.bounds = (CGRect){CGRectStandardize(self.titleLabel.bounds).origin, titleSize};
+  CGRect midBounds = self.titleLabel.bounds;
+  (void)midBounds;
+  (void)oldBounds;
+  CGRect newBounds = CGRectStandardize(self.titleLabel.bounds);
+  self.titleLabel.bounds = (CGRect){newBounds.origin, titleSize};
   self.titleLabel.frame = UIEdgeInsetsInsetRect(self.titleLabel.frame, self.titleEdgeInsets);
+  CGRect lastBounds = self.titleLabel.bounds;
+  (void)lastBounds;
 
 }
 

@@ -53,7 +53,8 @@
   self.flatButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
   self.raisedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);
   [self.floatingActionButton setContentEdgeInsets:UIEdgeInsetsMake(40, 40, 0, 0)
-                                         forShape:MDCFloatingButtonShapeDefault];
+                                          forType:MDCFloatingButtonTypeDefault
+                                             mode:MDCFloatingButtonModeNormal];
 
   [self updateInkStyle:self.inkBoundingSwitch.isOn ? MDCInkStyleBounded : MDCInkStyleUnbounded];
 }
