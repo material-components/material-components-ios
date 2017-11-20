@@ -23,6 +23,7 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputCommonFundament.h"
+#import "private/MDCIntrinsicHeightTextView.h"
 
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
@@ -75,6 +76,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
+    [self setupTextView];
+
     _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     [self commonMDCMultilineTextFieldInitialization];
@@ -88,12 +92,11 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if (self) {
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
       _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
-      [self setupTextView];
-    } else if (!_textView) {
-      // It's expected that this will be created by the fundament above. This is a catch.
-      _textView = [[UITextView alloc] initWithFrame:CGRectZero];
-      [self setupTextView];
     }
+    if (!_textView) {
+      _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
+    }
+    [self setupTextView];
 
     MDCTextInputCommonFundament *fundament =
         [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
@@ -233,6 +236,26 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.textView.opaque = NO;
 }
 
+// It's possible we've been passed a text view that's not our special class. We can handle that.
+// It's also something we guarantee to always be there. So, if it's nil, we make a new one.
+- (void)textViewSafetyCheck {
+  NSString *existingText = _textView.text;
+
+  // We expect users of Interface Builder to put a UITextView in the view. When that happens,
+  // we swap it out for one of our special text views and bring the text over.
+  if (![_textView isKindOfClass:[MDCIntrinsicHeightTextView class]]) {
+    [_textView removeFromSuperview];
+    _textView = nil;
+  }
+
+  if (!_textView) {
+    _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
+    if (existingText) {
+      _textView.text = existingText;
+    }
+  }
+}
+
 #pragma mark - Underline View Implementation
 
 - (void)setupUnderlineConstraints {
@@ -357,7 +380,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                     attribute:NSLayoutAttributeTop
                                                    multiplier:1
                                                      constant:self.textInsets.top];
-    self.textViewTop.priority = UILayoutPriorityDefaultLow;
+    self.textViewTop.priority = UILayoutPriorityDefaultLow + 1;
     self.textViewTop.active = YES;
   }
   self.textViewTop.constant = self.textInsets.top;
@@ -384,7 +407,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                  attribute:NSLayoutAttributeNotAnAttribute
                 multiplier:1
                   constant:[self estimatedTextViewLineHeight] * self.minimumLines];
-    self.textViewMinHeight.priority = UILayoutPriorityDefaultLow;
+    self.textViewMinHeight.priority = UILayoutPriorityDefaultLow + 1;
   }
   self.textViewMinHeight.active = YES;
   self.textViewMinHeight.constant = [self estimatedTextViewLineHeight] * self.minimumLines;
@@ -685,11 +708,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 }
 
 - (UITextView *)textView {
-  if (!_textView) {
-    _textView = [[UITextView alloc] initWithFrame:CGRectZero];
-    [self setupTextView];
-    [self setupUnderlineConstraints];
-  }
+  [self textViewSafetyCheck];
   return _textView;
 }
 
@@ -697,10 +716,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if (![_textView isEqual:textView]) {
     [_textView removeFromSuperview];
     _textView = textView;
-    if (textView) {
-      [self setupTextView];
-      [self setupUnderlineConstraints];
-    }
+    [self textViewSafetyCheck];
+    [self setupTextView];
+    [self setupUnderlineConstraints];
   }
 }
 

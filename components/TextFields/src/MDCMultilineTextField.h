@@ -67,7 +67,7 @@
 /**
  Embedded textView. Can be set from storyboard or will be auto-created during initialization.
  */
-@property(nonatomic, nullable, weak) IBOutlet UITextView *textView;
+@property(nonatomic, nullable, strong) IBOutlet UITextView *textView;
 
 @end
 
