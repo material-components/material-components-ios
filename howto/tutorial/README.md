@@ -508,8 +508,8 @@ override func viewDidLoad() {
   [self.view addSubview:self.fab];
 
   self.fab.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -16.0].active = YES;
-  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant: -16.0].active = YES;
+  [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-16.0].active = YES;
+  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-16.0].active = YES;
 }
 ```
 <!--</div>-->
@@ -696,8 +696,8 @@ class ViewController: MDCCollectionViewController {
   [self.view addSubview:self.fab];
 
   self.fab.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -16.0].active = YES;
-  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant: -16.0].active = YES;
+  [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-16.0].active = YES;
+  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-16.0].active = YES;
 
   [self.fab setTitle:@"+" forState:UIControlStateNormal];
   [self.fab setTitle:@"-" forState:UIControlStateSelected];
