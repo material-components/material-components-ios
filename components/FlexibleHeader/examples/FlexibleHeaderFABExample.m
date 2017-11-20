@@ -16,10 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderFABSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderFABSupplemental.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 

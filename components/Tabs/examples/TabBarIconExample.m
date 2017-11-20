@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "TabBarIconExampleSupplemental.h"
+#import "supplemental/TabBarIconExampleSupplemental.h"
 
 @import MaterialComponents.MaterialAppBar;
 @import MaterialComponents.MaterialPalettes;

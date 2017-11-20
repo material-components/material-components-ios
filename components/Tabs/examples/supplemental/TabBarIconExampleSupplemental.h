@@ -19,13 +19,9 @@
 
 @import UIKit;
 
+@import MaterialComponents.MaterialAppBar;
+@import MaterialComponents.MaterialButtons;
 @import MaterialComponents.MaterialTabs;
-
-@class MDCAppBar;
-@class MDCRaisedButton;
-@class MDCTabBar;
-
-@protocol MDCTabBarDelegate;
 
 @interface TabBarIconExample : UIViewController <MDCTabBarDelegate>
 

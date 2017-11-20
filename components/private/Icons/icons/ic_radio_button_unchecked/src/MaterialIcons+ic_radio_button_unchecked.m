@@ -19,8 +19,6 @@
 
 #import "MaterialIcons+ic_radio_button_unchecked.h"
 
-#import "MaterialIcons.h"
-
 static NSString *const kBundleName = @"MaterialIcons_ic_radio_button_unchecked";
 static NSString *const kIconName = @"ic_radio_button_unchecked";
 

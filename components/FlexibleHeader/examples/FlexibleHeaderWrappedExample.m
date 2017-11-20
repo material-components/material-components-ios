@@ -16,9 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderWrappedSupplemental.h"
-
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderWrappedSupplemental.h"
 
 @interface FlexibleHeaderWrappedExample () <UIScrollViewDelegate>
 

@@ -14,13 +14,12 @@
  limitations under the License.
  */
 
-#import "MDCProgressView+MotionSpec.h"
+#import "MDCChipView.h"
 
-const struct MDCProgressViewMotionSpec kMDCProgressViewMotionSpec = {
-  .setProgress = {
-    .duration = 0.250, .curve = _MDMBezier(0, 0, 1, 1),
-  },
-  .setHidden = {
-    .duration = 0.250, .curve = _MDMBezier(0, 0, 1, 1),
-  }
-};
+@interface MDCChipView (Private)
+
+- (void)startTouchBeganAnimationAtPoint:(CGPoint)point;
+- (void)startTouchEndedAnimationAtPoint:(CGPoint)point;
+- (BOOL)willChangeSizeWithSelectedValue:(BOOL)selected;
+
+@end

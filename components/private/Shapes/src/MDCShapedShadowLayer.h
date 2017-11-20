@@ -30,7 +30,7 @@
 
  @note Make sure to set the backgroundColor to a clear color when setting fillColor.
  */
-@property(nullable) CGColorRef fillColor;
+@property(nullable, nonatomic) CGColorRef fillColor;
 
 /*
  The MDCShapeGenerating object used to set the shape's path and shadow path.

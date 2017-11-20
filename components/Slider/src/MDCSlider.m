@@ -17,6 +17,7 @@
 #import "MDCSlider.h"
 
 #import "private/MDCSlider_Subclassable.h"
+#import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
 
 static const CGFloat kSliderDefaultWidth = 100.0f;
@@ -26,15 +27,8 @@ static const CGFloat kSliderThumbRadius = 6.0f;
 static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
-// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
-static const uint32_t MDCBlueColor = 0x2196F3;
-
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
+static inline UIColor *MDCThumbTrackDefaultColor(void) {
+  return MDCPalette.bluePalette.tint500;
 }
 
 @interface MDCSlider () <MDCThumbTrackDelegate>
@@ -61,7 +55,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 - (void)commonMDCSliderInit {
   _thumbTrack =
-      [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:[[self class] defaultColor]];
+      [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:MDCThumbTrackDefaultColor()];
   _thumbTrack.delegate = self;
   _thumbTrack.disabledTrackHasThumbGaps = YES;
   _thumbTrack.trackEndsAreInset = YES;
@@ -116,7 +110,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)setColor:(UIColor *)color {
-  _thumbTrack.primaryColor = color ? color : [[self class] defaultColor];
+  _thumbTrack.primaryColor = color ? color : MDCThumbTrackDefaultColor();
 }
 
 - (UIColor *)color {
@@ -337,10 +331,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 - (void)thumbTrackTouchCanceled:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventTouchCancel];
-}
-
-+ (UIColor *)defaultColor {
-  return MDCColorFromRGB(MDCBlueColor);
 }
 
 + (UIColor *)defaultTrackOffColor {

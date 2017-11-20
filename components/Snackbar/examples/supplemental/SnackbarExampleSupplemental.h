@@ -17,8 +17,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
-#import "MaterialTypography.h"
 #import "MaterialCollections.h"
+#import "MaterialTypography.h"
 
 @interface SnackbarExample : MDCCollectionViewController
 @property(nonatomic) NSArray *choices;

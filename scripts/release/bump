@@ -26,6 +26,7 @@ import os
 import subprocess
 import sys
 
+VERSION_FILE_NAME = "VERSION"
 
 def find_podspecs(directory):
   """Return a list of *.podspec files on disk.
@@ -44,6 +45,18 @@ def find_podspecs(directory):
   return paths
 
 
+def find_version_file(directory):
+  """Return the source-of-truth version file.
+
+  Args:
+    directory: Path to the directory to examine for the file.
+
+  Returns:
+    A path to the version file.
+  """
+  return os.path.join(directory, VERSION_FILE_NAME)
+
+
 def update_podspec_contents(verbose_printer, contents, version):
   """Update the contents of a podspec with a new version.
 
@@ -55,14 +68,32 @@ def update_podspec_contents(verbose_printer, contents, version):
   Returns:
     The updated contents string.
   """
-  # Strings like 
+  # Strings like
   #   .version      = "2.0.0"
   #   .version = "1.2.3.absc"
   #   .version="my dog has fleas"
   contents = re.sub(r'\.version([\s]*)=([\s]*)"[^"]+"',
-                    r'.version\1=\2"%s"' % version, 
+                    r'.version\1=\2"%s"' % version,
                     contents)
   return contents
+
+
+def set_version(verbose_printer, path, version):
+  """Update the version file on disk with a new version.
+
+  Args:
+    verbose_printer: A printing function for verbose messages.
+    path: The path to the version file.
+    version: The new version.
+  """
+  verbose_printer('Updating %s to version %s.' % (path, version))
+
+  try:
+    with open(path, 'w') as f:
+      f.write(version)
+  except:
+    print('Could not write version file "%s", aborting.' % path, file=sys.stderr)
+    raise
 
 
 def update_podspec_file(verbose_printer, path, version):
@@ -82,7 +113,7 @@ def update_podspec_file(verbose_printer, path, version):
     print('Could not read podspec "%s", aborting.' % path, file=sys.stderr)
     raise
 
-  new_contents = update_podspec_contents(verbose_printer, contents, version) 
+  new_contents = update_podspec_contents(verbose_printer, contents, version)
 
   try:
     with open(path, 'w') as f:
@@ -90,11 +121,11 @@ def update_podspec_file(verbose_printer, path, version):
   except:
     print('Could not write podspec "%s", aborting.' % path, file=sys.stderr)
     raise
-  
+
 
 def create_argument_parser():
   """Create an ArgumentParser for this script.
-  
+
   Returns:
     An ArgumentParser object.
   """
@@ -113,11 +144,11 @@ def create_argument_parser():
 
   parser.add_argument('--skip_pod_install', action='store_true',
                       help=('skip running `pod install` on all Podfiles.'),
-                      default=False) 
+                      default=False)
   parser.add_argument('--fast_pod_install', action='store_true',
                       help=('skip updating the pod repos when running `pod '
                             'install`.'),
-                      default=False) 
+                      default=False)
   return parser
 
 
@@ -142,6 +173,16 @@ def main():
 
   stderr_printer = lambda x: print(x, file=sys.stderr)
 
+  # Find the VERSION file.
+  version_file = find_version_file(args.directory)
+  if not version_file:
+    stderr_printer('Could not find "%s" in directory "%s", aborting.' %
+                   (VERSION_FILE_NAME, args.directory))
+    sys.exit(-1)
+
+  # Set the official version.
+  set_version(verbose_printer, version_file, args.version)
+
   # Find all podspecs files.
   podspecs = find_podspecs(args.directory)
   if not podspecs:
@@ -153,9 +194,6 @@ def main():
   for p in podspecs:
     update_podspec_file(verbose_printer, p, args.version)
 
-  # Update all pod files.
-  manage_pods.install_all_podfile_dirs(args.directory, args.fast_pod_install,
-                                       manage_pods.BLACKLIST_DIRS)
 
 if __name__ == '__main__':
   main()

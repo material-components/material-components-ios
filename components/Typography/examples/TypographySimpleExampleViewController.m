@@ -15,6 +15,7 @@
  */
 
 #import "TypographySimpleExampleViewController.h"
+
 #import "MaterialTypography.h"
 
 @implementation TypographySimpleExampleViewController

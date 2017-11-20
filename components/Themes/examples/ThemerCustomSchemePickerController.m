@@ -177,7 +177,7 @@ static NSString *s_secondaryColorString;
   self.previewButton.enabled = YES;
 }
 
-- (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
+- (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {
   // Apply color scheme to material design components using component themers.
   [MDCActivityIndicatorColorThemer applyColorScheme:colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
@@ -199,7 +199,16 @@ static NSString *s_secondaryColorString;
                                 toProgressView:[MDCProgressView appearance]];
   [MDCSliderColorThemer applyColorScheme:colorScheme toSlider:[MDCSlider appearance]];
   [MDCTabBarColorThemer applyColorScheme:colorScheme toTabBar:[MDCTabBar appearance]];
-  [MDCTextFieldColorThemer applyColorSchemeToAllTextInputControllerDefault:colorScheme];
+  [MDCTextFieldColorThemer applyColorScheme:colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
+  [MDCTextFieldColorThemer applyColorScheme:colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
+  [MDCTextFieldColorThemer applyColorScheme:colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerFilled class]];
+  [MDCTextFieldColorThemer applyColorScheme:colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerOutlined class]];
+  [MDCTextFieldColorThemer applyColorScheme:colorScheme
+           toAllTextInputControllersOfClass:[MDCTextInputControllerOutlinedTextArea class]];
 
   // Apply color scheme to UIKit components.
   [UISlider appearance].tintColor = colorScheme.primaryColor;

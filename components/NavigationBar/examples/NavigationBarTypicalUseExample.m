@@ -17,8 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialNavigationBar.h"
-
-#import "NavigationBarTypicalUseExampleSupplemental.h"
+#import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarTypicalUseExample ()
 

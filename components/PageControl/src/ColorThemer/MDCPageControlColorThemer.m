@@ -18,7 +18,7 @@
 
 @implementation MDCPageControlColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
            toPageControl:(MDCPageControl *)pageControl {
   pageControl.pageIndicatorTintColor = colorScheme.primaryLightColor;
   pageControl.currentPageIndicatorTintColor = colorScheme.primaryDarkColor;
