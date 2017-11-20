@@ -82,8 +82,6 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   self = [super initWithFrame:frame];
   if (self) {
     _shape = shape;
-    // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
-    // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
     [self commonMDCFloatingButtonInit];
     [self updateShape];
   }
@@ -141,8 +139,10 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
            @(MDCFloatingButtonShapeMini) : miniNormalHitAreaInsets,
            } mutableCopy];
 
-  super.contentEdgeInsets = [self defaultContentEdgeInsets];
-  super.hitAreaInsets = [self defaultHitAreaInsets];
+  // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
+  // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
+  [self updateContentEdgeInsets];
+  [self updateHitAreaInsets];
   _imageTitlePadding = 8;
   _imagePosition = MDCFloatingButtonImagePositionLeading;
 }
@@ -217,9 +217,12 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   const CGSize intrinsicImageSize
       = [self.imageView sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat intrinsicWidth = intrinsicTitleSize.width + intrinsicImageSize.width
-      + self.imageTitlePadding + self.contentEdgeInsets.left + self.contentEdgeInsets.right;
+      + self.imageTitlePadding + internalLayoutSpacingInsets.left
+      + internalLayoutSpacingInsets.right + self.contentEdgeInsets.left
+      + self.contentEdgeInsets.right;
   CGFloat intrinsicHeight = MAX(intrinsicTitleSize.height, intrinsicImageSize.height)
-      + self.contentEdgeInsets.top + self.contentEdgeInsets.bottom;
+      + self.contentEdgeInsets.top + self.contentEdgeInsets.bottom + internalLayoutSpacingInsets.top
+      + internalLayoutSpacingInsets.bottom;
   return CGSizeMake(intrinsicWidth, intrinsicHeight);
 }
 
@@ -264,21 +267,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 
 
 - (CGSize)sizeThatFits:(__unused CGSize)size {
-  const CGSize intrinsicSize = [self intrinsicContentSize];
-  CGSize finalSize = intrinsicSize;
-  if (self.minimumSize.height > 0) {
-    finalSize.height = MAX(self.minimumSize.height, finalSize.height);
-  }
-  if (self.maximumSize.height > 0) {
-    finalSize.height = MIN(self.maximumSize.height, finalSize.height);
-  }
-  if (self.minimumSize.width > 0) {
-    finalSize.width = MAX(self.minimumSize.width, finalSize.width);
-  }
-  if (self.maximumSize.width > 0) {
-    finalSize.width = MIN(self.maximumSize.width, finalSize.width);
-  }
-  return finalSize;
+  return [self intrinsicContentSize];
 }
 
 - (void)layoutSubviews {
@@ -370,36 +359,6 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   CGRect lastBounds = self.titleLabel.bounds;
   (void)lastBounds;
 
-}
-
-#pragma mark - Subclassing
-
-- (UIEdgeInsets)defaultContentEdgeInsets {
-  NSMutableDictionary *modeToContentEdgeInsets = self.shapeToModeToContentEdgeInsets[@(self.shape)];
-  if (!modeToContentEdgeInsets) {
-    return UIEdgeInsetsZero;
-  }
-
-  NSValue *insetsValue = modeToContentEdgeInsets[@(self.mode)];
-  if (insetsValue) {
-    return [insetsValue UIEdgeInsetsValue];
-  } else {
-    return UIEdgeInsetsZero;
-  }
-}
-
-- (UIEdgeInsets)defaultHitAreaInsets {
-  NSMutableDictionary *modeToHitAreaInsets = self.shapeToModeToHitAreaInsets[@(self.shape)];
-  if (!modeToHitAreaInsets) {
-    return UIEdgeInsetsZero;
-  }
-
-  NSValue *insetsValue = modeToHitAreaInsets[@(self.mode)];
-  if (insetsValue) {
-    return [insetsValue UIEdgeInsetsValue];
-  } else {
-    return UIEdgeInsetsZero;
-  }
 }
 
 #pragma mark - Extended FAB changes
