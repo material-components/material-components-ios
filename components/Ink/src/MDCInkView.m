@@ -19,12 +19,14 @@
 #import "private/MDCInkLayer.h"
 #import "private/MDCUpdatedInkLayer.h"
 
-@interface MDCInkView ()
+@interface MDCInkView () <MDCUpdatedInkLayerDelegate>
 
 // Legacy ink properties
 @property(nonatomic, readonly) MDCInkLayer *inkLayer;
 
 // Updated ink properties
+@property(nonatomic, assign) MDCInkCompletionBlock startInkRippleCompletionBlock;
+@property(nonatomic, assign) MDCInkCompletionBlock endInkRippleCompletionBlock;
 @property(nonatomic, strong) MDCUpdatedInkLayer *activeInkLayer;
 @property(nonatomic, strong) NSMutableArray<MDCUpdatedInkLayer *> *inkLayers;
 
@@ -124,9 +126,11 @@
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
   if (self.usesUpdatedInkRipple) {
+    self.startInkRippleCompletionBlock = completionBlock;
     MDCUpdatedInkLayer *inkLayer = [MDCUpdatedInkLayer layer];
     inkLayer.inkColor = self.inkColor;
-  
+    inkLayer.animationDelegate = self;
+
     switch (self.inkStyle) {
       case MDCInkStyleBounded:
         self.clipsToBounds = YES;
@@ -135,7 +139,7 @@
         self.clipsToBounds = NO;
         break;
     }
-  
+
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
     [self.layer addSublayer:inkLayer];
@@ -150,6 +154,7 @@
 - (void)startTouchEndedAnimationAtPoint:(__unused CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
   if (self.usesUpdatedInkRipple) {
+    self.endInkRippleCompletionBlock = completionBlock;
     [self.activeInkLayer endAnimationAtPoint:point];
   } else {
     [self.inkLayer evaporateWithCompletion:completionBlock];
@@ -157,9 +162,12 @@
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  
   if (self.usesUpdatedInkRipple) {
-    [self.activeInkLayer endAnimationAtPoint:CGPointZero];
+    if (animated) {
+      [self.activeInkLayer endAnimationAtPoint:CGPointZero];
+    } else {
+      [self.activeInkLayer removeAllAnimations];
+    }
   } else {
     [self.inkLayer resetAllInk:animated];
   }
@@ -184,6 +192,20 @@
     [view addSubview:foundInkView];
   }
   return foundInkView;
+}
+
+#pragma mark - MDCInkLayerDelegate
+
+- (void)inkLayerAnimationDidStart:(MDCUpdatedInkLayer *)inkLayer {
+  if (self.activeInkLayer == inkLayer && self.startInkRippleCompletionBlock) {
+    self.startInkRippleCompletionBlock();
+  }
+}
+
+- (void)inkLayerAnimationDidEnd:(MDCUpdatedInkLayer *)inkLayer {
+  if (self.activeInkLayer == inkLayer && self.endInkRippleCompletionBlock) {
+    self.endInkRippleCompletionBlock();
+  }
 }
 
 @end
