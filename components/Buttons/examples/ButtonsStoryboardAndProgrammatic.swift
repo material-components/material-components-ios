@@ -80,13 +80,11 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
     buttonSetup()
 
-    let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    floatingButton.layer.addSublayer(floatingPlusShapeLayer)
+    let plusIcon = UIImage.init(named: "Plus")?.withRenderingMode(.alwaysOriginal)
+    floatingButton.setImage(plusIcon, for: .normal)
     innerContainerView.addSubview(floatingButton)
 
-    let storyboardPlusShapeLayer =
-      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
+    storyboardFloating.setImage(plusIcon, for: .normal)
 
     addButtonConstraints()
   }
@@ -94,13 +92,9 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   func updateFloatingButtons(to mode: MDCFloatingButtonMode) {
     if (floatingButton.mode != mode) {
       floatingButton.mode = mode
-      NSLog("Prog: %@", String(describing: self.floatingButton.frame))
-
     }
     if (storyboardFloating.mode != mode) {
       storyboardFloating.mode = mode
-      NSLog("Story: %@", String(describing: self.storyboardFloating.frame))
-
     }
   }
 
@@ -110,8 +104,12 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     let verticalSizeClass = self.traitCollection.verticalSizeClass
     if (horizontalSizeClass == .regular && verticalSizeClass == .regular) {
       self.updateFloatingButtons(to: .extended)
+      self.floatingButton.setTitle("Button", for: .normal)
+      self.storyboardFloating.setTitle("Button", for: .normal)
     } else {
       self.updateFloatingButtons(to: .normal)
+      self.floatingButton.setTitle(nil, for: .normal)
+      self.storyboardFloating.setTitle(nil, for: .normal)
     }
   }
 
@@ -240,17 +238,13 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
       coordinator.animate(alongsideTransition:{ (_) in
         if (willBeRegularRegular) {
-          self.floatingButton.mode = .extended
-          self.storyboardFloating.mode = .extended
+          self.updateFloatingButtons(to: .extended)
+          self.floatingButton.setTitle("Button", for: .normal)
+          self.storyboardFloating.setTitle("Button", for: .normal)
         } else {
-          if (self.floatingButton.mode != .normal) {
-            self.floatingButton.mode = .normal
-            NSLog("Prog: %@", String(describing: self.floatingButton.frame))
-          }
-          if (self.storyboardFloating.mode != .normal) {
-            self.storyboardFloating.mode = .normal
-            NSLog("Story: %@", String(describing: self.storyboardFloating.frame))
-          }
+          self.updateFloatingButtons(to: .normal)
+          self.floatingButton.setTitle(nil, for: .normal)
+          self.storyboardFloating.setTitle(nil, for: .normal)
         }
       }, completion: nil)
     }
