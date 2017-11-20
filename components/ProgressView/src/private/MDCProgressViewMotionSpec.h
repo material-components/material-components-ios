@@ -19,8 +19,8 @@
 
 @interface MDCProgressViewMotionSpec: NSObject
 
-+ (MDMMotionTiming)willChangeProgress;
-+ (MDMMotionTiming)willChangeHidden;
+@property(nonatomic, class, readonly) MDMMotionTiming willChangeProgress;
+@property(nonatomic, class, readonly) MDMMotionTiming willChangeHidden;
 
 // This object is not meant to be instantiated.
 - (instancetype)init NS_UNAVAILABLE;

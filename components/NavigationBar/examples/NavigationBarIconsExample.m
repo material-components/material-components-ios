@@ -15,7 +15,10 @@
  */
 #import <UIKit/UIKit.h>
 
-#import "MDFInternationalization.h"
+#import "NavigationBarTypicalUseExampleSupplemental.h"
+
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"

@@ -81,7 +81,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 }
 
 - (void)startWithContext:(NSObject<MDMTransitionContext> *)context {
-  MDCMaskedTransitionMotionSpec spec = motionForContext(context);
+  MDCMaskedTransitionMotionSpecContext spec = MDCMaskedTransitionMotionSpecForContext(context);
   if (context.direction == MDMTransitionDirectionForward) {
     _shouldSlideWhenCollapsed = spec.shouldSlideWhenCollapsed;
   }

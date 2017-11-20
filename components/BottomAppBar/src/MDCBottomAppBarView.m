@@ -16,8 +16,9 @@
 
 #import "MDCBottomAppBarView.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCNavigationBarColorThemer.h"
-#import "MDFInternationalization.h"
 #import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
