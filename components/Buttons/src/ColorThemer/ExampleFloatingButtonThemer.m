@@ -32,25 +32,25 @@
   CGSize sizeExtendedMinimum = CGSizeMake(100, 40);
 
   [button setContentEdgeInsets:expandedLeadingInsets
-                       forType:MDCFloatingButtonTypeDefault
+                      forShape:MDCFloatingButtonShapeDefault
                           mode:MDCFloatingButtonModeExtended];
-
+  
   [button setHitAreaInsets:hitAreaCompactMini
-                   forType:MDCFloatingButtonTypeMini
+                  forShape:MDCFloatingButtonShapeMini
                       mode:MDCFloatingButtonModeNormal];
-
+  
   [button setMinimumSize:sizeCompactDefault
-                 forType:MDCFloatingButtonTypeDefault
+                forShape:MDCFloatingButtonShapeDefault
                     mode:MDCFloatingButtonModeNormal];
   [button setMaximumSize:sizeCompactDefault
-                 forType:MDCFloatingButtonTypeDefault
+                forShape:MDCFloatingButtonShapeDefault
                     mode:MDCFloatingButtonModeNormal];
-
+  
   [button setMinimumSize:sizeExtendedMinimum
-                 forType:MDCFloatingButtonTypeDefault
+                forShape:MDCFloatingButtonShapeDefault
                     mode:MDCFloatingButtonModeExtended];
   [button setMaximumSize:sizeExtendedMinimum
-                 forType:MDCFloatingButtonTypeDefault
+                forShape:MDCFloatingButtonShapeDefault
                     mode:MDCFloatingButtonModeExtended];
 
   [button setElevation:3 forState:UIControlStateNormal];

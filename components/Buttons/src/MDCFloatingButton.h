@@ -25,15 +25,15 @@
  The mini size should only be used when required for visual continuity with other elements on the
  screen.
  */
-typedef NS_ENUM(NSInteger, MDCFloatingButtonType) {
+typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   /**
    A 56-point circular button surrounding a 24-point or 36-point square icon or short text.
    */
-  MDCFloatingButtonTypeDefault = 0,
+  MDCFloatingButtonShapeDefault = 0,
   /**
    A 40-point circular button surrounding a 24-point square icon or short text.
    */
-  MDCFloatingButtonTypeMini = 1,
+  MDCFloatingButtonShapeMini = 1,
 };
 
 typedef NS_ENUM(NSInteger, MDCFloatingButtonMode) {
@@ -73,6 +73,14 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
 @interface MDCFloatingButton : MDCButton
 
 /**
+ Returns a MDCFloatingButton with default colors and the given @c shape.
+
+ @param shape Button shape.
+ @return Button with shape.
+ */
++ (nonnull instancetype)floatingButtonWithShape:(MDCFloatingButtonShape)shape;
+
+/**
  The mode of the floating button can either be .normal (a circle) or .extended (a pill-shaped
  rounded rectangle).
 
@@ -88,7 +96,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
 @property(nonatomic, assign) MDCFloatingButtonImagePosition imagePosition UI_APPEARANCE_SELECTOR;
 
 /**
- If @c YES, any values for @c contentEdgeInsets:forType:mode: will be flipped when the FAB is
+ If @c YES, any values for @c contentEdgeInsets:forShape:mode: will be flipped when the FAB is
  in @c MDCFloatingButtonModeExtended and its @c imagePosition is
  @c MDCFloatingButtonImagePositionTrailing.
 
@@ -104,14 +112,14 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
 @property(nonatomic, assign) CGFloat imageTitlePadding UI_APPEARANCE_SELECTOR;
 
 /**
- Initializes self to a button with the given @c type with a @c .normal mode.
+ Initializes self to a button with the given @c shape with a @c .normal mode.
 
  @param frame Button frame.
- @param type Button type.
+ @param shape Button type.
  @return Button with type.
  */
 - (nonnull instancetype)initWithFrame:(CGRect)frame
-                                type:(MDCFloatingButtonType)type NS_DESIGNATED_INITIALIZER;
+                                shape:(MDCFloatingButtonShape)shape NS_DESIGNATED_INITIALIZER;
 
 /**
  Initializes self to a button with the MDCFloatingButtonShapeDefault shape.
@@ -133,39 +141,30 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
 - (void)setMinimumSize:(CGSize)minimumSize NS_UNAVAILABLE;
 
 - (void)setMinimumSize:(CGSize)minimumSize
-               forType:(MDCFloatingButtonType)type
+              forShape:(MDCFloatingButtonShape)shape
                   mode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
 - (void)setMaximumSize:(CGSize)maximumSize NS_UNAVAILABLE;
 
 - (void)setMaximumSize:(CGSize)maximumSize
-               forType:(MDCFloatingButtonType)type
+              forShape:(MDCFloatingButtonShape)shape
                   mode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets NS_UNAVAILABLE;
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets
-                     forType:(MDCFloatingButtonType)type
+                    forShape:(MDCFloatingButtonShape)shape
                         mode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
 - (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets NS_UNAVAILABLE;
 
 - (void)setHitAreaInsets:(UIEdgeInsets)insets
-                 forType:(MDCFloatingButtonType)type
+                forShape:(MDCFloatingButtonShape)shape
                     mode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
 #pragma mark - Deprecations
 
-+ (nonnull instancetype)buttonWithShape:(MDCFloatingButtonType)shape
-    __deprecated_msg("Use initWithFrame:type: instead.");
-
-/**
- Returns a MDCFloatingButton with default colors and the given @c shape.
-
- @param shape Button shape.
- @return Button with shape.
- */
-+ (nonnull instancetype)floatingButtonWithShape:(MDCFloatingButtonType)shape
-    __deprecated_msg("Use initWithFrame:type: instead");
++ (nonnull instancetype)buttonWithShape:(MDCFloatingButtonShape)shape
+    __deprecated_msg("Use initWithFrame:shape: instead.");
 
 @end

@@ -182,7 +182,7 @@
 
   } else {
     [self.floatingButton setTitle:nil forState:UIControlStateNormal];
-    self.floatingButton.mode = MDCFloatingButtonTypeDefault;
+    self.floatingButton.mode = MDCFloatingButtonModeNormal;
 
   }
 }

@@ -25,7 +25,6 @@ static const CGFloat MDCFloatingButtonDefaultDimension = 56.0f;
 static const CGFloat MDCFloatingButtonMiniDimension = 40.0f;
 static const UIEdgeInsets internalLayoutSpacingInsets = (UIEdgeInsets){0, 16, 0, 24};
 
-static NSString *const MDCFloatingButtonTypeKey = @"MDCFloatingButtonTypeKey";
 static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
 static NSString *const MDCFloatingButtonImagePositionKey = @"MDCFloatingButtonImagePositionKey";
 static NSString *const MDCFloatingImageTitlePaddingKey = @"MDCFloatingImageTitlePaddingKey";
@@ -46,11 +45,11 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 }
 
 @interface MDCFloatingButton ()
-@property(nonatomic, assign) MDCFloatingButtonType type;
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *typeToModeToHitAreaInsets;
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *typetoModeToMinimumSize;
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *typeToModeToMaximumSize;
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *typeToModeToContentEdgeInsets;
+@property(nonatomic, assign) MDCFloatingButtonShape shape;
+@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToHitAreaInsets;
+@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToMinimumSize;
+@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToMaximumSize;
+@property(nonatomic, readonly) NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToContentEdgeInsets;
 @end
 
 @implementation MDCFloatingButton
@@ -72,21 +71,21 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 
 
 - (instancetype)init {
-  return [self initWithFrame:CGRectZero type:MDCFloatingButtonTypeDefault];
+  return [self initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
-  return [self initWithFrame:frame type:MDCFloatingButtonTypeDefault];
+  return [self initWithFrame:frame shape:MDCFloatingButtonShapeDefault];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame type:(MDCFloatingButtonType)type {
+- (instancetype)initWithFrame:(CGRect)frame shape:(MDCFloatingButtonShape)shape {
   self = [super initWithFrame:frame];
   if (self) {
-    _type = type;
+    _shape = shape;
     // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
     // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
     [self commonMDCFloatingButtonInit];
-    [self updateType];
+    [self updateShape];
   }
   return self;
 }
@@ -104,10 +103,10 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
       = [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultSizeNormal],
             @(MDCFloatingButtonModeExtended) : [NSValue valueWithCGSize:CGSizeMake(132, 48)],
             } mutableCopy];
-  _typetoModeToMinimumSize
+  _shapeToModeToMinimumSize
       = [@{
-           @(MDCFloatingButtonTypeMini) : miniMinimumSizes,
-           @(MDCFloatingButtonTypeDefault) : defaultMinimumSizes,
+           @(MDCFloatingButtonShapeMini) : miniMinimumSizes,
+           @(MDCFloatingButtonShapeDefault) : defaultMinimumSizes,
            } mutableCopy];
 
   NSMutableDictionary *miniMaxSizes
@@ -120,16 +119,16 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
            @(MDCFloatingButtonModeExtended) : [NSValue valueWithCGSize:CGSizeMake(328, 0)],
            } mutableCopy];
 
-  _typeToModeToMaximumSize
+  _shapeToModeToMaximumSize
       = [@{
-           @(MDCFloatingButtonTypeMini) : miniMaxSizes,
-           @(MDCFloatingButtonTypeDefault) : defaultMaxSizes,
+           @(MDCFloatingButtonShapeMini) : miniMaxSizes,
+           @(MDCFloatingButtonShapeDefault) : defaultMaxSizes,
            } mutableCopy];
 
   NSMutableDictionary *miniContentEdgeInsets = [@{} mutableCopy];
   NSMutableDictionary *defaultContentEdgeInsets = [@{} mutableCopy];
-  _typeToModeToContentEdgeInsets = [@{ @(MDCFloatingButtonTypeMini) : miniContentEdgeInsets,
-                                       @(MDCFloatingButtonTypeDefault) : defaultContentEdgeInsets,
+  _shapeToModeToContentEdgeInsets = [@{ @(MDCFloatingButtonShapeMini) : miniContentEdgeInsets,
+                                       @(MDCFloatingButtonShapeDefault) : defaultContentEdgeInsets,
                                        } mutableCopy];
 
   NSMutableDictionary *miniNormalHitAreaInsets
@@ -137,9 +136,9 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
            @(MDCFloatingButtonModeNormal) :
              [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(-4, -4, -4, -4)],
            } mutableCopy];
-  _typeToModeToHitAreaInsets
+  _shapeToModeToHitAreaInsets
       = [@{
-           @(MDCFloatingButtonTypeMini) : miniNormalHitAreaInsets,
+           @(MDCFloatingButtonShapeMini) : miniNormalHitAreaInsets,
            } mutableCopy];
 
   super.contentEdgeInsets = [self defaultContentEdgeInsets];
@@ -154,27 +153,27 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCFloatingButtonInit];
-    _type = [aDecoder decodeIntegerForKey:MDCFloatingButtonTypeKey];
+    _shape = [aDecoder decodeIntegerForKey:MDCFloatingButtonShapeKey];
 
     // Migrate (MDCFloatingButtonShapeLargeIcon = 2) to type value .default
     if ([aDecoder containsValueForKey:MDCFloatingButtonShapeKey]) {
       NSInteger shape = [aDecoder decodeIntegerForKey:MDCFloatingButtonShapeKey];
       if (shape == 2) {
-        _type = MDCFloatingButtonTypeDefault;
+        _shape = MDCFloatingButtonShapeDefault;
       }
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonMinimumSizeDictionaryKey]) {
-      _typetoModeToMinimumSize = [aDecoder decodeObjectForKey:MDCFloatingButtonMinimumSizeDictionaryKey];
+      _shapeToModeToMinimumSize = [aDecoder decodeObjectForKey:MDCFloatingButtonMinimumSizeDictionaryKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonMaximumSizeDictionaryKey]) {
-      _typeToModeToMaximumSize = [aDecoder decodeObjectForKey:MDCFloatingButtonMaximumSizeDictionaryKey];
+      _shapeToModeToMaximumSize = [aDecoder decodeObjectForKey:MDCFloatingButtonMaximumSizeDictionaryKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey]) {
-      _typeToModeToContentEdgeInsets
+      _shapeToModeToContentEdgeInsets
           = [aDecoder decodeObjectForKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey]) {
-      _typeToModeToHitAreaInsets
+      _shapeToModeToHitAreaInsets
           = [aDecoder decodeObjectForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonImagePositionKey]) {
@@ -183,19 +182,19 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
     if ([aDecoder containsValueForKey:MDCFloatingImageTitlePaddingKey]) {
       _imageTitlePadding = (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingImageTitlePaddingKey];
     }
-    [self updateType];
+    [self updateShape];
   }
   return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
-  [aCoder encodeInteger:self.type forKey:MDCFloatingButtonTypeKey];
-  [aCoder encodeObject:self.typeToModeToHitAreaInsets forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
-  [aCoder encodeObject:self.typeToModeToMaximumSize forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
-  [aCoder encodeObject:self.typeToModeToContentEdgeInsets
+  [aCoder encodeInteger:self.shape forKey:MDCFloatingButtonShapeKey];
+  [aCoder encodeObject:self.shapeToModeToHitAreaInsets forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
+  [aCoder encodeObject:self.shapeToModeToMaximumSize forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
+  [aCoder encodeObject:self.shapeToModeToContentEdgeInsets
                 forKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
-  [aCoder encodeObject:self.typeToModeToHitAreaInsets
+  [aCoder encodeObject:self.shapeToModeToHitAreaInsets
                 forKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
   [aCoder encodeInteger:self.imagePosition forKey:MDCFloatingButtonImagePositionKey];
   [aCoder encodeDouble:self.imageTitlePadding forKey:MDCFloatingImageTitlePaddingKey];
@@ -204,10 +203,10 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 #pragma mark - UIView
 
 - (CGSize)intrinsicContentSizeForModeNormal {
-  switch(self.type) {
-    case MDCFloatingButtonTypeMini:
+  switch(self.shape) {
+    case MDCFloatingButtonShapeMini:
       return CGSizeMake(40, 40);
-    case MDCFloatingButtonTypeDefault:
+    case MDCFloatingButtonShapeDefault:
       return CGSizeMake(56, 56);
   }
 }
@@ -376,7 +375,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 #pragma mark - Subclassing
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
-  NSMutableDictionary *modeToContentEdgeInsets = self.typeToModeToContentEdgeInsets[@(self.type)];
+  NSMutableDictionary *modeToContentEdgeInsets = self.shapeToModeToContentEdgeInsets[@(self.shape)];
   if (!modeToContentEdgeInsets) {
     return UIEdgeInsetsZero;
   }
@@ -390,7 +389,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 }
 
 - (UIEdgeInsets)defaultHitAreaInsets {
-  NSMutableDictionary *modeToHitAreaInsets = self.typeToModeToHitAreaInsets[@(self.type)];
+  NSMutableDictionary *modeToHitAreaInsets = self.shapeToModeToHitAreaInsets[@(self.shape)];
   if (!modeToHitAreaInsets) {
     return UIEdgeInsetsZero;
   }
@@ -409,16 +408,16 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 }
 
 - (void)setMinimumSize:(CGSize)size
-               forType:(MDCFloatingButtonType)type
+              forShape:(MDCFloatingButtonShape)shape
                   mode:(MDCFloatingButtonMode)mode {
-  NSMutableDictionary *modeToMinimumSize = self.typetoModeToMinimumSize[@(self.type)];
+  NSMutableDictionary *modeToMinimumSize = self.shapeToModeToMinimumSize[@(shape)];
   if (!modeToMinimumSize) {
     modeToMinimumSize = [@{} mutableCopy];
-    self.typetoModeToMinimumSize[@(self.type)] = modeToMinimumSize;
+    self.shapeToModeToMinimumSize[@(shape)] = modeToMinimumSize;
   }
   modeToMinimumSize[@(mode)] = [NSValue valueWithCGSize:size];
-  if (type == self.type && mode == self.mode) {
-    [self updateType];
+  if (shape == self.shape && mode == self.mode) {
+    [self updateShape];
   }
 }
 
@@ -427,54 +426,54 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 }
 
 - (void)setMaximumSize:(CGSize)size
-               forType:(MDCFloatingButtonType)type
+              forShape:(MDCFloatingButtonShape)shape
                   mode:(MDCFloatingButtonMode)mode {
-  NSMutableDictionary *modeToMaximumSize = self.typeToModeToMaximumSize[@(self.type)];
+  NSMutableDictionary *modeToMaximumSize = self.shapeToModeToMaximumSize[@(shape)];
   if (!modeToMaximumSize) {
     modeToMaximumSize = [@{} mutableCopy];
-    self.typeToModeToMaximumSize[@(self.type)] = modeToMaximumSize;
+    self.shapeToModeToMaximumSize[@(shape)] = modeToMaximumSize;
   }
   modeToMaximumSize[@(mode)] = [NSValue valueWithCGSize:size];
-  if (type == self.type && mode == self.mode) {
-    [self updateType];
+  if (shape == self.shape && mode == self.mode) {
+    [self updateShape];
   }
 }
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets
-                     forType:(MDCFloatingButtonType)type
+                    forShape:(MDCFloatingButtonShape)shape
                         mode:(MDCFloatingButtonMode)mode {
-  NSMutableDictionary *modeToContentEdgeInsets = self.typeToModeToContentEdgeInsets[@(self.type)];
+  NSMutableDictionary *modeToContentEdgeInsets = self.shapeToModeToContentEdgeInsets[@(shape)];
   if (!modeToContentEdgeInsets) {
     modeToContentEdgeInsets = [@{} mutableCopy];
-    self.typeToModeToContentEdgeInsets[@(self.type)] = modeToContentEdgeInsets;
+    self.shapeToModeToContentEdgeInsets[@(shape)] = modeToContentEdgeInsets;
   }
   modeToContentEdgeInsets[@(mode)] = [NSValue valueWithUIEdgeInsets:contentEdgeInsets];
-  if (type == self.type && mode == self.mode) {
-    [self updateType];
+  if (shape == self.shape && mode == self.mode) {
+    [self updateShape];
   }
 }
 
 - (void)setHitAreaInsets:(UIEdgeInsets)insets
-                 forType:(MDCFloatingButtonType)type
+                forShape:(MDCFloatingButtonShape)shape
                     mode:(MDCFloatingButtonMode)mode {
-  NSMutableDictionary *modeToHitAreaInsets = self.typeToModeToHitAreaInsets[@(self.type)];
+  NSMutableDictionary *modeToHitAreaInsets = self.shapeToModeToHitAreaInsets[@(shape)];
   if (!modeToHitAreaInsets) {
     modeToHitAreaInsets = [@{} mutableCopy];
-    self.typeToModeToHitAreaInsets[@(self.type)] = modeToHitAreaInsets;
+    self.shapeToModeToHitAreaInsets[@(shape)] = modeToHitAreaInsets;
   }
   modeToHitAreaInsets[@(mode)] = [NSValue valueWithUIEdgeInsets:insets];
-  if (type == self.type && mode == self.mode) {
-    [self updateType];
+  if (shape == self.shape && mode == self.mode) {
+    [self updateShape];
   }
 }
 
 - (void)setMode:(MDCFloatingButtonMode)mode {
   _mode = mode;
-  [self updateType];
+  [self updateShape];
 }
 
 - (CGSize)minimumSizeForMode:(MDCFloatingButtonMode)mode {
-  NSMutableDictionary *modeToMinimumSize = self.typetoModeToMinimumSize[@(self.type)];
+  NSMutableDictionary *modeToMinimumSize = self.shapeToModeToMinimumSize[@(self.shape)];
   if(!modeToMinimumSize) {
     return CGSizeZero;
   }
@@ -499,7 +498,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 }
 
 - (CGSize)maximumSizeForMode:(MDCFloatingButtonMode)mode {
-  NSMutableDictionary *modeToMaximumSize = self.typeToModeToMaximumSize[@(self.type)];
+  NSMutableDictionary *modeToMaximumSize = self.shapeToModeToMaximumSize[@(self.shape)];
   if (!modeToMaximumSize) {
     return CGSizeZero;
   }
@@ -525,7 +524,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 }
 
 - (UIEdgeInsets)contentEdgeInsetsForMode:(MDCFloatingButtonMode)mode {
-  NSMutableDictionary *modeToContentEdgeInsets = self.typeToModeToContentEdgeInsets[@(self.type)];
+  NSMutableDictionary *modeToContentEdgeInsets = self.shapeToModeToContentEdgeInsets[@(self.shape)];
   if (!modeToContentEdgeInsets) {
     return UIEdgeInsetsZero;
   }
@@ -543,7 +542,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 }
 
 - (UIEdgeInsets)hitAreaInsetsForMode:(MDCFloatingButtonMode)mode {
-  NSMutableDictionary *modeToHitAreaInsets = self.typeToModeToHitAreaInsets[@(self.type)];
+  NSMutableDictionary *modeToHitAreaInsets = self.shapeToModeToHitAreaInsets[@(self.shape)];
   if (!modeToHitAreaInsets) {
     return UIEdgeInsetsZero;
   }
@@ -560,7 +559,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   super.hitAreaInsets = [self hitAreaInsetsForMode:self.mode];
 }
 
-- (void)updateType {
+- (void)updateShape {
   BOOL needsLayout = [self updateMinimumSize];
   needsLayout |= [self updateMaximumSize];
   [self updateContentEdgeInsets];
@@ -574,12 +573,12 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 #pragma mark - Deprecations
 
 
-+ (instancetype)floatingButtonWithShape:(MDCFloatingButtonType)type {
-  return [[[self class] alloc] initWithFrame:CGRectZero type:type];
++ (instancetype)floatingButtonWithShape:(MDCFloatingButtonShape)shape {
+  return [[[self class] alloc] initWithFrame:CGRectZero shape:shape];
 }
 
-+ (instancetype)buttonWithShape:(MDCFloatingButtonType)type {
-  return [[[self class] alloc] initWithFrame:CGRectZero type:type];
++ (instancetype)buttonWithShape:(MDCFloatingButtonShape)shape {
+  return [[[self class] alloc] initWithFrame:CGRectZero shape:shape];
 }
 
 @end
