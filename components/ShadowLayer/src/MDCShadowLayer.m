@@ -282,50 +282,9 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
 - (void)setElevation:(CGFloat)elevation {
   _elevation = elevation;
+
   MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:elevation];
-  [self setMetrics:shadowMetrics];
-}
 
-- (void)setMetrics:(MDCShadowMetrics *)shadowMetrics {
-  CABasicAnimation *topOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
-  topOffsetAnimation.fromValue = nil;
-  topOffsetAnimation.toValue = [NSValue valueWithCGSize:shadowMetrics.topShadowOffset];
-
-  CABasicAnimation *bottomOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
-  bottomOffsetAnimation.fromValue = nil;
-  bottomOffsetAnimation.toValue = [NSValue valueWithCGSize:shadowMetrics.bottomShadowOffset];
-
-  CABasicAnimation *topRadiusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
-  topRadiusAnimation.fromValue = nil;
-  topRadiusAnimation.toValue = @(shadowMetrics.topShadowRadius);
-
-  CABasicAnimation *bottomRadiusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
-  bottomRadiusAnimation.fromValue = nil;
-  bottomRadiusAnimation.toValue = @(shadowMetrics.bottomShadowRadius);
-
-  CABasicAnimation *topOpacityAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
-  topOpacityAnimation.fromValue = nil;
-  topOpacityAnimation.toValue = @(shadowMetrics.topShadowOpacity);
-
-  CABasicAnimation *bottomOpacityAnimation =
-      [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
-  bottomOpacityAnimation.fromValue = nil;
-  bottomOpacityAnimation.toValue = @(shadowMetrics.bottomShadowOpacity);
-
-  // Group all animations together.
-  CAAnimationGroup *topAnimations = [CAAnimationGroup animation];
-  topAnimations.animations = @[ topOffsetAnimation, topRadiusAnimation, topOpacityAnimation ];
-
-  CAAnimationGroup *bottomAnimations = [CAAnimationGroup animation];
-  bottomAnimations.animations =
-      @[ bottomOffsetAnimation, bottomRadiusAnimation, bottomOpacityAnimation ];
-
-  [_topShadow removeAllAnimations];
-  [_bottomShadow removeAllAnimations];
-  [_topShadow addAnimation:topAnimations forKey:nil];
-  [_bottomShadow addAnimation:bottomAnimations forKey:nil];
-
-  // Set the final animation value in to the model layer.
   _topShadow.shadowOffset = shadowMetrics.topShadowOffset;
   _topShadow.shadowRadius = shadowMetrics.topShadowRadius;
   _topShadow.shadowOpacity = shadowMetrics.topShadowOpacity;
