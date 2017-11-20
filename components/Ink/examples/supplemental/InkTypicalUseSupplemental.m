@@ -100,7 +100,7 @@
   CGRect boundedTitleLabelFrame =
       CGRectMake(0, self.boundedShapes.frame.size.height, self.boundedShapes.frame.size.width, 24);
   UILabel *boundedTitleLabel = [[UILabel alloc] initWithFrame:boundedTitleLabelFrame];
-  boundedTitleLabel.text = @"Bounded";
+  boundedTitleLabel.text = @"Bounded Ink";
   boundedTitleLabel.textAlignment = NSTextAlignmentCenter;
   boundedTitleLabel.font = [MDCTypography captionFont];
   boundedTitleLabel.alpha = [MDCTypography captionFontOpacity];
@@ -114,7 +114,7 @@
   CGRect unboundedTitleLabelFrame = CGRectMake(0, self.unboundedShape.frame.size.height,
                                                self.unboundedShape.frame.size.width, 36);
   UILabel *unboundedTitleLabel = [[UILabel alloc] initWithFrame:unboundedTitleLabelFrame];
-  unboundedTitleLabel.text = @"Unbounded";
+  unboundedTitleLabel.text = @"Updated Ink";
   unboundedTitleLabel.textAlignment = NSTextAlignmentCenter;
   unboundedTitleLabel.font = [MDCTypography captionFont];
   unboundedTitleLabel.alpha = [MDCTypography captionFontOpacity];

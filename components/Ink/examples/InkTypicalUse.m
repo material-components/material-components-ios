@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialInk.h"
+#import "MaterialPalettes.h"
 
 #import "supplemental/InkTypicalUseSupplemental.h"
 
@@ -57,9 +58,10 @@
   inkTouchController.delegate = self;
   [inkTouchController addInkView];
 
-  UIColor *blueColor = [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:0.2];
+  UIColor *blueColor = [MDCPalette.bluePalette.tint500 colorWithAlphaComponent:0.2];
   inkTouchController.defaultInkView.inkColor = blueColor;
-  inkTouchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
+  inkTouchController.defaultInkView.inkStyle = MDCInkStyleBounded;
+  inkTouchController.defaultInkView.usesUpdatedInkRipple = YES;
   [_inkTouchControllers addObject:inkTouchController];
   [self.view addSubview:self.unboundedShape];
 }

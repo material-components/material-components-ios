@@ -17,9 +17,17 @@
 #import "MDCInkView.h"
 
 #import "private/MDCInkLayer.h"
+#import "private/MDCUpdatedInkLayer.h"
 
 @interface MDCInkView ()
+
+// Legacy ink properties
 @property(nonatomic, readonly) MDCInkLayer *inkLayer;
+
+// Updated ink properties
+@property(nonatomic, strong) MDCUpdatedInkLayer *activeInkLayer;
+@property(nonatomic, strong) NSMutableArray<MDCUpdatedInkLayer *> *inkLayers;
+
 @end
 
 @implementation MDCInkView
@@ -49,6 +57,12 @@
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.inkColor = self.defaultInkColor;
+  _usesUpdatedInkRipple = NO;
+}
+
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+  self.activeInkLayer.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
 }
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
@@ -109,23 +123,51 @@
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer spreadFromPoint:point completion:completionBlock];
+  if (self.usesUpdatedInkRipple) {
+    MDCUpdatedInkLayer *inkLayer = [MDCUpdatedInkLayer layer];
+    inkLayer.inkColor = self.inkColor;
+  
+    switch (self.inkStyle) {
+      case MDCInkStyleBounded:
+        self.clipsToBounds = YES;
+        break;
+      case MDCInkStyleUnbounded:
+        self.clipsToBounds = NO;
+        break;
+    }
+  
+    inkLayer.opacity = 0;
+    inkLayer.frame = self.bounds;
+    [self.layer addSublayer:inkLayer];
+    [self.inkLayers addObject:inkLayer];
+    [inkLayer startAnimationAtPoint:point];
+    self.activeInkLayer = inkLayer;
+  } else {
+    [self.inkLayer spreadFromPoint:point completion:completionBlock];
+  }
 }
 
 - (void)startTouchEndedAnimationAtPoint:(__unused CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer evaporateWithCompletion:completionBlock];
+  if (self.usesUpdatedInkRipple) {
+    [self.activeInkLayer endAnimationAtPoint:point];
+  } else {
+    [self.inkLayer evaporateWithCompletion:completionBlock];
+  }
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  [self.inkLayer resetAllInk:animated];
+  
+  if (self.usesUpdatedInkRipple) {
+    [self.activeInkLayer endAnimationAtPoint:CGPointZero];
+  } else {
+    [self.inkLayer resetAllInk:animated];
+  }
 }
 
 - (UIColor *)defaultInkColor {
   return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
 }
-
-#pragma mark
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {
   MDCInkView *foundInkView = nil;
