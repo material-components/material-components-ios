@@ -18,11 +18,13 @@
 
 #import "private/MDCInkLayer.h"
 
-@interface MDCInkView ()
+@interface MDCInkView () <MDCInkLayerDelegate>
 
+@property(nonatomic, assign) BOOL touchInsideView;
+@property(nonatomic, assign) MDCInkCompletionBlock startInkRippleCompletionBlock;
+@property(nonatomic, assign) MDCInkCompletionBlock endInkRippleCompletionBlock;
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
 @property(nonatomic, strong) NSMutableArray<MDCInkLayer *> *inkLayers;
-@property(nonatomic, assign) BOOL touchInsideView;
 
 @end
 
@@ -58,10 +60,12 @@
 }
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
-                             completion:(__unused MDCInkCompletionBlock)completionBlock {
+                             completion:(MDCInkCompletionBlock)completionBlock {
+  self.startInkRippleCompletionBlock = completionBlock;
   MDCInkLayer *inkLayer = [MDCInkLayer layer];
   inkLayer.inkColor = self.inkColor;
-  
+  inkLayer.animationDelegate = self;
+
   switch (self.inkStyle) {
     case MDCInkStyleBounded:
       self.clipsToBounds = YES;
@@ -80,19 +84,22 @@
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point
-                             completion:(__unused MDCInkCompletionBlock)completionBlock {
+                             completion:(MDCInkCompletionBlock)completionBlock {
+  self.endInkRippleCompletionBlock = completionBlock;
   [self.activeInkLayer endAnimationAtPoint:point];
 }
 
-- (void)cancelAllAnimationsAnimated:(__unused BOOL)animated {
-  [self.activeInkLayer endAnimationAtPoint:CGPointZero];
+- (void)cancelAllAnimationsAnimated:(BOOL)animated {
+  if (animated) {
+    [self.activeInkLayer endAnimationAtPoint:CGPointZero];
+  } else {
+    [self.activeInkLayer removeAllAnimations];
+  }
 }
 
 - (UIColor *)defaultInkColor {
   return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
 }
-
-#pragma mark
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {
   MDCInkView *foundInkView = nil;
@@ -109,6 +116,20 @@
     [view addSubview:foundInkView];
   }
   return foundInkView;
+}
+
+#pragma mark - MDCInkLayerDelegate
+
+- (void)inkLayerAnimationDidStart:(MDCInkLayer *)inkLayer {
+  if (self.activeInkLayer == inkLayer && self.startInkRippleCompletionBlock) {
+    self.startInkRippleCompletionBlock();
+  }
+}
+
+- (void)inkLayerAnimationDidEnd:(MDCInkLayer *)inkLayer {
+  if (self.activeInkLayer == inkLayer && self.endInkRippleCompletionBlock) {
+    self.endInkRippleCompletionBlock();
+  }
 }
 
 @end
