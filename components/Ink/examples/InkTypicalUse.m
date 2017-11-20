@@ -32,38 +32,37 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  UIColor *blueColor = [MDCPalette.bluePalette.tint500 colorWithAlphaComponent:0.2];
   CGFloat spacing = 16;
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
-  CGRect unboundedFrame = CGRectMake(spacing / 2, spacing / 2, customFrame.size.width - spacing,
-                                     customFrame.size.height - spacing);
+  CGRect legacyFrame = CGRectMake(spacing / 2, spacing / 2, CGRectGetWidth(customFrame) - spacing,
+                                  CGRectGetHeight(customFrame) - spacing);
 
   // ExampleShapes is a custom UIView with several subviews of various shapes.
-  self.boundedShapes = [[ExampleShapes alloc] initWithFrame:customFrame];
-  self.unboundedShape = [[UIView alloc] initWithFrame:unboundedFrame];
+  self.shapes = [[ExampleShapes alloc] initWithFrame:customFrame];
+  self.legacyShape = [[UIView alloc] initWithFrame:legacyFrame];
 
   [self setupExampleViews];
 
   _inkTouchControllers = [[NSMutableArray alloc] init];
 
-  for (UIView *view in self.boundedShapes.subviews) {
+  for (UIView *view in self.shapes.subviews) {
     MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
     inkTouchController.delegate = self;
+    inkTouchController.defaultInkView.inkColor = blueColor;
+    inkTouchController.defaultInkView.usesLegacyInkRipple = NO;
     [inkTouchController addInkView];
     [_inkTouchControllers addObject:inkTouchController];
   }
-  [self.view addSubview:self.boundedShapes];
+  [self.view addSubview:self.shapes];
 
   MDCInkTouchController *inkTouchController =
-      [[MDCInkTouchController alloc] initWithView:self.unboundedShape];
+      [[MDCInkTouchController alloc] initWithView:self.legacyShape];
   inkTouchController.delegate = self;
-  [inkTouchController addInkView];
-
-  UIColor *blueColor = [MDCPalette.bluePalette.tint500 colorWithAlphaComponent:0.2];
   inkTouchController.defaultInkView.inkColor = blueColor;
-  inkTouchController.defaultInkView.inkStyle = MDCInkStyleBounded;
-  inkTouchController.defaultInkView.usesLegacyInkRipple = NO;
+  [inkTouchController addInkView];
   [_inkTouchControllers addObject:inkTouchController];
-  [self.view addSubview:self.unboundedShape];
+  [self.view addSubview:self.legacyShape];
 }
 
 #pragma mark - Private
