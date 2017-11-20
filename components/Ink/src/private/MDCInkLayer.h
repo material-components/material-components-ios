@@ -15,6 +15,7 @@
  */
 
 #import <QuartzCore/QuartzCore.h>
+#import <UIKit/UIKit.h>
 
 @protocol MDCInkLayerDelegate;
 
