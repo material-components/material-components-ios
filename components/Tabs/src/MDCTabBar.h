@@ -85,6 +85,25 @@ IB_DESIGNABLE
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /**
+ Display font used for selected item titles.
+ Default is the regular font from the font loader.
+ */
+@property(nonatomic, strong, null_resettable) UIFont *selectedItemTitleFont UI_APPEARANCE_SELECTOR;
+
+/**
+ Display font used for unselected item titles.
+ Default is the regular font from the font loader.
+ */
+@property(nonatomic, strong, null_resettable) UIFont *unselectedItemTitleFont
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ Spacing between tab bar content (titles or images) for non-justified alignments.
+ Default depends on the horizontal size class.
+ */
+@property(nonatomic) IBInspectable CGFloat itemSpacing UI_APPEARANCE_SELECTOR;
+
+/**
  Tint color to apply to the tab bar background.
 
  If nil, the receiver uses the default background appearance. Default: nil.
@@ -112,7 +131,7 @@ IB_DESIGNABLE
 
  The default value is based on the position and is recommended for most applications.
  */
-@property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
+@property(nonatomic) IBInspectable BOOL displaysUppercaseTitles UI_APPEARANCE_SELECTOR;
 
 /**
  Template that defines the appearance of the selection indicator.
