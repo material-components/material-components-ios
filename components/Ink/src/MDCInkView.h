@@ -67,9 +67,9 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 
 /**
- Use an updated version of the ink ripple that consists of a single shape layer. Default is NO.
+ Use the older legacy version of the ink ripple. Default is YES.
  */
-@property(nonatomic, assign) BOOL usesUpdatedInkRipple;
+@property(nonatomic, assign) BOOL usesLegacyInkRipple;
 
 /**
  Use a custom center for the ink splash. If YES, then customInkCenter is used, otherwise the

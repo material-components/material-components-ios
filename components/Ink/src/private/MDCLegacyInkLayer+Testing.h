@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCInkLayer.h"
+#import "MDCLegacyInkLayer.h"
 
-@protocol MDCInkLayerRippleDelegate <NSObject>
+@protocol MDCLegacyInkLayerRippleDelegate <NSObject>
 
 @optional
 
@@ -26,16 +26,16 @@
 
 @end
 
-@interface MDCInkLayer ()  <MDCInkLayerRippleDelegate>
+@interface MDCLegacyInkLayer ()  <MDCLegacyInkLayerRippleDelegate>
 @end
 
-@interface MDCInkLayerRipple : CAShapeLayer
+@interface MDCLegacyInkLayerRipple : CAShapeLayer
 @end
 
-@interface MDCInkLayerForegroundRipple : MDCInkLayerRipple
+@interface MDCLegacyInkLayerForegroundRipple : MDCLegacyInkLayerRipple
 - (void)exit:(BOOL)animated;
 @end
 
-@interface MDCInkLayerBackgroundRipple : MDCInkLayerRipple
+@interface MDCLegacyInkLayerBackgroundRipple : MDCLegacyInkLayerRipple
 - (void)exit:(BOOL)animated;
 @end

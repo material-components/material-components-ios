@@ -61,7 +61,7 @@
   UIColor *blueColor = [MDCPalette.bluePalette.tint500 colorWithAlphaComponent:0.2];
   inkTouchController.defaultInkView.inkColor = blueColor;
   inkTouchController.defaultInkView.inkStyle = MDCInkStyleBounded;
-  inkTouchController.defaultInkView.usesUpdatedInkRipple = YES;
+  inkTouchController.defaultInkView.usesLegacyInkRipple = NO;
   [_inkTouchControllers addObject:inkTouchController];
   [self.view addSubview:self.unboundedShape];
 }

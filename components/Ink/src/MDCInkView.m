@@ -17,25 +17,24 @@
 #import "MDCInkView.h"
 
 #import "private/MDCInkLayer.h"
-#import "private/MDCUpdatedInkLayer.h"
+#import "private/MDCLegacyInkLayer.h"
 
-@interface MDCInkView () <MDCUpdatedInkLayerDelegate>
+@interface MDCInkView () <MDCInkLayerDelegate>
 
-// Legacy ink properties
-@property(nonatomic, readonly) MDCInkLayer *inkLayer;
-
-// Updated ink properties
 @property(nonatomic, assign) MDCInkCompletionBlock startInkRippleCompletionBlock;
 @property(nonatomic, assign) MDCInkCompletionBlock endInkRippleCompletionBlock;
-@property(nonatomic, strong) MDCUpdatedInkLayer *activeInkLayer;
-@property(nonatomic, strong) NSMutableArray<MDCUpdatedInkLayer *> *inkLayers;
+@property(nonatomic, strong) MDCInkLayer *activeInkLayer;
+@property(nonatomic, strong) NSMutableArray<MDCInkLayer *> *inkLayers;
+
+// Legacy ink ripple
+@property(nonatomic, readonly) MDCLegacyInkLayer *inkLayer;
 
 @end
 
 @implementation MDCInkView
 
 + (Class)layerClass {
-  return [MDCInkLayer class];
+  return [MDCLegacyInkLayer class];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -59,7 +58,7 @@
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.inkColor = self.defaultInkColor;
-  _usesUpdatedInkRipple = NO;
+  _usesLegacyInkRipple = YES;
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -119,15 +118,17 @@
   self.inkLayer.customInkCenter = customInkCenter;
 }
 
-- (MDCInkLayer *)inkLayer {
-  return (MDCInkLayer *)self.layer;
+- (MDCLegacyInkLayer *)inkLayer {
+  return (MDCLegacyInkLayer *)self.layer;
 }
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  if (self.usesUpdatedInkRipple) {
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer spreadFromPoint:point completion:completionBlock];
+  } else {
     self.startInkRippleCompletionBlock = completionBlock;
-    MDCUpdatedInkLayer *inkLayer = [MDCUpdatedInkLayer layer];
+    MDCInkLayer *inkLayer = [MDCInkLayer layer];
     inkLayer.inkColor = self.inkColor;
     inkLayer.animationDelegate = self;
 
@@ -146,30 +147,28 @@
     [self.inkLayers addObject:inkLayer];
     [inkLayer startAnimationAtPoint:point];
     self.activeInkLayer = inkLayer;
-  } else {
-    [self.inkLayer spreadFromPoint:point completion:completionBlock];
   }
 }
 
 - (void)startTouchEndedAnimationAtPoint:(__unused CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  if (self.usesUpdatedInkRipple) {
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer evaporateWithCompletion:completionBlock];
+  } else {
     self.endInkRippleCompletionBlock = completionBlock;
     [self.activeInkLayer endAnimationAtPoint:point];
-  } else {
-    [self.inkLayer evaporateWithCompletion:completionBlock];
   }
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  if (self.usesUpdatedInkRipple) {
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer resetAllInk:animated];
+  } else {
     if (animated) {
       [self.activeInkLayer endAnimationAtPoint:CGPointZero];
     } else {
       [self.activeInkLayer removeAllAnimations];
     }
-  } else {
-    [self.inkLayer resetAllInk:animated];
   }
 }
 
@@ -196,13 +195,13 @@
 
 #pragma mark - MDCInkLayerDelegate
 
-- (void)inkLayerAnimationDidStart:(MDCUpdatedInkLayer *)inkLayer {
+- (void)inkLayerAnimationDidStart:(MDCInkLayer *)inkLayer {
   if (self.activeInkLayer == inkLayer && self.startInkRippleCompletionBlock) {
     self.startInkRippleCompletionBlock();
   }
 }
 
-- (void)inkLayerAnimationDidEnd:(MDCUpdatedInkLayer *)inkLayer {
+- (void)inkLayerAnimationDidEnd:(MDCInkLayer *)inkLayer {
   if (self.activeInkLayer == inkLayer && self.endInkRippleCompletionBlock) {
     self.endInkRippleCompletionBlock();
   }
