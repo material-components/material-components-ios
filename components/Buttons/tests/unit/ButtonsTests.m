@@ -18,6 +18,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
@@ -81,6 +82,36 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
   return [string copy];
 }
+
+@interface FakeShadowLayer : MDCShadowLayer
+@property(nonatomic, assign) NSInteger elevationAssignmentCount;
+@end
+
+@implementation FakeShadowLayer
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  ++self.elevationAssignmentCount;
+  [super setElevation:elevation];
+}
+@end
+
+@interface TestButton : MDCButton
+@property(nonatomic, strong) FakeShadowLayer *shadowLayer;
+@end
+
+@implementation TestButton
++ (Class)layerClass {
+  return [FakeShadowLayer class];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _shadowLayer = (FakeShadowLayer *)self.layer;
+  }
+  return self;
+}
+@end
 
 @interface ButtonsTests : XCTestCase
 @end
@@ -173,6 +204,36 @@ static NSString *controlStateDescription(UIControlState controlState) {
     // Then
     XCTAssertEqual([button elevationForState:controlState], elevation);
   }
+}
+
+- (void)testSetElevationOnlyUpdatesCurrentState {
+  // Given
+  TestButton *selectedButton = [[TestButton alloc] init];
+  TestButton *highlightedButton = [[TestButton alloc] init];
+
+  XCTAssertEqualWithAccuracy([selectedButton elevationForState:UIControlStateNormal],
+                             [selectedButton elevationForState:UIControlStateHighlighted],
+                             0.0001,
+                             @"This test assumes that .normal and .highlighted start with the same "
+                              "elevation values.");
+
+  [selectedButton setSelected:YES];
+  [highlightedButton setHighlighted:YES];
+  NSInteger selectedButtonElevationCount = selectedButton.shadowLayer.elevationAssignmentCount;
+  NSInteger highlightedButtonElevationCount
+      = highlightedButton.shadowLayer.elevationAssignmentCount;
+
+  // When
+  [selectedButton setElevation:77 forState:UIControlStateHighlighted];
+  [highlightedButton setElevation:75 forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqual(selectedButton.shadowLayer.elevationAssignmentCount,
+                 selectedButtonElevationCount,
+                 @"Updating an unrelated elevation should not update the layer elevation.");
+  XCTAssertEqual(highlightedButtonElevationCount + 1,
+                 highlightedButton.shadowLayer.elevationAssignmentCount,
+                 @"Updating the current elevation should cause one elevation update.");
 }
 
 - (void)testElevationNormal {
