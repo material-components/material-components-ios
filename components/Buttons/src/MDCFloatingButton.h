@@ -81,7 +81,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
 @property(nonatomic, assign) MDCFloatingButtonMode mode;
 
 /**
- The position of the image relative to the title.
+ The position of the image relative to the title. Flipped for right-to-left.
 
  The default value is @c .leading .
  */

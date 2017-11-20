@@ -24,11 +24,9 @@
   if (colorScheme) {
     [MDCButtonColorThemer applyColorScheme:colorScheme toButton:button];
   }
+
+  UIEdgeInsets hitAreaCompactMini = UIEdgeInsetsMake(-4, -4, -4, -4);
   UIEdgeInsets expandedLeadingInsets = UIEdgeInsetsMake(4, 6, 4, 12);
-
-  UIEdgeInsets hitAreaCompactDefault = UIEdgeInsetsMake(-8, -8, -8, -8);
-  UIEdgeInsets hitAreaCompactMini = UIEdgeInsetsMake(-16, -16, -16, -16);
-
 
   CGSize sizeCompactDefault = CGSizeMake(40, 40);
   CGSize sizeExtendedMinimum = CGSizeMake(100, 40);
@@ -39,9 +37,6 @@
 
   [button setHitAreaInsets:hitAreaCompactMini
                    forType:MDCFloatingButtonTypeMini
-                      mode:MDCFloatingButtonModeNormal];
-  [button setHitAreaInsets:hitAreaCompactDefault
-                   forType:MDCFloatingButtonTypeDefault
                       mode:MDCFloatingButtonModeNormal];
 
   [button setMinimumSize:sizeCompactDefault
@@ -60,7 +55,6 @@
 
   [button setElevation:3 forState:UIControlStateNormal];
   [button setElevation:6 forState:UIControlStateHighlighted];
-
 
   [button setImageTitlePadding:4];
 }

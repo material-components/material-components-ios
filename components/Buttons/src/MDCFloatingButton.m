@@ -268,7 +268,6 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   return finalSize;
 }
 
-
 - (void)layoutSubviews {
   // We have to set cornerRadius before laying out subviews so that the boundingPath is correct.
   self.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;

@@ -91,6 +91,26 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     addButtonConstraints()
   }
 
+  func updateFloatingButtons(to mode: MDCFloatingButtonMode) {
+    if (floatingButton.mode != mode) {
+      floatingButton.mode = mode
+    }
+    if (storyboardFloating.mode != mode) {
+      storyboardFloating.mode = mode
+    }
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    let horizontalSizeClass = self.traitCollection.horizontalSizeClass
+    let verticalSizeClass = self.traitCollection.verticalSizeClass
+    if (horizontalSizeClass == .regular && verticalSizeClass == .regular) {
+      self.updateFloatingButtons(to: .extended)
+    } else {
+      self.updateFloatingButtons(to: .normal)
+    }
+  }
+
   private func layoutContainer() {
     let viewLayoutGuide: Any = {
       #if swift(>=3.2)
@@ -200,6 +220,34 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
   @IBAction func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
+  }
+
+  override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.willTransition(to: newCollection, with: coordinator)
+    let currentTraits = self.traitCollection;
+    let sizeClassChanged
+      = traitCollection.horizontalSizeClass != currentTraits.horizontalSizeClass
+        || traitCollection.verticalSizeClass != currentTraits.verticalSizeClass
+    if (sizeClassChanged) {
+      let willBeRegularRegular
+        = traitCollection.horizontalSizeClass == .regular
+          && traitCollection.verticalSizeClass == .regular
+
+
+      coordinator.animate(alongsideTransition:{ (_) in
+        if (willBeRegularRegular) {
+          self.floatingButton.mode = .extended
+          self.storyboardFloating.mode = .extended
+        } else {
+          if (self.floatingButton.mode != .normal) {
+            self.floatingButton.mode = .normal
+          }
+          if (self.storyboardFloating.mode != .normal) {
+            self.storyboardFloating.mode = .normal
+          }
+        }
+      }, completion: nil)
+    }
   }
 
 }
