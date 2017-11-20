@@ -76,61 +76,61 @@ CG_EXTERN const MDCPaletteAccent _Nonnull MDCPaletteAccent700Name;
 @interface MDCPalette : NSObject
 
 /** The red palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *redPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *redPalette;
 
 /** The pink palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *pinkPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *pinkPalette;
 
 /** The purple palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *purplePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *purplePalette;
 
 /** The deep purple palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *deepPurplePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *deepPurplePalette;
 
 /** The indigo palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *indigoPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *indigoPalette;
 
 /** The blue palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *bluePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *bluePalette;
 
 /** The light blue palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *lightBluePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *lightBluePalette;
 
 /** The cyan palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *cyanPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *cyanPalette;
 
 /** The teal palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *tealPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *tealPalette;
 
 /** The green palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *greenPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *greenPalette;
 
 /** The light green palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *lightGreenPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *lightGreenPalette;
 
 /** The lime palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *limePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *limePalette;
 
 /** The yellow palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *yellowPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *yellowPalette;
 
 /** The amber palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *amberPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *amberPalette;
 
 /** The orange palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *orangePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *orangePalette;
 
 /** The deep orange palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *deepOrangePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *deepOrangePalette;
 
 /** The brown palette (no accents). */
-@property(class, readonly, strong, nonnull) MDCPalette *brownPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *brownPalette;
 
 /** The grey palette (no accents). */
-@property(class, readonly, strong, nonnull) MDCPalette *greyPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *greyPalette;
 
 /** The blue grey palette (no accents). */
-@property(class, readonly, strong, nonnull) MDCPalette *blueGreyPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *blueGreyPalette;
 
 /**
  Returns a palette generated from a single target 500 tint color.
