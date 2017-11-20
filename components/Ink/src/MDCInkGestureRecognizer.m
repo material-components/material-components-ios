@@ -20,11 +20,14 @@
 
 static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
 
-@implementation MDCInkGestureRecognizer {
-  CGPoint _touchStartLocation;
-  CGPoint _touchCurrentLocation;
-  BOOL _cancelOnDragOut;
-}
+@interface MDCInkGestureRecognizer ()
+
+@property(nonatomic, assign) CGPoint touchStartLocation;
+@property(nonatomic, assign) CGPoint touchCurrentLocation;
+
+@end
+
+@implementation MDCInkGestureRecognizer
 
 - (instancetype)initWithTarget:(id)target action:(SEL)action {
   self = [super initWithTarget:target action:action];
@@ -34,6 +37,9 @@ static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
     _targetBounds = CGRectNull;
     self.cancelsTouchesInView = NO;
     self.delaysTouchesEnded = NO;
+
+    _touchStartLocation = CGPointZero;
+    _touchCurrentLocation = CGPointZero;
   }
   return self;
 }
@@ -42,31 +48,32 @@ static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
   return [view convertPoint:_touchStartLocation fromView:nil];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
-  if ([touches count] == 1) {
+  if (touches.count == 1) {
     self.state = UIGestureRecognizerStateBegan;
-    _touchStartLocation = [[touches anyObject] locationInView:nil];
-    _touchCurrentLocation = _touchStartLocation;
+    UITouch *touch = [touches anyObject];
+    self.touchStartLocation = [touch locationInView:nil];
+    self.touchCurrentLocation = self.touchStartLocation;
   } else {
     self.state = UIGestureRecognizerStateCancelled;
   }
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesMoved:touches withEvent:event];
   if (self.state == UIGestureRecognizerStateFailed) {
     return;
   }
-
-  _touchCurrentLocation = [[touches anyObject] locationInView:nil];
-
+  
   // Cancel the gesture if it is too far away.
   if (_cancelOnDragOut && ![self isTouchWithinTargetBounds]) {
     self.state = UIGestureRecognizerStateCancelled;
   } else {
     self.state = UIGestureRecognizerStateChanged;
   }
+  UITouch *touch = [touches anyObject];
+  self.touchCurrentLocation = [touch locationInView:nil];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {

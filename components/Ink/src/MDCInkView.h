@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 @property(nonatomic, assign) MDCInkStyle inkStyle;
 
 /** The foreground color of the ink. The default value is defaultInkColor. */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor;
+@property(nonatomic, strong, nonnull) UIColor *inkColor;
 
 /** Default color used for ink if no color is specified. */
 @property(nonatomic, strong, readonly, nonnull) UIColor *defaultInkColor;
