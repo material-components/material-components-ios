@@ -547,9 +547,11 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 
   CGFloat radius = MDCLegacyInkLayerRadiusBounds(_maxRippleRadius,
-                                           MDCLegacyInkLayerRectHypotenuse(self.bounds) / 2.f, _bounded);
+                                                 MDCLegacyInkLayerRectHypotenuse(self.bounds) / 2.f,
+                                                 _bounded);
 
-  MDCLegacyInkLayerBackgroundRipple *backgroundRipple = [[MDCLegacyInkLayerBackgroundRipple alloc] init];
+  MDCLegacyInkLayerBackgroundRipple *backgroundRipple =
+      [[MDCLegacyInkLayerBackgroundRipple alloc] init];
   backgroundRipple.inkLayer = _compositeRipple;
   backgroundRipple.targetFrame = self.bounds;
   backgroundRipple.point = point;
@@ -559,7 +561,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   backgroundRipple.animationDelegate = self;
   [backgroundRipple setupRipple];
 
-  MDCLegacyInkLayerForegroundRipple *foregroundRipple = [[MDCLegacyInkLayerForegroundRipple alloc] init];
+  MDCLegacyInkLayerForegroundRipple *foregroundRipple =
+      [[MDCLegacyInkLayerForegroundRipple alloc] init];
   foregroundRipple.inkLayer = _compositeRipple;
   foregroundRipple.targetFrame = self.bounds;
   foregroundRipple.point = point;
