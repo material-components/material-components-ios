@@ -235,7 +235,6 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
         = newCollection.horizontalSizeClass == .regular
           && newCollection.verticalSizeClass == .regular
 
-
       coordinator.animate(alongsideTransition:{ (_) in
         if (willBeRegularRegular) {
           self.updateFloatingButtons(to: .extended)
@@ -249,7 +248,6 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       }, completion: nil)
     }
   }
-
 }
 
 extension ButtonsSwiftAndStoryboardController {

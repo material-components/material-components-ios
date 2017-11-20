@@ -249,23 +249,6 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   return contentSize;
 }
 
-//- (CGSize)sizeThatFits:(CGSize)size {
-//  switch(self.shape) {
-//    case MDCFloatingButtonShapeDefault:
-//    case MDCFloatingButtonShapeMini:
-//    case MDCFloatingButtonShapeLargeIcon:
-//      return [super sizeThatFits:size];
-//    case MDCFloatingButtonShapeExtendedLeadingIcon:
-//    case MDCFloatingButtonShapeExtendedTrailingIcon: {
-//      // UIButton will compute the size basically the same as MDCFloatingButton,
-//      // but without the |imageTitlePadding|
-//      const CGSize superSize = [super sizeThatFits:size];
-//      return CGSizeMake(superSize.width + self.imageTitlePadding, superSize.height);
-//    }
-//  }
-//}
-
-
 - (CGSize)sizeThatFits:(__unused CGSize)size {
   return [self intrinsicContentSize];
 }
