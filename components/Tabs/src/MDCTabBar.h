@@ -98,10 +98,10 @@ IB_DESIGNABLE
     UI_APPEARANCE_SELECTOR;
 
 /**
- Spacing between tab bar content (titles or images) for non-justified alignments.
+ Padding on the left and right of each item's content (title or images) for non-justified alignment.
  Default depends on the horizontal size class.
  */
-@property(nonatomic) IBInspectable CGFloat itemSpacing UI_APPEARANCE_SELECTOR;
+@property(nonatomic) IBInspectable CGFloat itemHorizontalPadding UI_APPEARANCE_SELECTOR;
 
 /**
  Tint color to apply to the tab bar background.
