@@ -135,13 +135,14 @@
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
-    [self.floatingButton collapse:YES
-                       completion:^{
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                                        dispatch_get_main_queue(), ^{
-                                          [self.floatingButton expand:YES completion:nil];
-                                        });
-                       }];
+    [self.floatingButton
+        collapse:YES
+      completion:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+                         [self.floatingButton expand:YES completion:nil];
+                       });
+      }];
   }
 }
 
