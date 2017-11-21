@@ -151,6 +151,9 @@ if [ ! -d .kokoro-ios-runner ]; then
   git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
 fi
 
+yarn add danger --dev
+exit 1
+
 pushd .kokoro-ios-runner
 git fetch > /dev/null
 TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
