@@ -68,10 +68,10 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   self.position = point;
   self.startAnimationActive = YES;
 
-  CAKeyframeAnimation *scaleAnim = [[CAKeyframeAnimation alloc] init];
-  [scaleAnim setKeyPath:kMDCInkLayerScaleString];
-  scaleAnim.keyTimes = @[ @0, @1.0f ];
-  scaleAnim.values = @[ @0.6f, @1.0f ];
+  CABasicAnimation *scaleAnim = [[CABasicAnimation alloc] init];
+  scaleAnim.keyPath = kMDCInkLayerScaleString;
+  scaleAnim.fromValue = @0.6f;
+  scaleAnim.toValue = @1.0f;
   scaleAnim.duration = kMDCInkLayerStartScalePositionDuration;
   scaleAnim.beginTime = kMDCInkLayerCommonDuration;
   scaleAnim.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
@@ -86,7 +86,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   [centerPath closePath];
 
   CAKeyframeAnimation *positionAnim = [[CAKeyframeAnimation alloc] init];
-  [positionAnim setKeyPath:kMDCInkLayerPositionString];
+  positionAnim.keyPath = kMDCInkLayerPositionString;
   positionAnim.path = centerPath.CGPath;
   positionAnim.keyTimes = @[ @0, @1.0f ];
   positionAnim.values = @[ @0, @1.0f ];
@@ -97,20 +97,20 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   positionAnim.fillMode = kCAFillModeForwards;
   positionAnim.removedOnCompletion = NO;
 
-  CAKeyframeAnimation *fadeInAnim = [[CAKeyframeAnimation alloc] init];
-  [fadeInAnim setKeyPath:kMDCInkLayerOpacityString];
-  fadeInAnim.keyTimes = @[ @0, @1.0f ];
-  fadeInAnim.values = @[ @0, @1.0f ];
+  CABasicAnimation *fadeInAnim = [[CABasicAnimation alloc] init];
+  fadeInAnim.keyPath = kMDCInkLayerOpacityString;
+  fadeInAnim.fromValue = @0;
+  fadeInAnim.toValue = @1.0f;
   fadeInAnim.duration = kMDCInkLayerCommonDuration;
   fadeInAnim.beginTime = kMDCInkLayerCommonDuration;
   fadeInAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeInAnim.fillMode = kCAFillModeForwards;
   fadeInAnim.removedOnCompletion = NO;
 
-  CAKeyframeAnimation *fadeHalfAnim = [[CAKeyframeAnimation alloc] init];
-  [fadeHalfAnim setKeyPath:kMDCInkLayerOpacityString];
-  fadeHalfAnim.keyTimes = @[ @0, @1.0f ];
-  fadeHalfAnim.values = @[ @1.0f, @0.5f ];
+  CABasicAnimation *fadeHalfAnim = [[CABasicAnimation alloc] init];
+  fadeHalfAnim.keyPath = kMDCInkLayerOpacityString;
+  fadeHalfAnim.fromValue = @1.0f;
+  fadeHalfAnim.toValue = @0.5f;
   fadeHalfAnim.duration = kMDCInkLayerStartFadeHalfDuration;
   fadeHalfAnim.beginTime = kMDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   fadeHalfAnim.timingFunction =
@@ -148,10 +148,10 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
     updatedOpacity = 0.5f;
   }
 
-  CAKeyframeAnimation *changeAnim = [[CAKeyframeAnimation alloc] init];
-  [changeAnim setKeyPath:kMDCInkLayerOpacityString];
-  changeAnim.keyTimes = @[ @0, @1.0f ];
-  changeAnim.values = @[ @(currOpacity), @(updatedOpacity) ];
+  CABasicAnimation *changeAnim = [[CABasicAnimation alloc] init];
+  changeAnim.keyPath = kMDCInkLayerOpacityString;
+  changeAnim.fromValue = @(currOpacity);
+  changeAnim.toValue = @(updatedOpacity);
   changeAnim.duration = kMDCInkLayerCommonDuration;
   changeAnim.beginTime = CACurrentMediaTime() + animationDelay;
   changeAnim.timingFunction =
@@ -179,10 +179,10 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   }
 
   [CATransaction begin];
-  CAKeyframeAnimation *fadeOutAnim = [[CAKeyframeAnimation alloc] init];
-  [fadeOutAnim setKeyPath:kMDCInkLayerOpacityString];
-  fadeOutAnim.keyTimes = @[ @0, @1.0f ];
-  fadeOutAnim.values = @[ @(currOpacity), @0 ];
+  CABasicAnimation *fadeOutAnim = [[CABasicAnimation alloc] init];
+  fadeOutAnim.keyPath = kMDCInkLayerOpacityString;
+  fadeOutAnim.fromValue = @(currOpacity);
+  fadeOutAnim.toValue = @0;
   fadeOutAnim.duration = kMDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   fadeOutAnim.beginTime = CACurrentMediaTime() + self.endAnimationDelay;
   fadeOutAnim.timingFunction =
