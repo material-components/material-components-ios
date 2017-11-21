@@ -151,7 +151,7 @@
   }
 }
 
-- (void)startTouchEndedAnimationAtPoint:(__unused CGPoint)point
+- (void)startTouchEndedAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
   if (self.usesLegacyInkRipple) {
     [self.inkLayer evaporateWithCompletion:completionBlock];
