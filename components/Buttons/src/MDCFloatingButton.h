@@ -20,24 +20,45 @@
 #import "MDCButton.h"
 
 /**
- Shapes for Material Floating buttons.
+ Types of Material Floating buttons.
 
  The mini size should only be used when required for visual continuity with other elements on the
  screen.
  */
 typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   /**
-   A 56-point circular button surrounding a 24-point square icon or short text.
+   A 56-point circular button surrounding a 24-point or 36-point square icon or short text.
    */
   MDCFloatingButtonShapeDefault = 0,
   /**
    A 40-point circular button surrounding a 24-point square icon or short text.
    */
   MDCFloatingButtonShapeMini = 1,
+};
+
+typedef NS_ENUM(NSInteger, MDCFloatingButtonMode) {
   /**
-   A 56-point circular button surrounding a 36-point square icon or short text.
+   The floating button is a circle with its contents centered.
+   @c type initialization argument.
    */
-  MDCFloatingButtonShapeLargeIcon = 2
+  MDCFloatingButtonModeNormal = 0,
+
+  /**
+   The floating button is a "pill shape" with the image to one side of the title.
+   */
+  MDCFloatingButtonModeExtended = 1,
+};
+
+typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
+  /**
+   The image of the floating button is on the leading side of the title.
+   */
+  MDCFloatingButtonImagePositionLeading = 0,
+
+  /**
+   The image of the floating button is on the trailing side of the title.
+   */
+  MDCFloatingButtonImagePositionTrailing = 1,
 };
 
 /**
@@ -60,17 +81,38 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
 + (nonnull instancetype)floatingButtonWithShape:(MDCFloatingButtonShape)shape;
 
 /**
- @return The default floating button size dimension.
+ The mode of the floating button can either be .normal (a circle) or .extended (a pill-shaped
+ rounded rectangle).
+
+ The default value is @c .normal .
  */
-+ (CGFloat)defaultDimension;
+@property(nonatomic, assign) MDCFloatingButtonMode mode UI_APPEARANCE_SELECTOR;
 
 /**
- @return The mini floating button size dimension.
+ The position of the image relative to the title. Flipped for right-to-left.
+
+ The default value is @c .leading .
  */
-+ (CGFloat)miniDimension;
+@property(nonatomic, assign) MDCFloatingButtonImagePosition imagePosition UI_APPEARANCE_SELECTOR;
 
 /**
- Initializes self to a button with the given @c shape.
+ If @c YES, any values for @c contentEdgeInsets:forShape:mode: will be flipped when the FAB is
+ in @c MDCFloatingButtonModeExtended and its @c imagePosition is
+ @c MDCFloatingButtonImagePositionTrailing.
+
+ The default value is NO.
+ */
+@property(nonatomic, assign) BOOL contentEdgeInsetsFlippedForTrailingImagePosition
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ The horizontal padding between the |imageView| and |titleLabel| when the button is in its
+ "extended" mode.  If set to a negative value, the imageView and titleLabel may overlap.
+ */
+@property(nonatomic, assign) CGFloat imageTitlePadding UI_APPEARANCE_SELECTOR;
+
+/**
+ Initializes self to a button with the given @c shape with a @c .normal mode.
 
  @param frame Button frame.
  @param shape Button shape.
@@ -95,6 +137,30 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
 - (nonnull instancetype)init;
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+- (void)setMinimumSize:(CGSize)minimumSize NS_UNAVAILABLE;
+
+- (void)setMinimumSize:(CGSize)minimumSize
+              forShape:(MDCFloatingButtonShape)shape
+                  mode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+
+- (void)setMaximumSize:(CGSize)maximumSize NS_UNAVAILABLE;
+
+- (void)setMaximumSize:(CGSize)maximumSize
+              forShape:(MDCFloatingButtonShape)shape
+                  mode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets NS_UNAVAILABLE;
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets
+                    forShape:(MDCFloatingButtonShape)shape
+                        mode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+
+- (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets NS_UNAVAILABLE;
+
+- (void)setHitAreaInsets:(UIEdgeInsets)insets
+                forShape:(MDCFloatingButtonShape)shape
+                    mode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
 #pragma mark - Deprecations
 
