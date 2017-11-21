@@ -72,6 +72,11 @@ post_install do |installer|
   # EarlGrey configuration
   earl_grey_dir = "#{File.dirname(__FILE__)}/third_party/EarlGrey"
   `git submodule update --init #{earl_grey_dir}`
-  load "#{earl_grey_dir}/gem/lib/earlgrey/configure_earlgrey.rb"
-  configure_for_earlgrey(installer, PROJECT_NAME, TEST_TARGET, SCHEME_FILE)
+  if $?.exitstatus == 0 
+    load "#{earl_grey_dir}/gem/lib/earlgrey/configure_earlgrey.rb"
+    configure_for_earlgrey(installer, PROJECT_NAME, TEST_TARGET, SCHEME_FILE)
+  else
+    puts "Earl Grey submodule update failed. If this project is not a git "\
+         "repository, then this is fine." 
+  end
 end
