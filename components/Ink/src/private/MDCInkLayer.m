@@ -42,6 +42,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
       _endAnimationDelay = inkLayer.endAnimationDelay;
       _finalRadius = inkLayer.finalRadius;
       _initialRadius = inkLayer.initialRadius;
+      _maxRippleRadius = inkLayer.maxRippleRadius;
       _inkColor = inkLayer.inkColor;
       _startAnimationActive = NO;
     }
@@ -57,6 +58,9 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
 
 - (void)startAnimationAtPoint:(CGPoint)point {
   CGFloat radius = self.finalRadius;
+  if (self.maxRippleRadius > 0) {
+    radius = self.maxRippleRadius;
+  }
   CGRect ovalRect = CGRectMake(CGRectGetWidth(self.bounds) / 2 - radius,
                                CGRectGetHeight(self.bounds) / 2 - radius,
                                radius * 2,

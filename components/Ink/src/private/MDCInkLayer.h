@@ -47,6 +47,11 @@
 @property(nonatomic, assign) CGFloat initialRadius;
 
 /**
+ Maximum radius of the ink. If this is not set then the final radius value is used.
+ */
+@property(nonatomic, assign) CGFloat maxRippleRadius;
+
+/**
  The color of the ink ripple.
  */
 @property(nonatomic, strong) UIColor *inkColor;

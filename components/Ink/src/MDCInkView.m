@@ -130,6 +130,7 @@
     self.startInkRippleCompletionBlock = completionBlock;
     MDCInkLayer *inkLayer = [MDCInkLayer layer];
     inkLayer.inkColor = self.inkColor;
+    inkLayer.maxRippleRadius = self.maxRippleRadius;
     inkLayer.animationDelegate = self;
 
     switch (self.inkStyle) {
