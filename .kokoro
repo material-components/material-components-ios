@@ -152,7 +152,7 @@ if [ ! -d .kokoro-ios-runner ]; then
 fi
 
 yarn add danger --dev
-exit 1
+exit 0
 
 pushd .kokoro-ios-runner
 git fetch > /dev/null
