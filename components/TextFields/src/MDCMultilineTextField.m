@@ -239,10 +239,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 // It's possible we've been passed a text view that's not our special class. We can handle that.
 // It's also something we guarantee to always be there. So, if it's nil, we make a new one.
 - (void)textViewSafetyCheck {
-  NSString *existingText = _textView.text;
-
   // We expect users of Interface Builder to put a UITextView in the view. When that happens,
-  // we swap it out for one of our special text views and bring the text over.
+  // we swap it out for one of our special text views and bring the existing text over.
+  NSString *existingText = _textView.text;
   if (![_textView isKindOfClass:[MDCIntrinsicHeightTextView class]]) {
     [_textView removeFromSuperview];
     _textView = nil;
