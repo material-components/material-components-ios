@@ -71,6 +71,8 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   self.opacity = 0;
   self.position = point;
   self.startAnimationActive = YES;
+  CAMediaTimingFunction *materialTimingFunction =
+      [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
 
   CABasicAnimation *scaleAnim = [[CABasicAnimation alloc] init];
   scaleAnim.keyPath = kMDCInkLayerScaleString;
@@ -78,7 +80,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   scaleAnim.toValue = @1.0f;
   scaleAnim.duration = kMDCInkLayerStartScalePositionDuration;
   scaleAnim.beginTime = kMDCInkLayerCommonDuration;
-  scaleAnim.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
+  scaleAnim.timingFunction = materialTimingFunction;
   scaleAnim.fillMode = kCAFillModeForwards;
   scaleAnim.removedOnCompletion = NO;
 
@@ -96,8 +98,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   positionAnim.values = @[ @0, @1.0f ];
   positionAnim.duration = kMDCInkLayerStartScalePositionDuration;
   positionAnim.beginTime = kMDCInkLayerCommonDuration;
-  positionAnim.timingFunction =
-  [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
+  positionAnim.timingFunction = materialTimingFunction;
   positionAnim.fillMode = kCAFillModeForwards;
   positionAnim.removedOnCompletion = NO;
 
@@ -118,7 +119,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   fadeHalfAnim.duration = kMDCInkLayerStartFadeHalfDuration;
   fadeHalfAnim.beginTime = kMDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   fadeHalfAnim.timingFunction =
-  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeHalfAnim.fillMode = kCAFillModeForwards;
   fadeHalfAnim.removedOnCompletion = NO;
 
@@ -159,7 +160,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   changeAnim.duration = kMDCInkLayerCommonDuration;
   changeAnim.beginTime = CACurrentMediaTime() + animationDelay;
   changeAnim.timingFunction =
-  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   changeAnim.fillMode = kCAFillModeForwards;
   changeAnim.removedOnCompletion = NO;
   [self addAnimation:changeAnim forKey:nil];
@@ -190,7 +191,7 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
   fadeOutAnim.duration = kMDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   fadeOutAnim.beginTime = CACurrentMediaTime() + self.endAnimationDelay;
   fadeOutAnim.timingFunction =
-  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeOutAnim.fillMode = kCAFillModeForwards;
   fadeOutAnim.removedOnCompletion = NO;
   [CATransaction setCompletionBlock:^{
