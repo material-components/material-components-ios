@@ -19,6 +19,16 @@
 
 @protocol MDCInkLayerDelegate;
 
+/**
+ A Core Animation layer that draws and animates the ink effect.
+
+ Quick summary of how the ink ripple works:
+
+ 1. On touch down, ink spreads from the touch point.
+ 2. On touch down hold, ink continues to spread, but will gravitate to the center point
+ of the view.
+ 3. On touch up, the ink ripple opacity will start to decrease.
+ */
 @interface MDCInkLayer : CAShapeLayer
 
 /**
