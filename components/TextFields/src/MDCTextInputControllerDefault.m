@@ -527,12 +527,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   // We do this beforehand to flush the layout engine.
   [self.textInput layoutIfNeeded];
-  [self updatePlaceholder];
   [self updatePlaceholderAnimationConstraints:isToUp];
   [UIView animateWithDuration:[CATransaction animationDuration]
       animations:^{
         self.textInput.placeholderLabel.transform = scaleTransform;
-
+        [self updatePlaceholder];
         [self.textInput layoutIfNeeded];
       }
       completion:^(__unused BOOL finished) {
