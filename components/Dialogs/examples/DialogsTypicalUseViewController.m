@@ -36,17 +36,17 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   if (indexPath.row == 0) {
-    [self didTapProgrammatic:nil];
+    [self didTapProgrammatic];
   } else if (indexPath.row == 1) {
-    [self didTapStoryboard:nil];
+    [self didTapStoryboard];
   } else if (indexPath.row == 2) {
-    [self didTapModalProgrammatic:nil];
+    [self didTapModalProgrammatic];
   } else if (indexPath.row == 3) {
-    [self didTapOpenURL:nil];
+    [self didTapOpenURL];
   }
 }
 
-- (IBAction)didTapProgrammatic:(id)sender {
+- (IBAction)didTapProgrammatic {
   UIViewController *viewController =
       [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
@@ -55,7 +55,7 @@
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapModalProgrammatic:(id)sender {
+- (IBAction)didTapModalProgrammatic {
   UIViewController *viewController =
       [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
@@ -70,7 +70,7 @@
   }
 }
 
-- (IBAction)didTapOpenURL:(id)sender {
+- (IBAction)didTapOpenURL {
   UIViewController *viewController =
     [[OpenURLViewController alloc] initWithNibName:nil bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
@@ -79,7 +79,7 @@
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapStoryboard:(id)sender {
+- (IBAction)didTapStoryboard {
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.
   NSBundle *bundle = [NSBundle bundleForClass:[DialogsTypicalUseViewController class]];
   UIStoryboard *storyboard =

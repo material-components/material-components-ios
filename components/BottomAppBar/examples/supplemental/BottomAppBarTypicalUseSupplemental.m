@@ -56,7 +56,7 @@
 @implementation BottomAppBarExampleTableViewController
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nil bundle:nil];
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     NSArray<NSString *> *listItems = @[ @"Leading Floating Button",
                                         @"Center Floating Button",
@@ -88,7 +88,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (!cell) {
     cell =
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];

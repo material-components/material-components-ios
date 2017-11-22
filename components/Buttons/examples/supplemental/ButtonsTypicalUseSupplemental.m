@@ -82,7 +82,7 @@
   CGFloat lastButtonMaxY = (CGRectGetHeight(lastButton.bounds) / 2) + lastButton.center.y;
   if (lastButtonMaxY > CGRectGetHeight(self.view.bounds)) {
     CGFloat columnOffset = CGRectGetWidth(self.view.bounds) / 4;
-    NSUInteger splitIndex = ceil(self.buttons.count / 2);
+    NSUInteger splitIndex = (NSUInteger)ceil(self.buttons.count / 2);
 
     if (((MDCButton *)self.buttons[splitIndex - 1]).enabled) {
       splitIndex++;
@@ -116,7 +116,7 @@
   MDCButton *lastButton = self.buttons[NSMaxRange(range) - 1];
   CGFloat verticalCenterY =
       (viewHeight - (lastButton.center.y + (CGRectGetHeight(lastButton.bounds) / 2))) / 2;
-  for (NSInteger i = range.location; i < NSMaxRange(range); i++) {
+  for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
     button.center = MDCRoundCenterWithBoundsAndScale(CGPointMake(button.center.x,
