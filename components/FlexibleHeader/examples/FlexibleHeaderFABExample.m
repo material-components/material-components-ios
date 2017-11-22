@@ -16,10 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderFABSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderFABSupplemental.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
@@ -116,7 +115,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 #pragma mark -
 
 - (void)didTap:(id)sender {
-  NSLog(@"Button was tapped.");
+  NSLog(@"Button was tapped. %@", sender);
 }
 
 #pragma mark - <UIScrollViewDelegate>

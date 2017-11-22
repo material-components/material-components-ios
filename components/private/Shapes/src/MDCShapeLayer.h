@@ -16,7 +16,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "MDCShapeGenerating.h"
+@protocol MDCShapeGenerating;
 
 /*
  A CAShapeLayer with the path controlled by an MDCShapeGenerating object.

@@ -16,5 +16,6 @@
 
 #import "MDCBottomSheetController.h"
 #import "MDCBottomSheetPresentationController.h"
+#import "MDCBottomSheetTransition.h"
 #import "MDCBottomSheetTransitionController.h"
 #import "UIViewController+MaterialBottomSheet.h"

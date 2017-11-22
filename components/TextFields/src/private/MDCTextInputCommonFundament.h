@@ -13,9 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License. */
 
-/** Protocol implemented by a text field controlled by a |MDCTextFieldController|. */
-
-#import "MaterialTextFields.h"
+#import "MDCTextInput.h"
 
 extern const CGFloat MDCTextInputBorderRadius;
 extern const CGFloat MDCTextInputFullPadding;

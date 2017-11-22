@@ -68,8 +68,8 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     // Select a bottom navigation bar item.
     bottomNavBar.selectedItem = tabBarItem2;
   }
-
-  override func viewWillLayoutSubviews() {
+  
+  func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
     let bottomNavBarFrame = CGRect(x: 0,
                                    y: view.bounds.height - size.height,
@@ -77,6 +77,19 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
                                    height: size.height)
     bottomNavBar.frame = bottomNavBarFrame
   }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    layoutBottomNavBar()
+  }
+
+  #if swift(>=3.2)
+  @available(iOS 11, *)
+  override func viewSafeAreaInsetsDidChange() {
+    super.viewSafeAreaInsetsDidChange()
+    layoutBottomNavBar()
+  }
+  #endif
 
   override func viewDidLoad() {
     super.viewDidLoad()

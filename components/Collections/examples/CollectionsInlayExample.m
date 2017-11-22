@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "CollectionsInlayExample.h"
+#import "supplemental/CollectionsInlayExample.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 

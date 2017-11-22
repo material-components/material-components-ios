@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "CollectionsSwipeToDismissRowExample.h"
+#import "supplemental/CollectionsSwipeToDismissRowExample.h"
 
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 5;

@@ -18,7 +18,7 @@
 
 @implementation MDCBottomNavigationBarColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
     toBottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar {
   bottomNavigationBar.selectedItemTintColor = colorScheme.primaryLightColor;
   bottomNavigationBar.unselectedItemTintColor = colorScheme.primaryDarkColor;

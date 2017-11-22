@@ -28,21 +28,21 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
    is slow both at the beginning and end. It has similar characteristics to the system's EaseInOut.
    This is known as Standard in the Material Design spec.
    */
-  MDCAnimationTimingFunctionEaseInOut,
+  MDCAnimationTimingFunctionStandard,
 
   /**
    This curve should be used for motion when entering frame or when fading in from 0% opacity. This
    curve is slow at the end. It has similar characteristics to the system's EaseOut. This is known
    as Deceleration in the Material Design spec.
    */
-  MDCAnimationTimingFunctionEaseOut,
+  MDCAnimationTimingFunctionDeceleration,
 
   /**
    This curve should be used for motion when exiting frame or when fading out to 0% opacity. This
    curve is slow at the beginning. It has similar characteristics to the system's EaseIn. This
    is known as Acceleration in the Material Design spec.
    */
-  MDCAnimationTimingFunctionEaseIn,
+  MDCAnimationTimingFunctionAcceleration,
 
   /**
    This curve should be used for motion when elements quickly accelerate and decelerate. It is
@@ -50,15 +50,22 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
    faster than the standard curve since it doesn't follow an exact path to the off-screen point.
    */
   MDCAnimationTimingFunctionSharp,
+  
+  /**
+   Aliases for depreciated names
+   */
+  MDCAnimationTimingFunctionEaseInOut = MDCAnimationTimingFunctionStandard,
+  MDCAnimationTimingFunctionEaseOut = MDCAnimationTimingFunctionDeceleration,
+  MDCAnimationTimingFunctionEaseIn = MDCAnimationTimingFunctionAcceleration,
 
   /**
    Aliases for various specific timing curve recommendations.
    */
-  MDCAnimationTimingFunctionTranslate = MDCAnimationTimingFunctionEaseInOut,
-  MDCAnimationTimingFunctionTranslateOnScreen = MDCAnimationTimingFunctionEaseOut,
-  MDCAnimationTimingFunctionTranslateOffScreen = MDCAnimationTimingFunctionEaseIn,
-  MDCAnimationTimingFunctionFadeIn = MDCAnimationTimingFunctionEaseOut,
-  MDCAnimationTimingFunctionFadeOut = MDCAnimationTimingFunctionEaseIn,
+  MDCAnimationTimingFunctionTranslate = MDCAnimationTimingFunctionStandard,
+  MDCAnimationTimingFunctionTranslateOnScreen = MDCAnimationTimingFunctionDeceleration,
+  MDCAnimationTimingFunctionTranslateOffScreen = MDCAnimationTimingFunctionAcceleration,
+  MDCAnimationTimingFunctionFadeIn = MDCAnimationTimingFunctionDeceleration,
+  MDCAnimationTimingFunctionFadeOut = MDCAnimationTimingFunctionAcceleration,
 };
 
 /**

@@ -21,8 +21,6 @@
 
 #import "FlexibleHeaderHorizontalPagingSupplemental.h"
 
-#import "MaterialFlexibleHeader.h"
-
 @implementation FlexibleHeaderHorizontalPagingViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {

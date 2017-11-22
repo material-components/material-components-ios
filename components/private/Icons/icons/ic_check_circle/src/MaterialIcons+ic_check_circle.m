@@ -19,8 +19,6 @@
 
 #import "MaterialIcons+ic_check_circle.h"
 
-#import "MaterialIcons.h"
-
 static NSString *const kBundleName = @"MaterialIcons_ic_check_circle";
 static NSString *const kIconName = @"ic_check_circle";
 

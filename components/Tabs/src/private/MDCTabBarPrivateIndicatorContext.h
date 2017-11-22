@@ -16,24 +16,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCSheetBehavior : UIDynamicBehavior
+#import "MDCTabBarIndicatorContext.h"
 
-/**
- * The final center-point for the item to arrive at.
- */
-@property(nonatomic) CGPoint targetPoint;
+/// Concrete implementation of a tab indicator context.
+@interface MDCTabBarPrivateIndicatorContext : NSObject <MDCTabBarIndicatorContext>
 
-/**
- * The initial velocity for the behavior.
- */
-@property(nonatomic) CGPoint velocity;
+- (null_unspecified instancetype)init NS_UNAVAILABLE;
 
-/**
- * Initializes a @c MDCSheetBehavior.
- * @param item The dynamic item (a view) to apply the sheet behavior to.
- */
-- (nonnull instancetype)initWithItem:(nonnull id <UIDynamicItem>)item NS_DESIGNATED_INITIALIZER;
-
-- (nonnull instancetype)init NS_UNAVAILABLE;
+/// Designated initializer which creates a context from members.
+- (nonnull instancetype)initWithItem:(nonnull UITabBarItem *)item
+                              bounds:(CGRect)bounds
+                        contentFrame:(CGRect)contentFrame NS_DESIGNATED_INITIALIZER;
 
 @end

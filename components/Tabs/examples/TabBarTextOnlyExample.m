@@ -20,9 +20,7 @@
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
 #import "MaterialTabs.h"
-
-#import "TabBarTextOnlyExampleSupplemental.h"
-
+#import "supplemental/TabBarTextOnlyExampleSupplemental.h"
 
 @implementation TabBarTextOnlyExample
 

@@ -16,22 +16,12 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
 #import "MaterialSlider.h"
 
 static const int kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = 0.001f;
-
-// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
-static const uint32_t MDCBlueColor = 0x2196F3;
-
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
-}
 
 @interface MDCSlider (TestInterface)
 
@@ -477,7 +467,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 #pragma mark private test helpers
 
 - (UIColor *)blueColor {
-  return MDCColorFromRGB(MDCBlueColor);
+  return MDCPalette.bluePalette.tint500;
 }
 
 - (CGFloat)randomNumber {

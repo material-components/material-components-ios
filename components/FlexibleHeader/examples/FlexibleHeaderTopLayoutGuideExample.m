@@ -16,9 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderTopLayoutGuideSupplemental.h"
-
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderTopLayoutGuideSupplemental.h"
 
 @interface FlexibleHeaderTopLayoutGuideExample () <MDCFlexibleHeaderViewLayoutDelegate,
                                                    UIScrollViewDelegate>
@@ -155,7 +154,7 @@
   [super viewDidLayoutSubviews];
 }
 
-#pragma - MDCFlexibleHeaderViewLayoutDelegate
+#pragma mark - MDCFlexibleHeaderViewLayoutDelegate
 
 - (void)flexibleHeaderViewController:(MDCFlexibleHeaderViewController *)flexibleHeaderViewController
     flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)flexibleHeaderView {

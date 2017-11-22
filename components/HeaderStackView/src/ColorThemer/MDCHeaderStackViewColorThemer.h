@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialHeaderStackView.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCSlider.
@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCHeaderStackView.
  @param headerStackView A MDCHeaderStackView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
        toHeaderStackView:(MDCHeaderStackView *)headerStackView;
 
 @end
