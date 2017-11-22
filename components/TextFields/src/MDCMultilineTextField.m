@@ -96,6 +96,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     if (!_textView) {
       _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
     }
+    // It should be noted that setupTextView sets many properties of the textView that may have
+    // been encoded differently.
     [self setupTextView];
 
     MDCTextInputCommonFundament *fundament =
