@@ -58,15 +58,15 @@ The `scripts/release/cut` script will output the body of an email you should now
 clients can test the release.
 
 > Kokoro will begin testing the release candidate each time the branch is pushed to GitHub.
-> View the [release-candidate job](https://kokoro.corp.google.com/job/MaterialComponents_iOS/job/macos_external/job/release-candidate/)
+> [View the release-candidate jobs](https://kokoro.corp.google.com/job/MaterialComponents_iOS/job/macos_external/)
 > in order to assess the status of the release.
 
 ### Test the release branch
 
-Release testing is automated via the `.kokoro-release` script located in the root of the repo.
+Release testing is automated via the `.kokoro` script located in the root of the repo.
 You can run this script locally if the continuous integration fails.
 
-    ./.kokoro-release
+    ./.kokoro
 
 Identify why any failures occurred and resolve them before landing the release.
 
