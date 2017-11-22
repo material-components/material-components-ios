@@ -38,32 +38,37 @@ Releasing is important enough that we want to start with a clean slate:
 
 ### Cut a release branch and notify clients
 
-Verify that there are no existing release-candidate branches either locally or on origin:
-
-    git fetch -a
-    git remote prune origin
-    git branch -a | grep release-candidate
-
 Run the following command to cut a release:
 
     scripts/release/cut
     git add CHANGELOG.md
     git commit -m "Cut release candidate."
 
-You will now have a local `release-candidate` branch and a new section in CHANGELOG.md titled
-"release-candidate".
+> This command will fail if you have already cut a release-candidate. If this happens,
+> inspect the state of your local release-candidate branch and consider deleting it if it is
+> stale.
+>
+>    git branch -D release-candidate
+
+You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
+"release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
 The `scripts/release/cut` script will output the body of an email you should now send to the
 [discussion list](https://groups.google.com/forum/#!forum/material-components-ios-discuss) so
 clients can test the release.
 
+> Kokoro will begin testing the release candidate each time the branch is pushed to GitHub.
+> View the [release-candidate job](https://kokoro.corp.google.com/job/MaterialComponents_iOS/job/macos_external/job/release-candidate/)
+> in order to assess the status of the release.
+
 ### Test the release branch
 
-    scripts/prep_all
-    scripts/build_all
-    scripts/test_all
+Release testing is automated via the `.kokoro-release` script located in the root of the repo.
+You can run this script locally if the continuous integration fails.
 
-Identify why any failures occurred and resolve them before continuing.
+    ./.kokoro-release
+
+Identify why any failures occurred and resolve them before landing the release.
 
 > Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
 > This allows other people and machines to track the progress of the release.
