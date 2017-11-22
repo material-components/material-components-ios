@@ -519,7 +519,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (void)fhv_removeInsetsFromScrollView:(UIScrollView *)scrollView {
-  if (!scrollView) {
+  NSAssert(scrollView != _trackingScrollView,
+           @"Invalid attempt to remove insets from the tracking scroll view.");
+  if (!scrollView || scrollView == _trackingScrollView) {
     return;
   }
 
