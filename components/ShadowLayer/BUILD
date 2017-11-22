@@ -34,8 +34,10 @@ mdc_public_objc_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
+    srcs = glob([
+        "tests/unit/*.m",
+        "tests/unit/*.h"
+    ]),
     sdk_frameworks = [
         "UIKit",
         "XCTest",
