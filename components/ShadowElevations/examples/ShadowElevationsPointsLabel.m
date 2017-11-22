@@ -28,4 +28,8 @@
   [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 
+- (MDCShadowElevation)elevation {
+  return [(MDCShadowLayer *)self.layer elevation];
+}
+
 @end

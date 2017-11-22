@@ -41,10 +41,6 @@
 
 @implementation FlexibleHeaderUINavigationBarExample (Supplemental)
 
-- (void)didTap:(id)button {
-  NSLog(@"Button Tapped.");
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
 }
