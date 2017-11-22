@@ -20,7 +20,7 @@
 #import "MDCButton.h"
 
 /**
- Types of Material Floating buttons.
+ Shapes for Material Floating buttons.
 
  The mini size should only be used when required for visual continuity with other elements on the
  screen.
@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonMode) {
   /**
    The floating button is a "pill shape" with the image to one side of the title.
    */
-  MDCFloatingButtonModeExtended = 1,
+  MDCFloatingButtonModeExpanded = 1,
 };
 
 typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
@@ -81,7 +81,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
 + (nonnull instancetype)floatingButtonWithShape:(MDCFloatingButtonShape)shape;
 
 /**
- The mode of the floating button can either be .normal (a circle) or .extended (a pill-shaped
+ The mode of the floating button can either be .normal (a circle) or .expanded (a pill-shaped
  rounded rectangle).
 
  The default value is @c .normal .
@@ -97,7 +97,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImagePosition) {
 
 /**
  The horizontal padding between the |imageView| and |titleLabel| when the button is in its
- "extended" mode.  If set to a negative value, the imageView and titleLabel may overlap.
+ "expanded" mode.  If set to a negative value, the imageView and titleLabel may overlap.
  */
 @property(nonatomic, assign) CGFloat imageTitlePadding UI_APPEARANCE_SELECTOR;
 
