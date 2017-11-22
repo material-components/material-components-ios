@@ -239,20 +239,65 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 // It's possible we've been passed a text view that's not our special class. We can handle that.
 // It's also something we guarantee to always be there. So, if it's nil, we make a new one.
 - (void)textViewSafetyCheck {
+  [self lazilyInstantiateTextView];
+
   // We expect users of Interface Builder to put a UITextView in the view. When that happens,
   // we swap it out for one of our special text views and bring the existing text over.
-  NSString *existingText = _textView.text;
   if (![_textView isKindOfClass:[MDCIntrinsicHeightTextView class]]) {
-    [_textView removeFromSuperview];
-    _textView = nil;
+    [self promoteTextViewToCustomTextView];
   }
+}
 
+- (void)lazilyInstantiateTextView {
   if (!_textView) {
     _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
-    if (existingText) {
-      _textView.text = existingText;
-    }
   }
+}
+
+- (void)promoteTextViewToCustomTextView {
+  [_textView removeFromSuperview];
+  MDCIntrinsicHeightTextView *customTextView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero
+                                                                                   textContainer:_textView.textContainer];
+  // Now we copy over the properties that could have been set on the textView.
+  customTextView.allowsEditingTextAttributes = _textView.allowsEditingTextAttributes;
+
+  // attributedText should bring over font, textAlignment, etc. If we set those individually, we
+  // would override any ranges in the attributed string.
+  customTextView.attributedText = _textView.attributedText;
+  customTextView.dataDetectorTypes = _textView.dataDetectorTypes;
+  customTextView.editable = _textView.isEditable;
+  customTextView.typingAttributes = _textView.typingAttributes;
+  customTextView.linkTextAttributes = _textView.linkTextAttributes;
+  customTextView.textContainerInset = _textView.textContainerInset;
+  customTextView.selectedRange = _textView.selectedRange;
+  customTextView.clearsOnInsertion = _textView.clearsOnInsertion;
+  customTextView.selectable = _textView.isSelectable;
+  customTextView.scrollsToTop = _textView.scrollsToTop;
+  customTextView.scrollEnabled = _textView.isScrollEnabled;
+  customTextView.secureTextEntry = _textView.isSecureTextEntry;
+  customTextView.scrollIndicatorInsets = _textView.scrollIndicatorInsets;
+  customTextView.delegate = _textView.delegate;
+  customTextView.contentOffset = _textView.contentOffset;
+  customTextView.contentInset = _textView.contentInset;
+  customTextView.contentInsetAdjustmentBehavior = _textView.contentInsetAdjustmentBehavior;
+  customTextView.directionalLockEnabled = _textView.isDirectionalLockEnabled;
+  customTextView.pagingEnabled = _textView.isPagingEnabled;
+  customTextView.bounces = _textView.bounces;
+  customTextView.alwaysBounceVertical = _textView.alwaysBounceVertical;
+  customTextView.indicatorStyle = _textView.indicatorStyle;
+  customTextView.showsVerticalScrollIndicator = _textView.showsVerticalScrollIndicator;
+  customTextView.canCancelContentTouches = _textView.canCancelContentTouches;
+  customTextView.delaysContentTouches = _textView.delaysContentTouches;
+  customTextView.gestureRecognizers = _textView.gestureRecognizers;
+  customTextView.zoomScale = _textView.zoomScale;
+  customTextView.minimumZoomScale = _textView.minimumZoomScale;
+  customTextView.maximumZoomScale = _textView.maximumZoomScale;
+  customTextView.markedTextStyle = _textView.markedTextStyle;
+  customTextView.keyboardType = _textView.keyboardType;
+  customTextView.keyboardAppearance = _textView.keyboardAppearance;
+  customTextView.keyboardDismissMode = _textView.keyboardDismissMode;
+
+  _textView = customTextView;
 }
 
 #pragma mark - Underline View Implementation
