@@ -15,9 +15,9 @@
  */
 
 #import "MDCAlertController.h"
-
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MDCAlertContentView.h"
 #import "MDCDialogTransitionController.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
@@ -74,11 +74,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 @property(nonatomic, nonnull, strong) NSMutableArray<UIButton *> *actionButtons;
 
-@property(nonatomic, strong) UIScrollView *contentScrollView;
+@property(nonatomic, strong) MDCAlertContentView *contentScrollView;
 @property(nonatomic, strong) UIScrollView *actionsScrollView;
-
-@property(nonatomic, strong) UILabel *titleLabel;
-@property(nonatomic, strong) UILabel *messageLabel;
 
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
 
@@ -115,7 +112,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     _alertTitle = [title copy];
     _message = [message copy];
 
-    _contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    _contentScrollView = [[MDCAlertContentView alloc] initWithFrame:CGRectZero];
     _actionsScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
 
     _actions = [[NSMutableArray alloc] init];
@@ -154,6 +151,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self.view setNeedsLayout];
 }
 
+- (UILabel *)titleLabel {
+  return _contentScrollView.titleLabel;
+}
+
 - (NSString *)message {
   return _message;
 }
@@ -165,6 +166,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 
   [self.view setNeedsLayout];
+}
+
+- (UILabel *)messageLabel {
+  return _contentScrollView.messageLabel;
 }
 
 - (NSArray<MDCAlertAction *> *)actions {
@@ -256,26 +261,16 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   self.view.backgroundColor = [UIColor whiteColor];
   self.view.autoresizesSubviews = NO;
   self.view.clipsToBounds = YES;
-
-  self.contentScrollView.backgroundColor = [UIColor whiteColor];
+  
   [self.view addSubview:self.contentScrollView];
 
-  self.actionsScrollView.backgroundColor = [UIColor whiteColor];
-  [self.view addSubview:self.actionsScrollView];
-
-  self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.titleLabel.numberOfLines = 0;
-  self.titleLabel.textAlignment = NSTextAlignmentNatural;
   if (self.mdc_adjustsFontForContentSizeCategory) {
     self.titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
   } else {
     self.titleLabel.font = [MDCTypography titleFont];
   }
   [self.contentScrollView addSubview:self.titleLabel];
-
-  self.messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.messageLabel.numberOfLines = 0;
-  self.messageLabel.textAlignment = NSTextAlignmentNatural;
+  
   if (self.mdc_adjustsFontForContentSizeCategory) {
     self.messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
   } else {
@@ -283,9 +278,12 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   }
   self.messageLabel.textColor = [UIColor colorWithWhite:0.0 alpha:MDCDialogMessageOpacity];
   [self.contentScrollView addSubview:self.messageLabel];
-
+  
   self.titleLabel.text = self.title;
   self.messageLabel.text = self.message;
+  
+  self.actionsScrollView.backgroundColor = [UIColor whiteColor];
+  [self.view addSubview:self.actionsScrollView];
 
   CGSize idealSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 

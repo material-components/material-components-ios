@@ -15,6 +15,7 @@
  */
 
 #import "MDCAlertController.h"
+#import "MDCAlertContentView.h"
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
 #import "UIViewController+MaterialDialogs.h"

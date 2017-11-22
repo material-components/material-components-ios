@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Apply color scheme to material design components using component themers.
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
-    MDCAlertColorThemer.apply(colorScheme)
+    MDCAlertColorThemer.apply(colorScheme, to: MDCAlertContentView.appearance())
     MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
     MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
     let clearScheme = MDCBasicColorScheme(primaryColor: .clear)

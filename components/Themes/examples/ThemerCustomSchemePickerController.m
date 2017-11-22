@@ -181,7 +181,8 @@ static NSString *s_secondaryColorString;
   // Apply color scheme to material design components using component themers.
   [MDCActivityIndicatorColorThemer applyColorScheme:colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
-  [MDCAlertColorThemer applyColorScheme:colorScheme];
+  [MDCAlertColorThemer applyColorScheme:colorScheme
+                     toAlertContentView:[MDCAlertContentView appearance]];
   [MDCButtonBarColorThemer applyColorScheme:colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.previewButton];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:[MDCButton appearance]];
