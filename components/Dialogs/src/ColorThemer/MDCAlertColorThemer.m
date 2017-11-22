@@ -29,8 +29,8 @@
   [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
       setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
   #endif
-  [alertContentView setTitleLabelColor:colorScheme.secondaryDarkColor];
-  [alertContentView setMessageLabelColor:colorScheme.secondaryLightColor];
+  [alertContentView setTitleLabelColor:colorScheme.primaryTextColor];
+  [alertContentView setMessageLabelColor:colorScheme.secondaryTextColor];
 }
 
 @end
