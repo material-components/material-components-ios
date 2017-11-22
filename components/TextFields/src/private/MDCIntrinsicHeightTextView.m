@@ -24,7 +24,7 @@
  */
 - (CGSize)intrinsicContentSize {
   CGSize size = [super intrinsicContentSize];
-  if (size.height == -1) {
+  if (size.height == UIViewNoIntrinsicMetric) {
     size.height = [self contentSize].height;
   }
   return size;
