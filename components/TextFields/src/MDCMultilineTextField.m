@@ -706,11 +706,16 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.fundament.textInsetsMode = textInsetsMode;
 }
 
+// Regarding textView and setTextView, we call textViewSafetyCheck to perform a chunk of magic.
+// textViewSafetyCheck will both make sure textView != nil and it will make sure the textView is
+// MDCIntrinsicHeightTextView which is a subclass of UITextView. It needs to do this to add custom
+// behavior to UITextView's intrinsicContentSize.
 - (UITextView *)textView {
   [self textViewSafetyCheck];
   return _textView;
 }
 
+// See above.
 - (void)setTextView:(UITextView *)textView {
   if (![_textView isEqual:textView]) {
     [_textView removeFromSuperview];
