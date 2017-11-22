@@ -151,7 +151,7 @@
       && traits.verticalSizeClass == UIUserInterfaceSizeClassRegular;
   if (useExtendedMode) {
     [self.floatingButton setTitle:@"Button" forState:UIControlStateNormal];
-    self.floatingButton.mode = MDCFloatingButtonModeExtended;
+    self.floatingButton.mode = MDCFloatingButtonModeExpanded;
 
   } else {
     [self.floatingButton setTitle:nil forState:UIControlStateNormal];

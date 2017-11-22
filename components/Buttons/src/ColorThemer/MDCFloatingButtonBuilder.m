@@ -44,7 +44,7 @@
   [button setElevation:3 forState:UIControlStateNormal];
   [button setElevation:6 forState:UIControlStateHighlighted];
 
-  button.mode = MDCFloatingButtonModeExtended;
+  button.mode = MDCFloatingButtonModeExpanded;
   return button;
 }
 

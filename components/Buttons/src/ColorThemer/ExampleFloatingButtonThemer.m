@@ -35,23 +35,23 @@
 
   [button setContentEdgeInsets:defaultExtendedInsets
                       forShape:MDCFloatingButtonShapeDefault
-                          mode:MDCFloatingButtonModeExtended];
+                          mode:MDCFloatingButtonModeExpanded];
   [button setContentEdgeInsets:miniExtendedInsets
                       forShape:MDCFloatingButtonShapeMini
-                          mode:MDCFloatingButtonModeExtended];
+                          mode:MDCFloatingButtonModeExpanded];
 
   [button setMinimumSize:defaultExtendedMinimumSize
                 forShape:MDCFloatingButtonShapeDefault
-                    mode:MDCFloatingButtonModeExtended];
+                    mode:MDCFloatingButtonModeExpanded];
   [button setMaximumSize:defaultExtendedMaximumSize
                 forShape:MDCFloatingButtonShapeDefault
-                    mode:MDCFloatingButtonModeExtended];
+                    mode:MDCFloatingButtonModeExpanded];
   [button setMinimumSize:miniExtendedMinimumSize
                 forShape:MDCFloatingButtonShapeMini
-                    mode:MDCFloatingButtonModeExtended];
+                    mode:MDCFloatingButtonModeExpanded];
   [button setMaximumSize:miniExtendedMaximumSize
                 forShape:MDCFloatingButtonShapeMini
-                    mode:MDCFloatingButtonModeExtended];
+                    mode:MDCFloatingButtonModeExpanded];
 
   [button setImageTitlePadding:4];
 }
