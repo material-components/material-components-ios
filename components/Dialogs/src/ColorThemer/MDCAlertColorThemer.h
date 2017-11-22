@@ -27,6 +27,7 @@
  Applies a color scheme to theme to all MDCAlertController alert dialogs.
  
  @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+ @param alertContentView A MDCAlertContentView instance to apply a color scheme.
  */
 + (void)applyColorScheme:(id<MDCColorScheme> *)colorScheme
       toAlertContentView:(MDCAlertContentView *)alertContentView;
