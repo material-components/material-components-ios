@@ -16,14 +16,25 @@
 
 #import "MDCShadowLayer.h"
 
-#import "MDCAnimatedShapeLayer.h"
-
 static const CGFloat kShadowElevationDialog = 24.0;
 static const float kKeyShadowOpacity = 0.26f;
 static const float kAmbientShadowOpacity = 0.08f;
 
 static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey";
 static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShadowMaskEnabledKey";
+
+/**
+ A CAShapeLayer that will implicitly animate path and shadowPath if bounds.size of the
+ animationParentLayer is being animated.
+ */
+@interface MDCAnimatedShapeLayer : CAShapeLayer
+@property(nonatomic, weak) CALayer *animationParentLayer;
+@end
+
+@interface MDCPendingAnimation : NSObject <CAAction>
+@property(nonatomic, strong) NSString *keyPath;
+@property(nonatomic, strong) CAAnimation *animation;
+@end
 
 @implementation MDCShadowMetrics
 
@@ -343,6 +354,68 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     }
   }
   _shadowPathIsInvalid = NO;
+}
+
+@end
+
+@implementation MDCAnimatedShapeLayer
+
+- (id<CAAction>)actionForKey:(NSString *)key {
+  if ([key isEqualToString:@"path"] || [key isEqualToString:@"shadowPath"]) {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:key];
+    animation.fromValue = [self.presentationLayer valueForKey:key];
+
+    // We have to create a pending animation because if we are inside a UIKit animation block we
+    // won't know any properties of the animation block until it is commited.
+    MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
+    pendingAnim.animation = animation;
+
+    return pendingAnim;
+  }
+  return [super actionForKey:key];
+}
+
+- (MDCPendingAnimation *)pendingAnimationWithKeyPath:(NSString *)keyPath fromValue:(id)fromValue {
+  CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
+  animation.fromValue = fromValue;
+
+  MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
+  pendingAnim.animation = animation;
+
+  return pendingAnim;
+}
+
+@end
+
+@implementation MDCPendingAnimation
+
+- (void)runActionForKey:(NSString *)event object:(id)anObject arguments:(NSDictionary *)dict {
+  if ([anObject isKindOfClass:[MDCAnimatedShapeLayer class]]) {
+    MDCAnimatedShapeLayer *layer = (MDCAnimatedShapeLayer *)anObject;
+
+    // In order to synchronize our animation with UIKit animations we have to fetch the resizing
+    // animation created by UIKit and copy the configuration to our custom animation.
+    CALayer *animatedLayer = layer.animationParentLayer;
+    CAAnimation *boundsAction = [animatedLayer animationForKey:@"bounds.size"];
+    if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
+      [self configureAnimation:(CABasicAnimation *)boundsAction];
+    }
+
+    [layer addAnimation:self.animation forKey:event];
+  }
+}
+
+- (void)configureAnimation:(CAAnimation *)template {
+  self.animation.autoreverses = template.autoreverses;
+  self.animation.beginTime = template.beginTime;
+  self.animation.delegate = template.delegate;
+  self.animation.duration = template.duration;
+  self.animation.fillMode = template.fillMode;
+  self.animation.repeatCount = template.repeatCount;
+  self.animation.repeatDuration = template.repeatDuration;
+  self.animation.speed = template.speed;
+  self.animation.timingFunction = template.timingFunction;
+  self.animation.timeOffset = template.timeOffset;
 }
 
 @end
