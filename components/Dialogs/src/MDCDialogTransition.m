@@ -24,7 +24,17 @@
 @interface MDCDialogTransition() <MDMTransitionWithPresentation>
 @end
 
-@implementation MDCDialogTransition
+@implementation MDCDialogTransition {
+  MDCDialogPresentationController *_presentationController;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _dismissOnBackgroundTap = YES;
+  }
+  return self;
+}
 
 #pragma mark - MDMTransitionWithPresentation
 
@@ -32,8 +42,14 @@
     presentationControllerForPresentedViewController:(UIViewController *)presented
     presentingViewController:(UIViewController *)presenting
     sourceViewController:(__unused UIViewController *)source {
-  return [[MDCDialogPresentationController alloc] initWithPresentedViewController:presented
-                                                         presentingViewController:presenting];
+  if (_presentationController) {
+    return _presentationController;
+  }
+  _presentationController =
+      [[MDCDialogPresentationController alloc] initWithPresentedViewController:presented
+                                                      presentingViewController:presenting];
+  _presentationController.dismissOnBackgroundTap = self.dismissOnBackgroundTap;
+  return _presentationController;
 }
 
 - (UIModalPresentationStyle)defaultModalPresentationStyle {
@@ -44,6 +60,14 @@
 
 - (void)startWithContext:(id<MDMTransitionContext>)context {
   [context transitionDidEnd]; // All animations are handled in the presentation controller.
+}
+
+#pragma mark - Public
+
+- (void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
+  _dismissOnBackgroundTap = dismissOnBackgroundTap;
+
+  _presentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
 }
 
 @end

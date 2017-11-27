@@ -17,5 +17,13 @@
 #import <Foundation/Foundation.h>
 #import <MotionTransitioning/MotionTransitioning.h>
 
-@interface MDCDialogTransition : NSObject <MDMTransition>
+@interface MDCDialogTransition : NSObject <MDMTransitionWithPresentation>
+
+/**
+ Should a tap on the dimmed background view dismiss the presented controller.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL dismissOnBackgroundTap;
+
 @end
