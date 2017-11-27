@@ -241,11 +241,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   NSInteger actionIndex = [self.actionButtons indexOfObject:sender];
   MDCAlertAction *action = self.actions[actionIndex];
 
-  if (action.completionHandler) {
-    action.completionHandler(action);
-  }
-
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+    if (action.completionHandler) {
+      action.completionHandler(action);
+    }
+  }];
 }
 
 #pragma mark - UIViewController
