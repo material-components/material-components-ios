@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 /**
  Custom center for the ink splash in the view’s coordinate system.
 
- Ignored if usesCustomInkCenter is not set or updated ink is used.
+ Affects behavior only if both usesCustomInkCenter and usesLegacyInkRipple are enabled.
  */
 @property(nonatomic, assign) CGPoint customInkCenter;
 

@@ -61,9 +61,12 @@
   _usesLegacyInkRipple = YES;
 }
 
-- (void)setFrame:(CGRect)frame {
-  [super setFrame:frame];
-  self.activeInkLayer.bounds = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.activeInkLayer.bounds = CGRectMake(0,
+                                          0,
+                                          CGRectGetWidth(self.frame),
+                                          CGRectGetHeight(self.frame));
 }
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
@@ -166,9 +169,14 @@
     [self.inkLayer resetAllInk:animated];
   } else {
     if (animated) {
-      [self.activeInkLayer endAnimationAtPoint:CGPointZero];
+      for (MDCInkLayer *inkLayer in self.inkLayers) {
+        [inkLayer endAnimationAtPoint:CGPointZero];
+      }
     } else {
-      [self.activeInkLayer removeAllAnimations];
+      for (MDCInkLayer *inkLayer in self.inkLayers) {
+        [inkLayer removeAllAnimations];
+      }
+      self.layer.sublayers = nil;
     }
   }
 }

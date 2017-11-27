@@ -71,7 +71,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   self.fillColor = self.inkColor.CGColor;
   self.opacity = 0;
   self.position = point;
-  self.startAnimationActive = YES;
+  _startAnimationActive = YES;
+
   CAMediaTimingFunction *materialTimingFunction =
       [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
 
@@ -131,7 +132,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   animGroup.fillMode = kCAFillModeForwards;
   animGroup.removedOnCompletion = NO;
   [CATransaction setCompletionBlock:^{
-    self.startAnimationActive = NO;
+    _startAnimationActive = NO;
   }];
   [self addAnimation:animGroup forKey:nil];
   [CATransaction commit];

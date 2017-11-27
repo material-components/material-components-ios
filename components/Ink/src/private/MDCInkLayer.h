@@ -40,7 +40,7 @@
 /**
  The start ink ripple spread animation has started and is active.
  */
-@property(nonatomic, assign) BOOL startAnimationActive;
+@property(nonatomic, assign, readonly, getter=isStartAnimationActive) BOOL startAnimationActive;
 
 /**
  Delay time in milliseconds before the end ink ripple spread animation begins.
