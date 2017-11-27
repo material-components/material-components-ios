@@ -460,9 +460,11 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
                toPoint:(CGPoint)point
             completion:(void (^)(void))completionBlock;
 
-@property(nonatomic, strong) CAShapeLayer *compositeRipple;
-@property(nonatomic, strong) NSMutableArray<MDCLegacyInkLayerForegroundRipple *> *foregroundRipples;
-@property(nonatomic, strong) NSMutableArray<MDCLegacyInkLayerBackgroundRipple *> *backgroundRipples;
+@property(nonatomic, strong, nonnull) CAShapeLayer *compositeRipple;
+@property(nonatomic, strong, nonnull)
+    NSMutableArray<MDCLegacyInkLayerForegroundRipple *> *foregroundRipples;
+@property(nonatomic, strong, nonnull)
+    NSMutableArray<MDCLegacyInkLayerBackgroundRipple *> *backgroundRipples;
 
 @end
 
