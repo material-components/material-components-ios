@@ -80,15 +80,42 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
     buttonSetup()
 
-    let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    floatingButton.layer.addSublayer(floatingPlusShapeLayer)
+    let plusIcon = UIImage(named: "Plus")?.withRenderingMode(.alwaysOriginal)
+    floatingButton.setImage(plusIcon, for: .normal)
     innerContainerView.addSubview(floatingButton)
 
-    let storyboardPlusShapeLayer =
-      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
-    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
+    storyboardFloating.setImage(plusIcon, for: .normal)
 
     addButtonConstraints()
+  }
+
+  func updateFloatingButtons(to mode: MDCFloatingButtonMode) {
+    if (floatingButton.mode != mode) {
+      floatingButton.mode = mode
+    }
+    if (storyboardFloating.mode != mode) {
+      storyboardFloating.mode = mode
+    }
+  }
+
+  func updateFloatingButtons(whenSizeClass isRegularRegular: Bool) {
+    if (isRegularRegular) {
+      updateFloatingButtons(to: .extended)
+      floatingButton.setTitle("Button", for: .normal)
+      storyboardFloating.setTitle("Button", for: .normal)
+    } else {
+      updateFloatingButtons(to: .normal)
+      floatingButton.setTitle(nil, for: .normal)
+      storyboardFloating.setTitle(nil, for: .normal)
+    }
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    let horizontalSizeClass = traitCollection.horizontalSizeClass
+    let verticalSizeClass = traitCollection.verticalSizeClass
+    let isRegularRegular = horizontalSizeClass == .regular && verticalSizeClass == .regular
+    updateFloatingButtons(whenSizeClass: isRegularRegular)
   }
 
   private func layoutContainer() {
@@ -202,6 +229,22 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     print("\(type(of: sender)) was tapped.")
   }
 
+  override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.willTransition(to: newCollection, with: coordinator)
+    let currentTraits = traitCollection
+    let sizeClassChanged
+      = newCollection.horizontalSizeClass != currentTraits.horizontalSizeClass
+        || newCollection.verticalSizeClass != currentTraits.verticalSizeClass
+    if (sizeClassChanged) {
+      let willBeRegularRegular
+        = newCollection.horizontalSizeClass == .regular
+          && newCollection.verticalSizeClass == .regular
+
+      coordinator.animate(alongsideTransition:{ (_) in
+       self.updateFloatingButtons(whenSizeClass: willBeRegularRegular)
+      }, completion: nil)
+    }
+  }
 }
 
 extension ButtonsSwiftAndStoryboardController {

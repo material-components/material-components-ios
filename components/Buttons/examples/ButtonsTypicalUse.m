@@ -17,6 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
+#import "ExampleFloatingButtonThemer.h"
 
 @interface ButtonsTypicalUseViewController ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
@@ -135,18 +136,33 @@
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
     [self.floatingButton
-          collapse:YES
-        completion:^{
-          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                         dispatch_get_main_queue(), ^{
-                           [self.floatingButton expand:YES completion:nil];
-                         });
-        }];
+        collapse:YES
+      completion:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+                         [self.floatingButton expand:YES completion:nil];
+                       });
+      }];
+  }
+}
+
+- (void)updateFABExtendedMode:(UITraitCollection *)traits {
+  BOOL useExtendedMode = traits.horizontalSizeClass == UIUserInterfaceSizeClassRegular
+      && traits.verticalSizeClass == UIUserInterfaceSizeClassRegular;
+  if (useExtendedMode) {
+    [self.floatingButton setTitle:@"Button" forState:UIControlStateNormal];
+    self.floatingButton.mode = MDCFloatingButtonModeExpanded;
+
+  } else {
+    [self.floatingButton setTitle:nil forState:UIControlStateNormal];
+    self.floatingButton.mode = MDCFloatingButtonModeNormal;
+
   }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [self updateFABExtendedMode:self.traitCollection];
   if (animated) {
     [self.floatingButton collapse:NO completion:nil];
   }
@@ -156,6 +172,16 @@
   [super viewDidAppear:animated];
   if (animated) {
     [self.floatingButton expand:YES completion:nil];
+  }
+}
+
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection
+              withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  UITraitCollection *currentTraits = self.traitCollection;
+  BOOL traitsChange = currentTraits.horizontalSizeClass != newCollection.horizontalSizeClass ||
+  currentTraits.verticalSizeClass != newCollection.verticalSizeClass;
+  if (traitsChange) {
+    [self updateFABExtendedMode:newCollection];
   }
 }
 
