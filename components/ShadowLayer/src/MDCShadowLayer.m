@@ -375,16 +375,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   return [super actionForKey:key];
 }
 
-- (MDCPendingAnimation *)pendingAnimationWithKeyPath:(NSString *)keyPath fromValue:(id)fromValue {
-  CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
-  animation.fromValue = fromValue;
-
-  MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
-  pendingAnim.animation = animation;
-
-  return pendingAnim;
-}
-
 @end
 
 @implementation MDCPendingAnimation
