@@ -21,7 +21,7 @@
 
 #import <MotionAnimator/MotionAnimator.h>
 
-@interface MDCDialogTransition() <MDMTransitionWithPresentation>
+@interface MDCDialogTransition() <MDMTransitionWithCustomDuration, MDMTransitionWithPresentation>
 @end
 
 @implementation MDCDialogTransition {
@@ -54,6 +54,16 @@
 
 - (UIModalPresentationStyle)defaultModalPresentationStyle {
   return UIModalPresentationCustom;
+}
+
+#pragma mark - MDMTransitionWithCustomDuration
+
+- (NSTimeInterval)transitionDurationWithContext:(id<MDMTransitionContext>)context {
+  if (context.direction == MDMTransitionDirectionForward) {
+    return MDCDialogTransitionMotionSpec.appearance.contentOpacity.duration;
+  } else {
+    return MDCDialogTransitionMotionSpec.disappearance.contentOpacity.duration;
+  }
 }
 
 #pragma mark - MDMTransition
