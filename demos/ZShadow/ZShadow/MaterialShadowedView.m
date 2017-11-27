@@ -28,10 +28,14 @@
   return (MDCShadowLayer *)self.layer;
 }
 
+- (void)setElevation:(CGFloat)points {
+  [(MDCShadowLayer *)self.layer setElevation:points];
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    self.shadowLayer.elevation = 12;
+    [self setElevation:12];
   }
   return self;
 }
