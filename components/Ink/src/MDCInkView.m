@@ -62,7 +62,7 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
 
   // When bounds change ensure all ink layer bounds are changed too.
   for (CALayer *layer in self.layer.sublayers) {
