@@ -376,7 +376,7 @@ static CGFloat const kInkLayerBackgroundFastEnterDuration = 0.12f;
 static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 
 @interface MDCLegacyInkLayerBackgroundRipple ()
-@property(nonatomic, strong) CAKeyframeAnimation *backgroundOpacityAnim;
+@property(nonatomic, strong, nonnull) CAKeyframeAnimation *backgroundOpacityAnim;
 @end
 
 @implementation MDCLegacyInkLayerBackgroundRipple
