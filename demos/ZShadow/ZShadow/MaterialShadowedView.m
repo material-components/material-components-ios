@@ -18,8 +18,6 @@
 
 #import "MaterialShadowLayer.h"
 
-#import "MDCAnimatedShapeLayer.h"
-
 @implementation MaterialShadowedView
 
 + (Class)layerClass {
@@ -30,31 +28,12 @@
   return (MDCShadowLayer *)self.layer;
 }
 
-- (void)setElevation:(CGFloat)points {
-  [(MDCShadowLayer *)self.layer setElevation:points];
-}
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self setElevation:12];
-
-//    ((MDCShadowLayer *)self.layer).shadowMaskEnabled = NO;
+    self.shadowLayer.elevation = 12;
   }
   return self;
-}
-
-- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
-  id<NSObject, CAAction> action = (id<NSObject, CAAction>)[super actionForLayer:layer forKey:event];
-
-  if ([event isEqualToString:@"position"]) {
-    CAAnimation *boundsAction = [self.layer animationForKey:@"bounds.size"];
-    NSLog(@"%@ %.2f", boundsAction, boundsAction.duration);
-
-    MDCAnimatedShapeLayer.duration = boundsAction.duration;
-  }
-
-  return action;
 }
 
 @end
