@@ -24,7 +24,6 @@
 @property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
 @property(nonatomic, copy) MDCInkCompletionBlock endInkRippleCompletionBlock;
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
-@property(nonatomic, strong) NSMutableArray<MDCInkLayer *> *inkLayers;
 
 // Legacy ink ripple
 @property(nonatomic, readonly) MDCLegacyInkLayer *inkLayer;
@@ -63,10 +62,12 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.activeInkLayer.bounds = CGRectMake(0,
-                                          0,
-                                          CGRectGetWidth(self.frame),
-                                          CGRectGetHeight(self.frame));
+  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+
+  // When bounds change ensure all sublayers' bounds are changed too.
+  for (CALayer *layer in self.layer.sublayers) {
+    layer.bounds = inkBounds;
+  }
 }
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
@@ -148,7 +149,6 @@
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
     [self.layer addSublayer:inkLayer];
-    [self.inkLayers addObject:inkLayer];
     [inkLayer startAnimationAtPoint:point];
     self.activeInkLayer = inkLayer;
   }
@@ -169,13 +169,13 @@
     [self.inkLayer resetAllInk:animated];
   } else {
     if (animated) {
-      for (MDCInkLayer *inkLayer in self.inkLayers) {
-        [inkLayer endAnimationAtPoint:CGPointZero];
+      for (CALayer *layer in self.layer.sublayers) {
+        if ([layer isKindOfClass:[MDCInkLayer class]]) {
+          MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
+          [inkLayer endAnimationAtPoint:CGPointZero];
+        }
       }
     } else {
-      for (MDCInkLayer *inkLayer in self.inkLayers) {
-        [inkLayer removeAllAnimations];
-      }
       self.layer.sublayers = nil;
     }
   }
