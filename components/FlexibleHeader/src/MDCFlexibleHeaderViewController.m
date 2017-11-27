@@ -17,6 +17,7 @@
 #import "MDCFlexibleHeaderViewController.h"
 
 #import "MaterialApplication.h"
+#import "MaterialUIMetrics.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
@@ -241,6 +242,17 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
 - (void)updateTopLayoutGuide {
   [self.topLayoutGuideTopConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+
+  if (@available(iOS 11.0, *)) {
+    CGFloat deviceTopSafeAreaInset = MDCDeviceTopSafeAreaInset();
+    CGFloat top = self.flexibleHeaderViewControllerHeightOffset-deviceTopSafeAreaInset;
+    if (self.parentViewController.additionalSafeAreaInsets.top != top) {
+      UIEdgeInsets insets = self.parentViewController.additionalSafeAreaInsets;
+      insets.top = top;
+      self.parentViewController.additionalSafeAreaInsets = insets;
+    }
+  }
+
 }
 
 - (CGFloat)headerViewControllerHeight {
@@ -267,7 +279,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
   // We must change the constant of the constraint attached to our parentViewController's
   // topLayoutGuide to trigger the re-layout of its subviews
-  [self.topLayoutGuideTopConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+  [self updateTopLayoutGuide];
+
 
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
