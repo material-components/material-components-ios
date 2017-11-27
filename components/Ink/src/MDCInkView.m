@@ -64,9 +64,12 @@
   [super layoutSubviews];
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
 
-  // When bounds change ensure all sublayers' bounds are changed too.
+  // When bounds change ensure all ink layer bounds are changed too.
   for (CALayer *layer in self.layer.sublayers) {
-    layer.bounds = inkBounds;
+    if ([layer isKindOfClass:[MDCInkLayer class]]) {
+      MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
+      inkLayer.bounds = inkBounds;
+    }
   }
 }
 
@@ -168,15 +171,15 @@
   if (self.usesLegacyInkRipple) {
     [self.inkLayer resetAllInk:animated];
   } else {
-    if (animated) {
-      for (CALayer *layer in self.layer.sublayers) {
-        if ([layer isKindOfClass:[MDCInkLayer class]]) {
-          MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
+    for (CALayer *layer in self.layer.sublayers) {
+      if ([layer isKindOfClass:[MDCInkLayer class]]) {
+        MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
+        if (animated) {
           [inkLayer endAnimationAtPoint:CGPointZero];
+        } else {
+          [inkLayer removeFromSuperlayer];
         }
       }
-    } else {
-      self.layer.sublayers = nil;
     }
   }
 }
