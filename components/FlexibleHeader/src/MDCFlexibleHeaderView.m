@@ -519,7 +519,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (void)fhv_removeInsetsFromScrollView:(UIScrollView *)scrollView {
-  if (!scrollView) {
+  NSAssert(scrollView != _trackingScrollView,
+           @"Invalid attempt to remove insets from the tracking scroll view.");
+  if (!scrollView || scrollView == _trackingScrollView) {
     return;
   }
 
@@ -1164,15 +1166,16 @@ static BOOL isRunningiOS10_3OrAbove() {
 #endif  // #if 0
 #endif  // #if DEBUG
 
-  // If this header is shared by many scroll views then we leave the insets when switching the
-  // tracking scroll view.
-  if (!_sharedWithManyScrollViews) {
-    [self fhv_removeInsetsFromScrollView:_trackingScrollView];
-  }
+  UIScrollView *oldTrackingScrollView = _trackingScrollView;
 
   BOOL wasTrackingScrollView = _trackingScrollView != nil;
-
   _trackingScrollView = trackingScrollView;
+
+  // If this header is shared by many scroll views then we leave the insets when switching the
+  // tracking scroll view.
+  if (!_sharedWithManyScrollViews && wasTrackingScrollView) {
+    [self fhv_removeInsetsFromScrollView:oldTrackingScrollView];
+  }
 
   _shiftAccumulatorLastContentOffsetIsValid = NO;
   _shiftAccumulatorLastContentOffset = _trackingScrollView.contentOffset;

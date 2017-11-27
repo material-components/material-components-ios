@@ -75,17 +75,17 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
                    ];
 
    _opacities = @[
-                  [NSNumber numberWithFloat:[MDCTypography headlineFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography titleFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography subheadFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography body2FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography body1FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography captionFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography buttonFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography display1FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography display2FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography display3FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography display4FontOpacity]]
+                  @([MDCTypography headlineFontOpacity]),
+                  @([MDCTypography titleFontOpacity]),
+                  @([MDCTypography subheadFontOpacity]),
+                  @([MDCTypography body2FontOpacity]),
+                  @([MDCTypography body1FontOpacity]),
+                  @([MDCTypography captionFontOpacity]),
+                  @([MDCTypography buttonFontOpacity]),
+                  @([MDCTypography display1FontOpacity]),
+                  @([MDCTypography display2FontOpacity]),
+                  @([MDCTypography display3FontOpacity]),
+                  @([MDCTypography display4FontOpacity])
                   ];
 
    [[NSNotificationCenter defaultCenter] addObserver:self

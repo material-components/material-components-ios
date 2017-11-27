@@ -38,6 +38,8 @@ static NSString *const MDCMultilineTextFieldMinimumLinesKey = @"MDCMultilineText
 static NSString *const MDCMultilineTextFieldMultilineDelegateKey =
     @"MDCMultilineTextFieldMultilineDelegateKey";
 static NSString *const MDCMultilineTextFieldTextViewKey = @"MDCMultilineTextFieldTextViewKey";
+static NSString *const MDCMultilineTextFieldTrailingViewKey =
+    @"MDCMultilineTextFieldTrailingViewKey";
 static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     @"MDCMultilineTextFieldTrailingViewModeKey";
 
@@ -112,6 +114,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     }
     _multilineDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldMultilineDelegateKey];
 
+    _trailingView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTrailingViewKey];
     _trailingViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCMultilineTextFieldTrailingViewModeKey];
   }
@@ -134,6 +137,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [aCoder encodeConditionalObject:self.multilineDelegate
                            forKey:MDCMultilineTextFieldMultilineDelegateKey];
   [aCoder encodeObject:self.textView forKey:MDCMultilineTextFieldTextViewKey];
+  [aCoder encodeObject:self.trailingView forKey:MDCMultilineTextFieldTrailingViewKey];
   [aCoder encodeInteger:self.trailingViewMode forKey:MDCMultilineTextFieldTrailingViewModeKey];
 }
 

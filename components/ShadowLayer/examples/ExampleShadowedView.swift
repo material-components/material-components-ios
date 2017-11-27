@@ -28,14 +28,4 @@ class ExampleShadowedView: UIView {
   var shadowLayer: MDCShadowLayer {
     return self.layer as! MDCShadowLayer
   }
-
-  var elevation: ShadowElevation {
-    get {
-      return self.shadowLayer.elevation
-    }
-    set {
-      self.shadowLayer.elevation = newValue
-    }
-  }
-
 }
