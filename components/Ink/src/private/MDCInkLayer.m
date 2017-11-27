@@ -50,11 +50,14 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   return self;
 }
 
-- (void)setFrame:(CGRect)frame {
-  [super setFrame:frame];
-  self.initialRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(frame), CGRectGetWidth(frame)) / 2 * 0.6f);
-  self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(frame), CGRectGetWidth(frame)) / 2 + 10.f);
+- (void)setNeedsLayout {
+  [super setNeedsLayout];
+  [self setRadiiWithRect:self.bounds];
+}
+
+- (void)setRadiiWithRect:(CGRect)rect {
+  self.initialRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * 0.6f);
+  self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 + 10.f);
 }
 
 - (void)startAnimationAtPoint:(CGPoint)point {
