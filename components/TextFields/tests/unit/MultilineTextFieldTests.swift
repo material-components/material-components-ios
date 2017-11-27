@@ -154,6 +154,14 @@ class MultilineTextFieldTests: XCTestCase {
     XCTAssertEqual(textField.textInsetsMode, .never)
   }
 
+  func testTrailingView() {
+    let trailingView = UIView()
+    let textField = MDCMultilineTextField()
+
+    textField.trailingView = trailingView
+    XCTAssertEqual(textField.trailingView, trailingView)
+  }
+
   func testUnderlineSetters() {
     let textField = MDCMultilineTextField()
 

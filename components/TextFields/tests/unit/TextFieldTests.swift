@@ -101,6 +101,14 @@ class TextFieldTests: XCTestCase {
     XCTAssertNotEqual(UIFont.systemFont(ofSize: UIFont.smallSystemFontSize), textField.font)
   }
 
+  func testLeadingingView() {
+    let leadingView = UIView()
+    let textField = MDCTextField()
+
+    textField.leadingView = leadingView
+    XCTAssertEqual(textField.leadingView, leadingView)
+  }
+
   func testMDCDynamicTypeAPI() {
     let textField = MDCTextField()
 
