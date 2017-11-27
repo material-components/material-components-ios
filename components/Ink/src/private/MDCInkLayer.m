@@ -52,7 +52,8 @@ static NSString *const kMDCInkLayerScaleString = @"transform.scale";
 
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
-  self.initialRadius = (CGFloat)(MDCHypot(CGRectGetHeight(frame), CGRectGetWidth(frame)) / 2 * 0.6);
+  self.initialRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(frame), CGRectGetWidth(frame)) / 2 * 0.6f);
   self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(frame), CGRectGetWidth(frame)) / 2 + 10.f);
 }
 
