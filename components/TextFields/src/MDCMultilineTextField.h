@@ -18,6 +18,8 @@
 
 #import "MDCTextInput.h"
 
+@class MDCIntrinsicHeightTextView;
+
 @protocol MDCMultilineTextInputDelegate;
 @protocol MDCMultilineTextInputLayoutDelegate;
 
@@ -67,7 +69,7 @@
 /**
  Embedded textView. Can be set from storyboard or will be auto-created during initialization.
  */
-@property(nonatomic, nullable, weak) IBOutlet UITextView *textView;
+@property(nonatomic, nullable, strong) IBOutlet MDCIntrinsicHeightTextView *textView;
 
 @end
 

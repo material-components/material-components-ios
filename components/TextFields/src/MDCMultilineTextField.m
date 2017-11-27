@@ -16,6 +16,7 @@
 
 #import "MDCMultilineTextField.h"
 
+#import "MDCIntrinsicHeightTextView.h"
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputController.h"
@@ -46,7 +47,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 @interface MDCMultilineTextField () {
   UIColor *_cursorColor;
 
-  UITextView *_textView;
+  MDCIntrinsicHeightTextView *_textView;
 }
 
 @property(nonatomic, assign, getter=isEditing) BOOL editing;
@@ -77,6 +78,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
+    [self setupTextView];
+
     _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     [self commonMDCMultilineTextFieldInitialization];
@@ -90,12 +94,13 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if (self) {
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
       _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
-      [self setupTextView];
-    } else if (!_textView) {
-      // It's expected that this will be created by the fundament above. This is a catch.
-      _textView = [[UITextView alloc] initWithFrame:CGRectZero];
-      [self setupTextView];
     }
+    if (!_textView) {
+      _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
+    }
+    // It should be noted that setupTextView sets many properties of the textView that may have
+    // been encoded differently.
+    [self setupTextView];
 
     MDCTextInputCommonFundament *fundament =
         [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
@@ -361,7 +366,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                     attribute:NSLayoutAttributeTop
                                                    multiplier:1
                                                      constant:self.textInsets.top];
-    self.textViewTop.priority = UILayoutPriorityDefaultLow;
+    self.textViewTop.priority = UILayoutPriorityDefaultLow + 1;
     self.textViewTop.active = YES;
   }
   self.textViewTop.constant = self.textInsets.top;
@@ -388,7 +393,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                  attribute:NSLayoutAttributeNotAnAttribute
                 multiplier:1
                   constant:[self estimatedTextViewLineHeight] * self.minimumLines];
-    self.textViewMinHeight.priority = UILayoutPriorityDefaultLow;
+    self.textViewMinHeight.priority = UILayoutPriorityDefaultLow + 1;
   }
   self.textViewMinHeight.active = YES;
   self.textViewMinHeight.constant = [self estimatedTextViewLineHeight] * self.minimumLines;
@@ -688,16 +693,16 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.fundament.textInsetsMode = textInsetsMode;
 }
 
-- (UITextView *)textView {
+- (MDCIntrinsicHeightTextView *)textView {
   if (!_textView) {
-    _textView = [[UITextView alloc] initWithFrame:CGRectZero];
+    _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
     [self setupTextView];
     [self setupUnderlineConstraints];
   }
   return _textView;
 }
 
-- (void)setTextView:(UITextView *)textView {
+- (void)setTextView:(MDCIntrinsicHeightTextView *)textView {
   if (![_textView isEqual:textView]) {
     [_textView removeFromSuperview];
     _textView = textView;
