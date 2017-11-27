@@ -52,6 +52,7 @@ class MultilineTextFieldTests: XCTestCase {
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
+    textField.trailingViewMode = .never
     textField.underline?.color = .red
     textField.underline?.lineHeight = 10
 
@@ -77,6 +78,7 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
+      XCTAssertEqual(textField.trailingViewMode, textFieldCopy.trailingViewMode)
       XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
       XCTAssertEqual(textField.underline?.lineHeight, textFieldCopy.underline?.lineHeight)
     } else {
@@ -113,6 +115,11 @@ class MultilineTextFieldTests: XCTestCase {
     controller.characterCountMax = 40
     textField.textInsetsMode = .never
 
+    let trailingView = UIView()
+    trailingView.backgroundColor = .blue
+    textField.trailingView = trailingView
+    textField.trailingViewMode = .never
+
     let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
     XCTAssertNotNil(serializedInput)
 
@@ -129,11 +136,14 @@ class MultilineTextFieldTests: XCTestCase {
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)
 
+    XCTAssertEqual(textField.textInsetsMode, unserializedInput?.textInsetsMode)
+
+    XCTAssertEqual(textField.trailingView?.backgroundColor,
+                   unserializedInput?.trailingView?.backgroundColor)
+    XCTAssertEqual(textField.trailingViewMode, unserializedInput?.trailingViewMode)
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
     XCTAssertEqual(textField.trailingUnderlineLabel.text,
                    unserializedInput?.trailingUnderlineLabel.text)
-
-    XCTAssertEqual(textField.textInsetsMode, unserializedInput?.textInsetsMode)
   }
 
   func testSizing() {
