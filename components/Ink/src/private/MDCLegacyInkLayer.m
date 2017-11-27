@@ -40,8 +40,7 @@ static inline CGFloat MDCLegacyInkLayerRadiusBounds(CGFloat maxRippleRadius,
         NSLog(@"Implementation of MDCInkView with |MDCInkStyle| MDCInkStyleBounded and "
               @"maxRippleRadius has changed.\n\n"
               @"MDCInkStyleBounded ignores maxRippleRadius. "
-              @"Please use |MDCInkStyle| MDCInkStyleUnbounded to continue using maxRippleRadius. "
-              @"For implementation questions, please email shepj@google.com");
+              @"Please use |MDCInkStyle| MDCInkStyleUnbounded to continue using maxRippleRadius.");
       });
       return inkLayerRectHypotenuse;
     }
