@@ -399,9 +399,8 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     CAAnimation *boundsAction = [animatedLayer animationForKey:@"bounds.size"];
     if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
       [self configureAnimation:(CABasicAnimation *)boundsAction];
+      [layer addAnimation:self.animation forKey:event];
     }
-
-    [layer addAnimation:self.animation forKey:event];
   }
 }
 
