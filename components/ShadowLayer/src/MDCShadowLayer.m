@@ -83,8 +83,8 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
 @interface MDCShadowLayer ()
 
-@property(nonatomic, strong) CAShapeLayer *topShadow;
-@property(nonatomic, strong) CAShapeLayer *bottomShadow;
+@property(nonatomic, strong) MDCAnimatedShapeLayer *topShadow;
+@property(nonatomic, strong) MDCAnimatedShapeLayer *bottomShadow;
 @property(nonatomic, strong) MDCAnimatedShapeLayer *topShadowMask;
 @property(nonatomic, strong) MDCAnimatedShapeLayer *bottomShadowMask;
 
@@ -127,8 +127,8 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
       MDCShadowLayer *otherLayer = (MDCShadowLayer *)layer;
       _elevation = otherLayer.elevation;
       _shadowMaskEnabled = otherLayer.isShadowMaskEnabled;
-      _bottomShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadow];
-      _topShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadow];
+      _bottomShadow = [[MDCAnimatedShapeLayer alloc] initWithLayer:otherLayer.bottomShadow];
+      _topShadow = [[MDCAnimatedShapeLayer alloc] initWithLayer:otherLayer.topShadow];
       _topShadowMask = [[MDCAnimatedShapeLayer alloc] initWithLayer:otherLayer.topShadowMask];
       _bottomShadowMask = [[MDCAnimatedShapeLayer alloc] initWithLayer:otherLayer.bottomShadowMask];
       [self commonMDCShadowLayerInit];
@@ -143,16 +143,18 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
  */
 - (void)commonMDCShadowLayerInit {
   if (!_bottomShadow) {
-    _bottomShadow = [CAShapeLayer layer];
+    _bottomShadow = [MDCAnimatedShapeLayer layer];
     _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
     _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
+    _bottomShadow.animationParentLayer = self;
     [self addSublayer:_bottomShadow];
   }
 
   if (!_topShadow) {
-    _topShadow = [CAShapeLayer layer];
+    _topShadow = [MDCAnimatedShapeLayer layer];
     _topShadow.backgroundColor = [UIColor clearColor].CGColor;
     _topShadow.shadowColor = [UIColor blackColor].CGColor;
+    _topShadow.animationParentLayer = self;
     [self addSublayer:_topShadow];
   }
 
@@ -179,7 +181,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     [self configureShadowLayerMaskForLayer:_topShadowMask];
     [self configureShadowLayerMaskForLayer:_bottomShadowMask];
     _topShadow.mask = _topShadowMask;
-//    [self addSublayer:_topShadowMask];
     _bottomShadow.mask = _bottomShadowMask;
   }
 }
@@ -201,11 +202,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   BOOL sizeChanged = !CGSizeEqualToSize(self.bounds.size, bounds.size);
   [super setBounds:bounds];
   if (sizeChanged) {
-    // Invalidate our shadow paths.
-    // we should mark shadowPaths invalid and then reassign during layout
-    // by setting to nil we can't animate between two paths
-//    _bottomShadow.shadowPath = nil;
-//    _topShadow.shadowPath = nil;
     _shadowPathIsInvalid = YES;
     [self setNeedsLayout];
   }
@@ -268,6 +264,8 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   if (_shadowMaskEnabled) {
     [self configureShadowLayerMaskForLayer:_topShadowMask];
     [self configureShadowLayerMaskForLayer:_bottomShadowMask];
+    _topShadow.mask = _topShadowMask;
+    _bottomShadow.mask = _bottomShadowMask;
   } else {
     _topShadow.mask = nil;
     _bottomShadow.mask = nil;
@@ -330,64 +328,21 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   }
   // Enforce shadowPaths because otherwise no shadows can be drawn. If a shadowPath
   // is already set, use that, otherwise fallback to just a regular rect because path.
-//  if (!_bottomShadow.shadowPath || _shadowPathIsInvalid) {
-//    if (self.shadowPath) {
-//      _bottomShadow.shadowPath = self.shadowPath;
-//    } else {
-//      _bottomShadow.shadowPath = [self defaultShadowPath].CGPath;
-//    }
-//  }
-//  if (!_topShadow.shadowPath || _shadowPathIsInvalid) {
-//    if (self.shadowPath) {
-//      _topShadow.shadowPath = self.shadowPath;
-//    } else {
-//      _topShadow.shadowPath = [self defaultShadowPath].CGPath;
-//    }
-//  }
-  if (_shadowPathIsInvalid) {
-    self.shadowPath = [self defaultShadowPath].CGPath;
-  }
-  _shadowPathIsInvalid = NO;
-}
-
-- (id<CAAction>)actionForKey:(NSString *)key {
-  if ([key isEqualToString:@"shadowPath"]) {
-    CAAnimation *boundsAction = [super animationForKey:@"bounds.size"];
-    if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
-      CABasicAnimation *boundsAnim = (CABasicAnimation *)boundsAction;
-      CGSize fromSize = [(NSValue*)boundsAnim.fromValue CGSizeValue];
-      CGSize toSize = [(NSValue*)boundsAnim.toValue CGSizeValue];
-      CGSize currentSize = self.bounds.size;
-
-      if (boundsAnim.additive) {
-        fromSize.width += currentSize.width;
-        fromSize.height += currentSize.height;
-        toSize.width += currentSize.width;
-        toSize.height += currentSize.height;
-      }
-
-      CABasicAnimation *shadowAnim = [boundsAnim copy];
-      shadowAnim.keyPath = @"shadowPath";
-      shadowAnim.fromValue = (__bridge id _Nullable)([self pathForSize:fromSize].CGPath);
-      shadowAnim.toValue = (__bridge id _Nullable)([self pathForSize:toSize].CGPath);
-      [_topShadow addAnimation:shadowAnim forKey:@"shadowPath"];
-
-      shadowAnim = [shadowAnim copy];
-      [_bottomShadow addAnimation:shadowAnim forKey:@"shadowPath"];
-
-      return [shadowAnim copy];
+  if (!_bottomShadow.shadowPath || _shadowPathIsInvalid) {
+    if (self.shadowPath) {
+      _bottomShadow.shadowPath = self.shadowPath;
+    } else {
+      _bottomShadow.shadowPath = [self defaultShadowPath].CGPath;
     }
   }
-  return [super actionForKey:key];
-}
-
-- (UIBezierPath *)pathForSize:(CGSize)size {
-  CGRect rect = (CGRect) { CGPointZero, size };
-  CGFloat cornerRadius = self.cornerRadius;
-  if (0.0 < cornerRadius) {
-    return [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius];
+  if (!_topShadow.shadowPath || _shadowPathIsInvalid) {
+    if (self.shadowPath) {
+      _topShadow.shadowPath = self.shadowPath;
+    } else {
+      _topShadow.shadowPath = [self defaultShadowPath].CGPath;
+    }
   }
-  return [UIBezierPath bezierPathWithRect:rect];
+  _shadowPathIsInvalid = NO;
 }
 
 @end

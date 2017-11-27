@@ -16,42 +16,25 @@
 
 #import "MDCAnimatedShapeLayer.h"
 
-#if TARGET_IPHONE_SIMULATOR
-UIKIT_EXTERN float UIAnimationDragCoefficient(void); // UIKit private drag coefficient.
-#endif
-
-static inline float MDCSimulatorAnimationDragCoefficient(void) {
-#if TARGET_IPHONE_SIMULATOR
-  return UIAnimationDragCoefficient();
-#else
-  return 1.0f;
-#endif
-}
-
 @interface MDCPendingAnimation : NSObject <CAAction>
 @property(nonatomic, strong) NSString *keyPath;
 @property(nonatomic, strong) CAAnimation *animation;
 @end
 
-static CGFloat MDCAnimatedShapeLayerDuration = 0;
-
 @implementation MDCAnimatedShapeLayer
-
-+ (CGFloat)duration {
-  return MDCAnimatedShapeLayerDuration;
-}
-
-+ (void)setDuration:(CFTimeInterval)duration {
-  MDCAnimatedShapeLayerDuration = duration;
-}
 
 - (id<CAAction>)actionForKey:(NSString *)key {
   if ([key isEqualToString:@"path"]) {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:key];
     animation.fromValue = CFBridgingRelease(CGPathCreateCopy(self.presentationLayer.path));
 
-//    id<CAAction, NSObject> boundsAction = (id<CAAction, NSObject>)[super actionForKey:@"bounds"];
+    MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
+    pendingAnim.animation = animation;
 
+    return pendingAnim;
+  } else if ([key isEqualToString:@"shadowPath"]) {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:key];
+    animation.fromValue = CFBridgingRelease(CGPathCreateCopy(self.presentationLayer.shadowPath));
 
     MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
     pendingAnim.animation = animation;
@@ -87,7 +70,7 @@ static CGFloat MDCAnimatedShapeLayerDuration = 0;
   self.animation.fillMode = template.fillMode;
   self.animation.repeatCount = template.repeatCount;
   self.animation.repeatDuration = template.repeatDuration;
-  self.animation.speed = template.speed / MDCSimulatorAnimationDragCoefficient();
+  self.animation.speed = template.speed;
   self.animation.timingFunction = template.timingFunction;
   self.animation.timeOffset = template.timeOffset;
 }

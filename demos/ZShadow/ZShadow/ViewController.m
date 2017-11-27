@@ -57,7 +57,7 @@
   self.greenBannerLeadingConstraintCollapsed.active = !self.greenBannerLeadingConstraintCollapsed.active;
   self.blueBannerLeadingConstraintCollapsed.active = !self.blueBannerLeadingConstraintCollapsed.active;
 
-  [UIView animateWithDuration:5 animations:^{
+  [UIView animateWithDuration:1 animations:^{
     [self.view layoutIfNeeded];
   }];
 }

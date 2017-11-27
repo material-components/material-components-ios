@@ -19,6 +19,5 @@
 @interface MDCAnimatedShapeLayer : CAShapeLayer
 
 @property(nonatomic, weak) CALayer *animationParentLayer;
-@property(class, nonatomic, readwrite) CGFloat duration;
 
 @end
