@@ -21,8 +21,8 @@
 
 @interface MDCInkView () <MDCInkLayerDelegate>
 
-@property(nonatomic, assign) MDCInkCompletionBlock startInkRippleCompletionBlock;
-@property(nonatomic, assign) MDCInkCompletionBlock endInkRippleCompletionBlock;
+@property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
+@property(nonatomic, copy) MDCInkCompletionBlock endInkRippleCompletionBlock;
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
 @property(nonatomic, strong) NSMutableArray<MDCInkLayer *> *inkLayers;
 
@@ -63,7 +63,7 @@
 
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
-  self.activeInkLayer.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
+  self.activeInkLayer.bounds = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
 }
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {

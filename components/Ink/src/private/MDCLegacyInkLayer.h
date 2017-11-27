@@ -37,7 +37,7 @@
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 
 /** Set the foreground color of the ink. */
-@property(nonatomic, strong) UIColor *inkColor;
+@property(nonatomic, strong, nonnull) UIColor *inkColor;
 
 /** Spread duration. */
 @property(nonatomic, readonly, assign) NSTimeInterval spreadDuration;
@@ -78,7 +78,7 @@
  @param completionBlock Block called after the completion of the animation.
  @param point Point at which the ink spreads from.
  */
-- (void)spreadFromPoint:(CGPoint)point completion:(void (^)(void))completionBlock;
+- (void)spreadFromPoint:(CGPoint)point completion:(void (^_Nullable)(void))completionBlock;
 
 /**
  Dissipate ink blast, should be called on touch up.
@@ -87,7 +87,7 @@
 
  @param completionBlock Block called after the completion of the evaporation.
  */
-- (void)evaporateWithCompletion:(void (^)(void))completionBlock;
+- (void)evaporateWithCompletion:(void (^_Nullable)(void))completionBlock;
 
 /**
  Dissipates the ink blast, but condenses to a point. Used for touch exit or cancel.
@@ -97,6 +97,6 @@
  @param point Evaporate the ink towards the point.
  @param completionBlock Block called after the completion of the evaporation.
  */
-- (void)evaporateToPoint:(CGPoint)point completion:(void (^)(void))completionBlock;
+- (void)evaporateToPoint:(CGPoint)point completion:(void (^_Nullable)(void))completionBlock;
 
 @end

@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -32,9 +32,10 @@
 @interface MDCInkLayer : CAShapeLayer
 
 /**
- Ink layer animation delegate.
+ Ink layer animation delegate. Clients set this delegate to receive updates when ink layer
+ animations start and end.
  */
-@property(nonatomic, weak) id<MDCInkLayerDelegate> animationDelegate;
+@property(nonatomic, weak, nullable) id<MDCInkLayerDelegate> animationDelegate;
 
 /**
  The start ink ripple spread animation has started and is active.
@@ -48,11 +49,15 @@
 
 /**
  The radius the ink ripple grows to when ink ripple ends.
+
+ Default value is half the diagonal of the containing frame plus 10pt.
  */
 @property(nonatomic, assign) CGFloat finalRadius;
 
 /**
  The radius the ink ripple starts to grow from when the ink ripple begins.
+
+ Default value is half the diagonal of the containing frame multiplied by 0.6.
  */
 @property(nonatomic, assign) CGFloat initialRadius;
 
@@ -64,7 +69,7 @@
 /**
  The color of the ink ripple.
  */
-@property(nonatomic, strong) UIColor *inkColor;
+@property(nonatomic, strong, nonnull) UIColor *inkColor;
 
 /**
  Starts the ink ripple animation at a specified point.
@@ -85,7 +90,8 @@
 @end
 
 /**
- Delegate protocol for the MDCInkLayer.
+ Delegate protocol for the MDCInkLayer. Clients may implement this protocol to receive updates when
+ ink layer animations start and end.
  */
 @protocol MDCInkLayerDelegate <CALayerDelegate>
 
@@ -96,13 +102,13 @@
 
  @param inkLayer The MDCInkLayer that starts animating.
  */
-- (void)inkLayerAnimationDidStart:(MDCInkLayer *)inkLayer;
+- (void)inkLayerAnimationDidStart:(nonnull MDCInkLayer *)inkLayer;
 
 /**
  Called when the ink ripple animation ends.
 
  @param inkLayer The MDCInkLayer that ends animating.
  */
-- (void)inkLayerAnimationDidEnd:(MDCInkLayer *)inkLayer;
+- (void)inkLayerAnimationDidEnd:(nonnull MDCInkLayer *)inkLayer;
 
 @end

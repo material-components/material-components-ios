@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 @property(nonatomic, assign) MDCInkStyle inkStyle;
 
 /** The foreground color of the ink. The default value is defaultInkColor. */
-@property(nonatomic, strong, nonnull) UIColor *inkColor;
+@property(nonatomic, strong, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /** Default color used for ink if no color is specified. */
 @property(nonatomic, strong, readonly, nonnull) UIColor *defaultInkColor;
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  Use a custom center for the ink splash. If YES, then customInkCenter is used, otherwise the
  center of self.bounds is used. Default is NO.
 
- Ignored if updated ink is used.
+ Only used with legacy ink. Ignored if updated ink is used.
  */
 @property(nonatomic, assign) BOOL usesCustomInkCenter;
 
