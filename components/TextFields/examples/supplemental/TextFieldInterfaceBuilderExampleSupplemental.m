@@ -55,7 +55,7 @@
 }
 
 + (NSString *)catalogStoryboardName {
-  return @"TextFieldInterfaceBuilderExample";
+  return @"TextFieldInterfaceBuilderLegacyExample";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
