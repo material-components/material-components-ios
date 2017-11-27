@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  Use a custom center for the ink splash. If YES, then customInkCenter is used, otherwise the
  center of self.bounds is used. Default is NO.
 
- Only used with legacy ink. Ignored if updated ink is used.
+ Affects behavior only if usesLegacyInkRipple is enabled.
  */
 @property(nonatomic, assign) BOOL usesCustomInkCenter;
 
