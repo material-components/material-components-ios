@@ -122,7 +122,13 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return presentedViewFrame;
 }
 
+- (BOOL)isDrivenByMaterialMotion {
+  return self.presentedViewController.mdm_transitionController.activeTransition != nil;
+}
+
 - (void)presentationTransitionWillBegin {
+  [super presentationTransitionWillBegin];
+
   // Set the dimming view to the container's bounds and fully transparent.
   self.dimmingView.frame = self.containerView.bounds;
   self.dimmingView.alpha = 0.0f;
@@ -137,6 +143,21 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   self.presentedViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                                                         | UIViewAutoresizingFlexibleHeight);
   [self.presentedView addSubview:self.presentedViewController.view];
+
+  // Compatibility fall-back for when clients are using this presentation controller with
+  // MDCDialogTransitionController.
+  if (![self isDrivenByMaterialMotion]) {
+    id<UIViewControllerTransitionCoordinator> transitionCoordinator =
+          [self.presentedViewController transitionCoordinator];
+    if (transitionCoordinator) {
+      [transitionCoordinator animateAlongsideTransition:
+       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+         [self animateWithDirection:MDMTransitionDirectionForward];
+       } completion:nil];
+    } else {
+      [self animateWithDirection:MDMTransitionDirectionForward];
+    }
+  }
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -152,6 +173,25 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     // Transition was cancelled.
     [self.dimmingView removeFromSuperview];
     [self.presentedView removeFromSuperview];
+  }
+
+  [super presentationTransitionDidEnd:completed];
+}
+
+- (void)dismissalTransitionWillBegin {
+  [super dismissalTransitionWillBegin];
+
+  if (![self isDrivenByMaterialMotion]) {
+    id<UIViewControllerTransitionCoordinator> transitionCoordinator =
+          [self.presentedViewController transitionCoordinator];
+    if (transitionCoordinator) {
+      [transitionCoordinator animateAlongsideTransition:
+       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+         [self animateWithDirection:MDMTransitionDirectionBackward];
+       } completion:nil];
+    } else {
+      [self animateWithDirection:MDMTransitionDirectionBackward];
+    }
   }
 }
 
@@ -323,13 +363,17 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     [context transitionDidEnd];
   }];
 
-  MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
-  animator.shouldReverseValues = context.direction == MDMTransitionDirectionBackward;
+  [self animateWithDirection:context.direction];
 
-  MDMMotionTiming contentOpacity;
+  [CATransaction commit];
+}
+
+- (void)animateWithDirection:(MDMTransitionDirection)direction {
+  MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
+  animator.shouldReverseValues = direction == MDMTransitionDirectionBackward;
+
   MDMMotionTiming scrimOpacity;
-  if (context.direction == MDMTransitionDirectionForward) {
-    contentOpacity = MDCDialogTransitionMotionSpec.appearance.contentOpacity;
+  if (direction == MDMTransitionDirectionForward) {
     scrimOpacity = MDCDialogTransitionMotionSpec.appearance.scrimOpacity;
 
     // Only scale in when appearing.
@@ -340,21 +384,13 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
                         keyPath:MDMKeyPathScale];
 
   } else {
-    contentOpacity = MDCDialogTransitionMotionSpec.disappearance.contentOpacity;
     scrimOpacity = MDCDialogTransitionMotionSpec.disappearance.scrimOpacity;
   }
-
-  [animator animateWithTiming:contentOpacity
-                      toLayer:self.presentedView.layer
-                   withValues:@[@0, @1]
-                      keyPath:MDMKeyPathOpacity];
 
   [animator animateWithTiming:scrimOpacity
                       toLayer:self.dimmingView.layer
                    withValues:@[@0, @1]
                       keyPath:MDMKeyPathOpacity];
-
-  [CATransaction commit];
 }
 
 @end

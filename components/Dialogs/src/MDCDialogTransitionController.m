@@ -49,7 +49,6 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
   UIViewController *toPresentingViewController = toViewController.presentingViewController;
   BOOL presenting = (toPresentingViewController == fromViewController) ? YES : NO;
 
-  UIViewController *animatingViewController = presenting ? toViewController : fromViewController;
   UIView *animatingView = presenting ? toView : fromView;
 
   UIView *containerView = transitionContext.containerView;
@@ -61,7 +60,6 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
   CGFloat startingAlpha = presenting ? 0.0f : 1.0f;
   CGFloat endingAlpha = presenting ? 1.0f : 0.0f;
 
-  animatingView.frame = [transitionContext finalFrameForViewController:animatingViewController];
   animatingView.alpha = startingAlpha;
 
   NSTimeInterval transitionDuration = [self transitionDuration:transitionContext];

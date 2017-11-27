@@ -59,7 +59,27 @@
 #pragma mark - MDMTransition
 
 - (void)startWithContext:(id<MDMTransitionContext>)context {
-  [context transitionDidEnd]; // All animations are handled in the presentation controller.
+  [CATransaction begin];
+  [CATransaction setCompletionBlock:^{
+    [context transitionDidEnd];
+  }];
+
+  MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
+  animator.shouldReverseValues = context.direction == MDMTransitionDirectionBackward;
+
+  MDMMotionTiming contentOpacity;
+  if (context.direction == MDMTransitionDirectionForward) {
+    contentOpacity = MDCDialogTransitionMotionSpec.appearance.contentOpacity;
+  } else {
+    contentOpacity = MDCDialogTransitionMotionSpec.disappearance.contentOpacity;
+  }
+
+  [animator animateWithTiming:contentOpacity
+                      toLayer:context.presentationController.presentedView.layer
+                   withValues:@[@0, @1]
+                      keyPath:MDMKeyPathOpacity];
+
+  [CATransaction commit];
 }
 
 #pragma mark - Public
