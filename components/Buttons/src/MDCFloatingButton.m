@@ -72,6 +72,10 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
   self = [super initWithCoder:aDecoder];
   if (self) {
     _shape = [aDecoder decodeIntegerForKey:MDCFloatingButtonShapeKey];
+    // Required to migrate any previously-archived FloatingButtons from .largeIcon shape value
+    if (@(_shape).integerValue >= 2) {
+      _shape = MDCFloatingButtonShapeDefault;
+    }
   }
   return self;
 }
@@ -89,8 +93,6 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
       return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
     case MDCFloatingButtonShapeMini:
       return CGSizeMake([[self class] miniDimension], [[self class] miniDimension]);
-    case MDCFloatingButtonShapeLargeIcon:
-      return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
   }
 }
 
@@ -100,8 +102,6 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
       return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
     case MDCFloatingButtonShapeMini:
       return CGSizeMake([[self class] miniDimension], [[self class] miniDimension]);
-    case MDCFloatingButtonShapeLargeIcon:
-      return CGSizeMake([[self class] defaultDimension], [[self class] defaultDimension]);
   }
 }
 
@@ -116,11 +116,9 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 - (UIEdgeInsets)defaultContentEdgeInsets {
   switch (_shape) {
     case MDCFloatingButtonShapeDefault:
-      return UIEdgeInsetsMake(16, 16, 16, 16);
+      return UIEdgeInsetsZero;
     case MDCFloatingButtonShapeMini:
       return UIEdgeInsetsMake(8, 8, 8, 8);
-    case MDCFloatingButtonShapeLargeIcon:
-      return UIEdgeInsetsMake(10, 10, 10, 10);
   }
 }
 
@@ -131,8 +129,6 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
     case MDCFloatingButtonShapeMini:
       // Increase the touch target from (40, 40) to the minimum (48, 48)
       return UIEdgeInsetsMake(-4, -4, -4, -4);
-    case MDCFloatingButtonShapeLargeIcon:
-      return UIEdgeInsetsZero;
   }
 }
 

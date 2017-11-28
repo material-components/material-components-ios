@@ -19,10 +19,58 @@
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 
+@interface TestFloatingButtonSubclass : MDCFloatingButton
+@property (nonatomic, assign) NSInteger defaultShape;
+@end
+
+@implementation TestFloatingButtonSubclass
+
+- (instancetype)initWithFrame:(CGRect)frame shape:(MDCFloatingButtonShape)shape {
+  self = [super initWithFrame:frame shape:shape];
+  if (self) {
+    [self setValue:@(2) forKey:@"shape"];
+  }
+  return self;
+}
+
+@end
+
 @interface FloatingButtonsTests : XCTestCase
 @end
 
 @implementation FloatingButtonsTests
+
+- (void)testEncoding {
+  // Given
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] initWithFrame:CGRectMake(1, 2, 3, 4)
+                                                                 shape:MDCFloatingButtonShapeMini];
+
+  // When
+  NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:button];
+  MDCFloatingButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
+  [button sizeToFit];
+  [unarchivedButton sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(button.bounds, unarchivedButton.bounds));
+}
+
+- (void)testShapeMigrationFromLargeIcon {
+  // Given
+  TestFloatingButtonSubclass *button =
+      [[TestFloatingButtonSubclass alloc] initWithFrame:CGRectZero
+                                                  shape:MDCFloatingButtonShapeMini];
+  [button sizeToFit];
+
+  // When
+  NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:button];
+  MDCFloatingButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
+  [unarchivedButton sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(unarchivedButton.bounds, CGRectMake(0, 0, 56, 56)));
+  XCTAssertEqualObjects([unarchivedButton valueForKey:@"shape"], @(0));
+}
 
 - (void)testDefaultElevationsForState {
   // Given
@@ -113,18 +161,14 @@
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
   MDCFloatingButton *defaultButton =
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
-  MDCFloatingButton *largeIconButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeLargeIcon];
 
   // When
   CGSize miniSize = [miniButton sizeThatFits:CGSizeZero];
   CGSize defaultSize = [defaultButton sizeThatFits:CGSizeZero];
-  CGSize largeIconSize = [largeIconButton sizeThatFits:CGSizeZero];
 
   // Then
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(40, 40), miniSize));
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(56, 56), defaultSize));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(56, 56), largeIconSize));
 }
 
 - (void)testIntrinsicContentSize {
@@ -133,18 +177,14 @@
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
   MDCFloatingButton *defaultButton =
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
-  MDCFloatingButton *largeIconButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeLargeIcon];
 
   // When
   CGSize miniSize = [miniButton intrinsicContentSize];
   CGSize defaultSize = [defaultButton intrinsicContentSize];
-  CGSize largeIconSize = [largeIconButton intrinsicContentSize];
 
   // Then
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(40, 40), miniSize));
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(56, 56), defaultSize));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(56, 56), largeIconSize));
 }
 
 - (void)testContentEdgeInsets {
@@ -153,18 +193,14 @@
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
   MDCFloatingButton *defaultButton =
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
-  MDCFloatingButton *largeIconButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeLargeIcon];
 
   // When
   UIEdgeInsets miniInsets = [miniButton contentEdgeInsets];
   UIEdgeInsets defaultInsets = [defaultButton contentEdgeInsets];
-  UIEdgeInsets largeIconInsets = [largeIconButton contentEdgeInsets];
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(8, 8, 8, 8), miniInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(16, 16, 16, 16), defaultInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(10, 10, 10, 10), largeIconInsets));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultInsets));
 }
 
 - (void)testDefaultHitAreaInsets {
@@ -173,14 +209,11 @@
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
   MDCFloatingButton *miniButton =
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
-  MDCFloatingButton *largeIconButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeLargeIcon];
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButton.hitAreaInsets));
   XCTAssertTrue(
       UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(-4, -4, -4, -4), miniButton.hitAreaInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, largeIconButton.hitAreaInsets));
 }
 
 - (void)testHitAreaInsetsSurviveSizeThatFits {
@@ -189,19 +222,15 @@
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
   MDCFloatingButton *miniButton =
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
-  MDCFloatingButton *largeIconButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeLargeIcon];
 
   // When
   [defaultButton sizeThatFits:CGSizeZero];
   [miniButton sizeThatFits:CGSizeZero];
-  [largeIconButton sizeThatFits:CGSizeZero];
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButton.hitAreaInsets));
   XCTAssertTrue(
       UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(-4, -4, -4, -4), miniButton.hitAreaInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, largeIconButton.hitAreaInsets));
 }
 
 - (void)testCornerRadius {
