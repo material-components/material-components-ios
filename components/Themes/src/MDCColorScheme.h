@@ -54,6 +54,17 @@
  */
 @property(nonatomic, strong, nonnull, readonly) UIColor *secondaryDarkColor;
 
+/**
+ The text color to be typically used as titles and subjects. This will currently be used as the color
+ of the alert controller title.
+ */
+@property(nonatomic, strong, nonnull, readonly) UIColor *primaryTextColor;
+/**
+ The text color to be typically used as the body or message. This will currently be used as the color
+ of the alert controller message.
+ */
+@property(nonatomic, strong, nonnull, readonly) UIColor *secondaryTextColor;
+
 @end
 
 /**
@@ -68,8 +79,24 @@
 @property(nonatomic, strong, nonnull, readonly) UIColor *secondaryColor;
 @property(nonatomic, strong, nonnull, readonly) UIColor *secondaryLightColor;
 @property(nonatomic, strong, nonnull, readonly) UIColor *secondaryDarkColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *primaryTextColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *secondaryTextColor;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
+
+/**
+ Initializes and returns a color scheme given primary, primary light, primary dark, secondary,
+ secondary light, secondary dark, primary text and secondary text colors.
+ */
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor
+                         secondaryLightColor:(nonnull UIColor *)secondaryLightColor
+                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor
+                            primaryTextColor:(nonnull UIColor *)primaryTextColor
+                          secondaryTextColor:(nonnull UIColor *)secondaryTextColor
+    NS_DESIGNATED_INITIALIZER;
 
 /**
  Initializes and returns a color scheme given primary, primary light, primary dark, secondary,
@@ -80,8 +107,7 @@
                             primaryDarkColor:(nonnull UIColor *)primaryDarkColor
                               secondaryColor:(nonnull UIColor *)secondaryColor
                          secondaryLightColor:(nonnull UIColor *)secondaryLightColor
-                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor
-    NS_DESIGNATED_INITIALIZER;
+                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor;
 
 /**
  Initializes and returns a color scheme given a primary color. Primary light and primary dark colors
@@ -103,5 +129,14 @@
  */
 - (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
                               secondaryColor:(nonnull UIColor *)secondaryColor;
+
+/**
+ Initializes and returns a color scheme given primary, secondary colors, as well as primary and secondary text colors. Light and dark colors
+ are automatically generated.
+ */
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor
+                            primaryTextColor:(nonnull UIColor *)primaryTextColor
+                          secondaryTextColor:(nonnull UIColor *)secondaryTextColor;
 
 @end
