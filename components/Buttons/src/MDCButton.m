@@ -363,7 +363,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
-  if (_inkView.inkStyle == MDCInkStyleUnbounded) {
+  if (_inkView.inkStyle == MDCInkStyleUnbounded && _inkView.usesLegacyInkRipple) {
     CGRect contentRect = [self contentRectForBounds:self.bounds];
     CGPoint contentCenterPoint =
         CGPointMake(CGRectGetMidX(contentRect), CGRectGetMidY(contentRect));

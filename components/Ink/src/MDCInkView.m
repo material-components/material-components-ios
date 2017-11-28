@@ -80,7 +80,7 @@
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
 
   // When bounds change ensure all ink layer bounds are changed too.
-  for (CALayer *layer in self.layer.sublayers) {
+  for (CALayer *layer in _maskLayer.sublayers) {
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
@@ -90,15 +90,17 @@
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkStyle = inkStyle;
-  switch (inkStyle) {
-    case MDCInkStyleBounded:
-      self.inkLayer.masksToBounds = YES;
-      self.inkLayer.bounded = YES;
-      break;
-    case MDCInkStyleUnbounded:
-      self.inkLayer.masksToBounds = NO;
-      self.inkLayer.bounded = NO;
-      break;
+  if (self.usesLegacyInkRipple) {
+    switch (inkStyle) {
+      case MDCInkStyleBounded:
+        self.inkLayer.masksToBounds = YES;
+        self.inkLayer.bounded = YES;
+        break;
+      case MDCInkStyleUnbounded:
+        self.inkLayer.masksToBounds = NO;
+        self.inkLayer.bounded = NO;
+        break;
+    }
   }
 }
 
@@ -166,6 +168,7 @@
 
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
+    self.maskLayer.frame = self.bounds;
     [self.maskLayer addSublayer:inkLayer];
     [inkLayer startAnimationAtPoint:point];
     self.activeInkLayer = inkLayer;
@@ -186,7 +189,7 @@
   if (self.usesLegacyInkRipple) {
     [self.inkLayer resetAllInk:animated];
   } else {
-    for (CALayer *layer in self.layer.sublayers) {
+    for (CALayer *layer in _maskLayer.sublayers) {
       if ([layer isKindOfClass:[MDCInkLayer class]]) {
         MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
         if (animated) {
