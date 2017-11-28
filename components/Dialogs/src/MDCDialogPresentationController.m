@@ -29,7 +29,7 @@ static CGFloat MDCDialogMinimumWidth = 280.0f;
 // Side margins set to 20 until we have a resolution
 static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
-@interface MDCDialogPresentationController () <MDMTransitionWithCustomDuration>
+@interface MDCDialogPresentationController () <MDMTransition>
 
 // View matching the container's bounds that dims the entire screen and catchs taps to dismiss.
 @property(nonatomic) UIView *dimmingView;
@@ -342,16 +342,6 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
                      self.presentedView.frame = presentedViewFrame;
                    }
                    completion:NULL];
-}
-
-#pragma mark - MDMTransitionWithCustomDuration
-
-- (NSTimeInterval)transitionDurationWithContext:(id<MDMTransitionContext>)context {
-  if (context.direction == MDMTransitionDirectionForward) {
-    return MDCDialogTransitionMotionSpec.appearance.scrimOpacity.duration;
-  } else {
-    return MDCDialogTransitionMotionSpec.disappearance.scrimOpacity.duration;
-  }
 }
 
 #pragma mark - MDMTransition

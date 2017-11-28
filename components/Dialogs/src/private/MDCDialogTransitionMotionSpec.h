@@ -23,11 +23,13 @@ typedef struct MDCDialogTransitionAppearanceTimings {
   MDMMotionTiming scrimOpacity;
   MDMMotionTiming contentScale;
   CGFloat contentScaleFromValue;
+  NSTimeInterval transitionDuration;
 } MDCDialogTransitionAppearanceTimings;
 
 typedef struct MDCDialogTransitionDisappearanceTimings {
   MDMMotionTiming contentOpacity;
   MDMMotionTiming scrimOpacity;
+  NSTimeInterval transitionDuration;
 } MDCDialogTransitionDisappearanceTimings;
 
 @interface MDCDialogTransitionMotionSpec: NSObject

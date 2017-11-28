@@ -60,9 +60,9 @@
 
 - (NSTimeInterval)transitionDurationWithContext:(id<MDMTransitionContext>)context {
   if (context.direction == MDMTransitionDirectionForward) {
-    return MDCDialogTransitionMotionSpec.appearance.contentOpacity.duration;
+    return MDCDialogTransitionMotionSpec.appearance.transitionDuration;
   } else {
-    return MDCDialogTransitionMotionSpec.disappearance.contentOpacity.duration;
+    return MDCDialogTransitionMotionSpec.disappearance.transitionDuration;
   }
 }
 
