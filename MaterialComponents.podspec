@@ -258,7 +258,7 @@ Pod::Spec.new do |mdc|
       spec.dependency "MaterialComponents/private/KeyboardWatcher"
       spec.dependency "MDFInternationalization"
       spec.dependency "MotionAnimator", "~> 2.5"
-      spec.dependency "MotionTransitioning", "~> 4.0"
+      spec.dependency "MotionTransitioning", "~> 5.0"
     end
     component.subspec "ColorThemer" do |spec|
       spec.ios.deployment_target = '8.0'
