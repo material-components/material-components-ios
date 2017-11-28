@@ -23,14 +23,6 @@ static const float kAmbientShadowOpacity = 0.08f;
 static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey";
 static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShadowMaskEnabledKey";
 
-/**
- A CAShapeLayer that will implicitly animate path and shadowPath if bounds.size of the
- animationParentLayer is being animated.
- */
-@interface MDCAnimatedShapeLayer : CAShapeLayer
-@property(nonatomic, weak) CALayer *animationParentLayer;
-@end
-
 @interface MDCPendingAnimation : NSObject <CAAction>
 @property(nonatomic, strong) NSString *keyPath;
 @property(nonatomic, strong) id fromValue;
@@ -93,12 +85,12 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
 @end
 
-@interface MDCShadowLayer ()
+@interface MDCShadowLayer () <CALayerDelegate>
 
-@property(nonatomic, strong) MDCAnimatedShapeLayer *topShadow;
-@property(nonatomic, strong) MDCAnimatedShapeLayer *bottomShadow;
-@property(nonatomic, strong) MDCAnimatedShapeLayer *topShadowMask;
-@property(nonatomic, strong) MDCAnimatedShapeLayer *bottomShadowMask;
+@property(nonatomic, strong) CAShapeLayer *topShadow;
+@property(nonatomic, strong) CAShapeLayer *bottomShadow;
+@property(nonatomic, strong) CAShapeLayer *topShadowMask;
+@property(nonatomic, strong) CAShapeLayer *bottomShadowMask;
 
 @end
 
@@ -139,10 +131,10 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
       MDCShadowLayer *otherLayer = (MDCShadowLayer *)layer;
       _elevation = otherLayer.elevation;
       _shadowMaskEnabled = otherLayer.isShadowMaskEnabled;
-      _bottomShadow = [[MDCAnimatedShapeLayer alloc] initWithLayer:otherLayer.bottomShadow];
-      _topShadow = [[MDCAnimatedShapeLayer alloc] initWithLayer:otherLayer.topShadow];
-      _topShadowMask = [[MDCAnimatedShapeLayer alloc] initWithLayer:otherLayer.topShadowMask];
-      _bottomShadowMask = [[MDCAnimatedShapeLayer alloc] initWithLayer:otherLayer.bottomShadowMask];
+      _bottomShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadow];
+      _topShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadow];
+      _topShadowMask = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadowMask];
+      _bottomShadowMask = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadowMask];
       [self commonMDCShadowLayerInit];
     }
   }
@@ -155,18 +147,18 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
  */
 - (void)commonMDCShadowLayerInit {
   if (!_bottomShadow) {
-    _bottomShadow = [MDCAnimatedShapeLayer layer];
+    _bottomShadow = [CAShapeLayer layer];
     _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
     _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
-    _bottomShadow.animationParentLayer = self;
+    _bottomShadow.delegate = self;
     [self addSublayer:_bottomShadow];
   }
 
   if (!_topShadow) {
-    _topShadow = [MDCAnimatedShapeLayer layer];
+    _topShadow = [CAShapeLayer layer];
     _topShadow.backgroundColor = [UIColor clearColor].CGColor;
     _topShadow.shadowColor = [UIColor blackColor].CGColor;
-    _topShadow.animationParentLayer = self;
+    _topShadow.delegate = self;
     [self addSublayer:_topShadow];
   }
 
@@ -180,12 +172,12 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
 
   if (!_topShadowMask) {
-    _topShadowMask = [MDCAnimatedShapeLayer layer];
-    _topShadowMask.animationParentLayer = self;
+    _topShadowMask = [CAShapeLayer layer];
+    _topShadowMask.delegate = self;
   }
   if (!_bottomShadowMask) {
-    _bottomShadowMask = [MDCAnimatedShapeLayer layer];
-    _bottomShadowMask.animationParentLayer = self;
+    _bottomShadowMask = [CAShapeLayer layer];
+    _bottomShadowMask.delegate = self;
   }
 
   // TODO(#1021): We shouldn't be calling property accessors in an init method.
@@ -324,6 +316,22 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
 }
 
+#pragma mark - CALayerDelegate
+
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
+  if ([event isEqualToString:@"path"] || [event isEqualToString:@"shadowPath"]) {
+    // We have to create a pending animation because if we are inside a UIKit animation block we
+    // won't know any properties of the animation block until it is commited.
+    MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
+    pendingAnim.fromValue = [layer.presentationLayer valueForKey:event];
+    pendingAnim.toValue = nil;
+    pendingAnim.keyPath = event;
+
+    return pendingAnim;
+  }
+  return nil;
+}
+
 #pragma mark - Private
 
 - (void)commonLayoutSublayers {
@@ -359,33 +367,15 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
 @end
 
-@implementation MDCAnimatedShapeLayer
-
-- (id<CAAction>)actionForKey:(NSString *)key {
-  if ([key isEqualToString:@"path"] || [key isEqualToString:@"shadowPath"]) {
-    // We have to create a pending animation because if we are inside a UIKit animation block we
-    // won't know any properties of the animation block until it is commited.
-    MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
-    pendingAnim.fromValue = [self.presentationLayer valueForKey:key];
-    pendingAnim.toValue = nil;
-    pendingAnim.keyPath = key;
-
-    return pendingAnim;
-  }
-  return [super actionForKey:key];
-}
-
-@end
-
 @implementation MDCPendingAnimation
 
 - (void)runActionForKey:(NSString *)event object:(id)anObject arguments:(NSDictionary *)dict {
-  if ([anObject isKindOfClass:[MDCAnimatedShapeLayer class]]) {
-    MDCAnimatedShapeLayer *layer = (MDCAnimatedShapeLayer *)anObject;
+  if ([anObject isKindOfClass:[CAShapeLayer class]]) {
+    CAShapeLayer *layer = (CAShapeLayer *)anObject;
 
     // In order to synchronize our animation with UIKit animations we have to fetch the resizing
     // animation created by UIKit and copy the configuration to our custom animation.
-    CALayer *animatedLayer = layer.animationParentLayer;
+    CALayer *animatedLayer = (CALayer *)layer.delegate;
     CAAnimation *boundsAction = [animatedLayer animationForKey:@"bounds.size"];
     if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
       CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
