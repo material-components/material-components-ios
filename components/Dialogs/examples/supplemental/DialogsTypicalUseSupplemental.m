@@ -19,14 +19,12 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import <Foundation/Foundation.h>
-
 #import "DialogsTypicalUseSupplemental.h"
 #import "MaterialApplication.h"
 #import "MaterialButtons.h"
+#import "MaterialCollections.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
-#import "MaterialCollections.h"
 
 #pragma mark - DialogsTypicalUseViewController
 

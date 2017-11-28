@@ -335,6 +335,15 @@ IB_DESIGNABLE
 @property(nonatomic) MDCFlexibleHeaderShiftBehavior shiftBehavior;
 
 /**
+ Hides the view by changing its alpha when the header shifts. Note that this only happens when the
+ header shifting behavior is set to MDCFlexibleHeaderShiftBehaviorEnabled.
+ */
+- (void)hideViewWhenShifted:(nonnull UIView *)view;
+
+/** Stops hiding the view when the header shifts. */
+- (void)stopHidingViewWhenShifted:(nonnull UIView *)view;
+
+/**
  If shiftBehavior is enabled, this property affects the manner in which the Header reappears when
  pulling content down in the tracking scroll view.
 

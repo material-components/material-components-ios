@@ -36,6 +36,16 @@
 @property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
 
 /**
+ Interactions with the tracking scroll view will affect the bottom sheet's drag behavior.
+
+ If no trackingScrollView is provided, then one will be inferred from the associated view
+ controller.
+
+ Changes to this value will be ignored after the bottom sheet controller has been presented.
+ */
+@property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
+/**
  The bottom sheet delegate.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomSheetControllerDelegate> delegate;

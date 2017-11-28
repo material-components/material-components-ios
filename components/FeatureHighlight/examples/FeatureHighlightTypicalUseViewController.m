@@ -14,9 +14,8 @@
  limitations under the License.
  */
 
-#import "FeatureHighlightExampleSupplemental.h"
-
 #import "MaterialFeatureHighlight.h"
+#import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightTypicalUseViewController
 

@@ -18,9 +18,9 @@
 
 #import <MotionAnimator/MotionAnimator.h>
 
-#import "MDCMaskedPresentationController.h"
-#import "MDCMaskedTransitionMotionForContext.h"
-#import "MDCMaskedTransitionMotionSpec.h"
+#import "private/MDCMaskedPresentationController.h"
+#import "private/MDCMaskedTransitionMotionForContext.h"
+#import "private/MDCMaskedTransitionMotionSpec.h"
 
 // Math utilities
 
@@ -81,7 +81,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 }
 
 - (void)startWithContext:(NSObject<MDMTransitionContext> *)context {
-  MDCMaskedTransitionMotionSpec spec = motionForContext(context);
+  MDCMaskedTransitionMotionSpecContext spec = MDCMaskedTransitionMotionSpecForContext(context);
   if (context.direction == MDMTransitionDirectionForward) {
     _shouldSlideWhenCollapsed = spec.shouldSlideWhenCollapsed;
   }
@@ -185,12 +185,12 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   [animator animateWithTiming:motion.iconFade
                       toLayer:_sourceView.layer
                    withValues:@[ @1, @0 ]
-                      keyPath:@"opacity"];
+                      keyPath:MDMKeyPathOpacity];
 
   [animator animateWithTiming:motion.contentFade
                       toLayer:context.foreViewController.view.layer
                    withValues:@[ @0, @1 ]
-                      keyPath:@"opacity"];
+                      keyPath:MDMKeyPathOpacity];
 
   // TODO(featherless): Support shadow + elevation changes. May need companion transition for this?
 
@@ -206,7 +206,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     [animator animateWithTiming:motion.floodBackgroundColor
                         toLayer:floodFillView.layer
                      withValues:@[ initialColor, finalColor ]
-                        keyPath:@"backgroundColor"];
+                        keyPath:MDMKeyPathBackgroundColor];
   }
 
   {
@@ -223,7 +223,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     [animator animateWithTiming:motion.maskTransformation
                         toLayer:shapeLayer
                      withValues:@[ @1, @(finalScale) ]
-                        keyPath:@"transform.scale.xy"
+                        keyPath:MDMKeyPathScale
                      completion:completion];
   }
 
@@ -231,13 +231,13 @@ static inline CGFloat LengthOfVector(CGVector vector) {
                       toLayer:maskedView.layer
                    withValues:@[ @(CGRectGetMidX(initialMaskedFrame)),
                                  @(CGRectGetMidX(finalMaskedFrame)) ]
-                      keyPath:@"position.x"];
+                      keyPath:MDMKeyPathX];
 
   [animator animateWithTiming:motion.verticalMovement
                       toLayer:maskedView.layer
                    withValues:@[ @(CGRectGetMidY(initialMaskedFrame)),
                                  @(CGRectGetMidY(finalMaskedFrame)) ]
-                      keyPath:@"position.y"];
+                      keyPath:MDMKeyPathY];
 
   [CATransaction commit];
 }

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialPalettes
 
 class PaletteTests: XCTestCase {
   // Creates a UIColor from a 24-bit RGB color encoded as an integer.

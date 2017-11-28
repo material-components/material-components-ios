@@ -16,6 +16,7 @@
 
 #import "MDCTextInputControllerLegacyFullWidth.h"
 
+#import "MDCIntrinsicHeightTextView.h"
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
@@ -26,7 +27,6 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
-#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 static const CGFloat MDCTextInputControllerLegacyFullWidthClearButtonImageSquareWidthHeight = 24.f;

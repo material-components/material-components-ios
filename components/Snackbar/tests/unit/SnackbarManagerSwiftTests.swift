@@ -23,7 +23,7 @@ class SnackbarManagerSwiftTests: XCTestCase {
     // Given
     let expectation = self.expectation(description: "completion")
 
-    guard let suspendedMessage = MDCSnackbarMessage(text: "") else { XCTAssert(false); return }
+    let suspendedMessage = MDCSnackbarMessage(text: "")
     suspendedMessage.duration = 0.05
     suspendedMessage.completionHandler = { (userInitiated) -> Void  in
       expectation.fulfill()

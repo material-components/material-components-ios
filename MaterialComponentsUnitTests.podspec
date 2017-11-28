@@ -1,8 +1,9 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsUnitTests"
-  s.version      = "37.0.0"
+  s.version      = "40.0.3"
   s.authors      = "The Material Components authors."
-  s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
+  s.summary      = "This spec is an aggregate of all the Material Components unit tests."
+  s.description  = "This spec is made for use in the MDC Catalog."
   s.homepage     = "https://github.com/material-components/material-components-ios"
   s.license      = 'Apache 2.0'
   s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{s.version}" }

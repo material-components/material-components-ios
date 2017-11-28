@@ -86,7 +86,7 @@
 }
 
 - (void)startWithContext:(NSObject<MDMTransitionContext> *)context {
-  MDCMaskedTransitionMotionSpec spec = motionForContext(context);
+  MDCMaskedTransitionMotionSpecContext spec = MDCMaskedTransitionMotionSpecForContext(context);
 
   MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
   animator.shouldReverseValues = context.direction == MDMTransitionDirectionBackward;
@@ -101,10 +101,17 @@
     [context.containerView addSubview:self.scrimView];
   }
 
+  [CATransaction begin];
+  [CATransaction setCompletionBlock:^{
+    [context transitionDidEnd];
+  }];
+
   [animator animateWithTiming:motion.scrimFade
                       toLayer:self.scrimView.layer
                    withValues:@[ @0, @1 ]
                       keyPath:@"opacity"];
+
+  [CATransaction commit];
 }
 
 @end

@@ -13,19 +13,16 @@
  See the License for the specific language governing permissions and
  limitations under the License. */
 
-/** Protocol implemented by a text field controlled by a |MDCTextFieldController|. */
-
-#import "MaterialTextFields.h"
+#import "MDCTextInput.h"
 
 extern const CGFloat MDCTextInputBorderRadius;
 extern const CGFloat MDCTextInputFullPadding;
 extern const CGFloat MDCTextInputHalfPadding;
 
+UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
+
 /** A controller for common traits shared by text inputs. */
 @interface MDCTextInputCommonFundament : NSObject <MDCTextInput, NSCopying, NSCoding>
-
-/** The color of the caret indicating where inputted characters will be placed (in the text.) */
-@property(nonatomic, nullable, strong) UIColor *cursorColor;
 
 /**
  An overlay view on the side of the input where reading and writing lines begin. In LTR this is

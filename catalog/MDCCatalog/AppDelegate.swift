@@ -17,7 +17,22 @@ limitations under the License.
 import UIKit
 
 import CatalogByConvention
-import MaterialComponents
+
+import MaterialComponents.MDCActivityIndicatorColorThemer
+import MaterialComponents.MDCButtonBarColorThemer
+import MaterialComponents.MDCButtonColorThemer
+import MaterialComponents.MDCAlertColorThemer
+import MaterialComponents.MDCFeatureHighlightColorThemer
+import MaterialComponents.MDCFlexibleHeaderColorThemer
+import MaterialComponents.MDCHeaderStackViewColorThemer
+import MaterialComponents.MDCNavigationBarColorThemer
+import MaterialComponents.MDCPageControlColorThemer
+import MaterialComponents.MDCProgressViewColorThemer
+import MaterialComponents.MDCSliderColorThemer
+import MaterialComponents.MDCTabBarColorThemer
+import MaterialComponents.MaterialTextFields
+import MaterialComponents.MDCTextFieldColorThemer
+import MaterialComponents.MaterialThemes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
-    colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
+    colorScheme = MDCBasicColorScheme(primaryColor: .init(white: 33 / 255.0, alpha: 1),
                                       primaryLightColor: .init(white: 0.7, alpha: 1),
                                       primaryDarkColor: .init(white: 0, alpha: 1))
 
@@ -63,7 +78,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
     MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
-    MDCTextFieldColorThemer.applyColorScheme(toAllTextInputControllerDefault: colorScheme)
+
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerLegacyDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerFilled.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlined.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlinedTextArea.self)
 
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor

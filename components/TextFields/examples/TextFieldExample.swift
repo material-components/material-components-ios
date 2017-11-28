@@ -153,6 +153,15 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerDefault(textInput: message)
     message.textView?.delegate = self
+    #if swift(>=3.2)
+      message.text = """
+      This is where you could put a multi-line message like an email.
+
+      It can even handle new lines.
+      """
+    #else
+      message.text = "This is where you could put a multi-line message like an email. It can even handle new lines./n"
+    #endif
     message.multilineDelegate = self
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
@@ -430,16 +439,16 @@ extension TextFieldSwiftExample {
 // MARK: - CatalogByConvention
 
 extension TextFieldSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
+  @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Typical Use"]
   }
 
-  class func catalogDescription() -> String {
+  @objc class func catalogDescription() -> String {
     // swiftlint:disable:next line_length
     return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
   }
 
-  class func catalogIsPrimaryDemo() -> Bool {
+  @objc class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
 }

@@ -129,7 +129,7 @@
 // Test the Flexible Header View Height Offset After Initial Setup
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetSettingMinHeight {
   // When
-  CGFloat randomHeight = arc4random_uniform(200.0) + 20.0;  // Height Greater Than Status Bar
+  CGFloat randomHeight = (CGFloat)(arc4random_uniform(200.0) + 20.0);  // Height Greater Than Status Bar
   self.vc.fhvc.headerView.minimumHeight = randomHeight;
 
   // Then
@@ -166,7 +166,7 @@
 
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffPullDownRelease {
   // When
-  CGFloat randomHeight = arc4random_uniform(50.0) + 20.0;
+  CGFloat randomHeight = (CGFloat)(arc4random_uniform(50.0) + 20.0);
   self.vc.fhvc.headerView.maximumHeight = randomHeight;
   CGRect initialFrame =
       CGRectMake(0, self.vc.scrollView.contentInset.top, [UIScreen mainScreen].bounds.size.width,

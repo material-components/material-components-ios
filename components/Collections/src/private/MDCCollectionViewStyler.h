@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialCollections.h"
+#import "MDCCollectionViewStyling.h"
 
 /**
  The MDCCollectionViewStyler class provides a default implementation for a UICollectionView to set

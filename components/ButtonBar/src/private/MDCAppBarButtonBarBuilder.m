@@ -16,11 +16,11 @@
 
 #import "MDCAppBarButtonBarBuilder.h"
 
-#import "MDCButtonBar+Private.h"
-#import "MaterialButtons.h"
-#import "MaterialRTL.h"
-
 #import <objc/runtime.h>
+#import <MDFInternationalization/MDFInternationalization.h>
+
+#import "MaterialButtons.h"
+#import "MDCButtonBar+Private.h"
 
 static const CGFloat kMinimumItemWidth = 36.f;
 
@@ -122,7 +122,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   UIEdgeInsets contentInsets = [MDCAppBarButtonBarBuilder
       contentInsetsForButton:button
                  layoutHints:layoutHints
-             layoutDirection:[buttonBar mdc_effectiveUserInterfaceLayoutDirection]
+             layoutDirection:[buttonBar mdf_effectiveUserInterfaceLayoutDirection]
                                 userInterfaceIdiom:[self usePadInsetsForButtonBar:buttonBar] ?
                                 UIUserInterfaceIdiomPad : UIUserInterfaceIdiomPhone];
 

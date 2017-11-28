@@ -1,3 +1,6 @@
+bazel-*
+.kokoro-ios-runner
+
 # MDC
 
 build_tests/CocoapodsObjCApp/CocoapodsObjCApp.xcworkspace
@@ -48,7 +51,7 @@ xcuserdata
 #
 Pods/
 demos/**/Pods/
-catalog/Podfile.lock
+Podfile.lock
 
 # Carthage
 #

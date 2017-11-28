@@ -204,4 +204,16 @@
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, largeIconButton.hitAreaInsets));
 }
 
+- (void)testCornerRadius {
+  // Given
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  [button sizeToFit];
+  [button layoutIfNeeded];
+
+  // Then
+  XCTAssertNotEqualWithAccuracy(CGRectGetHeight(button.bounds), 0, 0.0001);
+  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, CGRectGetHeight(button.bounds) / 2, 0.0001);
+}
+
 @end

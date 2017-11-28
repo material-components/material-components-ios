@@ -318,7 +318,7 @@ by changing the Flexible Header's behavior.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-headerViewController.headerView.shiftBehavior = .Enabled
+headerViewController.headerView.shiftBehavior = .enabled
 ```
 
 #### Objective-C
@@ -333,13 +333,13 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 > information.
 
 It is also possible to hide the status bar when shifting the Flexible Header off-screen. Enable this
-behavior by setting the `EnabledWithStatusBar` behavior and implementing
+behavior by setting the `enabledWithStatusBar` behavior and implementing
 `childViewControllerForStatusBarHidden` on the parent view controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-headerViewController.headerView.shiftBehavior = .EnabledWithStatusBar
+headerViewController.headerView.shiftBehavior = .enabledWithStatusBar
 
 override func childViewControllerForStatusBarHidden() -> UIViewController? {
   return headerViewController
@@ -364,10 +364,10 @@ MDCFlexibleHeaderViewController instance's `layoutDelegate`.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-class MyViewController: UIViewController, MDCFlexibleHeaderViewLayoutDelegate {
+extension MyViewController: MDCFlexibleHeaderViewLayoutDelegate {
 
   // MARK: MDCFlexibleHeaderViewLayoutDelegate
-  func flexibleHeaderViewController(flexibleHeaderViewController: MDCFlexibleHeaderViewController,
+  func flexibleHeaderViewController(_: MDCFlexibleHeaderViewController,
       flexibleHeaderViewFrameDidChange flexibleHeaderView: MDCFlexibleHeaderView) {
     // Called whenever the frame changes.
   }
@@ -530,14 +530,14 @@ interactivePopGestureRecognizer's delegate to the held pointer in the `viewWillD
 #### Swift
 ``` swift
 // Create pointer to hold active interactivePopGestureRecognizer delegate
-var existingInteractivePopGestureRecognizerDelegate : UIGestureRecognizerDelegate?
+var existingInteractivePopGestureRecognizerDelegate: UIGestureRecognizerDelegate?
 
 override func viewWillAppear(animated: Bool) {
   super.viewWillAppear(animated)
 
   // Hold reference to current interactivePopGestureRecognizer delegate
-  if navigationController?.interactivePopGestureRecognizer?.delegate != nil {
-      existingInteractivePopGestureRecognizerDelegate = navigationController?.interactivePopGestureRecognizer?.delegate!
+  if let delegate = navigationController?.interactivePopGestureRecognizer?.delegate {
+      existingInteractivePopGestureRecognizerDelegate = delegate
   }
   navigationController?.setNavigationBarHidden(true, animated: animated)
 }
@@ -553,8 +553,8 @@ override func viewWillDisappear(animated: Bool) {
   super.viewWillDisappear(animated)
 
   // Return interactivePopGestureRecognizer delegate to previously held object
-  if existingInteractivePopGestureRecognizerDelegate != nil {
-      navigationController?.interactivePopGestureRecognizer?.delegate = existingInteractivePopGestureRecognizerDelegate!
+  if let delegate = existingInteractivePopGestureRecognizerDelegate {
+      navigationController?.interactivePopGestureRecognizer?.delegate = delegate
   }
 }
 ```
@@ -636,14 +636,14 @@ You can create and add a UIImageView subview to the Flexible Header view's conte
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let headerView = headerViewController!.headerView
+let headerView = headerViewController.headerView
 
 let imageView = ...
 imageView.frame = headerView.bounds
-imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-headerView.contentView.insertSubview(imageView, atIndex: 0)
+imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+headerView.contentView.insertSubview(imageView, at: 0)
 
-imageView.contentMode = .ScaleAspectFill
+imageView.contentMode = .scaleAspectFill
 imageView.clipsToBounds = true
 ```
 
@@ -680,7 +680,7 @@ To start touch forwarding you must call `forwardTouchEventsForView:` with each v
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-headerView.forwardTouchEventsForView(someContentView)
+headerView.forwardTouchEvents(for: someContentView)
 ```
 
 #### Objective-C
@@ -696,7 +696,7 @@ To stop touch forwarding you must call `forwardTouchEventsForView:` with each vi
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-headerView.stopForwardingTouchEventsForView(someContentView)
+headerView.stopForwardingTouchEvents(for: someContentView)
 ```
 
 #### Objective-C

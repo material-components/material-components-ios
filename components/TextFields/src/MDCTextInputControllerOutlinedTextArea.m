@@ -16,7 +16,12 @@
 
 #import "MDCTextInputControllerOutlinedTextArea.h"
 
+#import "MDCTextInput.h"
 #import "MDCTextInputBorderView.h"
+#import "MDCTextInputController.h"
+#import "MDCTextInputControllerDefault.h"
+#import "MDCTextInputControllerFloatingPlaceholder.h"
+#import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputControllerDefault+Subclassing.h"
 
 #import "MaterialMath.h"
@@ -59,20 +64,20 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 #pragma mark - Properties Implementations
 
-+ (UIRectCorner)roundedCornersDefault {
-  return _roundedCornersDefault;
-}
-
-+ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
-  _roundedCornersDefault = roundedCornersDefault;
-}
-
 - (BOOL)isFloatingEnabled {
   return YES;
 }
 
 - (void)setFloatingEnabled:(__unused BOOL)floatingEnabled {
   // Unused. Floating is always enabled.
+}
+
++ (UIRectCorner)roundedCornersDefault {
+  return _roundedCornersDefault;
+}
+
++ (void)setRoundedCornersDefault:(UIRectCorner)roundedCornersDefault {
+  _roundedCornersDefault = roundedCornersDefault;
 }
 
 #pragma mark - MDCTextInputPositioningDelegate

@@ -14,9 +14,7 @@
  limitations under the License.
  */
 
-#import "DialogsAlertViewControllerSupplemental.h"
-
-#import "MaterialButtons.h"
+#import "supplemental/DialogsAlertViewControllerSupplemental.h"
 #import "MaterialDialogs.h"
 
 @implementation DialogsAlertViewController
@@ -31,24 +29,24 @@
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
-      [self didTapShowAlert:nil];
+      [self didTapShowAlert];
       break;
     case 1:
-      [self didTapShowLongAlert:nil];
+      [self didTapShowLongAlert];
       break;
     case 2:
-      [self didTapNondismissingAlert:nil];
+      [self didTapNondismissingAlert];
       break;
     case 3:
-      [self didTapDynamicAlert:nil];
+      [self didTapDynamicAlert];
       break;
     case 4:
-      [self didTapOverpopulatedAlert:nil];
+      [self didTapOverpopulatedAlert];
       break;
   }
 }
 
-- (IBAction)didTapShowAlert:(id)sender {
+- (IBAction)didTapShowAlert {
 
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
@@ -71,7 +69,7 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapShowLongAlert:(id)sender {
+- (IBAction)didTapShowLongAlert {
   NSString *messageString =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
        "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
@@ -114,16 +112,16 @@
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
 
-  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"OK"
-                                                   handler:^(MDCAlertAction *action) {
+  MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
+                                                     handler:^(MDCAlertAction *action) {
                                                      NSLog(@"%@", @"OK pressed");
                                                    }];
-  [materialAlertController addAction:action];
+  [materialAlertController addAction:okAction];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapNondismissingAlert:(id)sender {
+- (IBAction)didTapNondismissingAlert {
   NSString *titleString = @"This alert requires an action.";
   NSString *messageString = @"You can't dismiss it by tapping the background. You must choose "
                              "one of the actions available.";
@@ -151,7 +149,7 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapDynamicAlert:(id)sender {
+- (IBAction)didTapDynamicAlert {
   // The following strings are extra verbose to better demonstrate the dynamic handling of an alert.
   NSString *titleString = @"This alert supports Dynamic Type font sizing.";
   NSString *messageString =
@@ -185,7 +183,7 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapOverpopulatedAlert:(id)sender {
+- (IBAction)didTapOverpopulatedAlert {
   NSString *messageString =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
@@ -229,11 +227,11 @@
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 
-  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"OK"
-                                                   handler:^(MDCAlertAction *action) {
-                                                     NSLog(@"%@", @"OK pressed");
-                                                   }];
-  [materialAlertController addAction:action];
+  MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
+                                                     handler:^(MDCAlertAction *action) {
+                                                       NSLog(@"%@", @"OK pressed");
+                                                     }];
+  [materialAlertController addAction:okAction];
 
   MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"OK - 2"
                                                    handler:^(MDCAlertAction *action) {

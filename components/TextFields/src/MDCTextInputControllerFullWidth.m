@@ -16,6 +16,7 @@
 
 #import "MDCTextInputControllerFullWidth.h"
 
+#import "MDCIntrinsicHeightTextView.h"
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
@@ -25,7 +26,6 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
-#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 static const CGFloat MDCTextInputFullWidthHintTextOpacity = 0.54f;

@@ -16,9 +16,10 @@
 
 #import "MDCBottomAppBarView.h"
 
-#import "MaterialNavigationBar.h"
-#import "MaterialRTL.h"
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCNavigationBarColorThemer.h"
+#import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
 
@@ -77,7 +78,7 @@ static const int kMDCButtonAnimationDuration = 200;
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                            UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
-  self.layoutDirection = self.mdc_effectiveUserInterfaceLayoutDirection;
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   [self addFloatingButton];
   [self addBottomBarLayer];
   [self addNavBar];
@@ -92,12 +93,7 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)addNavBar {
-  CGRect navBarFrame = CGRectMake(0,
-                                  kMDCBottomAppBarYOffset,
-                                  self.bounds.size.width,
-                                  self.bounds.size.height);
-  _navBar = [[MDCNavigationBar alloc] initWithFrame:navBarFrame];
-  _navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self addSubview:_navBar];
 
   MDCBasicColorScheme *clearScheme =
@@ -242,9 +238,15 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-      self.floatingButton.center =
-  [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
+  self.floatingButton.center =
+      [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+
+  CGRect navBarFrame = CGRectMake(0,
+                                  kMDCBottomAppBarYOffset,
+                                  CGRectGetWidth(self.bounds),
+                                  kMDCBottomAppBarHeight - kMDCBottomAppBarYOffset);
+  self.navBar.frame = navBarFrame;
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {

@@ -32,7 +32,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
   fileprivate var touchViews = [Int: UIView]()
   fileprivate var edgeView = MDCDebugSafeAreaInsetsView()
 
-  var showSafeAreaEdgeInsets:Bool {
+  var showSafeAreaEdgeInsets: Bool {
     set {
       if newValue {
         edgeView.frame = bounds

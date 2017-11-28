@@ -21,6 +21,11 @@
 /**
  Delegate for MDCBottomSheetPresentationController.
  */
+// TODO( https://github.com/material-components/material-components-ios/issues/2418 ):
+// Enable deprecation once internal clients have migrated to the new APIs or until a reasonable
+// period of time has passed.
+//__deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
+//                 "mdm_transitionController.transition instead.")
 @protocol MDCBottomSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
 @optional
 
@@ -48,7 +53,20 @@
 /**
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
  */
+// TODO( https://github.com/material-components/material-components-ios/issues/2418 ):
+// Enable deprecation once internal clients have migrated to the new APIs or until a reasonable
+// period of time has passed.
+//__deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
+//                 "mdm_transitionController.transition instead.")
 @interface MDCBottomSheetPresentationController : UIPresentationController
+
+/**
+ Interactions with the tracking scroll view will affect the bottom sheet's drag behavior.
+
+ If no trackingScrollView is provided, then one will be inferred from the associated view
+ controller.
+ */
+@property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
  Delegate to tell the presenter when to dismiss.

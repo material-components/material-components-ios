@@ -14,9 +14,8 @@
  limitations under the License.
  */
 
-#import "CollectionCellsLayoutExample.h"
-
 #import "MaterialTypography.h"
+#import "supplemental/CollectionCellsLayoutExample.h"
 
 @interface SimpleModel : NSObject
 @property(nonatomic, strong, nullable) NSString *text;

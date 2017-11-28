@@ -18,6 +18,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
@@ -81,6 +82,36 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
   return [string copy];
 }
+
+@interface FakeShadowLayer : MDCShadowLayer
+@property(nonatomic, assign) NSInteger elevationAssignmentCount;
+@end
+
+@implementation FakeShadowLayer
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  ++self.elevationAssignmentCount;
+  [super setElevation:elevation];
+}
+@end
+
+@interface TestButton : MDCButton
+@property(nonatomic, strong) FakeShadowLayer *shadowLayer;
+@end
+
+@implementation TestButton
++ (Class)layerClass {
+  return [FakeShadowLayer class];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _shadowLayer = (FakeShadowLayer *)self.layer;
+  }
+  return self;
+}
+@end
 
 @interface ButtonsTests : XCTestCase
 @end
@@ -173,6 +204,36 @@ static NSString *controlStateDescription(UIControlState controlState) {
     // Then
     XCTAssertEqual([button elevationForState:controlState], elevation);
   }
+}
+
+- (void)testSetElevationOnlyUpdatesCurrentState {
+  // Given
+  TestButton *selectedButton = [[TestButton alloc] init];
+  TestButton *highlightedButton = [[TestButton alloc] init];
+
+  XCTAssertEqualWithAccuracy([selectedButton elevationForState:UIControlStateNormal],
+                             [selectedButton elevationForState:UIControlStateHighlighted],
+                             0.0001,
+                             @"This test assumes that .normal and .highlighted start with the same "
+                              "elevation values.");
+
+  [selectedButton setSelected:YES];
+  [highlightedButton setHighlighted:YES];
+  NSInteger selectedButtonElevationCount = selectedButton.shadowLayer.elevationAssignmentCount;
+  NSInteger highlightedButtonElevationCount
+      = highlightedButton.shadowLayer.elevationAssignmentCount;
+
+  // When
+  [selectedButton setElevation:77 forState:UIControlStateHighlighted];
+  [highlightedButton setElevation:75 forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqual(selectedButton.shadowLayer.elevationAssignmentCount,
+                 selectedButtonElevationCount,
+                 @"Updating an unrelated elevation should not update the layer elevation.");
+  XCTAssertEqual(highlightedButtonElevationCount + 1,
+                 highlightedButton.shadowLayer.elevationAssignmentCount,
+                 @"Updating the current elevation should cause one elevation update.");
 }
 
 - (void)testElevationNormal {
@@ -492,6 +553,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
+  button.minimumSize = CGSizeMake(15, 33);
+  button.maximumSize = CGSizeMake(17, 41);
   CGFloat buttonAlpha = 0.5;
   button.alpha = buttonAlpha;
   button.enabled = NO;
@@ -526,6 +589,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
   XCTAssertEqualObjects(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
+  XCTAssertTrue(CGSizeEqualToSize(button.minimumSize, unarchivedButton.minimumSize));
+  XCTAssertTrue(CGSizeEqualToSize(button.maximumSize, unarchivedButton.maximumSize));
   XCTAssertEqual(button.enabled, unarchivedButton.enabled);
   XCTAssertEqualWithAccuracy(button.alpha, unarchivedButton.alpha, 0.0001);
   unarchivedButton.enabled = YES;
@@ -854,6 +919,66 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
+}
+
+#pragma mark - Size-related tests
+
+- (void)testSizeThatFitsWithMinimumOnly {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) + 15,
+                                    CGRectGetHeight(button.frame) + 21);
+
+  // When
+  button.minimumSize = expectedFrame.size;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
+- (void)testSizeThatFitsWithMaximumOnly {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) - 7,
+                                    CGRectGetHeight(button.frame) - 3);
+
+  // When
+  button.maximumSize = expectedFrame.size;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
+- (void)testSizeThatFitsWithMinimumAndMaximum {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) + 21,
+                                    CGRectGetHeight(button.frame) - 4);
+
+  // When
+  button.maximumSize = CGSizeMake(0, CGRectGetHeight(expectedFrame)); // Only bound max height
+  button.minimumSize = CGSizeMake(CGRectGetWidth(expectedFrame), 0); // Only bound min width
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
 }
 
 @end

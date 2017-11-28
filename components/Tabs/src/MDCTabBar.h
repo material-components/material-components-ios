@@ -21,6 +21,7 @@
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
+@protocol MDCTabBarIndicatorTemplate;
 
 /**
  A material tab bar for switching between views of grouped content.
@@ -35,6 +36,10 @@
 IB_DESIGNABLE
 @interface MDCTabBar : UIView <UIBarPositioning>
 
+/** The default height for the tab bar with a given position and item appearance. */
++ (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position
+                        itemAppearance:(MDCTabBarItemAppearance)appearance;
+
 /** The default height for the tab bar in the top position, given an item appearance. */
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance;
 
@@ -46,7 +51,7 @@ IB_DESIGNABLE
  * If there was no selection previously or if the old selected item is gone, select the first item.
    Clients that need empty selection to be preserved across updates to `items` must manually reset
    selectedItem to nil after the update.
- 
+
  Changes to this property are not animated.
  */
 @property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *items;
@@ -108,6 +113,14 @@ IB_DESIGNABLE
  The default value is based on the position and is recommended for most applications.
  */
 @property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
+
+/**
+ Template that defines the appearance of the selection indicator.
+
+ The default indicator template is a fixed-height rectangular bar under the selected tab.
+ */
+@property(nonatomic, null_resettable) id<MDCTabBarIndicatorTemplate> selectionIndicatorTemplate
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Select an item with optional animation. Setting to nil will clear the selection.

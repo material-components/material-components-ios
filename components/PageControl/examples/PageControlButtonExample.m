@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCPageControl.h"
+#import "MaterialPageControl.h"
 
 @interface PageControlButtonExample : UIViewController <UIScrollViewDelegate>
 @end
@@ -24,6 +24,7 @@
 @implementation PageControlButtonExample {
   UIScrollView *_scrollView;
   MDCPageControl *_pageControl;
+  UIButton *_nextButton;
   NSArray *_pages;
 }
 
@@ -52,7 +53,7 @@
   NSMutableArray *pages = [NSMutableArray array];
 
   // Add pages to scrollView.
-  for (NSInteger i = 0; i < pageColors.count; i++) {
+  for (NSUInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
@@ -83,17 +84,14 @@
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_pageControl];
 
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setTitle:@"Next Page" forState:UIControlStateNormal];
-  [button sizeToFit];
-  button.center =
-      CGPointMake(boundsWidth - button.frame.size.width / 2 - 16, _pageControl.center.y);
-  button.autoresizingMask =
+  _nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [_nextButton setTitle:@"Next Page" forState:UIControlStateNormal];
+  _nextButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-  [button addTarget:self
-                action:@selector(didTapButton:)
-      forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:button];
+  [_nextButton addTarget:self
+                  action:@selector(didTapButton:)
+        forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_nextButton];
 }
 
 #pragma mark - Frame changes
@@ -113,6 +111,26 @@
   offset.x = pageBeforeFrameChange * boundsWidth;
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
+
+  // We want the page control to span the bottom of the screen.
+  CGRect standardizedFrame = CGRectStandardize(self.view.frame);
+  [_pageControl sizeThatFits:standardizedFrame.size];
+  UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // Accommodate insets for iPhone X.
+    edgeInsets = self.view.safeAreaInsets;
+  }
+#endif
+  CGFloat yOffset =
+      CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
+  _pageControl.frame =
+      CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
+
+  [_nextButton sizeToFit];
+  CGFloat buttonCenterX =
+      boundsWidth - CGRectGetWidth(_nextButton.frame) / 2 - 16 - edgeInsets.right;
+  _nextButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
 }
 
 #pragma mark - UIScrollViewDelegate

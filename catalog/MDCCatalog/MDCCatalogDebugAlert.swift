@@ -17,6 +17,7 @@
 import UIKit
 
 import MDFInternationalization
+
 import MaterialComponents.MaterialDialogs
 
 class MDCCatalogDebugSetting {

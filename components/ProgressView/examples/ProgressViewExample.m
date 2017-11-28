@@ -71,7 +71,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   _backwardProgressResetView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_backwardProgressResetView];
   // Have a non-zero progress at setup time.
-  _backwardProgressResetView.progress = 0.33;
+  _backwardProgressResetView.progress = 0.33f;
 
   _backwardProgressAnimateView = [[MDCProgressView alloc] init];
   _backwardProgressAnimateView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -79,7 +79,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
       MDCProgressViewBackwardAnimationModeAnimate;
   [self.view addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
-  _backwardProgressAnimateView.progress = 0.33;
+  _backwardProgressAnimateView.progress = 0.33f;
 }
 
 @end

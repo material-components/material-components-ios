@@ -18,6 +18,8 @@
 
 #import "MDCTextInput.h"
 
+@class MDCIntrinsicHeightTextView;
+
 @protocol MDCMultilineTextInputDelegate;
 @protocol MDCMultilineTextInputLayoutDelegate;
 
@@ -30,8 +32,15 @@
 /** A mirror of the same property that already exists on UITextField, UITextView, and UILabel. */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategory;
 
-/** An optional delegate for useful methods not included in UITextViewDelegate.*/
-@property(nonatomic, nullable, weak) IBOutlet id<MDCMultilineTextInputDelegate> multilineDelegate;
+/**
+ Should the text field grow vertically as new lines are added.
+
+ Default is YES.
+
+ Note: Inherited from MDCMultilineTextInput protocol. Added here to declare Interface Builder
+ support (IBInspectable).
+ */
+@property(nonatomic, assign) IBInspectable BOOL expandsOnOverflow;
 
 /**
  The delegate for changes to preferred content size.
@@ -41,13 +50,26 @@
 @property(nonatomic, nullable, weak) IBOutlet id<MDCMultilineTextInputLayoutDelegate>
     layoutDelegate;
 
+/** An optional delegate for useful methods not included in UITextViewDelegate.*/
+@property(nonatomic, nullable, weak) IBOutlet id<MDCMultilineTextInputDelegate> multilineDelegate;
+
+/**
+ The text string of the placeholder label.
+ Bringing convenience api found in UITextField to all MDCTextInputs. Maps to the .text of the
+ placeholder label.
+
+ Note: Inherited from MDCTextInput protocol. Added here to declare Interface Builder support
+ (IBInspectable).
+ */
+@property(nonatomic, nullable, copy) IBInspectable NSString *placeholder;
+
 /** Insets used to calculate the spacing of subviews. */
 @property(nonatomic, assign, readonly) UIEdgeInsets textInsets;
 
 /**
  Embedded textView. Can be set from storyboard or will be auto-created during initialization.
  */
-@property(nonatomic, nullable, weak) IBOutlet UITextView *textView;
+@property(nonatomic, nullable, strong) IBOutlet MDCIntrinsicHeightTextView *textView;
 
 @end
 

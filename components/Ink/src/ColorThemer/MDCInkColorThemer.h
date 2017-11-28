@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialInk.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCInkView.
@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCInkView.
  @param inkView A MDCInkView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                toInkView:(MDCInkView *)inkView;
 
 @end

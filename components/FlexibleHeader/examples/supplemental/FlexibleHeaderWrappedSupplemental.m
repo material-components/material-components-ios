@@ -21,8 +21,6 @@
 
 #import "FlexibleHeaderWrappedSupplemental.h"
 
-#import "MaterialFlexibleHeader.h"
-
 @implementation FlexibleHeaderWrappedExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {

@@ -16,6 +16,7 @@
 
 #import "MDCInkTouchController.h"
 
+#import "MDCInkGestureRecognizer.h"
 #import "MDCInkView.h"
 
 static const NSTimeInterval kInkTouchDelayInterval = 0.1;

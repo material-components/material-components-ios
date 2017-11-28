@@ -24,6 +24,8 @@ class MultilineTextFieldTests: XCTestCase {
   func testAttributedSetters() {
     let textField = MDCMultilineTextField()
 
+    XCTAssertNotNil(textField.textView);
+
     let string = "attributed"
     textField.attributedPlaceholder = NSAttributedString(string: string)
     XCTAssertEqual(textField.attributedPlaceholder?.string, string)
@@ -42,6 +44,7 @@ class MultilineTextFieldTests: XCTestCase {
     textField.borderView?.borderStrokeColor = .green
     textField.clearButton.tintColor = .red
     textField.clearButtonMode = .always
+    textField.cursorColor = .white
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
@@ -49,6 +52,7 @@ class MultilineTextFieldTests: XCTestCase {
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
+    textField.trailingViewMode = .never
     textField.underline?.color = .red
     textField.underline?.lineHeight = 10
 
@@ -65,6 +69,7 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
+      XCTAssertEqual(textField.cursorColor, textFieldCopy.cursorColor)
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
@@ -73,6 +78,7 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
+      XCTAssertEqual(textField.trailingViewMode, textFieldCopy.trailingViewMode)
       XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
       XCTAssertEqual(textField.underline?.lineHeight, textFieldCopy.underline?.lineHeight)
     } else {
@@ -99,6 +105,7 @@ class MultilineTextFieldTests: XCTestCase {
     let textField = MDCMultilineTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
+    textField.cursorColor = .red
 
     let controller = MDCTextInputControllerDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
@@ -107,6 +114,11 @@ class MultilineTextFieldTests: XCTestCase {
     controller.helperText = leadingText
     controller.characterCountMax = 40
     textField.textInsetsMode = .never
+
+    let trailingView = UIView()
+    trailingView.backgroundColor = .blue
+    textField.trailingView = trailingView
+    textField.trailingViewMode = .never
 
     let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
     XCTAssertNotNil(serializedInput)
@@ -119,15 +131,19 @@ class MultilineTextFieldTests: XCTestCase {
                    unserializedInput?.translatesAutoresizingMaskIntoConstraints)
     XCTAssertEqual(textField.text,
                    unserializedInput?.text)
+    XCTAssertEqual(textField.cursorColor, unserializedInput?.cursorColor)
 
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)
 
+    XCTAssertEqual(textField.textInsetsMode, unserializedInput?.textInsetsMode)
+
+    XCTAssertEqual(textField.trailingView?.backgroundColor,
+                   unserializedInput?.trailingView?.backgroundColor)
+    XCTAssertEqual(textField.trailingViewMode, unserializedInput?.trailingViewMode)
     XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
     XCTAssertEqual(textField.trailingUnderlineLabel.text,
                    unserializedInput?.trailingUnderlineLabel.text)
-
-    XCTAssertEqual(textField.textInsetsMode, unserializedInput?.textInsetsMode)
   }
 
   func testSizing() {
@@ -146,6 +162,14 @@ class MultilineTextFieldTests: XCTestCase {
 
     textField.textInsetsMode = .never
     XCTAssertEqual(textField.textInsetsMode, .never)
+  }
+
+  func testTrailingView() {
+    let trailingView = UIView()
+    let textField = MDCMultilineTextField()
+
+    textField.trailingView = trailingView
+    XCTAssertEqual(textField.trailingView, trailingView)
   }
 
   func testUnderlineSetters() {
