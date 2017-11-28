@@ -21,6 +21,7 @@
 
 @interface MDCInkView () <MDCInkLayerDelegate>
 
+@property(nonatomic, strong) CAShapeLayer *maskLayer;
 @property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
 @property(nonatomic, copy) MDCInkCompletionBlock endInkRippleCompletionBlock;
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
@@ -58,10 +59,24 @@
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.inkColor = self.defaultInkColor;
   _usesLegacyInkRipple = YES;
+
+  // Create a mask layer to contain MDCInkLayer when the superview has a shadowPath.
+  _maskLayer = [CAShapeLayer layer];
+  _maskLayer.masksToBounds = YES;
+  [self.layer addSublayer:_maskLayer];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
+  if (self.superview.layer.shadowPath) {
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.path = self.superview.layer.shadowPath;
+    _maskLayer.frame = self.bounds;
+    _maskLayer.mask = maskLayer;
+  }
+
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
 
   // When bounds change ensure all ink layer bounds are changed too.
@@ -151,7 +166,7 @@
 
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
-    [self.layer addSublayer:inkLayer];
+    [self.maskLayer addSublayer:inkLayer];
     [inkLayer startAnimationAtPoint:point];
     self.activeInkLayer = inkLayer;
   }
