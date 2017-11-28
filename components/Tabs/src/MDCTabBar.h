@@ -18,6 +18,7 @@
 
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
+#import "MDCTabBarTextTransform.h"
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
@@ -134,12 +135,11 @@ IB_DESIGNABLE
 @property(nonatomic) MDCTabBarItemAppearance itemAppearance;
 
 /**
- Indicates if all tab titles should be uppercased for display. If NO, item titles will be
- displayed verbatim.
+ Defines how tab bar item titles are transformed for display.
 
- The default value is based on the position and is recommended for most applications.
+ The default value is MDCTabBarTextTransformAutomatic.
  */
-@property(nonatomic) IBInspectable BOOL displaysUppercaseTitles UI_APPEARANCE_SELECTOR;
+@property(nonatomic) IBInspectable MDCTabBarTextTransform titleTextTransform UI_APPEARANCE_SELECTOR;
 
 /**
  Template that defines the appearance of the selection indicator.
