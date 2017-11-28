@@ -45,7 +45,7 @@ git_repository(
 git_repository(
     name = "motion_animator_objc",
     remote = "https://github.com/material-motion/motion-animator-objc.git",
-    tag = "v2.3.0",
+    tag = "v2.5.0",
 )
 
 git_repository(
