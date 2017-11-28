@@ -37,7 +37,7 @@
     .contentScale = {
       .duration = 0.150, .delay = 0.000, .curve = [self deceleration]
     },
-    .contentScaleFromValue = 0.8,
+    .contentScaleFromValue = (CGFloat)0.8,
     .transitionDuration = 0.150,
   };
 }
