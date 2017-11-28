@@ -135,7 +135,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MotionAnimator", "~> 2.3"
-    component.dependency "MotionTransitioning", "~> 4.0"
+    component.dependency "MotionTransitioning", "~> 5.0"
   end
 
   mdc.subspec "Buttons" do |component|
@@ -347,7 +347,7 @@ Pod::Spec.new do |mdc|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
-    component.dependency "MotionTransitioning", "~> 4.0"
+    component.dependency "MotionTransitioning", "~> 5.0"
     component.dependency "MotionAnimator", "~> 2.0"
     component.dependency "MotionInterchange", "~> 1.0"
   end
