@@ -104,13 +104,13 @@ IB_DESIGNABLE
  Padding on the left and right of the tab bar's content for scrollable tabs.
  Default depends on the horizontal size class.
  */
-@property(nonatomic) IBInspectable CGFloat horizontalPadding UI_APPEARANCE_SELECTOR;
+@property(nonatomic) CGFloat horizontalPadding UI_APPEARANCE_SELECTOR;
 
 /**
  Padding on the left and right of each item's content (title or images) for non-justified alignment.
  Default depends on the horizontal size class.
  */
-@property(nonatomic) IBInspectable CGFloat itemHorizontalPadding UI_APPEARANCE_SELECTOR;
+@property(nonatomic) CGFloat itemHorizontalPadding UI_APPEARANCE_SELECTOR;
 
 /**
  Tint color to apply to the tab bar background.
@@ -139,7 +139,7 @@ IB_DESIGNABLE
 
  The default value is MDCTabBarTextTransformAutomatic.
  */
-@property(nonatomic) IBInspectable MDCTabBarTextTransform titleTextTransform UI_APPEARANCE_SELECTOR;
+@property(nonatomic) MDCTabBarTextTransform titleTextTransform UI_APPEARANCE_SELECTOR;
 
 /**
  Template that defines the appearance of the selection indicator.
