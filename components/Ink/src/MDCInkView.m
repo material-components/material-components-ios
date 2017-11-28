@@ -73,14 +73,14 @@
   if (self.superview.layer.shadowPath) {
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
     maskLayer.path = self.superview.layer.shadowPath;
-    _maskLayer.frame = self.bounds;
-    _maskLayer.mask = maskLayer;
+    self.maskLayer.frame = self.bounds;
+    self.maskLayer.mask = maskLayer;
   }
 
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
 
   // When bounds change ensure all ink layer bounds are changed too.
-  for (CALayer *layer in _maskLayer.sublayers) {
+  for (CALayer *layer in self.maskLayer.sublayers) {
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
@@ -189,7 +189,7 @@
   if (self.usesLegacyInkRipple) {
     [self.inkLayer resetAllInk:animated];
   } else {
-    for (CALayer *layer in _maskLayer.sublayers) {
+    for (CALayer *layer in self.maskLayer.sublayers) {
       if ([layer isKindOfClass:[MDCInkLayer class]]) {
         MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
         if (animated) {
