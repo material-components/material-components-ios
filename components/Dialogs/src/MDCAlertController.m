@@ -18,7 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCDialogTransitionController.h"
+#import "MDCDialogTransition.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "private/MaterialDialogsStrings.h"
@@ -82,8 +82,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
 
-@property(nonatomic, strong) MDCDialogTransitionController *transitionController;
-
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
 
@@ -121,24 +119,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     _actions = [[NSMutableArray alloc] init];
     _actionButtons = [[NSMutableArray alloc] init];
 
-    _transitionController = [[MDCDialogTransitionController alloc] init];
-    super.transitioningDelegate = _transitionController;
-    super.modalPresentationStyle = UIModalPresentationCustom;
+    self.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
   }
   return self;
-}
-
-/* Disable setter. Always use internal transition controller */
-- (void)setTransitioningDelegate:
-    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
-  NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
-  return;
-}
-
-/* Disable setter. Always use custom presentation style */
-- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
-  NSAssert(NO, @"MDCAlertController.modalPresentationStyle cannot be changed.");
-  return;
 }
 
 - (NSString *)title {
