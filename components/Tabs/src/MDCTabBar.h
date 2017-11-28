@@ -85,16 +85,18 @@ IB_DESIGNABLE
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /**
- Display font used for selected item titles.
- Default is the regular font from the font loader.
+ Text attributes used for selected item titles.
+ Default uses the regular font from the font loader.
  */
-@property(nonatomic, strong, null_resettable) UIFont *selectedItemTitleFont UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nonnull)
+    NSDictionary<NSAttributedStringKey, id> *selectedItemTitleTextAttributes UI_APPEARANCE_SELECTOR;
 
 /**
- Display font used for unselected item titles.
- Default is the regular font from the font loader.
+ Text attributes used for unselected item titles.
+ Default uses the regular font from the font loader.
  */
-@property(nonatomic, strong, null_resettable) UIFont *unselectedItemTitleFont
+@property(nonatomic, strong, nonnull)
+    NSDictionary<NSAttributedStringKey, id> *unselectedItemTitleTextAttributes
     UI_APPEARANCE_SELECTOR;
 
 /**
