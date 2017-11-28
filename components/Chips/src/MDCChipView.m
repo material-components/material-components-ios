@@ -588,7 +588,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point {
   CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat widthDiff = 24.f; // Difference between unselected and selected frame widths.
-  self.inkView.maxRippleRadius =
+  _inkView.maxRippleRadius =
       (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10.f + widthDiff / 2);
 
   [_inkView startTouchBeganAnimationAtPoint:point completion:nil];
