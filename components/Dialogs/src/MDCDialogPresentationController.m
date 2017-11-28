@@ -16,8 +16,8 @@
 
 #import "MDCDialogPresentationController.h"
 
-#import "MaterialKeyboardWatcher.h"
 #import "MDCDialogTransition.h"
+#import "MaterialKeyboardWatcher.h"
 #import "private/MDCDialogShadowedView.h"
 #import "private/MDCDialogTransitionMotionSpec.h"
 #import <MotionAnimator/MotionAnimator.h>
@@ -34,8 +34,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 // View matching the container's bounds that dims the entire screen and catchs taps to dismiss.
 @property(nonatomic) UIView *dimmingView;
 
-// Tracking view that adds a shadow under the presented view. This view's frame should always match
-// the presented view's.
+// A settable version of the parent presentedView API.
 @property(nonatomic) UIView *presentedView;
 
 @end
