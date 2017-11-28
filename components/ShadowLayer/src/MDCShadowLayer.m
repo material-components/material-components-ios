@@ -33,7 +33,8 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
 @interface MDCPendingAnimation : NSObject <CAAction>
 @property(nonatomic, strong) NSString *keyPath;
-@property(nonatomic, strong) CAAnimation *animation;
+@property(nonatomic, strong) id fromValue;
+@property(nonatomic, strong) id toValue;
 @end
 
 @implementation MDCShadowMetrics
@@ -362,13 +363,12 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
 - (id<CAAction>)actionForKey:(NSString *)key {
   if ([key isEqualToString:@"path"] || [key isEqualToString:@"shadowPath"]) {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:key];
-    animation.fromValue = [self.presentationLayer valueForKey:key];
-
     // We have to create a pending animation because if we are inside a UIKit animation block we
     // won't know any properties of the animation block until it is commited.
     MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
-    pendingAnim.animation = animation;
+    pendingAnim.fromValue = [self.presentationLayer valueForKey:key];
+    pendingAnim.toValue = nil;
+    pendingAnim.keyPath = key;
 
     return pendingAnim;
   }
@@ -388,23 +388,14 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     CALayer *animatedLayer = layer.animationParentLayer;
     CAAnimation *boundsAction = [animatedLayer animationForKey:@"bounds.size"];
     if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
-      [self configureAnimation:(CABasicAnimation *)boundsAction];
-      [layer addAnimation:self.animation forKey:event];
+      CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
+      animation.keyPath = self.keyPath;
+      animation.fromValue = self.fromValue;
+      animation.toValue = self.toValue;
+
+      [layer addAnimation:animation forKey:event];
     }
   }
-}
-
-- (void)configureAnimation:(CAAnimation *)template {
-  self.animation.autoreverses = template.autoreverses;
-  self.animation.beginTime = template.beginTime;
-  self.animation.delegate = template.delegate;
-  self.animation.duration = template.duration;
-  self.animation.fillMode = template.fillMode;
-  self.animation.repeatCount = template.repeatCount;
-  self.animation.repeatDuration = template.repeatDuration;
-  self.animation.speed = template.speed;
-  self.animation.timingFunction = template.timingFunction;
-  self.animation.timeOffset = template.timeOffset;
 }
 
 @end
