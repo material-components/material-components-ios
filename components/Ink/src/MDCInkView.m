@@ -17,15 +17,23 @@
 #import "MDCInkView.h"
 
 #import "private/MDCInkLayer.h"
+#import "private/MDCLegacyInkLayer.h"
 
-@interface MDCInkView ()
-@property(nonatomic, readonly) MDCInkLayer *inkLayer;
+@interface MDCInkView () <MDCInkLayerDelegate>
+
+@property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
+@property(nonatomic, copy) MDCInkCompletionBlock endInkRippleCompletionBlock;
+@property(nonatomic, strong) MDCInkLayer *activeInkLayer;
+
+// Legacy ink ripple
+@property(nonatomic, readonly) MDCLegacyInkLayer *inkLayer;
+
 @end
 
 @implementation MDCInkView
 
 + (Class)layerClass {
-  return [MDCInkLayer class];
+  return [MDCLegacyInkLayer class];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -49,6 +57,20 @@
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.inkColor = self.defaultInkColor;
+  _usesLegacyInkRipple = YES;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+
+  // When bounds change ensure all ink layer bounds are changed too.
+  for (CALayer *layer in self.layer.sublayers) {
+    if ([layer isKindOfClass:[MDCInkLayer class]]) {
+      MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
+      inkLayer.bounds = inkBounds;
+    }
+  }
 }
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
@@ -103,29 +125,68 @@
   self.inkLayer.customInkCenter = customInkCenter;
 }
 
-- (MDCInkLayer *)inkLayer {
-  return (MDCInkLayer *)self.layer;
+- (MDCLegacyInkLayer *)inkLayer {
+  return (MDCLegacyInkLayer *)self.layer;
 }
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer spreadFromPoint:point completion:completionBlock];
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer spreadFromPoint:point completion:completionBlock];
+  } else {
+    self.startInkRippleCompletionBlock = completionBlock;
+    MDCInkLayer *inkLayer = [MDCInkLayer layer];
+    inkLayer.inkColor = self.inkColor;
+    inkLayer.maxRippleRadius = self.maxRippleRadius;
+    inkLayer.animationDelegate = self;
+
+    switch (self.inkStyle) {
+      case MDCInkStyleBounded:
+        self.clipsToBounds = YES;
+        break;
+      case MDCInkStyleUnbounded:
+        self.clipsToBounds = NO;
+        break;
+    }
+
+    inkLayer.opacity = 0;
+    inkLayer.frame = self.bounds;
+    [self.layer addSublayer:inkLayer];
+    [inkLayer startAnimationAtPoint:point];
+    self.activeInkLayer = inkLayer;
+  }
 }
 
-- (void)startTouchEndedAnimationAtPoint:(__unused CGPoint)point
+- (void)startTouchEndedAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer evaporateWithCompletion:completionBlock];
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer evaporateWithCompletion:completionBlock];
+  } else {
+    self.endInkRippleCompletionBlock = completionBlock;
+    [self.activeInkLayer endAnimationAtPoint:point];
+  }
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  [self.inkLayer resetAllInk:animated];
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer resetAllInk:animated];
+  } else {
+    for (CALayer *layer in self.layer.sublayers) {
+      if ([layer isKindOfClass:[MDCInkLayer class]]) {
+        MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
+        if (animated) {
+          [inkLayer endAnimationAtPoint:CGPointZero];
+        } else {
+          [inkLayer removeFromSuperlayer];
+        }
+      }
+    }
+  }
 }
 
 - (UIColor *)defaultInkColor {
   return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
 }
-
-#pragma mark
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {
   MDCInkView *foundInkView = nil;
@@ -142,6 +203,20 @@
     [view addSubview:foundInkView];
   }
   return foundInkView;
+}
+
+#pragma mark - MDCInkLayerDelegate
+
+- (void)inkLayerAnimationDidStart:(MDCInkLayer *)inkLayer {
+  if (self.activeInkLayer == inkLayer && self.startInkRippleCompletionBlock) {
+    self.startInkRippleCompletionBlock();
+  }
+}
+
+- (void)inkLayerAnimationDidEnd:(MDCInkLayer *)inkLayer {
+  if (self.activeInkLayer == inkLayer && self.endInkRippleCompletionBlock) {
+    self.endInkRippleCompletionBlock();
+  }
 }
 
 @end
