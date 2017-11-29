@@ -24,6 +24,7 @@ static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey
 static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShadowMaskEnabledKey";
 
 @interface MDCPendingAnimation : NSObject <CAAction>
+@property(nonatomic, weak) CALayer *animationSourceLayer;
 @property(nonatomic, strong) NSString *keyPath;
 @property(nonatomic, strong) id fromValue;
 @property(nonatomic, strong) id toValue;
@@ -323,6 +324,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     // We have to create a pending animation because if we are inside a UIKit animation block we
     // won't know any properties of the animation block until it is commited.
     MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
+    pendingAnim.animationSourceLayer = self;
     pendingAnim.fromValue = [layer.presentationLayer valueForKey:event];
     pendingAnim.toValue = nil;
     pendingAnim.keyPath = event;
@@ -375,8 +377,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
     // In order to synchronize our animation with UIKit animations we have to fetch the resizing
     // animation created by UIKit and copy the configuration to our custom animation.
-    CALayer *animatedLayer = (CALayer *)layer.delegate;
-    CAAnimation *boundsAction = [animatedLayer animationForKey:@"bounds.size"];
+    CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
     if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
       CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
       animation.keyPath = self.keyPath;
