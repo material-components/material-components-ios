@@ -50,17 +50,10 @@ clients can test the release.
 > [View the release-candidate jobs](https://kokoro.corp.google.com/job/MaterialComponents_iOS/job/macos_external/)
 > in order to assess the status of the release.
 
-### Test the release branch
+### Resolve any failures
 
-Release testing is automated via the `.kokoro` script located in the root of the repo.
-You can run this script locally if the continuous integration fails.
-
-    ./.kokoro
-
-Identify why any failures occurred and resolve them before landing the release.
-
-> Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
-> This allows other people and machines to track the progress of the release.
+Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
+This allows other people and machines to track the progress of the release.
 
 #### Making changes
 
