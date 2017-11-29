@@ -93,7 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor
     UISwitch.appearance().onTintColor = colorScheme?.primaryColor
-    MDCAlertContentView.appearance().titleLabelColor = .blue
     return true
   }
 }
