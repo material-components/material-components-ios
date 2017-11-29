@@ -60,10 +60,8 @@
   self.inkColor = self.defaultInkColor;
   _usesLegacyInkRipple = YES;
 
-  // Create a mask layer to contain MDCInkLayer when the superview has a shadowPath.
+  // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
-  _maskLayer.masksToBounds = YES;
-  [self.layer addSublayer:_maskLayer];
 }
 
 - (void)layoutSubviews {
@@ -71,16 +69,15 @@
 
   // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
   if (self.superview.layer.shadowPath) {
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    maskLayer.path = self.superview.layer.shadowPath;
-    self.maskLayer.frame = self.bounds;
-    self.maskLayer.mask = maskLayer;
+    self.maskLayer.path = self.superview.layer.shadowPath;
+    self.layer.mask = _maskLayer;
+    self.layer.masksToBounds = YES;
   }
 
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
 
   // When bounds change ensure all ink layer bounds are changed too.
-  for (CALayer *layer in self.maskLayer.sublayers) {
+  for (CALayer *layer in self.layer.sublayers) {
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
@@ -168,8 +165,7 @@
 
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
-    self.maskLayer.frame = self.bounds;
-    [self.maskLayer addSublayer:inkLayer];
+    [self.layer addSublayer:inkLayer];
     [inkLayer startAnimationAtPoint:point];
     self.activeInkLayer = inkLayer;
   }
@@ -189,7 +185,7 @@
   if (self.usesLegacyInkRipple) {
     [self.inkLayer resetAllInk:animated];
   } else {
-    for (CALayer *layer in self.maskLayer.sublayers) {
+    for (CALayer *layer in self.layer.sublayers) {
       if ([layer isKindOfClass:[MDCInkLayer class]]) {
         MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
         if (animated) {
