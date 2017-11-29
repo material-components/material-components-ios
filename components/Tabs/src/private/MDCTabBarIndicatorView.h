@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 @class MDCTabBarIndicatorAttributes;
 
 /** View responsible for drawing the indicator behind tab content and animating changes. */
