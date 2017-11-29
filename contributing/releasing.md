@@ -96,15 +96,6 @@ Inspect changes to public component headers and manually generate the API diff b
 
     scripts/release/diff components/*/src/*.h
 
-~~Generate the API diff using scripts/release/api_diff:~~
-
-**The api_diff script is broken. Manually generate the API diff using scripts/release/diff as noted above and continue to the next step, Commit the changes. - Mar.28,2017 (ianegordon)**
-
-    scripts/release/api_diff
-
-- Append the command's output to CHANGELOG.md's "release-candidate" section.
-- Delete any component sections that state "No public API changes detected."
-
 Commit the changes to the release branch.
 
     git add CHANGELOG.md
