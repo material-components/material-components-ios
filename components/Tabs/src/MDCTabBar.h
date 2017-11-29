@@ -86,19 +86,16 @@ IB_DESIGNABLE
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /**
- Text attributes used for selected item titles.
- Default uses the regular font from the font loader.
+ Font used for selected item titles.
+ By default uses the regular font from the font loader.
  */
-@property(nonatomic, strong, nonnull)
-    NSDictionary<NSAttributedStringKey, id> *selectedItemTitleTextAttributes UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nonnull) UIFont *selectedItemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
- Text attributes used for unselected item titles.
- Default uses the regular font from the font loader.
+ Font used for unselected item titles.
+ By default uses the regular font from the font loader.
  */
-@property(nonatomic, strong, nonnull)
-    NSDictionary<NSAttributedStringKey, id> *unselectedItemTitleTextAttributes
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nonnull) UIFont *unselectedItemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
  Padding on the left and right of the tab bar's content for scrollable tabs.
