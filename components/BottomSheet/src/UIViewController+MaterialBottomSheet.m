@@ -20,11 +20,14 @@
 
 @implementation UIViewController (MaterialBottomSheet)
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (MDCBottomSheetPresentationController *)mdc_bottomSheetPresentationController {
   id presentationController = self.presentationController;
   if ([presentationController isKindOfClass:[MDCBottomSheetPresentationController class]]) {
     return (MDCBottomSheetPresentationController *)presentationController;
   }
+#pragma clang diagnostic pop
 
   return nil;
 }
