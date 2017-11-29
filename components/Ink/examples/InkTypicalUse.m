@@ -18,7 +18,7 @@
 
 #import "MaterialInk.h"
 
-#import "InkTypicalUseSupplemental.h"
+#import "supplemental/InkTypicalUseSupplemental.h"
 
 @interface InkTypicalUseViewController () <MDCInkTouchControllerDelegate>
 

@@ -16,13 +16,15 @@
 
 #import "MDCItemBar.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
-#import "MDFInternationalization.h"
+#import "MDCTabBarIndicatorAttributes.h"
+#import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarIndicatorView.h"
+#import "MDCTabBarPrivateIndicatorContext.h"
 #import "MaterialAnimationTiming.h"
-
-/// Height in points of the bar shown under selected items.
-static const CGFloat kSelectionIndicatorHeight = 2.0f;
 
 /// Cell reuse identifier for item bar cells.
 static NSString *const kItemReuseID = @"MDCItem";
@@ -65,8 +67,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UICollectionView *_collectionView;
   UICollectionViewFlowLayout *_flowLayout;
 
-  /// Underline displayed under the active item.
-  UIView *_selectionIndicator;
+  /// Indicator layered under the active item.
+  MDCTabBarIndicatorView *_selectionIndicator;
 
   /// Size of the view at last layout, for deduplicating changes.
   CGSize _lastSize;
@@ -128,10 +130,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   [self addSubview:_collectionView];
 
   // Configure the selection indicator view.
-  _selectionIndicator =
-      [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, kSelectionIndicatorHeight)];
-  _selectionIndicator.backgroundColor = [UIColor whiteColor];
-  _selectionIndicator.opaque = YES;
+  _selectionIndicator = [[MDCTabBarIndicatorView alloc] initWithFrame:CGRectZero];
   [_collectionView addSubview:_selectionIndicator];
 
   // Set initial properties.
@@ -158,6 +157,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     [self updateColors];
     [self updateAlignmentAnimated:NO];
     [self updateSelectionIndicatorVisibility];
+    [self updateSelectionIndicatorToIndex:[self indexForItem:_selectedItem]];
     [self configureVisibleCells];
     [self invalidateIntrinsicContentSize];
   }
@@ -284,11 +284,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       [self adjustedCollectionViewWidth] != _lastAdjustedCollectionViewWidth) {
     [self updateFlowLayoutMetrics];
 
-    // Ensure selected item is aligned properly on resize.
+    // Ensure selected item is aligned properly on resize, forcing the new layout to take effect.
+    [_collectionView layoutIfNeeded];
+
     [self selectItemAtIndex:[self indexForItem:_selectedItem] animated:NO];
   }
   _lastSize = bounds.size;
   _lastAdjustedCollectionViewWidth = [self adjustedCollectionViewWidth];
+
+  // The selection indicator must be behind all cells, regardless of the collection view's layout.
+  [_collectionView sendSubviewToBack:_selectionIndicator];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -534,17 +539,25 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (void)didSelectItemAtIndex:(NSInteger)index animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
     [self updateSelectionIndicatorToIndex:index];
+
+    // Force layout so any changes to the selection indicator are captured by the animation block.
+    [_selectionIndicator layoutIfNeeded];
   };
 
   if (animate) {
     CAMediaTimingFunction *easeInOutFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-    [UIView mdc_animateWithTimingFunction:easeInOutFunction
-                                 duration:kDefaultAnimationDuration
-                                    delay:0
-                                  options:UIViewAnimationOptionBeginFromCurrentState
-                               animations:animationBlock
-                               completion:nil];
+    // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:kDefaultAnimationDuration];
+    [CATransaction setAnimationTimingFunction:easeInOutFunction];
+    [UIView animateWithDuration:kDefaultAnimationDuration
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:animationBlock
+                     completion:nil];
+    [CATransaction commit];
+
   } else {
     animationBlock();
   }
@@ -565,20 +578,38 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 
   // Use layout attributes as the cell may not be visible or loaded yet.
-  UICollectionViewLayoutAttributes *attributes =
-      [_flowLayout layoutAttributesForItemAtIndexPath:[self indexPathForItemAtIndex:index]];
+  NSIndexPath *indexPath = [self indexPathForItemAtIndex:index];
+  UICollectionViewLayoutAttributes *layoutAttributes =
+      [_flowLayout layoutAttributesForItemAtIndexPath:indexPath];
 
-  // Size selection indicator to a fixed height, equal in width to the selected item's cell.
-  CGRect selectionIndicatorBounds = attributes.bounds;
-  selectionIndicatorBounds.size.height = kSelectionIndicatorHeight;
-
-  // Center selection indicator under cell.
-  CGPoint selectionIndicatorCenter = attributes.center;
-  selectionIndicatorCenter.y =
-      CGRectGetMaxY(_collectionView.bounds) - (kSelectionIndicatorHeight / 2.0f);
-
+  // Place selection indicator under the item's cell.
+  CGRect selectionIndicatorBounds = layoutAttributes.bounds;
+  CGPoint selectionIndicatorCenter = layoutAttributes.center;
   _selectionIndicator.bounds = selectionIndicatorBounds;
   _selectionIndicator.center = selectionIndicatorCenter;
+
+  // Extract content frame from cell.
+  CGRect contentFrame = selectionIndicatorBounds;
+  UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
+  if ([cell isKindOfClass:[MDCItemBarCell class]]) {
+    MDCItemBarCell *itemBarCell = (MDCItemBarCell *)cell;
+    contentFrame = [cell convertRect:itemBarCell.contentFrame fromView:cell];
+  }
+
+  // Construct a context object describing the selected tab.
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  MDCTabBarPrivateIndicatorContext *context =
+      [[MDCTabBarPrivateIndicatorContext alloc] initWithItem:item
+                                                      bounds:selectionIndicatorBounds
+                                                contentFrame:contentFrame];
+
+  // Ask the template for attributes.
+  id<MDCTabBarIndicatorTemplate> template = _style.selectionIndicatorTemplate;
+  MDCTabBarIndicatorAttributes *indicatorAttributes =
+      [template indicatorAttributesForContext:context];
+
+  // Update the selection indicator.
+  [_selectionIndicator applySelectionIndicatorAttributes:indicatorAttributes];
 }
 
 - (void)updateFlowLayoutMetricsAnimated:(BOOL)animate {
@@ -640,6 +671,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // this method to be used without animation.
   NSAssert(_collectionView.window, @"Collection view must be in a window to update layout");
   [_collectionView setCollectionViewLayout:_flowLayout animated:NO];
+
+  // Force immediate layout so the selection indicator can be placed accurately.
+  [_collectionView layoutIfNeeded];
 
   // Update selection indicator to potentially new location and size
   // Not animated for the same reason as mentioned above.
@@ -732,7 +766,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (void)updateColors {
   [self configureVisibleCells];
 
-  _selectionIndicator.backgroundColor = _style.selectionIndicatorColor;
+  _selectionIndicator.tintColor = _style.selectionIndicatorColor;
 }
 
 - (void)updateSelectionIndicatorVisibility {

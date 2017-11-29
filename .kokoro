@@ -17,10 +17,10 @@
 # Fail on any error.
 set -e
 
-# Display commands to stderr.
-set -x
+KOKORO_RUNNER_VERSION="v4.*"
 
-KOKORO_RUNNER_VERSION="v3.*"
+# Kokoro only supports up to 8.2 for now. Once 8.3 support is introduced we will bump this version.
+XCODE_MINIMUM_VERSION="8.2.0"
 
 fix_bazel_imports() {
   if [ -z "$KOKORO_BUILD_NUMBER" ]; then
@@ -38,16 +38,118 @@ fix_bazel_imports() {
   }
 
   stashed_dir=""
+  rewrite_tests "s/import MaterialComponents.MaterialMath/import components_private_Math_Math/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
+  rewrite_source "s/import <MDF(.+)\/MDF.+\.h>/import \"MDF\1.h\"/"
   stashed_dir="$(pwd)/"
   reset_imports() {
     # Undoes our source changes from above.
+    rewrite_tests "s/import components_private_Math_Math/import MaterialComponents.MaterialMath/"
     rewrite_tests "s/import components_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
+    rewrite_source "s/import \"MDF(.+)\.h\"/import <MDF\1\/MDF\1.h>/"
   }
   trap reset_imports EXIT
 }
+
+version_as_number() {
+  padded_version="${1%.}" # Strip any trailing dots
+  # Pad with .0 until we get a M.m.p version string.
+  while [ $(grep -o "\." <<< "$padded_version" | wc -l) -lt "2" ]; do
+    padded_version=${padded_version}.0
+  done
+  echo "${padded_version//.}"
+}
+
+run_bazel() {
+  echo "Running bazel builds..."
+
+  fix_bazel_imports
+
+  if [ -n "$VERBOSE_OUTPUT" ]; then
+    verbosity_args="-v"
+  fi
+
+  ./.kokoro-ios-runner/bazel.sh test //components/... \
+      --min-xcode-version $XCODE_MINIMUM_VERSION \
+      $verbosity_args \
+      --ios_minimum_os=8.0 \
+      --ios_multi_cpus=i386,x86_64
+}
+
+run_cocoapods() {
+  echo "Running cocoapods builds..."
+
+  xcode_min_version_as_number="$(version_as_number $XCODE_MINIMUM_VERSION)"
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    cd github/repo
+
+    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+    pod --version
+  fi
+
+  ls /Applications/ | grep "Xcode" | while read -r xcode_path; do
+    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
+      | grep "CFBundleShortVersionString" -A1 \
+      | grep string \
+      | cut -d'>' -f2 \
+      | cut -d'<' -f1)
+    if [ -n "$xcode_min_version_as_number" ]; then
+      xcode_version_as_number="$(version_as_number $xcode_version)"
+
+      if [ "$xcode_version_as_number" -lt "$xcode_min_version_as_number" ]; then
+        continue
+      fi
+    fi
+
+    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
+    xcodebuild -version
+
+    # Resolves the following crash when switching Xcode versions:
+    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
+    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
+
+    scripts/prep_all
+    scripts/build_all --verbose
+    if [ "$IS_RELEASE" -eq "1" ]; then
+      scripts/test_all
+    else
+      scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+    fi
+  done
+
+  bash <(curl -s https://codecov.io/bash)
+}
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  key="$1"
+
+  case $key in
+  -v|--verbose)
+    VERBOSE_OUTPUT="1"
+    shift
+    ;;
+  *)
+    POSITIONAL+=("$1")
+    shift
+    ;;
+  esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  # Always enable verbose output on kokoro runs.
+  VERBOSE_OUTPUT=1
+fi
+
+if [ -n "$VERBOSE_OUTPUT" ]; then
+  # Display commands to stderr.
+  set -x
+fi
 
 if [ ! -d .kokoro-ios-runner ]; then
   git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
@@ -59,8 +161,11 @@ TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
 git checkout "$TAG" > /dev/null
 popd
 
-fix_bazel_imports
+case "$DEPENDENCY_SYSTEM" in
+  "bazel")      run_bazel ;;
+  "cocoapods")  run_cocoapods ;;
 
-./.kokoro-ios-runner/bazel.sh test //components/... 8.2.0
+  *)            run_bazel ;;
+esac
 
 echo "Success!"

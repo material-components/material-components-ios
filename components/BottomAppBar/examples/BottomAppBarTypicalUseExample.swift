@@ -89,14 +89,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     }
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.view.backgroundColor = .white
-
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-  
-  override func viewWillLayoutSubviews() {
+  func layoutBottomAppBar() {
     let size = bottomBarView.sizeThatFits(view.bounds.size)
     let bottomBarViewFrame = CGRect(x: 0,
                                     y: view.bounds.size.height - size.height,
@@ -104,6 +97,26 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
                                     height: size.height)
     bottomBarView.frame = bottomBarViewFrame
   }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.view.backgroundColor = .white
+
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    layoutBottomAppBar()
+  }
+
+  #if swift(>=3.2)
+  @available(iOS 11, *)
+  override func viewSafeAreaInsetsDidChange() {
+    super.viewSafeAreaInsetsDidChange()
+    layoutBottomAppBar()
+  }
+  #endif
 
 }
 

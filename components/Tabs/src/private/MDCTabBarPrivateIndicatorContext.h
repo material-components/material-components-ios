@@ -14,13 +14,18 @@
  limitations under the License.
  */
 
-#import "MDCProgressView+MotionSpec.h"
+#import <UIKit/UIKit.h>
 
-const struct MDCProgressViewMotionSpec kMDCProgressViewMotionSpec = {
-  .setProgress = {
-    .duration = 0.250, .curve = _MDMBezier(0, 0, 1, 1),
-  },
-  .setHidden = {
-    .duration = 0.250, .curve = _MDMBezier(0, 0, 1, 1),
-  }
-};
+#import "MDCTabBarIndicatorContext.h"
+
+/// Concrete implementation of a tab indicator context.
+@interface MDCTabBarPrivateIndicatorContext : NSObject <MDCTabBarIndicatorContext>
+
+- (null_unspecified instancetype)init NS_UNAVAILABLE;
+
+/// Designated initializer which creates a context from members.
+- (nonnull instancetype)initWithItem:(nonnull UITabBarItem *)item
+                              bounds:(CGRect)bounds
+                        contentFrame:(CGRect)contentFrame NS_DESIGNATED_INITIALIZER;
+
+@end

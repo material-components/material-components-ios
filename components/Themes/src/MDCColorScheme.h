@@ -20,7 +20,7 @@
  A color scheme comprised of set of primary and secondary colors. Material design guidelines
  recommend using primary and secondary colors with light and dark color variants.
  */
-@protocol MDCColorScheme
+@protocol MDCColorScheme <NSObject>
 
 /** The main, primary color used for a theme. */
 @property(nonatomic, strong, nonnull, readonly) UIColor *primaryColor;

@@ -15,35 +15,52 @@
  */
 
 #import <Foundation/Foundation.h>
-
 #import <MotionInterchange/MotionInterchange.h>
 
-struct MDCActivityIndicatorMotionSpec {
-  struct MDCActivityIndicatorMotionSpecIndeterminate {
-    MDMMotionTiming outerRotation;
-    MDMMotionTiming innerRotation;
-    MDMMotionTiming strokeStart;
-    MDMMotionTiming strokeEnd;
-  } indeterminate;
+#ifndef MDC_SUBCLASSING_RESTRICTED
+#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
+#define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
+#else
+#define MDC_SUBCLASSING_RESTRICTED
+#endif
+#endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
 
-  struct MDCActivityIndicatorMotionSpecTransitionToDeterminate {
-    MDMMotionTiming innerRotation;
-    MDMMotionTiming strokeEnd;
-  } transitionToDeterminate;
+typedef struct MDCActivityIndicatorMotionSpecIndeterminate {
+  MDMMotionTiming outerRotation;
+  MDMMotionTiming innerRotation;
+  MDMMotionTiming strokeStart;
+  MDMMotionTiming strokeEnd;
+} MDCActivityIndicatorMotionSpecIndeterminate;
 
-  struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate {
-    MDMMotionTiming strokeStart;
-    MDMMotionTiming strokeEnd;
-  } transitionToIndeterminate;
+typedef struct MDCActivityIndicatorMotionSpecTransitionToDeterminate {
+  MDMMotionTiming innerRotation;
+  MDMMotionTiming strokeEnd;
+} MDCActivityIndicatorMotionSpecTransitionToDeterminate;
 
-  struct MDCActivityIndicatorMotionSpecProgress {
-    MDMMotionTiming strokeEnd;
-  } progress;
-};
-typedef struct MDCActivityIndicatorMotionSpec MDCActivityIndicatorMotionSpec;
+typedef struct MDCActivityIndicatorMotionSpecTransitionToIndeterminate {
+  MDMMotionTiming strokeStart;
+  MDMMotionTiming strokeEnd;
+} MDCActivityIndicatorMotionSpecTransitionToIndeterminate;
 
-FOUNDATION_EXPORT const NSTimeInterval kPointCycleDuration;
-FOUNDATION_EXPORT const NSTimeInterval kPointCycleMinimumVariableDuration;
+typedef struct MDCActivityIndicatorMotionSpecProgress {
+  MDMMotionTiming strokeEnd;
+} MDCActivityIndicatorMotionSpecProgress;
 
-FOUNDATION_EXPORT const struct MDCActivityIndicatorMotionSpec kMDCActivityIndicatorMotionSpec;
+MDC_SUBCLASSING_RESTRICTED
+@interface MDCActivityIndicatorMotionSpec: NSObject
+
+@property(nonatomic, class, readonly) NSTimeInterval pointCycleDuration;
+@property(nonatomic, class, readonly) NSTimeInterval pointCycleMinimumVariableDuration;
+
+@property(nonatomic, class, readonly) MDCActivityIndicatorMotionSpecIndeterminate loopIndeterminate;
+@property(nonatomic, class, readonly)
+    MDCActivityIndicatorMotionSpecTransitionToDeterminate willChangeToDeterminate;
+@property(nonatomic, class, readonly)
+    MDCActivityIndicatorMotionSpecTransitionToIndeterminate willChangeToIndeterminate;
+@property(nonatomic, class, readonly) MDCActivityIndicatorMotionSpecProgress willChangeProgress;
+
+// This object is not meant to be instantiated.
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
 

@@ -16,7 +16,7 @@
 
 #import "MDCButton.h"
 
-#import "MDFTextAccessibility.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
@@ -676,7 +676,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
   _userElevations[@(state)] = @(elevation);
-  self.layer.elevation = [self elevationForState:self.state];
+  MDCShadowElevation newElevation = [self elevationForState:self.state];
+  // If no change to the current elevation, don't perform updates
+  if (MDCCGFloatEqual(newElevation, self.layer.elevation)) {
+    return;
+  }
+  self.layer.elevation = newElevation;
 
   // The elevation of the normal state controls whether this button is flat or not, and flat buttons
   // have different background color requirements than raised buttons.

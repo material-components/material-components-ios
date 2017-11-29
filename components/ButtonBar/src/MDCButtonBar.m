@@ -16,7 +16,8 @@
 
 #import "MDCButtonBar.h"
 
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MaterialButtons.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
