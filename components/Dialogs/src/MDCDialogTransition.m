@@ -17,7 +17,7 @@
 #import "MDCDialogTransition.h"
 
 #import "MDCDialogPresentationController.h"
-#import "MDCDialogTransitionMotionSpec.h"
+#import "private/MDCDialogTransitionMotionSpec.h"
 
 #import <MotionAnimator/MotionAnimator.h>
 
