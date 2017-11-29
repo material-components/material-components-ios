@@ -16,8 +16,6 @@
 
 #import "MDCColorScheme.h"
 
-static const CGFloat MDCDialogMessageOpacity = 0.54f;
-
 @interface MDCBasicColorScheme ()
 
 @property (nonatomic, strong, nonnull) UIColor *primaryColor;
@@ -26,8 +24,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 @property (nonatomic, strong, nonnull) UIColor *secondaryColor;
 @property (nonatomic, strong, nonnull) UIColor *secondaryLightColor;
 @property (nonatomic, strong, nonnull) UIColor *secondaryDarkColor;
-@property (nonatomic, strong, nonnull) UIColor *primaryTextColor;
-@property (nonatomic, strong, nonnull) UIColor *secondaryTextColor;
 
 @end
 
@@ -38,9 +34,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                             primaryDarkColor:(nonnull UIColor *)primaryDarkColor
                               secondaryColor:(nonnull UIColor *)secondaryColor
                          secondaryLightColor:(nonnull UIColor *)secondaryLightColor
-                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor
-                            primaryTextColor:(nonnull UIColor *)primaryTextColor
-                          secondaryTextColor:(nonnull UIColor *)secondaryTextColor {
+                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor {
   self = [super init];
   if (self) {
     _primaryColor = primaryColor;
@@ -49,26 +43,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     _secondaryColor = secondaryColor;
     _secondaryLightColor = secondaryLightColor;
     _secondaryDarkColor = secondaryDarkColor;
-    _primaryTextColor = primaryTextColor;
-    _secondaryTextColor = secondaryTextColor;
   }
   return self;
-}
-
-- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
-                           primaryLightColor:(nonnull UIColor *)primaryLightColor
-                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor
-                              secondaryColor:(nonnull UIColor *)secondaryColor
-                         secondaryLightColor:(nonnull UIColor *)secondaryLightColor
-                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor {
-  return [self initWithPrimaryColor:primaryColor
-                  primaryLightColor:primaryLightColor
-                   primaryDarkColor:primaryDarkColor
-                     secondaryColor:primaryColor
-                secondaryLightColor:primaryLightColor
-                 secondaryDarkColor:primaryDarkColor
-                   primaryTextColor:[UIColor blackColor]
-                 secondaryTextColor:[UIColor colorWithWhite:0.0 alpha:MDCDialogMessageOpacity]];
 }
 
 - (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor {
@@ -101,20 +77,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                      secondaryColor:secondaryColor
                 secondaryLightColor:[self lighterColorForColor:secondaryColor]
                  secondaryDarkColor:[self darkerColorForColor:secondaryColor]];
-}
-
-- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
-                              secondaryColor:(nonnull UIColor *)secondaryColor
-                            primaryTextColor:(nonnull UIColor *)primaryTextColor
-                          secondaryTextColor:(nonnull UIColor *)secondaryTextColor {
-  return [self initWithPrimaryColor:primaryColor
-                  primaryLightColor:[self lighterColorForColor:primaryColor]
-                   primaryDarkColor:[self darkerColorForColor:primaryColor]
-                     secondaryColor:secondaryColor
-                secondaryLightColor:[self lighterColorForColor:secondaryColor]
-                 secondaryDarkColor:[self darkerColorForColor:secondaryColor]
-                   primaryTextColor:primaryTextColor
-                 secondaryTextColor:secondaryTextColor];
 }
 
 - (UIColor *)lighterColorForColor:(UIColor *)color {
@@ -150,8 +112,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     copy.secondaryColor = [self secondaryColor];
     copy.secondaryLightColor = [self secondaryLightColor];
     copy.secondaryDarkColor = [self secondaryDarkColor];
-    copy.primaryTextColor = [self primaryTextColor];
-    copy.secondaryTextColor = [self secondaryTextColor];
   }
   return copy;
 }

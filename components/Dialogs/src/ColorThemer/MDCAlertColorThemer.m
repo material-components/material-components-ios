@@ -20,8 +20,7 @@
 
 @implementation MDCAlertColorThemer
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-      toAlertContentView:(MDCAlertContentView *)alertContentView {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {
   #if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
   [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
       setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
@@ -29,8 +28,6 @@
   [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
       setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
   #endif
-  [alertContentView setTitleLabelColor:colorScheme.primaryTextColor];
-  [alertContentView setMessageLabelColor:colorScheme.secondaryTextColor];
 }
 
 @end

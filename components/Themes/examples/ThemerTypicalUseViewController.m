@@ -33,7 +33,7 @@
   // Apply color scheme to material design components using component themers.
   [MDCActivityIndicatorColorThemer applyColorScheme:self.colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
-  [MDCAlertColorThemer applyColorScheme:self.colorScheme toAlertContentView:[MDCAlertContentView appearance]];
+  [MDCAlertColorThemer applyColorScheme:self.colorScheme];
   [MDCButtonBarColorThemer applyColorScheme:self.colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:self.colorScheme toButton:[MDCButton appearance]];
   [MDCFeatureHighlightColorThemer applyColorScheme:self.colorScheme
