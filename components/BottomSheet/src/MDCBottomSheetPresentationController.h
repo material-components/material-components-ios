@@ -21,8 +21,7 @@
 /**
  Delegate for MDCBottomSheetPresentationController.
  */
-__deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
-                 "mdm_transitionController.transition instead.")
+__deprecated_msg("This API will soon be made private. Use MDCBottomSheetController instead.")
 @protocol MDCBottomSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
 @optional
 
@@ -50,8 +49,7 @@ __deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view co
 /**
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
  */
-__deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
-                 "mdm_transitionController.transition instead.")
+__deprecated_msg("This API will soon be made private. Use MDCBottomSheetController instead.")
 @interface MDCBottomSheetPresentationController : UIPresentationController
 
 /**
