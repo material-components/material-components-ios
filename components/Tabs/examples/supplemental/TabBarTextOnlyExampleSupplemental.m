@@ -18,11 +18,6 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import <Foundation/Foundation.h>
-
-#import "MaterialAppBar.h"
-#import "MaterialTabs.h"
-
 #import "TabBarTextOnlyExampleSupplemental.h"
 
 static CGFloat const kAppBarMinHeight = 56;

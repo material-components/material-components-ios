@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
 #import "MaterialAppBar.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCAppBar.
@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCAppBar.
  @param appBar A MDCAppBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toAppBar:(MDCAppBar *)appBar;
 
 @end

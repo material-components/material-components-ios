@@ -177,7 +177,7 @@ static NSString *s_secondaryColorString;
   self.previewButton.enabled = YES;
 }
 
-- (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
+- (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {
   // Apply color scheme to material design components using component themers.
   [MDCActivityIndicatorColorThemer applyColorScheme:colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];

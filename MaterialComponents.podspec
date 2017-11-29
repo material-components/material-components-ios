@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "40.0.3"
+  mdc.version      = "40.1.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -134,6 +134,8 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
+    component.dependency "MotionAnimator", "~> 2.3"
+    component.dependency "MotionTransitioning", "~> 4.0"
   end
 
   mdc.subspec "Buttons" do |component|

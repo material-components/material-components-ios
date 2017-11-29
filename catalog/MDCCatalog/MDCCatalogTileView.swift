@@ -78,57 +78,57 @@ class MDCCatalogTileView: UIView {
 
     switch componentNameString {
     case "Activity Indicator":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawActivityIndicatorTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawActivityIndicatorTile($0, $1) }, colorScheme)
     case "Animation Timing":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawAnimationTimingTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawAnimationTimingTile($0, $1) }, colorScheme)
     case "App Bar":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawAppBarTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawAppBarTile($0, $1) }, colorScheme)
     case "Bottom App Bar":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawBottomAppBarTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawBottomAppBarTile($0, $1) }, colorScheme)
     case "Bottom Navigation":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawBottomNavTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawBottomNavTile($0, $1) }, colorScheme)
     case "Bottom Sheet":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawBottomSheetTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawBottomSheetTile($0, $1) }, colorScheme)
     case "Button Bar":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawButtonBarTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawButtonBarTile($0, $1) }, colorScheme)
     case "Buttons":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawButtonsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawButtonsTile($0, $1) }, colorScheme)
     case "Collection Cells":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawCollectionCellsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawCollectionCellsTile($0, $1) }, colorScheme)
     case "Collections":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawCollectionsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawCollectionsTile($0, $1) }, colorScheme)
     case "Dialogs":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawDialogsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawDialogsTile($0, $1) }, colorScheme)
     case "Feature Highlight":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawFeatureHighlightTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawFeatureHighlightTile($0, $1) }, colorScheme)
     case "Flexible Header":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawFlexibleHeaderTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawFlexibleHeaderTile($0, $1) }, colorScheme)
     case "Ink":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawInkTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawInkTile($0, $1) }, colorScheme)
     case "Masked Transition":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawMaskedTransitionTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawMaskedTransitionTile($0, $1) }, colorScheme)
     case "Misc":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawMiscTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawMiscTile($0, $1) }, colorScheme)
     case "Page Control":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawPageControlTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawPageControlTile($0, $1) }, colorScheme)
     case "Palettes":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawPalettesTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawPalettesTile($0, $1) }, colorScheme)
     case "Shadow":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawShadowLayerTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawShadowLayerTile($0, $1) }, colorScheme)
     case "Slider":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawSliderTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawSliderTile($0, $1) }, colorScheme)
     case "Snackbar":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawSnackbarTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawSnackbarTile($0, $1) }, colorScheme)
     case "Tab Bar":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawTabsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawTabsTile($0, $1) }, colorScheme)
     case "Text Field":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawTextFieldTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawTextFieldTile($0, $1) }, colorScheme)
     case "Themes":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawThemesTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawThemesTile($0, $1) }, colorScheme)
     case "Typography Custom Fonts":
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawTypographyCustomFontsTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawTypographyCustomFontsTile($0, $1) }, colorScheme)
     default:
-      newImage = MDCDrawImage(bounds, MDCCatalogDrawMiscTile, colorScheme)
+      newImage = MDCDrawImage(bounds, { MDCCatalogDrawMiscTile($0, $1) }, colorScheme)
     }
 
     guard let unwrappedImage = newImage else {

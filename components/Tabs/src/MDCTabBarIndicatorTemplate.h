@@ -16,24 +16,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCSheetBehavior : UIDynamicBehavior
+@class MDCTabBarIndicatorAttributes;
+@protocol MDCTabBarIndicatorContext;
+
+/*
+ Template for indicator content which defines how the indicator changes appearance in response to
+ changes in its context.
+
+ Template objects are expected to be immutable once set on a tab bar.
+ */
+@protocol MDCTabBarIndicatorTemplate <NSObject>
 
 /**
- * The final center-point for the item to arrive at.
+ Returns an attributes object that describes how the indicator should appear in a given context.
  */
-@property(nonatomic) CGPoint targetPoint;
-
-/**
- * The initial velocity for the behavior.
- */
-@property(nonatomic) CGPoint velocity;
-
-/**
- * Initializes a @c MDCSheetBehavior.
- * @param item The dynamic item (a view) to apply the sheet behavior to.
- */
-- (nonnull instancetype)initWithItem:(nonnull id <UIDynamicItem>)item NS_DESIGNATED_INITIALIZER;
-
-- (nonnull instancetype)init NS_UNAVAILABLE;
+- (nonnull MDCTabBarIndicatorAttributes *)
+    indicatorAttributesForContext:(nonnull id<MDCTabBarIndicatorContext>)context;
 
 @end

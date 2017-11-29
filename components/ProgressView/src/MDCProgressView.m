@@ -18,11 +18,11 @@
 
 #include <tgmath.h>
 
-#import "MDFInternationalization.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import <MotionAnimator/MotionAnimator.h>
-#import "private/MDCProgressView+MotionSpec.h"
+#import "private/MDCProgressViewMotionSpec.h"
 
 static inline UIColor *MDCProgressViewDefaultTintColor(void) {
   return MDCPalette.bluePalette.tint500;
@@ -144,7 +144,7 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
     [self updateProgressView];
 
   } else {
-    MDMMotionTiming timing = kMDCProgressViewMotionSpec.setProgress;
+    MDMMotionTiming timing = MDCProgressViewMotionSpec.willChangeProgress;
     [_animator animateWithTiming:timing animations:^{
       [self updateProgressView];
     } completion:^{
@@ -200,7 +200,7 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
   }
 
   if (animated) {
-    MDMMotionTiming timing = kMDCProgressViewMotionSpec.setHidden;
+    MDMMotionTiming timing = MDCProgressViewMotionSpec.willChangeHidden;
     [_animator animateWithTiming:timing animations:animations completion:^{
       if (hidden) {
         self.animatingHide = NO;

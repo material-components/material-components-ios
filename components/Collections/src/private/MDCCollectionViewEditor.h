@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialCollections.h"
+#import "MDCCollectionViewEditing.h"
 
 /**
  The MDCCollectionViewEditingManager class provides an implementation for a UICollectionView to

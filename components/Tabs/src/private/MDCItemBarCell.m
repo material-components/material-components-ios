@@ -17,9 +17,10 @@
 #import "MDCItemBarCell.h"
 #import "MDCItemBarCell+Private.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
-#import "MDFInternationalization.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
@@ -177,6 +178,23 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [self setNeedsLayout];
 }
 
+- (CGRect)contentFrame {
+  if (_style.shouldDisplayTitle) {
+    if (_style.shouldDisplayImage) {
+      // Title and image.
+      CGRect titleFrame = [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+      CGRect imageFrame = [self convertRect:_imageView.bounds fromView:_imageView];
+      return CGRectUnion(titleFrame, imageFrame);
+    } else {
+      // Only title.
+      return [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+    }
+  } else {
+    // Only image.
+    return [self convertRect:_imageView.bounds fromView:_imageView];
+  }
+}
+
 - (void)applyStyle:(MDCItemBarStyle *)style {
   if (style != _style && ![style isEqual:_style]) {
     _style = style;
@@ -235,8 +253,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Title is a fixed height based on content and is placed full-width, regardless of content style.
   titleCenter.x = CGRectGetMidX(contentBounds);
-  titleBounds.size.width = CGRectGetWidth(contentBounds);
-  titleBounds.size.height = titleSize.height;
+  titleBounds.size = titleSize;
 
   // Horizontally align the badge.
   CGSize badgeSize = [_badgeLabel sizeThatFits:contentBounds.size];

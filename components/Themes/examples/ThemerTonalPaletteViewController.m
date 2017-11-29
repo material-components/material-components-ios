@@ -18,8 +18,7 @@
 
 #import "MaterialThemes.h"
 #import "MaterialPalettes.h"
-
-#import "ThemerTypicalUseSupplemental.h"
+#import "supplemental/ThemerTypicalUseSupplemental.h"
 
 @import MaterialComponents.MaterialCollections;
 
@@ -27,7 +26,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface ThemerTonalPaletteViewController : MDCCollectionViewController
 
-@property(nonatomic, strong) NSObject<MDCColorScheme> *colorScheme;
+@property(nonatomic, strong) id<MDCColorScheme> colorScheme;
 @property(nonatomic, strong, nullable) NSArray<NSString *> *modes;
 
 - (void)loadCollectionView:(nullable NSArray<NSString *> *)modes;

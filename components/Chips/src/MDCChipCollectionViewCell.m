@@ -16,8 +16,6 @@
 
 #import "MDCChipCollectionViewCell.h"
 
-#import "MaterialChips.h"
-
 #import "private/MDCChipView+Private.h"
 
 static NSString *const MDCChipCollectionViewCellChipViewKey =

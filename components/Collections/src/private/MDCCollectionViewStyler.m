@@ -16,8 +16,8 @@
 
 #import "MDCCollectionViewStyler.h"
 
+#import "MDCCollectionViewStylingDelegate.h"
 #import "MaterialCollectionLayoutAttributes.h"
-#import "MaterialCollections.h"
 #import "MaterialPalettes.h"
 
 #include <tgmath.h>

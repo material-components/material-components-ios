@@ -22,7 +22,7 @@ static const CGFloat kSliderThemerDarkAlpha = 0.3f;
 
 @implementation MDCSliderColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toSlider:(MDCSlider *)slider {
   slider.trackBackgroundColor = colorScheme.primaryLightColor;
   slider.color = colorScheme.primaryColor;

@@ -98,6 +98,17 @@ By default, the tab bar is configured to display items with white text and icons
 
 Configure where items are placed in the tab bar by setting the `alignment` property.
 
+### Custom selection indicators
+
+The currently-selected tab is indicated visually by a *selection indicator*. By default this is an
+underline, but you can customize its appearance by defining a selection indicator template and
+setting the `selectionIndicatorTemplate` property on the tab bar. Template objects are provided
+contextual information about a tab's content and return *attributes* that describe how that tab's
+indicator should appear. The indicator will then automatically display the provided shape and
+animate changes as the user selects different tabs.
+
+See `MDCTabBarIndicatorTemplate` and `MDCTabBarIndicatorAttributes` for details.
+
 ### Bottom navigation
 
 Implement `positionForBar:` and return `UIBarPositionBottom` to configure the tab bar as a bottom
