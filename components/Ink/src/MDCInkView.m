@@ -199,7 +199,7 @@
 }
 
 - (UIColor *)defaultInkColor {
-  return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
+  return [[UIColor alloc] initWithWhite:0 alpha:0.14f];
 }
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {
