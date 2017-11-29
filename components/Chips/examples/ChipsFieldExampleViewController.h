@@ -14,7 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCChipCollectionViewFlowLayout.h"
-#import "MDCChipCollectionViewCell.h"
-#import "MDCChipField.h"
-#import "MDCChipView.h"
+#import <UIKit/UIKit.h>
+
+@interface ChipsFieldExampleViewController : UIViewController
+
+@end
