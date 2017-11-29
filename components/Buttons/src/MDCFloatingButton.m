@@ -31,10 +31,6 @@ static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
 static NSString *const MDCFloatingButtonImageLocationKey = @"MDCFloatingButtonImageLocationKey";
 static NSString *const MDCFloatingButtonImageTitleSpacingKey = @"MDCFloatingButtonImageTitleSpacingKey";
 
-static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
-  return UIEdgeInsetsMake(insets.top, insets.right, insets.bottom, insets.left);
-}
-
 // TODO(rsmoore): All properties within here will be made public in a future PR.
 @interface MDCFloatingButton ()
 
@@ -118,10 +114,16 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
     if (@(_shape).integerValue >= 2) {
       _shape = MDCFloatingButtonShapeDefault;
     }
-    _mode = [aDecoder decodeIntegerForKey:MDCFloatingButtonModeKey];
-    _imageLocation = [aDecoder decodeIntegerForKey:MDCFloatingButtonImageLocationKey];
-    _imageTitleSpacing =
-        (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingButtonImageTitleSpacingKey];
+    if ([aDecoder containsValueForKey:MDCFloatingButtonModeKey]) {
+      _mode = [aDecoder decodeIntegerForKey:MDCFloatingButtonModeKey];
+    }
+    if ([aDecoder containsValueForKey:MDCFloatingButtonImageLocationKey]) {
+      _imageLocation = [aDecoder decodeIntegerForKey:MDCFloatingButtonImageLocationKey];
+    }
+    if ([aDecoder containsValueForKey:MDCFloatingButtonImageTitleSpacingKey]) {
+      _imageTitleSpacing =
+          (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingButtonImageTitleSpacingKey];
+    }
   }
   return self;
 }
@@ -222,7 +224,7 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
   BOOL isLeadingIcon = self.imageLocation == MDCFloatingButtonImageLocationLeading;
   UIEdgeInsets adjustedLayoutInsets =
       isLeadingIcon ? internalLayoutSpacingInsets
-                    : UIEdgeInsetsFlippedHorizonally(internalLayoutSpacingInsets);
+                    : MDFInsetsFlippedHorizontally(internalLayoutSpacingInsets);
 
   const CGRect insetBounds = UIEdgeInsetsInsetRect(UIEdgeInsetsInsetRect(self.bounds,
                                                                          adjustedLayoutInsets),
@@ -243,26 +245,24 @@ static UIEdgeInsets UIEdgeInsetsFlippedHorizonally(UIEdgeInsets insets) {
 
   CGPoint titleCenter;
   CGPoint imageCenter;
-  BOOL isRTL = self.mdf_effectiveUserInterfaceLayoutDirection
-      == UIUserInterfaceLayoutDirectionRightToLeft;
+  BOOL isLTR =
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
 
-  // isRTL && isLeadingIcon => icon to right of text
-  // !isRTL && !isLeadingIcon => icon to right of text
-  // isRTL && !isLeadingIcon => icon to left of text
-  // !isRTL && isLeadingIcon => icon to left of text
-  if (isRTL == isLeadingIcon) {
-    const CGFloat imageCenterX
-        = CGRectGetMaxX(insetBounds) - (imageViewWidth / 2);
+  // If we are LTR with a leading image, the image goes on the left.
+  // If we are RTL with a trailing image, the image goes on the left.
+  if ((isLTR && isLeadingIcon) || (!isLTR && !isLeadingIcon)) {
+    const CGFloat imageCenterX = CGRectGetMinX(insetBounds) + (imageViewWidth / 2);
+    const CGFloat titleCenterX = CGRectGetMaxX(insetBounds) - (titleWidthAvailable / 2);
+    titleCenter = CGPointMake(titleCenterX, boundsCenterY);
+    imageCenter = CGPointMake(imageCenterX, boundsCenterY);
+  }
+  // If we are LTR with a trailing image, the image goes on the right.
+  // If we are RTL with a leading image, the image goes on the right.
+  else {
+    const CGFloat imageCenterX = CGRectGetMaxX(insetBounds) - (imageViewWidth / 2);
     const CGFloat titleCenterX = CGRectGetMinX(insetBounds) + (titleWidthAvailable / 2);
     imageCenter = CGPointMake(imageCenterX, boundsCenterY);
     titleCenter = CGPointMake(titleCenterX, boundsCenterY);
-  } else {
-    const CGFloat imageCenterX
-        = CGRectGetMinX(insetBounds) + (imageViewWidth / 2);
-    const CGFloat titleCenterX
-        = CGRectGetMaxX(insetBounds) - (titleWidthAvailable / 2);
-    titleCenter = CGPointMake(titleCenterX, boundsCenterY);
-    imageCenter = CGPointMake(imageCenterX, boundsCenterY);
   }
 
   self.imageView.center = imageCenter;
