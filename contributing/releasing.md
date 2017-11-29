@@ -15,17 +15,6 @@ Occasionally there are temporary issues with the release process, check the [`re
 tag](https://github.com/material-components/material-components-ios/labels/is%3ABlocking%20next%20release) for
 anything that might be affecting the release.
 
-### Check the release milestone
-
-We use weekly release milestones to track important issues that need to land in a given release.
-These issues may come from client teams that are shipping to the App Store on a given date.
-
-Look in the [Tasks for Next Release
-milestone](https://github.com/material-components/material-components-ios/milestone/10) for issues
-that must be resolved before or during release. If there are open issues you must identify why the
-issues are still open and either close them if resolved or determine whether it's acceptable to move
-the issue to a subsequent release.
-
 ## Cutting and testing the release
 
 ### Reset your state
