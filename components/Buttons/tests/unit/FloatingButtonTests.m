@@ -19,20 +19,10 @@
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 
-@interface TestFloatingButtonSubclass : MDCFloatingButton
-@property (nonatomic, assign) NSInteger defaultShape;
-@end
-
-@implementation TestFloatingButtonSubclass
-
-- (instancetype)initWithFrame:(CGRect)frame shape:(MDCFloatingButtonShape)shape {
-  self = [super initWithFrame:frame shape:shape];
-  if (self) {
-    [self setValue:@(2) forKey:@"shape"];
-  }
-  return self;
-}
-
+@interface MDCFloatingButton (Testing)
+@property(nonatomic, assign) MDCFloatingButtonMode mode;
+@property(nonatomic, assign) MDCFloatingButtonImageLocation imageLocation;
+@property(nonatomic, assign) CGFloat imageTitleSpacing;
 @end
 
 @interface FloatingButtonsTests : XCTestCase
@@ -40,26 +30,82 @@
 
 @implementation FloatingButtonsTests
 
+- (void)testExpandedLayout {
+  // Given
+  MDCFloatingButton *button =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+  button.mode = MDCFloatingButtonModeExpanded;
+  [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
+  [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  button.maximumSize = CGSizeMake(100, 48);
+  button.imageTitleSpacing = 12;
+
+  // When
+  [button sizeToFit];
+
+  // Then
+  CGRect buttonBounds = CGRectStandardize(button.bounds);
+  CGRect imageFrame = CGRectStandardize(button.imageView.frame);
+  CGRect titleFrame = CGRectStandardize(button.titleLabel.frame);
+  XCTAssertEqualWithAccuracy(imageFrame.origin.x, 16, 1);
+  XCTAssertEqualWithAccuracy(CGRectGetMaxX(titleFrame), buttonBounds.size.width - 24, 1);
+  XCTAssertEqualWithAccuracy(titleFrame.origin.x,
+                             CGRectGetMaxX(imageFrame) + button.imageTitleSpacing, 1);
+}
+
+- (void)testExpandedLayoutWithNonZeroContentEdgeInsets {
+  // Given
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
+                                                                 shape:MDCFloatingButtonShapeMini];
+  button.mode = MDCFloatingButtonModeExpanded;
+  [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
+  [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  button.maximumSize = CGSizeMake(100, 48);
+  button.minimumSize = CGSizeMake(100, 48);
+  button.contentEdgeInsets = UIEdgeInsetsMake(4, -4, 8, -8);
+
+  // When
+  [button sizeToFit];
+
+  // Then
+  CGRect buttonBounds = CGRectStandardize(button.bounds);
+  CGRect imageFrame = CGRectStandardize(button.imageView.frame);
+  CGRect titleFrame = CGRectStandardize(button.titleLabel.frame);
+  XCTAssertEqualWithAccuracy(imageFrame.origin.x, 12, 1);
+  XCTAssertEqualWithAccuracy(CGRectGetMaxX(titleFrame), buttonBounds.size.width - 16, 1);
+  XCTAssertEqualWithAccuracy(titleFrame.origin.x,
+                             CGRectGetMaxX(imageFrame) + button.imageTitleSpacing, 1);
+}
+
 - (void)testEncoding {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] initWithFrame:CGRectMake(1, 2, 3, 4)
                                                                  shape:MDCFloatingButtonShapeMini];
+  button.mode = MDCFloatingButtonModeExpanded;
+  button.imageLocation = MDCFloatingButtonImageLocationTrailing;
+  [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
 
   // When
   NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:button];
   MDCFloatingButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
   [button sizeToFit];
+  [button layoutIfNeeded];
   [unarchivedButton sizeToFit];
+  [unarchivedButton layoutIfNeeded];
 
   // Then
   XCTAssertTrue(CGRectEqualToRect(button.bounds, unarchivedButton.bounds));
+  XCTAssertEqual(button.mode, unarchivedButton.mode);
+  XCTAssertEqual(button.imageLocation, unarchivedButton.imageLocation);
+  XCTAssertEqualObjects(button.currentTitle, unarchivedButton.currentTitle);
 }
 
 - (void)testShapeMigrationFromLargeIcon {
   // Given
-  TestFloatingButtonSubclass *button =
-      [[TestFloatingButtonSubclass alloc] initWithFrame:CGRectZero
-                                                  shape:MDCFloatingButtonShapeMini];
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
+                                                                 shape:MDCFloatingButtonShapeMini];
+  [button setValue:@(2) forKey:@"shape"];
   [button sizeToFit];
 
   // When
@@ -199,7 +245,7 @@
   UIEdgeInsets defaultInsets = [defaultButton contentEdgeInsets];
 
   // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(8, 8, 8, 8), miniInsets));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, miniInsets));
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultInsets));
 }
 

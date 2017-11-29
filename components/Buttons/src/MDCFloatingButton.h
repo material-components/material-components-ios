@@ -36,6 +36,30 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   MDCFloatingButtonShapeMini = 1
 };
 
+typedef NS_ENUM(NSInteger, MDCFloatingButtonMode) {
+  /**
+   The floating button is a circle with its contents centered.
+   */
+  MDCFloatingButtonModeNormal = 0,
+
+  /**
+   The floating button is a "pill shape" with the image to one side of the title.
+   */
+  MDCFloatingButtonModeExpanded = 1,
+};
+
+typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
+  /**
+   The image of the floating button is on the leading side of the title.
+   */
+  MDCFloatingButtonImageLocationLeading = 0,
+
+  /**
+   The image of the floating button is on the trailing side of the title.
+   */
+  MDCFloatingButtonImageLocationTrailing = 1,
+};
+
 /**
  A "floating" MDCButton.
 
