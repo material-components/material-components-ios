@@ -1,3 +1,13 @@
+# 40.1.1
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Add missing import (#2534)](https://github.com/material-components/material-components-ios/commit/8f56a94eb34370a442856f565b0ee44fe4832f32) (featherless)
+
 # 40.1.0
 
 ## API Changes
