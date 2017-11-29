@@ -81,14 +81,14 @@ run_bazel() {
 run_cocoapods() {
   echo "Running cocoapods builds..."
 
-  gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
-  pod --version
-
   xcode_min_version_as_number="$(version_as_number $XCODE_MINIMUM_VERSION)"
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     # Move into our cloned repo
     cd github/repo
+
+    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+    pod --version
   fi
 
   ls /Applications/ | grep "Xcode" | while read -r xcode_path; do
@@ -114,7 +114,11 @@ run_cocoapods() {
 
     scripts/prep_all
     scripts/build_all --verbose
-    scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+    if [ "$IS_RELEASE" -eq "1" ]; then
+      scripts/test_all
+    else
+      scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+    fi
   done
 
   bash <(curl -s https://codecov.io/bash)
