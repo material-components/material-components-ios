@@ -101,7 +101,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     let transition = MDCMaskedTransition(sourceView: fab)
     transition.calculateFrameOfPresentedView = target.calculateFrame
     vc.view.autoresizingMask = target.autoresizingMask
-    vc.transitionController.transition = transition
+    vc.mdm_transitionController.transition = transition
 
     showDetailViewController(vc, sender: self)
   }

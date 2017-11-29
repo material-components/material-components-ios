@@ -51,5 +51,5 @@ git_repository(
 git_repository(
     name = "motion_transitioning_objc",
     remote = "https://github.com/material-motion/motion-transitioning-objc.git",
-    tag = "v4.0.2",
+    tag = "v5.0.0",
 )
