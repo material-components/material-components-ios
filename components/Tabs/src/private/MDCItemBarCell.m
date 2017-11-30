@@ -543,14 +543,16 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   };
 
   if (animated) {
+    [CATransaction begin];
     CAMediaTimingFunction *translateTimingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslate];
-    [UIView mdc_animateWithTimingFunction:translateTimingFunction
-                                 duration:kSelectionAnimationDuration
-                                    delay:0
-                                  options:0
-                               animations:performAnimations
-                               completion:completeAnimations];
+    [CATransaction setAnimationTimingFunction:translateTimingFunction];
+    [UIView animateWithDuration:kSelectionAnimationDuration
+                          delay:0
+                        options:0
+                     animations:performAnimations
+                     completion:completeAnimations];
+    [CATransaction commit];
   } else {
     performAnimations();
     completeAnimations(YES);

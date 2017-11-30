@@ -618,14 +618,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   };
 
   if (animate) {
-    CAMediaTimingFunction *easeInOutFunction =
+    [CATransaction begin];
+    CAMediaTimingFunction *easeInOut =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-    [UIView mdc_animateWithTimingFunction:easeInOutFunction
-                                 duration:kDefaultAnimationDuration
-                                    delay:0.0f
-                                  options:UIViewAnimationOptionBeginFromCurrentState
-                               animations:animationBlock
-                               completion:nil];
+    [CATransaction setAnimationTimingFunction:easeInOut];
+    [UIView animateWithDuration:kDefaultAnimationDuration
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:animationBlock
+                     completion:nil];
+    [CATransaction commit];
   } else {
     animationBlock();
   }
