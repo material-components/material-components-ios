@@ -185,10 +185,10 @@
   [miniButton sizeToFit];
 
   // Then
-  XCTAssertLessThanOrEqual(defaultButton.bounds.size.width, 56);
-  XCTAssertLessThanOrEqual(defaultButton.bounds.size.height, 56);
-  XCTAssertLessThanOrEqual(miniButton.bounds.size.width, 40);
-  XCTAssertLessThanOrEqual(miniButton.bounds.size.height, 40);
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.width, [MDCFloatingButton defaultDimension]);
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.height, [MDCFloatingButton defaultDimension]);
+  XCTAssertLessThanOrEqual(miniButton.bounds.size.width, [MDCFloatingButton miniDimension]);
+  XCTAssertLessThanOrEqual(miniButton.bounds.size.height, [MDCFloatingButton miniDimension]);
 }
 
 - (void)testDefaultMaximumSizeForShapeInExpandedModeSizeToFit {
@@ -272,10 +272,12 @@
   [miniButton sizeToFit];
 
   // Then
-  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.width, 56);
-  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.height, 56);
-  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.width, 40);
-  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.height, 40);
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.width,
+                              [MDCFloatingButton defaultDimension]);
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.height,
+                              [MDCFloatingButton defaultDimension]);
+  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.width, [MDCFloatingButton miniDimension]);
+  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.height, [MDCFloatingButton miniDimension]);
 }
 
 - (void)testDefaultMinimumSizeForShapeInExpandedModeSizeToFit {
@@ -462,7 +464,8 @@
   [unarchivedButton sizeToFit];
 
   // Then
-  XCTAssertTrue(CGRectEqualToRect(unarchivedButton.bounds, CGRectMake(0, 0, 56, 56)));
+  CGFloat dimension = [MDCFloatingButton defaultDimension];
+  XCTAssertTrue(CGRectEqualToRect(unarchivedButton.bounds, CGRectMake(0, 0, dimension, dimension)));
   XCTAssertEqualObjects([unarchivedButton valueForKey:@"shape"], @(0));
 }
 
@@ -565,8 +568,10 @@
   CGSize defaultSize = [defaultButton sizeThatFits:CGSizeZero];
 
   // Then
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(40, 40), miniSize));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(56, 56), defaultSize));
+  CGFloat miniDimension = [MDCFloatingButton miniDimension];
+  CGFloat defaultDimension = [MDCFloatingButton defaultDimension];
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(miniDimension, miniDimension), miniSize));
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(defaultDimension, defaultDimension), defaultSize));
 }
 
 - (void)testIntrinsicContentSize {
@@ -581,8 +586,10 @@
   CGSize defaultSize = [defaultButton intrinsicContentSize];
 
   // Then
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(40, 40), miniSize));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(56, 56), defaultSize));
+  CGFloat miniDimension = [MDCFloatingButton miniDimension];
+  CGFloat defaultDimension = [MDCFloatingButton defaultDimension];
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(miniDimension, miniDimension), miniSize));
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(defaultDimension, defaultDimension), defaultSize));
 }
 
 - (void)testHitAreaInsetsSurviveSizeThatFits {
