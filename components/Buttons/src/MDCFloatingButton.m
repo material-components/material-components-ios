@@ -29,12 +29,21 @@ static const UIEdgeInsets internalLayoutSpacingInsets = (UIEdgeInsets){0, 16, 0,
 static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
 static NSString *const MDCFloatingButtonImageLocationKey = @"MDCFloatingButtonImageLocationKey";
-static NSString *const MDCFloatingButtonImageTitleSpacingKey = @"MDCFloatingButtonImageTitleSpacingKey";
-static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey = @"MDCFloatingButtonMinimumSizeDictionaryKey";
+static NSString *const MDCFloatingButtonImageTitleSpacingKey =
+    @"MDCFloatingButtonImageTitleSpacingKey";
+static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey =
+    @"MDCFloatingButtonMinimumSizeDictionaryKey";
+static NSString *const MDCFloatingButtonMaximumSizeDictionaryKey =
+    @"MDCFloatingButtonMaximumSizeDictionaryKey";
 
 @interface MDCFloatingButton ()
+
 @property(nonatomic, readonly) NSMutableDictionary<NSNumber *,
     NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToMinimumSize;
+
+@property(nonatomic, readonly) NSMutableDictionary<NSNumber *,
+    NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToMaximumSize;
+
 @end
 
 @implementation MDCFloatingButton {
@@ -105,6 +114,11 @@ static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey = @"MDCFloating
       _shapeToModeToMinimumSize = (NSMutableDictionary *)
           [aDecoder decodeObjectForKey:MDCFloatingButtonMinimumSizeDictionaryKey];
     }
+    if ([aDecoder containsValueForKey:MDCFloatingButtonMaximumSizeDictionaryKey]) {
+      _shapeToModeToMaximumSize = (NSMutableDictionary *)
+          [aDecoder decodeObjectForKey:MDCFloatingButtonMaximumSizeDictionaryKey];
+    }
+
     [self updateShape];
   }
   return self;
@@ -118,6 +132,8 @@ static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey = @"MDCFloating
   [aCoder encodeDouble:self.imageTitleSpacing forKey:MDCFloatingButtonImageTitleSpacingKey];
   [aCoder encodeObject:self.shapeToModeToMinimumSize
                 forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
+  [aCoder encodeObject:self.shapeToModeToMaximumSize
+                forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
 }
 
 - (void)commonMDCFloatingButtonInit {
@@ -126,19 +142,33 @@ static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey = @"MDCFloating
   const CGSize miniSizeNormal = CGSizeMake(40, 40);
   const CGSize defaultSizeNormal = CGSizeMake(56, 56);
 
-  if (!_shapeToModeToMinimumSize) {
-    NSMutableDictionary *miniMinimumSizes =
-        [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:miniSizeNormal]
-            } mutableCopy];
-    NSMutableDictionary *defaultMinimumSizes =
-        [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultSizeNormal],
-            @(MDCFloatingButtonModeExpanded) : [NSValue valueWithCGSize:CGSizeMake(132, 48)],
-            } mutableCopy];
-    _shapeToModeToMinimumSize =
-        [@{ @(MDCFloatingButtonShapeMini) : miniMinimumSizes,
-            @(MDCFloatingButtonShapeDefault) : defaultMinimumSizes,
-            } mutableCopy];
-  }
+  NSMutableDictionary *miniMinimumSizes =
+      [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:miniSizeNormal]
+          } mutableCopy];
+  NSMutableDictionary *defaultMinimumSizes =
+      [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultSizeNormal],
+          @(MDCFloatingButtonModeExpanded) : [NSValue valueWithCGSize:CGSizeMake(132, 48)],
+          } mutableCopy];
+  _shapeToModeToMinimumSize =
+      [@{ @(MDCFloatingButtonShapeMini) : miniMinimumSizes,
+          @(MDCFloatingButtonShapeDefault) : defaultMinimumSizes,
+          } mutableCopy];
+
+  NSMutableDictionary *miniMaxSizes
+      = [@{
+           @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:miniSizeNormal]
+           } mutableCopy];
+  NSMutableDictionary *defaultMaxSizes
+      = [@{
+           @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultSizeNormal],
+           @(MDCFloatingButtonModeExpanded) : [NSValue valueWithCGSize:CGSizeMake(328, 0)],
+           } mutableCopy];
+
+  _shapeToModeToMaximumSize
+      = [@{
+           @(MDCFloatingButtonShapeMini) : miniMaxSizes,
+           @(MDCFloatingButtonShapeDefault) : defaultMaxSizes,
+           } mutableCopy];
 
   // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
   // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
@@ -326,8 +356,49 @@ static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey = @"MDCFloating
   return sizeChanged;
 }
 
+- (void)setMaximumSize:(CGSize)size
+              forShape:(MDCFloatingButtonShape)shape
+                inMode:(MDCFloatingButtonMode)mode {
+  NSMutableDictionary *modeToMaximumSize = self.shapeToModeToMaximumSize[@(shape)];
+  if (!modeToMaximumSize) {
+    modeToMaximumSize = [@{} mutableCopy];
+    self.shapeToModeToMaximumSize[@(shape)] = modeToMaximumSize;
+  }
+  modeToMaximumSize[@(mode)] = [NSValue valueWithCGSize:size];
+  if (shape == _shape && mode == self.mode) {
+    [self updateShape];
+  }
+}
+
+- (CGSize)maximumSizeForMode:(MDCFloatingButtonMode)mode {
+  NSMutableDictionary *modeToMaximumSize = self.shapeToModeToMaximumSize[@(_shape)];
+  if (!modeToMaximumSize) {
+    return CGSizeZero;
+  }
+
+  NSValue *sizeValue = modeToMaximumSize[@(mode)];
+  if (sizeValue) {
+    return [sizeValue CGSizeValue];
+  } else {
+    return CGSizeZero;
+  }
+}
+
+- (BOOL)updateMaximumSize {
+  CGSize newSize = [self maximumSizeForMode:self.mode];
+
+  BOOL sizeChanged = !CGSizeEqualToSize(newSize, CGSizeZero)
+      && ((newSize.width < self.maximumSize.width) || (newSize.height < self.maximumSize.height));
+  super.maximumSize = newSize;
+  if (sizeChanged) {
+    [self invalidateIntrinsicContentSize];
+  }
+  return sizeChanged;
+}
+
 - (void)updateShape {
   BOOL needsLayout = [self updateMinimumSize];
+  needsLayout |= [self updateMaximumSize];
   if (needsLayout) {
     [self invalidateIntrinsicContentSize];
     [self sizeToFit];

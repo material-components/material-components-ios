@@ -24,6 +24,97 @@
 
 @implementation FloatingButtonsTests
 
+#pragma mark - setMaximumSize:forShape:inMode:
+
+- (void)testDefaultMaximumSizeForShapeInNormalModeSizeToFit {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];
+  [defaultButton setTitle:@"a very long title" forState:UIControlStateNormal];
+  MDCFloatingButton *miniButton =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  [miniButton setTitle:@"a very long title" forState:UIControlStateNormal];
+
+  // When
+  [defaultButton sizeToFit];
+  [miniButton sizeToFit];
+
+  // Then
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.width, 56);
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.height, 56);
+  XCTAssertLessThanOrEqual(miniButton.bounds.size.width, 40);
+  XCTAssertLessThanOrEqual(miniButton.bounds.size.height, 40);
+}
+
+- (void)testDefaultMaximumSizeForShapeInExpandedModeSizeToFit {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];
+  [defaultButton setTitle:@"An even longer title that should require more than 328 points to render"
+                 forState:UIControlStateNormal];
+  defaultButton.mode = MDCFloatingButtonModeExpanded;
+
+  // When
+  [defaultButton sizeToFit];
+
+  // Then
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.width, 328);
+}
+
+- (void)testSetMaximumSizeForShapeInModeNormal {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  [defaultButton setTitle:@"a very long title" forState:UIControlStateNormal];
+  MDCFloatingButton *miniButton =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  [miniButton setTitle:@"a very long title" forState:UIControlStateNormal];
+  [defaultButton setMaximumSize:CGSizeMake(100, 50)
+                       forShape:MDCFloatingButtonShapeDefault
+                         inMode:MDCFloatingButtonModeNormal];
+  [miniButton setMaximumSize:CGSizeMake(100, 50)
+                    forShape:MDCFloatingButtonShapeMini
+                      inMode:MDCFloatingButtonModeNormal];
+
+  // When
+  [defaultButton sizeToFit];
+  [miniButton sizeToFit];
+
+  // Then
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.width, 100);
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.height, 50);
+  XCTAssertLessThanOrEqual(miniButton.bounds.size.width, 100);
+  XCTAssertLessThanOrEqual(miniButton.bounds.size.height, 50);
+}
+
+- (void)testSetMaximumSizeForShapeInModeExpanded {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  [defaultButton setTitle:@"An even longer title that should require more than 328 points to render"
+                 forState:UIControlStateNormal];
+  MDCFloatingButton *miniButton =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  [miniButton setTitle:@"An even longer title that should require more than 328 points to render"
+              forState:UIControlStateNormal];
+  miniButton.mode = MDCFloatingButtonModeExpanded;
+  [defaultButton setMaximumSize:CGSizeMake(50, 100)
+                       forShape:MDCFloatingButtonShapeDefault
+                         inMode:MDCFloatingButtonModeExpanded];
+  [miniButton setMaximumSize:CGSizeMake(50, 100)
+                    forShape:MDCFloatingButtonShapeMini
+                      inMode:MDCFloatingButtonModeExpanded];
+
+  // When
+  [defaultButton sizeToFit];
+  [miniButton sizeToFit];
+
+  // Then
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.width, 50);
+  XCTAssertLessThanOrEqual(defaultButton.bounds.size.height, 100);
+  XCTAssertLessThanOrEqual(miniButton.bounds.size.width, 50);
+  XCTAssertLessThanOrEqual(miniButton.bounds.size.height, 100);
+}
+
+#pragma mark - setMinimumSize:forShape:inMode:
+
 - (void)testDefaultMinimumSizeForShapeInNormalModeSizeToFit {
   // Given
   MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];
@@ -62,7 +153,13 @@
   [defaultButton setMinimumSize:CGSizeMake(100, 50)
                        forShape:MDCFloatingButtonShapeDefault
                          inMode:MDCFloatingButtonModeNormal];
+  [defaultButton setMaximumSize:CGSizeZero
+                       forShape:MDCFloatingButtonShapeDefault
+                         inMode:MDCFloatingButtonModeNormal];
   [miniButton setMinimumSize:CGSizeMake(100, 50)
+                    forShape:MDCFloatingButtonShapeMini
+                      inMode:MDCFloatingButtonModeNormal];
+  [miniButton setMaximumSize:CGSizeZero
                     forShape:MDCFloatingButtonShapeMini
                       inMode:MDCFloatingButtonModeNormal];
 
@@ -102,6 +199,8 @@
   XCTAssertGreaterThanOrEqual(miniButton.bounds.size.height, 100);
 }
 
+#pragma mark - layoutSubviews
+
 - (void)testExpandedLayout {
   // Given
   MDCFloatingButton *button =
@@ -109,7 +208,9 @@
   button.mode = MDCFloatingButtonModeExpanded;
   [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
   [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
-  button.maximumSize = CGSizeMake(100, 48);
+  [button setMaximumSize:CGSizeMake(100, 48)
+                forShape:MDCFloatingButtonShapeDefault
+                  inMode:MDCFloatingButtonModeExpanded];
   button.imageTitleSpacing = 12;
 
   // When
@@ -135,7 +236,9 @@
   [button setMinimumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeMini
                   inMode:MDCFloatingButtonModeExpanded];
-  button.maximumSize = CGSizeMake(100, 48);
+  [button setMaximumSize:CGSizeMake(100, 48)
+                forShape:MDCFloatingButtonShapeMini
+                  inMode:MDCFloatingButtonModeExpanded];
   button.contentEdgeInsets = UIEdgeInsetsMake(4, -4, 8, -8);
 
   // When
@@ -150,6 +253,8 @@
   XCTAssertEqualWithAccuracy(titleFrame.origin.x,
                              CGRectGetMaxX(imageFrame) + button.imageTitleSpacing, 1);
 }
+
+#pragma mark - Encoding/decoding
 
 - (void)testEncoding {
   // Given
@@ -205,6 +310,8 @@
                  MDCShadowElevationFABPressed);
   XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
 }
+
+#pragma mark - Animations
 
 - (void)testCollapseExpandRestoresIdentityTransform {
   // Given
@@ -277,6 +384,8 @@
       @"Collapse and expand did not restore the original transform.\nExpected: %@\nReceived: %@",
       NSStringFromCGAffineTransform(transform), NSStringFromCGAffineTransform(button.transform));
 }
+
+#pragma mark - Sizing methods
 
 - (void)testSizeThatFits {
   // Given

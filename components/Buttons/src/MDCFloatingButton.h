@@ -141,9 +141,32 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 - (void)setMinimumSize:(CGSize)size NS_UNAVAILABLE;
-- (void)setMinimumSize:(CGSize)size
+
+/**
+ Sets the minimum size when the button has the provided @c shape and in the provided @c mode.
+ Setting a size of @c CGSizeZero will is equivalent to no minimum size.
+
+ @param minimumSize The new minimum size of the button.
+ @param shape The shape that the size constrains.
+ @param mode The mode that the size constrains.
+ */
+- (void)setMinimumSize:(CGSize)minimumSize
               forShape:(MDCFloatingButtonShape)shape
-                inMode:(MDCFloatingButtonMode)mode;
+                inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+
+- (void)setMaximumSize:(CGSize)maximumSize NS_UNAVAILABLE;
+
+/**
+ Sets the maximum size when the button has the provided @c shape and in the provided @c mode.
+ Setting a size of @c CGSizeZero will is equivalent to no maximum size.
+
+ @param maximumSize The new maximum size of the button.
+ @param shape The shape that the size constrains.
+ @param mode The mode that the size constrains.
+ */
+- (void)setMaximumSize:(CGSize)maximumSize
+              forShape:(MDCFloatingButtonShape)shape
+                inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
 #pragma mark - Deprecations
 
