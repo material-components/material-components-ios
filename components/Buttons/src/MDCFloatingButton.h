@@ -144,7 +144,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 
 /**
  Sets the minimum size when the button has the specified @c shape @c mode.
- Setting a size of @c CGSizeZero will is equivalent to no minimum size.
+ Setting a size of @c CGSizeZero is equivalent to no minimum size.
 
  @param minimumSize The new minimum size of the button.
  @param shape The shape that the size constrains.
@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 
 /**
  Sets the maximum size when the button has the specified @c shape and @c mode.
- Setting a size of @c CGSizeZero will is equivalent to no maximum size.
+ Setting a size of @c CGSizeZero is equivalent to no maximum size.
 
  @param maximumSize The new maximum size of the button.
  @param shape The shape that the size constrains.
