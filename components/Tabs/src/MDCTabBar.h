@@ -99,13 +99,13 @@ IB_DESIGNABLE
 
 /**
  Padding on the left and right of the tab bar's content for scrollable tabs.
- Default depends on the horizontal size class.
+ Default depends on the device type.
  */
 @property(nonatomic) CGFloat horizontalPadding UI_APPEARANCE_SELECTOR;
 
 /**
  Padding on the left and right of each item's content (title or images) for non-justified alignment.
- Default depends on the horizontal size class.
+ Default depends on the device type.
  */
 @property(nonatomic) CGFloat itemHorizontalPadding UI_APPEARANCE_SELECTOR;
 
