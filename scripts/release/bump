@@ -26,7 +26,37 @@ import os
 import subprocess
 import sys
 
-VERSION_FILE_NAME = "VERSION"
+# The path to the LibraryInfo component source file to be updated.
+LIBRARY_INFO_PATH = ("components", "LibraryInfo", "src", "MDCLibraryInfo.m")
+
+# The pattern in the LibraryInfo source to match.
+# Note the text before and after the version string is contained in groups.
+LIBRARY_INFO_PATTERN = r'(MDCLibraryInfoVersionString = @")\d+\.\d+\.\d+(";)'
+
+# The replacement pattern to use for the LibraryInfo source.
+# This string is expected to have the version string inserted via
+# LIBRARY_INFO_REPLACEMENT_PATTERN % version_string, e.g. "\g<1>1.2.3\g<2>"
+#
+# Note the explicit group references (\g<1>, \g<2>) instead of the more usual
+# references (\1, \2) to avoid the leading digits of the version number getting
+# interpreted as part of the group number, e.g. r'\11.2.3\2' looks like a ref
+# to a non-existent group 11 instead of group 1 followed by the digit 1.
+LIBRARY_INFO_REPLACEMENT_PATTERN = r'\g<1>%s\g<2>'
+
+# The path to the source-of-truth version file to be updated.
+VERSION_FILE_PATH = ("VERSION", )  # This is actually a tuple.
+
+def find_library_info_file(directory):
+  """Return the LibraryInfo component source file that includes the version.
+
+  Args:
+    directory: Path to the directory to examine for the file.
+
+  Returns:
+    A path to the version file.
+  """
+  return os.path.join(directory, *LIBRARY_INFO_PATH)
+
 
 def find_podspecs(directory):
   """Return a list of *.podspec files on disk.
@@ -54,7 +84,29 @@ def find_version_file(directory):
   Returns:
     A path to the version file.
   """
-  return os.path.join(directory, VERSION_FILE_NAME)
+  return os.path.join(directory, *VERSION_FILE_PATH)
+
+
+def update_library_info_contents(verbose_printer, contents, version):
+  """Update the contents of a source file with a new version.
+
+  Args:
+    verbose_printer: A printing function for verbose messages.
+    contents: The contents of a source file containing LIBRARY_INFO_PATTERN.
+    version: The new version.
+
+  Returns:
+    The updated contents string.
+  """
+  replacement = LIBRARY_INFO_REPLACEMENT_PATTERN % version
+  (contents, count) = re.subn(LIBRARY_INFO_PATTERN, replacement, contents)
+
+  if count != 1:
+    raise RuntimeError(("LibraryInfo source file does not contain a single ",
+                        "instance of regex '%s', aborting.") %
+                       LIBRARY_INFO_PATTERN)
+
+  return contents
 
 
 def update_podspec_contents(verbose_printer, contents, version):
@@ -92,7 +144,38 @@ def set_version(verbose_printer, path, version):
     with open(path, 'w') as f:
       f.write(version)
   except:
-    print('Could not write version file "%s", aborting.' % path, file=sys.stderr)
+    print('Could not write version file "%s", aborting.' % path,
+          file=sys.stderr)
+    raise
+
+
+def update_library_info_file(verbose_printer, path, version):
+  """Update a LibraryInfo source file on disk with a new version.
+
+  Args:
+    verbose_printer: A printing function for verbose messages.
+    path: The path to the LibraryInfo source file.
+    version: The new version.
+  """
+  verbose_printer('Updating %s to version %s.' % (path, version))
+
+  try:
+    with open(path, 'r') as f:
+      contents = f.read();
+  except:
+    print('Could not read LibraryInfo source "%s", aborting.' % path,
+          file=sys.stderr)
+    raise
+
+  new_contents = update_library_info_contents(verbose_printer, contents,
+                                              version)
+
+  try:
+    with open(path, 'w') as f:
+      f.write(new_contents)
+  except:
+    print('Could not write LibraryInfo source "%s", aborting.' % path,
+          file=sys.stderr)
     raise
 
 
@@ -177,11 +260,21 @@ def main():
   version_file = find_version_file(args.directory)
   if not version_file:
     stderr_printer('Could not find "%s" in directory "%s", aborting.' %
-                   (VERSION_FILE_NAME, args.directory))
+                   (VERSION_FILE_PATH, args.directory))
     sys.exit(-1)
 
   # Set the official version.
   set_version(verbose_printer, version_file, args.version)
+
+  # Find the LibraryInfo source file.
+  library_info = find_library_info_file(args.directory)
+  if not library_info:
+    stderr_printer('Could not find %s.' %
+                   os.path.join(args.directory, LIBRARY_INFO_PATH))
+    sys.exit(-1)
+
+  # Update the version number in the LibraryInfo source file.
+  update_library_info_file(verbose_printer, library_info, args.version)
 
   # Find all podspecs files.
   podspecs = find_podspecs(args.directory)
