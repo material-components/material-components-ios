@@ -27,6 +27,7 @@ import subprocess
 import sys
 
 VERSION_FILE_NAME = "VERSION"
+CATALOG_INFOPLIST_FILEPATH = "catalog/MDCCatalog/Info.plist"
 
 def find_podspecs(directory):
   """Return a list of *.podspec files on disk.
@@ -123,6 +124,32 @@ def update_podspec_file(verbose_printer, path, version):
     raise
 
 
+def update_plist_file(verbose_printer, path, version):
+  """Update a podspec file on disk with a new version.
+
+  Args:
+    verbose_printer: A printing function for verbose messages.
+    path: The path to the podspec file.
+    version: The new version.
+  """
+  verbose_printer('Updating %s to version %s.' % (path, version))
+
+  try:
+    with open(path, 'r') as f:
+      contents = f.read();
+  except:
+    print('Could not read "%s", aborting.' % path, file=sys.stderr)
+    raise
+
+#  command = "-c \"Set :CFBundleShortVersionString 1.2.3\""
+#  subprocess("echo", command, path)
+#  results = subprocess.check_output(['echo', 'PlistBuddy', '-c', '"Set :CFBundleShortVersionString 1.2.3"', 'catalog/MDCCatalog/Info.plist'])
+#  results = subprocess.check_output(['PlistBuddy', '-c', '\"Print\"', 'catalog/MDCCatalog/Info.plist'])
+  results = subprocess.check_output(['PlistBuddy', '-c', 'Print', 'catalog/MDCCatalog/Info.plist'])
+  print(results)
+
+
+
 def create_argument_parser():
   """Create an ArgumentParser for this script.
 
@@ -193,6 +220,9 @@ def main():
   # Update the version numbers in each podspec.
   for p in podspecs:
     update_podspec_file(verbose_printer, p, args.version)
+
+  # Update MDCCatalog's Info.plist
+  update_plist_file(verbose_printer, CATALOG_INFOPLIST_FILEPATH, args.version)
 
 
 if __name__ == '__main__':
