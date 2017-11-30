@@ -73,12 +73,14 @@
 
   // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
+  _maskLayer.delegate = self;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+  self.layer.bounds = inkBounds;
 
   // When bounds change ensure all ink layer bounds are changed too.
   for (CALayer *layer in self.layer.sublayers) {
@@ -93,7 +95,6 @@
     self.maskLayer.path = self.superview.layer.shadowPath;
     self.layer.mask = _maskLayer;
     self.layer.masksToBounds = YES;
-    self.layer.bounds = inkBounds;
   }
 }
 
