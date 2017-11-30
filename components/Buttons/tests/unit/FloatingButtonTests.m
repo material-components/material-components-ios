@@ -19,16 +19,88 @@
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 
-@interface MDCFloatingButton (Testing)
-@property(nonatomic, assign) MDCFloatingButtonMode mode;
-@property(nonatomic, assign) MDCFloatingButtonImageLocation imageLocation;
-@property(nonatomic, assign) CGFloat imageTitleSpacing;
-@end
-
 @interface FloatingButtonsTests : XCTestCase
 @end
 
 @implementation FloatingButtonsTests
+
+- (void)testDefaultMinimumSizeForShapeInNormalModeSizeToFit {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];
+  MDCFloatingButton *miniButton =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+
+  // When
+  [defaultButton sizeToFit];
+  [miniButton sizeToFit];
+
+  // Then
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.width, 56);
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.height, 56);
+  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.width, 40);
+  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.height, 40);
+}
+
+- (void)testDefaultMinimumSizeForShapeInExpandedModeSizeToFit {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];
+  defaultButton.mode = MDCFloatingButtonModeExpanded;
+
+  // When
+  [defaultButton sizeToFit];
+
+  // Then
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.width, 132);
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.height, 48);
+}
+
+- (void)testSetMinimumSizeForShapeInModeNormal {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *miniButton =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  [defaultButton setMinimumSize:CGSizeMake(100, 50)
+                       forShape:MDCFloatingButtonShapeDefault
+                         inMode:MDCFloatingButtonModeNormal];
+  [miniButton setMinimumSize:CGSizeMake(100, 50)
+                    forShape:MDCFloatingButtonShapeMini
+                      inMode:MDCFloatingButtonModeNormal];
+
+  // When
+  [defaultButton sizeToFit];
+  [miniButton sizeToFit];
+
+  // Then
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.width, 100);
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.height, 50);
+  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.width, 100);
+  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.height, 50);
+}
+
+- (void)testSetMinimumSizeForShapeInModeExpanded {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  MDCFloatingButton *miniButton =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  miniButton.mode = MDCFloatingButtonModeExpanded;
+  [defaultButton setMinimumSize:CGSizeMake(50, 100)
+                       forShape:MDCFloatingButtonShapeDefault
+                         inMode:MDCFloatingButtonModeExpanded];
+  [miniButton setMinimumSize:CGSizeMake(50, 100)
+                    forShape:MDCFloatingButtonShapeMini
+                      inMode:MDCFloatingButtonModeExpanded];
+
+  // When
+  [defaultButton sizeToFit];
+  [miniButton sizeToFit];
+
+  // Then
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.width, 50);
+  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.height, 100);
+  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.width, 50);
+  XCTAssertGreaterThanOrEqual(miniButton.bounds.size.height, 100);
+}
 
 - (void)testExpandedLayout {
   // Given
@@ -60,8 +132,10 @@
   button.mode = MDCFloatingButtonModeExpanded;
   [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
   [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  [button setMinimumSize:CGSizeMake(100, 48)
+                forShape:MDCFloatingButtonShapeMini
+                  inMode:MDCFloatingButtonModeExpanded];
   button.maximumSize = CGSizeMake(100, 48);
-  button.minimumSize = CGSizeMake(100, 48);
   button.contentEdgeInsets = UIEdgeInsetsMake(4, -4, 8, -8);
 
   // When
@@ -95,7 +169,10 @@
   [unarchivedButton layoutIfNeeded];
 
   // Then
-  XCTAssertTrue(CGRectEqualToRect(button.bounds, unarchivedButton.bounds));
+  XCTAssertTrue(CGRectEqualToRect(button.bounds, unarchivedButton.bounds),
+                @"Unarchived bounds did not match original button's bounds.\nExpected: %@\n"
+                 "Received: %@",NSStringFromCGRect(button.bounds),
+                NSStringFromCGRect(unarchivedButton.bounds));
   XCTAssertEqual(button.mode, unarchivedButton.mode);
   XCTAssertEqual(button.imageLocation, unarchivedButton.imageLocation);
   XCTAssertEqualObjects(button.currentTitle, unarchivedButton.currentTitle);

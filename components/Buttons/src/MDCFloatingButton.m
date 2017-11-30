@@ -30,33 +30,11 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
 static NSString *const MDCFloatingButtonImageLocationKey = @"MDCFloatingButtonImageLocationKey";
 static NSString *const MDCFloatingButtonImageTitleSpacingKey = @"MDCFloatingButtonImageTitleSpacingKey";
+static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey = @"MDCFloatingButtonMinimumSizeDictionaryKey";
 
-// TODO(rsmoore): All properties within here will be made public in a future PR.
 @interface MDCFloatingButton ()
-
-/**
- The mode of the floating button can either be .normal (a circle) or .expanded (a pill-shaped
- rounded rectangle).
-
- The default value is @c .normal .
- */
-@property(nonatomic, assign) MDCFloatingButtonMode mode UI_APPEARANCE_SELECTOR;
-
-/**
- The location of the image relative to the title when the floating button is in @c expanded mode.
-
- The default value is @c .leading .
- */
-@property(nonatomic, assign) MDCFloatingButtonImageLocation imageLocation UI_APPEARANCE_SELECTOR;
-
-/**
- The horizontal spacing in points between the @c imageView and @c titleLabel when the button is in
- @c .expanded mode. If set to a negative value, the image and title may overlap.
-
- The default value is 8.
- */
-@property(nonatomic, assign) CGFloat imageTitleSpacing UI_APPEARANCE_SELECTOR;
-
+@property(nonatomic, readonly) NSMutableDictionary<NSNumber *,
+    NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToMinimumSize;
 @end
 
 @implementation MDCFloatingButton {
@@ -94,11 +72,8 @@ static NSString *const MDCFloatingButtonImageTitleSpacingKey = @"MDCFloatingButt
   self = [super initWithFrame:frame];
   if (self) {
     _shape = shape;
-    // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
-    // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
-    self.contentEdgeInsets = [self defaultContentEdgeInsets];
-    self.hitAreaInsets = [self defaultHitAreaInsets];
     [self commonMDCFloatingButtonInit];
+    [self updateShape];
   }
   return self;
 }
@@ -108,12 +83,14 @@ static NSString *const MDCFloatingButtonImageTitleSpacingKey = @"MDCFloatingButt
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCFloatingButtonInit];
     _shape = [aDecoder decodeIntegerForKey:MDCFloatingButtonShapeKey];
     // Required to migrate any previously-archived FloatingButtons from .largeIcon shape value
     if (@(_shape).integerValue >= 2) {
       _shape = MDCFloatingButtonShapeDefault;
     }
+    // Shape must be set first before the common initialization
+    [self commonMDCFloatingButtonInit];
+
     if ([aDecoder containsValueForKey:MDCFloatingButtonModeKey]) {
       _mode = [aDecoder decodeIntegerForKey:MDCFloatingButtonModeKey];
     }
@@ -124,6 +101,11 @@ static NSString *const MDCFloatingButtonImageTitleSpacingKey = @"MDCFloatingButt
       _imageTitleSpacing =
           (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingButtonImageTitleSpacingKey];
     }
+    if ([aDecoder containsValueForKey:MDCFloatingButtonMinimumSizeDictionaryKey]) {
+      _shapeToModeToMinimumSize = (NSMutableDictionary *)
+          [aDecoder decodeObjectForKey:MDCFloatingButtonMinimumSizeDictionaryKey];
+    }
+    [self updateShape];
   }
   return self;
 }
@@ -134,12 +116,34 @@ static NSString *const MDCFloatingButtonImageTitleSpacingKey = @"MDCFloatingButt
   [aCoder encodeInteger:self.mode forKey:MDCFloatingButtonModeKey];
   [aCoder encodeInteger:self.imageLocation forKey:MDCFloatingButtonImageLocationKey];
   [aCoder encodeDouble:self.imageTitleSpacing forKey:MDCFloatingButtonImageTitleSpacingKey];
+  [aCoder encodeObject:self.shapeToModeToMinimumSize
+                forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
 }
 
 - (void)commonMDCFloatingButtonInit {
-  _mode = MDCFloatingButtonModeNormal;
-  _imageLocation = MDCFloatingButtonImageLocationLeading;
   _imageTitleSpacing = MDCFloatingButtonDefaultImageTitleSpacing;
+
+  const CGSize miniSizeNormal = CGSizeMake(40, 40);
+  const CGSize defaultSizeNormal = CGSizeMake(56, 56);
+
+  if (!_shapeToModeToMinimumSize) {
+    NSMutableDictionary *miniMinimumSizes =
+        [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:miniSizeNormal]
+            } mutableCopy];
+    NSMutableDictionary *defaultMinimumSizes =
+        [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultSizeNormal],
+            @(MDCFloatingButtonModeExpanded) : [NSValue valueWithCGSize:CGSizeMake(132, 48)],
+            } mutableCopy];
+    _shapeToModeToMinimumSize =
+        [@{ @(MDCFloatingButtonShapeMini) : miniMinimumSizes,
+            @(MDCFloatingButtonShapeDefault) : defaultMinimumSizes,
+            } mutableCopy];
+  }
+
+  // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
+  // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
+  self.contentEdgeInsets = [self defaultContentEdgeInsets];
+  self.hitAreaInsets = [self defaultHitAreaInsets];
 }
 
 #pragma mark - UIView
@@ -271,6 +275,63 @@ static NSString *const MDCFloatingButtonImageTitleSpacingKey = @"MDCFloatingButt
   CGRect newBounds = CGRectStandardize(self.titleLabel.bounds);
   self.titleLabel.bounds = (CGRect){newBounds.origin, titleSize};
   self.titleLabel.frame = UIEdgeInsetsInsetRect(self.titleLabel.frame, self.titleEdgeInsets);
+}
+
+#pragma mark - Property Setters/Getters
+
+- (void)setMode:(MDCFloatingButtonMode)mode {
+  BOOL needsShapeUpdate = _mode != mode;
+  _mode = mode;
+  if (needsShapeUpdate) {
+    [self updateShape];
+  }
+}
+
+- (void)setMinimumSize:(CGSize)size
+              forShape:(MDCFloatingButtonShape)shape
+                inMode:(MDCFloatingButtonMode)mode {
+  NSMutableDictionary *modeToMinimumSize = self.shapeToModeToMinimumSize[@(shape)];
+  if (!modeToMinimumSize) {
+    modeToMinimumSize = [@{} mutableCopy];
+    self.shapeToModeToMinimumSize[@(shape)] = modeToMinimumSize;
+  }
+  modeToMinimumSize[@(mode)] = [NSValue valueWithCGSize:size];
+  if (shape == _shape && mode == _mode) {
+    [self updateShape];
+  }
+}
+
+- (CGSize)minimumSizeForMode:(MDCFloatingButtonMode)mode {
+  NSMutableDictionary *modeToMinimumSize = self.shapeToModeToMinimumSize[@(_shape)];
+  if(!modeToMinimumSize) {
+    return CGSizeZero;
+  }
+
+  NSValue *sizeValue = modeToMinimumSize[@(mode)];
+  if (sizeValue) {
+    return [sizeValue CGSizeValue];
+  } else {
+    return CGSizeZero;
+  }
+}
+
+- (BOOL)updateMinimumSize {
+  CGSize newSize = [self minimumSizeForMode:self.mode];
+  BOOL sizeChanged = (newSize.width > self.minimumSize.width)
+      || (newSize.height > self.minimumSize.height);
+  super.minimumSize = newSize;
+  if (sizeChanged) {
+    [self invalidateIntrinsicContentSize];
+  }
+  return sizeChanged;
+}
+
+- (void)updateShape {
+  BOOL needsLayout = [self updateMinimumSize];
+  if (needsLayout) {
+    [self invalidateIntrinsicContentSize];
+    [self sizeToFit];
+  }
 }
 
 #pragma mark - Subclassing

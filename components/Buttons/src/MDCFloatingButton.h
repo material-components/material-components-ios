@@ -71,6 +71,30 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 @interface MDCFloatingButton : MDCButton
 
+
+/**
+ The mode of the floating button can either be .normal (a circle) or .expanded (a pill-shaped
+ rounded rectangle).
+
+ The default value is @c .normal .
+ */
+@property(nonatomic, assign) MDCFloatingButtonMode mode;
+
+/**
+ The location of the image relative to the title when the floating button is in @c expanded mode.
+
+ The default value is @c .leading .
+ */
+@property(nonatomic, assign) MDCFloatingButtonImageLocation imageLocation UI_APPEARANCE_SELECTOR;
+
+/**
+ The horizontal spacing in points between the @c imageView and @c titleLabel when the button is in
+ @c .expanded mode. If set to a negative value, the image and title may overlap.
+
+ The default value is 8.
+ */
+@property(nonatomic, assign) CGFloat imageTitleSpacing UI_APPEARANCE_SELECTOR;
+
 /**
  Returns a MDCFloatingButton with default colors and the given @c shape.
 
@@ -115,6 +139,11 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 - (nonnull instancetype)init;
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+- (void)setMinimumSize:(CGSize)size NS_UNAVAILABLE;
+- (void)setMinimumSize:(CGSize)size
+              forShape:(MDCFloatingButtonShape)shape
+                inMode:(MDCFloatingButtonMode)mode;
 
 #pragma mark - Deprecations
 
