@@ -24,6 +24,32 @@
 
 @implementation FloatingButtonsTests
 
+#pragma mark - setContentEdgeInsets:forShape:inMode:
+
+- (void)testDefaultContentEdgeInsetsValues {
+  // Given
+  MDCFloatingButton *defaultButtonNormal =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+  MDCFloatingButton *defaultButtonExpanded =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+  defaultButtonExpanded.mode = MDCFloatingButtonModeExpanded;
+  MDCFloatingButton *miniButtonNormal =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  MDCFloatingButton *miniButtonExpanded =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  miniButtonExpanded.mode = MDCFloatingButtonModeExpanded;
+
+  // Then
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero,
+                                              defaultButtonNormal.contentEdgeInsets));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero,
+                                              defaultButtonExpanded.contentEdgeInsets));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(-4, -4, -4, -4),
+                                              miniButtonNormal.contentEdgeInsets));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero,
+                                              miniButtonExpanded.contentEdgeInsets));
+}
+
 #pragma mark - setMaximumSize:forShape:inMode:
 
 - (void)testDefaultMaximumSizeForShapeInNormalModeSizeToFit {
@@ -239,7 +265,9 @@
   [button setMaximumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeMini
                   inMode:MDCFloatingButtonModeExpanded];
-  button.contentEdgeInsets = UIEdgeInsetsMake(4, -4, 8, -8);
+  [button setContentEdgeInsets:UIEdgeInsetsMake(4, -4, 8, -8)
+                      forShape:MDCFloatingButtonShapeMini
+                        inMode:MDCFloatingButtonModeExpanded];
 
   // When
   [button sizeToFit];
@@ -417,22 +445,6 @@
   // Then
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(40, 40), miniSize));
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(56, 56), defaultSize));
-}
-
-- (void)testContentEdgeInsets {
-  // Given
-  MDCFloatingButton *miniButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
-  MDCFloatingButton *defaultButton =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
-
-  // When
-  UIEdgeInsets miniInsets = [miniButton contentEdgeInsets];
-  UIEdgeInsets defaultInsets = [defaultButton contentEdgeInsets];
-
-  // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, miniInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultInsets));
 }
 
 - (void)testDefaultHitAreaInsets {
