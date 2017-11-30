@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 - (void)setMinimumSize:(CGSize)size NS_UNAVAILABLE;
 
 /**
- Sets the minimum size when the button has the specified @c shape and in the specified @c mode.
+ Sets the minimum size when the button has the specified @c shape @c mode.
  Setting a size of @c CGSizeZero will is equivalent to no minimum size.
 
  @param minimumSize The new minimum size of the button.
@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 - (void)setMaximumSize:(CGSize)maximumSize NS_UNAVAILABLE;
 
 /**
- Sets the maximum size when the button has the specified @c shape and in the specified @c mode.
+ Sets the maximum size when the button has the specified @c shape and @c mode.
  Setting a size of @c CGSizeZero will is equivalent to no maximum size.
 
  @param maximumSize The new maximum size of the button.
@@ -171,8 +171,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets NS_UNAVAILABLE;
 
 /**
- Sets the @c contentEdgeInsets value when the button has the specified @c shape and in the specified
- @c mode.
+ Sets the @c contentEdgeInsets value when the button has the specified @c shape and @c mode.
 
  @param contentEdgeInsets The new content edge insets value.
  @param shape The shape for the content edge insets.
@@ -181,6 +180,19 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets
                     forShape:(MDCFloatingButtonShape)shape
                       inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+
+- (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets NS_UNAVAILABLE;
+
+/**
+ Sets the @c hitAreaInsets value when the button has the specified @c shape and @c mode.
+
+ @param hitAreaInsets The new hit area insets value.
+ @param shape The shape for the hit area insets.
+ @param mode The mode for the hit area insets.
+ */
+- (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets
+                forShape:(MDCFloatingButtonShape)shape
+                  inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
 #pragma mark - Deprecations
 
