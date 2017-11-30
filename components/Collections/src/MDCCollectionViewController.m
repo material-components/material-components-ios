@@ -446,7 +446,6 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   MDCInkView *inkView;
   if ([cell respondsToSelector:@selector(inkView)]) {
     inkView = [cell performSelector:@selector(inkView)];
-    inkView.usesLegacyInkRipple = NO;
   } else {
     return;
   }
