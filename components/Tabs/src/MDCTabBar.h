@@ -98,18 +98,6 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nonnull) UIFont *unselectedItemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
- Padding on the left and right of the tab bar's content for scrollable tabs.
- Default depends on the device type.
- */
-@property(nonatomic) CGFloat horizontalPadding UI_APPEARANCE_SELECTOR;
-
-/**
- Padding on the left and right of each item's content (title or images) for non-justified alignment.
- Default depends on the device type.
- */
-@property(nonatomic) CGFloat itemHorizontalPadding UI_APPEARANCE_SELECTOR;
-
-/**
  Tint color to apply to the tab bar background.
 
  If nil, the receiver uses the default background appearance. Default: nil.
