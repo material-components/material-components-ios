@@ -370,8 +370,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     // Top tabs
     style.shouldDisplaySelectionIndicator = YES;
     style.shouldGrowOnSelection = NO;
-    style.selectedTitleFont = [MDCTypography buttonFont];
-    style.unselectedTitleFont = [MDCTypography buttonFont];
     style.inkStyle = MDCInkStyleBounded;
     style.titleImagePadding = (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
     style.textOnlyNumberOfLines = 2;
@@ -380,8 +378,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     style.shouldDisplaySelectionIndicator = NO;
     style.shouldGrowOnSelection = YES;
     style.maximumItemWidth = kBottomNavigationMaximumItemWidth;
-    style.selectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
-    style.unselectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
     style.inkStyle = MDCInkStyleUnbounded;
     style.titleImagePadding = kBottomNavigationTitleImagePadding;
     style.textOnlyNumberOfLines = 1;
@@ -545,7 +541,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   style = [[self class] defaultStyleForPosition:_barPosition itemAppearance:_itemAppearance];
 
-  // Set base style using position.
   if ([MDCTabBar isTopTabsForPosition:_barPosition]) {
     // Top tabs: Use provided fonts.
     style.selectedTitleFont = _selectedItemTitleFont;

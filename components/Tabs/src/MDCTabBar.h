@@ -88,12 +88,20 @@ IB_DESIGNABLE
 /**
  Font used for selected item titles.
  By default this uses the MDCTypography button font. Ignored for bottom-position tab bars.
+
+ Note: Tab sizes are determined based on their unselected state and do not vary based on selection.
+ To avoid clipped layouts and other layout issues, the font provided here should have similar
+ metrics to `unselectedItemTitleFont`.
  */
 @property(nonatomic, strong, nonnull) UIFont *selectedItemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
  Font used for unselected item titles.
  By default this uses the MDCTypography button font. Ignored for bottom-position tab bars.
+
+ Note: Tab sizes are determined based on their unselected state and do not vary based on selection.
+ To avoid clipped layouts and other layout issues, the font provided here should have similar
+ metrics to `selectedItemTitleFont`.
  */
 @property(nonatomic, strong, nonnull) UIFont *unselectedItemTitleFont UI_APPEARANCE_SELECTOR;
 
