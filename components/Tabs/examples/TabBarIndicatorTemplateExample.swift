@@ -67,6 +67,10 @@ class TabBarIndicatorTemplateExample: UIViewController {
 
     tabBar.itemAppearance = .titles
 
+    // Configure custom title fonts
+    tabBar.selectedItemTitleFont = UIFont.boldSystemFont(ofSize: 12)
+    tabBar.unselectedItemTitleFont = UIFont.systemFont(ofSize: 12)
+
     // Configure custom indicator template
     tabBar.selectionIndicatorTemplate = IndicatorTemplate()
     return tabBar

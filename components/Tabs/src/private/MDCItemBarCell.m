@@ -108,7 +108,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Only compute text bounding rect if necessary (all except image-only items)
   if (style.shouldDisplayTitle) {
-    UIFont *font = style.titleFont;
+    // Determine size based on the unselected state because the majority of tabs are unselected.
+    UIFont *font = style.unselectedTitleFont;
     NSDictionary *titleAttributes = @{NSFontAttributeName : font};
     textBounds = [title boundingRectWithSize:size
                                      options:NSStringDrawingTruncatesLastVisibleLine
@@ -343,6 +344,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [self updateTitleTextColor];
   [self updateAccessibilityTraits];
   [self updateTransformsAnimated:animate];
+  [self updateTitleFont];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -558,7 +560,11 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateTitleFont {
-  _titleLabel.font = _style.titleFont;
+  if (self.isSelected) {
+    _titleLabel.font = _style.selectedTitleFont;
+  } else {
+    _titleLabel.font = _style.unselectedTitleFont;
+  }
 }
 
 - (void)updateInk {

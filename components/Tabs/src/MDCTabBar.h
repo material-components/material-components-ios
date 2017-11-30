@@ -87,13 +87,13 @@ IB_DESIGNABLE
 
 /**
  Font used for selected item titles.
- By default uses the regular font from the font loader.
+ By default this uses the MDCTypography button font. Ignored for bottom-position tab bars.
  */
 @property(nonatomic, strong, nonnull) UIFont *selectedItemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
  Font used for unselected item titles.
- By default uses the regular font from the font loader.
+ By default this uses the MDCTypography button font. Ignored for bottom-position tab bars.
  */
 @property(nonatomic, strong, nonnull) UIFont *unselectedItemTitleFont UI_APPEARANCE_SELECTOR;
 
@@ -130,6 +130,16 @@ IB_DESIGNABLE
  The default value is based on the position and is recommended for most applications.
  */
 @property(nonatomic) MDCTabBarItemAppearance itemAppearance;
+
+/**
+ Indicates if all tab titles should be uppercased for display. If NO, item titles will be displayed
+ verbatim.
+
+ The default value is based on the position and is recommended for most applications.
+
+ NOTE: This property will be deprecated in a future release. Use `titleTextTransform` instead.
+ */
+@property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
 
 /**
  Defines how tab bar item titles are transformed for display.

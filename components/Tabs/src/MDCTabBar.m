@@ -133,6 +133,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _displaysUppercaseTitles = [self computedDisplaysUppercaseTitles];
   _itemAppearance = [self computedItemAppearance];
   _selectionIndicatorTemplate = [MDCTabBar defaultSelectionIndicatorTemplate];
+  _selectedItemTitleFont = [MDCTypography buttonFont];
+  _unselectedItemTitleFont = [MDCTypography buttonFont];
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
@@ -218,6 +220,22 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   if (_inkColor != inkColor && ![_inkColor isEqual:inkColor]) {
     _inkColor = inkColor;
 
+    [self updateItemBarStyle];
+  }
+}
+
+- (void)setUnselectedItemTitleFont:(UIFont *)unselectedItemTitleFont {
+  if ((unselectedItemTitleFont != _unselectedItemTitleFont) &&
+      ![unselectedItemTitleFont isEqual:_unselectedItemTitleFont]) {
+    _unselectedItemTitleFont = unselectedItemTitleFont;
+    [self updateItemBarStyle];
+  }
+}
+
+- (void)setSelectedItemTitleFont:(UIFont *)selectedItemTitleFont {
+  if ((selectedItemTitleFont != _selectedItemTitleFont) &&
+      ![selectedItemTitleFont isEqual:_selectedItemTitleFont]) {
+    _selectedItemTitleFont = selectedItemTitleFont;
     [self updateItemBarStyle];
   }
 }
@@ -332,7 +350,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     // Top tabs
     style.shouldDisplaySelectionIndicator = YES;
     style.shouldGrowOnSelection = NO;
-    style.titleFont = [MDCTypography buttonFont];
+    style.selectedTitleFont = [MDCTypography buttonFont];
+    style.unselectedTitleFont = [MDCTypography buttonFont];
     style.inkStyle = MDCInkStyleBounded;
     style.titleImagePadding = (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
     style.textOnlyNumberOfLines = 2;
@@ -341,7 +360,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     style.shouldDisplaySelectionIndicator = NO;
     style.shouldGrowOnSelection = YES;
     style.maximumItemWidth = kBottomNavigationMaximumItemWidth;
-    style.titleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
+    style.selectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
+    style.unselectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
     style.inkStyle = MDCInkStyleUnbounded;
     style.titleImagePadding = kBottomNavigationTitleImagePadding;
     style.textOnlyNumberOfLines = 1;
@@ -520,6 +540,17 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   MDCItemBarStyle *style;
 
   style = [[self class] defaultStyleForPosition:_barPosition itemAppearance:_itemAppearance];
+
+  // Set base style using position.
+  if ([MDCTabBar isTopTabsForPosition:_barPosition]) {
+    // Top tabs: Use provided fonts.
+    style.selectedTitleFont = _selectedItemTitleFont;
+    style.unselectedTitleFont = _unselectedItemTitleFont;
+  } else {
+    // Bottom navigation: Ignore provided fonts.
+    style.selectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
+    style.unselectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
+  }
 
   style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
