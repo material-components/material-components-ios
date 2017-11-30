@@ -79,18 +79,15 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   // Flags tracking if properties are unset and using default values.
   BOOL _hasDefaultAlignment;
   BOOL _hasDefaultItemAppearance;
-  BOOL _hasDefaultDisplaysUppercaseTitles;
 
   // For properties which have been set, these store the new fixed values.
   MDCTabBarAlignment _alignmentOverride;
   MDCTabBarItemAppearance _itemAppearanceOverride;
-  BOOL _displaysUppercaseTitlesOverride;
 }
 // Inherit UIView's tintColor logic.
 @dynamic tintColor;
 @synthesize alignment = _alignment;
 @synthesize barPosition = _barPosition;
-@synthesize displaysUppercaseTitles = _displaysUppercaseTitles;
 @synthesize itemAppearance = _itemAppearance;
 
 #pragma mark - Initialization
@@ -126,11 +123,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
   _hasDefaultAlignment = YES;
-  _hasDefaultDisplaysUppercaseTitles = YES;
 
   // Set default values
   _alignment = [self computedAlignment];
-  _displaysUppercaseTitles = [self computedDisplaysUppercaseTitles];
+  _titleTextTransform = MDCTabBarTextTransformAutomatic;
   _itemAppearance = [self computedItemAppearance];
   _selectionIndicatorTemplate = [MDCTabBar defaultSelectionIndicatorTemplate];
   _selectedItemTitleFont = [MDCTypography buttonFont];
@@ -274,10 +270,34 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
+- (BOOL)displaysUppercaseTitles {
+  switch (_titleTextTransform) {
+    case MDCTabBarTextTransformAutomatic:
+      return [MDCTabBar displaysUppercaseTitlesByDefaultForPosition:_barPosition];
+
+    case MDCTabBarTextTransformNone:
+      return NO;
+
+    case MDCTabBarTextTransformUppercase:
+      return YES;
+  }
+}
+
 - (void)setDisplaysUppercaseTitles:(BOOL)displaysUppercaseTitles {
-  _hasDefaultDisplaysUppercaseTitles = NO;
-  _displaysUppercaseTitlesOverride = displaysUppercaseTitles;
-  [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
+  MDCTabBarTextTransform newTransform = MDCTabBarTextTransformAutomatic;
+  if (displaysUppercaseTitles) {
+    newTransform = MDCTabBarTextTransformUppercase;
+  } else {
+    newTransform = MDCTabBarTextTransformNone;
+  }
+  self.titleTextTransform = newTransform;
+}
+
+- (void)setTitleTextTransform:(MDCTabBarTextTransform)titleTextTransform {
+  if (titleTextTransform != _titleTextTransform) {
+    _titleTextTransform = titleTextTransform;
+    [self updateItemBarStyle];
+  }
 }
 
 - (void)setSelectionIndicatorTemplate:(id<MDCTabBarIndicatorTemplate>)selectionIndicatorTemplate {
@@ -486,25 +506,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
-- (BOOL)computedDisplaysUppercaseTitles {
-  if (_hasDefaultDisplaysUppercaseTitles) {
-    return [[self class] displaysUppercaseTitlesByDefaultForPosition:_barPosition];
-  } else {
-    return _displaysUppercaseTitlesOverride;
-  }
-}
-
 - (void)internalSetAlignment:(MDCTabBarAlignment)alignment animated:(BOOL)animated {
   if (_alignment != alignment) {
     _alignment = alignment;
     [_itemBar setAlignment:MDCItemBarAlignmentForTabBarAlignment(_alignment) animated:animated];
-  }
-}
-
-- (void)internalSetDisplaysUppercaseTitles:(BOOL)displaysUppercaseTitles {
-  if (_displaysUppercaseTitles != displaysUppercaseTitles) {
-    _displaysUppercaseTitles = displaysUppercaseTitles;
-    [self updateItemBarStyle];
   }
 }
 
@@ -532,7 +537,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)updatePositionDerivedDefaultValues {
   [self internalSetAlignment:[self computedAlignment] animated:NO];
   [self internalSetItemAppearance:[self computedItemAppearance]];
-  [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
 }
 
 /// Update the item bar's style property, which depends on the bar position and item appearance.
@@ -557,7 +561,24 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.inkColor = _inkColor;
   style.selectedTitleColor = (_selectedItemTintColor ? _selectedItemTintColor : self.tintColor);
   style.titleColor = _unselectedItemTintColor;
-  style.displaysUppercaseTitles = _displaysUppercaseTitles;
+
+  // Set displaysUppercaseTitles based on titleTextTransform.
+  BOOL displaysUppercaseTitles = NO;
+  switch (_titleTextTransform) {
+    case MDCTabBarTextTransformAutomatic:
+      displaysUppercaseTitles =
+          [MDCTabBar displaysUppercaseTitlesByDefaultForPosition:_barPosition];
+      break;
+
+    case MDCTabBarTextTransformUppercase:
+      displaysUppercaseTitles = YES;
+      break;
+
+    case MDCTabBarTextTransformNone:
+      displaysUppercaseTitles = NO;
+      break;
+  }
+  style.displaysUppercaseTitles = displaysUppercaseTitles;
 
   [_itemBar applyStyle:style];
 
