@@ -26,7 +26,7 @@ static NSString const *MDCLibraryInfoVersionString = @"40.1.1";
 @implementation MDCLibraryInfo
 
 + (NSString *)versionString {
-  return [MDCLibraryInfoVersionString copy];
+  return [MDCLibraryInfoVersionString copy];  // Copy because caller isn't expecting `const`.
 }
 
 @end
