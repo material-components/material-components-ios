@@ -16,10 +16,12 @@
 
 #import "MDCLibraryInfo.h"
 
-// DO NOT EDIT. The version string is updated externally as a part of the release process and
-// should not be edited manually.
-// Do not rename this constant or change the formatting without updating the release scripts.
-static NSString const *MDCLibraryInfoVersionString = @"40.0.2";
+// The current version of the MDC-iOS library. DO NOT EDIT MANUALLY.
+//
+// This string is updated automatically as a part of the release process and should not be edited
+// manually. Do not rename this constant or change the formatting without updating the release
+// scripts.
+static NSString const *MDCLibraryInfoVersionString = @"40.1.1";
 
 @implementation MDCLibraryInfo
 
