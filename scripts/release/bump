@@ -28,6 +28,7 @@ import sys
 
 LIBRARY_INFO_PATH = ("components", "LibraryInfo", "src", "MDCLibraryInfo.m")
 LIBRARY_INFO_PATTERN = r'(MDCLibraryInfoVersionString = @")\d+\.\d+\.\d+(";)'
+LIBRARY_INFO_REPLACEMENT_PATTERN = r'\1%s\2'
 VERSION_FILE_NAME = "VERSION"
 
 def find_library_info_file(directory):
@@ -82,7 +83,14 @@ def update_library_info_contents(verbose_printer, contents, version):
   Returns:
     The updated contents string.
   """
-  contents = re.sub(LIBRARY_INFO_PATTERN, r'\1%s\2' % version, contents)
+  replacement = LIBRARY_INFO_REPLACEMENT_PATTERN % version
+  (contents, count) = re.subn(LIBRARY_INFO_PATTERN, replacement, contents)
+
+  if count != 1:
+    raise RuntimeError(("LibraryInfo source file does not contain a single ",
+                        "instance of regex '%s', aborting.") %
+                       LIBRARY_INFO_PATTERN)
+
   return contents
 
 
@@ -121,7 +129,38 @@ def set_version(verbose_printer, path, version):
     with open(path, 'w') as f:
       f.write(version)
   except:
-    print('Could not write version file "%s", aborting.' % path, file=sys.stderr)
+    print('Could not write version file "%s", aborting.' % path,
+          file=sys.stderr)
+    raise
+
+
+def update_library_info_file(verbose_printer, path, version):
+  """Update a LibraryInfo source file on disk with a new version.
+
+  Args:
+    verbose_printer: A printing function for verbose messages.
+    path: The path to the LibraryInfo source file.
+    version: The new version.
+  """
+  verbose_printer('Updating %s to version %s.' % (path, version))
+
+  try:
+    with open(path, 'r') as f:
+      contents = f.read();
+  except:
+    print('Could not read LibraryInfo source "%s", aborting.' % path,
+          file=sys.stderr)
+    raise
+
+  new_contents = update_library_info_contents(verbose_printer, contents,
+                                              version)
+
+  try:
+    with open(path, 'w') as f:
+      f.write(new_contents)
+  except:
+    print('Could not write LibraryInfo source "%s", aborting.' % path,
+          file=sys.stderr)
     raise
 
 
@@ -220,7 +259,7 @@ def main():
     sys.exit(-1)
 
   # Update the version number in the LibraryInfo source file.
-  update_library_info_contents(verbose_printer, library_info, args.version)
+  update_library_info_file(verbose_printer, library_info, args.version)
 
   # Find all podspecs files.
   podspecs = find_podspecs(args.directory)
