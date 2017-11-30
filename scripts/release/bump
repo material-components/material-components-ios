@@ -44,7 +44,7 @@ LIBRARY_INFO_PATTERN = r'(MDCLibraryInfoVersionString = @")\d+\.\d+\.\d+(";)'
 LIBRARY_INFO_REPLACEMENT_PATTERN = r'\g<1>%s\g<2>'
 
 # The path to the source-of-truth version file to be updated.
-VERSION_FILE_PATH = ("VERSION")
+VERSION_FILE_PATH = ("VERSION", )  # This is actually a tuple.
 
 def find_library_info_file(directory):
   """Return the LibraryInfo component source file that includes the version.
