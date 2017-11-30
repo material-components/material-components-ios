@@ -154,6 +154,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
                 forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
   [aCoder encodeObject:self.shapeToModeToContentEdgeInsets
                 forKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
+  [aCoder encodeObject:self.shapeToModeToHitAreaInsets
+                forKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
 }
 
 - (void)commonMDCFloatingButtonInit {

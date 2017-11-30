@@ -412,6 +412,18 @@
   button.imageLocation = MDCFloatingButtonImageLocationTrailing;
   [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
   [button setTitle:@"Title" forState:UIControlStateNormal];
+  [button setMinimumSize:CGSizeMake(75, 37)
+                forShape:MDCFloatingButtonShapeMini
+                  inMode:MDCFloatingButtonModeExpanded];
+  [button setMaximumSize:CGSizeMake(99, 65)
+                forShape:MDCFloatingButtonShapeMini
+                  inMode:MDCFloatingButtonModeExpanded];
+  [button setContentEdgeInsets:UIEdgeInsetsMake(5, 3, 1, 7)
+                      forShape:MDCFloatingButtonShapeMini
+                        inMode:MDCFloatingButtonModeExpanded];
+  [button setHitAreaInsets:UIEdgeInsetsMake(8, 6, 4, 2)
+                  forShape:MDCFloatingButtonShapeMini
+                    inMode:MDCFloatingButtonModeExpanded];
 
   // When
   NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:button];
