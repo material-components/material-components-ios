@@ -18,6 +18,7 @@
 
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
+#import "MDCTabBarTextTransform.h"
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
@@ -85,6 +86,30 @@ IB_DESIGNABLE
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /**
+ Font used for selected item titles.
+ By default uses the regular font from the font loader.
+ */
+@property(nonatomic, strong, nonnull) UIFont *selectedItemTitleFont UI_APPEARANCE_SELECTOR;
+
+/**
+ Font used for unselected item titles.
+ By default uses the regular font from the font loader.
+ */
+@property(nonatomic, strong, nonnull) UIFont *unselectedItemTitleFont UI_APPEARANCE_SELECTOR;
+
+/**
+ Padding on the left and right of the tab bar's content for scrollable tabs.
+ Default depends on the horizontal size class.
+ */
+@property(nonatomic) CGFloat horizontalPadding UI_APPEARANCE_SELECTOR;
+
+/**
+ Padding on the left and right of each item's content (title or images) for non-justified alignment.
+ Default depends on the horizontal size class.
+ */
+@property(nonatomic) CGFloat itemHorizontalPadding UI_APPEARANCE_SELECTOR;
+
+/**
  Tint color to apply to the tab bar background.
 
  If nil, the receiver uses the default background appearance. Default: nil.
@@ -107,12 +132,11 @@ IB_DESIGNABLE
 @property(nonatomic) MDCTabBarItemAppearance itemAppearance;
 
 /**
- Indicates if all tab titles should be uppercased for display. If NO, item titles will be
- displayed verbatim.
+ Defines how tab bar item titles are transformed for display.
 
- The default value is based on the position and is recommended for most applications.
+ The default value is MDCTabBarTextTransformAutomatic.
  */
-@property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
+@property(nonatomic) MDCTabBarTextTransform titleTextTransform UI_APPEARANCE_SELECTOR;
 
 /**
  Template that defines the appearance of the selection indicator.
