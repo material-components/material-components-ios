@@ -160,7 +160,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
         MDCColorLighten(titleColor, MDCChipTitleColorDisabledLightenPercent);
 
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.inkStyle = MDCInkStyleBounded;
+    _inkView.usesLegacyInkRipple = NO;
     _inkView.inkColor = [UIColor colorWithWhite:0 alpha:MDCChipInkAlpha];
     [self addSubview:_inkView];
 
