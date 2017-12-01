@@ -33,8 +33,8 @@
  @param colorScheme The color scheme to apply.
  @param textInputController A MDCTextInputController instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-    toTextInputController:(id<MDCTextInputController>)textInputController;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+    toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
 
 /**
  Applies a color scheme to MDCTextField for all instances of the class
@@ -47,7 +47,7 @@
  @param colorScheme The color scheme to apply.
  @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass
-    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+    toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
+        NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 @end
