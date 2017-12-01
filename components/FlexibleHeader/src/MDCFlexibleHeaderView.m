@@ -1089,13 +1089,11 @@ static BOOL isRunningiOS10_3OrAbove() {
   static BOOL isRunningiOS10_3OrAbove;
   dispatch_once(&onceToken, ^{
     NSProcessInfo *info = [NSProcessInfo processInfo];
-    if ([info respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-      isRunningiOS10_3OrAbove = [info isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){
-                                                                          .majorVersion = 10,
-                                                                          .minorVersion = 3,
-                                                                          .patchVersion = 0,
-                                                                      }];
-    }
+    isRunningiOS10_3OrAbove = [info isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion) {
+                                                                      .majorVersion = 10,
+                                                                      .minorVersion = 3,
+                                                                      .patchVersion = 0,
+                                                                    }];
   });
   return isRunningiOS10_3OrAbove;
 }

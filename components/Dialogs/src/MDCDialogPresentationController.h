@@ -16,10 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-#error "This component only supports iOS 8.0 and above."
-#endif
-
 /**
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the
  Material spec.

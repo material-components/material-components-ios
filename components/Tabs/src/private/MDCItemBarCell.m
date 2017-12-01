@@ -411,14 +411,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
-  // Use trait collection's horizontalSizeClass if available.
-  if ([self respondsToSelector:@selector(traitCollection)]) {
-    return self.traitCollection.horizontalSizeClass;
-  }
-
-  // Pre-iOS 8: Use fixed size class for device.
-  const BOOL isPad = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad;
-  return isPad ? UIUserInterfaceSizeClassRegular : UIUserInterfaceSizeClassCompact;
+  return self.traitCollection.horizontalSizeClass;
 }
 
 /// Ensures that subviews exist and have the correct visibility for the current content style.
