@@ -271,7 +271,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (BOOL)displaysUppercaseTitles {
-  switch (_titleTextTransform) {
+  switch (self.titleTextTransform) {
     case MDCTabBarTextTransformAutomatic:
       return [MDCTabBar displaysUppercaseTitlesByDefaultForPosition:_barPosition];
 
@@ -543,8 +543,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   if ([MDCTabBar isTopTabsForPosition:_barPosition]) {
     // Top tabs: Use provided fonts.
-    style.selectedTitleFont = _selectedItemTitleFont;
-    style.unselectedTitleFont = _unselectedItemTitleFont;
+    style.selectedTitleFont = self.selectedItemTitleFont;
+    style.unselectedTitleFont = self.unselectedItemTitleFont;
   } else {
     // Bottom navigation: Ignore provided fonts.
     style.selectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
@@ -556,24 +556,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.inkColor = _inkColor;
   style.selectedTitleColor = (_selectedItemTintColor ? _selectedItemTintColor : self.tintColor);
   style.titleColor = _unselectedItemTintColor;
-
-  // Set displaysUppercaseTitles based on titleTextTransform.
-  BOOL displaysUppercaseTitles = NO;
-  switch (_titleTextTransform) {
-    case MDCTabBarTextTransformAutomatic:
-      displaysUppercaseTitles =
-          [MDCTabBar displaysUppercaseTitlesByDefaultForPosition:_barPosition];
-      break;
-
-    case MDCTabBarTextTransformUppercase:
-      displaysUppercaseTitles = YES;
-      break;
-
-    case MDCTabBarTextTransformNone:
-      displaysUppercaseTitles = NO;
-      break;
-  }
-  style.displaysUppercaseTitles = displaysUppercaseTitles;
+  style.displaysUppercaseTitles = self.displaysUppercaseTitles;
 
   [_itemBar applyStyle:style];
 
