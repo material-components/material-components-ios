@@ -1,4 +1,4 @@
-# 40.2.0
+# 41.0.0
 
 ## API changes
 
@@ -8,13 +8,13 @@
 
 ### Ink
 
-**changed** property signature: `MDCInkView`'s `inkColor` from `null_resettable` to `nonnull`.
+**breaking** **changed** property signature: `MDCInkView`'s `inkColor` from `null_resettable` to `nonnull`.
 
 **new** property: `usesLegacyInkRipple`.
 
 ### Snackbar
 
-`MDCSnackbarMessage`'s public APIs have all been annotated with nullability annotations.
+**breaking** `MDCSnackbarMessage`'s public APIs have all been annotated with nullability annotations.
 
 ### TextFields
 
