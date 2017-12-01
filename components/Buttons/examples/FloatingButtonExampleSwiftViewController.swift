@@ -10,24 +10,9 @@ import UIKit
 class FloatingButtonExampleSwiftViewController: UIViewController {
 
   let floatingButtonPlusDimension = CGFloat(24)
-  let miniFloatingButton : MDCFloatingButton
-  let defaultFloatingButton : MDCFloatingButton
-  let largeIconFloatingButton : MDCFloatingButton
-
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)
-    defaultFloatingButton = MDCFloatingButton()
-    largeIconFloatingButton = MDCFloatingButton()
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)
-    defaultFloatingButton = MDCFloatingButton()
-    largeIconFloatingButton = MDCFloatingButton()
-    super.init(coder: aDecoder)
-  }
-  
+  let miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)
+  let defaultFloatingButton = MDCFloatingButton()
+  let largeIconFloatingButton = MDCFloatingButton()
 
   override func viewDidLoad() {
     super.viewDidLoad()
