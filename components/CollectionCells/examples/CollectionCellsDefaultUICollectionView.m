@@ -7,91 +7,61 @@
 
 #import "CollectionCellsDefaultUICollectionView.h"
 
-@interface CollectionCellsDefaultUICollectionView ()
+@interface CollectionCellsDefaultUICollectionView () <MDCInkTouchControllerDelegate>
 
 @end
 
 @implementation CollectionCellsDefaultUICollectionView {
   NSMutableArray *_content;
+  MDCInkTouchController *_inkTouchController;
+  CGPoint _inkTouchLocation;
 }
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
-static NSString *const kExampleDetailText =
-@"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
-"non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
+@synthesize collectionViewLayout = _collectionViewLayout;
+
+- (instancetype)init {
+  UICollectionViewFlowLayout *defaultLayout = [[UICollectionViewFlowLayout alloc] init];
+  defaultLayout.minimumInteritemSpacing = 0;
+  defaultLayout.minimumLineSpacing = 1;
+  defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+  return [self initWithCollectionViewLayout:defaultLayout];
+}
+
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+  self = [super initWithCollectionViewLayout:layout];
+  if (self) {
+    _collectionViewLayout = layout;
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
+  [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
+  self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.alwaysBounceVertical = YES;
+  
+  _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
+  _inkTouchController.delegate = self;
     
-    // Register cell classes
-    [self.collectionView registerClass:[MDCCollectionViewTextCell class]
-            forCellWithReuseIdentifier:kReusableIdentifierItem];
+  // Register cell classes
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
     
   _content = [NSMutableArray array];
-  NSDictionary *alignmentValues = @{
-                                    @"Left" : @(NSTextAlignmentLeft),
-                                    @"Right" : @(NSTextAlignmentRight),
-                                    @"Center" : @(NSTextAlignmentCenter),
-                                    @"Just." : @(NSTextAlignmentJustified),
-                                    @"Natural" : @(NSTextAlignmentNatural)
-                                    };
-
-  for (NSString *alignmentKey in alignmentValues) {
-    [_content addObject:@[
-                          [NSString stringWithFormat:@"(%@) Single line text", alignmentKey],
-                          alignmentValues[alignmentKey], @"", alignmentValues[alignmentKey],
-                          @(MDCCellDefaultOneLineHeight)
-                          ]];
-    [_content addObject:@[
-                          @"", alignmentValues[alignmentKey],
-                          [NSString stringWithFormat:@"(%@) Single line detail text", alignmentKey],
-                          alignmentValues[alignmentKey], @(MDCCellDefaultOneLineHeight)
-                          ]];
-    [_content addObject:@[
-                          [NSString stringWithFormat:@"(%@) Two line text", alignmentKey],
-                          alignmentValues[alignmentKey],
-                          [NSString stringWithFormat:@"(%@) Here is the detail text", alignmentKey],
-                          alignmentValues[alignmentKey], @(MDCCellDefaultTwoLineHeight)
-                          ]];
-    [_content addObject:@[
-                          [NSString stringWithFormat:@"(%@) Two line text (truncated)", alignmentKey],
-                          alignmentValues[alignmentKey],
-                          [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
-                          alignmentValues[alignmentKey], @(MDCCellDefaultTwoLineHeight)
-                          ]];
-    [_content addObject:@[
-                          [NSString stringWithFormat:@"(%@) Three line text (wrapped)", alignmentKey],
-                          alignmentValues[alignmentKey],
-                          [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
-                          alignmentValues[alignmentKey], @(MDCCellDefaultThreeLineHeight)
-                          ]];
+  for (int i=0; i<10; i++) {
+    [_content addObject:@[[NSString stringWithFormat:@"(Left) Two line text %d", i],
+                          [NSString stringWithFormat:@"(Left) here is the detail text %d", i]]];
   }
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
   return 1;
 }
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
   return [_content count];
@@ -102,19 +72,21 @@ static NSString *const kExampleDetailText =
   [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                             forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.item][0];
-  cell.textLabel.textAlignment = [_content[indexPath.item][1] integerValue];
-  cell.detailTextLabel.text = _content[indexPath.item][2];
-  cell.detailTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
-
-  if (indexPath.item % 5 == 4) {
-    cell.detailTextLabel.numberOfLines = 2;
-  }
+  cell.detailTextLabel.text = _content[indexPath.item][1];
   return cell;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {
-  return [_content[indexPath.item][4] floatValue];
+  return MDCCellDefaultTwoLineHeight;
+}
+
+#pragma mark - <UICollectionViewDelegateFlowLayout>
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+  return CGSizeMake(self.collectionView.frame.size.width, MDCCellDefaultTwoLineHeight);
 }
 
 #pragma mark - CatalogByConvention
@@ -127,35 +99,42 @@ static NSString *const kExampleDetailText =
   return NO;
 }
 
-#pragma mark <UICollectionViewDelegate>
+- (void)collectionView:(UICollectionView *)collectionView
+didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+  CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+  
+  MDCInkView *inkView;
+  if ([cell respondsToSelector:@selector(inkView)]) {
+    inkView = [cell performSelector:@selector(inkView)];
+  } else {
+    return;
+  }
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
+  [inkView startTouchBeganAnimationAtPoint:location completion:nil];
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
+- (void)collectionView:(UICollectionView *)collectionView
+didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+  CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+  
+  MDCInkView *inkView;
+  if ([cell respondsToSelector:@selector(inkView)]) {
+    inkView = [cell performSelector:@selector(inkView)];
+  } else {
+    return;
+  }
+  
+  [inkView startTouchEndedAnimationAtPoint:location completion:nil];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
+#pragma mark - <MDCInkTouchControllerDelegate>
+
+- (BOOL)inkTouchController:(__unused MDCInkTouchController *)inkTouchController
+shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+    _inkTouchLocation = location;
+  return NO;
 }
-*/
 
 @end
