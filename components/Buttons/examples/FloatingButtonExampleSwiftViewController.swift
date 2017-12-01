@@ -9,7 +9,6 @@ import UIKit
 
 class FloatingButtonExampleSwiftViewController: UIViewController {
 
-  let floatingButtonPlusDimension = CGFloat(24)
   let miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)
   let defaultFloatingButton = MDCFloatingButton()
   let largeIconFloatingButton = MDCFloatingButton()
