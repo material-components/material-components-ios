@@ -22,6 +22,10 @@ static const CGFloat MDCInkLayerStartScalePositionDuration = 0.333f;
 static const CGFloat MDCInkLayerStartFadeHalfDuration = 0.167f;
 static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = 0.25f;
 
+static const CGFloat MDCInkLayerScaleStartMin = 0.2f;
+static const CGFloat MDCInkLayerScaleStartMax = 0.6f;
+static const CGFloat MDCInkLayerScaleDivisor = 300.f;
+
 static NSString *const MDCInkLayerOpacityString = @"opacity";
 static NSString *const MDCInkLayerPositionString = @"position";
 static NSString *const MDCInkLayerScaleString = @"transform.scale";
@@ -78,11 +82,12 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   CAMediaTimingFunction *materialTimingFunction =
       [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
 
-  CGFloat scaleStart = MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / 300.f;
-  if (scaleStart < 0.2f) {
-    scaleStart = 0.2f;
-  } else if (scaleStart > 0.6f) {
-    scaleStart = 0.6f;
+  CGFloat scaleStart =
+      MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / MDCInkLayerScaleDivisor;
+  if (scaleStart < MDCInkLayerScaleStartMin) {
+    scaleStart = MDCInkLayerScaleStartMin;
+  } else if (scaleStart > MDCInkLayerScaleStartMax) {
+    scaleStart = MDCInkLayerScaleStartMax;
   }
 
   CABasicAnimation *scaleAnim = [[CABasicAnimation alloc] init];
@@ -125,7 +130,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 
   [CATransaction begin];
   CAAnimationGroup *animGroup = [[CAAnimationGroup alloc] init];
-  animGroup.animations = @[ scaleAnim, positionAnim, fadeInAnim, /*fadeHalfAnim , fadeFullAnim */ ];
+  animGroup.animations = @[ scaleAnim, positionAnim, fadeInAnim ];
   animGroup.duration = MDCInkLayerStartScalePositionDuration;
   animGroup.fillMode = kCAFillModeForwards;
   animGroup.removedOnCompletion = NO;
