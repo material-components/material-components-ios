@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCButtonBar.
  @param buttonBar A MDCButtonBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+             toButtonBar:(nonnull MDCButtonBar *)buttonBar;
 
 @end

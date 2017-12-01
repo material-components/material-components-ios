@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCInkView.
  @param inkView A MDCInkView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-               toInkView:(MDCInkView *)inkView;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+               toInkView:(nonnull MDCInkView *)inkView;
 
 @end
