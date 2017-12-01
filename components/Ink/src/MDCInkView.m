@@ -75,15 +75,17 @@
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkStyle = inkStyle;
-  switch (inkStyle) {
-    case MDCInkStyleBounded:
-      self.inkLayer.masksToBounds = YES;
-      self.inkLayer.bounded = YES;
-      break;
-    case MDCInkStyleUnbounded:
-      self.inkLayer.masksToBounds = NO;
-      self.inkLayer.bounded = NO;
-      break;
+  if (self.usesLegacyInkRipple) {
+    switch (inkStyle) {
+      case MDCInkStyleBounded:
+        self.inkLayer.masksToBounds = YES;
+        self.inkLayer.bounded = YES;
+        break;
+      case MDCInkStyleUnbounded:
+        self.inkLayer.masksToBounds = NO;
+        self.inkLayer.bounded = NO;
+        break;
+    }
   }
 }
 
@@ -139,16 +141,6 @@
     inkLayer.inkColor = self.inkColor;
     inkLayer.maxRippleRadius = self.maxRippleRadius;
     inkLayer.animationDelegate = self;
-
-    switch (self.inkStyle) {
-      case MDCInkStyleBounded:
-        self.clipsToBounds = YES;
-        break;
-      case MDCInkStyleUnbounded:
-        self.clipsToBounds = NO;
-        break;
-    }
-
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
     [self.layer addSublayer:inkLayer];
