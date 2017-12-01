@@ -23,7 +23,7 @@ components/HeaderStackView      jverkoey
 components/Ink                  jgunaratne
 components/LibraryInfo          ajsecord
 components/MaskedTransition     jverkoey
-components/Navigationbar        jverkoey
+components/NavigationBar        jverkoey
 components/Palettes             jgunaratne
 components/ProgressView         jmdetloff
 components/ShadowElevations     ianegordon
