@@ -254,7 +254,7 @@
     // We have to create a pending animation because if we are inside a UIKit animation block we
     // won't know any properties of the animation block until it is commited.
     MDCInkPendingAnimation *pendingAnim = [[MDCInkPendingAnimation alloc] init];
-    pendingAnim.animationSourceLayer = self.layer;
+    pendingAnim.animationSourceLayer = self.superview.layer;
     pendingAnim.fromValue = [layer.presentationLayer valueForKey:event];
     pendingAnim.toValue = nil;
     pendingAnim.keyPath = event;
