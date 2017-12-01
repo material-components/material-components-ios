@@ -23,7 +23,6 @@
 #import "MDCBottomNavigationItemBadge.h"
 
 static const CGFloat kMDCBottomNavigationItemViewInkOpacity = 0.150f;
-static const CGFloat kMDCBottomNavigationItemViewInkRadius = 48.f;
 static const CGFloat kMDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
@@ -106,7 +105,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                                            attributes:@{ NSFontAttributeName:self.label.font }
                                               context:nil].size;
   self.label.frame = CGRectMake(0, 0, labelSize.width, labelSize.height);
-  self.inkView.maxRippleRadius = kMDCBottomNavigationItemViewInkRadius;
   [self centerLayoutAnimated:NO];
 }
 
