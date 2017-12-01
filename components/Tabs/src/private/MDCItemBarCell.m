@@ -560,13 +560,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateTitleFont {
-  UIFont *font = nil;
-  if (self.isSelected) {
-    font = _style.selectedTitleFont;
-  } else {
-    font = _style.unselectedTitleFont;
-  }
-  _titleLabel.font = font;
+  _titleLabel.font = self.isSelected ? _style.selectedTitleFont : _style.unselectedTitleFont;
 }
 
 - (void)updateInk {

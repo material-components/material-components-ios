@@ -59,10 +59,10 @@
 @property(nonatomic, strong, nonnull) UIColor *selectedTitleColor;
 
 /** Font used for selected item titles. */
-@property(nonatomic, nonnull) UIFont *selectedTitleFont;
+@property(nonatomic, strong, nonnull) UIFont *selectedTitleFont;
 
 /** Font used for unselected item titles. */
-@property(nonatomic, nonnull) UIFont *unselectedTitleFont;
+@property(nonatomic, strong, nonnull) UIFont *unselectedTitleFont;
 
 /** Style of ink animations on item interaction. */
 @property(nonatomic) MDCInkStyle inkStyle;
