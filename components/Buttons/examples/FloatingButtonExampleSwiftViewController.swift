@@ -50,6 +50,8 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
     largeIconFloatingButton.sizeToFit()
     largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     largeIconFloatingButton.setImage(plusImage36, for: .normal)
+    largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsetsMake(-6, -6, -6, 0), for: .default,
+                                                 in: .expanded)
 
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
