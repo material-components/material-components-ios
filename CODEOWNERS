@@ -1,0 +1,35 @@
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners.
+
+# These owners will be the default owners for everything in the repo.
+*       @ianegordon
+
+# Order is important. The last matching pattern has the most precedence.
+# So if a pull request only touches javascript files, only these owners
+# will be requested to review.
+# *.js    @octocat @github/js
+
+# You can also use email addresses if you prefer.
+components/ActivityIndicator    jmdetloff
+components/AppBar               jverkoey
+components/BottomAppBar         jgunaratne
+components/BottomNavigation     jgunaratne
+components/Buttons              randallli
+components/Chips                samnm
+components/Collections          felixaemiliano
+components/Dialogs              ianegordon
+components/FeatureHighlight     samnm
+components/HeaderStackView      jverkoey
+components/Ink                  jgunaratne
+components/LibraryInfo          ajsecord
+components/MaskedTransition     jverkoey
+components/NavigationBar        jverkoey
+components/Palettes             jgunaratne
+components/ProgressView         jmdetloff
+components/ShadowElevations     ianegordon
+components/ShadowLayer          samnm
+components/Slider               ianegordon
+components/Tabs                 brianjmoore
+components/Themes               jgunaratne
+components/Typography           ianegordon
+
