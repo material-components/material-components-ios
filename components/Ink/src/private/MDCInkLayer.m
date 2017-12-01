@@ -125,7 +125,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 
   [CATransaction begin];
   CAAnimationGroup *animGroup = [[CAAnimationGroup alloc] init];
-  animGroup.animations = @[ scaleAnim, positionAnim, fadeInAnim, /*fadeHalfAnim , fadeFullAnim */ ];
+  animGroup.animations = @[ scaleAnim, positionAnim, fadeInAnim ];
   animGroup.duration = MDCInkLayerStartScalePositionDuration;
   animGroup.fillMode = kCAFillModeForwards;
   animGroup.removedOnCompletion = NO;
