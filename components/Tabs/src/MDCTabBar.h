@@ -87,7 +87,7 @@ IB_DESIGNABLE
 
 /**
  Font used for selected item titles.
- By default this uses the MDCTypography button font. Ignored for bottom-position tab bars.
+ By default this uses +[MDCTypography buttonFont]. Ignored for bottom-position tab bars.
 
  Note: Tab sizes are determined based on their unselected state and do not vary based on selection.
  To avoid clipped layouts and other layout issues, the font provided here should have similar
@@ -134,6 +134,7 @@ IB_DESIGNABLE
  The default value is based on the position and is recommended for most applications.
 
  NOTE: This property will be deprecated in a future release. Use `titleTextTransform` instead.
+ https://github.com/material-components/material-components-ios/issues/2552
  */
 @property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
 
