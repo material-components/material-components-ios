@@ -284,13 +284,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setDisplaysUppercaseTitles:(BOOL)displaysUppercaseTitles {
-  MDCTabBarTextTransform newTransform = MDCTabBarTextTransformAutomatic;
-  if (displaysUppercaseTitles) {
-    newTransform = MDCTabBarTextTransformUppercase;
-  } else {
-    newTransform = MDCTabBarTextTransformNone;
-  }
-  self.titleTextTransform = newTransform;
+  self.titleTextTransform =
+      displaysUppercaseTitles ? MDCTabBarTextTransformUppercase : MDCTabBarTextTransformNone;
 }
 
 - (void)setTitleTextTransform:(MDCTabBarTextTransform)titleTextTransform {
