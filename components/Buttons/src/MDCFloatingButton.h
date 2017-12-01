@@ -71,6 +71,30 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 @interface MDCFloatingButton : MDCButton
 
+
+/**
+ The mode of the floating button can either be .normal (a circle) or .expanded (a pill-shaped
+ rounded rectangle).
+
+ The default value is @c .normal .
+ */
+@property(nonatomic, assign) MDCFloatingButtonMode mode;
+
+/**
+ The location of the image relative to the title when the floating button is in @c expanded mode.
+
+ The default value is @c .leading .
+ */
+@property(nonatomic, assign) MDCFloatingButtonImageLocation imageLocation UI_APPEARANCE_SELECTOR;
+
+/**
+ The horizontal spacing in points between the @c imageView and @c titleLabel when the button is in
+ @c .expanded mode. If set to a negative value, the image and title may overlap.
+
+ The default value is 8.
+ */
+@property(nonatomic, assign) CGFloat imageTitleSpacing UI_APPEARANCE_SELECTOR;
+
 /**
  Returns a MDCFloatingButton with default colors and the given @c shape.
 
@@ -115,6 +139,60 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 - (nonnull instancetype)init;
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+- (void)setMinimumSize:(CGSize)size NS_UNAVAILABLE;
+
+/**
+ Sets the minimum size when the button has the specified @c shape @c mode.
+ Setting a size of @c CGSizeZero is equivalent to no minimum size.
+
+ @param minimumSize The new minimum size of the button.
+ @param shape The shape that the size constrains.
+ @param mode The mode that the size constrains.
+ */
+- (void)setMinimumSize:(CGSize)minimumSize
+              forShape:(MDCFloatingButtonShape)shape
+                inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+
+- (void)setMaximumSize:(CGSize)maximumSize NS_UNAVAILABLE;
+
+/**
+ Sets the maximum size when the button has the specified @c shape and @c mode.
+ Setting a size of @c CGSizeZero is equivalent to no maximum size.
+
+ @param maximumSize The new maximum size of the button.
+ @param shape The shape that the size constrains.
+ @param mode The mode that the size constrains.
+ */
+- (void)setMaximumSize:(CGSize)maximumSize
+              forShape:(MDCFloatingButtonShape)shape
+                inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets NS_UNAVAILABLE;
+
+/**
+ Sets the @c contentEdgeInsets value when the button has the specified @c shape and @c mode.
+
+ @param contentEdgeInsets The new content edge insets value.
+ @param shape The shape for the content edge insets.
+ @param mode The mode for the content edge insets.
+ */
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets
+                    forShape:(MDCFloatingButtonShape)shape
+                      inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+
+- (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets NS_UNAVAILABLE;
+
+/**
+ Sets the @c hitAreaInsets value when the button has the specified @c shape and @c mode.
+
+ @param hitAreaInsets The new hit area insets value.
+ @param shape The shape for the hit area insets.
+ @param mode The mode for the hit area insets.
+ */
+- (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets
+                forShape:(MDCFloatingButtonShape)shape
+                  inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
 #pragma mark - Deprecations
 
