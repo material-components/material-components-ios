@@ -16,6 +16,7 @@
 
 #import "MDCTextInputControllerFullWidth.h"
 
+#import "MDCIntrinsicHeightTextView.h"
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"

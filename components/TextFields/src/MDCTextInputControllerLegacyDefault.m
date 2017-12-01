@@ -348,8 +348,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIImage *image = [self
       drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
   [_textInput.clearButton setImage:image forState:UIControlStateNormal];
-  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
-  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
 }
 
 - (void)subscribeForNotifications {

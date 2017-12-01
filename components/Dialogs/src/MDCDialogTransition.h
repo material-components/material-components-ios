@@ -14,22 +14,16 @@
  limitations under the License.
  */
 
-#import "UIViewController+MaterialBottomSheet.h"
+#import <Foundation/Foundation.h>
+#import <MotionTransitioning/MotionTransitioning.h>
 
-#import "MDCBottomSheetPresentationController.h"
+@interface MDCDialogTransition : NSObject <MDMTransitionWithPresentation>
 
-@implementation UIViewController (MaterialBottomSheet)
+/**
+ Should a tap on the dimmed background view dismiss the presented controller.
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (MDCBottomSheetPresentationController *)mdc_bottomSheetPresentationController {
-  id presentationController = self.presentationController;
-  if ([presentationController isKindOfClass:[MDCBottomSheetPresentationController class]]) {
-    return (MDCBottomSheetPresentationController *)presentationController;
-  }
-#pragma clang diagnostic pop
-
-  return nil;
-}
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 @end

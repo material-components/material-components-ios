@@ -70,6 +70,10 @@ class TextInputTests: XCTestCase {
     textField.textColor = .red
     XCTAssertEqual(.red, textField.textColor)
 
+    let trailingView = UIView()
+    textField.trailingView = trailingView
+    XCTAssertEqual(textField.trailingView, trailingView)
+
     let testTrailing = "NN / NN"
     textField.trailingUnderlineLabel.text = testTrailing
     XCTAssertEqual(testTrailing, textField.trailingUnderlineLabel.text)

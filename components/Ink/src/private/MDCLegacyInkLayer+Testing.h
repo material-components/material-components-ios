@@ -14,22 +14,28 @@
  limitations under the License.
  */
 
-#import "UIViewController+MaterialBottomSheet.h"
+#import "MDCLegacyInkLayer.h"
 
-#import "MDCBottomSheetPresentationController.h"
+@protocol MDCLegacyInkLayerRippleDelegate <NSObject>
 
-@implementation UIViewController (MaterialBottomSheet)
+@optional
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (MDCBottomSheetPresentationController *)mdc_bottomSheetPresentationController {
-  id presentationController = self.presentationController;
-  if ([presentationController isKindOfClass:[MDCBottomSheetPresentationController class]]) {
-    return (MDCBottomSheetPresentationController *)presentationController;
-  }
-#pragma clang diagnostic pop
+- (void)animationDidStop:(CAAnimation *)anim
+              shapeLayer:(CAShapeLayer *)shapeLayer
+                finished:(BOOL)finished;
 
-  return nil;
-}
+@end
 
+@interface MDCLegacyInkLayer ()  <MDCLegacyInkLayerRippleDelegate>
+@end
+
+@interface MDCLegacyInkLayerRipple : CAShapeLayer
+@end
+
+@interface MDCLegacyInkLayerForegroundRipple : MDCLegacyInkLayerRipple
+- (void)exit:(BOOL)animated;
+@end
+
+@interface MDCLegacyInkLayerBackgroundRipple : MDCLegacyInkLayerRipple
+- (void)exit:(BOOL)animated;
 @end

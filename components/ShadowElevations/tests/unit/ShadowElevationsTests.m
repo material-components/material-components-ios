@@ -14,22 +14,17 @@
  limitations under the License.
  */
 
-#import "UIViewController+MaterialBottomSheet.h"
+#import <XCTest/XCTest.h>
+#import "MaterialShadowElevations.h"
 
-#import "MDCBottomSheetPresentationController.h"
+@interface ShadowElevationsTests : XCTestCase
 
-@implementation UIViewController (MaterialBottomSheet)
+@end
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (MDCBottomSheetPresentationController *)mdc_bottomSheetPresentationController {
-  id presentationController = self.presentationController;
-  if ([presentationController isKindOfClass:[MDCBottomSheetPresentationController class]]) {
-    return (MDCBottomSheetPresentationController *)presentationController;
-  }
-#pragma clang diagnostic pop
+@implementation ShadowElevationsTests
 
-  return nil;
+- (void)testNoop {
+  XCTAssertTrue(YES);
 }
 
 @end

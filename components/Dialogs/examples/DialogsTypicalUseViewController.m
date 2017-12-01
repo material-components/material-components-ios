@@ -28,6 +28,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self loadCollectionView:@[@"Programmatic", @"Storyboard", @"Modal", @"Open URL"]];
+
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
@@ -49,6 +50,7 @@
 - (IBAction)didTapProgrammatic {
   UIViewController *viewController =
       [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
+
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
@@ -58,8 +60,7 @@
 - (IBAction)didTapModalProgrammatic {
   UIViewController *viewController =
       [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
-  viewController.modalPresentationStyle = UIModalPresentationCustom;
-  viewController.transitioningDelegate = self.transitionController;
+  viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
 
   [self presentViewController:viewController animated:YES completion:NULL];
 
@@ -73,8 +74,7 @@
 - (IBAction)didTapOpenURL {
   UIViewController *viewController =
     [[OpenURLViewController alloc] initWithNibName:nil bundle:nil];
-  viewController.modalPresentationStyle = UIModalPresentationCustom;
-  viewController.transitioningDelegate = self.transitionController;
+  viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
 
   [self presentViewController:viewController animated:YES completion:NULL];
 }
@@ -88,8 +88,7 @@
 
   UIViewController *viewController =
       [storyboard instantiateViewControllerWithIdentifier:identifier];
-  viewController.modalPresentationStyle = UIModalPresentationCustom;
-  viewController.transitioningDelegate = self.transitionController;
+  viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
 
   [self presentViewController:viewController animated:YES completion:NULL];
 }

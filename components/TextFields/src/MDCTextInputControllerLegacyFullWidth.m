@@ -16,6 +16,7 @@
 
 #import "MDCTextInputControllerLegacyFullWidth.h"
 
+#import "MDCIntrinsicHeightTextView.h"
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
@@ -250,8 +251,6 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 - (void)setupClearButton {
   UIImage *image = [self
       drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
-  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
-  [_textInput.clearButton setImage:image forState:UIControlStateNormal];
   [_textInput.clearButton setImage:image forState:UIControlStateNormal];
 }
 

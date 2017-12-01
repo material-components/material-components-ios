@@ -14,22 +14,19 @@
  limitations under the License.
  */
 
-#import "UIViewController+MaterialBottomSheet.h"
+#import "MDCIntrinsicHeightTextView.h"
 
-#import "MDCBottomSheetPresentationController.h"
+@implementation MDCIntrinsicHeightTextView
 
-@implementation UIViewController (MaterialBottomSheet)
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (MDCBottomSheetPresentationController *)mdc_bottomSheetPresentationController {
-  id presentationController = self.presentationController;
-  if ([presentationController isKindOfClass:[MDCBottomSheetPresentationController class]]) {
-    return (MDCBottomSheetPresentationController *)presentationController;
+/**
+ When a value in the CGSize of intrinsicContentSize is -1, it's considered undefined. For the
+ MDCMultilineTextField, we want this to always be defined so our layouts are not ambiguous.
+ */
+- (CGSize)intrinsicContentSize {
+  CGSize size = [super intrinsicContentSize];
+  if (size.height == UIViewNoIntrinsicMetric) {
+    size.height = [self contentSize].height;
   }
-#pragma clang diagnostic pop
-
-  return nil;
+  return size;
 }
-
 @end
