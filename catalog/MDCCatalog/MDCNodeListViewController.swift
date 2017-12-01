@@ -398,7 +398,7 @@ extension MDCNodeListViewController {
         contentVC.title = node.title
 
         let headerView = container.appBar.headerViewController.headerView
-        if let collectionVC = contentVC as? MDCCollectionViewController {
+        if let collectionVC = contentVC as? UICollectionViewController {
           headerView.trackingScrollView = collectionVC.collectionView
         } else if let scrollView = contentVC.view as? UIScrollView {
           headerView.trackingScrollView = scrollView
