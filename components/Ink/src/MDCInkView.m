@@ -211,11 +211,17 @@
   if (self.activeInkLayer == inkLayer && self.startInkRippleCompletionBlock) {
     self.startInkRippleCompletionBlock();
   }
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidStart:)]) {
+    [self.animationDelegate inkAnimationDidStart:self];
+  }
 }
 
 - (void)inkLayerAnimationDidEnd:(MDCInkLayer *)inkLayer {
   if (self.activeInkLayer == inkLayer && self.endInkRippleCompletionBlock) {
     self.endInkRippleCompletionBlock();
+  }
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidEnd:)]) {
+    [self.animationDelegate inkAnimationDidEnd:self];
   }
 }
 

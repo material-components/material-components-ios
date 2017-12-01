@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MDCInkViewDelegate;
+
 /** Completion block signature for all ink animations. */
 typedef void (^MDCInkCompletionBlock)(void);
 
@@ -45,6 +47,12 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  of UI element the user is interacting with.
  */
 @interface MDCInkView : UIView
+
+/**
+ Ink view animation delegate. Clients set this delegate to receive updates when ink animations
+ start and end.
+ */
+@property(nonatomic, weak, nullable) id<MDCInkViewDelegate> animationDelegate;
 
 /**
  The style of ink for this view. Defaults to MDCInkStyleBounded.
@@ -131,5 +139,29 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  -inkTouchController:inkViewAtTouchLocation; implementation.
  */
 + (nonnull MDCInkView *)injectedInkViewForView:(nonnull UIView *)view;
+
+@end
+
+/**
+ Delegate protocol for MDCInkView. Clients may implement this protocol to receive updates when ink
+ layer start and end.
+ */
+@protocol MDCInkViewDelegate <NSObject>
+
+@optional
+
+/**
+ Called when the ink ripple animation begins.
+
+ @param inkView The MDCInkView that starts animating.
+ */
+- (void)inkAnimationDidStart:(nonnull MDCInkView *)inkView;
+
+/**
+ Called when the ink ripple animation ends.
+
+ @param inkView The MDCInkView that ends animating.
+ */
+- (void)inkAnimationDidEnd:(nonnull MDCInkView *)inkView;
 
 @end
