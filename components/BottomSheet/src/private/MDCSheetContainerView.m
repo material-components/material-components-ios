@@ -19,7 +19,11 @@
 #import "MaterialKeyboardWatcher.h"
 #import "MDCBottomSheetMotionSpec.h"
 #import "MDCDraggableView.h"
+#ifdef IS_BAZEL_BUILD
+#import "MotionAnimator.h"
+#else
 #import <MotionAnimator/MotionAnimator.h>
+#endif  // IS_BAZEL_BUILD
 
 // KVO key for monitoring the content size for the content view if it is a scrollview.
 static NSString *kContentSizeKey = nil;
