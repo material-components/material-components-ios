@@ -69,8 +69,7 @@
   textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
   NSOperatingSystemVersion iOS10Version = {10, 0, 0};
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
-      [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
+  if ([processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
     textFieldFloating.adjustsFontForContentSizeCategory = YES;
   } else {
     [textFieldFloating mdc_setAdjustsFontForContentSizeCategory:YES];
