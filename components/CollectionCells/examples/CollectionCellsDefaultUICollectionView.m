@@ -1,9 +1,18 @@
-//
-//  CollectionCellsDefaultUICollectionView.m
-//  MaterialCatalog
-//
-//  Created by yar on 12/1/17.
-//
+/*
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
 #import "CollectionCellsDefaultUICollectionView.h"
 
@@ -74,7 +83,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   cell.textLabel.text = _content[indexPath.item][0];
   cell.detailTextLabel.text = _content[indexPath.item][1];
   cell.backgroundColor = [UIColor whiteColor];
-  [(MDCShadowLayer *)cell.layer setElevation:3.f];
+  [(MDCShadowLayer *)cell.layer setElevation:2.f];
   return cell;
 }
 
@@ -88,13 +97,13 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  return CGSizeMake(self.collectionView.frame.size.width-32, MDCCellDefaultTwoLineHeight);
+  return CGSizeMake(self.collectionView.frame.size.width-16, MDCCellDefaultTwoLineHeight);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
                         layout:(UICollectionViewLayout *)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
-  return UIEdgeInsetsMake(10, 40, 10, 40);
+  return UIEdgeInsetsMake(8, 8, 0, 8);
 }
 
 #pragma mark - CatalogByConvention
