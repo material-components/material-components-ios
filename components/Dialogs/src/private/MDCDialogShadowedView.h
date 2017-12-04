@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
+#import "MaterialShadowLayer.h"
 #import <UIKit/UIKit.h>
 
 @interface MDCDialogShadowedView : UIView
-
 @end

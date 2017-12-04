@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 @property(nonatomic, assign) MDCInkStyle inkStyle;
 
 /** The foreground color of the ink. The default value is defaultInkColor. */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor;
+@property(nonatomic, strong, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /** Default color used for ink if no color is specified. */
 @property(nonatomic, strong, readonly, nonnull) UIColor *defaultInkColor;
@@ -62,19 +62,28 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 /**
  Maximum radius of the ink. If the radius <= 0 then half the length of the diagonal of self.bounds
  is used. This value is ignored if @c inkStyle is set to |MDCInkStyleBounded|.
+
+ Ignored if updated ink is used.
  */
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 
 /**
+ Use the older legacy version of the ink ripple. Default is YES.
+ */
+@property(nonatomic, assign) BOOL usesLegacyInkRipple;
+
+/**
  Use a custom center for the ink splash. If YES, then customInkCenter is used, otherwise the
  center of self.bounds is used. Default is NO.
+
+ Affects behavior only if usesLegacyInkRipple is enabled.
  */
 @property(nonatomic, assign) BOOL usesCustomInkCenter;
 
 /**
  Custom center for the ink splash in the view’s coordinate system.
 
- Ignored if usesCustomInkCenter is not set.
+ Affects behavior only if both usesCustomInkCenter and usesLegacyInkRipple are enabled.
  */
 @property(nonatomic, assign) CGPoint customInkCenter;
 

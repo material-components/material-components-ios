@@ -30,6 +30,8 @@
  The background is clear, the corners are rounded, there's a border, there is no underline, and
  the placeholder is centered vertically in the filled area but does NOT cross the border when
  floating.
+
+ This design defaults to 5 lines minimum and does not expand on overflow by default.
  */
 
 @interface MDCTextInputControllerOutlinedTextArea : MDCTextInputControllerDefault

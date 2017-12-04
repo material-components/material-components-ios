@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,22 +14,16 @@
  limitations under the License.
  */
 
-#import "ShadowElevationsPointsLabel.h"
+#import <Foundation/Foundation.h>
+#import <MotionTransitioning/MotionTransitioning.h>
 
-#import "MaterialShadowLayer.h"
+@interface MDCDialogTransition : NSObject <MDMTransitionWithPresentation>
 
-@implementation ShadowElevationsPointsLabel
+/**
+ Should a tap on the dimmed background view dismiss the presented controller.
 
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
-}
-
-- (void)setElevation:(MDCShadowElevation)elevation {
-  [(MDCShadowLayer *)self.layer setElevation:elevation];
-}
-
-- (MDCShadowElevation)elevation {
-  return [(MDCShadowLayer *)self.layer elevation];
-}
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 @end

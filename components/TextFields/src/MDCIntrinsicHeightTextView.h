@@ -14,28 +14,16 @@
  limitations under the License.
  */
 
-#import "MDCInkLayer.h"
+#import <UIKit/UIKit.h>
 
-@protocol MDCInkLayerRippleDelegate <NSObject>
+/**
+ This differs from UITextView in only one way: the intrinsicContentSize's height will never be
+ UIViewNoIntrinsicMetric (-1). If [super intrinsicContentSize].height == -1, return the
+ contentSize's height.
 
-@optional
+ NOTE: UITextView is a subclass of UIScrollView. That's why it has a contentSize.
+ */
 
-- (void)animationDidStop:(CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
-                finished:(BOOL)finished;
+@interface MDCIntrinsicHeightTextView : UITextView
 
-@end
-
-@interface MDCInkLayer ()  <MDCInkLayerRippleDelegate>
-@end
-
-@interface MDCInkLayerRipple : CAShapeLayer
-@end
-
-@interface MDCInkLayerForegroundRipple : MDCInkLayerRipple
-- (void)exit:(BOOL)animated;
-@end
-
-@interface MDCInkLayerBackgroundRipple : MDCInkLayerRipple
-- (void)exit:(BOOL)animated;
 @end

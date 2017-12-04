@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,26 +14,19 @@
  limitations under the License.
  */
 
-#import "MDCDialogShadowedView.h"
+#import "MDCIntrinsicHeightTextView.h"
 
-#import "MaterialShadowElevations.h"
+@implementation MDCIntrinsicHeightTextView
 
-@implementation MDCDialogShadowedView
-
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
-}
-
-- (MDCShadowLayer *)shadowLayer {
-  return (MDCShadowLayer *)self.layer;
-}
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [[self shadowLayer] setElevation:MDCShadowElevationDialog];
+/**
+ When a value in the CGSize of intrinsicContentSize is -1, it's considered undefined. For the
+ MDCMultilineTextField, we want this to always be defined so our layouts are not ambiguous.
+ */
+- (CGSize)intrinsicContentSize {
+  CGSize size = [super intrinsicContentSize];
+  if (size.height == UIViewNoIntrinsicMetric) {
+    size.height = [self contentSize].height;
   }
-  return self;
+  return size;
 }
-
 @end

@@ -36,7 +36,7 @@
     CGFloat padding = 8;
     CGFloat bigViewFrameHeight = 130;
     CGRect bigViewFrame =
-        CGRectMake(padding, padding, frame.size.width - 2 * padding, bigViewFrameHeight);
+        CGRectMake(padding, padding, CGRectGetWidth(frame) - 2 * padding, bigViewFrameHeight);
     UIView *bigView = [[UIView alloc] initWithFrame:bigViewFrame];
     bigView.backgroundColor = [UIColor whiteColor];
     [self addSubview:bigView];
@@ -54,7 +54,7 @@
     [self addSubview:pseudoButtonView];
 
     CGFloat pseudoFABViewFrameLeft =
-        padding + frame.size.width - 2 * padding - buttonViewDim + padding - fabPadding * 2;
+        padding + CGRectGetWidth(frame) - 2 * padding - buttonViewDim + padding - fabPadding * 2;
     CGRect pseudoFABViewFrame =
         CGRectMake(pseudoFABViewFrameLeft, padding + bigViewFrameHeight + padding,
                    buttonViewDim + fabPadding, buttonViewDim + fabPadding);
@@ -98,43 +98,45 @@
   self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
 
   CGRect boundedTitleLabelFrame =
-      CGRectMake(0, self.boundedShapes.frame.size.height, self.boundedShapes.frame.size.width, 24);
+      CGRectMake(0, CGRectGetHeight(self.shapes.frame), CGRectGetWidth(self.shapes.frame), 24);
   UILabel *boundedTitleLabel = [[UILabel alloc] initWithFrame:boundedTitleLabelFrame];
-  boundedTitleLabel.text = @"Bounded";
+  boundedTitleLabel.text = @"Ink";
   boundedTitleLabel.textAlignment = NSTextAlignmentCenter;
   boundedTitleLabel.font = [MDCTypography captionFont];
   boundedTitleLabel.alpha = [MDCTypography captionFontOpacity];
-  [self.boundedShapes addSubview:boundedTitleLabel];
+  [self.shapes addSubview:boundedTitleLabel];
 
-  self.unboundedShape.autoresizingMask =
+  self.legacyShape.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
-  self.unboundedShape.backgroundColor = [UIColor whiteColor];
+  self.legacyShape.backgroundColor = [UIColor whiteColor];
 
-  CGRect unboundedTitleLabelFrame = CGRectMake(0, self.unboundedShape.frame.size.height,
-                                               self.unboundedShape.frame.size.width, 36);
-  UILabel *unboundedTitleLabel = [[UILabel alloc] initWithFrame:unboundedTitleLabelFrame];
-  unboundedTitleLabel.text = @"Unbounded";
-  unboundedTitleLabel.textAlignment = NSTextAlignmentCenter;
-  unboundedTitleLabel.font = [MDCTypography captionFont];
-  unboundedTitleLabel.alpha = [MDCTypography captionFontOpacity];
-  [self.unboundedShape addSubview:unboundedTitleLabel];
+  CGRect legacyTitleLabelFrame = CGRectMake(0,
+                                            CGRectGetHeight(self.legacyShape.frame),
+                                            CGRectGetWidth(self.legacyShape.frame),
+                                            36);
+  UILabel *legacyTitleLabel = [[UILabel alloc] initWithFrame:legacyTitleLabelFrame];
+  legacyTitleLabel.text = @"Legacy Ink";
+  legacyTitleLabel.textAlignment = NSTextAlignmentCenter;
+  legacyTitleLabel.font = [MDCTypography captionFont];
+  legacyTitleLabel.alpha = [MDCTypography captionFontOpacity];
+  [self.legacyShape addSubview:legacyTitleLabel];
 }
 
 - (void)viewWillLayoutSubviews {
   CGFloat offset = 8;
   CGFloat shapeDimension = 200;
   CGFloat spacing = 16;
-  if (self.view.frame.size.height > self.view.frame.size.width) {
-    self.boundedShapes.center =
+  if (CGRectGetHeight(self.view.frame) > CGRectGetWidth(self.view.frame)) {
+    self.shapes.center =
         CGPointMake(self.view.center.x, self.view.center.y - shapeDimension - offset);
-    self.unboundedShape.center =
+    self.legacyShape.center =
         CGPointMake(self.view.center.x, self.view.center.y + spacing * 2 + offset);
   } else {
-    self.boundedShapes.center = CGPointMake(self.view.center.x - shapeDimension / 2 - spacing * 2,
-                                            self.view.center.y / 2 + spacing * 2);
-    self.unboundedShape.center = CGPointMake(self.view.center.x + shapeDimension / 2 + spacing * 2,
-                                             self.view.center.y / 2 + spacing * 2);
+    self.shapes.center = CGPointMake(self.view.center.x - shapeDimension / 2 - spacing * 2,
+                                     self.view.center.y / 2 + spacing * 2);
+    self.legacyShape.center = CGPointMake(self.view.center.x + shapeDimension / 2 + spacing * 2,
+                                          self.view.center.y / 2 + spacing * 2);
   }
 }
 

@@ -80,10 +80,10 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
                                                               target:self
                                                               action:@selector(doneAction:)];
 
-  UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"UINavigationBar"];
-  [navItem setLeftBarButtonItem:backItem animated:YES];
-  [navItem setRightBarButtonItem:doneItem animated:YES];
-  [navBar setItems:[NSArray arrayWithObject:navItem] animated:YES];
+
+  [self.navigationItem setLeftBarButtonItem:backItem animated:YES];
+  [self.navigationItem setRightBarButtonItem:doneItem animated:YES];
+  [navBar setItems:@[self.navigationItem] animated:YES];
 
   self.button = [[UIButton alloc] init];
   [self.button setTitle:@"UIButton" forState:UIControlStateNormal];
@@ -97,7 +97,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 }
 
 - (void)didTapButton:(id)sender {
-  NSLog(@"Button Tapped");
+  NSLog(@"Button Tapped: %@", sender);
 }
 
 - (void)doneAction:(id)sender {
