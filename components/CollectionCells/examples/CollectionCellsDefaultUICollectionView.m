@@ -73,6 +73,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                                             forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.item][0];
   cell.detailTextLabel.text = _content[indexPath.item][1];
+  [(MDCShadowLayer *)cell.layer setElevation:1.f];
   return cell;
 }
 

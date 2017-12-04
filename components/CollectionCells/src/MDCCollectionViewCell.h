@@ -15,7 +15,7 @@
  */
 
 #import "MaterialInk.h"
-
+#import "MaterialShadowLayer.h"
 #import <UIKit/UIKit.h>
 
 /** The available cell accessory view types. Based on UITableViewCellAccessoryType. */

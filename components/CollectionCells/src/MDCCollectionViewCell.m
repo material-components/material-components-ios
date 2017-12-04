@@ -279,6 +279,10 @@ NSString *const kDeselectedCellAccessibilityHintKey =
   return CGRectMake(originX, originY, size.width, size.height);
 }
 
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
 - (MDCInkView *)inkView {
   if (!_inkView) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
