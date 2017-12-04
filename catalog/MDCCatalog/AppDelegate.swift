@@ -93,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor
     UISwitch.appearance().onTintColor = colorScheme?.primaryColor
+
     return true
   }
 }
