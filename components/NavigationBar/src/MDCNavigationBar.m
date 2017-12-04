@@ -16,10 +16,15 @@
 
 #import "MDCNavigationBar.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#import "MDFTextAccessibility.h"
+#else
 #import <MDFInternationalization/MDFInternationalization.h>
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
+#endif  // IS_BAZEL_BUILD
 #import <objc/runtime.h>
 
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MaterialButtonBar.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"

@@ -16,7 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
+#ifdef IS_BAZEL_BUILD
+#import "MotionTransitioning.h"
+#else
 #import <MotionTransitioning/MotionTransitioning.h>
+#endif  // IS_BAZEL_BUILD
 
 /**
  A masked transition will animate between two view controllers using an expanding mask effect.

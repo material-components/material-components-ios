@@ -18,8 +18,14 @@
 
 #import "MDCAppBarContainerViewController.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#import "MDFTextAccessibility.h"
+#else
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
+#endif  // IS_BAZEL_BUILD
+
 #import "MaterialApplication.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialIcons+ic_arrow_back.h"

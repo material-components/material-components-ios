@@ -19,7 +19,11 @@
 #import "MDCDialogPresentationController.h"
 #import "private/MDCDialogTransitionMotionSpec.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MotionAnimator.h"
+#else
 #import <MotionAnimator/MotionAnimator.h>
+#endif  // IS_BAZEL_BUILD
 
 @interface MDCDialogTransition() <MDMTransitionWithCustomDuration, MDMTransitionWithPresentation>
 @end
