@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 
  The default value is 8.
  */
-@property(nonatomic, assign) CGFloat imageTitleSpacing UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) CGFloat imageTitleSpace UI_APPEARANCE_SELECTOR;
 
 /**
  Returns a MDCFloatingButton with default colors and the given @c shape.
