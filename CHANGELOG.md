@@ -1,3 +1,133 @@
+# 41.0.0
+
+## API changes
+
+### Dialogs
+
+**new** class: `MDCDialogTransition`.
+
+### Ink
+
+**breaking** **changed** property signature: `MDCInkView`'s `inkColor` from `null_resettable` to `nonnull`.
+
+**new** property: `usesLegacyInkRipple`.
+
+### Snackbar
+
+**breaking** `MDCSnackbarMessage`'s public APIs have all been annotated with nullability annotations.
+
+### TextFields
+
+**new** class: `MDCIntrinsicHeightTextView`.
+
+**changed** property signature: `MDCMultilineTextField`'s textView changed from `UITextView` to `MDCIntrinsicHeightTextView`.
+
+## Component changes
+
+### BottomAppBar
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### Buttons
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### Dialogs
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+* [Migrate to Material Motion. (#2481)](https://github.com/material-components/material-components-ios/commit/211ca772ea0456b56e522c0c67bd44312ddfe4d1) (featherless)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Minor fix of comment block notation. (#2503)](https://github.com/material-components/material-components-ios/commit/52f0c766b00d9020a2f249a99c2cbfbe0ec29880) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### Ink
+
+#### Changes
+
+* [Retrofit new ink layer with updated animation into existing ink API (#2488)](https://github.com/material-components/material-components-ios/commit/a27d49408a10282e4340436e13dc1ecbe57612d2) (Junius Gunaratne)
+
+### MaskedTransition
+
+#### Changes
+
+* [Bump the transitioning dependency to v5.0.0 (#2525)](https://github.com/material-components/material-components-ios/commit/38323773823742d130fd66bb076fc406d6da8678) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### ProgressView
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### ShadowElevations
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+* [[Shadow*] Add BUILD files for shadow components. (#2510)](https://github.com/material-components/material-components-ios/commit/d24789f484d50ff8437b9b1fdcb4c6ae0577fcff) (featherless)
+
+### ShadowLayer
+
+#### Changes
+
+* [Add support for implicitly animating the shadow layer's elevation using MotionAnimator. (#2509)](https://github.com/material-components/material-components-ios/commit/e38ac60ffd4b9f377249986180ee650c020f7cb4) (featherless)
+* [[Shadow*] Add BUILD files for shadow components. (#2510)](https://github.com/material-components/material-components-ios/commit/d24789f484d50ff8437b9b1fdcb4c6ae0577fcff) (featherless)
+
+### Slider
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### Snackbar
+
+#### Changes
+
+* [Add nullability annotations to types defined in MDCSnackbarMessage.h (#2445)](https://github.com/material-components/material-components-ios/commit/e8e3c8cd8087a5aadf5ca001ade4d6516a025403) (Benjamin Deming)
+
+### Tabs
+
+#### Changes
+
+* [Add missing import (#2534)](https://github.com/material-components/material-components-ios/commit/b6c054383ade56653bf91835b72361b0e2d49b8f) (featherless)
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### TextFields
+
+#### Changes
+
+* [Adding legacy storyboard. (#2517)](https://github.com/material-components/material-components-ios/commit/47ed556783e804fccfb0e6c53a80d1fa91847b68) (Will Larche)
+* [Correcting class of the textview to match the new class required for MDCMultilineTextField. (#2519)](https://github.com/material-components/material-components-ios/commit/0496c225496d2c52cc131835e245de1da8dfd2b4) (Will Larche)
+* [Fixes bug: multiline having ambiguous height in the text view (#2489)](https://github.com/material-components/material-components-ios/commit/35727c12495a18357c483b5d1ddacf978d315854) (Will Larche)
+* [TrailingView tests. (#2516)](https://github.com/material-components/material-components-ios/commit/7937f1b5c966bbe839d90629d6081e3e6ca39255) (Will Larche)
+* [Updating encoding and copying. (#2515)](https://github.com/material-components/material-components-ios/commit/6f48a43b53d7ad0101c05ea57dd07b3107ea020f) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
 # 40.1.1
 
 ## Component changes
