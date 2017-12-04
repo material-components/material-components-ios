@@ -38,8 +38,10 @@ static const CGFloat MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDe
 static const CGFloat MDCTextInputControllerBaseDefaultHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputControllerBaseDefaultPadding = 8.f;
 
-static const NSTimeInterval MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
-static const NSTimeInterval MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration = 0.3f;
+static const NSTimeInterval
+    MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
+static const NSTimeInterval
+    MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration = 0.3f;
 
 static NSString *const MDCTextInputControllerBaseActiveColorKey =
     @"MDCTextInputControllerBaseActiveColorKey";
@@ -97,7 +99,6 @@ static NSString *const MDCTextInputControllerBaseUnderlineHeightNormalKey =
     @"MDCTextInputControllerBaseUnderlineHeightNormalKey";
 static NSString *const MDCTextInputControllerBaseUnderlineViewModeKey =
     @"MDCTextInputControllerBaseUnderlineViewModeKey";
-
 
 static inline UIColor *MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerBaseDefaultHintTextOpacity];
@@ -199,7 +200,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (self) {
     if ([self isMemberOfClass:[MDCTextInputControllerBase class]]) {
       NSLog(@"NOTE: MDCTextInputControllerBase is a base class meant to be subclassed.\nFor more"
-            "information, see the README.md file");
+             "information, see the README.md file");
     }
     [self commonMDCTextInputControllerBaseInitialization];
   }
@@ -211,10 +212,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self = [super init];
   if (self) {
     _activeColor = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseActiveColorKey];
-    _borderFillColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerBaseBorderFillColorKey];
-    _characterCounter =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerBaseCharacterCounterKey];
+    _borderFillColor = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseBorderFillColorKey];
+    _characterCounter = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseCharacterCounterKey];
     _characterCountMax =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountMaxKey];
     _characterCountViewMode =
@@ -223,8 +222,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         (UIRectCorner)[aDecoder decodeIntegerForKey:MDCTextInputControllerBaseRoundedCorners];
     _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseDisabledColorKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseErrorColorKey];
-    _expandsOnOverflow =
-        [aDecoder decodeBoolForKey:MDCTextInputControllerBaseExpandsOnOverflowKey];
+    _expandsOnOverflow = [aDecoder decodeBoolForKey:MDCTextInputControllerBaseExpandsOnOverflowKey];
     _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerBaseFloatingEnabledKey];
     _floatingPlaceholderNormalColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerBaseFloatingPlaceholderNormalColorKey];
@@ -291,8 +289,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerBaseErrorAccessibilityValueKey];
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerBaseErrorColorKey];
   [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerBaseErrorTextKey];
-  [aCoder encodeBool:self.expandsOnOverflow
-              forKey:MDCTextInputControllerBaseExpandsOnOverflowKey];
+  [aCoder encodeBool:self.expandsOnOverflow forKey:MDCTextInputControllerBaseExpandsOnOverflowKey];
   [aCoder encodeBool:self.isFloatingEnabled forKey:MDCTextInputControllerBaseFloatingEnabledKey];
   [aCoder encodeObject:self.floatingPlaceholderNormalColor
                 forKey:MDCTextInputControllerBaseFloatingPlaceholderNormalColorKey];
@@ -310,8 +307,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [aCoder encodeInteger:self.minimumLines forKey:MDCTextInputControllerBaseMinimumLinesKey];
   [aCoder encodeObject:self.normalColor forKey:MDCTextInputControllerBaseNormalColorKey];
   if ([self.textInput conformsToProtocol:@protocol(NSCoding)]) {
-    [aCoder encodeConditionalObject:self.textInput
-                             forKey:MDCTextInputControllerBaseTextInputKey];
+    [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerBaseTextInputKey];
   }
   [aCoder encodeObject:self.trailingUnderlineLabelFont
                 forKey:MDCTextInputControllerBaseTrailingUnderlineLabelFontKey];
@@ -319,7 +315,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerBaseTrailingUnderlineLabelTextColor];
   [aCoder encodeFloat:(float)self.underlineHeightActive
                forKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
-  [aCoder encodeFloat:(float)self.underlineHeightNormal forKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
+  [aCoder encodeFloat:(float)self.underlineHeightNormal
+               forKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
   [aCoder encodeInteger:self.underlineViewMode
                  forKey:MDCTextInputControllerBaseUnderlineViewModeKey];
 }
@@ -467,10 +464,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (UIBezierPath *)defaultBorderPath {
   CGRect borderBound = self.textInput.bounds;
   borderBound.size.height = CGRectGetMaxY(self.textInput.underline.frame);
-  return [UIBezierPath bezierPathWithRoundedRect:borderBound
-                               byRoundingCorners:self.roundedCorners
-                                     cornerRadii:CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
-                                                            MDCTextInputControllerBaseDefaultBorderRadius)];
+  return [UIBezierPath
+      bezierPathWithRoundedRect:borderBound
+              byRoundingCorners:self.roundedCorners
+                    cornerRadii:CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
+                                           MDCTextInputControllerBaseDefaultBorderRadius)];
 }
 
 #pragma mark - Character Max Implementation
@@ -520,14 +518,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   UIColor *placeholderColor;
   if ([self isPlaceholderUp]) {
-    UIColor *nonErrorColor = self.textInput.isEditing ? self.activeColor :
-        self.floatingPlaceholderNormalColor;
-    placeholderColor =
-        (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
-            ? self.errorColor : nonErrorColor;
+    UIColor *nonErrorColor =
+        self.textInput.isEditing ? self.activeColor : self.floatingPlaceholderNormalColor;
+    placeholderColor = (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
+                           ? self.errorColor
+                           : nonErrorColor;
   } else {
-    placeholderColor = self.textInput.isEditing ? self.activeColor :
-        self.inlinePlaceholderColor;
+    placeholderColor = self.textInput.isEditing ? self.activeColor : self.inlinePlaceholderColor;
   }
   self.textInput.placeholderLabel.textColor = placeholderColor;
 }
@@ -573,8 +570,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (BOOL)isPlaceholderUp {
   return self.placeholderAnimationConstraints.count > 0 &&
-      !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
-                                         CGAffineTransformIdentity);
+         !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
+                                            CGAffineTransformIdentity);
 }
 
 // Sometimes we set up the animation constraints for floating up before we have a width for the text
@@ -590,8 +587,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     // See MDCTextInputController.h.
     UIEdgeInsets insets = self.textInput.textInsets;
 
-    CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
-                                                                                   offset:offset];
+    CGFloat leadingConstant =
+        [self floatingPlaceholderAnimationConstraintLeadingConstant:insets offset:offset];
     if (!self.placeholderAnimationConstraintLeading) {
       self.placeholderAnimationConstraintLeading =
           [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -616,8 +613,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     }
     self.placeholderAnimationConstraintTop.constant = offset.vertical;
 
-    CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
-                                                                                     offset:offset];
+    CGFloat trailingConstant =
+        [self floatingPlaceholderAnimationConstraintTrailingConstant:insets offset:offset];
     if (!self.placeholderAnimationConstraintTrailing) {
       self.placeholderAnimationConstraintTrailing =
           [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -655,13 +652,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   UIOffset offset = [self floatingPlaceholderOffset];
 
-  CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
-                                                                                 offset:offset];
-  CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
-                                                                                   offset:offset];
+  CGFloat leadingConstant =
+      [self floatingPlaceholderAnimationConstraintLeadingConstant:insets offset:offset];
+  CGFloat trailingConstant =
+      [self floatingPlaceholderAnimationConstraintTrailingConstant:insets offset:offset];
 
   return self.placeholderAnimationConstraintLeading.constant != leadingConstant &&
-      self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
+         self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
 }
 
 // When placeholder is not up, it just uses the layout code that comes for free from the text field
@@ -741,7 +738,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 // Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
 // See MDCTextInputController.h.
 - (CGFloat)floatingPlaceholderAnimationConstraintTrailingConstant:(UIEdgeInsets)textInsets
-                                                          offset:(UIOffset)offset {
+                                                           offset:(UIOffset)offset {
   CGFloat constant = offset.horizontal - textInsets.right;
   return constant;
 }
@@ -798,13 +795,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       break;
     case UITextFieldViewModeWhileEditing:
       underlineColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
-      underlineHeight = self.textInput.isEditing ? self.underlineHeightActive
-                                                 : self.underlineHeightNormal;
+      underlineHeight =
+          self.textInput.isEditing ? self.underlineHeightActive : self.underlineHeightNormal;
       break;
     case UITextFieldViewModeUnlessEditing:
       underlineColor = !self.textInput.isEditing ? self.activeColor : self.normalColor;
-      underlineHeight = !self.textInput.isEditing ? self.underlineHeightActive
-                                                  : self.underlineHeightNormal;
+      underlineHeight =
+          !self.textInput.isEditing ? self.underlineHeightActive : self.underlineHeightNormal;
       break;
     case UITextFieldViewModeNever:
     default:
@@ -851,8 +848,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setActiveColorDefault:(UIColor *)activeColorDefault {
-  _activeColorDefault =
-      activeColorDefault ? activeColorDefault : MDCTextInputControllerBaseDefaultActiveColorDefault();
+  _activeColorDefault = activeColorDefault ? activeColorDefault
+                                           : MDCTextInputControllerBaseDefaultActiveColorDefault();
 }
 
 - (UIColor *)borderFillColor {
@@ -897,8 +894,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setDisabledColor:(UIColor *)disabledColor {
   if (_disabledColor != disabledColor) {
-    _disabledColor =
-        disabledColor ? disabledColor : MDCTextInputControllerBaseDefaultNormalUnderlineColorDefault();
+    _disabledColor = disabledColor ? disabledColor
+                                   : MDCTextInputControllerBaseDefaultNormalUnderlineColorDefault();
     [self updateLayout];
   }
 }
@@ -911,8 +908,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setDisabledColorDefault:(UIColor *)disabledColorDefault {
-  _disabledColorDefault = disabledColorDefault ? disabledColorDefault
-                                               : MDCTextInputControllerBaseDefaultNormalUnderlineColorDefault();
+  _disabledColorDefault = disabledColorDefault
+                              ? disabledColorDefault
+                              : MDCTextInputControllerBaseDefaultNormalUnderlineColorDefault();
 }
 
 // This is when the character count text is red because the inputted text has more characters than
@@ -956,8 +954,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setErrorColorDefault:(UIColor *)errorColorDefault {
-  _errorColorDefault =
-      errorColorDefault ? errorColorDefault : MDCTextInputControllerBaseDefaultTextErrorColorDefault();
+  _errorColorDefault = errorColorDefault ? errorColorDefault
+                                         : MDCTextInputControllerBaseDefaultTextErrorColorDefault();
 }
 
 - (void)setErrorText:(NSString *)errorText {
@@ -976,7 +974,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIColor *)floatingPlaceholderNormalColor {
   return _floatingPlaceholderNormalColor ? _floatingPlaceholderNormalColor
-                                   : [self class].floatingPlaceholderNormalColorDefault;
+                                         : [self class].floatingPlaceholderNormalColorDefault;
 }
 
 - (void)setFloatingPlaceholderNormalColor:(UIColor *)floatingPlaceholderNormalColor {
@@ -995,8 +993,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (void)setFloatingPlaceholderNormalColorDefault:(UIColor *)floatingPlaceholderNormalColorDefault {
   _floatingPlaceholderNormalColorDefault = floatingPlaceholderNormalColorDefault
-                                         ? floatingPlaceholderNormalColorDefault
-                                         : [self class].inlinePlaceholderColorDefault;
+                                               ? floatingPlaceholderNormalColorDefault
+                                               : [self class].inlinePlaceholderColorDefault;
 }
 
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
@@ -1075,15 +1073,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIColor *)inlinePlaceholderColorDefault {
   if (!_inlinePlaceholderColorDefault) {
-    _inlinePlaceholderColorDefault = MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault();
+    _inlinePlaceholderColorDefault =
+        MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault();
   }
   return _inlinePlaceholderColorDefault;
 }
 
 + (void)setInlinePlaceholderColorDefault:(UIColor *)inlinePlaceholderColorDefault {
-  _inlinePlaceholderColorDefault = inlinePlaceholderColorDefault
-                                       ? inlinePlaceholderColorDefault
-                                       : MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault();
+  _inlinePlaceholderColorDefault =
+      inlinePlaceholderColorDefault
+          ? inlinePlaceholderColorDefault
+          : MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault();
 }
 
 - (UIFont *)inlinePlaceholderFont {
@@ -1141,7 +1141,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIColor *)leadingUnderlineLabelTextColorDefault {
   if (!_leadingUnderlineLabelTextColorDefault) {
-    _leadingUnderlineLabelTextColorDefault = MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault();
+    _leadingUnderlineLabelTextColorDefault =
+        MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault();
   }
   return _leadingUnderlineLabelTextColorDefault;
 }
@@ -1182,8 +1183,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setNormalColorDefault:(UIColor *)normalColorDefault {
-  _normalColorDefault =
-      normalColorDefault ? normalColorDefault : MDCTextInputControllerBaseDefaultNormalUnderlineColorDefault();
+  _normalColorDefault = normalColorDefault
+                            ? normalColorDefault
+                            : MDCTextInputControllerBaseDefaultNormalUnderlineColorDefault();
 }
 
 - (NSString *)placeholderText {
@@ -1191,7 +1193,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)setPlaceholderText:(NSString *)placeholderText {
-  if ([_textInput.placeholder isEqualToString: placeholderText]) {
+  if ([_textInput.placeholder isEqualToString:placeholderText]) {
     return;
   }
   _textInput.placeholder = [placeholderText copy];
@@ -1395,7 +1397,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGFloat underlineOffset = 0;
   switch (self.textInput.textInsetsMode) {
     case MDCTextInputTextInsetsModeAlways:
-      underlineOffset += MAX(leadingOffset, trailingOffset) + MDCTextInputControllerBaseDefaultPadding;
+      underlineOffset +=
+          MAX(leadingOffset, trailingOffset) + MDCTextInputControllerBaseDefaultPadding;
       break;
     case MDCTextInputTextInsetsModeIfContent: {
       // contentConditionalOffset will have the estimated text height for the largest underline
@@ -1441,7 +1444,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)textInputDidBeginEditing:(__unused NSNotification *)note {
   [CATransaction begin];
-  [CATransaction setAnimationDuration:MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration];
+  [CATransaction
+      setAnimationDuration:MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration];
   [CATransaction
       setAnimationTimingFunction:[CAMediaTimingFunction
                                      mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
@@ -1494,7 +1498,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)textInputDidEndEditing:(__unused NSNotification *)note {
   [CATransaction begin];
-  [CATransaction setAnimationDuration:MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration];
+  [CATransaction setAnimationDuration:
+                     MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration];
   [CATransaction
       setAnimationTimingFunction:[CAMediaTimingFunction
                                      mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
