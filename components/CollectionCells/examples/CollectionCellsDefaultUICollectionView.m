@@ -40,7 +40,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [super viewDidLoad];
     
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
-  self.collectionView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+  self.collectionView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
