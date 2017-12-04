@@ -21,44 +21,25 @@ load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "Ink",
+    name = "ShadowElevations",
     sdk_frameworks = [
         "QuartzCore",
         "UIKit",
-    ],
-    deps = [
-      "//components/private/Math",
-    ],
-)
-
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    deps = [":Ink"],
-    includes = ["src/private"],
-    visibility = [":test_targets"],
-)
-
-package_group(
-    name = "test_targets",
-    packages = [
-        "//components/Ink/...",
     ],
 )
 
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
+    srcs = glob([
+        "tests/unit/*.m",
+        "tests/unit/*.h"
+    ]),
     sdk_frameworks = [
         "UIKit",
         "XCTest",
     ],
-    deps = [
-        ":Ink",
-        ":private"
-    ],
+    deps = [":ShadowElevations"],
     visibility = ["//visibility:private"],
 )
 

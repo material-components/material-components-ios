@@ -154,7 +154,7 @@
   [super viewDidLayoutSubviews];
 }
 
-#pragma - MDCFlexibleHeaderViewLayoutDelegate
+#pragma mark - MDCFlexibleHeaderViewLayoutDelegate
 
 - (void)flexibleHeaderViewController:(MDCFlexibleHeaderViewController *)flexibleHeaderViewController
     flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)flexibleHeaderView {

@@ -17,86 +17,98 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+@protocol MDCInkLayerDelegate;
+
 /**
  A Core Animation layer that draws and animates the ink effect.
 
  Quick summary of how the ink ripple works:
 
- 1. On touch down, blast initiates from the touch point.
- 2. On touch down hold, it continues to spread, but will gravitate to the center point
+ 1. On touch down, ink spreads from the touch point.
+ 2. On touch down hold, ink continues to spread, but will gravitate to the center point
     of the view.
- 3. On touch up, the ink ripple will lose energy, opacity will start to decrease.
+ 3. On touch up, the ink ripple opacity will start to decrease.
  */
-@interface MDCInkLayer : CALayer
+@interface MDCInkLayer : CAShapeLayer
 
-/** Clips the ripple to the bounds of the layer. */
-@property(nonatomic, assign, getter=isBounded) BOOL bounded;
+/**
+ Ink layer animation delegate. Clients set this delegate to receive updates when ink layer
+ animations start and end.
+ */
+@property(nonatomic, weak, nullable) id<MDCInkLayerDelegate> animationDelegate;
 
-/** Maximum radius of the ink. No maximum if radius is 0 or less. This value is ignored if
- @c bounded is set to |YES|.*/
+/**
+ The start ink ripple spread animation has started and is active.
+ */
+@property(nonatomic, assign, readonly, getter=isStartAnimationActive) BOOL startAnimationActive;
+
+/**
+ Delay time in milliseconds before the end ink ripple spread animation begins.
+ */
+@property(nonatomic, assign) CGFloat endAnimationDelay;
+
+/**
+ The radius the ink ripple grows to when ink ripple ends.
+
+ Default value is half the diagonal of the containing frame plus 10pt.
+ */
+@property(nonatomic, assign) CGFloat finalRadius;
+
+/**
+ The radius the ink ripple starts to grow from when the ink ripple begins.
+
+ Default value is half the diagonal of the containing frame multiplied by 0.6.
+ */
+@property(nonatomic, assign) CGFloat initialRadius;
+
+/**
+ Maximum radius of the ink. If this is not set then the final radius value is used.
+ */
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 
-/** Set the foreground color of the ink. */
-@property(nonatomic, strong) UIColor *inkColor;
-
-/** Spread duration. */
-@property(nonatomic, readonly, assign) NSTimeInterval spreadDuration;
-
-/** Evaporate duration */
-@property(nonatomic, readonly, assign) NSTimeInterval evaporateDuration;
+/**
+ The color of the ink ripple.
+ */
+@property(nonatomic, strong, nonnull) UIColor *inkColor;
 
 /**
- Set to YES if the ink layer should be using a custom center.
+ Starts the ink ripple animation at a specified point.
  */
-@property(nonatomic, assign) BOOL useCustomInkCenter;
+- (void)startAnimationAtPoint:(CGPoint)point;
 
 /**
- Center point which ink gravitates towards.
-
- Ignored if useCustomInkCenter is not set.
+ Changes the opacity of the ink ripple depending on if touch point is contained within or
+ outside of the ink layer.
  */
-@property(nonatomic, assign) CGPoint customInkCenter;
+- (void)changeAnimationAtPoint:(CGPoint)point;
 
 /**
- Whether linear expansion should be used for the ink, rather than a Quantum curve. Useful for
- ink which needs to fill the bounds of its view completely and leave those bounds at full speed.
+ Ends the ink ripple animation.
  */
-@property(nonatomic, assign) BOOL userLinearExpansion;
+- (void)endAnimationAtPoint:(CGPoint)point;
+
+@end
 
 /**
- Reset any ink applied to the layer.
-
- @param animated Enables the ink ripple fade out animation.
+ Delegate protocol for the MDCInkLayer. Clients may implement this protocol to receive updates when
+ ink layer animations start and end.
  */
-- (void)resetAllInk:(BOOL)animated;
+@protocol MDCInkLayerDelegate <CALayerDelegate>
+
+@optional
 
 /**
- Spreads the ink over the whole view.
+ Called when the ink ripple animation begins.
 
- Can be called multiple times which will result in multiple ink ripples.
-
- @param completionBlock Block called after the completion of the animation.
- @param point Point at which the ink spreads from.
+ @param inkLayer The MDCInkLayer that starts animating.
  */
-- (void)spreadFromPoint:(CGPoint)point completion:(void (^)(void))completionBlock;
+- (void)inkLayerAnimationDidStart:(nonnull MDCInkLayer *)inkLayer;
 
 /**
- Dissipate ink blast, should be called on touch up.
+ Called when the ink ripple animation ends.
 
- If there are multiple ripples at once, the oldest ripple will be evaporated.
-
- @param completionBlock Block called after the completion of the evaporation.
+ @param inkLayer The MDCInkLayer that ends animating.
  */
-- (void)evaporateWithCompletion:(void (^)(void))completionBlock;
-
-/**
- Dissipates the ink blast, but condenses to a point. Used for touch exit or cancel.
-
- If there are mulitple ripples, the oldest ripple will be evaporated.
-
- @param point Evaporate the ink towards the point.
- @param completionBlock Block called after the completion of the evaporation.
- */
-- (void)evaporateToPoint:(CGPoint)point completion:(void (^)(void))completionBlock;
+- (void)inkLayerAnimationDidEnd:(nonnull MDCInkLayer *)inkLayer;
 
 @end

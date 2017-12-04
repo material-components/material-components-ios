@@ -199,8 +199,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
   if (self) {
-    [self commonMDCTextInputControllerDefaultInitialization];
-
     _activeColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultActiveColorKey];
     _borderFillColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultBorderFillColorKey];
@@ -231,13 +229,20 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor];
     _minimumLines = [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultMinimumLinesKey];
     _normalColor = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultNormalColorKey];
-    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTextInputKey];
+    if ([aDecoder containsValueForKey:MDCTextInputControllerDefaultTextInputKey]) {
+      _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTextInputKey];
+    }
     _trailingUnderlineLabelFont =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTrailingUnderlineLabelFontKey];
     _trailingUnderlineLabelTextColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerDefaultTrailingUnderlineLabelTextColor];
     _underlineViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCTextInputControllerDefaultUnderlineViewModeKey];
+
+    [self commonMDCTextInputControllerDefaultInitialization];
+
+    // This should happen last because it relies on the state of a ton of properties.
+    [self setupInput];
   }
   return self;
 }
@@ -289,7 +294,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerDefaultLeadingUnderlineLabelTextColor];
   [aCoder encodeInteger:self.minimumLines forKey:MDCTextInputControllerDefaultMinimumLinesKey];
   [aCoder encodeObject:self.normalColor forKey:MDCTextInputControllerDefaultNormalColorKey];
-  [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerDefaultTextInputKey];
+  if ([self.textInput conformsToProtocol:@protocol(NSCoding)]) {
+    [aCoder encodeConditionalObject:self.textInput
+                             forKey:MDCTextInputControllerDefaultTextInputKey];
+  }
   [aCoder encodeObject:self.trailingUnderlineLabelFont
                 forKey:MDCTextInputControllerDefaultTrailingUnderlineLabelFontKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor

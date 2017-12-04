@@ -75,9 +75,11 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   if (self) {
     NSString *interfaceBuilderPlaceholder = super.placeholder;
 
-    MDCTextInputCommonFundament *fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey];
-    _fundament =
-        fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+    if ([aDecoder containsValueForKey:MDCTextFieldFundamentKey]) {
+      _fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey];
+    } else {
+      _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+    }
 
     [self commonMDCTextFieldInitialization];
     _cursorColor = [aDecoder decodeObjectForKey:MDCTextFieldCursorColorKey];;

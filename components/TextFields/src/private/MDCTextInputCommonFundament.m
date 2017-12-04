@@ -54,8 +54,6 @@ static NSString *const MDCTextInputFundamentTextInsetsModeKey =
     @"MDCTextInputFundamentTextInsetsModeKey";
 static NSString *const MDCTextInputFundamentTrailingLabelKey =
     @"MDCTextInputFundamentTrailingLabelKey";
-static NSString *const MDCTextInputFundamentTrailingViewKey =
-    @"MDCTextInputFundamentTrailingViewKey";
 static NSString *const MDCTextInputFundamentUnderlineViewKey =
     @"MDCTextInputFundamentUnderlineViewKey";
 
@@ -122,7 +120,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize positioningDelegate = _positioningDelegate;
 @synthesize textColor = _textColor;
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
-@synthesize trailingViewMode = _trailingViewMode;
 @synthesize underline = _underline;
 @synthesize textInsetsMode = _textInsetsMode;
 
@@ -144,9 +141,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
     // Initialize elements of UI
     [self setupPlaceholderLabel];
-    [self setupUnderlineView];
+
+    // setupClearButton must come after setupPlaceholderLabel because it will setup constraints that
+    // depend on the placeholderLabel
     [self setupClearButton];
     [self setupUnderlineLabels];
+    [self setupUnderlineView];
 
     [self updateTextColor];
     [self mdc_setAdjustsFontForContentSizeCategory:NO];
@@ -170,8 +170,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCTextInputFundamentMDCAdjustsFontsKey];
     _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentPlaceholderLabelKey];
-    _positioningDelegate =
-        [aDecoder decodeObjectForKey:MDCTextInputFundamentPositioningDelegateKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextInputKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
     if ([aDecoder containsValueForKey:MDCTextInputFundamentTextInsetsModeKey]) {
@@ -179,12 +177,23 @@ static inline UIColor *MDCTextInputUnderlineColor() {
           [aDecoder decodeIntegerForKey:MDCTextInputFundamentTextInsetsModeKey];
     }
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
-    _trailingViewMode =
-        (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputFundamentTrailingViewKey];
     _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
 
     [self setupBorder];
+    [self setupPlaceholderLabel];
+
+    // setupClearButton must come after setupPlaceholderLabel because it will setup constraints that
+    // depend on the placeholderLabel
+    [self setupClearButton];
+    [self setupUnderlineLabels];
+    [self setupUnderlineView];
+
     [self subscribeForKVO];
+
+    // This is done last because it's an external object that may also depend on us. So, we want to
+    // be completely ready before we recreate it.
+    _positioningDelegate =
+      [aDecoder decodeObjectForKey:MDCTextInputFundamentPositioningDelegateKey];
   }
   return self;
 }
@@ -198,12 +207,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory
               forKey:MDCTextInputFundamentMDCAdjustsFontsKey];
   [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputFundamentPlaceholderLabelKey];
-  [aCoder encodeObject:self.positioningDelegate forKey:MDCTextInputFundamentPositioningDelegateKey];
+  [aCoder encodeConditionalObject:self.positioningDelegate forKey:MDCTextInputFundamentPositioningDelegateKey];
   [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputFundamentTextInputKey];
   [aCoder encodeObject:self.textColor forKey:MDCTextInputFundamentTextColorKey];
   [aCoder encodeInteger:self.textInsetsMode forKey:MDCTextInputFundamentTextInsetsModeKey];
   [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputFundamentTrailingLabelKey];
-  [aCoder encodeInteger:self.trailingViewMode forKey:MDCTextInputFundamentTrailingViewKey];
   [aCoder encodeObject:self.underline forKey:MDCTextInputFundamentUnderlineViewKey];
 }
 
@@ -223,7 +231,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   copy.text = [self.text copy];
   copy.textColor = self.textColor;
   copy.textInsetsMode = self.textInsetsMode;
-  copy.trailingViewMode = self.trailingViewMode;
   copy.underline.lineHeight = self.underline.lineHeight;
   copy.underline.color = self.underline.color;
 
@@ -242,7 +249,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setupClearButton {
-  _clearButton = [[UIButton alloc] initWithFrame:CGRectZero];
+  if (!_clearButton) {
+    _clearButton = [[UIButton alloc] initWithFrame:CGRectZero];
+  }
   _clearButton.translatesAutoresizingMaskIntoConstraints = NO;
   [_clearButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
                                                 forAxis:UILayoutConstraintAxisHorizontal];
@@ -313,7 +322,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   [NSLayoutConstraint activateConstraints:@[
     height, self.clearButtonWidth, self.clearButtonCenterY, self.placeholderLeading,
-    self.clearButtonTrailing
+      self.clearButtonTrailing
   ]];
 
   [_clearButton addTarget:self
@@ -322,7 +331,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setupPlaceholderLabel {
-  _placeholderLabel = [[MDCPaddedLabel alloc] initWithFrame:CGRectZero];
+  if (!_placeholderLabel) {
+    _placeholderLabel = [[MDCPaddedLabel alloc] initWithFrame:CGRectZero];
+  }
   _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 2
                                                      forAxis:UILayoutConstraintAxisHorizontal];
@@ -346,24 +357,26 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setupUnderlineLabels {
-  _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  if (!_leadingUnderlineLabel) {
+    _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _leadingUnderlineLabel.textColor = MDCTextInputDefaultPlaceholderTextColor();
+    _leadingUnderlineLabel.font = _textInput.font;
+    _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
 
-  _leadingUnderlineLabel.textColor = MDCTextInputDefaultPlaceholderTextColor();
-  _leadingUnderlineLabel.font = _textInput.font;
-  _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
+    [_leadingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  }
+
+  if (!_trailingUnderlineLabel) {
+    _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _trailingUnderlineLabel.textColor = [UIColor grayColor];
+    _trailingUnderlineLabel.font = _textInput.font;
+    [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  }
 
   _leadingUnderlineLabel.opaque = NO;
-
-  [_leadingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_leadingUnderlineLabel];
 
-  _trailingUnderlineLabel.textColor = [UIColor grayColor];
-  _trailingUnderlineLabel.font = _textInput.font;
-
   _trailingUnderlineLabel.opaque = NO;
-
-  [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_trailingUnderlineLabel];
 
   _leadingUnderlineLeading = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
@@ -430,8 +443,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setupUnderlineView {
-  _underline =
+  if (!_underline) {
+    _underline =
       [[MDCTextInputUnderlineView alloc] initWithFrame:CGRectZero];
+  }
   _underline.color = MDCTextInputUnderlineColor();
   _underline.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -822,6 +837,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setTrailingView:(UIView *)trailingView {
   self.textInput.trailingView = trailingView;
+}
+
+- (UITextFieldViewMode)trailingViewMode {
+  return self.textInput.trailingViewMode;
+}
+
+- (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
+  self.textInput.trailingViewMode = trailingViewMode;
 }
 
 #pragma mark - Layout

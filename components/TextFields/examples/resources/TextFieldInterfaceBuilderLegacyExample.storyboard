@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1F7-Hr-r85">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1F7-Hr-r85">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Text Field Interface Builder Example-->
+        <!--Text Field Interface Builder Legacy Example-->
         <scene sceneID="DdG-mX-4KR">
             <objects>
-                <viewController id="1F7-Hr-r85" customClass="TextFieldInterfaceBuilderExample" sceneMemberID="viewController">
+                <viewController id="1F7-Hr-r85" customClass="TextFieldInterfaceBuilderLegacyExample" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ut5-Wj-cOI"/>
                         <viewControllerLayoutGuide type="bottom" id="NTa-4i-lt3"/>
@@ -84,7 +84,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="expandsOnOverflow" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outlet property="textView" destination="qdZ-Us-0Y9" id="xUo-1t-Ggm"/>
+                                    <outlet property="textView" destination="qdZ-Us-0Y9" id="AV8-gh-CkW"/>
                                 </connections>
                             </view>
                         </subviews>

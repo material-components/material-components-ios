@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "40.1.1"
+  mdc.version      = "41.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -135,7 +135,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MotionAnimator", "~> 2.3"
-    component.dependency "MotionTransitioning", "~> 4.0"
+    component.dependency "MotionTransitioning", "~> 5.0"
   end
 
   mdc.subspec "Buttons" do |component|
@@ -257,6 +257,8 @@ Pod::Spec.new do |mdc|
       spec.dependency "MaterialComponents/ShadowLayer"
       spec.dependency "MaterialComponents/private/KeyboardWatcher"
       spec.dependency "MDFInternationalization"
+      spec.dependency "MotionAnimator", "~> 2.5"
+      spec.dependency "MotionTransitioning", "~> 5.0"
     end
     component.subspec "ColorThemer" do |spec|
       spec.ios.deployment_target = '8.0'
@@ -324,6 +326,7 @@ Pod::Spec.new do |mdc|
       spec.ios.deployment_target = '8.0'
       spec.public_header_files = "components/#{component.base_name}/src/*.h"
       spec.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+      spec.dependency "MaterialComponents/private/Math"
     end
     component.subspec "ColorThemer" do |spec|
       spec.ios.deployment_target = '8.0'
@@ -344,7 +347,7 @@ Pod::Spec.new do |mdc|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
-    component.dependency "MotionTransitioning", "~> 4.0"
+    component.dependency "MotionTransitioning", "~> 5.0"
     component.dependency "MotionAnimator", "~> 2.0"
     component.dependency "MotionInterchange", "~> 1.0"
   end
