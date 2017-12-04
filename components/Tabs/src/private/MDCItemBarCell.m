@@ -108,7 +108,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Only compute text bounding rect if necessary (all except image-only items)
   if (style.shouldDisplayTitle) {
-    UIFont *font = style.titleFont;
+    // Determine size based on the unselected state because the majority of tabs are unselected.
+    UIFont *font = style.unselectedTitleFont;
     NSDictionary *titleAttributes = @{NSFontAttributeName : font};
     textBounds = [title boundingRectWithSize:size
                                      options:NSStringDrawingTruncatesLastVisibleLine
@@ -343,6 +344,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [self updateTitleTextColor];
   [self updateAccessibilityTraits];
   [self updateTransformsAnimated:animate];
+  [self updateTitleFont];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -411,14 +413,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
-  // Use trait collection's horizontalSizeClass if available.
-  if ([self respondsToSelector:@selector(traitCollection)]) {
-    return self.traitCollection.horizontalSizeClass;
-  }
-
-  // Pre-iOS 8: Use fixed size class for device.
-  const BOOL isPad = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad;
-  return isPad ? UIUserInterfaceSizeClassRegular : UIUserInterfaceSizeClassCompact;
+  return self.traitCollection.horizontalSizeClass;
 }
 
 /// Ensures that subviews exist and have the correct visibility for the current content style.
@@ -560,7 +555,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateTitleFont {
-  _titleLabel.font = _style.titleFont;
+  _titleLabel.font = self.isSelected ? _style.selectedTitleFont : _style.unselectedTitleFont;
 }
 
 - (void)updateInk {

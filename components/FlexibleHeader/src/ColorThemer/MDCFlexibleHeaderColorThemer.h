@@ -29,8 +29,8 @@
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderView A MDCFlexibleHeaderView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-    toFlexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+    toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 /**
  Applies a color scheme to theme a MDCFlexibleHeaderViewController. Use a UIAppearance proxy to
@@ -39,7 +39,7 @@
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderController A MDCFlexibleHeaderViewController instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-    toMDCFlexibleHeaderController:(MDCFlexibleHeaderViewController *)flexibleHeaderController;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+    toMDCFlexibleHeaderController:(nonnull MDCFlexibleHeaderViewController *)flexibleHeaderController;
 
 @end
