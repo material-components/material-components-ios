@@ -29,6 +29,7 @@
 static const CGFloat kMDCBottomNavigationItemViewCircleLayerOffset = -6.f;
 static const CGFloat kMDCBottomNavigationItemViewCircleLayerDimension = 36.f;
 static const CGFloat kMDCBottomNavigationItemViewCircleOpacity = 0.150f;
+static const CGFloat kMDCBottomNavigationItemViewItemInset = 8.f;
 static const CGFloat kMDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
@@ -123,7 +124,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (self.titleBelowIcon) {
     CGPoint iconImageViewCenter =
         CGPointMake(CGRectGetMidX(self.bounds),
-                    CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
+                    CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) / 2 +
+                    CGRectGetHeight(self.iconImageView.bounds) / 2 +
+                    kMDCBottomNavigationItemViewItemInset);
     BOOL titleVisibilityNever = self.selected &&
         self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever;
     BOOL titleVisibilitySelectedNever = !self.selected &&
@@ -139,7 +142,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                     iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
     self.label.center =
         CGPointMake(CGRectGetMidX(self.bounds),
-                    CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
+                    CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) / 2 -
+                    CGRectGetHeight(self.label.bounds) / 2 -
+                    kMDCBottomNavigationItemViewItemInset);
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
         self.iconImageView.center = iconImageViewCenter;
