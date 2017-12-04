@@ -312,8 +312,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   titleWidthAvailable -= self.imageTitleSpacing;
 
   const CGFloat availableHeight = CGRectGetHeight(insetBounds);
-  CGSize titleIntrinsicSize
-      = [self.titleLabel sizeThatFits:CGSizeMake(titleWidthAvailable, availableHeight)];
+  CGSize titleIntrinsicSize =
+      [self.titleLabel sizeThatFits:CGSizeMake(titleWidthAvailable, availableHeight)];
 
   const CGSize titleSize = CGSizeMake(MAX(0, MIN(titleIntrinsicSize.width, titleWidthAvailable)),
                                       MAX(0, MIN(titleIntrinsicSize.height, availableHeight)));
