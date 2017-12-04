@@ -16,7 +16,7 @@
 
 #import "MDCTextInputControllerFloatingPlaceholder.h"
 
-extern const CGFloat MDCTextInputBaseDefaultBorderRadius;
+extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
 
 /**
  Base class providing floating placeholder animation and other functionality.
