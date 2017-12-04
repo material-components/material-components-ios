@@ -220,8 +220,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [selectedButton setSelected:YES];
   [highlightedButton setHighlighted:YES];
   NSInteger selectedButtonElevationCount = selectedButton.shadowLayer.elevationAssignmentCount;
-  NSInteger highlightedButtonElevationCount
-      = highlightedButton.shadowLayer.elevationAssignmentCount;
+  NSInteger highlightedButtonElevationCount =
+      highlightedButton.shadowLayer.elevationAssignmentCount;
 
   // When
   [selectedButton setElevation:77 forState:UIControlStateHighlighted];

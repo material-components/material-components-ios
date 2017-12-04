@@ -152,13 +152,13 @@ extension FloatingButtonExampleSwiftViewController {
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
     super.willTransition(to: newCollection, with: coordinator)
     let currentTraits = traitCollection
-    let sizeClassChanged
-      = newCollection.horizontalSizeClass != currentTraits.horizontalSizeClass
-        || newCollection.verticalSizeClass != currentTraits.verticalSizeClass
+    let sizeClassChanged =
+      newCollection.horizontalSizeClass != currentTraits.horizontalSizeClass ||
+        newCollection.verticalSizeClass != currentTraits.verticalSizeClass
     if (sizeClassChanged) {
-      let willBeRegularRegular
-        = newCollection.horizontalSizeClass == .regular
-          && newCollection.verticalSizeClass == .regular
+      let willBeRegularRegular =
+        newCollection.horizontalSizeClass == .regular &&
+          newCollection.verticalSizeClass == .regular
 
       coordinator.animate(alongsideTransition:{ (_) in
         self.updateFloatingButtons(whenSizeClass: willBeRegularRegular)
