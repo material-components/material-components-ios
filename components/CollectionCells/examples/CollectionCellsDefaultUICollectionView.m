@@ -40,7 +40,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [super viewDidLoad];
     
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
-  self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
@@ -60,11 +60,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-  return 1;
+  return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return [_content count];
+  return [_content count]/2;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -73,7 +73,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                                             forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.item][0];
   cell.detailTextLabel.text = _content[indexPath.item][1];
-  [(MDCShadowLayer *)cell.layer setElevation:1.f];
+  cell.backgroundColor = [UIColor whiteColor];
+  [(MDCShadowLayer *)cell.layer setElevation:3.f];
   return cell;
 }
 
@@ -87,7 +88,13 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  return CGSizeMake(self.collectionView.frame.size.width, MDCCellDefaultTwoLineHeight);
+  return CGSizeMake(self.collectionView.frame.size.width-32, MDCCellDefaultTwoLineHeight);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+                        layout:(UICollectionViewLayout *)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section {
+  return UIEdgeInsetsMake(10, 40, 10, 40);
 }
 
 #pragma mark - CatalogByConvention
