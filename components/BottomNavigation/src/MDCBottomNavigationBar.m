@@ -265,7 +265,6 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 - (void)didTouchDownButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  itemView.circleHighlightHidden = NO;
   CGPoint centerPoint = CGPointMake(CGRectGetMidX(itemView.inkView.bounds),
                                     CGRectGetMidY(itemView.inkView.bounds));
   [itemView.inkView startTouchBeganAnimationAtPoint:centerPoint completion:nil];
@@ -286,7 +285,6 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
           [self.delegate bottomNavigationBar:self didSelectItem:item];
         }
       }
-      itemView.circleHighlightHidden = YES;
       [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
     }
   }
@@ -294,7 +292,6 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 - (void)didTouchUpOutsideButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  itemView.circleHighlightHidden = YES;
   [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
 }
 

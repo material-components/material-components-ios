@@ -21,7 +21,6 @@
 
 @interface MDCBottomNavigationItemView : UIView
 
-@property(nonatomic, assign) BOOL circleHighlightHidden;
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
