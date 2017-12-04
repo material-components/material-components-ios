@@ -38,7 +38,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
-@property(nonatomic, strong) UIView *circleView;
 
 @end
 
