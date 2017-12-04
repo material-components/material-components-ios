@@ -17,8 +17,14 @@
 #import "MDCActivityIndicator.h"
 
 #import <QuartzCore/QuartzCore.h>
+
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#import "MotionAnimator.h"
+#else
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <MotionAnimator/MotionAnimator.h>
+#endif  // IS_BAZEL_BUILD
 
 #import "MaterialApplication.h"
 #import "MaterialPalettes.h"
@@ -290,6 +296,10 @@ static const CGFloat kSingleCycleRotation =
         [self addTransitionToIndeterminateCycle];
         break;
     }
+  } else {
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
   }
 }
 
@@ -516,6 +526,9 @@ static const CGFloat kSingleCycleRotation =
     // Special case for 0% progress.
     _cycleCount = nearestCycle;
     [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
     return;
   }
 
@@ -542,6 +555,9 @@ static const CGFloat kSingleCycleRotation =
     [CATransaction setCompletionBlock:^{
       [self
           strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
+      if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+        [_delegate activityIndicatorModeTransitionDidFinish:self];
+      }
     }];
     [CATransaction setDisableActions:YES];
 
@@ -582,6 +598,9 @@ static const CGFloat kSingleCycleRotation =
     _currentProgress = 0.0f;
     _lastProgress = _currentProgress;
     [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
   } else {
     _currentProgress = MAX(_progress, _minStrokeDifference);
 
@@ -600,6 +619,9 @@ static const CGFloat kSingleCycleRotation =
       [CATransaction setCompletionBlock:^{
         [self
             strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
+        if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+          [_delegate activityIndicatorModeTransitionDidFinish:self];
+        }
       }];
       [CATransaction setDisableActions:YES];
       [CATransaction mdm_setTimeScaleFactor:@(duration)];

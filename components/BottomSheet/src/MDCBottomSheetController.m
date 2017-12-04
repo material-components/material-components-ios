@@ -20,7 +20,11 @@
 #import "MDCBottomSheetTransition.h"
 #import "UIViewController+MaterialBottomSheet.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MotionTransitioning.h"
+#else
 #import <MotionTransitioning/MotionTransitioning.h>
+#endif  // IS_BAZEL_BUILD
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"

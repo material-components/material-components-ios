@@ -79,18 +79,15 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   // Flags tracking if properties are unset and using default values.
   BOOL _hasDefaultAlignment;
   BOOL _hasDefaultItemAppearance;
-  BOOL _hasDefaultDisplaysUppercaseTitles;
 
   // For properties which have been set, these store the new fixed values.
   MDCTabBarAlignment _alignmentOverride;
   MDCTabBarItemAppearance _itemAppearanceOverride;
-  BOOL _displaysUppercaseTitlesOverride;
 }
 // Inherit UIView's tintColor logic.
 @dynamic tintColor;
 @synthesize alignment = _alignment;
 @synthesize barPosition = _barPosition;
-@synthesize displaysUppercaseTitles = _displaysUppercaseTitles;
 @synthesize itemAppearance = _itemAppearance;
 
 #pragma mark - Initialization
@@ -126,13 +123,14 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
   _hasDefaultAlignment = YES;
-  _hasDefaultDisplaysUppercaseTitles = YES;
 
   // Set default values
   _alignment = [self computedAlignment];
-  _displaysUppercaseTitles = [self computedDisplaysUppercaseTitles];
+  _titleTextTransform = MDCTabBarTextTransformAutomatic;
   _itemAppearance = [self computedItemAppearance];
   _selectionIndicatorTemplate = [MDCTabBar defaultSelectionIndicatorTemplate];
+  _selectedItemTitleFont = [MDCTypography buttonFont];
+  _unselectedItemTitleFont = [MDCTypography buttonFont];
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
@@ -222,6 +220,22 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
+- (void)setUnselectedItemTitleFont:(UIFont *)unselectedItemTitleFont {
+  if ((unselectedItemTitleFont != _unselectedItemTitleFont) &&
+      ![unselectedItemTitleFont isEqual:_unselectedItemTitleFont]) {
+    _unselectedItemTitleFont = unselectedItemTitleFont;
+    [self updateItemBarStyle];
+  }
+}
+
+- (void)setSelectedItemTitleFont:(UIFont *)selectedItemTitleFont {
+  if ((selectedItemTitleFont != _selectedItemTitleFont) &&
+      ![selectedItemTitleFont isEqual:_selectedItemTitleFont]) {
+    _selectedItemTitleFont = selectedItemTitleFont;
+    [self updateItemBarStyle];
+  }
+}
+
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
   [self setAlignment:alignment animated:NO];
 }
@@ -256,10 +270,29 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
+- (BOOL)displaysUppercaseTitles {
+  switch (self.titleTextTransform) {
+    case MDCTabBarTextTransformAutomatic:
+      return [MDCTabBar displaysUppercaseTitlesByDefaultForPosition:_barPosition];
+
+    case MDCTabBarTextTransformNone:
+      return NO;
+
+    case MDCTabBarTextTransformUppercase:
+      return YES;
+  }
+}
+
 - (void)setDisplaysUppercaseTitles:(BOOL)displaysUppercaseTitles {
-  _hasDefaultDisplaysUppercaseTitles = NO;
-  _displaysUppercaseTitlesOverride = displaysUppercaseTitles;
-  [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
+  self.titleTextTransform =
+      displaysUppercaseTitles ? MDCTabBarTextTransformUppercase : MDCTabBarTextTransformNone;
+}
+
+- (void)setTitleTextTransform:(MDCTabBarTextTransform)titleTextTransform {
+  if (titleTextTransform != _titleTextTransform) {
+    _titleTextTransform = titleTextTransform;
+    [self updateItemBarStyle];
+  }
 }
 
 - (void)setSelectionIndicatorTemplate:(id<MDCTabBarIndicatorTemplate>)selectionIndicatorTemplate {
@@ -332,7 +365,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     // Top tabs
     style.shouldDisplaySelectionIndicator = YES;
     style.shouldGrowOnSelection = NO;
-    style.titleFont = [MDCTypography buttonFont];
     style.inkStyle = MDCInkStyleBounded;
     style.titleImagePadding = (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
     style.textOnlyNumberOfLines = 2;
@@ -341,7 +373,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     style.shouldDisplaySelectionIndicator = NO;
     style.shouldGrowOnSelection = YES;
     style.maximumItemWidth = kBottomNavigationMaximumItemWidth;
-    style.titleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
     style.inkStyle = MDCInkStyleUnbounded;
     style.titleImagePadding = kBottomNavigationTitleImagePadding;
     style.textOnlyNumberOfLines = 1;
@@ -466,25 +497,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
-- (BOOL)computedDisplaysUppercaseTitles {
-  if (_hasDefaultDisplaysUppercaseTitles) {
-    return [[self class] displaysUppercaseTitlesByDefaultForPosition:_barPosition];
-  } else {
-    return _displaysUppercaseTitlesOverride;
-  }
-}
-
 - (void)internalSetAlignment:(MDCTabBarAlignment)alignment animated:(BOOL)animated {
   if (_alignment != alignment) {
     _alignment = alignment;
     [_itemBar setAlignment:MDCItemBarAlignmentForTabBarAlignment(_alignment) animated:animated];
-  }
-}
-
-- (void)internalSetDisplaysUppercaseTitles:(BOOL)displaysUppercaseTitles {
-  if (_displaysUppercaseTitles != displaysUppercaseTitles) {
-    _displaysUppercaseTitles = displaysUppercaseTitles;
-    [self updateItemBarStyle];
   }
 }
 
@@ -512,7 +528,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)updatePositionDerivedDefaultValues {
   [self internalSetAlignment:[self computedAlignment] animated:NO];
   [self internalSetItemAppearance:[self computedItemAppearance]];
-  [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
 }
 
 /// Update the item bar's style property, which depends on the bar position and item appearance.
@@ -521,12 +536,22 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   style = [[self class] defaultStyleForPosition:_barPosition itemAppearance:_itemAppearance];
 
+  if ([MDCTabBar isTopTabsForPosition:_barPosition]) {
+    // Top tabs: Use provided fonts.
+    style.selectedTitleFont = self.selectedItemTitleFont;
+    style.unselectedTitleFont = self.unselectedItemTitleFont;
+  } else {
+    // Bottom navigation: Ignore provided fonts.
+    style.selectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
+    style.unselectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
+  }
+
   style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
   style.selectedTitleColor = (_selectedItemTintColor ? _selectedItemTintColor : self.tintColor);
   style.titleColor = _unselectedItemTintColor;
-  style.displaysUppercaseTitles = _displaysUppercaseTitles;
+  style.displaysUppercaseTitles = self.displaysUppercaseTitles;
 
   [_itemBar applyStyle:style];
 

@@ -21,8 +21,13 @@
 #import "private/MDCBottomSheetMotionSpec.h"
 
 #import "MaterialMath.h"
+#ifdef IS_BAZEL_BUILD
+#import "MotionAnimator.h"
+#import "MotionTransitioning.h"
+#else
 #import <MotionAnimator/MotionAnimator.h>
 #import <MotionTransitioning/MotionTransitioning.h>
+#endif  // IS_BAZEL_BUILD
 
 static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) {
   UIScrollView *scrollView = nil;

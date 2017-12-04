@@ -19,7 +19,11 @@
 #import "MaterialApplication.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
+#ifdef IS_BAZEL_BUILD
+#import "MDFTextAccessibility.h"
+#else
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
+#endif  // IS_BAZEL_BUILD
 
 static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   if (CGColorGetAlpha(color.CGColor) < 1) {
@@ -168,41 +172,6 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 - (BOOL)prefersStatusBarHidden {
   return _headerView.prefersStatusBarHidden;
 }
-
-// Only include this logic when supporting pre-iOS 8 devices.
-#if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
-    [_headerView interfaceOrientationWillChange];
-  }
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                         duration:(NSTimeInterval)duration {
-  [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
-    [_headerView interfaceOrientationIsChanging];
-  }
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-  // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
-    [_headerView interfaceOrientationDidChange];
-  }
-}
-#endif  // #if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];

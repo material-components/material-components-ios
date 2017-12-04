@@ -14,20 +14,16 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
-#ifdef IS_BAZEL_BUILD
-#import "MotionTransitioning.h"
-#else
-#import <MotionTransitioning/MotionTransitioning.h>
-#endif  // IS_BAZEL_BUILD
+#import <UIKit/UIKit.h>
 
-@interface MDCDialogTransition : NSObject <MDMTransitionWithPresentation>
+/** Appearance for content within tab bar items. */
+typedef NS_ENUM(NSInteger, MDCTabBarTextTransform) {
+  /** The default text transform is applied based on the bar's position. */
+  MDCTabBarTextTransformAutomatic = 0,
 
-/**
- Should a tap on the dimmed background view dismiss the presented controller.
+  /** Text on tabs is displayed verbatim with no transform. */
+  MDCTabBarTextTransformNone = 1,
 
- Defaults to YES.
- */
-@property(nonatomic, assign) BOOL dismissOnBackgroundTap;
-
-@end
+  /** Text on tabs is uppercased for display. */
+  MDCTabBarTextTransformUppercase = 2,
+};

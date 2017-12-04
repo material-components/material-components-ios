@@ -15,7 +15,12 @@
  */
 
 #import <Foundation/Foundation.h>
+
+#ifdef IS_BAZEL_BUILD
+#import "MotionInterchange.h"
+#else
 #import <MotionInterchange/MotionInterchange.h>
+#endif  // IS_BAZEL_BUILD
 
 #ifndef MDC_SUBCLASSING_RESTRICTED
 #if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)

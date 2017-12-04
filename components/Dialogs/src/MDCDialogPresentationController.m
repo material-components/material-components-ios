@@ -20,8 +20,13 @@
 #import "MaterialKeyboardWatcher.h"
 #import "private/MDCDialogShadowedView.h"
 #import "private/MDCDialogTransitionMotionSpec.h"
+#ifdef IS_BAZEL_BUILD
+#import "MotionAnimator.h"
+#import "MotionTransitioning.h"
+#else
 #import <MotionAnimator/MotionAnimator.h>
 #import <MotionTransitioning/MotionTransitioning.h>
+#endif  // IS_BAZEL_BUILD
 
 static CGFloat MDCDialogMinimumWidth = 280.0f;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
