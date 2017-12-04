@@ -20,10 +20,10 @@
 
 #import "MaterialBottomNavigationStrings.h"
 #import "MaterialBottomNavigationStrings_table.h"
+#import "MaterialMath.h"
 #import "MDCBottomNavigationItemBadge.h"
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
-static const CGFloat MDCBottomNavigationItemViewInkRadius = 18.f;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
@@ -88,9 +88,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _inkView.usesLegacyInkRipple = NO;
-  _inkView.maxRippleRadius = MDCBottomNavigationItemViewInkRadius;
   _inkView.clipsToBounds = NO;
-  [_iconImageView addSubview:_inkView];
+  [self addSubview:_inkView];
 
   _button = [[UIButton alloc] initWithFrame:self.bounds];
   _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -107,6 +106,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                                            attributes:@{ NSFontAttributeName:self.label.font }
                                               context:nil].size;
   self.label.frame = CGRectMake(0, 0, labelSize.width, labelSize.height);
+  self.inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
 }
 
