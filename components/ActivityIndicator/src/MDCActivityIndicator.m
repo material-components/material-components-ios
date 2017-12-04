@@ -17,8 +17,14 @@
 #import "MDCActivityIndicator.h"
 
 #import <QuartzCore/QuartzCore.h>
+
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#import "MotionAnimator.h"
+#else
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <MotionAnimator/MotionAnimator.h>
+#endif  // IS_BAZEL_BUILD
 
 #import "MaterialApplication.h"
 #import "MaterialPalettes.h"
