@@ -313,8 +313,7 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   // https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIBarButtonItem_Class/#//apple_ref/occ/instp/UIBarButtonItem/action
   // "If nil, the action message is passed up the responder chain where it may be handled by any
   // object implementing a method corresponding to the selector held by the action property."
-  if (target == nil && [self respondsToSelector:@selector(targetForAction:withSender:)]) {
-    // iOS 7 and up.
+  if (target == nil) {
     target = [self targetForAction:item.action withSender:self];
   }
 

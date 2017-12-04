@@ -19,7 +19,6 @@
 #import "private/MDCInkLayer.h"
 #import "private/MDCLegacyInkLayer.h"
 
-
 @interface MDCInkPendingAnimation : NSObject <CAAction>
 
 @property(nonatomic, weak) CALayer *animationSourceLayer;
@@ -78,6 +77,13 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
+  if (self.superview.layer.shadowPath) {
+    self.maskLayer.path = self.superview.layer.shadowPath;
+    self.layer.mask = _maskLayer;
+    self.layer.masksToBounds = YES;
+  }
 
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
   self.layer.bounds = inkBounds;
@@ -238,11 +244,17 @@
   if (self.activeInkLayer == inkLayer && self.startInkRippleCompletionBlock) {
     self.startInkRippleCompletionBlock();
   }
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidStart:)]) {
+    [self.animationDelegate inkAnimationDidStart:self];
+  }
 }
 
 - (void)inkLayerAnimationDidEnd:(MDCInkLayer *)inkLayer {
   if (self.activeInkLayer == inkLayer && self.endInkRippleCompletionBlock) {
     self.endInkRippleCompletionBlock();
+  }
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidEnd:)]) {
+    [self.animationDelegate inkAnimationDidEnd:self];
   }
 }
 

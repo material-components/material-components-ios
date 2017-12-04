@@ -480,14 +480,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
-  // Use trait collection's horizontalSizeClass if available.
-  if ([self respondsToSelector:@selector(traitCollection)]) {
-    return self.traitCollection.horizontalSizeClass;
-  }
-
-  // Pre-iOS 8: Use fixed size class for device.
-  BOOL isPad = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad);
-  return isPad ? UIUserInterfaceSizeClassRegular : UIUserInterfaceSizeClassCompact;
+  return self.traitCollection.horizontalSizeClass;
 }
 
 - (void)selectItemAtIndex:(NSUInteger)index animated:(BOOL)animated {
@@ -618,14 +611,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   };
 
   if (animate) {
-    CAMediaTimingFunction *easeInOutFunction =
+    [CATransaction begin];
+    CAMediaTimingFunction *easeInOut =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-    [UIView mdc_animateWithTimingFunction:easeInOutFunction
-                                 duration:kDefaultAnimationDuration
-                                    delay:0.0f
-                                  options:UIViewAnimationOptionBeginFromCurrentState
-                               animations:animationBlock
-                               completion:nil];
+    [CATransaction setAnimationTimingFunction:easeInOut];
+    [UIView animateWithDuration:kDefaultAnimationDuration
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:animationBlock
+                     completion:nil];
+    [CATransaction commit];
   } else {
     animationBlock();
   }
@@ -894,20 +889,12 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (BOOL)shouldEnforceRightToLeftLayout {
-  BOOL enforceRTL = NO;
-
   // Prior to iOS 9 RTL was not automatically applied, so we don't need to apply any fixes.
   NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+  UIUserInterfaceLayoutDirection rtl = UIUserInterfaceLayoutDirectionRightToLeft;
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
-      [processInfo isOperatingSystemAtLeastVersion:iOS9Version]) {
-    if (self.collectionView.mdf_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft) {
-      enforceRTL = YES;
-    }
-  }
-
-  return enforceRTL;
+  return [processInfo isOperatingSystemAtLeastVersion:iOS9Version] &&
+    self.collectionView.mdf_effectiveUserInterfaceLayoutDirection == rtl;
 }
 
 /// Indicates if the superclass' layout appears to have been layed out in a left-to-right order. If
