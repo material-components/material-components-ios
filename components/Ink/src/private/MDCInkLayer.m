@@ -18,6 +18,7 @@
 #import "MaterialMath.h"
 
 static const CGFloat MDCInkLayerCommonDuration = 0.083f;
+static const CGFloat MDCInkLayerEndFadeOutDuration = 0.15f;
 static const CGFloat MDCInkLayerStartScalePositionDuration = 0.333f;
 static const CGFloat MDCInkLayerStartFadeHalfDuration = 0.167f;
 static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = 0.25f;
@@ -187,7 +188,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   fadeOutAnim.keyPath = MDCInkLayerOpacityString;
   fadeOutAnim.fromValue = @(opacity);
   fadeOutAnim.toValue = @0;
-  fadeOutAnim.duration = MDCInkLayerStartScalePositionDuration;
+  fadeOutAnim.duration = MDCInkLayerEndFadeOutDuration;
   fadeOutAnim.beginTime = CACurrentMediaTime() + self.endAnimationDelay;
   fadeOutAnim.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
