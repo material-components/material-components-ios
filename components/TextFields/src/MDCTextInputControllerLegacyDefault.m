@@ -87,6 +87,10 @@ static NSString *const MDCTextInputControllerLegacyDefaultTrailingUnderlineLabel
     @"MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelFontKey";
 static NSString *const MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor =
     @"MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor";
+static NSString *const MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey =
+    @"MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey";
+static NSString *const MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey =
+    @"MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey";
 static NSString *const MDCTextInputControllerLegacyDefaultUnderlineViewModeKey =
     @"MDCTextInputControllerLegacyDefaultUnderlineViewModeKey";
 
@@ -117,6 +121,10 @@ static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
 
 static CGFloat _floatingPlaceholderScaleDefault =
     MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleDefault;
+static CGFloat _underlineHeightActiveDefault =
+    MDCTextInputControllerLegacyDefaultUnderlineActiveHeight;
+static CGFloat _underlineHeightNormalDefault =
+    MDCTextInputControllerLegacyDefaultUnderlineNormalHeight;
 
 static UIColor *_activeColorDefault;
 static UIColor *_disabledColorDefault;
@@ -177,6 +185,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 @synthesize characterCountViewMode = _characterCountViewMode;
 @synthesize floatingEnabled = _floatingEnabled;
 @synthesize textInput = _textInput;
+@synthesize underlineHeightActive = _underlineHeightActive;
+@synthesize underlineHeightNormal = _underlineHeightNormal;
 @synthesize underlineViewMode = _underlineViewMode;
 
 // TODO: (larche): Support in-line auto complete.
@@ -219,6 +229,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultTextInputKey];
     _trailingUnderlineLabelTextColor = [aDecoder
         decodeObjectForKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
+    _underlineHeightActive = (float)[aDecoder
+        decodeFloatForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey];
+    _underlineHeightActive = (float)[aDecoder
+        decodeFloatForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey];
     _underlineViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey];
   }
@@ -275,6 +289,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelFontKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
+  [aCoder encodeFloat:(float)self.underlineHeightActive
+               forKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey];
+  [aCoder encodeFloat:(float)self.underlineHeightNormal
+               forKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey];
   [aCoder encodeInteger:self.underlineViewMode
                  forKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey];
 }
@@ -303,6 +321,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   copy.textInput = self.textInput;  // Just a pointer value copy
   copy.trailingUnderlineLabelFont = self.trailingUnderlineLabelFont;
   copy.trailingUnderlineLabelTextColor = self.trailingUnderlineLabelTextColor;
+  copy.underlineHeightActive = self.underlineHeightActive;
+  copy.underlineHeightNormal = self.underlineHeightNormal;
   copy.underlineViewMode = self.underlineViewMode;
 
   return copy;
@@ -317,6 +337,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _disabledColor = [self class].disabledColorDefault;
   _floatingEnabled = [self class].isFloatingEnabledDefault;
   _internalCharacterCounter = [[MDCTextInputAllCharactersCounter alloc] init];
+  _underlineHeightActive = [self class].underlineHeightActiveDefault;
+  _underlineHeightNormal = [self class].underlineHeightNormalDefault;
   _underlineViewMode = [self class].underlineViewModeDefault;
   _textInput.hidesPlaceholderOnInput = NO;
 
@@ -470,11 +492,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   self.textInput.placeholderLabel.font = self.inlinePlaceholderFont;
 
   if ([self isPlaceholderUp]) {
-    UIColor *nonErrorColor = self.textInput.isEditing ? self.activeColor :
-        self.floatingPlaceholderNormalColor;
+    UIColor *nonErrorColor =
+        self.textInput.isEditing ? self.activeColor : self.floatingPlaceholderNormalColor;
     self.textInput.placeholderLabel.textColor =
-    (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
-        ? self.errorColor : nonErrorColor;
+        (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
+                                                                             : nonErrorColor;
   } else {
     self.textInput.placeholderLabel.textColor = self.inlinePlaceholderColor;
   }
@@ -523,8 +545,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (BOOL)isPlaceholderUp {
   return self.placeholderAnimationConstraints.count > 0 &&
-      !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
-                                         CGAffineTransformIdentity);
+         !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
+                                            CGAffineTransformIdentity);
 }
 
 // Sometimes we set up the animation constraints for floating up before we have a width for the text
@@ -602,18 +624,18 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   UIOffset offset = [self floatingPlaceholderOffset];
 
-  CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
-                                                                                 offset:offset];
-  CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
-                                                                                   offset:offset];
+  CGFloat leadingConstant =
+      [self floatingPlaceholderAnimationConstraintLeadingConstant:insets offset:offset];
+  CGFloat trailingConstant =
+      [self floatingPlaceholderAnimationConstraintTrailingConstant:insets offset:offset];
 
   return self.placeholderAnimationConstraintLeading.constant != leadingConstant &&
-  self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
+         self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
 }
 
 // When placeholder is not up, it just uses the layout code that comes for free from the text field
 // itself. That means these constraints need go away. So, we can use the existence of them as a
-// way to check if the placeholder is floating up. See isPlacehodlerUp.
+// way to check if the placeholder is floating up. See isplaceholderUp.
 - (void)cleanupPlaceholderAnimationConstraints {
   self.placeholderAnimationConstraints = nil;
   self.placeholderAnimationConstraintLeading = nil;
@@ -897,7 +919,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (UIColor *)floatingPlaceholderNormalColor {
   return _floatingPlaceholderNormalColor ? _floatingPlaceholderNormalColor
-                                   : [self class].floatingPlaceholderNormalColorDefault;
+                                         : [self class].floatingPlaceholderNormalColorDefault;
 }
 
 + (UIColor *)floatingPlaceholderNormalColorDefault {
@@ -909,8 +931,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (void)setFloatingPlaceholderNormalColorDefault:(UIColor *)floatingPlaceholderNormalColorDefault {
   _floatingPlaceholderNormalColorDefault = floatingPlaceholderNormalColorDefault
-                                         ? floatingPlaceholderNormalColorDefault
-                                         : [self class].inlinePlaceholderColorDefault;
+                                               ? floatingPlaceholderNormalColorDefault
+                                               : [self class].inlinePlaceholderColorDefault;
 }
 
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
@@ -1099,7 +1121,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)setPlaceholderText:(NSString *)placeholderText {
-  if ([_textInput.placeholder isEqualToString: placeholderText]) {
+  if ([_textInput.placeholder isEqualToString:placeholderText]) {
     return;
   }
   _textInput.placeholder = [placeholderText copy];
@@ -1187,6 +1209,36 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           : MDCTextInputControllerLegacyDefaultInlinePlaceholderTextColorDefault();
 }
 
+- (void)setUnderlineHeightActive:(CGFloat)underlineHeightActive {
+  if (_underlineHeightActive != underlineHeightActive) {
+    _underlineHeightActive = underlineHeightActive;
+    [self updateLayout];
+  }
+}
+
++ (CGFloat)underlineHeightActiveDefault {
+  return _underlineHeightActiveDefault;
+}
+
++ (void)setUnderlineHeightActiveDefault:(CGFloat)underlineHeightActiveDefault {
+  _underlineHeightActiveDefault = underlineHeightActiveDefault;
+}
+
+- (void)setUnderlineHeightNormal:(CGFloat)underlineHeightNormal {
+  if (_underlineHeightNormal != underlineHeightNormal) {
+    _underlineHeightNormal = underlineHeightNormal;
+    [self updateLayout];
+  }
+}
+
++ (CGFloat)underlineHeightNormalDefault {
+  return _underlineHeightNormalDefault;
+}
+
++ (void)setUnderlineHeightNormalDefault:(CGFloat)underlineHeightNormalDefault {
+  _underlineHeightNormalDefault = underlineHeightNormalDefault;
+}
+
 - (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
   if (_underlineViewMode != underlineViewMode) {
     _underlineViewMode = underlineViewMode;
@@ -1229,6 +1281,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 // clang-format off
 /**
+ NOTE: This is the main difference between the -Base / -Underline controllers and the -LegacyDefault
+ controller. The textInsets behavior is different to mimic the old internal classes.
+
  textInsets: is the source of truth for vertical layout. It's used to figure out the proper
  height and also where to place the placeholder / text field.
 
@@ -1236,14 +1291,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
  LTR.
 
  The vertical layout is, at most complex, this form:
- MDCTextInputControllerLegacyDefaultVerticalPadding +                                 // Top padding
- MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +                   // Placeholder when up
- MDCTextInputControllerLegacyDefaultVerticalHalfPadding +                             // Small padding
- MDCRint(MAX(self.textInput.font.lineHeight,                                          // Text field or placeholder
-              self.textInput.placeholderLabel.font.lineHeight)) +
- MDCTextInputControllerLegacyDefaultVerticalHalfPadding +                             // Small padding
- --Underline-- (height not counted)                                                   // Underline (height ignored)
- MAX(underlineLabelsOffset,MDCTextInputControllerLegacyDefaultVerticalHalfPadding)    // Padding and/or labels
+ MDCTextInputControllerLegacyDefaultVerticalPadding                   // Top padding
+ MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale)     // Placeholder when up
+ MDCTextInputControllerLegacyDefaultVerticalHalfPadding               // Padding
+ MDCCeil(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
+             self.textInput.placeholderLabel.font.lineHeight))
+ Underline and labels
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
