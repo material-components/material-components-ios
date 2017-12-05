@@ -41,7 +41,7 @@ mdc_public_objc_library(
 
 mdc_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
+    srcs = native.glob(["src/ColorThemer/*"]),
     hdrs = native.glob(["src/ColorThemer/*.h"]),
     includes = ["srcs"],
     deps = [
@@ -53,7 +53,7 @@ mdc_objc_library(
 
 mdc_objc_library(
     name = "TitleColorAccessibilityMutator",
-    srcs = native.glob(["src/TitleColorAccessibilityMutator/*.m"]),
+    srcs = native.glob(["src/TitleColorAccessibilityMutator/*"]),
     hdrs = native.glob(["src/TitleColorAccessibilityMutator/*.h"]),
     includes = ["srcs"],
     deps = [
