@@ -72,12 +72,12 @@
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
   MDCFloatingButton *defaultButtonExpanded =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
-  defaultButtonExpanded.mode = MDCFloatingButtonModeExpanded;
+  defaultButtonExpanded.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   MDCFloatingButton *miniButtonNormal =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
   MDCFloatingButton *miniButtonExpanded =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
-  miniButtonExpanded.mode = MDCFloatingButtonModeExpanded;
+  miniButtonExpanded.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButtonNormal.hitAreaInsets));
@@ -91,20 +91,20 @@
 - (void)testSetHitAreaInsetsForShapeInNormalMode {
   // Given
   MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // When
   [defaultButton setHitAreaInsets:UIEdgeInsetsMake(1, 2, 3, 4)
                          forShape:MDCFloatingButtonShapeDefault
-                           inMode:MDCFloatingButtonModeNormal];
-  defaultButton.mode = MDCFloatingButtonModeNormal;
+                           inMode:MDCFloatingButtonExpandedModeNormal];
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
   [miniButton setHitAreaInsets:UIEdgeInsetsMake(9, 8, 7, 6)
                           forShape:MDCFloatingButtonShapeMini
-                            inMode:MDCFloatingButtonModeNormal];
-  miniButton.mode = MDCFloatingButtonModeNormal;
+                            inMode:MDCFloatingButtonExpandedModeNormal];
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4),
@@ -122,12 +122,12 @@
   // When
   [defaultButton setHitAreaInsets:UIEdgeInsetsMake(1, 2, 3, 4)
                          forShape:MDCFloatingButtonShapeDefault
-                           inMode:MDCFloatingButtonModeExpanded];
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+                           inMode:MDCFloatingButtonExpandedModeExpanded];
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   [miniButton setHitAreaInsets:UIEdgeInsetsMake(9, 8, 7, 6)
                       forShape:MDCFloatingButtonShapeMini
-                        inMode:MDCFloatingButtonModeExpanded];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+                        inMode:MDCFloatingButtonExpandedModeExpanded];
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4),
@@ -144,7 +144,7 @@
   // When
   [button setHitAreaInsets:UIEdgeInsetsMake(17, 21, 25, 29)
                   forShape:MDCFloatingButtonShapeDefault
-                    inMode:MDCFloatingButtonModeNormal];
+                    inMode:MDCFloatingButtonExpandedModeNormal];
 
   // Then
   XCTAssertFalse(button.intrinsicContentSizeCalled);
@@ -161,12 +161,12 @@
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
   MDCFloatingButton *defaultButtonExpanded =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
-  defaultButtonExpanded.mode = MDCFloatingButtonModeExpanded;
+  defaultButtonExpanded.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   MDCFloatingButton *miniButtonNormal =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
   MDCFloatingButton *miniButtonExpanded =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
-  miniButtonExpanded.mode = MDCFloatingButtonModeExpanded;
+  miniButtonExpanded.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero,
@@ -182,20 +182,20 @@
 - (void)testSetContentEdgeInsetsForShapeInNormalMode {
   // Given
   MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // When
   [defaultButton setContentEdgeInsets:UIEdgeInsetsMake(1, 2, 3, 4)
                              forShape:MDCFloatingButtonShapeDefault
-                               inMode:MDCFloatingButtonModeNormal];
-  defaultButton.mode = MDCFloatingButtonModeNormal;
+                               inMode:MDCFloatingButtonExpandedModeNormal];
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
   [miniButton setContentEdgeInsets:UIEdgeInsetsMake(9, 8, 7, 6)
                           forShape:MDCFloatingButtonShapeMini
-                            inMode:MDCFloatingButtonModeNormal];
-  miniButton.mode = MDCFloatingButtonModeNormal;
+                            inMode:MDCFloatingButtonExpandedModeNormal];
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4),
@@ -213,12 +213,12 @@
   // When
   [defaultButton setContentEdgeInsets:UIEdgeInsetsMake(1, 2, 3, 4)
                              forShape:MDCFloatingButtonShapeDefault
-                               inMode:MDCFloatingButtonModeExpanded];
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+                               inMode:MDCFloatingButtonExpandedModeExpanded];
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   [miniButton setContentEdgeInsets:UIEdgeInsetsMake(9, 8, 7, 6)
                           forShape:MDCFloatingButtonShapeMini
-                            inMode:MDCFloatingButtonModeExpanded];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+                            inMode:MDCFloatingButtonExpandedModeExpanded];
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4),
@@ -235,7 +235,7 @@
   // When
   [button setContentEdgeInsets:UIEdgeInsetsMake(9, 8, 7, 7)
                       forShape:MDCFloatingButtonShapeDefault
-                        inMode:MDCFloatingButtonModeNormal];
+                        inMode:MDCFloatingButtonExpandedModeNormal];
 
   // Then
   XCTAssertFalse(button.intrinsicContentSizeCalled);
@@ -270,7 +270,7 @@
   MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];
   [defaultButton setTitle:@"An even longer title that should require more than 328 points to render"
                  forState:UIControlStateNormal];
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // When
   [defaultButton sizeToFit];
@@ -283,21 +283,21 @@
   // Given
   MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
   [defaultButton setTitle:@"a very long title" forState:UIControlStateNormal];
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
   [miniButton setTitle:@"a very long title" forState:UIControlStateNormal];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // When
   [defaultButton setMaximumSize:CGSizeMake(100, 50)
                        forShape:MDCFloatingButtonShapeDefault
-                         inMode:MDCFloatingButtonModeNormal];
-  defaultButton.mode = MDCFloatingButtonModeNormal;
+                         inMode:MDCFloatingButtonExpandedModeNormal];
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
   [miniButton setMaximumSize:CGSizeMake(100, 50)
                     forShape:MDCFloatingButtonShapeMini
-                      inMode:MDCFloatingButtonModeNormal];
-  miniButton.mode = MDCFloatingButtonModeNormal;
+                      inMode:MDCFloatingButtonExpandedModeNormal];
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
 
   // Then
   XCTAssertLessThanOrEqual(defaultButton.bounds.size.width, 100);
@@ -319,12 +319,12 @@
   // When
   [defaultButton setMaximumSize:CGSizeMake(50, 100)
                        forShape:MDCFloatingButtonShapeDefault
-                         inMode:MDCFloatingButtonModeExpanded];
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+                         inMode:MDCFloatingButtonExpandedModeExpanded];
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   [miniButton setMaximumSize:CGSizeMake(50, 100)
                     forShape:MDCFloatingButtonShapeMini
-                      inMode:MDCFloatingButtonModeExpanded];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+                      inMode:MDCFloatingButtonExpandedModeExpanded];
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // Then
   XCTAssertLessThanOrEqual(defaultButton.bounds.size.width, 50);
@@ -341,7 +341,7 @@
   // When
   [button setMaximumSize:CGSizeMake(7, 7)
                 forShape:MDCFloatingButtonShapeDefault
-                  inMode:MDCFloatingButtonModeNormal];
+                  inMode:MDCFloatingButtonExpandedModeNormal];
 
   // Then
   XCTAssertFalse(button.intrinsicContentSizeCalled);
@@ -374,7 +374,7 @@
 - (void)testDefaultMinimumSizeForShapeInExpandedModeSizeToFit {
   // Given
   MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // When
   [defaultButton sizeToFit];
@@ -387,28 +387,28 @@
 - (void)testSetMinimumSizeForShapeInModeNormal {
   // Given
   MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
 
   // When
   [defaultButton setMinimumSize:CGSizeMake(100, 50)
                        forShape:MDCFloatingButtonShapeDefault
-                         inMode:MDCFloatingButtonModeNormal];
+                         inMode:MDCFloatingButtonExpandedModeNormal];
   [defaultButton setMaximumSize:CGSizeZero
                        forShape:MDCFloatingButtonShapeDefault
-                         inMode:MDCFloatingButtonModeNormal];
-  defaultButton.mode = MDCFloatingButtonModeNormal;
+                         inMode:MDCFloatingButtonExpandedModeNormal];
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
   [defaultButton sizeToFit];
 
   [miniButton setMinimumSize:CGSizeMake(100, 50)
                     forShape:MDCFloatingButtonShapeMini
-                      inMode:MDCFloatingButtonModeNormal];
+                      inMode:MDCFloatingButtonExpandedModeNormal];
   [miniButton setMaximumSize:CGSizeZero
                     forShape:MDCFloatingButtonShapeMini
-                      inMode:MDCFloatingButtonModeNormal];
-  miniButton.mode = MDCFloatingButtonModeNormal;
+                      inMode:MDCFloatingButtonExpandedModeNormal];
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
   [miniButton sizeToFit];
 
   // Then
@@ -427,14 +427,14 @@
   // When
   [defaultButton setMinimumSize:CGSizeMake(50, 100)
                        forShape:MDCFloatingButtonShapeDefault
-                         inMode:MDCFloatingButtonModeExpanded];
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
+                         inMode:MDCFloatingButtonExpandedModeExpanded];
+  defaultButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   [defaultButton sizeToFit];
 
   [miniButton setMinimumSize:CGSizeMake(50, 100)
                     forShape:MDCFloatingButtonShapeMini
-                      inMode:MDCFloatingButtonModeExpanded];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+                      inMode:MDCFloatingButtonExpandedModeExpanded];
+  miniButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   [miniButton sizeToFit];
 
   // Then
@@ -452,7 +452,7 @@
   // When
   [button setMinimumSize:CGSizeMake(12, 12)
                 forShape:MDCFloatingButtonShapeDefault
-                  inMode:MDCFloatingButtonModeNormal];
+                  inMode:MDCFloatingButtonExpandedModeNormal];
 
   // Then
   XCTAssertFalse(button.intrinsicContentSizeCalled);
@@ -467,12 +467,12 @@
   // Given
   MDCFloatingButton *button =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
-  button.mode = MDCFloatingButtonModeExpanded;
+  button.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
   [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
   [button setMaximumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeDefault
-                  inMode:MDCFloatingButtonModeExpanded];
+                  inMode:MDCFloatingButtonExpandedModeExpanded];
   button.imageTitleSpace = 12;
 
   // When
@@ -492,18 +492,18 @@
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
                                                                  shape:MDCFloatingButtonShapeMini];
-  button.mode = MDCFloatingButtonModeExpanded;
+  button.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
   [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
   [button setMinimumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeMini
-                  inMode:MDCFloatingButtonModeExpanded];
+                  inMode:MDCFloatingButtonExpandedModeExpanded];
   [button setMaximumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeMini
-                  inMode:MDCFloatingButtonModeExpanded];
+                  inMode:MDCFloatingButtonExpandedModeExpanded];
   [button setContentEdgeInsets:UIEdgeInsetsMake(4, -4, 8, -8)
                       forShape:MDCFloatingButtonShapeMini
-                        inMode:MDCFloatingButtonModeExpanded];
+                        inMode:MDCFloatingButtonExpandedModeExpanded];
 
   // When
   [button sizeToFit];
@@ -524,22 +524,22 @@
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] initWithFrame:CGRectMake(1, 2, 3, 4)
                                                                  shape:MDCFloatingButtonShapeMini];
-  button.mode = MDCFloatingButtonModeExpanded;
+  button.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
   button.imageLocation = MDCFloatingButtonImageLocationTrailing;
   [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
   [button setTitle:@"Title" forState:UIControlStateNormal];
   [button setMinimumSize:CGSizeMake(75, 37)
                 forShape:MDCFloatingButtonShapeMini
-                  inMode:MDCFloatingButtonModeExpanded];
+                  inMode:MDCFloatingButtonExpandedModeExpanded];
   [button setMaximumSize:CGSizeMake(99, 65)
                 forShape:MDCFloatingButtonShapeMini
-                  inMode:MDCFloatingButtonModeExpanded];
+                  inMode:MDCFloatingButtonExpandedModeExpanded];
   [button setContentEdgeInsets:UIEdgeInsetsMake(5, 3, 1, 7)
                       forShape:MDCFloatingButtonShapeMini
-                        inMode:MDCFloatingButtonModeExpanded];
+                        inMode:MDCFloatingButtonExpandedModeExpanded];
   [button setHitAreaInsets:UIEdgeInsetsMake(8, 6, 4, 2)
                   forShape:MDCFloatingButtonShapeMini
-                    inMode:MDCFloatingButtonModeExpanded];
+                    inMode:MDCFloatingButtonExpandedModeExpanded];
 
   // When
   NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:button];
@@ -554,7 +554,7 @@
                 @"Unarchived bounds did not match original button's bounds.\nExpected: %@\n"
                  "Received: %@",NSStringFromCGRect(button.bounds),
                 NSStringFromCGRect(unarchivedButton.bounds));
-  XCTAssertEqual(button.mode, unarchivedButton.mode);
+  XCTAssertEqual(button.mdc_expandedMode, unarchivedButton.mdc_expandedMode);
   XCTAssertEqual(button.imageLocation, unarchivedButton.imageLocation);
   XCTAssertEqualObjects(button.currentTitle, unarchivedButton.currentTitle);
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(button.contentEdgeInsets,

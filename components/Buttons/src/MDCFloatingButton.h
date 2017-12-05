@@ -36,16 +36,16 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   MDCFloatingButtonShapeMini = 1
 };
 
-typedef NS_ENUM(NSInteger, MDCFloatingButtonMode) {
+typedef NS_ENUM(NSInteger, MDCFloatingButtonExpandedMode) {
   /**
    The floating button is a circle with its contents centered.
    */
-  MDCFloatingButtonModeNormal = 0,
+  MDCFloatingButtonExpandedModeNormal = 0,
 
   /**
    The floating button is a "pill shape" with the image to one side of the title.
    */
-  MDCFloatingButtonModeExpanded = 1,
+  MDCFloatingButtonExpandedModeExpanded = 1,
 };
 
 typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 
  The default value is @c .normal .
  */
-@property(nonatomic, assign) MDCFloatingButtonMode mode;
+@property(nonatomic, assign) MDCFloatingButtonExpandedMode mdc_expandedMode;
 
 /**
  The location of the image relative to the title when the floating button is in @c expanded mode.
@@ -152,7 +152,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 - (void)setMinimumSize:(CGSize)minimumSize
               forShape:(MDCFloatingButtonShape)shape
-                inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+                inMode:(MDCFloatingButtonExpandedMode)mode UI_APPEARANCE_SELECTOR;
 
 - (void)setMaximumSize:(CGSize)maximumSize NS_UNAVAILABLE;
 
@@ -166,7 +166,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 - (void)setMaximumSize:(CGSize)maximumSize
               forShape:(MDCFloatingButtonShape)shape
-                inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+                inMode:(MDCFloatingButtonExpandedMode)mode UI_APPEARANCE_SELECTOR;
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets NS_UNAVAILABLE;
 
@@ -179,7 +179,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets
                     forShape:(MDCFloatingButtonShape)shape
-                      inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+                      inMode:(MDCFloatingButtonExpandedMode)mode UI_APPEARANCE_SELECTOR;
 
 - (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets NS_UNAVAILABLE;
 
@@ -192,7 +192,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 - (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets
                 forShape:(MDCFloatingButtonShape)shape
-                  inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
+                  inMode:(MDCFloatingButtonExpandedMode)mode UI_APPEARANCE_SELECTOR;
 
 #pragma mark - Deprecations
 
