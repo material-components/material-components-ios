@@ -616,7 +616,7 @@
 - (void)testCollapseExpandRestoresTransform {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
-  CGAffineTransform transform = CGAffineTransformRotate(button.transform, M_PI_2);
+  CGAffineTransform transform = CGAffineTransformRotate(button.transform, (CGFloat)M_PI_2);
   button.transform = transform;
 
   // When
@@ -633,7 +633,7 @@
 - (void)testCollapseExpandAnimatedRestoresTransform {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
-  CGAffineTransform transform = CGAffineTransformMakeTranslation(10, -77.1);
+  CGAffineTransform transform = CGAffineTransformMakeTranslation(10, (CGFloat)-77.1);
   button.transform = transform;
   XCTestExpectation *expectation = [self expectationWithDescription:@"Collapse animation complete"];
 
