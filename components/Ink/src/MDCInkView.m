@@ -77,8 +77,7 @@
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
 
   // When bounds change ensure all ink layer bounds are changed too.
-  NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
-  for (CALayer *layer in sublayers) {
+  for (CALayer *layer in self.layer.sublayers) {
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
