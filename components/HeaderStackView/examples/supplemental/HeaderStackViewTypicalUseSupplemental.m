@@ -17,12 +17,8 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import <Foundation/Foundation.h>
-
 #import "HeaderStackViewTypicalUseSupplemental.h"
 
-#import "MaterialHeaderStackView.h"
-#import "MaterialNavigationBar.h"
 #import "MaterialPalettes.h"
 
 @interface ExampleInstructionsViewHeaderStackViewTypicalUse : UIView

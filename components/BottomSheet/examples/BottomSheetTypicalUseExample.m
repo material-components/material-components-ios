@@ -16,20 +16,21 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BottomSheetDummyCollectionViewController.h"
-#import "BottomSheetSupplemental.h"
 #import "MaterialBottomSheet.h"
+#import "supplemental/BottomSheetDummyCollectionViewController.h"
+#import "supplemental/BottomSheetSupplemental.h"
 
 @implementation BottomSheetTypicalUseExample
 
 - (void)presentBottomSheet {
   BottomSheetDummyCollectionViewController *viewController =
-      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:100];
+      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
   viewController.preferredContentSize = CGSizeMake(500, 200);
 
-  MDCBottomSheetController *bottomSheet =
-      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
-  [self presentViewController:bottomSheet animated:YES completion:nil];
+  MDCBottomSheetTransition *transition = [[MDCBottomSheetTransition alloc] init];
+  transition.trackingScrollView = viewController.collectionView;
+  viewController.mdm_transitionController.transition = transition;
+  [self presentViewController:viewController animated:YES completion:nil];
 }
 
 @end

@@ -16,7 +16,11 @@
 
 #import "MDCMaskedTransition.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MotionAnimator.h"
+#else
 #import <MotionAnimator/MotionAnimator.h>
+#endif  // IS_BAZEL_BUILD
 
 #import "private/MDCMaskedPresentationController.h"
 #import "private/MDCMaskedTransitionMotionForContext.h"
@@ -81,7 +85,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 }
 
 - (void)startWithContext:(NSObject<MDMTransitionContext> *)context {
-  MDCMaskedTransitionMotionSpec spec = motionForContext(context);
+  MDCMaskedTransitionMotionSpecContext spec = MDCMaskedTransitionMotionSpecForContext(context);
   if (context.direction == MDMTransitionDirectionForward) {
     _shouldSlideWhenCollapsed = spec.shouldSlideWhenCollapsed;
   }
@@ -206,7 +210,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     [animator animateWithTiming:motion.floodBackgroundColor
                         toLayer:floodFillView.layer
                      withValues:@[ initialColor, finalColor ]
-                        keyPath:@"backgroundColor"];
+                        keyPath:MDMKeyPathBackgroundColor];
   }
 
   {
@@ -223,7 +227,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     [animator animateWithTiming:motion.maskTransformation
                         toLayer:shapeLayer
                      withValues:@[ @1, @(finalScale) ]
-                        keyPath:@"transform.scale.xy"
+                        keyPath:MDMKeyPathScale
                      completion:completion];
   }
 

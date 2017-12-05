@@ -19,8 +19,9 @@ limitations under the License.
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialNavigationBar.h"
+
 @class ExampleInstructionsViewNavigationBarTypicalUseExample;
-@class MDCNavigationBar;
 
 @interface NavigationBarTypicalUseExample : UIViewController
 

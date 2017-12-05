@@ -14,23 +14,36 @@
  limitations under the License.
  */
 
-#import "MaterialBottomSheet.h"
+#import "MDCBottomSheetController.h"
 
+#import "MDCBottomSheetPresentationController.h"
+#import "MDCBottomSheetTransition.h"
+#import "UIViewController+MaterialBottomSheet.h"
+
+#ifdef IS_BAZEL_BUILD
+#import "MotionTransitioning.h"
+#else
+#import <MotionTransitioning/MotionTransitioning.h>
+#endif  // IS_BAZEL_BUILD
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
+#pragma clang diagnostic pop
 @end
 
 @implementation MDCBottomSheetController {
-  MDCBottomSheetTransitionController *_transitionController;
+  MDCBottomSheetTransition *_transition;
 }
 
 - (nonnull instancetype)initWithContentViewController:
     (nonnull UIViewController *)contentViewController {
-  if (self = [super initWithNibName:nil bundle:nil]) {
+  self = [super initWithNibName:nil bundle:nil];
+  if (self) {
     _contentViewController = contentViewController;
-    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
 
-    super.transitioningDelegate = _transitionController;
-    super.modalPresentationStyle = UIModalPresentationCustom;
+    _transition = [[MDCBottomSheetTransition alloc] init];
+    self.mdm_transitionController.transition = _transition;
   }
   return self;
 }
@@ -50,7 +63,10 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.mdc_bottomSheetPresentationController.delegate = self;
+#pragma clang diagnostic pop
 
   [self.contentViewController.view layoutIfNeeded];
 }
@@ -72,21 +88,19 @@
   self.contentViewController.preferredContentSize = preferredContentSize;
 }
 
-/* Disable setter. Always use internal transition controller */
-- (void)setTransitioningDelegate:
-    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
-  NSAssert(NO, @"MDCBottomSheetController.transitioningDelegate cannot be changed.");
-  return;
+- (UIScrollView *)trackingScrollView {
+  return _transition.trackingScrollView;
 }
 
-/* Disable setter. Always use custom presentation style */
-- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
-  NSAssert(NO, @"MDCBottomSheetController.modalPresentationStyle cannot be changed.");
-  return;
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _transition.trackingScrollView = trackingScrollView;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull __unused MDCBottomSheetPresentationController *)bottomSheet {
+#pragma clang diagnostic pop
   [self.delegate bottomSheetControllerDidDismissBottomSheet:self];
 }
 

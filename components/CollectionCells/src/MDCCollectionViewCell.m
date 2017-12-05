@@ -16,7 +16,12 @@
 
 #import "MDCCollectionViewCell.h"
 
+#ifdef IS_BAZEL_BUILD
 #import "MDFInternationalization.h"
+#else
+#import <MDFInternationalization/MDFInternationalization.h>
+#endif  // IS_BAZEL_BUILD
+
 #import "MaterialCollectionLayoutAttributes.h"
 #import "MaterialIcons+ic_check.h"
 #import "MaterialIcons+ic_check_circle.h"
@@ -222,7 +227,8 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 - (void)setAccessoryType:(MDCCollectionViewCellAccessoryType)accessoryType {
   _accessoryType = accessoryType;
 
-  UIImageView *accessoryImageView = nil;
+  UIImageView *accessoryImageView =
+      [_accessoryView isKindOfClass:[UIImageView class]] ? (UIImageView *)_accessoryView : nil;
   if (!_accessoryView && accessoryType != MDCCollectionViewCellAccessoryNone) {
     // Add accessory view.
     accessoryImageView = [[MDCAccessoryTypeImageView alloc] initWithFrame:CGRectZero];
@@ -280,6 +286,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 - (MDCInkView *)inkView {
   if (!_inkView) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.usesLegacyInkRipple = NO;
     [self addSubview:_inkView];
   }
   return _inkView;

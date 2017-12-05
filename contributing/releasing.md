@@ -190,7 +190,7 @@ Add the version number to the change log in the "release-candidate" section:
 
 Commit the results to your branch:
 
-    git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
+    git commit -am "Bumped version number to $(scripts/print_version)."
     git push origin release-candidate
 
 #### Verify CocoaPods podspec and trunk access

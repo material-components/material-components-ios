@@ -16,8 +16,13 @@
 
 #import "MDCMaskedPresentationController.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MotionAnimator.h"
+#import "MotionTransitioning.h"
+#else
 #import <MotionTransitioning/MotionTransitioning.h>
 #import <MotionAnimator/MotionAnimator.h>
+#endif  // IS_BAZEL_BUILD
 
 #import "MDCMaskedTransitionMotionForContext.h"
 
@@ -86,7 +91,7 @@
 }
 
 - (void)startWithContext:(NSObject<MDMTransitionContext> *)context {
-  MDCMaskedTransitionMotionSpec spec = motionForContext(context);
+  MDCMaskedTransitionMotionSpecContext spec = MDCMaskedTransitionMotionSpecForContext(context);
 
   MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
   animator.shouldReverseValues = context.direction == MDMTransitionDirectionBackward;

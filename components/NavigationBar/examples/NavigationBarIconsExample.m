@@ -17,11 +17,17 @@
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
+#ifdef IS_BAZEL_BUILD
 #import "MDFInternationalization.h"
+#else
+#import <MDFInternationalization/MDFInternationalization.h>
+#endif  // IS_BAZEL_BUILD
+
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialNavigationBar.h"
+#import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarIconsExample ()
 

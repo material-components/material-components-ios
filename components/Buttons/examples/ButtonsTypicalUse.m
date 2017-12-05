@@ -14,10 +14,9 @@
  limitations under the License.
  */
 
-#import "ButtonsTypicalUseSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "supplemental/ButtonsTypicalUseSupplemental.h"
 
 @interface ButtonsTypicalUseViewController ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;

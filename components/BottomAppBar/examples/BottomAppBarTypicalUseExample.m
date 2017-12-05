@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BottomAppBarTypicalUseSupplemental.h"
 #import "MDCButtonColorThemer.h"
+#import "supplemental/BottomAppBarTypicalUseSupplemental.h"
 
 @implementation BottomAppBarTypicalUseExample
 

@@ -18,6 +18,8 @@
 
 #import "MaterialInk.h"
 
+@protocol MDCTabBarIndicatorTemplate;
+
 /** Describes the visual style of individual items in an item bar. */
 @interface MDCItemBarStyle : NSObject <NSCopying>
 
@@ -29,6 +31,9 @@
 
 /** Color used for the selection indicator bar which indicates the selected item. */
 @property(nonatomic, strong, nullable) UIColor *selectionIndicatorColor;
+
+/** Template defining the selection indicator's appearance. */
+@property(nonatomic, nonnull) id<MDCTabBarIndicatorTemplate> selectionIndicatorTemplate;
 
 /** The maximum width for individual items within the bar. If zero, items have no maximum width. */
 @property(nonatomic) CGFloat maximumItemWidth;
@@ -53,8 +58,11 @@
 /** Color of title text when selected. Default is opaque white. */
 @property(nonatomic, strong, nonnull) UIColor *selectedTitleColor;
 
-/** Font used for item titles. */
-@property(nonatomic, nonnull) UIFont *titleFont;
+/** Font used for selected item titles. */
+@property(nonatomic, strong, nonnull) UIFont *selectedTitleFont;
+
+/** Font used for unselected item titles. */
+@property(nonatomic, strong, nonnull) UIFont *unselectedTitleFont;
 
 /** Style of ink animations on item interaction. */
 @property(nonatomic) MDCInkStyle inkStyle;

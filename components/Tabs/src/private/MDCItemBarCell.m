@@ -17,9 +17,14 @@
 #import "MDCItemBarCell.h"
 #import "MDCItemBarCell+Private.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#else
+#import <MDFInternationalization/MDFInternationalization.h>
+#endif  // IS_BAZEL_BUILD
+
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
-#import "MDFInternationalization.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
@@ -107,7 +112,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Only compute text bounding rect if necessary (all except image-only items)
   if (style.shouldDisplayTitle) {
-    UIFont *font = style.titleFont;
+    // Determine size based on the unselected state because the majority of tabs are unselected.
+    UIFont *font = style.unselectedTitleFont;
     NSDictionary *titleAttributes = @{NSFontAttributeName : font};
     textBounds = [title boundingRectWithSize:size
                                      options:NSStringDrawingTruncatesLastVisibleLine
@@ -177,6 +183,23 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [self setNeedsLayout];
 }
 
+- (CGRect)contentFrame {
+  if (_style.shouldDisplayTitle) {
+    if (_style.shouldDisplayImage) {
+      // Title and image.
+      CGRect titleFrame = [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+      CGRect imageFrame = [self convertRect:_imageView.bounds fromView:_imageView];
+      return CGRectUnion(titleFrame, imageFrame);
+    } else {
+      // Only title.
+      return [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+    }
+  } else {
+    // Only image.
+    return [self convertRect:_imageView.bounds fromView:_imageView];
+  }
+}
+
 - (void)applyStyle:(MDCItemBarStyle *)style {
   if (style != _style && ![style isEqual:_style]) {
     _style = style;
@@ -235,8 +258,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Title is a fixed height based on content and is placed full-width, regardless of content style.
   titleCenter.x = CGRectGetMidX(contentBounds);
-  titleBounds.size.width = CGRectGetWidth(contentBounds);
-  titleBounds.size.height = titleSize.height;
+  titleBounds.size = titleSize;
 
   // Horizontally align the badge.
   CGSize badgeSize = [_badgeLabel sizeThatFits:contentBounds.size];
@@ -326,6 +348,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [self updateTitleTextColor];
   [self updateAccessibilityTraits];
   [self updateTransformsAnimated:animate];
+  [self updateTitleFont];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -394,14 +417,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
-  // Use trait collection's horizontalSizeClass if available.
-  if ([self respondsToSelector:@selector(traitCollection)]) {
-    return self.traitCollection.horizontalSizeClass;
-  }
-
-  // Pre-iOS 8: Use fixed size class for device.
-  const BOOL isPad = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad;
-  return isPad ? UIUserInterfaceSizeClassRegular : UIUserInterfaceSizeClassCompact;
+  return self.traitCollection.horizontalSizeClass;
 }
 
 /// Ensures that subviews exist and have the correct visibility for the current content style.
@@ -526,14 +542,16 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   };
 
   if (animated) {
+    [CATransaction begin];
     CAMediaTimingFunction *translateTimingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslate];
-    [UIView mdc_animateWithTimingFunction:translateTimingFunction
-                                 duration:kSelectionAnimationDuration
-                                    delay:0
-                                  options:0
-                               animations:performAnimations
-                               completion:completeAnimations];
+    [CATransaction setAnimationTimingFunction:translateTimingFunction];
+    [UIView animateWithDuration:kSelectionAnimationDuration
+                          delay:0
+                        options:0
+                     animations:performAnimations
+                     completion:completeAnimations];
+    [CATransaction commit];
   } else {
     performAnimations();
     completeAnimations(YES);
@@ -541,7 +559,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateTitleFont {
-  _titleLabel.font = _style.titleFont;
+  _titleLabel.font = self.isSelected ? _style.selectedTitleFont : _style.unselectedTitleFont;
 }
 
 - (void)updateInk {

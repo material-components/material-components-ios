@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialButtons.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme MDCTabBar.
@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCButton.
  @param button A MDCButton instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-                toButton:(MDCButton *)button;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+                toButton:(nonnull MDCButton *)button;
 
 @end

@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCActivityIndicator.
  @param activityIndicator A MDCActivityIndicator instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-     toActivityIndicator:(MDCActivityIndicator *)activityIndicator;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+     toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator;
 
 @end

@@ -18,24 +18,23 @@
 
 #include <tgmath.h>
 
+#ifdef IS_BAZEL_BUILD
 #import "MDFInternationalization.h"
+#import "MotionAnimator.h"
+#else
+#import <MDFInternationalization/MDFInternationalization.h>
+#import <MotionAnimator/MotionAnimator.h>
+#endif  // IS_BAZEL_BUILD
 #import "MaterialMath.h"
+#import "MaterialPalettes.h"
+#import "private/MDCProgressViewMotionSpec.h"
 
-// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
-static const uint32_t MDCProgressViewDefaultTintColor = 0x2196F3;
+static inline UIColor *MDCProgressViewDefaultTintColor(void) {
+  return MDCPalette.bluePalette.tint500;
+}
 
 // The ratio by which to desaturate the progress tint color to obtain the default track tint color.
 static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
-
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
-}
-
-static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
 @interface MDCProgressView ()
 @property(nonatomic, strong) UIView *progressView;
@@ -44,6 +43,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 // A UIProgressView to return the same format for the accessibility value. For example, when
 // progress is 0.497, it reports "fifty per cent".
 @property(nonatomic, readonly) UIProgressView *accessibilityProgressView;
+@property(nonatomic, strong) MDMMotionAnimator *animator;
 @end
 
 @implementation MDCProgressView
@@ -65,6 +65,8 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 }
 
 - (void)commonMDCProgressViewInit {
+  _animator = [[MDMMotionAnimator alloc] init];
+
   self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   self.backgroundColor = [UIColor clearColor];
   self.clipsToBounds = YES;
@@ -79,7 +81,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   _progressView = [[UIView alloc] initWithFrame:CGRectZero];
   [self addSubview:_progressView];
 
-  _progressView.backgroundColor = [[self class] defaultProgressTintColor];
+  _progressView.backgroundColor = MDCProgressViewDefaultTintColor();
   _trackView.backgroundColor =
       [[self class] defaultTrackTintColorForProgressTintColor:_progressView.backgroundColor];
 }
@@ -105,7 +107,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
 - (void)setProgressTintColor:(UIColor *)progressTintColor {
   if (progressTintColor == nil) {
-    progressTintColor = [[self class] defaultProgressTintColor];
+    progressTintColor = MDCProgressViewDefaultTintColor();
   }
   self.progressView.backgroundColor = progressTintColor;
 }
@@ -134,7 +136,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
 - (void)setProgress:(float)progress
            animated:(BOOL)animated
-         completion:(void (^__nullable)(BOOL finished))completion {
+         completion:(void (^__nullable)(BOOL finished))userCompletion {
   if (progress < self.progress &&
       self.backwardProgressAnimationMode == MDCProgressViewBackwardAnimationModeReset) {
     self.progress = 0;
@@ -142,13 +144,23 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   }
 
   self.progress = progress;
-  [UIView animateWithDuration:animated ? [[self class] animationDuration] : 0
-                        delay:0
-                      options:[[self class] animationOptions]
-                   animations:^{
-                     [self updateProgressView];
-                   }
-                   completion:completion];
+
+  void (^animations)(void) = ^{
+    [self updateProgressView];
+  };
+  void (^completion)(void) = ^{
+    if (userCompletion) {
+      userCompletion(YES);
+    }
+  };
+
+  if (animated) {
+    MDMMotionTiming timing = MDCProgressViewMotionSpec.willChangeProgress;
+    [_animator animateWithTiming:timing animations:animations completion:completion];
+  } else {
+    animations();
+    completion();
+  }
 }
 
 - (void)setHidden:(BOOL)hidden {
@@ -158,10 +170,10 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
 - (void)setHidden:(BOOL)hidden
          animated:(BOOL)animated
-       completion:(void (^__nullable)(BOOL finished))completion {
+       completion:(void (^__nullable)(BOOL finished))userCompletion {
   if (hidden == self.hidden) {
-    if (completion) {
-      completion(YES);
+    if (userCompletion) {
+      userCompletion(YES);
     }
     return;
   }
@@ -195,18 +207,23 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
     };
   }
 
-  [UIView animateWithDuration:animated ? [[self class] animationDuration] : 0
-                        delay:0
-                      options:[[self class] animationOptions]
-                   animations:animations
-                   completion:^(BOOL finished) {
-                     if (hidden) {
-                       self.animatingHide = NO;
-                       self.hidden = YES;
-                     }
-                     if (completion)
-                       completion(finished);
-                   }];
+  void (^completion)(void) = ^{
+    if (hidden) {
+      self.animatingHide = NO;
+      self.hidden = YES;
+    }
+    if (userCompletion) {
+      userCompletion(YES);
+    }
+  };
+
+  if (animated) {
+    MDMMotionTiming timing = MDCProgressViewMotionSpec.willChangeHidden;
+    [_animator animateWithTiming:timing animations:animations completion:completion];
+  } else {
+    animations();
+    completion();
+  }
 }
 
 #pragma mark Accessibility
@@ -253,20 +270,6 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 }
 
 #pragma mark Private
-
-+ (NSTimeInterval)animationDuration {
-  return MDCProgressViewAnimationDuration;
-}
-
-+ (UIViewAnimationOptions)animationOptions {
-  // Since the animation is fake, using a linear interpolation avoids the speeding up and slowing
-  // down that repeated easing in and out causes.
-  return UIViewAnimationOptionCurveLinear;
-}
-
-+ (UIColor *)defaultProgressTintColor {
-  return MDCColorFromRGB(MDCProgressViewDefaultTintColor);
-}
 
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
   CGFloat hue, saturation, brightness, alpha;

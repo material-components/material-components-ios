@@ -15,7 +15,12 @@
  */
 
 #import "MDCButtonTitleColorAccessibilityMutator.h"
+
+#ifdef IS_BAZEL_BUILD
 #import "MDFTextAccessibility.h"
+#else
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
+#endif  // IS_BAZEL_BUILD
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 

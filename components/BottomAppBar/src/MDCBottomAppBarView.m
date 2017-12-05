@@ -16,8 +16,13 @@
 
 #import "MDCBottomAppBarView.h"
 
-#import "MDCNavigationBarColorThemer.h"
+#ifdef IS_BAZEL_BUILD
 #import "MDFInternationalization.h"
+#else
+#import <MDFInternationalization/MDFInternationalization.h>
+#endif  // IS_BAZEL_BUILD
+
+#import "MDCNavigationBarColorThemer.h"
 #import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"

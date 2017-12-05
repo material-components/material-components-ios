@@ -21,6 +21,7 @@
 /**
  Delegate for MDCBottomSheetPresentationController.
  */
+__deprecated_msg("This API will soon be made private. Use MDCBottomSheetController instead.")
 @protocol MDCBottomSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
 @optional
 
@@ -48,7 +49,16 @@
 /**
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
  */
+__deprecated_msg("This API will soon be made private. Use MDCBottomSheetController instead.")
 @interface MDCBottomSheetPresentationController : UIPresentationController
+
+/**
+ Interactions with the tracking scroll view will affect the bottom sheet's drag behavior.
+
+ If no trackingScrollView is provided, then one will be inferred from the associated view
+ controller.
+ */
+@property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
  Delegate to tell the presenter when to dismiss.

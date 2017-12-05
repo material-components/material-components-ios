@@ -6,7 +6,7 @@ app to explore, experiment, and experience.
 ## Generation
 
 The catalog app is generated dynamically via CocoaPods wildcards inclusion in
-[`MaterialComponentsCatalog.podspec`](../MaterialComponentsCatalog.podspec) The CocoaPods setup
+[`MaterialComponentsExamples.podspec`](../MaterialComponentsExamples.podspec) The CocoaPods setup
 includes:
 
 - The source for each component

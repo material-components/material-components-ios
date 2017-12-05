@@ -15,9 +15,13 @@
  */
 
 #import <Foundation/Foundation.h>
+#ifdef IS_BAZEL_BUILD
+#import "MotionInterchange.h"
+#else
 #import <MotionInterchange/MotionInterchange.h>
+#endif  // IS_BAZEL_BUILD
 
-struct MDCMaskedTransitionMotionTiming {
+typedef struct MDCMaskedTransitionMotionTiming {
   MDMMotionTiming iconFade;
   MDMMotionTiming contentFade;
   MDMMotionTiming floodBackgroundColor;
@@ -25,18 +29,23 @@ struct MDCMaskedTransitionMotionTiming {
   MDMMotionTiming horizontalMovement;
   MDMMotionTiming verticalMovement;
   MDMMotionTiming scrimFade;
-};
-typedef struct MDCMaskedTransitionMotionTiming MDCMaskedTransitionMotionTiming;
+} MDCMaskedTransitionMotionTiming;
 
-struct MDCMaskedTransitionMotionSpec {
+typedef struct MDCMaskedTransitionMotionSpecContext {
   MDCMaskedTransitionMotionTiming expansion;
   MDCMaskedTransitionMotionTiming collapse;
   BOOL shouldSlideWhenCollapsed;
   BOOL isCentered;
-};
-typedef struct MDCMaskedTransitionMotionSpec MDCMaskedTransitionMotionSpec;
+} MDCMaskedTransitionMotionSpecContext;
 
-FOUNDATION_EXPORT struct MDCMaskedTransitionMotionSpec fullscreen;
-FOUNDATION_EXPORT struct MDCMaskedTransitionMotionSpec bottomSheet;
-FOUNDATION_EXPORT struct MDCMaskedTransitionMotionSpec bottomCard;
-FOUNDATION_EXPORT struct MDCMaskedTransitionMotionSpec toolbar;
+@interface MDCMaskedTransitionMotionSpec: NSObject
+
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext fullscreen;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext bottomSheet;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext bottomCard;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext toolbar;
+
+// This object is not meant to be instantiated.
+- (instancetype)init NS_UNAVAILABLE;
+
+@end

@@ -21,7 +21,7 @@ git_repository(
 git_repository(
     name = "bazel_ios_warnings",
     remote = "https://github.com/material-foundation/bazel_ios_warnings.git",
-    tag = "v1.0.1",
+    tag = "v2.0.0",
 )
 
 git_repository(
@@ -39,11 +39,17 @@ git_repository(
 git_repository(
     name = "motion_interchange_objc",
     remote = "https://github.com/material-motion/motion-interchange-objc.git",
-    tag = "v1.2.0",
+    tag = "v1.4.0",
 )
 
 git_repository(
     name = "motion_animator_objc",
     remote = "https://github.com/material-motion/motion-animator-objc.git",
-    commit = "0f081454f5cea39a51e1575d9b961b4a9c7488c0",
+    tag = "v2.5.0",
+)
+
+git_repository(
+    name = "motion_transitioning_objc",
+    remote = "https://github.com/material-motion/motion-transitioning-objc.git",
+    tag = "v5.0.0",
 )

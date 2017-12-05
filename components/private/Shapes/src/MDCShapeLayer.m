@@ -16,6 +16,8 @@
 
 #import "MDCShapeLayer.h"
 
+#import "MDCShapeGenerating.h"
+
 @implementation MDCShapeLayer
 
 - (instancetype)initWithLayer:(id)layer {

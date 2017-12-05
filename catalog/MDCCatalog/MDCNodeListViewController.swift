@@ -93,7 +93,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
-    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+    MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
 
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
@@ -299,7 +299,7 @@ extension MDCNodeListViewController {
   func constrainView(view: UIView, containerView: UIView, height: CGFloat, top: CGFloat) {
 #if swift(>=3.2)
     if #available(iOS 11.0, *) {
-      let safeAreaLayoutGuide = containerView.safeAreaLayoutGuide;
+      let safeAreaLayoutGuide = containerView.safeAreaLayoutGuide
       NSLayoutConstraint.activate([
         view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,
                                       constant: padding),
@@ -387,7 +387,7 @@ extension MDCNodeListViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let colorScheme = appDelegate.colorScheme
-        MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+        MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
         let textColor = UIColor.white
         UIBarButtonItem.appearance().setTitleTextAttributes(
           [NSForegroundColorAttributeName: textColor],

@@ -15,8 +15,14 @@
  */
 
 #import <Foundation/Foundation.h>
+#ifdef IS_BAZEL_BUILD
+#import "MotionTransitioning.h"
+#else
 #import <MotionTransitioning/MotionTransitioning.h>
+#endif  // IS_BAZEL_BUILD
 
 #import "MDCMaskedTransitionMotionSpec.h"
 
-FOUNDATION_EXPORT MDCMaskedTransitionMotionSpec motionForContext(NSObject<MDMTransitionContext> *context);
+FOUNDATION_EXPORT
+MDCMaskedTransitionMotionSpecContext
+    MDCMaskedTransitionMotionSpecForContext(id<MDMTransitionContext> context);

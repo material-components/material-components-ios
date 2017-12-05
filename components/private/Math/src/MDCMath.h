@@ -14,6 +14,10 @@
  limitations under the License.
  */
 
+#import <math.h>
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+
 static inline CGFloat MDCSin(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return sin(value);

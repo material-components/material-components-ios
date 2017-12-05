@@ -16,7 +16,11 @@
 
 #import "MDCButton.h"
 
+#ifdef IS_BAZEL_BUILD
 #import "MDFTextAccessibility.h"
+#else
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
+#endif  // IS_BAZEL_BUILD
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
@@ -62,6 +66,7 @@ static NSString *const MDCButtonShadowColorsKey = @"MDCButtonShadowColorsKey";
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
 static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
+static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -289,6 +294,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _minimumSize = CGSizeZero;
   _maximumSize = CGSizeZero;
 
+  self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
   MDCShadowLayer *shadowLayer = self.layer;
   shadowLayer.shadowPath = [self boundingPath].CGPath;
   shadowLayer.shadowColor = [UIColor blackColor].CGColor;
@@ -299,6 +305,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+  _inkView.usesLegacyInkRipple = NO;
   [self insertSubview:_inkView belowSubview:self.imageView];
 
   // UIButton has a drag enter/exit boundary that is outside of the frame of the button itself.
@@ -352,10 +359,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)layoutSubviews {
   [super layoutSubviews];
   self.layer.shadowPath = [self boundingPath].CGPath;
-  self.layer.cornerRadius = [self cornerRadius];
+  if ([self respondsToSelector:@selector(cornerRadius)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    self.layer.cornerRadius = [self cornerRadius];
+#pragma clang diagnostic pop
+  }
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
-  if (_inkView.inkStyle == MDCInkStyleUnbounded) {
+  if (_inkView.inkStyle == MDCInkStyleUnbounded && _inkView.usesLegacyInkRipple) {
     CGRect contentRect = [self contentRectForBounds:self.bounds];
     CGPoint contentCenterPoint =
         CGPointMake(CGRectGetMidX(contentRect), CGRectGetMidY(contentRect));
@@ -669,7 +681,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
   _userElevations[@(state)] = @(elevation);
-  self.layer.elevation = [self elevationForState:self.state];
+  MDCShadowElevation newElevation = [self elevationForState:self.state];
+  // If no change to the current elevation, don't perform updates
+  if (MDCCGFloatEqual(newElevation, self.layer.elevation)) {
+    return;
+  }
+  self.layer.elevation = newElevation;
 
   // The elevation of the normal state controls whether this button is flat or not, and flat buttons
   // have different background color requirements than raised buttons.
@@ -783,11 +800,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIBezierPath *)boundingPath {
-  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
-}
+  CGFloat cornerRadius = self.layer.cornerRadius;
 
-- (CGFloat)cornerRadius {
-  return 2.0f;
+  if ([self respondsToSelector:@selector(cornerRadius)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    cornerRadius = [self cornerRadius];
+#pragma clang diagnostic pop
+  }
+
+
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {

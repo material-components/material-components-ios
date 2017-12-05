@@ -16,15 +16,19 @@
 
 #import "MDCBottomNavigationItemView.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#else
+#import <MDFInternationalization/MDFInternationalization.h>
+#endif  // IS_BAZEL_BUILD
+
 #import "MaterialBottomNavigationStrings.h"
 #import "MaterialBottomNavigationStrings_table.h"
+#import "MaterialMath.h"
 #import "MDCBottomNavigationItemBadge.h"
-#import "MDFInternationalization.h"
 
-static const CGFloat kMDCBottomNavigationItemViewCircleLayerOffset = -6.f;
-static const CGFloat kMDCBottomNavigationItemViewCircleLayerDimension = 36.f;
-static const CGFloat kMDCBottomNavigationItemViewCircleOpacity = 0.150f;
-static const CGFloat kMDCBottomNavigationItemViewTitleFontSize = 12.f;
+static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
+static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180f;
@@ -35,7 +39,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 @interface MDCBottomNavigationItemView ()
 
-@property(nonatomic, strong) CAShapeLayer *circleLayer;
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
@@ -71,7 +74,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
   _label = [[UILabel alloc] initWithFrame:CGRectZero];
   _label.text = _title;
-  _label.font = [UIFont systemFontOfSize:kMDCBottomNavigationItemViewTitleFontSize];
+  _label.font = [UIFont systemFontOfSize:MDCBottomNavigationItemViewTitleFontSize];
   _label.textAlignment = NSTextAlignmentCenter;
   _label.textColor = _selectedItemTintColor;
   _label.isAccessibilityElement = NO;
@@ -84,17 +87,12 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (!_badge.badgeValue) {
     _badge.hidden = YES;
   }
-
-  _circleLayer = [CAShapeLayer layer];
-  CGRect circleLayerRect = CGRectMake(kMDCBottomNavigationItemViewCircleLayerOffset,
-                                      kMDCBottomNavigationItemViewCircleLayerOffset,
-                                      kMDCBottomNavigationItemViewCircleLayerDimension,
-                                      kMDCBottomNavigationItemViewCircleLayerDimension);
-  UIBezierPath *bezierPath = [UIBezierPath bezierPathWithOvalInRect:circleLayerRect];
-  _circleLayer.path = bezierPath.CGPath;
-  _circleLayer.fillColor = _selectedItemTintColor.CGColor;
-  _circleLayer.opacity = 0;
-  [_iconImageView.layer addSublayer:_circleLayer];
+  
+  _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+  _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  _inkView.usesLegacyInkRipple = NO;
+  _inkView.clipsToBounds = NO;
+  [self addSubview:_inkView];
 
   _button = [[UIButton alloc] initWithFrame:self.bounds];
   _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -111,6 +109,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                                            attributes:@{ NSFontAttributeName:self.label.font }
                                               context:nil].size;
   self.label.frame = CGRectMake(0, 0, labelSize.width, labelSize.height);
+  self.inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
 }
 
@@ -248,25 +248,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   [self centerLayoutAnimated:animated];
 }
 
-- (void)setCircleHighlightHidden:(BOOL)circleHighlightHidden {
-  _circleHighlightHidden = circleHighlightHidden;
-  if (!circleHighlightHidden) {
-    self.circleLayer.opacity = kMDCBottomNavigationItemViewCircleOpacity;
-    self.iconImageView.tintColor = self.selectedItemTintColor;
-  } else {
-    self.circleLayer.opacity = 0;
-    if (self.selected) {
-      self.iconImageView.tintColor = self.selectedItemTintColor;
-    } else {
-      self.iconImageView.tintColor = self.unselectedItemTintColor;
-    }
-  }
-}
-
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
   _selectedItemTintColor = selectedItemTintColor;
   self.label.textColor = self.selectedItemTintColor;
-  self.circleLayer.fillColor = self.selectedItemTintColor.CGColor;
+  self.inkView.inkColor =
+      [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {

@@ -31,6 +31,17 @@
  The presenting UIViewController then calls presentViewController:animated:completion:
  [rootViewController presentViewController:myDialogViewController animated:YES completion:...];
  */
+__deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
+                 "mdm_transitionController.transition instead.")
 @interface MDCBottomSheetTransitionController
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+
+/**
+ Interactions with the tracking scroll view will affect the bottom sheet's drag behavior.
+
+ If no trackingScrollView is provided, then one will be inferred from the associated view
+ controller.
+ */
+@property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
 @end

@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCPageControl.h"
+#import "MaterialPageControl.h"
 
 @interface PageControlTypicalUseViewController : UIViewController <UIScrollViewDelegate>
 @end
@@ -52,7 +52,7 @@
   NSMutableArray *pages = [NSMutableArray array];
 
   // Add pages to scrollView.
-  for (NSInteger i = 0; i < pageColors.count; i++) {
+  for (NSUInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %zd", i + 1];

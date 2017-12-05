@@ -122,7 +122,7 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  */
 @property(nonatomic, strong, nullable) UIColor *bodyColor;
 
-/*
+/**
  Indicates whether the feature highlight contents should automatically update their font when the
  device’s UIContentSizeCategory changes.
 

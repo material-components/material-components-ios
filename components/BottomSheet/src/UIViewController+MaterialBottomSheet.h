@@ -29,7 +29,12 @@
  @return nil if the view controller is not managed by a Material bottom sheet presentation
  controller.
  */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, nullable, readonly)
-    MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController;
+    MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController
+    __deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
+                     "mdm_transitionController.transition instead.");
+#pragma clang diagnostic pop
 
 @end

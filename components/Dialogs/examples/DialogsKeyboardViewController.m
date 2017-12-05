@@ -14,24 +14,15 @@
  limitations under the License.
  */
 
-#import "DialogsKeyboardViewControllerSupplemental.h"
-
 #import "MaterialDialogs.h"
-
-@interface DialogsKeyboardViewController ()
-
-@property(nonatomic, strong) MDCDialogTransitionController *transitionController;
-
-@end
+#import "supplemental/DialogsKeyboardViewControllerSupplemental.h"
 
 @implementation DialogsKeyboardViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   [self loadCollectionView];
-  // We must create and store a strong reference to the transitionController.
-  // A presented view controller will set this object as its transitioning delegate.
-  self.transitionController = [[MDCDialogTransitionController alloc] init];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -45,8 +36,7 @@
 
   UIViewController *viewController =
       [storyboard instantiateViewControllerWithIdentifier:identifier];
-  viewController.modalPresentationStyle = UIModalPresentationCustom;
-  viewController.transitioningDelegate = self.transitionController;
+  viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
 
   [self presentViewController:viewController animated:YES completion:NULL];
 }

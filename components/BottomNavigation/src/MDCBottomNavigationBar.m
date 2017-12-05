@@ -16,9 +16,14 @@
 
 #import "MDCBottomNavigationBar.h"
 
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#else
+#import <MDFInternationalization/MDFInternationalization.h>
+#endif  // IS_BAZEL_BUILD
+
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
-#import "MDFInternationalization.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -26,8 +31,8 @@
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
-static const CGFloat kMDCBottomNavigationBarHeight = 72.f;
-static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 60.f;
+static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
+static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static const MDCShadowElevation kMDCBottomNavigationBarElevation = 6.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
@@ -80,6 +85,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   _containerView = [[UIView alloc] initWithFrame:CGRectZero];
   _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
                                      UIViewAutoresizingFlexibleRightMargin);
+  _containerView.clipsToBounds = YES;
   [self addSubview:_containerView];
   [self setElevation:kMDCBottomNavigationBarElevation];
   _itemViews = [NSMutableArray array];
@@ -103,7 +109,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self.maxLandscapeClusterContainerWidth = MIN(size.width, size.height);
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
-  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
+      UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
     heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
   }
   CGSize insetSize = CGSizeMake(size.width, heightWithInset);
@@ -146,7 +153,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
                         withBottomNavSize:(CGSize)bottomNavSize
                            containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
-  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles) {
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
+      UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
     barHeight = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
   if (itemsDistributed) {
@@ -261,27 +269,34 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 - (void)didTouchDownButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  itemView.circleHighlightHidden = NO;
+  CGPoint centerPoint = CGPointMake(CGRectGetMidX(itemView.inkView.bounds),
+                                    CGRectGetMidY(itemView.inkView.bounds));
+  [itemView.inkView startTouchBeganAnimationAtPoint:centerPoint completion:nil];
 }
 
 - (void)didTouchUpInsideButton:(UIButton *)button {
-  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    UITabBarItem *item = self.items[i];
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (itemView.button == button) {
-
-      // Newly selected item
-      [itemView setSelected:YES animated:YES];
-      itemView.circleHighlightHidden = YES;
-    } else {
-
-      // Deselect all other items
-      [itemView setSelected:NO animated:YES];
+      BOOL shouldSelect = YES;
+      if ([self.delegate respondsToSelector:@selector(bottomNavigationBar:shouldSelectItem:)]) {
+        shouldSelect = [self.delegate bottomNavigationBar:self shouldSelectItem:item];
+      }
+      if (shouldSelect) {
+        [self setSelectedItem:item animated:YES];
+        if ([self.delegate respondsToSelector:@selector(bottomNavigationBar:didSelectItem:)]) {
+          [self.delegate bottomNavigationBar:self didSelectItem:item];
+        }
+      }
+      [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
     }
   }
 }
 
 - (void)didTouchUpOutsideButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  itemView.circleHighlightHidden = YES;
+  [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
 }
 
 #pragma mark - Setters
@@ -349,16 +364,21 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
+  [self setSelectedItem:selectedItem animated:NO];
+}
+
+- (void)setSelectedItem:(UITabBarItem *)selectedItem animated:(BOOL)animated {
   if (_selectedItem == selectedItem) {
     return;
   }
   _selectedItem = selectedItem;
   for (NSUInteger i = 0; i < self.items.count; i++) {
     UITabBarItem *item = self.items[i];
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (selectedItem == item) {
-      self.itemViews[i].selected = YES;
+      [itemView setSelected:YES animated:animated];
     } else {
-      self.itemViews[i].selected = NO;
+      [itemView setSelected:NO animated:animated];
     }
   }
 }

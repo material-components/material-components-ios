@@ -1,3 +1,663 @@
+# 41.0.0
+
+## API changes
+
+### Dialogs
+
+**new** class: `MDCDialogTransition`.
+
+### Ink
+
+**breaking** **changed** property signature: `MDCInkView`'s `inkColor` from `null_resettable` to `nonnull`.
+
+**new** property: `usesLegacyInkRipple`.
+
+### Snackbar
+
+**breaking** `MDCSnackbarMessage`'s public APIs have all been annotated with nullability annotations.
+
+### TextFields
+
+**new** class: `MDCIntrinsicHeightTextView`.
+
+**changed** property signature: `MDCMultilineTextField`'s textView changed from `UITextView` to `MDCIntrinsicHeightTextView`.
+
+## Component changes
+
+### BottomAppBar
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### Buttons
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### Dialogs
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+* [Migrate to Material Motion. (#2481)](https://github.com/material-components/material-components-ios/commit/211ca772ea0456b56e522c0c67bd44312ddfe4d1) (featherless)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Minor fix of comment block notation. (#2503)](https://github.com/material-components/material-components-ios/commit/52f0c766b00d9020a2f249a99c2cbfbe0ec29880) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### Ink
+
+#### Changes
+
+* [Retrofit new ink layer with updated animation into existing ink API (#2488)](https://github.com/material-components/material-components-ios/commit/a27d49408a10282e4340436e13dc1ecbe57612d2) (Junius Gunaratne)
+
+### MaskedTransition
+
+#### Changes
+
+* [Bump the transitioning dependency to v5.0.0 (#2525)](https://github.com/material-components/material-components-ios/commit/38323773823742d130fd66bb076fc406d6da8678) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### ProgressView
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### ShadowElevations
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+* [[Shadow*] Add BUILD files for shadow components. (#2510)](https://github.com/material-components/material-components-ios/commit/d24789f484d50ff8437b9b1fdcb4c6ae0577fcff) (featherless)
+
+### ShadowLayer
+
+#### Changes
+
+* [Add support for implicitly animating the shadow layer's elevation using MotionAnimator. (#2509)](https://github.com/material-components/material-components-ios/commit/e38ac60ffd4b9f377249986180ee650c020f7cb4) (featherless)
+* [[Shadow*] Add BUILD files for shadow components. (#2510)](https://github.com/material-components/material-components-ios/commit/d24789f484d50ff8437b9b1fdcb4c6ae0577fcff) (featherless)
+
+### Slider
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### Snackbar
+
+#### Changes
+
+* [Add nullability annotations to types defined in MDCSnackbarMessage.h (#2445)](https://github.com/material-components/material-components-ios/commit/e8e3c8cd8087a5aadf5ca001ade4d6516a025403) (Benjamin Deming)
+
+### Tabs
+
+#### Changes
+
+* [Add missing import (#2534)](https://github.com/material-components/material-components-ios/commit/b6c054383ade56653bf91835b72361b0e2d49b8f) (featherless)
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+### TextFields
+
+#### Changes
+
+* [Adding legacy storyboard. (#2517)](https://github.com/material-components/material-components-ios/commit/47ed556783e804fccfb0e6c53a80d1fa91847b68) (Will Larche)
+* [Correcting class of the textview to match the new class required for MDCMultilineTextField. (#2519)](https://github.com/material-components/material-components-ios/commit/0496c225496d2c52cc131835e245de1da8dfd2b4) (Will Larche)
+* [Fixes bug: multiline having ambiguous height in the text view (#2489)](https://github.com/material-components/material-components-ios/commit/35727c12495a18357c483b5d1ddacf978d315854) (Will Larche)
+* [TrailingView tests. (#2516)](https://github.com/material-components/material-components-ios/commit/7937f1b5c966bbe839d90629d6081e3e6ca39255) (Will Larche)
+* [Updating encoding and copying. (#2515)](https://github.com/material-components/material-components-ios/commit/6f48a43b53d7ad0101c05ea57dd07b3107ea020f) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Fixed some compiler warnings (#2426)](https://github.com/material-components/material-components-ios/commit/2f29f00d8665ee177e8ad09fc0d7c2a4547ff6f2) (Randall Li)
+
+# 40.1.1
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Add missing import (#2534)](https://github.com/material-components/material-components-ios/commit/8f56a94eb34370a442856f565b0ee44fe4832f32) (featherless)
+
+# 40.1.0
+
+## API Changes
+
+### AnimationTiming
+
+* New enums: `MDCAnimationTimingFunctionStandard`, `MDCAnimationTimingFunctionDeceleration`, and `MDCAnimationTimingFunctionAcceleration`.
+
+### BottomSheet
+
+* New class: `MDCBottomSheetTransition`.
+
+### Tabs
+
+* New property: `-selectionIndicatorTemplate`.
+
+* New class: `MDCTabBarIndicatorAttributes`.
+
+* New protocol: `MDCTabBarIndicatorContext`.
+
+* New Protocol: `MDCTabBarIndicatorTemplate`.
+
+* New class: `MDCTabBarUnderlineIndicatorTemplate`.
+
+### Themes
+
+* New conformity: `MDCColorScheme` now conforms to `NSObject`.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Convert motion spec to an Objective-C static class. (#2451)](https://github.com/material-components/material-components-ios/commit/68356bbd908417606edefa083866a1a1bd2f2716) (featherless)
+* [Make the motion spec values be class properties. (#2473)](https://github.com/material-components/material-components-ios/commit/2a3b2d12200f475e4dbbf4011b207f8079d04e2a) (featherless)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[Kokoro] Support for TextFields, Math, and Typography (#2432)](https://github.com/material-components/material-components-ios/commit/1bd5590bbb19a28f1869733588535429b4642015) (Will Larche)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### AnimationTiming
+
+#### Changes
+
+* [Rename animation timing curves to match spec. (#2370)](https://github.com/material-components/material-components-ios/commit/93f7d880baf66ece00dbe02c120307785c041aaa) (Cody Weaver)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Update animation timing README and examples (#2444)](https://github.com/material-components/material-components-ios/commit/6049093d2aa2d80a22e0cf586621ebc8b69325ef) (Cody Weaver)
+
+### AppBar
+
+#### Changes
+
+* [Automated header standardization by the kokoro script. (#2472)](https://github.com/material-components/material-components-ios/commit/d1b31cab6acaf665e968a59524372e6f24f4520c) (featherless)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### BottomAppBar
+
+#### Changes
+
+* [Implement viewSafeAreaInsetsDidChange (#2466)](https://github.com/material-components/material-components-ios/commit/fbbab80570a1385f697f9476b4bca07f7bd43a8b) (Junius Gunaratne)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+
+### BottomNavigation
+
+#### Changes
+
+* [Adding app bar navigation to demo (#2430)](https://github.com/material-components/material-components-ios/commit/a7e0a0163681d6a52c6681e47e4dc9d09d57a6f9) (Junius Gunaratne)
+* [Implement viewSafeAreaInsetsDidChange (#2465)](https://github.com/material-components/material-components-ios/commit/36cf023a96a674e6e6c7faaf5d3997a31781bb39) (Junius Gunaratne)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### BottomSheet
+
+#### Changes
+
+* [Convert to Material Motion. (#2400)](https://github.com/material-components/material-components-ios/commit/c9ef0366c1525be0f5c384cf90703ab73dbcf3e3) (featherless)
+* [Fix build breakage due to floating point conversions. (#2449)](https://github.com/material-components/material-components-ios/commit/abc6ab9f91141e4884830d0b9cbcbb59891894ef) (featherless)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+
+### ButtonBar
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [Automated header standardization by the kokoro script. (#2472)](https://github.com/material-components/material-components-ios/commit/d1b31cab6acaf665e968a59524372e6f24f4520c) (featherless)
+* [Fix example storyboard module (#2427)](https://github.com/material-components/material-components-ios/commit/108aa31fb982f9ae497edca8cc2312154153d220) (Robert Moore)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Update layer elevation only on change (#2484)](https://github.com/material-components/material-components-ios/commit/4f9f95a24433f3dfb69f0439202eae6eb8451ee9) (Robert Moore)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### Chips
+
+#### Changes
+
+* [Fix private header import (#2434)](https://github.com/material-components/material-components-ios/commit/527b093bc8e158a6383914b50d8206023ce8ee59) (Sam Morrison)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+
+### CollectionCells
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+
+### Collections
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+
+### Dialogs
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Automated header standardization by the kokoro script. (#2472)](https://github.com/material-components/material-components-ios/commit/d1b31cab6acaf665e968a59524372e6f24f4520c) (featherless)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Automated header standardization by the kokoro script. (#2472)](https://github.com/material-components/material-components-ios/commit/d1b31cab6acaf665e968a59524372e6f24f4520c) (featherless)
+* [Fix bug where insets wouldn't be removed from the old tracking scroll view when a new one was set. (#2498)](https://github.com/material-components/material-components-ios/commit/882c71ae1166f1c3929075a71c0324ec890b76b4) (featherless)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+* [[kokoro] Specify ios_multi_cpus and ios_minimum_os when building against bazel. (#2458)](https://github.com/material-components/material-components-ios/commit/bac12681f514bfb3e003a1efad4315193b97594b) (featherless)
+
+### HeaderStackView
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### Ink
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### LibraryInfo
+
+#### Changes
+
+* [Clean up warning flags (#2456)](https://github.com/material-components/material-components-ios/commit/b558c28e34e4037475ade8fb4d8e0c78ca31294d) (Adrian Secord)
+
+### MaskedTransition
+
+#### Changes
+
+* [Convert motion spec to an Objective-C static class. (#2460)](https://github.com/material-components/material-components-ios/commit/2ab8cf5c78e17d33fb0906657609e077fb7e02c5) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [Automated header standardization by the kokoro script. (#2472)](https://github.com/material-components/material-components-ios/commit/d1b31cab6acaf665e968a59524372e6f24f4520c) (featherless)
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[NavBar] Fix custom title view on iOS 11. (#2437)](https://github.com/material-components/material-components-ios/commit/8b267bc787325bf5d28db77afa7ccec97cfb6a03) (Andrés)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### PageControl
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### Palettes
+
+#### Changes
+
+* [Clean up warning flags (#2456)](https://github.com/material-components/material-components-ios/commit/b558c28e34e4037475ade8fb4d8e0c78ca31294d) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Convert motion spec to an Objective-C static class. (#2452)](https://github.com/material-components/material-components-ios/commit/a4d0a8512accb2ed9678a9de37a2c3c84b26992f) (featherless)
+* [Make the motion spec values be class properties. (#2474)](https://github.com/material-components/material-components-ios/commit/fceb3e8314e1574d973a2b8f6ac5bf8e6d1bf27a) (featherless)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### Slider
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### Snackbar
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+
+### Tabs
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Selection indicator templates (#2384)](https://github.com/material-components/material-components-ios/commit/e558394e6eaf148bdd83704c42face9473fcaab8) (Brian Moore)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### TextFields
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [Reverting change that caused regression. (#2492)](https://github.com/material-components/material-components-ios/commit/8472a0ad799cad0fcb07460143e1fdb458146e85) (Will Larche)
+* [Use framework-style imports. (#2428)](https://github.com/material-components/material-components-ios/commit/c3615fa300e7fa2bc0cb188bf2caeced5cd33747) (Sylvain Defresne)
+* [[Kokoro] Support for TextFields, Math, and Typography (#2432)](https://github.com/material-components/material-components-ios/commit/1bd5590bbb19a28f1869733588535429b4642015) (Will Larche)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [[Themer] Updating the protocol generic syntax. (#2440)](https://github.com/material-components/material-components-ios/commit/d9e0811a819b463a128e8ece569ea5d6e444aed8) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Replace unnecessary imports with forward declarations (#2429)](https://github.com/material-components/material-components-ios/commit/2a966822308c5fb2416081480ebf59a5734f1b66) (Yurii Samsoniuk)
+* [[Kokoro] Support for TextFields, Math, and Typography (#2432)](https://github.com/material-components/material-components-ios/commit/1bd5590bbb19a28f1869733588535429b4642015) (Will Larche)
+
+# 40.0.3
+
+* [Chips] Fix private header import (#2434)
+
+# 40.0.2
+
+* Fix missing step from 40.0.1: update version numbers throughout library.
+
+# 40.0.1
+
+* [Catalog] Added Import to catalog’s AppDelegate.
+
+# 40.0.0
+
+## API Changes
+
+### Bottom Sheet
+
+* Added `trackingScrollView` property to support better dragging.
+
+### Chips (new)
+
+* Added [Chips](https://material.io/guidelines/components/chips.html).
+
+### LibraryInfo (new)
+
+* Added LibraryInfo for accessing information about the MDC library itself.
+
+### Tabs
+
+* Added `[MDCTabBar defaultHeightForBarPosition:itemAppearance:]`.
+
+### Text Fields
+
+* Refactored [color theming support](https://github.com/material-components/material-components-ios/pull/2416).
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Fix bug where outer rotation was incorrect in determinate state. (#2390)](https://github.com/material-components/material-components-ios/commit/c25d6e32485ea3837d5a333c79ce3ba18fc899a3) (featherless)
+* [Prefix the motion spec with the API name. (#2387)](https://github.com/material-components/material-components-ios/commit/13b0631515888140172ac8b923a40a541492a9fe) (featherless)
+* [Replace Motion relative imports with framework imports throughout the repo. (#2424)](https://github.com/material-components/material-components-ios/commit/30c9fcb84116ef47ec1d5e629dee06b85962f1aa) (featherless)
+* [[ProgressView|ActivityIndicator] Fix build (#2385)](https://github.com/material-components/material-components-ios/commit/114b2e28cd03218a0196663a2ba6ce937d0b8df8) (Brian Moore)
+
+### AppBar
+
+#### Changes
+
+* [[FlexibleHeader] Add hideViewWhenShifted API. (#2317)](https://github.com/material-components/material-components-ios/commit/f11269ad6b15cb50f9b137a4a0ff7512058166da) (Andrés)
+
+### BottomNavigation
+
+#### Changes
+
+* [Update bottom navigation bar defaults to match native component height and orientation behavior (#2411)](https://github.com/material-components/material-components-ios/commit/106de4a6bf8a719e9b1aa6f48e1a58da84af5f16) (Junius Gunaratne)
+
+### BottomSheet
+
+#### Changes
+
+* [Add BUILD file for kokoro + bazel support. (#2396)](https://github.com/material-components/material-components-ios/commit/5c87a3fd9a43cfdf57e14be69e743f3d3f27e351) (featherless)
+* [Add a trackingScrollView API to the bottom sheet controller. (#2420)](https://github.com/material-components/material-components-ios/commit/d30b396671021a9b540158c0ca446b8d174046d6) (featherless)
+* [Don't set the frame on the draggable view until we've set the anchor point. (#2399)](https://github.com/material-components/material-components-ios/commit/4907310d3453d7ff8768cc826c9abfe0312ef01a) (featherless)
+* [Remove umbrella imports from source files. (#2397)](https://github.com/material-components/material-components-ios/commit/dbeb67977f2615686a07095e42fa6d35aa0ca476) (featherless)
+* [Replace mdc_cancel category method with a C function. (#2398)](https://github.com/material-components/material-components-ios/commit/607b128566577bfd6974d9efe71d1e70b7b1b75d) (featherless)
+* [Safe Area fixes (#2392)](https://github.com/material-components/material-components-ios/commit/c6e8803c86ceb90bd48571408fb15b02caa9a891) (Andrés)
+
+### Chips
+
+#### Changes
+
+* [Chip component (#2389)](https://github.com/material-components/material-components-ios/commit/7c8131b672e9aa296f2dcde47d36d5faace268ee) (Sam Morrison)
+
+### Collections
+
+#### Changes
+
+* [Support SafeAreaInsets in MDCCollectionInfoBarView. (#2378)](https://github.com/material-components/material-components-ios/commit/8cda30a778236df51ae9da5a067476abc67f4862) (Andrés)
+* [Use MDCPalettes for info bar colors (#2364)](https://github.com/material-components/material-components-ios/commit/2f1921b64e6aed760fea68491a8ea5a2591713b6) (Yurii Samsoniuk)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add hideViewWhenShifted API. (#2317)](https://github.com/material-components/material-components-ios/commit/f11269ad6b15cb50f9b137a4a0ff7512058166da) (Andrés)
+
+### LibraryInfo
+
+#### Changes
+
+* [Add new LibraryInfo component (attempt #2) (#2412)](https://github.com/material-components/material-components-ios/commit/1a24b7cb9ed93f2e0196d0839e0e5fa11674a40f) (Adrian Secord)
+
+### MaskedTransition
+
+#### Changes
+
+* [Update the component with MotionAnimator v2 APIs. (#2386)](https://github.com/material-components/material-components-ios/commit/655712a616129dd4253091687e30892c47ffd814) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [Corrected comment that references file name of the strings file. (#2394)](https://github.com/material-components/material-components-ios/commit/e63e9ad595a2f87e2d965c44ede89b0a81ff1904) (Randall Li)
+
+### ProgressView
+
+#### Changes
+
+* [Replace Motion relative imports with framework imports throughout the repo. (#2424)](https://github.com/material-components/material-components-ios/commit/30c9fcb84116ef47ec1d5e629dee06b85962f1aa) (featherless)
+* [[ProgressView|ActivityIndicator] Fix build (#2385)](https://github.com/material-components/material-components-ios/commit/114b2e28cd03218a0196663a2ba6ce937d0b8df8) (Brian Moore)
+
+### Slider
+
+#### Changes
+
+* [Correct colors for slider default light color scheme (#2409)](https://github.com/material-components/material-components-ios/commit/74d700e466155aa3475241a83ae37c1973cb65cb) (John Detloff)
+* [Use MDCPalettes for default thumb track color (#2369)](https://github.com/material-components/material-components-ios/commit/f437e8187a405c9e320b647e66ca0b110e5ff8df) (Yurii Samsoniuk)
+
+### Tabs
+
+#### Changes
+
+* [Remove incorrect layout optimization (#2422)](https://github.com/material-components/material-components-ios/commit/c1397792ccca4f403ff51fbb026df64b44492228) (Brian Moore)
+* [Use bottom position when determining the bottom tab bar's height (#2375)](https://github.com/material-components/material-components-ios/commit/ba097149c4f4c1dd6f2161ca7f7994829273ba40) (Brian Moore)
+
+### TextFields
+
+#### Changes
+
+* [Complete theming of controllers (#2416)](https://github.com/material-components/material-components-ios/commit/93cc72187f8f376cf36747c06d6ecec328533bcb) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [[TextFields] Complete theming of controllers (#2416)](https://github.com/material-components/material-components-ios/commit/93cc72187f8f376cf36747c06d6ecec328533bcb) (Will Larche)
+
+# 39.0.0
+
+## API Changes
+
+### Animation Timing
+
+* Added the `MDCAnimationTimingFunctionSharp` timing function [from the spec](https://material.io/guidelines/motion/duration-easing.html#duration-easing-natural-easing-curves).
+
+### Bottom Navigation
+
+* Added `MDCBottomNavigationBarDelegate` with controls on selecting items.
+
+### Button
+
+* Added `minimumSize` and `maximumSize` properties.
+
+### Ink
+
+* Added `injectedInkViewForView` convenience function to find an ink view in a view hierarchy.
+
+### Slider
+
+* Added `disabledColor` property.
+
+### Text Fields
+
+* Added `MDCMultilineTextField` `expandsOnOverflow` and `placeholder` text properties.
+* The `MDCTextInput` `expandsOnOverflow` property is no longer IBInspectable.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Add a mode switch for the configurator example. (#2341)](https://github.com/material-components/material-components-ios/commit/26297be7d6a97c68caa0ea86a16893cec3de472a) (featherless)
+* [Extract motion spec and use the Material Motion Animator for all animations. (#2344)](https://github.com/material-components/material-components-ios/commit/8e6da0f4973b202f4f7334e33bd2747f7ff05bec) (featherless)
+* [Fix bug where the indeterminate animation stroke end would animate too quickly. (#2345)](https://github.com/material-components/material-components-ios/commit/4923871005b8756144c919c146478717e4f7042b) (featherless)
+* [Implement sizeThatFits on MDCActivityIndicator (#2380)](https://github.com/material-components/material-components-ios/commit/bfe59c010f8eb28cec3a02f5498e712575fa91dd) (John Detloff)
+* [Initial addition of kokoro and bazel continuous integration support. (#2316)](https://github.com/material-components/material-components-ios/commit/4ef8b6fdae7a92eca730eee1f9ad669f19dbc053) (featherless)
+* [Remove ActivityIndicator prefix from local static consts. (#2342)](https://github.com/material-components/material-components-ios/commit/7ed14b83b91d51c2479534cf02080b3fcb960cbd) (featherless)
+
+### AnimationTiming
+
+#### Changes
+
+* [Add the sharp curve. (#2329)](https://github.com/material-components/material-components-ios/commit/7b86769656def213e5f543835c7653d6570a8121) (Cody Weaver)
+* [Initial addition of kokoro and bazel continuous integration support. (#2316)](https://github.com/material-components/material-components-ios/commit/4ef8b6fdae7a92eca730eee1f9ad669f19dbc053) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [ Add protocol for responding to item selection (#2372)](https://github.com/material-components/material-components-ios/commit/9788a65695ee55d3772e0e5a1bb70f543cde20e7) (Junius Gunaratne)
+* [Add bottom navigation documentation (#2313)](https://github.com/material-components/material-components-ios/commit/b218a0a379c74d4a247c14b8581d737c3f40bce5) (Junius Gunaratne)
+* [Add color themer to bottom navigation bar (#2239)](https://github.com/material-components/material-components-ios/commit/4ada8e028a40a129ee41d2728ee5fd4415966d70) (Junius Gunaratne)
+* [Fix example using iOS 10 API (#2357)](https://github.com/material-components/material-components-ios/commit/798f44762da90eef3fed6faffdd258ab28a65f28) (Robert Moore)
+
+### Buttons
+
+#### Changes
+
+* [Add properties minimumSize, maximumSize (#2254)](https://github.com/material-components/material-components-ios/commit/5bba61686c083155e5ac1ec8d332c58ab792b541) (Robert Moore)
+* [Deprecate -cornerRadius method (#2256)](https://github.com/material-components/material-components-ios/commit/4e02cc19b82a90782a8d9fbc26aaf1298e67d3da) (Robert Moore)
+
+### CollectionCells
+
+#### Changes
+
+* [[Collections] Change image when accessoryType changes (#2354)](https://github.com/material-components/material-components-ios/commit/5b33ae0c0b9eec9c0b7d5296535e80a14a397733) (Robert Moore)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix bug where status bar visibility changes could cause the header size to jump. (#2321)](https://github.com/material-components/material-components-ios/commit/7e35618d2ae89a00228fe7ff3efb2399913c3c12) (featherless)
+* [Fix jumping header behavior when shifting off-screen. (#2327)](https://github.com/material-components/material-components-ios/commit/28518354cf717a3d236213a43f9043ead75546e8) (featherless)
+* [[FlexibleHeader+UIMetrics] Add BUILD file. (#2323)](https://github.com/material-components/material-components-ios/commit/eed027106ba71609116706ef2ea70460750c1f88) (featherless)
+* [updating FlexibleHeader readme (#2318)](https://github.com/material-components/material-components-ios/commit/9175d84dd34706290e80967ce776d261f65c3f3a) (Martin Petrov)
+
+### Ink
+
+#### Changes
+
+* [Add BUILD file. (#2330)](https://github.com/material-components/material-components-ios/commit/cc7033f8575c118dfecf9a1c588a322269719b45) (featherless)
+* [Moved InkTouchController injectedInkViewForView: from catalog to Ink component (#2332)](https://github.com/material-components/material-components-ios/commit/fa90fc349506bc0f6e6a14f07d89467ce922c5ab) (Randall Li)
+
+### MaskedTransition
+
+#### Changes
+
+* [Fix imports of private headers (#2331)](https://github.com/material-components/material-components-ios/commit/4d49d02d13c15d0a6aa2b9dac9e11aa0e68d7893) (Robert Moore)
+
+### PageControl
+
+#### Changes
+
+* [Removed unused ColorFromRGB function (#2365)](https://github.com/material-components/material-components-ios/commit/342b19a67b8c2b172ad0ebc672a2d49c4b033619) (Yurii Samsoniuk)
+
+### Palettes
+
+#### Changes
+
+* [Initial addition of kokoro and bazel continuous integration support. (#2316)](https://github.com/material-components/material-components-ios/commit/4ef8b6fdae7a92eca730eee1f9ad669f19dbc053) (featherless)
+
+### ProgressView
+
+#### Changes
+
+* [Add a motion spec and use new implicit motion animator APIs (#2363)](https://github.com/material-components/material-components-ios/commit/d8919eb8a2ab64eb60968610f11f28b6eef727a5) (featherless)
+* [Use MDCPalettes for default tint color (#2368)](https://github.com/material-components/material-components-ios/commit/3e0adf5acfe7bc86fdea3fb36150c4fc19e5d95e) (Yurii Samsoniuk)
+
+### Slider
+
+#### Changes
+
+* [Create default light and dark color schemes for MDCSlider (#2362)](https://github.com/material-components/material-components-ios/commit/b9218a2e7562ae91007a580974a45deaa8863729) (John Detloff)
+
+### TextFields
+
+#### Changes
+
+* [Adding a constraints update when the placeholder scale changes. (#2367)](https://github.com/material-components/material-components-ios/commit/b5dc8a79e4c067638346af258003cedea239d3e7) (Will Larche)
+* [Correcting alphabetizing of some code. (#2343)](https://github.com/material-components/material-components-ios/commit/336d830895e2a633cde9414e53d5a9734c067bff) (Will Larche)
+* [Fix multiline placeholder position and transform bug. PR #2 (#2360)](https://github.com/material-components/material-components-ios/commit/e13fa143a59f548d2adc80a6fb313cf29c94a4e4) (Will Larche)
+* [Fixes bugs on multiline IB support (#2289)](https://github.com/material-components/material-components-ios/commit/282754e7a90aeec008365ac75b8985626a462d88) (Will Larche)
+* [Some useful comments. (#2366)](https://github.com/material-components/material-components-ios/commit/0bcae8d882fcca8219929116805af8acd20a3513) (Will Larche)
+
+
 # 38.1.1
 
 No code changes. Added a missing dependency to the BottomNavigation component found after the 38.1.0 release was published.

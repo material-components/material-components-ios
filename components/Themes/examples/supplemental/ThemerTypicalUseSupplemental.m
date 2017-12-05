@@ -19,13 +19,13 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import <Foundation/Foundation.h>
-
 #import "ThemerTypicalUseSupplemental.h"
+
+#import "MaterialDialogs.h"
 
 @implementation ThemerTypicalUseViewController (Supplemental)
 
-- (instancetype)initWithColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
+- (instancetype)initWithColorScheme:(id<MDCColorScheme>)colorScheme {
   self = [super init];
   if (self) {
     [self setupAppBar];

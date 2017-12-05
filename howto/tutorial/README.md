@@ -374,7 +374,7 @@ First, add a function to ViewController that will be called when the button is t
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-func barButtonDidTap(sender: UIBarButtonItem) {
+func barButtonDidTap(_ sender: UIBarButtonItem) {
   editor.isEditing = !editor.isEditing
 
   let buttonTitle =  editor.isEditing ? "Cancel" : "Edit"
@@ -454,7 +454,7 @@ class ViewController: MDCCollectionViewController {
 
   ...
 
-  func fabDidTap(sender: UIButton) {
+  func fabDidTap(_ sender: UIButton) {
     sender.isSelected = !sender.isSelected
   }
 ```
@@ -509,8 +509,7 @@ override func viewDidLoad() {
 
   self.fab.translatesAutoresizingMaskIntoConstraints = NO;
   [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-16.0].active = YES;
-  [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -16.0].active = YES;
-  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant: -16.0].active = YES;
+  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-16.0].active = YES;
 }
 ```
 <!--</div>-->
@@ -597,13 +596,13 @@ class ViewController: MDCCollectionViewController {
     fab.addTarget(self, action: #selector(ViewController.fabDidTap(_:)), for: .touchUpInside)
   }
 
-  func barButtonDidTap(sender: UIBarButtonItem) {
+  func barButtonDidTap(_ sender: UIBarButtonItem) {
     editor.isEditing = !editor.isEditing
 
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(_:)))
   }
 
-  func fabDidTap(sender: UIButton) {
+  func fabDidTap(_ sender: UIButton) {
     sender.isSelected = !sender.isSelected
   }
 
@@ -698,8 +697,7 @@ class ViewController: MDCCollectionViewController {
 
   self.fab.translatesAutoresizingMaskIntoConstraints = NO;
   [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-16.0].active = YES;
-  [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -16.0].active = YES;
-  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant: -16.0].active = YES;
+  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-16.0].active = YES;
 
   [self.fab setTitle:@"+" forState:UIControlStateNormal];
   [self.fab setTitle:@"-" forState:UIControlStateSelected];

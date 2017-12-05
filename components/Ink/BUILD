@@ -26,6 +26,9 @@ mdc_public_objc_library(
         "QuartzCore",
         "UIKit",
     ],
+    deps = [
+      "//components/private/Math",
+    ],
 )
 
 mdc_objc_library(

@@ -16,11 +16,15 @@
 
 #import "MDCAppBarButtonBarBuilder.h"
 
-#import "MDCButtonBar+Private.h"
-#import "MDFInternationalization.h"
-#import "MaterialButtons.h"
-
 #import <objc/runtime.h>
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#else
+#import <MDFInternationalization/MDFInternationalization.h>
+#endif  // IS_BAZEL_BUILD
+
+#import "MaterialButtons.h"
+#import "MDCButtonBar+Private.h"
 
 static const CGFloat kMinimumItemWidth = 36.f;
 

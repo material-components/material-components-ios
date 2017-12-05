@@ -16,11 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderPageControlSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialPageControl.h"
+#import "supplemental/FlexibleHeaderPageControlSupplemental.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
@@ -105,7 +104,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   NSMutableArray *pages = [NSMutableArray array];
 
   // Add pages to scrollView.
-  for (NSInteger i = 0; i < pageColors.count; i++) {
+  for (NSUInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(pageScrollViewFrame, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %zd", i + 1];

@@ -36,6 +36,7 @@
   newStyle.defaultHeight = _defaultHeight;
   newStyle.shouldDisplaySelectionIndicator = _shouldDisplaySelectionIndicator;
   newStyle.selectionIndicatorColor = _selectionIndicatorColor;
+  newStyle.selectionIndicatorTemplate = _selectionIndicatorTemplate;
   newStyle.maximumItemWidth = _maximumItemWidth;
   newStyle.shouldDisplayTitle = _shouldDisplayTitle;
   newStyle.shouldDisplayImage = _shouldDisplayImage;
@@ -43,7 +44,8 @@
   newStyle.shouldGrowOnSelection = _shouldGrowOnSelection;
   newStyle.titleColor = _titleColor;
   newStyle.selectedTitleColor = _selectedTitleColor;
-  newStyle.titleFont = _titleFont;
+  newStyle.selectedTitleFont = _selectedTitleFont;
+  newStyle.unselectedTitleFont = _unselectedTitleFont;
   newStyle.inkStyle = _inkStyle;
   newStyle.inkColor = _inkColor;
   newStyle.titleImagePadding = _titleImagePadding;

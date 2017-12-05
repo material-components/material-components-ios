@@ -19,10 +19,11 @@ limitations under the License.
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialHeaderStackView.h"
+#import "MaterialNavigationBar.h"
+
 @class ExampleInstructionsViewHeaderStackViewTypicalUse;
 @class HeaderStackViewTypicalUse;
-@class MDCHeaderStackView;
-@class MDCNavigationBar;
 
 @interface HeaderStackViewTypicalUse : UIViewController
 
