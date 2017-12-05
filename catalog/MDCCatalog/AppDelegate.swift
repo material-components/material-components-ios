@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
 
     MDCTextFieldColorThemer.apply(colorScheme,
-                                  toAllControllersOfClass: MDCTextInputControllerDefault.self)
+                                  toAllControllersOfClass: MDCTextInputControllerUnderline.self)
     MDCTextFieldColorThemer.apply(colorScheme,
                                   toAllControllersOfClass: MDCTextInputControllerLegacyDefault.self)
     MDCTextFieldColorThemer.apply(colorScheme,
