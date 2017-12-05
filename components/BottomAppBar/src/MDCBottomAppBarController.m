@@ -21,7 +21,6 @@
                                          UIGestureRecognizerDelegate>
 
 @property(nonatomic, strong) MDCBottomSheetController *bottomSheet;
-@property(nonatomic, assign) CGPoint originPoint;
 @property(nonatomic, strong) UINavigationController *navController;
 
 @end
@@ -78,7 +77,6 @@
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  _originPoint = _bottomBarView.center;
   
   CGSize size = [_bottomBarView sizeThatFits:self.view.frame.size];
   CGRect bottomBarViewFrame = CGRectMake(0,
@@ -115,7 +113,9 @@
   if (controller) {
     [self.bottomBarView setFloatingButtonHidden:NO animated:YES];
     [UIView animateWithDuration:0.180f animations:^{
-      self.bottomBarView.center = self.originPoint;
+      self.bottomBarView.center = CGPointMake(CGRectGetMidX(self.view.bounds),
+                                              CGRectGetMidY(self.view.bounds) +
+                                              CGRectGetHeight(self.view.bounds) / 2 - 48);
     }];
   }
 }
