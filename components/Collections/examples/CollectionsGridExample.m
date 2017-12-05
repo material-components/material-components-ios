@@ -21,7 +21,7 @@ static const NSInteger kSectionItemCount = 4;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsGridExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
   UIAlertController *_actionController;
 }
 
@@ -65,7 +65,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return [(NSArray *)_content[section] count];
+  return [_content[section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView

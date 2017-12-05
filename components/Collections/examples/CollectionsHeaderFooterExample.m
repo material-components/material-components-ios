@@ -22,7 +22,7 @@ static const NSInteger kSectionItemCount = 2;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsHeaderFooterExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
 }
 
 - (void)viewDidLoad {
@@ -65,7 +65,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return [(NSArray *)_content[section] count];
+  return [_content[section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
