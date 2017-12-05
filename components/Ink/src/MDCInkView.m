@@ -153,16 +153,6 @@
     inkLayer.inkColor = self.inkColor;
     inkLayer.maxRippleRadius = self.maxRippleRadius;
     inkLayer.animationDelegate = self;
-
-    switch (self.inkStyle) {
-      case MDCInkStyleBounded:
-        self.clipsToBounds = YES;
-        break;
-      case MDCInkStyleUnbounded:
-        self.clipsToBounds = NO;
-        break;
-    }
-
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
     [self.layer addSublayer:inkLayer];
