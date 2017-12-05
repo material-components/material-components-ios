@@ -65,7 +65,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return [_content[section] count];
+  return [(NSArray *)_content[section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
