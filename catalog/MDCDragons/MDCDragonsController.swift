@@ -145,7 +145,7 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
 //                                    height: Constants.logoWidthHeight),
 //                             { MDCCatalogDrawMDCLogoLight($0, $1) },
 //                             appDelegate.colorScheme)
-    let image = MDCDrawDragons.image(with: MDCDrawDragons.drawDragon(), size: CGSize(width: 40, height: 40))
+    let image = MDCDrawDragons.image(with: MDCDrawDragons.drawDragon, size: CGSize(width: 100, height: 100))
     logo.image = image
     
     NSLayoutConstraint(item: logo,
