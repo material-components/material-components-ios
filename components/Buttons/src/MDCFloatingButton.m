@@ -23,14 +23,14 @@
 
 static const CGFloat MDCFloatingButtonDefaultDimension = 56;
 static const CGFloat MDCFloatingButtonMiniDimension = 40;
-static const CGFloat MDCFloatingButtonDefaultImageTitleSpacing = 8;
+static const CGFloat MDCFloatingButtonDefaultImageTitleSpace = 8;
 static const UIEdgeInsets internalLayoutSpacingInsets = (UIEdgeInsets){0, 16, 0, 24};
 
 static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
 static NSString *const MDCFloatingButtonImageLocationKey = @"MDCFloatingButtonImageLocationKey";
-static NSString *const MDCFloatingButtonImageTitleSpacingKey =
-    @"MDCFloatingButtonImageTitleSpacingKey";
+static NSString *const MDCFloatingButtonImageTitleSpaceKey =
+    @"MDCFloatingButtonImageTitleSpaceKey";
 static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey =
     @"MDCFloatingButtonMinimumSizeDictionaryKey";
 static NSString *const MDCFloatingButtonMaximumSizeDictionaryKey =
@@ -118,9 +118,9 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
     if ([aDecoder containsValueForKey:MDCFloatingButtonImageLocationKey]) {
       _imageLocation = [aDecoder decodeIntegerForKey:MDCFloatingButtonImageLocationKey];
     }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonImageTitleSpacingKey]) {
-      _imageTitleSpacing =
-          (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingButtonImageTitleSpacingKey];
+    if ([aDecoder containsValueForKey:MDCFloatingButtonImageTitleSpaceKey]) {
+      _imageTitleSpace =
+          (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingButtonImageTitleSpaceKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonMinimumSizeDictionaryKey]) {
       _shapeToModeToMinimumSize = (NSMutableDictionary *)
@@ -149,7 +149,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   [aCoder encodeInteger:_shape forKey:MDCFloatingButtonShapeKey];
   [aCoder encodeInteger:self.mode forKey:MDCFloatingButtonModeKey];
   [aCoder encodeInteger:self.imageLocation forKey:MDCFloatingButtonImageLocationKey];
-  [aCoder encodeDouble:self.imageTitleSpacing forKey:MDCFloatingButtonImageTitleSpacingKey];
+  [aCoder encodeDouble:self.imageTitleSpace forKey:MDCFloatingButtonImageTitleSpaceKey];
   [aCoder encodeObject:self.shapeToModeToMinimumSize
                 forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
   [aCoder encodeObject:self.shapeToModeToMaximumSize
@@ -161,7 +161,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
 }
 
 - (void)commonMDCFloatingButtonInit {
-  _imageTitleSpacing = MDCFloatingButtonDefaultImageTitleSpacing;
+  _imageTitleSpace = MDCFloatingButtonDefaultImageTitleSpace;
 
   const CGSize miniNormalSize = CGSizeMake(MDCFloatingButtonMiniDimension,
                                            MDCFloatingButtonMiniDimension);
@@ -238,7 +238,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   const CGSize intrinsicImageSize =
       [self.imageView sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat intrinsicWidth = intrinsicTitleSize.width + intrinsicImageSize.width +
-      self.imageTitleSpacing + internalLayoutSpacingInsets.left +
+      self.imageTitleSpace + internalLayoutSpacingInsets.left +
       internalLayoutSpacingInsets.right + self.contentEdgeInsets.left +
       self.contentEdgeInsets.right;
   CGFloat intrinsicHeight = MAX(intrinsicTitleSize.height, intrinsicImageSize.height) +
@@ -309,7 +309,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   const CGFloat boundsCenterY = CGRectGetMidY(insetBounds);
   CGFloat titleWidthAvailable = CGRectGetWidth(insetBounds);
   titleWidthAvailable -= imageViewWidth;
-  titleWidthAvailable -= self.imageTitleSpacing;
+  titleWidthAvailable -= self.imageTitleSpace;
 
   const CGFloat availableHeight = CGRectGetHeight(insetBounds);
   CGSize titleIntrinsicSize =
