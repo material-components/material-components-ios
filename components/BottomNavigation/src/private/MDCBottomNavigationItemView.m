@@ -123,9 +123,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)centerLayoutAnimated:(bool)animated {
   if (self.titleBelowIcon) {
     CGPoint iconImageViewCenter =
-        CGPointMake(CGRectGetMidX(self.bounds),
-                    CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) / 2 +
-                    CGRectGetHeight(self.iconImageView.bounds) / 2 +
+        CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.iconImageView.bounds) / 2 +
                     kMDCBottomNavigationItemViewItemInset);
     BOOL titleVisibilityNever = self.selected &&
         self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever;
@@ -141,10 +139,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
         CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.iconImageView.bounds) / 2,
                     iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
     self.label.center =
-        CGPointMake(CGRectGetMidX(self.bounds),
-                    CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) / 2 -
-                    CGRectGetHeight(self.label.bounds) / 2 -
-                    kMDCBottomNavigationItemViewItemInset);
+        CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.bounds) -
+                    CGRectGetHeight(self.label.bounds) / 2 - kMDCBottomNavigationItemViewItemInset);
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
         self.iconImageView.center = iconImageViewCenter;
