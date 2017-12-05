@@ -14,24 +14,16 @@
  limitations under the License.
  */
 
-#import "ChipsFieldExampleViewController.h"
+#import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
 #import "MaterialTextFields.h"
 
-@interface ChipsFieldExampleViewController () <MDCChipFieldDelegate>
+@interface ChipsInputExampleViewController () <MDCChipFieldDelegate>
 @end
 
-@implementation ChipsFieldExampleViewController {
+@implementation ChipsInputExampleViewController {
   MDCChipField *_chipField;
-}
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Input" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Use chips in a text field.";
 }
 
 - (void)viewDidLoad {
