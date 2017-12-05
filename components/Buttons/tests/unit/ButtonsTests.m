@@ -505,7 +505,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testAlphaRestoredWhenReenabled {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];
-  CGFloat alpha = 0.5;
+  CGFloat alpha = (CGFloat)0.5;
 
   // When
   button.alpha = alpha;
@@ -519,7 +519,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testEnabledAlphaNotSetWhileDisabled {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];
-  CGFloat alpha = 0.2;
+  CGFloat alpha = (CGFloat)0.2;
 
   // When
   button.alpha = alpha;
@@ -528,7 +528,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.enabled = YES;
 
   // Then
-  XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
+  XCTAssertEqualWithAccuracy(alpha, button.alpha, (CGFloat)0.0001);
 }
 
 - (void)testDisabledAlpha {
@@ -541,7 +541,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.enabled = NO;
 
   // Then
-  XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
+  XCTAssertEqualWithAccuracy(alpha, button.alpha, (CGFloat)0.0001);
 }
 
 - (void)testEncode {
@@ -549,13 +549,13 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] init];
   button.inkStyle = arc4random_uniform(2) ? MDCInkStyleBounded : MDCInkStyleUnbounded;
   button.inkMaxRippleRadius = randomNumber();
-  button.uppercaseTitle = arc4random_uniform(2) ? YES : NO;
+  button.uppercaseTitle = (BOOL)arc4random_uniform(2) ? YES : NO;
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
   button.minimumSize = CGSizeMake(15, 33);
   button.maximumSize = CGSizeMake(17, 41);
-  CGFloat buttonAlpha = 0.5;
+  CGFloat buttonAlpha = (CGFloat)0.5;
   button.alpha = buttonAlpha;
   button.enabled = NO;
 
@@ -592,9 +592,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertTrue(CGSizeEqualToSize(button.minimumSize, unarchivedButton.minimumSize));
   XCTAssertTrue(CGSizeEqualToSize(button.maximumSize, unarchivedButton.maximumSize));
   XCTAssertEqual(button.enabled, unarchivedButton.enabled);
-  XCTAssertEqualWithAccuracy(button.alpha, unarchivedButton.alpha, 0.0001);
+  XCTAssertEqualWithAccuracy(button.alpha, unarchivedButton.alpha, (CGFloat)0.0001);
   unarchivedButton.enabled = YES;
-  XCTAssertEqualWithAccuracy(buttonAlpha, unarchivedButton.alpha, 0.0001);
+  XCTAssertEqualWithAccuracy(buttonAlpha, unarchivedButton.alpha, (CGFloat)0.0001);
 
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button elevationForState:controlState],
@@ -637,11 +637,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 50)];
 
   CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
-  CGPoint touchPointInsideBoundsTopRight = CGPointMake(79.9, 0);
-  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(79.9, 49.9);
-  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 49.9);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake((CGFloat)79.9, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake((CGFloat)79.9, (CGFloat)49.9);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, (CGFloat)49.9);
 
-  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, -0.1);
+  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, (CGFloat)-0.1);
   CGPoint touchPointOutsideBoundsTopRight = CGPointMake(80, 0);
   CGPoint touchPointOutsideBoundsBottomRight = CGPointMake(80, 50);
   CGPoint touchPointOutsideBoundsBottomLeft = CGPointMake(0, 50);
@@ -663,11 +663,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
 
   CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
-  CGPoint touchPointInsideBoundsTopRight = CGPointMake(9.9, 0);
-  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(9.9, 9.9);
-  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 9.9);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake((CGFloat)9.9, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake((CGFloat)9.9, (CGFloat)9.9);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, (CGFloat)9.9);
 
-  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, -0.1);
+  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, (CGFloat)-0.1);
   CGPoint touchPointOutsideBoundsTopRight = CGPointMake(10, 0);
   CGPoint touchPointOutsideBoundsBottomRight = CGPointMake(10, 10);
   CGPoint touchPointOutsideBoundsBottomLeft = CGPointMake(0, 10);
@@ -689,11 +689,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
 
   CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-5, -5);
-  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(-5, 14.9);
-  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9, 14.9);
-  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(14.9, -5);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(-5, (CGFloat)14.9);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake((CGFloat)14.9, (CGFloat)14.9);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake((CGFloat)14.9, -5);
 
-  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake(-5.1, -5);
+  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake((CGFloat)-5.1, -5);
   CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(-5, 15);
   CGPoint touchPointOutsideHitAreaBottomRight = CGPointMake(15, 15);
   CGPoint touchPointOutsideHitAreaBottomLeft = CGPointMake(15, -5);
@@ -722,11 +722,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   UIEdgeInsets insets = UIEdgeInsetsMake(-10, -5, -10, -5);
 
   CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-15, -20);
-  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(14.9, -20);
-  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9, 19.9);
-  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(-15, 19.9);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake((CGFloat)14.9, -20);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake((CGFloat)14.9, (CGFloat)19.9);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(-15, (CGFloat)19.9);
 
-  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake(-15.1, -20);
+  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake((CGFloat)-15.1, -20);
   CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(20, -20);
   CGPoint touchPointOutsideHitAreaBottomRight = CGPointMake(15, 20);
   CGPoint touchPointOutsideHitAreaBottomLeft = CGPointMake(-15, 20);
@@ -799,9 +799,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testEnabled {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.enabled = YES;
@@ -814,9 +814,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testDisabled {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.enabled = NO;
@@ -830,7 +830,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.highlighted = NO;
-  button.selected = arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
 
   // For some reason we can only set the highlighted state to YES if its enabled is also YES.
   button.enabled = YES;
@@ -851,8 +851,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.highlighted = YES;
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
   UIControlState oldState = button.state;
   XCTAssertTrue(button.highlighted);
 
@@ -868,9 +868,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testSelected {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
   button.selected = NO;
-  button.enabled = arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
   UIControlState oldState = button.state;
 
   // When
@@ -885,9 +885,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testUnselected {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
   button.selected = YES;
-  button.enabled = arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.selected = NO;
