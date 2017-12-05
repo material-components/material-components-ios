@@ -65,7 +65,9 @@ static NSString *s_secondaryColorString;
     rangeStep = 1;
   }
 
-  unsigned int tempRed, tempGreen, tempBlue;
+  unsigned int tempRed = 0;
+  unsigned int tempGreen = 0;
+  unsigned int tempBlue = 0;
   NSScanner *scanner =
       [NSScanner scannerWithString:[string substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
   rangeStart += rangeStep;
