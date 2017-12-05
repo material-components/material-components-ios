@@ -58,7 +58,7 @@
   _bottomBarView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
   [self.view addSubview:_bottomBarView];
-  
+
   UIViewController *bottomSheetViewController = [[UIViewController alloc] init];
   bottomSheetViewController.view.backgroundColor = [UIColor whiteColor];
 
@@ -77,7 +77,7 @@
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  
+
   CGSize size = [_bottomBarView sizeThatFits:self.view.frame.size];
   CGRect bottomBarViewFrame = CGRectMake(0,
                                          self.view.frame.size.height - size.height,
@@ -106,7 +106,6 @@
   }];
 
   [self presentViewController:_bottomSheet animated:YES completion:nil];
-  
 }
 
 - (void)bottomSheetControllerDidDismissBottomSheet:(MDCBottomSheetController *)controller {
