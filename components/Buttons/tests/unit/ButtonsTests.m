@@ -549,7 +549,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] init];
   button.inkStyle = arc4random_uniform(2) ? MDCInkStyleBounded : MDCInkStyleUnbounded;
   button.inkMaxRippleRadius = randomNumber();
-  button.uppercaseTitle = arc4random_uniform(2) ? YES : NO;
+  button.uppercaseTitle = (BOOL)arc4random_uniform(2) ? YES : NO;
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
@@ -799,9 +799,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testEnabled {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.enabled = YES;
@@ -814,9 +814,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testDisabled {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.enabled = NO;
@@ -830,7 +830,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.highlighted = NO;
-  button.selected = arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
 
   // For some reason we can only set the highlighted state to YES if its enabled is also YES.
   button.enabled = YES;
@@ -851,8 +851,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.highlighted = YES;
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
   UIControlState oldState = button.state;
   XCTAssertTrue(button.highlighted);
 
@@ -868,9 +868,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testSelected {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
   button.selected = NO;
-  button.enabled = arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
   UIControlState oldState = button.state;
 
   // When
@@ -885,9 +885,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testUnselected {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
   button.selected = YES;
-  button.enabled = arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.selected = NO;
