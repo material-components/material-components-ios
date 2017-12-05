@@ -14,5 +14,20 @@
  limitations under the License.
  */
 
-#import "MDCBottomAppBarController.h"
+#import <UIKit/UIKit.h>
+
 #import "MDCBottomAppBarView.h"
+
+@interface MDCBottomAppBarController : UIViewController
+
+@property(nonatomic, strong, nonnull) MDCBottomAppBarView *bottomBarView;
+
+@property(nonatomic, strong, nonnull) NSArray<UIViewController *> *viewControllers;
+
+- (void)pushViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated;
+
+- (void)popViewControllerAnimated:(BOOL)animated;
+
+- (void)presentBottomSheet;
+
+@end

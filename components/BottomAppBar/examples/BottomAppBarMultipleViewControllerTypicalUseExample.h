@@ -14,5 +14,12 @@
  limitations under the License.
  */
 
-#import "MDCBottomAppBarController.h"
-#import "MDCBottomAppBarView.h"
+#import <UIKit/UIKit.h>
+
+#import "MaterialBottomAppBar.h"
+
+@interface BottomAppBarMultipleViewControllerTypicalUseExample : UIViewController
+
+@property(nonatomic, strong) MDCBottomAppBarView *bottomBarView;
+
+@end
