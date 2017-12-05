@@ -39,23 +39,28 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_public_objc_library(
+mdc_objc_library(
     name = "ColorThemer",
     srcs = native.glob(["src/ColorThemer/*"]),
     hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["srcs"],
     deps = [
         ":Buttons",
         "//components/Themes",
     ],
+    visibility = ["//visibility:public"],
 )
 
-mdc_public_objc_library(
-  name = "TitleColorAccessibilityMutator",
-  srcs = native.glob(["src/TitleColorAccessibilityMutator/*"]),
-  hdrs = native.globe(["src/TitleColorAccessibilityMutator/*.h"]),
-  deps = [
-      "@material_text_accessibility_ios//:MDFTextAccessibility",
-  ],
+mdc_objc_library(
+    name = "TitleColorAccessibilityMutator",
+    srcs = native.glob(["src/TitleColorAccessibilityMutator/*"]),
+    hdrs = native.globe(["src/TitleColorAccessibilityMutator/*.h"]),
+    includes = ["srcs"],
+    deps = [
+        ":Buttons",
+        "@material_text_accessibility_ios//:MDFTextAccessibility",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -100,4 +105,3 @@ ios_unit_test(
     minimum_os_version = "8.0",
     visibility = ["//visibility:private"],
 )
-
