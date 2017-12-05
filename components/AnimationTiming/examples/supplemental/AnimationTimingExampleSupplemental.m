@@ -45,7 +45,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 @implementation AnimationTimingExample (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
   self.title = @"Animation Timing";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -144,11 +144,11 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   dispatch_once(&onceToken, ^{
     UIColor *primaryColor = [UIColor darkGrayColor];
     defaultColors = @[
-      [primaryColor colorWithAlphaComponent:0.8],
-      [primaryColor colorWithAlphaComponent:0.65],
-      [primaryColor colorWithAlphaComponent:0.5],
-      [primaryColor colorWithAlphaComponent:0.35],
-      [primaryColor colorWithAlphaComponent:0.2]
+      [primaryColor colorWithAlphaComponent:0.8f],
+      [primaryColor colorWithAlphaComponent:0.65f],
+      [primaryColor colorWithAlphaComponent:0.5f],
+      [primaryColor colorWithAlphaComponent:0.35f],
+      [primaryColor colorWithAlphaComponent:0.2f]
     ];
   });
   return defaultColors;
