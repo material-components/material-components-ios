@@ -17,13 +17,14 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCBottomNavigationBar.h"
+#import "MaterialInk.h"
 
 @interface MDCBottomNavigationItemView : UIView
 
-@property(nonatomic, assign) BOOL circleHighlightHidden;
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
+@property(nonatomic, strong) MDCInkView *inkView;
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
