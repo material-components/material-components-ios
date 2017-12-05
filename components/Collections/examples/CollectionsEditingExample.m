@@ -77,7 +77,7 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return [_content[section] count];
+  return [(NSArray *)_content[section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
