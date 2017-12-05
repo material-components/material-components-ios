@@ -77,7 +77,8 @@
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
 
   // When bounds change ensure all ink layer bounds are changed too.
-  for (CALayer *layer in self.layer.sublayers) {
+  NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
+  for (CALayer *layer in sublayers) {
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
@@ -185,7 +186,8 @@
   if (self.usesLegacyInkRipple) {
     [self.inkLayer resetAllInk:animated];
   } else {
-    for (CALayer *layer in self.layer.sublayers) {
+    NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
+    for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCInkLayer class]]) {
         MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
         if (animated) {
