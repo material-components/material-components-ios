@@ -54,7 +54,7 @@ mdc_objc_library(
 mdc_objc_library(
     name = "TitleColorAccessibilityMutator",
     srcs = native.glob(["src/TitleColorAccessibilityMutator/*"]),
-    hdrs = native.globe(["src/TitleColorAccessibilityMutator/*.h"]),
+    hdrs = native.glob(["src/TitleColorAccessibilityMutator/*.h"]),
     includes = ["srcs"],
     deps = [
         ":Buttons",
