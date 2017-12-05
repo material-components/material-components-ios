@@ -22,7 +22,11 @@
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
+#ifdef IS_BAZEL_BUILD
+#import "MDFInternationalization.h"
+#else
 #import <MDFInternationalization/MDFInternationalization.h>
+#endif  // IS_BAZEL_BUILD
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
 
