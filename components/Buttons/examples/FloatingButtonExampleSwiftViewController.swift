@@ -115,15 +115,15 @@ extension FloatingButtonExampleSwiftViewController {
 }
 
 extension FloatingButtonExampleSwiftViewController {
-  func updateFloatingButtons(to mode: MDCFloatingButtonMode) {
-    if (miniFloatingButton.mode != mode) {
-      miniFloatingButton.mode = mode
+  func updateFloatingButtons(to mode: MDCFloatingButtonExpandedMode) {
+    if (miniFloatingButton.mdc_expandedMode != mode) {
+      miniFloatingButton.mdc_expandedMode = mode
     }
-    if (defaultFloatingButton.mode != mode) {
-      defaultFloatingButton.mode = mode
+    if (defaultFloatingButton.mdc_expandedMode != mode) {
+      defaultFloatingButton.mdc_expandedMode = mode
     }
-    if (largeIconFloatingButton.mode != mode) {
-      largeIconFloatingButton.mode = mode
+    if (largeIconFloatingButton.mdc_expandedMode != mode) {
+      largeIconFloatingButton.mdc_expandedMode = mode
     }
   }
 

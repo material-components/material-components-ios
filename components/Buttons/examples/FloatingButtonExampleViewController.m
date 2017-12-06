@@ -46,7 +46,7 @@
   [self.miniFloatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
                                  forShape:MDCFloatingButtonShapeMini
-                                   inMode:MDCFloatingButtonModeExpanded];
+                                   inMode:MDCFloatingButtonExpandedModeExpanded];
 
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   self.defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -57,7 +57,7 @@
   [self.largeIconFloatingButton setImage:plusImage36 forState:UIControlStateNormal];
   [self.largeIconFloatingButton setContentEdgeInsets:UIEdgeInsetsMake(-6, -6, -6, 0)
                                             forShape:MDCFloatingButtonShapeDefault
-                                              inMode:MDCFloatingButtonModeExpanded];
+                                              inMode:MDCFloatingButtonExpandedModeExpanded];
 
   [self.view addSubview:self.iPadLabel];
   [self.view addSubview:self.miniFloatingButton];
@@ -114,18 +114,18 @@
 
 - (void)updateFloatingButtonsWhenSizeClassIsRegularRegular:(BOOL)isRegularRegular {
   if (isRegularRegular) {
-    self.miniFloatingButton.mode = MDCFloatingButtonModeExpanded;
+    self.miniFloatingButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
     [self.miniFloatingButton setTitle:@"Add" forState:UIControlStateNormal];
-    self.defaultFloatingButton.mode = MDCFloatingButtonModeExpanded;
+    self.defaultFloatingButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
     [self.defaultFloatingButton setTitle:@"Create" forState:UIControlStateNormal];
-    self.largeIconFloatingButton.mode = MDCFloatingButtonModeExpanded;
+    self.largeIconFloatingButton.mdc_expandedMode = MDCFloatingButtonExpandedModeExpanded;
     [self.largeIconFloatingButton setTitle:@"Create" forState:UIControlStateNormal];
   } else {
-    self.miniFloatingButton.mode = MDCFloatingButtonModeNormal;
+    self.miniFloatingButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
     [self.miniFloatingButton setTitle:nil forState:UIControlStateNormal];
-    self.defaultFloatingButton.mode = MDCFloatingButtonModeNormal;
+    self.defaultFloatingButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
     [self.defaultFloatingButton setTitle:nil forState:UIControlStateNormal];
-    self.largeIconFloatingButton.mode = MDCFloatingButtonModeNormal;
+    self.largeIconFloatingButton.mdc_expandedMode = MDCFloatingButtonExpandedModeNormal;
     [self.largeIconFloatingButton setTitle:nil forState:UIControlStateNormal];
   }
 }
