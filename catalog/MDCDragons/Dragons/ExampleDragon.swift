@@ -15,28 +15,21 @@ import UIKit
 
 class ExampleDragon: UIViewController {
   
-  struct MDCPalette {
-    static let blue: UIColor = UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0)
-    static let red: UIColor = UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0)
-    static let green: UIColor = UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0)
-    static let yellow: UIColor = UIColor(red: 1.0, green: 0.922, blue: 0.231, alpha: 1.0)
-  }
-  
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.view.backgroundColor = .white
     
   }
 }
 
 extension ExampleDragon {
-  
   // MARK: Catalog by convention
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Example Dragon", "Example Dragon 2"]
+    return ["Example Dragon"]
   }
   
   @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+    return true
   }
 }
 

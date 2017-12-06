@@ -80,7 +80,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     
     collectionView?.register(MDCDragonsCollectionViewCell.self,
                              forCellWithReuseIdentifier: "MDCDragonCollectionViewCell")
-    collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+    collectionView?.backgroundColor = UIColor(white: 0.97, alpha: 1)
     
     MDCIcons.ic_arrow_backUseNewStyle(true)
   }
@@ -139,7 +139,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     constrainLogo(logo: logo,
                   label: titleLabel)
     
-    headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    headerViewController.headerView.backgroundColor = MDCDragonsController.colors[2]
     headerViewController.headerView.trackingScrollView = collectionView
     view.addSubview(headerViewController.view)
     headerViewController.didMove(toParentViewController: self)
