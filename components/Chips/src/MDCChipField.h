@@ -102,7 +102,7 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 /**
  The chips that are visible in the input area.
  */
-@property(nonatomic, nonnull, strong) NSArray<MDCChipView *> *chips;
+@property(nonatomic, nonnull, copy) NSArray<MDCChipView *> *chips;
 
 /**
  Delegate to receive updates to the chip field view. Implement
@@ -208,12 +208,12 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
  Tells the delegate when the text in the chip field changes.
 
  @param chipField The MDCChipField where text has changed.
- @param input The text entered into the chip field that has not been chipized yet.
+ @param input The text entered into the chip field that has not yet been converted to a chip.
  */
 - (void)chipField:(nonnull MDCChipField *)chipField didChangeInput:(nullable NSString *)input;
 
 /**
- Tells the delegate when chip in the chip field is tapped.
+ Tells the delegate when a chip in the chip field is tapped.
 
  @param chipField The MDCChipField which has a chip that was tapped.
  @param chip The chip that was tapped.

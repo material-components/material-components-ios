@@ -128,15 +128,13 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   return self;
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-  [super setBackgroundColor:backgroundColor];
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  CGRect standardizedBounds = CGRectStandardize(self.bounds);
+
   // Calculate the frames for all the chips and set them.
-  NSArray *chipFrames = [self chipFramesForSize:self.bounds.size];
+  NSArray *chipFrames = [self chipFramesForSize:standardizedBounds.size];
   for (NSUInteger index = 0; index < _chips.count; index++) {
     MDCChipView *chip = _chips[index];
     chip.frame = [chipFrames[index] CGRectValue];
@@ -145,7 +143,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   // Get the last chip frame and calculate the text field frame from that.
   CGRect lastChipFrame = [chipFrames.lastObject CGRectValue];
   self.textField.frame = [self frameForTextFieldForLastChipFrame:lastChipFrame
-                                                   chipFieldSize:self.bounds.size];
+                                                   chipFieldSize:standardizedBounds.size];
 
   [self updateTextFieldPlaceholderText];
 }
@@ -164,7 +162,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 - (CGSize)intrinsicContentSize {
   CGFloat minWidth =
       MAX(self.minTextFieldWidth + self.contentEdgeInsets.left + self.contentEdgeInsets.right,
-          self.bounds.size.width);
+          CGRectGetWidth(self.bounds));
   return [self sizeThatFits:CGSizeMake(minWidth, CGFLOAT_MAX)];
 }
 
@@ -207,6 +205,10 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   [self setNeedsLayout];
 }
 
+- (NSArray<MDCChipView *> *)chips {
+  return [NSArray arrayWithArray:_chips];
+}
+
 - (BOOL)becomeFirstResponder {
   return [self.textField becomeFirstResponder];
 }
@@ -245,7 +247,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 - (void)removeSelectedChips {
   NSMutableArray *chipsToRemove = [NSMutableArray array];
   for (MDCChipView *chip in self.chips) {
-    if (chip.selected) {
+    if (chip.isSelected) {
       [chipsToRemove addObject:chip];
     }
   }
@@ -302,7 +304,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 - (void)createNewChipFromInput {
   NSString *strippedTitle = [self.textField.text
       stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  if ([strippedTitle length] > 0) {
+  if (strippedTitle.length > 0) {
     MDCChipView *chip = [[MDCChipView alloc] init];
     chip.titleLabel.text = strippedTitle;
     BOOL shouldAddChip = YES;
@@ -320,7 +322,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 - (void)notifyDelegateIfSizeNeedsToBeUpdated {
   if ([self.delegate respondsToSelector:@selector(chipFieldHeightDidChange:)]) {
-    CGSize currentSize = self.bounds.size;
+    CGSize currentSize = CGRectStandardize(self.bounds).size;
     CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
     if (currentSize.height != requiredSize.height) {
       [self.delegate chipFieldHeightDidChange:self];
@@ -399,7 +401,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
   if ([self.delegate respondsToSelector:@selector(chipField:didChangeInput:)]) {
     [self.delegate chipField:self
-              didChangeInput:[NSString stringWithString:self.textField.text]];
+              didChangeInput:[self.textField.text copy]];
   }
 }
 
@@ -437,7 +439,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 - (BOOL)isAnyChipSelected {
   for (MDCChipView *chip in self.chips) {
-    if (chip.selected) {
+    if (chip.isSelected) {
       return YES;
     }
   }
@@ -510,7 +512,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   }
   UIFont *placeholderFont = self.textField.placeholderLabel.font;
   CGRect placeholderDesiredRect =
-      [placeholder boundingRectWithSize:self.bounds.size
+      [placeholder boundingRectWithSize:CGRectStandardize(self.bounds).size
                                 options:NSStringDrawingUsesLineFragmentOrigin
                              attributes:@{ NSFontAttributeName : placeholderFont, }
                                 context:nil];
@@ -520,8 +522,8 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 #pragma mark - MDCTextInputPositioningDelegate
 
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
-  CGRect lastChipFrame = [self.chips.lastObject frame];
-  CGFloat availableWidth = self.bounds.size.width - self.contentEdgeInsets.right -
+  CGRect lastChipFrame = self.chips.lastObject.frame;
+  CGFloat availableWidth = CGRectGetWidth(self.bounds) - self.contentEdgeInsets.right -
       CGRectGetMaxX(lastChipFrame) - MDCChipFieldHorizontalMargin;
 
   CGFloat leftInset = MDCChipFieldIndent;
