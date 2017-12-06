@@ -141,10 +141,15 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
     _characterCounter =
         [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthCharacterCounterKey];
-    _characterCountMax =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey];
-    _characterCountViewMode = [aDecoder
-        decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey];
+    if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey]) {
+      _characterCountMax =
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey];
+    }
+    if ([aDecoder
+            containsValueForKey:MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey]) {
+      _characterCountViewMode = (UITextFieldViewMode)[aDecoder
+          decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey];
+    }
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthErrorColorKey];
     _inlinePlaceholderColor = [aDecoder
         decodeObjectForKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey];
