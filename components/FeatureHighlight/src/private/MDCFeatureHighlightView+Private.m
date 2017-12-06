@@ -18,11 +18,7 @@
 
 #import "MDCFeatureHighlightDismissGestureRecognizer.h"
 #import "MDCFeatureHighlightLayer.h"
-#ifdef IS_BAZEL_BUILD
-#import "MDFTextAccessibility.h"
-#else
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "MaterialFeatureHighlightStrings.h"
 #import "MaterialFeatureHighlightStrings_table.h"

@@ -18,15 +18,10 @@
 
 #include <tgmath.h>
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFInternationalization.h"
-#import "MotionAnimator.h"
-#else
 #import <MDFInternationalization/MDFInternationalization.h>
-#import <MotionAnimator/MotionAnimator.h>
-#endif  // IS_BAZEL_BUILD
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
+#import <MotionAnimator/MotionAnimator.h>
 #import "private/MDCProgressViewMotionSpec.h"
 
 static inline UIColor *MDCProgressViewDefaultTintColor(void) {
