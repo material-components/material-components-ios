@@ -527,6 +527,8 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
   for (MDCChipView *chip in self.chips) {
     CGSize chipSize = [chip sizeThatFits:CGSizeMake(maxWidth, self.chipHeight)];
+    chipSize.width = MIN(chipSize.width, maxWidth);
+
     CGFloat availableWidth = chipFieldMaxX - currentOriginX;
     // Check if the chip will fit on the current line.  If it won't fit and the available width
     // is the maximum width, it won't fit on any line. Put it on the current one and move on.
