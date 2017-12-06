@@ -50,8 +50,4 @@
   [self.view layoutIfNeeded];
 }
 
-- (BOOL)chipFieldShouldReturn:(MDCChipField *)chipField {
-  return NO;
-}
-
 @end
