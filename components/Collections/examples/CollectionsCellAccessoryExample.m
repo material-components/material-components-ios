@@ -20,7 +20,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsCellAccessoryExample {
   NSArray *_accessoryTypes;
-  NSMutableArray *_content;
+  NSMutableArray <NSArray *>*_content;
 }
 
 - (void)viewDidLoad {

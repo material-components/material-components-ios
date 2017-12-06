@@ -21,7 +21,7 @@ static const NSInteger kSectionItemCount = 5;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsSwipeToDismissRowExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
 }
 
 - (void)viewDidLoad {
@@ -43,7 +43,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   }
 
   // Insert cell that cannot be removed.
-  [_content insertObject:@[ @"This cell cannot be deleted." ] atIndex:0];
+  [_content insertObject:[@[ @"This cell cannot be deleted." ] mutableCopy] atIndex:0];
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
