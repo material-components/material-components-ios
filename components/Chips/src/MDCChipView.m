@@ -20,6 +20,7 @@
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
 static NSString *const MDCChipImageViewKey = @"MDCChipImageViewKey";
@@ -109,7 +110,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 @interface MDCChipView ()
 @property(nonatomic, readonly) CGRect contentRect;
-@property(nonatomic, readonly, strong) MDCShadowLayer *layer;
+@property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @property(nonatomic, readonly) BOOL showImageView;
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
@@ -128,7 +129,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @dynamic layer;
 
 + (Class)layerClass {
-  return [MDCShadowLayer class];
+  return [MDCShapedShadowLayer class];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -180,9 +181,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _titlePadding = MDCChipTitlePadding;
     _accessoryPadding = MDCChipAccessoryPadding;
 
-    [self updateBackgroundColor];
-    self.layer.elevation = [self elevationForState:UIControlStateNormal];
-
     // UIControl has a drag enter/exit boundary that is outside of the frame of the button itself.
     // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
     // change ink state. So instead we fall back on adding target/actions for these specific events.
@@ -192,6 +190,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     [self addTarget:self
              action:@selector(touchDragExit:forEvent:)
    forControlEvents:UIControlEventTouchDragExit];
+
+    self.layer.elevation = [self elevationForState:UIControlStateNormal];
+
+    [self updateBackgroundColor];
   }
   return self;
 }
@@ -248,6 +250,16 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIContentSizeCategoryDidChangeNotification
                                                 object:nil];
+}
+
+- (void)setShapeGenerator:(id)shapeGenerator {
+  self.layer.shapeGenerator = shapeGenerator;
+
+  [self updateBackgroundColor];
+}
+
+- (id)shapeGenerator {
+  return self.layer.shapeGenerator;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
@@ -307,7 +319,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateBackgroundColor {
-  self.backgroundColor = [self backgroundColorForState:self.state];
+  if (self.layer.shapeGenerator) {
+    self.layer.fillColor = [self backgroundColorForState:self.state].CGColor;
+    self.backgroundColor = [UIColor clearColor];
+  } else {
+    self.backgroundColor = [self backgroundColorForState:self.state];
+  }
 }
 
 - (nullable UIColor *)borderColorForState:(UIControlState)state {
@@ -423,6 +440,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 #pragma mark - Layout
 
 - (void)layoutSubviews {
+  [super layoutSubviews];
+
   _inkView.frame = self.bounds;
   _imageView.frame = [self imageViewFrame];
   _selectedImageView.frame = [self selectedImageViewFrame];
@@ -431,10 +450,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   _selectedImageView.alpha = self.showSelectedImageView ? 1 : 0;
 
-  CGFloat cornerRadius = MIN(CGRectGetHeight(self.frame), CGRectGetWidth(self.frame)) / 2;
-  self.layer.cornerRadius = cornerRadius;
-  self.layer.shadowPath =
-      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
+  if (!self.layer.shapeGenerator) {
+    CGFloat cornerRadius = MIN(CGRectGetHeight(self.frame), CGRectGetWidth(self.frame)) / 2;
+    self.layer.cornerRadius = cornerRadius;
+    self.layer.shadowPath =
+        [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
+  }
 }
 
 - (CGRect)contentRect {
