@@ -74,7 +74,7 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 /**
  The fixed height of all chip views.
 
- Default is 32.
+ Default is 32dp.
  */
 @property(nonatomic, assign) CGFloat chipHeight;
 
