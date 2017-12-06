@@ -38,7 +38,7 @@ mdc_public_objc_library(
 
 mdc_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*"]),
+    srcs = native.glob(["src/ColorThemer/*.m"]),
     hdrs = native.glob(["src/ColorThemer/*.h"]),
     includes = ["src/ColorThemer"],
     deps = [
@@ -58,7 +58,7 @@ package_group(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob([
+    srcs = native.glob([
         "tests/unit/*.m",
         "tests/unit/*.h"
     ]),
@@ -76,7 +76,7 @@ mdc_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
+    srcs = native.glob(["tests/unit/*.swift"]),
     deps = [
         ":NavigationBar",
         ":ColorThemer",
