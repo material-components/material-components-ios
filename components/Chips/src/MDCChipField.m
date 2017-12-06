@@ -18,6 +18,15 @@
 
 #import "MaterialTextFields.h"
 
+static NSString *const MDCChipFieldTextFieldKey = @"textField";
+static NSString *const MDCChipFieldDelegateKey = @"delegate";
+static NSString *const MDCChipFieldChipsKey = @"chips";
+static NSString *const MDCChipFieldDelimiterKey = @"delimiter";
+static NSString *const MDCChipFieldMinTextFieldWidthKey = @"minTextFieldWidth";
+static NSString *const MDCChipFieldContentEdgeInsetsKey = @"contentEdgeInsets";
+static NSString *const MDCChipFieldShowPlaceholderWithChipsKey = @"showPlaceholderWithChips";
+static NSString *const MDCChipFieldChipHeightKey = @"chipHeight";
+
 NSString * const kMDCEmptyTextString = @"";
 NSString * const kMDCChipDelimiterSpace = @" ";
 
@@ -106,12 +115,9 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    [self commonMDCChipFieldInit];
+
     _chips = [NSMutableArray array];
-    _delimiter = MDCChipFieldDelimiterDefault;
-    _minTextFieldWidth = MDCChipFieldDefaultMinTextFieldWidth;
-    _contentEdgeInsets = MDCChipFieldDefaultContentEdgeInsets;
-    _showPlaceholderWithChips = YES;
-    _chipHeight = 32.0f;
 
     MDCChipTextField *chipTextField = [[MDCChipTextField alloc] initWithFrame:self.bounds];
     chipTextField.underline.hidden = YES;
@@ -129,6 +135,61 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
     _textField = chipTextField;
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCChipFieldInit];
+
+    _textField = [aDecoder decodeObjectForKey:MDCChipFieldTextFieldKey];
+
+    if ([aDecoder containsValueForKey:MDCChipFieldDelegateKey]) {
+      _delegate = [aDecoder decodeObjectForKey:MDCChipFieldDelegateKey];
+    }
+    if ([aDecoder containsValueForKey:MDCChipFieldChipsKey]) {
+      _chips = [aDecoder decodeObjectForKey:MDCChipFieldChipsKey];
+    }
+    if ([aDecoder containsValueForKey:MDCChipFieldDelimiterKey]) {
+      _delimiter = (NSUInteger)[aDecoder decodeIntegerForKey:MDCChipFieldDelimiterKey];
+    }
+    if ([aDecoder containsValueForKey:MDCChipFieldMinTextFieldWidthKey]) {
+      _minTextFieldWidth = (CGFloat)[aDecoder decodeDoubleForKey:MDCChipFieldMinTextFieldWidthKey];
+    }
+    if ([aDecoder containsValueForKey:MDCChipFieldContentEdgeInsetsKey]) {
+      _contentEdgeInsets = [aDecoder decodeUIEdgeInsetsForKey:MDCChipFieldContentEdgeInsetsKey];
+    }
+    if ([aDecoder containsValueForKey:MDCChipFieldShowPlaceholderWithChipsKey]) {
+      _showPlaceholderWithChips =
+          [aDecoder decodeBoolForKey:MDCChipFieldShowPlaceholderWithChipsKey];
+    }
+    if ([aDecoder containsValueForKey:MDCChipFieldChipHeightKey]) {
+      _chipHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCChipFieldChipHeightKey];
+    }
+  }
+  return self;
+}
+
+- (void)commonMDCChipFieldInit {
+  _chips = [NSMutableArray array];
+  _delimiter = MDCChipFieldDelimiterDefault;
+  _minTextFieldWidth = MDCChipFieldDefaultMinTextFieldWidth;
+  _contentEdgeInsets = MDCChipFieldDefaultContentEdgeInsets;
+  _showPlaceholderWithChips = YES;
+  _chipHeight = 32.0f;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+
+  [aCoder encodeObject:_textField forKey:MDCChipFieldTextFieldKey];
+  [aCoder encodeObject:_delegate forKey:MDCChipFieldDelegateKey];
+  [aCoder encodeObject:_chips forKey:MDCChipFieldChipHeightKey];
+  [aCoder encodeInteger:(NSInteger)_delimiter forKey:MDCChipFieldDelimiterKey];
+  [aCoder encodeDouble:(double)_minTextFieldWidth forKey:MDCChipFieldMinTextFieldWidthKey];
+  [aCoder encodeUIEdgeInsets:_contentEdgeInsets forKey:MDCChipFieldContentEdgeInsetsKey];
+  [aCoder encodeBool:_showPlaceholderWithChips forKey:MDCChipFieldShowPlaceholderWithChipsKey];
+  [aCoder encodeDouble:(double)_chipHeight forKey:MDCChipFieldChipHeightKey];
 }
 
 - (void)layoutSubviews {
