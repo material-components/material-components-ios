@@ -3,6 +3,7 @@ process which can be summarized as:
 
 - cut
 - test
+- bump
 - merge
 - publish
 
