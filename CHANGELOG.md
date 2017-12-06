@@ -1,3 +1,209 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Add a delegate callback for the activity indicator mode animation (#2537)](https://github.com/material-components/material-components-ios/commit/beac4fa1502646227a1ce5bf660fc1542e023af8) (John Detloff)
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### AppBar
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[AppBar:ColorThemer] Add nullability annotations (#2536)](https://github.com/material-components/material-components-ios/commit/d0026701b4a2f7f6c1a2a1da43fbb285e6ed7483) (Brian Moore)
+
+### BottomAppBar
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Ensure item top and bottom content insets are identical (#2579)](https://github.com/material-components/material-components-ios/commit/4bae4dc17880de31c7580fe001c92d487634770c) (Junius Gunaratne)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Ink] Use updated ink for bottom navigation (#2567)](https://github.com/material-components/material-components-ios/commit/17cea995c708622602ad3f39aae42d464f2999c6) (Junius Gunaratne)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### BottomSheet
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Deprecate to-be-removed APIs. (#2539)](https://github.com/material-components/material-components-ios/commit/411eaec1904d51835f548286100095286e6a99d2) (featherless)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+
+### ButtonBar
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Cleanup] remove checks for iOS8 and above as we now only support iOS8+ (#2555)](https://github.com/material-components/material-components-ios/commit/f9e187feb4096c5388a3495d1ac7123a9447840f) (Yarden Eitan)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [Add BUILD file for kokoro (#2599)](https://github.com/material-components/material-components-ios/commit/0b91616d9aaeb3844770dabd7b82b6c9e81471e7) (Robert Moore)
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Extended FAB (#2563)](https://github.com/material-components/material-components-ios/commit/2d8333d7d83dabafe64bdb6dfa96031f99d89f57) (Robert Moore)
+* [Readability for newlines (#2568)](https://github.com/material-components/material-components-ios/commit/f01c39d050b23b30555c1e963ff258313641b6a5) (Robert Moore)
+* [Rename `imageTitleSpace` (#2565)](https://github.com/material-components/material-components-ios/commit/c35ddaa8733e4825f2a5db404c257f4dcdedec35) (Robert Moore)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Ink] Enable updated ink on MDCButton, add support for shadowPaths (#2530)](https://github.com/material-components/material-components-ios/commit/c9d1b7163db9f09c62f2acc596e54897a8b1282b) (Junius Gunaratne)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### CollectionCells
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Ink] Enable updated ink for collection views (#2546)](https://github.com/material-components/material-components-ios/commit/10047dfbc9536c2f9dbb16c4a5870280a8bb7173) (Junius Gunaratne)
+
+### Dialogs
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Call actionHandlers after the alert has been dismissed (#2490)](https://github.com/material-components/material-components-ios/commit/fa22f6d39e3797486f7049b3bb8898e3b7f1ef81) (ianegordon)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Cleanup] remove checks for iOS8 and above as we now only support iOS8+ (#2555)](https://github.com/material-components/material-components-ios/commit/f9e187feb4096c5388a3495d1ac7123a9447840f) (Yarden Eitan)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Cleanup] remove checks for iOS8 and above as we now only support iOS8+ (#2555)](https://github.com/material-components/material-components-ios/commit/f9e187feb4096c5388a3495d1ac7123a9447840f) (Yarden Eitan)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### Ink
+
+#### Changes
+
+* [Add MDCInkViewDelegate (#2558)](https://github.com/material-components/material-components-ios/commit/c3695264cf55009f078fcb8503dcc846dea87371) (Junius Gunaratne)
+* [Change ink fade out timing (#2576)](https://github.com/material-components/material-components-ios/commit/3078879b422535f68edf93ef42d48d7607d8b74b) (Junius Gunaratne)
+* [Enable updated ink on MDCButton, add support for shadowPaths (#2530)](https://github.com/material-components/material-components-ios/commit/c9d1b7163db9f09c62f2acc596e54897a8b1282b) (Junius Gunaratne)
+* [Prevent ink layers from collecting. Copy sublayers before calling removeFromSuperlayer (#2596)](https://github.com/material-components/material-components-ios/commit/1c99b810ecfc0a373413ab02ec38ab002bff82ec) (Junius Gunaratne)
+* [Use updated ink for bottom navigation (#2567)](https://github.com/material-components/material-components-ios/commit/17cea995c708622602ad3f39aae42d464f2999c6) (Junius Gunaratne)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### LibraryInfo
+
+#### Changes
+
+* [Fix version numbers for statically-compiled components. (#2544)](https://github.com/material-components/material-components-ios/commit/6da7d0af51044faec13fec2800cb1c33ec8b74b4) (Adrian Secord)
+
+### MaskedTransition
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### PageControl
+
+#### Changes
+
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### ProgressView
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Execute the same logical paths for completion and animation. (#2564)](https://github.com/material-components/material-components-ios/commit/9efe297a4c613cc77678edd2397b2a538ad42dab) (featherless)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### ShadowLayer
+
+#### Changes
+
+* [Animate shadow resizing (#2523)](https://github.com/material-components/material-components-ios/commit/7e2d44522e43852499ebd2c803de464dd56066e3) (Sam Morrison)
+
+### Snackbar
+
+#### Changes
+
+* [Using block typdef to silence warning as error. (#2573)](https://github.com/material-components/material-components-ios/commit/d555a8d7aaeff4ac1c88098f9771b82f2fa8a23a) (Randall Li)
+
+### Tabs
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Allow customization of fonts and text transform (#2547)](https://github.com/material-components/material-components-ios/commit/8463e9b46baa133b40ddde502f9dced9ff1afd8c) (Brian Moore)
+* [Enable new ink (#2616)](https://github.com/material-components/material-components-ios/commit/64425cd469716c717e074ebb990efe931b4bf873) (Junius Gunaratne)
+* [Replace mdc_animateWithTimingFunction with standard UIKit/QuartzCore APIs. (#2548)](https://github.com/material-components/material-components-ios/commit/cfde77c40061d1c0a8dc0f66cf7e91282e427dcb) (featherless)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Cleanup] remove checks for iOS8 and above as we now only support iOS8+ (#2555)](https://github.com/material-components/material-components-ios/commit/f9e187feb4096c5388a3495d1ac7123a9447840f) (Yarden Eitan)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### TextFields
+
+#### Changes
+
+* [Add compile time flag for import style (#2562)](https://github.com/material-components/material-components-ios/commit/6791dc4993d3a0ffa11735eeeef0583102621d52) (Louis Romero)
+* [Removing extra calls in setupClearButton. (#2541)](https://github.com/material-components/material-components-ios/commit/2b8200185bb70c113933c2e04905e796efaec360) (Will Larche)
+* [Revert "Add compile time flag for import style (#2562)" (#2612)](https://github.com/material-components/material-components-ios/commit/b9404ded10fe549f211c01ecfdd1ee3c15fdf9fe) (featherless)
+* [[Cleanup] remove checks for iOS8 and above as we now only support iOS8+ (#2555)](https://github.com/material-components/material-components-ios/commit/f9e187feb4096c5388a3495d1ac7123a9447840f) (Yarden Eitan)
+* [[Themers] Add nullability to themers (#2551)](https://github.com/material-components/material-components-ios/commit/7dc94709434595060c8534f5126c2bdaecc4afca) (Junius Gunaratne)
+
+### Themes
+
+#### Changes
+
+* [Add BUILD file for kokoro (#2601)](https://github.com/material-components/material-components-ios/commit/a33df5ad4ba8de35c638f8b1fca857d8b8019b30) (Robert Moore)
+
+---
+
 # 41.0.0
 
 ## API changes
