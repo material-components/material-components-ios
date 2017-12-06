@@ -285,6 +285,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if (!UIEdgeInsetsEqualToEdgeInsets(_contentEdgeInsets, contentEdgeInsets)) {
     _contentEdgeInsets = contentEdgeInsets;
     [self setNeedsLayout];
+    [self invalidateIntrinsicContentSize];
   }
 }
 
@@ -292,6 +293,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if (_minTextFieldWidth != minTextFieldWidth) {
     _minTextFieldWidth = minTextFieldWidth;
     [self setNeedsLayout];
+    [self invalidateIntrinsicContentSize];
   }
 }
 
