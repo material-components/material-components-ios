@@ -214,12 +214,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _activeColor = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseActiveColorKey];
     _borderFillColor = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseBorderFillColorKey];
     _characterCounter = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseCharacterCounterKey];
-    _characterCountMax =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountMaxKey];
-    _characterCountViewMode =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountViewModeKey];
-    _roundedCorners =
-        (UIRectCorner)[aDecoder decodeIntegerForKey:MDCTextInputControllerBaseRoundedCorners];
     _disabledColor = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseDisabledColorKey];
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerBaseErrorColorKey];
     _expandsOnOverflow = [aDecoder decodeBoolForKey:MDCTextInputControllerBaseExpandsOnOverflowKey];
@@ -253,6 +247,19 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseUnderlineViewModeKey];
 
     [self commonMDCTextInputControllerBaseInitialization];
+
+    if ([aDecoder containsValueForKey:MDCTextInputControllerBaseCharacterCountMaxKey]) {
+      _characterCountMax =
+      [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountMaxKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTextInputControllerBaseCharacterCountViewModeKey]) {
+      _characterCountViewMode =
+      [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountViewModeKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTextInputControllerBaseRoundedCorners]) {
+      _roundedCorners =
+      (UIRectCorner)[aDecoder decodeIntegerForKey:MDCTextInputControllerBaseRoundedCorners];
+    }
 
     // This should happen last because it relies on the state of a ton of properties.
     [self setupInput];
