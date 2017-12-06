@@ -21,7 +21,8 @@
 @implementation TypographyMaterialStyleViewController {
   NSArray<NSString *> *_strings;
   NSArray<NSString *> *_styleNames;
-  NSArray<UIFont *> *_styleFonts;
+  NSArray<UIFont *> *_styleStandardFonts;
+  NSArray<UIFont *> *_styleDynamicFonts;
 }
 
 - (void)viewDidLoad {
@@ -44,21 +45,46 @@
   _styleNames = @[
                   // Common UI fonts.
                   @"Headline Font",
+                  @"Headline Font (Dynamic Type-enabled)",
                   @"Title Font",
+                  @"Title Font (Dynamic Type-enabled)",
                   @"Subhead Font",
+                  @"Subhead Font (Dynamic Type-enabled)",
                   @"Body 2 Font",
+                  @"Body 2 Font (Dynamic Type-enabled)",
                   @"Body 1 Font",
+                  @"Body 1 Font (Dynamic Type-enabled)",
                   @"Caption Font",
+                  @"Caption Font (Dynamic Type-enabled)",
                   @"Button Font",
+                  @"Button Font (Dynamic Type-enabled)",
 
                   // Display fonts (extra large fonts)
                   @"Display 1 Font",
+                  @"Display 1 Font (Dynamic Type-enabled)",
                   @"Display 2 Font",
+                  @"Display 2 Font (Dynamic Type-enabled)",
                   @"Display 3 Font",
-                  @"Display 4 Font"
+                  @"Display 3 Font (Dynamic Type-enabled)",
+                  @"Display 4 Font",
+                  @"Display 4 Font (Dynamic Type-enabled)"
                   ];
 
-  _styleFonts = @[
+  _styleStandardFonts = @[
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
+                  ];
+
+  _styleDynamicFonts = @[
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
@@ -108,7 +134,7 @@
   NSLog(@"New size category : %@", sizeCategory);
 
   // Update font array to reflect new size category
-  _styleFonts = @[
+  _styleDynamicFonts = @[
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
@@ -132,7 +158,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return _styleFonts.count;
+  return _styleNames.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -143,7 +169,13 @@
                                   reuseIdentifier:@"cell"];
   }
   cell.textLabel.text = _strings[indexPath.section];
-  cell.textLabel.font = _styleFonts[indexPath.row];
+  UIFont *font;
+  if (indexPath.row % 2) {
+    font = _styleDynamicFonts[indexPath.row / 2];
+  } else {
+    font = _styleStandardFonts[indexPath.row / 2];
+  }
+  cell.textLabel.font = font;
   cell.textLabel.numberOfLines = 0;
   cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
