@@ -66,6 +66,16 @@
 
 @end
 
+@protocol MDCTypographyDelegate <NSObject>
+@optional
+/** Returns a font for buttons. */
+- (nonnull UIFont *)buttonFont;
+
+/** Returns a dynamic font for buttons. */
+- (nonnull UIFont *)buttonFontDynamic;
+
+@end
+
 /**
  Typographic constants and helpers.
 
@@ -84,6 +94,9 @@
 + (nonnull id<MDCTypographyFontLoading>)fontLoader;
 
 #pragma mark - Display fonts (extra large fonts)
+
++ (void)setDelegate:(nonnull id<MDCTypographyDelegate>)delegate;
++ (nonnull id<MDCTypographyDelegate>)delegate;
 
 /** Returns the display 4 font. (largest of the display font sizes) */
 + (nonnull UIFont *)display4Font;
@@ -149,6 +162,9 @@
 
 /** Returns a font for buttons. */
 + (nonnull UIFont *)buttonFont;
+
+/** Returns a dynamic font for buttons. */
++ (nonnull UIFont *)buttonFontDynamic;
 
 /** Returns the recommended opacity of black text for the button font. */
 + (CGFloat)buttonFontOpacity;

@@ -16,8 +16,12 @@
 
 #import "MDCTypography.h"
 #import "private/UIFont+MaterialTypographyPrivate.h"
+#import "UIFont+MaterialTypography.h"
+#import "UIFontDescriptor+MaterialTypography.h"
+#import "MDCFontTextStyle.h"
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
+static id<MDCTypographyDelegate> gDelegate = nil;
 const CGFloat MDCTypographyStandardOpacity = 0.87f;
 const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
@@ -46,6 +50,14 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   });
   return gFontLoader;
 }
+
++ (void)setDelegate:(nonnull id<MDCTypographyDelegate>)delegate {
+  gDelegate = delegate;
+}
++ (nonnull id<MDCTypographyDelegate>)delegate {
+  return gDelegate;
+}
+
 
 #pragma mark - Display fonts (extra large fonts)
 
@@ -132,7 +144,17 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 }
 
 + (UIFont *)buttonFont {
+  if (self.delegate && [self.delegate respondsToSelector:@selector(buttonFont)]) {
+    return [self.delegate buttonFont];
+  }
   return [[self fontLoader] mediumFontOfSize:14];
+}
+
++ (UIFont *)buttonFontDynamic {
+  if (self.delegate && [self.delegate respondsToSelector:@selector(buttonFontDynamic)]) {
+    return [self.delegate buttonFontDynamic];
+  }
+  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
 }
 
 + (CGFloat)buttonFontOpacity {
@@ -364,6 +386,28 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   }
 
   return NO;
+}
+
+@end
+
+@interface SampleTypographyDelegate : NSObject <MDCTypographyDelegate>
+@end
+
+@implementation SampleTypographyDelegate
+
++ (id<MDCTypographyFontLoading>)comicSansfontLoader {
+  return nil; //TODO: load the custom font
+}
+
+- (UIFont *) buttonFont {
+  return [[[self class] comicSansfontLoader] regularFontOfSize:12];
+}
+- (UIFont *) buttonFontDynamic {
+  UIFontDescriptor *dynamicSystemFontDescriptor =
+      [UIFontDescriptor mdc_preferredFontDescriptorForMaterialTextStyle:MDCFontTextStyleButton];
+
+  // Create a customFont sized to the value from the font descriptor.
+  return [[self buttonFont] fontWithSize:dynamicSystemFontDescriptor.pointSize];
 }
 
 @end
