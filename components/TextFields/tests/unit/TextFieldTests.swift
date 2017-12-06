@@ -200,7 +200,6 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.borderView?.borderStrokeColor, unserializedInput?.borderView?.borderStrokeColor)
     XCTAssertEqual(textField.cursorColor, unserializedInput?.cursorColor)
 
-
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)
 
