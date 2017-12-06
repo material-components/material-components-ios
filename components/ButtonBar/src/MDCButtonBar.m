@@ -16,11 +16,7 @@
 
 #import "MDCButtonBar.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFInternationalization.h"
-#else
 #import <MDFInternationalization/MDFInternationalization.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "MaterialButtons.h"
 #import "private/MDCAppBarButtonBarBuilder.h"

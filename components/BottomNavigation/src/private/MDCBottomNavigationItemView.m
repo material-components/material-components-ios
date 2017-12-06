@@ -16,11 +16,7 @@
 
 #import "MDCBottomNavigationItemView.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFInternationalization.h"
-#else
 #import <MDFInternationalization/MDFInternationalization.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "MaterialBottomNavigationStrings.h"
 #import "MaterialBottomNavigationStrings_table.h"

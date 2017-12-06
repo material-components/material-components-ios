@@ -16,11 +16,7 @@
 
 #import "MDCButton.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFTextAccessibility.h"
-#else
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#endif  // IS_BAZEL_BUILD
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
