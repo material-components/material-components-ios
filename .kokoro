@@ -118,7 +118,7 @@ run_cocoapods() {
 
     scripts/prep_all
     scripts/build_all --verbose
-    if [ "$IS_RELEASE" -eq "1" ]; then
+    if [[ "$IS_RELEASE" && "$IS_RELEASE" -eq "1" ]]; then
       scripts/test_all
     else
       scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
