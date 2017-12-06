@@ -12,7 +12,7 @@ tested, and then merged into `stable`, which serves as the stable "vetted" branc
 ### Check for issues that might affect the release process
 
 Occasionally there are temporary issues with the release process, check the [`release`
-tag](https://github.com/material-components/material-components-ios/labels/where%3ARelease) for
+tag](https://github.com/material-components/material-components-ios/labels/is%3ABlocking%20next%20release) for
 anything that might be affecting the release.
 
 ### Check the release milestone

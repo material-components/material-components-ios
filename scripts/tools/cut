@@ -52,7 +52,11 @@ fi
 
 # Prepare the CHANGELOG for updates.
 if ! grep "# release-candidate" CHANGELOG.md >> /dev/null; then
-  echo -e "# release-candidate TODO: Replace me with version number. \n" | cat - CHANGELOG.md > /tmp/out && mv /tmp/out CHANGELOG.md
+  echo "" | cat - CHANGELOG.md > /tmp/out && mv /tmp/out CHANGELOG.md
+  # Add component changes to the changelog.
+  "$DIR/changes" | cat - CHANGELOG.md > /tmp/out && mv /tmp/out CHANGELOG.md
+  # Add the new version header.
+  echo -e "# vM.m.p TODO: Replace me with version number.\n" | cat - CHANGELOG.md > /tmp/out && mv /tmp/out CHANGELOG.md
 fi
 
 RELEASE_SHA=$(git merge-base --fork-point release-candidate origin/develop)
