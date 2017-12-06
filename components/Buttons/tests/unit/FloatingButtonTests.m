@@ -509,7 +509,7 @@ static UIImage *fakeImage(void) {
   [button setMaximumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeDefault
                   inMode:MDCFloatingButtonModeExpanded];
-  button.imageTitleSpacing = 12;
+  button.imageTitleSpace = 12;
 
   // When
   [button sizeToFit];
@@ -520,7 +520,7 @@ static UIImage *fakeImage(void) {
   XCTAssertEqualWithAccuracy(CGRectGetMaxX(imageFrame), CGRectGetWidth(button.bounds)-16, 1);
   XCTAssertEqualWithAccuracy(CGRectGetMinX(titleFrame), 24, 1);
   XCTAssertEqualWithAccuracy(CGRectGetMinX(imageFrame),
-                             CGRectGetMaxX(titleFrame) + button.imageTitleSpacing, 1);
+                             CGRectGetMaxX(titleFrame) + button.imageTitleSpace, 1);
 }
 
 - (void)testExpandedLayoutWithNonZeroContentEdgeInsets {
