@@ -55,6 +55,13 @@
   return self;
 }
 
+- (void)commonMDCShapedShadowLayerInit {
+  self.backgroundColor = [UIColor clearColor].CGColor;
+  _colorLayer = [CAShapeLayer layer];
+  _colorLayer.delegate = self;
+  [self addSublayer:_colorLayer];
+}
+
 - (void)layoutSublayers {
   // We have to set the path before calling [super layoutSublayers] because we need the shadowPath
   // to be correctly set before MDCShadowLayer performs layoutSublayers.
@@ -91,12 +98,6 @@
 
 - (CGColorRef)fillColor {
   return _colorLayer.fillColor;
-}
-
-- (void)commonMDCShapedShadowLayerInit {
-  self.backgroundColor = [UIColor clearColor].CGColor;
-  _colorLayer = [CAShapeLayer layer];
-  [self addSublayer:_colorLayer];
 }
 
 @end
