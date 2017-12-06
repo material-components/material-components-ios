@@ -18,88 +18,19 @@
 
 #### UIViewController(MaterialBottomSheet)
 
-*modified* property: `mdc_bottomSheetPresentationController` in `UIViewController(MaterialBottomSheet)`
-
-| Type of change: | Deprecation message |
-|---|---|
-| From: | `` |
-| To: | `Assign an instance of MDCBottomSheetTransition to your view controller's mdm_transitionController.transition instead.` |
-
-*modified* property: `mdc_bottomSheetPresentationController` in `UIViewController(MaterialBottomSheet)`
-
-| Type of change: | Deprecation |
-|---|---|
-| From: | `0` |
-| To: | `1` |
-
-*modified* property: `mdc_bottomSheetPresentationController` in `UIViewController(MaterialBottomSheet)`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@property (readonly, nonatomic, nullable)     MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController;` |
-| To: | `@property(nonatomic, nullable, readonly)     MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController` |
+*deprecated* property: `mdc_bottomSheetPresentationController` in `UIViewController(MaterialBottomSheet)`. Assign an instance of MDCBottomSheetTransition to your view controller's mdm_transitionController.transition instead.
 
 #### MDCBottomSheetTransitionController
 
-*modified* class: `MDCBottomSheetTransitionController`
-
-| Type of change: | Deprecation message |
-|---|---|
-| From: | `` |
-| To: | `Assign an instance of MDCBottomSheetTransition to your view controller's mdm_transitionController.transition instead.` |
-
-*modified* class: `MDCBottomSheetTransitionController`
-
-| Type of change: | Deprecation |
-|---|---|
-| From: | `0` |
-| To: | `1` |
-
-*modified* class: `MDCBottomSheetTransitionController`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCBottomSheetTransitionController     : NSObject <UIViewControllerAnimatedTransitioning,                 UIViewControllerTransitioningDelegate>` |
-| To: | ` @interface MDCBottomSheetTransitionController     : NSObject <UIViewControllerAnimatedTransitioning,                 UIViewControllerTransitioningDelegate>` |
+*deprecated* class: `MDCBottomSheetTransitionController`. Assign an instance of MDCBottomSheetTransition to your view controller's mdm_transitionController.transition instead.
 
 #### MDCBottomSheetPresentationControllerDelegate
 
-*modified* protocol: `MDCBottomSheetPresentationControllerDelegate`
-
-| Type of change: | Deprecation message |
-|---|---|
-| From: | `` |
-| To: | `This API will soon be made private. Use MDCBottomSheetController instead.` |
-
-*modified* protocol: `MDCBottomSheetPresentationControllerDelegate`
-
-| Type of change: | Deprecation |
-|---|---|
-| From: | `0` |
-| To: | `1` |
+*deprecated* protocol: `MDCBottomSheetPresentationControllerDelegate`. This API will soon be made private. Use MDCBottomSheetController instead.
 
 #### MDCBottomSheetPresentationController
 
-*modified* class: `MDCBottomSheetPresentationController`
-
-| Type of change: | Deprecation message |
-|---|---|
-| From: | `` |
-| To: | `This API will soon be made private. Use MDCBottomSheetController instead.` |
-
-*modified* class: `MDCBottomSheetPresentationController`
-
-| Type of change: | Deprecation |
-|---|---|
-| From: | `0` |
-| To: | `1` |
-
-*modified* class: `MDCBottomSheetPresentationController`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCBottomSheetPresentationController : UIPresentationController` |
-| To: | ` @interface MDCBottomSheetPresentationController : UIPresentationController` |
+*deprecated* class: `MDCBottomSheetPresentationController`. This API will soon be made private. Use MDCBottomSheetController instead.
 
 ### Buttons
 
