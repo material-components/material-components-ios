@@ -42,6 +42,8 @@ fix_bazel_imports() {
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDF(.+)\/MDF.+\.h>/import \"MDF\1.h\"/"
+  rewrite_source "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
+  rewrite_source "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
   reset_imports() {
     # Undoes our source changes from above.
@@ -49,6 +51,8 @@ fix_bazel_imports() {
     rewrite_tests "s/import components_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDF(.+)\.h\"/import <MDF\1\/MDF\1.h>/"
+    rewrite_source "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
+    rewrite_source "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
   }
   trap reset_imports EXIT
 }
