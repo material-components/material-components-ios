@@ -872,8 +872,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   if (_mdc_adjustsFontForContentSizeCategory) {
-    UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-    self.titleLabel.font = font;
+    self.titleLabel.font = [MDCTypography buttonFontDynamic];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contentSizeCategoryDidChange:)
                                                  name:UIContentSizeCategoryDidChangeNotification
@@ -886,8 +885,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-  self.titleLabel.font = font;
+  self.titleLabel.font = [MDCTypography buttonFontDynamic];;
   [self sizeToFit];
 }
 
