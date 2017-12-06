@@ -786,7 +786,7 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, id<MDCColorScheme> colorSchem
   UIColor* gradientColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
   UIColor* fillColor = colorScheme.primaryColor;
   UIColor* fillColor2 = colorScheme.primaryLightColor;
-  UIColor* textForeground = [fillColor colorWithAlphaComponent:0.2];
+  UIColor* textForeground = [fillColor colorWithAlphaComponent:0.2f];
   UIColor* gradientColor2 = colorScheme.primaryColor;
 
   CGFloat gradientLocations[] = {0.14, 0.5, 1};
@@ -972,7 +972,7 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, id<MDCColorScheme> colorSchem
 void MDCCatalogDrawOverlayWindow(CGRect frame, id<MDCColorScheme> colorScheme) {
   UIColor* fillColor = colorScheme.primaryLightColor;
   UIColor* fillColor2 = colorScheme.primaryColor;
-  UIColor* fillColor3 = [UIColor colorWithWhite:0.5 alpha:1.0];
+  UIColor* fillColor3 = [UIColor colorWithWhite:0.5f alpha:1.0f];
 
   CGRect overlayWindowGroup = CGRectMake(CGRectGetMinX(frame) + 54, CGRectGetMinY(frame) + 38,
                                          floor((CGRectGetWidth(frame) - 54) * 0.59701 + 0.5),

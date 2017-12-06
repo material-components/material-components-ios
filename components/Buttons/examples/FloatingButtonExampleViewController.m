@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
 
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   UIImage *plusImage36 = [UIImage imageNamed:@"plus_white_36"

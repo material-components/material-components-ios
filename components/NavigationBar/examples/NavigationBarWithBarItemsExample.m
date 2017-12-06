@@ -41,7 +41,7 @@
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];
 
-  [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
+  [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1.0f]];
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
       [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
   [mutator mutate:self.navBar];

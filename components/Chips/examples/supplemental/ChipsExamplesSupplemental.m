@@ -42,7 +42,7 @@ static UIButton *DeleteButton() {
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
-  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7];
+  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7f];
   [button setImage:image forState:UIControlStateNormal];
 
   return button;
