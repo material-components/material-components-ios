@@ -175,7 +175,8 @@
   if (self.usesLegacyInkRipple) {
     [self.inkLayer resetAllInk:animated];
   } else {
-    for (CALayer *layer in self.layer.sublayers) {
+    NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
+    for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCInkLayer class]]) {
         MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
         if (animated) {
