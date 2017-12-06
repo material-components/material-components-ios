@@ -141,11 +141,11 @@ static UIFont *_trailingUnderlineLabelFontDefault;
         [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthCharacterCounterKey];
     if ([aDecoder containsValueForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey]) {
       _characterCountMax =
-      [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey];
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey];
     }
     if ([aDecoder containsValueForKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey]) {
       _characterCountViewMode =
-      [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey];
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey];
     }
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthErrorColorKey];
     _inlinePlaceholderColor =
