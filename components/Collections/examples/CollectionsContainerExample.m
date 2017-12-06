@@ -23,7 +23,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsContainerExample {
   MDCCollectionViewController *_collectionsController;
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
 }
 
 - (void)viewDidLoad {

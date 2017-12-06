@@ -19,7 +19,7 @@
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsCellColorExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSArray *>*_content;
   NSArray *_cellBackgroundColors;
 }
 
