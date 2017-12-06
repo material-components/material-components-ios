@@ -20,7 +20,7 @@ cmd=$(basename "${BASH_SOURCE[0]}")
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 usage() {
-  "$dir/tools/readme_to_console" "$dir/README-release.md"
+  "$dir/release_tools/readme_to_console" "$dir/README-release.md"
 }
 
 # HELPER METHODS
@@ -80,64 +80,73 @@ version_for_platform() {
 
 # Creates a release-candidate branch based off the latest origin/develop
 cut_release() {
-  isHotFix=false;
+  #isHotFix=false;
+  #
+  #while test $# -gt 0; do
+  #  case "$1" in
+  #    --hotfix)
+  #      isHotFix=true;
+  #      shift
+  #      ;;
+  #  esac
+  #done
+  #
+  #if [ $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
+  #  echo "${B}Release already cut.${N}"
+  #  echo "Consider deleting your existing release-candidate branch."
+  #  exit 1
+  #fi
 
-  while test $# -gt 0; do
-    case "$1" in
-      --hotfix)
-        isHotFix=true;
-        shift
-        ;;
-    esac
-  done
+  #git fetch
 
-  if [ $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
-    echo "${B}Release already cut.${N}"
-    echo "Consider deleting your existing release-candidate branch."
-    exit 1
-  fi
-
-  git fetch
-
-  git show develop >> /dev/null 2>&1 || { git checkout -b develop origin/develop; }
-
-  deviance=$(git log develop..origin/develop --oneline | wc -l)
-  if [ $deviance -ne 0 ]; then
-    echo
-    echo "    Your local develop branch is behind origin/develop."
-    echo "    Refusing to continue until you've rebased off of origin/develop."
-    echo
-    echo "    git checkout develop"
-    echo "    git rebase origin/develop"
-    echo
-    exit 1
-  fi
-
-  deviance=$(git log origin/develop..develop --oneline | wc -l)
-  if [ $deviance -ne "0" ]; then
-    echo
-    echo "    Your local develop branch is ahead of origin/develop."
-    echo "    Refusing to continue until you've landed your local changes into origin/develop."
-    echo
-    exit 1 # TODO: Revert this line so we bail out.
-  fi
-
-  if $isHotFix; then
-    branch=origin/stable
-    branch_message="This is a hotfix... branching off $branch"
-  else
-    branch=origin/develop
-    branch_message="This is a normal release... branching off $branch"
-  fi
-  echo $branch_message
-  git checkout -b release-candidate $branch
+  #git show develop >> /dev/null 2>&1 || { git checkout -b develop origin/develop; }
+  #
+  #deviance=$(git log develop..origin/develop --oneline | wc -l)
+  #if [ $deviance -ne 0 ]; then
+  #  echo
+  #  echo "    Your local develop branch is behind origin/develop."
+  #  echo "    Refusing to continue until you've rebased off of origin/develop."
+  #  echo
+  #  echo "    git checkout develop"
+  #  echo "    git rebase origin/develop"
+  #  echo
+  #  exit 1
+  #fi
+  #
+  #deviance=$(git log origin/develop..develop --oneline | wc -l)
+  #if [ $deviance -ne "0" ]; then
+  #  echo
+  #  echo "    Your local develop branch is ahead of origin/develop."
+  #  echo "    Refusing to continue until you've landed your local changes into origin/develop."
+  #  echo
+  #  exit 1 # TODO: Revert this line so we bail out.
+  #fi
+  #
+  #if $isHotFix; then
+  #  branch=origin/stable
+  #  branch_message="This is a hotfix... branching off $branch"
+  #else
+  #  branch=origin/develop
+  #  branch_message="This is a normal release... branching off $branch"
+  #fi
+  #echo $branch_message
+  #git checkout -b release-candidate $branch
 
   touch "$rootdir/CHANGELOG.md"
   if ! grep "# #develop#" "$rootdir/CHANGELOG.md" >> /dev/null; then
+    CHANGELOG_TMP_PATH=$(mktemp -d)
+    scripts/release_tools/api_diff | tee "$CHANGELOG_TMP_PATH/api_diff"
+
+    CHANGELOG_PATH=$(grep "$CHANGELOG_TMP_PATH/api_diff" "Changelog: " | cut -d':' -f2)
+
+    # Add the new changelog contents in reverse order:
     echo -e "\n---\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    cat $CHANGELOG_PATH | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## API changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     generate_release_notes | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "# #develop#\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
   fi
+  exit 0
   git add "$rootdir/CHANGELOG.md"
   git commit -m "Automatic changelog preparation for release."
   git push origin release-candidate -u
@@ -272,7 +281,7 @@ generate_release_notes() {
   echo "## API changes"
   echo
 
-  "$dir/tools/changes"
+  "$dir/release_tools/changes"
 }
 
 merge_release() {
