@@ -151,8 +151,10 @@ static NSString *s_secondaryColorString;
     return;
   }
 
-  primaryColor =
-      [UIColor colorWithRed:redInt / 255.0 green:greenInt / 255.0 blue:blueInt / 255.0 alpha:1.0];
+  primaryColor = [UIColor colorWithRed:redInt / 255.0f
+                                 green:greenInt / 255.0f
+                                  blue:blueInt / 255.0f
+                                 alpha:1.0f];
   s_primaryColorString = primaryString;
   self.primaryColorPreView.backgroundColor = primaryColor;
 
@@ -166,8 +168,10 @@ static NSString *s_secondaryColorString;
     return;
   }
 
-  secondaryColor =
-      [UIColor colorWithRed:redInt / 255.0 green:greenInt / 255.0 blue:blueInt / 255.0 alpha:1.0];
+  secondaryColor = [UIColor colorWithRed:redInt / 255.0f
+                                   green:greenInt / 255.0f
+                                    blue:blueInt / 255.0f
+                                   alpha:1.0f];
   s_secondaryColorString = secondaryString;
   self.secondaryColorPreView.backgroundColor = secondaryColor;
 

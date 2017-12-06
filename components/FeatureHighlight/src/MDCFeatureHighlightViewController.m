@@ -132,7 +132,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
       options |= MDFTextAccessibilityOptionsLargeFont;
     }
 
-    UIColor *outerColor = [self.outerHighlightColor colorWithAlphaComponent:1.0];
+    UIColor *outerColor = [self.outerHighlightColor colorWithAlphaComponent:1.0f];
     self.bodyColor =
         [MDFTextAccessibility textColorOnBackgroundColor:outerColor
                                          targetTextAlpha:[MDCTypography captionFontOpacity]
@@ -144,7 +144,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     if ([MDFTextAccessibility isLargeForContrastRatios:_featureHighlightView.titleLabel.font]) {
       options |= MDFTextAccessibilityOptionsLargeFont;
     }
-    UIColor *outerColor = [self.outerHighlightColor colorWithAlphaComponent:1.0];
+    UIColor *outerColor = [self.outerHighlightColor colorWithAlphaComponent:1.0f];
     // Since MDFTextAccessibility can return either a dark value or light value color we want to
     // guarantee that the title and body have the same value.
     CGFloat titleAlpha = [MDFTextAccessibility minAlphaOfTextColor:self.bodyColor

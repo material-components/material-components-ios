@@ -79,7 +79,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
 
   UILabel *titleLabel = [[UILabel alloc] init];
   CGRect frame = self.fhvc.headerView.bounds;
@@ -190,7 +190,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [self.sections[section] count];
+  return [(NSArray *)self.sections[section] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

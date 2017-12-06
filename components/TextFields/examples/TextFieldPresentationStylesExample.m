@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
   self.title = @"Material Text Fields";
 
   [self setupExampleViews];
