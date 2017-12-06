@@ -68,8 +68,11 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
         (BOOL (*)(id, SEL, UITextField *))[UITextField instanceMethodForSelector:_cmd];
     if (keyboardInputShouldDelete) {
       shouldDelete = keyboardInputShouldDelete(self, _cmd, textField);
-      BOOL isIos8 = ([[[UIDevice currentDevice] systemVersion] intValue] == 8);
-      BOOL isLessThanIos8_3 = ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.3f);
+      NSOperatingSystemVersion minimumVersion = {8, 0, 0};
+      NSOperatingSystemVersion maximumVersion = {8, 3, 0};
+      NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+      BOOL isIos8 = [processInfo isOperatingSystemAtLeastVersion:minimumVersion];
+      BOOL isLessThanIos8_3 = ![processInfo isOperatingSystemAtLeastVersion:maximumVersion];
       if (![textField.text length] && isIos8 && isLessThanIos8_3) {
         [self deleteBackward];
       }
