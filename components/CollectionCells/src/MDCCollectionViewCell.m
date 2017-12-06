@@ -16,11 +16,7 @@
 
 #import "MDCCollectionViewCell.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFInternationalization.h"
-#else
 #import <MDFInternationalization/MDFInternationalization.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "MaterialCollectionLayoutAttributes.h"
 #import "MaterialIcons+ic_check.h"
