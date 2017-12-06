@@ -210,11 +210,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
     if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey]) {
       _characterCountMax =
-      [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey];
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey];
     }
-    if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey]) {
-      _characterCountViewMode =
-      (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey];
+    if ([aDecoder
+            containsValueForKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey]) {
+      _characterCountViewMode = (UITextFieldViewMode)[aDecoder
+          decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey];
     }
     _disabledColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
@@ -233,16 +234,19 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultTextInputKey];
     _trailingUnderlineLabelTextColor = [aDecoder
         decodeObjectForKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
-    if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey]) {
+    if ([aDecoder
+            containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey]) {
       _underlineHeightActive = (float)[aDecoder
-                                       decodeFloatForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey];
+          decodeFloatForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey];
     }
-    if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey]) {
+    if ([aDecoder
+            containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey]) {
       _underlineHeightActive = (float)[aDecoder
-                                       decodeFloatForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey];
+          decodeFloatForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey];
     }
     if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey]) {
-      _underlineViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey];
+      _underlineViewMode = (UITextFieldViewMode)
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey];
     }
   }
   return self;
