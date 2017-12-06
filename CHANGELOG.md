@@ -8,6 +8,185 @@
 
 ## API changes
 
+### ActivityIndicator
+
+#### MDCActivityIndicatorDelegate
+
+*new* method: `-activityIndicatorModeTransitionDidFinish:` in `MDCActivityIndicatorDelegate`
+
+### BottomSheet
+
+#### UIViewController(MaterialBottomSheet)
+
+*modified* property: `mdc_bottomSheetPresentationController` in `UIViewController(MaterialBottomSheet)`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `Assign an instance of MDCBottomSheetTransition to your view controller's mdm_transitionController.transition instead.` |
+
+*modified* property: `mdc_bottomSheetPresentationController` in `UIViewController(MaterialBottomSheet)`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* property: `mdc_bottomSheetPresentationController` in `UIViewController(MaterialBottomSheet)`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readonly, nonatomic, nullable)     MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController;` |
+| To: | `@property(nonatomic, nullable, readonly)     MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController` |
+
+#### MDCBottomSheetTransitionController
+
+*modified* class: `MDCBottomSheetTransitionController`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `Assign an instance of MDCBottomSheetTransition to your view controller's mdm_transitionController.transition instead.` |
+
+*modified* class: `MDCBottomSheetTransitionController`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* class: `MDCBottomSheetTransitionController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCBottomSheetTransitionController     : NSObject <UIViewControllerAnimatedTransitioning,                 UIViewControllerTransitioningDelegate>` |
+| To: | ` @interface MDCBottomSheetTransitionController     : NSObject <UIViewControllerAnimatedTransitioning,                 UIViewControllerTransitioningDelegate>` |
+
+#### MDCBottomSheetPresentationControllerDelegate
+
+*modified* protocol: `MDCBottomSheetPresentationControllerDelegate`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `This API will soon be made private. Use MDCBottomSheetController instead.` |
+
+*modified* protocol: `MDCBottomSheetPresentationControllerDelegate`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+#### MDCBottomSheetPresentationController
+
+*modified* class: `MDCBottomSheetPresentationController`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `This API will soon be made private. Use MDCBottomSheetController instead.` |
+
+*modified* class: `MDCBottomSheetPresentationController`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* class: `MDCBottomSheetPresentationController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCBottomSheetPresentationController : UIPresentationController` |
+| To: | ` @interface MDCBottomSheetPresentationController : UIPresentationController` |
+
+### Buttons
+
+#### MDCFloatingButton
+
+*new* method: `-setMaximumSize:` in `MDCFloatingButton`
+
+*new* property: `imageTitleSpace` in `MDCFloatingButton`
+
+*new* method: `-setContentEdgeInsets:` in `MDCFloatingButton`
+
+*new* method: `-setMinimumSize:` in `MDCFloatingButton`
+
+*new* property: `imageLocation` in `MDCFloatingButton`
+
+*new* method: `-setMinimumSize:forShape:inMode:` in `MDCFloatingButton`
+
+*new* property: `mode` in `MDCFloatingButton`
+
+*new* method: `-setHitAreaInsets:forShape:inMode:` in `MDCFloatingButton`
+
+*new* method: `-setContentEdgeInsets:forShape:inMode:` in `MDCFloatingButton`
+
+*new* method: `-setHitAreaInsets:` in `MDCFloatingButton`
+
+*new* method: `-setMaximumSize:forShape:inMode:` in `MDCFloatingButton`
+
+#### MDCFloatingButtonMode
+
+*new* enum value: `MDCFloatingButtonModeExpanded` in `MDCFloatingButtonMode`
+
+*new* enum value: `MDCFloatingButtonModeNormal` in `MDCFloatingButtonMode`
+
+*new* enum: `MDCFloatingButtonMode`
+
+*new* typedef: `MDCFloatingButtonMode`
+
+#### MDCFloatingButtonShape
+
+*removed* enum value: `MDCFloatingButtonShapeLargeIcon` in `MDCFloatingButtonShape`
+
+#### MDCFloatingButtonImageLocation
+
+*new* enum value: `MDCFloatingButtonImageLocationLeading` in `MDCFloatingButtonImageLocation`
+
+*new* typedef: `MDCFloatingButtonImageLocation`
+
+*new* enum: `MDCFloatingButtonImageLocation`
+
+*new* enum value: `MDCFloatingButtonImageLocationTrailing` in `MDCFloatingButtonImageLocation`
+
+### Ink
+
+#### MDCInkView
+
+*new* property: `animationDelegate` in `MDCInkView`
+
+#### MDCInkViewDelegate
+
+*new* method: `-inkAnimationDidStart:` in `MDCInkViewDelegate`
+
+*new* method: `-inkAnimationDidEnd:` in `MDCInkViewDelegate`
+
+*new* protocol: `MDCInkViewDelegate`
+
+### Tabs
+
+#### MDCTabBar
+
+*new* property: `selectedItemTitleFont` in `MDCTabBar`
+
+*new* property: `titleTextTransform` in `MDCTabBar`
+
+*new* property: `unselectedItemTitleFont` in `MDCTabBar`
+
+#### MDCTabBarTextTransform
+
+*new* enum: `MDCTabBarTextTransform`
+
+*new* enum value: `MDCTabBarTextTransformAutomatic` in `MDCTabBarTextTransform`
+
+*new* typedef: `MDCTabBarTextTransform`
+
+*new* enum value: `MDCTabBarTextTransformUppercase` in `MDCTabBarTextTransform`
+
+*new* enum value: `MDCTabBarTextTransformNone` in `MDCTabBarTextTransform`
+
 ## Component changes
 
 ### ActivityIndicator
