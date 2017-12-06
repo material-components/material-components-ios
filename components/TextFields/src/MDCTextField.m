@@ -87,7 +87,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
     [self commonMDCTextFieldInitialization];
     _cursorColor = [aDecoder decodeObjectForKey:MDCTextFieldCursorColorKey];
-    ;
 
     self.leftViewMode =
         (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldLeftViewModeKey];
