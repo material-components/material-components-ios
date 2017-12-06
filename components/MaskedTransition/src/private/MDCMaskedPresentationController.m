@@ -16,13 +16,8 @@
 
 #import "MDCMaskedPresentationController.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MotionAnimator.h"
-#import "MotionTransitioning.h"
-#else
 #import <MotionTransitioning/MotionTransitioning.h>
 #import <MotionAnimator/MotionAnimator.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "MDCMaskedTransitionMotionForContext.h"
 

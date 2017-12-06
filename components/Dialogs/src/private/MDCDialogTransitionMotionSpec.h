@@ -15,13 +15,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#ifdef IS_BAZEL_BUILD
-#import "MotionInterchange.h"
-#import "MotionTransitioning.h"
-#else
 #import <MotionInterchange/MotionInterchange.h>
 #import <MotionTransitioning/MotionTransitioning.h>
-#endif  // IS_BAZEL_BUILD
 
 typedef struct MDCDialogTransitionAppearanceTimings {
   MDMMotionTiming contentOpacity;

@@ -16,11 +16,7 @@
 
 #import "MDCFeatureHighlightViewController.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFTextAccessibility.h"
-#else
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#endif  // IS_BAZEL_BUILD
 #import "MaterialTypography.h"
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView+Private.h"
