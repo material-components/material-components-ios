@@ -473,7 +473,7 @@
   [button setMaximumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeDefault
                   inMode:MDCFloatingButtonModeExpanded];
-  button.imageTitleSpacing = 12;
+  button.imageTitleSpace = 12;
 
   // When
   [button sizeToFit];
@@ -485,7 +485,7 @@
   XCTAssertEqualWithAccuracy(imageFrame.origin.x, 16, 1);
   XCTAssertEqualWithAccuracy(CGRectGetMaxX(titleFrame), buttonBounds.size.width - 24, 1);
   XCTAssertEqualWithAccuracy(titleFrame.origin.x,
-                             CGRectGetMaxX(imageFrame) + button.imageTitleSpacing, 1);
+                             CGRectGetMaxX(imageFrame) + button.imageTitleSpace, 1);
 }
 
 - (void)testExpandedLayoutWithNonZeroContentEdgeInsets {
@@ -515,7 +515,7 @@
   XCTAssertEqualWithAccuracy(imageFrame.origin.x, 12, 1);
   XCTAssertEqualWithAccuracy(CGRectGetMaxX(titleFrame), buttonBounds.size.width - 16, 1);
   XCTAssertEqualWithAccuracy(titleFrame.origin.x,
-                             CGRectGetMaxX(imageFrame) + button.imageTitleSpacing, 1);
+                             CGRectGetMaxX(imageFrame) + button.imageTitleSpace, 1);
 }
 
 #pragma mark - Encoding/decoding
@@ -616,7 +616,7 @@
 - (void)testCollapseExpandRestoresTransform {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
-  CGAffineTransform transform = CGAffineTransformRotate(button.transform, M_PI_2);
+  CGAffineTransform transform = CGAffineTransformRotate(button.transform, (CGFloat)M_PI_2);
   button.transform = transform;
 
   // When
@@ -633,7 +633,7 @@
 - (void)testCollapseExpandAnimatedRestoresTransform {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
-  CGAffineTransform transform = CGAffineTransformMakeTranslation(10, -77.1);
+  CGAffineTransform transform = CGAffineTransformMakeTranslation(10, (CGFloat)-77.1);
   button.transform = transform;
   XCTestExpectation *expectation = [self expectationWithDescription:@"Collapse animation complete"];
 
