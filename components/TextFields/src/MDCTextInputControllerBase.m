@@ -250,15 +250,15 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
     if ([aDecoder containsValueForKey:MDCTextInputControllerBaseCharacterCountMaxKey]) {
       _characterCountMax =
-      [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountMaxKey];
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountMaxKey];
     }
     if ([aDecoder containsValueForKey:MDCTextInputControllerBaseCharacterCountViewModeKey]) {
       _characterCountViewMode =
-      [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountViewModeKey];
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseCharacterCountViewModeKey];
     }
     if ([aDecoder containsValueForKey:MDCTextInputControllerBaseRoundedCorners]) {
       _roundedCorners =
-      (UIRectCorner)[aDecoder decodeIntegerForKey:MDCTextInputControllerBaseRoundedCorners];
+          (UIRectCorner)[aDecoder decodeIntegerForKey:MDCTextInputControllerBaseRoundedCorners];
     }
 
     // This should happen last because it relies on the state of a ton of properties.
