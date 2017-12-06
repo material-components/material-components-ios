@@ -18,7 +18,6 @@ import CatalogByConvention
 
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialIcons_ic_arrow_back
-import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
@@ -27,7 +26,7 @@ import MaterialComponents.MaterialTypography
 
 import UIKit
 
-class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDelegate {
+class MDCDragonsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 50
@@ -37,14 +36,12 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
     static let spacing: CGFloat = 1
   }
   
-  fileprivate lazy var headerViewController = MDCFlexibleHeaderViewController()
+  static let colors: [UIColor] = [UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0),
+                                  UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0),
+                                  UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0),
+                                  UIColor(red: 1.0, green: 0.922, blue: 0.231, alpha: 1.0)]
   
-  private lazy var inkController: MDCInkTouchController = {
-    let controller = MDCInkTouchController(view: self.collectionView!)
-    controller.delaysInkSpread = true
-    controller.delegate = self
-    return controller
-  }()
+  fileprivate lazy var headerViewController = MDCFlexibleHeaderViewController()
   
   private lazy var logo: UIImageView = {
     let imageView = UIImageView()
@@ -59,11 +56,10 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
   }()
-  
-  init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
+
+  init(collectionViewLayout layout: UICollectionViewFlowLayout, node: CBCNode) {
     self.node = node
     
-    let layout = UICollectionViewFlowLayout()
     let sectionInset: CGFloat = Constants.spacing
     layout.sectionInset = UIEdgeInsets(top: sectionInset,
                                        left: sectionInset,
@@ -73,7 +69,7 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
     layout.minimumLineSpacing = Constants.spacing
     
     super.init(collectionViewLayout: layout)
-    
+
     title = "Material Dragons"
     
     addChildViewController(headerViewController)
@@ -90,7 +86,7 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
   }
   
   convenience init(node: CBCNode) {
-    self.init(collectionViewLayout: UICollectionViewLayout(), node: node)
+    self.init(collectionViewLayout: UICollectionViewFlowLayout(), node: node)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -99,8 +95,6 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    inkController.addInkView()
     
     let containerView = UIView(frame: headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -137,67 +131,23 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
     headerViewController.headerView.forwardTouchEvents(for: containerView)
     
     headerViewController.headerView.addSubview(logo)
-    
-    
-//    let image = MDCDrawImage(CGRect(x:0,
-//                                    y:0,
-//                                    width: Constants.logoWidthHeight,
-//                                    height: Constants.logoWidthHeight),
-//                             { MDCCatalogDrawMDCLogoLight($0, $1) },
-//                             appDelegate.colorScheme)
-    let image = MDCDrawDragons.image(with: MDCDrawDragons.drawDragon, size: CGSize(width: 100, height: 100))
+    let image = MDCDrawDragons.image(with: MDCDrawDragons.drawDragon,
+                                     size: CGSize(width: Constants.logoWidthHeight,
+                                                  height: Constants.logoWidthHeight),
+                                     fillColor: .white)
     logo.image = image
-    
-    NSLayoutConstraint(item: logo,
-                       attribute: .bottom,
-                       relatedBy: .equal,
-                       toItem: titleLabel,
-                       attribute: .top,
-                       multiplier: 1,
-                       constant: -1 * Constants.logoTitleVerticalSpacing).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .leading,
-                       relatedBy: .equal,
-                       toItem: titleLabel,
-                       attribute: .leading,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: logo,
-                       attribute: .height,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1,
-                       constant: Constants.logoWidthHeight).isActive = true
+    constrainLogo(logo: logo,
+                  label: titleLabel)
     
     headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     headerViewController.headerView.trackingScrollView = collectionView
-    
-    headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
-      let shadowLayer = layer as? MDCShadowLayer
-      CATransaction.begin()
-      CATransaction.setDisableActions(true)
-      shadowLayer!.elevation = ShadowElevation(intensity * ShadowElevation.appBar.rawValue)
-      CATransaction.commit()
-    }
-    
     view.addSubview(headerViewController.view)
     headerViewController.didMove(toParentViewController: self)
     
     collectionView?.accessibilityIdentifier = "collectionView"
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        collectionView?.contentInsetAdjustmentBehavior = .always
-      }
-    #endif
+    if #available(iOS 11.0, *) {
+      collectionView?.contentInsetAdjustmentBehavior = .always
+    }
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -219,7 +169,6 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
     return headerViewController
   }
   
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     // Re-constraint the title label to account for changes in safeAreaInsets's left and right.
@@ -233,10 +182,8 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
                    insets: titleInsets,
                    height: titleLabel.bounds.height)
   }
-  #endif
   
   // MARK: UICollectionViewDataSource
-  
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
   }
@@ -246,70 +193,41 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
     return node.children.count
   }
   
-  func inkViewForView(_ view: UIView) -> MDCInkView {
-    let foundInkView = MDCInkView.injectedInkView(for: view)
-    foundInkView.inkStyle = .unbounded
-    foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
-    return foundInkView
-  }
-  
-  // MARK: MDCInkTouchControllerDelegate
-  
-  func inkTouchController(_ inkTouchController: MDCInkTouchController,
-                          shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
-    return self.collectionView!.indexPathForItem(at: location) != nil
-  }
-  
-  func inkTouchController(_ inkTouchController: MDCInkTouchController,
-                          inkViewAtTouchLocation location: CGPoint) -> MDCInkView? {
-    if let indexPath = self.collectionView!.indexPathForItem(at: location) {
-      let cell = self.collectionView!.cellForItem(at: indexPath)
-      return inkViewForView(cell!)
-    }
-    return MDCInkView()
-  }
-  
   // MARK: UICollectionViewDelegate
-  
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell =
-      collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
+      collectionView.dequeueReusableCell(withReuseIdentifier: "MDCDragonCollectionViewCell",
                                          for: indexPath)
     cell.backgroundColor = UIColor.white
     
-    let componentName = node.children[indexPath.row].title
+    let componentName = node.children[indexPath.item].title
     if let catalogCell = cell as? MDCDragonsCollectionViewCell {
-      catalogCell.populateView(componentName)
+      catalogCell.populateView(componentName,
+                               color: MDCDragonsController.colors[indexPath.item % MDCDragonsController.colors.count])
     }
-    
-    // Ensure that ink animations aren't recycled.
-    MDCInkView.injectedInkView(for: view).cancelAllAnimations(animated: false)
-    
     return cell
   }
   
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
     let dividerWidth: CGFloat = 1
     var safeInsets: CGFloat = 0
-    #if swift(>=3.2)
-      if #available(iOS 11, *) {
-        safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
-      }
-    #endif
+    if #available(iOS 11, *) {
+      safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
+    }
     var cellWidthHeight: CGFloat
     
-    // iPhones have 2 columns in portrait and 3 in landscape
+    // iPhones have 3 columns in portrait and 4 in landscape
     if UI_USER_INTERFACE_IDIOM() == .phone {
-      cellWidthHeight = (view.frame.size.width - 3 * dividerWidth - safeInsets) / 2
+      cellWidthHeight = (view.frame.size.width - 4 * dividerWidth - safeInsets) / 3
       if view.frame.size.width > view.frame.size.height {
-        cellWidthHeight = (view.frame.size.width - 4 * dividerWidth - safeInsets) / 3
+        cellWidthHeight = (view.frame.size.width - 5 * dividerWidth - safeInsets) / 4
       }
     } else {
-      // iPads have 4 columns
-      cellWidthHeight = (view.frame.size.width - 5 * dividerWidth - safeInsets) / 4
+      // iPads have 5 columns
+      cellWidthHeight = (view.frame.size.width - 6 * dividerWidth - safeInsets) / 5
     }
     return CGSize(width: cellWidthHeight, height: cellWidthHeight)
   }
@@ -318,54 +236,86 @@ class MDCDragonsController: UICollectionViewController, MDCInkTouchControllerDel
                                didSelectItemAt indexPath: IndexPath) {
     let node = self.node.children[indexPath.row]
     var vc: UIViewController
-//    if node.isExample() {
-      vc = node.createExampleViewController()
-//    } else {
-//      vc = MDCNodeListViewController(node: node)
-//    }
+    //    if node.isExample() {
+    vc = node.createExampleViewController()
+    //    } else {
+    //      vc = MDCNodeListViewController(node: node)
+    //    }
     self.navigationController?.pushViewController(vc, animated: true)
   }
   
   // MARK: Private
+  func constrainLogo(logo: UIImageView,
+                     label: UILabel) {
+    
+    NSLayoutConstraint(item: logo,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: label,
+                       attribute: .top,
+                       multiplier: 1,
+                       constant: -1 * Constants.logoTitleVerticalSpacing).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .leading,
+                       relatedBy: .equal,
+                       toItem: label,
+                       attribute: .leading,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: logo,
+                       attribute: .height,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: nil,
+                       attribute: .notAnAttribute,
+                       multiplier: 1,
+                       constant: Constants.logoWidthHeight).isActive = true
+    
+  }
+  
   func constrainLabel(label: UILabel,
                       containerView: UIView,
                       insets: UIEdgeInsets,
                       height: CGFloat) {
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .leading,
-      multiplier: 1.0,
-      constant: insets.left).isActive = true
     
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .trailing,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .trailing,
-      multiplier: 1.0,
-      constant: 0).isActive = true
+    NSLayoutConstraint(item: label,
+                       attribute: .leading,
+                       relatedBy: .equal,
+                       toItem: containerView,
+                       attribute: .leading,
+                       multiplier: 1.0,
+                       constant: insets.left).isActive = true
     
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .bottom,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .bottom,
-      multiplier: 1.0,
-      constant: -insets.bottom).isActive = true
+    NSLayoutConstraint(item: label,
+                       attribute: .trailing,
+                       relatedBy: .equal,
+                       toItem: containerView,
+                       attribute: .trailing,
+                       multiplier: 1.0,
+                       constant: 0).isActive = true
     
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .height,
-      relatedBy: .equal,
-      toItem: nil,
-      attribute: .notAnAttribute,
-      multiplier: 1.0,
-      constant: height).isActive = true
+    NSLayoutConstraint(item: label,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: containerView,
+                       attribute: .bottom,
+                       multiplier: 1.0,
+                       constant: -insets.bottom).isActive = true
+    
+    NSLayoutConstraint(item: label,
+                       attribute: .height,
+                       relatedBy: .equal,
+                       toItem: nil,
+                       attribute: .notAnAttribute,
+                       multiplier: 1.0,
+                       constant: height).isActive = true
   }
   
   func adjustLogoForScrollView(_ scrollView: UIScrollView) {
@@ -402,15 +352,13 @@ extension MDCDragonsController {
     }
   }
   
-  override func scrollViewWillEndDragging(
-    _ scrollView: UIScrollView,
-    withVelocity velocity: CGPoint,
-    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                          withVelocity velocity: CGPoint,
+                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(
-        withVelocity: velocity,
-        targetContentOffset: targetContentOffset)
+      headerView.trackingScrollWillEndDragging(withVelocity: velocity,
+                                               targetContentOffset: targetContentOffset)
     }
   }
   

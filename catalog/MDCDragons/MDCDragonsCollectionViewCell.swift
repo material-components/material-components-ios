@@ -33,13 +33,14 @@ class MDCDragonsCollectionViewCell: UICollectionViewCell {
     
     return label
   }()
-  private lazy var tile = UIView(frame: CGRect.zero)
+  private lazy var imageView = UIImageView()
+  private let imageCache = NSCache<AnyObject, UIImage>()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     contentView.addSubview(label)
     contentView.clipsToBounds = true
-    contentView.addSubview(tile)
+    contentView.addSubview(imageView)
   }
   
   @available(*, unavailable)
@@ -60,11 +61,11 @@ class MDCDragonsCollectionViewCell: UICollectionViewCell {
       width: frame.width - Constants.xPadding * 2,
       height: label.frame.height
     )
-    tile.bounds = CGRect(x: 0,
+    imageView.bounds = CGRect(x: 0,
                          y: 0,
                          width: Constants.imageWidthHeight,
                          height: Constants.imageWidthHeight)
-    tile.center = CGPoint(x: contentView.bounds.width / 2,
+    imageView.center = CGPoint(x: contentView.bounds.width / 2,
                           y: label.frame.minY / 2 )
   }
   
@@ -73,9 +74,41 @@ class MDCDragonsCollectionViewCell: UICollectionViewCell {
     label.text = ""
   }
   
-  func populateView(_ componentName: String) {
+  func populateView(_ componentName: String, color: UIColor) {
     label.text = componentName
-//    tile.componentName = componentName
+    imageView.image = getImage("tile", color: color)
     accessibilityIdentifier = componentName
+  }
+  
+  func getImage(_ key: String, color: UIColor) -> UIImage {
+    if let cachedImage = imageCache.object(forKey: key as AnyObject) {
+      let scale = UIScreen.main.scale
+      let pixelSize = CGSize(width: frame.width * scale, height: frame.height * scale)
+      let cachedPixelSize = CGSize(width: cachedImage.size.width * cachedImage.scale,
+                                   height: cachedImage.size.height * cachedImage.scale)
+      if cachedPixelSize != pixelSize {
+        return createImage(key: key, color: color)
+      }
+      return cachedImage
+    } else {
+      return createImage(key: key, color: color)
+    }
+  }
+  
+  func createImage(key: String, color: UIColor) -> UIImage {
+    var newImage: UIImage?
+    newImage = MDCDrawDragons.image(with: MDCDrawDragons.drawTile,
+                                    size: CGSize(width: Constants.imageWidthHeight,
+                                                 height: Constants.imageWidthHeight),
+                                    fillColor: color)
+    
+    guard let unwrappedImage = newImage else {
+      let emptyImage = UIImage()
+      imageCache.setObject(emptyImage, forKey: key as AnyObject)
+      return emptyImage
+    }
+    
+    imageCache.setObject(unwrappedImage, forKey: key as AnyObject)
+    return unwrappedImage
   }
 }

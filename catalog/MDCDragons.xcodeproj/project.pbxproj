@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		5C3964421FD72D0E003CB44B /* MDCDragonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */; };
 		5C3964441FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3964431FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift */; };
+		5CC9B0401FD893AE0047A45D /* ZShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC9B03E1FD893AE0047A45D /* ZShadow.swift */; };
+		5CC9B0411FD893AE0047A45D /* ZShadow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CC9B03F1FD893AE0047A45D /* ZShadow.xib */; };
+		5CC9B0431FD895A90047A45D /* ShadowedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC9B0421FD895A90047A45D /* ShadowedViews.swift */; };
 		5CDA58A81FD735FE00DB25A8 /* MDCDrawDragons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDA58A71FD735FE00DB25A8 /* MDCDrawDragons.swift */; };
+		5CDA58AB1FD85BB300DB25A8 /* ExampleDragon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDA58AA1FD85BB300DB25A8 /* ExampleDragon.swift */; };
 		5CE8092D1FD729880068A050 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE8092C1FD729880068A050 /* AppDelegate.swift */; };
 		5CE809341FD729880068A050 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CE809331FD729880068A050 /* Assets.xcassets */; };
 		5CE809371FD729880068A050 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CE809351FD729880068A050 /* LaunchScreen.storyboard */; };
@@ -39,7 +43,11 @@
 		096F30AD42FD7675B81193D1 /* Pods-MDCDragons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons.debug.xcconfig"; sourceTree = "<group>"; };
 		5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDragonsController.swift; sourceTree = "<group>"; };
 		5C3964431FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDragonsCollectionViewCell.swift; sourceTree = "<group>"; };
+		5CC9B03E1FD893AE0047A45D /* ZShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZShadow.swift; sourceTree = "<group>"; };
+		5CC9B03F1FD893AE0047A45D /* ZShadow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZShadow.xib; sourceTree = "<group>"; };
+		5CC9B0421FD895A90047A45D /* ShadowedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowedViews.swift; sourceTree = "<group>"; };
 		5CDA58A71FD735FE00DB25A8 /* MDCDrawDragons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDrawDragons.swift; sourceTree = "<group>"; };
+		5CDA58AA1FD85BB300DB25A8 /* ExampleDragon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleDragon.swift; sourceTree = "<group>"; };
 		5CE809291FD729880068A050 /* MDCDragons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDCDragons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CE8092C1FD729880068A050 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CE809331FD729880068A050 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,6 +89,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5CC9B03D1FD884070047A45D /* ZShadow */ = {
+			isa = PBXGroup;
+			children = (
+				5CC9B03E1FD893AE0047A45D /* ZShadow.swift */,
+				5CC9B03F1FD893AE0047A45D /* ZShadow.xib */,
+				5CC9B0421FD895A90047A45D /* ShadowedViews.swift */,
+			);
+			path = ZShadow;
+			sourceTree = "<group>";
+		};
+		5CDA58A91FD85B9600DB25A8 /* Dragons */ = {
+			isa = PBXGroup;
+			children = (
+				5CC9B03D1FD884070047A45D /* ZShadow */,
+				5CDA58AA1FD85BB300DB25A8 /* ExampleDragon.swift */,
+			);
+			path = Dragons;
+			sourceTree = "<group>";
+		};
 		5CE809201FD729880068A050 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +133,7 @@
 		5CE8092B1FD729880068A050 /* MDCDragons */ = {
 			isa = PBXGroup;
 			children = (
+				5CDA58A91FD85B9600DB25A8 /* Dragons */,
 				5CE8092C1FD729880068A050 /* AppDelegate.swift */,
 				5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */,
 				5C3964431FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift */,
@@ -264,6 +292,7 @@
 			files = (
 				5CE809371FD729880068A050 /* LaunchScreen.storyboard in Resources */,
 				5CE809341FD729880068A050 /* Assets.xcassets in Resources */,
+				5CC9B0411FD893AE0047A45D /* ZShadow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +386,10 @@
 				5C3964421FD72D0E003CB44B /* MDCDragonsController.swift in Sources */,
 				5C3964441FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift in Sources */,
 				5CE8092D1FD729880068A050 /* AppDelegate.swift in Sources */,
+				5CDA58AB1FD85BB300DB25A8 /* ExampleDragon.swift in Sources */,
+				5CC9B0431FD895A90047A45D /* ShadowedViews.swift in Sources */,
 				5CDA58A81FD735FE00DB25A8 /* MDCDrawDragons.swift in Sources */,
+				5CC9B0401FD893AE0047A45D /* ZShadow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
