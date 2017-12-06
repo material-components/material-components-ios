@@ -134,14 +134,15 @@ cut_release() {
 
   touch "$rootdir/CHANGELOG.md"
   if ! grep "# #develop#" "$rootdir/CHANGELOG.md" >> /dev/null; then
+    echo "Generating API diff..."
     CHANGELOG_TMP_PATH=$(mktemp -d)
     scripts/release_tools/api_diff | tee "$CHANGELOG_TMP_PATH/api_diff"
 
-    CHANGELOG_PATH=$(grep "$CHANGELOG_TMP_PATH/api_diff" "Changelog: " | cut -d':' -f2)
+    CHANGELOG_PATH=$(cat "$CHANGELOG_TMP_PATH/api_diff" | grep "Changelog: " | cut -d':' -f2)
 
     # Add the new changelog contents in reverse order:
     echo -e "\n---\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
-    cat $CHANGELOG_PATH | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    cat "$CHANGELOG_PATH" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## API changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     generate_release_notes | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "# #develop#\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
