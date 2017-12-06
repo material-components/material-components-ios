@@ -27,8 +27,8 @@ static NSString *const MDCChipFieldContentEdgeInsetsKey = @"contentEdgeInsets";
 static NSString *const MDCChipFieldShowPlaceholderWithChipsKey = @"showPlaceholderWithChips";
 static NSString *const MDCChipFieldChipHeightKey = @"chipHeight";
 
-NSString * const kMDCEmptyTextString = @"";
-NSString * const kMDCChipDelimiterSpace = @" ";
+NSString * const MDCEmptyTextString = @"";
+NSString * const MDCChipDelimiterSpace = @" ";
 
 static const CGFloat MDCChipFieldHorizontalInset = 15.f;
 static const CGFloat MDCChipFieldVerticalInset = 8.f;
@@ -247,7 +247,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 }
 
 - (void)clearTextInput {
-  self.textField.text = kMDCEmptyTextString;
+  self.textField.text = MDCEmptyTextString;
   [self updateTextFieldPlaceholderText];
 }
 
@@ -496,7 +496,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
       [self createNewChipFromInput];
     } else if (delimiter == MDCChipFieldDelimiterSpace) {
       NSString *lastChar = [textField.text substringFromIndex:textField.text.length - 1];
-      if ([lastChar isEqualToString:kMDCChipDelimiterSpace]) {
+      if ([lastChar isEqualToString:MDCChipDelimiterSpace]) {
         [self createNewChipFromInput];
       }
     }

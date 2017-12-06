@@ -42,10 +42,10 @@
  */
 
 /** The minimum text field width of the text field contained within the MDCChipField. */
-extern const CGFloat kMDCChipFieldDefaultMinTextFieldWidth;
+extern const CGFloat MDCChipFieldDefaultMinTextFieldWidth;
 
 /** The default content edge insets for the MDCChipField. */
-extern const UIEdgeInsets kMDCChipFieldDefaultContentEdgeInsets;
+extern const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets;
 
 @protocol MDCChipFieldDelegate;
 
