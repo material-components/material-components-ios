@@ -224,10 +224,10 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   // Clients calling |addChip| directly programmatically are expected to handle such restrictions
   // themselves rather than using |chipField:shouldAddChip| to prevent chips from being added.
   [_chips addObject:chip];
+  [self addChipSubview:chip];
   if ([self.delegate respondsToSelector:@selector(chipField:didAddChip:)]) {
     [self.delegate chipField:self didAddChip:chip];
   }
-  [self addChipSubview:chip];
   [self notifyDelegateIfSizeNeedsToBeUpdated];
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
