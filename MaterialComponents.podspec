@@ -114,6 +114,7 @@ Pod::Spec.new do |mdc|
       spec.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
       spec.dependency "MDFInternationalization"
+      spec.dependency "MaterialComponents/Ink"
       spec.dependency "MaterialComponents/ShadowElevations"
       spec.dependency "MaterialComponents/ShadowLayer"
       spec.dependency "MaterialComponents/private/Math"
