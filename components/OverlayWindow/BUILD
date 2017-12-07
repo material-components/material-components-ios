@@ -32,13 +32,6 @@ mdc_public_objc_library(
     ],
 )
 
-package_group(
-    name = "test_targets",
-    packages = [
-        "//components/OverlayWindow/...",
-    ],
-)
-
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
