@@ -103,8 +103,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
  MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment               // Additional point (iOS specific)
  MDCCeil(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
              self.textInput.placeholderLabel.font.lineHeight))
- MDCTextInputTextFieldOutlinedTextAreaHalfPadding                     // Padding to bottom of border rect
- underlineLabelsOffset                                                // From super class.
+ underlineOffset                                                      // Small Padding +
+                                                                      // underlineLabelsOffset From super class.
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
