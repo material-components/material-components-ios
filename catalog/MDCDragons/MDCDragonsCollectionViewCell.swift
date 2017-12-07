@@ -29,7 +29,7 @@ class MDCDragonsCollectionViewCell: UICollectionViewCell {
   private lazy var label: UILabel = {
     let label = UILabel()
     label.textColor = UIColor(white: 0, alpha: MDCTypography.buttonFontOpacity())
-    label.font = MDCTypography.buttonFont()
+    label.font = UIFont.systemFont(ofSize: 10)
     
     return label
   }()
@@ -41,6 +41,8 @@ class MDCDragonsCollectionViewCell: UICollectionViewCell {
     contentView.addSubview(label)
     contentView.clipsToBounds = true
     contentView.addSubview(imageView)
+    self.layer.cornerRadius = self.bounds.size.width / 2
+    self.clipsToBounds = true
   }
   
   @available(*, unavailable)
@@ -61,6 +63,7 @@ class MDCDragonsCollectionViewCell: UICollectionViewCell {
       width: frame.width - Constants.xPadding * 2,
       height: label.frame.height
     )
+    label.textAlignment = .center
     imageView.bounds = CGRect(x: 0,
                          y: 0,
                          width: Constants.imageWidthHeight,

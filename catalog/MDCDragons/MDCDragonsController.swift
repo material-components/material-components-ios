@@ -60,7 +60,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
   init(collectionViewLayout layout: UICollectionViewFlowLayout, node: CBCNode) {
     self.node = node
     
-    let sectionInset: CGFloat = Constants.spacing
+    let sectionInset: CGFloat = 1
     layout.sectionInset = UIEdgeInsets(top: sectionInset,
                                        left: sectionInset,
                                        bottom: sectionInset,
@@ -69,20 +69,15 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     layout.minimumLineSpacing = Constants.spacing
     
     super.init(collectionViewLayout: layout)
-
     title = "Material Dragons"
-    
     addChildViewController(headerViewController)
-    
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    headerViewController.headerView.maximumHeight = 128
+    headerViewController.headerView.maximumHeight = 100
     headerViewController.headerView.minimumHeight = 56
     
     collectionView?.register(MDCDragonsCollectionViewCell.self,
                              forCellWithReuseIdentifier: "MDCDragonCollectionViewCell")
     collectionView?.backgroundColor = UIColor(white: 0.97, alpha: 1)
-    
-    MDCIcons.ic_arrow_backUseNewStyle(true)
   }
   
   convenience init(node: CBCNode) {
@@ -101,20 +96,9 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     
     titleLabel.text = title!
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
-    titleLabel.font = UIFont.mdc_preferredFont(forMaterialTextStyle: .title)
-    if #available(iOS 9.0, *) {
-      titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .regular)
-    } else {
-      let attribute: [UIFontDescriptor.AttributeName: UIFontDescriptorSymbolicTraits] =
-        [.symbolic: .traitMonoSpace]
-      let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
-      titleLabel.font = UIFont(descriptor: descriptor, size: 14)
-    }
+    titleLabel.font = UIFont.systemFont(ofSize: 20)
     titleLabel.sizeToFit()
-    if Constants.inset + titleLabel.frame.size.width > containerView.frame.size.width {
-      titleLabel.font = MDCTypography.body2Font()
-    }
-    
+
     let titleInsets = UIEdgeInsets(top: 0,
                                    left: Constants.inset,
                                    bottom: Constants.inset,
