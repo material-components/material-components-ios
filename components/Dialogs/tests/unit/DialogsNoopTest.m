@@ -24,7 +24,7 @@
 
 @implementation DialogsNoopTest
 
-- (void)simpleBuildTest {
+- (void)testSimpleBuild {
   MDCAlertController *controller = [[MDCAlertController alloc] init];
   XCTAssertNotNil(controller);
 }
