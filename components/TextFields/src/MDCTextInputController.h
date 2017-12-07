@@ -82,7 +82,7 @@
 /**
  Default value for disabledColor.
 
- Default is blue.
+ Default is [UIColor lightGrayColor].
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *disabledColorDefault;
 
@@ -147,7 +147,7 @@
 /**
  The font applied to the leading side underline label.
 
- Default is leadingUnderlineLabelFontDefault;
+ Default is leadingUnderlineLabelFontDefault.
  */
 @property(nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFont;
 
@@ -161,7 +161,7 @@
 /**
  The color applied to the leading side underline label when not in error state.
 
- Default is leadingUnderlineLabelTextColorDefault;
+ Default is leadingUnderlineLabelTextColorDefault.
  */
 @property(nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelTextColor;
 
@@ -229,7 +229,7 @@
 /**
  The font applied to the trailing side underline label.
 
- Default is trailingUnderlineLabelFontDefault;
+ Default is trailingUnderlineLabelFontDefault.
  */
 @property(nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFont;
 
@@ -242,7 +242,7 @@
 /**
  The color applied to the trailing side underline label when not in error state.
 
- Default is trailingUnderlineLabelTextColorDefault;
+ Default is trailingUnderlineLabelTextColorDefault.
  */
 @property(nonatomic, nullable, strong) UIColor *trailingUnderlineLabelTextColor;
 
@@ -252,6 +252,34 @@
  Default is black with Material Design hint text opacity.
  */
 @property(class, nonatomic, nullable, strong) UIColor *trailingUnderlineLabelTextColorDefault;
+
+/**
+ Height of the underline when text field is first responder.
+
+ Default is underlineHeightActiveDefault.
+ */
+@property(nonatomic, assign) CGFloat underlineHeightActive;
+
+/**
+ Default value for underlineHeightActive.
+
+ Default is 2.
+ */
+@property(class, nonatomic, assign) CGFloat underlineHeightActiveDefault;
+
+/**
+ Height of the underline when NOT first responder.
+
+ Default is underlineHeightNormalDefault.
+ */
+@property(nonatomic, assign) CGFloat underlineHeightNormal;
+
+/**
+ Default value for underlineHeightNormal.
+
+ Default is 1.
+ */
+@property(class, nonatomic, assign) CGFloat underlineHeightNormalDefault;
 
 /**
  Controls when the underline will be shown.
