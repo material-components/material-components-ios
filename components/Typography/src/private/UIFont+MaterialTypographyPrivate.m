@@ -56,7 +56,7 @@
   NSDictionary *fontTraits = [self.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
   if (fontTraits) {
     NSNumber *weightNumber = fontTraits[UIFontWeightTrait];
-    if (weightNumber) {
+    if (weightNumber != nil) {
       weight = [weightNumber floatValue];
     }
   }
@@ -70,7 +70,7 @@
   NSDictionary *fontTraits = [self.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
   if (fontTraits) {
     NSNumber *slantNumber = fontTraits[UIFontSlantTrait];
-    if (slantNumber) {
+    if (slantNumber != nil) {
       slant = [slantNumber floatValue];
     }
   }

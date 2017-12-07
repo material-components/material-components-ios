@@ -19,16 +19,8 @@
 
 @implementation UIFontDescriptor (MaterialTypography)
 
-+ (nonnull UIFontDescriptor *)mdc_preferredFontDescriptorForMaterialTextStyle:
-        (MDCFontTextStyle)style {
-  // iOS' default UIContentSizeCategory is Large.
-  NSString *sizeCategory = UIContentSizeCategoryLarge;
-
-  // If we are within an application, query the preferredContentSizeCategory.
-  if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  }
-
++ (nonnull UIFontDescriptor *)mdc_fontDescriptorForMaterialTextStyle:(MDCFontTextStyle)style
+                                                        sizeCategory:(NSString *)sizeCategory {
   // TODO(#1179): We should include our leading and tracking metrics when creating this descriptor.
   MDCFontTraits *materialTraits =
       [MDCFontTraits traitsForTextStyle:style sizeCategory:sizeCategory];
@@ -67,6 +59,28 @@
   UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] initWithFontAttributes:attributes];
 
   return fontDescriptor;
+}
+
++ (nonnull UIFontDescriptor *)mdc_preferredFontDescriptorForMaterialTextStyle:
+    (MDCFontTextStyle)style {
+  // iOS' default UIContentSizeCategory is Large.
+  NSString *sizeCategory = UIContentSizeCategoryLarge;
+
+  // If we are within an application, query the preferredContentSizeCategory.
+  if ([UIApplication mdc_safeSharedApplication]) {
+    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+  }
+
+  return [UIFontDescriptor mdc_fontDescriptorForMaterialTextStyle:style sizeCategory:sizeCategory];
+}
+
++ (nonnull UIFontDescriptor *)mdc_standardFontDescriptorForMaterialTextStyle:
+    (MDCFontTextStyle)style {
+  // iOS' default UIContentSizeCategory is Large.
+  // Since we don't want to scale with Dynamic Type create the font descriptor based on that.
+  NSString *sizeCategory = UIContentSizeCategoryLarge;
+
+  return [UIFontDescriptor mdc_fontDescriptorForMaterialTextStyle:style sizeCategory:sizeCategory];
 }
 
 @end
