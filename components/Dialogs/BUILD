@@ -71,14 +71,7 @@ mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
-    visibility = [":test_targets"],
-)
-
-package_group(
-    name = "test_targets",
-    packages = [
-        "//components/Dialogs/...",
-    ],
+    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
