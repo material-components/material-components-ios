@@ -139,10 +139,14 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
     _characterCounter =
         [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthCharacterCounterKey];
-    _characterCountMax =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey];
-    _characterCountViewMode =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey];
+    if ([aDecoder containsValueForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey]) {
+      _characterCountMax =
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey]) {
+      _characterCountViewMode =
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey];
+    }
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthErrorColorKey];
     _inlinePlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
@@ -694,7 +698,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return 0;
 }
 
-- (void)setUnderlineHeightActive:(CGFloat)underlineHeightActive {
+- (void)setUnderlineHeightActive:(__unused CGFloat)underlineHeightActive {
   // Not implemented. Underline is never shown.
 }
 
@@ -702,7 +706,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return 0;
 }
 
-+ (void)setUnderlineHeightActiveDefault:(CGFloat)underlineHeightActiveDefault {
++ (void)setUnderlineHeightActiveDefault:(__unused CGFloat)underlineHeightActiveDefault {
   // Not implemented. Underline is never shown.
 }
 
@@ -710,7 +714,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return 0;
 }
 
-- (void)setUnderlineHeightNormal:(CGFloat)underlineHeightNormal {
+- (void)setUnderlineHeightNormal:(__unused CGFloat)underlineHeightNormal {
   // Not implemented. Underline is never shown.
 }
 
@@ -718,7 +722,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return 0;
 }
 
-+ (void)setUnderlineHeightNormalDefault:(CGFloat)underlineHeightNormalDefault {
++ (void)setUnderlineHeightNormalDefault:(__unused CGFloat)underlineHeightNormalDefault {
   // Not implemented. Underline is never shown.
 }
 
