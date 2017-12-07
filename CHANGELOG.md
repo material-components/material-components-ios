@@ -2,6 +2,17 @@
 
 ## Breaking changes
 
+`MDCFloatingButtonShapeLargeIcon` has been removed.
+
+```
+// Old code
+MDCFloatingButton *button = 
+    [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeLargeIcon];
+
+// New code
+MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
+```
+
 ## New deprecations
 
 ## New features
