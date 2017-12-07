@@ -141,18 +141,23 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
     _characterCounter =
         [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthCharacterCounterKey];
-    _characterCountMax =
-        [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey];
-    _characterCountViewMode = [aDecoder
-        decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey];
+    if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey]) {
+      _characterCountMax =
+          [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey];
+    }
+    if ([aDecoder
+            containsValueForKey:MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey]) {
+      _characterCountViewMode = (UITextFieldViewMode)[aDecoder
+          decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountViewModeKey];
+    }
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthErrorColorKey];
     _inlinePlaceholderColor = [aDecoder
         decodeObjectForKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey];
     _inlinePlaceholderFont =
         [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderFontKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthTextInputKey];
-    _trailingUnderlineLabelFont =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelFontKey];
+    _trailingUnderlineLabelFont = [aDecoder
+        decodeObjectForKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelFontKey];
     _trailingUnderlineLabelTextColor = [aDecoder
         decodeObjectForKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelTextColor];
   }
@@ -607,7 +612,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 }
 
 + (void)setLeadingUnderlineLabelTextColorDefault:
-    (__unused UIColor *)leadingUnderlineLabelTextColorDefault {
+        (__unused UIColor *)leadingUnderlineLabelTextColorDefault {
   // Not implemented. Leading underline label is always clear.
 }
 
@@ -633,7 +638,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 }
 
 - (void)setPlaceholderText:(NSString *)placeholderText {
-  if ([_textInput.placeholder isEqualToString: placeholderText]) {
+  if ([_textInput.placeholder isEqualToString:placeholderText]) {
     return;
   }
   _textInput.placeholder = [placeholderText copy];
@@ -720,6 +725,38 @@ static UIFont *_trailingUnderlineLabelFontDefault;
       trailingUnderlineLabelTextColorDefault
           ? trailingUnderlineLabelTextColorDefault
           : MDCTextInputControllerLegacyFullWidthInlinePlaceholderTextColorDefault();
+}
+
+- (CGFloat)underlineHeightActive {
+  return 0;
+}
+
+- (void)setUnderlineHeightActive:(CGFloat)underlineHeightActive {
+  // Not implemented. Underline is never shown.
+}
+
++ (CGFloat)underlineHeightActiveDefault {
+  return 0;
+}
+
++ (void)setUnderlineHeightActiveDefault:(CGFloat)underlineHeightActiveDefault {
+  // Not implemented. Underline is never shown.
+}
+
+- (CGFloat)underlineHeightNormal {
+  return 0;
+}
+
+- (void)setUnderlineHeightNormal:(CGFloat)underlineHeightNormal {
+  // Not implemented. Underline is never shown.
+}
+
++ (CGFloat)underlineHeightNormalDefault {
+  return 0;
+}
+
++ (void)setUnderlineHeightNormalDefault:(CGFloat)underlineHeightNormalDefault {
+  // Not implemented. Underline is never shown.
 }
 
 - (void)setUnderlineViewMode:(__unused UITextFieldViewMode)underlineViewMode {
@@ -942,15 +979,11 @@ static UIFont *_trailingUnderlineLabelFontDefault;
  NOTE: It's applied before the textRect is flipped for RTL. So all calculations are done here à la
  LTR.
 
- The vertical layout is, at most complex, this form:
- MDCTextInputVerticalPadding +                                        // Top padding
- MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +   // Placeholder when up
- MDCTextInputVerticalHalfPadding +                                    // Small padding
- MDCRint(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
- self.textInput.placeholderLabel.font.lineHeight)) +
- MDCTextInputVerticalHalfPadding +                                    // Small padding
- --Underline-- (height not counted)                                   // Underline (height ignored)
- MAX(underlineLabelsOffset,MDCTextInputVerticalHalfPadding)           // Padding and/or labels
+ The vertical layout is, simply:
+ MDCTextInputControllerLegacyFullWidthVerticalPadding                       // Top padding
+ MDCRint(MAX(self.textInput.font.lineHeight,                                // Text field or placeholder
+             self.textInput.placeholderLabel.font.lineHeight)) 
+ MDCTextInputControllerLegacyFullWidthVerticalPadding                       // Bottom padding
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(__unused UIEdgeInsets)defaultInsets {
