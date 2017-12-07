@@ -15,7 +15,15 @@ MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
 
 ## New deprecations
 
+BottomSheet has a variety of new deprecations.
+
 ## New features
+
+MDCFloatingButton has a new mode property and can now be expanded.
+
+MDCInkView has a new delegate-based API for responding to animation events.
+
+It's now possible to customize fonts on Tabs.
 
 ## API changes
 
@@ -76,8 +84,6 @@ MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
 *new* enum value: `MDCFloatingButtonModeNormal` in `MDCFloatingButtonMode`
 
 *new* enum: `MDCFloatingButtonMode`
-
-*new* typedef: `MDCFloatingButtonMode`
 
 #### MDCFloatingButtonShape
 
