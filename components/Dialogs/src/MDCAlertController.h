@@ -49,6 +49,9 @@
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
+/** Alert controllers must be created with alertControllerWithTitle:message: */
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
 /**
  Adds an action to the alert dialog.
 
