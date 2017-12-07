@@ -43,21 +43,22 @@
 
   self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
 
-  if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){
-                                                                      .majorVersion = 11,
-                                                                      .minorVersion = 0,
-                                                                      .patchVersion = 0}]) {
-      [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navBar.topAnchor].active = YES;
-    } else {
-      [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.navBar
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1.0
-                                    constant:0]
-      .active = YES;
-    }
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navBar.topAnchor].active = YES;
+  } else {
+#endif
+    [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.navBar
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1.0
+                                  constant:0].active = YES;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  }
+#endif
+  
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navBar);
 
   [NSLayoutConstraint
@@ -65,8 +66,7 @@
                                                                options:0
                                                                metrics:nil
                                                                  views:viewsBindings]];
-
-
+  
   [self setupExampleViews];
 }
 
