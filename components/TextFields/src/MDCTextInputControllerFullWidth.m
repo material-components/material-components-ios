@@ -698,7 +698,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return 0;
 }
 
-- (void)setUnderlineHeightActive:(CGFloat)underlineHeightActive {
+- (void)setUnderlineHeightActive:(__unused CGFloat)underlineHeightActive {
   // Not implemented. Underline is never shown.
 }
 
@@ -706,7 +706,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return 0;
 }
 
-+ (void)setUnderlineHeightActiveDefault:(CGFloat)underlineHeightActiveDefault {
++ (void)setUnderlineHeightActiveDefault:(__unused CGFloat)underlineHeightActiveDefault {
   // Not implemented. Underline is never shown.
 }
 
@@ -714,7 +714,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return 0;
 }
 
-- (void)setUnderlineHeightNormal:(CGFloat)underlineHeightNormal {
+- (void)setUnderlineHeightNormal:(__unused CGFloat)underlineHeightNormal {
   // Not implemented. Underline is never shown.
 }
 
@@ -722,7 +722,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return 0;
 }
 
-+ (void)setUnderlineHeightNormalDefault:(CGFloat)underlineHeightNormalDefault {
++ (void)setUnderlineHeightNormalDefault:(__unused CGFloat)underlineHeightNormalDefault {
   // Not implemented. Underline is never shown.
 }
 
