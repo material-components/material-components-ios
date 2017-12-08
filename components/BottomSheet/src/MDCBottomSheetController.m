@@ -22,7 +22,10 @@
 
 #import <MotionTransitioning/MotionTransitioning.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
+#pragma clang diagnostic pop
 @end
 
 @implementation MDCBottomSheetController {
@@ -56,7 +59,10 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.mdc_bottomSheetPresentationController.delegate = self;
+#pragma clang diagnostic pop
 
   [self.contentViewController.view layoutIfNeeded];
 }
@@ -86,8 +92,11 @@
   _transition.trackingScrollView = trackingScrollView;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull __unused MDCBottomSheetPresentationController *)bottomSheet {
+#pragma clang diagnostic pop
   [self.delegate bottomSheetControllerDidDismissBottomSheet:self];
 }
 

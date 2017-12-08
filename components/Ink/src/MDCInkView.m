@@ -21,6 +21,7 @@
 
 @interface MDCInkView () <MDCInkLayerDelegate>
 
+@property(nonatomic, strong) CAShapeLayer *maskLayer;
 @property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
 @property(nonatomic, copy) MDCInkCompletionBlock endInkRippleCompletionBlock;
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
@@ -58,10 +59,21 @@
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.inkColor = self.defaultInkColor;
   _usesLegacyInkRipple = YES;
+
+  // Use mask layer when the superview has a shadowPath.
+  _maskLayer = [CAShapeLayer layer];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
+  if (self.superview.layer.shadowPath) {
+    self.maskLayer.path = self.superview.layer.shadowPath;
+    self.layer.mask = _maskLayer;
+    self.layer.masksToBounds = YES;
+  }
+
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
 
   // When bounds change ensure all ink layer bounds are changed too.
@@ -75,15 +87,17 @@
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkStyle = inkStyle;
-  switch (inkStyle) {
-    case MDCInkStyleBounded:
-      self.inkLayer.masksToBounds = YES;
-      self.inkLayer.bounded = YES;
-      break;
-    case MDCInkStyleUnbounded:
-      self.inkLayer.masksToBounds = NO;
-      self.inkLayer.bounded = NO;
-      break;
+  if (self.usesLegacyInkRipple) {
+    switch (inkStyle) {
+      case MDCInkStyleBounded:
+        self.inkLayer.masksToBounds = YES;
+        self.inkLayer.bounded = YES;
+        break;
+      case MDCInkStyleUnbounded:
+        self.inkLayer.masksToBounds = NO;
+        self.inkLayer.bounded = NO;
+        break;
+    }
   }
 }
 
@@ -139,16 +153,6 @@
     inkLayer.inkColor = self.inkColor;
     inkLayer.maxRippleRadius = self.maxRippleRadius;
     inkLayer.animationDelegate = self;
-
-    switch (self.inkStyle) {
-      case MDCInkStyleBounded:
-        self.clipsToBounds = YES;
-        break;
-      case MDCInkStyleUnbounded:
-        self.clipsToBounds = NO;
-        break;
-    }
-
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
     [self.layer addSublayer:inkLayer];
@@ -171,7 +175,8 @@
   if (self.usesLegacyInkRipple) {
     [self.inkLayer resetAllInk:animated];
   } else {
-    for (CALayer *layer in self.layer.sublayers) {
+    NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
+    for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCInkLayer class]]) {
         MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
         if (animated) {
@@ -185,7 +190,7 @@
 }
 
 - (UIColor *)defaultInkColor {
-  return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
+  return [[UIColor alloc] initWithWhite:0 alpha:0.14f];
 }
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {
@@ -211,11 +216,17 @@
   if (self.activeInkLayer == inkLayer && self.startInkRippleCompletionBlock) {
     self.startInkRippleCompletionBlock();
   }
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidStart:)]) {
+    [self.animationDelegate inkAnimationDidStart:self];
+  }
 }
 
 - (void)inkLayerAnimationDidEnd:(MDCInkLayer *)inkLayer {
   if (self.activeInkLayer == inkLayer && self.endInkRippleCompletionBlock) {
     self.endInkRippleCompletionBlock();
+  }
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidEnd:)]) {
+    [self.animationDelegate inkAnimationDidEnd:self];
   }
 }
 

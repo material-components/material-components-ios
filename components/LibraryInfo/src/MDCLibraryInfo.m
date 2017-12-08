@@ -16,19 +16,17 @@
 
 #import "MDCLibraryInfo.h"
 
+// The current version of the MDC-iOS library. DO NOT EDIT MANUALLY.
+//
+// This string is updated automatically as a part of the release process and should not be edited
+// manually. Do not rename this constant or change the formatting without updating the release
+// scripts.
+static NSString const *MDCLibraryInfoVersionString = @"42.0.0";
+
 @implementation MDCLibraryInfo
 
 + (NSString *)versionString {
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCLibraryInfo class]];
-  NSString *value = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-
-  if (value) {
-    return value;
-  } else {
-    NSAssert(NO, @"Missing version number in library's bundle. "
-                 @"Is CFBundleShortVersionString defined?");
-    return @"0.0.0";
-  }
+  return [MDCLibraryInfoVersionString copy];  // Copy because caller isn't expecting `const`.
 }
 
 @end
