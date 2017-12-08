@@ -197,6 +197,26 @@
     UI_APPEARANCE_SELECTOR;
 
 /*
+ Returns the shadow color for a particular control state.
+
+ If no shadow color has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The control state.
+ @return The shadow color for the requested state.
+ */
+- (nullable UIColor *)shadowColorForState:(UIControlState)state;
+
+/*
+ Sets the shadow color for a particular control state.
+
+ @param elevation The shadow color.
+ @param state The control state.
+ */
+- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/*
  Returns the title color for a particular control state.
 
  If no title color has been set for a given state, the returned value will fall back to the value
