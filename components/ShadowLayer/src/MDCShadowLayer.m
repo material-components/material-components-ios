@@ -86,7 +86,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
 @end
 
-@interface MDCShadowLayer () <CALayerDelegate>
+@interface MDCShadowLayer ()
 
 @property(nonatomic, strong) CAShapeLayer *topShadow;
 @property(nonatomic, strong) CAShapeLayer *bottomShadow;
