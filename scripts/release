@@ -144,7 +144,7 @@ cut_release() {
   if ! grep "# #develop#" "$rootdir/CHANGELOG.md" >> /dev/null; then
     echo "Generating API diff..."
     CHANGELOG_TMP_PATH=$(mktemp -d)
-    scripts/release_tools/api_diff | tee "$CHANGELOG_TMP_PATH/api_diff"
+    "$dir/release_tools/api_diff" origin/stable release-candidate | tee "$CHANGELOG_TMP_PATH/api_diff"
 
     CHANGELOG_PATH=$(cat "$CHANGELOG_TMP_PATH/api_diff" | grep "Changelog: " | cut -d':' -f2)
 
@@ -413,6 +413,17 @@ publish_release() {
   fi
 }
 
+# Generators
+
+generate_release_apidiff() {
+  CHANGELOG_TMP_PATH=$(mktemp -d)
+  "$dir/release_tools/api_diff" origin/stable $(get_latest_branch) | tee "$CHANGELOG_TMP_PATH/api_diff"
+
+  CHANGELOG_PATH=$(cat "$CHANGELOG_TMP_PATH/api_diff" | grep "Changelog: " | cut -d':' -f2)
+
+  cat "$CHANGELOG_PATH"
+}
+
 generate_release_authors() {
   git log origin/stable...$(get_latest_branch) --format="%ae" | sort | uniq
 }
@@ -521,6 +532,7 @@ case "$1" in
   merge)   merge_release ${@:2} ;;
   publish) publish_release ${@:2} ;;
 
+  apidiff) generate_release_apidiff ${@:2} ;;
   authors) generate_release_authors ${@:2} ;;
   diff)    generate_release_diff ${@:2} ;;
   files)   generate_release_files ${@:2} ;;

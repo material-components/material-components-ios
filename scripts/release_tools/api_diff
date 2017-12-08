@@ -34,14 +34,9 @@ clean_clones() {
   fi
 }
 
-if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
-  echo "Please cut a release first by running scripts/release/cut."
-  exit 1
-fi
-
 # Verify commits
-old_commit=$(git rev-list -n 1 origin/stable)
-new_commit=$(git rev-list -n 1 release-candidate)
+old_commit=$(git rev-list -n 1 $1)
+new_commit=$(git rev-list -n 1 $2)
 
 if [[ -z "$old_commit" || -z "$new_commit" ]]; then
   echo "Unable to get commit shas."
@@ -118,8 +113,6 @@ for d in $NEW_ROOT_PATH/components/*/src; do
   if [ -s "$ERROR_PATH" ]; then
     echo "### $component" >> "$ALL_ERROR_LOG_PATH"
     cat "$ERROR_PATH" >> "$ALL_ERROR_LOG_PATH"
-
-    echo -n " Errors detected."
   fi
 
   echo
