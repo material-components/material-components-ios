@@ -264,58 +264,6 @@ bump_release() {
   done
 }
 
-generate_release_notes() {
-  find components -type d -name 'src' | while read path; do
-    folder=$(dirname $path)
-    component=$(echo $folder | cut -d'/' -f2-)
-
-    if [[ $component == private* ]]; then
-      continue;
-    fi
-
-    if [ $(git log --pretty=oneline --no-merges origin/stable..$(get_latest_branch) $folder \
-           | wc -l) == "0" ]; then
-      continue
-    fi
-
-    componentdiff() {
-      git log \
-        --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
-        --no-merges \
-        origin/stable..$(get_latest_branch) \
-        $folder
-    }
-
-    if [[ $(componentdiff) ]]; then
-      echo
-      echo "### $component"
-
-      if [[ $(componentdiff | grep "\[$component\]\!") ]]; then
-        echo
-        echo "#### Breaking changes"
-        echo
-
-        componentdiff \
-          | grep "\[$component\]\!" \
-          | sed "s|\[$component\]!|**Breaking**: |" \
-          | sort
-      fi
-
-      if [[ $(componentdiff | grep -v "\[$component\]\!") ]]; then
-        echo
-        echo "#### Changes"
-        echo
-
-        componentdiff \
-          | grep -v "\[$component\]!" \
-          | sed "s|\[$component\] ||" \
-          | sort
-      fi
-    fi
-
-  done
-}
-
 merge_release() {
   enforce_release_cut
 
@@ -465,22 +413,22 @@ publish_release() {
   fi
 }
 
-authors_release() {
+generate_release_authors() {
   git log origin/stable...$(get_latest_branch) --format="%ae" | sort | uniq
 }
 
-files_release() {
+generate_release_files() {
   git diff --name-only origin/stable..$(get_latest_branch) components/ \
     | grep "src/"
 }
 
-headers_release() {
+generate_release_headers() {
   git diff --name-only origin/stable..$(get_latest_branch) components/ \
     | grep -i -e "components\/.*\/src\/.*\.h" \
     | grep -v -i -e "\/private\/"
 }
 
-diff_release() {
+generate_release_diff() {
   git_diff=diff
   if [ "$1" == "--use_diff_tool" ]; then
     git_diff=difftool
@@ -488,6 +436,58 @@ diff_release() {
   fi
 
   git $git_diff origin/stable..$(get_latest_branch) "$@"
+}
+
+generate_release_notes() {
+  find components -type d -name 'src' | while read path; do
+    folder=$(dirname $path)
+    component=$(echo $folder | cut -d'/' -f2-)
+
+    if [[ $component == private* ]]; then
+      continue;
+    fi
+
+    if [ $(git log --pretty=oneline --no-merges origin/stable..$(get_latest_branch) $folder \
+           | wc -l) == "0" ]; then
+      continue
+    fi
+
+    componentdiff() {
+      git log \
+        --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
+        --no-merges \
+        origin/stable..$(get_latest_branch) \
+        $folder
+    }
+
+    if [[ $(componentdiff) ]]; then
+      echo
+      echo "### $component"
+
+      if [[ $(componentdiff | grep "\[$component\]\!") ]]; then
+        echo
+        echo "#### Breaking changes"
+        echo
+
+        componentdiff \
+          | grep "\[$component\]\!" \
+          | sed "s|\[$component\]!|**Breaking**: |" \
+          | sort
+      fi
+
+      if [[ $(componentdiff | grep -v "\[$component\]\!") ]]; then
+        echo
+        echo "#### Changes"
+        echo
+
+        componentdiff \
+          | grep -v "\[$component\]!" \
+          | sed "s|\[$component\] ||" \
+          | sort
+      fi
+    fi
+
+  done
 }
 
 if [ $# -eq 0 ]; then
@@ -521,10 +521,10 @@ case "$1" in
   merge)   merge_release ${@:2} ;;
   publish) publish_release ${@:2} ;;
 
-  authors) authors_release ${@:2} ;;
-  diff)    diff_release ${@:2} ;;
-  files)   files_release ${@:2} ;;
-  headers) headers_release ${@:2} ;;
+  authors) generate_release_authors ${@:2} ;;
+  diff)    generate_release_diff ${@:2} ;;
+  files)   generate_release_files ${@:2} ;;
+  headers) generate_release_headers ${@:2} ;;
   notes)   generate_release_notes ${@:2} ;;
 
   abort)   abort_release ${@:2} ;;
