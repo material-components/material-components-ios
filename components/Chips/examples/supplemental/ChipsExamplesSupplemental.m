@@ -115,6 +115,21 @@ static UIButton *DeleteButton() {
 
 @end
 
+@interface ChipsInputExampleViewController (Supplemental)
+@end
+
+@implementation ChipsInputExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Input" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+@end
+
 @implementation ChipsSizingExampleViewController (Supplemental)
 
 + (NSArray *)catalogBreadcrumbs {
