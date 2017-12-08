@@ -131,4 +131,13 @@ IB_DESIGNABLE
  */
 - (void)activityIndicatorAnimationDidFinish:(nonnull MDCActivityIndicator *)activityIndicator;
 
+/**
+ When setIndicatorMode:animated: is called the spinner animates the transition from the current
+ mode to the new mode. This method is called after the animation completes or immediately if no
+ animation is requested.
+
+ @param activityIndicator Caller
+ */
+- (void)activityIndicatorModeTransitionDidFinish:(nonnull MDCActivityIndicator *)activityIndicator;
+
 @end

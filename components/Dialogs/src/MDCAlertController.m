@@ -223,12 +223,14 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)actionButtonPressed:(id)sender {
   NSInteger actionIndex = [self.actionButtons indexOfObject:sender];
   MDCAlertAction *action = self.actions[actionIndex];
-
-  if (action.completionHandler) {
-    action.completionHandler(action);
-  }
-
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+  // We call our action.completionHandler after we dismiss the existing alert in case the handler
+  // also presents a view controller. Otherwise we get a warning about presenting on a controller
+  // which is already presenting.
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void){
+    if (action.completionHandler) {
+      action.completionHandler(action);
+    }
+  }];
 }
 
 #pragma mark - UIViewController

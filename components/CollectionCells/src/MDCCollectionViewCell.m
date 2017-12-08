@@ -282,6 +282,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 - (MDCInkView *)inkView {
   if (!_inkView) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.usesLegacyInkRipple = NO;
     [self addSubview:_inkView];
   }
   return _inkView;

@@ -14,22 +14,16 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
-#import "MaterialButtonBar.h"
+#import <UIKit/UIKit.h>
 
-/**
- Used to apply a color scheme to theme MDCButtonBar.
- */
-@interface MDCButtonBarColorThemer : NSObject
+/** Appearance for content within tab bar items. */
+typedef NS_ENUM(NSInteger, MDCTabBarTextTransform) {
+  /** The default text transform is applied based on the bar's position. */
+  MDCTabBarTextTransformAutomatic = 0,
 
-/**
- Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButtonBar.
+  /** Text on tabs is displayed verbatim with no transform. */
+  MDCTabBarTextTransformNone = 1,
 
- @param colorScheme The color scheme to apply to MDCButtonBar.
- @param buttonBar A MDCButtonBar instance to apply a color scheme.
- */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-             toButtonBar:(nonnull MDCButtonBar *)buttonBar;
-
-@end
+  /** Text on tabs is uppercased for display. */
+  MDCTabBarTextTransformUppercase = 2,
+};

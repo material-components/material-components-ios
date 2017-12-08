@@ -677,16 +677,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 // TODO: (larche) remove when we drop iOS 8
 // Prior to iOS 9 RTL was not automatically applied, so we need to apply fixes manually.
 - (BOOL)shouldManuallyEnforceRightToLeftLayoutForOverlayViews {
-  BOOL manuallyEnforceRTL = YES;
-
   NSOperatingSystemVersion iOS9Version = {9, 0, 0};
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
-      [processInfo isOperatingSystemAtLeastVersion:iOS9Version]) {
-      manuallyEnforceRTL = NO;
-  }
-
-  return manuallyEnforceRTL;
+  return ![processInfo isOperatingSystemAtLeastVersion:iOS9Version];
 }
 
 #pragma mark - Accessibility
