@@ -253,11 +253,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
-  self.layer.shapeGenerator = shapeGenerator;
-
   if (shapeGenerator) {
     self.layer.cornerRadius = 0;
+    self.layer.shadowPath = nil;
   }
+
+  self.layer.shapeGenerator = shapeGenerator;
 
   [self updateBackgroundColor];
 }
