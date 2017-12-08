@@ -121,7 +121,7 @@ cut_release() {
     echo
     exit 1 # TODO: Revert this line so we bail out.
   fi
-  
+
   if $isHotFix; then
     branch=origin/stable
     branch_message="This is a hotfix... branching off $branch"
@@ -279,9 +279,6 @@ generate_release_notes() {
   echo "## New features"
   echo
 
-  echo "## API changes"
-  echo
-
   "$dir/release_tools/changes"
 }
 
@@ -323,11 +320,19 @@ merge_release() {
 
   # Merge in to stable.
   git fetch
-  git checkout stable
+  if [ ! $(git rev-parse --verify stable 2> /dev/null) ]; then
+    git checkout -b stable origin/stable
+  else
+    git checkout stable
+  fi
   git rebase origin/stable
   git merge --no-ff release-candidate --no-edit
 
-  git checkout develop
+  if [ ! $(git rev-parse --verify develop 2> /dev/null) ]; then
+    git checkout -b develop origin/develop
+  else
+    git checkout develop
+  fi
   git rebase origin/develop
   git merge --no-ff release-candidate --no-edit
 
@@ -494,6 +499,7 @@ case "$1" in
   diff)    diff_release ${@:2} ;;
   files)   files_release ${@:2} ;;
   headers) headers_release ${@:2} ;;
+  notes)   generate_release_notes ${@:2} ;;
 
   abort)   abort_release ${@:2} ;;
 
