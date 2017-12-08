@@ -426,6 +426,39 @@ publish_release() {
   fi
 }
 
+get_latest_branch() {
+  if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
+    echo "HEAD"
+  else
+    echo "release-candidate"
+  fi
+}
+
+authors_release() {
+  git log origin/stable...$(get_latest_branch) --format="%ae" | sort | uniq
+}
+
+files_release() {
+  git diff --name-only origin/stable..$(get_latest_branch) components/ \
+    | grep "src/"
+}
+
+headers_release() {
+  git diff --name-only origin/stable..$(get_latest_branch) components/ \
+    | grep -i -e "components\/.*\/src\/.*\.h" \
+    | grep -v -i -e "\/private\/"
+}
+
+diff_release() {
+  git_diff=diff
+  if [ "$1" == "--use_diff_tool" ]; then
+    git_diff=difftool
+    shift 1
+  fi
+
+  git $git_diff origin/stable..$(get_latest_branch) "$@"
+}
+
 if [ $# -eq 0 ]; then
   usage
   exit 1
@@ -456,6 +489,11 @@ case "$1" in
   bump)    bump_release ${@:2} ;;
   merge)   merge_release ${@:2} ;;
   publish) publish_release ${@:2} ;;
+
+  authors) authors_release ${@:2} ;;
+  diff)    diff_release ${@:2} ;;
+  files)   files_release ${@:2} ;;
+  headers) headers_release ${@:2} ;;
 
   abort)   abort_release ${@:2} ;;
 
