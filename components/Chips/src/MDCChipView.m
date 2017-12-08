@@ -252,8 +252,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
                                                 object:nil];
 }
 
-- (void)setShapeGenerator:(id)shapeGenerator {
+- (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
   self.layer.shapeGenerator = shapeGenerator;
+
+  if (shapeGenerator) {
+    self.layer.cornerRadius = 0;
+  }
 
   [self updateBackgroundColor];
 }
@@ -440,8 +444,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 #pragma mark - Layout
 
 - (void)layoutSubviews {
-  [super layoutSubviews];
-
   _inkView.frame = self.bounds;
   _imageView.frame = [self imageViewFrame];
   _selectedImageView.frame = [self selectedImageViewFrame];
