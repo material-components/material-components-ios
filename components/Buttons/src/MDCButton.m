@@ -301,7 +301,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-  _inkView.usesLegacyInkRipple = NO;
+// TODO: Enable once we can identify why the ink behavior is regressing for internal clients.
+//  _inkView.usesLegacyInkRipple = NO;
   [self insertSubview:_inkView belowSubview:self.imageView];
 
   // UIButton has a drag enter/exit boundary that is outside of the frame of the button itself.
