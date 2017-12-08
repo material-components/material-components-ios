@@ -296,10 +296,8 @@ merge_release() {
 
   current_branch=$(current_branch)
   if [ "$current_branch" != "release-candidate" ]; then
-    echo "This command must be run from the release-candidate branch."
-    echo
-    echo "Your current branch: $current_branch"
-    exit 1
+    echo "Checking out the release-candidate branch..."
+    git checkout release-candidate
   fi
 
   enforce_changelog_version
