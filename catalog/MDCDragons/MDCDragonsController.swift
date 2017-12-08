@@ -60,13 +60,13 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
   init(collectionViewLayout layout: UICollectionViewFlowLayout, node: CBCNode) {
     self.node = node
     
-    let sectionInset: CGFloat = 1
-    layout.sectionInset = UIEdgeInsets(top: sectionInset,
-                                       left: sectionInset,
-                                       bottom: sectionInset,
-                                       right: sectionInset)
-    layout.minimumInteritemSpacing = Constants.spacing
-    layout.minimumLineSpacing = Constants.spacing
+    let sectionInset: CGFloat = 10
+    layout.sectionInset = UIEdgeInsets(top: 10,
+                                       left: 5,
+                                       bottom: 10,
+                                       right: 5)
+    layout.minimumInteritemSpacing = sectionInset
+    layout.minimumLineSpacing = sectionInset
     
     super.init(collectionViewLayout: layout)
     title = "Material Dragons"
@@ -128,7 +128,6 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     view.addSubview(headerViewController.view)
     headerViewController.didMove(toParentViewController: self)
     
-    collectionView?.accessibilityIdentifier = "collectionView"
     if #available(iOS 11.0, *) {
       collectionView?.contentInsetAdjustmentBehavior = .always
     }
@@ -174,7 +173,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
   
   override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
-    return node.children.count
+    return 100//node.children.count
   }
   
   // MARK: UICollectionViewDelegate
@@ -185,7 +184,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
                                          for: indexPath)
     cell.backgroundColor = UIColor.white
     
-    let componentName = node.children[indexPath.item].title
+    let componentName = node.children[0].title
     if let catalogCell = cell as? MDCDragonsCollectionViewCell {
       catalogCell.populateView(componentName,
                                color: MDCDragonsController.colors[indexPath.item % MDCDragonsController.colors.count])
@@ -196,13 +195,13 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let dividerWidth: CGFloat = 1
+    let dividerWidth: CGFloat = 10
     var safeInsets: CGFloat = 0
     if #available(iOS 11, *) {
       safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
     }
     var cellWidthHeight: CGFloat
-    
+    cellWidthHeight = 100
     // iPhones have 3 columns in portrait and 4 in landscape
     if UI_USER_INTERFACE_IDIOM() == .phone {
       cellWidthHeight = (view.frame.size.width - 4 * dividerWidth - safeInsets) / 3
@@ -218,13 +217,9 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
   
   override func collectionView(_ collectionView: UICollectionView,
                                didSelectItemAt indexPath: IndexPath) {
-    let node = self.node.children[indexPath.row]
+    let node = self.node.children[0]
     var vc: UIViewController
-    //    if node.isExample() {
     vc = node.createExampleViewController()
-    //    } else {
-    //      vc = MDCNodeListViewController(node: node)
-    //    }
     self.navigationController?.pushViewController(vc, animated: true)
   }
   
@@ -309,6 +304,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     
     logo.alpha = 1 - (relativeOffset / Constants.headerScrollThreshold)
   }
+  
 }
 
 // UIScrollViewDelegate
@@ -317,7 +313,7 @@ extension MDCDragonsController {
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidScroll()
-      adjustLogoForScrollView(scrollView)
+      self.adjustLogoForScrollView(scrollView)
     }
   }
   

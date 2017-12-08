@@ -118,7 +118,7 @@ class MDCDrawDragons {
   
   static func drawTile(fillColor: UIColor, size: CGSize) {
     let trianglePath = UIBezierPath()
-    let themesGroup = CGRect(x: 11, y: 8, width: floor((size.width - 11) * 0.88732 + 0.5), height: floor((size.height - 8) * 0.89189 + 0.5))
+    let themesGroup = CGRect(x: 8, y: 8, width: floor((size.width - 11) * 0.88732 + 0.5), height: floor((size.height - 8) * 0.89189 + 0.5))
     trianglePath.move(to: CGPoint(x: themesGroup.minX + 0.47619 * themesGroup.size.width, y: themesGroup.minY + 0.19394 * themesGroup.size.height))
     trianglePath.addLine(to: CGPoint(x: themesGroup.minX + 0.57924 * themesGroup.size.width, y: themesGroup.minY + 0.35354 * themesGroup.size.height))
     trianglePath.addLine(to: CGPoint(x: themesGroup.minX + 0.37261 * themesGroup.size.width, y: themesGroup.minY + 0.35354 * themesGroup.size.height))

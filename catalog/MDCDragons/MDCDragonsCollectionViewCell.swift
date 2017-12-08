@@ -21,16 +21,15 @@ import MaterialComponents.MaterialTypography
 class MDCDragonsCollectionViewCell: UICollectionViewCell {
   
   fileprivate struct Constants {
-    static let imageWidthHeight: CGFloat = 80
+    static let imageWidthHeight: CGFloat = 40
     static let xPadding: CGFloat = 14
-    static let yPadding: CGFloat = 16
+    static let yPadding: CGFloat = 20
   }
   
   private lazy var label: UILabel = {
     let label = UILabel()
-    label.textColor = UIColor(white: 0, alpha: MDCTypography.buttonFontOpacity())
+    label.textColor = UIColor(white: 0, alpha: 0.8)
     label.font = UIFont.systemFont(ofSize: 10)
-    
     return label
   }()
   private lazy var imageView = UIImageView()
@@ -41,11 +40,9 @@ class MDCDragonsCollectionViewCell: UICollectionViewCell {
     contentView.addSubview(label)
     contentView.clipsToBounds = true
     contentView.addSubview(imageView)
-    self.layer.cornerRadius = self.bounds.size.width / 2
     self.clipsToBounds = true
   }
   
-  @available(*, unavailable)
   required init(coder: NSCoder) {
     super.init(coder: coder)!
   }
@@ -56,20 +53,20 @@ class MDCDragonsCollectionViewCell: UICollectionViewCell {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    label.sizeToFit()
-    label.frame = CGRect(
-      x: Constants.xPadding,
-      y: frame.height - label.frame.height - Constants.yPadding,
-      width: frame.width - Constants.xPadding * 2,
-      height: label.frame.height
-    )
-    label.textAlignment = .center
     imageView.bounds = CGRect(x: 0,
-                         y: 0,
-                         width: Constants.imageWidthHeight,
-                         height: Constants.imageWidthHeight)
+                              y: 0,
+                              width: Constants.imageWidthHeight,
+                              height: Constants.imageWidthHeight)
     imageView.center = CGPoint(x: contentView.bounds.width / 2,
-                          y: label.frame.minY / 2 )
+                               y: Constants.yPadding )
+    label.sizeToFit()
+    label.frame = CGRect(x: Constants.xPadding,
+                         y: imageView.bounds.maxY,
+                         width: frame.width - Constants.xPadding * 2,
+                         height: contentView.bounds.size.height - (imageView.bounds.maxY + 5))
+    label.textAlignment = .center
+    label.numberOfLines = 0
+    self.layer.cornerRadius = self.bounds.size.width / 2
   }
   
   override func prepareForReuse() {
