@@ -64,6 +64,14 @@ enforce_changelog_version() {
   fi
 }
 
+get_latest_branch() {
+  if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
+    echo "HEAD"
+  else
+    echo "release-candidate"
+  fi
+}
+
 version_for_platform() {
   user_version="$1"
 
@@ -142,9 +150,13 @@ cut_release() {
 
     # Add the new changelog contents in reverse order:
     echo -e "\n---\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    generate_release_notes | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## Component changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     cat "$CHANGELOG_PATH" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## API changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
-    generate_release_notes | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## New features\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## New deprecations\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## Breaking changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "# #develop#\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
   fi
   exit 0
@@ -253,33 +265,55 @@ bump_release() {
 }
 
 generate_release_notes() {
-  enforce_release_cut
+  find components -type d -name 'src' | while read path; do
+    folder=$(dirname $path)
+    component=$(echo $folder | cut -d'/' -f2-)
 
-  current_branch=$(current_branch)
-  if [ "$current_branch" != "release-candidate" ]; then
-    echo "This command must be run from the release-candidate branch."
-    echo
-    echo "Your current branch: $current_branch"
-    exit 1
-  fi
+    if [[ $component == private* ]]; then
+      continue;
+    fi
 
-  ref_log() {
-    git log \
-      --pretty="%H" \
-      --no-merges \
-      origin/stable..release-candidate
-  }
+    if [ $(git log --pretty=oneline --no-merges origin/stable..$(get_latest_branch) $folder \
+           | wc -l) == "0" ]; then
+      continue
+    fi
 
-  echo "## Breaking changes"
-  echo
+    componentdiff() {
+      git log \
+        --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
+        --no-merges \
+        origin/stable..$(get_latest_branch) \
+        $folder
+    }
 
-  echo "## New deprecations"
-  echo
+    if [[ $(componentdiff) ]]; then
+      echo
+      echo "### $component"
 
-  echo "## New features"
-  echo
+      if [[ $(componentdiff | grep "\[$component\]\!") ]]; then
+        echo
+        echo "#### Breaking changes"
+        echo
 
-  "$dir/release_tools/changes"
+        componentdiff \
+          | grep "\[$component\]\!" \
+          | sed "s|\[$component\]!|**Breaking**: |" \
+          | sort
+      fi
+
+      if [[ $(componentdiff | grep -v "\[$component\]\!") ]]; then
+        echo
+        echo "#### Changes"
+        echo
+
+        componentdiff \
+          | grep -v "\[$component\]!" \
+          | sed "s|\[$component\] ||" \
+          | sort
+      fi
+    fi
+
+  done
 }
 
 merge_release() {
@@ -428,14 +462,6 @@ publish_release() {
     open $htmlurl
   elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     xdg-open $htmlurl
-  fi
-}
-
-get_latest_branch() {
-  if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
-    echo "HEAD"
-  else
-    echo "release-candidate"
   fi
 }
 
