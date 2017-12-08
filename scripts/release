@@ -417,6 +417,7 @@ publish_release() {
 
 generate_release_apidiff() {
   CHANGELOG_TMP_PATH=$(mktemp -d)
+  # TODO: Consolidate api_diff here.
   "$dir/release_tools/api_diff" origin/stable $(get_latest_branch) | tee "$CHANGELOG_TMP_PATH/api_diff"
 
   CHANGELOG_PATH=$(cat "$CHANGELOG_TMP_PATH/api_diff" | grep "Changelog: " | cut -d' ' -f2-)
