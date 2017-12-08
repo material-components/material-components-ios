@@ -14,6 +14,10 @@
  limitations under the License.
  */
 
+import UIKit
+
+import MaterialComponents.MaterialButtons
+
 class ButtonsTypicalUseSupplemental: NSObject {
 
   static let floatingButtonPlusDimension = CGFloat(24)
