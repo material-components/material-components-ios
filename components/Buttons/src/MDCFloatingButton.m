@@ -94,7 +94,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
     [self commonMDCFloatingButtonInit];
     // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
     // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
-    [self updateShapeForcingResize:NO];
+    [self updateShapeAndAllowResize:NO];
   }
   return self;
 }
@@ -139,7 +139,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
           [aDecoder decodeObjectForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
     }
 
-    [self updateShapeForcingResize:NO];
+    [self updateShapeAndAllowResize:NO];
   }
   return self;
 }
@@ -366,7 +366,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   BOOL needsShapeUpdate = self.mode != mode;
   _mode = mode;
   if (needsShapeUpdate) {
-    [self updateShapeForcingResize:YES];
+    [self updateShapeAndAllowResize:YES];
   }
 }
 
@@ -380,7 +380,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   }
   modeToMinimumSize[@(mode)] = [NSValue valueWithCGSize:size];
   if (shape == _shape && mode == self.mode) {
-    [self updateShapeForcingResize:YES];
+    [self updateShapeAndAllowResize:YES];
   }
 }
 
@@ -417,7 +417,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   }
   modeToMaximumSize[@(mode)] = [NSValue valueWithCGSize:size];
   if (shape == _shape && mode == self.mode) {
-    [self updateShapeForcingResize:YES];
+    [self updateShapeAndAllowResize:YES];
   }
 }
 
@@ -454,7 +454,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   }
   modeToContentEdgeInsets[@(mode)] = [NSValue valueWithUIEdgeInsets:contentEdgeInsets];
   if (shape == _shape && mode == self.mode) {
-    [self updateShapeForcingResize:YES];
+    [self updateShapeAndAllowResize:YES];
   }
 }
 
@@ -486,7 +486,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   }
   modeToHitAreaInsets[@(mode)] = [NSValue valueWithUIEdgeInsets:insets];
   if (shape == _shape && mode == self.mode) {
-    [self updateShapeForcingResize:NO];
+    [self updateShapeAndAllowResize:NO];
   }
 }
 
@@ -508,13 +508,13 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   super.hitAreaInsets = [self hitAreaInsetsForMode:self.mode];
 }
 
-- (void)updateShapeForcingResize:(BOOL)forceResize {
+- (void)updateShapeAndAllowResize:(BOOL)allowsResize {
   BOOL minimumSizeChanged = [self updateMinimumSize];
   BOOL maximumSizeChanged = [self updateMaximumSize];
   [self updateContentEdgeInsets];
   [self updateHitAreaInsets];
 
-  if (forceResize && (minimumSizeChanged || maximumSizeChanged)) {
+  if (allowsResize && (minimumSizeChanged || maximumSizeChanged)) {
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];
   }
