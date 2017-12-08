@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme. 
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-                toTabBar:(MDCTabBar *)tabBar;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+                toTabBar:(nonnull MDCTabBar *)tabBar;
 
 @end

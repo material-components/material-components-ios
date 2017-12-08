@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
   self.title = @"Material Text Fields";
 
   [self setupExampleViews];
@@ -69,8 +69,7 @@
   textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
   NSOperatingSystemVersion iOS10Version = {10, 0, 0};
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
-      [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
+  if ([processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
     textFieldFloating.adjustsFontForContentSizeCategory = YES;
   } else {
     [textFieldFloating mdc_setAdjustsFontForContentSizeCategory:YES];

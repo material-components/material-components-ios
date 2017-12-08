@@ -65,7 +65,9 @@ static NSString *s_secondaryColorString;
     rangeStep = 1;
   }
 
-  unsigned int tempRed, tempGreen, tempBlue;
+  unsigned int tempRed = 0;
+  unsigned int tempGreen = 0;
+  unsigned int tempBlue = 0;
   NSScanner *scanner =
       [NSScanner scannerWithString:[string substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
   rangeStart += rangeStep;
@@ -151,8 +153,10 @@ static NSString *s_secondaryColorString;
     return;
   }
 
-  primaryColor =
-      [UIColor colorWithRed:redInt / 255.0 green:greenInt / 255.0 blue:blueInt / 255.0 alpha:1.0];
+  primaryColor = [UIColor colorWithRed:redInt / 255.0f
+                                 green:greenInt / 255.0f
+                                  blue:blueInt / 255.0f
+                                 alpha:1.0f];
   s_primaryColorString = primaryString;
   self.primaryColorPreView.backgroundColor = primaryColor;
 
@@ -166,8 +170,10 @@ static NSString *s_secondaryColorString;
     return;
   }
 
-  secondaryColor =
-      [UIColor colorWithRed:redInt / 255.0 green:greenInt / 255.0 blue:blueInt / 255.0 alpha:1.0];
+  secondaryColor = [UIColor colorWithRed:redInt / 255.0f
+                                   green:greenInt / 255.0f
+                                    blue:blueInt / 255.0f
+                                   alpha:1.0f];
   s_secondaryColorString = secondaryString;
   self.secondaryColorPreView.backgroundColor = secondaryColor;
 

@@ -14,22 +14,16 @@
  limitations under the License.
  */
 
-#import <QuartzCore/QuartzCore.h>
+#import <UIKit/UIKit.h>
 
-@protocol MDCShapeGenerating;
+/** Appearance for content within tab bar items. */
+typedef NS_ENUM(NSInteger, MDCTabBarTextTransform) {
+  /** The default text transform is applied based on the bar's position. */
+  MDCTabBarTextTransformAutomatic = 0,
 
-/*
- A CAShapeLayer with the path controlled by an MDCShapeGenerating object.
+  /** Text on tabs is displayed verbatim with no transform. */
+  MDCTabBarTextTransformNone = 1,
 
- @note Do not set @c path manually.
- */
-@interface MDCShapeLayer : CAShapeLayer
-
-/*
- The shape generator used to set the @c path.
-
- The path will be set upon assignment of this property and every time layoutSublayers is called.
- */
-@property(nonatomic, strong, nullable) id<MDCShapeGenerating> shapeGenerator;
-
-@end
+  /** Text on tabs is uppercased for display. */
+  MDCTabBarTextTransformUppercase = 2,
+};

@@ -57,7 +57,7 @@
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"A red flair silhouetted the jagged edge of a sublime wing.";
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  void (^actionHandler)() = ^() {
+  MDCSnackbarMessageActionHandler actionHandler = ^() {
     MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
     answerMessage.text = @"The sky was cloudless and of a deep dark blue.";
     [MDCSnackbarManager showMessage:answerMessage];

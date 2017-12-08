@@ -23,6 +23,6 @@ static const NSInteger kSectionItemCount = 3;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @interface CollectionsSectionInsetsExample : MDCCollectionViewController
-@property(nonatomic, readonly, copy) NSMutableArray *content;
+@property(nonatomic, readonly, copy) NSMutableArray <NSMutableArray *>*content;
 @property(nonatomic, readonly, copy) NSMutableDictionary *sectionUsesCustomInsets;
 @end
