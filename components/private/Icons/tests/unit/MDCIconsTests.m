@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-@import XCTest;
+#import <XCTest/XCTest.h>
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_check.h"
 #import "MaterialIcons+ic_check_circle.h"
