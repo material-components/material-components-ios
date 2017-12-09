@@ -27,6 +27,7 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "@material_internationalization_ios//:MDFInternationalization",
         "@motion_animator_objc//:MotionAnimator",
         "@motion_interchange_objc//:MotionInterchange",
     ],
