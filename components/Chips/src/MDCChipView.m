@@ -36,6 +36,7 @@ static NSString *const MDCChipBackgroundColorsKey = @"MDCChipBackgroundColorsKey
 static NSString *const MDCChipBorderColorsKey = @"MDCChipBorderColorsKey";
 static NSString *const MDCChipBorderWidthsKey = @"MDCChipBorderWidthsKey";
 static NSString *const MDCChipElevationsKey = @"MDCChipElevationsKey";
+static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
@@ -122,6 +123,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, NSNumber *> *_elevations;
+  NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_titleColors;
 }
 
@@ -158,6 +160,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _titleColors[@(UIControlStateNormal)] = titleColor;
     _titleColors[@(UIControlStateDisabled)] =
         MDCColorLighten(titleColor, MDCChipTitleColorDisabledLightenPercent);
+
+    _shadowColors = [NSMutableDictionary dictionary];
+    _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
 
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
     _inkView.inkStyle = MDCInkStyleBounded;
@@ -214,6 +219,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _borderColors = [aDecoder decodeObjectForKey:MDCChipBorderColorsKey];
     _borderWidths = [aDecoder decodeObjectForKey:MDCChipBorderWidthsKey];
     _elevations = [aDecoder decodeObjectForKey:MDCChipElevationsKey];
+    _shadowColors = [aDecoder decodeObjectForKey:MDCChipShadowColorsKey];
     _titleColors = [aDecoder decodeObjectForKey:MDCChipTitleColorsKey];
 
     self.mdc_adjustsFontForContentSizeCategory =
@@ -239,6 +245,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [aCoder encodeObject:_borderColors forKey:MDCChipBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCChipBorderWidthsKey];
   [aCoder encodeObject:_elevations forKey:MDCChipElevationsKey];
+  [aCoder encodeObject:_shadowColors forKey:MDCChipShadowColorsKey];
   [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
 }
 
@@ -373,6 +380,24 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 }
 
+- (nullable UIColor *)shadowColorForState:(UIControlState)state {
+  UIColor *shadowColor = _shadowColors[@(state)];
+  if (!shadowColor && state != UIControlStateNormal) {
+    shadowColor = _shadowColors[@(UIControlStateNormal)];
+  }
+  return shadowColor;
+}
+
+- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state {
+  _shadowColors[@(state)] = shadowColor;
+
+  [self updateShadowColor];
+}
+
+- (void)updateShadowColor {
+  self.layer.shadowColor = [self shadowColorForState:self.state].CGColor;
+}
+
 - (nullable UIColor *)titleColorForState:(UIControlState)state {
   UIColor *titleColor = _titleColors[@(state)];
   if (!titleColor && state != UIControlStateNormal) {
@@ -396,6 +421,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateBorderColor];
   [self updateBorderWidth];
   [self updateElevation];
+  [self updateShadowColor];
   [self updateTitleColor];
 }
 
