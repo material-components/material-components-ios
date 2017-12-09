@@ -79,6 +79,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   MDCFeatureHighlightLayer *_innerLayer;
   MDCFeatureHighlightLayer *_displayMaskLayer;
 
+  BOOL _mdc_adjustsFontForContentSizeCategory;
+
   // This view is a hack to work around UIKit calling our animation completion blocks immediately if
   // there is no UIKit content being animated. Since our appearance and disappearance animations are
   // mostly CAAnimations, we need to guarantee there will be a UIKit animation occuring in order to
@@ -109,7 +111,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
+    _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle];
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
@@ -117,7 +119,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+    _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
     _bodyLabel.textAlignment = NSTextAlignmentNatural;
@@ -145,6 +147,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _outerRadiusScale = 1.0;
   }
   return self;
+}
+
+- (void)dealloc {
+  //TODO(#2651): Remove once we move to iOS8
+  // Remove Dynamic Type contentSizeCategoryDidChangeNotification
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIContentSizeCategoryDidChangeNotification
+                                                object:nil];
 }
 
 - (void)applyMDCFeatureHighlightViewDefaults {
@@ -541,6 +551,40 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   NSString *localizedString = NSLocalizedStringFromTableInBundle(
       key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
   return localizedString;
+}
+
+#pragma mark - Dynamic Type Support
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [self updateFontsForDynamicType];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+    // Dynamic Type adjusting turned off, return to standard sized fonts
+    _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle];
+    _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+
+    if (!CGRectIsEmpty(self.frame)) {
+      [self setNeedsLayout];
+    }
+  }
+}
+
+// Handles UIContentSizeCategoryDidChangeNotifications
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
+  [self updateFontsForDynamicType];
 }
 
 #pragma mark - UIGestureRecognizerDelegate (Tap)
