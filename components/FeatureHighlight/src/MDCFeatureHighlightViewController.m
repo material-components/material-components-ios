@@ -94,6 +94,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   _featureHighlightView.displayedView = _displayedView;
   _featureHighlightView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _featureHighlightView.mdc_adjustsFontForContentSizeCategory =
+      _mdc_adjustsFontForContentSizeCategory;
 
   __weak __typeof__(self) weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
