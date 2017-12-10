@@ -30,9 +30,12 @@ fix_bazel_imports() {
   fi
   
   rewrite_tests() {
+    find "${stashed_dir}${tests_dir_prefix}"components/private/*/tests/unit -type f -name '*.swift' -exec sed -i '' -E "$1" {} + || true
     find "${stashed_dir}${tests_dir_prefix}"components/*/tests/unit -type f -name '*.swift' -exec sed -i '' -E "$1" {} + || true
   }
   rewrite_source() {
+    find "${stashed_dir}${tests_dir_prefix}"components/private/*/src -type f -name '*.h' -exec sed -i '' -E "$1" {} + || true
+    find "${stashed_dir}${tests_dir_prefix}"components/private/*/src -type f -name '*.m' -exec sed -i '' -E "$1" {} + || true
     find "${stashed_dir}${tests_dir_prefix}"components/*/src -type f -name '*.h' -exec sed -i '' -E "$1" {} + || true
     find "${stashed_dir}${tests_dir_prefix}"components/*/src -type f -name '*.m' -exec sed -i '' -E "$1" {} + || true
   }
