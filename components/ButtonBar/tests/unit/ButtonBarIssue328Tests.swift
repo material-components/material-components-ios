@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialButtonBar
+import MaterialComponents.MaterialButtons
 
 // Tests confirming that the Button Bar button ink configuration is:
 //
