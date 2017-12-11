@@ -20,7 +20,7 @@ cmd=$(basename "${BASH_SOURCE[0]}")
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 usage() {
-  "$dir/release_tools/readme_to_console" "$dir/README-release.md"
+  "$dir/readme_to_console" "$dir/README-release.md"
 }
 
 # HELPER METHODS
@@ -530,6 +530,10 @@ generate_release_headers() {
     | grep -v -i -e "\/private\/"
 }
 
+generate_release_log() {
+  git --no-pager log  origin/stable..$(get_latest_branch) "$@"
+}
+
 generate_release_diff() {
   git_diff=diff
   if [ "$1" == "--use_diff_tool" ]; then
@@ -629,6 +633,7 @@ case "$1" in
   diff)       generate_release_diff ${@:2} ;;
   files)      generate_release_files ${@:2} ;;
   headers)    generate_release_headers ${@:2} ;;
+  log)        generate_release_log ${@:2} ;;
   notes)      generate_release_notes ${@:2} ;;
               
   abort)      abort_release ${@:2} ;;
