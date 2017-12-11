@@ -449,6 +449,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 #pragma mark - Layout
 
 - (void)layoutSubviews {
+  [super layoutSubviews];
+
   _inkView.frame = self.bounds;
   _imageView.frame = [self imageViewFrame];
   _selectedImageView.frame = [self selectedImageViewFrame];
