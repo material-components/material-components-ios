@@ -1,10 +1,8 @@
-# #develop#
-
-## Breaking changes
-
-## New deprecations
+# 42.1.0
 
 ## New features
+
+New MDCChipField API in the Chips component provides an interface through which a user can input a collection of string tokens.
 
 ## API changes
 
@@ -34,6 +32,8 @@
 
 #### MDCChipField
 
+*new* class: `MDCChipField`
+
 *new* method: `-focusTextFieldForAccessibility` in `MDCChipField`
 
 *new* method: `-removeSelectedChips` in `MDCChipField`
@@ -51,8 +51,6 @@
 *new* property: `minTextFieldWidth` in `MDCChipField`
 
 *new* property: `chipHeight` in `MDCChipField`
-
-*new* class: `MDCChipField`
 
 *new* method: `-deselectAllChips` in `MDCChipField`
 
@@ -125,7 +123,6 @@
 *new* class method: `+mdc_standardFontForMaterialTextStyle:` in `UIFont(MaterialTypography)`
 
 ## Component changes
-
 
 ### AnimationTiming
 
