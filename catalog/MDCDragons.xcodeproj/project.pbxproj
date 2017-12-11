@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5C3964421FD72D0E003CB44B /* MDCDragonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */; };
 		5C3964441FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3964431FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift */; };
+		5CA1B85A1FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA1B8591FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift */; };
+		5CA1B85D1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA1B85C1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift */; };
 		5CA6E6291FDB23D3001F2A17 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CA6E6281FDB23D3001F2A17 /* HeaderView.xib */; };
 		5CA6E62B1FDB253E001F2A17 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA6E62A1FDB253E001F2A17 /* HeaderView.swift */; };
 		5CC9B0401FD893AE0047A45D /* ZShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC9B03E1FD893AE0047A45D /* ZShadow.swift */; };
@@ -45,6 +47,8 @@
 		096F30AD42FD7675B81193D1 /* Pods-MDCDragons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons.debug.xcconfig"; sourceTree = "<group>"; };
 		5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDragonsController.swift; sourceTree = "<group>"; };
 		5C3964431FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDragonsCollectionViewCell.swift; sourceTree = "<group>"; };
+		5CA1B8591FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldKitchenSinkExample.swift; sourceTree = "<group>"; };
+		5CA1B85C1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldKitchenSinkExampleSupplemental.swift; sourceTree = "<group>"; };
 		5CA6E6281FDB23D3001F2A17 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		5CA6E62A1FDB253E001F2A17 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		5CC9B03E1FD893AE0047A45D /* ZShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZShadow.swift; sourceTree = "<group>"; };
@@ -93,6 +97,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5CA1B85B1FDED51B007D89C5 /* TextFieldKitchenSink */ = {
+			isa = PBXGroup;
+			children = (
+				5CA1B85C1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift */,
+				5CA1B8591FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift */,
+			);
+			path = TextFieldKitchenSink;
+			sourceTree = "<group>";
+		};
 		5CC9B03D1FD884070047A45D /* ZShadow */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,8 +119,9 @@
 		5CDA58A91FD85B9600DB25A8 /* Dragons */ = {
 			isa = PBXGroup;
 			children = (
-				5CC9B03D1FD884070047A45D /* ZShadow */,
 				5CDA58AA1FD85BB300DB25A8 /* ExampleDragon.swift */,
+				5CA1B85B1FDED51B007D89C5 /* TextFieldKitchenSink */,
+				5CC9B03D1FD884070047A45D /* ZShadow */,
 			);
 			path = Dragons;
 			sourceTree = "<group>";
@@ -390,11 +404,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CA1B85A1FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift in Sources */,
 				5C3964421FD72D0E003CB44B /* MDCDragonsController.swift in Sources */,
 				5C3964441FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift in Sources */,
 				5CE8092D1FD729880068A050 /* AppDelegate.swift in Sources */,
 				5CDA58AB1FD85BB300DB25A8 /* ExampleDragon.swift in Sources */,
 				5CC9B0431FD895A90047A45D /* ShadowedViews.swift in Sources */,
+				5CA1B85D1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift in Sources */,
 				5CDA58A81FD735FE00DB25A8 /* MDCDrawDragons.swift in Sources */,
 				5CC9B0401FD893AE0047A45D /* ZShadow.swift in Sources */,
 				5CA6E62B1FDB253E001F2A17 /* HeaderView.swift in Sources */,
