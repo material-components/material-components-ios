@@ -29,7 +29,7 @@ Run the following command to cut a release:
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
-The `scripts/release/cut` script will output the body of an email you should now send to the
+The `scripts/release cut` script will output the body of an email you should now send to the
 [discussion list](https://groups.google.com/forum/#!forum/material-components-ios-discuss) so
 clients can test the release.
 
