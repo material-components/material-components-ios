@@ -146,7 +146,7 @@ cut_release() {
     CHANGELOG_TMP_PATH=$(mktemp -d)
     generate_release_apidiff | tee "$CHANGELOG_TMP_PATH/api_diff"
 
-    CHANGELOG_PATH=$(cat "$CHANGELOG_TMP_PATH/api_diff" | grep "Changelog: " | cut -d':' -f2)
+    CHANGELOG_PATH=$(cat "$CHANGELOG_TMP_PATH/api_diff" | grep "Changelog= " | cut -d'=' -f2)
 
     # Add the new changelog contents in reverse order:
     echo -e "\n---\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
@@ -466,8 +466,8 @@ generate_release_apidiff() {
   ALL_CHANGELOG_PATH="$TMP_PATH/changelog"
   ALL_ERROR_LOG_PATH="$TMP_PATH/errlog"
 
-  echo "Changelog: $ALL_CHANGELOG_PATH"
-  echo "Errors: $ALL_ERROR_LOG_PATH"
+  echo "Changelog=$ALL_CHANGELOG_PATH"
+  echo "Errors=$ALL_ERROR_LOG_PATH"
 
   # Run new pathdiff script on each umbrella header in array
   for path_to_component in $(generate_release_components | grep -v "private"); do
