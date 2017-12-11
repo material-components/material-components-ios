@@ -201,6 +201,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/TextFields"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/Shapes"
   end
 
   mdc.subspec "CollectionCells" do |component|
