@@ -26,6 +26,10 @@
 
 - (MDCButton *)buildCustomStrokedButton {
   MDCButton *button = [[MDCButton alloc] init];
+  UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:(CGFloat)14.0];
+  [button setTitleFont:titleFont forState:UIControlStateNormal];
+  UIFont *selectedTitleFont = [UIFont fontWithName:@"Chalkduster" size:(CGFloat)14.0];
+  [button setTitleFont:selectedTitleFont forState:UIControlStateDisabled];
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
   [button setTitleColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
   button.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
