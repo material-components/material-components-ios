@@ -25,7 +25,7 @@
 @end
 
 @implementation MDCDialogTransition {
-  MDCDialogPresentationController *_presentationController;
+  __weak MDCDialogPresentationController *_presentationController;
 }
 
 - (instancetype)init {
@@ -45,11 +45,12 @@
   if (_presentationController) {
     return _presentationController;
   }
-  _presentationController =
+  MDCDialogPresentationController *presentationController =
       [[MDCDialogPresentationController alloc] initWithPresentedViewController:presented
                                                       presentingViewController:presenting];
-  _presentationController.dismissOnBackgroundTap = self.dismissOnBackgroundTap;
-  return _presentationController;
+  presentationController.dismissOnBackgroundTap = self.dismissOnBackgroundTap;
+  _presentationController = presentationController;
+  return presentationController;
 }
 
 - (UIModalPresentationStyle)defaultModalPresentationStyle {
