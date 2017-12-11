@@ -56,13 +56,6 @@ mdc_objc_library(
     visibility = [":test_targets"],
 )
 
-package_group(
-    name = "test_targets",
-    packages = [
-        "//components/ButtonBar/...",
-    ],
-)
-
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
