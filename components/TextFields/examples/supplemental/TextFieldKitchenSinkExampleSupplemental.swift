@@ -21,6 +21,10 @@
 
 import UIKit
 
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialTextFields
+
 extension TextFieldKitchenSinkSwiftExample {
 
   func setupExampleViews() {
