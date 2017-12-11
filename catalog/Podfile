@@ -39,6 +39,7 @@ target "MDCDragons" do
   project 'MDCDragons.xcodeproj'
   pod 'CatalogByConvention'
   pod 'MaterialComponents', :path => '../'
+  pod 'MaterialComponentsExamples', :path => '../'
   use_frameworks!
 end
 

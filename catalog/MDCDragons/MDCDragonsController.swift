@@ -17,7 +17,6 @@
 import CatalogByConvention
 
 import MaterialComponents.MaterialFlexibleHeader
-import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
@@ -26,7 +25,7 @@ import MaterialComponents.MaterialTypography
 
 import UIKit
 
-class MDCDragonsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class MDCDragonsController: UITableViewController, UISearchBarDelegate {
   
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 50
@@ -36,7 +35,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     static let spacing: CGFloat = 1
   }
   
-  private let node: CBCNode
+  fileprivate let dragonCells: [DragonCell]
   
   static let colors: [UIColor] = [UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0),
                                   UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0),
@@ -45,35 +44,22 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
   
   fileprivate lazy var headerViewController = MDCFlexibleHeaderViewController()
   var headerView: HeaderView!
-  var searched: [CBCNode] = []
-  
-  init(collectionViewLayout layout: UICollectionViewFlowLayout, node: CBCNode) {
-    self.node = node
-    searched = node.children
-    let sectionInset: CGFloat = 10
-    layout.sectionInset = UIEdgeInsets(top: 10,
-                                       left: 5,
-                                       bottom: 10,
-                                       right: 5)
-    layout.minimumInteritemSpacing = sectionInset
-    layout.minimumLineSpacing = sectionInset
-    
-    super.init(collectionViewLayout: layout)
+  var searched: [DragonCell] = []
+
+  init(node: CBCNode) {
+    dragonCells = node.children.map { DragonCell(node: $0) }
+    searched = dragonCells
+    super.init(style: .plain)
     title = "Material Dragons"
     addChildViewController(headerViewController)
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = 113
     headerViewController.headerView.minimumHeight = 53
-    
-    collectionView?.register(MDCDragonsCollectionViewCell.self,
-                             forCellWithReuseIdentifier: "MDCDragonCollectionViewCell")
-    collectionView?.backgroundColor = UIColor(white: 0.97, alpha: 1)
+
+    tableView.register(MDCDragonsTableViewCell.self, forCellReuseIdentifier: "MDCDragonsTableViewCell")
+    tableView?.backgroundColor = UIColor(white: 0.97, alpha: 1)
   }
-  
-  convenience init(node: CBCNode) {
-    self.init(collectionViewLayout: UICollectionViewFlowLayout(), node: node)
-  }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -86,7 +72,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     self.view.addGestureRecognizer(tapgesture)
     
     if #available(iOS 11.0, *) {
-      collectionView?.contentInsetAdjustmentBehavior = .always
+      tableView?.contentInsetAdjustmentBehavior = .always
     }
   }
   
@@ -99,7 +85,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     headerViewController.headerView.addSubview(headerView)
     headerViewController.headerView.forwardTouchEvents(for: headerView)
     headerViewController.headerView.backgroundColor = MDCDragonsController.colors[2]
-    headerViewController.headerView.trackingScrollView = collectionView
+    headerViewController.headerView.trackingScrollView = tableView
     view.addSubview(headerViewController.view)
     headerViewController.didMove(toParentViewController: self)
   }
@@ -115,13 +101,7 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    collectionView?.collectionViewLayout.invalidateLayout()
     navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-  
-  override func willAnimateRotation(
-    to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-    collectionView?.collectionViewLayout.invalidateLayout()
   }
   
   override var childViewControllerForStatusBarStyle: UIViewController? {
@@ -132,60 +112,64 @@ class MDCDragonsController: UICollectionViewController, UICollectionViewDelegate
     return headerViewController
   }
   
-  // MARK: UICollectionViewDataSource
-  override func numberOfSections(in collectionView: UICollectionView) -> Int {
+  // MARK: UITableViewDataSource
+  override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
-  
-  override func collectionView(_ collectionView: UICollectionView,
-                               numberOfItemsInSection section: Int) -> Int {
+
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return searched.count
   }
   
-  // MARK: UICollectionViewDelegate
-  override func collectionView(_ collectionView: UICollectionView,
-                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell =
-      collectionView.dequeueReusableCell(withReuseIdentifier: "MDCDragonCollectionViewCell",
-                                         for: indexPath)
-    cell.backgroundColor = UIColor.white
-    
-    let componentName = searched[indexPath.item].title
-    if let catalogCell = cell as? MDCDragonsCollectionViewCell {
-      catalogCell.populateView(componentName,
-                               color: MDCDragonsController.colors[indexPath.item % MDCDragonsController.colors.count])
+  // MARK: UITableViewDelegate
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell =
+      tableView.dequeueReusableCell(withIdentifier: "MDCDragonsTableViewCell",
+                                    for: indexPath) as? MDCDragonsTableViewCell else {
+      return UITableViewCell()
+    }
+    cell.backgroundColor = .white
+    let nodeData = searched[indexPath.item]
+    let componentName = nodeData.node.title
+    cell.textLabel?.text = componentName
+    let node = searched[indexPath.item].node
+    if !node.isExample() {
+      if nodeData.expanded {
+        cell.accessoryView = cell.expandedButton
+      } else {
+        cell.accessoryView = cell.defaultButton
+      }
+    } else {
+      cell.accessoryView = nil
     }
     return cell
   }
-  
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let dividerWidth: CGFloat = 10
-    var safeInsets: CGFloat = 0
-    if #available(iOS 11, *) {
-      safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
-    }
-    var cellWidthHeight: CGFloat
-    // iPhones have 3 columns in portrait and 4 in landscape
-    if UI_USER_INTERFACE_IDIOM() == .phone {
-      cellWidthHeight = (view.frame.size.width - 4 * dividerWidth - safeInsets) / 3
-      if view.frame.size.width > view.frame.size.height {
-        cellWidthHeight = (view.frame.size.width - 5 * dividerWidth - safeInsets) / 4
-      }
-    } else {
-      // iPads have 5 columns
-      cellWidthHeight = (view.frame.size.width - 6 * dividerWidth - safeInsets) / 5
-    }
-    return CGSize(width: cellWidthHeight, height: cellWidthHeight)
+
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 50
   }
-  
-  override func collectionView(_ collectionView: UICollectionView,
-                               didSelectItemAt indexPath: IndexPath) {
-    let node = searched[indexPath.item]
-    var vc: UIViewController
-    vc = node.createExampleViewController()
-    self.navigationController?.pushViewController(vc, animated: true)
+
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    guard let cell = tableView.cellForRow(at: indexPath) as? MDCDragonsTableViewCell else {
+      return
+    }
+    let nodeData = searched[indexPath.item]
+    if nodeData.node.isExample() {
+      let vc = nodeData.node.createExampleViewController()
+      self.navigationController?.pushViewController(vc, animated: true)
+    } else {
+      self.tableView.beginUpdates()
+      if nodeData.expanded {
+        collapseCells(at: indexPath.item)
+        cell.accessoryView = cell.defaultButton
+      } else {
+        expandCells(at: indexPath.item)
+        cell.accessoryView = cell.expandedButton
+      }
+      self.tableView.endUpdates()
+      nodeData.expanded = !nodeData.expanded
+    }
   }
   
 }
@@ -232,18 +216,18 @@ extension MDCDragonsController {
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     if searchText.isEmpty {
-      searched = node.children
+      searched = dragonCells
     } else {
-      searched = node.children.filter ({ (node) -> Bool in
-        return node.title.range(of: searchText, options: .caseInsensitive) != nil
+      searched = dragonCells.filter ({ (cell) -> Bool in
+        return cell.node.title.range(of: searchText, options: .caseInsensitive) != nil
       })
     }
-    self.collectionView?.reloadData()
+    self.tableView?.reloadData()
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    searched = node.children
-    self.collectionView?.reloadData()
+    searched = dragonCells
+    self.tableView?.reloadData()
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -252,6 +236,26 @@ extension MDCDragonsController {
 
   @objc func dismissKeyboard() {
     self.view.endEditing(true)
+  }
+}
+
+extension MDCDragonsController {
+  func collapseCells(at index: Int) {
+    let indexPaths = (index+1..<index+1+searched[index].node.children.count).map {
+      IndexPath(row: $0, section: 0)
+    }
+    tableView.deleteRows(at: indexPaths, with: .automatic)
+    searched.removeSubrange((index+1..<index+1+searched[index].node.children.count))
+
+  }
+
+  func expandCells(at index: Int) {
+    let indexPaths = (index+1..<index+1+searched[index].node.children.count).map {
+      IndexPath(row: $0, section: 0)
+    }
+    tableView.insertRows(at: indexPaths, with: .automatic)
+    searched.insert(contentsOf: searched[index].node.children.map { DragonCell(node: $0) },
+                    at: index+1)
   }
 }
 

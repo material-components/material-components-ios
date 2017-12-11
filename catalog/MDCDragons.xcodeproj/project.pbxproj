@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5C3964421FD72D0E003CB44B /* MDCDragonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */; };
-		5C3964441FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3964431FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift */; };
+		5C96F51E1FDF168C00F5E8AF /* MDCDragonsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C96F51D1FDF168C00F5E8AF /* MDCDragonsTableViewCell.swift */; };
+		5C96F5201FDF471A00F5E8AF /* DragonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C96F51F1FDF471A00F5E8AF /* DragonCell.swift */; };
 		5CA1B85A1FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA1B8591FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift */; };
 		5CA1B85D1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA1B85C1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift */; };
 		5CA6E6291FDB23D3001F2A17 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CA6E6281FDB23D3001F2A17 /* HeaderView.xib */; };
@@ -46,7 +47,9 @@
 /* Begin PBXFileReference section */
 		096F30AD42FD7675B81193D1 /* Pods-MDCDragons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons.debug.xcconfig"; sourceTree = "<group>"; };
 		5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDragonsController.swift; sourceTree = "<group>"; };
-		5C3964431FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDragonsCollectionViewCell.swift; sourceTree = "<group>"; };
+		5C96F5101FDF047E00F5E8AF /* MaterialCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MaterialCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C96F51D1FDF168C00F5E8AF /* MDCDragonsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDragonsTableViewCell.swift; sourceTree = "<group>"; };
+		5C96F51F1FDF471A00F5E8AF /* DragonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragonCell.swift; sourceTree = "<group>"; };
 		5CA1B8591FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldKitchenSinkExample.swift; sourceTree = "<group>"; };
 		5CA1B85C1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldKitchenSinkExampleSupplemental.swift; sourceTree = "<group>"; };
 		5CA6E6281FDB23D3001F2A17 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -154,8 +157,9 @@
 				5CDA58A91FD85B9600DB25A8 /* Dragons */,
 				5CE8092C1FD729880068A050 /* AppDelegate.swift */,
 				5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */,
-				5C3964431FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift */,
+				5C96F51D1FDF168C00F5E8AF /* MDCDragonsTableViewCell.swift */,
 				5CDA58A71FD735FE00DB25A8 /* MDCDrawDragons.swift */,
+				5C96F51F1FDF471A00F5E8AF /* DragonCell.swift */,
 				5CA6E62A1FDB253E001F2A17 /* HeaderView.swift */,
 				5CA6E6281FDB23D3001F2A17 /* HeaderView.xib */,
 				5CE809331FD729880068A050 /* Assets.xcassets */,
@@ -195,6 +199,7 @@
 		D4ABDA04F1CA652783DC8BBB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5C96F5101FDF047E00F5E8AF /* MaterialCatalog.framework */,
 				D1727545609D5A05DD1A8DD8 /* Pods_MDCDragons.framework */,
 			);
 			name = Frameworks;
@@ -378,6 +383,7 @@
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponentsExamples/MaterialComponentsExamples.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
@@ -388,6 +394,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsExamples.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
@@ -406,13 +413,14 @@
 			files = (
 				5CA1B85A1FDED4CC007D89C5 /* TextFieldKitchenSinkExample.swift in Sources */,
 				5C3964421FD72D0E003CB44B /* MDCDragonsController.swift in Sources */,
-				5C3964441FD72EC2003CB44B /* MDCDragonsCollectionViewCell.swift in Sources */,
 				5CE8092D1FD729880068A050 /* AppDelegate.swift in Sources */,
 				5CDA58AB1FD85BB300DB25A8 /* ExampleDragon.swift in Sources */,
 				5CC9B0431FD895A90047A45D /* ShadowedViews.swift in Sources */,
 				5CA1B85D1FDED547007D89C5 /* TextFieldKitchenSinkExampleSupplemental.swift in Sources */,
 				5CDA58A81FD735FE00DB25A8 /* MDCDrawDragons.swift in Sources */,
 				5CC9B0401FD893AE0047A45D /* ZShadow.swift in Sources */,
+				5C96F5201FDF471A00F5E8AF /* DragonCell.swift in Sources */,
+				5C96F51E1FDF168C00F5E8AF /* MDCDragonsTableViewCell.swift in Sources */,
 				5CA6E62B1FDB253E001F2A17 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,7 +585,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCDragons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -592,7 +600,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCDragons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

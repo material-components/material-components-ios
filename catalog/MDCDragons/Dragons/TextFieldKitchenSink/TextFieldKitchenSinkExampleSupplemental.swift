@@ -450,7 +450,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let closure: (MDCTextInputTextInsetsMode, String) -> Void = { mode, title in
       self.allInputControllers.forEach { controller in
-        guard let input = controller.textInput else {
+        guard let input = controller.textInput as? MDCTextInput else {
           return
         }
         input.textInsetsMode = mode
