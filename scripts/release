@@ -520,8 +520,7 @@ generate_release_components() {
 }
 
 generate_release_files() {
-  git diff --name-only origin/stable..$(get_latest_branch) components/ \
-    | grep "src/"
+  git diff --name-only origin/stable..$(get_latest_branch) components/
 }
 
 generate_release_headers() {
@@ -596,6 +595,11 @@ generate_release_notes() {
   done
 }
 
+generate_release_source() {
+  git diff --name-only origin/stable..$(get_latest_branch) components/ \
+    | grep "src/"
+}
+
 if [ $# -eq 0 ]; then
   usage
   exit 1
@@ -635,6 +639,7 @@ case "$1" in
   headers)    generate_release_headers ${@:2} ;;
   log)        generate_release_log ${@:2} ;;
   notes)      generate_release_notes ${@:2} ;;
+  source)     generate_release_source ${@:2} ;;
               
   abort)      abort_release ${@:2} ;;
               

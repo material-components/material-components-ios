@@ -68,7 +68,7 @@ perform any final sanity checks.
 
 And you're done!
 
-## Commands
+## Release process commands
 
 Usage: `release cut [--hotfix]`
 
@@ -111,3 +111,47 @@ Usage: `release abort`
     Aborts an active release.
 
     `This operation is destructive and requires confirmation.`
+
+## Release information commands
+
+The following commands will compare from origin/stable...release-candidate, if a
+release candidate exists. Otherwise they will compare from origin/stable...HEAD.
+
+Usage: `release apidiff`
+
+    Generates an API diff since the last stable release.
+
+Usage: `release authors`
+
+    Generates the list of authors who have contributed since the last
+    stable release.
+
+Usage: `release components`
+
+    Generates the list of components that have changed since the last
+    stable release.
+
+Usage: `release diff`
+
+    Generates a diff of changes since the last stable release.
+
+Usage: `release files`
+
+    Generates a list of files that have changed since the last stable release.
+
+Usage: `release headers`
+
+    Generates a list of headers that have changed since the last stable release.
+
+Usage: `release log`
+
+    Generates a changelog since the last stable release.
+
+Usage: `release notes`
+
+    Generates CHANGELOG.md component notes since the last stable release.
+
+Usage: `release source`
+
+    Generates a list of component source files that have changed since the last
+    stable release.
