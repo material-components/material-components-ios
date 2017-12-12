@@ -96,13 +96,13 @@
     _colorLayer.strokeColor = nil;
     _colorLayer.lineWidth = 0;
   } else {
-    _colorLayer.fillColor = self.shapedBackgroundColor.CGColor;
-    _colorLayer.strokeColor = self.shapedBorderColor.CGColor;
-    _colorLayer.lineWidth = self.shapedBorderWidth;
-
     self.backgroundColor = nil;
     self.borderColor = nil;
     self.borderWidth = 0;
+
+    _colorLayer.fillColor = self.shapedBackgroundColor.CGColor;
+    _colorLayer.strokeColor = self.shapedBorderColor.CGColor;
+    _colorLayer.lineWidth = self.shapedBorderWidth;
   }
 }
 
@@ -117,8 +117,8 @@
     self.backgroundColor = _shapedBackgroundColor.CGColor;
     _colorLayer.fillColor = nil;
   } else {
-    _colorLayer.fillColor = _shapedBackgroundColor.CGColor;
     self.backgroundColor = nil;
+    _colorLayer.fillColor = _shapedBackgroundColor.CGColor;
   }
 }
 
@@ -129,8 +129,8 @@
     self.borderColor = _shapedBorderColor.CGColor;
     _colorLayer.strokeColor = nil;
   } else {
-    _colorLayer.strokeColor = _shapedBorderColor.CGColor;
     self.borderColor = nil;
+    _colorLayer.strokeColor = _shapedBorderColor.CGColor;
   }
 }
 
@@ -141,8 +141,8 @@
     self.borderWidth = _shapedBorderWidth;
     _colorLayer.lineWidth = 0;
   } else {
-    _colorLayer.lineWidth = _shapedBorderWidth;
     self.borderWidth = 0;
+    _colorLayer.lineWidth = _shapedBorderWidth;
   }
 }
 
