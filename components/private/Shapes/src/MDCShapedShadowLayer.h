@@ -26,17 +26,48 @@
 @interface MDCShapedShadowLayer : MDCShadowLayer
 
 /*
+ Sets the shaped background color of the layer.
+
+ Use shapedBackgroundColor instead of backgroundColor to ensure the background appears correct with
+ or without a valid shape.
+
+ @note If you set shapedBackgroundColor, you should not manually write to backgroundColor or
+ fillColor.
+ */
+@property(nonatomic, strong, nullable) UIColor *shapedBackgroundColor;
+
+/*
+ Sets the shaped border color of the layer.
+
+ Use shapedBorderColor instead of borderColor to ensure the border appears correct with or without
+ a valid shape.
+
+ @note If you set shapedBorderColor, you should not manually write to borderColor.
+ */
+@property(nonatomic, strong, nullable) UIColor *shapedBorderColor;
+
+/*
+ Sets the shaped border width of the layer.
+
+ Use shapedBorderWidth instead of borderWidth to ensure the border appears correct with or without
+ a valid shape.
+
+ @note If you set shapedBorderWidth, you should not manually write to borderWidth.
+ */
+@property(nonatomic, assign) CGFloat shapedBorderWidth;
+
+/*
  The fill color of the shape.
 
  @note Make sure to set the backgroundColor to a clear color when setting fillColor.
  */
-@property(nullable, nonatomic) CGColorRef fillColor;
+@property(nonatomic, nullable) CGColorRef fillColor __deprecated_msg("Use shapedBackgroundColor");
 
 /*
  The MDCShapeGenerating object used to set the shape's path and shadow path.
 
  The path will be set upon assignment of this property and whenever layoutSublayers is called.
  */
-@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+@property(nonatomic, strong, nullable) id<MDCShapeGenerating> shapeGenerator;
 
 @end
