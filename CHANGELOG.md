@@ -2,6 +2,10 @@
 
 This major release includes a variety of API name changes. Please see the API changes below for more details.
 
+## Breaking changes
+
+`MDCTextInputControllerDefault` has been removed. Use `MDCTextInputControllerUnderline` instead.
+
 ## API changes
 
 ### TextFields
