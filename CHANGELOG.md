@@ -1,6 +1,8 @@
 # 43.0.0
 
-This major release includes a variety of API name changes. Please see the API changes below for more details.
+This major release includes a variety of TextField API name changes.
+
+Please see the API changes below for more details.
 
 ## API changes
 
@@ -38,29 +40,9 @@ This major release includes a variety of API name changes. Please see the API ch
 | From: | `@interface MDCTextInputControllerOutlinedTextArea     : MDCTextInputControllerDefault` |
 | To: | `@interface MDCTextInputControllerOutlinedTextArea : MDCTextInputControllerBase` |
 
-#### MDCTextInputControllerBase
-
-*new* property: `expandsOnOverflow` in `MDCTextInputControllerBase`
-
-*new* property: `borderFillColorDefault` in `MDCTextInputControllerBase`
-
-*new* property: `borderFillColor` in `MDCTextInputControllerBase`
-
-*new* property: `minimumLines` in `MDCTextInputControllerBase`
-
-*new* class: `MDCTextInputControllerBase`
-
 #### MDCTextInputControllerDefault
 
-*removed* property: `expandsOnOverflow` in `MDCTextInputControllerDefault`
-
-*removed* property: `borderFillColor` in `MDCTextInputControllerDefault`
-
-*removed* class: `MDCTextInputControllerDefault`
-
-*removed* property: `borderFillColorDefault` in `MDCTextInputControllerDefault`
-
-*removed* property: `minimumLines` in `MDCTextInputControllerDefault`
+*renamed*: to `MDCTextInputControllerBase`
 
 #### MDCTextInputDefaultUnderlineActiveHeight
 
