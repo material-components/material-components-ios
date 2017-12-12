@@ -64,8 +64,4 @@
   [self presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)fabDidTap:(MDCFloatingButton *)sender {
-  NSLog(@"Tapped %@", sender);
-}
-
 @end
