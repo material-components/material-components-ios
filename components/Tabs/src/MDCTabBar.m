@@ -94,8 +94,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 + (void)initialize {
   [MDCTabBar appearance].selectedItemTintColor = [UIColor whiteColor];
-  [MDCTabBar appearance].unselectedItemTintColor = [UIColor colorWithWhite:1.0 alpha:0.7f];
-  [MDCTabBar appearance].inkColor = [UIColor colorWithWhite:1.0 alpha:0.7f];
+  [MDCTabBar appearance].unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  [MDCTabBar appearance].inkColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
   [MDCTabBar appearance].barTintColor = nil;
 
   id<MDCTabBarIndicatorTemplate> template = [[MDCTabBarUnderlineIndicatorTemplate alloc] init];

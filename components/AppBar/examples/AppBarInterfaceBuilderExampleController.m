@@ -48,7 +48,7 @@
 - (void)commonAppBarInterfaceBuilderExampleSetup {
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
-  UIColor *headerColor = [UIColor colorWithWhite:0.2 alpha:1];
+  UIColor *headerColor = [UIColor colorWithWhite:0.2f alpha:1];
   self.appBar.headerViewController.headerView.backgroundColor = headerColor;
 
   MDCAppBarTextColorAccessibilityMutator *mutator =

@@ -24,7 +24,7 @@
 static const CGFloat MDCFloatingButtonDefaultDimension = 56;
 static const CGFloat MDCFloatingButtonMiniDimension = 40;
 static const CGFloat MDCFloatingButtonDefaultImageTitleSpace = 8;
-static const UIEdgeInsets internalLayoutSpacingInsets = (UIEdgeInsets){0, 16, 0, 24};
+static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
 
 static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
@@ -94,7 +94,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
     [self commonMDCFloatingButtonInit];
     // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
     // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
-    [self updateShapeForcingResize:NO];
+    [self updateShapeAndAllowResize:NO];
   }
   return self;
 }
@@ -139,7 +139,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
           [aDecoder decodeObjectForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
     }
 
-    [self updateShapeForcingResize:NO];
+    [self updateShapeAndAllowResize:NO];
   }
   return self;
 }
@@ -238,12 +238,11 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   const CGSize intrinsicImageSize =
       [self.imageView sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat intrinsicWidth = intrinsicTitleSize.width + intrinsicImageSize.width +
-      self.imageTitleSpace + internalLayoutSpacingInsets.left +
-      internalLayoutSpacingInsets.right + self.contentEdgeInsets.left +
-      self.contentEdgeInsets.right;
+      self.imageTitleSpace + internalLayoutInsets.left + internalLayoutInsets.right +
+      self.contentEdgeInsets.left + self.contentEdgeInsets.right;
   CGFloat intrinsicHeight = MAX(intrinsicTitleSize.height, intrinsicImageSize.height) +
-      self.contentEdgeInsets.top + self.contentEdgeInsets.bottom + internalLayoutSpacingInsets.top +
-      internalLayoutSpacingInsets.bottom;
+      self.contentEdgeInsets.top + self.contentEdgeInsets.bottom + internalLayoutInsets.top +
+      internalLayoutInsets.bottom;
   return CGSizeMake(intrinsicWidth, intrinsicHeight);
 }
 
@@ -270,6 +269,19 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   return contentSize;
 }
 
+/*
+ Performs custom layout when the FAB is in .expanded mode. Specifically, the layout algorithm is
+ as follows:
+
+ 1. Inset the bounds by the value of `contentEdgeInsets` and use this as the layout bounds.
+ 2. Determine the intrinsic sizes of the imageView and titleLabel.
+ 3. Compute the space remaining for the titleLabel after accounting for the imageView and built-in
+    alignment guidelines (internalLayoutInsets).
+ 4. Position the imageView along the leading (or trailing) edge of the button, inset by
+    internalLayoutInsets.left (flipped for RTL).
+ 5. Position the titleLabel within the center of its available space.
+ 6. Apply the imageEdgeInsets and titleEdgeInsets to their respective views.
+ */
 - (void)layoutSubviews {
   // We have to set cornerRadius before laying out subviews so that the boundingPath is correct.
   self.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
@@ -298,8 +310,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
 
   BOOL isLeadingIcon = self.imageLocation == MDCFloatingButtonImageLocationLeading;
   UIEdgeInsets adjustedLayoutInsets =
-      isLeadingIcon ? internalLayoutSpacingInsets
-                    : MDFInsetsFlippedHorizontally(internalLayoutSpacingInsets);
+      isLeadingIcon ? internalLayoutInsets
+                    : MDFInsetsFlippedHorizontally(internalLayoutInsets);
 
   const CGRect insetBounds = UIEdgeInsetsInsetRect(UIEdgeInsetsInsetRect(self.bounds,
                                                                          adjustedLayoutInsets),
@@ -354,7 +366,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   BOOL needsShapeUpdate = self.mode != mode;
   _mode = mode;
   if (needsShapeUpdate) {
-    [self updateShapeForcingResize:YES];
+    [self updateShapeAndAllowResize:YES];
   }
 }
 
@@ -368,7 +380,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   }
   modeToMinimumSize[@(mode)] = [NSValue valueWithCGSize:size];
   if (shape == _shape && mode == self.mode) {
-    [self updateShapeForcingResize:YES];
+    [self updateShapeAndAllowResize:YES];
   }
 }
 
@@ -405,7 +417,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   }
   modeToMaximumSize[@(mode)] = [NSValue valueWithCGSize:size];
   if (shape == _shape && mode == self.mode) {
-    [self updateShapeForcingResize:YES];
+    [self updateShapeAndAllowResize:YES];
   }
 }
 
@@ -442,7 +454,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   }
   modeToContentEdgeInsets[@(mode)] = [NSValue valueWithUIEdgeInsets:contentEdgeInsets];
   if (shape == _shape && mode == self.mode) {
-    [self updateShapeForcingResize:YES];
+    [self updateShapeAndAllowResize:YES];
   }
 }
 
@@ -474,7 +486,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   }
   modeToHitAreaInsets[@(mode)] = [NSValue valueWithUIEdgeInsets:insets];
   if (shape == _shape && mode == self.mode) {
-    [self updateShapeForcingResize:NO];
+    [self updateShapeAndAllowResize:NO];
   }
 }
 
@@ -496,13 +508,13 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   super.hitAreaInsets = [self hitAreaInsetsForMode:self.mode];
 }
 
-- (void)updateShapeForcingResize:(BOOL)forceResize {
+- (void)updateShapeAndAllowResize:(BOOL)allowsResize {
   BOOL minimumSizeChanged = [self updateMinimumSize];
   BOOL maximumSizeChanged = [self updateMaximumSize];
   [self updateContentEdgeInsets];
   [self updateHitAreaInsets];
 
-  if (forceResize && (minimumSizeChanged || maximumSizeChanged)) {
+  if (allowsResize && (minimumSizeChanged || maximumSizeChanged)) {
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];
   }

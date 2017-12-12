@@ -25,7 +25,7 @@ static NSString *const kReusableIdentifierItem = @"customCell";
 @end
 
 @implementation CollectionsStoryboardExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
 }
 
 - (void)viewDidLoad {

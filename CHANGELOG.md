@@ -1,3 +1,305 @@
+# 42.1.0
+
+## New features
+
+New MDCChipField API in the Chips component provides an interface through which a user can input a collection of string tokens.
+
+## API changes
+
+### Chips
+
+#### MDCChipFieldDefaultContentEdgeInsets
+
+*new* constant: `MDCChipFieldDefaultContentEdgeInsets`
+
+#### MDCChipFieldDelimiter
+
+*new* enum value: `MDCChipFieldDelimiterReturn` in `MDCChipFieldDelimiter`
+
+*new* enum: `MDCChipFieldDelimiter`
+
+*new* enum value: `MDCChipFieldDelimiterAll` in `MDCChipFieldDelimiter`
+
+*new* enum value: `MDCChipFieldDelimiterNone` in `MDCChipFieldDelimiter`
+
+*new* typedef: `MDCChipFieldDelimiter`
+
+*new* enum value: `MDCChipFieldDelimiterDefault` in `MDCChipFieldDelimiter`
+
+*new* enum value: `MDCChipFieldDelimiterSpace` in `MDCChipFieldDelimiter`
+
+*new* enum value: `MDCChipFieldDelimiterDidEndEditing` in `MDCChipFieldDelimiter`
+
+#### MDCChipField
+
+*new* class: `MDCChipField`
+
+*new* method: `-focusTextFieldForAccessibility` in `MDCChipField`
+
+*new* method: `-removeSelectedChips` in `MDCChipField`
+
+*new* method: `-removeChip:` in `MDCChipField`
+
+*new* property: `contentEdgeInsets` in `MDCChipField`
+
+*new* method: `-addChip:` in `MDCChipField`
+
+*new* property: `showPlaceholderWithChips` in `MDCChipField`
+
+*new* property: `textField` in `MDCChipField`
+
+*new* property: `minTextFieldWidth` in `MDCChipField`
+
+*new* property: `chipHeight` in `MDCChipField`
+
+*new* method: `-deselectAllChips` in `MDCChipField`
+
+*new* property: `delegate` in `MDCChipField`
+
+*new* method: `-selectChip:` in `MDCChipField`
+
+*new* property: `chips` in `MDCChipField`
+
+*new* method: `-clearTextInput` in `MDCChipField`
+
+*new* property: `delimiter` in `MDCChipField`
+
+#### MDCChipFieldDelegate
+
+*new* method: `-chipField:didChangeInput:` in `MDCChipFieldDelegate`
+
+*new* protocol: `MDCChipFieldDelegate`
+
+*new* method: `-chipFieldHeightDidChange:` in `MDCChipFieldDelegate`
+
+*new* method: `-chipFieldDidBeginEditing:` in `MDCChipFieldDelegate`
+
+*new* method: `-chipField:didRemoveChip:` in `MDCChipFieldDelegate`
+
+*new* method: `-chipField:didTapChip:` in `MDCChipFieldDelegate`
+
+*new* method: `-chipField:shouldAddChip:` in `MDCChipFieldDelegate`
+
+*new* method: `-chipFieldShouldBecomeFirstResponder:` in `MDCChipFieldDelegate`
+
+*new* method: `-chipField:didAddChip:` in `MDCChipFieldDelegate`
+
+*new* method: `-chipFieldShouldReturn:` in `MDCChipFieldDelegate`
+
+*new* method: `-chipFieldDidEndEditing:` in `MDCChipFieldDelegate`
+
+#### MDCChipView
+
+*new* property: `shapeGenerator` in `MDCChipView`
+
+*new* method: `-shadowColorForState:` in `MDCChipView`
+
+*new* method: `-setShadowColor:forState:` in `MDCChipView`
+
+#### MDCChipFieldDefaultMinTextFieldWidth
+
+*new* constant: `MDCChipFieldDefaultMinTextFieldWidth`
+
+### FeatureHighlight
+
+#### MDCFeatureHighlightView
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCFeatureHighlightView`
+
+### ShadowLayer
+
+#### MDCShadowLayer(Subclassing)
+
+*new* category: `MDCShadowLayer(Subclassing)`
+
+### Typography
+
+#### UIFontDescriptor(MaterialTypography)
+
+*new* class method: `+mdc_standardFontDescriptorForMaterialTextStyle:` in `UIFontDescriptor(MaterialTypography)`
+
+#### UIFont(MaterialTypography)
+
+*new* class method: `+mdc_standardFontForMaterialTextStyle:` in `UIFont(MaterialTypography)`
+
+## Component changes
+
+### AnimationTiming
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [[Bazel] Fix BUILD files for bazel 0.8.0 and latest apple_rules (#2640)](https://github.com/material-components/material-components-ios/commit/7c86d12f5f71689d83d41585833355242bd03fc3) (Robert Moore)
+
+### AppBar
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### BottomAppBar
+
+#### Changes
+
+* [Corrected imports in examples. (#2656)](https://github.com/material-components/material-components-ios/commit/c3f9fbd4299e2ff0ce77dacd29197a1ff705b686) (Randall Li)
+
+### BottomNavigation
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### BottomSheet
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### ButtonBar
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### Buttons
+
+#### Changes
+
+* [ Corrected imports in examples. (#2645)](https://github.com/material-components/material-components-ios/commit/00611df7bdc5fac4732708c5d9cc4dcef113beec) (Randall Li)
+* [Add unit tests for Floating Button layout (#2577)](https://github.com/material-components/material-components-ios/commit/58f9854760cadd0c2401d040b24afe4eb0b4b0d0) (Robert Moore)
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [Improve FloatingButton documentation (#2578)](https://github.com/material-components/material-components-ios/commit/c360db7e94d6f43a351ee18c8f568906b4d0d4cb) (Robert Moore)
+* [Re-enable legacy ink. (#2657)](https://github.com/material-components/material-components-ios/commit/aae4264e412a8db537bfe43d39cf3c3abd48436e) (featherless)
+* [Rename `MDCFloatingButton updateShapeForcingLayout` (#2625)](https://github.com/material-components/material-components-ios/commit/6469bad9dca832923b339e7eaad4a65ac610fb94) (Robert Moore)
+* [Revert "Re-enable legacy ink. (#2657)" (#2664)](https://github.com/material-components/material-components-ios/commit/1631d8e45d14ad334406cf6b6fa1b40ee4fd7dfb) (featherless)
+
+### Chips
+
+#### Changes
+
+* [Call [super layoutSubviews] (#2667)](https://github.com/material-components/material-components-ios/commit/25afc0f8ac3b0db3cf43472579f985b967c05b5e) (Sam Morrison)
+* [Chip field (#2600)](https://github.com/material-components/material-components-ios/commit/5384f00f9a36c6e13f63dd1782a21723d86391d8) (Sam Morrison)
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [Stateful shadow colors (#2668)](https://github.com/material-components/material-components-ios/commit/c5d47f8cf321073e3601180995bdd4594ecd02cd) (Sam Morrison)
+* [Use shaped shadow layer (#2628)](https://github.com/material-components/material-components-ios/commit/183e289a87c1cbbf4aaaa31778c1e363fc739316) (Sam Morrison)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Add BUILD file (#2646)](https://github.com/material-components/material-components-ios/commit/35206bbdff1800dc3c35e2f22fc8ed0f3da9c3ec) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [Fix iOS 11-specific bug where section headers would overlap scroll indicators. (#2572)](https://github.com/material-components/material-components-ios/commit/fb7109442a9d1cde8a09cec9e51fbdcf8c5933e9) (featherless)
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [Fixed method collision build errors (#2603)](https://github.com/material-components/material-components-ios/commit/ef179750a003b15e43d2d92f19a61f6a67721f69) (Randall Li)
+
+### Dialogs
+
+#### Changes
+
+* [Add BUILD file and test (#2647)](https://github.com/material-components/material-components-ios/commit/a0915f51835a92d3e7d322bfb9b6eb53cf129f3e) (Robert Moore)
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Add BUILD file and no-op test (#2648)](https://github.com/material-components/material-components-ios/commit/89b098e308f501751e1dd79081d442c7d3e2b7d2) (Robert Moore)
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [Move Dynamic Type support to the FeatureHighlightView (#2653)](https://github.com/material-components/material-components-ios/commit/872380d0e934ab942a7f4a177678d5ac0e5ffab2) (ianegordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### HeaderStackView
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### Ink
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [[Bazel] Fix BUILD files for bazel 0.8.0 and latest apple_rules (#2640)](https://github.com/material-components/material-components-ios/commit/7c86d12f5f71689d83d41585833355242bd03fc3) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [Fix navbar placement in catalog for iPhoneX (#2581)](https://github.com/material-components/material-components-ios/commit/d429911bd8f428c720f9de790e54ac7a3e73dab7) (Yarden Eitan)
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [[CocoaPods] Added warnings to examples. (#2480)](https://github.com/material-components/material-components-ios/commit/d28366d523f39d116a7d856191d91607d3ad8fcb) (Randall Li)
+
+### OverlayWindow
+
+#### Changes
+
+* [Add BUILD file and no-op test (#2649)](https://github.com/material-components/material-components-ios/commit/9d74268cab97c3b4937f500277ca9c7f9e910ddb) (Robert Moore)
+
+### PageControl
+
+#### Changes
+
+* [Add BUILD file (#2652)](https://github.com/material-components/material-components-ios/commit/d65707ad23fc7d1e216cd0f6011cb9f1b3ba93f3) (Robert Moore)
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### ProgressView
+
+#### Changes
+
+* [Add BUILD file (#2671)](https://github.com/material-components/material-components-ios/commit/5a592ed71b00f72211e6cf8d1d306bed876691de) (Robert Moore)
+
+### ShadowLayer
+
+#### Changes
+
+* [[Bazel] Fix BUILD files for bazel 0.8.0 and latest apple_rules (#2640)](https://github.com/material-components/material-components-ios/commit/7c86d12f5f71689d83d41585833355242bd03fc3) (Robert Moore)
+* [[Shapes] Implicitly animate shape path on resizing (#2619)](https://github.com/material-components/material-components-ios/commit/9b097023fb43cfac5e8106c1fab56fe2b05c5ab7) (Sam Morrison)
+
+### Snackbar
+
+#### Changes
+
+* [[EarlGrey] Fixing Snackbar test for iPhone 4S (#2622)](https://github.com/material-components/material-components-ios/commit/acf0eae26eda238c858b80a2512613c527732e9e) (Robert Moore)
+
+### Tabs
+
+#### Changes
+
+* [Add BUILD file (#2676)](https://github.com/material-components/material-components-ios/commit/44704084dd8ae8d34f6e402a7f757a5b70446e3b) (Robert Moore)
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [Revert "Enable new ink (#2616)" (#2665)](https://github.com/material-components/material-components-ios/commit/83994481a936a47d4bec4381fa34f711c47ba486) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+
+### Themes
+
+#### Changes
+
+* [Fixed float conversion build errors (#2602)](https://github.com/material-components/material-components-ios/commit/b1ec22207f9364660d6f5583b8ab5c4b247d1311) (Randall Li)
+* [Init temp variable to avoid warning / error. (#2609)](https://github.com/material-components/material-components-ios/commit/a4e0b6cbecd1a661ddc45b6df678bc0fd135be1c) (ianegordon)
+
+### Typography
+
+#### Changes
+
+* [Add standard (non-Dynamic Type) font convenience method (#2629)](https://github.com/material-components/material-components-ios/commit/4da22ef2a728ed4be3db33788d36b39c23fc2736) (ianegordon)
+
+---
+
 # 42.0.0
 
 ## Breaking changes

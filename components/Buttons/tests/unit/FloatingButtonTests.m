@@ -19,6 +19,16 @@
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 
+static UIImage *fakeImage(void) {
+  CGSize imageSize = CGSizeMake(24, 24);
+  UIGraphicsBeginImageContext(imageSize);
+  [UIColor.whiteColor setFill];
+  UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height));
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface FakeFloatingButton : MDCFloatingButton
 @property(nonatomic, assign) BOOL intrinsicContentSizeCalled;
 @property(nonatomic, assign) BOOL invalidateIntrinsicContentSizeCalled;
@@ -469,7 +479,7 @@
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
   button.mode = MDCFloatingButtonModeExpanded;
   [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
-  [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  [button setImage:fakeImage() forState:UIControlStateNormal];
   [button setMaximumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeDefault
                   inMode:MDCFloatingButtonModeExpanded];
@@ -488,13 +498,38 @@
                              CGRectGetMaxX(imageFrame) + button.imageTitleSpace, 1);
 }
 
+- (void)testExpandedLayoutWithImageLocationTrailing {
+  // Given
+  MDCFloatingButton *button =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+  button.mode = MDCFloatingButtonModeExpanded;
+  button.imageLocation = MDCFloatingButtonImageLocationTrailing;
+  [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
+  [button setImage:fakeImage() forState:UIControlStateNormal];
+  [button setMaximumSize:CGSizeMake(100, 48)
+                forShape:MDCFloatingButtonShapeDefault
+                  inMode:MDCFloatingButtonModeExpanded];
+  button.imageTitleSpace = 12;
+
+  // When
+  [button sizeToFit];
+
+  // Then
+  CGRect imageFrame = button.imageView.frame;
+  CGRect titleFrame = button.titleLabel.frame;
+  XCTAssertEqualWithAccuracy(CGRectGetMaxX(imageFrame), CGRectGetWidth(button.bounds)-16, 1);
+  XCTAssertEqualWithAccuracy(CGRectGetMinX(titleFrame), 24, 1);
+  XCTAssertEqualWithAccuracy(CGRectGetMinX(imageFrame),
+                             CGRectGetMaxX(titleFrame) + button.imageTitleSpace, 1);
+}
+
 - (void)testExpandedLayoutWithNonZeroContentEdgeInsets {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
                                                                  shape:MDCFloatingButtonShapeMini];
   button.mode = MDCFloatingButtonModeExpanded;
   [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
-  [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  [button setImage:fakeImage() forState:UIControlStateNormal];
   [button setMinimumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeMini
                   inMode:MDCFloatingButtonModeExpanded];
@@ -518,6 +553,33 @@
                              CGRectGetMaxX(imageFrame) + button.imageTitleSpace, 1);
 }
 
+- (void)testExpandedLayoutBehaviorIsIdempotent {
+  // Given
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] init]; // Default shape
+  button.mode = MDCFloatingButtonModeExpanded;
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+  [button setImage:fakeImage() forState:UIControlStateNormal];
+  [button sizeToFit];
+  CGRect originalImageFrame = button.imageView.frame;
+  CGRect originalTitleFrame = button.titleLabel.frame;
+
+  // When
+  [button layoutIfNeeded];
+  [button sizeToFit];
+  [button layoutIfNeeded];
+  [button layoutIfNeeded];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(originalImageFrame, button.imageView.frame),
+                @"Image frames are not equal.\nExpected: %@\nReceived: %@",
+                NSStringFromCGRect(originalImageFrame), NSStringFromCGRect(button.imageView.frame));
+  XCTAssertTrue(CGRectEqualToRect(originalTitleFrame, button.titleLabel.frame),
+                @"Title frames are not equal.\nExpected: %@\nReceived: %@",
+                NSStringFromCGRect(originalTitleFrame),
+                NSStringFromCGRect(button.titleLabel.frame));
+
+}
+
 #pragma mark - Encoding/decoding
 
 - (void)testEncoding {
@@ -526,7 +588,7 @@
                                                                  shape:MDCFloatingButtonShapeMini];
   button.mode = MDCFloatingButtonModeExpanded;
   button.imageLocation = MDCFloatingButtonImageLocationTrailing;
-  [button setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  [button setImage:fakeImage() forState:UIControlStateNormal];
   [button setTitle:@"Title" forState:UIControlStateNormal];
   [button setMinimumSize:CGSizeMake(75, 37)
                 forShape:MDCFloatingButtonShapeMini

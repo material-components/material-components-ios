@@ -20,6 +20,7 @@
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
 static NSString *const MDCChipImageViewKey = @"MDCChipImageViewKey";
@@ -36,6 +37,7 @@ static NSString *const MDCChipBackgroundColorsKey = @"MDCChipBackgroundColorsKey
 static NSString *const MDCChipBorderColorsKey = @"MDCChipBorderColorsKey";
 static NSString *const MDCChipBorderWidthsKey = @"MDCChipBorderWidthsKey";
 static NSString *const MDCChipElevationsKey = @"MDCChipElevationsKey";
+static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
@@ -109,7 +111,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 @interface MDCChipView ()
 @property(nonatomic, readonly) CGRect contentRect;
-@property(nonatomic, readonly, strong) MDCShadowLayer *layer;
+@property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @property(nonatomic, readonly) BOOL showImageView;
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
@@ -122,13 +124,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, NSNumber *> *_elevations;
+  NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_titleColors;
 }
 
 @dynamic layer;
 
 + (Class)layerClass {
-  return [MDCShadowLayer class];
+  return [MDCShapedShadowLayer class];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -159,6 +162,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _titleColors[@(UIControlStateDisabled)] =
         MDCColorLighten(titleColor, MDCChipTitleColorDisabledLightenPercent);
 
+    _shadowColors = [NSMutableDictionary dictionary];
+    _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
+
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
     _inkView.inkStyle = MDCInkStyleBounded;
     _inkView.inkColor = [UIColor colorWithWhite:0 alpha:MDCChipInkAlpha];
@@ -180,9 +186,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _titlePadding = MDCChipTitlePadding;
     _accessoryPadding = MDCChipAccessoryPadding;
 
-    [self updateBackgroundColor];
-    self.layer.elevation = [self elevationForState:UIControlStateNormal];
-
     // UIControl has a drag enter/exit boundary that is outside of the frame of the button itself.
     // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
     // change ink state. So instead we fall back on adding target/actions for these specific events.
@@ -192,6 +195,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     [self addTarget:self
              action:@selector(touchDragExit:forEvent:)
    forControlEvents:UIControlEventTouchDragExit];
+
+    self.layer.elevation = [self elevationForState:UIControlStateNormal];
+
+    [self updateBackgroundColor];
   }
   return self;
 }
@@ -214,6 +221,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _borderColors = [aDecoder decodeObjectForKey:MDCChipBorderColorsKey];
     _borderWidths = [aDecoder decodeObjectForKey:MDCChipBorderWidthsKey];
     _elevations = [aDecoder decodeObjectForKey:MDCChipElevationsKey];
+    _shadowColors = [aDecoder decodeObjectForKey:MDCChipShadowColorsKey];
     _titleColors = [aDecoder decodeObjectForKey:MDCChipTitleColorsKey];
 
     self.mdc_adjustsFontForContentSizeCategory =
@@ -239,6 +247,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [aCoder encodeObject:_borderColors forKey:MDCChipBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCChipBorderWidthsKey];
   [aCoder encodeObject:_elevations forKey:MDCChipElevationsKey];
+  [aCoder encodeObject:_shadowColors forKey:MDCChipShadowColorsKey];
   [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
 }
 
@@ -248,6 +257,21 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIContentSizeCategoryDidChangeNotification
                                                 object:nil];
+}
+
+- (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
+  if (shapeGenerator) {
+    self.layer.cornerRadius = 0;
+    self.layer.shadowPath = nil;
+  }
+
+  self.layer.shapeGenerator = shapeGenerator;
+
+  [self updateBackgroundColor];
+}
+
+- (id)shapeGenerator {
+  return self.layer.shapeGenerator;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
@@ -307,7 +331,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateBackgroundColor {
-  self.backgroundColor = [self backgroundColorForState:self.state];
+  if (self.layer.shapeGenerator) {
+    self.layer.fillColor = [self backgroundColorForState:self.state].CGColor;
+    self.backgroundColor = [UIColor clearColor];
+  } else {
+    self.backgroundColor = [self backgroundColorForState:self.state];
+  }
 }
 
 - (nullable UIColor *)borderColorForState:(UIControlState)state {
@@ -373,6 +402,24 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 }
 
+- (nullable UIColor *)shadowColorForState:(UIControlState)state {
+  UIColor *shadowColor = _shadowColors[@(state)];
+  if (!shadowColor && state != UIControlStateNormal) {
+    shadowColor = _shadowColors[@(UIControlStateNormal)];
+  }
+  return shadowColor;
+}
+
+- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state {
+  _shadowColors[@(state)] = shadowColor;
+
+  [self updateShadowColor];
+}
+
+- (void)updateShadowColor {
+  self.layer.shadowColor = [self shadowColorForState:self.state].CGColor;
+}
+
 - (nullable UIColor *)titleColorForState:(UIControlState)state {
   UIColor *titleColor = _titleColors[@(state)];
   if (!titleColor && state != UIControlStateNormal) {
@@ -396,6 +443,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateBorderColor];
   [self updateBorderWidth];
   [self updateElevation];
+  [self updateShadowColor];
   [self updateTitleColor];
 }
 
@@ -423,6 +471,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 #pragma mark - Layout
 
 - (void)layoutSubviews {
+  [super layoutSubviews];
+
   _inkView.frame = self.bounds;
   _imageView.frame = [self imageViewFrame];
   _selectedImageView.frame = [self selectedImageViewFrame];
@@ -431,10 +481,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   _selectedImageView.alpha = self.showSelectedImageView ? 1 : 0;
 
-  CGFloat cornerRadius = MIN(CGRectGetHeight(self.frame), CGRectGetWidth(self.frame)) / 2;
-  self.layer.cornerRadius = cornerRadius;
-  self.layer.shadowPath =
-      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
+  if (!self.layer.shapeGenerator) {
+    CGFloat cornerRadius = MIN(CGRectGetHeight(self.frame), CGRectGetWidth(self.frame)) / 2;
+    self.layer.cornerRadius = cornerRadius;
+    self.layer.shadowPath =
+        [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
+  }
 }
 
 - (CGRect)contentRect {
