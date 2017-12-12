@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 
 /*
  A Material chip.
@@ -100,6 +101,11 @@
  The color of the ink ripple.
  */
 @property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+
+/*
+ The shape generator used to define the chip's shape.
+ */
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;
 
 /*
  Indicates whether the chip should automatically update its font when the device’s
@@ -194,6 +200,26 @@
  @param state The control state.
  */
 - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/*
+ Returns the shadow color for a particular control state.
+
+ If no shadow color has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The control state.
+ @return The shadow color for the requested state.
+ */
+- (nullable UIColor *)shadowColorForState:(UIControlState)state;
+
+/*
+ Sets the shadow color for a particular control state.
+
+ @param elevation The shadow color.
+ @param state The control state.
+ */
+- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state
     UI_APPEARANCE_SELECTOR;
 
 /*

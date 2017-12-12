@@ -117,6 +117,23 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
                  withReuseIdentifier:classIdentifier];
 }
 
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  // Fixes an iOS 11 bug where supplementary views would be given a zPosition of 1, meaning the
+  // scroll view indicator (with a zPosition of 0) would be placed behind supplementary views.
+  // We know that iOS keeps the scroll indicator as the top-most view in the hierarchy as a subview,
+  // so we grab it and give it a better zPosition ourselves.
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    UIView *maybeScrollViewIndicator = self.collectionView.subviews.lastObject;
+    if ([maybeScrollViewIndicator isKindOfClass:[UIImageView class]]) {
+      maybeScrollViewIndicator.layer.zPosition = 2;
+    }
+  }
+#endif
+}
+
 - (void)setCollectionView:(__kindof UICollectionView *)collectionView {
   [super setCollectionView:collectionView];
 

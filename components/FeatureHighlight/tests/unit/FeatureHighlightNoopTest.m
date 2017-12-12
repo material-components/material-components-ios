@@ -14,22 +14,19 @@
  limitations under the License.
  */
 
-#import <QuartzCore/QuartzCore.h>
+#import <XCTest/XCTest.h>
 
-@protocol MDCShapeGenerating;
+#import "MaterialFeatureHighlight.h"
 
-/*
- A CAShapeLayer with the path controlled by an MDCShapeGenerating object.
+@interface FeatureHighlightNoopTest : XCTestCase
 
- @note Do not set @c path manually.
- */
-@interface MDCShapeLayer : CAShapeLayer
+@end
 
-/*
- The shape generator used to set the @c path.
+@implementation FeatureHighlightNoopTest
 
- The path will be set upon assignment of this property and every time layoutSublayers is called.
- */
-@property(nonatomic, strong, nullable) id<MDCShapeGenerating> shapeGenerator;
+- (void)testSimpleBuild {
+  MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
+  XCTAssertNotNil(view);
+}
 
 @end

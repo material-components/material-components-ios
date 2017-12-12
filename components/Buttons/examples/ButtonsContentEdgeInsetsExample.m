@@ -14,14 +14,15 @@
  limitations under the License.
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
+
 #import "MaterialButtons.h"
 
 @interface ButtonsContentEdgeInsetsExample : UIViewController
 @property(weak, nonatomic) IBOutlet MDCFlatButton *flatButton;
 @property(weak, nonatomic) IBOutlet MDCRaisedButton *raisedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
-@property (weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
+@property(weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
 
 @end
 
@@ -47,9 +48,9 @@
   [super viewDidLoad];
 
   // Force a darker background color to show the button frame
-  [self.flatButton setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:1.0]
+  [self.flatButton setBackgroundColor:[UIColor colorWithWhite:0.2f alpha:1.0f]
                              forState:UIControlStateNormal];
-  self.flatButton.inkColor = [UIColor colorWithWhite:1.0 alpha:0.1];
+  self.flatButton.inkColor = [UIColor colorWithWhite:1.0f alpha:0.1f];
   self.flatButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
   self.raisedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);
   [self.floatingActionButton setContentEdgeInsets:UIEdgeInsetsMake(40, 40, 0, 0)

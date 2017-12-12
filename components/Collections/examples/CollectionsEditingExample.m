@@ -22,7 +22,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 
 @implementation CollectionsEditingExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
 }
 
 - (void)viewDidLoad {

@@ -15,7 +15,8 @@
  */
 
 import UIKit
-import MaterialComponents
+
+import MaterialComponents.MaterialButtons
 
 class ButtonsDynamicTypeViewController: UIViewController {
 

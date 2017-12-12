@@ -15,7 +15,11 @@
  */
 
 import Foundation
-import MaterialComponents
+import UIKit
+
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialBottomAppBar
+import MaterialComponents.MDCButtonColorThemer
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
