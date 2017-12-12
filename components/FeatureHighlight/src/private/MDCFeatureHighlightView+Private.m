@@ -113,7 +113,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      _titleLabel.font = [MDCTypography titleFont];
+    }
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
@@ -121,7 +128,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      _bodyLabel.font = [MDCTypography body1Font];
+    }
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
     _bodyLabel.textAlignment = NSTextAlignmentNatural;
@@ -202,7 +216,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     if (_mdc_adjustsFontForContentSizeCategory) {
       _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kTitleTextStyle];
     } else {
-      _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+      // If we are using the default (system) font loader, retrieve the
+      // font from the UIFont standardFont API.
+      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+        _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+      } else {
+        // There is a custom font loader, retrieve the font from it.
+        _titleLabel.font = [MDCTypography titleFont];
+      }
     }
   }
 
@@ -237,7 +258,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     if (_mdc_adjustsFontForContentSizeCategory) {
       _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kBodyTextStyle];
     } else {
-      _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
+      // If we are using the default (system) font loader, retrieve the
+      // font from the UIFont standardFont API.
+      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+        _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
+      } else {
+        // There is a custom font loader, retrieve the font from it.
+        _bodyLabel.font = [MDCTypography body1Font];
+      }
     }
   }
 
