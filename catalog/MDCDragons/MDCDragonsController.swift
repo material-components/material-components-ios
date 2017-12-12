@@ -37,8 +37,9 @@ class MDCDragonsController: UIViewController,
     static let logoWidthHeight: CGFloat = 40
     static let spacing: CGFloat = 1
   }
-  
-  fileprivate let dragonCells: [DragonCell]
+  fileprivate var cellsBySection: [[DragonCell]]
+//  fileprivate let catalogCells: [DragonCell]
+//  fileprivate let dragonCells: [DragonCell]
   fileprivate var tableView: UITableView!
   static let colors: [UIColor] = [UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0),
                                   UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0),
@@ -50,8 +51,11 @@ class MDCDragonsController: UIViewController,
   var searched: [DragonCell] = []
 
   init(node: CBCNode) {
-    dragonCells = node.children.map { DragonCell(node: $0) }
-    searched = dragonCells
+    let filteredPresentable = node.children.filter { return $0.isPresentable() }
+    let filteredDragons = Set(node.children).subtracting(filteredPresentable)
+    cellsBySection = [filteredPresentable.map { DragonCell(node: $0) },
+                      filteredDragons.map { DragonCell(node: $0) }]
+    searched = cellsBySection[0]
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -66,7 +70,7 @@ class MDCDragonsController: UIViewController,
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = 113
     headerViewController.headerView.minimumHeight = 53
-    tableView = UITableView(frame: self.view.bounds, style: .plain)
+    tableView = UITableView(frame: self.view.bounds, style: .grouped)
     tableView.register(MDCDragonsTableViewCell.self, forCellReuseIdentifier: "MDCDragonsTableViewCell")
     tableView.backgroundColor = UIColor(white: 0.97, alpha: 1)
     tableView.delegate = self
@@ -129,11 +133,15 @@ class MDCDragonsController: UIViewController,
   
   // MARK: UITableViewDataSource
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    return 2
+  }
+
+  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return section == 0 ? "Dragons" : "Catalog"
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return searched.count
+    return cellsBySection[section].count
   }
   
   // MARK: UITableViewDelegate
@@ -144,10 +152,10 @@ class MDCDragonsController: UIViewController,
       return UITableViewCell()
     }
     cell.backgroundColor = .white
-    let nodeData = searched[indexPath.item]
+    let nodeData = cellsBySection[indexPath.section][indexPath.row]
     let componentName = nodeData.node.title
     cell.textLabel?.text = componentName
-    let node = searched[indexPath.item].node
+    let node = nodeData.node
     if !node.isExample() {
       if nodeData.expanded {
         cell.accessoryView = cell.expandedButton
@@ -160,26 +168,22 @@ class MDCDragonsController: UIViewController,
     return cell
   }
 
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 50
-  }
-
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     guard let cell = tableView.cellForRow(at: indexPath) as? MDCDragonsTableViewCell else {
       return
     }
-    let nodeData = searched[indexPath.item]
+    let nodeData = cellsBySection[indexPath.section][indexPath.row]
     if nodeData.node.isExample() {
       let vc = nodeData.node.createExampleViewController()
       self.navigationController?.pushViewController(vc, animated: true)
     } else {
       self.tableView.beginUpdates()
       if nodeData.expanded {
-        collapseCells(at: indexPath.item)
+        collapseCells(at: indexPath)
         cell.accessoryView = cell.defaultButton
       } else {
-        expandCells(at: indexPath.item)
+        expandCells(at: indexPath)
         cell.accessoryView = cell.expandedButton
       }
       self.tableView.endUpdates()
@@ -231,9 +235,9 @@ extension MDCDragonsController {
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     if searchText.isEmpty {
-      searched = dragonCells
+      searched = cellsBySection[0]
     } else {
-      searched = dragonCells.filter ({ (cell) -> Bool in
+      searched = cellsBySection[0].filter ({ (cell) -> Bool in
         return cell.node.title.range(of: searchText, options: .caseInsensitive) != nil
       })
     }
@@ -241,7 +245,7 @@ extension MDCDragonsController {
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    searched = dragonCells
+    searched = cellsBySection[0]
     self.tableView.reloadData()
   }
   
@@ -255,22 +259,24 @@ extension MDCDragonsController {
 }
 
 extension MDCDragonsController {
-  func collapseCells(at index: Int) {
-    let indexPaths = (index+1..<index+1+searched[index].node.children.count).map {
-      IndexPath(row: $0, section: 0)
+  func collapseCells(at indexPath: IndexPath) {
+    let upperCount = cellsBySection[indexPath.section][indexPath.row].node.children.count
+    let indexPaths = (indexPath.row+1..<indexPath.row+1+upperCount).map {
+      IndexPath(row: $0, section: indexPath.section)
     }
     tableView.deleteRows(at: indexPaths, with: .automatic)
-    searched.removeSubrange((index+1..<index+1+searched[index].node.children.count))
+    cellsBySection[indexPath.section].removeSubrange((indexPath.row+1..<indexPath.row+1+upperCount))
 
   }
 
-  func expandCells(at index: Int) {
-    let indexPaths = (index+1..<index+1+searched[index].node.children.count).map {
-      IndexPath(row: $0, section: 0)
+  func expandCells(at indexPath: IndexPath) {
+    let nodeChildren = cellsBySection[indexPath.section][indexPath.row].node.children
+    let upperCount = nodeChildren.count
+    let indexPaths = (indexPath.row+1..<indexPath.row+1+upperCount).map {
+      IndexPath(row: $0, section: indexPath.section)
     }
     tableView.insertRows(at: indexPaths, with: .automatic)
-    searched.insert(contentsOf: searched[index].node.children.map { DragonCell(node: $0) },
-                    at: index+1)
+    cellsBySection[indexPath.section].insert(contentsOf: nodeChildren.map { DragonCell(node: $0) }, at: indexPath.row+1)
   }
 }
 

@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
     UIApplication.shared.statusBarStyle = .lightContent
 
-    let tree = CBCCreateNavigationTree()
+    let tree = CBCCreatePresentableNavigationTree()
 
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
