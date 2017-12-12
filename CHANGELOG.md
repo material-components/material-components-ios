@@ -1,3 +1,138 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### TextFields
+
+#### MDCTextInputControllerOutlined
+
+*modified* class: `MDCTextInputControllerOutlined`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextInputControllerOutlined : MDCTextInputControllerDefault` |
+| To: | `class MDCTextInputControllerOutlined : MDCTextInputControllerBase` |
+
+*modified* class: `MDCTextInputControllerOutlined`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextInputControllerOutlined : MDCTextInputControllerDefault` |
+| To: | `@interface MDCTextInputControllerOutlined : MDCTextInputControllerBase` |
+
+#### MDCTextInputControllerOutlinedTextArea
+
+*modified* class: `MDCTextInputControllerOutlinedTextArea`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextInputControllerOutlinedTextArea : MDCTextInputControllerDefault` |
+| To: | `class MDCTextInputControllerOutlinedTextArea : MDCTextInputControllerBase` |
+
+*modified* class: `MDCTextInputControllerOutlinedTextArea`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextInputControllerOutlinedTextArea     : MDCTextInputControllerDefault` |
+| To: | `@interface MDCTextInputControllerOutlinedTextArea : MDCTextInputControllerBase` |
+
+#### MDCMultilineTextInputDelegate
+
+*modified* protocol: `MDCMultilineTextInputDelegate`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@protocol MDCMultilineTextInputDelegate <NSObject>  @optional  /**  Called when the clear button is tapped.   Return YES to set the textfield's .text to nil.  Return NO to ignore and keep the .text.   A direct mirror of UITextFieldDelegate's textFieldShouldClear:.   UITextView's don't require this method already because they do not have clear buttons. The clear  button in MDCMultilineTextField is custom.  */ - (BOOL)multilineTextFieldShouldClear:(UIView <MDCTextInput>*)textField;  @end` |
+| To: | `@protocol MDCMultilineTextInputDelegate <NSObject>  @optional  /**  Called when the clear button is tapped.   Return YES to set the textfield's .text to nil.  Return NO to ignore and keep the .text.   A direct mirror of UITextFieldDelegate's textFieldShouldClear:.   UITextView's don't require this method already because they do not have clear buttons. The clear  button in MDCMultilineTextField is custom.  */ - (BOOL)multilineTextFieldShouldClear:(UIView<MDCTextInput> *)textField;  @end` |
+
+#### MDCTextInputControllerBase
+
+*new* property: `expandsOnOverflow` in `MDCTextInputControllerBase`
+
+*new* property: `borderFillColorDefault` in `MDCTextInputControllerBase`
+
+*new* property: `borderFillColor` in `MDCTextInputControllerBase`
+
+*new* property: `minimumLines` in `MDCTextInputControllerBase`
+
+*new* class: `MDCTextInputControllerBase`
+
+#### MDCTextInputControllerDefault
+
+*removed* property: `expandsOnOverflow` in `MDCTextInputControllerDefault`
+
+*removed* property: `borderFillColor` in `MDCTextInputControllerDefault`
+
+*removed* class: `MDCTextInputControllerDefault`
+
+*removed* property: `borderFillColorDefault` in `MDCTextInputControllerDefault`
+
+*removed* property: `minimumLines` in `MDCTextInputControllerDefault`
+
+#### MDCTextInputDefaultUnderlineActiveHeight
+
+*removed* constant: `MDCTextInputDefaultUnderlineActiveHeight`
+
+#### MDCTextInputControllerFilled
+
+*modified* class: `MDCTextInputControllerFilled`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextInputControllerFilled : MDCTextInputControllerDefault` |
+| To: | `class MDCTextInputControllerFilled : MDCTextInputControllerBase` |
+
+*modified* class: `MDCTextInputControllerFilled`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextInputControllerFilled : MDCTextInputControllerDefault` |
+| To: | `@interface MDCTextInputControllerFilled : MDCTextInputControllerBase` |
+
+#### MDCTextInputDefaultBorderRadius
+
+*removed* constant: `MDCTextInputDefaultBorderRadius`
+
+#### MDCTextInputControllerUnderline
+
+*new* class: `MDCTextInputControllerUnderline`
+
+#### MDCTextInputControllerBaseDefaultBorderRadius
+
+*new* constant: `MDCTextInputControllerBaseDefaultBorderRadius`
+
+#### MDCTextInputController
+
+*new* property: `underlineHeightActiveDefault` in `MDCTextInputController`
+
+*new* property: `underlineHeightActive` in `MDCTextInputController`
+
+*new* property: `underlineHeightNormalDefault` in `MDCTextInputController`
+
+*new* property: `underlineHeightNormal` in `MDCTextInputController`
+## Component changes
+
+
+### TextFields
+
+#### Changes
+
+* [Feature branch merge: Clarity, Safety, Docs, Comments, Formatting (#2634)](https://github.com/material-components/material-components-ios/commit/62d5a4fa850b943e32099fa921bb30082f539c0f) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [[TextFields] Feature branch merge: Clarity, Safety, Docs, Comments, Formatting (#2634)](https://github.com/material-components/material-components-ios/commit/62d5a4fa850b943e32099fa921bb30082f539c0f) (Will Larche)
+
+---
+
 # 42.2.0
 
 ## API changes
