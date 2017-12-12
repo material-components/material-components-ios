@@ -1,10 +1,6 @@
 # 43.0.0
 
-## Breaking changes
-
-## New deprecations
-
-## New features
+This major release includes a variety of API name changes. Please see the API changes below for more details.
 
 ## API changes
 
@@ -41,15 +37,6 @@
 |---|---|
 | From: | `@interface MDCTextInputControllerOutlinedTextArea     : MDCTextInputControllerDefault` |
 | To: | `@interface MDCTextInputControllerOutlinedTextArea : MDCTextInputControllerBase` |
-
-#### MDCMultilineTextInputDelegate
-
-*modified* protocol: `MDCMultilineTextInputDelegate`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@protocol MDCMultilineTextInputDelegate <NSObject>  @optional  /**  Called when the clear button is tapped.   Return YES to set the textfield's .text to nil.  Return NO to ignore and keep the .text.   A direct mirror of UITextFieldDelegate's textFieldShouldClear:.   UITextView's don't require this method already because they do not have clear buttons. The clear  button in MDCMultilineTextField is custom.  */ - (BOOL)multilineTextFieldShouldClear:(UIView <MDCTextInput>*)textField;  @end` |
-| To: | `@protocol MDCMultilineTextInputDelegate <NSObject>  @optional  /**  Called when the clear button is tapped.   Return YES to set the textfield's .text to nil.  Return NO to ignore and keep the .text.   A direct mirror of UITextFieldDelegate's textFieldShouldClear:.   UITextView's don't require this method already because they do not have clear buttons. The clear  button in MDCMultilineTextField is custom.  */ - (BOOL)multilineTextFieldShouldClear:(UIView<MDCTextInput> *)textField;  @end` |
 
 #### MDCTextInputControllerBase
 
@@ -116,8 +103,8 @@
 *new* property: `underlineHeightNormalDefault` in `MDCTextInputController`
 
 *new* property: `underlineHeightNormal` in `MDCTextInputController`
-## Component changes
 
+## Component changes
 
 ### TextFields
 
