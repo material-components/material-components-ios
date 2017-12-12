@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialButtonBar
+import MaterialComponents.MaterialButtons
 
 // Tests confirming that the Button Bar respects UI appearance for bar button item
 // titleTextAttributes on iOS 9 and above.

@@ -35,4 +35,14 @@
  */
 + (nonnull UIFont *)mdc_standardFontForMaterialTextStyle:(MDCFontTextStyle)style;
 
+/**
+ Returns an new instance of the font sized according to the text-style and whether the content
+ size category (Dynamic Type) should be taken into account.
+
+ @param style The Material font text style that will determine the fontSize of the new font
+ @param scaled Should the new font be scaled according to the content size category (Dynamic Type)
+ */
+- (nonnull UIFont *)mdc_fontSizedForMaterialTextStyle:(MDCFontTextStyle)style
+                                 scaledForDynamicType:(BOOL)scaled;
+
 @end

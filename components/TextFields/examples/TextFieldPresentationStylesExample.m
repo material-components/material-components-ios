@@ -14,9 +14,11 @@
  limitations under the License.
  */
 
-#import "supplemental/TextFieldPresentationStylesLegacyExampleSupplemental.h"
+#import <UIKit/UIKit.h>
 
-@import MaterialComponents.MaterialTextFields;
+#import "MaterialTextFields.h"
+
+#import "supplemental/TextFieldPresentationStylesLegacyExampleSupplemental.h"
 
 @interface TextFieldPresentationStylesExample ()
 

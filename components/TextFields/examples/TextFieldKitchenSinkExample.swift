@@ -24,6 +24,7 @@ import MaterialComponents.MaterialTextFields
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTypography
+import MaterialComponents.MaterialPalettes
 
 final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
