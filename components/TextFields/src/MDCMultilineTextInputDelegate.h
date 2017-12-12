@@ -36,6 +36,6 @@
  UITextView's don't require this method already because they do not have clear buttons. The clear
  button in MDCMultilineTextField is custom.
  */
-- (BOOL)multilineTextFieldShouldClear:(UIView <MDCTextInput>*)textField;
+- (BOOL)multilineTextFieldShouldClear:(UIView<MDCTextInput> *)textField;
 
 @end

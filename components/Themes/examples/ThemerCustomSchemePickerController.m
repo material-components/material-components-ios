@@ -206,7 +206,7 @@ static NSString *s_secondaryColorString;
   [MDCSliderColorThemer applyColorScheme:colorScheme toSlider:[MDCSlider appearance]];
   [MDCTabBarColorThemer applyColorScheme:colorScheme toTabBar:[MDCTabBar appearance]];
   [MDCTextFieldColorThemer applyColorScheme:colorScheme
-           toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
+           toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
   [MDCTextFieldColorThemer applyColorScheme:colorScheme
            toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
   [MDCTextFieldColorThemer applyColorScheme:colorScheme

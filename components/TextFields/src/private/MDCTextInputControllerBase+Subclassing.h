@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerDefault.h"
+#import "MDCTextInputControllerBase.h"
 
-@interface MDCTextInputControllerDefault (Subclassing)
+@interface MDCTextInputControllerBase (Subclassing)
 
 @property(nonatomic, assign, readonly, getter=isDisplayingCharacterCountError)
     BOOL displayingCharacterCountError;

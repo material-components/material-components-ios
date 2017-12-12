@@ -249,49 +249,49 @@
 #endif
 
   //  Flip comments from here down in this method for testing
-//  UITextField *appleField = [[UITextField alloc] initWithFrame:CGRectZero];
-//  [self.scrollView addSubview:appleField];
-//  appleField.translatesAutoresizingMaskIntoConstraints = NO;
-//
-//  appleField.placeholder = @"UIKit Text Field";
-//  appleField.delegate = self;
-//  appleField.clearButtonMode = UITextFieldViewModeWhileEditing;
-//
-//  NSBundle *bundle = [NSBundle bundleForClass:[TextFieldPresentationStylesExample class]];
-//  UIImage *image =
-//      [UIImage imageNamed:@"ic_search" inBundle:bundle compatibleWithTraitCollection:nil];
-//  UIImageView *left = [[UIImageView alloc] initWithImage:image];
-//  UIImageView *right = [[UIImageView alloc] initWithImage:image];
-//
-//  appleField.leftView = left;
-//  appleField.leftViewMode = UITextFieldViewModeAlways;
-//  appleField.rightView = right;
-//  appleField.rightViewMode = UITextFieldViewModeAlways;
-//
-//  [NSLayoutConstraint constraintWithItem:appleField
-//                               attribute:NSLayoutAttributeTop
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:unstyledTextField
-//                               attribute:NSLayoutAttributeBottom
-//                              multiplier:1
-//                                constant:10]
-//      .active = YES;
-//  [NSLayoutConstraint constraintWithItem:appleField
-//                               attribute:NSLayoutAttributeLeading
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:textFieldDefaultCharMax
-//                               attribute:NSLayoutAttributeLeading
-//                              multiplier:1
-//                                constant:0]
-//      .active = YES;
-//  [NSLayoutConstraint constraintWithItem:appleField
-//                               attribute:NSLayoutAttributeTrailing
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:textFieldDefaultCharMax
-//                               attribute:NSLayoutAttributeTrailing
-//                              multiplier:1
-//                                constant:0]
-//      .active = YES;
+  //  UITextField *appleField = [[UITextField alloc] initWithFrame:CGRectZero];
+  //  [self.scrollView addSubview:appleField];
+  //  appleField.translatesAutoresizingMaskIntoConstraints = NO;
+  //
+  //  appleField.placeholder = @"UIKit Text Field";
+  //  appleField.delegate = self;
+  //  appleField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  //
+  //  NSBundle *bundle = [NSBundle bundleForClass:[TextFieldPresentationStylesExample class]];
+  //  UIImage *image =
+  //      [UIImage imageNamed:@"ic_search" inBundle:bundle compatibleWithTraitCollection:nil];
+  //  UIImageView *left = [[UIImageView alloc] initWithImage:image];
+  //  UIImageView *right = [[UIImageView alloc] initWithImage:image];
+  //
+  //  appleField.leftView = left;
+  //  appleField.leftViewMode = UITextFieldViewModeAlways;
+  //  appleField.rightView = right;
+  //  appleField.rightViewMode = UITextFieldViewModeAlways;
+  //
+  //  [NSLayoutConstraint constraintWithItem:appleField
+  //                               attribute:NSLayoutAttributeTop
+  //                               relatedBy:NSLayoutRelationEqual
+  //                                  toItem:unstyledTextField
+  //                               attribute:NSLayoutAttributeBottom
+  //                              multiplier:1
+  //                                constant:10]
+  //      .active = YES;
+  //  [NSLayoutConstraint constraintWithItem:appleField
+  //                               attribute:NSLayoutAttributeLeading
+  //                               relatedBy:NSLayoutRelationEqual
+  //                                  toItem:textFieldDefaultCharMax
+  //                               attribute:NSLayoutAttributeLeading
+  //                              multiplier:1
+  //                                constant:0]
+  //      .active = YES;
+  //  [NSLayoutConstraint constraintWithItem:appleField
+  //                               attribute:NSLayoutAttributeTrailing
+  //                               relatedBy:NSLayoutRelationEqual
+  //                                  toItem:textFieldDefaultCharMax
+  //                               attribute:NSLayoutAttributeTrailing
+  //                              multiplier:1
+  //                                constant:0]
+  //      .active = YES;
 }
 
 #pragma mark - UITextFieldDelegate

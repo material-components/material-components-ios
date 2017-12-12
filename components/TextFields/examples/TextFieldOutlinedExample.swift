@@ -78,7 +78,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     return message
   }()
 
-  var allTextFieldControllers = [MDCTextInputControllerDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerFloatingPlaceholder]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerOutlined(textInput: city)
