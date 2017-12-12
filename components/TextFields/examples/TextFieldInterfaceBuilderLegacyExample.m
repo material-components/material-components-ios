@@ -16,9 +16,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "supplemental/TextFieldInterfaceBuilderExampleSupplemental.h"
+#import <UIKit/UIKit.h>
 
-@import MaterialComponents.MaterialTextFields;
+#import "MaterialTextFields.h"
+
+#import "supplemental/TextFieldInterfaceBuilderExampleSupplemental.h"
 
 @interface TextFieldInterfaceBuilderLegacyExample () <UITextFieldDelegate>
 

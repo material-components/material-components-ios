@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,18 +14,19 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import <XCTest/XCTest.h>
 
-@interface TextFieldInterfaceBuilderExample : UIViewController
+#import "MaterialOverlay.h"
 
-@end
-
-@interface TextFieldInterfaceBuilderExample (Supplemental)
-
-- (void)setupExampleViews;
+@interface OverlayNoopTests : XCTestCase
 
 @end
 
-@interface TextFieldInterfaceBuilderLegacyExample : TextFieldInterfaceBuilderExample
+@implementation OverlayNoopTests
+
+- (void)testInit {
+  MDCOverlayObserver *observer = [[MDCOverlayObserver alloc] init];
+  XCTAssertNotNil(observer);
+}
 
 @end

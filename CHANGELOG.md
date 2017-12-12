@@ -1,3 +1,41 @@
+# 42.2.0
+
+## API changes
+
+### Typography
+
+#### UIFont(MaterialTypography)
+
+*new* method: `-mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:` in `UIFont(MaterialTypography)`
+
+## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [[ButtonBar, NavigationBar] Add BUILD file for kokoro (#2598)](https://github.com/material-components/material-components-ios/commit/5879c18c26c3b8f69ed7a77ecdf8fcd2e220d427) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [[ButtonBar, NavigationBar] Add BUILD file for kokoro (#2598)](https://github.com/material-components/material-components-ios/commit/5879c18c26c3b8f69ed7a77ecdf8fcd2e220d427) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Corrected imports in examples. (#2655)](https://github.com/material-components/material-components-ios/commit/63abcadd7c62b3c36361cd0108928b8ecf1eb801) (Randall Li)
+
+### Typography
+
+#### Changes
+
+* [font initializer based on style and Dynamic Type (#2666)](https://github.com/material-components/material-components-ios/commit/93e21f1483f3568729cac0fe010e912274945702) (ianegordon)
+
+---
+
 # 42.1.0
 
 ## New features

@@ -52,4 +52,16 @@
   return font;
 }
 
+- (nonnull UIFont *)mdc_fontSizedForMaterialTextStyle:(MDCFontTextStyle)style
+                                 scaledForDynamicType:(BOOL)scaled {
+  UIFontDescriptor *fontDescriptor;
+  if (scaled) {
+    fontDescriptor = [UIFontDescriptor mdc_preferredFontDescriptorForMaterialTextStyle:style];
+  } else {
+    fontDescriptor = [UIFontDescriptor mdc_standardFontDescriptorForMaterialTextStyle:style];
+  }
+
+  return [self fontWithSize:fontDescriptor.pointSize];
+}
+
 @end

@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 #import "TextFieldPresentationStylesLegacyExampleSupplemental.h"
 
 @implementation TextFieldPresentationStylesExample (Supplemental)

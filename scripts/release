@@ -339,10 +339,7 @@ publish_release() {
 
   enforce_changelog_version
 
-  echo "Checking gh authorization..."
-  $parentcmd gh user --whoami
-
-  ghtoken=$($parentcmd gh user --token)
+  ghtoken=$(cat ~/.gh.json | grep "github_token" | cut -d'"' -f4)
   if [ -z "$ghtoken" ]; then
     echo "Must be authenticated with gh."
     echo
@@ -364,8 +361,8 @@ publish_release() {
   if [ $? -ne 0 ]; then # Found the release
     echo "Release already cut."
     echo
-    echo "    Release URL: https://github.com/$repopath/releases/tag/$version"
-    open "https://github.com/$repopath/releases/tag/$version"
+    echo "    Release URL: https://github.com/material-components/material-components-ios/releases/tag/$version"
+    open "https://github.com/material-components/material-components-ios/releases/tag/$version"
     exit 0
   fi
 
@@ -378,7 +375,7 @@ publish_release() {
     -H "Content-Type: application/json" \
     -X POST \
     -d '{"tag_name":"'$version'","target_commitish":"stable","name":"'$version'","draft":true}' \
-    "https://api.github.com/repos/$repopath/releases" > "$tmp_path/release"
+    "https://api.github.com/repos/material-components/material-components-ios/releases" > "$tmp_path/release"
 
   if [ $? -ne 0 ]; then # Found the release
     echo "Failed to draft the release. Check that it doesn't already exist before continuing."
@@ -621,7 +618,7 @@ fi
 
 rootdir=$( cd "$(dirname $(git rev-parse --git-dir))" && pwd )
 
-enforce_clean_state
+#enforce_clean_state
 
 case "$1" in
   cut)        cut_release ${@:2} ;;

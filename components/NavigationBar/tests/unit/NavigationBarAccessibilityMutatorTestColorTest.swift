@@ -15,7 +15,8 @@
  */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialNavigationBar
+
 import MDFTextAccessibility
 
 // Tests confirming that the Navigation Bar Accessibility Mutator correctly changes title font
