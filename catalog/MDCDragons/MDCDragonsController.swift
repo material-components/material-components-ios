@@ -25,7 +25,10 @@ import MaterialComponents.MaterialTypography
 
 import UIKit
 
-class MDCDragonsController: UITableViewController, UISearchBarDelegate {
+class MDCDragonsController: UIViewController,
+                            UITableViewDelegate,
+                            UITableViewDataSource,
+                            UISearchBarDelegate {
   
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 50
@@ -36,7 +39,7 @@ class MDCDragonsController: UITableViewController, UISearchBarDelegate {
   }
   
   fileprivate let dragonCells: [DragonCell]
-  
+  fileprivate var tableView: UITableView!
   static let colors: [UIColor] = [UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0),
                                   UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0),
                                   UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0),
@@ -49,15 +52,7 @@ class MDCDragonsController: UITableViewController, UISearchBarDelegate {
   init(node: CBCNode) {
     dragonCells = node.children.map { DragonCell(node: $0) }
     searched = dragonCells
-    super.init(style: .plain)
-    title = "Material Dragons"
-    addChildViewController(headerViewController)
-    headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    headerViewController.headerView.maximumHeight = 113
-    headerViewController.headerView.minimumHeight = 53
-
-    tableView.register(MDCDragonsTableViewCell.self, forCellReuseIdentifier: "MDCDragonsTableViewCell")
-    tableView?.backgroundColor = UIColor(white: 0.97, alpha: 1)
+    super.init(nibName: nil, bundle: nil)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -66,13 +61,33 @@ class MDCDragonsController: UITableViewController, UISearchBarDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = "Material Dragons"
+    addChildViewController(headerViewController)
+    headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    headerViewController.headerView.maximumHeight = 113
+    headerViewController.headerView.minimumHeight = 53
+    tableView = UITableView(frame: self.view.bounds, style: .plain)
+    tableView.register(MDCDragonsTableViewCell.self, forCellReuseIdentifier: "MDCDragonsTableViewCell")
+    tableView.backgroundColor = UIColor(white: 0.97, alpha: 1)
+    tableView.delegate = self
+    tableView.dataSource = self
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(tableView)
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
+                                                                          options: [],
+                                                                          metrics: nil,
+                                                                          views: ["view": tableView]));
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
+                                                                          options: [],
+                                                                          metrics: nil,
+                                                                          views: ["view": tableView]));
     setupHeaderView()
     let tapgesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     tapgesture.cancelsTouchesInView = false
-    self.view.addGestureRecognizer(tapgesture)
+    view.addGestureRecognizer(tapgesture)
     
     if #available(iOS 11.0, *) {
-      tableView?.contentInsetAdjustmentBehavior = .always
+      tableView.contentInsetAdjustmentBehavior = .always
     }
   }
   
@@ -89,7 +104,7 @@ class MDCDragonsController: UITableViewController, UISearchBarDelegate {
     view.addSubview(headerViewController.view)
     headerViewController.didMove(toParentViewController: self)
   }
-  
+
   func adjustLogoForScrollView(_ scrollView: UIScrollView) {
     let offset = scrollView.contentOffset.y
     let inset = scrollView.contentInset.top
@@ -113,16 +128,16 @@ class MDCDragonsController: UITableViewController, UISearchBarDelegate {
   }
   
   // MARK: UITableViewDataSource
-  override func numberOfSections(in tableView: UITableView) -> Int {
+  func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return searched.count
   }
   
   // MARK: UITableViewDelegate
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell =
       tableView.dequeueReusableCell(withIdentifier: "MDCDragonsTableViewCell",
                                     for: indexPath) as? MDCDragonsTableViewCell else {
@@ -145,11 +160,11 @@ class MDCDragonsController: UITableViewController, UISearchBarDelegate {
     return cell
   }
 
-  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 50
   }
 
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     guard let cell = tableView.cellForRow(at: indexPath) as? MDCDragonsTableViewCell else {
       return
@@ -177,14 +192,14 @@ class MDCDragonsController: UITableViewController, UISearchBarDelegate {
 // UIScrollViewDelegate
 extension MDCDragonsController {
   
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidScroll()
       self.adjustLogoForScrollView(scrollView)
     }
   }
   
-  override func scrollViewDidEndDragging(
+  func scrollViewDidEndDragging(
     _ scrollView: UIScrollView,
     willDecelerate decelerate: Bool) {
     let headerView = headerViewController.headerView
@@ -193,13 +208,13 @@ extension MDCDragonsController {
     }
   }
   
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
   
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                           withVelocity velocity: CGPoint,
                                           targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let headerView = headerViewController.headerView
@@ -222,12 +237,12 @@ extension MDCDragonsController {
         return cell.node.title.range(of: searchText, options: .caseInsensitive) != nil
       })
     }
-    self.tableView?.reloadData()
+    self.tableView.reloadData()
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     searched = dragonCells
-    self.tableView?.reloadData()
+    self.tableView.reloadData()
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
