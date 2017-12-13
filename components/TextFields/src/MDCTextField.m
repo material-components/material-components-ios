@@ -82,7 +82,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     }
 
     [self commonMDCTextFieldInitialization];
-    _cursorColor = [aDecoder decodeObjectForKey:MDCTextFieldCursorColorKey];;
+    _cursorColor = [aDecoder decodeObjectForKey:MDCTextFieldCursorColorKey];
 
     self.leftViewMode =
         (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldLeftViewModeKey];
@@ -335,7 +335,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     return self.leftViewMode;
   }
-    return self.rightViewMode;
+  return self.rightViewMode;
 }
 
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {

@@ -14,19 +14,12 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerFloatingPlaceholder.h"
+#import "MDCTextInputControllerBase.h"
 
 /**
- Material Design compliant text field from 2016. The logic for 'automagic' error states changes:
- underline color, underline text color.
+ Material Design compliant text field from early 2017 with floating placeholder and an underline.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
-
- The placeholder text is laid out inline. If floating is enabled, it will float above the field when
- there is content or the field is being edited. The character count is below text. The Material
- Design guidelines call this 'Floating inline labels.'
  https://material.io/guidelines/components/text-fields.html#text-fields-labels
-
- NOTE: This design doesn't exactly match the 2015 text fields that had slightly different colors.
 
  Defaults:
 
@@ -58,8 +51,7 @@
  Underline Height Normal - 1p
 
  Underline View Mode - While editing
-*/
-@interface MDCTextInputControllerLegacyDefault
-    : NSObject <MDCTextInputControllerFloatingPlaceholder>
+ */
+@interface MDCTextInputControllerUnderline : MDCTextInputControllerBase
 
 @end

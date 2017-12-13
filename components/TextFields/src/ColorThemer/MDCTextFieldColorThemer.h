@@ -49,5 +49,5 @@
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
-        NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
+    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 @end

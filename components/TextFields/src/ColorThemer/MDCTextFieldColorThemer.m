@@ -45,7 +45,7 @@
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-  toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
     [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
   }
