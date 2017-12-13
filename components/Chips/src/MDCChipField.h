@@ -15,8 +15,9 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 
-#import "MaterialChips.h"
+#import "MDCChipView.h"
 #import "MaterialTextFields.h"
 
 /**
