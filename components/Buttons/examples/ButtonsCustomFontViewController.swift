@@ -34,9 +34,11 @@ class ButtonsCustomFontViewController: UIViewController {
     view.backgroundColor = UIColor(white: 0.9, alpha:1.0)
     let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    let customFont = UIFont(name:"Zapfino", size:14.0)
 
     let flatButtonStatic = MDCRaisedButton()
     flatButtonStatic.setTitleColor(titleColor, for: .normal)
+    flatButtonStatic.setTitleFont(customFont, for: .normal)
     flatButtonStatic.setBackgroundColor(backgroundColor, for: .normal)
     flatButtonStatic.setTitle("Static", for: UIControlState())
     flatButtonStatic.sizeToFit()
@@ -47,6 +49,7 @@ class ButtonsCustomFontViewController: UIViewController {
     let flatButtonDynamic = MDCRaisedButton()
     flatButtonDynamic.setTitleColor(titleColor, for: .normal)
     flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
+    flatButtonDynamic.setTitleFont(customFont, for: .normal)
     flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
     flatButtonDynamic.sizeToFit()
     flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
