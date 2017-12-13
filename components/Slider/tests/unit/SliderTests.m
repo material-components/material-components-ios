@@ -458,7 +458,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
   slider.enabled =
-      arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
+      (BOOL)arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
 
   // Then
   XCTAssertTrue(slider.accessibilityTraits & UIAccessibilityTraitAdjustable);
