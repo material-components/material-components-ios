@@ -155,8 +155,6 @@
 
  If left unset or reset to nil for a given state, then a default font is used.
 
- NOTE: This font property will not work if you have set a custom font loader.
-
  @param font The font.
  @param state The state.
  */
