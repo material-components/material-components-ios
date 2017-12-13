@@ -761,43 +761,29 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
-  if (![MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    NSLog(@"MDCButton setFont: is not compatible with a custom font loader");
-    return;
-  }
-
   _fonts[@(state)] = font;
 
   [self updateTitleFont];
 }
 
 - (void)updateTitleFont {
+  // Retreive any custom font that has been set
   UIFont *font = _fonts[@(self.state)];
   if (!font && self.state != UIControlStateNormal) {
     // We fall back to UIControlStateNormal if there is no value for the current state.
     font = _fonts[@(UIControlStateNormal)];
   }
 
-  if (font) {
-    // If we are automatically adjusting for Dynamic Type, resize our custom
-    // font based on the contentSizeCategory
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    }
-  } else {
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-    } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        font = [MDCTypography buttonFont];
-      }
-    }
+  if (!font) {
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    font = [MDCTypography buttonFont];
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    // Dynamic type is enabled so apply scaling
+    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
 
   self.titleLabel.font = font;
