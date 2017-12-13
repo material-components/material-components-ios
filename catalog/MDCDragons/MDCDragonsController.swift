@@ -94,14 +94,22 @@ class MDCDragonsController: UIViewController,
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(tableView)
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
-                                                                          options: [],
-                                                                          metrics: nil,
-                                                                          views: ["view": tableView]));
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
-                                                                          options: [],
-                                                                          metrics: nil,
-                                                                          views: ["view": tableView]));
+    view.backgroundColor = UIColor(white: 0.97, alpha: 1)
+
+    #if swift(>=3.2)
+      if #available(iOS 11, *) {
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+                                    tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+                                    tableView.topAnchor.constraint(equalTo: view.topAnchor),
+                                    tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+      } else {
+        preiOS11Constraints()
+      }
+    #else
+      preiOS11Constraints()
+    #endif
+
     setupHeaderView()
     let tapgesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     tapgesture.delegate = self
@@ -110,6 +118,17 @@ class MDCDragonsController: UIViewController,
     if #available(iOS 11.0, *) {
       tableView.contentInsetAdjustmentBehavior = .always
     }
+  }
+  
+  func preiOS11Constraints() {
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
+                                                       options: [],
+                                                       metrics: nil,
+                                                       views: ["view": tableView]));
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
+                                                       options: [],
+                                                       metrics: nil,
+                                                       views: ["view": tableView]));
   }
   
   func setupHeaderView() {

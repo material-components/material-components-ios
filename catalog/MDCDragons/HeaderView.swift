@@ -47,6 +47,8 @@ class HeaderView: UIView {
       xIconView.setImage(UIImage(), for: .normal)
       xIconView.tintColor = .white
     }
+    searchBar.scopeBarBackgroundImage = UIImage()
+
   }
   
 }

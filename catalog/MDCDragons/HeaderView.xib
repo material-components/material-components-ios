@@ -41,6 +41,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="53" id="c1p-DD-EQR"/>
                     </constraints>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <textInputTraits key="textInputTraits" textContentType="name"/>
                     <scopeButtonTitles>
                         <string>Title</string>
