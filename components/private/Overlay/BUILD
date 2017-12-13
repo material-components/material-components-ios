@@ -23,6 +23,7 @@ licenses(["notice"])  # Apache 2.0
 mdc_public_objc_library(
     name = "Overlay",
     sdk_frameworks = [
+        "QuartzCore",
         "CoreGraphics",
         "UIKit",
     ],
