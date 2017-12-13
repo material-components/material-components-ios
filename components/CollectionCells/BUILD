@@ -29,10 +29,17 @@ mdc_public_objc_library(
     deps = [
         "//components/Ink",
         "//components/CollectionLayoutAttributes",
+        "//components/Palettes",
         "//components/Typography",
-        "//copmonents/private/Icons",
+        "//components/private/Icons",
+        "//components/private/Icons/icons/ic_check",
+        "//components/private/Icons/icons/ic_check_circle",
+        "//components/private/Icons/icons/ic_chevron_right",
+        "//components/private/Icons/icons/ic_info",
+        "//components/private/Icons/icons/ic_radio_button_unchecked",
+        "//components/private/Icons/icons/ic_reorder",
+        "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
-        "@motion_transitioning_objc//:MotionTransitioning",
     ],
 )
 
