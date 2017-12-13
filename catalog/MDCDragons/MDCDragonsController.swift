@@ -33,20 +33,16 @@ class MDCDragonsController: UIViewController,
   
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 50
-    static let inset: CGFloat = 16
-    static let logoTitleVerticalSpacing: CGFloat = 32
-    static let logoWidthHeight: CGFloat = 40
-    static let spacing: CGFloat = 1
+    static let headerViewMaxHeight: CGFloat = 113
+    static let headerViewMinHeight: CGFloat = 53
+    static let bgColor = UIColor(white: 0.97, alpha: 1)
+    static let headerColor = UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0)
   }
   fileprivate var cellsBySection: [[DragonCell]]
   fileprivate var searched: [DragonCell]!
   fileprivate var results: [DragonCell]!
   fileprivate var tableView: UITableView!
   fileprivate var isSearchActive = false
-  static let colors: [UIColor] = [UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0),
-                                  UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0),
-                                  UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0),
-                                  UIColor(red: 1.0, green: 0.922, blue: 0.231, alpha: 1.0)]
   
   fileprivate lazy var headerViewController = MDCFlexibleHeaderViewController()
   var headerView: HeaderView!
@@ -84,17 +80,17 @@ class MDCDragonsController: UIViewController,
     title = "Material Dragons"
     addChildViewController(headerViewController)
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    headerViewController.headerView.maximumHeight = 113
-    headerViewController.headerView.minimumHeight = 53
+    headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
+    headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
     tableView = UITableView(frame: self.view.bounds, style: .grouped)
     tableView.register(MDCDragonsTableViewCell.self,
                        forCellReuseIdentifier: "MDCDragonsTableViewCell")
-    tableView.backgroundColor = UIColor(white: 0.97, alpha: 1)
+    tableView.backgroundColor = Constants.bgColor
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(tableView)
-    view.backgroundColor = UIColor(white: 0.97, alpha: 1)
+    view.backgroundColor = Constants.bgColor
 
     #if swift(>=3.2)
       if #available(iOS 11, *) {
@@ -139,7 +135,7 @@ class MDCDragonsController: UIViewController,
     
     headerViewController.headerView.addSubview(headerView)
     headerViewController.headerView.forwardTouchEvents(for: headerView)
-    headerViewController.headerView.backgroundColor = MDCDragonsController.colors[2]
+    headerViewController.headerView.backgroundColor = Constants.headerColor
     headerViewController.headerView.trackingScrollView = tableView
     view.addSubview(headerViewController.view)
     headerViewController.didMove(toParentViewController: self)
