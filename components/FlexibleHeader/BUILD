@@ -33,10 +33,28 @@ mdc_public_objc_library(
     ],
 )
 
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":FlexibleHeader",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
-    deps = [":FlexibleHeader"],
+    deps = [
+        ":FlexibleHeader",
+        ":ColorThemer",
+    ],
     visibility = ["//visibility:private"],
 )
 
@@ -49,7 +67,10 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":FlexibleHeader"],
+    deps = [
+        ":FlexibleHeader",
+        ":ColorThemer",
+    ],
     visibility = ["//visibility:private"],
 )
 
