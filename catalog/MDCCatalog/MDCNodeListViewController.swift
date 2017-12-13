@@ -301,7 +301,7 @@ extension MDCNodeListViewController {
     if #available(iOS 11.0, *) {
       let safeAreaLayoutGuide = containerView.safeAreaLayoutGuide
       NSLayoutConstraint.activate([
-        view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
+        view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,
                                       constant: padding),
         view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,
                                        constant: -padding),
