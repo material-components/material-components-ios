@@ -146,12 +146,4 @@
   }
 }
 
-- (void)setFillColor:(CGColorRef)fillColor {
-  _colorLayer.fillColor = fillColor;
-}
-
-- (CGColorRef)fillColor {
-  return _colorLayer.fillColor;
-}
-
 @end
