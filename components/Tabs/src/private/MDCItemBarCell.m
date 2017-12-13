@@ -563,7 +563,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   inkView.inkColor = _style.inkColor;
   inkView.inkStyle = _style.inkStyle;
   inkView.usesLegacyInkRipple = NO;
-  inkView.clipsToBounds = inkView.inkStyle == MDCInkStyleBounded ? YES : NO;
+  inkView.clipsToBounds = (inkView.inkStyle == MDCInkStyleBounded) ? YES : NO;
 }
 
 - (void)updateAccessibilityTraits {
