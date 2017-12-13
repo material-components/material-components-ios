@@ -15,7 +15,7 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "MaterialSnackBar.h"
+#import "MaterialSnackbar.h"
 
 @interface SnackbarManagerTests : XCTestCase
 
