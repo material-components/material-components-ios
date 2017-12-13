@@ -28,7 +28,8 @@ import UIKit
 class MDCDragonsController: UIViewController,
                             UITableViewDelegate,
                             UITableViewDataSource,
-                            UISearchBarDelegate {
+                            UISearchBarDelegate,
+                            UIGestureRecognizerDelegate {
   
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 50
@@ -38,9 +39,10 @@ class MDCDragonsController: UIViewController,
     static let spacing: CGFloat = 1
   }
   fileprivate var cellsBySection: [[DragonCell]]
-  fileprivate var searched: [[DragonCell]]
-
+  fileprivate var searched: [DragonCell]!
+  fileprivate var results: [DragonCell]!
   fileprivate var tableView: UITableView!
+  fileprivate var isSearchActive = false
   static let colors: [UIColor] = [UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0),
                                   UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0),
                                   UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0),
@@ -54,8 +56,22 @@ class MDCDragonsController: UIViewController,
     let filteredDragons = Set(node.children).subtracting(filteredPresentable)
     cellsBySection = [filteredPresentable.map { DragonCell(node: $0) },
                       filteredDragons.map { DragonCell(node: $0) }]
-    searched = cellsBySection
     super.init(nibName: nil, bundle: nil)
+    results = getLeafNodes(node: node)
+    searched = results
+  }
+  
+  func getLeafNodes(node: CBCNode) -> [DragonCell] {
+    if node.children.count == 0 {
+      return [DragonCell(node: node)]
+    }
+    
+    var cells = [DragonCell]()
+    for child in node.children {
+      cells += getLeafNodes(node: child)
+    }
+    
+    return cells
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -87,7 +103,7 @@ class MDCDragonsController: UIViewController,
                                                                           views: ["view": tableView]));
     setupHeaderView()
     let tapgesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-    tapgesture.cancelsTouchesInView = false
+    tapgesture.delegate = self
     view.addGestureRecognizer(tapgesture)
     
     if #available(iOS 11.0, *) {
@@ -133,15 +149,15 @@ class MDCDragonsController: UIViewController,
   
   // MARK: UITableViewDataSource
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 2
+    return isSearchActive ? 1 : 2
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return section == 0 ? "Dragons" : "Catalog"
+    return isSearchActive ? "Results" : (section == 0 ? "Dragons" : "Catalog")
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return searched[section].count
+    return isSearchActive ? searched.count : cellsBySection[section].count
   }
   
   // MARK: UITableViewDelegate
@@ -152,11 +168,11 @@ class MDCDragonsController: UIViewController,
       return UITableViewCell()
     }
     cell.backgroundColor = .white
-    let nodeData = searched[indexPath.section][indexPath.row]
+    let nodeData = isSearchActive ? searched[indexPath.item] : cellsBySection[indexPath.section][indexPath.row]
     let componentName = nodeData.node.title
     cell.textLabel?.text = componentName
     let node = nodeData.node
-    if !node.isExample() {
+    if !node.isExample() && !isSearchActive {
       if nodeData.expanded {
         cell.accessoryView = cell.expandedButton
       } else {
@@ -173,11 +189,11 @@ class MDCDragonsController: UIViewController,
     guard let cell = tableView.cellForRow(at: indexPath) as? MDCDragonsTableViewCell else {
       return
     }
-    let nodeData = searched[indexPath.section][indexPath.row]
-    if nodeData.node.isExample() {
+    let nodeData = isSearchActive ? searched[indexPath.item] : cellsBySection[indexPath.section][indexPath.row]
+    if nodeData.node.isExample() || isSearchActive {
       let vc = nodeData.node.createExampleViewController()
       self.navigationController?.pushViewController(vc, animated: true)
-    } else {
+    } else if !isSearchActive {
       self.tableView.beginUpdates()
       if nodeData.expanded {
         collapseCells(at: indexPath)
@@ -233,51 +249,67 @@ extension MDCDragonsController {
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     if searchText.isEmpty {
-      searched = cellsBySection
+      isSearchActive = false
+      searched = results
     } else {
-      searched = cellsBySection.map {
-        $0.filter {
-          return $0.node.title.range(of: searchText, options: .caseInsensitive) != nil
-        }
+      isSearchActive = true
+      searched = results.filter {
+        return $0.node.title.range(of: searchText, options: .caseInsensitive) != nil
       }
     }
-    self.tableView.reloadData()
+    tableView.reloadData()
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    searched = cellsBySection
-    self.tableView.reloadData()
+    searched = results
+    tableView.reloadData()
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     searchBar.endEditing(true)
   }
 
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    isSearchActive = true
+    tableView.reloadData()
+  }
+
   @objc func dismissKeyboard() {
     self.view.endEditing(true)
+    isSearchActive = false
+    tableView.reloadData()
   }
+  
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    if gestureRecognizer is UITapGestureRecognizer {
+      let location = touch.location(in: tableView)
+      return (tableView.indexPathForRow(at: location) == nil)
+    }
+    return true
+  }
+
 }
 
 extension MDCDragonsController {
   func collapseCells(at indexPath: IndexPath) {
-    let upperCount = searched[indexPath.section][indexPath.row].node.children.count
+    let upperCount = cellsBySection[indexPath.section][indexPath.row].node.children.count
     let indexPaths = (indexPath.row+1..<indexPath.row+1+upperCount).map {
       IndexPath(row: $0, section: indexPath.section)
     }
     tableView.deleteRows(at: indexPaths, with: .automatic)
-    searched[indexPath.section].removeSubrange((indexPath.row+1..<indexPath.row+1+upperCount))
+    cellsBySection[indexPath.section].removeSubrange((indexPath.row+1..<indexPath.row+1+upperCount))
 
   }
 
   func expandCells(at indexPath: IndexPath) {
-    let nodeChildren = searched[indexPath.section][indexPath.row].node.children
+    let nodeChildren = cellsBySection[indexPath.section][indexPath.row].node.children
     let upperCount = nodeChildren.count
     let indexPaths = (indexPath.row+1..<indexPath.row+1+upperCount).map {
       IndexPath(row: $0, section: indexPath.section)
     }
     tableView.insertRows(at: indexPaths, with: .automatic)
-    searched[indexPath.section].insert(contentsOf: nodeChildren.map { DragonCell(node: $0) },
-                                       at: indexPath.row+1)
+    cellsBySection[indexPath.section].insert(contentsOf: nodeChildren.map { DragonCell(node: $0) },
+                                                     at: indexPath.row+1)
   }
 }
 
