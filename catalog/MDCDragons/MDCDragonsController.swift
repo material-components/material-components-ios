@@ -38,8 +38,8 @@ class MDCDragonsController: UIViewController,
     static let spacing: CGFloat = 1
   }
   fileprivate var cellsBySection: [[DragonCell]]
-//  fileprivate let catalogCells: [DragonCell]
-//  fileprivate let dragonCells: [DragonCell]
+  fileprivate var searched: [[DragonCell]]
+
   fileprivate var tableView: UITableView!
   static let colors: [UIColor] = [UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0),
                                   UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1.0),
@@ -48,14 +48,13 @@ class MDCDragonsController: UIViewController,
   
   fileprivate lazy var headerViewController = MDCFlexibleHeaderViewController()
   var headerView: HeaderView!
-  var searched: [DragonCell] = []
 
   init(node: CBCNode) {
     let filteredPresentable = node.children.filter { return $0.isPresentable() }
     let filteredDragons = Set(node.children).subtracting(filteredPresentable)
     cellsBySection = [filteredPresentable.map { DragonCell(node: $0) },
                       filteredDragons.map { DragonCell(node: $0) }]
-    searched = cellsBySection[0]
+    searched = cellsBySection
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -71,7 +70,8 @@ class MDCDragonsController: UIViewController,
     headerViewController.headerView.maximumHeight = 113
     headerViewController.headerView.minimumHeight = 53
     tableView = UITableView(frame: self.view.bounds, style: .grouped)
-    tableView.register(MDCDragonsTableViewCell.self, forCellReuseIdentifier: "MDCDragonsTableViewCell")
+    tableView.register(MDCDragonsTableViewCell.self,
+                       forCellReuseIdentifier: "MDCDragonsTableViewCell")
     tableView.backgroundColor = UIColor(white: 0.97, alpha: 1)
     tableView.delegate = self
     tableView.dataSource = self
@@ -141,7 +141,7 @@ class MDCDragonsController: UIViewController,
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return cellsBySection[section].count
+    return searched[section].count
   }
   
   // MARK: UITableViewDelegate
@@ -152,7 +152,7 @@ class MDCDragonsController: UIViewController,
       return UITableViewCell()
     }
     cell.backgroundColor = .white
-    let nodeData = cellsBySection[indexPath.section][indexPath.row]
+    let nodeData = searched[indexPath.section][indexPath.row]
     let componentName = nodeData.node.title
     cell.textLabel?.text = componentName
     let node = nodeData.node
@@ -173,7 +173,7 @@ class MDCDragonsController: UIViewController,
     guard let cell = tableView.cellForRow(at: indexPath) as? MDCDragonsTableViewCell else {
       return
     }
-    let nodeData = cellsBySection[indexPath.section][indexPath.row]
+    let nodeData = searched[indexPath.section][indexPath.row]
     if nodeData.node.isExample() {
       let vc = nodeData.node.createExampleViewController()
       self.navigationController?.pushViewController(vc, animated: true)
@@ -203,9 +203,7 @@ extension MDCDragonsController {
     }
   }
   
-  func scrollViewDidEndDragging(
-    _ scrollView: UIScrollView,
-    willDecelerate decelerate: Bool) {
+  func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
@@ -235,17 +233,19 @@ extension MDCDragonsController {
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     if searchText.isEmpty {
-      searched = cellsBySection[0]
+      searched = cellsBySection
     } else {
-      searched = cellsBySection[0].filter ({ (cell) -> Bool in
-        return cell.node.title.range(of: searchText, options: .caseInsensitive) != nil
-      })
+      searched = cellsBySection.map {
+        $0.filter {
+          return $0.node.title.range(of: searchText, options: .caseInsensitive) != nil
+        }
+      }
     }
     self.tableView.reloadData()
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    searched = cellsBySection[0]
+    searched = cellsBySection
     self.tableView.reloadData()
   }
   
@@ -260,23 +260,24 @@ extension MDCDragonsController {
 
 extension MDCDragonsController {
   func collapseCells(at indexPath: IndexPath) {
-    let upperCount = cellsBySection[indexPath.section][indexPath.row].node.children.count
+    let upperCount = searched[indexPath.section][indexPath.row].node.children.count
     let indexPaths = (indexPath.row+1..<indexPath.row+1+upperCount).map {
       IndexPath(row: $0, section: indexPath.section)
     }
     tableView.deleteRows(at: indexPaths, with: .automatic)
-    cellsBySection[indexPath.section].removeSubrange((indexPath.row+1..<indexPath.row+1+upperCount))
+    searched[indexPath.section].removeSubrange((indexPath.row+1..<indexPath.row+1+upperCount))
 
   }
 
   func expandCells(at indexPath: IndexPath) {
-    let nodeChildren = cellsBySection[indexPath.section][indexPath.row].node.children
+    let nodeChildren = searched[indexPath.section][indexPath.row].node.children
     let upperCount = nodeChildren.count
     let indexPaths = (indexPath.row+1..<indexPath.row+1+upperCount).map {
       IndexPath(row: $0, section: indexPath.section)
     }
     tableView.insertRows(at: indexPaths, with: .automatic)
-    cellsBySection[indexPath.section].insert(contentsOf: nodeChildren.map { DragonCell(node: $0) }, at: indexPath.row+1)
+    searched[indexPath.section].insert(contentsOf: nodeChildren.map { DragonCell(node: $0) },
+                                       at: indexPath.row+1)
   }
 }
 
