@@ -119,13 +119,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertNotNil(unarchivedBar.backItem);
   XCTAssertEqualObjects(navBar.backItem.title, unarchivedBar.backItem.title);
   XCTAssertEqual(navBar.hidesBackButton, unarchivedBar.hidesBackButton);
-  XCTAssertEqual(2, unarchivedBar.leadingBarButtonItems.count);
+  XCTAssertEqual(2U, unarchivedBar.leadingBarButtonItems.count);
   XCTAssertEqual(navBar.leadingBarButtonItems.count, unarchivedBar.leadingBarButtonItems.count);
   for (int i = 0; i < navBar.leadingBarButtonItems.count; ++i) {
     XCTAssertEqualObjects(navBar.leadingBarButtonItems[i].title,
                           unarchivedBar.leadingBarButtonItems[i].title);
   }
-  XCTAssertEqual(2, unarchivedBar.trailingBarButtonItems.count);
+  XCTAssertEqual(2U, unarchivedBar.trailingBarButtonItems.count);
   XCTAssertEqual(navBar.trailingBarButtonItems.count, unarchivedBar.trailingBarButtonItems.count);
   for (int i = 0; i < navBar.trailingBarButtonItems.count; ++i) {
     XCTAssertEqualObjects(navBar.trailingBarButtonItems[i].title,
