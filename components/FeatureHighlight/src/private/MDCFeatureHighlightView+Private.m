@@ -213,8 +213,19 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       _titleLabel.font = _titleFont;
     }
   } else {
+    // There is no custom font, so use the default font.
     if (_mdc_adjustsFontForContentSizeCategory) {
-      _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kTitleTextStyle];
+      // If we are using the default (system) font loader, retrieve the
+      // font from the UIFont preferredFont API.
+      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+        _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kTitleTextStyle];
+      } else {
+        // There is a custom font loader, retrieve the font and scale it.
+        UIFont *customTypographyFont = [MDCTypography titleFont];
+        _titleLabel.font =
+            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      }
     } else {
       // If we are using the default (system) font loader, retrieve the
       // font from the UIFont standardFont API.
@@ -255,8 +266,19 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       _bodyLabel.font = _bodyFont;
     }
   } else {
+    // There is no custom font, so use the default font.
     if (_mdc_adjustsFontForContentSizeCategory) {
-      _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kBodyTextStyle];
+      // If we are using the default (system) font loader, retrieve the
+      // font from the UIFont preferredFont API.
+      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+        _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kBodyTextStyle];
+      } else {
+        // There is a custom font loader, retrieve the font and scale it.
+        UIFont *customTypographyFont = [MDCTypography body1Font];
+        _bodyLabel.font =
+            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
+                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      }
     } else {
       // If we are using the default (system) font loader, retrieve the
       // font from the UIFont standardFont API.
