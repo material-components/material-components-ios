@@ -17,7 +17,13 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialFeatureHighlight.h"
-#import "../../src/private/MDCFeatureHighlightView+Private.h"
+
+@interface MDCFeatureHighlightView (TestInterface)
+
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) UILabel *bodyLabel;
+
+@end
 
 @interface FeatureHighlightCustomFontTest : XCTestCase
 

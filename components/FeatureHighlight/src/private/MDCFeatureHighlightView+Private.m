@@ -113,6 +113,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    // TODO(#2709): Migrate to a single source of truth for fonts
     // If we are using the default (system) font loader, retrieve the
     // font from the UIFont standardFont API.
     if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
@@ -128,6 +129,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    // TODO(#2709): Migrate to a single source of truth for fonts
     // If we are using the default (system) font loader, retrieve the
     // font from the UIFont standardFont API.
     if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
@@ -213,6 +215,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       _titleLabel.font = _titleFont;
     }
   } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
     // There is no custom font, so use the default font.
     if (_mdc_adjustsFontForContentSizeCategory) {
       // If we are using the default (system) font loader, retrieve the
@@ -266,6 +269,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
       _bodyLabel.font = _bodyFont;
     }
   } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
     // There is no custom font, so use the default font.
     if (_mdc_adjustsFontForContentSizeCategory) {
       // If we are using the default (system) font loader, retrieve the
