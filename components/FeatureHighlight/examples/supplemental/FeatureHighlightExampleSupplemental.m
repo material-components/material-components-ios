@@ -148,6 +148,38 @@ static NSString *const reuseIdentifier = @"Cell";
 
 @end
 
+
+@implementation FeatureHighlightCustomFontsExample (CatalogByConvention)
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  [self.button sizeToFit];
+  CGRect frame = self.button.frame;
+  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+  frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
+  self.button.frame = frame;
+
+  CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
+  self.infoLabel.frame =
+  MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
+                                 labelSize.width, labelSize.height),
+                      [UIScreen mainScreen].scale);
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Feature Highlight", @"Custom Fonts" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+@end
+
+
 @implementation FeatureHighlightShownViewExample (CatalogByConvention)
 
 - (void)viewDidLoad {
