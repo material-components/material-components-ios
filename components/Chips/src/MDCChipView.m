@@ -79,8 +79,7 @@ static const UIEdgeInsets MDCChipAccessoryPadding = {0, 0, 0, 0};
 
 static CGRect CGRectVerticallyCentered(CGRect rect, UIEdgeInsets padding, CGFloat height) {
   CGFloat viewHeight = CGRectGetHeight(rect) + padding.top + padding.bottom;
-  CGRect frame = CGRectOffset(rect, 0, (height - viewHeight) / 2);
-  return MDCRectAlignToScale(frame, [UIScreen mainScreen].scale);
+  return CGRectOffset(rect, 0, (height - viewHeight) / 2);
 }
 
 static inline CGRect MDCChipBuildFrame(UIEdgeInsets insets,
