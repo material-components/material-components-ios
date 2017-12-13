@@ -56,6 +56,7 @@ class MDCDragonsController: UIViewController,
     let filteredDragons = Set(node.children).subtracting(filteredPresentable)
     cellsBySection = [filteredPresentable.map { DragonCell(node: $0) },
                       filteredDragons.map { DragonCell(node: $0) }]
+    cellsBySection = cellsBySection.map { $0.sorted() { $0.node.title < $1.node.title } }
     super.init(nibName: nil, bundle: nil)
     results = getLeafNodes(node: node)
     searched = results
@@ -191,8 +192,7 @@ class MDCDragonsController: UIViewController,
     }
     let nodeData = isSearchActive ? searched[indexPath.item] : cellsBySection[indexPath.section][indexPath.row]
     if nodeData.node.isExample() || isSearchActive {
-      let vc = nodeData.node.createExampleViewController()
-      self.navigationController?.pushViewController(vc, animated: true)
+      setupTransition(nodeData: nodeData)
     } else if !isSearchActive {
       self.tableView.beginUpdates()
       if nodeData.expanded {
@@ -205,6 +205,34 @@ class MDCDragonsController: UIViewController,
       self.tableView.endUpdates()
       nodeData.expanded = !nodeData.expanded
     }
+  }
+  
+  func setupTransition(nodeData: DragonCell) {
+    var vc = nodeData.node.createExampleViewController()
+    if !vc.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
+      let container = MDCAppBarContainerViewController(contentViewController: vc)
+      container.appBar.headerViewController.headerView.backgroundColor = headerViewController.headerView.backgroundColor
+      container.appBar.navigationBar.tintColor = .white
+      container.appBar.navigationBar.titleTextAttributes =
+        [ NSForegroundColorAttributeName: UIColor.white,
+          NSFontAttributeName: UIFont.systemFont(ofSize: 16) ]
+      vc.title = nodeData.node.title
+      
+      let headerView = container.appBar.headerViewController.headerView
+      if let collectionVC = vc as? MDCCollectionViewController {
+        headerView.trackingScrollView = collectionVC.collectionView
+      } else if let scrollView = vc.view as? UIScrollView {
+        headerView.trackingScrollView = scrollView
+      } else {
+        var contentFrame = container.contentViewController.view.frame
+        let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
+        contentFrame.origin.y = headerSize.height
+        contentFrame.size.height = self.view.bounds.height - headerSize.height
+        container.contentViewController.view.frame = contentFrame
+      }
+      vc = container
+    }
+    self.navigationController?.pushViewController(vc, animated: true)
   }
   
 }
