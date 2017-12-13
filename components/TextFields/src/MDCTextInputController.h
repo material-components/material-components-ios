@@ -33,8 +33,6 @@
 
 /**
  Default value for activeColor.
-
- Default is blue.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *activeColorDefault;
 
@@ -59,16 +57,12 @@
  Note: setErrorText:errorAccessibilityValue: also sets these MDCTextInput properties.
 
  There is no support for a minimum character count.
-
- Default is 0.
  */
 @property(nonatomic, assign) IBInspectable NSUInteger characterCountMax;
 
 /**
  Controls when the character count will be shown and therefore whether character counting determines
  error state.
-
- Default is UITextFieldViewModeNever.
  */
 @property(nonatomic, assign) UITextFieldViewMode characterCountViewMode;
 
@@ -79,11 +73,7 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *disabledColor;
 
-/**
- Default value for disabledColor.
-
- Default is blue.
- */
+/** Default value for disabledColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *disabledColorDefault;
 
 /**
@@ -94,11 +84,7 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *errorColor;
 
-/**
- Default value for errorColor.
-
- Default is red.
- */
+/** Default value for errorColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *errorColorDefault;
 
 /**
@@ -123,11 +109,7 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColor;
 
-/**
- Default value for inlinePlaceholderColor.
-
- Default is black with Material Design hint text opacity.
- */
+/** Default value for inlinePlaceholderColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
 /**
@@ -137,39 +119,27 @@
  */
 @property(nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFont;
 
-/**
- Default value for inlinePlaceholderFont.
-
- Default is MDCFontTextStyleBody1.
- */
+/** Default value for inlinePlaceholderFont. */
 @property(class, nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFontDefault;
 
 /**
  The font applied to the leading side underline label.
 
- Default is leadingUnderlineLabelFontDefault;
+ Default is leadingUnderlineLabelFontDefault.
  */
 @property(nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFont;
 
-/**
- Default value for leadingUnderlineLabelFont.
-
- Default is MDCFontTextStyleCaption.
- */
+/** Default value for leadingUnderlineLabelFont. */
 @property(class, nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFontDefault;
 
 /**
  The color applied to the leading side underline label when not in error state.
 
- Default is leadingUnderlineLabelTextColorDefault;
+ Default is leadingUnderlineLabelTextColorDefault.
  */
 @property(nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelTextColor;
 
-/**
- Default value for leadingUnderlineLabelTextColor.
-
- Default is black with Material Design hint text opacity.
- */
+/** Default value for leadingUnderlineLabelTextColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelTextColorDefault;
 
 /*
@@ -184,11 +154,7 @@
 @property(nonatomic, assign, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
-/**
- Default value for mdc_adjustsFontForContentSizeCategory.
-
- Default is NO.
- */
+/** Default value for mdc_adjustsFontForContentSizeCategory. */
 @property(class, nonatomic, assign) BOOL mdc_adjustsFontForContentSizeCategoryDefault;
 
 /**
@@ -198,12 +164,7 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *normalColor;
 
-/**
- Default value for normalColor.
-
- Default is black with Material Design hint text opacity which is the same as
- inlinePlaceholderColorDefault.
- */
+/** Default value for normalColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *normalColorDefault;
 
 /** The text displayed in the placeholder label.*/
@@ -216,11 +177,7 @@
  */
 @property(nonatomic, assign) UIRectCorner roundedCorners;
 
-/**
- Default for roundedCorners.
-
- Default is top right and top left.
- */
+/** Default for roundedCorners. */
 @property(class, nonatomic, assign) UIRectCorner roundedCornersDefault;
 
 /** The text input the controller is affecting. */
@@ -229,29 +186,41 @@
 /**
  The font applied to the trailing side underline label.
 
- Default is trailingUnderlineLabelFontDefault;
+ Default is trailingUnderlineLabelFontDefault.
  */
 @property(nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFont;
 
-/**
- Default value for trailingUnderlineLabelFont.
-
- Default is MDCFontTextStyleCaption.
- */
+/** Default value for trailingUnderlineLabelFont. */
 @property(class, nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFontDefault;
 /**
  The color applied to the trailing side underline label when not in error state.
 
- Default is trailingUnderlineLabelTextColorDefault;
+ Default is trailingUnderlineLabelTextColorDefault.
  */
 @property(nonatomic, nullable, strong) UIColor *trailingUnderlineLabelTextColor;
 
-/**
- Default value for trailingUnderlineLabelTextColor.
-
- Default is black with Material Design hint text opacity.
- */
+/** Default value for trailingUnderlineLabelTextColor. */
 @property(class, nonatomic, nullable, strong) UIColor *trailingUnderlineLabelTextColorDefault;
+
+/**
+ Height of the underline when text field is first responder.
+
+ Default is underlineHeightActiveDefault.
+ */
+@property(nonatomic, assign) CGFloat underlineHeightActive;
+
+/** Default value for underlineHeightActive. */
+@property(class, nonatomic, assign) CGFloat underlineHeightActiveDefault;
+
+/**
+ Height of the underline when NOT first responder.
+
+ Default is underlineHeightNormalDefault.
+ */
+@property(nonatomic, assign) CGFloat underlineHeightNormal;
+
+/** Default value for underlineHeightNormal. */
+@property(class, nonatomic, assign) CGFloat underlineHeightNormalDefault;
 
 /**
  Controls when the underline will be shown.
@@ -262,11 +231,7 @@
  */
 @property(nonatomic, assign) UITextFieldViewMode underlineViewMode;
 
-/**
- Default value for underlineViewMode.
-
- Default is UITextFieldViewModeAlways.
- */
+/** Default value for underlineViewMode. */
 @property(class, nonatomic, assign) UITextFieldViewMode underlineViewModeDefault;
 
 /**

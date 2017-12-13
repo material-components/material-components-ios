@@ -267,14 +267,22 @@
 
 - (void)registerKeyboardNotifications {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-  [defaultCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardDidChangeFrameNotification object:nil];
-  [defaultCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+  [defaultCenter addObserver:self
+                    selector:@selector(keyboardWillShow:)
+                        name:UIKeyboardWillShowNotification
+                      object:nil];
+  [defaultCenter addObserver:self
+                    selector:@selector(keyboardWillShow:)
+                        name:UIKeyboardDidChangeFrameNotification
+                      object:nil];
+  [defaultCenter addObserver:self
+                    selector:@selector(keyboardWillHide:)
+                        name:UIKeyboardWillHideNotification
+                      object:nil];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-  CGRect frame =
-    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  CGRect frame = [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
   self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, CGRectGetHeight(frame), 0);
 }
 
