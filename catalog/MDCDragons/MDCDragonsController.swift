@@ -50,8 +50,8 @@ class MDCDragonsController: UIViewController,
   init(node: CBCNode) {
     let filteredPresentable = node.children.filter { return $0.isPresentable() }
     let filteredDragons = Set(node.children).subtracting(filteredPresentable)
-    cellsBySection = [filteredPresentable.map { DragonCell(node: $0) },
-                      filteredDragons.map { DragonCell(node: $0) }]
+    cellsBySection = [filteredDragons.map { DragonCell(node: $0) },
+                      filteredPresentable.map { DragonCell(node: $0) }]
     cellsBySection = cellsBySection.map { $0.sorted() { $0.node.title < $1.node.title } }
     super.init(nibName: nil, bundle: nil)
     results = getLeafNodes(node: node)

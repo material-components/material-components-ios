@@ -56,7 +56,7 @@ extension ZShadow {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 }
 
