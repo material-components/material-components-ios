@@ -25,8 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window = UIWindow(frame: UIScreen.main.bounds)
     UIApplication.shared.statusBarStyle = .lightContent
     let tree = CBCCreateNavigationTree()
-    
-    let rootNodeViewController = MDCDragonsController(node: tree)
+    var rootNodeViewController: UIViewController
+    if let debugLeaf = tree.debugLeaf {
+      rootNodeViewController = debugLeaf.createExampleViewController()
+    } else {
+      rootNodeViewController = MDCDragonsController(node: tree)
+    }
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
     navigationController.interactivePopGestureRecognizer?.delegate = navigationController
     
