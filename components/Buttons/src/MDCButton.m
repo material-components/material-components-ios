@@ -292,13 +292,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.showsTouchWhenHighlighted = NO;
 
   // Set up title label attributes.
-  // If we have a custom font loader we go through the existing MDCTypography API.
-  // If we are using the default system font loader we go through standardFontForMaterialTextStyle.
-  if (![MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    self.titleLabel.font = [MDCTypography buttonFont];
-  } else {
-    self.titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
-  }
+  // TODO(#2709): Have a single source of truth for fonts
+  // Migrate to [UIFont standardFont] when possible
+  self.titleLabel.font = [MDCTypography buttonFont];
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
@@ -783,7 +779,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (_mdc_adjustsFontForContentSizeCategory) {
     // Dynamic type is enabled so apply scaling
     font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
-                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+                              scaledForDynamicType:YES];
   }
 
   self.titleLabel.font = font;
