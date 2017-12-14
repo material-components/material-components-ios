@@ -1,3 +1,39 @@
+# 44.0.0
+
+This major release includes a change to the Slider API.
+
+## Breaking changes
+
+Slider removed the disabledColor property.
+
+## Component changes
+
+### CollectionCells
+
+#### Changes
+
+* [Add BUILD file (#2693)](https://github.com/material-components/material-components-ios/commit/847d3757f553ff662d9f6fb48472eb099aaa5bdf) (Robert Moore)
+
+### HeaderStackView
+
+#### Changes
+
+* [Add BUILD file and no-op test (#2695)](https://github.com/material-components/material-components-ios/commit/1f5918b55ac3e74bac35ed7eb1da2c9b372cc69d) (Robert Moore)
+
+### Slider
+
+#### Changes
+
+* [Add BUILD file (#2694)](https://github.com/material-components/material-components-ios/commit/a31a9e10c291501b6cd3e353d06c08b606b1ea67) (Robert Moore)
+
+### Tabs
+
+#### Changes
+
+* [Re-enable new ink (reverts #2665) (#2682)](https://github.com/material-components/material-components-ios/commit/b0266e9367b95b851699a1aa62e4082bb6d8f157) (featherless)
+
+---
+
 # 43.0.0
 
 This major release includes a variety of API name changes. Please see the API changes below for more details.

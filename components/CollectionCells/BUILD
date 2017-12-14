@@ -21,19 +21,38 @@ load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "Overlay",
+    name = "CollectionCells",
+    bundles = [":Bundle"],
     sdk_frameworks = [
-        "QuartzCore",
-        "CoreGraphics",
         "UIKit",
+    ],
+    deps = [
+        "//components/Ink",
+        "//components/CollectionLayoutAttributes",
+        "//components/Palettes",
+        "//components/Typography",
+        "//components/private/Icons",
+        "//components/private/Icons/icons/ic_check",
+        "//components/private/Icons/icons/ic_check_circle",
+        "//components/private/Icons/icons/ic_chevron_right",
+        "//components/private/Icons/icons/ic_info",
+        "//components/private/Icons/icons/ic_radio_button_unchecked",
+        "//components/private/Icons/icons/ic_reorder",
+        "//components/private/Math",
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
+filegroup(
+    name = "BundleFiles",
+    srcs = glob([
+        "src/MaterialCollectionCells.bundle/**",
+    ]),
+)
+
+objc_bundle(
+    name = "Bundle",
+    bundle_imports = [":BundleFiles"],
 )
 
 mdc_objc_library(
@@ -48,8 +67,7 @@ mdc_objc_library(
         "XCTest",
     ],
     deps = [
-        ":Overlay",
-        ":private",
+        ":CollectionCells",
     ],
     visibility = ["//visibility:private"],
 )

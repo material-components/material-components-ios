@@ -21,12 +21,30 @@ load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "Overlay",
+    name = "Slider",
     sdk_frameworks = [
-        "QuartzCore",
         "CoreGraphics",
         "UIKit",
     ],
+    deps = [
+        "//components/Palettes",
+        "//components/private/ThumbTrack",
+    ],
+)
+
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Slider",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -48,7 +66,8 @@ mdc_objc_library(
         "XCTest",
     ],
     deps = [
-        ":Overlay",
+        ":Slider",
+        ":ColorThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],

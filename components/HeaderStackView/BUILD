@@ -17,23 +17,31 @@ load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
+load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "Overlay",
+    name = "HeaderStackView",
     sdk_frameworks = [
-        "QuartzCore",
         "CoreGraphics",
         "UIKit",
     ],
 )
 
 mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":HeaderStackView",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -48,8 +56,8 @@ mdc_objc_library(
         "XCTest",
     ],
     deps = [
-        ":Overlay",
-        ":private",
+        ":HeaderStackView",
+        ":ColorThemer",
     ],
     visibility = ["//visibility:private"],
 )
