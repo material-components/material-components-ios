@@ -1,3 +1,166 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Buttons
+
+#### MDCButton
+
+*new* method: `-setTitleFont:forState:` in `MDCButton`
+
+*new* method: `-titleFontForState:` in `MDCButton`
+
+### FeatureHighlight
+
+#### MDCFeatureHighlightView
+
+*new* property: `bodyFont` in `MDCFeatureHighlightView`
+
+*new* property: `titleFont` in `MDCFeatureHighlightView`
+
+*modified* class: `MDCFeatureHighlightView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCFeatureHighlightView : UIView  @property(nonatomic, strong, nullable) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *bodyColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
+| To: | `@interface MDCFeatureHighlightView : UIView  @property(nonatomic, strong, nullable) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *bodyFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *bodyColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
+## Component changes
+
+
+### ActivityIndicator
+
+#### Changes
+
+* [[kokoro] Add :ColorThemer targets (#2712)](https://github.com/material-components/material-components-ios/commit/d2e028f3886596f7fa6b2400418dc6140a2d4174) (Robert Moore)
+
+### AppBar
+
+#### Changes
+
+* [Add BUILD file (#2699)](https://github.com/material-components/material-components-ios/commit/6469c85b04b61eb21a83610f51b2f9aad11a2fb2) (Robert Moore)
+
+### BottomAppBar
+
+#### Changes
+
+* [Add BUILD file and no-op test (#2700)](https://github.com/material-components/material-components-ios/commit/60c4e169c21b3e9594133c6beb69bf089aabeb07) (Robert Moore)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add BUILD file and no-op test (#2703)](https://github.com/material-components/material-components-ios/commit/c478173606fff7ed6e2927abd8577032f18dbfc7) (Robert Moore)
+
+### ButtonBar
+
+#### Changes
+
+* [[NavBar, ButtonBar] Add NavBar tests, fix ButtonBar KVO (#2713)](https://github.com/material-components/material-components-ios/commit/8f1eb74490f3641ff7edf4608fb16698aaebdf93) (Robert Moore)
+
+### Buttons
+
+#### Changes
+
+* [Add a custom font property (#2715)](https://github.com/material-components/material-components-ios/commit/4befe61f74f42a20bb9667a6c3c50975753ad0d7) (ianegordon)
+
+### Chips
+
+#### Changes
+
+* [Add BUILD file and no-op test (#2706)](https://github.com/material-components/material-components-ios/commit/ef3f7d103b78bd00d6fc17f746b079de20a3ef4a) (Robert Moore)
+* [Fix sizeToFit sometimes being too small (#2719)](https://github.com/material-components/material-components-ios/commit/3cc1a7a6c542d3153aa74778933beb6bcfaf8875) (Sam Morrison)
+* [Use new layer border properties (#2717)](https://github.com/material-components/material-components-ios/commit/723f8c798e322e503004b822f0a9969976c5be66) (Sam Morrison)
+* [[Ink] Add updated ink to chips, update ink animation when bounds change (#2545)](https://github.com/material-components/material-components-ios/commit/892f0c09d95ca4e2e6210429b4ad1dbc4413c551) (Junius Gunaratne)
+* [[Shapes] Remove MDCShapedShadowLayer fillColor property (#2716)](https://github.com/material-components/material-components-ios/commit/1a68851befc1e1a6838325a628fce6194e9e37db) (Sam Morrison)
+
+### CollectionCells
+
+#### Changes
+
+* [ Add BUILD file (#2693)](https://github.com/material-components/material-components-ios/commit/847d3757f553ff662d9f6fb48472eb099aaa5bdf) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [Add BUILD file and add missing import (#2698)](https://github.com/material-components/material-components-ios/commit/0bade5a52e8c16223c68ad7cb48fa59cd6ac5171) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Add custom font support (#2701)](https://github.com/material-components/material-components-ios/commit/fcf9712d325e28f9c1683ca61c7f239536130c8e) (ianegordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[kokoro] Add :ColorThemer targets (#2712)](https://github.com/material-components/material-components-ios/commit/d2e028f3886596f7fa6b2400418dc6140a2d4174) (Robert Moore)
+
+### HeaderStackView
+
+#### Changes
+
+* [Add BUILD file and no-op test (#2695)](https://github.com/material-components/material-components-ios/commit/1f5918b55ac3e74bac35ed7eb1da2c9b372cc69d) (Robert Moore)
+
+### Ink
+
+#### Changes
+
+* [Add updated ink to chips, update ink animation when bounds change (#2545)](https://github.com/material-components/material-components-ios/commit/892f0c09d95ca4e2e6210429b4ad1dbc4413c551) (Junius Gunaratne)
+* [[kokoro] Add :ColorThemer targets (#2712)](https://github.com/material-components/material-components-ios/commit/d2e028f3886596f7fa6b2400418dc6140a2d4174) (Robert Moore)
+
+### LibraryInfo
+
+#### Changes
+
+* [Add BUILD file (#2707)](https://github.com/material-components/material-components-ios/commit/5c24f30a291b296bd3e8f4641bf88253cb08b243) (Robert Moore)
+
+### MaskedTransition
+
+#### Changes
+
+* [Add BUILD file and no-op test (#2708)](https://github.com/material-components/material-components-ios/commit/5746134132216de8583c79024505ac611f2054f1) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [[NavBar, ButtonBar] Add NavBar tests, fix ButtonBar KVO (#2713)](https://github.com/material-components/material-components-ios/commit/8f1eb74490f3641ff7edf4608fb16698aaebdf93) (Robert Moore)
+
+### Slider
+
+#### Changes
+
+* [Add BUILD file (#2694)](https://github.com/material-components/material-components-ios/commit/a31a9e10c291501b6cd3e353d06c08b606b1ea67) (Robert Moore)
+
+### Snackbar
+
+#### Changes
+
+* [Add BUILD file (#2697)](https://github.com/material-components/material-components-ios/commit/9481c61954f6668305071ec3ad50af537657958e) (Robert Moore)
+
+### Tabs
+
+#### Changes
+
+* [Re-enable new ink (reverts #2665) (#2682)](https://github.com/material-components/material-components-ios/commit/b0266e9367b95b851699a1aa62e4082bb6d8f157) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [States example (#2718)](https://github.com/material-components/material-components-ios/commit/290f13f7bede9eceaa8159d7af85cd54a703c1c6) (Will Larche)
+* [[kokoro] Add :ColorThemer targets (#2712)](https://github.com/material-components/material-components-ios/commit/d2e028f3886596f7fa6b2400418dc6140a2d4174) (Robert Moore)
+
+---
+
 # 43.0.0
 
 This major release includes a variety of API name changes. Please see the API changes below for more details.
