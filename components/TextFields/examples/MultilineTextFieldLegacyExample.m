@@ -263,10 +263,6 @@
   return NO;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 #pragma mark - Keyboard Handling
 
 - (void)registerKeyboardNotifications {

@@ -28,10 +28,6 @@
   return NO;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 #pragma mark - <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

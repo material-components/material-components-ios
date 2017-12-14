@@ -90,10 +90,6 @@ static NSString *const reuseIdentifier = @"Cell";
   return YES;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end
 
 @implementation FeatureHighlightColorExample (CatalogByConvention)
@@ -148,10 +144,6 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
 }
 
 @end
@@ -237,10 +229,6 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
 }
 
 @end

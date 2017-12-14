@@ -38,10 +38,6 @@
   return NO;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end
 
 @implementation TextFieldInterfaceBuilderLegacyExample (Supplemental)
@@ -64,10 +60,6 @@
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
 }
 
 @end

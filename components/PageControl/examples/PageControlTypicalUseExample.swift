@@ -129,8 +129,4 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
   @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
 }

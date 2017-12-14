@@ -409,8 +409,4 @@ extension TextFieldOutlinedSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Outlined Fields & Text Areas"]
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
 }

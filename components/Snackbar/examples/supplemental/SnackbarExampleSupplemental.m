@@ -63,10 +63,6 @@ static NSString * const kCellIdentifier = @"Cell";
   return YES;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end
 
 @implementation SnackbarOverlayViewExample (CatalogByConvention)
@@ -77,10 +73,6 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
 }
 
 @end
@@ -118,10 +110,6 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
 }
 
 @end

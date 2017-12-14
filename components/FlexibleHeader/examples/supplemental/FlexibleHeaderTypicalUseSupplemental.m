@@ -40,10 +40,6 @@
   return YES;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end
 
 @implementation FlexibleHeaderTypicalUseViewController (Supplemental)

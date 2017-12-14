@@ -131,8 +131,4 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
   return NO;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end

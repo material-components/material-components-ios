@@ -420,8 +420,4 @@ extension TextFieldLegacySwiftExample {
     return ["Text Field", "[Legacy] Typical Use"]
   }
 
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-
 }

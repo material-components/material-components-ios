@@ -87,8 +87,4 @@ class ShadowDragSquareExampleViewController: UIViewController {
   @objc class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
 }

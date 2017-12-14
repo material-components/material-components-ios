@@ -158,8 +158,4 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
    return NO;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end

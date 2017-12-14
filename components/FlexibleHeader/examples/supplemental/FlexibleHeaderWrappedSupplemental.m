@@ -35,10 +35,6 @@
   return YES;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end
 
 @implementation FlexibleHeaderWrappedExample (Supplemental)
