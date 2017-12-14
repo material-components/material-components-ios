@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -55,17 +54,16 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="uLs-P2-tCR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="6YR-1h-KrG"/>
+                <constraint firstItem="uLs-P2-tCR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6YR-1h-KrG"/>
                 <constraint firstItem="TM8-Ag-WXw" firstAttribute="leading" secondItem="0yz-y4-suc" secondAttribute="trailing" constant="10" id="Joa-Fm-XvF"/>
                 <constraint firstItem="TM8-Ag-WXw" firstAttribute="centerY" secondItem="0yz-y4-suc" secondAttribute="centerY" id="VkS-gQ-cfl"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="TM8-Ag-WXw" secondAttribute="trailing" constant="15" id="b0l-Ca-7T2"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="uLs-P2-tCR" secondAttribute="bottom" id="cLj-Jl-aSs"/>
+                <constraint firstAttribute="trailing" secondItem="TM8-Ag-WXw" secondAttribute="trailing" constant="15" id="b0l-Ca-7T2"/>
+                <constraint firstAttribute="bottom" secondItem="uLs-P2-tCR" secondAttribute="bottom" id="cLj-Jl-aSs"/>
                 <constraint firstItem="uLs-P2-tCR" firstAttribute="top" secondItem="0yz-y4-suc" secondAttribute="bottom" constant="5" id="hXu-Uv-yIJ"/>
-                <constraint firstItem="0yz-y4-suc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="jGk-Vp-ROk"/>
-                <constraint firstItem="uLs-P2-tCR" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="zRO-BR-bWo"/>
+                <constraint firstItem="0yz-y4-suc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="jGk-Vp-ROk"/>
+                <constraint firstItem="uLs-P2-tCR" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="zRO-BR-bWo"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="9.5" y="-224.5"/>
         </view>
     </objects>
