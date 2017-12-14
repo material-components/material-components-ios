@@ -1,12 +1,5 @@
-# #develop#
+# 43.0.1
 
-## Breaking changes
-
-## New deprecations
-
-## New features
-
-## API changes
 ## Component changes
 
 
@@ -14,7 +7,7 @@
 
 #### Changes
 
-* [ Add BUILD file (#2693)](https://github.com/material-components/material-components-ios/commit/847d3757f553ff662d9f6fb48472eb099aaa5bdf) (Robert Moore)
+* [Add BUILD file (#2693)](https://github.com/material-components/material-components-ios/commit/847d3757f553ff662d9f6fb48472eb099aaa5bdf) (Robert Moore)
 
 ### HeaderStackView
 
