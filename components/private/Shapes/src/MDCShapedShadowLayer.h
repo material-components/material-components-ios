@@ -57,13 +57,6 @@
 @property(nonatomic, assign) CGFloat shapedBorderWidth;
 
 /*
- The fill color of the shape.
-
- @note Make sure to set the backgroundColor to a clear color when setting fillColor.
- */
-@property(nonatomic, nullable) CGColorRef fillColor __deprecated_msg("Use shapedBackgroundColor");
-
-/*
  The MDCShapeGenerating object used to set the shape's path and shadow path.
 
  The path will be set upon assignment of this property and whenever layoutSublayers is called.
