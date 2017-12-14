@@ -15,7 +15,7 @@
  */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialSnackbar
 
 class SnackbarManagerSwiftTests: XCTestCase {
 

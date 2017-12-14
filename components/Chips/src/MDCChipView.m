@@ -79,8 +79,7 @@ static const UIEdgeInsets MDCChipAccessoryPadding = {0, 0, 0, 0};
 
 static CGRect CGRectVerticallyCentered(CGRect rect, UIEdgeInsets padding, CGFloat height) {
   CGFloat viewHeight = CGRectGetHeight(rect) + padding.top + padding.bottom;
-  CGRect frame = CGRectOffset(rect, 0, (height - viewHeight) / 2);
-  return MDCRectAlignToScale(frame, [UIScreen mainScreen].scale);
+  return CGRectOffset(rect, 0, (height - viewHeight) / 2);
 }
 
 static inline CGRect MDCChipBuildFrame(UIEdgeInsets insets,
@@ -331,12 +330,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateBackgroundColor {
-  if (self.layer.shapeGenerator) {
-    self.layer.fillColor = [self backgroundColorForState:self.state].CGColor;
-    self.backgroundColor = [UIColor clearColor];
-  } else {
-    self.backgroundColor = [self backgroundColorForState:self.state];
-  }
+  self.layer.shapedBackgroundColor = [self backgroundColorForState:self.state];
 }
 
 - (nullable UIColor *)borderColorForState:(UIControlState)state {
