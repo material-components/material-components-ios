@@ -20,7 +20,11 @@
 
 @property(nonatomic, strong, nullable) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
+
+@property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;
+
+@property(nonatomic, strong, nullable) UIFont *bodyFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *bodyColor UI_APPEARANCE_SELECTOR;
 
 /*

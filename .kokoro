@@ -78,7 +78,14 @@ run_bazel() {
     verbosity_args="-v"
   fi
 
-  ./.kokoro-ios-runner/bazel.sh test //components/... \
+  if [ -z "$COMMAND" ]; then
+    COMMAND="test"
+  fi
+  if [ -z "$TARGET" ]; then
+    TARGET="//components/..."
+  fi
+
+  ./.kokoro-ios-runner/bazel.sh $COMMAND $TARGET \
       --min-xcode-version $XCODE_MINIMUM_VERSION \
       $verbosity_args \
       --ios_minimum_os=8.0 \
@@ -138,6 +145,21 @@ while [[ $# -gt 0 ]]; do
   case $key in
   -v|--verbose)
     VERBOSE_OUTPUT="1"
+    shift
+    ;;
+  -d|--dependency_system)
+    DEPENDENCY_SYSTEM="$2"
+    shift
+    shift
+    ;;
+  -c|--command)
+    COMMAND="$2"
+    shift
+    shift
+    ;;
+  -t|--target)
+    TARGET="$2"
+    shift
     shift
     ;;
   *)
