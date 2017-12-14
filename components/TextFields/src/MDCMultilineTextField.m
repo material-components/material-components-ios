@@ -19,17 +19,16 @@
 #import "MDCIntrinsicHeightTextView.h"
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInputController.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
+#import "MDCTextInputController.h"
 #import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputCommonFundament.h"
 
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCMultilineTextFieldCursorColorKey =
-    @"MDCMultilineTextFieldCursorColorKey";
+static NSString *const MDCMultilineTextFieldCursorColorKey = @"MDCMultilineTextFieldCursorColorKey";
 static NSString *const MDCMultilineTextFieldExpandsOnOverflowKey =
     @"MDCMultilineTextFieldExpandsOnOverflowKey";
 static NSString *const MDCMultilineTextFieldFundamentKey = @"MDCMultilineTextFieldFundamentKey";
@@ -111,7 +110,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     _cursorColor = [aDecoder decodeObjectForKey:MDCMultilineTextFieldCursorColorKey];
 
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldExpandsOnOverflowKey]) {
-      self.expandsOnOverflow = [aDecoder decodeBoolForKey:MDCMultilineTextFieldExpandsOnOverflowKey];
+      self.expandsOnOverflow =
+          [aDecoder decodeBoolForKey:MDCMultilineTextFieldExpandsOnOverflowKey];
     }
     _layoutDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldLayoutDelegateKey];
     if ([aDecoder containsValueForKey:MDCMultilineTextFieldMinimumLinesKey]) {

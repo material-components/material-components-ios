@@ -15,12 +15,7 @@
  */
 
 #import <Foundation/Foundation.h>
-
-#ifdef IS_BAZEL_BUILD
-#import "MotionTransitioning.h"
-#else
 #import <MotionTransitioning/MotionTransitioning.h>
-#endif  // IS_BAZEL_BUILD
 
 /**
  Presents the associated view controller as a draggable bottom view.

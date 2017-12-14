@@ -16,11 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#ifdef IS_BAZEL_BUILD
-#import "MotionInterchange.h"
-#else
 #import <MotionInterchange/MotionInterchange.h>
-#endif  // IS_BAZEL_BUILD
 
 @interface MDCBottomSheetMotionSpec: NSObject
 

@@ -77,3 +77,10 @@
 @property(nonatomic, getter=isShadowMaskEnabled, assign) BOOL shadowMaskEnabled;
 
 @end
+
+/**
+ Subclasses can depend on MDCShadowLayer implementing CALayerDelegate actionForLayer:forKey: in
+ order to implicitly animate 'path' or 'shadowPath' on sublayers.
+ */
+@interface MDCShadowLayer (Subclassing) <CALayerDelegate>
+@end

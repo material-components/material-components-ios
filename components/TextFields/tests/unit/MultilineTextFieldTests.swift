@@ -24,7 +24,7 @@ class MultilineTextFieldTests: XCTestCase {
   func testAttributedSetters() {
     let textField = MDCMultilineTextField()
 
-    XCTAssertNotNil(textField.textView);
+    XCTAssertNotNil(textField.textView)
 
     let string = "attributed"
     textField.attributedPlaceholder = NSAttributedString(string: string)
@@ -107,7 +107,7 @@ class MultilineTextFieldTests: XCTestCase {
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
     textField.cursorColor = .red
 
-    let controller = MDCTextInputControllerDefault(textInput: textField)
+    let controller = MDCTextInputControllerUnderline(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
     let leadingText = "Serialized Helper Test"

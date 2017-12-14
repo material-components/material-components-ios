@@ -16,11 +16,7 @@
 
 #import "MDCAlertController.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFInternationalization.h"
-#else
 #import <MDFInternationalization/MDFInternationalization.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "MDCDialogTransition.h"
 #import "MaterialButtons.h"
@@ -270,7 +266,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   } else {
     self.messageLabel.font = [MDCTypography body1Font];
   }
-  self.messageLabel.textColor = [UIColor colorWithWhite:0.0 alpha:MDCDialogMessageOpacity];
+  self.messageLabel.textColor = [UIColor colorWithWhite:0.0f alpha:MDCDialogMessageOpacity];
   [self.contentScrollView addSubview:self.messageLabel];
 
   self.titleLabel.text = self.title;

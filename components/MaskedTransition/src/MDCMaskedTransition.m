@@ -14,13 +14,12 @@
  limitations under the License.
  */
 
+#import <CoreGraphics/CoreGraphics.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "MDCMaskedTransition.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MotionAnimator.h"
-#else
 #import <MotionAnimator/MotionAnimator.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "private/MDCMaskedPresentationController.h"
 #import "private/MDCMaskedTransitionMotionForContext.h"

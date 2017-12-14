@@ -38,7 +38,7 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];
-  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1]];
+  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Action" forState:UIControlStateNormal];
   [self.button sizeToFit];
@@ -148,6 +148,38 @@ static NSString *const reuseIdentifier = @"Cell";
 
 @end
 
+
+@implementation FeatureHighlightCustomFontsExample (CatalogByConvention)
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  [self.button sizeToFit];
+  CGRect frame = self.button.frame;
+  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+  frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
+  self.button.frame = frame;
+
+  CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
+  self.infoLabel.frame =
+  MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
+                                 labelSize.width, labelSize.height),
+                      [UIScreen mainScreen].scale);
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Feature Highlight", @"Custom Fonts" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+@end
+
+
 @implementation FeatureHighlightShownViewExample (CatalogByConvention)
 
 - (void)viewDidLoad {
@@ -163,7 +195,7 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];
-  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1]];
+  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Action" forState:UIControlStateNormal];
   [self.button sizeToFit];

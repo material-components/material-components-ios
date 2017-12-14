@@ -42,6 +42,9 @@
 - (UIImage *)doneImage;
 @end
 
+@interface ChipsInputExampleViewController : UIViewController
+@end
+
 @interface ChipsSizingExampleViewController : UIViewController
 @end
 

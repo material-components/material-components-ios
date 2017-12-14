@@ -48,10 +48,28 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":ActivityIndicator",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
-    deps = [":ActivityIndicator"],
+    deps = [
+        ":ActivityIndicator",
+        ":ColorThemer",
+    ],
     visibility = ["//visibility:private"],
 )
 
@@ -64,7 +82,10 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":ActivityIndicator"],
+    deps = [
+        ":ActivityIndicator",
+        ":ColorThemer",
+    ],
     visibility = ["//visibility:private"],
 )
 

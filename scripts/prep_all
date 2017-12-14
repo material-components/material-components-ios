@@ -22,4 +22,4 @@ readonly ROOT_DIR="$SCRIPTS_DIR/.."
 pod repo update
 
 # We've already updated the repo once, so don't do it in each directory.
-"$SCRIPTS_DIR"/release/manage_pods.py --fast_pod_install install
+"$SCRIPTS_DIR"/manage_pods.py --fast_pod_install install

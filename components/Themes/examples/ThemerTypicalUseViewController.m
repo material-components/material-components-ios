@@ -52,7 +52,7 @@
   [MDCTabBarColorThemer applyColorScheme:self.colorScheme toTabBar:[MDCTabBar appearance]];
 
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
-           toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
+           toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
            toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme

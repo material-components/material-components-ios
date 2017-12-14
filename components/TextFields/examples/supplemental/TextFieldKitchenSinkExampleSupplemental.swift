@@ -21,6 +21,10 @@
 
 import UIKit
 
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialTextFields
+
 extension TextFieldKitchenSinkSwiftExample {
 
   func setupExampleViews() {
@@ -30,14 +34,14 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let textFieldControllersFullWidth = setupFullWidthTextFields()
 
-    allTextFieldControllers = [setupFilledTextFields(), setupDefaultTextFields(),
+    allTextFieldControllers = [setupFilledTextFields(), setupInlineUnderlineTextFields(),
                                textFieldControllersFullWidth,
-                               setupFloatingTextFields(),
+                               setupFloatingUnderlineTextFields(),
                                setupSpecialTextFields()].flatMap { $0 as! [MDCTextInputController] }
 
     let multilineTextFieldControllersFullWidth = setupFullWidthMultilineTextFields()
 
-    allMultilineTextFieldControllers = [setupAreaTextFields(), setupDefaultMultilineTextFields(),
+    allMultilineTextFieldControllers = [setupAreaTextFields(), setupUnderlineMultilineTextFields(),
                               multilineTextFieldControllersFullWidth,
                               setupFloatingMultilineTextFields(),
                               setupSpecialMultilineTextFields()].flatMap { $0 as! [MDCTextInputController] }

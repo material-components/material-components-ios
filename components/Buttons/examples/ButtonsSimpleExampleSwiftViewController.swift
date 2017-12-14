@@ -15,7 +15,9 @@
  */
 
 import Foundation
-import MaterialComponents
+import UIKit
+
+import MaterialComponents.MaterialButtons
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
 

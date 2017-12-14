@@ -16,9 +16,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TextFieldInterfaceBuilderExampleSupplemental.h"
+#import <UIKit/UIKit.h>
 
-@import MaterialComponents.MaterialTextFields;
+#import "MaterialTextFields.h"
+
+#import "supplemental/TextFieldInterfaceBuilderExampleSupplemental.h"
 
 @interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
 
@@ -44,8 +46,7 @@
 
   self.firstController =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.firstTextField];
-  self.lastController =
-      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.lastTextField];
+  self.lastController = [[MDCTextInputControllerFilled alloc] initWithTextInput:self.lastTextField];
   self.address1Controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.address1TextField];
   self.address2Controller =

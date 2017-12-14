@@ -14,13 +14,11 @@
  limitations under the License.
  */
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "MDCBottomAppBarView.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFInternationalization.h"
-#else
 #import <MDFInternationalization/MDFInternationalization.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "MDCNavigationBarColorThemer.h"
 #import "MaterialNavigationBar.h"

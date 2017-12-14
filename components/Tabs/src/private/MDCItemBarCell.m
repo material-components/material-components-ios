@@ -17,11 +17,7 @@
 #import "MDCItemBarCell.h"
 #import "MDCItemBarCell+Private.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFInternationalization.h"
-#else
 #import <MDFInternationalization/MDFInternationalization.h>
-#endif  // IS_BAZEL_BUILD
 
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
@@ -566,6 +562,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   MDCInkView *inkView = _inkTouchController.defaultInkView;
   inkView.inkColor = _style.inkColor;
   inkView.inkStyle = _style.inkStyle;
+  inkView.usesLegacyInkRipple = NO;
+  inkView.clipsToBounds = (inkView.inkStyle == MDCInkStyleBounded) ? YES : NO;
 }
 
 - (void)updateAccessibilityTraits {

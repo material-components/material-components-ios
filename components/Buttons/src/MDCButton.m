@@ -16,11 +16,7 @@
 
 #import "MDCButton.h"
 
-#ifdef IS_BAZEL_BUILD
-#import "MDFTextAccessibility.h"
-#else
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#endif  // IS_BAZEL_BUILD
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
@@ -61,6 +57,8 @@ static NSString *const MDCButtonBorderColorsKey = @"MDCButtonBorderColorsKey";
 static NSString *const MDCButtonBorderWidthsKey = @"MDCButtonBorderWidthsKey";
 
 static NSString *const MDCButtonShadowColorsKey = @"MDCButtonShadowColorsKey";
+
+static NSString *const MDCButtonFontsKey = @"MDCButtonFontsKey";
 
 // Specified in Material Guidelines
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
@@ -117,6 +115,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
+  NSMutableDictionary<NSNumber *, UIFont *> *_fonts;
 
   CGFloat _enabledAlpha;
   BOOL _hasCustomDisabledTitleColor;
@@ -226,6 +225,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
     [self updateBackgroundColor];
 
+    if ([aDecoder containsValueForKey:MDCButtonFontsKey]) {
+      _fonts = [aDecoder decodeObjectForKey:MDCButtonFontsKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonNontransformedTitlesKey]) {
       _nontransformedTitles = [aDecoder decodeObjectForKey:MDCButtonNontransformedTitlesKey];
     }
@@ -261,6 +264,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
   [aCoder encodeObject:_borderColors forKey:MDCButtonBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCButtonBorderWidthsKey];
+  [aCoder encodeObject:_fonts forKey:MDCButtonFontsKey];
   if (_shadowColors) {
     [aCoder encodeObject:_shadowColors forKey:MDCButtonShadowColorsKey];
   }
@@ -275,6 +279,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _nontransformedTitles = [NSMutableDictionary dictionary];
   _borderColors = [NSMutableDictionary dictionary];
   _borderWidths = [NSMutableDictionary dictionary];
+  _fonts = [NSMutableDictionary dictionary];
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -287,6 +292,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.showsTouchWhenHighlighted = NO;
 
   // Set up title label attributes.
+  // TODO(#2709): Have a single source of truth for fonts
+  // Migrate to [UIFont standardFont] when possible
   self.titleLabel.font = [MDCTypography buttonFont];
 
   // Default content insets
@@ -487,6 +494,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateBorderColor];
   [self updateBorderWidth];
   [self updateShadowColor];
+  [self updateTitleFont];
 }
 
 #pragma mark - Title Uppercasing
@@ -742,6 +750,43 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.layer.borderWidth = width ? (CGFloat)width.doubleValue : 0;
 }
 
+#pragma mark - Title Font
+
+- (nullable UIFont *)titleFontForState:(UIControlState)state {
+  return _fonts[@(state)];
+}
+
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
+  _fonts[@(state)] = font;
+
+  [self updateTitleFont];
+}
+
+- (void)updateTitleFont {
+  // Retreive any custom font that has been set
+  UIFont *font = _fonts[@(self.state)];
+  if (!font && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
+    font = _fonts[@(UIControlStateNormal)];
+  }
+
+  if (!font) {
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    font = [MDCTypography buttonFont];
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    // Dynamic type is enabled so apply scaling
+    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                              scaledForDynamicType:YES];
+  }
+
+  self.titleLabel.font = font;
+
+  [self setNeedsLayout];
+}
+
 #pragma mark - Private methods
 
 - (UIColor *)currentBackgroundColor {
@@ -865,6 +910,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 }
 
+#pragma mark - Dynamic Type
+
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
 }
@@ -872,8 +919,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   if (_mdc_adjustsFontForContentSizeCategory) {
-    UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-    self.titleLabel.font = font;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contentSizeCategoryDidChange:)
                                                  name:UIContentSizeCategoryDidChangeNotification
@@ -883,11 +928,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                                                     name:UIContentSizeCategoryDidChangeNotification
                                                   object:nil];
   }
+
+  [self updateTitleFont];
 }
 
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-  self.titleLabel.font = font;
+  [self updateTitleFont];
+
   [self sizeToFit];
 }
 

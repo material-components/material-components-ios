@@ -22,6 +22,10 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "AnimationTiming",
+    sdk_frameworks = [
+        "UIKit",
+        "QuartzCore",
+    ],
 )
 
 mdc_objc_library(

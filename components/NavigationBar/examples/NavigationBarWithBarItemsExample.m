@@ -41,7 +41,7 @@
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];
 
-  [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
+  [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1.0f]];
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
       [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
   [mutator mutate:self.navBar];
@@ -50,20 +50,29 @@
 
   self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
 
-  NSDictionary *viewBindings = @{ @"navBar" : self.navBar };
-  NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
-  [arrayOfConstraints
-      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:viewBindings]];
-  [arrayOfConstraints
-      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navBar]"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:viewBindings]];
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navBar.topAnchor].active = YES;
+  } else {
+#endif
+    [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.navBar
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1.0
+                                  constant:0].active = YES;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  }
+#endif
 
-  [self.view addConstraints:arrayOfConstraints];
+  NSDictionary *viewsBindings = @{@"navBar": self.navBar};
+
+  [NSLayoutConstraint
+   activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"
+                                                               options:0
+                                                               metrics:nil
+                                                                 views:viewsBindings]];
 
   [self setupExampleViews];
 }
