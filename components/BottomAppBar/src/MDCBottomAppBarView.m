@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "MDCBottomAppBarView.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
