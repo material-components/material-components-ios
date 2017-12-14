@@ -35,6 +35,21 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":TextFields",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
@@ -42,6 +57,10 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
         "XCTest",
+    ],
+    deps = [
+        ":TextFields",
+        ":ColorThemer",
     ],
     visibility = ["//visibility:private"],
 )
@@ -51,6 +70,7 @@ swift_library(
     srcs = glob(["tests/unit/*.swift"]),
     deps = [
         ":TextFields",
+        ":ColorThemer",
         "//components/private/Math",
         "//components/Palettes",
     ],

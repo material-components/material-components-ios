@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
 
 class AppBarContainerTests: XCTestCase {
 

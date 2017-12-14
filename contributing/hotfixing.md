@@ -13,11 +13,10 @@ https://github.com/material-components/material-components-ios/issues/294
 
 Run the following command to cut a release:
 
-    scripts/release/cut --hotfix
+    scripts/release cut --hotfix
 
 A hotfix branch is like a release branch, but its scope is limited specifically to the fix. In other
 words, the hotfix branch must start from `origin/stable`.
-
 
 ### Follow the releasing process
 
