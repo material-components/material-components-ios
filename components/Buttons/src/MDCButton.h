@@ -142,6 +142,25 @@
 /* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
 
+/**
+ The font used by the button's @c title for @c state.
+
+ @param state The state.
+ @return The font.
+ */
+- (nullable UIFont *)titleFontForState:(UIControlState)state;
+
+/**
+ The font used by the button's @c title.
+
+ If left unset or reset to nil for a given state, then a default font is used.
+
+ @param font The font.
+ @param state The state.
+ */
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
 /** Sets the enabled state with optional animation. */
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
 
