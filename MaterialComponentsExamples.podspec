@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.source_files = 'components/*/examples/*.{h,m,swift}', 'components/*/examples/supplemental/*.{h,m,swift}', 'components/private/*/*/*.{h,m,swift}'
-  s.resources = ['components/*/examples/resources/*', 'components/private/Dragons/**/*.{xib,storyboard,xcassets}']
+  s.resources = ['components/*/examples/resources/*', 'components/private/Dragons/*/*/*.{xib,storyboard,xcassets}']
   s.dependency 'MaterialComponents'
   s.public_header_files = 'components/*/examples/*.h', 'components/*/examples/supplemental/*.h', 'components/private/*/*/*.h'
 end
