@@ -1,7 +1,12 @@
-# 43.0.1
+# 44.0.0
+
+This major release includes a change to the Slider API.
+
+## Breaking changes
+
+Slider removed the disabledColor property.
 
 ## Component changes
-
 
 ### CollectionCells
 
