@@ -154,7 +154,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
 
   // Then
-  XCTAssertEqual(3, navBar.accessibilityElementCount);
+  const NSInteger elementsCount = 3; // Leading bar, titleLabel, trailing bar
+  XCTAssertEqual(elementsCount, navBar.accessibilityElementCount);
 }
 
 - (void)testAccessibilityItemsCountWithTitleView {
@@ -165,7 +166,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   navBar.titleView = [[UIView alloc] init];
 
   // Then
-  XCTAssertEqual(3, navBar.accessibilityElementCount);
+  const NSInteger elementsCount = 3; // Leading bar, titleView, trailing bar
+  XCTAssertEqual(elementsCount, navBar.accessibilityElementCount);
 }
 
 - (void)testAccessibilityItemAtIndexDefault {
