@@ -348,7 +348,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateBorderColor {
-  self.layer.borderColor = [self borderColorForState:self.state].CGColor;
+  self.layer.shapedBorderColor = [self borderColorForState:self.state];
 }
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
@@ -369,7 +369,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateBorderWidth {
-  self.layer.borderWidth = [self borderWidthForState:self.state];
+  self.layer.shapedBorderWidth = [self borderWidthForState:self.state];
 }
 
 - (CGFloat)elevationForState:(UIControlState)state {
