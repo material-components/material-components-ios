@@ -14,18 +14,19 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-#import <CoreGraphics/CoreGraphics.h>
+#import <XCTest/XCTest.h>
 
-@interface MDCBottomNavigationItemBadge : UIView
+#import "MaterialBottomNavigation.h"
 
-@property(nonatomic, assign) CGFloat badgeCircleWidth;
-@property(nonatomic, assign) CGFloat badgeCircleHeight;
-@property(nonatomic, assign) CGFloat xPadding;
-@property(nonatomic, assign) CGFloat yPadding;
+@interface BottomNavigationNoopTest : XCTestCase
 
-@property(nonatomic, copy) NSString *badgeValue;
-@property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
-@property(nonatomic, strong, readonly) UILabel *badgeValueLabel;
+@end
+
+@implementation BottomNavigationNoopTest
+
+- (void)testInit {
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  XCTAssertNotNil(bar);
+}
 
 @end
