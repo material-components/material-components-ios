@@ -64,16 +64,17 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCButtonBarInit];
-    if ([coder containsValueForKey:MDCButtonBarItemsKey]) {
-      _items = [coder decodeObjectForKey:MDCButtonBarItemsKey];
-    }
-
     if ([coder containsValueForKey:MDCButtonBarButtonTitleBaselineKey]) {
       _buttonTitleBaseline = (CGFloat)[coder decodeDoubleForKey:MDCButtonBarButtonTitleBaselineKey];
     }
 
     if ([coder containsValueForKey:MDCButtonBarButtonLayoutPositionKey]) {
       _layoutPosition = [coder decodeIntegerForKey:MDCButtonBarButtonLayoutPositionKey];
+    }
+
+    if ([coder containsValueForKey:MDCButtonBarItemsKey]) {
+      // Force going through the setter to ensure KVO is observed for these items
+      self.items = [coder decodeObjectForKey:MDCButtonBarItemsKey];
     }
   }
   return self;
