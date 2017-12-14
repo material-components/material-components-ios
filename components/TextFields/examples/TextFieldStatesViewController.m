@@ -20,22 +20,22 @@
 
 @interface TextFieldStatesViewController : UIViewController
 
-@property (nonatomic) Class selectedClass;
-@property (nonatomic) NSArray <Class> *classes;
+@property(nonatomic) Class selectedClass;
+@property(nonatomic) NSArray<Class> *classes;
 
-@property (nonatomic) id <MDCTextInputController> enabledController;
-@property (nonatomic) MDCTextField *enabled;
+@property(nonatomic) id<MDCTextInputController> enabledController;
+@property(nonatomic) MDCTextField *enabled;
 
-@property (nonatomic) id <MDCTextInputController> disabledController;
-@property (nonatomic) MDCTextField *disabled;
+@property(nonatomic) id<MDCTextInputController> disabledController;
+@property(nonatomic) MDCTextField *disabled;
 
-@property (nonatomic) id <MDCTextInputController> erroredController;
-@property (nonatomic) MDCTextField *errored;
+@property(nonatomic) id<MDCTextInputController> erroredController;
+@property(nonatomic) MDCTextField *errored;
 
-@property (nonatomic) id <MDCTextInputController> erroredDisabledController;
-@property (nonatomic) MDCTextField *erroredDisabled;
+@property(nonatomic) id<MDCTextInputController> erroredDisabledController;
+@property(nonatomic) MDCTextField *erroredDisabled;
 
-@property (nonatomic) UIScrollView *scrollView;
+@property(nonatomic) UIScrollView *scrollView;
 
 @end
 
@@ -81,7 +81,7 @@
                                attribute:NSLayoutAttributeLeadingMargin
                               multiplier:1
                                 constant:0]
-  .active = YES;
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.enabled
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
@@ -89,7 +89,7 @@
                                attribute:NSLayoutAttributeTrailingMargin
                               multiplier:1
                                 constant:0]
-  .active = YES;
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.enabled
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
@@ -97,13 +97,22 @@
                                attribute:NSLayoutAttributeTrailingMargin
                               multiplier:1
                                 constant:0]
-  .active = YES;
+      .active = YES;
 
-  NSDictionary *views = @{@"enabled": self.enabled,
-                          @"disabled": self.disabled,
-                          @"errored": self.errored,
-                          @"erroredDisabled": self.erroredDisabled};
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[enabled]-[disabled]-[errored]-[erroredDisabled]" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:nil views:views]];
+  NSDictionary *views = @{
+    @"enabled" : self.enabled,
+    @"disabled" : self.disabled,
+    @"errored" : self.errored,
+    @"erroredDisabled" : self.erroredDisabled
+  };
+  [NSLayoutConstraint
+      activateConstraints:
+          [NSLayoutConstraint
+              constraintsWithVisualFormat:@"V:[enabled]-[disabled]-[errored]-[erroredDisabled]"
+                                  options:NSLayoutFormatAlignAllLeading |
+                                          NSLayoutFormatAlignAllTrailing
+                                  metrics:nil
+                                    views:views]];
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -114,7 +123,7 @@
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1
                                   constant:20]
-    .active = YES;
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:self.erroredDisabled
                                  attribute:NSLayoutAttributeBottom
                                  relatedBy:NSLayoutRelationEqual
@@ -122,7 +131,7 @@
                                  attribute:NSLayoutAttributeBottomMargin
                                 multiplier:1
                                   constant:-20]
-    .active = YES;
+        .active = YES;
 
   } else {
     [NSLayoutConstraint constraintWithItem:self.enabled
@@ -132,7 +141,7 @@
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1
                                   constant:20]
-    .active = YES;
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:self.erroredDisabled
                                  attribute:NSLayoutAttributeBottom
                                  relatedBy:NSLayoutRelationEqual
@@ -140,7 +149,7 @@
                                  attribute:NSLayoutAttributeBottomMargin
                                 multiplier:1
                                   constant:-20]
-    .active = YES;
+        .active = YES;
   }
 #else
   [NSLayoutConstraint constraintWithItem:self.enabled
@@ -150,7 +159,7 @@
                                attribute:NSLayoutAttributeTop
                               multiplier:1
                                 constant:20]
-  .active = YES;
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.erroredDisabled
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
@@ -158,37 +167,37 @@
                                attribute:NSLayoutAttributeBottomMargin
                               multiplier:1
                                 constant:-20]
-  .active = YES;
+      .active = YES;
 #endif
-
 }
 
 - (void)setupControllers {
   if (!self.classes) {
     // TODO: (larche) When more classes (other than full width) are added, put them in here so they
     // can be showcased.
-    self.classes = @[[MDCTextInputControllerFilled self],
-                     [MDCTextInputControllerOutlined self],
-                     [MDCTextInputControllerUnderline self]];
+    self.classes = @[
+      [MDCTextInputControllerFilled self], [MDCTextInputControllerOutlined self],
+      [MDCTextInputControllerUnderline self]
+    ];
     self.selectedClass = self.classes.firstObject;
   }
 
   if ([self.selectedClass conformsToProtocol:@protocol(MDCTextInputController)]) {
     self.enabledController =
-        [(id <MDCTextInputController>)[self.selectedClass alloc] initWithTextInput:self.enabled];
+        [(id<MDCTextInputController>)[self.selectedClass alloc] initWithTextInput:self.enabled];
     self.enabledController.placeholderText = @"Enabled";
 
     self.disabledController =
-        [(id <MDCTextInputController>)[self.selectedClass alloc] initWithTextInput:self.disabled];
+        [(id<MDCTextInputController>)[self.selectedClass alloc] initWithTextInput:self.disabled];
     self.disabledController.placeholderText = @"Disabled";
 
     self.erroredController =
-        [(id <MDCTextInputController>)[self.selectedClass alloc] initWithTextInput:self.errored];
+        [(id<MDCTextInputController>)[self.selectedClass alloc] initWithTextInput:self.errored];
     self.erroredController.placeholderText = @"Errored";
     [self.erroredController setErrorText:@"Errored" errorAccessibilityValue:nil];
 
-    self.erroredDisabledController =
-        [(id <MDCTextInputController>)[self.selectedClass alloc] initWithTextInput:self.erroredDisabled];
+    self.erroredDisabledController = [(id<MDCTextInputController>)[self.selectedClass alloc]
+        initWithTextInput:self.erroredDisabled];
     self.erroredDisabledController.placeholderText = @"Errored Disabled";
     [self.erroredDisabledController setErrorText:@"Errored Disabled" errorAccessibilityValue:nil];
   }
@@ -201,28 +210,28 @@
   self.scrollView.backgroundColor = UIColor.whiteColor;
 
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"V:|[scrollView]|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"scrollView" : self.scrollView
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|[scrollView]|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"scrollView" : self.scrollView
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
 
   CGFloat marginOffset = 16;
   UIEdgeInsets margins = UIEdgeInsetsMake(0, marginOffset, 0, marginOffset);
   self.scrollView.layoutMargins = margins;
 
   UITapGestureRecognizer *tapRecognizer =
-  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidTouch)];
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidTouch)];
   [self.view addGestureRecognizer:tapRecognizer];
 }
 
@@ -239,15 +248,14 @@
   __weak TextFieldStatesViewController *weakSelf = self;
   for (Class class in self.classes) {
     NSString *title = NSStringFromClass(class);
-    title = [title stringByReplacingOccurrencesOfString:@"MDCTextInputController"
-                                             withString:@""];
+    title = [title stringByReplacingOccurrencesOfString:@"MDCTextInputController" withString:@""];
     if ([class isEqual:self.selectedClass]) {
       title = [title stringByAppendingString:@" ✓"];
     }
     UIAlertAction *action =
         [UIAlertAction actionWithTitle:title
                                  style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * __unused _Nonnull unusedAction) {
+                               handler:^(UIAlertAction *__unused _Nonnull unusedAction) {
                                  weakSelf.selectedClass = class;
                                  [weakSelf setupControllers];
                                }];
