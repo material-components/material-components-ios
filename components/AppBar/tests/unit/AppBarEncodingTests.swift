@@ -15,7 +15,7 @@
  */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
 
 class AppBarEncodingTests: XCTestCase {
 
