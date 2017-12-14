@@ -422,4 +422,8 @@ extension TextFieldFilledSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Filled Text Fields"]
   }
+
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
 }

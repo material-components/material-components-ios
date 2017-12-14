@@ -104,6 +104,10 @@
   return YES;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 #pragma mark - Typical application code (not Material-specific)

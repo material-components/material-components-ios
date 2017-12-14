@@ -278,4 +278,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   return YES;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
