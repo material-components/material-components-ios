@@ -15,11 +15,7 @@
 git_repository(
     name = "build_bazel_rules_apple",
     remote = "https://github.com/bazelbuild/rules_apple.git",
-<<<<<<< HEAD
     tag = "0.2.0",
-=======
-    commit = "0119e91157fd3ad069bc75462796d28031c5b70f",
->>>>>>> 671ad309... WIP
 )
 
 git_repository(
