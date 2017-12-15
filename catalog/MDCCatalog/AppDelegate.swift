@@ -45,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
     UIApplication.shared.statusBarStyle = .lightContent
 
+    // The navigation tree will only take examples that implement
+    // and return YES to catalogIsPresentable.
     let tree = CBCCreatePresentableNavigationTree()
 
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
