@@ -42,6 +42,10 @@
   return NO;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {

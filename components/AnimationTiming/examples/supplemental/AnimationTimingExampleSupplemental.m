@@ -40,6 +40,11 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   return YES;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
+
 @end
 
 @implementation AnimationTimingExample (Supplemental)
