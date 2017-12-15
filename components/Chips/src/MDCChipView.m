@@ -79,7 +79,10 @@ static const UIEdgeInsets MDCChipAccessoryPadding = {0, 0, 0, 0};
 
 static CGRect CGRectVerticallyCentered(CGRect rect, UIEdgeInsets padding, CGFloat height) {
   CGFloat viewHeight = CGRectGetHeight(rect) + padding.top + padding.bottom;
-  return CGRectOffset(rect, 0, (height - viewHeight) / 2);
+  CGFloat yValue = (height - viewHeight) / 2;
+  CGFloat scale = UIScreen.mainScreen.scale;
+  yValue = MDCRound(yValue * scale) / scale;
+  return CGRectOffset(rect, 0, yValue);
 }
 
 static inline CGRect MDCChipBuildFrame(UIEdgeInsets insets,
@@ -567,7 +570,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   CGSize contentSize =
       CGSizeMake(imageSize.width + titleSize.width + accessorySize.width,
                  MAX(imageSize.height, MAX(titleSize.height, accessorySize.height)));
-  return CGSizeExpandWithInsets(contentSize, self.contentPadding);
+  CGSize chipSize = CGSizeExpandWithInsets(contentSize, self.contentPadding);
+  CGFloat scale = self.window.screen ? self.window.screen.scale : UIScreen.mainScreen.scale;
+  return MDCSizeCeilWithScale(chipSize, scale);
 }
 
 - (CGSize)intrinsicContentSize {
