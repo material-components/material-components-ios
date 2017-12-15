@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZShadow" customModule="MaterialComponentsExamples" customModuleProvider="target">
+            <connections>
+                <outlet property="blueBanner" destination="ERy-ab-LIz" id="eiU-Fz-p6t"/>
+                <outlet property="blueTappable" destination="iGC-oU-SRb" id="5tP-jL-hcC"/>
+                <outlet property="containerView" destination="i5M-Pr-FkT" id="fHc-7S-cLY"/>
+                <outlet property="greenBanner" destination="Ztb-1V-JQy" id="Olr-vM-VW7"/>
+                <outlet property="greenTappable" destination="gGm-XA-Dof" id="DaO-Fh-HNZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ERy-ab-LIz" userLabel="Blue.Banner" customClass="VanillaShadowedView" customModule="MaterialComponentsExamples" customModuleProvider="target">
+                    <rect key="frame" x="168" y="511" width="207" height="64"/>
+                    <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Material Shadow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMT-Bl-dTQ">
+                    <rect key="frame" x="41" y="184" width="127" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UIKit Shadow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uji-fp-5tG">
+                    <rect key="frame" x="53" y="450" width="103" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ztb-1V-JQy" userLabel="Green.Banner" customClass="MaterialShadowedView" customModule="MaterialComponentsExamples" customModuleProvider="target">
+                    <rect key="frame" x="168" y="80" width="207" height="64"/>
+                    <color key="backgroundColor" red="0.0" green="1" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGm-XA-Dof" userLabel="Green.Tappable" customClass="MaterialShadowedView" customModule="MaterialComponentsExamples" customModuleProvider="target">
+                    <rect key="frame" x="40" y="48" width="128" height="128"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="128" id="P01-Ks-R0d"/>
+                        <constraint firstAttribute="width" secondItem="gGm-XA-Dof" secondAttribute="height" multiplier="1:1" id="skO-qg-G7l"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on the Squares to animate." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="srW-Y7-iXB">
+                    <rect key="frame" x="69" y="323" width="237" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGC-oU-SRb" userLabel="Blue.Tappable" customClass="VanillaShadowedView" customModule="MaterialComponentsExamples" customModuleProvider="target">
+                    <rect key="frame" x="40" y="479" width="128" height="128"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="128" id="To6-Nn-htG"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="iGC-oU-SRb" firstAttribute="width" secondItem="iGC-oU-SRb" secondAttribute="height" multiplier="1:1" id="07O-cp-rrR"/>
+                <constraint firstItem="ERy-ab-LIz" firstAttribute="centerY" secondItem="iGC-oU-SRb" secondAttribute="centerY" id="1EA-kQ-QPW"/>
+                <constraint firstItem="Ztb-1V-JQy" firstAttribute="height" secondItem="gGm-XA-Dof" secondAttribute="height" multiplier="0.5" id="4xV-ou-Ou4"/>
+                <constraint firstItem="srW-Y7-iXB" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="AKl-RM-oyl"/>
+                <constraint firstItem="Ztb-1V-JQy" firstAttribute="leading" secondItem="gGm-XA-Dof" secondAttribute="trailing" id="Aje-nZ-ef7"/>
+                <constraint firstItem="iGC-oU-SRb" firstAttribute="top" secondItem="uji-fp-5tG" secondAttribute="bottom" constant="8" id="E4o-i7-smi"/>
+                <constraint firstItem="gGm-XA-Dof" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="EBO-T2-UbT"/>
+                <constraint firstItem="tMT-Bl-dTQ" firstAttribute="centerX" secondItem="gGm-XA-Dof" secondAttribute="centerX" id="Fqo-wa-I0f"/>
+                <constraint firstAttribute="bottom" secondItem="iGC-oU-SRb" secondAttribute="bottom" constant="60" id="HyO-yO-fSw"/>
+                <constraint firstAttribute="trailing" secondItem="ERy-ab-LIz" secondAttribute="trailing" priority="750" id="MFc-iq-tEY"/>
+                <constraint firstItem="srW-Y7-iXB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Mti-63-OIO"/>
+                <constraint firstItem="gGm-XA-Dof" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="48" id="W6h-mH-5OR"/>
+                <constraint firstItem="tMT-Bl-dTQ" firstAttribute="top" secondItem="gGm-XA-Dof" secondAttribute="bottom" constant="8" id="XDc-x2-0gQ"/>
+                <constraint firstItem="ERy-ab-LIz" firstAttribute="height" secondItem="iGC-oU-SRb" secondAttribute="height" multiplier="0.5" id="YQn-ve-PhJ"/>
+                <constraint firstAttribute="trailing" secondItem="Ztb-1V-JQy" secondAttribute="trailing" priority="750" id="ZdZ-48-ASg"/>
+                <constraint firstItem="ERy-ab-LIz" firstAttribute="leading" secondItem="iGC-oU-SRb" secondAttribute="trailing" id="g0a-j6-wI4"/>
+                <constraint firstItem="Ztb-1V-JQy" firstAttribute="centerY" secondItem="gGm-XA-Dof" secondAttribute="centerY" id="iN0-Zo-Gfd"/>
+                <constraint firstItem="iGC-oU-SRb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="pck-6J-dfo"/>
+                <constraint firstItem="uji-fp-5tG" firstAttribute="centerX" secondItem="iGC-oU-SRb" secondAttribute="centerX" id="rCY-Pa-nnr"/>
+            </constraints>
+            <point key="canvasLocation" x="-380" y="39"/>
+        </view>
+    </objects>
+</document>

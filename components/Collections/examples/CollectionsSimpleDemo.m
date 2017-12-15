@@ -84,4 +84,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
           "capabilities.";
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end

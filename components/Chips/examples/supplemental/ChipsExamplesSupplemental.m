@@ -82,6 +82,10 @@ static UIButton *DeleteButton() {
   return NO;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 @interface ChipsCollectionExampleViewController (Supplemental)
@@ -95,6 +99,10 @@ static UIButton *DeleteButton() {
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end
@@ -111,6 +119,10 @@ static UIButton *DeleteButton() {
 
 - (UIImage *)doneImage {
   return DoneImage();
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end
@@ -148,6 +160,10 @@ static UIButton *DeleteButton() {
   return DeleteButton();
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 @implementation ChipsTypicalUseViewController (Supplemental)
@@ -162,6 +178,10 @@ static UIButton *DeleteButton() {
 
 - (UIImage *)doneImage {
   return DoneImage();
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

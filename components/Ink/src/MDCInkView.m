@@ -19,7 +19,16 @@
 #import "private/MDCInkLayer.h"
 #import "private/MDCLegacyInkLayer.h"
 
-@interface MDCInkView () <MDCInkLayerDelegate>
+@interface MDCInkPendingAnimation : NSObject <CAAction>
+
+@property(nonatomic, weak) CALayer *animationSourceLayer;
+@property(nonatomic, strong) NSString *keyPath;
+@property(nonatomic, strong) id fromValue;
+@property(nonatomic, strong) id toValue;
+
+@end
+
+@interface MDCInkView () <CALayerDelegate, MDCInkLayerDelegate>
 
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
 @property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
@@ -57,11 +66,13 @@
   self.userInteractionEnabled = NO;
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+  self.layer.delegate = self;
   self.inkColor = self.defaultInkColor;
   _usesLegacyInkRipple = YES;
 
   // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
+  _maskLayer.delegate = self;
 }
 
 - (void)layoutSubviews {
@@ -75,6 +86,7 @@
   }
 
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+  self.layer.bounds = inkBounds;
 
   // When bounds change ensure all ink layer bounds are changed too.
   for (CALayer *layer in self.layer.sublayers) {
@@ -82,6 +94,13 @@
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
     }
+  }
+
+  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
+  if (self.superview.layer.shadowPath) {
+    self.maskLayer.path = self.superview.layer.shadowPath;
+    self.layer.mask = _maskLayer;
+    self.layer.masksToBounds = YES;
   }
 }
 
@@ -227,6 +246,46 @@
   }
   if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidEnd:)]) {
     [self.animationDelegate inkAnimationDidEnd:self];
+  }
+}
+
+#pragma mark - CALayerDelegate
+
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
+  if ([event isEqualToString:@"path"] || [event isEqualToString:@"shadowPath"]) {
+
+    // We have to create a pending animation because if we are inside a UIKit animation block we
+    // won't know any properties of the animation block until it is commited.
+    MDCInkPendingAnimation *pendingAnim = [[MDCInkPendingAnimation alloc] init];
+    pendingAnim.animationSourceLayer = self.superview.layer;
+    pendingAnim.fromValue = [layer.presentationLayer valueForKey:event];
+    pendingAnim.toValue = nil;
+    pendingAnim.keyPath = event;
+
+    return pendingAnim;
+  }
+  return nil;
+}
+
+@end
+
+@implementation MDCInkPendingAnimation
+
+- (void)runActionForKey:(NSString *)event object:(id)anObject arguments:(NSDictionary *)dict {
+  if ([anObject isKindOfClass:[CAShapeLayer class]]) {
+    CAShapeLayer *layer = (CAShapeLayer *)anObject;
+
+    // In order to synchronize our animation with UIKit animations we have to fetch the resizing
+    // animation created by UIKit and copy the configuration to our custom animation.
+    CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
+    if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
+      CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
+      animation.keyPath = self.keyPath;
+      animation.fromValue = self.fromValue;
+      animation.toValue = self.toValue;
+
+      [layer addAnimation:animation forKey:event];
+    }
   }
 }
 

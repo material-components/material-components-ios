@@ -165,7 +165,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
 
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.inkStyle = MDCInkStyleBounded;
+    _inkView.usesLegacyInkRipple = NO;
     _inkView.inkColor = [UIColor colorWithWhite:0 alpha:MDCChipInkAlpha];
     [self addSubview:_inkView];
 
@@ -348,7 +348,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateBorderColor {
-  self.layer.borderColor = [self borderColorForState:self.state].CGColor;
+  self.layer.shapedBorderColor = [self borderColorForState:self.state];
 }
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
@@ -369,7 +369,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateBorderWidth {
-  self.layer.borderWidth = [self borderWidthForState:self.state];
+  self.layer.shapedBorderWidth = [self borderWidthForState:self.state];
 }
 
 - (CGFloat)elevationForState:(UIControlState)state {
@@ -631,6 +631,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @implementation MDCChipView (Private)
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point {
+  CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  CGFloat widthDiff = 24.f; // Difference between unselected and selected frame widths.
+  _inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10.f + widthDiff / 2);
+
   [_inkView startTouchBeganAnimationAtPoint:point completion:nil];
 }
 
