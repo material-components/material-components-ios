@@ -167,7 +167,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
                                            MDCFloatingButtonMiniDimension);
   const CGSize defaultNormalSize = CGSizeMake(MDCFloatingButtonDefaultDimension,
                                               MDCFloatingButtonDefaultDimension);
-  const CGSize defaultExpandedMinimumSize = CGSizeMake(132, 48);
+  const CGSize defaultExpandedMinimumSize = CGSizeMake(0, 48);
   const CGSize defaultExpandedMaximumSize = CGSizeMake(328, 0);
 
   // Minimum size values for different shape + mode combinations
@@ -339,7 +339,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   // If we are RTL with a trailing image, the image goes on the left.
   if ((isLTR && isLeadingIcon) || (!isLTR && !isLeadingIcon)) {
     const CGFloat imageCenterX = CGRectGetMinX(insetBounds) + (imageViewWidth / 2);
-    const CGFloat titleCenterX = CGRectGetMaxX(insetBounds) - (titleWidthAvailable / 2);
+    const CGFloat titleCenterX = CGRectGetMaxX(insetBounds) - titleWidthAvailable +
+        (titleSize.width / 2);
     titleCenter = CGPointMake(titleCenterX, boundsCenterY);
     imageCenter = CGPointMake(imageCenterX, boundsCenterY);
   }
@@ -347,7 +348,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   // If we are RTL with a leading image, the image goes on the right.
   else {
     const CGFloat imageCenterX = CGRectGetMaxX(insetBounds) - (imageViewWidth / 2);
-    const CGFloat titleCenterX = CGRectGetMinX(insetBounds) + (titleWidthAvailable / 2);
+    const CGFloat titleCenterX = CGRectGetMinX(insetBounds) + titleWidthAvailable -
+        (titleSize.width / 2);
     imageCenter = CGPointMake(imageCenterX, boundsCenterY);
     titleCenter = CGPointMake(titleCenterX, boundsCenterY);
   }

@@ -390,7 +390,6 @@ static UIImage *fakeImage(void) {
   [defaultButton sizeToFit];
 
   // Then
-  XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.width, 132);
   XCTAssertGreaterThanOrEqual(defaultButton.bounds.size.height, 48);
 }
 
@@ -479,6 +478,31 @@ static UIImage *fakeImage(void) {
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
   button.mode = MDCFloatingButtonModeExpanded;
   [button setTitle:@"A very long title that can never fit" forState:UIControlStateNormal];
+  [button setImage:fakeImage() forState:UIControlStateNormal];
+  [button setMaximumSize:CGSizeMake(100, 48)
+                forShape:MDCFloatingButtonShapeDefault
+                  inMode:MDCFloatingButtonModeExpanded];
+  button.imageTitleSpace = 12;
+
+  // When
+  [button sizeToFit];
+
+  // Then
+  CGRect buttonBounds = CGRectStandardize(button.bounds);
+  CGRect imageFrame = CGRectStandardize(button.imageView.frame);
+  CGRect titleFrame = CGRectStandardize(button.titleLabel.frame);
+  XCTAssertEqualWithAccuracy(imageFrame.origin.x, 16, 1);
+  XCTAssertEqualWithAccuracy(CGRectGetMaxX(titleFrame), buttonBounds.size.width - 24, 1);
+  XCTAssertEqualWithAccuracy(titleFrame.origin.x,
+                             CGRectGetMaxX(imageFrame) + button.imageTitleSpace, 1);
+}
+
+- (void)testExpandedLayoutShortTitle {
+  // Given
+  MDCFloatingButton *button =
+  [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+  button.mode = MDCFloatingButtonModeExpanded;
+  [button setTitle:@"A" forState:UIControlStateNormal];
   [button setImage:fakeImage() forState:UIControlStateNormal];
   [button setMaximumSize:CGSizeMake(100, 48)
                 forShape:MDCFloatingButtonShapeDefault
