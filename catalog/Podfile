@@ -34,6 +34,15 @@ target "MDCActionExtension" do
   use_frameworks!
 end
 
+target "MDCDragons" do
+  platform :ios, '8.0'
+  project 'MDCDragons.xcodeproj'
+  pod 'CatalogByConvention'
+  pod 'MaterialComponents', :path => '../'
+  pod 'MaterialComponentsExamples', :path => '../'
+  use_frameworks!
+end
+
 # EarlGrey configuration
 PROJECT_NAME = 'MDCCatalog'
 TEST_TARGET = 'MDCEarlGreyTests'

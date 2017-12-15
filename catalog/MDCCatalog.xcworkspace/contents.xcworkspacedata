@@ -8,6 +8,9 @@
       location = "group:MDCUnitTests.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:MDCDragons.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
