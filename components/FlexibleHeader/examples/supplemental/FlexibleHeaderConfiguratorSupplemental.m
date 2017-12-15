@@ -39,6 +39,10 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   return YES;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 @implementation FlexibleHeaderConfiguratorExample (Supplemental)

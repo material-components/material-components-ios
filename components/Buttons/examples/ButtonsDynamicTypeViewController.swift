@@ -28,6 +28,10 @@ class ButtonsDynamicTypeViewController: UIViewController {
     return false
   }
 
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
