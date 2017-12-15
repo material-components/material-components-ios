@@ -26,6 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIApplication.shared.statusBarStyle = .lightContent
     let tree = CBCCreateNavigationTree()
     var rootNodeViewController: UIViewController
+
+    /**
+     To have your example show up as the initial view controller, you need it to implement
+     the method `@objc class func catalogIsDebug() -> Bool` and have it return true.
+     That way it will become the debugLeaf and be presented first.
+     */
     if let debugLeaf = tree.debugLeaf {
       rootNodeViewController = debugLeaf.createExampleViewController()
     } else {

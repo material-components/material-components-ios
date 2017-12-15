@@ -46,14 +46,13 @@ class HeaderView: UIView {
                                                   height: 40),
                                      fillColor: .white)
     imageView.image = image
+
+    // To make the search icon tinted white we have to reach the internal UITextField of the UISearchBar
     if let searchBarTextField = self.searchBar.value(forKey: "_searchField") as? UITextField,
-      let glassIconView = searchBarTextField.leftView as? UIImageView,
-      let xIconView = searchBarTextField.value(forKey: "_clearButton") as? UIButton {
+      let glassIconView = searchBarTextField.leftView as? UIImageView {
       searchBarTextField.tintColor = .white
       glassIconView.image = glassIconView.image?.withRenderingMode(.alwaysTemplate)
       glassIconView.tintColor = .white
-      xIconView.setImage(UIImage(), for: .normal)
-      xIconView.tintColor = .white
     }
     searchBar.scopeBarBackgroundImage = UIImage()
 
