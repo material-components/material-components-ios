@@ -266,7 +266,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (void)updateFontsForDynamicType {
-  [_featureHighlightView updateFontsForDynamicType];
+  [_featureHighlightView updateTitleFont];
+  [_featureHighlightView updateBodyFont];
   [_featureHighlightView layoutIfNeeded];
 }
 
