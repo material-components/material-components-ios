@@ -172,6 +172,15 @@ static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
   return CGPointMake(MDCRound(point.x * scale) / scale, MDCRound(point.y * scale) / scale);
 }
 
+/**
+ Expand `size' to the closest larger pixel-aligned value.
+ If @c scale is zero, then a CGSizeZero will be returned.
+
+ @param size the size to align.
+ @param scale the scale factor to use for pixel alignment.
+
+ @return the size aligned to the closest larger pixel-aligned value using the provided scale factor.
+ */
 static inline CGSize MDCSizeCeilWithScale(CGSize size, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 0)) {
     return CGSizeZero;
