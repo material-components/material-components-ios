@@ -44,6 +44,7 @@ typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 - (void)animateRejected:(NSTimeInterval)duration;
 - (void)animatePulse;
 
-- (void)updateFontsForDynamicType;
+- (void)updateTitleFont;
+- (void)updateBodyFont;
 
 @end
