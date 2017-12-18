@@ -117,6 +117,7 @@ Pod::Spec.new do |mdc|
       spec.dependency "MaterialComponents/Ink"
       spec.dependency "MaterialComponents/ShadowElevations"
       spec.dependency "MaterialComponents/ShadowLayer"
+      spec.dependency "MaterialComponents/Typography"
       spec.dependency "MaterialComponents/private/Math"
     end
     component.subspec "ColorThemer" do |spec|

@@ -21,6 +21,7 @@
 
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialTypography.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -86,6 +87,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   [self addSubview:_containerView];
   [self setElevation:kMDCBottomNavigationBarElevation];
   _itemViews = [NSMutableArray array];
+  _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
 }
 
 - (void)layoutSubviews {
@@ -316,6 +318,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     MDCBottomNavigationItemView *itemView =
         [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
     itemView.title = item.title;
+    itemView.itemTitleFont = self.itemTitleFont;
     itemView.selectedItemTintColor = self.selectedItemTintColor;
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
     itemView.titleVisibility = self.titleVisibility;
