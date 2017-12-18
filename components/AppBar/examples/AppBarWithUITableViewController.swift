@@ -116,7 +116,7 @@ class AppBarWithUITableViewController: UITableViewController {
 
 extension AppBarWithUITableViewController {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["AppBar+UITableViewController"]
+    return ["App Bar", "AppBar+UITableViewController"]
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
