@@ -81,8 +81,8 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  aligned based on the @c contentHorizontalAlignment and @c contentVerticalAlignment properties. In
  @c .expanded layout, the image view will be inset from the leading edge (or trailing edge when
  @c imageLocation is .trailing). The "bounding box" for the title will be inset from the opposite
- edge and separated from @c imageView by @c imageTitleSpace and the title label will be centered
- within this box. In @c .expanded mode, the @c contentVerticalAlignment and
+ edge and separated from @c imageView by @c imageTitleSpace and the title label will be
+ leading-aligned within this box. In @c .expanded mode, the @c contentVerticalAlignment and
  @c contentHorizontalAlignment properties are ignored.
 
  The default value is @c .normal .

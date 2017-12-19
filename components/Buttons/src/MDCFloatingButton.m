@@ -279,7 +279,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
     alignment guidelines (internalLayoutInsets).
  4. Position the imageView along the leading (or trailing) edge of the button, inset by
     internalLayoutInsets.left (flipped for RTL).
- 5. Position the titleLabel within the center of its available space.
+ 5. Position the titleLabel along the leading edge of its available space.
  6. Apply the imageEdgeInsets and titleEdgeInsets to their respective views.
  */
 - (void)layoutSubviews {
@@ -295,9 +295,9 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   //
   // +------------------------------------+
   // |    |  |  |  CEI TOP            |   |
-  // |CEI +--+  |       +-----+       |CEI|
-  // | LT ||SP|-- A --|Title|-- A --|RGT|
-  // |    +--+  |       +-----+       |   |
+  // |CEI +--+  |+-----+              |CEI|
+  // | LT ||SP||Title|              |RGT|
+  // |    +--+  |+-----+              |   |
   // |    |  |  |  CEI BOT            |   |
   // +------------------------------------+
   //
