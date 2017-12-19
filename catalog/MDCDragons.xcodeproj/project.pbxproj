@@ -379,7 +379,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 096F30AD42FD7675B81193D1 /* Pods-MDCDragons.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconInverse;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = MDCDragons/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -395,7 +395,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 63301F6E1E07E3E0BAAFE1AF /* Pods-MDCDragons.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconInverse;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = MDCDragons/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
