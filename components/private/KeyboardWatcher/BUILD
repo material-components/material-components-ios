@@ -26,6 +26,7 @@ mdc_public_objc_library(
     ],
     sdk_frameworks = [
         "CoreGraphics",
+        "UIKit",
     ],
 )
 
