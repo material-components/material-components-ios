@@ -1,12 +1,5 @@
 # 43.1.1
 
-## Breaking changes
-
-## New deprecations
-
-## New features
-
-## API changes
 ## Component changes
 
 
@@ -820,7 +813,7 @@ New MDCChipField API in the Chips component provides an interface through which 
 
 ```
 // Old code
-MDCFloatingButton *button = 
+MDCFloatingButton *button =
     [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeLargeIcon];
 
 // New code
