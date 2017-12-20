@@ -6,3 +6,4 @@
 Podfile\.lock
 CHANGELOG\.md
 scripts/release
+^\./bazel
