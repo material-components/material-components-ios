@@ -64,13 +64,13 @@ class ShrineCollectionViewController: UICollectionViewController {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-    var safeAreaInset: CGFloat = 0
+    var safeAreaInset: CGFloat = 20
     #if swift(>=3.2)
       if #available(iOS 11.0, *) {
-        safeAreaInset = self.view.safeAreaInsets.left
+        safeAreaInset += self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
       }
     #endif
-    let cellWidth = (floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5)) - safeAreaInset
+    let cellWidth = floor((self.view.frame.size.width - 10 - safeAreaInset) / 2)
     let cellHeight = cellWidth * 1.2
     return CGSize(width: cellWidth, height: cellHeight)
   }

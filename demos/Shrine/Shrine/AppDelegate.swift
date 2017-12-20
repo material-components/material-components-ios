@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     window = UIWindow(frame: UIScreen.main.bounds)
     let flexHeadVC = ShrineFlexibleHeaderContainerViewController()
-    self.window?.rootViewController = flexHeadVC
-    self.window?.makeKeyAndVisible()
+    window?.rootViewController = flexHeadVC
+    window?.makeKeyAndVisible()
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
 
