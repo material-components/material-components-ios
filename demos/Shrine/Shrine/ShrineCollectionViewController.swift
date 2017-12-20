@@ -64,9 +64,15 @@ class ShrineCollectionViewController: UICollectionViewController {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-      let cellWidth = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5)
-      let cellHeight = cellWidth * 1.2
-      return CGSize(width: cellWidth, height: cellHeight)
+    var safeAreaInset: CGFloat = 0
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+        safeAreaInset = self.view.safeAreaInsets.left
+      }
+    #endif
+    let cellWidth = (floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5)) - safeAreaInset
+    let cellHeight = cellWidth * 1.2
+    return CGSize(width: cellWidth, height: cellHeight)
   }
 
   override func collectionView(_ collectionView: UICollectionView,
@@ -127,10 +133,10 @@ class ShrineCollectionViewController: UICollectionViewController {
     headerView.trackingScrollView = collectionView
     headerView.maximumHeight = 440
     headerView.minimumHeight = 72
+    headerView.minMaxHeightIncludesSafeArea = false
     headerView.backgroundColor = UIColor.white
     headerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-    headerContentView.frame = (headerView.frame)
+    headerContentView.frame = (headerView.bounds)
     headerContentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     headerView.addSubview(headerContentView)
   }
