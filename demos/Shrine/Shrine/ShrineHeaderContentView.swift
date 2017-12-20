@@ -126,7 +126,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     pageControl.frame = CGRect(x: 0, y: boundsHeight - pageControlSize.height, width: boundsWidth,
       height: pageControlSize.height)
     let scrollWidth: CGFloat = boundsWidth * CGFloat(pages.count)
-    scrollView.frame = CGRect(x: 0, y: safeAreaInset, width: boundsWidth, height: boundsHeight - safeAreaInset)
+    scrollView.frame = CGRect(x: 0, y: 0, width: boundsWidth, height: boundsHeight)
     scrollView.contentSize = CGSize(width: scrollWidth, height: boundsHeight)
 
     let scrollViewOffsetX = CGFloat(pageControl.currentPage) * boundsWidth
