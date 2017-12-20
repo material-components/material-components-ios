@@ -18,7 +18,7 @@ anything that might be affecting the release.
 ## Cutting and testing the release
 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
-Read the tool's [../scripts/README-release.md](readme) to learn more about the tool.
+Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
 
 ### Cut a release branch and notify clients
 
