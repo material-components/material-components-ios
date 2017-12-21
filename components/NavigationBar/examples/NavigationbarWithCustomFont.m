@@ -33,7 +33,13 @@
   [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1.0f]];
 
   UIFont *font = [UIFont fontWithName:@"Zapfino" size:18.0];
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   NSDictionary<NSAttributedStringKey,id> *titleTextAttributes = @{ NSFontAttributeName : font };
+#else
+  NSDictionary<NSString *,id> *titleTextAttributes = @{ NSFontAttributeName : font };
+#endif
+
   [self.navBar setTitleTextAttributes:titleTextAttributes];
 
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
