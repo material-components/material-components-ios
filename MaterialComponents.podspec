@@ -299,6 +299,13 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/FeatureHighlight"
       extension.dependency "MaterialComponents/Themes"
     end
+    component.subspec "FontThemer" do |spec|
+      spec.ios.deployment_target = '8.0'
+      spec.public_header_files = "components/#{component.base_name}/src/#{spec.base_name}/*.h"
+      spec.source_files = "components/#{component.base_name}/src/#{spec.base_name}/*.{h,m}"
+      spec.dependency "MaterialComponents/FeatureHighlight/Component"
+      spec.dependency "MaterialComponents/Themes"
+    end
   end
 
   mdc.subspec "FlexibleHeader" do |component|

@@ -14,7 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
 #import "MDCFontScheme.h"
-#import "MDCTonalColorScheme.h"
-#import "MDCTonalPalette.h"
+
+@implementation MDCBasicFontScheme
+
+@end
