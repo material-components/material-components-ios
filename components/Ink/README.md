@@ -92,7 +92,7 @@ The simplest method of using ink in your views is to use a
 let myButton = UIButton(type: .system)
 myButton.setTitle("Tap Me", for: .normal)
 let inkTouchController = MDCInkTouchController(view: myButton)
-inkTouchController?.addInkView()
+inkTouchController.addInkView()
 ```
 
 #### Objective-C
@@ -133,8 +133,8 @@ myButton.setTitle("Tap Me", for: .normal)
 let myDelegate = MyDelegate()
 
 let inkTouchController = MDCInkTouchController(view: myButton)
-inkTouchController?.delegate = myDelegate
-inkTouchController?.addInkView()
+inkTouchController.delegate = myDelegate
+inkTouchController.addInkView()
 
 ```
 
