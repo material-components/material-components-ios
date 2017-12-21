@@ -1,3 +1,194 @@
+# 43.1.1
+
+## Component changes
+
+
+### ActivityIndicator
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### AnimationTiming
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### AppBar
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+* [An example showing a bug when using MDCFlexibleHeaderView inside a UITableViewController (#2744)](https://github.com/material-components/material-components-ios/commit/89be8d3119c6f4907dc02cc6616a5a694da52155) (Yarden Eitan)
+
+### BottomAppBar
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add NSCoding tests (#2740)](https://github.com/material-components/material-components-ios/commit/86002fe84d974489949c667447c8c36d2385780a) (Robert Moore)
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+* [Correct itemTitleFont behavior (#2736)](https://github.com/material-components/material-components-ios/commit/da57f335e85d4723178774be91b7086c8a031522) (Robert Moore)
+
+### BottomSheet
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Buttons
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+* [Extended FAB leading-align text and no minimum width (#2732)](https://github.com/material-components/material-components-ios/commit/26f02a360ccb4987b00d123561c670bce7691581) (Robert Moore)
+* [Fix docs/art for Floating Button layout (#2745)](https://github.com/material-components/material-components-ios/commit/30a1be6d9cd91214ac8a3d0433bbaaf6f8fbd7ab) (Robert Moore)
+
+### Chips
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+* [Pixel align subviews (#2739)](https://github.com/material-components/material-components-ios/commit/c63eeafda445eb95eb32d03feb6b3103367026b1) (Sam Morrison)
+
+### CollectionCells
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Collections
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Dialogs
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+* [Fixed retain cycle in MDCDialogTransition that causes MDCAlertController to never be released and presenting view to never be released. (#2684)](https://github.com/material-components/material-components-ios/commit/c7f9946ee3b444c536bab2a051564310c703ba40) (Randall Li)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+* [Fix crash in Dynamic Type handling (#2742)](https://github.com/material-components/material-components-ios/commit/a903493eeeaeeacac14114bf7b7eda198558c833) (ianegordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### HeaderStackView
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Ink
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### MaskedTransition
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Add Accessibility method tests (#2721)](https://github.com/material-components/material-components-ios/commit/8ea0d77f72b98ac2255b0f280ff6bb0080c3d553) (Robert Moore)
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### PageControl
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Palettes
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### ProgressView
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### ShadowElevations
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### ShadowLayer
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Slider
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Snackbar
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Tabs
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### TextFields
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+* [Formatting. (#2725)](https://github.com/material-components/material-components-ios/commit/09b3c9583d8dff111414badabc99467e2f4207a8) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Typography
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+---
+
 # 43.1.0
 
 ## API changes
@@ -622,7 +813,7 @@ New MDCChipField API in the Chips component provides an interface through which 
 
 ```
 // Old code
-MDCFloatingButton *button = 
+MDCFloatingButton *button =
     [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeLargeIcon];
 
 // New code

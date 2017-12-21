@@ -43,6 +43,10 @@ static NSString * const kCell = @"Cell";
   return YES;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 @implementation ActivityIndicatorExample (Supplemental)
