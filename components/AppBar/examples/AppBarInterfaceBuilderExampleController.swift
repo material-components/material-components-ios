@@ -78,4 +78,8 @@ extension AppBarInterfaceBuilderSwiftExample {
     return true
   }
 
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
+
 }

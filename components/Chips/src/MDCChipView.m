@@ -77,17 +77,23 @@ static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};
 static const UIEdgeInsets MDCChipTitlePadding = {3, 8, 4, 8};
 static const UIEdgeInsets MDCChipAccessoryPadding = {0, 0, 0, 0};
 
-static CGRect CGRectVerticallyCentered(CGRect rect, UIEdgeInsets padding, CGFloat height) {
+static CGRect CGRectVerticallyCentered(CGRect rect,
+                                       UIEdgeInsets padding,
+                                       CGFloat height,
+                                       CGFloat pixelScale) {
   CGFloat viewHeight = CGRectGetHeight(rect) + padding.top + padding.bottom;
-  return CGRectOffset(rect, 0, (height - viewHeight) / 2);
+  CGFloat yValue = (height - viewHeight) / 2;
+  yValue = MDCRound(yValue * pixelScale) / pixelScale;
+  return CGRectOffset(rect, 0, yValue);
 }
 
 static inline CGRect MDCChipBuildFrame(UIEdgeInsets insets,
                                        CGSize size,
                                        CGFloat xOffset,
-                                       CGFloat chipHeight) {
+                                       CGFloat chipHeight,
+                                       CGFloat pixelScale) {
   CGRect frame = CGRectMake(xOffset + insets.left, insets.top, size.width, size.height);
-  return CGRectVerticallyCentered(frame, insets, chipHeight);
+  return CGRectVerticallyCentered(frame, insets, chipHeight, pixelScale);
 }
 
 static inline CGFloat UIEdgeInsetsHorizontal(UIEdgeInsets insets) {
@@ -115,6 +121,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
 @property(nonatomic, strong) MDCInkView *inkView;
+@property(nonatomic, readonly) CGFloat pixelScale;
 @end
 
 @implementation MDCChipView {
@@ -503,7 +510,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     frame = MDCChipBuildFrame(_imagePadding,
                               selectedSize,
                               CGRectGetMinX(self.contentRect),
-                              CGRectGetHeight(self.frame));
+                              CGRectGetHeight(self.frame),
+                              self.pixelScale);
   }
   return frame;
 }
@@ -515,7 +523,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     size = [_accessoryView sizeThatFits:availableSize];
   }
   CGFloat xOffset = CGRectGetMaxX(self.contentRect) - size.width - _accessoryPadding.right;
-  return MDCChipBuildFrame(_accessoryPadding, size, xOffset, CGRectGetHeight(self.frame));
+  return MDCChipBuildFrame(_accessoryPadding,
+                           size,
+                           xOffset,
+                           CGRectGetHeight(self.frame),
+                           self.pixelScale);
 }
 
 - (CGRect)titleLabelFrame {
@@ -533,7 +545,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   titleSize.width = MAX(0, maximumTitleWidth);
 
   CGFloat imageRightEdge = CGRectGetMaxX(imageFrame) + _imagePadding.right;
-  return MDCChipBuildFrame(_titlePadding, titleSize, imageRightEdge, CGRectGetHeight(self.frame));
+  return MDCChipBuildFrame(_titlePadding,
+                           titleSize,
+                           imageRightEdge,
+                           CGRectGetHeight(self.frame),
+                           self.pixelScale);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -567,7 +583,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   CGSize contentSize =
       CGSizeMake(imageSize.width + titleSize.width + accessorySize.width,
                  MAX(imageSize.height, MAX(titleSize.height, accessorySize.height)));
-  return CGSizeExpandWithInsets(contentSize, self.contentPadding);
+  CGSize chipSize = CGSizeExpandWithInsets(contentSize, self.contentPadding);
+  return MDCSizeCeilWithScale(chipSize, self.pixelScale);
 }
 
 - (CGSize)intrinsicContentSize {
@@ -589,6 +606,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (BOOL)showAccessoryView {
   return self.accessoryView && !self.accessoryView.hidden;
+}
+
+- (CGFloat)pixelScale {
+  return self.window.screen ? self.window.screen.scale : UIScreen.mainScreen.scale;
 }
 
 #pragma mark - Ink Touches

@@ -21,12 +21,31 @@
 
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialTypography.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
 
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
+
+static NSString *const kMDCBottomNavigationBarDelegateKey = @"kMDCBottomNavigationBarDelegateKey";
+static NSString *const kMDCBottomNavigationBarTitleVisibilityKey =
+    @"kMDCBottomNavigationBarTitleVisibilityKey";
+static NSString *const kMDCBottomNavigationBarAlignmentKey = @"kMDCBottomNavigationBarAlignmentKey";
+static NSString *const KMDCBottomNavigationBarItemsKey = @"KMDCBottomNavigationBarItemsKey";
+static NSString *const kMDCBottomNavigationBarSelectedItemKey =
+    @"kMDCBottomNavigationBarSelectedItemKey";
+static NSString *const kMDCBottomNavigationBarItemTitleFontKey =
+    @"kMDCBottomNavigationBarItemTitleFontKey";
+static NSString *const kMDCBottomNavigationBarSelectedItemTintColorKey =
+    @"kMDCBottomNavigationBarSelectedItemTintColorKey";
+static NSString *const kMDCBottomNavigationBarUnselectedItemTintColorKey =
+    @"kMDCBottomNavigationBarUnselectedItemTintColorKey";
+static NSString *const kMDCBottomNavigationBarItemsDistributedKey =
+    @"kMDCBottomNavigationBarItemsDistributedKey";
+static NSString *const kMDCBottomNavigationBarTitleBelowItemKey =
+    @"kMDCBottomNavigationBarTitleBelowItemKey";
 
 static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
@@ -55,6 +74,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
+    self.backgroundColor = [UIColor whiteColor];
+    self.isAccessibilityElement = NO;
     [self commonMDCBottomNavigationBarInit];
   }
   return self;
@@ -64,20 +86,85 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCBottomNavigationBarInit];
+
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarDelegateKey]) {
+      _delegate = [aDecoder decodeObjectForKey:kMDCBottomNavigationBarDelegateKey];
+    }
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarTitleVisibilityKey]) {
+      _titleVisibility = [aDecoder decodeIntegerForKey:kMDCBottomNavigationBarTitleVisibilityKey];
+    }
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarAlignmentKey]) {
+      _alignment = [aDecoder decodeIntegerForKey:kMDCBottomNavigationBarAlignmentKey];
+    }
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarItemTitleFontKey]) {
+      _itemTitleFont = [aDecoder decodeObjectForKey:kMDCBottomNavigationBarItemTitleFontKey];
+    }
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarSelectedItemTintColorKey]) {
+      _selectedItemTintColor =
+          [aDecoder decodeObjectForKey:kMDCBottomNavigationBarSelectedItemTintColorKey];
+    }
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarUnselectedItemTintColorKey]) {
+      _unselectedItemTintColor =
+          [aDecoder decodeObjectForKey:kMDCBottomNavigationBarUnselectedItemTintColorKey];
+    }
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarItemsDistributedKey]) {
+      _itemsDistributed = [aDecoder decodeBoolForKey:kMDCBottomNavigationBarItemsDistributedKey];
+    }
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarTitleBelowItemKey]) {
+      _titleBelowItem = [aDecoder decodeBoolForKey:kMDCBottomNavigationBarTitleBelowItemKey];
+    }
+
+    // Should be second-last due to KVO
+    if ([aDecoder containsValueForKey:KMDCBottomNavigationBarItemsKey]) {
+      self.items = [aDecoder decodeObjectForKey:KMDCBottomNavigationBarItemsKey];
+    }
+    // Should be last due to updating views
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarSelectedItemKey]) {
+      self.selectedItem = [aDecoder decodeObjectForKey:kMDCBottomNavigationBarSelectedItemKey];
+    }
   }
   return self;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  if (self.delegate) {
+    [aCoder encodeObject:self.delegate forKey:kMDCBottomNavigationBarDelegateKey];
+  }
+  [aCoder encodeInteger:self.titleVisibility forKey:kMDCBottomNavigationBarTitleVisibilityKey];
+  [aCoder encodeInteger:self.alignment forKey:kMDCBottomNavigationBarAlignmentKey];
+  [aCoder encodeObject:self.items forKey:KMDCBottomNavigationBarItemsKey];
+  [aCoder encodeObject:self.selectedItem forKey:kMDCBottomNavigationBarSelectedItemKey];
+  if (self.itemTitleFont) {
+    [aCoder encodeObject:self.itemTitleFont forKey:kMDCBottomNavigationBarItemTitleFontKey];
+  }
+  if (self.selectedItemTintColor) {
+    [aCoder encodeObject:self.selectedItemTintColor
+                  forKey:kMDCBottomNavigationBarSelectedItemTintColorKey];
+  }
+  if (self.unselectedItemTintColor) {
+    [aCoder encodeObject:self.unselectedItemTintColor
+                  forKey:kMDCBottomNavigationBarUnselectedItemTintColorKey];
+  }
+  [aCoder encodeBool:self.itemsDistributed forKey:kMDCBottomNavigationBarItemsDistributedKey];
+  [aCoder encodeBool:self.titleBelowItem forKey:kMDCBottomNavigationBarTitleBelowItemKey];
+}
+
 - (void)commonMDCBottomNavigationBarInit {
-  self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
-  self.backgroundColor = [UIColor whiteColor];
-  self.isAccessibilityElement = NO;
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _alignment = MDCBottomNavigationBarAlignmentJustified;
   _itemsDistributed = YES;
   _titleBelowItem = YES;
+
+  // Remove any unarchived subviews and reconfigure the view hierarchy
+  if (self.subviews.count) {
+    NSArray *subviews = self.subviews;
+    for (UIView *view in subviews) {
+      [view removeFromSuperview];
+    }
+  }
   _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
   _containerView = [[UIView alloc] initWithFrame:CGRectZero];
   _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
@@ -86,6 +173,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   [self addSubview:_containerView];
   [self setElevation:kMDCBottomNavigationBarElevation];
   _itemViews = [NSMutableArray array];
+  _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
 }
 
 - (void)layoutSubviews {
@@ -316,6 +404,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     MDCBottomNavigationItemView *itemView =
         [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
     itemView.title = item.title;
+    itemView.itemTitleFont = self.itemTitleFont;
     itemView.selectedItemTintColor = self.selectedItemTintColor;
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
     itemView.titleVisibility = self.titleVisibility;

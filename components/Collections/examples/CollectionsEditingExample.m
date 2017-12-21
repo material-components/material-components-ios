@@ -174,4 +174,8 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
   return NO;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end

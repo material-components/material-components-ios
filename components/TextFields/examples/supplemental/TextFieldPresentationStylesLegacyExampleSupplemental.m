@@ -71,4 +71,8 @@
   return NO;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
