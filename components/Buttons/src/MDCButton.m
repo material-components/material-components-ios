@@ -716,15 +716,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateBorderColor];
 }
 
-- (void)updateBorderColor {
-  UIColor *color = _borderColors[@(self.state)];
-  if (!color && self.state != UIControlStateNormal) {
-    // We fall back to UIControlStateNormal if there is no value for the current state.
-    color = _borderColors[@(UIControlStateNormal)];
-  }
-  self.layer.borderColor = color ? color.CGColor : NULL;
-}
-
 #pragma mark - Border Width
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
@@ -760,31 +751,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _fonts[@(state)] = font;
 
   [self updateTitleFont];
-}
-
-- (void)updateTitleFont {
-  // Retreive any custom font that has been set
-  UIFont *font = _fonts[@(self.state)];
-  if (!font && self.state != UIControlStateNormal) {
-    // We fall back to UIControlStateNormal if there is no value for the current state.
-    font = _fonts[@(UIControlStateNormal)];
-  }
-
-  if (!font) {
-    // TODO(#2709): Have a single source of truth for fonts
-    // Migrate to [UIFont standardFont] when possible
-    font = [MDCTypography buttonFont];
-  }
-
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    // Dynamic type is enabled so apply scaling
-    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
-                              scaledForDynamicType:YES];
-  }
-
-  self.titleLabel.font = font;
-
-  [self setNeedsLayout];
 }
 
 #pragma mark - Private methods
@@ -908,6 +874,40 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       [self updateDisabledTitleColor];
     }
   }
+}
+
+- (void)updateBorderColor {
+  UIColor *color = _borderColors[@(self.state)];
+  if (!color && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
+    color = _borderColors[@(UIControlStateNormal)];
+  }
+  self.layer.borderColor = color ? color.CGColor : NULL;
+}
+
+- (void)updateTitleFont {
+  // Retreive any custom font that has been set
+  UIFont *font = _fonts[@(self.state)];
+  if (!font && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
+    font = _fonts[@(UIControlStateNormal)];
+  }
+
+  if (!font) {
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    font = [MDCTypography buttonFont];
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    // Dynamic type is enabled so apply scaling
+    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                              scaledForDynamicType:YES];
+  }
+
+  self.titleLabel.font = font;
+
+  [self setNeedsLayout];
 }
 
 #pragma mark - Dynamic Type

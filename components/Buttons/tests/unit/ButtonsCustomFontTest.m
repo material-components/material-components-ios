@@ -27,11 +27,11 @@
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
 
-  // When
   NSString *customFontName = @"Zapfino";
   UIFont *customFont = [UIFont fontWithName:customFontName size:14.0];
   XCTAssert(customFont != nil, @"Unable to instantiate font named %@", customFontName);
 
+  // When
   [button setTitleFont:customFont forState:UIControlStateNormal];
 
   // Then
@@ -44,14 +44,13 @@
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
 
-  // When
   NSString *customFontName = @"Zapfino";
   UIFont *customFont = [UIFont fontWithName:customFontName size:14.0];
   XCTAssert(customFont != nil, @"Unable to instantiate font named %@", customFontName);
 
+  // When
+  // Set font to custom then set to nil
   [button setTitleFont:customFont forState:UIControlStateNormal];
-
-  // Set font to nil
   [button setTitleFont:nil forState:UIControlStateNormal];
 
   UIFont *finalTitleFont = [button titleFontForState:UIControlStateNormal];
