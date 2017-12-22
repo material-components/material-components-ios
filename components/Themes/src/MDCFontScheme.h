@@ -71,8 +71,6 @@
  */
 @interface MDCBasicFontScheme : NSObject <MDCFontScheme>
 
-//TODO : Add NSCopying
-
 @property(nonatomic, nullable) UIFont *primaryColor;
 @property(nonatomic, nullable) UIFont *display1;
 @property(nonatomic, nullable) UIFont *display2;
