@@ -34,6 +34,11 @@
 @property(nonatomic) UIButton *button;
 @end
 
+@interface FeatureHighlightThemerExample : UIViewController
+@property(nonatomic) UILabel *infoLabel;
+@property(nonatomic) UIButton *button;
+@end
+
 @interface FeatureHighlightShownViewExample : UIViewController
 @property(nonatomic) UILabel *infoLabel;
 @property(nonatomic) UIButton *button;
