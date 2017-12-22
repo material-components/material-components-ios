@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-@import MaterialComponents.MaterialTabs;
+#import "MaterialTabs.h"
 
 @interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
 @end

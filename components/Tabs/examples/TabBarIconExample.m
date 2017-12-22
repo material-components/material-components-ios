@@ -16,9 +16,9 @@
 
 #import "supplemental/TabBarIconExampleSupplemental.h"
 
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialPalettes;
-@import MaterialComponents.MaterialTabs;
+#import "MaterialAppBar.h"
+#import "MaterialPalettes.h"
+#import "MaterialTabs.h"
 
 @implementation TabBarIconExample
 
