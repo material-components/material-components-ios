@@ -59,6 +59,7 @@ mdc_objc_library(
     deps = [
         ":Chips",
         ":private",
+        "//components/private/ShapeLibrary",
     ],
     visibility = ["//visibility:private"],
 )
