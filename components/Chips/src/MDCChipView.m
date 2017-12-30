@@ -246,7 +246,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [aCoder encodeUIEdgeInsets:_contentPadding forKey:MDCChipContentPaddingKey];
   [aCoder encodeUIEdgeInsets:_imagePadding forKey:MDCChipImagePaddingKey];
   [aCoder encodeUIEdgeInsets:_titlePadding forKey:MDCChipTitlePaddingKey];
-  [aCoder encodeUIEdgeInsets:_accessoryPadding forKey:MDCChipTitlePaddingKey];
+  [aCoder encodeUIEdgeInsets:_accessoryPadding forKey:MDCChipAccessoryPaddingKey];
   [aCoder encodeObject:_inkView forKey:MDCChipInkViewKey];
   [aCoder encodeBool:_mdc_adjustsFontForContentSizeCategory forKey:MDCChipAdjustsFontForContentSizeKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCChipBackgroundColorsKey];
