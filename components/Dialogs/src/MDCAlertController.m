@@ -124,6 +124,15 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return self;
 }
 
+- (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
+                                 bundle:(nullable NSBundle *)nibBundleOrNil {
+  return [self initWithTitle:nil message:nil];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
+  return [self initWithTitle:nil message:nil];
+}
+
 - (NSString *)title {
   return _alertTitle;
 }
