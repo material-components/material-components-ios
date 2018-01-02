@@ -24,6 +24,16 @@
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
 
+static NSString *const MDCAlertControllerTitleKey = @"";
+static NSString *const MDCAlertControllerMessageKey = @"";
+static NSString *const MDCAlertControllerActionsKey = @"";
+static NSString *const MDCAlertControllerContentScrollViewKey = @"";
+static NSString *const MDCAlertControllerActionsScrollViewKey = @"";
+static NSString *const MDCAlertControllerTitleLabelKey = @"";
+static NSString *const MDCAlertControllerMessageLabelKey = @"";
+static NSString *const MDCAlertControllerVerticalActionsLayoutKey = @"";
+static NSString *const MDCAlertControllerAdjustsFontForContentSizeCategoryKey = @"";
+
 // The Bundle for string resources.
 static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
@@ -127,7 +137,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   }
   return self;
 }
-
 
 - (NSString *)title {
   return _alertTitle;
