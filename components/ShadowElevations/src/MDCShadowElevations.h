@@ -96,4 +96,5 @@ FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSnackbar;
 FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSubMenu;
 
 /** The shadow elevation of a switch. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSwitch;
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSwitch
+    __deprecated_msg("Prefer UISwitch");

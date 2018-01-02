@@ -78,8 +78,6 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
   [_paper setElevation:points];
   if (points == MDCShadowElevationNone) {
     _elevationLabel.text = @"MDCShadowElevationNone";
- } else if (points == MDCShadowElevationSwitch) {
-    _elevationLabel.text = @"MDCShadowElevationSwitch";
   } else if (points == MDCShadowElevationRaisedButtonResting) {
     _elevationLabel.text = @"MDCShadowElevationRaisedButtonResting";
   } else if (points == MDCShadowElevationRefresh) {
