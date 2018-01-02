@@ -357,7 +357,7 @@ static const CGFloat kOpacityMedium = 0.87f;
 #pragma clang diagnostic ignored "-Wpartial-availability"
     systemFont = [UIFont systemFontOfSize:mdcFont.pointSize weight:UIFontWeightRegular];
     } else {
-      systemFont = [UIFont fontWithName:@"HelveticaNeue" size:mdcFont.pointSize];
+      systemFont = [UIFont systemFontOfSize:mdcFont.pointSize];
     }
 #pragma clang diagnostic pop
 

@@ -949,7 +949,7 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, id<MDCColorScheme> colorSchem
         font = [UIFont systemFontOfSize:11 weight:UIFontWeightMedium];
 #pragma clang diagnostic pop
       } else {
-        font = [UIFont fontWithName:@"HelveticaNeue" size:11];
+        font = [UIFont systemFontOfSize:11];
       }
       NSDictionary* labelFontAttributes = @{
         NSFontAttributeName : font,
