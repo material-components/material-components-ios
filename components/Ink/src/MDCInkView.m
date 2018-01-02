@@ -23,7 +23,6 @@ static NSString *const MDCInkViewAnimationDelegateKey = @"MDCInkViewAnimationDel
 static NSString *const MDCInkViewInkStyleKey = @"MDCInkViewInkStyleKey";
 static NSString *const MDCInkViewUsesLegacyInkRippleKey = @"MDCInkViewUsesLegacyInkRippleKey";
 static NSString *const MDCInkViewMaskLayerKey = @"MDCInkViewMaskLayerKey";
-static NSString *const MDCInkViewActiveInkLayerKey = @"MDCInkViewActiveInkLayerKey";
 static NSString *const MDCInkViewUsesCustomInkCenterKey = @"MDCInkViewUsesCustomInkCenterKey";
 static NSString *const MDCInkViewCustomInkCenterKey = @"MDCInkViewCustomInkCenterKey";
 static NSString *const MDCInkViewInkColorKey = @"MDCInkViewInkColorKey";
@@ -82,9 +81,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
     } else {
       _usesLegacyInkRipple = YES;
     }
-    if ([aDecoder containsValueForKey:MDCInkViewActiveInkLayerKey]) {
-      _activeInkLayer = [aDecoder decodeObjectForKey:MDCInkViewActiveInkLayerKey];
-    }
     if ([aDecoder containsValueForKey:MDCInkViewInkStyleKey]) {
       self.inkStyle = [aDecoder decodeIntegerForKey:MDCInkViewInkStyleKey];
     }
@@ -115,9 +111,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
   [aCoder encodeInteger:self.inkStyle forKey:MDCInkViewInkStyleKey];
   [aCoder encodeBool:self.usesLegacyInkRipple forKey:MDCInkViewUsesLegacyInkRippleKey];
   [aCoder encodeObject:self.maskLayer forKey:MDCInkViewMaskLayerKey];
-  if (self.activeInkLayer) {
-    [aCoder encodeObject:self.activeInkLayer forKey:MDCInkViewActiveInkLayerKey];
-  }
 
   // The following are derived properties, but `layer` may not get encoded by the superclass
   [aCoder encodeBool:self.usesCustomInkCenter forKey:MDCInkViewUsesCustomInkCenterKey];

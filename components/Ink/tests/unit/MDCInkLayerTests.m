@@ -20,16 +20,20 @@
 
 #pragma mark - Fake classes
 
-@interface FakeMDCInkLayerAnimationDelegate : NSObject <MDCInkLayerDelegate, NSCoding>
+@interface FakeMDCInkLayerAnimationDelegate : NSObject <MDCInkLayerDelegate, NSSecureCoding>
 @property(nonatomic, strong) MDCInkLayer *inkLayer;
 @end
 
 @implementation FakeMDCInkLayerAnimationDelegate
 
++ (BOOL)supportsSecureCoding {
+  return YES;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
   if (self) {
-    _inkLayer = [aDecoder decodeObjectForKey:@"inkLayer"];
+    _inkLayer = [aDecoder decodeObjectOfClass:[MDCInkLayer class] forKey:@"inkLayer"];
   }
   return self;
 }
@@ -62,12 +66,37 @@
   XCTAssertEqualObjects(inkLayer.inkColor, [UIColor colorWithWhite:0 alpha:(CGFloat)0.08]);
 }
 
-- (void)testEncoding {
+- (void)testInitWithLayer {
   // Given
   FakeMDCInkLayerAnimationDelegate *delegate = [[FakeMDCInkLayerAnimationDelegate alloc] init];
   MDCInkLayer *inkLayer = [[MDCInkLayer alloc] init];
   delegate.inkLayer = inkLayer;
   inkLayer.delegate = delegate;
+  inkLayer.endAnimationDelay = 1;
+  inkLayer.initialRadius = 2;
+  inkLayer.finalRadius = 3;
+  inkLayer.maxRippleRadius = 4;
+  inkLayer.inkColor = UIColor.magentaColor;
+
+  // When
+  MDCInkLayer *copiedLayer = [[MDCInkLayer alloc] initWithLayer:inkLayer];
+
+  // Then
+  XCTAssertNil(copiedLayer.delegate);
+  XCTAssertEqualWithAccuracy(copiedLayer.endAnimationDelay, inkLayer.endAnimationDelay, 0.0001);
+  XCTAssertEqualWithAccuracy(copiedLayer.initialRadius, inkLayer.initialRadius, 0.0001);
+  XCTAssertEqualWithAccuracy(copiedLayer.finalRadius, inkLayer.finalRadius, 0.0001);
+  XCTAssertEqualWithAccuracy(copiedLayer.maxRippleRadius, inkLayer.maxRippleRadius, 0.0001);
+  XCTAssertEqualObjects(copiedLayer.inkColor, inkLayer.inkColor);
+  XCTAssertEqual(copiedLayer.sublayers.count, inkLayer.sublayers.count);
+}
+
+- (void)testEncoding {
+  // Given
+  FakeMDCInkLayerAnimationDelegate *delegate = [[FakeMDCInkLayerAnimationDelegate alloc] init];
+  MDCInkLayer *inkLayer = [[MDCInkLayer alloc] init];
+  delegate.inkLayer = inkLayer;
+  inkLayer.animationDelegate = delegate;
   inkLayer.endAnimationDelay = 1;
   inkLayer.initialRadius = 2;
   inkLayer.finalRadius = 3;
