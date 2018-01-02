@@ -42,8 +42,6 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 
 @end
 
-
-
 #pragma mark - Tests
 
 @interface MDCAlertControllerTests : XCTestCase
