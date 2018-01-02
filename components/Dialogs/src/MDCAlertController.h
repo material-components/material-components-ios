@@ -42,20 +42,6 @@
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
                                          message:(nullable NSString *)message;
 
-/**
- Creates an MDCAlertController for displaying an alert to the user.
-
- After creating the alert controller, add actions to the controller by calling -addAction.
-
- @note Most alerts don't need titles. Use only for high-risk situations.
-
- @param title The title of the alert.
- @param message Descriptive text that summarizes a decision in a sentence of two.
- @return an MDCAlertController.
- */
-- (nonnull instancetype)initWithTitle:(nullable NSString *)title
-                              message:(nullable NSString *)message NS_DESIGNATED_INITIALIZER;
-
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
                                  bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;

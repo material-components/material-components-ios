@@ -34,10 +34,10 @@
   XCTAssertNil(alert.message);
 }
 
-- (void)testInitWithTitleMessage {
+- (void)testAlertControllerWithTitleMessage {
   // Given
-  MDCAlertController *alert = [[MDCAlertController alloc] initWithTitle:@"title"
-                                                                message:@"message"];
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
 
   // Then
   XCTAssertNotNil(alert.actions);
