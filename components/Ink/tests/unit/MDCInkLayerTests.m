@@ -110,7 +110,7 @@
   MDCInkLayer *unarchivedInkLayer = unarchivedDelegate.inkLayer;
 
   // Then
-  XCTAssertEqual(unarchivedInkLayer.delegate, unarchivedDelegate);
+  XCTAssertEqual(unarchivedInkLayer.animationDelegate, unarchivedDelegate);
   XCTAssertEqualWithAccuracy(unarchivedInkLayer.endAnimationDelay,
                              inkLayer.endAnimationDelay,
                              0.0001);
