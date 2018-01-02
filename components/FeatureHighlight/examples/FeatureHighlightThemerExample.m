@@ -24,9 +24,7 @@
 
 @implementation FeatureHighlightThemerExample
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
+- (void)applyFeatureHighlightTheming {
   // You would normally set your UIAppearance properties in your AppDelegate in
   // applicationDidFinishLoading.  We are doing it here to keep the revalent
   // code in the sample.
@@ -45,6 +43,12 @@
                             toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
   [MDCFeatureHighlightFontThemer applyFontScheme:fontScheme
                           toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  [self applyFeatureHighlightTheming];
 
   self.view.backgroundColor = [UIColor whiteColor];
 

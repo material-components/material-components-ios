@@ -17,8 +17,12 @@
 #import <UIKit/UIKit.h>
 
 /**
- A color scheme comprised of set of primary and secondary colors. Material design guidelines
- recommend using primary and secondary colors with light and dark color variants.
+ A font scheme comprised of set of UIFonts that are associated with various text styles.
+
+ By apply the scheme to various components using themers one can set fonts on a single instance
+ of a components or on all instances of that component using the UIAppearance proxy.
+
+ If a font in a scheme is nil, a component should use its default font.
  */
 @protocol MDCFontScheme <NSObject>
 
