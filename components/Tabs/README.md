@@ -40,6 +40,11 @@ pod 'MaterialComponents/Tabs'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
+To add this component along with its themer and other related extensions, please add the following instead:
+``` bash
+pod 'MaterialComponents/Tabs+Extensions'
+```
+
 Then, run the following command:
 
 ``` bash
