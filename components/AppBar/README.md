@@ -44,6 +44,11 @@ pod 'MaterialComponents/AppBar'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
+To add this component along with its themer and other related extensions, please add the following instead:
+``` bash
+pod 'MaterialComponents/AppBar+Extensions'
+```
+
 Then, run the following command:
 
 ``` bash
