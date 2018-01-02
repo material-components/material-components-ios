@@ -76,7 +76,7 @@
   inkView.animationDelegate = delegate;
   inkView.inkColor = UIColor.purpleColor;
   inkView.inkStyle = MDCInkStyleUnbounded;
-  inkView.maxRippleRadius = 9.1;
+  inkView.maxRippleRadius = (CGFloat)9.1;
 
   // When
   NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:delegate];
@@ -108,7 +108,7 @@
   inkView.animationDelegate = delegate;
   inkView.inkColor = UIColor.purpleColor;
   inkView.inkStyle = MDCInkStyleUnbounded;
-  inkView.maxRippleRadius = 9.1;
+  inkView.maxRippleRadius = (CGFloat)9.1;
 
   // When
   NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:delegate];
