@@ -17,6 +17,14 @@
 #import "MDCInkLayer.h"
 #import "MaterialMath.h"
 
+static NSString *const MDCInkLayerAnimationDelegateClassNameKey = @"MDCInkLayerAnimationDelegateClassNameKey";
+static NSString *const MDCInkLayerAnimationDelegateKey = @"MDCInkLayerAnimationDelegateKey";
+static NSString *const MDCInkLayerEndAnimationDelayKey = @"MDCInkLayerEndAnimationDelayKey";
+static NSString *const MDCInkLayerFinalRadiusKey = @"MDCInkLayerFinalRadiusKey";
+static NSString *const MDCInkLayerInitialRadiusKey = @"MDCInkLayerInitialRadiusKey";
+static NSString *const MDCInkLayerMaxRippleRadiusKey = @"MDCInkLayerMaxRippleRadiusKey";
+static NSString *const MDCInkLayerInkColorKey = @"MDCInkLayerInkColorKey";
+
 static const CGFloat MDCInkLayerCommonDuration = 0.083f;
 static const CGFloat MDCInkLayerEndFadeOutDuration = 0.15f;
 static const CGFloat MDCInkLayerStartScalePositionDuration = 0.333f;
@@ -33,13 +41,25 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 
 @implementation MDCInkLayer
 
++ (BOOL)supportsSecureCoding {
+  return YES;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+  }
+  return self;
+}
+
 - (instancetype)initWithLayer:(id)layer {
   self = [super initWithLayer:layer];
   if (self) {
     _endAnimationDelay = 0;
     _finalRadius = 0;
     _initialRadius = 0;
-    _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
+    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
     _startAnimationActive = NO;
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
@@ -52,6 +72,57 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     }
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+
+  if (self) {
+    NSString *delegateClassName;
+    if ([aDecoder containsValueForKey:MDCInkLayerAnimationDelegateClassNameKey]) {
+      delegateClassName = [aDecoder decodeObjectOfClass:[NSString class]
+                                                 forKey:MDCInkLayerAnimationDelegateClassNameKey];
+    }
+    if (delegateClassName.length > 0 &&
+        [aDecoder containsValueForKey:MDCInkLayerAnimationDelegateKey]) {
+      _animationDelegate = [aDecoder decodeObjectOfClass:NSClassFromString(delegateClassName)
+                                                  forKey:MDCInkLayerAnimationDelegateKey];
+    }
+    if ([aDecoder containsValueForKey:MDCInkLayerInkColorKey]) {
+      _inkColor = [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCInkLayerInkColorKey];
+    } else {
+      _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+    }
+    if ([aDecoder containsValueForKey:MDCInkLayerEndAnimationDelayKey]) {
+      _endAnimationDelay = (CGFloat)[aDecoder decodeDoubleForKey:MDCInkLayerEndAnimationDelayKey];
+    }
+    if ([aDecoder containsValueForKey:MDCInkLayerFinalRadiusKey]) {
+      _finalRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCInkLayerFinalRadiusKey];
+    }
+    if ([aDecoder containsValueForKey:MDCInkLayerInitialRadiusKey]) {
+      _initialRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCInkLayerInitialRadiusKey];
+    }
+    if ([aDecoder containsValueForKey:MDCInkLayerMaxRippleRadiusKey]) {
+      _maxRippleRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCInkLayerMaxRippleRadiusKey];
+    }
+  }
+
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+
+  if (self.animationDelegate && [self.animationDelegate conformsToProtocol:@protocol(NSCoding)]) {
+    [aCoder encodeObject:NSStringFromClass([self.animationDelegate class])
+                  forKey:MDCInkLayerAnimationDelegateClassNameKey];
+    [aCoder encodeObject:self.animationDelegate forKey:MDCInkLayerAnimationDelegateKey];
+  }
+  [aCoder encodeDouble:self.endAnimationDelay forKey:MDCInkLayerEndAnimationDelayKey];
+  [aCoder encodeDouble:self.finalRadius forKey:MDCInkLayerFinalRadiusKey];
+  [aCoder encodeDouble:self.initialRadius forKey:MDCInkLayerInitialRadiusKey];
+  [aCoder encodeDouble:self.maxRippleRadius forKey:MDCInkLayerMaxRippleRadiusKey];
+  [aCoder encodeObject:self.inkColor forKey:MDCInkLayerInkColorKey];
 }
 
 - (void)setNeedsLayout {
