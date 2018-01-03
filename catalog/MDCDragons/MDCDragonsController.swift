@@ -110,10 +110,11 @@ class MDCDragonsController: UIViewController,
     let tapgesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     tapgesture.delegate = self
     view.addGestureRecognizer(tapgesture)
-    
-    if #available(iOS 11.0, *) {
-      tableView.contentInsetAdjustmentBehavior = .always
-    }
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+        tableView.contentInsetAdjustmentBehavior = .always
+      }
+    #endif
   }
   
   func preiOS11Constraints() {
@@ -323,6 +324,7 @@ extension MDCDragonsController {
     tableView.reloadData()
   }
   
+  @objc(gestureRecognizer:shouldReceiveTouch:)
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     if gestureRecognizer is UITapGestureRecognizer {
       let location = touch.location(in: tableView)
