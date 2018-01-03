@@ -4,10 +4,10 @@
 
 Podspec now separates out extensions (themers, accessibility additions, etc.) into their own podspec.
 
-If you wish to add a component and all of its extensions, update your Podfile and add "+Extensions" to the 
-component.
+If you wish to add a component and all of its extensions, update your Podfile and add "+Extensions"
+to the component.
 
-To include Activity Indicator and its extensions you would write: 
+To include Activity Indicator and its extensions you would write:
 ```
 pod 'MaterialComponents/ActivityIndicator+Extensions'
 ```
