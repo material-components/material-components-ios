@@ -101,6 +101,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
     SEL panSelector = @selector(handlePanGesture:);
     _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:panSelector];
     _panGestureRecognizer.delegate = self;
+    _panGestureRecognizer.maximumNumberOfTouches = 1;
     [_collectionView addGestureRecognizer:_panGestureRecognizer];
   }
   return self;
