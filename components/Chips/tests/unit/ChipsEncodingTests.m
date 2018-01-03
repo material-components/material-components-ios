@@ -61,8 +61,7 @@ static UIImage *FakeImage(void) {
   MDCChipView *unarchivedChip = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
 
   // Then
-  // TODO(#2772): Check for equality once MDCInkView supports encoding
-  XCTAssertNotEqualObjects(unarchivedChip.inkColor, chip.inkColor);
+  XCTAssertEqualObjects(unarchivedChip.inkColor, chip.inkColor);
   XCTAssertEqualObjects(unarchivedChip.titleLabel.text, chip.titleLabel.text);
   XCTAssertNotNil(unarchivedChip.imageView.image);
   XCTAssertNotNil(unarchivedChip.selectedImageView.image);
