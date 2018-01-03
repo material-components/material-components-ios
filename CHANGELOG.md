@@ -1,14 +1,18 @@
-# #develop#
+# 44.0.0
 
 ## Breaking changes
 
-## New deprecations
+Podspec now separates out extensions (themers, accessibility additions, etc.) into their own podspec.
 
-## New features
+If you wish to add a component and all of its extensions, update your Podfile and add "+Extensions" to the 
+component.
 
-## API changes
+To include Activity Indicator and its extensions you would write: 
+```
+pod 'MaterialComponents/ActivityIndicator+Extensions'
+```
+
 ## Component changes
-
 
 ### ActivityIndicator
 
