@@ -1,7 +1,167 @@
-# 43.1.1
+# 44.0.0
+
+## Breaking changes
+
+Podspec now separates out extensions (themers, accessibility additions, etc.) into their own podspec.
+
+If you wish to add a component and all of its extensions, update your Podfile and add "+Extensions"
+to the component.
+
+To include Activity Indicator and its extensions you would write:
+```
+pod 'MaterialComponents/ActivityIndicator+Extensions'
+```
 
 ## Component changes
 
+### ActivityIndicator
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### BottomNavigation
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### BottomSheet
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### Buttons
+
+#### Changes
+
+* [Cleanup (#2759)](https://github.com/material-components/material-components-ios/commit/ab4e4ea0da213c539480b863ce6734cc6fa29a40) (ianegordon)
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### Collection Cells
+
+#### Changes
+
+* [Fix accessoryPadding encoding key (#2773)](https://github.com/material-components/material-components-ios/commit/873e6874ef6b024123ac3a8ca6a62e35d5dba7f9) (Robert Moore)
+* [Use correct title label text property in README.md (#2776)](https://github.com/material-components/material-components-ios/commit/5866de850ca1857acd3a70ff0c6a732069496809) (heinberg)
+* [[Ink] Add NSCoding support to MDCInkView/Layer (#2777)](https://github.com/material-components/material-components-ios/commit/85647affe85fca41592855882215df043eaeff74) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [[Examples/Tests] Convert @imports to imports (#2761)](https://github.com/material-components/material-components-ios/commit/e03186525d38969d754ffd6005eb80499fd85673) (Robert Moore)
+
+### Dialogs
+
+#### Changes
+
+* [Add designated initializer to MDCAlertController (#2778)](https://github.com/material-components/material-components-ios/commit/ae955a3af028e291462ff8700d8aad0d5f72eebb) (Robert Moore)
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+* [[Examples/Tests] Convert @imports to imports (#2761)](https://github.com/material-components/material-components-ios/commit/e03186525d38969d754ffd6005eb80499fd85673) (Robert Moore)
+
+### Feature Highlights
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### HeaderStackView
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### Ink
+
+#### Changes
+
+* [Add NSCoding support to MDCInkView/Layer (#2777)](https://github.com/material-components/material-components-ios/commit/85647affe85fca41592855882215df043eaeff74) (Robert Moore)
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+* [Update docs to remove optional chaining for MDCInkTouchController instances (#2756)](https://github.com/material-components/material-components-ios/commit/fc790a4a855a4615508719cab971592881bacc56) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Example showing custom font (#2720)](https://github.com/material-components/material-components-ios/commit/06813993fb040c528c3a5a37ad9aee708fc671ed) (ianegordon)
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### PageControl
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### ProgressView
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### Slider
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### Snackbar
+
+#### Changes
+
+* [[Examples/Tests] Convert @imports to imports (#2761)](https://github.com/material-components/material-components-ios/commit/e03186525d38969d754ffd6005eb80499fd85673) (Robert Moore)
+* [[SnackBar] Increase unit test timeout (#2750)](https://github.com/material-components/material-components-ios/commit/e297a8f9e84367d91321cb5fb9b40647179f3020) (Robert Moore)
+
+### Tabs
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+* [Update README.md](https://github.com/material-components/material-components-ios/commit/9987ff35b21cf933103d485e69fd8cec60b19898) (ianegordon)
+* [[Examples/Tests] Convert @imports to imports (#2761)](https://github.com/material-components/material-components-ios/commit/e03186525d38969d754ffd6005eb80499fd85673) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Update MaterialComponents podspec to separate extensions from component. Breaking change, please see description when sending out a new release (#2748)](https://github.com/material-components/material-components-ios/commit/6df22d2cd62e9da6e685890042e3f8748f9f6c19) (Yarden Eitan)
+
+### Themes
+
+#### Changes
+
+* [[Examples/Tests] Convert @imports to imports (#2761)](https://github.com/material-components/material-components-ios/commit/e03186525d38969d754ffd6005eb80499fd85673) (Robert Moore)
+
+### Typography
+
+#### Changes
+
+* [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
+### Typography
+
+#### Changes
+
+* [[Tests/Catalog] Suppress partial availability warnings (#2780)](https://github.com/material-components/material-components-ios/commit/25de3728070a8681384fb22919689490d3b2f3ab) (Robert Moore)
+
+---
+
+# 43.1.1
+
+## Component changes
 
 ### ActivityIndicator
 
@@ -33,7 +193,9 @@
 #### Changes
 
 * [Add NSCoding tests (#2740)](https://github.com/material-components/material-components-ios/commit/86002fe84d974489949c667447c8c36d2385780a) (Robert Moore)
+
 * [Added isPresentable to catalog files, ported over ZShadow to dragons. (#2726)](https://github.com/material-components/material-components-ios/commit/29d760c7d6cd8694cc35118ec66575f15201a636) (Yarden Eitan)
+
 * [Correct itemTitleFont behavior (#2736)](https://github.com/material-components/material-components-ios/commit/da57f335e85d4723178774be91b7086c8a031522) (Robert Moore)
 
 ### BottomSheet

@@ -102,7 +102,7 @@ chips.
 #### Swift
 ``` swift
 let chipView = MDCChipView()
-chipView.title = "Tap me"
+chipView.titleLabel.text = "Tap me"
 chipView.setTitleColor(UIColor.red, for: .selected)
 chipView.sizeToFit()
 chipView.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -113,7 +113,7 @@ self.view.addSubview(chipView)
 
 ``` objc
 MDCChipView *chipView = [[MDCChipView alloc] init];
-chipView.title = @"Tap me";
+chipView.titleLabel.text = @"Tap me";
 [chipView setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
 [chipView sizeToFit];
 [chipView addTarget:self

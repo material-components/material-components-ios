@@ -20,8 +20,8 @@
 
 #import "TabBarViewControllerExampleSupplemental.h"
 
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialPalettes;
+#import "MaterialAppBar.h"
+#import "MaterialPalettes.h"
 
 @interface TBVCSampleView : UIView
 @end

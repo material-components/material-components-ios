@@ -106,6 +106,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return alertController;
 }
 
+- (instancetype)init {
+  return [self initWithTitle:nil message:nil];
+}
+
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message {
   self = [super initWithNibName:nil bundle:nil];

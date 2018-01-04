@@ -12,7 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl", "mdc_public_objc_library")
+load("//:material_components_ios.bzl",
+     "mdc_objc_library",
+     "mdc_public_objc_library")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -21,4 +24,35 @@ mdc_public_objc_library(
     deps = [
         "//components/private/Application",
     ],
+    sdk_frameworks = [
+        "CoreGraphics",
+        "UIKit",
+    ],
+)
+
+mdc_objc_library(
+    name = "unit_test_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/*.m",
+        "tests/unit/*.h",
+    ]),
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
+    ],
+    deps = [
+        ":KeyboardWatcher",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+ios_unit_test(
+    name = "unit_tests",
+    deps = [
+      ":unit_test_sources",
+    ],
+    minimum_os_version = "8.0",
+    visibility = ["//visibility:private"],
+    size = "small",
 )

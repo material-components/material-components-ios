@@ -30,6 +30,8 @@
 
   // Then
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
     XCTAssertEqual([fontLoader lightFontOfSize:size],
                    [UIFont systemFontOfSize:size weight:UIFontWeightLight]);
     XCTAssertEqual([fontLoader regularFontOfSize:size],
@@ -38,6 +40,7 @@
                    [UIFont systemFontOfSize:size weight:UIFontWeightMedium]);
     XCTAssertEqual([fontLoader boldFontOfSize:size],
                    [UIFont systemFontOfSize:size weight:UIFontWeightSemibold]);
+#pragma clang diagnostic pop
   } else {
     // Fallback on earlier versions
     XCTAssertEqual([fontLoader lightFontOfSize:size],
@@ -110,7 +113,12 @@
   CGFloat MDCFontWeightMedium = (CGFloat)0.23;
   // Ensure that our placehold value for UIFontWeightMedium matches the real value.
   // We are defining it for < iOS 8.2 in MDCTypography.m
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+  if (&UIFontWeightMedium != NULL) {
   XCTAssertEqualWithAccuracy(UIFontWeightMedium, MDCFontWeightMedium, FLT_EPSILON);
+  }
+#pragma clang diagnostic pop
 }
 
 @end

@@ -44,6 +44,11 @@ pod 'MaterialComponents/Ink'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
+To add this component along with its themer and other related extensions, please add the following instead:
+``` bash
+pod 'MaterialComponents/Ink+Extensions'
+```
+
 Then, run the following command:
 
 ``` bash
@@ -92,7 +97,7 @@ The simplest method of using ink in your views is to use a
 let myButton = UIButton(type: .system)
 myButton.setTitle("Tap Me", for: .normal)
 let inkTouchController = MDCInkTouchController(view: myButton)
-inkTouchController?.addInkView()
+inkTouchController.addInkView()
 ```
 
 #### Objective-C
@@ -133,8 +138,8 @@ myButton.setTitle("Tap Me", for: .normal)
 let myDelegate = MyDelegate()
 
 let inkTouchController = MDCInkTouchController(view: myButton)
-inkTouchController?.delegate = myDelegate
-inkTouchController?.addInkView()
+inkTouchController.delegate = myDelegate
+inkTouchController.addInkView()
 
 ```
 

@@ -40,6 +40,11 @@ pod 'MaterialComponents/Tabs'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
+To add this component along with its themer and other related extensions, please add the following instead:
+``` bash
+pod 'MaterialComponents/Tabs+Extensions'
+```
+
 Then, run the following command:
 
 ``` bash
@@ -138,7 +143,7 @@ view.addSubview(tabBar)
 #### Objective-C
 
 ``` objc
-MDCTabBar *tabBar = [[MDCTabBar alloc] initWitFrame:self.view.bounds];
+MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:self.view.bounds];
 tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Favorites" image:[UIImage imageNamed:@"heart"] tag:0],
