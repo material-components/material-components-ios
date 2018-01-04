@@ -68,6 +68,14 @@ perform any final sanity checks.
 
 And you're done!
 
+## Publish the podspec
+
+At this point you have published your release to Github, and the last step is to push the new version to CocoaPods!
+
+    release podspec
+
+And the release is now public in CocoaPods!
+
 ## Release process commands
 
 Usage: `release cut [--hotfix]`
