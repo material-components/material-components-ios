@@ -173,7 +173,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   [self addSubview:_containerView];
   [self setElevation:kMDCBottomNavigationBarElevation];
   _itemViews = [NSMutableArray array];
-  _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
+  _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
 - (void)layoutSubviews {
