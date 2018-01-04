@@ -409,19 +409,8 @@ publish_release() {
 
 publish_podspec() {
   cd "$rootdir"
-  echo "Running a pod spec lint to validate the podspec..."
-  # Checking spec lint
-  pod spec lint MaterialComponents.podspec --allow-warnings > lint_logs.log
-  if grep -Fxq "MaterialComponents.podspec passed validation." lint_logs.log
-  then
-    echo "pod spec lint was successful!"
-    echo
-    echo "running a pod trunk push..."
-    pod trunk push MaterialComponents.podspec
-    rm lint_logs.log
-  else
-    echo "Spec didn't pass validation, please take a look at lint_logs.log for more information"
-  fi
+  echo "running a pod trunk push..."
+  pod trunk push MaterialComponents.podspec
 }
 
 # Generators
