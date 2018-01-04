@@ -21,7 +21,7 @@
 
 #import <UIKit/UIKit.h>
 
-@import MaterialComponents.MaterialCollections;
+#import "MaterialCollections.h"
 
 @interface DialogsKeyboardViewController : MDCCollectionViewController
 @end

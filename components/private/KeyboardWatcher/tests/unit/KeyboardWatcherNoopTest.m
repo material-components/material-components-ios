@@ -16,17 +16,17 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialDialogs.h"
+#import "MaterialKeyboardWatcher.h"
 
-@interface DialogsNoopTest : XCTestCase
+@interface KeyboardWatcherNoopTest : XCTestCase
 
 @end
 
-@implementation DialogsNoopTest
+@implementation KeyboardWatcherNoopTest
 
-- (void)testSimpleBuild {
-  MDCAlertController *controller = [[MDCAlertController alloc] init];
-  XCTAssertNotNil(controller);
+- (void)testInit {
+  MDCKeyboardWatcher *watcher = [[MDCKeyboardWatcher alloc] init];
+  XCTAssertNotNil(watcher);
 }
 
 @end

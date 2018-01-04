@@ -20,7 +20,7 @@
 #import "MaterialPalettes.h"
 #import "supplemental/ThemerTypicalUseSupplemental.h"
 
-@import MaterialComponents.MaterialCollections;
+#import "MaterialCollections.h"
 
 static NSString *const kReusableIdentifierItem = @"cell";
 

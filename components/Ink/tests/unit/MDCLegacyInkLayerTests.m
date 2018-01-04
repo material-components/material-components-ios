@@ -88,6 +88,54 @@
   self.inkLayer = nil;
 }
 
+- (void)testInit {
+  // Given
+  self.inkLayer = [[MDCLegacyInkLayer alloc] init];
+
+  // Then
+  XCTAssertTrue(self.inkLayer.isBounded);
+  XCTAssertFalse(self.inkLayer.useCustomInkCenter);
+  XCTAssertTrue(CGPointEqualToPoint(self.inkLayer.customInkCenter, CGPointZero),
+                @"%@ is not equal to %@",
+                NSStringFromCGPoint(self.inkLayer.customInkCenter),
+                NSStringFromCGPoint(CGPointZero));
+  XCTAssertFalse(self.inkLayer.userLinearExpansion);
+  XCTAssertEqualWithAccuracy(self.inkLayer.evaporateDuration, 0, 0.0001);
+  XCTAssertEqualWithAccuracy(self.inkLayer.spreadDuration, 0, 0.0001);
+  XCTAssertEqualWithAccuracy(self.inkLayer.maxRippleRadius, 0, 0.0001);
+  XCTAssertNotNil(self.inkLayer.inkColor);
+}
+
+- (void)testEncoding {
+  // Given
+  self.inkLayer = [[MDCLegacyInkLayer alloc] init];
+  self.inkLayer.bounded = NO;
+  self.inkLayer.useCustomInkCenter = YES;
+  self.inkLayer.customInkCenter = CGPointMake(2, 3);
+  self.inkLayer.userLinearExpansion = YES;
+  self.inkLayer.maxRippleRadius = 3;
+  self.inkLayer.inkColor = UIColor.orangeColor;
+
+  // When
+  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:self.inkLayer];
+  MDCLegacyInkLayer *unarchivedInkLayer = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
+
+  // Then
+  XCTAssertEqual(unarchivedInkLayer.isBounded, self.inkLayer.isBounded);
+  XCTAssertEqual(unarchivedInkLayer.useCustomInkCenter, self.inkLayer.useCustomInkCenter);
+  XCTAssertTrue(CGPointEqualToPoint(unarchivedInkLayer.customInkCenter,
+                                    self.inkLayer.customInkCenter),
+                @"%@ is not equal to %@",
+                NSStringFromCGPoint(unarchivedInkLayer.customInkCenter),
+                NSStringFromCGPoint(self.inkLayer.customInkCenter));
+  XCTAssertEqual(unarchivedInkLayer.userLinearExpansion, self.inkLayer.userLinearExpansion);
+  XCTAssertEqualWithAccuracy(unarchivedInkLayer.maxRippleRadius,
+                             self.inkLayer.maxRippleRadius,
+                             0.0001);
+  XCTAssertEqualObjects(unarchivedInkLayer.inkColor, self.inkLayer.inkColor);
+  XCTAssertEqual(unarchivedInkLayer.sublayers.count, self.inkLayer.sublayers.count);
+}
+
 - (void)testResetRipplesWithoutAnimation {
   // Given
   MDCLegacyInkLayer *inkLayer = [[MDCLegacyInkLayer alloc] init];

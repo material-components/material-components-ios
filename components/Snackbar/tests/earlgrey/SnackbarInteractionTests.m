@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-@import XCTest;
-@import EarlGrey;
+#import <XCTest/XCTest.h>
+#import <EarlGrey/EarlGrey.h>
 
 @interface SnackbarEarlGreyTests : XCTestCase
 

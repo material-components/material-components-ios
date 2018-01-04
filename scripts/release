@@ -222,8 +222,6 @@ abort_release() {
 }
 
 test_release() {
-  enforce_release_cut
-
   "$dir/prep_all"
   "$dir/build_all" --verbose
   "$dir/test_all"
@@ -252,12 +250,12 @@ bump_release() {
   last_version=${last_version#v}
   last_version=$(echo "$last_version" | sed "s:\.:\\\\.:g")
 
-  grep -Ilr "$last_version" . | grep -v -f "$dir/versionignore" | while read line; do
+  grep -FIlr "$last_version" . 2>/dev/null | grep -v -f "$dir/versionignore" | while read line; do
     sed -i.bak "s:$last_version:$new_version:g" "$line"
     rm "$line.bak"
   done
 
-  grep -Ilr "#develop#" . | grep -v -f "$dir/versionignore" | while read line; do
+  grep -FIlr "#develop#" . 2>/dev/null | grep -v -f "$dir/versionignore" | while read line; do
     sed -i.bak "s:#develop#:$new_version:g" "$line"
     rm "$line.bak"
   done

@@ -39,6 +39,11 @@ pod 'MaterialComponents/FeatureHighlight'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
+To add this component along with its themer and other related extensions, please add the following instead:
+``` bash
+pod 'MaterialComponents/FeatureHighlight+Extensions'
+```
+
 Then, run the following command:
 
 ``` bash

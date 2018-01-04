@@ -35,12 +35,12 @@ class SnackbarManagerSwiftTests: XCTestCase {
       MDCSnackbarManager.show(suspendedMessage)
       token = nil
 
-    // When
+      // When
       XCTAssertNil(token, "Ensuring that the compiler knows we're reading this variable")
     }
 
     // Then
-    self.waitForExpectations(timeout: 1.0, handler: nil)
+    // Swift unit tests are sometimes slower, need to wait a little longer
+    self.waitForExpectations(timeout: 3.0, handler: nil)
   }
-
 }
