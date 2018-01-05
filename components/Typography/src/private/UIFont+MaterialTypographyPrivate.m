@@ -21,6 +21,8 @@
 + (NSString *)mdc_fontWeightDescription:(CGFloat)weight {
 // The UIFontWeight enumeration was added in iOS 8.2
 #if defined(__IPHONE_8_2)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if (weight == UIFontWeightUltraLight) {
     return @"UltraLight";
   } else if (weight == UIFontWeightThin) {
@@ -43,6 +45,7 @@
     NSString *description = [NSString stringWithFormat:@"(%.3f)", weight];
     return description;
   }
+#pragma clang diagnostic pop
 #else
   NSString *description = [NSString stringWithFormat:@"(%.3f)", weight];
   return description;
