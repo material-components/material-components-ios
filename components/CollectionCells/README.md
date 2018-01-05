@@ -28,11 +28,6 @@ Collection view cell classes that adhere to Material Design layout and styling.
 
 ## Installation
 
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
-
 ## Usage
 
 Please see the [Collections](../Collections/) component for more information about using Collection
