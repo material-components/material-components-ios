@@ -116,7 +116,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.tableView.backgroundColor = UIColor.white
     self.tableView.separatorStyle = .none
 
-    if node.title.characters.count > 0 {
+    var charactersCount = 0
+    #if swift(>=3.2)
+      charactersCount = node.title.count
+    #else
+      charactersCount = node.title.characters.count
+    #endif
+    if charactersCount > 0 {
       self.tableView.accessibilityIdentifier = "Table" + node.title
     } else {
       self.tableView.accessibilityIdentifier = "DemoTableList"

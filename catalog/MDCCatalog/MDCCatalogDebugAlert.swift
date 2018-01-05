@@ -172,7 +172,7 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
   }
 }
 
-fileprivate class MDCCatalogDebugDismissCell: UICollectionViewCell {
+class MDCCatalogDebugDismissCell: UICollectionViewCell {
   let label = UILabel()
 
   override var isHighlighted: Bool {

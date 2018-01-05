@@ -326,17 +326,17 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
 
     if textField == state {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         stateController.setErrorText("Error: State can only contain letters",
                                      errorAccessibilityValue: nil)
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
-      } else if fullString.characters.count > 5 {
+      } else if fullString.characterCount > 5 {
         zipController.setErrorText("Error: Zip can only contain five digits",
                                    errorAccessibilityValue: nil)
       } else {
@@ -344,7 +344,7 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         cityController.setErrorText("Error: City can only contain letters",
                                     errorAccessibilityValue: nil)
       } else {
