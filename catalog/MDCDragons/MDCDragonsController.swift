@@ -112,9 +112,9 @@ class MDCDragonsController: UIViewController,
     view.addGestureRecognizer(tapgesture)
 
     #if swift(>=3.2)
-    if #available(iOS 11.0, *) {
-      tableView.contentInsetAdjustmentBehavior = .always
-    }
+      if #available(iOS 11.0, *) {
+        tableView.contentInsetAdjustmentBehavior = .always
+      }
     #endif
   }
   
@@ -325,6 +325,7 @@ extension MDCDragonsController {
     tableView.reloadData()
   }
   
+  @objc(gestureRecognizer:shouldReceiveTouch:)
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     if gestureRecognizer is UITapGestureRecognizer {
       let location = touch.location(in: tableView)
