@@ -104,7 +104,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Buttons"
-    component.dependency "MaterialComponents/NavigationBar+Extensions/ColorThemer"
+    component.dependency "MaterialComponents/NavigationBar"
     component.dependency "MaterialComponents/private/Math"
   end
 
