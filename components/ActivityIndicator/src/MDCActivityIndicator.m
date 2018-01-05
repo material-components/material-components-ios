@@ -135,13 +135,6 @@ static const CGFloat kSingleCycleRotation =
   return self;
 }
 
-+ (void)initialize {
-  // Ensure we do not set the UIAppearance proxy if subclasses are initialized
-  if (self == [MDCActivityIndicator class]) {
-    [MDCActivityIndicator appearance].cycleColors = [MDCActivityIndicator defaultCycleColors];
-  }
-}
-
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
