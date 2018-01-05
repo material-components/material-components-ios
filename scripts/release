@@ -407,6 +407,19 @@ publish_release() {
   fi
 }
 
+publish_podspec() {
+  cd "$rootdir"
+  echo "Verifying Cocoapod trunk permissions"
+  pod trunk me > cocoapods_permissions.log
+  if grep -Fq "MaterialComponents" cocoapods_permissions.log; then
+    echo "Running a pod trunk push..."
+    pod trunk push MaterialComponents.podspec
+  else
+    echo "You do not have the right permissions to push the pod via the CocoaPods API."
+  fi
+  rm cocoapods_permissions.log
+}
+
 # Generators
 
 generate_release_apidiff() {
@@ -624,6 +637,7 @@ case "$1" in
   bump)       bump_release ${@:2} ;;
   merge)      merge_release ${@:2} ;;
   publish)    publish_release ${@:2} ;;
+  podspec)    publish_podspec ${@:2} ;;
 
   apidiff)    generate_release_apidiff ${@:2} ;;
   authors)    generate_release_authors ${@:2} ;;
