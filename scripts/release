@@ -409,8 +409,15 @@ publish_release() {
 
 publish_podspec() {
   cd "$rootdir"
-  echo "running a pod trunk push..."
-  pod trunk push MaterialComponents.podspec
+  echo "Verifying Cocoapod trunk permissions"
+  pod trunk me > cocoapods_permissions.log
+  if grep -Fq "MaterialComponents" cocoapods_permissions.log; then
+    echo "Running a pod trunk push..."
+    pod trunk push MaterialComponents.podspec
+  else
+    echo "You do not have the right permissions to push the pod via the CocoaPods API."
+  fi
+  rm cocoapods_permissions.log
 }
 
 # Generators
