@@ -44,7 +44,7 @@ Use `cmd-1` to open the project navigator within Xcode. Peal open the `Pods` pro
 
 ### Requirements
 
-- Xcode 7.0 or higher.
+- Xcode 8.0 or higher.
 - Minimum iOS deployment target of 8.0 or higher
 - Cocoapods
 
