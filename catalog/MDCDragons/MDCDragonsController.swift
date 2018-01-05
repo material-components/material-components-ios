@@ -110,6 +110,7 @@ class MDCDragonsController: UIViewController,
     let tapgesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     tapgesture.delegate = self
     view.addGestureRecognizer(tapgesture)
+
     #if swift(>=3.2)
       if #available(iOS 11.0, *) {
         tableView.contentInsetAdjustmentBehavior = .always

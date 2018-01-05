@@ -17,31 +17,6 @@
 #import <XCTest/XCTest.h>
 #import "MaterialDialogs.h"
 
-#pragma mark - Subclasses for testing
-
-static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertControllerSubclassValueKey";
-
-@interface MDCAlertControllerSubclass : MDCAlertController
-@property(nonatomic, assign) NSInteger value;
-@end
-
-@implementation MDCAlertControllerSubclass
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    _value = [aDecoder decodeIntegerForKey:MDCAlertControllerSubclassValueKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeInteger:self.value forKey:MDCAlertControllerSubclassValueKey];
-}
-
-@end
-
 #pragma mark - Tests
 
 @interface MDCAlertControllerTests : XCTestCase
@@ -71,26 +46,6 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertNotNil(alert.mdm_transitionController.transition);
   XCTAssertEqualObjects(alert.title, @"title");
   XCTAssertEqualObjects(alert.message, @"message");
-}
-
-- (void)testSubclassEncodingFails {
-  // Given
-  MDCAlertControllerSubclass *subclass = [[MDCAlertControllerSubclass alloc] init];
-  subclass.value = 7;
-  subclass.title = @"title";
-  subclass.message = @"message";
-  subclass.modalInPopover = YES;
-
-  // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:subclass];
-  MDCAlertControllerSubclass *unarchivedSubclass =
-      [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-
-  // Then
-  XCTAssertEqual(unarchivedSubclass.value, subclass.value);
-  XCTAssertNil(unarchivedSubclass.title);
-  XCTAssertNil(unarchivedSubclass.message);
-  XCTAssertEqual(unarchivedSubclass.isModalInPopover, NO);
 }
 
 @end

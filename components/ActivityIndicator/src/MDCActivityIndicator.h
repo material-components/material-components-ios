@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCActivityIndicatorTransition;
 @protocol MDCActivityIndicatorDelegate;
 
 /**
@@ -110,10 +111,28 @@ IB_DESIGNABLE
 - (void)startAnimating;
 
 /**
+ Starts the animated activity indicator after performing the provided transition. The animation
+ cycle will begin on the cycleStartIndex provided. The startTransition will be applied with the
+ starting and ending positions of the indicator stroke at the moment when the animation will begin
+ taking into account the provided cycleStartIndex in the range [0,1]. The indicatorMode must be
+ MDCActivityIndicatorModeIndeterminate before calling.
+ */
+- (void)startAnimatingWithTransition:(nonnull MDCActivityIndicatorTransition *)startTransition
+                     cycleStartIndex:(NSInteger)cycleStartIndex;
+
+/**
  Stops the animated activity indicator with a short opacity and stroke width animation. Does nothing
  if the spinner is not animating.
  */
 - (void)stopAnimating;
+
+/**
+ Stops the animated activity indicator and then performs the provided transition. The provided
+ stopTransition will be called with the starting and ending positions of the indicator stroke at the
+ moment when the animation will begin in the range [0,1]. The indicatorMode must be
+ MDCActivityIndicatorModeIndeterminate before calling.
+ */
+- (void)stopAnimatingWithTransition:(nonnull MDCActivityIndicatorTransition *)stopTransition;
 
 @end
 
@@ -139,5 +158,40 @@ IB_DESIGNABLE
  @param activityIndicator Caller
  */
 - (void)activityIndicatorModeTransitionDidFinish:(nonnull MDCActivityIndicator *)activityIndicator;
+
+@end
+
+typedef void (^MDCActivityIndicatorAnimation)(CGFloat strokeStart, CGFloat strokeEnd);
+
+/**
+ Describes an animation that can be provided to an MDCActivityIndicator instance to perform before
+ or after its standard cycle animation.
+ */
+@interface MDCActivityIndicatorTransition : NSObject
+
+/**
+ The animations to be performed by MDCActivityIndicator. In this block add CAAnimations to be
+ animated before or after MDCActivityIndicator's cycle animation. MDCActivityIndicator will trigger
+ these animations and call completion after they complete.
+ */
+@property(nonatomic, copy, nonnull) MDCActivityIndicatorAnimation animation;
+
+/**
+ The completion block to call after animation's completion. This should be used to clean up any
+ layers placed and animating on the MDCActivityIndicator.
+ */
+@property(nonatomic, copy, nullable) void (^completion)(void);
+
+/**
+ The duration of the animation.
+ */
+@property(nonatomic, assign) NSTimeInterval duration;
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+
+- (nonnull instancetype)initWithAnimation:
+    (_Nonnull MDCActivityIndicatorAnimation)animation NS_DESIGNATED_INITIALIZER;
 
 @end
