@@ -38,12 +38,6 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 @implementation SliderTests
 
-// Archive and then unarchive an object, returning a functional copy of the original object.
-+ (id)archiveAndUnarchiveObject:(id)object {
-  NSData *archived = [NSKeyedArchiver archivedDataWithRootObject:object];
-  return [NSKeyedUnarchiver unarchiveObjectWithData:archived];
-}
-
 - (void)setUp {
   [super setUp];
   self.slider = [[MDCSlider alloc] init];
