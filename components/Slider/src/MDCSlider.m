@@ -23,7 +23,7 @@
 static const CGFloat kSliderDefaultWidth = 100.0f;
 static const CGFloat kSliderFrameHeight = 27.0f;
 static const CGFloat kSliderMinTouchSize = 48.0f;
-static const CGFloat kSliderThumbRadius = 6.0f;
+static const CGFloat kSliderDefaultThumbRadius = 6.0f;
 static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
@@ -59,7 +59,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.delegate = self;
   _thumbTrack.disabledTrackHasThumbGaps = YES;
   _thumbTrack.trackEndsAreInset = YES;
-  _thumbTrack.thumbRadius = kSliderThumbRadius;
+  _thumbTrack.thumbRadius = kSliderDefaultThumbRadius;
   _thumbTrack.thumbIsSmallerWhenDisabled = YES;
   _thumbTrack.thumbIsHollowAtStart = YES;
   _thumbTrack.thumbGrowsWhenDragging = YES;
@@ -115,6 +115,22 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (UIColor *)color {
   return _thumbTrack.primaryColor;
+}
+
+- (void)setThumbRadius:(CGFloat)thumbRadius {
+  _thumbTrack.thumbRadius = thumbRadius;
+}
+
+- (CGFloat)thumbRadius {
+  return _thumbTrack.thumbRadius;
+}
+
+- (void)setThumbElevation:(MDCShadowElevation)thumbElevation {
+  _thumbTrack.thumbElevation = thumbElevation;
+}
+
+- (MDCShadowElevation)thumbElevation {
+  return _thumbTrack.thumbElevation;
 }
 
 - (NSUInteger)numberOfDiscreteValues {
@@ -227,7 +243,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
-  CGFloat dx = MIN(0, kSliderThumbRadius - kSliderMinTouchSize / 2);
+  CGFloat dx = MIN(0, self.thumbRadius - kSliderMinTouchSize / 2);
   CGFloat dy = MIN(0, (self.bounds.size.height - kSliderMinTouchSize) / 2);
   CGRect rect = CGRectInset(self.bounds, dx, dy);
   return CGRectContainsPoint(rect, point);
