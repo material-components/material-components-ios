@@ -48,13 +48,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testValue {
   // Given
-  CGFloat value = [self randomPercent] * self.self.slider.maximumValue;
+  CGFloat value = [self randomPercent] * self.slider.maximumValue;
 
   // When
-  [self.self.slider setValue:value animated:YES];
+  [self.slider setValue:value animated:YES];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.self.slider.value, value, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, value, kEpsilonAccuracy);
 }
 
 - (void)testValueAnimated {
