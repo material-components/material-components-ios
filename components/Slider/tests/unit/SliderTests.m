@@ -308,12 +308,14 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects(self.slider.trackBackgroundColor, self.defaultGray);
 }
 
-- (void)testDefaultThumbRadius {
+#pragma mark Thumb
+
+- (void)testThumbRadiusDefault {
   // Then
   XCTAssertEqual(self.slider.thumbRadius, 6);
 }
 
-- (void)testDefaultThumbElevation {
+- (void)testThumbElevationDefault {
   // Then
   XCTAssertEqual(self.slider.thumbElevation, MDCShadowElevationNone);
 }
