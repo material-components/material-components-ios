@@ -130,16 +130,18 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(self.slider.maximumValue, self.slider.minimumValue, kEpsilonAccuracy,
-                             @"setting the self.slider's max to lower than the max must equal the min");
+                             @"Setting the self.slider's max to lower than the max must equal the "
+                             @"min.");
   XCTAssertEqualWithAccuracy(
       newMax, self.slider.minimumValue, kEpsilonAccuracy,
-      @"setting the self.slider's max must change the min when smaller than the min");
+      @"Setting the self.slider's max must change the min when smaller than the min.");
   XCTAssertEqualWithAccuracy(
       newMax, self.slider.maximumValue, kEpsilonAccuracy,
-      @"setting the self.slider's max must equal the value gotten even when smaller than the minimum");
+      @"Setting the self.slider's max must equal the value gotten even when smaller than the "
+      @"minimum.");
   XCTAssertEqualWithAccuracy(
       newMax, self.slider.value, kEpsilonAccuracy,
-      @"setting the self.slider's min to lower than the value must change the value also");
+      @"Setting the self.slider's min to lower than the value must change the value also.");
 }
 
 - (void)testSetMinimumToLowerThanMaximum {
@@ -151,16 +153,18 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(self.slider.minimumValue, self.slider.maximumValue, kEpsilonAccuracy,
-                             @"setting the self.slider's min to higher than the max must equal the max");
+                             @"Setting the self.slider's min to higher than the max must equal the "
+                             @"max.");
   XCTAssertEqualWithAccuracy(
       newMin, self.slider.minimumValue, kEpsilonAccuracy,
-      @"setting the self.slider's min must equal the value gotten even when larger than the maximum");
+      @"Setting the self.slider's min must equal the value gotten even when larger than the "
+      @"maximum.");
   XCTAssertEqualWithAccuracy(
       newMin, self.slider.maximumValue, kEpsilonAccuracy,
-      @"setting the self.slider's min to larger than the max must change the max also");
+      @"Setting the self.slider's min to larger than the max must change the max also.");
   XCTAssertEqualWithAccuracy(
       newMin, self.slider.value, kEpsilonAccuracy,
-      @"setting the self.slider's min to higher than the value must change the value also");
+      @"Setting the self.slider's min to higher than the value must change the value also.");
 }
 
 - (void)testDiscreteValues2 {
@@ -344,7 +348,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects(
       [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:1.f]], @(1.));
   XCTAssertEqualObjects(
-      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:0.57f]], @(0.57));
+      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:0.57f]],
+      @(0.57));
   XCTAssertEqualObjects(
       [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:0.33333333f]],
       @(0.333));
@@ -378,8 +383,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // Then
   NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
   numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
-  CGFloat percent =
-      (self.slider.value - self.slider.minimumValue) / (self.slider.maximumValue - self.slider.minimumValue);
+  CGFloat percent = (self.slider.value - self.slider.minimumValue) /
+      (self.slider.maximumValue - self.slider.minimumValue);
   NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:(float)percent]];
   XCTAssertEqualObjects([self.slider accessibilityValue], expected);
 }
@@ -424,7 +429,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testAccessibilityTraits {
   // Given
   self.slider.enabled =
-      (BOOL)arc4random_uniform(2);  // It does not matter if the self.slider is enabled or disabled.
+      (BOOL)arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
 
   // Then
   XCTAssertTrue(self.slider.accessibilityTraits & UIAccessibilityTraitAdjustable);
