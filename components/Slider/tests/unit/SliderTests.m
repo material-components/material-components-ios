@@ -264,50 +264,48 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   }
 }
 
-#pragma mark Clors
+#pragma mark Colors
 
-- (void)testDefaultColor {
-  // When
-  UIColor *actualColor = self.slider.color;
-
+- (void)testColorDefault {
   // Then
-  UIColor *expectedColor = self.defaultBlue;
-  XCTAssertEqualObjects(actualColor, expectedColor);
+  XCTAssertEqualObjects(self.slider.color, self.defaultBlue);
 }
 
-- (void)testThumbColorNullResettable {
+- (void)testColorIsNullResettable {
   // When
+  self.slider.color = self.aNonDefaultColor;
   self.slider.color = nil;
 
   // Then
-  UIColor *actualColor = self.slider.color;
-  UIColor *expectedColor = self.defaultBlue;
-  XCTAssertEqualObjects(actualColor, expectedColor);
+  XCTAssertEqualObjects(self.slider.color, self.defaultBlue);
 }
 
-- (void)testTrackColor {
+- (void)testDisabledColorDefault {
+  // Then
+  XCTAssertEqualObjects(self.slider.disabledColor, self.defaultGray);
+}
+
+- (void)testDisabledColorIsNullResettable {
   // When
-  UIColor *actualColor = self.slider.trackBackgroundColor;
+  self.slider.disabledColor = self.aNonDefaultColor;
+  self.slider.disabledColor = nil;
 
   // Then
-  XCTAssertEqualObjects(actualColor, self.defaultGray);
+  XCTAssertEqualObjects(self.slider.disabledColor, self.defaultGray);
 }
 
-- (void)testTrackColorNullResettable {
+- (void)testTrackBackgroundColorDefault {
+  // Then
+  XCTAssertEqualObjects(self.slider.trackBackgroundColor, self.defaultGray);
+}
+
+- (void)testTrackBackgroundColorIsNullResettable {
   // When
+  self.slider.trackBackgroundColor = self.aNonDefaultColor;
   self.slider.trackBackgroundColor = nil;
 
   // Then
-  UIColor *actualColor = self.slider.trackBackgroundColor;
-  XCTAssertEqualObjects(actualColor, self.defaultGray);
-}
-
-- (void)testDisabledColor {
-  // When
-  UIColor *actualColor = self.slider.disabledColor;
-
-  // Then
-  XCTAssertEqualObjects(actualColor, self.defaultGray);
+  XCTAssertEqualObjects(self.slider.trackBackgroundColor, self.defaultGray);
 }
 
 - (void)testDefaultThumbRadius {
@@ -320,16 +318,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(self.slider.thumbElevation, MDCShadowElevationNone);
 }
 
-- (void)testDisabledColorNullResettable {
-  // When
-  self.slider.trackBackgroundColor = nil;
-
-  // Then
-  UIColor *actualColor = self.slider.trackBackgroundColor;
-  XCTAssertEqualObjects(actualColor, self.defaultGray);
-}
-
-#pragma mark numeric value label
+#pragma mark Numeric value label
 
 - (void)testNumericValueLabelString {
   MDCThumbTrack *track = nil;
@@ -355,7 +344,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
       @(0.333));
 }
 
-#pragma mark accessibility
+#pragma mark Accessibility
 
 - (void)testAccessibilityValue {
   // Given

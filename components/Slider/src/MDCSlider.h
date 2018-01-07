@@ -33,7 +33,7 @@
      set the right and left track images (if you wanted a custom track)
      set the right (background track) color
    Same features
-     set color for thumb via @c thumbColor
+     set color for thumb via @c color
      set color of track via @c trackColor
    New features
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
