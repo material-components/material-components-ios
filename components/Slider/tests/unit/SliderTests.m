@@ -271,15 +271,6 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects(actualColor, expectedColor);
 }
 
-- (void)testColorCoding {
-  // When
-  self.slider.color = self.aNonDefaultColor;
-  MDCSlider *unarchived = [[self class] archiveAndUnarchiveObject:self.slider];
-
-  // Then
-  XCTAssertEqualObjects(unarchived.color, self.aNonDefaultColor);
-}
-
 - (void)testThumbColorNullResettable {
   // When
   self.slider.color = nil;
