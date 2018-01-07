@@ -124,18 +124,16 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(self.slider.maximumValue, self.slider.minimumValue, kEpsilonAccuracy,
-                             @"Setting the self.slider's max to lower than the max must equal the "
-                             @"min.");
+                             @"Setting the slider's max to lower than the max must equal the min.");
   XCTAssertEqualWithAccuracy(
       newMax, self.slider.minimumValue, kEpsilonAccuracy,
-      @"Setting the self.slider's max must change the min when smaller than the min.");
+      @"Setting the slider's max must change the min when smaller than the min.");
   XCTAssertEqualWithAccuracy(
       newMax, self.slider.maximumValue, kEpsilonAccuracy,
-      @"Setting the self.slider's max must equal the value gotten even when smaller than the "
-      @"minimum.");
+      @"Setting the slider's max must equal the value gotten even when smaller than the minimum.");
   XCTAssertEqualWithAccuracy(
       newMax, self.slider.value, kEpsilonAccuracy,
-      @"Setting the self.slider's min to lower than the value must change the value also.");
+      @"Setting the slider's min to lower than the value must change the value also.");
 }
 
 - (void)testSetMinimumToLowerThanMaximum {
@@ -147,18 +145,17 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(self.slider.minimumValue, self.slider.maximumValue, kEpsilonAccuracy,
-                             @"Setting the self.slider's min to higher than the max must equal the "
+                             @"Setting the slider's min to higher than the max must equal the "
                              @"max.");
   XCTAssertEqualWithAccuracy(
       newMin, self.slider.minimumValue, kEpsilonAccuracy,
-      @"Setting the self.slider's min must equal the value gotten even when larger than the "
-      @"maximum.");
+      @"Setting the slider's min must equal the value gotten even when larger than the maximum.");
   XCTAssertEqualWithAccuracy(
       newMin, self.slider.maximumValue, kEpsilonAccuracy,
-      @"Setting the self.slider's min to larger than the max must change the max also.");
+      @"Setting the slider's min to larger than the max must change the max also.");
   XCTAssertEqualWithAccuracy(
       newMin, self.slider.value, kEpsilonAccuracy,
-      @"Setting the self.slider's min to higher than the value must change the value also.");
+      @"Setting the slider's min to higher than the value must change the value also.");
 }
 
 - (void)testDiscreteValues2 {
