@@ -243,7 +243,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
-  CGFloat dx = MIN(0, _thumbTrack.thumbRadius - kSliderMinTouchSize / 2);
+  CGFloat dx = MIN(0, self.thumbRadius - kSliderMinTouchSize / 2);
   CGFloat dy = MIN(0, (self.bounds.size.height - kSliderMinTouchSize) / 2);
   CGRect rect = CGRectInset(self.bounds, dx, dy);
   return CGRectContainsPoint(rect, point);
