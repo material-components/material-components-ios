@@ -17,6 +17,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#import "MaterialShadowElevations.h"
+
 @protocol MDCSliderDelegate;
 
 /**
@@ -31,7 +33,7 @@
      set the right and left track images (if you wanted a custom track)
      set the right (background track) color
    Same features
-     set color for thumb via @c thumbColor
+     set color for thumb via @c color
      set color of track via @c trackColor
    New features
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
@@ -47,22 +49,35 @@ IB_DESIGNABLE
 
  Default color is blue.
  */
-@property(nonatomic, strong, null_resettable) UIColor *color;
+@property(nonatomic, strong, null_resettable) UIColor *color UI_APPEARANCE_SELECTOR;
 
 /**
  The color of the cursor (thumb) and track while the slider is disabled.
 
  Default color is gray.
  */
-@property(nonatomic, strong, null_resettable) UIColor *disabledColor;
+@property(nonatomic, strong, null_resettable) UIColor *disabledColor UI_APPEARANCE_SELECTOR;
 
-/*
+/**
  The color of the unfilled track that the cursor moves along (right side).
 
  Default color is gray.
  */
-@property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor;
+@property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
 
+/**
+ The radius of the cursor (thumb).
+
+ Default value is 6 points.
+ */
+@property(nonatomic, assign) CGFloat thumbRadius UI_APPEARANCE_SELECTOR;
+
+/**
+ The elevation of the cursor (thumb).
+
+ Default value is MDCElevationNone.
+ */
+@property(nonatomic, assign) MDCShadowElevation thumbElevation UI_APPEARANCE_SELECTOR;
 /**
  The number of discrete values that the slider can take.
 

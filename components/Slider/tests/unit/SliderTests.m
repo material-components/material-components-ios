@@ -30,220 +30,201 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 @end
 
 @interface SliderTests : XCTestCase
-
+@property(nonatomic, nonnull) MDCSlider *slider;
+@property(nonatomic, nonnull) UIColor *aNonDefaultColor;
+@property(nonatomic, nonnull) UIColor *defaultBlue;
+@property(nonatomic, nonnull) UIColor *defaultGray;
 @end
 
 @implementation SliderTests
 
 - (void)setUp {
   [super setUp];
-  // Put setup code here. This method is called before the invocation of each test method in
-  // the class.
-}
-
-- (void)tearDown {
-  // Put teardown code here. This method is called after the invocation of each test method in
-  // the class.
-  [super tearDown];
+  self.slider = [[MDCSlider alloc] init];
+  self.aNonDefaultColor = [UIColor orangeColor];
+  self.defaultBlue = MDCPalette.bluePalette.tint500;
+  self.defaultGray = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
 }
 
 - (void)testValue {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  CGFloat value = [self randomPercent] * slider.maximumValue;
+  CGFloat value = [self randomPercent] * self.slider.maximumValue;
 
   // When
-  [slider setValue:value animated:YES];
+  [self.slider setValue:value animated:YES];
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, value, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, value, kEpsilonAccuracy);
 }
 
 - (void)testValueAnimated {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  CGFloat value = [self randomPercent] * slider.maximumValue;
+  CGFloat value = [self randomPercent] * self.slider.maximumValue;
 
   // When
-  [slider setValue:value animated:YES];
+  [self.slider setValue:value animated:YES];
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, value, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, value, kEpsilonAccuracy);
 }
 
 - (void)testMaximumDefault {
-  // When
-  MDCSlider *slider = [[MDCSlider alloc] init];
-
   // Then
-  XCTAssertEqualWithAccuracy(slider.maximumValue, 1.0f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.maximumValue, 1.0f, kEpsilonAccuracy);
 }
 
 - (void)testSetValueToHigherThanMaximum {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-
   // When
-  slider.value = slider.maximumValue + [self randomNumber];
+  self.slider.value = self.slider.maximumValue + [self randomNumber];
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, slider.maximumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.maximumValue, kEpsilonAccuracy);
 }
 
 - (void)testSetValueToLowerThanMinimum {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-
   // When
-  slider.value = slider.minimumValue - [self randomNumber];
+  self.slider.value = self.slider.minimumValue - [self randomNumber];
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, slider.minimumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testSetMaximumToLowerThanValue {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.maximumValue = [self randomNumber];
-  slider.value =
-      slider.minimumValue + [self randomPercent] * (slider.maximumValue - slider.minimumValue);
+  self.slider.maximumValue = [self randomNumber];
+  self.slider.value = self.slider.minimumValue +
+      [self randomPercent] * (self.slider.maximumValue - self.slider.minimumValue);
 
   // When
-  slider.maximumValue = slider.value - [self randomPercent] * slider.value;
+  self.slider.maximumValue = self.slider.value - [self randomPercent] * self.slider.value;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, slider.maximumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.maximumValue, kEpsilonAccuracy);
 }
 
 - (void)testSetMinimumToHigherThanValue {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.maximumValue = [self randomNumber];
-  slider.value =
-      slider.minimumValue + [self randomPercent] * (slider.maximumValue - slider.minimumValue);
+  self.slider.maximumValue = [self randomNumber];
+  self.slider.value = self.slider.minimumValue +
+      [self randomPercent] * (self.slider.maximumValue - self.slider.minimumValue);
 
   // When
-  slider.minimumValue = slider.value + [self randomPercent] * slider.value;
+  self.slider.minimumValue = self.slider.value + [self randomPercent] * self.slider.value;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, slider.minimumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testSetMaximumToLowerThanMinimum {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  CGFloat newMax = slider.minimumValue - [self randomNumber];
+  CGFloat newMax = self.slider.minimumValue - [self randomNumber];
 
   // When
-  slider.maximumValue = newMax;
+  self.slider.maximumValue = newMax;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.maximumValue, slider.minimumValue, kEpsilonAccuracy,
-                             @"setting the slider's max to lower than the max must equal the min");
+  XCTAssertEqualWithAccuracy(self.slider.maximumValue, self.slider.minimumValue, kEpsilonAccuracy,
+                             @"Setting the slider's max to lower than the max must equal the min.");
   XCTAssertEqualWithAccuracy(
-      newMax, slider.minimumValue, kEpsilonAccuracy,
-      @"setting the slider's max must change the min when smaller than the min");
+      newMax, self.slider.minimumValue, kEpsilonAccuracy,
+      @"Setting the slider's max must change the min when smaller than the min.");
   XCTAssertEqualWithAccuracy(
-      newMax, slider.maximumValue, kEpsilonAccuracy,
-      @"setting the slider's max must equal the value gotten even when smaller than the minimum");
+      newMax, self.slider.maximumValue, kEpsilonAccuracy,
+      @"Setting the slider's max must equal the value gotten even when smaller than the minimum.");
   XCTAssertEqualWithAccuracy(
-      newMax, slider.value, kEpsilonAccuracy,
-      @"setting the slider's min to lower than the value must change the value also");
+      newMax, self.slider.value, kEpsilonAccuracy,
+      @"Setting the slider's min to lower than the value must change the value also.");
 }
 
 - (void)testSetMinimumToLowerThanMaximum {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  CGFloat newMin = slider.maximumValue + [self randomNumber];
+  CGFloat newMin = self.slider.maximumValue + [self randomNumber];
 
   // When
-  slider.minimumValue = newMin;
+  self.slider.minimumValue = newMin;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.minimumValue, slider.maximumValue, kEpsilonAccuracy,
-                             @"setting the slider's min to higher than the max must equal the max");
+  XCTAssertEqualWithAccuracy(self.slider.minimumValue, self.slider.maximumValue, kEpsilonAccuracy,
+                             @"Setting the slider's min to higher than the max must equal the "
+                             @"max.");
   XCTAssertEqualWithAccuracy(
-      newMin, slider.minimumValue, kEpsilonAccuracy,
-      @"setting the slider's min must equal the value gotten even when larger than the maximum");
+      newMin, self.slider.minimumValue, kEpsilonAccuracy,
+      @"Setting the slider's min must equal the value gotten even when larger than the maximum.");
   XCTAssertEqualWithAccuracy(
-      newMin, slider.maximumValue, kEpsilonAccuracy,
-      @"setting the slider's min to larger than the max must change the max also");
+      newMin, self.slider.maximumValue, kEpsilonAccuracy,
+      @"Setting the slider's min to larger than the max must change the max also.");
   XCTAssertEqualWithAccuracy(
-      newMin, slider.value, kEpsilonAccuracy,
-      @"setting the slider's min to higher than the value must change the value also");
+      newMin, self.slider.value, kEpsilonAccuracy,
+      @"Setting the slider's min to higher than the value must change the value also.");
 }
 
 - (void)testDiscreteValues2 {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.maximumValue = 10;
-  slider.minimumValue = 0;
-  slider.value = arc4random_uniform((u_int32_t)(slider.maximumValue / 2));
+  self.slider.maximumValue = 10;
+  self.slider.minimumValue = 0;
+  self.slider.value = arc4random_uniform((u_int32_t)(self.slider.maximumValue / 2));
 
   // When
-  slider.numberOfDiscreteValues = 2;
+  self.slider.numberOfDiscreteValues = 2;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, slider.minimumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValues2SetValue {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.maximumValue = 10;
-  slider.minimumValue = 0;
-  slider.numberOfDiscreteValues = 2;
+  self.slider.maximumValue = 10;
+  self.slider.minimumValue = 0;
+  self.slider.numberOfDiscreteValues = 2;
 
   // When
-  slider.value = arc4random_uniform((u_int32_t)(slider.maximumValue / 2));
+  self.slider.value = arc4random_uniform((u_int32_t)(self.slider.maximumValue / 2));
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, slider.minimumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValues3 {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.maximumValue = 100;
-  slider.minimumValue = 0;
-  slider.value = arc4random_uniform((u_int32_t)(slider.maximumValue / 6));
+  self.slider.maximumValue = 100;
+  self.slider.minimumValue = 0;
+  self.slider.value = arc4random_uniform((u_int32_t)(self.slider.maximumValue / 6));
 
   // When
-  slider.numberOfDiscreteValues = 3;
+  self.slider.numberOfDiscreteValues = 3;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, slider.minimumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValues3SetValue {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.maximumValue = 100;
-  slider.minimumValue = 0;
-  slider.numberOfDiscreteValues = 3;
+  self.slider.maximumValue = 100;
+  self.slider.minimumValue = 0;
+  self.slider.numberOfDiscreteValues = 3;
 
   // When
-  slider.value = arc4random_uniform((u_int32_t)(slider.maximumValue / 6));
+  self.slider.value = arc4random_uniform((u_int32_t)(self.slider.maximumValue / 6));
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.value, slider.minimumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValuesWithIntegers {
   for (int i = 0; i < kNumberOfRepeats; ++i) {
     // Given
-    MDCSlider *slider = [[MDCSlider alloc] init];
-    slider.maximumValue = (int)[self randomNumber];
-    slider.minimumValue = 0;
-    slider.value = [self randomPercent] * slider.maximumValue;
-    CGFloat originalValue = slider.value;
+    self.slider = [[MDCSlider alloc] init];
+    self.slider.maximumValue = (int)[self randomNumber];
+    self.slider.minimumValue = 0;
+    self.slider.value = [self randomPercent] * self.slider.maximumValue;
+    CGFloat originalValue = self.slider.value;
 
     // When
-    slider.numberOfDiscreteValues = (NSUInteger)(slider.maximumValue + 1);
+    self.slider.numberOfDiscreteValues = (NSUInteger)(self.slider.maximumValue + 1);
 
     // Then
-    XCTAssertEqualWithAccuracy(slider.value, originalValue, 0.5f + kEpsilonAccuracy);
-    XCTAssertEqualWithAccuracy(slider.value, round(originalValue), kEpsilonAccuracy);
+    XCTAssertEqualWithAccuracy(self.slider.value, originalValue, 0.5f + kEpsilonAccuracy);
+    XCTAssertEqualWithAccuracy(self.slider.value, round(originalValue), kEpsilonAccuracy);
   }
 }
 
@@ -256,108 +237,85 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     CGFloat originalValue = snapedValue + [self randomPercent] * (delta - kEpsilonAccuracy) -
                             (delta - kEpsilonAccuracy) / 2;
 
-    MDCSlider *slider = [[MDCSlider alloc] init];
-    slider.minimumValue = 0;
-    slider.maximumValue = delta * (numberOfValues - 1);
-    slider.value = originalValue;
+    self.slider = [[MDCSlider alloc] init];
+    self.slider.minimumValue = 0;
+    self.slider.maximumValue = delta * (numberOfValues - 1);
+    self.slider.value = originalValue;
 
     // When
-    slider.numberOfDiscreteValues = numberOfValues;
+    self.slider.numberOfDiscreteValues = numberOfValues;
 
     // Then
-    XCTAssertEqualWithAccuracy(slider.value, originalValue, delta / 2 + kEpsilonAccuracy);
-    XCTAssertEqualWithAccuracy(slider.value, snapedValue, kEpsilonAccuracy);
-    if ((slider.value - kEpsilonAccuracy > snapedValue) ||
-        (slider.value + kEpsilonAccuracy < snapedValue)) {
-      NSLog(@"failed with difference:%f", slider.value - snapedValue);
+    XCTAssertEqualWithAccuracy(self.slider.value, originalValue, delta / 2 + kEpsilonAccuracy);
+    XCTAssertEqualWithAccuracy(self.slider.value, snapedValue, kEpsilonAccuracy);
+    if ((self.slider.value - kEpsilonAccuracy > snapedValue) ||
+        (self.slider.value + kEpsilonAccuracy < snapedValue)) {
+      NSLog(@"failed with difference:%f", self.slider.value - snapedValue);
     }
   }
 }
 
-#pragma mark colors
+#pragma mark Colors
 
-- (void)testThumbColor {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-
-  // When
-  UIColor *actualColor = slider.color;
-
+- (void)testColorDefault {
   // Then
-  UIColor *expectedColor = [self blueColor];
-  XCTAssertEqualObjects(actualColor, expectedColor);
+  XCTAssertEqualObjects(self.slider.color, self.defaultBlue);
 }
 
-- (void)testThumbColorNullRestable {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-
+- (void)testColorIsNullResettable {
   // When
-  slider.color = nil;
+  self.slider.color = self.aNonDefaultColor;
+  self.slider.color = nil;
 
   // Then
-  UIColor *actualColor = slider.color;
-  UIColor *expectedColor = [self blueColor];
-  XCTAssertEqualObjects(actualColor, expectedColor);
+  XCTAssertEqualObjects(self.slider.color, self.defaultBlue);
 }
 
-- (void)testTrackColor {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
+- (void)testDisabledColorDefault {
+  // Then
+  XCTAssertEqualObjects(self.slider.disabledColor, self.defaultGray);
+}
 
+- (void)testDisabledColorIsNullResettable {
   // When
-  UIColor *actualColor = slider.trackBackgroundColor;
+  self.slider.disabledColor = self.aNonDefaultColor;
+  self.slider.disabledColor = nil;
 
   // Then
-  UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
-  XCTAssertEqualObjects(actualColor, expectedColor);
+  XCTAssertEqualObjects(self.slider.disabledColor, self.defaultGray);
 }
 
-- (void)testTrackColorNullRestable {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
+- (void)testTrackBackgroundColorDefault {
+  // Then
+  XCTAssertEqualObjects(self.slider.trackBackgroundColor, self.defaultGray);
+}
 
+- (void)testTrackBackgroundColorIsNullResettable {
   // When
-  slider.trackBackgroundColor = nil;
+  self.slider.trackBackgroundColor = self.aNonDefaultColor;
+  self.slider.trackBackgroundColor = nil;
 
   // Then
-  UIColor *actualColor = slider.trackBackgroundColor;
-  UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
-  XCTAssertEqualObjects(actualColor, expectedColor);
+  XCTAssertEqualObjects(self.slider.trackBackgroundColor, self.defaultGray);
 }
 
-- (void)testDisabledColor {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
+#pragma mark Thumb
 
-  // When
-  UIColor *actualColor = slider.disabledColor;
-
+- (void)testThumbRadiusDefault {
   // Then
-  UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
-  XCTAssertEqualObjects(actualColor, expectedColor);
+  XCTAssertEqual(self.slider.thumbRadius, 6);
 }
 
-- (void)testDisabledColorNullRestable {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-
-  // When
-  slider.trackBackgroundColor = nil;
-
+- (void)testThumbElevationDefault {
   // Then
-  UIColor *actualColor = slider.trackBackgroundColor;
-  UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
-  XCTAssertEqualObjects(actualColor, expectedColor);
+  XCTAssertEqual(self.slider.thumbElevation, MDCShadowElevationNone);
 }
 
-#pragma mark numeric value label
+#pragma mark Numeric value label
 
 - (void)testNumericValueLabelString {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
   MDCThumbTrack *track = nil;
-  for (UIView *view in slider.subviews) {
+  for (UIView *view in self.slider.subviews) {
     if ([view isKindOfClass:[MDCThumbTrack class]]) {
       track = (MDCThumbTrack *)view;
       break;
@@ -370,105 +328,96 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualObjects(
-      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:1.f]], @(1.));
+      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:1.f]], @(1.));
   XCTAssertEqualObjects(
-      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:0.57f]], @(0.57));
+      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:0.57f]],
+      @(0.57));
   XCTAssertEqualObjects(
-      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:0.33333333f]],
+      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:0.33333333f]],
       @(0.333));
 }
 
-#pragma mark accessibility
+#pragma mark Accessibility
 
 - (void)testAccessibilityValue {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
   CGFloat newValue = [self randomPercent];
 
   // When
-  slider.value = newValue;
+  self.slider.value = newValue;
 
   // Then
   NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
   numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
   NSString *expected =
-      [numberFormatter stringFromNumber:[NSNumber numberWithFloat:(float)slider.value]];
-  XCTAssertEqualObjects([slider accessibilityValue], expected);
+      [numberFormatter stringFromNumber:[NSNumber numberWithFloat:(float)self.slider.value]];
+  XCTAssertEqualObjects([self.slider accessibilityValue], expected);
 }
 
 - (void)testAccessibilityValueWithLargerMax {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.maximumValue = [self randomNumber];
+  self.slider.maximumValue = [self randomNumber];
   CGFloat newValue = [self randomPercent];
 
   // When
-  slider.value = newValue;
+  self.slider.value = newValue;
 
   // Then
   NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
   numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
-  CGFloat percent =
-      (slider.value - slider.minimumValue) / (slider.maximumValue - slider.minimumValue);
+  CGFloat percent = (self.slider.value - self.slider.minimumValue) /
+      (self.slider.maximumValue - self.slider.minimumValue);
   NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:(float)percent]];
-  XCTAssertEqualObjects([slider accessibilityValue], expected);
+  XCTAssertEqualObjects([self.slider accessibilityValue], expected);
 }
 
 - (void)testAccessibilityIncrement {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.value = [self randomPercent] - 0.1f;
-  CGFloat originalValue = slider.value;
+  self.slider.value = [self randomPercent] - 0.1f;
+  CGFloat originalValue = self.slider.value;
 
   // When
-  [slider accessibilityIncrement];
+  [self.slider accessibilityIncrement];
 
   // Then
-  XCTAssertEqual(originalValue + 0.1f, slider.value);
+  XCTAssertEqual(originalValue + 0.1f, self.slider.value);
 }
 
 - (void)testAccessibilityDecrement {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.value = [self randomPercent] + 0.1f;
-  CGFloat originalValue = slider.value;
+  self.slider.value = [self randomPercent] + 0.1f;
+  CGFloat originalValue = self.slider.value;
 
   // When
-  [slider accessibilityDecrement];
+  [self.slider accessibilityDecrement];
 
   // Then
-  XCTAssertEqual(originalValue - 0.1f, slider.value);
+  XCTAssertEqual(originalValue - 0.1f, self.slider.value);
 }
 
 - (void)testAccessibilityIncrementWithLargerMax {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.maximumValue = [self randomNumber];
-  slider.value = ([self randomPercent] - 0.1f) * slider.maximumValue;
-  CGFloat originalValue = slider.value;
+  self.slider.maximumValue = [self randomNumber];
+  self.slider.value = ([self randomPercent] - 0.1f) * self.slider.maximumValue;
+  CGFloat originalValue = self.slider.value;
 
   // When
-  [slider accessibilityIncrement];
+  [self.slider accessibilityIncrement];
 
   // Then
-  XCTAssertEqual(originalValue + 0.1f * slider.maximumValue, slider.value);
+  XCTAssertEqual(originalValue + 0.1f * self.slider.maximumValue, self.slider.value);
 }
 
 - (void)testAccessibilityTraits {
   // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.enabled =
+  self.slider.enabled =
       (BOOL)arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
 
   // Then
-  XCTAssertTrue(slider.accessibilityTraits & UIAccessibilityTraitAdjustable);
+  XCTAssertTrue(self.slider.accessibilityTraits & UIAccessibilityTraitAdjustable);
 }
 
-#pragma mark private test helpers
-
-- (UIColor *)blueColor {
-  return MDCPalette.bluePalette.tint500;
-}
+#pragma mark Private test helpers
 
 - (CGFloat)randomNumber {
   return arc4random_uniform(1000) / (CGFloat)(arc4random_uniform(9) + 1);

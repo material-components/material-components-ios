@@ -246,6 +246,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self setNeedsLayout];
 }
 
+- (void)setThumbElevation:(MDCShadowElevation)thumbElevation {
+  _thumbView.elevation = thumbElevation;
+}
+
+- (MDCShadowElevation)thumbElevation {
+  return _thumbView.elevation;
+}
+
 - (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
   if (_shouldDisplayDiscreteDots != shouldDisplayDiscreteDots) {
     if (shouldDisplayDiscreteDots) {
