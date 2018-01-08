@@ -113,10 +113,12 @@
   CGFloat MDCFontWeightMedium = (CGFloat)0.23;
   // Ensure that our placehold value for UIFontWeightMedium matches the real value.
   // We are defining it for < iOS 8.2 in MDCTypography.m
+  // TODO(#2651): Remove the pragmas and pointer check below
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
+#pragma clang diagnostic ignored "-Wtautological-compare"
   if (&UIFontWeightMedium != NULL) {
-  XCTAssertEqualWithAccuracy(UIFontWeightMedium, MDCFontWeightMedium, FLT_EPSILON);
+    XCTAssertEqualWithAccuracy(UIFontWeightMedium, MDCFontWeightMedium, FLT_EPSILON);
   }
 #pragma clang diagnostic pop
 }

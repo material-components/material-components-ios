@@ -35,11 +35,6 @@ fill out have been marked with `TODO` statements.
 
     ## Installation
 
-    ### Requirements
-
-    - Xcode 7.0 or higher.
-    - iOS SDK version 7.0 or higher.
-
     ### Installation with CocoaPods
 
     To add this component to your Xcode project using CocoaPods, add the
