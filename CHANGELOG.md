@@ -35,17 +35,6 @@
 
 *new* method: `-stopAnimatingWithTransition:` in `MDCActivityIndicator`
 
-### Dialogs
-
-#### MDCAlertController
-
-*modified* class: `MDCAlertController`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCAlertController : UIViewController` |
-| To: | ` @interface MDCAlertController : UIViewController` |
-
 ### Slider
 
 #### MDCSlider
