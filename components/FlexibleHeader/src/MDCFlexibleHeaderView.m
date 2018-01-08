@@ -426,6 +426,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   _wasStatusBarHiddenIsValid = NO;
 }
 
+- (void)didMoveToWindow {
+  [super didMoveToWindow];
+
+  [_statusBarShifter didMoveToWindow];
+}
+
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *hitView = [super hitTest:point withEvent:event];
 
