@@ -56,8 +56,15 @@ static const CGFloat kMinTouchSize = 48;
 
 - (void)setHasShadow:(BOOL)hasShadow {
   _hasShadow = hasShadow;
-  [[self shadowLayer]
-      setElevation:(hasShadow) ? MDCShadowElevationCardResting : MDCShadowElevationNone];
+  self.elevation = hasShadow ? MDCShadowElevationCardResting : MDCShadowElevationNone;
+}
+
+- (MDCShadowElevation)elevation {
+  return [self shadowLayer].elevation;
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  [self shadowLayer].elevation = elevation;
 }
 
 - (MDCShadowLayer *)shadowLayer {

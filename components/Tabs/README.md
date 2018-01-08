@@ -25,11 +25,6 @@ Tabs are bars of buttons used to navigate between groups of content.
 
 ## Installation
 
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 9.0 or higher.
-
 ### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the
