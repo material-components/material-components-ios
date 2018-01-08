@@ -34,7 +34,6 @@
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.contentView addSubview:self.cardView];
   self.cornerRadius = 4.f;
-  self.shadowElevation = 1.f;
   // Separator defaults.
 //  _separatorView = [[UIImageView alloc] initWithFrame:CGRectZero];
 //  [self addSubview:_separatorView];
@@ -64,16 +63,12 @@
   return self.cardView.cornerRadius;
 }
 
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
-}
-
 - (void)setShadowElevation:(CGFloat)elevation {
-  [(MDCShadowLayer *)self.layer setElevation:elevation];
+  [(MDCShadowLayer *)self.cardView setElevation:elevation];
 }
 
 - (CGFloat)shadowElevation {
-  return ((MDCShadowLayer *)self.layer).elevation;
+  return self.cardView.shadowElevation;
 }
 
 @end

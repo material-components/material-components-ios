@@ -35,16 +35,17 @@
 }
 
 - (void)commonInit {
-  if (!self.isUsingCell) {
-    self.cornerRadius = 4.f;
-    self.shadowElevation = 1.f;
-  }
+  self.cornerRadius = 4.f;
 
   self.inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   self.inkView.autoresizingMask =
     (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.inkView.usesLegacyInkRipple = NO;
   [self addSubview:self.inkView];
+}
+
+- (void)layoutSubviews {
+  self.shadowElevation = 1.f;
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
@@ -76,6 +77,8 @@
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
+
+  self.shadowElevation = 8.f;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -84,6 +87,18 @@
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
+
+  self.shadowElevation = 1.f;
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesCancelled:touches withEvent:event];
+
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
+
+  self.shadowElevation = 1.f;
 }
 
 

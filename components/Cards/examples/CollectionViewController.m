@@ -87,7 +87,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  CGFloat cardSize = (self.view.bounds.size.width / 3) - (8);
+  CGFloat cardSize = (self.view.bounds.size.width / 3) - 12;
   return CGSizeMake(cardSize, cardSize);
 }
 
@@ -95,6 +95,18 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                         layout:(UICollectionViewLayout *)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
   return UIEdgeInsetsMake(8, 8, 8, 8);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView
+                   layout:(UICollectionViewLayout*)collectionViewLayout
+minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+  return 8.f;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView
+                   layout:(UICollectionViewLayout*)collectionViewLayout
+minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+  return 8.f;
 }
 
 #pragma mark - CatalogByConvention
