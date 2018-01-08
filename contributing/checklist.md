@@ -384,6 +384,11 @@ Classes that set ivar values or perform other commands from the initializer, sho
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
 
 
+### Custom Font Support (if necessary)
+
+Components with text elements should allow clients to choose a custom font. Each text element should have 
+its own UIFont property.  (titleFont, bodyFont, etc.)
+
 ### Safe Area Support (if necessary)
 
 All of our components should work as expected on iOS 11, and support new devices like the iPhone X.
