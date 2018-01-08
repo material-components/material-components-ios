@@ -20,7 +20,6 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCNavigationBarColorThemer.h"
 #import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
@@ -98,9 +97,7 @@ static const int kMDCButtonAnimationDuration = 200;
   _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self addSubview:_navBar];
 
-  MDCBasicColorScheme *clearScheme =
-      [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor clearColor]];
-  [MDCNavigationBarColorThemer applyColorScheme:clearScheme toNavigationBar:_navBar];
+  _navBar.backgroundColor = [UIColor clearColor];
   _navBar.tintColor = [UIColor blackColor];
 }
 
