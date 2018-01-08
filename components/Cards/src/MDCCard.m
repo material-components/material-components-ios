@@ -41,6 +41,7 @@
   self.inkView.autoresizingMask =
     (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.inkView.usesLegacyInkRipple = NO;
+  self.inkView.layer.zPosition = MAXFLOAT;
   [self addSubview:self.inkView];
 }
 
