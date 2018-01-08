@@ -1,11 +1,5 @@
 # 45.0.0
 
-## Breaking changes
-
-* `MDCAlertController` is now formally marked as not subclassable. It was previously documented as not subclassable, this change adds a compiler error.
-
-## New deprecations
-
 ## New features
 
 * `MDCSlider` supports more UIAppearance customization.
