@@ -107,6 +107,26 @@ static UIButton *DeleteButton() {
 
 @end
 
+@implementation ChipsCustomizedExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Customized" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (UIImage *)doneImage {
+  return DoneImage();
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
+@end
+
 @implementation ChipsFilterExampleViewController (Supplemental)
 
 + (NSArray *)catalogBreadcrumbs {

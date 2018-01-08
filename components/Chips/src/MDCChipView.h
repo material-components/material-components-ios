@@ -224,6 +224,26 @@
     UI_APPEARANCE_SELECTOR;
 
 /*
+ Returns the title font for a particular control state.
+
+ If no title font has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The control state.
+ @return The title font for the requested state.
+ */
+- (nullable UIFont *)titleFontForState:(UIControlState)state;
+
+/*
+ Sets the title font for a particular control state.
+
+ @param titleFont The title font.
+ @param state The control state.
+ */
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state
+UI_APPEARANCE_SELECTOR;
+
+/*
  Returns the title color for a particular control state.
 
  If no title color has been set for a given state, the returned value will fall back to the value
