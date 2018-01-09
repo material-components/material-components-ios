@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import "MDCActionSheetController.h"
 #import "MDCAlertController.h"
 #import "MDCDialogTransition.h"
 #import "MDCDialogPresentationController.h"
