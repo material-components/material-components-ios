@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -25,18 +25,17 @@
 
 + (void)configureChip:(MDCChipView *)chip {
   UIFont *customTitleFont = [UIFont fontWithName:@"ChalkDuster" size:14.0];
+  chip.titleFont = customTitleFont;
+
   UIColor *customColor = [UIColor blueColor];
-  [chip setTitleFont:customTitleFont forState:UIControlStateNormal];
   [chip setTitleColor:customColor forState:UIControlStateNormal];
   [chip setBorderColor:customColor forState:UIControlStateNormal];
   [chip setBorderWidth:2.0 forState:UIControlStateNormal];
 
-  UIFont *customSelectedTitleFont = [UIFont fontWithName:@"Courier" size:14.0];
   UIColor *customSelectedColor = [UIColor orangeColor];
-  [chip setTitleFont:customSelectedTitleFont forState:UIControlStateSelected];
   [chip setTitleColor:customSelectedColor forState:UIControlStateSelected];
   [chip setBorderColor:customSelectedColor forState:UIControlStateSelected];
-  [chip setBorderWidth:2.0 forState:UIControlStateSelected];
+  [chip setBorderWidth:4.0 forState:UIControlStateSelected];
 }
 
 - (void)loadView {

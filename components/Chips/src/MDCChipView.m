@@ -38,7 +38,7 @@ static NSString *const MDCChipBorderColorsKey = @"MDCChipBorderColorsKey";
 static NSString *const MDCChipBorderWidthsKey = @"MDCChipBorderWidthsKey";
 static NSString *const MDCChipElevationsKey = @"MDCChipElevationsKey";
 static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
-static NSString *const MDCChipTitleFontsKey = @"MDCChipTitleFontsKey";
+static NSString *const MDCChipTitleFontKey = @"MDCChipTitleFontKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleButton;
@@ -134,8 +134,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, NSNumber *> *_elevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
-  NSMutableDictionary<NSNumber *, UIFont *> *_titleFonts;
   NSMutableDictionary<NSNumber *, UIColor *> *_titleColors;
+
+  UIFont *_titleFont;
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
@@ -167,8 +168,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _elevations[@(UIControlStateHighlighted)] = @(MDCShadowElevationRaisedButtonPressed);
     _elevations[@(UIControlStateHighlighted | UIControlStateSelected)] =
         @(MDCShadowElevationRaisedButtonPressed);
-
-    _titleFonts = [NSMutableDictionary dictionary];
 
     UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1.0f];
     _titleColors = [NSMutableDictionary dictionary];
@@ -243,7 +242,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _borderWidths = [aDecoder decodeObjectForKey:MDCChipBorderWidthsKey];
     _elevations = [aDecoder decodeObjectForKey:MDCChipElevationsKey];
     _shadowColors = [aDecoder decodeObjectForKey:MDCChipShadowColorsKey];
-    _titleFonts = [aDecoder decodeObjectForKey:MDCChipTitleFontsKey];
+    _titleFont = [aDecoder decodeObjectForKey:MDCChipTitleFontKey];
     _titleColors = [aDecoder decodeObjectForKey:MDCChipTitleColorsKey];
 
     self.mdc_adjustsFontForContentSizeCategory =
@@ -270,7 +269,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [aCoder encodeObject:_borderWidths forKey:MDCChipBorderWidthsKey];
   [aCoder encodeObject:_elevations forKey:MDCChipElevationsKey];
   [aCoder encodeObject:_shadowColors forKey:MDCChipShadowColorsKey];
-  [aCoder encodeObject:_titleFonts forKey:MDCChipTitleFontsKey];
+  [aCoder encodeObject:_titleFont forKey:MDCChipTitleFontKey];
   [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
 }
 
@@ -443,16 +442,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   self.layer.shadowColor = [self shadowColorForState:self.state].CGColor;
 }
 
-- (nullable UIFont *)titleFontForState:(UIControlState)state {
-  UIFont *titleFont = _titleFonts[@(state)];
-  if (!titleFont && state != UIControlStateNormal) {
-    titleFont = _titleFonts[@(UIControlStateNormal)];
-  }
-  return titleFont;
+- (nullable UIFont *)titleFont {
+  return _titleFont;
 }
 
-- (void)setTitleFont:(nullable UIFont *)titleFont forState:(UIControlState)state {
-  _titleFonts[@(state)] = titleFont;
+- (void)setTitleFont:(nullable UIFont *)titleFont {
+  _titleFont = titleFont;
 
   [self updateTitleFont];
 }
@@ -472,7 +467,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateTitleFont {
-  UIFont *customTitleFont = [self titleFontForState:self.state];
+  UIFont *customTitleFont = _titleFont;
 
   // If we have a custom font apply it to the label.
   // If not, fall back to the Material specified font.
