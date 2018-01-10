@@ -24,6 +24,7 @@
 #if defined(__IPHONE_8_2)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
+#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
   if (&UIFontWeightMedium != NULL) {
     if (weight == UIFontWeightUltraLight) {
       return @"UltraLight";
