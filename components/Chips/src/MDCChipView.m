@@ -302,11 +302,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
-  _inkView.inkColor = inkColor;
+  [self setInkColor:inkColor forState:UIControlStateNormal];
 }
 
 - (UIColor *)inkColor {
-  return _inkView.inkColor;
+  return [self inkColorForState:UIControlStateNormal];
 }
 
 #pragma mark - Dynamic Type Support
