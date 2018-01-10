@@ -74,7 +74,6 @@ static const CGFloat MDCChipSelectedDarkenPercent = 0.16f;
 static const CGFloat MDCChipDisabledLightenPercent = 0.38f;
 static const CGFloat MDCChipTitleColorWhite = 0.13f;
 static const CGFloat MDCChipTitleColorDisabledLightenPercent = 0.38f;
-static const CGFloat MDCChipInkAlpha = 0.16f;
 
 static const UIEdgeInsets MDCChipContentPadding = {4, 4, 4, 4};
 static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};
@@ -172,7 +171,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
         @(MDCShadowElevationRaisedButtonPressed);
 
     _inkColors = [NSMutableDictionary dictionary];
-    _inkColors[@(UIControlStateNormal)] = [UIColor colorWithWhite:0 alpha:MDCChipInkAlpha];
 
     UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1.0f];
     _titleColors = [NSMutableDictionary dictionary];
