@@ -24,22 +24,22 @@
 }
 
 + (void)configureChip:(MDCChipView *)chip {
-  UIFont *customTitleFont = [UIFont fontWithName:@"ChalkDuster" size:14.0];
+  UIFont *customTitleFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
   chip.titleFont = customTitleFont;
 
   UIColor *customColor = [UIColor blueColor];
   [chip setTitleColor:customColor forState:UIControlStateNormal];
   [chip setBorderColor:customColor forState:UIControlStateNormal];
-  [chip setBorderWidth:2.0 forState:UIControlStateNormal];
-  [chip setInkColor:[customColor colorWithAlphaComponent:0.2] forState:UIControlStateNormal];
+  [chip setBorderWidth:2.0f forState:UIControlStateNormal];
+  [chip setInkColor:[customColor colorWithAlphaComponent:0.2f] forState:UIControlStateNormal];
 
   UIColor *customSelectedColor = [UIColor orangeColor];
   [chip setTitleColor:customSelectedColor forState:UIControlStateSelected];
   [chip setBorderColor:customSelectedColor forState:UIControlStateSelected];
-  [chip setBorderWidth:4.0 forState:UIControlStateSelected];
-  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:0.2]
+  [chip setBorderWidth:4.0f forState:UIControlStateSelected];
+  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:0.2f]
            forState:UIControlStateSelected];
-  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:0.2]
+  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:0.2f]
            forState:UIControlStateSelected|UIControlStateHighlighted];
 }
 
