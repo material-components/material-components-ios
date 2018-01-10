@@ -444,7 +444,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateInkColor {
-  self.inkView.inkColor = [self inkColorForState:self.state];
+  UIColor *inkColor = [self inkColorForState:self.state];
+  self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
 }
 
 - (nullable UIColor *)shadowColorForState:(UIControlState)state {
