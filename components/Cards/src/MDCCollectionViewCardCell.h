@@ -11,6 +11,7 @@
 @interface MDCCollectionViewCardCell : UICollectionViewCell
 
 @property(nonatomic, strong, nullable) MDCCard *cardView;
+@property(nonatomic, assign) BOOL pressed;
 
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
 - (nullable UIColor *)backgroundColor;
@@ -20,5 +21,7 @@
 
 - (void)setShadowElevation:(CGFloat)elevation;
 - (CGFloat)shadowElevation;
+
+- (void)isReordering:(BOOL)reordering withLocation:(CGPoint)location;
 
 @end

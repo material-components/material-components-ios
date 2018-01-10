@@ -13,7 +13,10 @@
 
 @end
 
-@implementation MDCCard
+@implementation MDCCard {
+  UILongPressGestureRecognizer *longPressGestureRecognizer;
+  UITapGestureRecognizer *tapGestureRecognizer;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
@@ -42,6 +45,7 @@
     (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.inkView.usesLegacyInkRipple = NO;
   self.inkView.layer.zPosition = MAXFLOAT;
+  self.userInteractionEnabled = YES;
   [self addSubview:self.inkView];
 }
 
@@ -70,36 +74,59 @@
   return ((MDCShadowLayer *)self.layer).elevation;
 }
 
+- (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location {
+  switch (state) {
+    case MDCCardsStateDefault: {
+      NSLog(@"DEFAULT with loc: %f %f", location.x, location.y);
+      [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
+      self.shadowElevation = 1.f;
+      NSLog(@"end %f %@",self.shadowElevation, self.description);
+      break;
+    }
+    case MDCCardsStatePressed: {
+      NSLog(@"PRESSED with loc: %f %f", location.x, location.y );
+      [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
+      self.shadowElevation = 8.f;
+      NSLog(@"start %f %@",self.shadowElevation, self.description);
+      break;
+    }
+    default:
+      break;
+  }
+}
+
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
 
+  if (self.isUsingCell) {
+    [self.nextResponder touchesBegan:touches withEvent:event];
+  }
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
-
-  self.shadowElevation = 8.f;
+  [self styleForState:MDCCardsStatePressed withLocation:location];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
 
+  if (self.isUsingCell) {
+    [self.nextResponder touchesBegan:touches withEvent:event];
+  }
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
-
-  self.shadowElevation = 1.f;
+  [self styleForState:MDCCardsStateDefault withLocation:location];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
 
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
-
-  self.shadowElevation = 1.f;
+  if (!self.isUsingCell) {
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [self styleForState:MDCCardsStateDefault withLocation:location];
+  }
 }
 
 

@@ -34,6 +34,8 @@
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.contentView addSubview:self.cardView];
   self.cornerRadius = 4.f;
+  self.shadowElevation = 1.f;
+  self.pressed = NO;
   // Separator defaults.
 //  _separatorView = [[UIImageView alloc] initWithFrame:CGRectZero];
 //  [self addSubview:_separatorView];
@@ -42,6 +44,12 @@
 //  _accessoryType = MDCCollectionViewCellAccessoryNone;
 //  _accessoryInset = kAccessoryInsetDefault;
 //  _editingSelectorColor = MDCCollectionViewCellRedColor();
+//  [self addTarget:self
+//           action:@selector(touchDragEnter:forEvent:)
+// forControlEvents:UIControlEventTouchDragEnter];
+}
+
+- (void)touchDragEnter:(__unused MDCCollectionViewCardCell *)cell forEvent:(UIEvent *)event {
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -64,11 +72,31 @@
 }
 
 - (void)setShadowElevation:(CGFloat)elevation {
-  [(MDCShadowLayer *)self.cardView setElevation:elevation];
+  [self.cardView setShadowElevation:elevation];
 }
 
 - (CGFloat)shadowElevation {
   return self.cardView.shadowElevation;
+}
+
+- (void)isReordering:(BOOL)reordering withLocation:(CGPoint)location {
+  if (reordering) {
+    self.pressed = YES;
+    [self.cardView styleForState:MDCCardsStatePressed withLocation:(CGPoint)location];
+  } else {
+    self.pressed = NO;
+    [self.cardView styleForState:MDCCardsStateDefault withLocation:(CGPoint)location];
+  }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {\
+  [super touchesBegan:touches withEvent:event];
+  self.pressed = YES;
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  [super touchesEnded:touches withEvent:event];
+  self.pressed = NO;
 }
 
 @end

@@ -8,7 +8,7 @@
 #import "CollectionViewController.h"
 #import "MaterialInk.h"
 
-@interface CollectionViewController ()
+@interface CollectionViewController () <UIGestureRecognizerDelegate>
 
 @end
 
@@ -16,6 +16,7 @@
   NSMutableArray *_content;
   MDCInkTouchController *_inkTouchController;
   CGPoint _inkTouchLocation;
+  UILongPressGestureRecognizer *gestureRecognizer;
 }
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
@@ -44,8 +45,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   self.collectionView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
 
-//  _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
-//  _inkTouchController.delegate = self;
+  gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(reorderCells:)];
+  gestureRecognizer.delegate = self;
+  [self.collectionView addGestureRecognizer:gestureRecognizer];
 
   // Register cell classes
   [self.collectionView registerClass:[MDCCollectionViewCardCell class]
@@ -109,6 +111,48 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return 8.f;
 }
 
+#pragma mark - Reordering
+
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
+shouldRecognizeSimultaneouslyWithGestureRecognizer:
+(__unused UIGestureRecognizer *)otherGestureRecognizer {
+  return YES;
+}
+
+- (void)reorderCells:(UILongPressGestureRecognizer *)gesture {
+  NSLog(@"%ld",gesture.state);
+  if (gesture.state == UIGestureRecognizerStateEnded) {
+    NSLog(@"IM HERE");
+    for (MDCCollectionViewCardCell *cell in [self.collectionView visibleCells]) {
+      if (cell.pressed) {
+        CGPoint loc = [gesture locationInView:cell];
+        [cell isReordering:NO withLocation:loc];
+      }
+    }
+  }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+   moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
+           toIndexPath:(NSIndexPath *)destinationIndexPath {
+}
+
+//- (NSIndexPath *)targetIndexPathForInteractivelyMovingItem:(NSIndexPath *)previousIndexPath withPosition:(CGPoint)position {
+//  return super.targetIndex
+//}
+//
+//- (UICollectionViewLayoutAttributes *)layoutAttributesForInteractivelyMovingItemAtIndexPath:(NSIndexPath *)indexPath withTargetPosition:(CGPoint)position {
+//
+//}
+//
+//- (UICollectionViewLayoutInvalidationContext *)invalidationContextForInteractivelyMovingItems:(NSArray<NSIndexPath *> *)targetIndexPaths withTargetPosition:(CGPoint)targetPosition previousIndexPaths:(NSArray<NSIndexPath *> *)previousIndexPaths previousPosition:(CGPoint)previousPosition {
+//
+//}
+//
+//- (UICollectionViewLayoutInvalidationContext *)invalidationContextForEndingInteractiveMovementOfItemsToFinalIndexPaths:(NSArray<NSIndexPath *> *)indexPaths previousIndexPaths:(NSArray<NSIndexPath *> *)previousIndexPaths movementCancelled:(BOOL)movementCancelled {
+//
+//}
+
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
@@ -162,12 +206,6 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 //  return;
 //}
 
-#pragma mark - <MDCInkTouchControllerDelegate>
 
-- (BOOL)inkTouchController:(__unused MDCInkTouchController *)inkTouchController
-shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
-  _inkTouchLocation = location;
-  return NO;
-}
 
 @end

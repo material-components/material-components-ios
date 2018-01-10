@@ -9,6 +9,12 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialInk.h"
 
+typedef NS_ENUM(NSInteger, MDCCardsState) {
+  MDCCardsStateDefault,
+  MDCCardsStatePressed,
+  MDCCardsStateSelected
+};
+
 @interface MDCCard : UIView
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame withIsUsingCollectionViewCell:(BOOL)isUsingCell;
@@ -18,6 +24,8 @@
 
 - (void)setShadowElevation:(CGFloat)elevation;
 - (CGFloat)shadowElevation;
+
+- (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location;
 
 @property(nonatomic, strong, nullable) MDCInkView *inkView;
 
