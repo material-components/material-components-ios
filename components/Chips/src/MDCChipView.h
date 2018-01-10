@@ -216,7 +216,7 @@
  Returns the ink color for a particular control state.
 
  If no ink color has been set for a given state, the returned value will fall back to the value
- set for UIControlStateNormal. Defaults to MDCInkView.defaultInkColor.
+ set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.
 
  @param state The control state.
  @return The ink color for the requested state.
