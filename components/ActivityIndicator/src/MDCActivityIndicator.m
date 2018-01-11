@@ -159,9 +159,15 @@ static const CGFloat kSingleCycleRotation =
   // Register notifications for foreground and background if needed.
   [self registerForegroundAndBackgroundNotificationObserversIfNeeded];
 
+  // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+  // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+  // symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   // The activity indicator reflects the passage of time (a spatial semantic context) and so
   // will not be mirrored in RTL languages.
   self.mdf_semanticContentAttribute = UISemanticContentAttributeSpatial;
+#pragma clang diagnostic pop
 
   _animator = [[MDMMotionAnimator alloc] init];
   _animator.additive = NO;

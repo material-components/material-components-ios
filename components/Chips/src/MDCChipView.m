@@ -38,7 +38,10 @@ static NSString *const MDCChipBorderColorsKey = @"MDCChipBorderColorsKey";
 static NSString *const MDCChipBorderWidthsKey = @"MDCChipBorderWidthsKey";
 static NSString *const MDCChipElevationsKey = @"MDCChipElevationsKey";
 static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
+static NSString *const MDCChipTitleFontKey = @"MDCChipTitleFontKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
+
+static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleButton;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
@@ -132,6 +135,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   NSMutableDictionary<NSNumber *, NSNumber *> *_elevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_titleColors;
+
+  UIFont *_titleFont;
+
+  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 @dynamic layer;
@@ -183,7 +190,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     [self addSubview:_selectedImageView];
 
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.font = [MDCTypography buttonFont];
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      _titleLabel.font = [MDCTypography buttonFont];
+    }
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_titleLabel];
 
@@ -228,6 +242,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _borderWidths = [aDecoder decodeObjectForKey:MDCChipBorderWidthsKey];
     _elevations = [aDecoder decodeObjectForKey:MDCChipElevationsKey];
     _shadowColors = [aDecoder decodeObjectForKey:MDCChipShadowColorsKey];
+    _titleFont = [aDecoder decodeObjectForKey:MDCChipTitleFontKey];
     _titleColors = [aDecoder decodeObjectForKey:MDCChipTitleColorsKey];
 
     self.mdc_adjustsFontForContentSizeCategory =
@@ -254,6 +269,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [aCoder encodeObject:_borderWidths forKey:MDCChipBorderWidthsKey];
   [aCoder encodeObject:_elevations forKey:MDCChipElevationsKey];
   [aCoder encodeObject:_shadowColors forKey:MDCChipShadowColorsKey];
+  [aCoder encodeObject:_titleFont forKey:MDCChipTitleFontKey];
   [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
 }
 
@@ -288,11 +304,16 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   return _inkView.inkColor;
 }
 
+#pragma mark - Dynamic Type Support
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
+
   if (_mdc_adjustsFontForContentSizeCategory) {
-    UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-    self.titleLabel.font = font;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contentSizeCategoryDidChange:)
                                                  name:UIContentSizeCategoryDidChangeNotification
@@ -302,12 +323,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
                                                     name:UIContentSizeCategoryDidChangeNotification
                                                   object:nil];
   }
+
+  [self updateTitleFont];
 }
 
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-  self.titleLabel.font = font;
-  [self setNeedsLayout];
+  [self updateTitleFont];
 }
 
 - (void)setAccessoryView:(UIView *)accessoryView {
@@ -421,6 +442,16 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   self.layer.shadowColor = [self shadowColorForState:self.state].CGColor;
 }
 
+- (nullable UIFont *)titleFont {
+  return _titleFont;
+}
+
+- (void)setTitleFont:(nullable UIFont *)titleFont {
+  _titleFont = titleFont;
+
+  [self updateTitleFont];
+}
+
 - (nullable UIColor *)titleColorForState:(UIControlState)state {
   UIColor *titleColor = _titleColors[@(state)];
   if (!titleColor && state != UIControlStateNormal) {
@@ -435,6 +466,50 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateTitleColor];
 }
 
+- (void)updateTitleFont {
+  UIFont *customTitleFont = _titleFont;
+
+  // If we have a custom font apply it to the label.
+  // If not, fall back to the Material specified font.
+  if (customTitleFont) {
+    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
+    if (_mdc_adjustsFontForContentSizeCategory) {
+      self.titleLabel.font =
+          [customTitleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    } else {
+      self.titleLabel.font = customTitleFont;
+    }
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    if (_mdc_adjustsFontForContentSizeCategory) {
+      // If we are using the default (system) font loader, retrieve the
+      // font from the UIFont preferredFont API.
+      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+        _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kTitleTextStyle];
+      } else {
+        // There is a custom font loader, retrieve the font and scale it.
+        UIFont *customTypographyFont = [MDCTypography buttonFont];
+        _titleLabel.font =
+            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      }
+    } else {
+      // If we are using the default (system) font loader, retrieve the
+      // font from the UIFont standardFont API.
+      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+        _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+      } else {
+        // There is a custom font loader, retrieve the font from it.
+        _titleLabel.font = [MDCTypography buttonFont];
+      }
+    }
+  }
+
+  [self setNeedsLayout];
+}
+
 - (void)updateTitleColor {
   self.titleLabel.textColor = [self titleColorForState:self.state];
 }
@@ -445,6 +520,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateBorderWidth];
   [self updateElevation];
   [self updateShadowColor];
+  [self updateTitleFont];
   [self updateTitleColor];
 }
 
@@ -540,8 +616,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
   CGFloat maximumTitleHeight =
       CGRectGetHeight(self.contentRect) - UIEdgeInsetsVertical(_titlePadding);
-  CGSize titleSize = [_titleLabel sizeThatFits:CGSizeMake(maximumTitleWidth,
-                                                          maximumTitleHeight)];
+  CGSize maximumSize = CGSizeMake(maximumTitleWidth, maximumTitleHeight);
+  CGSize titleSize = [_titleLabel sizeThatFits:maximumSize];
   titleSize.width = MAX(0, maximumTitleWidth);
 
   CGFloat imageRightEdge = CGRectGetMaxX(imageFrame) + _imagePadding.right;
@@ -572,8 +648,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   imageSize.width = MAX(imageSize.width, selectedSize.width);
   imageSize.height = MAX(imageSize.height, selectedSize.height);
 
-  CGSize titleSize = CGSizeExpandWithInsets([_titleLabel sizeThatFits:titlePaddedSize],
-                                            self.titlePadding);
+  CGSize originalTitleSize = [_titleLabel sizeThatFits:titlePaddedSize];
+  CGSize titleSize = CGSizeExpandWithInsets(originalTitleSize, self.titlePadding);
+
   CGSize accessorySize = CGSizeZero;
   if (_accessoryView) {
     accessorySize = CGSizeExpandWithInsets([_accessoryView sizeThatFits:accessoryPaddedSize],
