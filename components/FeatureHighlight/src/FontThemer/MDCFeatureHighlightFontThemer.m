@@ -14,7 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
-#import "MDCFontScheme.h"
-#import "MDCTonalColorScheme.h"
-#import "MDCTonalPalette.h"
+#import "MDCFeatureHighlightFontThemer.h"
+
+@implementation MDCFeatureHighlightFontThemer
+
++ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
+    toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView {
+  featureHighlightView.titleFont = fontScheme.headline2;
+  featureHighlightView.bodyFont = fontScheme.body2;
+}
+
+@end
