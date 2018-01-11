@@ -7,8 +7,9 @@
 
 #import "CollectionViewController.h"
 #import "MaterialInk.h"
+#import "UICollectionViewController+MDCCardReordering.h"
 
-@interface CollectionViewController () <UIGestureRecognizerDelegate>
+@interface CollectionViewController ()
 
 @end
 
@@ -16,7 +17,6 @@
   NSMutableArray *_content;
   MDCInkTouchController *_inkTouchController;
   CGPoint _inkTouchLocation;
-  UILongPressGestureRecognizer *gestureRecognizer;
 }
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
@@ -45,10 +45,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   self.collectionView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
 
-  gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(reorderCells:)];
-  gestureRecognizer.delegate = self;
-  [self.collectionView addGestureRecognizer:gestureRecognizer];
-
   // Register cell classes
   [self.collectionView registerClass:[MDCCollectionViewCardCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
@@ -58,6 +54,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     [_content addObject:@[[NSString stringWithFormat:@"(Left) Two line text %d", i],
                           [NSString stringWithFormat:@"(Left) here is the detail text %d", i]]];
   }
+
+  [self mdc_setupCardReordering];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -74,12 +72,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   MDCCollectionViewCardCell *cell =
   [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                             forIndexPath:indexPath];
-//  cell.textLabel.text = _content[indexPath.item][0];
-//  cell.detailTextLabel.text = _content[indexPath.item][1];
-//  cell.backgroundColor = [UIColor whiteColor];
-//  [(MDCShadowLayer *)cell.layer setElevation:2.f];
-//  cell.backgroundColor = [UIColor blackColor];
-//  [cell setCornerRadius:6.f];
   [cell setBackgroundColor:[UIColor blueColor]];
   return cell;
 }
@@ -113,45 +105,11 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 
 #pragma mark - Reordering
 
-- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
-shouldRecognizeSimultaneouslyWithGestureRecognizer:
-(__unused UIGestureRecognizer *)otherGestureRecognizer {
-  return YES;
-}
-
-- (void)reorderCells:(UILongPressGestureRecognizer *)gesture {
-  NSLog(@"%ld",gesture.state);
-  if (gesture.state == UIGestureRecognizerStateEnded) {
-    NSLog(@"IM HERE");
-    for (MDCCollectionViewCardCell *cell in [self.collectionView visibleCells]) {
-      if (cell.pressed) {
-        CGPoint loc = [gesture locationInView:cell];
-        [cell isReordering:NO withLocation:loc];
-      }
-    }
-  }
-}
-
 - (void)collectionView:(UICollectionView *)collectionView
    moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
            toIndexPath:(NSIndexPath *)destinationIndexPath {
 }
 
-//- (NSIndexPath *)targetIndexPathForInteractivelyMovingItem:(NSIndexPath *)previousIndexPath withPosition:(CGPoint)position {
-//  return super.targetIndex
-//}
-//
-//- (UICollectionViewLayoutAttributes *)layoutAttributesForInteractivelyMovingItemAtIndexPath:(NSIndexPath *)indexPath withTargetPosition:(CGPoint)position {
-//
-//}
-//
-//- (UICollectionViewLayoutInvalidationContext *)invalidationContextForInteractivelyMovingItems:(NSArray<NSIndexPath *> *)targetIndexPaths withTargetPosition:(CGPoint)targetPosition previousIndexPaths:(NSArray<NSIndexPath *> *)previousIndexPaths previousPosition:(CGPoint)previousPosition {
-//
-//}
-//
-//- (UICollectionViewLayoutInvalidationContext *)invalidationContextForEndingInteractiveMovementOfItemsToFinalIndexPaths:(NSArray<NSIndexPath *> *)indexPaths previousIndexPaths:(NSArray<NSIndexPath *> *)previousIndexPaths movementCancelled:(BOOL)movementCancelled {
-//
-//}
 
 #pragma mark - CatalogByConvention
 
@@ -174,38 +132,5 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
 + (BOOL)catalogIsDebug {
   return YES;
 }
-
-//- (void)collectionView:(UICollectionView *)collectionView
-//didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-//  UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-//  CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
-
-//  MDCInkView *inkView;
-//  if ([cell respondsToSelector:@selector(inkView)]) {
-//    inkView = [cell performSelector:@selector(inkView)];
-//  } else {
-//    return;
-//  }
-
-//  [inkView startTouchBeganAnimationAtPoint:location completion:nil];
-//}
-
-//- (void)collectionView:(UICollectionView *)collectionView
-//didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-//  UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-//  CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
-
-//  MDCInkView *inkView;
-//  if ([cell respondsToSelector:@selector(inkView)]) {
-//    inkView = [cell performSelector:@selector(inkView)];
-//  } else {
-//    return;
-//  }
-
-//  [inkView startTouchEndedAnimationAtPoint:location completion:nil];
-//  return;
-//}
-
-
 
 @end
