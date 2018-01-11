@@ -85,6 +85,9 @@
 /** Must be called when the owning UIViewController's interface orientation has changed. */
 - (void)interfaceOrientationDidChange;
 
+/** Must be called when the owning UIViewController's view moves to a window. */
+- (void)didMoveToWindow;
+
 @end
 
 /**

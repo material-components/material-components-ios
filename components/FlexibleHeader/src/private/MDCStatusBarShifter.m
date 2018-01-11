@@ -279,4 +279,8 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   _statusBarReplicaView.hidden = NO;
 }
 
+- (void)didMoveToWindow {
+  _originalStatusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+}
+
 @end

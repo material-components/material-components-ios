@@ -58,6 +58,7 @@
  The title label.
 
  @note The title color is controlled by setTitleColor:forState:.
+ @note The title font is controlled by setTitleFont.
  */
 @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;
 
@@ -97,6 +98,13 @@
  Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.
  */
 @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;
+
+/*
+ Font used to render the title.
+
+ If nil, the chip will use the system font.
+ */
+@property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 
 /*
  The color of the ink ripple.

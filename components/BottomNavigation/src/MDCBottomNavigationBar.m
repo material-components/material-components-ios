@@ -427,11 +427,14 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
       itemView.badgeValue = item.badgeValue;
     }
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
       if (item.badgeColor) {
         itemView.badgeColor = item.badgeColor;
       }
     }
+#pragma clang diagnostic pop
 #endif
     itemView.selected = NO;
     [itemView.button addTarget:self
