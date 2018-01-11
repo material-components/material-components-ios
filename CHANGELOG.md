@@ -1,10 +1,4 @@
-# #develop#
-
-## Breaking changes
-
-## New deprecations
-
-## New features
+# 44.2.1
 
 ## API changes
 
@@ -69,8 +63,8 @@
 *new* property: `headline3` in `MDCBasicFontScheme`
 
 *new* property: `caption` in `MDCBasicFontScheme`
-## Component changes
 
+## Component changes
 
 ### FeatureHighlight
 
