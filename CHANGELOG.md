@@ -1,3 +1,57 @@
+# 44.2.0
+
+## API changes
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `titleFont` in `MDCChipView`
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+### BottomNavigation
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+### Chips
+
+#### Changes
+
+* [Add custom font support (#2820)](https://github.com/material-components/material-components-ios/commit/e4b7f2464a589022b5b1c40167c9c25989b88961) (ianegordon)
+
+### CollectionCells
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix status bar not disappearing for edge case (#2819)](https://github.com/material-components/material-components-ios/commit/79a506b4eac810b2e258ee17fbaa8399ceab7aa8) (Sam Morrison)
+
+### Typography
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+---
+
 # 44.1.0
 
 ## New features
