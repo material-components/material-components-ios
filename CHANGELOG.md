@@ -1,3 +1,91 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Themes
+
+#### MDCFontScheme
+
+*new* property: `button` in `MDCFontScheme`
+
+*new* property: `body2` in `MDCFontScheme`
+
+*new* property: `headline5` in `MDCFontScheme`
+
+*new* property: `caption` in `MDCFontScheme`
+
+*new* property: `subtitle2` in `MDCFontScheme`
+
+*new* property: `subtitle1` in `MDCFontScheme`
+
+*new* property: `body1` in `MDCFontScheme`
+
+*new* property: `headline1` in `MDCFontScheme`
+
+*new* property: `overline` in `MDCFontScheme`
+
+*new* property: `headline2` in `MDCFontScheme`
+
+*new* property: `headline4` in `MDCFontScheme`
+
+*new* protocol: `MDCFontScheme`
+
+*new* property: `headline3` in `MDCFontScheme`
+
+*new* property: `headline6` in `MDCFontScheme`
+
+#### MDCBasicFontScheme
+
+*new* property: `button` in `MDCBasicFontScheme`
+
+*new* property: `headline1` in `MDCBasicFontScheme`
+
+*new* property: `headline5` in `MDCBasicFontScheme`
+
+*new* property: `body1` in `MDCBasicFontScheme`
+
+*new* property: `subtitle2` in `MDCBasicFontScheme`
+
+*new* property: `headline2` in `MDCBasicFontScheme`
+
+*new* property: `body2` in `MDCBasicFontScheme`
+
+*new* property: `overline` in `MDCBasicFontScheme`
+
+*new* property: `headline6` in `MDCBasicFontScheme`
+
+*new* property: `subtitle1` in `MDCBasicFontScheme`
+
+*new* class: `MDCBasicFontScheme`
+
+*new* property: `headline4` in `MDCBasicFontScheme`
+
+*new* property: `headline3` in `MDCBasicFontScheme`
+
+*new* property: `caption` in `MDCBasicFontScheme`
+## Component changes
+
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Typography] Add FontThemer & FontScheme to FeatureHighlight (#2760)](https://github.com/material-components/material-components-ios/commit/5a05ff9f9b9bc80f213416a8a25409faee3e01b1) (ianegordon)
+
+### Themes
+
+#### Changes
+
+* [[Typography] Add FontThemer & FontScheme to FeatureHighlight (#2760)](https://github.com/material-components/material-components-ios/commit/5a05ff9f9b9bc80f213416a8a25409faee3e01b1) (ianegordon)
+
+---
+
 # 44.2.0
 
 ## API changes
