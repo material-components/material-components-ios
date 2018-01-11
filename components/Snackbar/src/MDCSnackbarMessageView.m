@@ -162,7 +162,9 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 @end
 
-@implementation MDCSnackbarMessageView
+@implementation MDCSnackbarMessageView {
+  UIFont *_messageFont;
+}
 
 + (void)initialize {
   [[self appearance] setSnackbarMessageViewShadowColor:MDCRGBAColor(0x00, 0x00, 0x00, 1.0f)];
@@ -231,6 +233,37 @@ static const CGFloat kButtonInkRadius = 64.0f;
   }
                          range:NSMakeRange(0, messageString.length)];
   _label.attributedText = messageString;
+}
+
+- (UIFont *)snackbarMessageViewFont {
+  return _messageFont;
+}
+
+- (void)setSnackbarMessageViewFont:(UIFont *)font {
+  _messageFont = font;
+
+  [self updateMessageFont];
+}
+
+- (void)updateMessageFont {
+  // If we have a custom font apply it to the label.
+  // If not, fall back to the Material specified font.
+  if (_messageFont) {
+    _label.font = _messageFont;
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      _label.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      _label.font = [MDCTypography body2Font];
+    }
+  }
+
+  [self setNeedsLayout];
 }
 
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message

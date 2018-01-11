@@ -38,4 +38,9 @@
  */
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewTextColor UI_APPEARANCE_SELECTOR;
 
+/**
+ The font for the message text in the snackbar message view.
+ */
+@property(nonatomic, strong, nullable) UIFont *snackbarMessageViewFont UI_APPEARANCE_SELECTOR;
+
 @end

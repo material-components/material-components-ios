@@ -27,7 +27,9 @@
       @"Simple Snackbar",
       @"Snackbar with Action Button",
       @"Snackbar with Long Text",
-      @"Attributed Text Example"
+      @"Attributed Text Example",
+      @"Customize Font Example",
+      @"De-Customize Font Example"
   ]];
   self.title = @"Snackbar";
 }
@@ -88,6 +90,24 @@
 }
 
 
+- (void)showCustomizedSnackbar:(id)sender {
+  [MDCSnackbarMessageView appearance].snackbarMessageViewFont =
+      [UIFont fontWithName:@"ChalkDuster" size:18.0f];
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Customized Font";
+
+  [MDCSnackbarManager showMessage:message];
+}
+
+- (void)showDecustomizedSnackbar:(id)sender {
+  [MDCSnackbarMessageView appearance].snackbarMessageViewFont = nil;
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Back to the standard font";
+
+  [MDCSnackbarManager showMessage:message];
+}
+
+
 
 #pragma mark - UICollectionView
 
@@ -105,6 +125,13 @@
       break;
     case 3:
       [self showBoldSnackbar:nil];
+      break;
+    case 4:
+      [self showCustomizedSnackbar:nil];
+      break;
+    case 5:
+      [self showDecustomizedSnackbar:nil];
+      break;
     default:
       break;
   }
