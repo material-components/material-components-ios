@@ -59,6 +59,18 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "FontThemer",
+    srcs = native.glob(["src/FontThemer/*.m"]),
+    hdrs = native.glob(["src/FontThemer/*.h"]),
+    includes = ["src/FontThemer"],
+    deps = [
+        ":FeatureHighlight",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
@@ -79,6 +91,7 @@ mdc_objc_library(
     deps = [
         ":FeatureHighlight",
         ":ColorThemer",
+        ":FontThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],
