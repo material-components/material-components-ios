@@ -47,6 +47,8 @@
   self.inkView.layer.zPosition = MAXFLOAT;
   self.userInteractionEnabled = YES;
   [self addSubview:self.inkView];
+
+  self.longPress = NO;
 }
 
 - (void)layoutSubviews {
@@ -122,7 +124,7 @@
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
 
-  if (!self.isUsingCell) {
+  if (!self.longPress) {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:self];
     [self styleForState:MDCCardsStateDefault withLocation:location];

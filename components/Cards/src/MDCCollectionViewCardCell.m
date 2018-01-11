@@ -35,7 +35,6 @@
   [self.contentView addSubview:self.cardView];
   self.cornerRadius = 4.f;
   self.shadowElevation = 1.f;
-  self.pressed = NO;
   // Separator defaults.
 //  _separatorView = [[UIImageView alloc] initWithFrame:CGRectZero];
 //  [self addSubview:_separatorView];
@@ -79,24 +78,21 @@
   return self.cardView.shadowElevation;
 }
 
+- (void)setLongPressActive:(BOOL)longPressActive {
+  self.cardView.longPress = longPressActive;
+}
+
+- (BOOL)longPressActive {
+  return self.cardView.longPress;
+}
+
 - (void)isReordering:(BOOL)reordering withLocation:(CGPoint)location {
   if (reordering) {
-    self.pressed = YES;
-    [self.cardView styleForState:MDCCardsStatePressed withLocation:(CGPoint)location];
+    self.longPressActive = YES;
   } else {
-    self.pressed = NO;
+    self.longPressActive = NO;
     [self.cardView styleForState:MDCCardsStateDefault withLocation:(CGPoint)location];
   }
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {\
-  [super touchesBegan:touches withEvent:event];
-  self.pressed = YES;
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesEnded:touches withEvent:event];
-  self.pressed = NO;
 }
 
 @end

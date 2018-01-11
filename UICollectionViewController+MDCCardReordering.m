@@ -14,7 +14,7 @@
 - (void)mdc_setupCardReordering {
   UILongPressGestureRecognizer *gestureRecognizer = [[UILongPressGestureRecognizer alloc]
                                                      initWithTarget:self
-                                                     action:@selector(reorderCells:)];
+                                                     action:@selector(mdc_reorderCells:)];
   gestureRecognizer.delegate = self;
   [self.collectionView addGestureRecognizer:gestureRecognizer];
 }
@@ -25,10 +25,16 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   return YES;
 }
 
-- (void)reorderCells:(UILongPressGestureRecognizer *)gesture {
-  if (gesture.state == UIGestureRecognizerStateEnded) {
+- (void)mdc_reorderCells:(UILongPressGestureRecognizer *)gesture {
+  if (gesture.state == UIGestureRecognizerStateBegan) {
+    NSIndexPath *selected = [self.collectionView indexPathForItemAtPoint:
+                             [gesture locationInView:self.collectionView]];
+    MDCCollectionViewCardCell *cell =
+    (MDCCollectionViewCardCell *)[self.collectionView cellForItemAtIndexPath:selected];
+    [cell isReordering:YES withLocation:CGPointZero];
+  } else if (gesture.state == UIGestureRecognizerStateEnded) {
     for (MDCCollectionViewCardCell *cell in [self.collectionView visibleCells]) {
-      if (cell.pressed) {
+      if (cell.longPressActive) {
         CGPoint loc = [gesture locationInView:cell];
         [cell isReordering:NO withLocation:loc];
       }

@@ -11,7 +11,7 @@
 @interface MDCCollectionViewCardCell : UICollectionViewCell
 
 @property(nonatomic, strong, nullable) MDCCard *cardView;
-@property(nonatomic, assign) BOOL pressed;
+@property(nonatomic, assign) BOOL longPressActive;
 
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
 - (nullable UIColor *)backgroundColor;
