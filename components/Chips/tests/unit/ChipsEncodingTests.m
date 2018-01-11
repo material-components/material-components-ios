@@ -38,7 +38,6 @@ static UIImage *FakeImage(void) {
 - (void)testEncoding {
   // Given
   MDCChipView *chip = [[MDCChipView alloc] init];
-  chip.inkColor = UIColor.cyanColor;
   chip.titleLabel.text = @"Title";
   chip.imageView.image = FakeImage();
   chip.selectedImageView.image =
@@ -49,6 +48,7 @@ static UIImage *FakeImage(void) {
   chip.accessoryPadding = UIEdgeInsetsMake(4, 5, 6, 7);
   chip.shapeGenerator = [[MDCPillShapeGenerator alloc] init];
   chip.mdc_adjustsFontForContentSizeCategory = YES;
+  [chip setInkColor:UIColor.cyanColor forState:UIControlStateNormal];
   [chip setBackgroundColor:UIColor.orangeColor forState:UIControlStateNormal];
   [chip setTitleColor:UIColor.magentaColor forState:UIControlStateNormal];
   [chip setBorderColor:UIColor.greenColor forState:UIControlStateNormal];
@@ -61,7 +61,8 @@ static UIImage *FakeImage(void) {
   MDCChipView *unarchivedChip = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
 
   // Then
-  XCTAssertEqualObjects(unarchivedChip.inkColor, chip.inkColor);
+  XCTAssertEqualObjects([unarchivedChip inkColorForState:UIControlStateNormal],
+                        [chip inkColorForState:UIControlStateNormal]);
   XCTAssertEqualObjects(unarchivedChip.titleLabel.text, chip.titleLabel.text);
   XCTAssertNotNil(unarchivedChip.imageView.image);
   XCTAssertNotNil(unarchivedChip.selectedImageView.image);

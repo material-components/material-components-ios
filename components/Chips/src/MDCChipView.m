@@ -37,6 +37,7 @@ static NSString *const MDCChipBackgroundColorsKey = @"MDCChipBackgroundColorsKey
 static NSString *const MDCChipBorderColorsKey = @"MDCChipBorderColorsKey";
 static NSString *const MDCChipBorderWidthsKey = @"MDCChipBorderWidthsKey";
 static NSString *const MDCChipElevationsKey = @"MDCChipElevationsKey";
+static NSString *const MDCChipInkColorsKey = @"MDCChipInkColorsKey";
 static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
 static NSString *const MDCChipTitleFontKey = @"MDCChipTitleFontKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
@@ -73,7 +74,6 @@ static const CGFloat MDCChipSelectedDarkenPercent = 0.16f;
 static const CGFloat MDCChipDisabledLightenPercent = 0.38f;
 static const CGFloat MDCChipTitleColorWhite = 0.13f;
 static const CGFloat MDCChipTitleColorDisabledLightenPercent = 0.38f;
-static const CGFloat MDCChipInkAlpha = 0.16f;
 
 static const UIEdgeInsets MDCChipContentPadding = {4, 4, 4, 4};
 static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};
@@ -133,6 +133,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, NSNumber *> *_elevations;
+  NSMutableDictionary<NSNumber *, UIColor *> *_inkColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_titleColors;
 
@@ -169,6 +170,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _elevations[@(UIControlStateHighlighted | UIControlStateSelected)] =
         @(MDCShadowElevationRaisedButtonPressed);
 
+    _inkColors = [NSMutableDictionary dictionary];
+
     UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1.0f];
     _titleColors = [NSMutableDictionary dictionary];
     _titleColors[@(UIControlStateNormal)] = titleColor;
@@ -180,7 +183,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
     _inkView.usesLegacyInkRipple = NO;
-    _inkView.inkColor = [UIColor colorWithWhite:0 alpha:MDCChipInkAlpha];
+    _inkView.inkColor = [self inkColorForState:UIControlStateNormal];
     [self addSubview:_inkView];
 
     _imageView = [[UIImageView alloc] init];
@@ -241,6 +244,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _borderColors = [aDecoder decodeObjectForKey:MDCChipBorderColorsKey];
     _borderWidths = [aDecoder decodeObjectForKey:MDCChipBorderWidthsKey];
     _elevations = [aDecoder decodeObjectForKey:MDCChipElevationsKey];
+    _inkColors = [aDecoder decodeObjectForKey:MDCChipInkColorsKey];
     _shadowColors = [aDecoder decodeObjectForKey:MDCChipShadowColorsKey];
     _titleFont = [aDecoder decodeObjectForKey:MDCChipTitleFontKey];
     _titleColors = [aDecoder decodeObjectForKey:MDCChipTitleColorsKey];
@@ -268,6 +272,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [aCoder encodeObject:_borderColors forKey:MDCChipBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCChipBorderWidthsKey];
   [aCoder encodeObject:_elevations forKey:MDCChipElevationsKey];
+  [aCoder encodeObject:_inkColors forKey:MDCChipInkColorsKey];
   [aCoder encodeObject:_shadowColors forKey:MDCChipShadowColorsKey];
   [aCoder encodeObject:_titleFont forKey:MDCChipTitleFontKey];
   [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
@@ -297,11 +302,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
-  _inkView.inkColor = inkColor;
+  [self setInkColor:inkColor forState:UIControlStateNormal];
 }
 
 - (UIColor *)inkColor {
-  return _inkView.inkColor;
+  return [self inkColorForState:UIControlStateNormal];
 }
 
 #pragma mark - Dynamic Type Support
@@ -424,6 +429,25 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 }
 
+- (UIColor *)inkColorForState:(UIControlState)state {
+  UIColor *inkColor = _inkColors[@(state)];
+  if (!inkColor && state != UIControlStateNormal) {
+    inkColor = _inkColors[@(UIControlStateNormal)];
+  }
+  return inkColor;
+}
+
+- (void)setInkColor:(UIColor *)inkColor forState:(UIControlState)state {
+  _inkColors[@(state)] = inkColor;
+
+  [self updateInkColor];
+}
+
+- (void)updateInkColor {
+  UIColor *inkColor = [self inkColorForState:self.state];
+  self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
+}
+
 - (nullable UIColor *)shadowColorForState:(UIControlState)state {
   UIColor *shadowColor = _shadowColors[@(state)];
   if (!shadowColor && state != UIControlStateNormal) {
@@ -519,6 +543,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateBorderColor];
   [self updateBorderWidth];
   [self updateElevation];
+  [self updateInkColor];
   [self updateShadowColor];
   [self updateTitleFont];
   [self updateTitleColor];
