@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
   MDCCardsStateSelected
 };
 
-@interface MDCCard : UIView
+@interface MDCCard : UIControl
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame withIsUsingCollectionViewCell:(BOOL)isUsingCell;
 

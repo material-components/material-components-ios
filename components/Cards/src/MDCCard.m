@@ -7,6 +7,7 @@
 
 #import "MDCCard.h"
 #import "MaterialIcons+ic_check_circle.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 @interface MDCCard ()
 
@@ -48,15 +49,28 @@
 
   self.longPress = NO;
   UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
+  circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.selectedImageView = [[UIImageView alloc]
                             initWithImage:circledCheck];
   self.selectedImageView.center = CGPointMake(self.bounds.size.width - 8 - (circledCheck.size.width/2),
                                               8 + (circledCheck.size.height/2));
   self.selectedImageView.layer.zPosition = MAXFLOAT - 1;
   [self addSubview:self.selectedImageView];
-  self.editMode = YES;
+//  self.editMode = YES;
   self.selectedImageView.hidden = YES;
 
+  [self addTarget:self action:@selector(eventCancelled:withEvent:) forControlEvents:UIControlEventAllTouchEvents];
+
+}
+
+
+- (void)eventCancelled:(UIControl *)sender withEvent:(UIEvent *)event {
+  NSLog(@"\n%ld\n", [event.allTouches anyObject].phase);
+  if (!self.longPress && !self.editMode) {
+    UITouch *touch = [event.allTouches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [self styleForState:MDCCardsStateDefault withLocation:location];
+  }
 }
 
 - (void)layoutSubviews {
@@ -81,24 +95,34 @@
 }
 
 - (CGFloat)shadowElevation {
+  self.layer.shadowPath = [self boundingPath].CGPath;
   return ((MDCShadowLayer *)self.layer).elevation;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  super.backgroundColor = backgroundColor;
+  UIColor *checkColor =
+    [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                     targetTextAlpha:1.f
+                                             options:MDFTextAccessibilityOptionsNone];
+  [self.selectedImageView setTintColor:checkColor];
 }
 
 - (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location {
   switch (state) {
     case MDCCardsStateDefault: {
       self.selectedImageView.hidden = YES;
-      NSLog(@"DEFAULT with loc: %f %f", location.x, location.y);
+//      NSLog(@"DEFAULT with loc: %f %f", location.x, location.y);
       [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
       self.shadowElevation = 1.f;
-      NSLog(@"end %f %@",self.shadowElevation, self.description);
+//      NSLog(@"end %f %@",self.shadowElevation, self.description);
       break;
     }
     case MDCCardsStatePressed: {
-      NSLog(@"PRESSED with loc: %f %f", location.x, location.y );
+//      NSLog(@"PRESSED with loc: %f %f", location.x, location.y );
       [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
       self.shadowElevation = 8.f;
-      NSLog(@"start %f %@",self.shadowElevation, self.description);
+//      NSLog(@"start %f %@",self.shadowElevation, self.description);
       break;
     }
     case MDCCardsStateSelected: {
@@ -110,6 +134,11 @@
     default:
       break;
   }
+}
+
+- (UIBezierPath *)boundingPath {
+  CGFloat cornerRadius = self.cornerRadius;
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
 #pragma mark - UIResponder
@@ -140,15 +169,15 @@
   }
 }
 
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesCancelled:touches withEvent:event];
-  NSLog(@"Cancelled");
-  if (!self.longPress && !self.editMode) {
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView:self];
-    [self styleForState:MDCCardsStateDefault withLocation:location];
-  }
-}
+//- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//  [super touchesCancelled:touches withEvent:event];
+//  NSLog(@"Cancelled");
+//  if (!self.longPress && !self.editMode) {
+//    UITouch *touch = [touches anyObject];
+//    CGPoint location = [touch locationInView:self];
+//    [self styleForState:MDCCardsStateDefault withLocation:location];
+//  }
+//}
 
 
 

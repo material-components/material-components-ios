@@ -19,6 +19,7 @@
                                                          initWithTarget:self
                                                          action:@selector(mdc_longPressCard:)];
   longGestureRecognizer.delegate = self;
+  longGestureRecognizer.delaysTouchesEnded = NO;
 //  tapGestureRecognizer.delegate = self;
 //  gestureRecognizer.cancelsTouchesInView = NO;
   [self.collectionView addGestureRecognizer:longGestureRecognizer];
@@ -32,6 +33,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
 }
 
 //- (void)mdc_tapCard:(UITapGestureRecognizer *)gesture {
+//  NSLog(@"woot");
 //  if (gesture.state == UIGestureRecognizerStateBegan) {
 //    NSLog(@"tapped");
 ////    NSIndexPath *selected = [self.collectionView indexPathForItemAtPoint:
@@ -51,7 +53,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
 //}
 
 - (void)mdc_longPressCard:(UILongPressGestureRecognizer *)gesture {
-  NSLog(@"long");
+//  NSLog(@"long");
   if (gesture.state == UIGestureRecognizerStateBegan) {
     NSIndexPath *selected = [self.collectionView indexPathForItemAtPoint:
                              [gesture locationInView:self.collectionView]];
