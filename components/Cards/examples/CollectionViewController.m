@@ -127,7 +127,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 }
 
 + (BOOL)catalogIsDebug {
-  return YES;
+  return NO;
 }
 
 @end
