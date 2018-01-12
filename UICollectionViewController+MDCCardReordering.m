@@ -45,6 +45,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
       MDCCollectionViewCardCell *cell =
       (MDCCollectionViewCardCell *)[self.collectionView cellForItemAtIndexPath:selected];
       [cell isReordering:YES withLocation:CGPointZero];
+      break;
     }
     case UIGestureRecognizerStateEnded:
     case UIGestureRecognizerStateCancelled:
@@ -55,7 +56,10 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
           [cell isReordering:NO withLocation:loc];
         }
       }
+      break;
     }
+    default:
+      break;
   }
 }
 
