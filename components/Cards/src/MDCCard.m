@@ -49,7 +49,6 @@
   }
   [self addSubview:self.inkView];
 
-  self.longPress = NO;
   UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
   circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.selectedImageView = [[UIImageView alloc]

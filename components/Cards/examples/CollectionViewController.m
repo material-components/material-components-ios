@@ -69,7 +69,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   MDCCollectionViewCardCell *cell =
   [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                             forIndexPath:indexPath];
-  [cell setBackgroundColor:[UIColor whiteColor]];
+  [cell setBackgroundColor:[UIColor colorWithRed:107/255.f green:63/255.f blue:238/255.f alpha:1]];
   return cell;
 }
 

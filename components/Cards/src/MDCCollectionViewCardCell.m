@@ -64,19 +64,11 @@
   return self.cardView.shadowElevation;
 }
 
-- (void)setLongPressActive:(BOOL)longPressActive {
-  self.cardView.longPress = longPressActive;
-}
-
 - (void)setLongPressActive:(BOOL)longPressActive withLocation:(CGPoint)location {
   self.longPressActive = longPressActive;
   if (!longPressActive) {
     [self.cardView styleForState:MDCCardsStateDefault withLocation:(CGPoint)location];
   }
-}
-
-- (BOOL)longPressActive {
-  return self.cardView.longPress;
 }
 
 #pragma mark - UIResponder

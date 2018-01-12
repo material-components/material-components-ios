@@ -28,7 +28,6 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
 - (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location;
 
 @property(nonatomic, strong, nullable) MDCInkView *inkView;
-@property(nonatomic, assign) BOOL longPress;
 @property(nonatomic, strong, nonnull) UIImageView *selectedImageView;
 
 @end
