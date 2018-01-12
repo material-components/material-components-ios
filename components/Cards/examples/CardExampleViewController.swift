@@ -48,6 +48,6 @@ extension CardExampleViewController {
   }
 
   @objc class func catalogIsDebug() -> Bool {
-    return true
+    return false
   }
 }
