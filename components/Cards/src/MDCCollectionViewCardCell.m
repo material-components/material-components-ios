@@ -48,9 +48,6 @@
 // forControlEvents:UIControlEventTouchDragEnter];
 }
 
-- (void)touchDragEnter:(__unused MDCCollectionViewCardCell *)cell forEvent:(UIEvent *)event {
-}
-
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   super.backgroundColor = backgroundColor;
   self.cardView.backgroundColor = backgroundColor;
@@ -95,9 +92,30 @@
   }
 }
 
-//- (BOOL)pointInside:(CGPoint)point withEvent:(nullable UIEvent *)event {
-//  NSLog(@"pointInside");
-//  return [super pointInside:point withEvent:event];
-//}
+#pragma mark - UIResponder
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  [super touchesBegan:touches withEvent:event];
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [self.cardView styleForState:MDCCardsStatePressed withLocation:location];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  [super touchesEnded:touches withEvent:event];
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  NSLog(@"cancelled");
+  if (!self.longPressActive) {
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
+  }
+  [super touchesCancelled:touches withEvent:event];
+}
 
 @end

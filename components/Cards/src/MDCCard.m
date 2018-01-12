@@ -44,7 +44,9 @@
     (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.inkView.usesLegacyInkRipple = NO;
   self.inkView.layer.zPosition = MAXFLOAT;
-  self.userInteractionEnabled = YES;
+  if (self.isUsingCell) {
+    self.userInteractionEnabled = NO;
+  }
   [self addSubview:self.inkView];
 
   self.longPress = NO;
@@ -56,21 +58,7 @@
                                               8 + (circledCheck.size.height/2));
   self.selectedImageView.layer.zPosition = MAXFLOAT - 1;
   [self addSubview:self.selectedImageView];
-//  self.editMode = YES;
   self.selectedImageView.hidden = YES;
-
-  [self addTarget:self action:@selector(eventCancelled:withEvent:) forControlEvents:UIControlEventAllTouchEvents];
-
-}
-
-
-- (void)eventCancelled:(UIControl *)sender withEvent:(UIEvent *)event {
-  NSLog(@"\n%ld\n", [event.allTouches anyObject].phase);
-  if (!self.longPress && !self.editMode) {
-    UITouch *touch = [event.allTouches anyObject];
-    CGPoint location = [touch locationInView:self];
-    [self styleForState:MDCCardsStateDefault withLocation:location];
-  }
 }
 
 - (void)layoutSubviews {
@@ -145,39 +133,24 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
-
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  if (self.editMode) {
-    if (self.selectedImageView.hidden) {
-      [self styleForState:MDCCardsStateSelected withLocation:location];
-    } else {
-      [self styleForState:MDCCardsStateDefault withLocation:location];
-    }
-  } else {
-    [self styleForState:MDCCardsStatePressed withLocation:location];
-  }
+  [self styleForState:MDCCardsStatePressed withLocation:location];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-
-  if (!self.editMode) {
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView:self];
-    [self styleForState:MDCCardsStateDefault withLocation:location];
-  }
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  [self styleForState:MDCCardsStateDefault withLocation:location];
 }
 
-//- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//  [super touchesCancelled:touches withEvent:event];
-//  NSLog(@"Cancelled");
-//  if (!self.longPress && !self.editMode) {
-//    UITouch *touch = [touches anyObject];
-//    CGPoint location = [touch locationInView:self];
-//    [self styleForState:MDCCardsStateDefault withLocation:location];
-//  }
-//}
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesCancelled:touches withEvent:event];
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  [self styleForState:MDCCardsStateDefault withLocation:location];
+}
 
 
 

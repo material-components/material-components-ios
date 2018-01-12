@@ -7,23 +7,19 @@
 
 #import "UICollectionViewController+MDCCardReordering.h"
 #import "MDCCollectionViewCardCell.h"
+#import "MaterialInk.h"
 
 @implementation UICollectionViewController (MDCCardReordering)
 
 
 - (void)mdc_setupCardReordering {
-//  UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]
-//                                                  initWithTarget:self
-//                                                  action:@selector(mdc_tapCard:)];
   UILongPressGestureRecognizer *longGestureRecognizer = [[UILongPressGestureRecognizer alloc]
                                                          initWithTarget:self
                                                          action:@selector(mdc_longPressCard:)];
+
   longGestureRecognizer.delegate = self;
-  longGestureRecognizer.delaysTouchesEnded = NO;
-//  tapGestureRecognizer.delegate = self;
-//  gestureRecognizer.cancelsTouchesInView = NO;
+  longGestureRecognizer.cancelsTouchesInView = NO;
   [self.collectionView addGestureRecognizer:longGestureRecognizer];
-//  [self.collectionView addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
@@ -32,39 +28,32 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   return YES;
 }
 
-//- (void)mdc_tapCard:(UITapGestureRecognizer *)gesture {
-//  NSLog(@"woot");
-//  if (gesture.state == UIGestureRecognizerStateBegan) {
-//    NSLog(@"tapped");
-////    NSIndexPath *selected = [self.collectionView indexPathForItemAtPoint:
-////                             [gesture locationInView:self.collectionView]];
-////    MDCCollectionViewCardCell *cell =
-////    (MDCCollectionViewCardCell *)[self.collectionView cellForItemAtIndexPath:selected];
-////    [cell isReordering:YES withLocation:CGPointZero];
-//  } else if (gesture.state == UIGestureRecognizerStateEnded) {
-//    NSLog(@"untapped");
-////    for (MDCCollectionViewCardCell *cell in [self.collectionView visibleCells]) {
-////      if (cell.longPressActive) {
-////        CGPoint loc = [gesture locationInView:cell];
-////        [cell isReordering:NO withLocation:loc];
-////      }
-////    }
-//  }
-//}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+  for (UIGestureRecognizer *gesture in self.collectionView.gestureRecognizers) {
+    if ([gesture isKindOfClass:[UILongPressGestureRecognizer class]]) {
+      gesture.cancelsTouchesInView = NO;
+    }
+  }
+  return YES;
+}
 
 - (void)mdc_longPressCard:(UILongPressGestureRecognizer *)gesture {
-//  NSLog(@"long");
-  if (gesture.state == UIGestureRecognizerStateBegan) {
-    NSIndexPath *selected = [self.collectionView indexPathForItemAtPoint:
-                             [gesture locationInView:self.collectionView]];
-    MDCCollectionViewCardCell *cell =
-    (MDCCollectionViewCardCell *)[self.collectionView cellForItemAtIndexPath:selected];
-    [cell isReordering:YES withLocation:CGPointZero];
-  } else if (gesture.state == UIGestureRecognizerStateEnded) {
-    for (MDCCollectionViewCardCell *cell in [self.collectionView visibleCells]) {
-      if (cell.longPressActive) {
-        CGPoint loc = [gesture locationInView:cell];
-        [cell isReordering:NO withLocation:loc];
+  switch(gesture.state) {
+    case UIGestureRecognizerStateBegan: {
+      NSIndexPath *selected = [self.collectionView indexPathForItemAtPoint:
+                               [gesture locationInView:self.collectionView]];
+      MDCCollectionViewCardCell *cell =
+      (MDCCollectionViewCardCell *)[self.collectionView cellForItemAtIndexPath:selected];
+      [cell isReordering:YES withLocation:CGPointZero];
+    }
+    case UIGestureRecognizerStateEnded:
+    case UIGestureRecognizerStateCancelled:
+    case UIGestureRecognizerStateFailed: {
+      for (MDCCollectionViewCardCell *cell in [self.collectionView visibleCells]) {
+        if (cell.longPressActive) {
+          CGPoint loc = [gesture locationInView:cell];
+          [cell isReordering:NO withLocation:loc];
+        }
       }
     }
   }

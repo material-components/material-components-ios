@@ -30,6 +30,5 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
 @property(nonatomic, strong, nullable) MDCInkView *inkView;
 @property(nonatomic, assign) BOOL longPress;
 @property(nonatomic, strong, nonnull) UIImageView *selectedImageView;
-@property(nonatomic, assign) BOOL editMode;
 
 @end

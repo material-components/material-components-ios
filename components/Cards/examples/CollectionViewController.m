@@ -15,8 +15,6 @@
 
 @implementation CollectionViewController {
   NSMutableArray *_content;
-  MDCInkTouchController *_inkTouchController;
-  CGPoint _inkTouchLocation;
 }
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
@@ -44,7 +42,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
-
   // Register cell classes
   [self.collectionView registerClass:[MDCCollectionViewCardCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
