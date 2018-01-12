@@ -44,10 +44,11 @@
     (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.inkView.usesLegacyInkRipple = NO;
   self.inkView.layer.zPosition = MAXFLOAT;
+  [self addSubview:self.inkView];
+
   if (self.isUsingCell) {
     self.userInteractionEnabled = NO;
   }
-  [self addSubview:self.inkView];
 
   UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
   circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
