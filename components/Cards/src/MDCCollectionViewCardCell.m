@@ -35,17 +35,6 @@
   [self.contentView addSubview:self.cardView];
   self.cornerRadius = 4.f;
   self.shadowElevation = 1.f;
-  // Separator defaults.
-//  _separatorView = [[UIImageView alloc] initWithFrame:CGRectZero];
-//  [self addSubview:_separatorView];
-
-  // Accessory defaults.
-//  _accessoryType = MDCCollectionViewCellAccessoryNone;
-//  _accessoryInset = kAccessoryInsetDefault;
-//  _editingSelectorColor = MDCCollectionViewCellRedColor();
-//  [self addTarget:self
-//           action:@selector(touchDragEnter:forEvent:)
-// forControlEvents:UIControlEventTouchDragEnter];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -79,42 +68,37 @@
   self.cardView.longPress = longPressActive;
 }
 
-- (BOOL)longPressActive {
-  return self.cardView.longPress;
-}
-
-- (void)isReordering:(BOOL)reordering withLocation:(CGPoint)location {
-  if (reordering) {
-    self.longPressActive = YES;
-  } else {
-    self.longPressActive = NO;
+- (void)setLongPressActive:(BOOL)longPressActive withLocation:(CGPoint)location {
+  self.longPressActive = longPressActive;
+  if (!longPressActive) {
     [self.cardView styleForState:MDCCardsStateDefault withLocation:(CGPoint)location];
   }
+}
+
+- (BOOL)longPressActive {
+  return self.cardView.longPress;
 }
 
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView:self];
-    [self.cardView styleForState:MDCCardsStatePressed withLocation:location];
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  [self.cardView styleForState:MDCCardsStatePressed withLocation:location];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView:self];
-    [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  NSLog(@"cancelled");
-  if (!self.longPressActive) {
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView:self];
-    [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
-  }
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
   [super touchesCancelled:touches withEvent:event];
 }
 

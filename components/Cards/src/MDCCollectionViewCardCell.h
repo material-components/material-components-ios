@@ -22,6 +22,8 @@
 - (void)setShadowElevation:(CGFloat)elevation;
 - (CGFloat)shadowElevation;
 
-- (void)isReordering:(BOOL)reordering withLocation:(CGPoint)location;
+- (void)setLongPressActive:(BOOL)longPressActive;
+- (void)setLongPressActive:(BOOL)longPressActive withLocation:(CGPoint)location;
+- (BOOL)longPressActive;
 
 @end

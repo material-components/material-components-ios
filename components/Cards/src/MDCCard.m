@@ -79,11 +79,11 @@
 }
 
 - (void)setShadowElevation:(CGFloat)elevation {
+  self.layer.shadowPath = [self boundingPath].CGPath;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 
 - (CGFloat)shadowElevation {
-  self.layer.shadowPath = [self boundingPath].CGPath;
   return ((MDCShadowLayer *)self.layer).elevation;
 }
 
@@ -100,17 +100,13 @@
   switch (state) {
     case MDCCardsStateDefault: {
       self.selectedImageView.hidden = YES;
-//      NSLog(@"DEFAULT with loc: %f %f", location.x, location.y);
       [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
       self.shadowElevation = 1.f;
-//      NSLog(@"end %f %@",self.shadowElevation, self.description);
       break;
     }
     case MDCCardsStatePressed: {
-//      NSLog(@"PRESSED with loc: %f %f", location.x, location.y );
       [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
       self.shadowElevation = 8.f;
-//      NSLog(@"start %f %@",self.shadowElevation, self.description);
       break;
     }
     case MDCCardsStateSelected: {
@@ -151,7 +147,5 @@
   CGPoint location = [touch locationInView:self];
   [self styleForState:MDCCardsStateDefault withLocation:location];
 }
-
-
 
 @end

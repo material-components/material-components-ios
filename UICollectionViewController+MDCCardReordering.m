@@ -44,7 +44,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
                                [gesture locationInView:self.collectionView]];
       MDCCollectionViewCardCell *cell =
       (MDCCollectionViewCardCell *)[self.collectionView cellForItemAtIndexPath:selected];
-      [cell isReordering:YES withLocation:CGPointZero];
+      [cell setLongPressActive:YES];
       break;
     }
     case UIGestureRecognizerStateEnded:
@@ -53,7 +53,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
       for (MDCCollectionViewCardCell *cell in [self.collectionView visibleCells]) {
         if (cell.longPressActive) {
           CGPoint loc = [gesture locationInView:cell];
-          [cell isReordering:NO withLocation:loc];
+          [cell setLongPressActive:NO withLocation:loc];
         }
       }
       break;
