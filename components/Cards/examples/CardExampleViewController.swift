@@ -9,14 +9,26 @@ import UIKit
 
 class CardExampleViewController: UIViewController {
   @IBOutlet var contentView: UIView!
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var cardView: MDCCard!
 
     override func viewDidLoad() {
       super.viewDidLoad()
 
       let bundle = Bundle(for: CardExampleViewController.self)
       bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
-      contentView.frame = self.view.bounds;
+      contentView.frame = self.view.bounds
       self.view.addSubview(contentView)
+
+      let bezierPath = UIBezierPath(roundedRect: imageView.bounds,
+                                    byRoundingCorners: [.topLeft, .topRight],
+                                    cornerRadii: CGSize(width: cardView.cornerRadius(),
+                                                        height: cardView.cornerRadius()))
+      let shapeLayer = CAShapeLayer()
+      shapeLayer.frame = imageView.bounds
+      shapeLayer.path = bezierPath.cgPath
+      imageView.layer.mask = shapeLayer
+
     }
 
     override func didReceiveMemoryWarning() {

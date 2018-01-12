@@ -13,18 +13,20 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardExampleViewController" customModule="MaterialComponentsExamples" customModuleProvider="target">
             <connections>
+                <outlet property="cardView" destination="BAQ-GJ-1pn" id="2P6-6Y-Hjh"/>
                 <outlet property="contentView" destination="i5M-Pr-FkT" id="Hkq-gw-WEg"/>
+                <outlet property="imageView" destination="ldt-3r-Agk" id="rFC-QD-GJJ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BAQ-GJ-1pn" customClass="MDCCard">
                     <rect key="frame" x="30" y="94" width="315" height="543"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ldt-3r-Agk">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample-image" translatesAutoresizingMaskIntoConstraints="NO" id="ldt-3r-Agk">
                             <rect key="frame" x="0.0" y="0.0" width="315" height="315"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="ldt-3r-Agk" secondAttribute="height" multiplier="15:15" id="OUj-9G-eou"/>
@@ -68,4 +70,7 @@
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>
     </objects>
+    <resources>
+        <image name="sample-image" width="4824" height="3229"/>
+    </resources>
 </document>
