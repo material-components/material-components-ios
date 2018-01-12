@@ -162,7 +162,13 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 @end
 
-@implementation MDCSnackbarMessageView
+@implementation MDCSnackbarMessageView {
+  UIFont *_messageFont;
+  UIFont *_buttonFont;
+
+  // Holds the instances of MDCButton
+  NSMutableArray<MDCButton *> *_actionButtons;
+}
 
 + (void)initialize {
   [[self appearance] setSnackbarMessageViewShadowColor:MDCRGBAColor(0x00, 0x00, 0x00, 1.0f)];
@@ -233,6 +239,75 @@ static const CGFloat kButtonInkRadius = 64.0f;
   _label.attributedText = messageString;
 }
 
+- (UIFont *)messageFont {
+  return _messageFont;
+}
+
+- (void)setMessageFont:(UIFont *)font {
+  _messageFont = font;
+
+  [self updateMessageFont];
+}
+
+- (void)updateMessageFont {
+  // If we have a custom font apply it to the label.
+  // If not, fall back to the Material specified font.
+  if (_messageFont) {
+    _label.font = _messageFont;
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      _label.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      _label.font = [MDCTypography body2Font];
+    }
+  }
+
+  [self setNeedsLayout];
+}
+
+- (UIFont *)buttonFont {
+  return _buttonFont;
+}
+
+- (void)setButtonFont:(UIFont *)font {
+  _buttonFont = font;
+
+  [self updateButtonFont];
+}
+
+- (void)updateButtonFont {
+  UIFont *finalButtonFont;
+
+  // If we have a custom font apply it to the button.
+  // If not, fall back to the Material specified font.
+  if (_buttonFont) {
+    finalButtonFont = _buttonFont;
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      finalButtonFont = [MDCTypography buttonFont];
+    }
+  }
+
+  for (MDCButton *button in _actionButtons) {
+    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+    [button setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
+  }
+
+  [self setNeedsLayout];
+}
+
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
                  dismissHandler:(MDCSnackbarMessageDismissHandler)handler {
   self = [super init];
@@ -285,6 +360,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
     _buttonView = [[UIView alloc] init];
     [_buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_containerView addSubview:_buttonView];
+
+    _actionButtons = [[NSMutableArray alloc] init];
 
     // Set up the title label.
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -365,16 +442,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
       textColorHighlighted = message.highlightedButtonTextColor;
     }
 
-    NSDictionary *buttonAttributes = @{
-      NSFontAttributeName : [MDCTypography buttonFont],
-      NSForegroundColorAttributeName : textColor,
-    };
-
-    NSDictionary *buttonHighlightedAttributes = @{
-      NSFontAttributeName : [MDCTypography buttonFont],
-      NSForegroundColorAttributeName : textColorHighlighted,
-    };
-
     // Add buttons to the view. We'll use this opportunity to determine how much space a button will
     // need, to inform the layout direction.
     NSMutableArray *actions = [NSMutableArray array];
@@ -383,18 +450,19 @@ static const CGFloat kButtonInkRadius = 64.0f;
       [buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];
       [_buttonView addSubview:buttonView];
 
-      UIButton *button = [[MDCSnackbarMessageViewButton alloc] init];
+      MDCButton *button = [[MDCSnackbarMessageViewButton alloc] init];
+      if (_buttonFont) {
+        [button setTitleFont:_buttonFont forState:UIControlStateNormal];
+        [button setTitleFont:_buttonFont forState:UIControlStateHighlighted];
+      }
+      [button setTitleColor:textColor forState:UIControlStateNormal];
+      [button setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
       [button setTranslatesAutoresizingMaskIntoConstraints:NO];
       button.tag = kButtonTagStart;
       [buttonView addSubview:button];
+      [_actionButtons addObject:button];
 
       // Style the text in the button.
-      NSAttributedString *buttonText =
-          [[NSAttributedString alloc] initWithString:message.action.title
-                                          attributes:buttonAttributes];
-      NSAttributedString *buttonHighlightedText =
-          [[NSAttributedString alloc] initWithString:message.action.title
-                                          attributes:buttonHighlightedAttributes];
       button.titleLabel.numberOfLines = 1;
       button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
       button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -404,8 +472,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
       button.accessibilityIdentifier = message.action.accessibilityIdentifier;
       button.accessibilityHint = message.action.accessibilityHint;
 
-      [button setAttributedTitle:buttonText forState:UIControlStateNormal];
-      [button setAttributedTitle:buttonHighlightedText forState:UIControlStateHighlighted];
+      [button setTitle:message.action.title forState:UIControlStateNormal];
+      [button setTitle:message.action.title forState:UIControlStateHighlighted];
 
       if (message.buttonTextColor) {
         [button setTitleColor:textColor forState:UIControlStateNormal];
@@ -420,7 +488,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
                     action:@selector(handleButtonTapped:)
           forControlEvents:UIControlEventTouchUpInside];
 
-      availableTextWidth -= [buttonText size].width;
+      CGSize buttonSize = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX,CGFLOAT_MAX)];
+      availableTextWidth -= buttonSize.width;
       availableTextWidth -= 2 * kButtonPadding;
 
       [actions addObject:buttonView];
