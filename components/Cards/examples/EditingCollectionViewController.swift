@@ -61,6 +61,6 @@ extension EditingCollectionViewController {
   }
 
   @objc class func catalogIsDebug() -> Bool {
-    return true
+    return false
   }
 }
