@@ -105,8 +105,13 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 - (void)collectionView:(UICollectionView *)collectionView
    moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
            toIndexPath:(NSIndexPath *)destinationIndexPath {
+  NSLog(@"WOOGO");
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView
+canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+  return YES;
+}
 
 #pragma mark - CatalogByConvention
 
@@ -128,6 +133,10 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 
 + (BOOL)catalogIsDebug {
   return NO;
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end

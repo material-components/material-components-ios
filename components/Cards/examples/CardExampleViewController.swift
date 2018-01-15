@@ -36,6 +36,14 @@ class CardExampleViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+  override public var traitCollection: UITraitCollection {
+    if UIDevice.current.userInterfaceIdiom == .pad && UIDevice.current.orientation.isPortrait {
+      return UITraitCollection(traitsFrom:[UITraitCollection(horizontalSizeClass: .compact),
+                                           UITraitCollection(verticalSizeClass: .regular)])
+    }
+    return super.traitCollection
+  }
+
 }
 
 extension CardExampleViewController {
