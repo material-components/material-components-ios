@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "44.3.0"
+  mdc.version      = "44.4.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -299,13 +299,13 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/FeatureHighlight"
       extension.dependency "MaterialComponents/Themes"
     end
-    component.subspec "FontThemer" do |fontthemer|
-      fontthemer.ios.deployment_target = '8.0'
-      fontthemer.public_header_files = "components/FeatureHighlight/src/#{fontthemer.base_name}/*.h"
-      fontthemer.source_files = "components/FeatureHighlight/src/#{fontthemer.base_name}/*.{h,m}"
+    component.subspec "FontThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/FeatureHighlight/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/FeatureHighlight/src/#{extension.base_name}/*.{h,m}"
 
-      fontthemer.dependency "MaterialComponents/FeatureHighlight"
-      fontthemer.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/FeatureHighlight"
+      extension.dependency "MaterialComponents/Themes"
     end
   end
 
