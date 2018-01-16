@@ -1,5 +1,5 @@
 //
-//  EditingCollectionViewController.swift
+//  EditReorderCollectionViewController.swift
 //  MaterialComponentsExamples
 //
 //  Created by Yarden Eitan on 1/12/18.
@@ -11,7 +11,7 @@ enum ToggleMode: Int {
   case edit = 1, reorder
 }
 
-class EditingCollectionViewController: UIViewController,
+class EditReorderCollectionViewController: UIViewController,
   UICollectionViewDelegate,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
@@ -20,7 +20,7 @@ class EditingCollectionViewController: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var dataSource = [(Int, Bool)]()
   var longPressGesture: UILongPressGestureRecognizer!
-  var toggle = ToggleMode.edit
+  var toggle = ToggleMode.reorder
   var toggleButton: UIButton!
   
   override func viewDidLoad() {
@@ -35,7 +35,7 @@ class EditingCollectionViewController: UIViewController,
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(collectionView)
 
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Mode",
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reorder",
                                                         style: .plain,
                                                         target: self,
                                                         action: #selector(toggleModes))
@@ -81,10 +81,10 @@ class EditingCollectionViewController: UIViewController,
   func toggleModes() {
     if toggle == .edit {
       toggle = .reorder
-      navigationItem.rightBarButtonItem?.title = "Reorder Mode"
+      navigationItem.rightBarButtonItem?.title = "Reorder"
     } else if toggle == .reorder {
       toggle = .edit
-      navigationItem.rightBarButtonItem?.title = "Edit Mode"
+      navigationItem.rightBarButtonItem?.title = "Edit"
     }
     collectionView.reloadData()
   }
@@ -184,9 +184,9 @@ class EditingCollectionViewController: UIViewController,
 
 }
 
-extension EditingCollectionViewController {
+extension EditReorderCollectionViewController {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Cards", "Editing Collection Cards (Swift)"]
+    return ["Cards", "Edit/Reorder (Swift)"]
   }
 
   @objc class func catalogIsPresentable() -> Bool {
@@ -194,6 +194,6 @@ extension EditingCollectionViewController {
   }
 
   @objc class func catalogIsDebug() -> Bool {
-    return true
+    return false
   }
 }
