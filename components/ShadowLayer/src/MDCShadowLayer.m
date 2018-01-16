@@ -23,13 +23,6 @@ static const float kAmbientShadowOpacity = 0.08f;
 static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey";
 static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShadowMaskEnabledKey";
 
-@interface MDCPendingAnimation : NSObject <CAAction>
-@property(nonatomic, weak) CALayer *animationSourceLayer;
-@property(nonatomic, strong) NSString *keyPath;
-@property(nonatomic, strong) id fromValue;
-@property(nonatomic, strong) id toValue;
-@end
-
 @implementation MDCShadowMetrics
 
 + (MDCShadowMetrics *)metricsWithElevation:(CGFloat)elevation {
@@ -92,6 +85,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 @property(nonatomic, strong) CAShapeLayer *bottomShadow;
 @property(nonatomic, strong) CAShapeLayer *topShadowMask;
 @property(nonatomic, strong) CAShapeLayer *bottomShadowMask;
+@property(nonatomic, strong) CADisplayLink *animationDisplayLink;
 
 @end
 
@@ -181,10 +175,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     _bottomShadowMask.delegate = self;
   }
 
-  // TODO(#1021): We shouldn't be calling property accessors in an init method.
   if (_shadowMaskEnabled) {
-    [self configureShadowLayerMaskForLayer:_topShadowMask];
-    [self configureShadowLayerMaskForLayer:_bottomShadowMask];
     _topShadow.mask = _topShadowMask;
     _bottomShadow.mask = _bottomShadowMask;
   }
@@ -212,15 +203,38 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   }
 }
 
+- (void)addAnimation:(CABasicAnimation *)anim forKey:(NSString *)key {
+  if (!self.animationDisplayLink) {
+    self.animationDisplayLink =
+        [CADisplayLink displayLinkWithTarget:self selector:@selector(updateAnimation)];
+    [self.animationDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+  }
+  [super addAnimation:anim forKey:key];
+}
+
+- (void)updateAnimation {
+  if (![self.animationKeys count]) {
+    [self.animationDisplayLink removeFromRunLoop:[NSRunLoop mainRunLoop]
+                                         forMode:NSRunLoopCommonModes];
+    self.animationDisplayLink = nil;
+    return;
+  }
+  
+  if (!CGRectEqualToRect(self.bounds, self.presentationLayer.bounds)) {
+    _shadowPathIsInvalid = YES;
+    [self commonLayoutSublayers];
+  }
+}
+
 #pragma mark - CALayer change monitoring.
 
 /** Returns a shadowPath based on the layer properties. */
 - (UIBezierPath *)defaultShadowPath {
   CGFloat cornerRadius = self.cornerRadius;
   if (0.0 < cornerRadius) {
-    return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
+    return [UIBezierPath bezierPathWithRoundedRect:self.shadowBounds cornerRadius:cornerRadius];
   }
-  return [UIBezierPath bezierPathWithRect:self.bounds];
+  return [UIBezierPath bezierPathWithRect:self.shadowBounds];
 }
 
 - (void)setShadowPath:(CGPathRef)shadowPath {
@@ -282,7 +296,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 // cast.
 - (void)configureShadowLayerMaskForLayer:(CAShapeLayer *)maskLayer {
   CGSize shadowSpread = [MDCShadowLayer shadowSpreadForElevation:kShadowElevationDialog];
-  CGRect bounds = self.bounds;
+  CGRect bounds = self.shadowBounds;
   CGRect maskRect = CGRectInset(bounds, -shadowSpread.width * 2, -shadowSpread.height * 2);
 
   UIBezierPath *path = [UIBezierPath bezierPathWithRect:maskRect];
@@ -290,9 +304,9 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   if (self.shadowPath != nil) {
     innerPath = [UIBezierPath bezierPathWithCGPath:(_Nonnull CGPathRef)self.shadowPath];
   } else if (self.cornerRadius > 0) {
-    innerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.cornerRadius];
+    innerPath = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:self.cornerRadius];
   } else {
-    innerPath = [UIBezierPath bezierPathWithRect:self.bounds];
+    innerPath = [UIBezierPath bezierPathWithRect:bounds];
   }
   [path appendPath:innerPath];
   [path setUsesEvenOddFillRule:YES];
@@ -317,27 +331,10 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
 }
 
-#pragma mark - CALayerDelegate
-
-- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
-  if ([event isEqualToString:@"path"] || [event isEqualToString:@"shadowPath"]) {
-    // We have to create a pending animation because if we are inside a UIKit animation block we
-    // won't know any properties of the animation block until it is commited.
-    MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
-    pendingAnim.animationSourceLayer = self;
-    pendingAnim.fromValue = [layer.presentationLayer valueForKey:event];
-    pendingAnim.toValue = nil;
-    pendingAnim.keyPath = event;
-
-    return pendingAnim;
-  }
-  return nil;
-}
-
 #pragma mark - Private
 
 - (void)commonLayoutSublayers {
-  CGRect bounds = self.bounds;
+  CGRect bounds = self.shadowBounds;
 
   _bottomShadow.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
   _bottomShadow.bounds = bounds;
@@ -367,26 +364,8 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   _shadowPathIsInvalid = NO;
 }
 
-@end
-
-@implementation MDCPendingAnimation
-
-- (void)runActionForKey:(NSString *)event object:(id)anObject arguments:(NSDictionary *)dict {
-  if ([anObject isKindOfClass:[CAShapeLayer class]]) {
-    CAShapeLayer *layer = (CAShapeLayer *)anObject;
-
-    // In order to synchronize our animation with UIKit animations we have to fetch the resizing
-    // animation created by UIKit and copy the configuration to our custom animation.
-    CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
-    if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
-      CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
-      animation.keyPath = self.keyPath;
-      animation.fromValue = self.fromValue;
-      animation.toValue = self.toValue;
-
-      [layer addAnimation:animation forKey:event];
-    }
-  }
+- (CGRect)shadowBounds {
+  return self.animationKeys.count ? self.presentationLayer.bounds : self.bounds;
 }
 
 @end
