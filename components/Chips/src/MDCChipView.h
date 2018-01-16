@@ -109,7 +109,8 @@
 /*
  The color of the ink ripple.
  */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR
+    __deprecated_msg("Use setInkColor:forState:");
 
 /*
  The shape generator used to define the chip's shape.
@@ -209,6 +210,26 @@
  @param state The control state.
  */
 - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/*
+ Returns the ink color for a particular control state.
+
+ If no ink color has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.
+
+ @param state The control state.
+ @return The ink color for the requested state.
+ */
+- (nullable UIColor *)inkColorForState:(UIControlState)state;
+
+/*
+ Sets the ink color for a particular control state.
+
+ @param inkColor The ink color.
+ @param state The control state.
+ */
+- (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state
     UI_APPEARANCE_SELECTOR;
 
 /*
