@@ -87,6 +87,8 @@
  */
 - (void)endAnimationAtPoint:(CGPoint)point;
 
+- (void)inkWithoutAnimation;
+
 @end
 
 /**

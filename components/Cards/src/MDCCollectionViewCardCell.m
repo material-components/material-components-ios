@@ -7,6 +7,13 @@
 
 #import "MDCCollectionViewCardCell.h"
 
+
+@interface MDCCollectionViewCardCell ()
+
+@property(nonatomic, assign) CGPoint lastTouch;
+
+@end
+
 @implementation MDCCollectionViewCardCell
 
 - (instancetype)initWithCoder:(NSCoder *)coder
@@ -35,6 +42,7 @@
   [self.contentView addSubview:self.cardView];
   self.cornerRadius = 4.f;
   self.shadowElevation = 1.f;
+  self.editMode = NO;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -67,7 +75,41 @@
 - (void)setLongPressActive:(BOOL)longPressActive withLocation:(CGPoint)location {
   self.longPressActive = longPressActive;
   if (!longPressActive) {
-    [self.cardView styleForState:MDCCardsStateDefault withLocation:(CGPoint)location];
+    [self.cardView styleForState:MDCCardsStateDefault
+                    withLocation:(CGPoint)location
+                  withCompletion:nil];
+  }
+}
+
+- (void)selectionState:(MDCCardCellSelectionState)state {
+  self.editMode = YES;
+  [self.cardView.inkView cancelAllAnimationsAnimated:NO];
+  switch (state) {
+    case MDCCardCellSelectionStateSelect: {
+      [self.cardView styleForState:MDCCardsStateSelect
+                      withLocation:self.lastTouch
+                    withCompletion:nil];
+      break;
+    }
+    case MDCCardCellSelectionStateSelected: {
+      [self.cardView styleForState:MDCCardsStateSelected
+                      withLocation:CGPointZero
+                    withCompletion:nil];
+      break;
+    }
+    case MDCCardCellSelectionStateUnselect: {
+      [self.cardView styleForState:MDCCardsStateDefault
+                      withLocation:CGPointZero
+                    withCompletion:nil];
+      break;
+    }
+    case MDCCardCellSelectionStateUnselected: {
+      [self.cardView styleForState:MDCCardsStateDefault
+                      withLocation:CGPointZero
+                    withCompletion:nil];
+      break;
+
+    }
   }
 }
 
@@ -77,21 +119,36 @@
   [super touchesBegan:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self.cardView styleForState:MDCCardsStatePressed withLocation:location];
+  self.lastTouch = location;
+  if (!self.editMode) {
+    [self.cardView styleForState:MDCCardsStatePressed
+                    withLocation:location
+                  withCompletion:nil];
+  }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
+
+  if (!self.editMode) {
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [self.cardView styleForState:MDCCardsStateDefault
+                    withLocation:location
+                  withCompletion:nil];
+  }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
   [super touchesCancelled:touches withEvent:event];
+
+  if (!self.editMode) {
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [self.cardView styleForState:MDCCardsStateDefault
+                    withLocation:location
+                  withCompletion:nil];
+  }
 }
 
 @end

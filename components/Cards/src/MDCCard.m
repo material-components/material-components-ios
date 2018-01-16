@@ -46,6 +46,13 @@
   self.inkView.layer.zPosition = MAXFLOAT;
   [self addSubview:self.inkView];
 
+//  self.opacityMask = [[UIView alloc] initWithFrame:self.bounds];
+//  self.opacityMask.autoresizingMask =
+//    (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+//  self.opacityMask.backgroundColor = self.inkView.inkColor;
+//  [self addSubview:self.opacityMask];
+//  self.opacityMask.hidden = YES;
+
   if (self.isUsingCell) {
     self.userInteractionEnabled = NO;
   }
@@ -96,23 +103,31 @@
   [self.selectedImageView setTintColor:checkColor];
 }
 
-- (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location {
+- (void)styleForState:(MDCCardsState)state
+         withLocation:(CGPoint)location
+       withCompletion:(MDCInkCompletionBlock)completion {
   switch (state) {
     case MDCCardsStateDefault: {
       self.selectedImageView.hidden = YES;
-      [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
+      [self.inkView startTouchEndedAnimationAtPoint:location completion:completion];
       self.shadowElevation = 1.f;
       break;
     }
     case MDCCardsStatePressed: {
-      [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
+      [self.inkView startTouchBeganAnimationAtPoint:location completion:completion];
       self.shadowElevation = 8.f;
       break;
     }
-    case MDCCardsStateSelected: {
+    case MDCCardsStateSelect: {
+      [self.inkView startTouchBeganAnimationAtPoint:location completion:completion];
       self.selectedImageView.hidden = NO;
       self.shadowElevation = 1.f;
-      [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
+      break;
+    }
+    case MDCCardsStateSelected: {
+      [self.inkView addInkSublayerWithoutAnimation];
+      self.selectedImageView.hidden = NO;
+      self.shadowElevation = 1.f;
       break;
     }
     default:
@@ -131,21 +146,27 @@
   [super touchesBegan:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStatePressed withLocation:location];
+  [self styleForState:MDCCardsStatePressed
+         withLocation:location
+       withCompletion:nil];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStateDefault withLocation:location];
+  [self styleForState:MDCCardsStateDefault
+         withLocation:location
+       withCompletion:nil];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStateDefault withLocation:location];
+  [self styleForState:MDCCardsStateDefault
+         withLocation:location
+       withCompletion:nil];
 }
 
 @end

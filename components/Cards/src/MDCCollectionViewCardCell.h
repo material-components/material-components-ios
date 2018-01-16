@@ -8,10 +8,18 @@
 #import <UIKit/UIKit.h>
 #import "MDCCard.h"
 
+typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
+  MDCCardCellSelectionStateSelect,
+  MDCCardCellSelectionStateSelected,
+  MDCCardCellSelectionStateUnselect,
+  MDCCardCellSelectionStateUnselected
+};
+
 @interface MDCCollectionViewCardCell : UICollectionViewCell
 
 @property(nonatomic, strong, nullable) MDCCard *cardView;
 @property(nonatomic, assign) BOOL longPressActive;
+@property(nonatomic, assign) BOOL editMode;
 
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
 - (nullable UIColor *)backgroundColor;
@@ -23,5 +31,6 @@
 - (CGFloat)shadowElevation;
 
 - (void)setLongPressActive:(BOOL)longPressActive withLocation:(CGPoint)location;
+- (void)selectionState:(MDCCardCellSelectionState)state;
 
 @end

@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger, MDCCardsState) {
   MDCCardsStateDefault,
   MDCCardsStatePressed,
+  MDCCardsStateSelect,
   MDCCardsStateSelected
 };
 
@@ -25,8 +26,11 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
 - (void)setShadowElevation:(CGFloat)elevation;
 - (CGFloat)shadowElevation;
 
-- (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location;
+- (void)styleForState:(MDCCardsState)state
+         withLocation:(CGPoint)location
+       withCompletion:(nullable MDCInkCompletionBlock)completion;
 
+//@property(nonatomic, strong, nullable) UIView *opacityMask;
 @property(nonatomic, strong, nullable) MDCInkView *inkView;
 @property(nonatomic, strong, nonnull) UIImageView *selectedImageView;
 
