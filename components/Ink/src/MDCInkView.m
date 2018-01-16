@@ -235,9 +235,15 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 }
 
 - (void)addInkSublayerWithoutAnimation {
-  MDCInkLayer *inkLayer = [self commonInkSublayerInit];
+  MDCInkLayer *inkLayer = [MDCInkLayer layer];
+  inkLayer.inkColor = self.inkColor;
+  inkLayer.frame = self.bounds;
   inkLayer.opacity = 1;
-  [inkLayer inkWithoutAnimation];
+  CGRect rect = self.bounds;
+  UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:rect];
+  inkLayer.path = rectPath.CGPath;
+  inkLayer.fillColor = self.inkColor.CGColor;
+  [self.layer addSublayer:inkLayer];
   self.activeInkLayer = inkLayer;
 }
 

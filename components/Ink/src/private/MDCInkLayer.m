@@ -53,17 +53,6 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   return self;
 }
 
-- (void)inkWithoutAnimation {
-  CGRect ovalRect = CGRectMake(CGRectGetWidth(self.bounds) / 2 - 100,
-                               CGRectGetHeight(self.bounds) / 2 - 100,
-                               100 * 2,
-                               100 * 2);
-  UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
-  self.path = circlePath.CGPath;
-  self.fillColor = self.inkColor.CGColor;
-  self.opacity = 1;
-}
-
 - (instancetype)initWithLayer:(id)layer {
   self = [super initWithLayer:layer];
   if (self) {
