@@ -125,6 +125,9 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  */
 - (void)cancelAllAnimationsAnimated:(BOOL)animated;
 
+/**
+ Add an Ink sublayer without any animation
+ */
 - (void)addInkSublayerWithoutAnimation;
 
 /**
