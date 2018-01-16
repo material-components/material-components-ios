@@ -1,3 +1,50 @@
+# 44.4.0
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Chips
+
+#### MDCChipView
+
+*new* method: `-inkColorForState:` in `MDCChipView`
+
+*new* method: `-setInkColor:forState:` in `MDCChipView`
+
+*modified* class: `MDCChipView`
+
+*modified* property: `inkColor` in `MDCChipView`
+
+*modified* property: `inkColor` in `MDCChipView`
+
+### Snackbar
+
+#### MDCSnackbarMessageView
+
+*new* property: `buttonFont` in `MDCSnackbarMessageView`
+
+*new* property: `messageFont` in `MDCSnackbarMessageView`
+## Component changes
+
+### Chips
+
+#### Changes
+
+* [Stateful ink (#2823)](https://github.com/material-components/material-components-ios/commit/b67f04ed800e5b2f7ed92a77e41598eb28d0c437) (Sam Morrison)
+
+### Snackbar
+
+#### Changes
+
+* [Add customizable fonts  (#2831)](https://github.com/material-components/material-components-ios/commit/29e98b873673a56c4f84f92b8f31e00c88e476b4) (ianegordon)
+
+---
+
 # 44.3.0
 
 ## API changes
