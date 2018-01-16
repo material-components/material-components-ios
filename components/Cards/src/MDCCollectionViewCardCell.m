@@ -46,6 +46,8 @@
                    withIsUsingCollectionViewCell:YES];
   self.cardView.autoresizingMask =
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  self.contentView.autoresizingMask =
+    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.contentView addSubview:self.cardView];
   self.cornerRadius = 4.f;
   self.editMode = NO;
@@ -113,6 +115,24 @@
     }
   }
 }
+
+- (void)setColorForSelectedImage:(UIColor *)color {
+  [self.cardView.selectedImageView setTintColor:color];
+}
+
+- (UIColor *)getColorForSelectedImage {
+  return self.cardView.selectedImageView.tintColor;
+}
+
+- (void)setImageForSelectedState:(UIImage *)image {
+  UIImage *renderedImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [self.cardView.selectedImageView setImage:renderedImage];
+}
+
+- (nullable UIImage *)getImageForSelectedState {
+  return self.cardView.selectedImageView.image;
+}
+
 
 #pragma mark - UIResponder
 

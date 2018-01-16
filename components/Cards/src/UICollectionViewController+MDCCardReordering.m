@@ -31,7 +31,8 @@
   [self.collectionView addGestureRecognizer:longGestureRecognizer];
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch {
   for (UIGestureRecognizer *gesture in self.collectionView.gestureRecognizers) {
     if ([gesture isKindOfClass:[UILongPressGestureRecognizer class]]) {
       gesture.cancelsTouchesInView = NO;

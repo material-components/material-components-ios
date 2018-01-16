@@ -82,6 +82,25 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 - (CGFloat)shadowElevation;
 
 /**
+ Set the color of the image appearing in the selected state.
+
+ @param color UIColor the color to have the image as
+ */
+- (void)setColorForSelectedImage:(nonnull UIColor *)color;
+
+/**
+ Get the color of the image appearing in the selected state.
+ */
+- (nonnull UIColor *)getColorForSelectedImage;
+
+/**
+ Get the image for the selected state.
+ */
+- (void)setImageForSelectedState:(nullable UIImage *)image;
+
+- (nullable UIImage *)getImageForSelectedState;
+
+/**
  selectionState sets the selection state of the cell when in editing/selection mode.
  This method also puts the cell in editMode which then makes it follow the selection visuals.
 

@@ -69,9 +69,12 @@
   circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.selectedImageView = [[UIImageView alloc]
                             initWithImage:circledCheck];
-  self.selectedImageView.center = CGPointMake(self.bounds.size.width - 8 - (circledCheck.size.width/2),
+  self.selectedImageView.center = CGPointMake(self.bounds.size.width-8-(circledCheck.size.width/2),
                                               8 + (circledCheck.size.height/2));
   self.selectedImageView.layer.zPosition = MAXFLOAT - 1;
+  self.selectedImageView.autoresizingMask =
+    (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
+     UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
   [self addSubview:self.selectedImageView];
   self.selectedImageView.hidden = YES;
 }
@@ -104,6 +107,10 @@
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   super.backgroundColor = backgroundColor;
+  /**
+   currently the selected check image uses the color
+   based on MDFTextAccessibility to fit the background color.
+   */
   UIColor *checkColor =
     [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
                                      targetTextAlpha:1.f

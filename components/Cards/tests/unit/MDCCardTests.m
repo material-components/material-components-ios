@@ -17,6 +17,8 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialCards.h"
+#import "MDCIcons.h"
+#import "MaterialIcons+ic_info.h"
 
 @interface MDCCardTests : XCTestCase
 @property(nonatomic, strong) MDCCollectionViewCardCell *cell;
@@ -103,6 +105,21 @@
   [self.cell setCornerRadius:8.f];
   XCTAssertEqual(self.cell.cardView.layer.cornerRadius, 8.f);
   XCTAssertEqual(self.cell.layer.cornerRadius, 8.f);
+}
+
+- (void)testSetSelectionImageColor {
+  [self.cell setBackgroundColor:[UIColor blackColor]];
+  XCTAssertEqual(self.cell.cardView.selectedImageView.tintColor, [UIColor whiteColor]);
+  UIColor *color = [UIColor blueColor];
+  [self.cell setColorForSelectedImage:color];
+  XCTAssertEqual(self.cell.cardView.selectedImageView.tintColor, color);
+}
+
+- (void)testSetSelectionImage {
+  XCTAssertNotNil(self.cell.cardView.selectedImageView);
+  UIImage *img = self.cell.getImageForSelectedState;
+  [self.cell setImageForSelectedState:[MDCIcons imageFor_ic_info]];
+  XCTAssertNotEqual(img, self.cell.getImageForSelectedState);
 }
 
 @end

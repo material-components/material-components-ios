@@ -22,9 +22,7 @@
 
 @end
 
-@implementation CollectionViewController {
-  NSMutableArray *_content;
-}
+@implementation CollectionViewController
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 @synthesize collectionViewLayout = _collectionViewLayout;
@@ -55,12 +53,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [self.collectionView registerClass:[MDCCollectionViewCardCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
-  _content = [NSMutableArray array];
-  for (int i=0; i<20; i++) {
-    [_content addObject:@[[NSString stringWithFormat:@"(Left) Two line text %d", i],
-                          [NSString stringWithFormat:@"(Left) here is the detail text %d", i]]];
-  }
-
   [self mdc_setupCardReordering];
 }
 
@@ -70,11 +62,13 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return [_content count];
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return 20;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewCardCell *cell =
   [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                             forIndexPath:indexPath];

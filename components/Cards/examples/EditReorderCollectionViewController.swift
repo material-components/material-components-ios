@@ -50,7 +50,8 @@ class EditReorderCollectionViewController: UIViewController,
                                                         action: #selector(toggleModes))
 
     if #available(iOS 9.0, *) {
-      longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleReordering(gesture:)))
+      longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                      action: #selector(handleReordering(gesture:)))
       longPressGesture.cancelsTouchesInView = false
       collectionView.addGestureRecognizer(longPressGesture)
     }
@@ -62,10 +63,11 @@ class EditReorderCollectionViewController: UIViewController,
     #if swift(>=3.2)
       if #available(iOS 11, *) {
         let guide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-                                     collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-                                     collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-                                     collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+        NSLayoutConstraint.activate([
+          collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+          collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
         collectionView.contentInsetAdjustmentBehavior = .always
       } else {
         preiOS11Constraints()
@@ -98,10 +100,12 @@ class EditReorderCollectionViewController: UIViewController,
     collectionView.reloadData()
   }
 
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  func collectionView(_ collectionView: UICollectionView,
+                      cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCollectionViewCardCell
     cell.backgroundColor = .white
+    cell.setColorForSelectedImage(.blue)
     if toggle == .edit {
       if dataSource[indexPath.item].1 {
         cell.selectionState(MDCCardCellSelectionState.selected)
@@ -131,31 +135,43 @@ class EditReorderCollectionViewController: UIViewController,
     return 1
   }
 
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(_ collectionView: UICollectionView,
+                      numberOfItemsInSection section: Int) -> Int {
     return dataSource.count
   }
 
-  func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+  func collectionView(_ collectionView: UICollectionView,
+                      moveItemAt sourceIndexPath: IndexPath,
+                      to destinationIndexPath: IndexPath) {
   }
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
     let cardSize = (collectionView.bounds.size.width / 3) - 12
     return CGSize(width: cardSize, height: cardSize)
   }
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      insetForSectionAt section: Int) -> UIEdgeInsets {
     return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
   }
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 8
   }
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 8
   }
 
-  func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+  func collectionView(_ collectionView: UICollectionView,
+                      canMoveItemAt indexPath: IndexPath) -> Bool {
     return toggle == .reorder
   }
 
@@ -164,7 +180,8 @@ class EditReorderCollectionViewController: UIViewController,
     if toggle == .reorder {
       switch(gesture.state) {
       case .began:
-        guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+        guard let selectedIndexPath = collectionView.indexPathForItem(at:
+          gesture.location(in: collectionView)) else {
           break
         }
         collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
