@@ -108,25 +108,36 @@
        withCompletion:(MDCInkCompletionBlock)completion {
   switch (state) {
     case MDCCardsStateDefault: {
+      self.inkView.hidden = NO;
       self.selectedImageView.hidden = YES;
       [self.inkView startTouchEndedAnimationAtPoint:location completion:completion];
       self.shadowElevation = 1.f;
       break;
     }
     case MDCCardsStatePressed: {
+      self.inkView.hidden = NO;
       [self.inkView startTouchBeganAnimationAtPoint:location completion:completion];
       self.shadowElevation = 8.f;
       break;
     }
     case MDCCardsStateSelect: {
+      self.inkView.hidden = NO;
       [self.inkView startTouchBeganAnimationAtPoint:location completion:completion];
       self.selectedImageView.hidden = NO;
       self.shadowElevation = 1.f;
       break;
     }
     case MDCCardsStateSelected: {
+      self.inkView.hidden = NO;
       [self.inkView addInkSublayerWithoutAnimation];
       self.selectedImageView.hidden = NO;
+      self.shadowElevation = 1.f;
+      break;
+    }
+    case MDCCardStateUnselected: {
+      self.inkView.hidden = YES;
+      self.selectedImageView.hidden = YES;
+      [self.inkView cancelAllAnimationsAnimated:false];
       self.shadowElevation = 1.f;
       break;
     }

@@ -104,7 +104,7 @@
       break;
     }
     case MDCCardCellSelectionStateUnselected: {
-      [self.cardView styleForState:MDCCardsStateDefault
+      [self.cardView styleForState:MDCCardStateUnselected
                       withLocation:CGPointZero
                     withCompletion:nil];
       break;

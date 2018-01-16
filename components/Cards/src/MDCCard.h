@@ -13,7 +13,8 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
   MDCCardsStateDefault,
   MDCCardsStatePressed,
   MDCCardsStateSelect,
-  MDCCardsStateSelected
+  MDCCardsStateSelected,
+  MDCCardStateUnselected
 };
 
 @interface MDCCard : UIControl
