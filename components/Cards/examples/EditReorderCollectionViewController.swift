@@ -159,25 +159,13 @@ class EditReorderCollectionViewController: UIViewController,
           break
         }
         let cell = collectionView.cellForItem(at: selectedIndexPath) as! MDCCollectionViewCardCell
-        cell.longPressActive = true
         collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
       case .changed:
         collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
       case .ended:
-        endLongPress(gesture: gesture)
         collectionView.endInteractiveMovement()
       default:
-        endLongPress(gesture: gesture)
         collectionView.cancelInteractiveMovement()
-      }
-    }
-  }
-
-  func endLongPress(gesture: UILongPressGestureRecognizer) {
-    for cell in collectionView.visibleCells {
-      if let cell = cell as? MDCCollectionViewCardCell, cell.longPressActive {
-        let loc = gesture.location(in: cell)
-        cell.setLongPressActive(false, withLocation: loc)
       }
     }
   }

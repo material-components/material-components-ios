@@ -105,7 +105,6 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 - (void)collectionView:(UICollectionView *)collectionView
    moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
            toIndexPath:(NSIndexPath *)destinationIndexPath {
-  NSLog(@"WOOGO");
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView

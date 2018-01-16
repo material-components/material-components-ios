@@ -18,7 +18,6 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 @interface MDCCollectionViewCardCell : UICollectionViewCell
 
 @property(nonatomic, strong, nullable) MDCCard *cardView;
-@property(nonatomic, assign) BOOL longPressActive;
 @property(nonatomic, assign) BOOL editMode;
 
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
@@ -30,7 +29,6 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 - (void)setShadowElevation:(CGFloat)elevation;
 - (CGFloat)shadowElevation;
 
-- (void)setLongPressActive:(BOOL)longPressActive withLocation:(CGPoint)location;
 - (void)selectionState:(MDCCardCellSelectionState)state;
 
 @end

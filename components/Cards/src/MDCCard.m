@@ -17,8 +17,7 @@
 
 @implementation MDCCard
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
     [self commonInit];
@@ -26,8 +25,15 @@
   return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame withIsUsingCollectionViewCell:(BOOL)isUsingCell
-{
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonInit];
+  }
+  return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame withIsUsingCollectionViewCell:(BOOL)isUsingCell {
   self = [super initWithFrame:frame];
   if (self) {
     self.isUsingCell = isUsingCell;
@@ -45,13 +51,6 @@
   self.inkView.usesLegacyInkRipple = NO;
   self.inkView.layer.zPosition = MAXFLOAT;
   [self addSubview:self.inkView];
-
-//  self.opacityMask = [[UIView alloc] initWithFrame:self.bounds];
-//  self.opacityMask.autoresizingMask =
-//    (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-//  self.opacityMask.backgroundColor = self.inkView.inkColor;
-//  [self addSubview:self.opacityMask];
-//  self.opacityMask.hidden = YES;
 
   if (self.isUsingCell) {
     self.userInteractionEnabled = NO;

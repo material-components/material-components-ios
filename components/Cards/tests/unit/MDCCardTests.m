@@ -16,54 +16,93 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialCollectionCells.h"
-#import "MaterialCollectionLayoutAttributes.h"
+#import "MaterialCards.h"
 
-// Expose internal helper method.
-@interface MDCCollectionViewCell (Private)
-+ (NSString *)localizedStringWithKey:(NSString *)key;
+@interface MDCCardTests : XCTestCase
+@property(nonatomic, strong) MDCCollectionViewCardCell *cell;
+@property(nonatomic, strong) MDCCard *card;
 @end
 
-// Tests confirming that the accessibility hint for (de)selectable cells is correctly set up.
-//
-// Based on issue https://github.com/material-components/material-components-ios/issues/1257
-@interface CollectionCellsIssue1257Tests : XCTestCase
-@property(nonatomic, strong) MDCCollectionViewCell *cell;
-@property(nonatomic, strong) MDCCollectionViewLayoutAttributes *layoutAttributes;
-@end
-
-@implementation CollectionCellsIssue1257Tests
+@implementation MDCCardTests
 
 - (void)setUp {
   [super setUp];
-  self.cell = [[MDCCollectionViewCell alloc] init];
-  self.layoutAttributes = [[MDCCollectionViewLayoutAttributes alloc] init];
+  self.cell = [[MDCCollectionViewCardCell alloc] init];
+  self.card = [[MDCCard alloc] init];
 }
 
-- (void)testSelectableSelected {
-  self.layoutAttributes.shouldShowSelectorStateMask = YES;
-  [self.cell applyLayoutAttributes:self.layoutAttributes];
-  self.cell.selected = YES;
-
-  XCTAssertEqual(self.cell.accessibilityHint,
-                 [MDCCollectionViewCell localizedStringWithKey:kSelectedCellAccessibilityHintKey]);
+- (void)testCellSelectAndUnselect {
+  XCTAssertEqual(self.cell.shadowElevation, 0.f);
+  [self.cell layoutSubviews];
+  XCTAssertEqual(self.cell.shadowElevation, 1.f);
+  XCTAssertEqual(self.cell.cornerRadius, 4.f);
+  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 1);
+  [self.cell selectionState:MDCCardCellSelectionStateSelect];
+  XCTAssert(self.cell.editMode);
+  XCTAssertEqual(self.cell.shadowElevation, 1.f);
+  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(((CAShapeLayer *)self.cell.cardView.inkView.layer.sublayers.lastObject).fillColor,
+                 self.cell.cardView.inkView.inkColor.CGColor);
+  [self.cell selectionState:MDCCardCellSelectionStateUnselected];
+  XCTAssertEqual(self.cell.shadowElevation, 1.f);
+  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 1);
+  [self.cell selectionState:MDCCardCellSelectionStateSelected];
+  XCTAssertEqual(self.cell.shadowElevation, 1.f);
+  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(((CAShapeLayer *)self.cell.cardView.inkView.layer.sublayers.lastObject).fillColor,
+                 self.cell.cardView.inkView.inkColor.CGColor);
+  XCTAssert(
+    CGRectEqualToRect(
+      (((CAShapeLayer *)self.cell.cardView.inkView.layer.sublayers.firstObject).frame),
+      self.cell.cardView.inkView.layer.bounds));
+  [self.cell selectionState:MDCCardCellSelectionStateUnselect];
+  XCTAssertEqual(self.cell.shadowElevation, 1.f);
+  XCTAssertEqual(self.cell.cornerRadius, 4.f);
+  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 1);
 }
 
-- (void)testSelectableDeselected {
-  self.layoutAttributes.shouldShowSelectorStateMask = YES;
-  [self.cell applyLayoutAttributes:self.layoutAttributes];
-  self.cell.selected = NO;
+- (void)testCellLongPress {
+  NSMutableArray *touchArray = [NSMutableArray new];
+  [touchArray addObject:[UITouch new]];
+  NSSet *touches = [[NSSet alloc] init];
+  [touches setByAddingObjectsFromArray:touchArray];
+  UIEvent *event = [[UIEvent alloc] init];
+  [self.cell touchesBegan:touches withEvent:event];
 
-  XCTAssertEqual(
-      self.cell.accessibilityHint,
-      [MDCCollectionViewCell localizedStringWithKey:kDeselectedCellAccessibilityHintKey]);
+  XCTAssertEqual(self.cell.shadowElevation, 8.f);
+  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 2);
+
+  [self.cell touchesEnded:touches withEvent:event];
+
+  XCTAssertEqual(self.cell.shadowElevation, 1.f);
 }
 
-- (void)testUnselectable {
-  self.layoutAttributes.shouldShowSelectorStateMask = NO;
-  [self.cell applyLayoutAttributes:self.layoutAttributes];
+- (void)testShadowForCard {
+  [self.card layoutSubviews];
+  XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 1.f);
+  [self.card setShadowElevation:8.f];
+  XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 8.f);
+}
 
-  XCTAssertEqual(self.cell.accessibilityHint, nil);
+- (void)testCornerForCard {
+  XCTAssertEqual(self.card.layer.cornerRadius, 4.f);
+  [self.card setCornerRadius:8.f];
+  XCTAssertEqual(self.card.layer.cornerRadius, 8.f);
+}
+
+- (void)testShadowForCell {
+  [self.cell layoutSubviews];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 1.f);
+  [self.cell setShadowElevation:8.f];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 8.f);
+}
+
+- (void)testCornerForCell {
+  XCTAssertEqual(self.cell.cardView.layer.cornerRadius, 4.f);
+  XCTAssertEqual(self.cell.layer.cornerRadius, 4.f);
+  [self.cell setCornerRadius:8.f];
+  XCTAssertEqual(self.cell.cardView.layer.cornerRadius, 8.f);
+  XCTAssertEqual(self.cell.layer.cornerRadius, 8.f);
 }
 
 @end

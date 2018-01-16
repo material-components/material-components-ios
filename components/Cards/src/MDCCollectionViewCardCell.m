@@ -16,8 +16,7 @@
 
 @implementation MDCCollectionViewCardCell
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
     [self commonInit];
@@ -25,8 +24,7 @@
   return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self commonInit];
@@ -41,8 +39,11 @@
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.contentView addSubview:self.cardView];
   self.cornerRadius = 4.f;
-  self.shadowElevation = 1.f;
   self.editMode = NO;
+}
+
+- (void)layoutSubviews {
+  self.shadowElevation = 1.f;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -70,15 +71,6 @@
 
 - (CGFloat)shadowElevation {
   return self.cardView.shadowElevation;
-}
-
-- (void)setLongPressActive:(BOOL)longPressActive withLocation:(CGPoint)location {
-  self.longPressActive = longPressActive;
-  if (!longPressActive) {
-    [self.cardView styleForState:MDCCardsStateDefault
-                    withLocation:(CGPoint)location
-                  withCompletion:nil];
-  }
 }
 
 - (void)selectionState:(MDCCardCellSelectionState)state {
