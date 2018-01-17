@@ -50,13 +50,6 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 @interface MDCButtonBarSandbagView : UIView
 @end
 
-@interface MDCButtonBarButton (MDCAppBarButtonBarBuilder)
-
-//// Content padding for the button.
-//@property(nonatomic) UIEdgeInsets contentPadding;
-
-@end
-
 @interface UIBarButtonItem (MDCHeaderInternal)
 
 // Internal version of the standard -customView property. When an item is pushed onto a

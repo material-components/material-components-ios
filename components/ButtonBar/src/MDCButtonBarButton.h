@@ -18,7 +18,9 @@
 
 @interface MDCButtonBarButton : MDCFlatButton
 
-// Content padding for the button.
+/**
+ Content padding for the button.
+ */
 @property(nonatomic) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;
 
 /**
