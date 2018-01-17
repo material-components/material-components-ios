@@ -20,6 +20,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialButtons.h"
+#import "MDCButtonBarButton.h"
 #import "MDCButtonBar+Private.h"
 
 static const CGFloat kMinimumItemWidth = 36.f;
@@ -49,10 +50,10 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 @interface MDCButtonBarSandbagView : UIView
 @end
 
-@interface MDCButtonBarButton : MDCFlatButton
+@interface MDCButtonBarButton (MDCAppBarButtonBarBuilder)
 
-// Content padding for the button.
-@property(nonatomic) UIEdgeInsets contentPadding;
+//// Content padding for the button.
+//@property(nonatomic) UIEdgeInsets contentPadding;
 
 @end
 
@@ -317,6 +318,10 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   } else {
     self.inkMaxRippleRadius = 0;
   }
+}
+
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
+  [super setTitleFont:font forState:state];
 }
 
 @end
