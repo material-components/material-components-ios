@@ -313,6 +313,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   }
 }
 
+//TODO(#2850): Why do we need this implementation if we just call super?  Removing it causes a
+// method definition error
 - (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
   [super setTitleFont:font forState:state];
 }
