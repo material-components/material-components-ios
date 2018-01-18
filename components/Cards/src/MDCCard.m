@@ -14,22 +14,16 @@
  limitations under the License.
  */
 
-#import "MDCCard.h"
 #import "MaterialIcons+ic_check_circle.h"
+#import "MDCCard.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-
-@interface MDCCard ()
-
-@property(nonatomic, assign) BOOL isUsingCell;
-
-@end
 
 @implementation MDCCard
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    [self commonInit];
+    [self commonMDCCardInit];
   }
   return self;
 }
@@ -37,50 +31,37 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInit];
+    [self commonMDCCardInit];
   }
   return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame withIsUsingCollectionViewCell:(BOOL)isUsingCell {
-  self = [super initWithFrame:frame];
-  if (self) {
-    self.isUsingCell = isUsingCell;
-    [self commonInit];
-  }
-  return self;
-}
-
-- (void)commonInit {
-  self.cornerRadius = 4.f;
-
-  self.inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-  self.inkView.autoresizingMask =
-    (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  self.inkView.usesLegacyInkRipple = NO;
-  self.inkView.layer.zPosition = MAXFLOAT;
+- (void)commonMDCCardInit {
+  _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+  _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  _inkView.usesLegacyInkRipple = NO;
+  _inkView.layer.zPosition = MAXFLOAT;
   [self addSubview:self.inkView];
-
-  if (self.isUsingCell) {
-    self.userInteractionEnabled = NO;
-  }
 
   UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
   circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.selectedImageView = [[UIImageView alloc]
-                            initWithImage:circledCheck];
-  self.selectedImageView.center = CGPointMake(self.bounds.size.width-8-(circledCheck.size.width/2),
-                                              8 + (circledCheck.size.height/2));
+  self.selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
+  self.selectedImageView.center = CGPointMake(
+                                      CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - 8,
+                                      (circledCheck.size.height/2) + 8);
   self.selectedImageView.layer.zPosition = MAXFLOAT - 1;
   self.selectedImageView.autoresizingMask =
     (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
   [self addSubview:self.selectedImageView];
   self.selectedImageView.hidden = YES;
+  self.cornerRadius = 4.f;
+  self.shadowElevation = 1.f;
 }
 
 - (void)layoutSubviews {
-  self.shadowElevation = 1.f;
+  [super layoutSubviews];
+  self.layer.shadowPath = [self boundingPath].CGPath;
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
@@ -119,41 +100,19 @@
 }
 
 - (void)styleForState:(MDCCardsState)state
-         withLocation:(CGPoint)location
-       withCompletion:(MDCInkCompletionBlock)completion {
+         withLocation:(CGPoint)location {
   switch (state) {
     case MDCCardsStateDefault: {
       self.inkView.hidden = NO;
       self.selectedImageView.hidden = YES;
-      [self.inkView startTouchEndedAnimationAtPoint:location completion:completion];
+      [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
       self.shadowElevation = 1.f;
       break;
     }
     case MDCCardsStatePressed: {
       self.inkView.hidden = NO;
-      [self.inkView startTouchBeganAnimationAtPoint:location completion:completion];
+      [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
       self.shadowElevation = 8.f;
-      break;
-    }
-    case MDCCardsStateSelect: {
-      self.inkView.hidden = NO;
-      [self.inkView startTouchBeganAnimationAtPoint:location completion:completion];
-      self.selectedImageView.hidden = NO;
-      self.shadowElevation = 1.f;
-      break;
-    }
-    case MDCCardsStateSelected: {
-      self.inkView.hidden = NO;
-      [self.inkView addInkSublayerWithoutAnimation];
-      self.selectedImageView.hidden = NO;
-      self.shadowElevation = 1.f;
-      break;
-    }
-    case MDCCardStateUnselected: {
-      self.inkView.hidden = YES;
-      self.selectedImageView.hidden = YES;
-      [self.inkView cancelAllAnimationsAnimated:false];
-      self.shadowElevation = 1.f;
       break;
     }
     default:
@@ -172,27 +131,21 @@
   [super touchesBegan:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStatePressed
-         withLocation:location
-       withCompletion:nil];
+  [self styleForState:MDCCardsStatePressed withLocation:location];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStateDefault
-         withLocation:location
-       withCompletion:nil];
+  [self styleForState:MDCCardsStateDefault withLocation:location];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStateDefault
-         withLocation:location
-       withCompletion:nil];
+  [self styleForState:MDCCardsStateDefault withLocation:location];
 }
 
 @end

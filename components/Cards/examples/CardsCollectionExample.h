@@ -17,6 +17,6 @@
 #import <UIKit/UIKit.h>
 #import "MaterialCards.h"
 
-@interface CollectionViewController : UICollectionViewController
+@interface CardsCollectionExample : UICollectionViewController
 
 @end

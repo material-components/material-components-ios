@@ -15,61 +15,38 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MaterialShadowLayer.h"
 #import "MaterialInk.h"
+#import "MaterialShadowLayer.h"
 
 typedef NS_ENUM(NSInteger, MDCCardsState) {
   /** The default state for the card. */
   MDCCardsStateDefault,
 
   /** The visual state when the card is pressed (i.e. dragging). */
-  MDCCardsStatePressed,
-
-  /** The visual state when you select the card (i.e. editing). */
-  MDCCardsStateSelect,
-
-  /** The visual state when the card is already selected (i.e. editing). */
-  MDCCardsStateSelected,
-
-  /** The visual state when the card is already unselected (i.e. editing) */
-  MDCCardStateUnselected
+  MDCCardsStatePressed
 };
 
-@interface MDCCard : UIControl
+@interface MDCCard : UIView
 
 /**
- Initializing the MDCCard using the frame and if it is the
- underlying view for MDCCollectionViewCardCell
-
- @param frame CGRect for the view's frame.
- @param isUsingCell YES if this is the underlying view for MDCCollectionViewCardCell,
-                    otherwise, NO.
+ The corner radius for the card
  */
-- (nonnull instancetype)initWithFrame:(CGRect)frame withIsUsingCollectionViewCell:(BOOL)isUsingCell;
+@property(nonatomic, assign) CGFloat cornerRadius;
 
 /**
- Setter for the cornerRadius of the MDCCard.
-
- @param cornerRadius CGFloat of the radius to set the corner
+ The shadow elevation for the card
  */
-- (void)setCornerRadius:(CGFloat)cornerRadius;
+@property(nonatomic, assign) CGFloat shadowElevation;
 
 /**
- Getter for the cornerRadius of the MDCCard.
+ The inkView for the card that is initiated on tap
  */
-- (CGFloat)cornerRadius;
+@property(nonatomic, readonly, strong, nullable) MDCInkView *inkView;
 
 /**
- Setter for the shadow elevation surrounding the MDCCard.
-
- @param elevation CGFloat of the elevation for the shadow of the MDDCCard.
+ The image view that is seen when the card is in the selected state
  */
-- (void)setShadowElevation:(CGFloat)elevation;
-
-/**
- Getter for the shadow elevation surrounding the MDCCard.
- */
-- (CGFloat)shadowElevation;
+@property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 
 /**
  Sets the style for the MDCCard based on the defined state. Please see the MDCCardState definition
@@ -77,20 +54,9 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
 
  @param state MDCCardState this defines the state in which the card should visually be set to
  @param location CGPoint some states may need the touch location to begin/end the ink from
- @param completion MDCInkCompletionBlock the completion block for the ink animation
  */
-- (void)styleForState:(MDCCardsState)state
-         withLocation:(CGPoint)location
-       withCompletion:(nullable MDCInkCompletionBlock)completion;
+- (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location;
 
-/**
-  The inkView for the card that is initiated on tap
- */
-@property(nonatomic, strong, nullable) MDCInkView *inkView;
 
-/**
- The image view that is seen when the card is in the selected state
- */
-@property(nonatomic, strong, nonnull) UIImageView *selectedImageView;
 
 @end

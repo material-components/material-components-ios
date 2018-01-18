@@ -31,8 +31,8 @@ class CardExampleViewController: UIViewController {
 
       let bezierPath = UIBezierPath(roundedRect: imageView.bounds,
                                     byRoundingCorners: [.topLeft, .topRight],
-                                    cornerRadii: CGSize(width: cardView.cornerRadius(),
-                                                        height: cardView.cornerRadius()))
+                                    cornerRadii: CGSize(width: cardView.cornerRadius,
+                                                        height: cardView.cornerRadius))
       let shapeLayer = CAShapeLayer()
       shapeLayer.frame = imageView.bounds
       shapeLayer.path = bezierPath.cgPath

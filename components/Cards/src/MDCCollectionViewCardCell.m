@@ -25,35 +25,24 @@
 
 @implementation MDCCollectionViewCardCell
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super initWithCoder:coder];
-  if (self) {
-    [self commonInit];
-  }
-  return self;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInit];
+    [self commonMDCCollectionViewCardCellInit];
   }
   return self;
 }
 
-- (void)commonInit {
-  self.cardView = [[MDCCard alloc] initWithFrame:self.contentView.bounds
-                   withIsUsingCollectionViewCell:YES];
-  self.cardView.autoresizingMask =
+- (void)commonMDCCollectionViewCardCellInit {
+  _cardView = [[MDCCard alloc] initWithFrame:self.contentView.bounds];
+  _cardView.autoresizingMask =
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _cardView.userInteractionEnabled = NO;
   self.contentView.autoresizingMask =
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.contentView addSubview:self.cardView];
-  self.cornerRadius = 4.f;
   self.editMode = NO;
-}
-
-- (void)layoutSubviews {
+  self.cornerRadius = 4.f;
   self.shadowElevation = 1.f;
 }
 
@@ -89,50 +78,50 @@
   [self.cardView.inkView cancelAllAnimationsAnimated:NO];
   switch (state) {
     case MDCCardCellSelectionStateSelect: {
-      [self.cardView styleForState:MDCCardsStateSelect
-                      withLocation:self.lastTouch
-                    withCompletion:nil];
+      self.cardView.inkView.hidden = NO;
+      [self.cardView.inkView startTouchBeganAnimationAtPoint:self.lastTouch completion:nil];
+      self.cardView.selectedImageView.hidden = NO;
+      self.shadowElevation = 1.f;
       break;
     }
     case MDCCardCellSelectionStateSelected: {
-      [self.cardView styleForState:MDCCardsStateSelected
-                      withLocation:CGPointZero
-                    withCompletion:nil];
+      self.cardView.inkView.hidden = NO;
+      [self.cardView.inkView addInkSublayerWithoutAnimation];
+      self.cardView.selectedImageView.hidden = NO;
+      self.shadowElevation = 1.f;
       break;
     }
     case MDCCardCellSelectionStateUnselect: {
-      [self.cardView styleForState:MDCCardsStateDefault
-                      withLocation:CGPointZero
-                    withCompletion:nil];
+      [self.cardView styleForState:MDCCardsStateDefault withLocation:self.lastTouch];
       break;
     }
     case MDCCardCellSelectionStateUnselected: {
-      [self.cardView styleForState:MDCCardStateUnselected
-                      withLocation:CGPointZero
-                    withCompletion:nil];
+      self.cardView.inkView.hidden = YES;
+      self.cardView.selectedImageView.hidden = YES;
+      [self.cardView.inkView cancelAllAnimationsAnimated:NO];
+      self.shadowElevation = 1.f;
       break;
-
     }
   }
 }
 
-- (void)setColorForSelectedImage:(UIColor *)color {
-  [self.cardView.selectedImageView setTintColor:color];
+- (void)setColorForSelectedImage:(UIColor *)colorForSelectedImage {
+  [self.cardView.selectedImageView setTintColor:colorForSelectedImage];
 }
 
-- (UIColor *)getColorForSelectedImage {
+- (UIColor *)colorForSelectedImage {
   return self.cardView.selectedImageView.tintColor;
 }
 
-- (void)setImageForSelectedState:(UIImage *)image {
-  UIImage *renderedImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+- (void)setImageForSelectedState:(UIImage *)imageForSelectedState {
+  UIImage *renderedImage =
+    [imageForSelectedState imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.cardView.selectedImageView setImage:renderedImage];
 }
 
-- (nullable UIImage *)getImageForSelectedState {
+- (UIImage *)imageForSelectedState {
   return self.cardView.selectedImageView.image;
 }
-
 
 #pragma mark - UIResponder
 
@@ -142,9 +131,7 @@
   CGPoint location = [touch locationInView:self];
   self.lastTouch = location;
   if (!self.editMode) {
-    [self.cardView styleForState:MDCCardsStatePressed
-                    withLocation:location
-                  withCompletion:nil];
+    [self.cardView styleForState:MDCCardsStatePressed withLocation:location];
   }
 }
 
@@ -154,9 +141,7 @@
   if (!self.editMode) {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:self];
-    [self.cardView styleForState:MDCCardsStateDefault
-                    withLocation:location
-                  withCompletion:nil];
+    [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
   }
 }
 
@@ -166,9 +151,7 @@
   if (!self.editMode) {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:self];
-    [self.cardView styleForState:MDCCardsStateDefault
-                    withLocation:location
-                  withCompletion:nil];
+    [self.cardView styleForState:MDCCardsStateDefault withLocation:location];
   }
 }
 

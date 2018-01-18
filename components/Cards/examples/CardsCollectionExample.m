@@ -14,15 +14,15 @@
  limitations under the License.
  */
 
-#import "CollectionViewController.h"
+#import "CardsCollectionExample.h"
 #import "MaterialInk.h"
 #import "UICollectionViewController+MDCCardReordering.h"
 
-@interface CollectionViewController ()
+@interface CardsCollectionExample ()
 
 @end
 
-@implementation CollectionViewController
+@implementation CardsCollectionExample
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 @synthesize collectionViewLayout = _collectionViewLayout;
@@ -47,7 +47,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [super viewDidLoad];
 
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
-  self.collectionView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
+  self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   // Register cell classes
   [self.collectionView registerClass:[MDCCollectionViewCardCell class]

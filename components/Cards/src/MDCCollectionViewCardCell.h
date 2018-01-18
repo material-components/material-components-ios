@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 /**
  The underlying card view for the cell
  */
-@property(nonatomic, strong, nullable) MDCCard *cardView;
+@property(readonly, nonatomic, strong, nullable) MDCCard *cardView;
 
 /**
  editMode is toggled to true once any of the selection states are invoked
@@ -45,60 +45,24 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 @property(nonatomic, assign) BOOL editMode;
 
 /**
- Setter for the background color of the view
-
- @param backgroundColor UIColor for the background color
+ The corner radius for the cell and the underlying card
  */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
+@property(nonatomic, assign) CGFloat cornerRadius;
 
 /**
- Getter for the background color of the view
+ The shadow elevation for the card in the cell
  */
-- (nullable UIColor *)backgroundColor;
-
+@property(nonatomic, assign) CGFloat shadowElevation;
 
 /**
- Setter for the cornerRadius of the cell and the underlying card.
-
- @param cornerRadius CGFloat of the radius to set the corner
+The color of the image in the selected state
  */
-- (void)setCornerRadius:(CGFloat)cornerRadius;
+@property(nonatomic, strong, nullable) UIColor *colorForSelectedImage;
 
 /**
- Getter for the cornerRadius of the cell and the underlying card.
+The image for the selected state (by default is a checked circle)
  */
-- (CGFloat)cornerRadius;
-
-/**
- Setter for the shadow elevation surrounding the cell.
-
- @param elevation CGFloat of the elevation for the shadow of the MDDCCard.
- */
-- (void)setShadowElevation:(CGFloat)elevation;
-
-/**
- Getter for the shadow elevation surrounding the cell.
- */
-- (CGFloat)shadowElevation;
-
-/**
- Set the color of the image appearing in the selected state.
-
- @param color UIColor the color to have the image as
- */
-- (void)setColorForSelectedImage:(nonnull UIColor *)color;
-
-/**
- Get the color of the image appearing in the selected state.
- */
-- (nonnull UIColor *)getColorForSelectedImage;
-
-/**
- Get the image for the selected state.
- */
-- (void)setImageForSelectedState:(nullable UIImage *)image;
-
-- (nullable UIImage *)getImageForSelectedState;
+@property(nonatomic, strong, nullable) UIImage *imageForSelectedState;
 
 /**
  selectionState sets the selection state of the cell when in editing/selection mode.

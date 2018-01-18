@@ -105,7 +105,7 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCollectionViewCardCell
     cell.backgroundColor = .white
-    cell.setColorForSelectedImage(.blue)
+    cell.colorForSelectedImage = .blue
     if toggle == .edit {
       if dataSource[indexPath.item].1 {
         cell.selectionState(MDCCardCellSelectionState.selected)
