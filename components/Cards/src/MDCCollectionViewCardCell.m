@@ -16,6 +16,8 @@
 
 #import "MDCCollectionViewCardCell.h"
 
+#import "MaterialIcons+ic_check_circle.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 @interface MDCCollectionViewCardCell ()
 
@@ -42,13 +44,41 @@
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.contentView addSubview:self.cardView];
   self.editMode = NO;
+
+  [self initializeSelectedImage];
+
   self.cornerRadius = 4.f;
   self.shadowElevation = 1.f;
+}
+
+- (void)initializeSelectedImage {
+  UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
+  circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
+  self.selectedImageView.center = CGPointMake(
+                                              CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - 8,
+                                              (circledCheck.size.height/2) + 8);
+  self.selectedImageView.layer.zPosition = MAXFLOAT - 1;
+  self.selectedImageView.autoresizingMask =
+  (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
+   UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
+  [self.contentView addSubview:self.selectedImageView];
+  self.selectedImageView.hidden = YES;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   super.backgroundColor = backgroundColor;
   self.cardView.backgroundColor = backgroundColor;
+
+  /**
+   currently the selected check image uses the color
+   based on MDFTextAccessibility to fit the background color.
+   */
+  UIColor *checkColor =
+  [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                   targetTextAlpha:1.f
+                                           options:MDFTextAccessibilityOptionsNone];
+  [self.selectedImageView setTintColor:checkColor];
 }
 
 - (UIColor *)backgroundColor {
@@ -80,24 +110,25 @@
     case MDCCardCellSelectionStateSelect: {
       self.cardView.inkView.hidden = NO;
       [self.cardView.inkView startTouchBeganAnimationAtPoint:self.lastTouch completion:nil];
-      self.cardView.selectedImageView.hidden = NO;
+      self.selectedImageView.hidden = NO;
       self.shadowElevation = 1.f;
       break;
     }
     case MDCCardCellSelectionStateSelected: {
       self.cardView.inkView.hidden = NO;
       [self.cardView.inkView addInkSublayerWithoutAnimation];
-      self.cardView.selectedImageView.hidden = NO;
+      self.selectedImageView.hidden = NO;
       self.shadowElevation = 1.f;
       break;
     }
     case MDCCardCellSelectionStateUnselect: {
+      self.selectedImageView.hidden = YES;
       [self.cardView styleForState:MDCCardsStateDefault withLocation:self.lastTouch];
       break;
     }
     case MDCCardCellSelectionStateUnselected: {
       self.cardView.inkView.hidden = YES;
-      self.cardView.selectedImageView.hidden = YES;
+      self.selectedImageView.hidden = YES;
       [self.cardView.inkView cancelAllAnimationsAnimated:NO];
       self.shadowElevation = 1.f;
       break;
@@ -106,21 +137,21 @@
 }
 
 - (void)setColorForSelectedImage:(UIColor *)colorForSelectedImage {
-  [self.cardView.selectedImageView setTintColor:colorForSelectedImage];
+  [self.selectedImageView setTintColor:colorForSelectedImage];
 }
 
 - (UIColor *)colorForSelectedImage {
-  return self.cardView.selectedImageView.tintColor;
+  return self.selectedImageView.tintColor;
 }
 
 - (void)setImageForSelectedState:(UIImage *)imageForSelectedState {
   UIImage *renderedImage =
     [imageForSelectedState imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  [self.cardView.selectedImageView setImage:renderedImage];
+  [self.selectedImageView setImage:renderedImage];
 }
 
 - (UIImage *)imageForSelectedState {
-  return self.cardView.selectedImageView.image;
+  return self.selectedImageView.image;
 }
 
 #pragma mark - UIResponder

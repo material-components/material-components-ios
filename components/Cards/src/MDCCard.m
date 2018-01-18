@@ -14,9 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialIcons+ic_check_circle.h"
 #import "MDCCard.h"
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 @implementation MDCCard
 
@@ -43,18 +41,6 @@
   _inkView.layer.zPosition = MAXFLOAT;
   [self addSubview:self.inkView];
 
-  UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
-  circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
-  self.selectedImageView.center = CGPointMake(
-                                      CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - 8,
-                                      (circledCheck.size.height/2) + 8);
-  self.selectedImageView.layer.zPosition = MAXFLOAT - 1;
-  self.selectedImageView.autoresizingMask =
-    (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
-     UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-  [self addSubview:self.selectedImageView];
-  self.selectedImageView.hidden = YES;
   self.cornerRadius = 4.f;
   self.shadowElevation = 1.f;
 }
@@ -86,25 +72,11 @@
   return ((MDCShadowLayer *)self.layer).elevation;
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-  super.backgroundColor = backgroundColor;
-  /**
-   currently the selected check image uses the color
-   based on MDFTextAccessibility to fit the background color.
-   */
-  UIColor *checkColor =
-    [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                     targetTextAlpha:1.f
-                                             options:MDFTextAccessibilityOptionsNone];
-  [self.selectedImageView setTintColor:checkColor];
-}
-
 - (void)styleForState:(MDCCardsState)state
          withLocation:(CGPoint)location {
   switch (state) {
     case MDCCardsStateDefault: {
       self.inkView.hidden = NO;
-      self.selectedImageView.hidden = YES;
       [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
       self.shadowElevation = 1.f;
       break;

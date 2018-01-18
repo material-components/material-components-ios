@@ -44,11 +44,6 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
 @property(nonatomic, readonly, strong, nullable) MDCInkView *inkView;
 
 /**
- The image view that is seen when the card is in the selected state
- */
-@property(nonatomic, strong, nullable) UIImageView *selectedImageView;
-
-/**
  Sets the style for the MDCCard based on the defined state. Please see the MDCCardState definition
  above to see all the possible states.
 
