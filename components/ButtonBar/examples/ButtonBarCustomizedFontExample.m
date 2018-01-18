@@ -72,7 +72,7 @@
 - (void)didTapActionButton:(id)sender {
   NSLog(@"Did tap action item: %@", sender);
 
-  // Disable CUstomization
+  // Disable Customization
   [[MDCButtonBarButton appearance] setTitleFont:nil forState:UIControlStateNormal];
 }
 
@@ -103,6 +103,13 @@
   if (self) {
     self.title = @"Button Bar";
 
+    // You would normally set your UIAppearance properties in your AppDelegate in
+    // applicationDidFinishLoading.  We are doing it here to keep the revalent
+    // code in the sample.
+    // Once this code has been executed ALL MDCButtonBar's will have the following
+    // font.
+    // See Apple > UIKit > UIAppearance
+    // https://developer.apple.com/documentation/uikit/uiappearance
     UIFont *customFont = [UIFont fontWithName:@"American Typewriter" size:10.0f];
     NSAssert(customFont, @"Unable to instantiate font");
     [[MDCButtonBarButton appearance] setTitleFont:customFont forState:UIControlStateNormal];
