@@ -14,25 +14,14 @@
  limitations under the License.
  */
 
-#import "MaterialButtons.h"
+#import <UIKit/UIKit.h>
+
+@interface MDCButtonBarButton ()
 
 /**
- The MDCButtonBarButton class is used by MDCButtonBar.
-
- This is publically declared to inform clients they can use the UIAppearance proxy to customize the
- appearance of button bar buttons.
+ Content padding for the button.
  */
-@interface MDCButtonBarButton : MDCFlatButton
-
-/**
- The font used by the button's @c title.
-
- If left unset or reset to nil for a given state, then a default font is used.
-
- @param font The font.
- @param state The state.
- */
-- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+//TODO(#2851): Can't we do this with the existing contentEdgeInsets
+@property(nonatomic) UIEdgeInsets contentPadding;
 
 @end

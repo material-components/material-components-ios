@@ -88,10 +88,6 @@
   return NO;
 }
 
-+ (NSString *)catalogDescription {
-  return @"A Button Bar with a customized font.";
-}
-
 + (BOOL)catalogIsPresentable {
   return YES;
 }

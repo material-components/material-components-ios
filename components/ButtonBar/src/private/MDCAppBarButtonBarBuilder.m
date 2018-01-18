@@ -22,8 +22,7 @@
 #import "MaterialButtons.h"
 #import "MDCButtonBarButton.h"
 #import "MDCButtonBar+Private.h"
-
-static const CGFloat kMinimumItemWidth = 36.f;
+#import "MDCButtonBarButton+Private.h"
 
 // The padding around button contents.
 static const CGFloat kButtonPaddingHorizontal = 12.f;
@@ -287,38 +286,6 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 @end
 
 @implementation MDCButtonBarSandbagView
-@end
-
-@implementation MDCButtonBarButton
-
-- (CGSize)sizeThatFits:(CGSize)size {
-  CGSize fitSize = [super sizeThatFits:size];
-  fitSize.height =
-      self.contentPadding.top + MAX(kMinimumItemWidth, fitSize.height) + self.contentPadding.bottom;
-  fitSize.width =
-      self.contentPadding.left + MAX(kMinimumItemWidth, fitSize.width) + self.contentPadding.right;
-
-  return fitSize;
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  // TODO(featherless): Remove this conditional and always set the max ripple radius once
-  // https://github.com/material-components/material-components-ios/issues/329 lands.
-  if (self.inkStyle == MDCInkStyleUnbounded) {
-    self.inkMaxRippleRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
-  } else {
-    self.inkMaxRippleRadius = 0;
-  }
-}
-
-//TODO(#2850): Why do we need this implementation if we just call super?  Removing it causes a
-// method definition error
-- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
-  [super setTitleFont:font forState:state];
-}
-
 @end
 
 @implementation UIBarButtonItem (MDCHeaderInternal)
