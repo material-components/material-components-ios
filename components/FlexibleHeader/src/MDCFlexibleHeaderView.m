@@ -839,7 +839,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
 
-  if (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled) {
+  if (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled) {
     CGFloat contentHeight = self.computedMinimumHeight - MDCDeviceTopSafeAreaInset();
     CGFloat hideThreshold = kContentHidingThreshold;
     CGFloat alpha = MAX(contentHeight - boundedAccumulator / hideThreshold, 0) / contentHeight;
