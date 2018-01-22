@@ -1,3 +1,43 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### ButtonBar
+
+#### MDCButtonBarButton
+
+*new* method: `-setTitleFont:forState:` in `MDCButtonBarButton`
+
+*new* class: `MDCButtonBarButton`
+## Component changes
+
+
+### ButtonBar
+
+#### Changes
+
+* [Expose font and padding properties (#2849)](https://github.com/material-components/material-components-ios/commit/a8d903460e6d0bb78b06db0a38b882698069c04e) (ianegordon)
+
+### ProgressView
+
+#### Changes
+
+* [Remove MDMMotion (#2854)](https://github.com/material-components/material-components-ios/commit/fd1681b0de136ca4ac21ec34e31a70292c667176) (ianegordon)
+
+### TextFields
+
+#### Changes
+
+* [Correcting documentation (#2844)](https://github.com/material-components/material-components-ios/commit/b7ec2004ab4fd7567422af3c2d2563923ef1e758) (Will Larche)
+
+---
+
 # 44.4.0
 
 ## Breaking changes
