@@ -1,22 +1,14 @@
 # #develop#
 
-## Breaking changes
-
-## New deprecations
-
-## New features
-
 ## API changes
 
 ### ButtonBar
 
 #### MDCButtonBarButton
 
-*new* method: `-setTitleFont:forState:` in `MDCButtonBarButton`
-
 *new* class: `MDCButtonBarButton`
-## Component changes
 
+## Component changes
 
 ### ButtonBar
 
