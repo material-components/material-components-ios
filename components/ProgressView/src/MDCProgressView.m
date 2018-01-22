@@ -21,8 +21,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
-//KM #import <MotionAnimator/MotionAnimator.h>
-//KM #import "private/MDCProgressViewMotionSpec.h"
 
 static inline UIColor *MDCProgressViewDefaultTintColor(void) {
   return MDCPalette.bluePalette.tint500;
@@ -40,7 +38,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 // A UIProgressView to return the same format for the accessibility value. For example, when
 // progress is 0.497, it reports "fifty per cent".
 @property(nonatomic, readonly) UIProgressView *accessibilityProgressView;
-//KM @property(nonatomic, strong) MDMMotionAnimator *animator;
+
 @end
 
 @implementation MDCProgressView
@@ -62,8 +60,6 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 }
 
 - (void)commonMDCProgressViewInit {
-//KM   _animator = [[MDMMotionAnimator alloc] init];
-
   self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   self.backgroundColor = [UIColor clearColor];
   self.clipsToBounds = YES;
