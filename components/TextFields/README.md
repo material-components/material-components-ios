@@ -221,7 +221,7 @@ let textFieldFloating = MDCMultilineTextField()
 scrollView.addSubview(textFieldFloating)
 
 textFieldFloating.placeholder = "Full Name"
-textFieldFloating.delegate = self
+textFieldFloating.textView.delegate = self
 
 textFieldControllerFloating = MDCTextInputControllerDefault(input: textFieldFloating) // Hold on as a property
 ```
@@ -233,7 +233,7 @@ MDCMultilineTextField *textFieldFloating = [[MDCMultilineTextField alloc] init];
 [self.scrollView addSubview:textFieldFloating];
 
 textFieldFloating.placeholder = @"Full Name";
-textFieldFloating.delegate = self;
+textFieldFloating.textView.delegate = self;
 
 self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
 ```
@@ -250,7 +250,7 @@ let textFieldDefaultCharMax = MDCMultilineTextField()
 scrollView.addSubview(textFieldDefaultCharMax)
 
 textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
-textFieldDefaultCharMax.delegate = self
+textFieldDefaultCharMax.textView.delegate = self
 
 // Second the controller is created to manage the text field
 textFieldControllerDefaultCharMax = MDCTextInputControllerDefault(input: textFieldDefaultCharMax) // Hold on as a property
@@ -266,7 +266,7 @@ MDCMultilineTextField *textFieldDefaultCharMax = [[MDCMultilineTextField alloc] 
 [self.scrollView addSubview:textFieldDefaultCharMax];
 
 textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
-textFieldDefaultCharMax.delegate = self;
+textFieldDefaultCharMax.textView.delegate = self;
 
 // Second the controller is created to manage the text field
 self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerDefault alloc] initWithTextInput: textFieldDefaultCharMax];
