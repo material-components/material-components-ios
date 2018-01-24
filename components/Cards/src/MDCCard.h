@@ -62,6 +62,4 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
  */
 - (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location;
 
-
-
 @end
