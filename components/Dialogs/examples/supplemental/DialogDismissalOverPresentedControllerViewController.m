@@ -46,6 +46,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.navigationItem.title = @"Presented View Controller";
+
   // Make a layout that displays content in the corners.
   _topLeftLabel = [[UILabel alloc] init];
   _topLeftLabel.text = @"Top Left";
@@ -215,7 +217,7 @@
 @implementation DialogDismissalOverPresentedControllerViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Dialogs", @"Dialog Presentation/Dismissal From Presented View Controller" ];
+  return @[ @"Dialogs", @"Dialog Over Presented View Controller on iPad" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
