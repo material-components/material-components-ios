@@ -136,7 +136,7 @@ extension AnimationTimingExample {
       linearView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
       scrollView.addSubview(linearView)
 
-      let materialEaseInOutLabel: UILabel = curveLabel("MDCAnimationTimingFunctionEaseInOut")
+      let materialEaseInOutLabel: UILabel = curveLabel("MDCAnimationTimingFunctionStandard")
       materialEaseInOutLabel.frame = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace, width: materialEaseInOutLabel.frame.size.width, height: materialEaseInOutLabel.frame.size.height)
       scrollView.addSubview(materialEaseInOutLabel)
 
@@ -146,7 +146,7 @@ extension AnimationTimingExample {
       materialStandardView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
       scrollView.addSubview(materialStandardView)
 
-      let materialEaseOutLabel: UILabel = curveLabel("MDCAnimationTimingFunctionEaseOut")
+      let materialEaseOutLabel: UILabel = curveLabel("MDCAnimationTimingFunctionDeceleration")
       materialEaseOutLabel.frame = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace * 2.0, width: materialEaseOutLabel.frame.size.width, height: materialEaseOutLabel.frame.size.height)
       scrollView.addSubview(materialEaseOutLabel)
 
@@ -156,7 +156,7 @@ extension AnimationTimingExample {
       materialDecelerationView.layer.cornerRadius = Constants.Sizes.circleSize.width / 2.0
       scrollView.addSubview(materialDecelerationView)
 
-      let materialEaseInLabel: UILabel = curveLabel("MDCAnimationTimingFunctionEaseIn")
+      let materialEaseInLabel: UILabel = curveLabel("MDCAnimationTimingFunctionAcceleration")
       materialEaseInLabel.frame = CGRect(x: Constants.Sizes.leftGutter, y: lineSpace * 3.0, width: materialEaseInLabel.frame.size.width, height: materialEaseInLabel.frame.size.height)
       scrollView.addSubview(materialEaseInLabel)
 
