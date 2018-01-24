@@ -136,9 +136,12 @@
 
 - (void)showDialog:(UIButton *)sender {
   MDCAlertController *dialog =
-      [MDCAlertController  alertControllerWithTitle:@"Hello, My Name Is"
-                                            message:@"Material Dialog"];
-  [dialog addAction:[MDCAlertAction actionWithTitle:@"Nice To Meet You" handler:nil]];
+      [MDCAlertController  alertControllerWithTitle:@"This is a normal MDCAlertController"
+                                            message:@"When this dialog is dismissed, the content"
+                                                    " of the view controller underneath should"
+                                                    " remain unchanged and all four sections should"
+                                                    " continue to be fully visible."];
+  [dialog addAction:[MDCAlertAction actionWithTitle:@"Dismiss Me" handler:nil]];
   [self presentViewController:dialog animated:YES completion:nil];
 }
 
