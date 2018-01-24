@@ -34,8 +34,6 @@
 }
 
 - (void)testCellSelectAndUnselect {
-  XCTAssertEqual(self.cell.shadowElevation, 0.f);
-  [self.cell layoutSubviews];
   XCTAssertEqual(self.cell.shadowElevation, 1.f);
   XCTAssertEqual(self.cell.cornerRadius, 4.f);
   XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 1);
@@ -79,6 +77,25 @@
   XCTAssertEqual(self.cell.shadowElevation, 1.f);
 }
 
+- (void)testDefaultShadowElevations {
+  [self.cell setRestingShadowElevation:3.5f];
+  [self.cell setPressedShadowElevation:7.2f];
+  XCTAssertEqual(self.cell.shadowElevation, 3.5f);
+  NSMutableArray *touchArray = [NSMutableArray new];
+  [touchArray addObject:[UITouch new]];
+  NSSet *touches = [[NSSet alloc] init];
+  [touches setByAddingObjectsFromArray:touchArray];
+  UIEvent *event = [[UIEvent alloc] init];
+  [self.cell touchesBegan:touches withEvent:event];
+
+  XCTAssertEqual(self.cell.shadowElevation, 7.2f);
+  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 2);
+
+  [self.cell touchesEnded:touches withEvent:event];
+
+  XCTAssertEqual(self.cell.shadowElevation, 3.5f);
+}
+
 - (void)testShadowForCard {
   [self.card layoutSubviews];
   XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 1.f);
@@ -109,17 +126,17 @@
 
 - (void)testSetSelectionImageColor {
   [self.cell setBackgroundColor:[UIColor blackColor]];
-  XCTAssertEqual(self.cell.cardView.selectedImageView.tintColor, [UIColor whiteColor]);
+  XCTAssertEqual(self.cell.selectedImageView.tintColor, [UIColor whiteColor]);
   UIColor *color = [UIColor blueColor];
   [self.cell setColorForSelectedImage:color];
-  XCTAssertEqual(self.cell.cardView.selectedImageView.tintColor, color);
+  XCTAssertEqual(self.cell.selectedImageView.tintColor, color);
 }
 
 - (void)testSetSelectionImage {
-  XCTAssertNotNil(self.cell.cardView.selectedImageView);
-  UIImage *img = self.cell.getImageForSelectedState;
+  XCTAssertNotNil(self.cell.selectedImageView);
+  UIImage *img = self.cell.imageForSelectedState;
   [self.cell setImageForSelectedState:[MDCIcons imageFor_ic_info]];
-  XCTAssertNotEqual(img, self.cell.getImageForSelectedState);
+  XCTAssertNotEqual(img, self.cell.imageForSelectedState);
 }
 
 @end
