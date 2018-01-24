@@ -42,7 +42,9 @@
   [self addSubview:self.inkView];
 
   self.cornerRadius = 4.f;
-  self.shadowElevation = 1.f;
+  self.restingShadowElevation = 1.f;
+  self.pressedShadowElevation = 8.f;
+  self.shadowElevation = self.restingShadowElevation;
 }
 
 - (void)layoutSubviews {
@@ -64,12 +66,22 @@
 }
 
 - (void)setShadowElevation:(CGFloat)elevation {
+  _shadowElevation = elevation;
+  if (elevation == -1) {
+    self.layer.borderWidth = 1.f;
+    self.layer.borderColor =
+      [UIColor colorWithRed:218/255.0 green:220/255.0 blue:224/255.0 alpha:1].CGColor;
+  } else {
+    self.layer.borderWidth = 0.f;
+  }
+  CGFloat elevationNormalized = elevation < 0 ? 0 : elevation;
   self.layer.shadowPath = [self boundingPath].CGPath;
-  [(MDCShadowLayer *)self.layer setElevation:elevation];
+  [(MDCShadowLayer *)self.layer setElevation:elevationNormalized];
 }
 
-- (CGFloat)shadowElevation {
-  return ((MDCShadowLayer *)self.layer).elevation;
+- (void)setRestingShadowElevation:(CGFloat)restingShadowElevation {
+  _restingShadowElevation = restingShadowElevation;
+  [self setShadowElevation:restingShadowElevation];
 }
 
 - (void)styleForState:(MDCCardsState)state
@@ -78,13 +90,13 @@
     case MDCCardsStateDefault: {
       self.inkView.hidden = NO;
       [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
-      self.shadowElevation = 1.f;
+      self.shadowElevation = self.restingShadowElevation;
       break;
     }
     case MDCCardsStatePressed: {
       self.inkView.hidden = NO;
       [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
-      self.shadowElevation = 8.f;
+      self.shadowElevation = self.pressedShadowElevation;
       break;
     }
     default:

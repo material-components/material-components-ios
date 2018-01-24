@@ -55,6 +55,16 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 @property(nonatomic, assign) CGFloat shadowElevation;
 
 /**
+ The resting (default) state shadow elevation for the card in the cell
+ */
+@property(nonatomic, assign) CGFloat restingShadowElevation;
+
+/**
+ The pressed/dragged state shadow elevation for the card in the cell
+ */
+@property(nonatomic, assign) CGFloat pressedShadowElevation;
+
+/**
  The image view that is seen when the card is in the selected state
  */
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;

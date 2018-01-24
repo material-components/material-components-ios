@@ -39,6 +39,16 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
 @property(nonatomic, assign) CGFloat shadowElevation;
 
 /**
+ The resting (default) state shadow elevation for the card
+ */
+@property(nonatomic, assign) CGFloat restingShadowElevation;
+
+/**
+ The pressed/dragged state shadow elevation for the card
+ */
+@property(nonatomic, assign) CGFloat pressedShadowElevation;
+
+/**
  The inkView for the card that is initiated on tap
  */
 @property(nonatomic, readonly, strong, nullable) MDCInkView *inkView;

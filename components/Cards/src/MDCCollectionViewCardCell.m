@@ -48,7 +48,7 @@
   [self initializeSelectedImage];
 
   self.cornerRadius = 4.f;
-  self.shadowElevation = 1.f;
+  self.shadowElevation = self.cardView.restingShadowElevation;
 }
 
 - (void)initializeSelectedImage {
@@ -103,6 +103,22 @@
   return self.cardView.shadowElevation;
 }
 
+- (void)setRestingShadowElevation:(CGFloat)restingShadowElevation {
+  [self.cardView setRestingShadowElevation:restingShadowElevation];
+}
+
+- (CGFloat)restingShadowElevation {
+  return self.cardView.restingShadowElevation;
+}
+
+- (void)setPressedShadowElevation:(CGFloat)pressedShadowElevation {
+  [self.cardView setPressedShadowElevation:pressedShadowElevation];
+}
+
+- (CGFloat)pressedShadowElevation {
+  return self.cardView.pressedShadowElevation;
+}
+
 - (void)selectionState:(MDCCardCellSelectionState)state {
   self.editMode = YES;
   [self.cardView.inkView cancelAllAnimationsAnimated:NO];
@@ -111,14 +127,14 @@
       self.cardView.inkView.hidden = NO;
       [self.cardView.inkView startTouchBeganAnimationAtPoint:self.lastTouch completion:nil];
       self.selectedImageView.hidden = NO;
-      self.shadowElevation = 1.f;
+      self.shadowElevation = self.restingShadowElevation;
       break;
     }
     case MDCCardCellSelectionStateSelected: {
       self.cardView.inkView.hidden = NO;
       [self.cardView.inkView addInkSublayerWithoutAnimation];
       self.selectedImageView.hidden = NO;
-      self.shadowElevation = 1.f;
+      self.shadowElevation = self.restingShadowElevation;
       break;
     }
     case MDCCardCellSelectionStateUnselect: {
@@ -130,7 +146,7 @@
       self.cardView.inkView.hidden = YES;
       self.selectedImageView.hidden = YES;
       [self.cardView.inkView cancelAllAnimationsAnimated:NO];
-      self.shadowElevation = 1.f;
+      self.shadowElevation = self.restingShadowElevation;
       break;
     }
   }
@@ -158,9 +174,11 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
+
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   self.lastTouch = location;
+
   if (!self.editMode) {
     [self.cardView styleForState:MDCCardsStatePressed withLocation:location];
   }
