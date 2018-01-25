@@ -44,7 +44,7 @@ static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
 static NSString *const MDCChipTitleFontKey = @"MDCChipTitleFontKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
 
-static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleButton;
+static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
