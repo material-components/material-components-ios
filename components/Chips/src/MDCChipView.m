@@ -16,6 +16,8 @@
 
 #import "private/MDCChipView+Private.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
@@ -588,6 +590,15 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     self.layer.cornerRadius = cornerRadius;
     self.layer.shadowPath =
         [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
+  }
+
+  // Handle RTL
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    for (UIView *subview in self.subviews) {
+      CGRect flippedRect =
+        MDFRectFlippedHorizontally(subview.frame, CGRectGetWidth(self.bounds));
+      subview.frame = flippedRect;
+    }
   }
 }
 
