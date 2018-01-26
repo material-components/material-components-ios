@@ -14,14 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCCard.h"
+#import "MDCCardView.h"
 
-@implementation MDCCard
+@implementation MDCCardView
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    [self commonMDCCardInit];
+    [self commonMDCCardViewInit];
   }
   return self;
 }
@@ -29,12 +29,12 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCCardInit];
+    [self commonMDCCardViewInit];
   }
   return self;
 }
 
-- (void)commonMDCCardInit {
+- (void)commonMDCCardViewInit {
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _inkView.usesLegacyInkRipple = NO;
@@ -84,17 +84,15 @@
   [self setShadowElevation:restingShadowElevation];
 }
 
-- (void)styleForState:(MDCCardsState)state
+- (void)styleForState:(MDCCardViewState)state
          withLocation:(CGPoint)location {
   switch (state) {
-    case MDCCardsStateDefault: {
-      self.inkView.hidden = NO;
+    case MDCCardViewStateNormal: {
       [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
       self.shadowElevation = self.restingShadowElevation;
       break;
     }
-    case MDCCardsStatePressed: {
-      self.inkView.hidden = NO;
+    case MDCCardViewStateHighlighted: {
       [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
       self.shadowElevation = self.pressedShadowElevation;
       break;
@@ -115,21 +113,21 @@
   [super touchesBegan:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStatePressed withLocation:location];
+  [self styleForState:MDCCardViewStateHighlighted withLocation:location];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStateDefault withLocation:location];
+  [self styleForState:MDCCardViewStateNormal withLocation:location];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardsStateDefault withLocation:location];
+  [self styleForState:MDCCardViewStateNormal withLocation:location];
 }
 
 @end

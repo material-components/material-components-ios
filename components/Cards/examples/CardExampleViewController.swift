@@ -19,7 +19,7 @@ import UIKit
 class CardExampleViewController: UIViewController {
   @IBOutlet var contentView: UIView!
   @IBOutlet weak var imageView: UIImageView!
-  @IBOutlet weak var cardView: MDCCard!
+  @IBOutlet weak var cardView: MDCCardView!
 
     override func viewDidLoad() {
       super.viewDidLoad()

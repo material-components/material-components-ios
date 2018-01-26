@@ -15,17 +15,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MDCCard.h"
+#import "MDCCardView.h"
 
 typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
-  /** The visual state when you are now selecting the cell. */
-  MDCCardCellSelectionStateSelect,
-
   /** The visual state when you have already selected the cell. */
   MDCCardCellSelectionStateSelected,
-
-  /** The visual state when you are now unselecting the cell. */
-  MDCCardCellSelectionStateUnselect,
 
   /** The visual state when you have already unselected the cell. */
   MDCCardCellSelectionStateUnselected
@@ -36,14 +30,14 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 /**
  The underlying card view for the cell
  */
-@property(readonly, nonatomic, strong, nullable) MDCCard *cardView;
+@property(readonly, nonatomic, strong, nullable) MDCCardView *cardView;
 
 /**
  editMode is toggled to true once any of the selection states are invoked
  to insure that the default touch recognizer isn't invoked like a regular tap.
  */
 @property(nonatomic, assign) BOOL editMode;
-
+@property(nonatomic, assign) MDCCardCellSelectionState state;
 /**
  The corner radius for the cell and the underlying card
  */
@@ -85,6 +79,6 @@ The image for the selected state (by default is a checked circle)
 
  @param state MDCCardCellSelectionState is the visual state of the cell in regards to selection.
  */
-- (void)selectionState:(MDCCardCellSelectionState)state;
+- (void)selectionState:(MDCCardCellSelectionState)state withAnimation:(BOOL)animation;
 
 @end

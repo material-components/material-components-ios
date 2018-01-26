@@ -18,15 +18,15 @@
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
-typedef NS_ENUM(NSInteger, MDCCardsState) {
-  /** The default state for the card. */
-  MDCCardsStateDefault,
+typedef NS_ENUM(NSInteger, MDCCardViewState) {
+  /** The normal state for the card. */
+  MDCCardViewStateNormal,
 
   /** The visual state when the card is pressed (i.e. dragging). */
-  MDCCardsStatePressed
+  MDCCardViewStateHighlighted
 };
 
-@interface MDCCard : UIView
+@interface MDCCardView : UIView
 
 /**
  The corner radius for the card
@@ -54,12 +54,12 @@ typedef NS_ENUM(NSInteger, MDCCardsState) {
 @property(nonatomic, readonly, strong, nullable) MDCInkView *inkView;
 
 /**
- Sets the style for the MDCCard based on the defined state. Please see the MDCCardState definition
- above to see all the possible states.
+ Sets the style for the MDCCardView based on the defined state. Please see the MDCCardViewState
+ definition above to see all the possible states.
 
- @param state MDCCardState this defines the state in which the card should visually be set to
+ @param state MDCCardViewState this defines the state in which the card should visually be set to
  @param location CGPoint some states may need the touch location to begin/end the ink from
  */
-- (void)styleForState:(MDCCardsState)state withLocation:(CGPoint)location;
+- (void)styleForState:(MDCCardViewState)state withLocation:(CGPoint)location;
 
 @end

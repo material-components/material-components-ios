@@ -42,6 +42,7 @@ class EditReorderCollectionViewController: UIViewController,
     collectionView.alwaysBounceVertical = true;
     collectionView.register(MDCCollectionViewCardCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
+    collectionView.allowsMultipleSelection = true
     view.addSubview(collectionView)
 
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reorder",
@@ -107,13 +108,8 @@ class EditReorderCollectionViewController: UIViewController,
     cell.backgroundColor = .white
     cell.colorForSelectedImage = .blue
     if toggle == .edit {
-      if dataSource[indexPath.item].1 {
-        cell.selectionState(MDCCardCellSelectionState.selected)
-      } else {
-        cell.selectionState(MDCCardCellSelectionState.unselected)
-      }
+      cell.editMode = true
     } else {
-      cell.selectionState(MDCCardCellSelectionState.unselected)
       cell.editMode = false
     }
     return cell
@@ -122,12 +118,6 @@ class EditReorderCollectionViewController: UIViewController,
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     if toggle == .edit {
       dataSource[indexPath.item].1 = !dataSource[indexPath.item].1
-      let cell = collectionView.cellForItem(at: indexPath) as! MDCCollectionViewCardCell
-      if dataSource[indexPath.item].1 {
-        cell.selectionState(MDCCardCellSelectionState.select)
-      } else {
-        cell.selectionState(MDCCardCellSelectionState.unselect)
-      }
     }
   }
 

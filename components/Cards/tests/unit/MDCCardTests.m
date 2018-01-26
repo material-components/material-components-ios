@@ -22,7 +22,7 @@
 
 @interface MDCCardTests : XCTestCase
 @property(nonatomic, strong) MDCCollectionViewCardCell *cell;
-@property(nonatomic, strong) MDCCard *card;
+@property(nonatomic, strong) MDCCardView *card;
 @end
 
 @implementation MDCCardTests
@@ -30,7 +30,7 @@
 - (void)setUp {
   [super setUp];
   self.cell = [[MDCCollectionViewCardCell alloc] init];
-  self.card = [[MDCCard alloc] init];
+  self.card = [[MDCCardView alloc] init];
 }
 
 - (void)testCellSelectAndUnselect {
