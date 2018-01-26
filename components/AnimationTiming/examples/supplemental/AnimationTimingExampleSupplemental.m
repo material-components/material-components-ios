@@ -91,7 +91,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   [self.scrollView addSubview:self.materialStandardView];
 
   UILabel *materialEaseOutLabel =
-      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionEaseOut"];
+      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionDeceleration"];
   materialEaseOutLabel.frame =
       CGRectMake(kLeftGutter, lineSpace * 2.f, materialEaseOutLabel.frame.size.width,
                  materialEaseOutLabel.frame.size.height);
@@ -106,7 +106,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   [self.scrollView addSubview:self.materialDecelerationView];
 
   UILabel *materialEaseInLabel =
-      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionEaseIn"];
+      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionAcceleration"];
   materialEaseInLabel.frame =
       CGRectMake(kLeftGutter, lineSpace * 3.f, materialEaseInLabel.frame.size.width,
                  materialEaseInLabel.frame.size.height);
