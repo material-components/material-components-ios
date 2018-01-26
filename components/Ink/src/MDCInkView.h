@@ -126,6 +126,11 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 - (void)cancelAllAnimationsAnimated:(BOOL)animated;
 
 /**
+ Add an Ink sublayer without any animation
+ */
+- (void)addInkSublayerWithoutAnimation;
+
+/**
  Enumerates the given view's subviews for an instance of MDCInkView and returns it if found, or
  creates and adds a new instance of MDCInkView if not.
 
