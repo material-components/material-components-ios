@@ -44,15 +44,6 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
 @property(nonatomic, readonly) MDCCardViewState state;
 
 /**
- Sets the style for the MDCCardView based on the defined state. Please see the MDCCardViewState
- definition above to see all the possible states.
-
- @param state MDCCardViewState this defines the state in which the card should visually be set to
- @param location CGPoint some states may need the touch location to begin/end the ink from
- */
-- (void)styleForState:(MDCCardViewState)state withLocation:(CGPoint)location;
-
-/**
  Sets the shadow elevation for an MDCCardViewState state
 
  @param shadowElevation The shadow elevation
@@ -74,6 +65,5 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
  @return The shadow elevation for the requested state.
  */
 - (CGFloat)shadowElevationForState:(MDCCardViewState)state;
-
 
 @end

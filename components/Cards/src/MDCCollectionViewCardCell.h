@@ -38,34 +38,32 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
  */
 @property(nonatomic,getter=isSelecting) BOOL selecting;
 
-@property(nonatomic, assign) MDCCardCellSelectionState selectionState;
 /**
  The corner radius for the cell and the underlying card
  */
 @property(nonatomic, assign) CGFloat cornerRadius;
-
-///**
-// The image view that is seen when the card is in the selected state
-// */
-//@property(nonatomic, strong, nullable) UIImageView *selectedImageView;
-
-///**
-//The color of the image in the selected state
-// */
-//@property(nonatomic, strong, nullable) UIColor *colorForSelectedImage;
 
 /**
 The image for the selected state (by default is a checked circle)
  */
 @property(nonatomic, strong, nullable) UIImage *selectedImage;
 
+/**
+The tint color for the selected image.
+ */
 @property(nonatomic, strong, nullable) UIColor *selectedImageTintColor;
+
+/**
+The selection state of the card cell
+ */
+@property(nonatomic, readonly) MDCCardCellSelectionState selectionState;
 
 /**
  selectionState sets the selection state of the cell when in editing/selection mode.
  This method also puts the cell in editMode which then makes it follow the selection visuals.
 
  @param state MDCCardCellSelectionState is the visual state of the cell in regards to selection.
+ @param animation BOOL to animate the transition between states (ink animation)
  */
 - (void)selectionState:(MDCCardCellSelectionState)state withAnimation:(BOOL)animation;
 

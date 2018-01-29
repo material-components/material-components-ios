@@ -18,6 +18,7 @@
 
 #import "MaterialIcons+ic_check_circle.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
+#import "private/MDCCardView+Private.h"
 
 @interface MDCCollectionViewCardCell ()
 
@@ -99,6 +100,7 @@
 }
 
 - (void)selectionState:(MDCCardCellSelectionState)state withAnimation:(BOOL)animation {
+  _selectionState = state;
   self.selecting = YES;
   switch (state) {
     case MDCCardCellSelectionStateSelected: {
@@ -130,7 +132,6 @@
       break;
     }
   }
-  self.selectionState = state;
 }
 
 - (void)setSelectedImage:(UIImage *)selectedImage {
@@ -173,7 +174,7 @@
       [self selectionState:MDCCardCellSelectionStateSelected withAnimation:YES];
     }
   } else {
-    [self.cardView styleForState:MDCCardViewStateHighlighted withLocation:location];
+    [self.cardView setStyleForState:MDCCardViewStateHighlighted withLocation:location];
   }
 }
 
@@ -187,7 +188,7 @@
       [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
     }
   } else {
-    [self.cardView styleForState:MDCCardViewStateNormal withLocation:location];
+    [self.cardView setStyleForState:MDCCardViewStateNormal withLocation:location];
   }
 }
 
@@ -201,7 +202,7 @@
       [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
     }
   } else {
-    [self.cardView styleForState:MDCCardViewStateNormal withLocation:location];
+    [self.cardView setStyleForState:MDCCardViewStateNormal withLocation:location];
   }
 }
 
