@@ -34,24 +34,14 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
 @property(nonatomic, assign) CGFloat cornerRadius;
 
 /**
- The shadow elevation for the card
- */
-@property(nonatomic, assign) CGFloat shadowElevation;
-
-/**
- The resting (default) state shadow elevation for the card
- */
-@property(nonatomic, assign) CGFloat restingShadowElevation;
-
-/**
- The pressed/dragged state shadow elevation for the card
- */
-@property(nonatomic, assign) CGFloat pressedShadowElevation;
-
-/**
  The inkView for the card that is initiated on tap
  */
-@property(nonatomic, readonly, strong, nullable) MDCInkView *inkView;
+@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+
+/**
+ Returns the current state of the card
+ */
+@property(nonatomic, readonly) MDCCardViewState state;
 
 /**
  Sets the style for the MDCCardView based on the defined state. Please see the MDCCardViewState
@@ -61,5 +51,29 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
  @param location CGPoint some states may need the touch location to begin/end the ink from
  */
 - (void)styleForState:(MDCCardViewState)state withLocation:(CGPoint)location;
+
+/**
+ Sets the shadow elevation for an MDCCardViewState state
+
+ @param shadowElevation The shadow elevation
+ @param state MDCCardViewState the card view state
+
+ @note when setting the shadowElevation lower than 0
+ it will produce a hairline border around it with a 0 shadow.
+ This applies also when setting the resting and pressed shadow elevation properties.
+ */
+- (void)setShadowElevation:(CGFloat)shadowElevation forState:(MDCCardViewState)state;
+
+/**
+ Returns the shadow elevation for an MDCCardViewState state
+
+ If no elevation has been set for a given state, the returned value will fall back to the value set
+ for UIControlStateNormal.
+
+ @param state MDCCardViewState the card view state
+ @return The shadow elevation for the requested state.
+ */
+- (CGFloat)shadowElevationForState:(MDCCardViewState)state;
+
 
 @end

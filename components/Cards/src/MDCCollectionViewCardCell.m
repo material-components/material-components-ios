@@ -21,6 +21,7 @@
 
 @interface MDCCollectionViewCardCell ()
 
+@property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 @property(nonatomic, assign) CGPoint lastTouch;
 
 @end
@@ -46,13 +47,11 @@
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.contentView addSubview:self.cardView];
   _inkAnimating = NO;
-
-  self.editMode = NO;
+  self.selecting = NO;
 
   [self initializeSelectedImage];
 
   self.cornerRadius = 4.f;
-  self.shadowElevation = self.cardView.restingShadowElevation;
 }
 
 - (void)initializeSelectedImage {
@@ -82,7 +81,7 @@
   [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
                                    targetTextAlpha:1.f
                                            options:MDFTextAccessibilityOptionsNone];
-  [self.selectedImageView setTintColor:checkColor];
+  self.selectedImageTintColor = checkColor;
 }
 
 - (UIColor *)backgroundColor {
@@ -99,32 +98,8 @@
   return self.cardView.cornerRadius;
 }
 
-- (void)setShadowElevation:(CGFloat)elevation {
-  [self.cardView setShadowElevation:elevation];
-}
-
-- (CGFloat)shadowElevation {
-  return self.cardView.shadowElevation;
-}
-
-- (void)setRestingShadowElevation:(CGFloat)restingShadowElevation {
-  [self.cardView setRestingShadowElevation:restingShadowElevation];
-}
-
-- (CGFloat)restingShadowElevation {
-  return self.cardView.restingShadowElevation;
-}
-
-- (void)setPressedShadowElevation:(CGFloat)pressedShadowElevation {
-  [self.cardView setPressedShadowElevation:pressedShadowElevation];
-}
-
-- (CGFloat)pressedShadowElevation {
-  return self.cardView.pressedShadowElevation;
-}
-
 - (void)selectionState:(MDCCardCellSelectionState)state withAnimation:(BOOL)animation {
-  self.editMode = YES;
+  self.selecting = YES;
   switch (state) {
     case MDCCardCellSelectionStateSelected: {
       if (animation) {
@@ -138,7 +113,9 @@
         _inkAnimating = NO;
         self.selectedImageView.hidden = NO;
       }
-      self.shadowElevation = self.restingShadowElevation;
+      [(MDCShadowLayer *)self.cardView.layer setElevation:
+       [self.cardView shadowElevationForState:MDCCardViewStateNormal]];
+
       break;
     }
     case MDCCardCellSelectionStateUnselected: {
@@ -147,37 +124,34 @@
       } else {
         [self.cardView.inkView cancelAllAnimationsAnimated:NO];
       }
-      self.shadowElevation = self.restingShadowElevation;
+      [(MDCShadowLayer *)self.cardView.layer setElevation:
+       [self.cardView shadowElevationForState:MDCCardViewStateNormal]];
       self.selectedImageView.hidden = YES;
       break;
     }
   }
-  self.state = state;
+  self.selectionState = state;
 }
 
-- (void)setColorForSelectedImage:(UIColor *)colorForSelectedImage {
-  [self.selectedImageView setTintColor:colorForSelectedImage];
+- (void)setSelectedImage:(UIImage *)selectedImage {
+  [self.selectedImageView setImage:selectedImage];
 }
 
-- (UIColor *)colorForSelectedImage {
-  return self.selectedImageView.tintColor;
-}
-
-- (void)setImageForSelectedState:(UIImage *)imageForSelectedState {
-  UIImage *renderedImage =
-    [imageForSelectedState imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  [self.selectedImageView setImage:renderedImage];
-}
-
-- (UIImage *)imageForSelectedState {
+- (UIImage *)selectedImage {
   return self.selectedImageView.image;
 }
 
-#pragma mark - UIResponder
+- (void)setSelectedImageTintColor:(UIColor *)selectedImageTintColor {
+  [self.selectedImageView setTintColor:selectedImageTintColor];
+}
+
+- (UIColor *)selectedImageTintColor {
+  return self.selectedImageView.tintColor;
+}
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-  if (self.editMode) {
+  if (self.selecting) {
     if (selected) {
       [self selectionState:MDCCardCellSelectionStateSelected withAnimation:NO];
     } else {
@@ -186,13 +160,15 @@
   }
 }
 
+#pragma mark - UIResponder
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
 
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   self.lastTouch = location;
-  if (self.editMode) {
+  if (self.selecting) {
     if (!self.selected) {
       [self selectionState:MDCCardCellSelectionStateSelected withAnimation:YES];
     }
@@ -206,7 +182,7 @@
 
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  if (self.editMode) {
+  if (self.selecting) {
     if (!self.selected) {
       [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
     }
@@ -220,7 +196,7 @@
 
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  if (self.editMode) {
+  if (self.selecting) {
     if (!self.selected) {
       [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
     }
@@ -228,6 +204,5 @@
     [self.cardView styleForState:MDCCardViewStateNormal withLocation:location];
   }
 }
-
 
 @end

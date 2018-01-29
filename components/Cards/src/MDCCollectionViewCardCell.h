@@ -18,11 +18,11 @@
 #import "MDCCardView.h"
 
 typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
-  /** The visual state when you have already selected the cell. */
-  MDCCardCellSelectionStateSelected,
+  /** The visual state when the cell is in its unselected state. */
+  MDCCardCellSelectionStateUnselected,
 
-  /** The visual state when you have already unselected the cell. */
-  MDCCardCellSelectionStateUnselected
+  /** The visual state when the cell has been selected. */
+  MDCCardCellSelectionStateSelected
 };
 
 @interface MDCCollectionViewCardCell : UICollectionViewCell
@@ -30,48 +30,36 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 /**
  The underlying card view for the cell
  */
-@property(readonly, nonatomic, strong, nullable) MDCCardView *cardView;
+@property(readonly, nonatomic, strong, nonnull) MDCCardView *cardView;
 
 /**
- editMode is toggled to true once any of the selection states are invoked
- to insure that the default touch recognizer isn't invoked like a regular tap.
+ selecting for the cell should be set to YES if the
+ cell should react visually to when it is selected.
  */
-@property(nonatomic, assign) BOOL editMode;
-@property(nonatomic, assign) MDCCardCellSelectionState state;
+@property(nonatomic,getter=isSelecting) BOOL selecting;
+
+@property(nonatomic, assign) MDCCardCellSelectionState selectionState;
 /**
  The corner radius for the cell and the underlying card
  */
 @property(nonatomic, assign) CGFloat cornerRadius;
 
-/**
- The shadow elevation for the card in the cell
- */
-@property(nonatomic, assign) CGFloat shadowElevation;
+///**
+// The image view that is seen when the card is in the selected state
+// */
+//@property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 
-/**
- The resting (default) state shadow elevation for the card in the cell
- */
-@property(nonatomic, assign) CGFloat restingShadowElevation;
-
-/**
- The pressed/dragged state shadow elevation for the card in the cell
- */
-@property(nonatomic, assign) CGFloat pressedShadowElevation;
-
-/**
- The image view that is seen when the card is in the selected state
- */
-@property(nonatomic, strong, nullable) UIImageView *selectedImageView;
-
-/**
-The color of the image in the selected state
- */
-@property(nonatomic, strong, nullable) UIColor *colorForSelectedImage;
+///**
+//The color of the image in the selected state
+// */
+//@property(nonatomic, strong, nullable) UIColor *colorForSelectedImage;
 
 /**
 The image for the selected state (by default is a checked circle)
  */
-@property(nonatomic, strong, nullable) UIImage *imageForSelectedState;
+@property(nonatomic, strong, nullable) UIImage *selectedImage;
+
+@property(nonatomic, strong, nullable) UIColor *selectedImageTintColor;
 
 /**
  selectionState sets the selection state of the cell when in editing/selection mode.

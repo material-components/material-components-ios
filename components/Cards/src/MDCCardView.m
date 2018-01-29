@@ -16,7 +16,9 @@
 
 #import "MDCCardView.h"
 
-@implementation MDCCardView
+@implementation MDCCardView {
+  NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
@@ -42,9 +44,12 @@
   [self addSubview:self.inkView];
 
   self.cornerRadius = 4.f;
-  self.restingShadowElevation = 1.f;
-  self.pressedShadowElevation = 8.f;
-  self.shadowElevation = self.restingShadowElevation;
+
+  _shadowElevations = [[NSMutableDictionary alloc] init];
+  _shadowElevations[@(MDCCardViewStateNormal)] = @(1.f);
+  _shadowElevations[@(MDCCardViewStateHighlighted)] = @(8.f);
+  _state = MDCCardViewStateNormal;
+  [self updateShadowElevation];
 }
 
 - (void)layoutSubviews {
@@ -65,46 +70,58 @@
   return [MDCShadowLayer class];
 }
 
-- (void)setShadowElevation:(CGFloat)elevation {
-  _shadowElevation = elevation;
-  if (elevation == -1) {
+- (void)styleForState:(MDCCardViewState)state
+         withLocation:(CGPoint)location {
+  _state = state;
+  switch (state) {
+    case MDCCardViewStateNormal: {
+      [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
+      break;
+    }
+    case MDCCardViewStateHighlighted: {
+      [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
+      break;
+    }
+    default:
+      break;
+  }
+  [self updateShadowElevation];
+}
+
+- (UIBezierPath *)boundingPath {
+  CGFloat cornerRadius = self.cornerRadius;
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
+}
+
+- (CGFloat)shadowElevationForState:(MDCCardViewState)state {
+  NSNumber *elevation = _shadowElevations[@(state)];
+  if (elevation == nil) {
+    elevation = _shadowElevations[@(MDCCardViewStateNormal)];
+  }
+  if (elevation != nil) {
+    return (CGFloat)[elevation doubleValue];
+  }
+  return 0;
+}
+
+- (void)setShadowElevation:(CGFloat)shadowElevation forState:(MDCCardViewState)state {
+  _shadowElevations[@(state)] = @(shadowElevation);
+
+  [self updateShadowElevation];
+}
+
+- (void)updateShadowElevation {
+  CGFloat elevation = [self shadowElevationForState:self.state];
+  if (elevation < 0) {
     self.layer.borderWidth = 1.f;
     self.layer.borderColor =
-      [UIColor colorWithRed:218/255.0 green:220/255.0 blue:224/255.0 alpha:1].CGColor;
+    [UIColor colorWithRed:218/255.0 green:220/255.0 blue:224/255.0 alpha:1].CGColor;
   } else {
     self.layer.borderWidth = 0.f;
   }
   CGFloat elevationNormalized = elevation < 0 ? 0 : elevation;
   self.layer.shadowPath = [self boundingPath].CGPath;
   [(MDCShadowLayer *)self.layer setElevation:elevationNormalized];
-}
-
-- (void)setRestingShadowElevation:(CGFloat)restingShadowElevation {
-  _restingShadowElevation = restingShadowElevation;
-  [self setShadowElevation:restingShadowElevation];
-}
-
-- (void)styleForState:(MDCCardViewState)state
-         withLocation:(CGPoint)location {
-  switch (state) {
-    case MDCCardViewStateNormal: {
-      [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
-      self.shadowElevation = self.restingShadowElevation;
-      break;
-    }
-    case MDCCardViewStateHighlighted: {
-      [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
-      self.shadowElevation = self.pressedShadowElevation;
-      break;
-    }
-    default:
-      break;
-  }
-}
-
-- (UIBezierPath *)boundingPath {
-  CGFloat cornerRadius = self.cornerRadius;
-  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
 #pragma mark - UIResponder
