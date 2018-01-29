@@ -15,6 +15,7 @@
  */
 
 #import "MDCCardView.h"
+#import "private/MDCCardView+Private.h"
 
 @implementation MDCCardView {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
@@ -70,7 +71,7 @@
   return [MDCShadowLayer class];
 }
 
-- (void)styleForState:(MDCCardViewState)state
+- (void)setStyleForState:(MDCCardViewState)state
          withLocation:(CGPoint)location {
   _state = state;
   switch (state) {
@@ -130,21 +131,21 @@
   [super touchesBegan:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardViewStateHighlighted withLocation:location];
+  [self setStyleForState:MDCCardViewStateHighlighted withLocation:location];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardViewStateNormal withLocation:location];
+  [self setStyleForState:MDCCardViewStateNormal withLocation:location];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  [self styleForState:MDCCardViewStateNormal withLocation:location];
+  [self setStyleForState:MDCCardViewStateNormal withLocation:location];
 }
 
 @end

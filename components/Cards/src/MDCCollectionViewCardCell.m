@@ -60,8 +60,8 @@
   circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
   self.selectedImageView.center = CGPointMake(
-                                              CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - 8,
-                                              (circledCheck.size.height/2) + 8);
+                                    CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - 8,
+                                    (circledCheck.size.height/2) + 8);
   self.selectedImageView.layer.zPosition = MAXFLOAT - 1;
   self.selectedImageView.autoresizingMask =
   (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
@@ -174,7 +174,7 @@
       [self selectionState:MDCCardCellSelectionStateSelected withAnimation:YES];
     }
   } else {
-    [self.cardView setStyleForState:MDCCardViewStateHighlighted withLocation:location];
+    [_cardView setStyleForState:MDCCardViewStateHighlighted withLocation:location];
   }
 }
 
@@ -188,7 +188,7 @@
       [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
     }
   } else {
-    [self.cardView setStyleForState:MDCCardViewStateNormal withLocation:location];
+    [_cardView setStyleForState:MDCCardViewStateNormal withLocation:location];
   }
 }
 
@@ -202,7 +202,7 @@
       [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
     }
   } else {
-    [self.cardView setStyleForState:MDCCardViewStateNormal withLocation:location];
+    [_cardView setStyleForState:MDCCardViewStateNormal withLocation:location];
   }
 }
 

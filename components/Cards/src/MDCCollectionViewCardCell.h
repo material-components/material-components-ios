@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
  selecting for the cell should be set to YES if the
  cell should react visually to when it is selected.
  */
-@property(nonatomic,getter=isSelecting) BOOL selecting;
+@property(nonatomic, getter=isSelecting) BOOL selecting;
 
 /**
  The corner radius for the cell and the underlying card
@@ -57,14 +57,5 @@ The tint color for the selected image.
 The selection state of the card cell
  */
 @property(nonatomic, readonly) MDCCardCellSelectionState selectionState;
-
-/**
- selectionState sets the selection state of the cell when in editing/selection mode.
- This method also puts the cell in editMode which then makes it follow the selection visuals.
-
- @param state MDCCardCellSelectionState is the visual state of the cell in regards to selection.
- @param animation BOOL to animate the transition between states (ink animation)
- */
-- (void)selectionState:(MDCCardCellSelectionState)state withAnimation:(BOOL)animation;
 
 @end
