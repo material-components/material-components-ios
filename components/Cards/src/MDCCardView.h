@@ -58,8 +58,7 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
 /**
  Returns the shadow elevation for an MDCCardViewState state
 
- If no elevation has been set for a given state, the returned value will fall back to the value set
- for UIControlStateNormal.
+ If no elevation has been set for a state, the value for MDCCardViewStateNormal will be returned.
 
  @param state MDCCardViewState the card view state
  @return The shadow elevation for the requested state.
