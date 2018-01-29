@@ -113,16 +113,18 @@
 
 - (void)updateShadowElevation {
   CGFloat elevation = [self shadowElevationForState:self.state];
-  if (elevation < 0) {
-    self.layer.borderWidth = 1.f;
-    self.layer.borderColor =
-    [UIColor colorWithRed:218/255.0 green:220/255.0 blue:224/255.0 alpha:1].CGColor;
-  } else {
-    self.layer.borderWidth = 0.f;
+  if (((MDCShadowLayer *)self.layer).elevation != elevation) {
+    if (elevation < 0) {
+      self.layer.borderWidth = 1.f;
+      self.layer.borderColor =
+        [UIColor colorWithRed:218/255.0 green:220/255.0 blue:224/255.0 alpha:1].CGColor;
+    } else {
+      self.layer.borderWidth = 0.f;
+    }
+    CGFloat elevationNormalized = elevation < 0 ? 0 : elevation;
+    self.layer.shadowPath = [self boundingPath].CGPath;
+    [(MDCShadowLayer *)self.layer setElevation:elevationNormalized];
   }
-  CGFloat elevationNormalized = elevation < 0 ? 0 : elevation;
-  self.layer.shadowPath = [self boundingPath].CGPath;
-  [(MDCShadowLayer *)self.layer setElevation:elevationNormalized];
 }
 
 #pragma mark - UIResponder

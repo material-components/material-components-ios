@@ -108,6 +108,8 @@ class EditReorderCollectionViewController: UIViewController,
     cell.backgroundColor = .white
     cell.selectedImageTintColor = .blue
     cell.isSelecting = (toggle == .edit)
+    cell.cardView.setShadowElevation(20, for: .normal)
+    cell.cardView.setShadowElevation(-10, for: .highlighted)
     return cell
   }
 
