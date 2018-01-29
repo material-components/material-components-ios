@@ -16,6 +16,15 @@
 
 #import "MDCCardView.h"
 
+@interface MDCCardView ()
+
+/**
+ The inkView for the card that is initiated on tap
+ */
+@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+
+@end
+
 @interface MDCCardView (Private)
 
 /**

@@ -34,11 +34,6 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
 @property(nonatomic, assign) CGFloat cornerRadius;
 
 /**
- The inkView for the card that is initiated on tap
- */
-@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
-
-/**
  Returns the current state of the card
  */
 @property(nonatomic, readonly) MDCCardViewState state;
