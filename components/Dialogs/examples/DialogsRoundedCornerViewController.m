@@ -14,12 +14,9 @@
  limitations under the License.
  */
 
-#import "MaterialDialogs.h"
-
-#import "MaterialButtons.h"
-
 #import "DialogsRoundedCornerViewController.h"
-
+#import "MaterialButtons.h"
+#import "MaterialDialogs.h"
 
 @interface DialogsRoundedCornerSimpleController : UIViewController
 
@@ -69,7 +66,6 @@
 @end
 
 
-
 @interface DialogsRoundedCornerViewController ()
 
 @property(nonatomic, strong) MDCFlatButton *presentButton;
@@ -92,16 +88,15 @@
   [_presentButton setTitle:@"Present" forState:UIControlStateNormal];
   [_presentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _presentButton.autoresizingMask =
-  UIViewAutoresizingFlexibleTopMargin |
-  UIViewAutoresizingFlexibleLeftMargin |
-  UIViewAutoresizingFlexibleRightMargin |
-  UIViewAutoresizingFlexibleBottomMargin;
+      UIViewAutoresizingFlexibleTopMargin |
+      UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleRightMargin |
+      UIViewAutoresizingFlexibleBottomMargin;
   [_presentButton addTarget:self
                      action:@selector(didTapPresent:)
            forControlEvents:UIControlEventTouchUpInside];
 
   [self.view addSubview:_presentButton];
-
 }
 
 - (void)viewWillLayoutSubviews {

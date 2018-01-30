@@ -15,8 +15,8 @@
  */
 
 /* IMPORTANT:
- This file contains supplemental code used to populate the examples with dummy data and/or
- instructions. It is not necessary to import this file to use Material Components for iOS.
+ This class demonstrates a shadow rendering error when presenting a view controller with a
+ non-zero corner radius.
  */
 
 #import <UIKit/UIKit.h>
