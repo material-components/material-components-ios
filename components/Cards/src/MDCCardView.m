@@ -19,6 +19,9 @@
 
 @implementation MDCCardView {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
+  NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
+  NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
+  NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -114,17 +117,81 @@
 - (void)updateShadowElevation {
   CGFloat elevation = [self shadowElevationForState:self.state];
   if (((MDCShadowLayer *)self.layer).elevation != elevation) {
-    if (elevation < 0) {
-      self.layer.borderWidth = 1.f;
-      self.layer.borderColor =
-        [UIColor colorWithRed:218/255.0 green:220/255.0 blue:224/255.0 alpha:1].CGColor;
-    } else {
-      self.layer.borderWidth = 0.f;
-    }
-    CGFloat elevationNormalized = elevation < 0 ? 0 : elevation;
     self.layer.shadowPath = [self boundingPath].CGPath;
-    [(MDCShadowLayer *)self.layer setElevation:elevationNormalized];
+    [(MDCShadowLayer *)self.layer setElevation:elevation];
   }
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardViewState)state {
+  _borderWidths[@(state)] = @(borderWidth);
+
+  [self updateBorderWidth];
+}
+
+- (void)updateBorderWidth {
+  CGFloat borderWidth = [self borderWidthForState:self.state];
+  if (self.layer.borderWidth != borderWidth) {
+    self.layer.borderWidth = borderWidth;
+  }
+}
+
+- (CGFloat)borderWidthForState:(MDCCardViewState)state {
+  NSNumber *borderWidth = _borderWidths[@(state)];
+  if (borderWidth == nil) {
+    borderWidth = _borderWidths[@(MDCCardViewStateNormal)];
+  }
+  if (borderWidth != nil) {
+    return (CGFloat)[borderWidth doubleValue];
+  }
+  return 0;
+}
+
+- (void)setBorderColor:(UIColor *)borderColor forState:(MDCCardViewState)state {
+  _borderColors[@(state)] = borderColor;
+
+  [self updateBorderColor];
+}
+
+- (void)updateBorderColor {
+  CGColorRef borderColorRef = [self borderColorForState:self.state].CGColor;
+  if (self.layer.borderColor != borderColorRef) {
+    self.layer.borderColor = borderColorRef;
+  }
+}
+
+- (UIColor *)borderColorForState:(MDCCardViewState)state {
+  UIColor *borderColor = _borderColors[@(state)];
+  if (borderColor == nil) {
+    borderColor = _borderColors[@(MDCCardViewStateNormal)];
+  }
+  if (borderColor != nil) {
+    return borderColor;
+  }
+  return [UIColor clearColor];
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor forState:(MDCCardViewState)state {
+  _shadowColors[@(state)] = shadowColor;
+
+  [self updateShadowColor];
+}
+
+- (void)updateShadowColor {
+  CGColorRef shadowColor = [self shadowColorForState:MDCCardViewStateNormal].CGColor;
+  if (self.layer.shadowColor != shadowColor) {
+    self.layer.shadowColor = shadowColor;
+  }
+}
+
+- (UIColor *)shadowColorForState:(MDCCardViewState)state {
+  UIColor *shadowColor = _shadowColors[@(state)];
+  if (shadowColor == nil) {
+    shadowColor = _shadowColors[@(MDCCardViewStateNormal)];
+  }
+  if (shadowColor != nil) {
+    return shadowColor;
+  }
+  return [UIColor clearColor];
 }
 
 #pragma mark - UIResponder

@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
   /** The normal state for the card. */
   MDCCardViewStateNormal,
 
-  /** The visual state when the card is pressed (i.e. dragging). */
+  /** The state when the card is pressed (e.g. dragging). */
   MDCCardViewStateHighlighted
 };
 
@@ -43,10 +43,6 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
 
  @param shadowElevation The shadow elevation
  @param state MDCCardViewState the card view state
-
- @note when setting the shadowElevation lower than 0
- it will produce a hairline border around it with a 0 shadow.
- This applies also when setting the resting and pressed shadow elevation properties.
  */
 - (void)setShadowElevation:(CGFloat)shadowElevation forState:(MDCCardViewState)state
   UI_APPEARANCE_SELECTOR;
@@ -60,5 +56,63 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
  @return The shadow elevation for the requested state.
  */
 - (CGFloat)shadowElevationForState:(MDCCardViewState)state;
+
+/**
+ Sets the border width for an MDCCardViewState state
+
+ @param borderWidth The border width
+ @param state MDCCardViewState the card view state
+ */
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardViewState)state
+  UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the border width for an MDCCardViewState state
+
+ If no border width has been set for a state, the value for MDCCardViewStateNormal will be returned.
+
+ @param state MDCCardViewState the card view state
+ @return The border width for the requested state.
+ */
+- (CGFloat)borderWidthForState:(MDCCardViewState)state;
+
+/**
+ Sets the border color for an MDCCardViewState state
+
+ @param borderColor The border color
+ @param state MDCCardViewState the card view state
+ */
+- (void)setBorderColor:(UIColor *)borderColor forState:(MDCCardViewState)state
+  UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the border color for an MDCCardViewState state
+
+ If no border color has been set for a state, the value for MDCCardViewStateNormal will be returned.
+
+ @param state MDCCardViewState the card view state
+ @return The border color for the requested state.
+ */
+- (UIColor *)borderColorForState:(MDCCardViewState)state;
+
+/**
+ Sets the shadow color for an MDCCardViewState state
+
+ @param shadowColor The shadow color
+ @param state MDCCardViewState the card view state
+ */
+- (void)setShadowColor:(UIColor *)shadowColor forState:(MDCCardViewState)state
+UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the shadow color for an MDCCardViewState state
+
+ If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.
+
+ @param state MDCCardViewState the card view state
+ @return The shadow color for the requested state.
+ */
+- (UIColor *)shadowColorForState:(MDCCardViewState)state;
+
 
 @end

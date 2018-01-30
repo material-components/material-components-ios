@@ -33,10 +33,11 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 @property(readonly, nonatomic, strong, nonnull) MDCCardView *cardView;
 
 /**
- selecting for the cell should be set to YES if the
- cell should react visually to when it is selected.
+ When selectionMode is set to YES, a tap on a cell will trigger a visual change between selected
+ and unselected. When it is set to NO, a tap will trigger a normal tap (rather than trigger
+ different visual selection states on the card)
  */
-@property(nonatomic, getter=isSelecting) BOOL selecting;
+@property(nonatomic, assign) BOOL selectionMode;
 
 /**
  The corner radius for the cell and the underlying card

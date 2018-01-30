@@ -29,7 +29,7 @@
 
 /**
  Sets the style for the MDCCardView based on the defined state. Please see the MDCCardViewState
- definition above to see all the possible states.
+ definition to see all the possible states.
 
  @param state MDCCardViewState this defines the state in which the card should visually be set to
  @param location CGPoint some states may need the touch location to begin/end the ink from

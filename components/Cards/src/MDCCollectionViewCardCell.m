@@ -48,7 +48,7 @@
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.contentView addSubview:self.cardView];
   _inkAnimating = NO;
-  self.selecting = NO;
+  self.selectionMode = NO;
 
   [self initializeSelectedImage];
 
@@ -101,7 +101,7 @@
 
 - (void)selectionState:(MDCCardCellSelectionState)state withAnimation:(BOOL)animation {
   _selectionState = state;
-  self.selecting = YES;
+  self.selectionMode = YES;
   switch (state) {
     case MDCCardCellSelectionStateSelected: {
       if (animation) {
@@ -152,7 +152,7 @@
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-  if (self.selecting) {
+  if (self.selectionMode) {
     if (selected) {
       [self selectionState:MDCCardCellSelectionStateSelected withAnimation:NO];
     } else {
@@ -169,7 +169,7 @@
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   self.lastTouch = location;
-  if (self.selecting) {
+  if (self.selectionMode) {
     if (!self.selected) {
       [self selectionState:MDCCardCellSelectionStateSelected withAnimation:YES];
     }
@@ -183,7 +183,7 @@
 
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  if (self.selecting) {
+  if (self.selectionMode) {
     if (!self.selected) {
       [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
     }
@@ -197,7 +197,7 @@
 
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  if (self.selecting) {
+  if (self.selectionMode) {
     if (!self.selected) {
       [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
     }
