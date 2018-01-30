@@ -107,7 +107,7 @@ class EditReorderCollectionViewController: UIViewController,
                                                   for: indexPath) as! MDCCollectionViewCardCell
     cell.backgroundColor = .white
     cell.selectedImageTintColor = .blue
-    cell.isSelecting = (toggle == .edit)
+    cell.selectionMode = (toggle == .edit)
     return cell
   }
 
