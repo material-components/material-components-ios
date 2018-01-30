@@ -80,11 +80,11 @@ class EditReorderCollectionViewController: UIViewController,
   }
 
   func preiOS11Constraints() {
-    collectionView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
+    self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
                                                                  options: [],
                                                                  metrics: nil,
                                                                  views: ["view": collectionView]));
-    collectionView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
+    self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
                                                                  options: [],
                                                                  metrics: nil,
                                                                  views: ["view": collectionView]));
