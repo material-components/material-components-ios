@@ -49,11 +49,27 @@
 
   self.cornerRadius = 4.f;
 
+  _state = MDCCardViewStateNormal;
+
   _shadowElevations = [[NSMutableDictionary alloc] init];
   _shadowElevations[@(MDCCardViewStateNormal)] = @(1.f);
   _shadowElevations[@(MDCCardViewStateHighlighted)] = @(8.f);
-  _state = MDCCardViewStateNormal;
   [self updateShadowElevation];
+
+  _shadowColors = [[NSMutableDictionary alloc] init];
+  _shadowColors[@(MDCCardViewStateNormal)] = [UIColor blackColor];
+  _shadowColors[@(MDCCardViewStateHighlighted)] = [UIColor blackColor];
+  [self updateShadowColor];
+
+  _borderColors = [[NSMutableDictionary alloc] init];
+  _borderColors[@(MDCCardViewStateNormal)] = [UIColor clearColor];
+  _borderColors[@(MDCCardViewStateHighlighted)] = [UIColor clearColor];
+  [self updateBorderColor];
+
+  _borderWidths = [[NSMutableDictionary alloc] init];
+  _borderWidths[@(MDCCardViewStateNormal)] = @(1.f);
+  _borderWidths[@(MDCCardViewStateHighlighted)] = @(0.f);
+  [self updateBorderWidth];
 }
 
 - (void)layoutSubviews {
@@ -130,9 +146,7 @@
 
 - (void)updateBorderWidth {
   CGFloat borderWidth = [self borderWidthForState:self.state];
-  if (self.layer.borderWidth != borderWidth) {
-    self.layer.borderWidth = borderWidth;
-  }
+  self.layer.borderWidth = borderWidth;
 }
 
 - (CGFloat)borderWidthForState:(MDCCardViewState)state {
@@ -154,9 +168,7 @@
 
 - (void)updateBorderColor {
   CGColorRef borderColorRef = [self borderColorForState:self.state].CGColor;
-  if (self.layer.borderColor != borderColorRef) {
-    self.layer.borderColor = borderColorRef;
-  }
+  self.layer.borderColor = borderColorRef;
 }
 
 - (UIColor *)borderColorForState:(MDCCardViewState)state {
@@ -177,10 +189,8 @@
 }
 
 - (void)updateShadowColor {
-  CGColorRef shadowColor = [self shadowColorForState:MDCCardViewStateNormal].CGColor;
-  if (self.layer.shadowColor != shadowColor) {
-    self.layer.shadowColor = shadowColor;
-  }
+  CGColorRef shadowColor = [self shadowColorForState:self.state].CGColor;
+  self.layer.shadowColor = shadowColor;
 }
 
 - (UIColor *)shadowColorForState:(MDCCardViewState)state {
