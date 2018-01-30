@@ -208,12 +208,12 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   animGroup.removedOnCompletion = NO;
   [CATransaction setCompletionBlock:^{
     _startAnimationActive = NO;
-    if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidStart:)]) {
-      [self.animationDelegate inkLayerAnimationDidStart:self];
-    }
   }];
   [self addAnimation:animGroup forKey:nil];
   [CATransaction commit];
+  if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidStart:)]) {
+    [self.animationDelegate inkLayerAnimationDidStart:self];
+  }
 }
 
 - (void)changeAnimationAtPoint:(CGPoint)point {

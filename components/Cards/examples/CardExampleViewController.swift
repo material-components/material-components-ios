@@ -21,29 +21,29 @@ class CardExampleViewController: UIViewController {
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var cardView: MDCCardView!
 
-    override func viewDidLoad() {
-      super.viewDidLoad()
+  override func viewDidLoad() {
+    super.viewDidLoad()
 
-      let bundle = Bundle(for: CardExampleViewController.self)
-      bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
-      contentView.frame = self.view.bounds
-      self.view.addSubview(contentView)
+    let bundle = Bundle(for: CardExampleViewController.self)
+    bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
+    contentView.frame = self.view.bounds
+    self.view.addSubview(contentView)
 
-      let bezierPath = UIBezierPath(roundedRect: imageView.bounds,
-                                    byRoundingCorners: [.topLeft, .topRight],
-                                    cornerRadii: CGSize(width: cardView.cornerRadius,
-                                                        height: cardView.cornerRadius))
-      let shapeLayer = CAShapeLayer()
-      shapeLayer.frame = imageView.bounds
-      shapeLayer.path = bezierPath.cgPath
-      imageView.layer.mask = shapeLayer
+    let bezierPath = UIBezierPath(roundedRect: imageView.bounds,
+                                  byRoundingCorners: [.topLeft, .topRight],
+                                  cornerRadii: CGSize(width: cardView.cornerRadius,
+                                                      height: cardView.cornerRadius))
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.frame = imageView.bounds
+    shapeLayer.path = bezierPath.cgPath
+    imageView.layer.mask = shapeLayer
 
-    }
+  }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+  override func didReceiveMemoryWarning() {
+      super.didReceiveMemoryWarning()
+      // Dispose of any resources that can be recreated.
+  }
 
   override public var traitCollection: UITraitCollection {
     if UIDevice.current.userInterfaceIdiom == .pad && UIDevice.current.orientation.isPortrait {
