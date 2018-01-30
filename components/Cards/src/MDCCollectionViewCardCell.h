@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
 /**
  The corner radius for the cell and the underlying card
  */
-@property(nonatomic, assign) CGFloat cornerRadius;
+@property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;
 
 /**
 The image for the selected state (by default is a checked circle)
@@ -51,7 +51,7 @@ The image for the selected state (by default is a checked circle)
 /**
 The tint color for the selected image.
  */
-@property(nonatomic, strong, nullable) UIColor *selectedImageTintColor;
+@property(nonatomic, strong, nullable) UIColor *selectedImageTintColor UI_APPEARANCE_SELECTOR;
 
 /**
 The selection state of the card cell

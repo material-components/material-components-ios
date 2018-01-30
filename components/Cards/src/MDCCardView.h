@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
 /**
  The corner radius for the card
  */
-@property(nonatomic, assign) CGFloat cornerRadius;
+@property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the current state of the card
@@ -48,7 +48,8 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
  it will produce a hairline border around it with a 0 shadow.
  This applies also when setting the resting and pressed shadow elevation properties.
  */
-- (void)setShadowElevation:(CGFloat)shadowElevation forState:(MDCCardViewState)state;
+- (void)setShadowElevation:(CGFloat)shadowElevation forState:(MDCCardViewState)state
+  UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the shadow elevation for an MDCCardViewState state
