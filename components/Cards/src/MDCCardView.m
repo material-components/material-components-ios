@@ -67,7 +67,7 @@
   [self updateBorderColor];
 
   _borderWidths = [[NSMutableDictionary alloc] init];
-  _borderWidths[@(MDCCardViewStateNormal)] = @(1.f);
+  _borderWidths[@(MDCCardViewStateNormal)] = @(0.f);
   _borderWidths[@(MDCCardViewStateHighlighted)] = @(0.f);
   [self updateBorderWidth];
 }
