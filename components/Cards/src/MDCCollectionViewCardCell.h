@@ -15,48 +15,144 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MDCCardView.h"
+#import "MDCCard.h"
 
-typedef NS_ENUM(NSInteger, MDCCardCellSelectionState) {
-  /** The visual state when the cell is in its unselected state. */
-  MDCCardCellSelectionStateUnselected,
+typedef NS_ENUM(NSInteger, MDCCardCellState) {
+  /** The visual state when the cell is in its normal state. */
+  MDCCardCellStateNormal = 0,
 
+  /** The visual state when the cell is in its highlighted state. */
+  MDCCardCellStateHighlighted,
+  
   /** The visual state when the cell has been selected. */
-  MDCCardCellSelectionStateSelected
+  MDCCardCellStateSelected
 };
 
 @interface MDCCollectionViewCardCell : UICollectionViewCell
 
 /**
- The underlying card view for the cell
- */
-@property(readonly, nonatomic, strong, nonnull) MDCCardView *cardView;
-
-/**
- When selectionMode is set to YES, a tap on a cell will trigger a visual change between selected
+ When selecting is set to YES, a tap on a cell will trigger a visual change between selected
  and unselected. When it is set to NO, a tap will trigger a normal tap (rather than trigger
- different visual selection states on the card)
+ different visual selection states on the card).
+ Default is set to NO.
  */
-@property(nonatomic, assign) BOOL selectionMode;
+@property(nonatomic, assign, getter=isSelecting) BOOL selecting;
 
 /**
- The corner radius for the cell and the underlying card
+ The corner radius for the card
+ Default is set to 4.
  */
 @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;
 
 /**
-The image for the selected state (by default is a checked circle)
+ The inkView for the card that is initiated on tap
+ */
+@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+
+/**
+ Sets the shadow elevation for an MDCCardViewState state
+
+ @param shadowElevation The shadow elevation
+ @param state MDCCardCellState the card state
+ */
+- (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCCardCellState)state
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the shadow elevation for an MDCCardViewState state
+
+ If no elevation has been set for a state, the value for MDCCardCellStateNormal will be returned.
+ Default value for MDCCardCellStateNormal is 1
+ Default value for MDCCardCellStateHighlighted is 8
+ Default value for MDCCardCellStateSelected is 8
+
+ @param state MDCCardCellStateNormal the card state
+ @return The shadow elevation for the requested state.
+ */
+- (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state;
+
+/**
+ Sets the border width for an MDCCardViewState state
+
+ @param borderWidth The border width
+ @param state MDCCardCellState the card state
+ */
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardCellState)state
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the border width for an MDCCardCellState state
+
+ If no border width has been set for a state, the value for MDCCardCellStateNormal will be returned.
+ Default value for MDCCardCellStateNormal is 0
+ Default value for MDCCardCellStateHighlighted is 0
+ Default value for MDCCardCellStateSelected is 0
+
+ @param state MDCCardCellState the card state
+ @return The border width for the requested state.
+ */
+- (CGFloat)borderWidthForState:(MDCCardCellState)state;
+
+/**
+ Sets the border color for an MDCCardCellStateNormal state
+
+ @param borderColor The border color
+ @param state MDCCardCellState the card state
+ */
+- (void)setBorderColor:(nullable UIColor *)borderColor forState:(MDCCardCellState)state
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the border color for an MDCCardCellStateNormal state
+
+ If no border color has been set for a state, the value for MDCCardCellStateNormal will be returned.
+ Default value for MDCCardCellStateNormal is clearColor
+ Default value for MDCCardCellStateHighlighted is clearColor
+ Default value for MDCCardCellStateSelected is clearColor
+
+ @param state MDCCardCellState the card state
+ @return The border color for the requested state.
+ */
+- (nullable UIColor *)borderColorForState:(MDCCardCellState)state;
+
+/**
+ Sets the shadow color for an MDCCardCellStateNormal state
+
+ @param shadowColor The shadow color
+ @param state MDCCardCellState the card state
+ */
+- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(MDCCardCellState)state
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the shadow color for an MDCCardCellStateNormal state
+
+ If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.
+ Default value for MDCCardCellStateNormal is blackColor
+ Default value for MDCCardCellStateHighlighted is blackColor
+ Default value for MDCCardCellStateSelected is blackColor
+
+ @param state MDCCardCellState the card state
+ @return The shadow color for the requested state.
+ */
+- (nullable UIColor *)shadowColorForState:(MDCCardCellState)state;
+
+/**
+ The image for the selected state.
+ Default is the checked circle image.
  */
 @property(nonatomic, strong, nullable) UIImage *selectedImage;
 
 /**
-The tint color for the selected image.
+ The tint color for the selected image.
+ Default is set to default UIImageView tintColor
  */
 @property(nonatomic, strong, nullable) UIColor *selectedImageTintColor UI_APPEARANCE_SELECTOR;
 
 /**
-The selection state of the card cell
+ The state of the card cell.
+ Default is MDCCardCellStateNormal.
  */
-@property(nonatomic, readonly) MDCCardCellSelectionState selectionState;
+@property(nonatomic, readonly) MDCCardCellState state;
 
 @end

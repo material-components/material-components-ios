@@ -14,6 +14,6 @@
  limitations under the License.
  */
 
-#import "MDCCardView.h"
+#import "MDCCard.h"
 #import "MDCCollectionViewCardCell.h"
 

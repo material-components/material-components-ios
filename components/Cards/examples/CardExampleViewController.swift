@@ -19,7 +19,7 @@ import UIKit
 class CardExampleViewController: UIViewController {
   @IBOutlet var contentView: UIView!
   @IBOutlet weak var imageView: UIImageView!
-  @IBOutlet weak var cardView: MDCCardView!
+  @IBOutlet weak var card: MDCCard!
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,8 +31,8 @@ class CardExampleViewController: UIViewController {
 
     let bezierPath = UIBezierPath(roundedRect: imageView.bounds,
                                   byRoundingCorners: [.topLeft, .topRight],
-                                  cornerRadii: CGSize(width: cardView.cornerRadius,
-                                                      height: cardView.cornerRadius))
+                                  cornerRadii: CGSize(width: card.cornerRadius,
+                                                      height: card.cornerRadius))
     let shapeLayer = CAShapeLayer()
     shapeLayer.frame = imageView.bounds
     shapeLayer.path = bezierPath.cgPath

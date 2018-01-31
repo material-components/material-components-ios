@@ -14,20 +14,20 @@
  limitations under the License.
  */
 
-#import "MDCCardView.h"
-#import "private/MDCCardView+Private.h"
+#import "MDCCard.h"
 
-@implementation MDCCardView {
+@implementation MDCCard {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
+  CGPoint _lastTouch;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    [self commonMDCCardViewInit];
+    [self commonMDCCardInit];
   }
   return self;
 }
@@ -35,40 +35,38 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCCardViewInit];
+    [self commonMDCCardInit];
   }
   return self;
 }
 
-- (void)commonMDCCardViewInit {
+- (void)commonMDCCardInit {
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _inkView.usesLegacyInkRipple = NO;
-  _inkView.layer.zPosition = MAXFLOAT;
+  _inkView.layer.zPosition = 101;
   [self addSubview:self.inkView];
 
   self.cornerRadius = 4.f;
 
-  _state = MDCCardViewStateNormal;
-
   _shadowElevations = [[NSMutableDictionary alloc] init];
-  _shadowElevations[@(MDCCardViewStateNormal)] = @(1.f);
-  _shadowElevations[@(MDCCardViewStateHighlighted)] = @(8.f);
+  _shadowElevations[@(UIControlStateNormal)] = @(1.f);
+  _shadowElevations[@(UIControlStateHighlighted)] = @(8.f);
   [self updateShadowElevation];
 
   _shadowColors = [[NSMutableDictionary alloc] init];
-  _shadowColors[@(MDCCardViewStateNormal)] = [UIColor blackColor];
-  _shadowColors[@(MDCCardViewStateHighlighted)] = [UIColor blackColor];
+  _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
+  _shadowColors[@(UIControlStateHighlighted)] = [UIColor blackColor];
   [self updateShadowColor];
 
   _borderColors = [[NSMutableDictionary alloc] init];
-  _borderColors[@(MDCCardViewStateNormal)] = [UIColor clearColor];
-  _borderColors[@(MDCCardViewStateHighlighted)] = [UIColor clearColor];
+  _borderColors[@(UIControlStateNormal)] = [UIColor clearColor];
+  _borderColors[@(UIControlStateHighlighted)] = [UIColor clearColor];
   [self updateBorderColor];
 
   _borderWidths = [[NSMutableDictionary alloc] init];
-  _borderWidths[@(MDCCardViewStateNormal)] = @(0.f);
-  _borderWidths[@(MDCCardViewStateHighlighted)] = @(0.f);
+  _borderWidths[@(UIControlStateNormal)] = @(0.f);
+  _borderWidths[@(UIControlStateHighlighted)] = @(0.f);
   [self updateBorderWidth];
 }
 
@@ -90,33 +88,15 @@
   return [MDCShadowLayer class];
 }
 
-- (void)setStyleForState:(MDCCardViewState)state
-         withLocation:(CGPoint)location {
-  _state = state;
-  switch (state) {
-    case MDCCardViewStateNormal: {
-      [self.inkView startTouchEndedAnimationAtPoint:location completion:nil];
-      break;
-    }
-    case MDCCardViewStateHighlighted: {
-      [self.inkView startTouchBeganAnimationAtPoint:location completion:nil];
-      break;
-    }
-    default:
-      break;
-  }
-  [self updateShadowElevation];
-}
-
 - (UIBezierPath *)boundingPath {
   CGFloat cornerRadius = self.cornerRadius;
   return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
-- (MDCShadowElevation)shadowElevationForState:(MDCCardViewState)state {
+- (MDCShadowElevation)shadowElevationForState:(UIControlState)state {
   NSNumber *elevation = _shadowElevations[@(state)];
   if (elevation == nil) {
-    elevation = _shadowElevations[@(MDCCardViewStateNormal)];
+    elevation = _shadowElevations[@(UIControlStateNormal)];
   }
   if (elevation != nil) {
     return (CGFloat)[elevation doubleValue];
@@ -124,7 +104,7 @@
   return 0;
 }
 
-- (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCCardViewState)state {
+- (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(UIControlState)state {
   _shadowElevations[@(state)] = @(shadowElevation);
 
   [self updateShadowElevation];
@@ -138,7 +118,7 @@
   }
 }
 
-- (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardViewState)state {
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state {
   _borderWidths[@(state)] = @(borderWidth);
 
   [self updateBorderWidth];
@@ -149,10 +129,10 @@
   self.layer.borderWidth = borderWidth;
 }
 
-- (CGFloat)borderWidthForState:(MDCCardViewState)state {
+- (CGFloat)borderWidthForState:(UIControlState)state {
   NSNumber *borderWidth = _borderWidths[@(state)];
   if (borderWidth == nil) {
-    borderWidth = _borderWidths[@(MDCCardViewStateNormal)];
+    borderWidth = _borderWidths[@(UIControlStateNormal)];
   }
   if (borderWidth != nil) {
     return (CGFloat)[borderWidth doubleValue];
@@ -160,7 +140,7 @@
   return 0;
 }
 
-- (void)setBorderColor:(UIColor *)borderColor forState:(MDCCardViewState)state {
+- (void)setBorderColor:(UIColor *)borderColor forState:(UIControlState)state {
   _borderColors[@(state)] = borderColor;
 
   [self updateBorderColor];
@@ -171,10 +151,10 @@
   self.layer.borderColor = borderColorRef;
 }
 
-- (UIColor *)borderColorForState:(MDCCardViewState)state {
+- (UIColor *)borderColorForState:(UIControlState)state {
   UIColor *borderColor = _borderColors[@(state)];
   if (borderColor == nil) {
-    borderColor = _borderColors[@(MDCCardViewStateNormal)];
+    borderColor = _borderColors[@(UIControlStateNormal)];
   }
   if (borderColor != nil) {
     return borderColor;
@@ -182,7 +162,7 @@
   return [UIColor clearColor];
 }
 
-- (void)setShadowColor:(UIColor *)shadowColor forState:(MDCCardViewState)state {
+- (void)setShadowColor:(UIColor *)shadowColor forState:(UIControlState)state {
   _shadowColors[@(state)] = shadowColor;
 
   [self updateShadowColor];
@@ -193,10 +173,10 @@
   self.layer.shadowColor = shadowColor;
 }
 
-- (UIColor *)shadowColorForState:(MDCCardViewState)state {
+- (UIColor *)shadowColorForState:(UIControlState)state {
   UIColor *shadowColor = _shadowColors[@(state)];
   if (shadowColor == nil) {
-    shadowColor = _shadowColors[@(MDCCardViewStateNormal)];
+    shadowColor = _shadowColors[@(UIControlStateNormal)];
   }
   if (shadowColor != nil) {
     return shadowColor;
@@ -204,27 +184,29 @@
   return [UIColor clearColor];
 }
 
-#pragma mark - UIResponder
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesBegan:touches withEvent:event];
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  [self setStyleForState:MDCCardViewStateHighlighted withLocation:location];
+- (void)setHighlighted:(BOOL)highlighted {
+  [super setHighlighted: highlighted];
+  if (highlighted) {
+    /**
+     Note: setHighlighted might get more touches began than touches ended hence the call
+     hence the call to startTouchEndedAnimationAtPoint before.
+     */
+    [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+    [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+  } else {
+    [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+  }
+  [self updateShadowElevation];
+  [self updateBorderColor];
+  [self updateBorderWidth];
+  [self updateShadowColor];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesEnded:touches withEvent:event];
-  UITouch *touch = [touches anyObject];
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(nullable UIEvent *)event {
+  BOOL beginTracking = [super beginTrackingWithTouch:touch withEvent:event];
   CGPoint location = [touch locationInView:self];
-  [self setStyleForState:MDCCardViewStateNormal withLocation:location];
-}
-
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesCancelled:touches withEvent:event];
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  [self setStyleForState:MDCCardViewStateNormal withLocation:location];
+  _lastTouch = location;
+  return beginTracking;
 }
 
 @end

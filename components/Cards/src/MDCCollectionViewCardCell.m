@@ -23,11 +23,15 @@
 @interface MDCCollectionViewCardCell ()
 
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
-@property(nonatomic, assign) CGPoint lastTouch;
 
 @end
 
-@implementation MDCCollectionViewCardCell {
+@implementation MDCCollectionViewCardCell  {
+  NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
+  NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
+  NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
+  NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
+  CGPoint _lastTouch;
   BOOL _inkAnimating;
 }
 
@@ -40,19 +44,42 @@
 }
 
 - (void)commonMDCCollectionViewCardCellInit {
-  _cardView = [[MDCCardView alloc] initWithFrame:self.contentView.bounds];
-  _cardView.autoresizingMask =
-    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _cardView.userInteractionEnabled = NO;
-  self.contentView.autoresizingMask =
-    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  [self.contentView addSubview:self.cardView];
+  _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+  _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  _inkView.usesLegacyInkRipple = NO;
+  _inkView.layer.zPosition = 101;
+  [self addSubview:self.inkView];
+
   _inkAnimating = NO;
-  self.selectionMode = NO;
+  self.selecting = NO;
 
   [self initializeSelectedImage];
 
   self.cornerRadius = 4.f;
+
+  _shadowElevations = [[NSMutableDictionary alloc] init];
+  _shadowElevations[@(MDCCardCellStateNormal)] = @(1.f);
+  _shadowElevations[@(MDCCardCellStateHighlighted)] = @(8.f);
+  _shadowElevations[@(MDCCardCellStateSelected)] = @(8.f);
+  [self updateShadowElevation];
+
+  _shadowColors = [[NSMutableDictionary alloc] init];
+  _shadowColors[@(MDCCardCellStateNormal)] = [UIColor blackColor];
+  _shadowColors[@(MDCCardCellStateHighlighted)] = [UIColor blackColor];
+  _shadowColors[@(MDCCardCellStateSelected)] = [UIColor blackColor];
+  [self updateShadowColor];
+
+  _borderColors = [[NSMutableDictionary alloc] init];
+  _borderColors[@(MDCCardCellStateNormal)] = [UIColor clearColor];
+  _borderColors[@(MDCCardCellStateHighlighted)] = [UIColor clearColor];
+  _borderColors[@(MDCCardCellStateSelected)] = [UIColor blackColor];
+  [self updateBorderColor];
+
+  _borderWidths = [[NSMutableDictionary alloc] init];
+  _borderWidths[@(MDCCardCellStateNormal)] = @(0.f);
+  _borderWidths[@(MDCCardCellStateHighlighted)] = @(0.f);
+  _borderWidths[@(MDCCardCellStateSelected)] = @(0.f);
+  [self updateBorderWidth];
 }
 
 - (void)initializeSelectedImage {
@@ -72,7 +99,6 @@
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   super.backgroundColor = backgroundColor;
-  self.cardView.backgroundColor = backgroundColor;
 
   /**
    currently the selected check image uses the color
@@ -85,53 +111,57 @@
   self.selectedImageTintColor = checkColor;
 }
 
-- (UIColor *)backgroundColor {
-  return self.cardView.backgroundColor;
-}
-
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   self.layer.cornerRadius = cornerRadius;
-  self.cardView.cornerRadius = cornerRadius;
   [self setNeedsLayout];
 }
 
 - (CGFloat)cornerRadius {
-  return self.cardView.cornerRadius;
+  return self.layer.cornerRadius;
 }
 
-- (void)selectionState:(MDCCardCellSelectionState)state withAnimation:(BOOL)animation {
-  _selectionState = state;
-  self.selectionMode = YES;
+- (void)setState:(MDCCardCellState)state withAnimation:(BOOL)animation {
+  _state = state;
   switch (state) {
-    case MDCCardCellSelectionStateSelected: {
+    case MDCCardCellStateSelected: {
       if (animation) {
         _inkAnimating = YES;
-        [self.cardView.inkView startTouchBeganAnimationAtPoint:self.lastTouch completion:nil];
+        [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
       } else {
         if (!_inkAnimating) {
-          [self.cardView.inkView cancelAllAnimationsAnimated:NO];
-          [self.cardView.inkView startTouchBeganAtPoint:self.cardView.center
+          [self.inkView cancelAllAnimationsAnimated:NO];
+          [self.inkView startTouchBeganAtPoint:self.center
                                           withAnimation:NO
                                           andCompletion:nil];
         }
         _inkAnimating = NO;
         self.selectedImageView.hidden = NO;
       }
-      [(MDCShadowLayer *)self.cardView.layer setElevation:
-       [self.cardView shadowElevationForState:MDCCardViewStateNormal]];
-
       break;
     }
-    case MDCCardCellSelectionStateUnselected: {
-      [self.cardView.inkView startTouchEndAtPoint:self.lastTouch
+    case MDCCardCellStateNormal: {
+      [self.inkView startTouchEndAtPoint:_lastTouch
                                     withAnimation:animation
                                     andCompletion:nil];
-      [(MDCShadowLayer *)self.cardView.layer setElevation:
-       [self.cardView shadowElevationForState:MDCCardViewStateNormal]];
+      self.selectedImageView.hidden = YES;
+      break;
+
+    }
+    case MDCCardCellStateHighlighted: {
+      /**
+       Note: setHighlighted might get more touches began than touches ended hence the call
+       hence the call to startTouchEndedAnimationAtPoint before.
+       */
+      [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+      [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
       self.selectedImageView.hidden = YES;
       break;
     }
   }
+  [self updateShadowElevation];
+  [self updateBorderColor];
+  [self updateBorderWidth];
+  [self updateShadowColor];
 }
 
 - (void)setSelectedImage:(UIImage *)selectedImage {
@@ -152,13 +182,118 @@
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-  if (self.selectionMode) {
+  if (self.selecting) {
     if (selected) {
-      [self selectionState:MDCCardCellSelectionStateSelected withAnimation:NO];
+      [self setState:MDCCardCellStateSelected withAnimation:NO];
     } else {
-      [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:NO];
+      [self setState:MDCCardCellStateNormal withAnimation:NO];
     }
   }
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.layer.shadowPath = [self boundingPath].CGPath;
+}
+
+- (UIBezierPath *)boundingPath {
+  CGFloat cornerRadius = self.cornerRadius;
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
+}
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state {
+  NSNumber *elevation = _shadowElevations[@(state)];
+  if (elevation == nil) {
+    elevation = _shadowElevations[@(MDCCardCellStateNormal)];
+  }
+  if (elevation != nil) {
+    return (CGFloat)[elevation doubleValue];
+  }
+  return 0;
+}
+
+- (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCCardCellState)state {
+  _shadowElevations[@(state)] = @(shadowElevation);
+
+  [self updateShadowElevation];
+}
+
+- (void)updateShadowElevation {
+  CGFloat elevation = [self shadowElevationForState:self.state];
+  if (((MDCShadowLayer *)self.layer).elevation != elevation) {
+    self.layer.shadowPath = [self boundingPath].CGPath;
+    [(MDCShadowLayer *)self.layer setElevation:elevation];
+  }
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardCellState)state {
+  _borderWidths[@(state)] = @(borderWidth);
+
+  [self updateBorderWidth];
+}
+
+- (void)updateBorderWidth {
+  CGFloat borderWidth = [self borderWidthForState:self.state];
+  self.layer.borderWidth = borderWidth;
+}
+
+- (CGFloat)borderWidthForState:(MDCCardCellState)state {
+  NSNumber *borderWidth = _borderWidths[@(state)];
+  if (borderWidth == nil) {
+    borderWidth = _borderWidths[@(MDCCardCellStateNormal)];
+  }
+  if (borderWidth != nil) {
+    return (CGFloat)[borderWidth doubleValue];
+  }
+  return 0;
+}
+
+- (void)setBorderColor:(UIColor *)borderColor forState:(MDCCardCellState)state {
+  _borderColors[@(state)] = borderColor;
+
+  [self updateBorderColor];
+}
+
+- (void)updateBorderColor {
+  CGColorRef borderColorRef = [self borderColorForState:self.state].CGColor;
+  self.layer.borderColor = borderColorRef;
+}
+
+- (UIColor *)borderColorForState:(MDCCardCellState)state {
+  UIColor *borderColor = _borderColors[@(state)];
+  if (borderColor == nil) {
+    borderColor = _borderColors[@(MDCCardCellStateNormal)];
+  }
+  if (borderColor != nil) {
+    return borderColor;
+  }
+  return [UIColor clearColor];
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor forState:(MDCCardCellState)state {
+  _shadowColors[@(state)] = shadowColor;
+
+  [self updateShadowColor];
+}
+
+- (void)updateShadowColor {
+  CGColorRef shadowColor = [self shadowColorForState:self.state].CGColor;
+  self.layer.shadowColor = shadowColor;
+}
+
+- (UIColor *)shadowColorForState:(MDCCardCellState)state {
+  UIColor *shadowColor = _shadowColors[@(state)];
+  if (shadowColor == nil) {
+    shadowColor = _shadowColors[@(MDCCardCellStateNormal)];
+  }
+  if (shadowColor != nil) {
+    return shadowColor;
+  }
+  return [UIColor clearColor];
 }
 
 #pragma mark - UIResponder
@@ -168,41 +303,35 @@
 
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  self.lastTouch = location;
-  if (self.selectionMode) {
+  _lastTouch = location;
+  if (self.selecting) {
     if (!self.selected) {
-      [self selectionState:MDCCardCellSelectionStateSelected withAnimation:YES];
+      [self setState:MDCCardCellStateSelected withAnimation:YES];
     }
   } else {
-    [_cardView setStyleForState:MDCCardViewStateHighlighted withLocation:location];
+    [self setState:MDCCardCellStateHighlighted withAnimation:YES];
   }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  if (self.selectionMode) {
+  if (self.selecting) {
     if (!self.selected) {
-      [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
+      [self setState:MDCCardCellStateNormal withAnimation:YES];
     }
   } else {
-    [_cardView setStyleForState:MDCCardViewStateNormal withLocation:location];
+    [self setState:MDCCardCellStateNormal withAnimation:YES];
   }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
-
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  if (self.selectionMode) {
+  if (self.selecting) {
     if (!self.selected) {
-      [self selectionState:MDCCardCellSelectionStateUnselected withAnimation:YES];
+      [self setState:MDCCardCellStateNormal withAnimation:YES];
     }
   } else {
-    [_cardView setStyleForState:MDCCardViewStateNormal withLocation:location];
+    [self setState:MDCCardCellStateNormal withAnimation:YES];
   }
 }
 

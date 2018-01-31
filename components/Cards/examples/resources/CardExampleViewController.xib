@@ -13,7 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardExampleViewController" customModule="MaterialComponentsExamples" customModuleProvider="target">
             <connections>
-                <outlet property="cardView" destination="BAQ-GJ-1pn" id="2P6-6Y-Hjh"/>
+                <outlet property="card" destination="BAQ-GJ-1pn" id="kH3-zF-uH0"/>
                 <outlet property="contentView" destination="i5M-Pr-FkT" id="Hkq-gw-WEg"/>
                 <outlet property="imageView" destination="ldt-3r-Agk" id="rFC-QD-GJJ"/>
             </connections>
@@ -23,7 +23,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BAQ-GJ-1pn" customClass="MDCCardView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BAQ-GJ-1pn" customClass="MDCCard">
                     <rect key="frame" x="30" y="94" width="315" height="479"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample-image" translatesAutoresizingMaskIntoConstraints="NO" id="ldt-3r-Agk">

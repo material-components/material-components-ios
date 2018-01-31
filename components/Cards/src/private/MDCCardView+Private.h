@@ -14,26 +14,27 @@
  limitations under the License.
  */
 
-#import "MDCCardView.h"
+#import "MDCCard.h"
+//
+//@interface MDCCardView ()
+//
+///**
+// The inkView for the card that is initiated on tap
+// */
+//@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+//
+//@end
+//
+//@interface MDCCardView (Private)
+//
+///**
+// Sets the style for the MDCCardView based on the defined state. Please see the MDCCardViewState
+// definition to see all the possible states.
+//
+// @param state MDCCardViewState this defines the state in which the card should visually be set to
+// @param location CGPoint some states may need the touch location to begin/end the ink from
+// */
+//- (void)setStyleForState:(MDCCardViewState)state withLocation:(CGPoint)location;
 
-@interface MDCCardView ()
+//@end
 
-/**
- The inkView for the card that is initiated on tap
- */
-@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
-
-@end
-
-@interface MDCCardView (Private)
-
-/**
- Sets the style for the MDCCardView based on the defined state. Please see the MDCCardViewState
- definition to see all the possible states.
-
- @param state MDCCardViewState this defines the state in which the card should visually be set to
- @param location CGPoint some states may need the touch location to begin/end the ink from
- */
-- (void)setStyleForState:(MDCCardViewState)state withLocation:(CGPoint)location;
-
-@end
