@@ -235,7 +235,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   changeAnim.fromValue = @(currOpacity);
   changeAnim.toValue = @(updatedOpacity);
   changeAnim.duration = MDCInkLayerCommonDuration;
-  changeAnim.beginTime = CACurrentMediaTime() + animationDelay;
+  changeAnim.beginTime = [self convertTime:(CACurrentMediaTime() + animationDelay) fromLayer:nil];
   changeAnim.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   changeAnim.fillMode = kCAFillModeForwards;
@@ -260,7 +260,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   fadeOutAnim.fromValue = @(opacity);
   fadeOutAnim.toValue = @0;
   fadeOutAnim.duration = MDCInkLayerEndFadeOutDuration;
-  fadeOutAnim.beginTime = CACurrentMediaTime() + self.endAnimationDelay;
+  fadeOutAnim.beginTime = [self convertTime:(CACurrentMediaTime() + self.endAnimationDelay)
+                                  fromLayer:nil];
   fadeOutAnim.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeOutAnim.fillMode = kCAFillModeForwards;
