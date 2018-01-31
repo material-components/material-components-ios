@@ -14,18 +14,18 @@
  limitations under the License.
  */
 
-#import "MDCCollectionViewCardCell.h"
+#import "MDCCardCollectionCell.h"
 
 #import "MaterialIcons+ic_check_circle.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 
-@interface MDCCollectionViewCardCell ()
+@interface MDCCardCollectionCell ()
 
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 
 @end
 
-@implementation MDCCollectionViewCardCell  {
+@implementation MDCCardCollectionCell  {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
@@ -37,12 +37,12 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCCollectionViewCardCellInit];
+    [self commonMDCCardCollectionCellInit];
   }
   return self;
 }
 
-- (void)commonMDCCollectionViewCardCellInit {
+- (void)commonMDCCardCollectionCellInit {
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _inkView.usesLegacyInkRipple = NO;

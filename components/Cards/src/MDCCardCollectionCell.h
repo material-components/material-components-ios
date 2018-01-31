@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   MDCCardCellStateSelected
 };
 
-@interface MDCCollectionViewCardCell : UICollectionViewCell
+@interface MDCCardCollectionCell : UICollectionViewCell
 
 /**
  When selecting is set to YES, a tap on a cell will trigger a visual change between selected

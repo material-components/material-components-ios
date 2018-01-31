@@ -40,7 +40,7 @@ class EditReorderCollectionViewController: UIViewController,
     collectionView.delegate = self
     collectionView.backgroundColor = UIColor(white: 0.9, alpha: 1)
     collectionView.alwaysBounceVertical = true;
-    collectionView.register(MDCCollectionViewCardCell.self, forCellWithReuseIdentifier: "Cell")
+    collectionView.register(MDCCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsMultipleSelection = true
     view.addSubview(collectionView)
@@ -104,7 +104,7 @@ class EditReorderCollectionViewController: UIViewController,
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
-                                                  for: indexPath) as! MDCCollectionViewCardCell
+                                                  for: indexPath) as! MDCCardCollectionCell
     cell.backgroundColor = .white
     cell.selectedImageTintColor = .blue
     cell.isSelecting = (toggle == .edit)

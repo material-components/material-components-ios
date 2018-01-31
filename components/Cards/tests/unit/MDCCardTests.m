@@ -21,7 +21,7 @@
 #import "MaterialIcons+ic_info.h"
 
 @interface MDCCardTests : XCTestCase
-@property(nonatomic, strong) MDCCollectionViewCardCell *cell;
+@property(nonatomic, strong) MDCCardCollectionCell *cell;
 @property(nonatomic, strong) MDCCardView *card;
 @end
 
@@ -29,7 +29,7 @@
 
 - (void)setUp {
   [super setUp];
-  self.cell = [[MDCCollectionViewCardCell alloc] init];
+  self.cell = [[MDCCardCollectionCell alloc] init];
   self.card = [[MDCCardView alloc] init];
 }
 

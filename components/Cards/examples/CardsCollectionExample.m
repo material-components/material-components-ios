@@ -50,7 +50,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   // Register cell classes
-  [self.collectionView registerClass:[MDCCollectionViewCardCell class]
+  [self.collectionView registerClass:[MDCCardCollectionCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   [self mdc_setupCardReordering];
@@ -69,7 +69,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewCardCell *cell =
+  MDCCardCollectionCell *cell =
   [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                             forIndexPath:indexPath];
   [cell setBackgroundColor:[UIColor colorWithRed:107/255.f green:63/255.f blue:238/255.f alpha:1]];
