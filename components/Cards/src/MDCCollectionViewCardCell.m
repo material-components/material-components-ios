@@ -110,7 +110,9 @@
       } else {
         if (!_inkAnimating) {
           [self.cardView.inkView cancelAllAnimationsAnimated:NO];
-          [self.cardView.inkView addInkSublayerWithoutAnimation];
+          [self.cardView.inkView startTouchBeganAtPoint:self.cardView.center
+                                          withAnimation:NO
+                                          andCompletion:nil];
         }
         _inkAnimating = NO;
         self.selectedImageView.hidden = NO;
@@ -121,11 +123,9 @@
       break;
     }
     case MDCCardCellSelectionStateUnselected: {
-      if (animation) {
-        [self.cardView.inkView startTouchEndedAnimationAtPoint:self.lastTouch completion:nil];
-      } else {
-        [self.cardView.inkView cancelAllAnimationsAnimated:NO];
-      }
+      [self.cardView.inkView startTouchEndAtPoint:self.lastTouch
+                                    withAnimation:animation
+                                    andCompletion:nil];
       [(MDCShadowLayer *)self.cardView.layer setElevation:
        [self.cardView shadowElevationForState:MDCCardViewStateNormal]];
       self.selectedImageView.hidden = YES;

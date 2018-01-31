@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
  @param shadowElevation The shadow elevation
  @param state MDCCardViewState the card view state
  */
-- (void)setShadowElevation:(CGFloat)shadowElevation forState:(MDCCardViewState)state
+- (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCCardViewState)state
   UI_APPEARANCE_SELECTOR;
 
 /**
@@ -55,7 +55,7 @@ typedef NS_ENUM(NSInteger, MDCCardViewState) {
  @param state MDCCardViewState the card view state
  @return The shadow elevation for the requested state.
  */
-- (CGFloat)shadowElevationForState:(MDCCardViewState)state;
+- (MDCShadowElevation)shadowElevationForState:(MDCCardViewState)state;
 
 /**
  Sets the border width for an MDCCardViewState state
@@ -113,6 +113,5 @@ UI_APPEARANCE_SELECTOR;
  @return The shadow color for the requested state.
  */
 - (UIColor *)shadowColorForState:(MDCCardViewState)state;
-
 
 @end

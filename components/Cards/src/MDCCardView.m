@@ -113,7 +113,7 @@
   return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
-- (CGFloat)shadowElevationForState:(MDCCardViewState)state {
+- (MDCShadowElevation)shadowElevationForState:(MDCCardViewState)state {
   NSNumber *elevation = _shadowElevations[@(state)];
   if (elevation == nil) {
     elevation = _shadowElevations[@(MDCCardViewStateNormal)];
@@ -124,7 +124,7 @@
   return 0;
 }
 
-- (void)setShadowElevation:(CGFloat)shadowElevation forState:(MDCCardViewState)state {
+- (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCCardViewState)state {
   _shadowElevations[@(state)] = @(shadowElevation);
 
   [self updateShadowElevation];
