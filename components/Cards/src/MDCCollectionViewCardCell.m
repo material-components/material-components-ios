@@ -18,7 +18,6 @@
 
 #import "MaterialIcons+ic_check_circle.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#import "private/MDCCardView+Private.h"
 
 @interface MDCCollectionViewCardCell ()
 

@@ -19,7 +19,6 @@
 #import "MaterialCards.h"
 #import "MDCIcons.h"
 #import "MaterialIcons+ic_info.h"
-#import "MDCCardView+Private.h"
 
 @interface MDCCardTests : XCTestCase
 @property(nonatomic, strong) MDCCollectionViewCardCell *cell;
