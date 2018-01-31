@@ -15,5 +15,5 @@
  */
 
 #import "MDCCard.h"
-#import "MDCCollectionViewCardCell.h"
+#import "MDCCardCollectionCell.h"
 
