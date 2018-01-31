@@ -20,7 +20,7 @@
 
 /**
  This method should be called when using a UICollectionViewController and want to have
- the reorder/drag&drop visuals. It will make sure that the underlying longPressGestureRecognizer
+ the reorder or drag and drop visuals. It will make sure that the underlying longPressGestureRecognizer
  doesn't cancel the ink tap visual causing the ink to disappear once the reorder begins.
  */
 - (void)mdc_setupCardReordering;

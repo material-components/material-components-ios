@@ -39,7 +39,7 @@
  @param state UIControlState the card state
  */
 - (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(UIControlState)state
-  UI_APPEARANCE_SELECTOR;
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the shadow elevation for an UIControlState state
@@ -60,7 +60,7 @@
  @param state UIControlState the card state
  */
 - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state
-  UI_APPEARANCE_SELECTOR;
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the border width for an UIControlState state
@@ -81,7 +81,7 @@
  @param state UIControlState the card state
  */
 - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state
-  UI_APPEARANCE_SELECTOR;
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the border color for an UIControlState state
@@ -102,7 +102,7 @@
  @param state UIControlState the card state
  */
 - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state
-UI_APPEARANCE_SELECTOR;
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the shadow color for an UIControlState state
