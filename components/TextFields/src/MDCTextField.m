@@ -200,7 +200,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (BOOL)needsUpdateUnderlinePosition {
-  return MDCCGFloatEqual(self.underlineY.constant, [self underlineYConstant]);
+  return !MDCCGFloatEqual(self.underlineY.constant, [self underlineYConstant]);
 }
 
 - (void)updateUnderlinePosition {
