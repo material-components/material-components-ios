@@ -82,19 +82,19 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
     _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _inkView.usesLegacyInkRipple = NO;
     _inkView.layer.zPosition = FLT_MAX;
-    [self addSubview:self.inkView];
+    [self addSubview:_inkView];
   }
 
-  if (self.selectedImageView == nil) {
+  if (_selectedImageView == nil) {
     UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
     circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
-    self.selectedImageView.layer.zPosition = _inkView.layer.zPosition - 1;
-    self.selectedImageView.autoresizingMask =
+    _selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
+    _selectedImageView.layer.zPosition = _inkView.layer.zPosition - 1;
+    _selectedImageView.autoresizingMask =
     (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-    [self.contentView addSubview:self.selectedImageView];
-    self.selectedImageView.hidden = YES;
+    [self.contentView addSubview:_selectedImageView];
+    _selectedImageView.hidden = YES;
   }
 
   if (_shadowElevations == nil) {

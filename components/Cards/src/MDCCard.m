@@ -68,7 +68,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
                                  UIViewAutoresizingFlexibleHeight);
     _inkView.usesLegacyInkRipple = NO;
     _inkView.layer.zPosition = FLT_MAX;
-    [self addSubview:self.inkView];
+    [self addSubview:_inkView];
   }
 
   if (_shadowElevations == nil) {
