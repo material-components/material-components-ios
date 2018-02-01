@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,5 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCButtonBar.h"
-#import "MDCButtonBarButton.h"
+/* IMPORTANT:
+ This class demonstrates a shadow rendering error when presenting a view controller with a
+ non-zero corner radius.
+ */
+
+#import <UIKit/UIKit.h>
+
+@interface DialogsRoundedCornerViewController : UIViewController
+
+@end
+

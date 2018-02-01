@@ -16,14 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#ifndef MDC_SUBCLASSING_RESTRICTED
-#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
-#define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
-#else
-#define MDC_SUBCLASSING_RESTRICTED
-#endif
-#endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
-
 @class MDCAlertAction;
 
 /**
@@ -34,7 +26,6 @@
  MDCAlertController class is intended to be used as-is and does not support subclassing. The view
  hierarchy for this class is private and must not be modified.
  */
-MDC_SUBCLASSING_RESTRICTED
 @interface MDCAlertController : UIViewController
 
 /**

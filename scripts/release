@@ -240,7 +240,6 @@ bump_release() {
 
   new_version="$1"
   new_version=${new_version#v}
-  new_version=$(echo "$new_version" | sed "s:\.:\\\\.:g")
 
   if [ -z "$2" ]; then
     last_version=$(git describe --tags $(git rev-list --tags --max-count=1))
@@ -248,7 +247,6 @@ bump_release() {
     last_version="$2"
   fi
   last_version=${last_version#v}
-  last_version=$(echo "$last_version" | sed "s:\.:\\\\.:g")
 
   grep -FIlr "$last_version" . 2>/dev/null | grep -v -f "$dir/versionignore" | while read line; do
     sed -i.bak "s:$last_version:$new_version:g" "$line"

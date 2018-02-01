@@ -27,7 +27,9 @@
       @"Simple Snackbar",
       @"Snackbar with Action Button",
       @"Snackbar with Long Text",
-      @"Attributed Text Example"
+      @"Attributed Text Example",
+      @"Customize Font Example",
+      @"De-Customize Font Example"
   ]];
   self.title = @"Snackbar";
 }
@@ -88,6 +90,37 @@
 }
 
 
+- (void)showCustomizedSnackbar:(id)sender {
+  UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14.0f];
+  NSAssert(customMessageFont, @"Unable to instantiate font");
+  [MDCSnackbarMessageView appearance].messageFont = customMessageFont;
+
+  UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
+  NSAssert(customButtonFont, @"Unable to instantiate font");
+  [MDCSnackbarMessageView appearance].buttonFont = customButtonFont;
+
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Customized Fonts";
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Fancy";
+  message.action = action;
+
+  [MDCSnackbarManager showMessage:message];
+}
+
+- (void)showDecustomizedSnackbar:(id)sender {
+  [MDCSnackbarMessageView appearance].messageFont = nil;
+  [MDCSnackbarMessageView appearance].buttonFont = nil;
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Back to the standard fonts";
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Okay";
+  message.action = action;
+
+  [MDCSnackbarManager showMessage:message];
+}
+
+
 
 #pragma mark - UICollectionView
 
@@ -105,6 +138,13 @@
       break;
     case 3:
       [self showBoldSnackbar:nil];
+      break;
+    case 4:
+      [self showCustomizedSnackbar:nil];
+      break;
+    case 5:
+      [self showDecustomizedSnackbar:nil];
+      break;
     default:
       break;
   }
