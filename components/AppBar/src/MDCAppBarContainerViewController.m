@@ -44,7 +44,7 @@
 
   [_appBar addSubviewsToParent];
 
-   UIView *contentView = self.contentViewController.view;
+  UIView *contentView = self.contentViewController.view;
   UIView *headerView = self.appBar.headerViewController.headerView;
   contentView.translatesAutoresizingMaskIntoConstraints = NO;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
