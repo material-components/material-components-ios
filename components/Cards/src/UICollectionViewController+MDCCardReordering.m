@@ -23,9 +23,8 @@
 
 
 - (void)mdc_setupCardReordering {
-  UILongPressGestureRecognizer *longGestureRecognizer = [[UILongPressGestureRecognizer alloc]
-                                                         initWithTarget:self
-                                                         action:nil];
+  UILongPressGestureRecognizer *longGestureRecognizer =
+      [[UILongPressGestureRecognizer alloc] initWithTarget:self action:nil];
 
   longGestureRecognizer.delegate = self;
   longGestureRecognizer.cancelsTouchesInView = NO;

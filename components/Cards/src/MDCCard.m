@@ -24,6 +24,9 @@ static NSString *const MDCCardBorderWidthsKey = @"MDCCardBorderWidthsKey";
 static NSString *const MDCCardBorderColorsKey = @"MDCCardBorderColorsKey";
 static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
 
+static const CGFloat MDCCardShadowElevationNormal = 1.f;
+static const CGFloat MDCCardShadowElevationHighlighted = 8.f;
+static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 
 @implementation MDCCard {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
@@ -50,15 +53,6 @@ static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
   return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:_shadowElevations forKey:MDCCardShadowElevationsKey];
-  [coder encodeObject:_shadowColors forKey:MDCCardShadowColorsKey];
-  [coder encodeObject:_borderWidths forKey:MDCCardBorderWidthsKey];
-  [coder encodeObject:_borderColors forKey:MDCCardBorderColorsKey];
-  [coder encodeObject:_inkView forKey:MDCCardInkViewKey];
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -79,8 +73,8 @@ static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
 
   if (_shadowElevations == nil) {
     _shadowElevations = [NSMutableDictionary dictionary];
-    _shadowElevations[@(UIControlStateNormal)] = @(1.f);
-    _shadowElevations[@(UIControlStateHighlighted)] = @(8.f);
+    _shadowElevations[@(UIControlStateNormal)] = @(MDCCardShadowElevationNormal);
+    _shadowElevations[@(UIControlStateHighlighted)] = @(MDCCardShadowElevationHighlighted);
   }
 
   if (_shadowColors == nil) {
@@ -94,23 +88,31 @@ static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
 
   if (_borderWidths == nil) {
     _borderWidths = [NSMutableDictionary dictionary];
-    _borderWidths[@(UIControlStateNormal)] = @(0.f);
   }
+
+  self.layer.cornerRadius = MDCCardCornerRadiusDefault;
+  [self updateShadowElevation];
+  [self updateShadowColor];
+  [self updateBorderWidth];
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+  [super encodeWithCoder:coder];
+  [coder encodeObject:_shadowElevations forKey:MDCCardShadowElevationsKey];
+  [coder encodeObject:_shadowColors forKey:MDCCardShadowColorsKey];
+  [coder encodeObject:_borderWidths forKey:MDCCardBorderWidthsKey];
+  [coder encodeObject:_borderColors forKey:MDCCardBorderColorsKey];
+  [coder encodeObject:_inkView forKey:MDCCardInkViewKey];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-
-  [self updateShadowElevation];
-  [self updateShadowColor];
-  [self updateBorderWidth];
-
-  self.cornerRadius = 4.f;
   self.layer.shadowPath = [self boundingPath].CGPath;
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   self.layer.cornerRadius = cornerRadius;
+  [self setNeedsLayout];
 }
 
 - (CGFloat)cornerRadius {
