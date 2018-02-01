@@ -15,6 +15,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MaterialInk.h"
+#import "MaterialShadowLayer.h"
 
 /**
  Through the lifecycle of the cell, the cell can go through one of the 3 states,
