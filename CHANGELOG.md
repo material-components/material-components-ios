@@ -1,10 +1,4 @@
-# #develop#
-
-## Breaking changes
-
-## New deprecations
-
-## New features
+# 44.6.0
 
 ## API changes
 
@@ -19,8 +13,8 @@
 *new* method: `-startTouchBeganAtPoint:animated:withCompletion:` in `MDCInkView`
 
 *new* method: `-startTouchEndAtPoint:animated:withCompletion:` in `MDCInkView`
-## Component changes
 
+## Component changes
 
 ### AnimationTiming
 
