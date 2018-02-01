@@ -225,16 +225,34 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
     [self.inkLayer spreadFromPoint:point completion:completionBlock];
   } else {
     self.startInkRippleCompletionBlock = completionBlock;
-    MDCInkLayer *inkLayer = [MDCInkLayer layer];
-    inkLayer.inkColor = self.inkColor;
+    MDCInkLayer *inkLayer = [self commonInkSublayerInit];
     inkLayer.maxRippleRadius = self.maxRippleRadius;
     inkLayer.animationDelegate = self;
     inkLayer.opacity = 0;
-    inkLayer.frame = self.bounds;
-    [self.layer addSublayer:inkLayer];
-    [inkLayer startAnimationAtPoint:point];
     self.activeInkLayer = inkLayer;
+    [inkLayer startAnimationAtPoint:point];
   }
+}
+
+- (void)addInkSublayerWithoutAnimation {
+  MDCInkLayer *inkLayer = [MDCInkLayer layer];
+  inkLayer.inkColor = self.inkColor;
+  inkLayer.frame = self.bounds;
+  inkLayer.opacity = 1;
+  CGRect rect = self.bounds;
+  UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:rect];
+  inkLayer.path = rectPath.CGPath;
+  inkLayer.fillColor = self.inkColor.CGColor;
+  [self.layer addSublayer:inkLayer];
+  self.activeInkLayer = inkLayer;
+}
+
+- (MDCInkLayer *)commonInkSublayerInit {
+  MDCInkLayer *inkLayer = [MDCInkLayer layer];
+  inkLayer.inkColor = self.inkColor;
+  inkLayer.frame = self.bounds;
+  [self.layer addSublayer:inkLayer];
+  return inkLayer;
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point
