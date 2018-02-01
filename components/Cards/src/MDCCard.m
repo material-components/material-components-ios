@@ -45,6 +45,7 @@ static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
     _borderWidths = [coder decodeObjectForKey:MDCCardBorderWidthsKey];
     _borderColors = [coder decodeObjectForKey:MDCCardBorderColorsKey];
     _inkView = [coder decodeObjectForKey:MDCCardInkViewKey];
+    [self commonMDCCardInit];
   }
   return self;
 }
@@ -67,24 +68,34 @@ static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
 }
 
 - (void)commonMDCCardInit {
-  _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-  _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                               UIViewAutoresizingFlexibleHeight);
-  _inkView.usesLegacyInkRipple = NO;
-  _inkView.layer.zPosition = FLT_MAX;
-  [self addSubview:self.inkView];
+  if (_inkView == nil) {
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                                 UIViewAutoresizingFlexibleHeight);
+    _inkView.usesLegacyInkRipple = NO;
+    _inkView.layer.zPosition = FLT_MAX;
+    [self addSubview:self.inkView];
+  }
 
-  _shadowElevations = [NSMutableDictionary dictionary];
-  _shadowElevations[@(UIControlStateNormal)] = @(1.f);
-  _shadowElevations[@(UIControlStateHighlighted)] = @(8.f);
+  if (_shadowElevations == nil) {
+    _shadowElevations = [NSMutableDictionary dictionary];
+    _shadowElevations[@(UIControlStateNormal)] = @(1.f);
+    _shadowElevations[@(UIControlStateHighlighted)] = @(8.f);
+  }
 
-  _shadowColors = [NSMutableDictionary dictionary];
-  _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
+  if (_shadowColors == nil) {
+    _shadowColors = [NSMutableDictionary dictionary];
+    _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
+  }
 
-  _borderColors = [NSMutableDictionary dictionary];
+  if (_borderColors == nil) {
+    _borderColors = [NSMutableDictionary dictionary];
+  }
 
-  _borderWidths = [NSMutableDictionary dictionary];
-  _borderWidths[@(UIControlStateNormal)] = @(0.f);
+  if (_borderWidths == nil) {
+    _borderWidths = [NSMutableDictionary dictionary];
+    _borderWidths[@(UIControlStateNormal)] = @(0.f);
+  }
 }
 
 - (void)layoutSubviews {

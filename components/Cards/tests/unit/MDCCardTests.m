@@ -34,12 +34,13 @@
 }
 
 - (void)testCellSelectAndUnselect {
+  [self.cell layoutSubviews];
   XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 1.f);
   XCTAssertEqual(self.cell.cornerRadius, 4.f);
   XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1);
   self.cell.selectable = YES;
   self.cell.selected = YES;
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
   XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
   XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
                  self.cell.inkView.inkColor.CGColor);
@@ -47,7 +48,7 @@
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
   XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1);
   self.cell.selected = YES;
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
   XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
   XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
                  self.cell.inkView.inkColor.CGColor);

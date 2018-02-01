@@ -16,7 +16,6 @@
 
 #import "MDCCardCollectionCell.h"
 
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MaterialMath.h"
 #import "MaterialIcons+ic_check_circle.h"
 
@@ -58,6 +57,7 @@ static const CGFloat MDCCardSelectedImagePadding = 8;
     _selectedImageView = [coder decodeObjectForKey:MDCCardCellSelectedImageViewKey];
     _state = [coder decodeIntegerForKey:MDCCardCellStateKey];
     _selectable = [coder decodeBoolForKey:MDCCardCellSelectableKey];
+    [self commonMDCCardCollectionCellInit];
   }
   return self;
 }
@@ -83,28 +83,36 @@ static const CGFloat MDCCardSelectedImagePadding = 8;
 }
 
 - (void)commonMDCCardCollectionCellInit {
-  _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-  _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  _inkView.usesLegacyInkRipple = NO;
-  _inkView.layer.zPosition = FLT_MAX;
-  [self addSubview:self.inkView];
-
-  self.selectable = NO;
+  if (_inkView == nil) {
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _inkView.usesLegacyInkRipple = NO;
+    _inkView.layer.zPosition = FLT_MAX;
+    [self addSubview:self.inkView];
+  }
 
   [self initializeSelectedImage];
 
-  _shadowElevations = [NSMutableDictionary dictionary];
-  _shadowElevations[@(MDCCardCellStateNormal)] = @(1.f);
-  _shadowElevations[@(MDCCardCellStateHighlighted)] = @(8.f);
-  _shadowElevations[@(MDCCardCellStateSelected)] = @(8.f);
+  if (_shadowElevations == nil) {
+    _shadowElevations = [NSMutableDictionary dictionary];
+    _shadowElevations[@(MDCCardCellStateNormal)] = @(1.f);
+    _shadowElevations[@(MDCCardCellStateHighlighted)] = @(8.f);
+    _shadowElevations[@(MDCCardCellStateSelected)] = @(8.f);
+  }
 
-  _shadowColors = [NSMutableDictionary dictionary];
-  _shadowColors[@(MDCCardCellStateNormal)] = [UIColor blackColor];
+  if (_shadowColors == nil) {
+    _shadowColors = [NSMutableDictionary dictionary];
+    _shadowColors[@(MDCCardCellStateNormal)] = [UIColor blackColor];
+  }
 
-  _borderColors = [NSMutableDictionary dictionary];
+  if (_borderColors == nil) {
+    _borderColors = [NSMutableDictionary dictionary];
+  }
 
-  _borderWidths = [NSMutableDictionary dictionary];
-  _borderWidths[@(MDCCardCellStateNormal)] = @(0.f);
+  if (_borderWidths == nil) {
+    _borderWidths = [NSMutableDictionary dictionary];
+    _borderWidths[@(MDCCardCellStateNormal)] = @(0.f);
+  }
 }
 
 - (void)layoutSubviews {
@@ -119,18 +127,20 @@ static const CGFloat MDCCardSelectedImagePadding = 8;
 }
 
 - (void)initializeSelectedImage {
-  UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
-  circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
-  self.selectedImageView.center =
-      CGPointMake(CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - MDCCardSelectedImagePadding,
-                  (circledCheck.size.height/2) + MDCCardSelectedImagePadding);
-  self.selectedImageView.layer.zPosition = _inkView.layer.zPosition - 1;
-  self.selectedImageView.autoresizingMask =
-      (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
-       UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-  [self.contentView addSubview:self.selectedImageView];
-  self.selectedImageView.hidden = YES;
+  if (self.selectedImageView == nil) {
+    UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
+    circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
+    self.selectedImageView.center =
+        CGPointMake(CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - MDCCardSelectedImagePadding,
+                    (circledCheck.size.height/2) + MDCCardSelectedImagePadding);
+    self.selectedImageView.layer.zPosition = _inkView.layer.zPosition - 1;
+    self.selectedImageView.autoresizingMask =
+        (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
+         UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
+    [self.contentView addSubview:self.selectedImageView];
+    self.selectedImageView.hidden = YES;
+  }
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
