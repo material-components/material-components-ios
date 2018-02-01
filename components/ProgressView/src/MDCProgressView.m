@@ -21,8 +21,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
-#import <MotionAnimator/MotionAnimator.h>
-#import "private/MDCProgressViewMotionSpec.h"
 
 static inline UIColor *MDCProgressViewDefaultTintColor(void) {
   return MDCPalette.bluePalette.tint500;
@@ -31,6 +29,8 @@ static inline UIColor *MDCProgressViewDefaultTintColor(void) {
 // The ratio by which to desaturate the progress tint color to obtain the default track tint color.
 static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
 
+static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
+
 @interface MDCProgressView ()
 @property(nonatomic, strong) UIView *progressView;
 @property(nonatomic, strong) UIView *trackView;
@@ -38,7 +38,7 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
 // A UIProgressView to return the same format for the accessibility value. For example, when
 // progress is 0.497, it reports "fifty per cent".
 @property(nonatomic, readonly) UIProgressView *accessibilityProgressView;
-@property(nonatomic, strong) MDMMotionAnimator *animator;
+
 @end
 
 @implementation MDCProgressView
@@ -60,8 +60,6 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
 }
 
 - (void)commonMDCProgressViewInit {
-  _animator = [[MDMMotionAnimator alloc] init];
-
   self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   self.backgroundColor = [UIColor clearColor];
   self.clipsToBounds = YES;
@@ -139,23 +137,13 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
   }
 
   self.progress = progress;
-
-  void (^animations)(void) = ^{
-    [self updateProgressView];
-  };
-  void (^completion)(void) = ^{
-    if (userCompletion) {
-      userCompletion(YES);
-    }
-  };
-
-  if (animated) {
-    MDMMotionTiming timing = MDCProgressViewMotionSpec.willChangeProgress;
-    [_animator animateWithTiming:timing animations:animations completion:completion];
-  } else {
-    animations();
-    completion();
-  }
+  [UIView animateWithDuration:animated ? [[self class] animationDuration] : 0
+                        delay:0
+                      options:[[self class] animationOptions]
+                   animations:^{
+                     [self updateProgressView];
+                   }
+                   completion:userCompletion];
 }
 
 - (void)setHidden:(BOOL)hidden {
@@ -202,23 +190,19 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
     };
   }
 
-  void (^completion)(void) = ^{
-    if (hidden) {
-      self.animatingHide = NO;
-      self.hidden = YES;
-    }
-    if (userCompletion) {
-      userCompletion(YES);
-    }
-  };
-
-  if (animated) {
-    MDMMotionTiming timing = MDCProgressViewMotionSpec.willChangeHidden;
-    [_animator animateWithTiming:timing animations:animations completion:completion];
-  } else {
-    animations();
-    completion();
-  }
+  [UIView animateWithDuration:animated ? [[self class] animationDuration] : 0
+                         delay:0
+                       options:[[self class] animationOptions]
+                    animations:animations
+                    completion:^(BOOL finished) {
+                      if (hidden) {
+                        self.animatingHide = NO;
+                        self.hidden = YES;
+                      }
+                      if (userCompletion) {
+                        userCompletion(finished);
+                      }
+                    }];
 }
 
 #pragma mark Accessibility
@@ -265,6 +249,16 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
 }
 
 #pragma mark Private
+
++ (NSTimeInterval)animationDuration {
+  return MDCProgressViewAnimationDuration;
+}
+
++ (UIViewAnimationOptions)animationOptions {
+  // Since the animation is fake, using a linear interpolation avoids the speeding up and slowing
+  // down that repeated easing in and out causes.
+  return UIViewAnimationOptionCurveLinear;
+}
 
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
   CGFloat hue, saturation, brightness, alpha;

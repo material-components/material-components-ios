@@ -1,3 +1,460 @@
+# 44.5.0
+
+## API changes
+
+### ButtonBar
+
+#### MDCButtonBarButton
+
+*new* class: `MDCButtonBarButton`
+
+## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [Expose font and padding properties (#2849)](https://github.com/material-components/material-components-ios/commit/a8d903460e6d0bb78b06db0a38b882698069c04e) (ianegordon)
+
+### ProgressView
+
+#### Changes
+
+* [Remove MDMMotion (#2854)](https://github.com/material-components/material-components-ios/commit/fd1681b0de136ca4ac21ec34e31a70292c667176) (ianegordon)
+
+### TextFields
+
+#### Changes
+
+* [Correcting documentation (#2844)](https://github.com/material-components/material-components-ios/commit/b7ec2004ab4fd7567422af3c2d2563923ef1e758) (Will Larche)
+
+---
+
+# 44.4.0
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Chips
+
+#### MDCChipView
+
+*new* method: `-inkColorForState:` in `MDCChipView`
+
+*new* method: `-setInkColor:forState:` in `MDCChipView`
+
+*modified* class: `MDCChipView`
+
+*modified* property: `inkColor` in `MDCChipView`
+
+*modified* property: `inkColor` in `MDCChipView`
+
+### Snackbar
+
+#### MDCSnackbarMessageView
+
+*new* property: `buttonFont` in `MDCSnackbarMessageView`
+
+*new* property: `messageFont` in `MDCSnackbarMessageView`
+## Component changes
+
+### Chips
+
+#### Changes
+
+* [Stateful ink (#2823)](https://github.com/material-components/material-components-ios/commit/b67f04ed800e5b2f7ed92a77e41598eb28d0c437) (Sam Morrison)
+
+### Snackbar
+
+#### Changes
+
+* [Add customizable fonts  (#2831)](https://github.com/material-components/material-components-ios/commit/29e98b873673a56c4f84f92b8f31e00c88e476b4) (ianegordon)
+
+---
+
+# 44.3.0
+
+## API changes
+
+### Themes
+
+#### MDCFontScheme
+
+*new* property: `button` in `MDCFontScheme`
+
+*new* property: `body2` in `MDCFontScheme`
+
+*new* property: `headline5` in `MDCFontScheme`
+
+*new* property: `caption` in `MDCFontScheme`
+
+*new* property: `subtitle2` in `MDCFontScheme`
+
+*new* property: `subtitle1` in `MDCFontScheme`
+
+*new* property: `body1` in `MDCFontScheme`
+
+*new* property: `headline1` in `MDCFontScheme`
+
+*new* property: `overline` in `MDCFontScheme`
+
+*new* property: `headline2` in `MDCFontScheme`
+
+*new* property: `headline4` in `MDCFontScheme`
+
+*new* protocol: `MDCFontScheme`
+
+*new* property: `headline3` in `MDCFontScheme`
+
+*new* property: `headline6` in `MDCFontScheme`
+
+#### MDCBasicFontScheme
+
+*new* property: `button` in `MDCBasicFontScheme`
+
+*new* property: `headline1` in `MDCBasicFontScheme`
+
+*new* property: `headline5` in `MDCBasicFontScheme`
+
+*new* property: `body1` in `MDCBasicFontScheme`
+
+*new* property: `subtitle2` in `MDCBasicFontScheme`
+
+*new* property: `headline2` in `MDCBasicFontScheme`
+
+*new* property: `body2` in `MDCBasicFontScheme`
+
+*new* property: `overline` in `MDCBasicFontScheme`
+
+*new* property: `headline6` in `MDCBasicFontScheme`
+
+*new* property: `subtitle1` in `MDCBasicFontScheme`
+
+*new* class: `MDCBasicFontScheme`
+
+*new* property: `headline4` in `MDCBasicFontScheme`
+
+*new* property: `headline3` in `MDCBasicFontScheme`
+
+*new* property: `caption` in `MDCBasicFontScheme`
+
+## Component changes
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Typography] Add FontThemer & FontScheme to FeatureHighlight (#2760)](https://github.com/material-components/material-components-ios/commit/5a05ff9f9b9bc80f213416a8a25409faee3e01b1) (ianegordon)
+
+### Themes
+
+#### Changes
+
+* [[Typography] Add FontThemer & FontScheme to FeatureHighlight (#2760)](https://github.com/material-components/material-components-ios/commit/5a05ff9f9b9bc80f213416a8a25409faee3e01b1) (ianegordon)
+
+---
+
+# 44.2.0
+
+## API changes
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `titleFont` in `MDCChipView`
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+### BottomNavigation
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+### Chips
+
+#### Changes
+
+* [Add custom font support (#2820)](https://github.com/material-components/material-components-ios/commit/e4b7f2464a589022b5b1c40167c9c25989b88961) (ianegordon)
+
+### CollectionCells
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix status bar not disappearing for edge case (#2819)](https://github.com/material-components/material-components-ios/commit/79a506b4eac810b2e258ee17fbaa8399ceab7aa8) (Sam Morrison)
+
+### Typography
+
+#### Changes
+
+* [[Podspec] Fix podspec warnings when issuing a lint (#2811)](https://github.com/material-components/material-components-ios/commit/3fe2bff374b5f4c893ae58e1c742943808c9b4c3) (Yarden Eitan)
+
+---
+
+# 44.1.0
+
+## New features
+
+* `MDCSlider` supports more UIAppearance customization.
+* `MDCActivityIndicator` provides improved support for animation transitions.
+
+## API changes
+
+### ActivityIndicator
+
+#### MDCActivityIndicatorTransition
+
+*new* property: `duration` in `MDCActivityIndicatorTransition`
+
+*new* method: `-initWithAnimation:` in `MDCActivityIndicatorTransition`
+
+*new* class: `MDCActivityIndicatorTransition`
+
+*new* property: `animation` in `MDCActivityIndicatorTransition`
+
+*new* method: `-init` in `MDCActivityIndicatorTransition`
+
+*new* method: `-initWithCoder:` in `MDCActivityIndicatorTransition`
+
+*new* property: `completion` in `MDCActivityIndicatorTransition`
+
+#### MDCActivityIndicatorAnimation
+
+*new* typedef: `MDCActivityIndicatorAnimation`
+
+#### MDCActivityIndicator
+
+*new* method: `-startAnimatingWithTransition:cycleStartIndex:` in `MDCActivityIndicator`
+
+*new* method: `-stopAnimatingWithTransition:` in `MDCActivityIndicator`
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `thumbRadius` in `MDCSlider`
+
+*new* property: `thumbElevation` in `MDCSlider`
+
+*modified* property: `trackBackgroundColor` in `MDCSlider`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor` |
+| To: | `@property (readwrite, strong, nonatomic, null_resettable)     UIColor *trackBackgroundColor;` |
+## Component changes
+
+
+### ActivityIndicator
+
+#### Changes
+
+* [Add an api to MDCActivityIndicator to allow animations before/after animating (#2766)](https://github.com/material-components/material-components-ios/commit/d30df6c569ba97c4ab7ef897ca2d1e148900ac05) (John Detloff)
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+* [[Activity Indicator] Don't call UIAppearance in +initialize (#2810)](https://github.com/material-components/material-components-ios/commit/a63e8610dafa39920db6d27660f5ce8ff40cd86a) (ianegordon)
+
+### AnimationTiming
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### AppBar
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### BottomAppBar
+
+#### Changes
+
+* [remove themer from bottomnavbar (#2814)](https://github.com/material-components/material-components-ios/commit/c29c4c5b5a4f6f32644c3ef58e6ca75cf8074802) (Yarden Eitan)
+
+### BottomNavigation
+
+#### Changes
+
+* [[BottomNav] Reduce default font to `caption` (#2799)](https://github.com/material-components/material-components-ios/commit/d4a4220e62cc05a2247df691aeff1b654af03693) (Robert Moore)
+
+### BottomSheet
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### ButtonBar
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### Chips
+
+#### Changes
+
+* [[Catalog] Remove unwanted warnings from build (#2794)](https://github.com/material-components/material-components-ios/commit/c88a0596400be26c792b71655bcc6364fcb52023) (Yarden Eitan)
+
+### CollectionCells
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### Collections
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+* [stop weird behavior of swiping to dismiss cells in collection views if 2 fingers are swiping at the same time (#2792)](https://github.com/material-components/material-components-ios/commit/224115d5f1de6da300c0c76cc45b9e92deb18271) (Yarden Eitan)
+
+### Dialogs
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+* [Explicitly annotate MDCAlertController as not subclassable (#2801)](https://github.com/material-components/material-components-ios/commit/d70ebaa194591c68e9fb7e4d755b93f56aabe703) (ianegordon)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### HeaderStackView
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### Ink
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### LibraryInfo
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### MaskedTransition
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### NavigationBar
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### OverlayWindow
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### PageControl
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### Palettes
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### ProgressView
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### ShadowElevations
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### ShadowLayer
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### Slider
+
+#### Changes
+
+* [Add appearance properties and enable UIAppearance. (#2796)](https://github.com/material-components/material-components-ios/commit/294643fc0bab62db3e28203fdae0f065dc780e6f) (Adrian Secord)
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### Snackbar
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### Tabs
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+
+### TextFields
+
+#### Changes
+
+* [[Catalog] Remove unwanted warnings from build (#2794)](https://github.com/material-components/material-components-ios/commit/c88a0596400be26c792b71655bcc6364fcb52023) (Yarden Eitan)
+
+### Typography
+
+#### Changes
+
+* [Consolidate installation requirements in the main README (#2809)](https://github.com/material-components/material-components-ios/commit/49de50edae780245c8b964c043cf1268926bc3b3) (ianegordon)
+* [Suppress pointer warning in tests (#2805)](https://github.com/material-components/material-components-ios/commit/f4cc724e54c6b40f0bf85f987d84ee1c347d0451) (Robert Moore)
+
+---
+
 # 44.0.0
 
 ## Breaking changes

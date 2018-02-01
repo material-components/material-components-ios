@@ -240,7 +240,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   changeAnim.fromValue = @(currOpacity);
   changeAnim.toValue = @(updatedOpacity);
   changeAnim.duration = MDCInkLayerCommonDuration;
-  changeAnim.beginTime = CACurrentMediaTime() + animationDelay;
+  changeAnim.beginTime = [self convertTime:(CACurrentMediaTime() + animationDelay) fromLayer:nil];
   changeAnim.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   changeAnim.fillMode = kCAFillModeForwards;

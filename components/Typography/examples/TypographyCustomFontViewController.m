@@ -151,7 +151,7 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-   return @[ @"Typography Custom Fonts", @"Material Font Styles" ];
+   return @[ @"Typography and Fonts", @"Custom Font Example" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
