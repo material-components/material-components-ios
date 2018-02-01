@@ -179,8 +179,9 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
       break;
     }
     case MDCCardCellStateHighlighted: {
-      // Note: setHighlighted might get more touches began than touches ended hence the call
-      // hence the call to startTouchEndedAnimationAtPoint before.
+      // Note: setHighlighted: can get getting more calls with YES than NO when clicking rapidly.
+      // To guard against ink never going away and darkening our card we call
+      // startTouchEndedAnimationAtPoint:completion:.
       [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
       [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
       self.selectedImageView.hidden = YES;
