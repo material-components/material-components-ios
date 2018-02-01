@@ -266,7 +266,7 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
       if ([layer isKindOfClass:[MDCInkLayer class]]) {
         MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
         if (animated) {
-          [inkLayer endInkAtPoint:CGPointZero animated:YES];
+          [inkLayer endAnimationAtPoint:CGPointZero];
         } else {
           [inkLayer removeFromSuperlayer];
         }
