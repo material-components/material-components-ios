@@ -51,7 +51,7 @@
  @param state UIControlState the card state
  @return The shadow elevation for the requested state.
  */
-- (MDCShadowElevation)shadowElevationForState:(UIControlState)state;
+- (MDCShadowElevation)shadowElevationForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Sets the border width for an UIControlState state
@@ -67,12 +67,11 @@
 
  If no border width has been set for a state, the value for UIControlStateNormal will be returned.
  Default value for UIControlStateNormal is 0
- Default value for UIControlStateHighlighted is 0
 
  @param state UIControlState the card state
  @return The border width for the requested state.
  */
-- (CGFloat)borderWidthForState:(UIControlState)state;
+- (CGFloat)borderWidthForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Sets the border color for an UIControlState state
@@ -87,13 +86,11 @@
  Returns the border color for an UIControlState state
 
  If no border color has been set for a state, the value for UIControlStateNormal will be returned.
- Default value for UIControlStateNormal is clearColor
- Default value for UIControlStateHighlighted is clearColor
 
  @param state UIControlState the card state
  @return The border color for the requested state.
  */
-- (nullable UIColor *)borderColorForState:(UIControlState)state;
+- (nullable UIColor *)borderColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Sets the shadow color for an UIControlState state
@@ -109,11 +106,10 @@
 
  If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.
  Default value for UIControlStateNormal is blackColor
- Default value for UIControlStateHighlighted is blackColor
 
  @param state UIControlState the card state
  @return The shadow color for the requested state.
  */
-- (nullable UIColor *)shadowColorForState:(UIControlState)state;
+- (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 @end

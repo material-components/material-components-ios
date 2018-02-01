@@ -17,6 +17,14 @@
 #import <UIKit/UIKit.h>
 #import "MDCCard.h"
 
+/**
+ Through the lifecycle of the cell, the cell can go through one of the 3 states,
+ normal, highlighted, and selected. The cell starts in its default state, normal.
+ When `selectable` is set to NO, each touch on the cell turns it to the highlighted state, and when
+ the touch is released, it is returned to the normal state. When `selectable` is set to YES. Each
+ touch on the cell that isn't cancelled turns the cell to its selected state. Another touch on the
+ cell changes it back to normal.
+ */
 typedef NS_ENUM(NSInteger, MDCCardCellState) {
   /** The visual state when the cell is in its normal state. */
   MDCCardCellStateNormal = 0,
@@ -31,12 +39,12 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
 @interface MDCCardCollectionCell : UICollectionViewCell
 
 /**
- When selecting is set to YES, a tap on a cell will trigger a visual change between selected
+ When selectable is set to YES, a tap on a cell will trigger a visual change between selected
  and unselected. When it is set to NO, a tap will trigger a normal tap (rather than trigger
  different visual selection states on the card).
  Default is set to NO.
  */
-@property(nonatomic, assign, getter=isSelecting) BOOL selecting;
+@property(nonatomic, assign, getter=isSelectable) BOOL selectable;
 
 /**
  The corner radius for the card
@@ -69,7 +77,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
  @param state MDCCardCellStateNormal the card state
  @return The shadow elevation for the requested state.
  */
-- (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state;
+- (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Sets the border width for an MDCCardViewState state
@@ -85,13 +93,11 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
 
  If no border width has been set for a state, the value for MDCCardCellStateNormal will be returned.
  Default value for MDCCardCellStateNormal is 0
- Default value for MDCCardCellStateHighlighted is 0
- Default value for MDCCardCellStateSelected is 0
 
  @param state MDCCardCellState the card state
  @return The border width for the requested state.
  */
-- (CGFloat)borderWidthForState:(MDCCardCellState)state;
+- (CGFloat)borderWidthForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Sets the border color for an MDCCardCellStateNormal state
@@ -106,14 +112,11 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
  Returns the border color for an MDCCardCellStateNormal state
 
  If no border color has been set for a state, the value for MDCCardCellStateNormal will be returned.
- Default value for MDCCardCellStateNormal is clearColor
- Default value for MDCCardCellStateHighlighted is clearColor
- Default value for MDCCardCellStateSelected is clearColor
 
  @param state MDCCardCellState the card state
  @return The border color for the requested state.
  */
-- (nullable UIColor *)borderColorForState:(MDCCardCellState)state;
+- (nullable UIColor *)borderColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Sets the shadow color for an MDCCardCellStateNormal state
@@ -129,13 +132,11 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
 
  If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.
  Default value for MDCCardCellStateNormal is blackColor
- Default value for MDCCardCellStateHighlighted is blackColor
- Default value for MDCCardCellStateSelected is blackColor
 
  @param state MDCCardCellState the card state
  @return The shadow color for the requested state.
  */
-- (nullable UIColor *)shadowColorForState:(MDCCardCellState)state;
+- (nullable UIColor *)shadowColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  The image for the selected state.
