@@ -307,7 +307,7 @@ static const CGFloat MDCCardSelectedImagePadding = 8;
   if (shadowColor != nil) {
     return shadowColor;
   }
-  return [UIColor clearColor];
+  return [UIColor blackColor];
 }
 
 #pragma mark - UIResponder
