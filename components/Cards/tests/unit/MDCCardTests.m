@@ -22,7 +22,7 @@
 
 @interface MDCCardTests : XCTestCase
 @property(nonatomic, strong) MDCCardCollectionCell *cell;
-@property(nonatomic, strong) MDCCardView *card;
+@property(nonatomic, strong) MDCCard *card;
 @end
 
 @implementation MDCCardTests
@@ -30,35 +30,35 @@
 - (void)setUp {
   [super setUp];
   self.cell = [[MDCCardCollectionCell alloc] init];
-  self.card = [[MDCCardView alloc] init];
+  self.card = [[MDCCard alloc] init];
 }
 
 - (void)testCellSelectAndUnselect {
-  XCTAssertEqual([self.cell.cardView shadowElevationForState:MDCCardViewStateNormal], 1.f);
+  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 1.f);
   XCTAssertEqual(self.cell.cornerRadius, 4.f);
-  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 1);
-  self.cell.selecting = YES;
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1);
+  self.cell.selectable = YES;
   self.cell.selected = YES;
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 1.f);
-  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 2);
-  XCTAssertEqual(((CAShapeLayer *)self.cell.cardView.inkView.layer.sublayers.lastObject).fillColor,
-                 self.cell.cardView.inkView.inkColor.CGColor);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
+                 self.cell.inkView.inkColor.CGColor);
   self.cell.selected = NO;
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 1.f);
-  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 1);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1);
   self.cell.selected = YES;
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 1.f);
-  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 2);
-  XCTAssertEqual(((CAShapeLayer *)self.cell.cardView.inkView.layer.sublayers.lastObject).fillColor,
-                 self.cell.cardView.inkView.inkColor.CGColor);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
+                 self.cell.inkView.inkColor.CGColor);
   XCTAssert(
     CGRectEqualToRect(
-      (((CAShapeLayer *)self.cell.cardView.inkView.layer.sublayers.firstObject).frame),
-      self.cell.cardView.inkView.layer.bounds));
+      (((CAShapeLayer *)self.cell.inkView.layer.sublayers.firstObject).frame),
+      self.cell.inkView.layer.bounds));
   self.cell.selected = NO;
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 1.f);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
   XCTAssertEqual(self.cell.cornerRadius, 4.f);
-  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 1);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1);
 }
 
 - (void)testCellLongPress {
@@ -69,18 +69,18 @@
   UIEvent *event = [[UIEvent alloc] init];
   [self.cell touchesBegan:touches withEvent:event];
 
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 8.f);
-  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
 
   [self.cell touchesEnded:touches withEvent:event];
 
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 1.f);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
 }
 
 - (void)testDefaultShadowElevations {
-  [self.cell.cardView setShadowElevation:3.5f forState:MDCCardViewStateNormal];
-  [self.cell.cardView setShadowElevation:7.2f forState:MDCCardViewStateHighlighted];
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 3.5f);
+  [self.cell setShadowElevation:3.5f forState:MDCCardCellStateNormal];
+  [self.cell setShadowElevation:7.2f forState:MDCCardCellStateHighlighted];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 3.5f);
   NSMutableArray *touchArray = [NSMutableArray new];
   [touchArray addObject:[UITouch new]];
   NSSet *touches = [[NSSet alloc] init];
@@ -88,38 +88,43 @@
   UIEvent *event = [[UIEvent alloc] init];
   [self.cell touchesBegan:touches withEvent:event];
 
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 7.2f);
-  XCTAssertEqual(self.cell.cardView.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 7.2f);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
 
   [self.cell touchesEnded:touches withEvent:event];
 
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.cardView.layer).elevation, 3.5f);
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 3.5f);
 }
 
 - (void)testShadowForCard {
   [self.card layoutSubviews];
   XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 1.f);
-  [self.card setShadowElevation:8.f forState:MDCCardViewStateNormal];
+  [self.card setShadowElevation:8.f forState:UIControlStateNormal];
   XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 8.f);
 }
 
+- (void)testShadowForCell {
+  [self.cell layoutSubviews];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
+  [self.cell setShadowElevation:8.f forState:MDCCardCellStateNormal];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
+}
+
 - (void)testCornerForCard {
+  [self.card layoutSubviews];
   XCTAssertEqual(self.card.layer.cornerRadius, 4.f);
   [self.card setCornerRadius:8.f];
   XCTAssertEqual(self.card.layer.cornerRadius, 8.f);
 }
 
 - (void)testCornerForCell {
-  XCTAssertEqual(self.cell.cardView.layer.cornerRadius, 4.f);
+  [self.cell layoutSubviews];
   XCTAssertEqual(self.cell.layer.cornerRadius, 4.f);
   [self.cell setCornerRadius:8.f];
-  XCTAssertEqual(self.cell.cardView.layer.cornerRadius, 8.f);
   XCTAssertEqual(self.cell.layer.cornerRadius, 8.f);
 }
 
 - (void)testSetSelectionImageColor {
-  [self.cell setBackgroundColor:[UIColor blackColor]];
-  XCTAssertEqual(self.cell.selectedImageTintColor, [UIColor whiteColor]);
   UIColor *color = [UIColor blueColor];
   [self.cell setSelectedImageTintColor:color];
   XCTAssertEqual(self.cell.selectedImageTintColor, color);
