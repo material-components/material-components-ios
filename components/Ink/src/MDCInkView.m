@@ -221,6 +221,11 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
+  [self startTouchBeganAtPoint:point animated:YES withCompletion:completionBlock];
+}
+
+- (void)startTouchBeganAtPoint:(CGPoint)point animated:(BOOL)animated
+                withCompletion:(nullable MDCInkCompletionBlock)completionBlock {
   if (self.usesLegacyInkRipple) {
     [self.inkLayer spreadFromPoint:point completion:completionBlock];
   } else {
@@ -232,19 +237,24 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
     inkLayer.opacity = 0;
     inkLayer.frame = self.bounds;
     [self.layer addSublayer:inkLayer];
-    [inkLayer startAnimationAtPoint:point];
+    [inkLayer startInkAtPoint:point animated:animated];
     self.activeInkLayer = inkLayer;
+  }
+}
+
+- (void)startTouchEndAtPoint:(CGPoint)point animated:(BOOL)animated
+              withCompletion:(nullable MDCInkCompletionBlock)completionBlock {
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer evaporateWithCompletion:completionBlock];
+  } else {
+    self.endInkRippleCompletionBlock = completionBlock;
+    [self.activeInkLayer endInkAtPoint:point animated:animated];
   }
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  if (self.usesLegacyInkRipple) {
-    [self.inkLayer evaporateWithCompletion:completionBlock];
-  } else {
-    self.endInkRippleCompletionBlock = completionBlock;
-    [self.activeInkLayer endAnimationAtPoint:point];
-  }
+  [self startTouchEndAtPoint:point animated:YES withCompletion:completionBlock];
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
