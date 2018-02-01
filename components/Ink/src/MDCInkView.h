@@ -134,7 +134,8 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  @param animated to add the ink sublayer with animation or not.
  @param completionBlock Block called after the completion of the animation.
  */
-- (void)startTouchBeganAtPoint:(CGPoint)point animated:(BOOL)animated
+- (void)startTouchBeganAtPoint:(CGPoint)point
+                      animated:(BOOL)animated
                 withCompletion:(nullable MDCInkCompletionBlock)completionBlock;
 
 /**
@@ -147,7 +148,8 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  @param animated to remove the ink sublayer with animation or not.
  @param completionBlock Block called after the completion of the animation.
  */
-- (void)startTouchEndAtPoint:(CGPoint)point animated:(BOOL)animated
+- (void)startTouchEndAtPoint:(CGPoint)point
+                    animated:(BOOL)animated
               withCompletion:(nullable MDCInkCompletionBlock)completionBlock;
 
 /**

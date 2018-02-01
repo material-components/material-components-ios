@@ -74,6 +74,15 @@
 /**
  Starts the ink ripple animation at a specified point.
  */
+- (void)startAnimationAtPoint:(CGPoint)point;
+
+
+/**
+ Starts the ink ripple
+
+ @param point the point where to start the ink ripple
+ @param animated if to animate the ripple or not
+ */
 - (void)startInkAtPoint:(CGPoint)point animated:(BOOL)animated;
 
 /**
@@ -84,6 +93,15 @@
 
 /**
  Ends the ink ripple animation.
+ */
+- (void)endAnimationAtPoint:(CGPoint)point;
+
+
+/**
+ Ends the ink ripple
+
+ @param point the point where to end the ink ripple
+ @param animated if to animate the ripple or not
  */
 - (void)endInkAtPoint:(CGPoint)point animated:(BOOL)animated;
 
