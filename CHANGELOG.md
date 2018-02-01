@@ -1,3 +1,92 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Cards
+
+**New component.**
+
+### Ink
+
+#### MDCInkView
+
+*new* method: `-startTouchBeganAtPoint:animated:withCompletion:` in `MDCInkView`
+
+*new* method: `-startTouchEndAtPoint:animated:withCompletion:` in `MDCInkView`
+## Component changes
+
+
+### AnimationTiming
+
+#### Changes
+
+* [Update custom font example to be in the right cell instead of its own. Update the AnimationTiming example to showcase the right names. (#2869)](https://github.com/material-components/material-components-ios/commit/2161a9be86b8937fe95c4400f68ed6cc642024ac) (Cody Weaver)
+
+### BottomSheet
+
+#### Changes
+
+* [Adds missing Jazzy yaml files. (#2871)](https://github.com/material-components/material-components-ios/commit/cc70fe7ca7ed093c5128aa843556a2b2b74dd7d5) (Scott Hyndman)
+
+### Cards
+
+#### Changes
+
+* [Initial Implementation (#2894)](https://github.com/material-components/material-components-ios/commit/58f24b4f183b1366a9b337f7446ad45ceaed2b26) (Yarden Eitan)
+
+### Chips
+
+#### Changes
+
+* [RTL support (#2863)](https://github.com/material-components/material-components-ios/commit/31f908a10d76becaa9b47e923c89bfdf7193d519) (Sam Morrison)
+* [Update font style](https://github.com/material-components/material-components-ios/commit/9995b282e1b3b88f70380d276c48de256b90d6f5) (Ian Gordon)
+
+### Dialogs
+
+#### Changes
+
+* [Added Example for issue #2860 to Dragons (#2864)](https://github.com/material-components/material-components-ios/commit/dea8e3c7f4942ac03d5c83350556a5c35e765116) (danblakemore)
+* [Rounded corner example (#2881)](https://github.com/material-components/material-components-ios/commit/2a38d427115966960434a606f85e0141fb0a9915) (ianegordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Update MDCFlexibleHeaderView.m (#2861)](https://github.com/material-components/material-components-ios/commit/2afa8c57d806da6fcdfdf669ff8943a65fdf1f68) (andrewplai)
+
+### Ink
+
+#### Changes
+
+* [Fix ink animation timing in time-scaled layers (#2884)](https://github.com/material-components/material-components-ios/commit/61445a677a014e94a922faee33cdbebcffa2e607) (Robert Moore)
+* [[Cards] Initial Implementation (#2894)](https://github.com/material-components/material-components-ios/commit/58f24b4f183b1366a9b337f7446ad45ceaed2b26) (Yarden Eitan)
+
+### LibraryInfo
+
+#### Changes
+
+* [Adds missing Jazzy yaml files. (#2871)](https://github.com/material-components/material-components-ios/commit/cc70fe7ca7ed093c5128aa843556a2b2b74dd7d5) (Scott Hyndman)
+
+### TextFields
+
+#### Changes
+
+* [Correcting logic mistake (#2885)](https://github.com/material-components/material-components-ios/commit/0d877a048f842436406f2428e76fe2bebae6cf08) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Update custom font example to be in the right cell instead of its own. Update the AnimationTiming example to showcase the right names. (#2869)](https://github.com/material-components/material-components-ios/commit/2161a9be86b8937fe95c4400f68ed6cc642024ac) (Cody Weaver)
+
+---
+
 # 44.5.0
 
 ## API changes
