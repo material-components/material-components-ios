@@ -44,6 +44,31 @@
 
   [_appBar addSubviewsToParent];
 
+   UIView *contentView = self.contentViewController.view;
+  UIView *headerView = self.appBar.headerViewController.headerView;
+  contentView.translatesAutoresizingMaskIntoConstraints = NO;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [NSLayoutConstraint activateConstraints:@[
+      [contentView.topAnchor constraintEqualToAnchor:headerView.bottomAnchor],
+      [contentView.leadingAnchor
+          constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+      [contentView.trailingAnchor
+          constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
+      [contentView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
+    ]];
+  } else {
+#endif
+    [NSLayoutConstraint activateConstraints:@[
+      [contentView.topAnchor constraintEqualToAnchor:headerView.bottomAnchor],
+      [contentView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [contentView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [contentView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  }
+#endif
+
   [_appBar.navigationBar observeNavigationItem:_contentViewController.navigationItem];
 }
 
