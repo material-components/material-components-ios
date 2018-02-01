@@ -85,7 +85,8 @@
 /**
  Returns the border color for an UIControlState state
 
- If no border color has been set for a state, the value for UIControlStateNormal will be returned.
+ If no border color has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then nil will be returned.
 
  @param state UIControlState the card state
  @return The border color for the requested state.
