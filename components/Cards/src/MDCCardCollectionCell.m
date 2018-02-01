@@ -323,7 +323,7 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   _lastTouch = location;
-  if ((self.selectable && !self.selected) || !self.selectable) {
+  if (!self.selected || !self.selectable) {
     [self setState:MDCCardCellStateHighlighted animated:YES];
   }
 }
@@ -334,14 +334,14 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-  if ((self.selectable && !self.selected) || !self.selectable) {
+  if (!self.selected || !self.selectable) {
     [self setState:MDCCardCellStateNormal animated:YES];
   }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
-  if ((self.selectable && !self.selected) || !self.selectable) {
+  if (!self.selected || !self.selectable) {
     [self setState:MDCCardCellStateNormal animated:YES];
   }
 }
