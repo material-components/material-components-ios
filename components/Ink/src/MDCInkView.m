@@ -221,11 +221,11 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self startTouchBeganAtPoint:point withAnimation:YES andCompletion:completionBlock];
+  [self startTouchBeganAtPoint:point animated:YES withCompletion:completionBlock];
 }
 
-- (void)startTouchBeganAtPoint:(CGPoint)point withAnimation:(BOOL)animated
-                 andCompletion:(nullable MDCInkCompletionBlock)completionBlock {
+- (void)startTouchBeganAtPoint:(CGPoint)point animated:(BOOL)animated
+                withCompletion:(nullable MDCInkCompletionBlock)completionBlock {
   if (self.usesLegacyInkRipple) {
     [self.inkLayer spreadFromPoint:point completion:completionBlock];
   } else {
@@ -238,23 +238,23 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
     inkLayer.opacity = 0;
     [self.layer addSublayer:inkLayer];
     self.activeInkLayer = inkLayer;
-    [inkLayer startInkAtPoint:point withAnimation:animated];
+    [inkLayer startInkAtPoint:point animated:animated];
   }
 }
 
-- (void)startTouchEndAtPoint:(CGPoint)point withAnimation:(BOOL)animated
-               andCompletion:(nullable MDCInkCompletionBlock)completionBlock {
+- (void)startTouchEndAtPoint:(CGPoint)point animated:(BOOL)animated
+              withCompletion:(nullable MDCInkCompletionBlock)completionBlock {
   if (self.usesLegacyInkRipple) {
     [self.inkLayer evaporateWithCompletion:completionBlock];
   } else {
     self.endInkRippleCompletionBlock = completionBlock;
-    [self.activeInkLayer endInkAtPoint:point withAnimation:animated];
+    [self.activeInkLayer endInkAtPoint:point animated:animated];
   }
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self startTouchEndAtPoint:point withAnimation:YES andCompletion:completionBlock];
+  [self startTouchEndAtPoint:point animated:YES withCompletion:completionBlock];
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
@@ -266,7 +266,7 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
       if ([layer isKindOfClass:[MDCInkLayer class]]) {
         MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
         if (animated) {
-          [inkLayer endInkAtPoint:CGPointZero withAnimation:YES];
+          [inkLayer endInkAtPoint:CGPointZero animated:YES];
         } else {
           [inkLayer removeFromSuperlayer];
         }

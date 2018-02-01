@@ -50,7 +50,7 @@
   [self addSubview:self.inkView];
 
   _inkAnimating = NO;
-  self.selecting = NO;
+  self.selectable = NO;
 
   [self initializeSelectedImage];
 
@@ -64,20 +64,14 @@
 
   _shadowColors = [[NSMutableDictionary alloc] init];
   _shadowColors[@(MDCCardCellStateNormal)] = [UIColor blackColor];
-  _shadowColors[@(MDCCardCellStateHighlighted)] = [UIColor blackColor];
-  _shadowColors[@(MDCCardCellStateSelected)] = [UIColor blackColor];
   [self updateShadowColor];
 
   _borderColors = [[NSMutableDictionary alloc] init];
   _borderColors[@(MDCCardCellStateNormal)] = [UIColor clearColor];
-  _borderColors[@(MDCCardCellStateHighlighted)] = [UIColor clearColor];
-  _borderColors[@(MDCCardCellStateSelected)] = [UIColor blackColor];
   [self updateBorderColor];
 
   _borderWidths = [[NSMutableDictionary alloc] init];
   _borderWidths[@(MDCCardCellStateNormal)] = @(0.f);
-  _borderWidths[@(MDCCardCellStateHighlighted)] = @(0.f);
-  _borderWidths[@(MDCCardCellStateSelected)] = @(0.f);
   [self updateBorderWidth];
 }
 
@@ -130,8 +124,8 @@
         if (!_inkAnimating) {
           [self.inkView cancelAllAnimationsAnimated:NO];
           [self.inkView startTouchBeganAtPoint:self.center
-                                          withAnimation:NO
-                                          andCompletion:nil];
+                                      animated:NO
+                                withCompletion:nil];
         }
         _inkAnimating = NO;
         self.selectedImageView.hidden = NO;
@@ -140,8 +134,8 @@
     }
     case MDCCardCellStateNormal: {
       [self.inkView startTouchEndAtPoint:_lastTouch
-                                    withAnimation:animation
-                                    andCompletion:nil];
+                                animated:NO
+                          withCompletion:nil];
       self.selectedImageView.hidden = YES;
       break;
 
@@ -181,7 +175,7 @@
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-  if (self.selecting) {
+  if (self.selectable) {
     if (selected) {
       [self setState:MDCCardCellStateSelected withAnimation:NO];
     } else {
@@ -303,7 +297,7 @@
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   _lastTouch = location;
-  if (self.selecting) {
+  if (self.selectable) {
     if (!self.selected) {
       [self setState:MDCCardCellStateSelected withAnimation:YES];
     }
@@ -314,7 +308,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-  if (self.selecting) {
+  if (self.selectable) {
     if (!self.selected) {
       [self setState:MDCCardCellStateNormal withAnimation:YES];
     }
@@ -325,7 +319,7 @@
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
-  if (self.selecting) {
+  if (self.selectable) {
     if (!self.selected) {
       [self setState:MDCCardCellStateNormal withAnimation:YES];
     }

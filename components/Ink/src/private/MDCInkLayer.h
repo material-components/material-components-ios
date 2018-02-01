@@ -74,7 +74,7 @@
 /**
  Starts the ink ripple animation at a specified point.
  */
-- (void)startInkAtPoint:(CGPoint)point withAnimation:(BOOL)animated;
+- (void)startInkAtPoint:(CGPoint)point animated:(BOOL)animated;
 
 /**
  Changes the opacity of the ink ripple depending on if touch point is contained within or
@@ -85,7 +85,7 @@
 /**
  Ends the ink ripple animation.
  */
-- (void)endInkAtPoint:(CGPoint)point withAnimation:(BOOL)animated;
+- (void)endInkAtPoint:(CGPoint)point animated:(BOOL)animated;
 
 @end
 

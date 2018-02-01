@@ -135,7 +135,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 + 10.f);
 }
 
-- (void)startInkAtPoint:(CGPoint)point withAnimation:(BOOL)animated {
+- (void)startInkAtPoint:(CGPoint)point animated:(BOOL)animated {
   CGFloat radius = self.finalRadius;
   if (self.maxRippleRadius > 0) {
     radius = self.maxRippleRadius;
@@ -248,7 +248,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   [self addAnimation:changeAnim forKey:nil];
 }
 
-- (void)endInkAtPoint:(CGPoint)point withAnimation:(BOOL)animated {
+- (void)endInkAtPoint:(CGPoint)point animated:(BOOL)animated {
   if (self.startAnimationActive) {
     self.endAnimationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   }

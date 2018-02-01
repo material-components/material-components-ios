@@ -56,17 +56,14 @@
 
   _shadowColors = [[NSMutableDictionary alloc] init];
   _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
-  _shadowColors[@(UIControlStateHighlighted)] = [UIColor blackColor];
   [self updateShadowColor];
 
   _borderColors = [[NSMutableDictionary alloc] init];
   _borderColors[@(UIControlStateNormal)] = [UIColor clearColor];
-  _borderColors[@(UIControlStateHighlighted)] = [UIColor clearColor];
   [self updateBorderColor];
 
   _borderWidths = [[NSMutableDictionary alloc] init];
   _borderWidths[@(UIControlStateNormal)] = @(0.f);
-  _borderWidths[@(UIControlStateHighlighted)] = @(0.f);
   [self updateBorderWidth];
 }
 
