@@ -126,6 +126,33 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 - (void)cancelAllAnimationsAnimated:(BOOL)animated;
 
 /**
+ Start the first part of spreading the ink at a particular point.
+
+ This begins by fading in the ink ripple when this method is called.
+
+ @param point The user interaction position in the view’s coordinate system.
+ @param animated to add the ink sublayer with animation or not.
+ @param completionBlock Block called after the completion of the animation.
+ */
+- (void)startTouchBeganAtPoint:(CGPoint)point
+                      animated:(BOOL)animated
+                withCompletion:(nullable MDCInkCompletionBlock)completionBlock;
+
+/**
+ Start the second part of evaporating the ink at a particular point.
+
+ This ends by completing the ink ripple expansion while fading out when
+ this method is called.
+
+ @param point The user interaction position in the view’s coordinate system.
+ @param animated to remove the ink sublayer with animation or not.
+ @param completionBlock Block called after the completion of the animation.
+ */
+- (void)startTouchEndAtPoint:(CGPoint)point
+                    animated:(BOOL)animated
+              withCompletion:(nullable MDCInkCompletionBlock)completionBlock;
+
+/**
  Enumerates the given view's subviews for an instance of MDCInkView and returns it if found, or
  creates and adds a new instance of MDCInkView if not.
 
