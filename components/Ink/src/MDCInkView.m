@@ -232,13 +232,13 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
     self.startInkRippleCompletionBlock = completionBlock;
     MDCInkLayer *inkLayer = [MDCInkLayer layer];
     inkLayer.inkColor = self.inkColor;
-    inkLayer.frame = self.bounds;
     inkLayer.maxRippleRadius = self.maxRippleRadius;
     inkLayer.animationDelegate = self;
     inkLayer.opacity = 0;
+    inkLayer.frame = self.bounds;
     [self.layer addSublayer:inkLayer];
-    self.activeInkLayer = inkLayer;
     [inkLayer startInkAtPoint:point animated:animated];
+    self.activeInkLayer = inkLayer;
   }
 }
 
