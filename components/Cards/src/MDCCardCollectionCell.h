@@ -111,7 +111,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
 /**
  Returns the border color for an MDCCardCellStateNormal state
 
- If no border color has been set for a state, the value for MDCCardCellStateNormal will be returned.
+ If no border color has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then nil will be returned.
 
  @param state MDCCardCellState the card state
  @return The border color for the requested state.
@@ -142,7 +143,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
  The image for the selected state.
  Default is the checked circle image.
  */
-@property(nonatomic, strong, nullable) UIImage *selectedImage;
+@property(nonatomic, strong, nullable) UIImage *selectedImage UI_APPEARANCE_SELECTOR;
 
 /**
  The tint color for the selected image.

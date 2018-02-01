@@ -16,13 +16,23 @@
 
 #import "MDCCardCollectionCell.h"
 
-#import "MaterialIcons+ic_check_circle.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
+#import "MaterialMath.h"
+#import "MaterialIcons+ic_check_circle.h"
+
+static NSString *const MDCCardCellShadowElevationsKey = @"MDCCardCellShadowElevationsKey";
+static NSString *const MDCCardCellShadowColorsKey = @"MDCCardCellShadowColorsKey";
+static NSString *const MDCCardCellBorderWidthsKey = @"MDCCardCellBorderWidthsKey";
+static NSString *const MDCCardCellBorderColorsKey = @"MDCCardCellBorderColorsKey";
+static NSString *const MDCCardCellInkViewKey = @"MDCCardCellInkViewKey";
+static NSString *const MDCCardCellSelectedImageViewKey = @"MDCCardCellSelectedImageViewKey";
+static NSString *const MDCCardCellStateKey = @"MDCCardCellStateKey";
+static NSString *const MDCCardCellSelectableKey = @"MDCCardCellSelectableKey";
+
+static const CGFloat MDCCardSelectedImagePadding = 8;
 
 @interface MDCCardCollectionCell ()
-
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
-
 @end
 
 @implementation MDCCardCollectionCell  {
@@ -31,7 +41,37 @@
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   CGPoint _lastTouch;
-  BOOL _inkAnimating;
+}
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+  self = [super initWithCoder:coder];
+  if (self) {
+    _shadowElevations = [coder decodeObjectForKey:MDCCardCellShadowElevationsKey];
+    _shadowColors = [coder decodeObjectForKey:MDCCardCellShadowColorsKey];
+    _borderWidths = [coder decodeObjectForKey:MDCCardCellBorderWidthsKey];
+    _borderColors = [coder decodeObjectForKey:MDCCardCellBorderColorsKey];
+    _inkView = [coder decodeObjectForKey:MDCCardCellInkViewKey];
+    _selectedImageView = [coder decodeObjectForKey:MDCCardCellSelectedImageViewKey];
+    _state = [coder decodeIntegerForKey:MDCCardCellStateKey];
+    _selectable = [coder decodeBoolForKey:MDCCardCellSelectableKey];
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+  [super encodeWithCoder:coder];
+  [coder encodeObject:_shadowElevations forKey:MDCCardCellShadowElevationsKey];
+  [coder encodeObject:_shadowColors forKey:MDCCardCellShadowColorsKey];
+  [coder encodeObject:_borderWidths forKey:MDCCardCellBorderWidthsKey];
+  [coder encodeObject:_borderColors forKey:MDCCardCellBorderColorsKey];
+  [coder encodeObject:_inkView forKey:MDCCardCellInkViewKey];
+  [coder encodeObject:_selectedImageView forKey:MDCCardCellSelectedImageViewKey];
+  [coder encodeInteger:_state forKey:MDCCardCellStateKey];
+  [coder encodeBool:_selectable forKey:MDCCardCellSelectableKey];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -46,111 +86,94 @@
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _inkView.usesLegacyInkRipple = NO;
-  _inkView.layer.zPosition = 101;
+  _inkView.layer.zPosition = FLT_MAX;
   [self addSubview:self.inkView];
 
-  _inkAnimating = NO;
   self.selectable = NO;
 
   [self initializeSelectedImage];
 
-  self.cornerRadius = 4.f;
-
-  _shadowElevations = [[NSMutableDictionary alloc] init];
+  _shadowElevations = [NSMutableDictionary dictionary];
   _shadowElevations[@(MDCCardCellStateNormal)] = @(1.f);
   _shadowElevations[@(MDCCardCellStateHighlighted)] = @(8.f);
   _shadowElevations[@(MDCCardCellStateSelected)] = @(8.f);
-  [self updateShadowElevation];
 
-  _shadowColors = [[NSMutableDictionary alloc] init];
+  _shadowColors = [NSMutableDictionary dictionary];
   _shadowColors[@(MDCCardCellStateNormal)] = [UIColor blackColor];
-  [self updateShadowColor];
 
-  _borderColors = [[NSMutableDictionary alloc] init];
-  _borderColors[@(MDCCardCellStateNormal)] = [UIColor clearColor];
-  [self updateBorderColor];
+  _borderColors = [NSMutableDictionary dictionary];
 
-  _borderWidths = [[NSMutableDictionary alloc] init];
+  _borderWidths = [NSMutableDictionary dictionary];
   _borderWidths[@(MDCCardCellStateNormal)] = @(0.f);
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  [self updateShadowElevation];
+  [self updateShadowColor];
   [self updateBorderWidth];
+
+  self.cornerRadius = 4.f;
+  self.layer.shadowPath = [self boundingPath].CGPath;
 }
 
 - (void)initializeSelectedImage {
   UIImage *circledCheck = [MDCIcons imageFor_ic_check_circle];
   circledCheck = [circledCheck imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.selectedImageView = [[UIImageView alloc] initWithImage:circledCheck];
-  self.selectedImageView.center = CGPointMake(
-                                    CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - 8,
-                                    (circledCheck.size.height/2) + 8);
-  self.selectedImageView.layer.zPosition = MAXFLOAT - 1;
+  self.selectedImageView.center =
+      CGPointMake(CGRectGetWidth(self.bounds) - (circledCheck.size.width/2) - MDCCardSelectedImagePadding,
+                  (circledCheck.size.height/2) + MDCCardSelectedImagePadding);
+  self.selectedImageView.layer.zPosition = _inkView.layer.zPosition - 1;
   self.selectedImageView.autoresizingMask =
-  (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
-   UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
+      (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
+       UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
   [self.contentView addSubview:self.selectedImageView];
   self.selectedImageView.hidden = YES;
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-  super.backgroundColor = backgroundColor;
-
-  /**
-   currently the selected check image uses the color
-   based on MDFTextAccessibility to fit the background color.
-   */
-  UIColor *checkColor =
-  [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                   targetTextAlpha:1.f
-                                           options:MDFTextAccessibilityOptionsNone];
-  self.selectedImageTintColor = checkColor;
-}
-
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   self.layer.cornerRadius = cornerRadius;
-  [self setNeedsLayout];
 }
 
 - (CGFloat)cornerRadius {
   return self.layer.cornerRadius;
 }
 
-- (void)setState:(MDCCardCellState)state withAnimation:(BOOL)animation {
-  _state = state;
+- (void)setState:(MDCCardCellState)state animated:(BOOL)animated {
   switch (state) {
     case MDCCardCellStateSelected: {
-      if (animation) {
-        _inkAnimating = YES;
-        [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
-      } else {
-        if (!_inkAnimating) {
+      if (_state != MDCCardCellStateHighlighted) {
+        if (animated) {
+          [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+        } else {
           [self.inkView cancelAllAnimationsAnimated:NO];
           [self.inkView startTouchBeganAtPoint:self.center
                                       animated:NO
                                 withCompletion:nil];
         }
-        _inkAnimating = NO;
-        self.selectedImageView.hidden = NO;
       }
+      self.selectedImageView.hidden = NO;
       break;
     }
     case MDCCardCellStateNormal: {
       [self.inkView startTouchEndAtPoint:_lastTouch
-                                animated:NO
+                                animated:animated
                           withCompletion:nil];
       self.selectedImageView.hidden = YES;
       break;
-
     }
     case MDCCardCellStateHighlighted: {
-      /**
-       Note: setHighlighted might get more touches began than touches ended hence the call
-       hence the call to startTouchEndedAnimationAtPoint before.
-       */
+      // Note: setHighlighted might get more touches began than touches ended hence the call
+      // hence the call to startTouchEndedAnimationAtPoint before.
       [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
       [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
       self.selectedImageView.hidden = YES;
       break;
     }
   }
+  _state = state;
   [self updateShadowElevation];
   [self updateBorderColor];
   [self updateBorderWidth];
@@ -177,16 +200,11 @@
   [super setSelected:selected];
   if (self.selectable) {
     if (selected) {
-      [self setState:MDCCardCellStateSelected withAnimation:NO];
+      [self setState:MDCCardCellStateSelected animated:NO];
     } else {
-      [self setState:MDCCardCellStateNormal withAnimation:NO];
+      [self setState:MDCCardCellStateNormal animated:NO];
     }
   }
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  self.layer.shadowPath = [self boundingPath].CGPath;
 }
 
 - (UIBezierPath *)boundingPath {
@@ -194,13 +212,9 @@
   return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
-}
-
 - (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state {
   NSNumber *elevation = _shadowElevations[@(state)];
-  if (elevation == nil) {
+  if (state != MDCCardCellStateNormal && elevation == nil) {
     elevation = _shadowElevations[@(MDCCardCellStateNormal)];
   }
   if (elevation != nil) {
@@ -217,7 +231,7 @@
 
 - (void)updateShadowElevation {
   CGFloat elevation = [self shadowElevationForState:self.state];
-  if (((MDCShadowLayer *)self.layer).elevation != elevation) {
+  if (!MDCCGFloatEqual(((MDCShadowLayer *)self.layer).elevation, elevation)) {
     self.layer.shadowPath = [self boundingPath].CGPath;
     [(MDCShadowLayer *)self.layer setElevation:elevation];
   }
@@ -236,7 +250,7 @@
 
 - (CGFloat)borderWidthForState:(MDCCardCellState)state {
   NSNumber *borderWidth = _borderWidths[@(state)];
-  if (borderWidth == nil) {
+  if (state != MDCCardCellStateNormal && borderWidth == nil) {
     borderWidth = _borderWidths[@(MDCCardCellStateNormal)];
   }
   if (borderWidth != nil) {
@@ -258,13 +272,10 @@
 
 - (UIColor *)borderColorForState:(MDCCardCellState)state {
   UIColor *borderColor = _borderColors[@(state)];
-  if (borderColor == nil) {
+  if (state != MDCCardCellStateNormal && borderColor == nil) {
     borderColor = _borderColors[@(MDCCardCellStateNormal)];
   }
-  if (borderColor != nil) {
-    return borderColor;
-  }
-  return [UIColor clearColor];
+  return borderColor;
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor forState:(MDCCardCellState)state {
@@ -280,7 +291,7 @@
 
 - (UIColor *)shadowColorForState:(MDCCardCellState)state {
   UIColor *shadowColor = _shadowColors[@(state)];
-  if (shadowColor == nil) {
+  if (state != MDCCardCellStateNormal && shadowColor == nil) {
     shadowColor = _shadowColors[@(MDCCardCellStateNormal)];
   }
   if (shadowColor != nil) {
@@ -297,34 +308,22 @@
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   _lastTouch = location;
-  if (self.selectable) {
-    if (!self.selected) {
-      [self setState:MDCCardCellStateSelected withAnimation:YES];
-    }
-  } else {
-    [self setState:MDCCardCellStateHighlighted withAnimation:YES];
+  if ((self.selectable && !self.selected) || !self.selectable) {
+    [self setState:MDCCardCellStateHighlighted animated:YES];
   }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-  if (self.selectable) {
-    if (!self.selected) {
-      [self setState:MDCCardCellStateNormal withAnimation:YES];
-    }
-  } else {
-    [self setState:MDCCardCellStateNormal withAnimation:YES];
+  if ((self.selectable && !self.selected) || !self.selectable) {
+    [self setState:MDCCardCellStateNormal animated:YES];
   }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
-  if (self.selectable) {
-    if (!self.selected) {
-      [self setState:MDCCardCellStateNormal withAnimation:YES];
-    }
-  } else {
-    [self setState:MDCCardCellStateNormal withAnimation:YES];
+  if ((self.selectable && !self.selected) || !self.selectable) {
+    [self setState:MDCCardCellStateNormal animated:YES];
   }
 }
 

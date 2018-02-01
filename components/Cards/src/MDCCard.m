@@ -16,6 +16,15 @@
 
 #import "MDCCard.h"
 
+#import "MaterialMath.h"
+
+static NSString *const MDCCardShadowElevationsKey = @"MDCCardShadowElevationsKey";
+static NSString *const MDCCardShadowColorsKey = @"MDCCardShadowColorsKey";
+static NSString *const MDCCardBorderWidthsKey = @"MDCCardBorderWidthsKey";
+static NSString *const MDCCardBorderColorsKey = @"MDCCardBorderColorsKey";
+static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
+
+
 @implementation MDCCard {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
@@ -24,12 +33,29 @@
   CGPoint _lastTouch;
 }
 
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    [self commonMDCCardInit];
+    _shadowElevations = [coder decodeObjectForKey:MDCCardShadowElevationsKey];
+    _shadowColors = [coder decodeObjectForKey:MDCCardShadowColorsKey];
+    _borderWidths = [coder decodeObjectForKey:MDCCardBorderWidthsKey];
+    _borderColors = [coder decodeObjectForKey:MDCCardBorderColorsKey];
+    _inkView = [coder decodeObjectForKey:MDCCardInkViewKey];
   }
   return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+  [super encodeWithCoder:coder];
+  [coder encodeObject:_shadowElevations forKey:MDCCardShadowElevationsKey];
+  [coder encodeObject:_shadowColors forKey:MDCCardShadowColorsKey];
+  [coder encodeObject:_borderWidths forKey:MDCCardBorderWidthsKey];
+  [coder encodeObject:_borderColors forKey:MDCCardBorderColorsKey];
+  [coder encodeObject:_inkView forKey:MDCCardInkViewKey];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -42,47 +68,42 @@
 
 - (void)commonMDCCardInit {
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-  _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                               UIViewAutoresizingFlexibleHeight);
   _inkView.usesLegacyInkRipple = NO;
-  _inkView.layer.zPosition = 101;
+  _inkView.layer.zPosition = FLT_MAX;
   [self addSubview:self.inkView];
 
-  self.cornerRadius = 4.f;
-
-  _shadowElevations = [[NSMutableDictionary alloc] init];
+  _shadowElevations = [NSMutableDictionary dictionary];
   _shadowElevations[@(UIControlStateNormal)] = @(1.f);
   _shadowElevations[@(UIControlStateHighlighted)] = @(8.f);
-  [self updateShadowElevation];
 
-  _shadowColors = [[NSMutableDictionary alloc] init];
+  _shadowColors = [NSMutableDictionary dictionary];
   _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
-  [self updateShadowColor];
 
-  _borderColors = [[NSMutableDictionary alloc] init];
-  _borderColors[@(UIControlStateNormal)] = [UIColor clearColor];
-  [self updateBorderColor];
+  _borderColors = [NSMutableDictionary dictionary];
 
-  _borderWidths = [[NSMutableDictionary alloc] init];
+  _borderWidths = [NSMutableDictionary dictionary];
   _borderWidths[@(UIControlStateNormal)] = @(0.f);
-  [self updateBorderWidth];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  [self updateShadowElevation];
+  [self updateShadowColor];
+  [self updateBorderWidth];
+
+  self.cornerRadius = 4.f;
   self.layer.shadowPath = [self boundingPath].CGPath;
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   self.layer.cornerRadius = cornerRadius;
-  [self setNeedsLayout];
 }
 
 - (CGFloat)cornerRadius {
   return self.layer.cornerRadius;
-}
-
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
 }
 
 - (UIBezierPath *)boundingPath {
@@ -92,7 +113,7 @@
 
 - (MDCShadowElevation)shadowElevationForState:(UIControlState)state {
   NSNumber *elevation = _shadowElevations[@(state)];
-  if (elevation == nil) {
+  if (state != UIControlStateNormal && elevation == nil) {
     elevation = _shadowElevations[@(UIControlStateNormal)];
   }
   if (elevation != nil) {
@@ -109,7 +130,7 @@
 
 - (void)updateShadowElevation {
   CGFloat elevation = [self shadowElevationForState:self.state];
-  if (((MDCShadowLayer *)self.layer).elevation != elevation) {
+  if (!MDCCGFloatEqual(((MDCShadowLayer *)self.layer).elevation, elevation)) {
     self.layer.shadowPath = [self boundingPath].CGPath;
     [(MDCShadowLayer *)self.layer setElevation:elevation];
   }
@@ -128,7 +149,7 @@
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
   NSNumber *borderWidth = _borderWidths[@(state)];
-  if (borderWidth == nil) {
+  if (state != UIControlStateNormal && borderWidth == nil) {
     borderWidth = _borderWidths[@(UIControlStateNormal)];
   }
   if (borderWidth != nil) {
@@ -150,13 +171,10 @@
 
 - (UIColor *)borderColorForState:(UIControlState)state {
   UIColor *borderColor = _borderColors[@(state)];
-  if (borderColor == nil) {
+  if (state != UIControlStateNormal && borderColor == nil) {
     borderColor = _borderColors[@(UIControlStateNormal)];
   }
-  if (borderColor != nil) {
-    return borderColor;
-  }
-  return [UIColor clearColor];
+  return borderColor;
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor forState:(UIControlState)state {
@@ -172,13 +190,13 @@
 
 - (UIColor *)shadowColorForState:(UIControlState)state {
   UIColor *shadowColor = _shadowColors[@(state)];
-  if (shadowColor == nil) {
+  if (state != UIControlStateNormal && shadowColor == nil) {
     shadowColor = _shadowColors[@(UIControlStateNormal)];
   }
   if (shadowColor != nil) {
     return shadowColor;
   }
-  return [UIColor clearColor];
+  return [UIColor blackColor];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
