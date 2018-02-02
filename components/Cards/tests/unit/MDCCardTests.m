@@ -129,12 +129,21 @@
   XCTAssertEqual(self.cell.selectedImageTintColor, color);
 }
 
-// TODO(#2896): Re-enable test once the icon dependencies are sorted
-//- (void)testSetSelectionImage {
-//  XCTAssertNotNil(self.cell.selectedImage);
-//  UIImage *img = self.cell.selectedImage;
-//  [self.cell setSelectedImage:[MDCIcons imageFor_ic_info]];
-//  XCTAssertNotEqual(img, self.cell.selectedImage);
-//}
+static UIImage *FakeImage(void) {
+  CGSize imageSize = CGSizeMake(24, 24);
+  UIGraphicsBeginImageContext(imageSize);
+  [UIColor.whiteColor setFill];
+  UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height));
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
+- (void)testSetSelectionImage {
+  XCTAssertNotNil(self.cell.selectedImage);
+  UIImage *img = self.cell.selectedImage;
+  [self.cell setSelectedImage:FakeImage()];
+  XCTAssertNotEqual(img, self.cell.selectedImage);
+}
 
 @end
