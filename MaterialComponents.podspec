@@ -199,7 +199,11 @@ Pod::Spec.new do |mdc|
   mdc.subspec "Cards" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/private/Icons/ic_check_circle"
+    component.dependency "MaterialComponents/private/Math"
   end
 
   mdc.subspec "Chips" do |component|
