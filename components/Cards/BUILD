@@ -22,7 +22,6 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Cards",
-    bundles = [":Bundle"],
     sdk_frameworks = [
         "CoreGraphics",
         "UIKit",
