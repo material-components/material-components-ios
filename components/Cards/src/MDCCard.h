@@ -18,7 +18,7 @@
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
-@interface MDCCard : UIControl
+@interface MDCCard : UIControl <NSSecureCoding>
 
 /**
  The corner radius for the card
