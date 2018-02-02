@@ -244,8 +244,4 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   return beginTracking;
 }
 
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 @end
