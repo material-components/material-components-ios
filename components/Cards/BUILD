@@ -55,6 +55,7 @@ ios_unit_test(
     name = "unit_tests",
     deps = [
       ":unit_test_sources",
+        "//components/private/Icons/icons/ic_info",
     ],
     minimum_os_version = "8.0",
     visibility = ["//visibility:private"],
