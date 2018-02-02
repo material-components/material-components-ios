@@ -20,6 +20,23 @@
 
 #pragma mark - Fake classes
 
+@interface CapturingMDCInkLayerSubclass : MDCInkLayer
+@property(nonatomic, strong) NSMutableArray *addedAnimations;
+
+@end
+
+@implementation CapturingMDCInkLayerSubclass
+
+- (void)addAnimation:(CAAnimation *)anim forKey:(NSString *)key {
+  if (!self.addedAnimations) {
+    self.addedAnimations = [NSMutableArray array];
+  }
+  [self.addedAnimations addObject:anim];
+  [super addAnimation:anim forKey:key];
+}
+
+@end
+
 @interface FakeMDCInkLayerAnimationDelegate : NSObject <MDCInkLayerDelegate, NSSecureCoding>
 @property(nonatomic, strong) MDCInkLayer *inkLayer;
 @end
@@ -119,6 +136,48 @@
   XCTAssertEqualWithAccuracy(unarchivedInkLayer.maxRippleRadius, inkLayer.maxRippleRadius, 0.0001);
   XCTAssertEqualObjects(unarchivedInkLayer.inkColor, inkLayer.inkColor);
   XCTAssertEqual(unarchivedInkLayer.sublayers.count, inkLayer.sublayers.count);
+}
+
+- (void)testEndAnimationTimingInTimeScaledLayer {
+  // Given
+  CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
+  inkLayer.bounds = CGRectMake(0, 0, 10, 10);
+  inkLayer.speed = 0.5f;
+  inkLayer.endAnimationDelay = (CGFloat)0.9;
+
+  // When
+  NSTimeInterval startTime = CACurrentMediaTime();
+  [inkLayer endAnimationAtPoint:CGPointMake(5, 5)];
+
+
+  // Then
+  XCTAssertEqual(inkLayer.addedAnimations.count, 1U);
+  CAAnimation *animation = inkLayer.addedAnimations.firstObject;
+  if (animation) {
+    XCTAssertEqualWithAccuracy(animation.beginTime,
+                               [inkLayer convertTime:(startTime + 0.9) fromLayer:nil],
+                               0.005);
+  }
+}
+
+- (void)testChangeAnimationTimingInTimeScaledLayer {
+  // Given
+  CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
+  inkLayer.bounds = CGRectMake(0, 0, 10, 10);
+  inkLayer.speed = 0.5f;
+
+  // When
+  NSTimeInterval startTime = CACurrentMediaTime();
+  [inkLayer changeAnimationAtPoint:CGPointMake(5, 5)];
+
+  // Then
+  XCTAssertEqual(inkLayer.addedAnimations.count, 1U);
+  CAAnimation *animation = inkLayer.addedAnimations.firstObject;
+  if (animation) {
+    XCTAssertEqualWithAccuracy(animation.beginTime,
+                               [inkLayer convertTime:startTime fromLayer:nil],
+                               0.005);
+  }
 }
 
 @end

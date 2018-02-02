@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "44.5.0"
+  mdc.version      = "44.6.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -196,10 +196,21 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  mdc.subspec "Cards" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/private/Icons/ic_check_circle"
+    component.dependency "MaterialComponents/private/Math"
+  end
+
   mdc.subspec "Chips" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/ShadowElevations"
