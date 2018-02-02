@@ -17,8 +17,6 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialCards.h"
-#import "MDCIcons.h"
-#import "MaterialIcons+ic_info.h"
 
 @interface MDCCardTests : XCTestCase
 @property(nonatomic, strong) MDCCardCollectionCell *cell;
@@ -37,19 +35,19 @@
   [self.cell layoutSubviews];
   XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 1.f);
   XCTAssertEqual(self.cell.cornerRadius, 4.f);
-  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
   self.cell.selectable = YES;
   self.cell.selected = YES;
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
-  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
   XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
                  self.cell.inkView.inkColor.CGColor);
   self.cell.selected = NO;
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
-  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
   self.cell.selected = YES;
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
-  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
   XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
                  self.cell.inkView.inkColor.CGColor);
   XCTAssert(
@@ -59,7 +57,7 @@
   self.cell.selected = NO;
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
   XCTAssertEqual(self.cell.cornerRadius, 4.f);
-  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
 }
 
 - (void)testCellLongPress {
@@ -71,7 +69,7 @@
   [self.cell touchesBegan:touches withEvent:event];
 
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
-  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
 
   [self.cell touchesEnded:touches withEvent:event];
 
@@ -90,7 +88,7 @@
   [self.cell touchesBegan:touches withEvent:event];
 
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 7.2f);
-  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
 
   [self.cell touchesEnded:touches withEvent:event];
 
@@ -131,10 +129,20 @@
   XCTAssertEqual(self.cell.selectedImageTintColor, color);
 }
 
+static UIImage *FakeImage(void) {
+  CGSize imageSize = CGSizeMake(24, 24);
+  UIGraphicsBeginImageContext(imageSize);
+  [UIColor.whiteColor setFill];
+  UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height));
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 - (void)testSetSelectionImage {
   XCTAssertNotNil(self.cell.selectedImage);
   UIImage *img = self.cell.selectedImage;
-  [self.cell setSelectedImage:[MDCIcons imageFor_ic_info]];
+  [self.cell setSelectedImage:FakeImage()];
   XCTAssertNotEqual(img, self.cell.selectedImage);
 }
 
