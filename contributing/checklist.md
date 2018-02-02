@@ -50,6 +50,8 @@ Each component must have a short video captured from either iPhone or iPhone sim
 
 
 Each component must also have a still image to use when video cannot play.
+This image should be 750 x 1334, which is the device resolution of an iPhone 8.
+If captured from a simulator, this image should only contain the pixels on screen, no bezel.
 
 1. Verify the component's `.../docs/assets` folder contains a still named `component_name.png`.
 1. Enter YES or NO

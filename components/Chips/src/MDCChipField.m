@@ -16,6 +16,8 @@
 
 #import "MDCChipField.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MaterialTextFields.h"
 
 static NSString *const MDCChipFieldTextFieldKey = @"textField";
@@ -197,17 +199,29 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
   CGRect standardizedBounds = CGRectStandardize(self.bounds);
 
+  BOOL isRTL =
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
   // Calculate the frames for all the chips and set them.
   NSArray *chipFrames = [self chipFramesForSize:standardizedBounds.size];
   for (NSUInteger index = 0; index < _chips.count; index++) {
     MDCChipView *chip = _chips[index];
-    chip.frame = [chipFrames[index] CGRectValue];
+
+    CGRect chipFrame = [chipFrames[index] CGRectValue];
+    if (isRTL) {
+      chipFrame = MDFRectFlippedHorizontally(chipFrame, CGRectGetWidth(self.bounds));
+    }
+    chip.frame = chipFrame;
   }
 
   // Get the last chip frame and calculate the text field frame from that.
   CGRect lastChipFrame = [chipFrames.lastObject CGRectValue];
-  self.textField.frame = [self frameForTextFieldForLastChipFrame:lastChipFrame
-                                                   chipFieldSize:standardizedBounds.size];
+  CGRect textFieldFrame = [self frameForTextFieldForLastChipFrame:lastChipFrame
+                                                    chipFieldSize:standardizedBounds.size];
+  if (isRTL) {
+    textFieldFrame = MDFRectFlippedHorizontally(textFieldFrame, CGRectGetWidth(self.bounds));
+  }
+  self.textField.frame = textFieldFrame;
 
   [self updateTextFieldPlaceholderText];
 }
@@ -591,6 +605,10 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   CGRect lastChipFrame = self.chips.lastObject.frame;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    lastChipFrame = MDFRectFlippedHorizontally(lastChipFrame, CGRectGetWidth(self.bounds));
+  }
+
   CGFloat availableWidth = CGRectGetWidth(self.bounds) - self.contentEdgeInsets.right -
       CGRectGetMaxX(lastChipFrame) - MDCChipFieldHorizontalMargin;
 
@@ -599,11 +617,9 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
     leftInset +=
         CGRectGetMaxX(lastChipFrame) + MDCChipFieldHorizontalMargin - self.contentEdgeInsets.left;
   }
+  defaultInsets.left = leftInset;
 
-  return UIEdgeInsetsMake(defaultInsets.top,
-                          leftInset,
-                          defaultInsets.bottom,
-                          defaultInsets.right);
+  return defaultInsets;
 }
 
 #pragma mark - UIAccessibilityContainer

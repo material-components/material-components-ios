@@ -160,6 +160,10 @@ static UIButton *DeleteButton() {
   return NO;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 @implementation ChipsSizingExampleViewController (Supplemental)
