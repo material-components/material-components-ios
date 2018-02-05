@@ -23,6 +23,7 @@ static NSString *const MDCCardShadowColorsKey = @"MDCCardShadowColorsKey";
 static NSString *const MDCCardBorderWidthsKey = @"MDCCardBorderWidthsKey";
 static NSString *const MDCCardBorderColorsKey = @"MDCCardBorderColorsKey";
 static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
+static NSString *const MDCCardCornerRadiusKey = @"MDCCardCornerRadiusKey";
 
 static const CGFloat MDCCardShadowElevationNormal = 1.f;
 static const CGFloat MDCCardShadowElevationHighlighted = 8.f;
@@ -48,6 +49,11 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
     _borderWidths = [coder decodeObjectForKey:MDCCardBorderWidthsKey];
     _borderColors = [coder decodeObjectForKey:MDCCardBorderColorsKey];
     _inkView = [coder decodeObjectForKey:MDCCardInkViewKey];
+    if ([coder containsValueForKey:MDCCardCornerRadiusKey]) {
+      self.layer.cornerRadius = (CGFloat)[coder decodeDoubleForKey:MDCCardCornerRadiusKey];
+    } else {
+      self.layer.cornerRadius = MDCCardCornerRadiusDefault;
+    }
     [self commonMDCCardInit];
   }
   return self;
@@ -56,6 +62,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.layer.cornerRadius = MDCCardCornerRadiusDefault;
     [self commonMDCCardInit];
   }
   return self;
@@ -90,10 +97,10 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
     _borderWidths = [NSMutableDictionary dictionary];
   }
 
-  self.layer.cornerRadius = MDCCardCornerRadiusDefault;
   [self updateShadowElevation];
   [self updateShadowColor];
   [self updateBorderWidth];
+  [self updateBorderColor];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
@@ -103,6 +110,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   [coder encodeObject:_borderWidths forKey:MDCCardBorderWidthsKey];
   [coder encodeObject:_borderColors forKey:MDCCardBorderColorsKey];
   [coder encodeObject:_inkView forKey:MDCCardInkViewKey];
+  [coder encodeDouble:self.layer.cornerRadius forKey:MDCCardCornerRadiusKey];
 }
 
 - (void)layoutSubviews {
