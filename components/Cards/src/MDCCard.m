@@ -50,7 +50,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
     _borderColors = [coder decodeObjectForKey:MDCCardBorderColorsKey];
     _inkView = [coder decodeObjectForKey:MDCCardInkViewKey];
     if ([coder containsValueForKey:MDCCardCornerRadiusKey]) {
-      self.layer.cornerRadius = [coder decodeDoubleForKey:MDCCardCornerRadiusKey];
+      self.layer.cornerRadius = (CGFloat)[coder decodeDoubleForKey:MDCCardCornerRadiusKey];
     } else {
       self.layer.cornerRadius = MDCCardCornerRadiusDefault;
     }

@@ -65,7 +65,7 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
     _state = [coder decodeIntegerForKey:MDCCardCellStateKey];
     _selectable = [coder decodeBoolForKey:MDCCardCellSelectableKey];
     if ([coder containsValueForKey:MDCCardCellCornerRadiusKey]) {
-      self.layer.cornerRadius = [coder decodeDoubleForKey:MDCCardCellCornerRadiusKey];
+      self.layer.cornerRadius = (CGFloat)[coder decodeDoubleForKey:MDCCardCellCornerRadiusKey];
     } else {
       self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
     }
