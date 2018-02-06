@@ -53,6 +53,27 @@ pod install
 
 - - -
 
+### Overview
+
+Cards can be used either as a standalone `UIControl`, or as a `UICollectionViewCell`.
+
+A card consists of different visual styling based on the current state it is in.
+
+When treated as a `UIControl` (`MDCCard`), it has a default styling (`UIControlStateNormal`), and a highlighted styling (`UIControlStateHighlighted`) when interacted with.
+
+When treated as a `UICollectionViewCell` (`MDCCardCollectionCell`), it has a default styling (`MDCCardCellStateNormal`), a highlighted styling (`MDCCardCellStateHighlighted`), and lastly a selected styling (`MDCCardCellStateSelected`).
+
+Customization to the card is exposed via its API either in `MDCCard` or `MDCCardCollectionCell`. Currently the card consists of these customizations:
+* The border width for a specific state
+* The border color for a specific state
+* The shadow elevation for a specific state
+* The shadow color for a specific state
+* The corner radius for the card
+
+(`MDCCardCollectionCell` customization only):
+* Changing the image that appears in the Selected state.
+* Changing the image tint color that appears in the Selected state.
+
 ### Cards Classes
 
 #### Card
