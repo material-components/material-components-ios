@@ -27,14 +27,31 @@ Cards adhere to Material Design layout and styling.
   <li class="icon-list-item icon-list-item--spec">
     <a href="https://material.io/guidelines/components/cards.htm">Material Design guidelines: Cards</a>
   </li>
-  <li class="icon-list-item icon-list-item--link">
-    <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html">API: MDCTextField</a>
-  </li>
-  <li class="icon-list-item icon-list-item--link">
-    <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCMultilineTextField.html">API: MDCMultilineTextField</a>
-  </li>
 </ul>
 
+## Installation
+
+### Requirements
+
+- Xcode 8.0 or higher.
+- iOS SDK version 8.0 or higher.
+- To use the baked UICollectionView or UICollectionViewController reordering, then you must use iOS SDK version 9.0 or higher.
+
+### Installation with CocoaPods
+
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+
+```
+pod 'MaterialComponents/Cards'
+```
+
+Then run the following command:
+
+``` bash
+pod install
+```
+
+- - -
 
 ### Cards Classes
 
