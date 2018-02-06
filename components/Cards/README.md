@@ -31,12 +31,6 @@ Cards adhere to Material Design layout and styling.
 
 ## Installation
 
-### Requirements
-
-- Xcode 8.0 or higher.
-- iOS SDK version 8.0 or higher.
-- To use the baked UICollectionView or UICollectionViewController reordering, then you must use iOS SDK version 9.0 or higher.
-
 ### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
@@ -55,9 +49,9 @@ pod install
 
 ### Overview
 
-Cards can be used either as a standalone `UIControl`, or as a `UICollectionViewCell`.
+Cards provides two different versions, `MDCCard` inheriting from `UIControl` and `MDCCardCollectionCell` inheriting from `UICollectionViewCell`.
 
-A card consists of different visual styling based on the current state it is in.
+A card's state determines its visual styling.
 
 When treated as a `UIControl` (`MDCCard`), it has a default styling (`UIControlStateNormal`), and a highlighted styling (`UIControlStateHighlighted`) when interacted with.
 
