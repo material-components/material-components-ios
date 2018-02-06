@@ -177,37 +177,44 @@ UIImageView *imageView = [[UIImageView alloc] init];
 #### Swift
 
 ``` swift
-let card = MDCCard()
+collectionView.register(MDCCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
 
-// Customization (optional)
-card.cornerRadius = 8
-card.setShadowElevation(6, for: .highlighted)
-card.setBorderWidth(1, for: .normal)
-card.setBorderColor(UIColor.brown, for: .normal)
-
-// Adding content inside a card (optional)
-let imageView = UIImageView()
-card.addSubview(imageView)
-
-view.addSubview(card)
+func collectionView(_ collectionView: UICollectionView,
+                    cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
+                                                for: indexPath) as! MDCCardCollectionCell
+  // If you wanted to have the card show the selected state when tapped
+  // then you need to turn isSelectable to true, otherwise the default is false.
+  cell.isSelectable = true
+  
+  cell.selectedImageTintColor = .blue
+  cell.cornerRadius = 8
+  cell.setShadowElevation(6, for: .selected)
+  cell.setShadowColor(UIColor.black, for: .highlighted)
+  return cell
+}
 ```
 
 #### Objective-C
 
 ``` objc
-MDCCard *card = [[MDCCard alloc] init];
+[self.collectionView registerClass:[MDCCardCollectionCell class]
+        forCellWithReuseIdentifier:@"Cell"];
 
-// Customization (optional)
-[card setCornerRadius:8.f];
-[card setShadowElevation:6.f forState:UIControlStateHighlighted];
-[card setBorderWidth:1.f forState:UIControlStateNormal];
-[card setBorderColor:[UIColor brownColor] forState:UIControlStateNormal];
-
-// Adding content inside a card (optional)
-UIImageView *imageView = [[UIImageView alloc] init];
-[card addSubview:imageView];
-
-[self.view addSubview:card];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCardCollectionCell *cell =
+  [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell"
+                                            forIndexPath:indexPath];
+  // If you wanted to have the card show the selected state when tapped
+  // then you need to turn selectable to true, otherwise the default is false.
+  [cell setSelectable:YES];
+  
+  [cell setSelectedImageTintColor:[UIColor blueColor]];
+  [cell setCornerRadius:8.f];
+  [cell setShadowElevation:6.f forState:MDCCardCellStateSelected];
+  [cell setShadowColor:[UIColor blackColor] forState:MDCCardCellStateHighlighted];
+}
 ```
 <!--</div>-->
 
