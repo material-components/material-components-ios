@@ -133,7 +133,83 @@ import MaterialComponents.MaterialCards
 
 ### Use `MDCCard` as a base class for your custom card
 
-### Use `MDCCardCollectionCell` as a base class for your custom cell
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+``` swift
+let card = MDCCard()
+
+// Customization (optional)
+card.cornerRadius = 8
+card.setShadowElevation(6, for: .highlighted)
+card.setBorderWidth(1, for: .normal)
+card.setBorderColor(UIColor.brown, for: .normal)
+
+// Adding content inside a card (optional)
+let imageView = UIImageView()
+card.addSubview(imageView)
+
+view.addSubview(card)
+```
+
+#### Objective-C
+
+``` objc
+MDCCard *card = [[MDCCard alloc] init];
+
+// Customization (optional)
+[card setCornerRadius:8.f];
+[card setShadowElevation:6.f forState:UIControlStateHighlighted];
+[card setBorderWidth:1.f forState:UIControlStateNormal];
+[card setBorderColor:[UIColor brownColor] forState:UIControlStateNormal];
+
+// Adding content inside a card (optional)
+UIImageView *imageView = [[UIImageView alloc] init];
+[card addSubview:imageView];
+
+[self.view addSubview:card];
+```
+<!--</div>-->
+
+### Use `MDCCardCollectionCell` as a base class for your custom collection view cell
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+``` swift
+let card = MDCCard()
+
+// Customization (optional)
+card.cornerRadius = 8
+card.setShadowElevation(6, for: .highlighted)
+card.setBorderWidth(1, for: .normal)
+card.setBorderColor(UIColor.brown, for: .normal)
+
+// Adding content inside a card (optional)
+let imageView = UIImageView()
+card.addSubview(imageView)
+
+view.addSubview(card)
+```
+
+#### Objective-C
+
+``` objc
+MDCCard *card = [[MDCCard alloc] init];
+
+// Customization (optional)
+[card setCornerRadius:8.f];
+[card setShadowElevation:6.f forState:UIControlStateHighlighted];
+[card setBorderWidth:1.f forState:UIControlStateNormal];
+[card setBorderColor:[UIColor brownColor] forState:UIControlStateNormal];
+
+// Adding content inside a card (optional)
+UIImageView *imageView = [[UIImageView alloc] init];
+[card addSubview:imageView];
+
+[self.view addSubview:card];
+```
+<!--</div>-->
 
 - - -
 
