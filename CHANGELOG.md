@@ -1,3 +1,13 @@
+# 44.6.1
+
+## Component changes
+
+### MDCIcons
+
+Added extra guard to prevent crash cause by adding nil to a NSCache.
+
+---
+
 # 44.6.0
 
 ## API changes
