@@ -221,16 +221,12 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
-  [super setHighlighted: highlighted];
-  if (highlighted) {
-    // Note: setHighlighted: can get getting more calls with YES than NO when clicking rapidly.
-    // To guard against ink never going away and darkening our card we call
-    // startTouchEndedAnimationAtPoint:completion:.
-    [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+  if (highlighted && !self.highlighted) {
     [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
-  } else {
+  } else if (!highlighted && self.highlighted) {
     [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
   }
+  [super setHighlighted:highlighted];
   [self updateShadowElevation];
   [self updateBorderColor];
   [self updateBorderWidth];
