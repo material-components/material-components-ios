@@ -49,14 +49,6 @@
   if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
     [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
   }
-
-  if ([textInputControllerClass
-          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
-    Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
-        (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    [textInputControllerFloatingPlaceholderClass
-        setFloatingPlaceholderNormalColorDefault:colorScheme.primaryColor];
-  }
 }
 #if !defined(__IPHONE_11_0)
 #pragma clang diagnostic pop
