@@ -56,7 +56,6 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 
   // Then
   XCTAssertNotNil(alert.actions);
-  XCTAssertNotNil(alert.mdm_transitionController.transition);
   XCTAssertNil(alert.title);
   XCTAssertNil(alert.message);
 }
@@ -68,7 +67,6 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 
   // Then
   XCTAssertNotNil(alert.actions);
-  XCTAssertNotNil(alert.mdm_transitionController.transition);
   XCTAssertEqualObjects(alert.title, @"title");
   XCTAssertEqualObjects(alert.message, @"message");
 }
