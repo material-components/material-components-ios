@@ -19,11 +19,11 @@
 #import "MaterialPalettes.h"
 #import "MaterialThemes.h"
 
-@interface MaterialThemesTests : XCTestCase
+@interface MDCTonalPaletteTests : XCTestCase
 
 @end
 
-@implementation MaterialThemesTests
+@implementation MDCTonalPaletteTests
 
 - (void)testTonalPaletteEncodingDecoding {
 
@@ -56,10 +56,12 @@
   [unarchiver finishDecoding];
 
   // Then
-  XCTAssertEqual(decodedTonalPalette.colors.count, tonalPalette.colors.count);
+  XCTAssertTrue([decodedTonalPalette.colors isEqualToArray:tonalPalette.colors]);
   XCTAssertEqual(decodedTonalPalette.mainColorIndex, tonalPalette.mainColorIndex);
   XCTAssertEqual(decodedTonalPalette.darkColorIndex, tonalPalette.darkColorIndex);
-  XCTAssertEqual(decodedTonalPalette.lightColorIndex, tonalPalette.lightColorIndex);
+  XCTAssertEqual(decodedTonalPalette.lightColor, tonalPalette.lightColor);
+  XCTAssertEqual(decodedTonalPalette.mainColor, tonalPalette.mainColor);
+  XCTAssertEqual(decodedTonalPalette.darkColor, tonalPalette.darkColor);
 }
 
 @end
