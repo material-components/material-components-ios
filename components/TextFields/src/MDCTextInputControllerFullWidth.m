@@ -137,8 +137,8 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   if (self) {
     [self commonMDCTextInputControllerFullWidthInitialization];
 
-    _characterCounter =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthCharacterCounterKey];
+    _characterCounter = [aDecoder decodeObjectOfClass:[NSObject<MDCTextInputCharacterCounter> class]
+                                               forKey:MDCTextInputControllerFullWidthCharacterCounterKey];
     if ([aDecoder containsValueForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey]) {
       _characterCountMax =
           [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountMaxKey];
@@ -147,16 +147,18 @@ static UIFont *_trailingUnderlineLabelFontDefault;
       _characterCountViewMode =
           [aDecoder decodeIntegerForKey:MDCTextInputControllerFullWidthCharacterCountViewModeKey];
     }
-    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthErrorColorKey];
-    _inlinePlaceholderColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
-    _inlinePlaceholderFont =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthInlinePlaceholderFontKey];
-    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthTextInputKey];
-    _trailingUnderlineLabelFont =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelFontKey];
-    _trailingUnderlineLabelTextColor = [aDecoder
-        decodeObjectForKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
+    _errorColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                         forKey:MDCTextInputControllerFullWidthErrorColorKey];
+    _inlinePlaceholderColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                     forKey:MDCTextInputControllerFullWidthInlinePlaceholderColorKey];
+    _inlinePlaceholderFont = [aDecoder decodeObjectOfClass:[UIFont class]
+                                                    forKey:MDCTextInputControllerFullWidthInlinePlaceholderFontKey];
+    _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
+                                        forKey:MDCTextInputControllerFullWidthInlinePlaceholderFontKey];
+    _trailingUnderlineLabelFont = [aDecoder decodeObjectOfClass:[UIFont class]
+                                                         forKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelFontKey];
+    _trailingUnderlineLabelTextColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                              forKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelTextColor];
   }
   return self;
 }
@@ -172,7 +174,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  if ([self.characterCounter conformsToProtocol:@protocol(NSCoding)]) {
+  if ([self.characterCounter conformsToProtocol:@protocol(NSSecureCoding)]) {
     [aCoder encodeObject:self.characterCounter
                   forKey:MDCTextInputControllerFullWidthCharacterCounterKey];
   }
@@ -740,6 +742,12 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 + (void)setUnderlineViewModeDefault:(__unused UITextFieldViewMode)underlineViewModeDefault {
   // Not implemented. Underline is never shown.
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+  return YES;
 }
 
 #pragma mark - Layout
