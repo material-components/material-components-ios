@@ -275,8 +275,6 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MDFInternationalization"
-    component.dependency "MotionAnimator", "~> 2.5"
-    component.dependency "MotionTransitioning", "~> 5.0"
   end
 
   mdc.subspec "Dialogs+Extensions" do |component|
