@@ -61,6 +61,7 @@ static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkC
     if ([coder containsValueForKey:MDCTonalPaletteColorsKey]) {
       _colors = [coder decodeObjectOfClass:[NSArray class] forKey:MDCTonalPaletteColorsKey];
     }
+      
 
     if ([coder containsValueForKey:MDCTonalPaletteMainColorIndexKey]) {
       _mainColorIndex = [coder decodeIntegerForKey:MDCTonalPaletteMainColorIndexKey];
