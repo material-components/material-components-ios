@@ -238,7 +238,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                forKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
     _leadingUnderlineLabelTextColor = [aDecoder
         decodeObjectOfClass:[UIColor class]
-                     forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
+                     forKey:MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor];
     _normalColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                           forKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
     _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]

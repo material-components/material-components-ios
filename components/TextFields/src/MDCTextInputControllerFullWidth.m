@@ -158,7 +158,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
                                forKey:MDCTextInputControllerFullWidthInlinePlaceholderFontKey];
     _textInput =
         [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
-                               forKey:MDCTextInputControllerFullWidthInlinePlaceholderFontKey];
+                               forKey:MDCTextInputControllerFullWidthTextInputKey];
     _trailingUnderlineLabelFont =
         [aDecoder decodeObjectOfClass:[UIFont class]
                                forKey:MDCTextInputControllerFullWidthTrailingUnderlineLabelFontKey];
