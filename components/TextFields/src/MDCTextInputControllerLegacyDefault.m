@@ -205,9 +205,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (self) {
     [self commonMDCTextInputControllerLegacyDefaultInitialization];
 
-    _activeColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
+    _activeColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                          forKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
     _characterCounter =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
+        [aDecoder decodeObjectOfClass:[NSObject<MDCTextInputCharacterCounter> class]
+                               forKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
+
     if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey]) {
       _characterCountMax =
           [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey];
@@ -218,22 +221,31 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey];
     }
     _disabledColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
-    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultErrorColorKey];
+        [aDecoder decodeObjectOfClass:[UIColor class]
+                               forKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
+    _errorColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                         forKey:MDCTextInputControllerLegacyDefaultErrorColorKey];
     _floatingEnabled =
         [aDecoder decodeBoolForKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
     _floatingPlaceholderNormalColor = [aDecoder
-        decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
+        decodeObjectOfClass:[UIColor class]
+                     forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
     _floatingPlaceholderScale = [aDecoder
-        decodeObjectForKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
+        decodeObjectOfClass:[NSNumber class]
+                     forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
     _inlinePlaceholderColor =
-        [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
+        [aDecoder decodeObjectOfClass:[UIColor class]
+                               forKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
     _leadingUnderlineLabelTextColor = [aDecoder
-        decodeObjectForKey:MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor];
-    _normalColor = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
-    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerLegacyDefaultTextInputKey];
+        decodeObjectOfClass:[UIColor class]
+                     forKey:MDCTextInputControllerLegacyDefaultLeadingUnderlineLabelTextColor];
+    _normalColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                          forKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
+    _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
+                                        forKey:MDCTextInputControllerLegacyDefaultTextInputKey];
     _trailingUnderlineLabelTextColor = [aDecoder
-        decodeObjectForKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
+        decodeObjectOfClass:[UIColor class]
+                     forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
     if ([aDecoder
             containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey]) {
       _underlineHeightActive = (float)[aDecoder
@@ -266,7 +278,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.activeColor forKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
-  if ([self.characterCounter conformsToProtocol:@protocol(NSCoding)]) {
+  if ([self.characterCounter conformsToProtocol:@protocol(NSSecureCoding)]) {
     [aCoder encodeObject:self.characterCounter
                   forKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
   }
@@ -1265,6 +1277,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (void)setUnderlineViewModeDefault:(UITextFieldViewMode)underlineViewModeDefault {
   _underlineViewModeDefault = underlineViewModeDefault;
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+  return YES;
 }
 
 #pragma mark - Layout
