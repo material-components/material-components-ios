@@ -170,14 +170,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                forKey:MDCTextInputFundamentPlaceholderLabelKey];
     _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
                                         forKey:MDCTextInputFundamentTextInputKey];
-    _textColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                        forKey:MDCTextInputFundamentTextColorKey];
+    _textColor =
+        [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputFundamentTextColorKey];
     if ([aDecoder containsValueForKey:MDCTextInputFundamentTextInsetsModeKey]) {
       _textInsetsMode = (MDCTextInputTextInsetsMode)
           [aDecoder decodeIntegerForKey:MDCTextInputFundamentTextInsetsModeKey];
     }
-    _trailingUnderlineLabel = [aDecoder decodeObjectOfClass:[UILabel class]
-                                                     forKey:MDCTextInputFundamentTrailingLabelKey];
+    _trailingUnderlineLabel =
+        [aDecoder decodeObjectOfClass:[UILabel class] forKey:MDCTextInputFundamentTrailingLabelKey];
     _underline = [aDecoder decodeObjectOfClass:[MDCTextInputUnderlineView class]
                                         forKey:MDCTextInputFundamentUnderlineViewKey];
 

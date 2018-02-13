@@ -53,10 +53,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     [self commonMDCUnderlineViewInit];
 
-    _color = [coder decodeObjectOfClass:[UIColor class]
-                                 forKey:MDCTextInputUnderlineColorKey];
-    _disabledColor = [coder decodeObjectOfClass:[UIColor class]
-                                         forKey:MDCTextInputUnderlineDisabledColorKey];
+    _color = [coder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputUnderlineColorKey];
+    _disabledColor =
+        [coder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputUnderlineDisabledColorKey];
     _enabled = [coder decodeBoolForKey:MDCTextInputUnderlineEnabledKey];
     _lineHeight = (CGFloat)[coder decodeFloatForKey:MDCTextInputUnderlineLineHeightKey];
   }

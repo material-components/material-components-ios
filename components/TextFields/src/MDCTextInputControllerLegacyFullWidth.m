@@ -139,8 +139,9 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   if (self) {
     [self commonMDCTextInputControllerLegacyFullWidthInitialization];
 
-    _characterCounter = [aDecoder decodeObjectOfClass:[NSObject <MDCTextInputCharacterCounter> class]
-                                               forKey:MDCTextInputControllerLegacyFullWidthCharacterCounterKey];
+    _characterCounter =
+        [aDecoder decodeObjectOfClass:[NSObject<MDCTextInputCharacterCounter> class]
+                               forKey:MDCTextInputControllerLegacyFullWidthCharacterCounterKey];
     if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey]) {
       _characterCountMax =
           [aDecoder decodeIntegerForKey:MDCTextInputControllerLegacyFullWidthCharacterCountMaxKey];
@@ -152,16 +153,20 @@ static UIFont *_trailingUnderlineLabelFontDefault;
     }
     _errorColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                          forKey:MDCTextInputControllerLegacyFullWidthErrorColorKey];
-    _inlinePlaceholderColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                     forKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey];
-    _inlinePlaceholderFont = [aDecoder decodeObjectOfClass:[UIFont class]
-                                                    forKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderFontKey];
-    _textInput = [aDecoder decodeObjectOfClass:[UIView <MDCTextInput> class]
+    _inlinePlaceholderColor = [aDecoder
+        decodeObjectOfClass:[UIColor class]
+                     forKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderColorKey];
+    _inlinePlaceholderFont = [aDecoder
+        decodeObjectOfClass:[UIFont class]
+                     forKey:MDCTextInputControllerLegacyFullWidthInlinePlaceholderFontKey];
+    _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
                                         forKey:MDCTextInputControllerLegacyFullWidthTextInputKey];
-    _trailingUnderlineLabelFont = [aDecoder decodeObjectOfClass:[UIFont class]
-                                                         forKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelFontKey];
-    _trailingUnderlineLabelTextColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                              forKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelTextColor];
+    _trailingUnderlineLabelFont = [aDecoder
+        decodeObjectOfClass:[UIFont class]
+                     forKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelFontKey];
+    _trailingUnderlineLabelTextColor = [aDecoder
+        decodeObjectOfClass:[UIColor class]
+                     forKey:MDCTextInputControllerLegacyFullWidthTrailingUnderlineLabelTextColor];
   }
   return self;
 }

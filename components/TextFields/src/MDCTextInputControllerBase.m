@@ -215,37 +215,46 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                           forKey:MDCTextInputControllerBaseActiveColorKey];
     _borderFillColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                               forKey:MDCTextInputControllerBaseBorderFillColorKey];
-    _characterCounter = [aDecoder decodeObjectOfClass:[NSObject <MDCTextInputCharacterCounter> class]
-                                               forKey:MDCTextInputControllerBaseCharacterCounterKey];
+    _characterCounter =
+        [aDecoder decodeObjectOfClass:[NSObject<MDCTextInputCharacterCounter> class]
+                               forKey:MDCTextInputControllerBaseCharacterCounterKey];
     _disabledColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                             forKey:MDCTextInputControllerBaseDisabledColorKey];
     _errorColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                          forKey:MDCTextInputControllerBaseErrorColorKey];
     _expandsOnOverflow = [aDecoder decodeBoolForKey:MDCTextInputControllerBaseExpandsOnOverflowKey];
     _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerBaseFloatingEnabledKey];
-    _floatingPlaceholderNormalColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                             forKey:MDCTextInputControllerBaseNormalColorKey];
-    _floatingPlaceholderScale = [aDecoder decodeObjectOfClass:[NSNumber class]
-                                                       forKey:MDCTextInputControllerBaseFloatingPlaceholderScaleKey];
-    _inlinePlaceholderColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                     forKey:MDCTextInputControllerBaseInlinePlaceholderColorKey];
-    _inlinePlaceholderFont = [aDecoder decodeObjectOfClass:[UIFont class]
-                                                    forKey:MDCTextInputControllerBaseInlinePlaceholderFontKey];
-    _leadingUnderlineLabelFont = [aDecoder decodeObjectOfClass:[UIFont class]
-                                                        forKey:MDCTextInputControllerBaseLeadingUnderlineLabelFontKey];
-    _leadingUnderlineLabelTextColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                             forKey:MDCTextInputControllerBaseLeadingUnderlineLabelTextColor];
+    _floatingPlaceholderNormalColor =
+        [aDecoder decodeObjectOfClass:[UIColor class]
+                               forKey:MDCTextInputControllerBaseNormalColorKey];
+    _floatingPlaceholderScale =
+        [aDecoder decodeObjectOfClass:[NSNumber class]
+                               forKey:MDCTextInputControllerBaseFloatingPlaceholderScaleKey];
+    _inlinePlaceholderColor =
+        [aDecoder decodeObjectOfClass:[UIColor class]
+                               forKey:MDCTextInputControllerBaseInlinePlaceholderColorKey];
+    _inlinePlaceholderFont =
+        [aDecoder decodeObjectOfClass:[UIFont class]
+                               forKey:MDCTextInputControllerBaseInlinePlaceholderFontKey];
+    _leadingUnderlineLabelFont =
+        [aDecoder decodeObjectOfClass:[UIFont class]
+                               forKey:MDCTextInputControllerBaseLeadingUnderlineLabelFontKey];
+    _leadingUnderlineLabelTextColor =
+        [aDecoder decodeObjectOfClass:[UIColor class]
+                               forKey:MDCTextInputControllerBaseLeadingUnderlineLabelTextColor];
     _minimumLines = [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseMinimumLinesKey];
     _normalColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                           forKey:MDCTextInputControllerBaseNormalColorKey];
     if ([aDecoder containsValueForKey:MDCTextInputControllerBaseTextInputKey]) {
-      _textInput = [aDecoder decodeObjectOfClass:[UIView <MDCTextInput> class]
+      _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
                                           forKey:MDCTextInputControllerBaseTextInputKey];
     }
-    _trailingUnderlineLabelFont = [aDecoder decodeObjectOfClass:[UIFont class]
-                                                         forKey:MDCTextInputControllerBaseTrailingUnderlineLabelFontKey];
-    _trailingUnderlineLabelTextColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                              forKey:MDCTextInputControllerBaseTrailingUnderlineLabelTextColor];
+    _trailingUnderlineLabelFont =
+        [aDecoder decodeObjectOfClass:[UIFont class]
+                               forKey:MDCTextInputControllerBaseTrailingUnderlineLabelFontKey];
+    _trailingUnderlineLabelTextColor =
+        [aDecoder decodeObjectOfClass:[UIColor class]
+                               forKey:MDCTextInputControllerBaseTrailingUnderlineLabelTextColor];
     _underlineHeightActive =
         [aDecoder decodeFloatForKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
     _underlineHeightNormal =

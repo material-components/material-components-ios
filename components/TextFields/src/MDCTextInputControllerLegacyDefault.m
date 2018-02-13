@@ -207,8 +207,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
     _activeColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                           forKey:MDCTextInputControllerLegacyDefaultActiveColorKey];
-    _characterCounter = [aDecoder decodeObjectOfClass:[NSObject <MDCTextInputCharacterCounter> class]
-                                               forKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
+    _characterCounter =
+        [aDecoder decodeObjectOfClass:[NSObject<MDCTextInputCharacterCounter> class]
+                               forKey:MDCTextInputControllerLegacyDefaultCharacterCounterKey];
 
     if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyDefaultCharacterCountMaxKey]) {
       _characterCountMax =
@@ -219,26 +220,32 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       _characterCountViewMode = (UITextFieldViewMode)[aDecoder
           decodeIntegerForKey:MDCTextInputControllerLegacyDefaultCharacterCountViewModeKey];
     }
-    _disabledColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                            forKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
+    _disabledColor =
+        [aDecoder decodeObjectOfClass:[UIColor class]
+                               forKey:MDCTextInputControllerLegacyDefaultDisabledColorKey];
     _errorColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                          forKey:MDCTextInputControllerLegacyDefaultErrorColorKey];
     _floatingEnabled =
         [aDecoder decodeBoolForKey:MDCTextInputControllerLegacyDefaultFloatingEnabledKey];
-    _floatingPlaceholderNormalColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                             forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
-    _floatingPlaceholderScale = [aDecoder decodeObjectOfClass:[NSNumber class]
-                                                       forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
-    _inlinePlaceholderColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                     forKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
-    _leadingUnderlineLabelTextColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                             forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
+    _floatingPlaceholderNormalColor = [aDecoder
+        decodeObjectOfClass:[UIColor class]
+                     forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
+    _floatingPlaceholderScale = [aDecoder
+        decodeObjectOfClass:[NSNumber class]
+                     forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleKey];
+    _inlinePlaceholderColor =
+        [aDecoder decodeObjectOfClass:[UIColor class]
+                               forKey:MDCTextInputControllerLegacyDefaultInlinePlaceholderColorKey];
+    _leadingUnderlineLabelTextColor = [aDecoder
+        decodeObjectOfClass:[UIColor class]
+                     forKey:MDCTextInputControllerLegacyDefaultFloatingPlaceholderNormalColorKey];
     _normalColor = [aDecoder decodeObjectOfClass:[UIColor class]
                                           forKey:MDCTextInputControllerLegacyDefaultNormalColorKey];
-    _textInput = [aDecoder decodeObjectOfClass:[UIView <MDCTextInput> class]
+    _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
                                         forKey:MDCTextInputControllerLegacyDefaultTextInputKey];
-    _trailingUnderlineLabelTextColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                              forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
+    _trailingUnderlineLabelTextColor = [aDecoder
+        decodeObjectOfClass:[UIColor class]
+                     forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
     if ([aDecoder
             containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey]) {
       _underlineHeightActive = (float)[aDecoder
