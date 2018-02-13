@@ -226,7 +226,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _floatingEnabled = [aDecoder decodeBoolForKey:MDCTextInputControllerBaseFloatingEnabledKey];
     _floatingPlaceholderNormalColor =
         [aDecoder decodeObjectOfClass:[UIColor class]
-                               forKey:MDCTextInputControllerBaseNormalColorKey];
+                               forKey:MDCTextInputControllerBaseFloatingPlaceholderNormalColorKey];
     _floatingPlaceholderScale =
         [aDecoder decodeObjectOfClass:[NSNumber class]
                                forKey:MDCTextInputControllerBaseFloatingPlaceholderScaleKey];
