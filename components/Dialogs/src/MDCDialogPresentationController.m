@@ -16,12 +16,8 @@
 
 #import "MDCDialogPresentationController.h"
 
-#import "MDCDialogTransition.h"
 #import "MaterialKeyboardWatcher.h"
 #import "private/MDCDialogShadowedView.h"
-#import "private/MDCDialogTransitionMotionSpec.h"
-#import <MotionAnimator/MotionAnimator.h>
-#import <MotionTransitioning/MotionTransitioning.h>
 
 static CGFloat MDCDialogMinimumWidth = 280.0f;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
@@ -29,22 +25,20 @@ static CGFloat MDCDialogMinimumWidth = 280.0f;
 // Side margins set to 20 until we have a resolution
 static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
-@interface MDCDialogPresentationController () <MDMTransition>
+@interface MDCDialogPresentationController ()
 
 // View matching the container's bounds that dims the entire screen and catchs taps to dismiss.
 @property(nonatomic) UIView *dimmingView;
 
-// A settable version of the parent presentedView API.
-@property(nonatomic) UIView *presentedView;
+// Tracking view that adds a shadow under the presented view. This view's frame should always match
+// the presented view's.
+@property(nonatomic) UIView *trackingView;
 
 @end
 
 @implementation MDCDialogPresentationController {
   UITapGestureRecognizer *_dismissGestureRecognizer;
 }
-
-// We've made presentedView writable, so we need to synthesize the setter.
-@synthesize presentedView = _presentedView;
 
 #pragma mark - UIPresentationController
 
@@ -70,7 +64,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
     [_dimmingView addGestureRecognizer:_dismissGestureRecognizer];
 
-    self.presentedView = [[MDCDialogShadowedView alloc] init];
+    _trackingView = [[MDCDialogShadowedView alloc] init];
 
     [self registerKeyboardNotifications];
   }
@@ -121,12 +115,10 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return presentedViewFrame;
 }
 
-- (BOOL)isDrivenByMaterialMotion {
-  return self.presentedViewController.mdm_transitionController.activeTransition != nil;
-}
-
 - (void)presentationTransitionWillBegin {
-  [super presentationTransitionWillBegin];
+  // TODO: Follow the Material spec description of Autonomous surface creation for both
+  // presentation and dismissal of the dialog.
+  // https://material.io/guidelines/motion/choreography.html#choreography-creation
 
   // Set the dimming view to the container's bounds and fully transparent.
   self.dimmingView.frame = self.containerView.bounds;
@@ -135,27 +127,24 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
   // Set the shadowing view to the same frame as the presented view.
   CGRect presentedFrame = [self frameOfPresentedViewInContainerView];
-  self.presentedView.frame = presentedFrame;
-  [self.containerView addSubview:self.presentedView];
+  self.trackingView.frame = presentedFrame;
+  self.trackingView.alpha = 0.0f;
+  [self.containerView addSubview:self.trackingView];
 
-  self.presentedViewController.view.frame = self.presentedView.bounds;
-  self.presentedViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                                        | UIViewAutoresizingFlexibleHeight);
-  [self.presentedView addSubview:self.presentedViewController.view];
-
-  // Compatibility fall-back for when clients are using this presentation controller with
-  // MDCDialogTransitionController.
-  if (![self isDrivenByMaterialMotion]) {
-    id<UIViewControllerTransitionCoordinator> transitionCoordinator =
-          [self.presentedViewController transitionCoordinator];
-    if (transitionCoordinator) {
-      [transitionCoordinator animateAlongsideTransition:
-       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-         [self animateWithDirection:MDMTransitionDirectionForward];
-       } completion:nil];
-    } else {
-      [self animateWithDirection:MDMTransitionDirectionForward];
-    }
+  // Fade-in chrome views to be fully visible.
+  id<UIViewControllerTransitionCoordinator> transitionCoordinator =
+      [self.presentedViewController transitionCoordinator];
+  if (transitionCoordinator) {
+    [transitionCoordinator
+        animateAlongsideTransition:
+            ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+          self.dimmingView.alpha = 1.0f;
+          self.trackingView.alpha = 1.0f;
+        }
+                        completion:NULL];
+  } else {
+    self.dimmingView.alpha = 1.0f;
+    self.trackingView.alpha = 1.0f;
   }
 }
 
@@ -171,33 +160,32 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   } else {
     // Transition was cancelled.
     [self.dimmingView removeFromSuperview];
-    [self.presentedView removeFromSuperview];
+    [self.trackingView removeFromSuperview];
   }
-
-  [super presentationTransitionDidEnd:completed];
 }
 
 - (void)dismissalTransitionWillBegin {
-  [super dismissalTransitionWillBegin];
-
-  if (![self isDrivenByMaterialMotion]) {
-    id<UIViewControllerTransitionCoordinator> transitionCoordinator =
-          [self.presentedViewController transitionCoordinator];
-    if (transitionCoordinator) {
-      [transitionCoordinator animateAlongsideTransition:
-       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-         [self animateWithDirection:MDMTransitionDirectionBackward];
-       } completion:nil];
-    } else {
-      [self animateWithDirection:MDMTransitionDirectionBackward];
-    }
+  // Fade-out dimmingView and trackingView to be fully transparent.
+  id<UIViewControllerTransitionCoordinator> transitionCoordinator =
+      [self.presentedViewController transitionCoordinator];
+  if (transitionCoordinator != nil) {
+    [transitionCoordinator
+        animateAlongsideTransition:
+            ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+          self.dimmingView.alpha = 0.0f;
+          self.trackingView.alpha = 0.0f;
+        }
+                        completion:NULL];
+  } else {
+    self.dimmingView.alpha = 0.0f;
+    self.trackingView.alpha = 0.0f;
   }
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
     [self.dimmingView removeFromSuperview];
-    [self.presentedView removeFromSuperview];
+    [self.trackingView removeFromSuperview];
 
     // Re-enable accessibilityElements on the presenting view controller.
     self.presentingViewController.view.accessibilityElementsHidden = NO;
@@ -259,6 +247,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
         self.dimmingView.frame = self.containerView.bounds;
         CGRect presentedViewFrame = [self frameOfPresentedViewInContainerView];
         self.presentedView.frame = presentedViewFrame;
+        self.trackingView.frame = presentedViewFrame;
       }
                                completion:NULL];
 }
@@ -277,6 +266,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   if (!CGSizeEqualToSize(existingSize, newSize)) {
     CGRect presentedViewFrame = [self frameOfPresentedViewInContainerView];
     self.presentedView.frame = presentedViewFrame;
+    self.trackingView.frame = presentedViewFrame;
   }
 }
 
@@ -340,46 +330,9 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
                    animations:^{
                      CGRect presentedViewFrame = [self frameOfPresentedViewInContainerView];
                      self.presentedView.frame = presentedViewFrame;
+                     self.trackingView.frame = presentedViewFrame;
                    }
                    completion:NULL];
-}
-
-#pragma mark - MDMTransition
-
-- (void)startWithContext:(id<MDMTransitionContext>)context {
-  [CATransaction begin];
-  [CATransaction setCompletionBlock:^{
-    [context transitionDidEnd];
-  }];
-
-  [self animateWithDirection:context.direction];
-
-  [CATransaction commit];
-}
-
-- (void)animateWithDirection:(MDMTransitionDirection)direction {
-  MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
-  animator.shouldReverseValues = direction == MDMTransitionDirectionBackward;
-
-  MDMMotionTiming scrimOpacity;
-  if (direction == MDMTransitionDirectionForward) {
-    scrimOpacity = MDCDialogTransitionMotionSpec.appearance.scrimOpacity;
-
-    // Only scale in when appearing.
-    [animator animateWithTiming:MDCDialogTransitionMotionSpec.appearance.contentScale
-                        toLayer:self.presentedView.layer
-                     withValues:@[@(MDCDialogTransitionMotionSpec.appearance.contentScaleFromValue),
-                                  @1]
-                        keyPath:MDMKeyPathScale];
-
-  } else {
-    scrimOpacity = MDCDialogTransitionMotionSpec.disappearance.scrimOpacity;
-  }
-
-  [animator animateWithTiming:scrimOpacity
-                      toLayer:self.dimmingView.layer
-                   withValues:@[@0, @1]
-                      keyPath:MDMKeyPathOpacity];
 }
 
 @end

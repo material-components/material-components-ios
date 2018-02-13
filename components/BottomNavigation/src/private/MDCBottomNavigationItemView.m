@@ -363,6 +363,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {
+  // Due to KVO, badgeValue may be of type NSNull.
+  if ([badgeValue isKindOfClass:[NSNull class]]) {
+    badgeValue = nil;
+  }
   self.badge.badgeValue = badgeValue;
   self.button.accessibilityValue = badgeValue;
   if (badgeValue == nil || badgeValue.length == 0) {
