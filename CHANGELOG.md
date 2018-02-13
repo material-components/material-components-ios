@@ -1,10 +1,4 @@
-# #develop#
-
-## Breaking changes
-
-## New deprecations
-
-## New features
+# 45.0.0
 
 ## API changes
 
@@ -49,8 +43,8 @@
 |---|---|
 | From: | `@protocol MDCTextInputController <NSObject, NSCoding, NSCopying,                                   MDCTextInputPositioningDelegate>` |
 | To: | `@protocol MDCTextInputController <NSObject, NSSecureCoding, NSCopying,                                   MDCTextInputPositioningDelegate>` |
-## Component changes
 
+## Component changes
 
 ### BottomNavigation
 
@@ -70,7 +64,7 @@
 
 #### Changes
 
-* [Temporarily revert MMotion (#2921)](https://github.com/material-components/material-components-ios/commit/f88160007ed44f6d2971c7ff5f6869279d2ab8d0) (ianegordon)
+* [Temporarily revert Material Motion (#2921)](https://github.com/material-components/material-components-ios/commit/f88160007ed44f6d2971c7ff5f6869279d2ab8d0) (ianegordon)
 
 ### TextFields
 
