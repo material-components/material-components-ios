@@ -27,6 +27,7 @@ static NSString *const MDCCardCellInkViewKey = @"MDCCardCellInkViewKey";
 static NSString *const MDCCardCellSelectedImageViewKey = @"MDCCardCellSelectedImageViewKey";
 static NSString *const MDCCardCellStateKey = @"MDCCardCellStateKey";
 static NSString *const MDCCardCellSelectableKey = @"MDCCardCellSelectableKey";
+static NSString *const MDCCardCellCornerRadiusKey = @"MDCCardCellCornerRadiusKey";
 
 static const CGFloat MDCCardCellSelectedImagePadding = 8;
 static const CGFloat MDCCardCellShadowElevationNormal = 1.f;
@@ -63,6 +64,11 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
     _selectedImageView = [coder decodeObjectForKey:MDCCardCellSelectedImageViewKey];
     _state = [coder decodeIntegerForKey:MDCCardCellStateKey];
     _selectable = [coder decodeBoolForKey:MDCCardCellSelectableKey];
+    if ([coder containsValueForKey:MDCCardCellCornerRadiusKey]) {
+      self.layer.cornerRadius = (CGFloat)[coder decodeDoubleForKey:MDCCardCellCornerRadiusKey];
+    } else {
+      self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
+    }
     [self commonMDCCardCollectionCellInit];
   }
   return self;
@@ -71,6 +77,7 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
     [self commonMDCCardCollectionCellInit];
   }
   return self;
@@ -117,10 +124,10 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
     _borderWidths = [NSMutableDictionary dictionary];
   }
 
-  self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
   [self updateShadowElevation];
-  [self updateShadowColor];
+  [self updateBorderColor];
   [self updateBorderWidth];
+  [self updateShadowColor];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
@@ -133,6 +140,7 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   [coder encodeObject:_selectedImageView forKey:MDCCardCellSelectedImageViewKey];
   [coder encodeInteger:_state forKey:MDCCardCellStateKey];
   [coder encodeBool:_selectable forKey:MDCCardCellSelectableKey];
+  [coder encodeDouble:self.layer.cornerRadius forKey:MDCCardCellCornerRadiusKey];
 }
 
 - (void)layoutSubviews {

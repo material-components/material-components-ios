@@ -1,3 +1,80 @@
+# 45.0.0
+
+## API changes
+
+### Dialogs
+
+#### MDCDialogTransition
+
+*removed* property: `dismissOnBackgroundTap` in `MDCDialogTransition`
+
+*removed* class: `MDCDialogTransition`
+
+### TextFields
+
+#### MDCTextInputUnderlineView
+
+*modified* class: `MDCTextInputUnderlineView`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextInputUnderlineView : UIView, NSCopying, NSCoding` |
+| To: | `class MDCTextInputUnderlineView : UIView, NSCopying, NSSecureCoding` |
+
+*modified* class: `MDCTextInputUnderlineView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextInputUnderlineView : UIView <NSCopying, NSCoding>` |
+| To: | `@interface MDCTextInputUnderlineView : UIView <NSCopying, NSSecureCoding>` |
+
+#### MDCTextInputController
+
+*modified* protocol: `MDCTextInputController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `protocol MDCTextInputController : NSObjectProtocol, NSCoding, NSCopying, MDCTextInputPositioningDelegate` |
+| To: | `protocol MDCTextInputController : NSObjectProtocol, NSSecureCoding, NSCopying, MDCTextInputPositioningDelegate` |
+
+*modified* protocol: `MDCTextInputController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@protocol MDCTextInputController <NSObject, NSCoding, NSCopying,                                   MDCTextInputPositioningDelegate>` |
+| To: | `@protocol MDCTextInputController <NSObject, NSSecureCoding, NSCopying,                                   MDCTextInputPositioningDelegate>` |
+
+## Component changes
+
+### BottomNavigation
+
+#### Changes
+
+* [Handle KVO NSNull parameter (#2919)](https://github.com/material-components/material-components-ios/commit/7c8bb7bee66116307f51fc1e5d387af77e63413d) (ianegordon)
+
+### Cards
+
+#### Changes
+
+* [Added proper readme with overview, installation, and usage. (#2907)](https://github.com/material-components/material-components-ios/commit/d384f34c6fedcb27fadbb552541cc175bdea1f37) (Yarden Eitan)
+* [fix bug with ink when dragging an MDCCard (#2906)](https://github.com/material-components/material-components-ios/commit/27c960005cbac1e4c204fdde90bce33014358a77) (Yarden Eitan)
+* [updates to unit tests and minor fixes (#2898)](https://github.com/material-components/material-components-ios/commit/de988cfe59717f8e1ae300fb77466ddfb80ac5a2) (Yarden Eitan)
+
+### Dialogs
+
+#### Changes
+
+* [Temporarily revert Material Motion (#2921)](https://github.com/material-components/material-components-ios/commit/f88160007ed44f6d2971c7ff5f6869279d2ab8d0) (ianegordon)
+
+### TextFields
+
+#### Changes
+
+* [Converting NSCoding to NSSecureCoding (#2925)](https://github.com/material-components/material-components-ios/commit/30ce9b6a445d41ed91052a69bf3a1519a4f95bc3) (Will Larche)
+* [Correcting color themer (#2920)](https://github.com/material-components/material-components-ios/commit/c41bbdb1bc3acd899b9ca8e34512e337fe8fe8ba) (Will Larche)
+
+---
+
 # 44.6.1
 
 ## Component changes

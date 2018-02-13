@@ -166,15 +166,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentLeadingLabelKey];
     _mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCTextInputFundamentMDCAdjustsFontsKey];
-    _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentPlaceholderLabelKey];
-    _textInput = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextInputKey];
-    _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
+    _placeholderLabel = [aDecoder decodeObjectOfClass:[UILabel class]
+                                               forKey:MDCTextInputFundamentPlaceholderLabelKey];
+    _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
+                                        forKey:MDCTextInputFundamentTextInputKey];
+    _textColor =
+        [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputFundamentTextColorKey];
     if ([aDecoder containsValueForKey:MDCTextInputFundamentTextInsetsModeKey]) {
       _textInsetsMode = (MDCTextInputTextInsetsMode)
           [aDecoder decodeIntegerForKey:MDCTextInputFundamentTextInsetsModeKey];
     }
-    _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
-    _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
+    _trailingUnderlineLabel =
+        [aDecoder decodeObjectOfClass:[UILabel class] forKey:MDCTextInputFundamentTrailingLabelKey];
+    _underline = [aDecoder decodeObjectOfClass:[MDCTextInputUnderlineView class]
+                                        forKey:MDCTextInputFundamentUnderlineViewKey];
 
     [self setupBorder];
     [self setupPlaceholderLabel];
@@ -841,6 +846,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
   self.textInput.trailingViewMode = trailingViewMode;
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+  return YES;
 }
 
 #pragma mark - Layout
