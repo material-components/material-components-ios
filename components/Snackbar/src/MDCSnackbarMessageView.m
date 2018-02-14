@@ -45,13 +45,13 @@ static const CGFloat kBorderWidth = 0;
  Shadow coloring.
  */
 static const CGFloat kShadowAlpha = 0.24f;
-static const CGSize kShadowOffset = (CGSize){0.0, 1.0};
-static const CGFloat kShadowSpread = 1.0f;
+static const CGSize kShadowOffset = (CGSize){0.0, 2.0};
+static const CGFloat kShadowSpread = 4.0f;
 
 /**
  The radius of the corners.
  */
-static const CGFloat kCornerRadius = 0;
+static const CGFloat kCornerRadius = 4;
 
 /**
  Padding between the edges of the snackbar and any content.
@@ -916,25 +916,32 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 #pragma mark - Animation
 
-- (void)animateContentOpacityFrom:(CGFloat)fromOpacity
+- (CABasicAnimation *)animateContentOpacityFrom:(CGFloat)fromOpacity
                                to:(CGFloat)toOpacity
                          duration:(NSTimeInterval)duration
                    timingFunction:(CAMediaTimingFunction *)timingFunction {
-  [CATransaction begin];
-
   CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-  opacityAnimation.duration = duration;
+//  opacityAnimation.duration = duration;
   opacityAnimation.fromValue = @(fromOpacity);
   opacityAnimation.toValue = @(toOpacity);
-  opacityAnimation.timingFunction = timingFunction;
+//  opacityAnimation.timingFunction = timingFunction;
+//  [self.layer addAnimation:opacityAnimation forKey:@"opacity"];
+  return opacityAnimation;
+}
 
-  // The text and the button do not share a common view that can be animated independently of the
-  // background color, so just animate them both independently here. If this becomes more
-  // complicated, refactor to add a containing view for both and animate that.
-  [self.contentView.layer addAnimation:opacityAnimation forKey:@"opacity"];
-  [self.buttonView.layer addAnimation:opacityAnimation forKey:@"opacity"];
-
-  [CATransaction commit];
+- (CABasicAnimation *)animateSnackbarScaleFrom:(CGFloat)fromScale
+                                       toScale:(CGFloat)toScale
+                        duration:(NSTimeInterval)duration
+                  timingFunction:(CAMediaTimingFunction *)timingFunction {
+  CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+  scaleAnimation.fromValue = [NSNumber numberWithDouble:fromScale];
+  scaleAnimation.toValue = [NSNumber numberWithDouble:toScale];
+//  scaleAnimation.duration = duration;
+//  scaleAnimation.timingFunction = timingFunction;
+//  scaleAnimation.fillMode = kCAFillModeForwards;
+//  scaleAnimation.removedOnCompletion = NO;
+//  [self.layer addAnimation:scaleAnimation forKey:@"transform.scale"];
+  return scaleAnimation;
 }
 
 #pragma mark - Resource bundle

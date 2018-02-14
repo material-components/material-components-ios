@@ -205,7 +205,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
         // that the dismissal logic will only fire one time for a given Snackbar view.
         if (shouldDismiss) {
           shouldDismiss = NO;
-
           // If the user
           [self hideSnackbarViewReally:snackbarView withAction:action userPrompted:userInitiated];
         }
@@ -225,6 +224,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
+              NSLog(@"show snackback completion");
               if ([self isSnackbarTransient:snackbarView]) {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
@@ -272,6 +272,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
   [self.overlayView dismissSnackbarViewAnimated:YES
                                      completion:^{
+                                       NSLog(@"hide snackback completion");
                                        self.overlayView.hidden = YES;
                                        [self deactivateOverlay:self.overlayView];
 
@@ -382,7 +383,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   // care of getting it on screen. At this moment, @c message is the only message of its category
   // in @c _sPendingMessages.
   [self.pendingMessages addObject:message];
-
+  NSLog(@"%ld", self.pendingMessages.count);
   // Pulse the UI as needed.
   [self showNextMessageIfNecessaryMainThread];
 }

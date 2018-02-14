@@ -27,14 +27,14 @@
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the snackbar.
-NSTimeInterval const MDCSnackbarTransitionDuration = 0.5f;
+NSTimeInterval const MDCSnackbarTransitionDuration = 0.25f;
 
 // How far from the bottom of the screen should the snackbar be.
-static const CGFloat MDCSnackbarBottomMargin_iPhone = 0;
-static const CGFloat MDCSnackbarBottomMargin_iPad = 0;
+static const CGFloat MDCSnackbarBottomMargin_iPhone = 16.f;
+static const CGFloat MDCSnackbarBottomMargin_iPad = 16.f;
 
 // How far from the sides of the screen should the snackbar be.
-static const CGFloat MDCSnackbarSideMargin_iPhone = 0;
+static const CGFloat MDCSnackbarSideMargin_iPhone = 8.f;
 static const CGFloat MDCSnackbarSideMargin_iPad = 24.0f;
 
 // The maximum height of the snackbar.
@@ -90,12 +90,12 @@ static const CGFloat kMaximumHeight = 80.0f;
 /**
  The constraint used to pin the bottom of the snackbar to the bottom of the screen.
  */
-@property(nonatomic) NSLayoutConstraint *snackbarOnscreenConstraint;
+//@property(nonatomic) NSLayoutConstraint *snackbarOnscreenConstraint;
 
 /**
  The constraint used to pin the top of the snackbar to the bottom of the screen.
  */
-@property(nonatomic) NSLayoutConstraint *snackbarOffscreenConstraint;
+//@property(nonatomic) NSLayoutConstraint *snackbarOffscreenConstraint;
 
 @end
 
@@ -281,26 +281,34 @@ static const CGFloat kMaximumHeight = 80.0f;
       }
 
       // Always pin the snackbar to the bottom of the container.
-      _snackbarOnscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:container
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:-bottomMargin];
-      _snackbarOnscreenConstraint.active = NO;  // snackbar starts off-screen.
-      _snackbarOnscreenConstraint.priority = UILayoutPriorityDefaultHigh;
-      [container addConstraint:_snackbarOnscreenConstraint];
+      [container
+       addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                  attribute:NSLayoutAttributeBottom
+                                                  relatedBy:NSLayoutRelationEqual
+                                                     toItem:container
+                                                  attribute:NSLayoutAttributeBottom
+                                                 multiplier:1.0
+                                                   constant:-bottomMargin]];
+//      _snackbarOnscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
+//                                                                 attribute:NSLayoutAttributeBottom
+//                                                                 relatedBy:NSLayoutRelationEqual
+//                                                                    toItem:container
+//                                                                 attribute:NSLayoutAttributeBottom
+//                                                                multiplier:1.0
+//                                                                  constant:-bottomMargin];
+//      _snackbarOnscreenConstraint.active = YES;  // snackbar starts off-screen.
+//      _snackbarOnscreenConstraint.priority = UILayoutPriorityDefaultHigh;
+//      [container addConstraint:_snackbarOnscreenConstraint];
 
-      _snackbarOffscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
-                                                                  attribute:NSLayoutAttributeTop
-                                                                  relatedBy:NSLayoutRelationEqual
-                                                                     toItem:container
-                                                                  attribute:NSLayoutAttributeBottom
-                                                                 multiplier:1.0
-                                                                   constant:-bottomMargin];
-      _snackbarOffscreenConstraint.active = YES;
-      [container addConstraint:_snackbarOffscreenConstraint];
+//      _snackbarOffscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
+//                                                                  attribute:NSLayoutAttributeTop
+//                                                                  relatedBy:NSLayoutRelationEqual
+//                                                                     toItem:container
+//                                                                  attribute:NSLayoutAttributeBottom
+//                                                                 multiplier:1.0
+//                                                                   constant:-bottomMargin];
+//      _snackbarOffscreenConstraint.active = NO;
+//      [container addConstraint:_snackbarOffscreenConstraint];
 
       // Always limit the height of the snackbar.
       self.maximumHeightConstraint =
@@ -313,6 +321,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                                         constant:self.maximumHeight];
 
       [container addConstraint:self.maximumHeightConstraint];
+
     }
   }
 }
@@ -452,35 +461,36 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:(BOOL)onscreen
       fromContentOpacity:(CGFloat)fromContentOpacity
         toContentOpacity:(CGFloat)toContentOpacity
+               fromScale:(CGFloat)fromScale
+                 toScale:(CGFloat)toScale
               completion:(void (^)(void))completion {
   // Prepare to move the snackbar.
-  _snackbarOnscreenConstraint.active = onscreen;
-  _snackbarOffscreenConstraint.active = !onscreen;
-  [_containingView setNeedsUpdateConstraints];
-
+//  _snackbarOnscreenConstraint.active = onscreen;
+//  _snackbarOffscreenConstraint.active = !onscreen;
+//  [_containingView setNeedsUpdateConstraints];
+  NSLog(@"sup");
   CAMediaTimingFunction *timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:timingFunction];
-
-  // We use UIView animation inside a CATransaction in order to use the custom animation curve.
-  [UIView animateWithDuration:MDCSnackbarTransitionDuration
-      delay:0
-      options:UIViewAnimationOptionCurveEaseInOut
-      animations:^{
-        // Trigger snackbar animation.
-        [self.containingView layoutIfNeeded];
-      }
-      completion:^(__unused BOOL finished) {
-        if (completion) {
-          completion();
-        }
-      }];
-
-  [snackbarView animateContentOpacityFrom:fromContentOpacity
+  [CATransaction setCompletionBlock:completion];
+  [CATransaction setAnimationDuration:MDCSnackbarTransitionDuration];
+  CAAnimationGroup *animations = [CAAnimationGroup animation];
+  animations.duration = MDCSnackbarTransitionDuration;
+  animations.timingFunction = timingFunction;
+  animations.fillMode = kCAFillModeForwards;
+  animations.removedOnCompletion = NO;
+  animations.delegate = self;
+  animations.animations =
+  @[[snackbarView animateContentOpacityFrom:fromContentOpacity
                                        to:toContentOpacity
                                  duration:MDCSnackbarTransitionDuration
-                           timingFunction:timingFunction];
+                           timingFunction:timingFunction],
+  [snackbarView animateSnackbarScaleFrom:fromScale
+                                 toScale:toScale
+                              duration:MDCSnackbarTransitionDuration
+                        timingFunction:timingFunction]];
+  [snackbarView.layer addAnimation:animations forKey:@"opacityAndScale"];
   [CATransaction commit];
 
   // Notify the overlay system.
@@ -499,6 +509,8 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:YES
       fromContentOpacity:0
         toContentOpacity:1
+               fromScale:0.8
+                 toScale:1
               completion:completion];
 }
 
@@ -511,6 +523,8 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:NO
       fromContentOpacity:1
         toContentOpacity:0
+               fromScale:1
+                 toScale:0.8
               completion:completion];
 }
 
@@ -684,6 +698,14 @@ static void WrapWithTimingFunctionForCurve(MDCAnimationTimingFunction mediaTimin
   WrapWithTimingFunctionForCurve(curve, ^{
     [UIView animateWithDuration:duration animations:animations completion:completion];
   });
+}
+
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag {
+  if (flag) {
+    NSLog(@"FINISHED");
+  }
 }
 
 @end
