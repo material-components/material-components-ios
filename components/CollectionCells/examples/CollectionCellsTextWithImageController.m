@@ -21,9 +21,9 @@ static NSString *const kExampleText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
 
-@implementation CollectionCellsTextWithImageController {
-  NSMutableArray *_content;
-}
+static const NSUInteger kRowCount = 22;
+
+@implementation CollectionCellsTextWithImageController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -37,7 +37,7 @@ static NSString *const kExampleText =
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 22;
+  return kRowCount;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
