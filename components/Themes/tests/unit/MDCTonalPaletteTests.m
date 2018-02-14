@@ -27,17 +27,31 @@
 
 - (void)testTonalPaletteEncodingDecoding {
 
+  // These tests are commented out because of precision bug on apple side when archiving.
+  // TODO: (#2931) Uncomment this colors array to test double precision.
+//  NSArray<UIColor *> *tonalColors = @[ [MDCPalette purplePalette].tint50,
+//                                       [MDCPalette purplePalette].tint100,
+//                                       [MDCPalette purplePalette].tint200,
+//                                       [MDCPalette purplePalette].tint300,
+//                                       [MDCPalette purplePalette].tint400,
+//                                       [MDCPalette purplePalette].tint500,
+//                                       [MDCPalette purplePalette].tint600,
+//                                       [MDCPalette purplePalette].tint700,
+//                                       [MDCPalette purplePalette].tint800,
+//                                       [MDCPalette purplePalette].tint900 ];
+
   // Given
-  NSArray<UIColor *> *tonalColors = @[ [MDCPalette purplePalette].tint50,
-                                              [MDCPalette purplePalette].tint100,
-                                              [MDCPalette purplePalette].tint200,
-                                              [MDCPalette purplePalette].tint300,
-                                              [MDCPalette purplePalette].tint400,
-                                              [MDCPalette purplePalette].tint500,
-                                              [MDCPalette purplePalette].tint600,
-                                              [MDCPalette purplePalette].tint700,
-                                              [MDCPalette purplePalette].tint800,
-                                              [MDCPalette purplePalette].tint900 ];
+  NSArray<UIColor *> *tonalColors = @[ [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1.0f],
+                                       [UIColor colorWithRed:1.0f green:0.5f blue:0 alpha:1.0f],
+                                       [UIColor colorWithRed:0.2f green:0.3f blue:0.3f alpha:1.0f],
+                                       [UIColor colorWithRed:0.5f green:0.8f blue:0.6f alpha:1.0f],
+                                       [UIColor colorWithRed:0.4f green:0.7f blue:0.4f alpha:1.0f],
+                                       [UIColor colorWithRed:0.8f green:0.3f blue:0.9f alpha:1.0f],
+                                       [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1.0f],
+                                       [UIColor colorWithRed:0 green:0.8f blue:1.0f alpha:1.0f],
+                                       [UIColor colorWithRed:0.1f green:0.8f blue:0.3f alpha:1.0f],
+                                       [UIColor colorWithRed:1 green:0 blue:1 alpha:1.0f] ];
+
   MDCTonalPalette *tonalPalette =
       [[MDCTonalPalette alloc] initWithColors:tonalColors
                                mainColorIndex:5
@@ -61,16 +75,13 @@
   XCTAssertEqual(decodedTonalPalette.darkColorIndex, tonalPalette.darkColorIndex);
   XCTAssertEqual(decodedTonalPalette.lightColorIndex, tonalPalette.lightColorIndex);
 
-  // These tests are commented out because of precision bug on apple side when archiving.
-  // Issue #2931.
-  // TODO: Uncomment these tests when this issue is fixed.
-//  XCTAssertTrue([decodedTonalPalette.colors isEqualToArray:tonalPalette.colors]);
-//  XCTAssertTrue(CGColorEqualToColor(decodedTonalPalette.lightColor.CGColor,
-//                                    tonalPalette.lightColor.CGColor));
-//  XCTAssertTrue(CGColorEqualToColor(decodedTonalPalette.mainColor.CGColor,
-//                                    tonalPalette.mainColor.CGColor));
-//  XCTAssertTrue(CGColorEqualToColor(decodedTonalPalette.darkColor.CGColor,
-//                                    tonalPalette.darkColor.CGColor));
+  XCTAssertTrue([decodedTonalPalette.colors isEqualToArray:tonalPalette.colors]);
+  XCTAssertTrue(CGColorEqualToColor(decodedTonalPalette.lightColor.CGColor,
+                                    tonalPalette.lightColor.CGColor));
+  XCTAssertTrue(CGColorEqualToColor(decodedTonalPalette.mainColor.CGColor,
+                                    tonalPalette.mainColor.CGColor));
+  XCTAssertTrue(CGColorEqualToColor(decodedTonalPalette.darkColor.CGColor,
+                                    tonalPalette.darkColor.CGColor));
 }
 
 @end
