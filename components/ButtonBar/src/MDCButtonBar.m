@@ -252,12 +252,12 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
                        context:(void *)context {
   if (context == kKVOContextMDCButtonBar) {
     void (^mainThreadWork)(void) = ^{
-      @synchronized(_buttonItemsLock) {
-        NSUInteger itemIndex = [_items indexOfObject:object];
-        if (itemIndex == NSNotFound || itemIndex > [_buttonViews count]) {
+      @synchronized(self->_buttonItemsLock) {
+        NSUInteger itemIndex = [self.items indexOfObject:object];
+        if (itemIndex == NSNotFound || itemIndex > [self->_buttonViews count]) {
           return;
         }
-        UIButton *button = _buttonViews[itemIndex];
+        UIButton *button = self->_buttonViews[itemIndex];
 
         id newValue = [object valueForKey:keyPath];
         if (newValue == [NSNull null]) {

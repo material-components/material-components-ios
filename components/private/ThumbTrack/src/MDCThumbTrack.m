@@ -533,11 +533,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                             delay:0.0f
                           options:options
                        animations:^{
-                         _value = _filledTrackAnchorValue;
+                         self.value = self.filledTrackAnchorValue;
                          [self updateViewsMainIsAnimated:animated
                                             withDuration:animationDurationToAnchor
                                         animationOptions:options];
-                         _value = currentValue;
+                         self.value = currentValue;
                        }
                        completion:afterCrossingAnchorAnimation];
     } else {

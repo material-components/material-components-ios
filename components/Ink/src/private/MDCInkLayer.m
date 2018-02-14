@@ -215,7 +215,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     animGroup.fillMode = kCAFillModeForwards;
     animGroup.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
-      _startAnimationActive = NO;
+      self->_startAnimationActive = NO;
     }];
     [self addAnimation:animGroup forKey:nil];
     [CATransaction commit];

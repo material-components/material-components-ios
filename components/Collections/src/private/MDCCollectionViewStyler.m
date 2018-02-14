@@ -361,7 +361,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
       if ([self.delegate
               respondsToSelector:@selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
-        [self.delegate collectionView:_collectionView
+        [self.delegate collectionView:self.collectionView
             didApplyInlayToItemAtIndexPaths:@[ indexPath ]];
       }
     };
@@ -378,7 +378,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
     if ([self.delegate
             respondsToSelector:@selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
-      [self.delegate collectionView:_collectionView
+      [self.delegate collectionView:self.collectionView
           didRemoveInlayFromItemAtIndexPaths:@[ indexPath ]];
     }
   };
@@ -400,8 +400,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
       if ([self.delegate
               respondsToSelector:@selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
-        [self.delegate collectionView:_collectionView
-            didApplyInlayToItemAtIndexPaths:[_inlaidIndexPathSet allObjects]];
+        [self.delegate collectionView:self.collectionView
+            didApplyInlayToItemAtIndexPaths:[self.inlaidIndexPathSet allObjects]];
       }
     };
 
@@ -417,7 +417,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
     if ([self.delegate
             respondsToSelector:@selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
-      [self.delegate collectionView:_collectionView didRemoveInlayFromItemAtIndexPaths:indexPaths];
+      [self.delegate collectionView:self.collectionView didRemoveInlayFromItemAtIndexPaths:indexPaths];
     }
   };
 
@@ -440,7 +440,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // Invalidate current layout while allowing animation to new layout.
     [UIView animateWithDuration:0
         animations:^{
-          [_collectionView.collectionViewLayout invalidateLayout];
+          [self.collectionView.collectionViewLayout invalidateLayout];
         }
         completion:^(BOOL finished) {
           if (completion) {

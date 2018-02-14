@@ -453,7 +453,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   if (context == kKVOContextMDCNavigationBar) {
     void (^mainThreadWork)(void) = ^{
       @synchronized(self->_observedNavigationItemLock) {
-        if (object != _observedNavigationItem) {
+        if (object != self->_observedNavigationItem) {
           return;
         }
 
