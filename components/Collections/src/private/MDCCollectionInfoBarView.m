@@ -232,7 +232,8 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
       delay:0
       options:UIViewAnimationOptionCurveEaseIn
       animations:^{
-        self.backgroundView.transform = CGAffineTransformMakeTranslation(0, self->_backgroundTransformY);
+        self.backgroundView.transform =
+            CGAffineTransformMakeTranslation(0, self->_backgroundTransformY);
       }
       completion:^(__unused BOOL finished) {
         self.userInteractionEnabled = NO;
