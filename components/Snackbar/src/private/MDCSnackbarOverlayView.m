@@ -469,7 +469,7 @@ static const CGFloat kMaximumHeight = 80.0f;
       options:UIViewAnimationOptionCurveEaseInOut
       animations:^{
         // Trigger snackbar animation.
-        [_containingView layoutIfNeeded];
+        [self.containingView layoutIfNeeded];
       }
       completion:^(__unused BOOL finished) {
         if (completion) {

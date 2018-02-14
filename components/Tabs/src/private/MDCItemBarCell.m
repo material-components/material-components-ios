@@ -526,8 +526,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
     // Set the transforms.
     self.titleLabel.transform = titleTransform;
-    _badgeLabel.transform = imageTransform;
-    _imageView.transform = imageTransform;
+    self->_badgeLabel.transform = imageTransform;
+    self->_imageView.transform = imageTransform;
   };
   void (^completeAnimations)(BOOL) = ^(__unused BOOL finished) {
     if (titleContentsScale != self.titleLabel.layer.contentsScale) {

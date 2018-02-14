@@ -141,7 +141,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
       dispatch_time_t delayTime =
           dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kInkTouchDelayInterval));
       dispatch_after(_delaysInkSpread ? delayTime : 0, dispatch_get_main_queue(), ^(void) {
-        [self touchBeganAtPoint:[recognizer locationInView:_addedInkView]
+        [self touchBeganAtPoint:[recognizer locationInView:self.addedInkView]
                   touchLocation:touchLocation];
       });
       break;

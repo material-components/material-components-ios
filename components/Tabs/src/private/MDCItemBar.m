@@ -534,7 +534,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     [self updateSelectionIndicatorToIndex:index];
 
     // Force layout so any changes to the selection indicator are captured by the animation block.
-    [_selectionIndicator layoutIfNeeded];
+    [self->_selectionIndicator layoutIfNeeded];
   };
 
   if (animate) {
