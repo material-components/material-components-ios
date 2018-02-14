@@ -173,7 +173,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
       // destination.
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)),
                      dispatch_get_main_queue(), ^{
-                       [_trackLayer removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
+                       [self->_trackLayer removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
                                                  completion:^{
                                                    // Once track is removed, reveal indicators once
                                                    // more to ensure
@@ -269,11 +269,11 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                      NSInteger currentPage = [self scrolledPageNumber:scrollView];
                      [self setCurrentPage:currentPage animated:YES duration:animation.duration];
 
-                     CGFloat transformX = scrolledPercentage * _trackLength;
-                     [_animatedIndicator updateIndicatorTransformX:transformX
-                                                          animated:YES
-                                                          duration:animation.duration
-                                               mediaTimingFunction:animation.timingFunction];
+                     CGFloat transformX = scrolledPercentage * self->_trackLength;
+                     [self->_animatedIndicator updateIndicatorTransformX:transformX
+                                                                animated:YES
+                                                                duration:animation.duration
+                                                     mediaTimingFunction:animation.timingFunction];
                    });
 
   } else if (scrolledPercentage >= 0 && scrolledPercentage <= 1 && _numberOfPages > 0) {

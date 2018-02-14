@@ -149,20 +149,18 @@ NSString *const kDeselectedCellAccessibilityHintKey =
         txSelectorTransform = kEditingControlAppearanceOffset;
         break;
     }
-    _editingReorderImageView.alpha = _attr.shouldShowReorderStateMask ? 1.0f : 0.0f;
-    _editingReorderImageView.transform =
-        _attr.shouldShowReorderStateMask ? CGAffineTransformMakeTranslation(txReorderTransform, 0)
-                                         : CGAffineTransformIdentity;
+    self->_editingReorderImageView.alpha = self->_attr.shouldShowReorderStateMask ? 1.0f : 0.0f;
+    self->_editingReorderImageView.transform = self->_attr.shouldShowReorderStateMask ?
+        CGAffineTransformMakeTranslation(txReorderTransform, 0) : CGAffineTransformIdentity;
 
-    _editingSelectorImageView.alpha = _attr.shouldShowSelectorStateMask ? 1.0f : 0.0f;
-    _editingSelectorImageView.transform =
-        _attr.shouldShowSelectorStateMask ? CGAffineTransformMakeTranslation(txSelectorTransform, 0)
-                                          : CGAffineTransformIdentity;
+    self->_editingSelectorImageView.alpha = self->_attr.shouldShowSelectorStateMask ? 1.0f : 0.0f;
+    self->_editingSelectorImageView.transform = self->_attr.shouldShowSelectorStateMask ?
+        CGAffineTransformMakeTranslation(txSelectorTransform, 0) : CGAffineTransformIdentity;
 
-    _accessoryView.alpha = _attr.shouldShowSelectorStateMask ? 0.0f : 1.0f;
-    _accessoryInset.right = _attr.shouldShowSelectorStateMask
-                                ? kAccessoryInsetDefault.right + kEditingControlAppearanceOffset
-                                : kAccessoryInsetDefault.right;
+    self.accessoryView.alpha = self->_attr.shouldShowSelectorStateMask ? 0.0f : 1.0f;
+    self->_accessoryInset.right = self->_attr.shouldShowSelectorStateMask
+                                  ? kAccessoryInsetDefault.right + kEditingControlAppearanceOffset
+                                  : kAccessoryInsetDefault.right;
   };
 
   // Animate editing controls.
@@ -487,7 +485,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
                           options:UIViewAnimationOptionCurveEaseOut
                        animations:^{
                          self.contentView.alpha = 1;
-                         _separatorView.alpha = 1;
+                         self->_separatorView.alpha = 1;
                        }
                        completion:nil];
     }

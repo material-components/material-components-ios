@@ -144,12 +144,12 @@ static const CGFloat kSingleCycleRotation =
 
   [self applyPropertiesWithoutAnimation:^{
     // Resize and recenter rotation layer.
-    _outerRotationLayer.bounds = self.bounds;
-    _outerRotationLayer.position =
+    self.outerRotationLayer.bounds = self.bounds;
+    self.outerRotationLayer.position =
         CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
 
-    _strokeLayer.bounds = _outerRotationLayer.bounds;
-    _strokeLayer.position = _outerRotationLayer.position;
+    self.strokeLayer.bounds = self.outerRotationLayer.bounds;
+    self.strokeLayer.position = self.outerRotationLayer.position;
 
     [self updateStrokePath];
   }];
@@ -281,11 +281,11 @@ static const CGFloat kSingleCycleRotation =
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
-      _animationInProgress = NO;
+      self->_animationInProgress = NO;
 
       [self actuallyStartAnimating];
 
-      _cycleColorsIndex = self.cycleColors.count > 0 ? cycleStartIndex % self.cycleColors.count : 0;
+      self.cycleColorsIndex = self.cycleColors.count > 0 ? cycleStartIndex % self.cycleColors.count : 0;
       [self applyPropertiesWithoutAnimation:^{
         [self updateStrokeColor];
       }];
@@ -471,10 +471,10 @@ static const CGFloat kSingleCycleRotation =
   _cycleCount = _cycleStartIndex;
 
   [self applyPropertiesWithoutAnimation:^{
-    _strokeLayer.strokeStart = 0.0f;
-    _strokeLayer.strokeEnd = 0.001f;
-    _strokeLayer.lineWidth = _strokeWidth;
-    _trackLayer.lineWidth = _strokeWidth;
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.001f;
+    self.strokeLayer.lineWidth = self.strokeWidth;
+    self.trackLayer.lineWidth = self.strokeWidth;
 
     [self resetStrokeColor];
     [self updateStrokePath];
@@ -497,8 +497,8 @@ static const CGFloat kSingleCycleRotation =
 
   [self removeAnimations];
   [self applyPropertiesWithoutAnimation:^{
-    _strokeLayer.strokeStart = 0.0f;
-    _strokeLayer.strokeEnd = 0.0f;
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.0f;
   }];
 }
 
@@ -531,8 +531,8 @@ static const CGFloat kSingleCycleRotation =
   strokeEnd = strokeEnd > 1 ? strokeEnd - 1 : strokeEnd;
 
   [self applyPropertiesWithoutAnimation:^{
-    _strokeLayer.strokeStart = 0.0f;
-    _strokeLayer.strokeEnd = 0.0f;
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.0f;
   }];
 
   [CATransaction begin];
@@ -542,8 +542,8 @@ static const CGFloat kSingleCycleRotation =
         stopTransition.completion();
       }
       if (stopTransition == self.stopTransition) {
-        if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
-          [_delegate activityIndicatorAnimationDidFinish:self];
+        if ([self.delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+          [self.delegate activityIndicatorAnimationDidFinish:self];
         }
         [self removeAnimations];
       }
@@ -676,8 +676,8 @@ static const CGFloat kSingleCycleRotation =
     [CATransaction setCompletionBlock:^{
       [self
           strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
-      if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
-        [_delegate activityIndicatorModeTransitionDidFinish:self];
+      if ([self.delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+        [self.delegate activityIndicatorModeTransitionDidFinish:self];
       }
     }];
     [CATransaction setDisableActions:YES];
@@ -740,8 +740,8 @@ static const CGFloat kSingleCycleRotation =
       [CATransaction setCompletionBlock:^{
         [self
             strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
-        if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
-          [_delegate activityIndicatorModeTransitionDidFinish:self];
+        if ([self.delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+          [self.delegate activityIndicatorModeTransitionDidFinish:self];
         }
       }];
       [CATransaction setDisableActions:YES];
@@ -875,10 +875,10 @@ static const CGFloat kSingleCycleRotation =
   [CATransaction begin];
 
   [CATransaction setCompletionBlock:^{
-    if (_animatingOut) {
+    if (self->_animatingOut) {
       [self removeAnimations];
-      if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
-        [_delegate activityIndicatorAnimationDidFinish:self];
+      if ([self.delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+        [self.delegate activityIndicatorAnimationDidFinish:self];
       }
     }
   }];

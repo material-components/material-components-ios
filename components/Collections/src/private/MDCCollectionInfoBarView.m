@@ -205,16 +205,16 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
       delay:0
       options:UIViewAnimationOptionCurveEaseOut
       animations:^{
-        _backgroundView.transform = CGAffineTransformIdentity;
+        self.backgroundView.transform = CGAffineTransformIdentity;
       }
       completion:^(__unused BOOL finished) {
-        self.userInteractionEnabled = _allowsTap;
+        self.userInteractionEnabled = self.allowsTap;
 
         // Notify delegate.
-        if ([_delegate respondsToSelector:@selector(infoBar:didShowAnimated:willAutoDismiss:)]) {
-          [_delegate infoBar:self
-              didShowAnimated:animated
-              willAutoDismiss:[self shouldAutoDismiss]];
+        if ([self.delegate respondsToSelector:@selector(infoBar:didShowAnimated:willAutoDismiss:)]) {
+          [self.delegate infoBar:self
+                 didShowAnimated:animated
+                 willAutoDismiss:[self shouldAutoDismiss]];
         }
 
         [self autoDismissIfNecessaryWithAnimation:animated];
@@ -232,17 +232,18 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
       delay:0
       options:UIViewAnimationOptionCurveEaseIn
       animations:^{
-        _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
+        self.backgroundView.transform =
+            CGAffineTransformMakeTranslation(0, self->_backgroundTransformY);
       }
       completion:^(__unused BOOL finished) {
         self.userInteractionEnabled = NO;
-        _backgroundView.hidden = YES;
+        self.backgroundView.hidden = YES;
 
         // Notify delegate.
-        if ([_delegate respondsToSelector:@selector(infoBar:didDismissAnimated:didAutoDismiss:)]) {
-          [_delegate infoBar:self
-              didDismissAnimated:animated
-                  didAutoDismiss:[self shouldAutoDismiss]];
+        if ([self.delegate respondsToSelector:@selector(infoBar:didDismissAnimated:didAutoDismiss:)]) {
+          [self.delegate infoBar:self
+                didDismissAnimated:animated
+                    didAutoDismiss:[self shouldAutoDismiss]];
         }
       }];
 }

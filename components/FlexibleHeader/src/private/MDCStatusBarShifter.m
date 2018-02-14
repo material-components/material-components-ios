@@ -235,7 +235,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
       // If we're in an invalid state then we have to manage the visibility directly.
       [UIView animateWithDuration:kStatusBarBecomesInvalidAnimationDuration
                        animations:^{
-                         self.prefersStatusBarHidden = _prefersStatusBarHiddenWhileInvalid;
+                         self.prefersStatusBarHidden = self->_prefersStatusBarHiddenWhileInvalid;
                        }];
 
     } else {
