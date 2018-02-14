@@ -46,6 +46,10 @@ static inline CGFloat CellDefaultDetailTextFontOpacity(void) {
   return [MDCTypography captionFontOpacity];
 }
 
+// Image size.
+static const CGFloat kImageSize = 40;
+// Cell image view padding.
+static const CGFloat kCellImagePaddingLeading = 16;
 // Cell padding top/bottom.
 static const CGFloat kCellTwoLinePaddingTop = 20;
 static const CGFloat kCellTwoLinePaddingBottom = 20;
@@ -54,9 +58,8 @@ static const CGFloat kCellThreeLinePaddingBottom = 20;
 // Cell padding leading/trailing.
 static const CGFloat kCellTextNoImagePaddingLeading = 16;
 static const CGFloat kCellTextNoImagePaddingTrailing = 16;
-static const CGFloat kCellTextWithImagePaddingLeading = 72;
-// Cell image view padding.
-static const CGFloat kCellImagePaddingLeading = 16;
+static const CGFloat kCellTextWithImagePaddingLeading = kCellImagePaddingLeading + kImageSize +
+  kCellTextNoImagePaddingLeading;
 
 // Returns the closest pixel-aligned value higher than |value|, taking the scale factor into
 // account. At a scale of 1, equivalent to Ceil().
@@ -182,8 +185,8 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   CGFloat boundsHeight = CGRectGetHeight(_contentWrapper.bounds);
 
   // Image layout.
-  [_imageView sizeToFit];
-  CGRect imageFrame = _imageView.frame;
+  CGRect imageFrame = CGRectZero;
+  imageFrame.size = CGSizeMake(kImageSize, kImageSize);
   imageFrame.origin.x = kCellImagePaddingLeading;
   imageFrame.origin.y =
       (CGRectGetHeight(self.contentView.frame) / 2) - (imageFrame.size.height / 2);
