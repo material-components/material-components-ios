@@ -59,7 +59,7 @@
   XCTAssertEqual(decodedTonalPalette.colors.count, tonalPalette.colors.count);
   XCTAssertEqual(decodedTonalPalette.mainColorIndex, tonalPalette.mainColorIndex);
   XCTAssertEqual(decodedTonalPalette.darkColorIndex, tonalPalette.darkColorIndex);
-  XCTAssertEqual(decodedTonalPalette.lightColorIndex, tonalPalette.darkColorIndex);
+  XCTAssertEqual(decodedTonalPalette.lightColorIndex, tonalPalette.lightColorIndex);
 
   // These tests are commented out because of precision bug on apple side when archiving.
   // Issue #2931.
