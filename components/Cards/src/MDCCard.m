@@ -119,7 +119,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 }
 
 - (CGSize)intrinsicContentSize {
-  // Because MDCCardCollectionCell is an empty canvas, it is up to the subclasser to implement
+  // Because MDCCard is an empty canvas, it is up to the subclasser to implement
   // the intrinsticContentSize based on the contents they add.
   return [super intrinsicContentSize];
 }
