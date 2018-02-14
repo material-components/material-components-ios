@@ -118,6 +118,16 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   self.layer.shadowPath = [self boundingPath].CGPath;
 }
 
+- (CGSize)intrinsicContentSize {
+  // Because MDCCardCollectionCell is an empty canvas, it is up to the subclasser to implement
+  // the intrinsticContentSize based on the contents they add.
+  return [super intrinsicContentSize];
+}
+
+- (void)invalidateIntrinsicContentSize {
+  [super invalidateIntrinsicContentSize];
+}
+
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   self.layer.cornerRadius = cornerRadius;
   [self setNeedsLayout];

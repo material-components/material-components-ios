@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   MDCCardCellStateSelected
 };
 
+IB_DESIGNABLE
 @interface MDCCardCollectionCell : UICollectionViewCell
 
 /**
