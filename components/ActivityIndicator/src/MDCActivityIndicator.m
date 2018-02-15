@@ -388,19 +388,21 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)setProgress:(float)progress {
+  [self setProgress:progress animated:YES];
+}
+
+- (void)setProgress:(float)progress animated:(BOOL)animated {
   _progress = MAX(0.0f, MIN(progress, 1.0f));
-  if (_progress == _currentProgress) {
+  if (_indicatorMode == MDCActivityIndicatorModeIndeterminate || _progress == _currentProgress) {
     return;
   }
-  if (_animating && !_animationInProgress) {
-    switch (_indicatorMode) {
-      case MDCActivityIndicatorModeDeterminate:
-        // Currently animating the determinate mode but no animation queued.
-        [self addProgressAnimation];
-        break;
-      case MDCActivityIndicatorModeIndeterminate:
-        break;
+  if (animated) {
+    if (_animating && !_animationInProgress) {
+      // Currently animating the determinate mode but no animation queued.
+      [self addProgressAnimation];
     }
+  } else {
+    [self setDeterminateProgressWithoutAnimation];
   }
 }
 
@@ -802,6 +804,15 @@ static const CGFloat kSingleCycleRotation =
 
   _lastProgress = _currentProgress;
   _animationInProgress = YES;
+}
+
+- (void)setDeterminateProgressWithoutAnimation {
+  [self removeAnimations];
+  _animationInProgress = NO;
+  _currentProgress = MAX(_progress, _minStrokeDifference);
+  _strokeLayer.strokeStart = 0.0;
+  _strokeLayer.strokeEnd = _currentProgress;
+  _lastProgress = _currentProgress;
 }
 
 - (void)strokeRotationCycleFinishedFromState:(MDCActivityIndicatorState)state {
