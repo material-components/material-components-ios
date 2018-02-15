@@ -171,16 +171,18 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
       // We are using the delay to increase the time between the end of the extension of the track
       // ahead of the dots movement and the contraction of the track under the dot at the
       // destination.
+      __weak typeof(self) weakSelf = self;
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)),
                      dispatch_get_main_queue(), ^{
-                       [self->_trackLayer removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
-                                                 completion:^{
-                                                   // Once track is removed, reveal indicators once
-                                                   // more to ensure
-                                                   // no hidden indicators remain.
-                                                   [self revealIndicatorsReversed:shouldReverse];
-                                                 }];
-                       [self revealIndicatorsReversed:shouldReverse];
+                       __strong typeof(self) strongSelf = weakSelf;
+                       CGPoint towardsPoint = shouldReverse ? startPoint : endPoint;
+                       [strongSelf->_trackLayer removeTrackTowardsPoint:towardsPoint completion:^{
+                         // Once track is removed, reveal indicators once
+                         // more to ensure
+                         // no hidden indicators remain.
+                         [strongSelf revealIndicatorsReversed:shouldReverse];
+                       }];
+                       [strongSelf revealIndicatorsReversed:shouldReverse];
                      });
     };
 
@@ -264,18 +266,23 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     // If the animation block has a delay it translates to the beginTime of the CAAnimation. We need
     // to ensure that we delay our animation of the page control to keep in sync with the animation
     // of the scrollView.contentOffset.
+    __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(animation.beginTime * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
-                     NSInteger currentPage = [self scrolledPageNumber:scrollView];
-                     [self setCurrentPage:currentPage animated:YES duration:animation.duration];
+                     __strong typeof(self) strongSelf = weakSelf;
+                     NSInteger currentPage = [strongSelf scrolledPageNumber:scrollView];
+                     [strongSelf setCurrentPage:currentPage
+                                       animated:YES
+                                       duration:animation.duration];
 
-                     CGFloat transformX = scrolledPercentage * self->_trackLength;
-                     [self->_animatedIndicator updateIndicatorTransformX:transformX
-                                                                animated:YES
-                                                                duration:animation.duration
-                                                     mediaTimingFunction:animation.timingFunction];
+                     CGFloat transformX = scrolledPercentage * strongSelf->_trackLength;
+                     [strongSelf->_animatedIndicator
+                          updateIndicatorTransformX:transformX
+                                           animated:YES
+                                           duration:animation.duration
+                                mediaTimingFunction:animation.timingFunction];
                    });
-
+    
   } else if (scrolledPercentage >= 0 && scrolledPercentage <= 1 && _numberOfPages > 0) {
     // Update active indicator position.
     CGFloat transformX = scrolledPercentage * _trackLength;
