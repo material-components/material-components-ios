@@ -19,7 +19,6 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 #import "private/MaterialBottomNavigationStrings.h"
