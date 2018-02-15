@@ -18,6 +18,7 @@
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
+IB_DESIGNABLE
 @interface MDCCard : UIControl
 
 /**
