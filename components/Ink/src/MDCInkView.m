@@ -18,6 +18,7 @@
 
 #import "private/MDCInkLayer.h"
 #import "private/MDCLegacyInkLayer.h"
+#import "MaterialMath.h"
 
 static NSString *const MDCInkViewAnimationDelegateKey = @"MDCInkViewAnimationDelegateKey";
 static NSString *const MDCInkViewInkStyleKey = @"MDCInkViewInkStyleKey";
@@ -49,7 +50,9 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 
 @end
 
-@implementation MDCInkView
+@implementation MDCInkView {
+  CGFloat _maxRippleRadius;
+}
 
 + (Class)layerClass {
   return [MDCLegacyInkLayer class];
@@ -174,6 +177,15 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
         self.inkLayer.bounded = NO;
         break;
     }
+  } else {
+    switch(inkStyle) {
+      case MDCInkStyleBounded:
+        self.inkLayer.maxRippleRadius = 0;
+        break;
+      case MDCInkStyleUnbounded:
+        self.inkLayer.maxRippleRadius = _maxRippleRadius;
+        break;
+    }
   }
 }
 
@@ -193,7 +205,8 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 }
 
 - (void)setMaxRippleRadius:(CGFloat)radius {
-  if (self.inkLayer.maxRippleRadius != radius) {
+  if (!MDCCGFloatEqual(self.inkLayer.maxRippleRadius, radius)) {
+    _maxRippleRadius = radius;
     self.inkLayer.maxRippleRadius = radius;
     [self setNeedsLayout];
   }
