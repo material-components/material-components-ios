@@ -16,9 +16,9 @@
 
 #import "MDCInkView.h"
 
+#import "MaterialMath.h"
 #import "private/MDCInkLayer.h"
 #import "private/MDCLegacyInkLayer.h"
-#import "MaterialMath.h"
 
 static NSString *const MDCInkViewAnimationDelegateKey = @"MDCInkViewAnimationDelegateKey";
 static NSString *const MDCInkViewInkStyleKey = @"MDCInkViewInkStyleKey";
