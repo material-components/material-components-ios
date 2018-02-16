@@ -21,11 +21,11 @@ env:
 
 matrix:
   include:
-    - osx_image: xcode9
+    - osx_image: xcode9.2
       # The iPhone X was chosen because it is a device with a strange screen size and
       # the 'notch'.
       # 11.0 was chosen as the latest generally available iOS version.
-      env: DESTINATION="platform=iOS Simulator,name=iPhone X,OS=11.0" SDK="iphonesimulator11.0"
+      env: DESTINATION="platform=iOS Simulator,name=iPhone X,OS=11.2" SDK="iphonesimulator11.2"
     - osx_image: xcode9
       # The iPhone 7 Plus was chosen because it is a device with a 3x screen and also changes
       # its size category trait on rotation.
