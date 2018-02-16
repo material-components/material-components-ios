@@ -154,6 +154,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/ColorUtility"
     component.dependency "MaterialComponents/private/Math"
   end
 
@@ -216,6 +217,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/TextFields"
     component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/ColorUtility"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/ShapeLibrary"
     component.dependency "MaterialComponents/private/Shapes"
@@ -325,6 +327,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency 'MDFTextAccessibility'
     component.dependency "MaterialComponents/private/Application"
+    component.dependency "MaterialComponents/private/ColorUtility"
     component.dependency "MaterialComponents/private/UIMetrics"
   end
 
@@ -446,6 +449,7 @@ Pod::Spec.new do |mdc|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.dependency "MaterialComponents/private/ColorUtility"
   end
 
   mdc.subspec "ProgressView" do |component|
@@ -516,6 +520,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/OverlayWindow"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Application"
+    component.dependency "MaterialComponents/private/ColorUtility"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Overlay"
   end
@@ -592,6 +597,12 @@ Pod::Spec.new do |mdc|
     registerIcons(private_spec)
 
     private_spec.subspec "Application" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+    end
+
+    private_spec.subspec "ColorUtility" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"

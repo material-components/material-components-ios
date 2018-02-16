@@ -20,6 +20,7 @@
 #import "MDCSnackbarMessageView.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
+#import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 #import "private/MaterialSnackbarStrings.h"
 #import "private/MaterialSnackbarStrings_table.h"
@@ -31,10 +32,6 @@ NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
 
 // The Bundle for string resources.
 static NSString *const kMaterialSnackbarBundle = @"MaterialSnackbar.bundle";
-
-static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
-  return [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:(a)];
-}
 
 /**
  The thickness of the snackbar border.
@@ -171,9 +168,9 @@ static const CGFloat kButtonInkRadius = 64.0f;
 }
 
 + (void)initialize {
-  [[self appearance] setSnackbarMessageViewShadowColor:MDCRGBAColor(0x00, 0x00, 0x00, 1.0f)];
-  [[self appearance] setSnackbarMessageViewBackgroundColor:MDCRGBAColor(0x32, 0x32, 0x32, 1.0f)];
-  [[self appearance] setSnackbarMessageViewTextColor:MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f)];
+  [[self appearance] setSnackbarMessageViewShadowColor:MDCColorFromRGBA(0x000000FF)];
+  [[self appearance] setSnackbarMessageViewBackgroundColor:MDCColorFromRGBA(0x323232FF)];
+  [[self appearance] setSnackbarMessageViewTextColor:MDCColorFromRGBA(0xFFFFFF)];
 }
 
 - (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
@@ -204,15 +201,15 @@ static const CGFloat kButtonInkRadius = 64.0f;
 #pragma mark - Styling the view
 
 - (UIColor *)snackbarButtonTextColor {
-  return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+  return MDCColorFromRGBA(0xFFFFFF99);
 }
 
 - (UIColor *)snackbarButtonTextColorHighlighted {
-  return MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f);
+  return MDCColorFromRGBA(0xFFFFFFFF);
 }
 
 - (UIColor *)snackbarSeparatorColor {
-  return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.5f);
+  return [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5f];
 }
 
 - (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
