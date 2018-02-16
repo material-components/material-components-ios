@@ -15,7 +15,7 @@
  */
 
 #import "MaterialFlexibleHeader.h"
-#import "MaterialPalettes.h"
+#import "MaterialColorUtility.h"
 #import "supplemental/FlexibleHeaderHorizontalPagingSupplemental.h"
 
 static const NSUInteger kNumberOfPages = 10;

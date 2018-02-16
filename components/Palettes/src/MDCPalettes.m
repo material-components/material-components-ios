@@ -15,6 +15,7 @@
  */
 
 #import "MDCPalettes.h"
+
 #import "MDCColorUtility.h"
 #import "private/MDCPaletteExpansions.h"
 #import "private/MDCPaletteNames.h"
