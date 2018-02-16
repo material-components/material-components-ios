@@ -205,19 +205,27 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 }
 
 - (void)setMaxRippleRadius:(CGFloat)radius {
+  // Keep track of the set value in case the caller will change inkStyle later
   _maxRippleRadius = radius;
-  BOOL rippleRadiusChanged = !MDCCGFloatEqual(self.inkLayer.maxRippleRadius, radius);
-  // New Ink will only update inkLayer.maxRippleRadius when using Unbounded ink
-  if (!self.usesLegacyInkRipple) {
-    if (self.inkStyle == MDCInkStyleUnbounded && rippleRadiusChanged) {
-      self.inkLayer.maxRippleRadius = radius;
-      [self setNeedsLayout];
-    }
+  if (MDCCGFloatEqual(self.inkLayer.maxRippleRadius, radius)) {
+    return;
   }
+
   // Legacy Ink updates inkLayer.maxRippleRadius regardless of inkStyle
-  else if (rippleRadiusChanged) {
+  if (self.usesLegacyInkRipple) {
     self.inkLayer.maxRippleRadius = radius;
     [self setNeedsLayout];
+  } else {
+    // New Ink Bounded style ignores maxRippleRadius
+    switch(self.inkStyle) {
+      case MDCInkStyleUnbounded:
+        self.inkLayer.maxRippleRadius = radius;
+        [self setNeedsLayout];
+        break;
+      case MDCInkStyleBounded:
+        // No-op
+        break;
+    }
   }
 }
 
