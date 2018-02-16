@@ -35,12 +35,11 @@ package_group(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
+    srcs = glob(["tests/unit/*.m"]),
+    hdrs = glob(["tests/unit/*.h"]),
     includes = ["src"],
     sdk_frameworks = [
+        "CoreGraphics",
         "UIKit",
         "XCTest",
     ],
@@ -59,4 +58,3 @@ ios_unit_test(
     minimum_os_version = "8.0",
     visibility = ["//visibility:private"],
 )
-
