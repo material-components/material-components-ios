@@ -20,6 +20,7 @@
 
 #import "MaterialInk.h"
 #import "MaterialMath.h"
+#import "MaterialPalettes.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
@@ -45,14 +46,6 @@ static NSString *const MDCChipTitleFontKey = @"MDCChipTitleFontKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
-
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
-}
 
 static inline UIColor *MDCColorDarken(UIColor *color, CGFloat percent) {
   CGFloat hue;

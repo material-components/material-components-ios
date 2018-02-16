@@ -151,6 +151,7 @@ Pod::Spec.new do |mdc|
     component.dependency 'MDFInternationalization'
     component.dependency 'MDFTextAccessibility'
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
@@ -212,6 +213,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/TextFields"
@@ -324,6 +326,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency 'MDFTextAccessibility'
+    component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/UIMetrics"
   end
@@ -514,6 +517,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/OverlayWindow"
+    component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/KeyboardWatcher"

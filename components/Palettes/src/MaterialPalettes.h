@@ -14,4 +14,5 @@
  limitations under the License.
  */
 
+#import "MDCColorUtility.h"
 #import "MDCPalettes.h"

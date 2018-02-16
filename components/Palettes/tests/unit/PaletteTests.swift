@@ -18,18 +18,10 @@ import XCTest
 import MaterialComponents.MaterialPalettes
 
 class PaletteTests: XCTestCase {
-  // Creates a UIColor from a 24-bit RGB color encoded as an integer.
-  func colorFromRGB(_ rgbValue: UInt32) -> UIColor {
-    return UIColor(
-      red:CGFloat((rgbValue & 0xFF0000) >> 16) / 255,
-      green:CGFloat((rgbValue & 0x00FF00) >> 8) / 255,
-      blue:CGFloat((rgbValue & 0x0000FF) >> 0) / 255,
-      alpha:1)
-  }
 
   func testBasics() {
     let color = MDCPalette.red.tint50
-    XCTAssertEqual(color, colorFromRGB(0xFFEBEE))
+    XCTAssertEqual(color, MDCColorFromRGB(0xFFEBEE))
   }
 
   func testCaching() {
