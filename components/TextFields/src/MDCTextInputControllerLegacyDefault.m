@@ -502,8 +502,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)updateCursor {
   self.textInput.cursorColor = (self.isDisplayingErrorText || self.isDisplayingCharacterCountError)
-  ? self.errorColor
-  : self.activeColor;
+                                   ? self.errorColor
+                                   : self.activeColor;
 }
 
 #pragma mark - Leading Label Customization
