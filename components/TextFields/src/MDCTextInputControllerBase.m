@@ -521,6 +521,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
+#pragma mark - Cursor Customization
+
+- (void)updateCursor {
+  self.textInput.cursorColor = (self.isDisplayingErrorText || self.isDisplayingCharacterCountError)
+                                   ? self.errorColor
+                                   : self.activeColor;
+}
+
 #pragma mark - Leading Label Customization
 
 - (void)updateLeadingUnderlineLabel {
@@ -859,7 +867,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)setActiveColor:(UIColor *)activeColor {
   if (![_activeColor isEqual:activeColor]) {
     _activeColor = activeColor;
-    [self updateUnderline];
+    [self updateLayout];
   }
 }
 
@@ -1362,6 +1370,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     return;
   }
 
+  [self updateCursor];
   [self updatePlaceholder];
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
