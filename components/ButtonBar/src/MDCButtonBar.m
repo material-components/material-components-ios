@@ -74,7 +74,7 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
 
     if ([coder containsValueForKey:MDCButtonBarItemsKey]) {
       // Force going through the setter to ensure KVO is observed for these items
-      self.items = [coder decodeObjectForKey:MDCButtonBarItemsKey];
+      self.items = [coder decodeObjectOfClass:[NSArray class] forKey:MDCButtonBarItemsKey];
     }
   }
   return self;
