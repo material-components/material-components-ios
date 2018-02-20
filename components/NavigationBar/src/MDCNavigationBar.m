@@ -376,8 +376,10 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 }
 
 - (CGSize)intrinsicContentSize {
-
-  CGFloat height = ([self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
+  CGFloat height =
+      self.height > 0 ?
+          self.height :
+          ([self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
@@ -734,6 +736,15 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                                    context:kKVOContextMDCNavigationBar];
     }
   }
+}
+
+- (void)setHeight:(CGFloat)height {
+  if (_height == height) {
+    return;
+  }
+  _height = height;
+  _leadingButtonBar.height = height;
+  _trailingButtonBar.height = height;
 }
 
 - (void)observeNavigationItem:(UINavigationItem *)navigationItem {
