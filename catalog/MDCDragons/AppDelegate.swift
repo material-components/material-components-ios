@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
     navigationController.interactivePopGestureRecognizer?.delegate = navigationController
+
     
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
