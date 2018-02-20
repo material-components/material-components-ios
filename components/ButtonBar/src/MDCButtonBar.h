@@ -107,9 +107,13 @@ IB_DESIGNABLE
 
 /**
  Returns a height adhering to the Material spec for Bars and a width that is able to accommodate
- every item present in the `items` property. The provided size is ignored.
+ every item present in the `items` property. The provided size is ignored. If height is set to a
+ value greater than zero, that is used instead of the default height.
  */
 - (CGSize)sizeThatFits:(CGSize)size;
+
+/* If greater than zero, overrides the default Material height used in sizeThatFits. */
+@property(nonatomic, assign) CGFloat height;
 
 @end
 
