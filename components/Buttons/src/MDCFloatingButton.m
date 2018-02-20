@@ -123,20 +123,24 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
           (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingButtonImageTitleSpaceKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonMinimumSizeDictionaryKey]) {
-      _shapeToModeToMinimumSize = (NSMutableDictionary *)
-          [aDecoder decodeObjectForKey:MDCFloatingButtonMinimumSizeDictionaryKey];
+      _shapeToModeToMinimumSize =
+          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                 forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonMaximumSizeDictionaryKey]) {
-      _shapeToModeToMaximumSize = (NSMutableDictionary *)
-          [aDecoder decodeObjectForKey:MDCFloatingButtonMaximumSizeDictionaryKey];
+      _shapeToModeToMaximumSize =
+          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                 forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey]) {
-      _shapeToModeToContentEdgeInsets = (NSMutableDictionary *)
-          [aDecoder decodeObjectForKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
+      _shapeToModeToContentEdgeInsets =
+          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                 forKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
     }
     if ([aDecoder containsValueForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey]) {
-      _shapeToModeToHitAreaInsets = (NSMutableDictionary *)
-          [aDecoder decodeObjectForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
+      _shapeToModeToHitAreaInsets =
+          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                 forKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
     }
 
     [self updateShapeAndAllowResize:NO];
