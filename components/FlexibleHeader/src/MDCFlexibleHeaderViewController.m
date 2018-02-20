@@ -75,7 +75,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey]) {
-      _layoutDelegate = [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
+      _layoutDelegate =
+          [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
     }
   }
   return self;
