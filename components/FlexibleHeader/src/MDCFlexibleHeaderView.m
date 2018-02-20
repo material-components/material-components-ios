@@ -247,7 +247,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderTrackingScrollViewKey]) {
-      _trackingScrollView = [aDecoder decodeObjectOfClass:[UIScrollView class]
+      _trackingScrollView = [aDecoder decodeObjectOfClass:[UIScrollView class] 
                                                    forKey:MDCFlexibleHeaderTrackingScrollViewKey];
     }
 
