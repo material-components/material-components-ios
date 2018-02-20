@@ -88,6 +88,12 @@ IB_DESIGNABLE
 @property(nonatomic, copy, nullable) NSString *title;
 
 /**
+ If greater than zero, overrides the default height that is used for the navigation bar and its
+ leading and trailing button bars.
+ */
+@property(nonatomic, assign) CGFloat height;
+
+/**
  The title view layout differs from the traditional behavior of UINavigationBar.
 
  Due to MDCNavigationBar being able to expand vertically, the titleView's height is updated to match
