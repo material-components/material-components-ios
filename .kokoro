@@ -18,9 +18,7 @@
 set -e
 
 KOKORO_RUNNER_VERSION="v4.*"
-
-# Kokoro only supports up to 8.2 for now. Once 8.3 support is introduced we will bump this version.
-XCODE_MINIMUM_VERSION="8.2.0"
+XCODE_MINIMUM_VERSION="8.3.3"
 
 fix_bazel_imports() {
   if [ -z "$KOKORO_BUILD_NUMBER" ]; then
