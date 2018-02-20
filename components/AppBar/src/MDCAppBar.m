@@ -115,7 +115,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
     }
 
     if ([aDecoder containsValueForKey:MDCAppBarHeaderStackViewKey]) {
-      _navigationBar = [aDecoder decodeObjectOfClass:[MDCHeaderStackView class]
+      _headerStackView = [aDecoder decodeObjectOfClass:[MDCHeaderStackView class]
                                               forKey:MDCAppBarHeaderStackViewKey];
       _appBarController.headerStackView = _headerStackView;
     }
