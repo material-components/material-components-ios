@@ -18,7 +18,7 @@
 set -e
 
 KOKORO_RUNNER_VERSION="v4.*"
-XCODE_MINIMUM_VERSION="8.3.3"
+XCODE_MINIMUM_VERSION="8.2"
 
 fix_bazel_imports() {
   if [ -z "$KOKORO_BUILD_NUMBER" ]; then
@@ -84,7 +84,10 @@ run_bazel() {
   fi
 
   ./.kokoro-ios-runner/bazel.sh $COMMAND $TARGET \
-      --min-xcode-version $XCODE_MINIMUM_VERSION
+      --min-xcode-version $XCODE_MINIMUM_VERSION \
+      $verbosity_args \
+      --ios_minimum_os=8.0 \
+      --ios_multi_cpus=i386,x86_64
 }
 
 run_cocoapods() {
@@ -123,7 +126,7 @@ run_cocoapods() {
 
     scripts/prep_all
     scripts/build_all --verbose
-    if [ "$IS_RELEASE" -eq "1" ]; then
+    if [ -n "$IS_RELEASE" ]; then
       scripts/test_all
     else
       scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
