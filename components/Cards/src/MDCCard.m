@@ -44,11 +44,15 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    _shadowElevations = [coder decodeObjectForKey:MDCCardShadowElevationsKey];
-    _shadowColors = [coder decodeObjectForKey:MDCCardShadowColorsKey];
-    _borderWidths = [coder decodeObjectForKey:MDCCardBorderWidthsKey];
-    _borderColors = [coder decodeObjectForKey:MDCCardBorderColorsKey];
-    _inkView = [coder decodeObjectForKey:MDCCardInkViewKey];
+    _shadowElevations = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                            forKey:MDCCardShadowElevationsKey];
+    _shadowColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                        forKey:MDCCardShadowColorsKey];
+    _borderWidths = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                        forKey:MDCCardBorderWidthsKey];
+    _borderColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                        forKey:MDCCardBorderColorsKey];
+    _inkView = [coder decodeObjectOfClass:[MDCInkView class] forKey:MDCCardInkViewKey];
     if ([coder containsValueForKey:MDCCardCornerRadiusKey]) {
       self.layer.cornerRadius = (CGFloat)[coder decodeDoubleForKey:MDCCardCornerRadiusKey];
     } else {
