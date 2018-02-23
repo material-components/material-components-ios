@@ -179,7 +179,7 @@ if [ -n "$VERBOSE_OUTPUT" ]; then
 fi
 
 if [ ! -d .kokoro-ios-runner ]; then
-  git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
+  git clone https://github.com/yarneo/kokoro-ios-runner.git .kokoro-ios-runner
 fi
 
 pushd .kokoro-ios-runner
