@@ -79,7 +79,7 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
       for (id item in items) {
         if (![item isKindOfClass:[UIBarButtonItem class]]) {
           isValid = NO;
-          NSAssert(NO, @"Wrong class time for MDCButtonBar Items when decoding.");
+          NSAssert(NO, @"Wrong class type for MDCButtonBar items when decoding.");
         }
       }
       if (isValid) {
