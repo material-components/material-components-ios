@@ -169,20 +169,23 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   if (self) {
     [self commonMDCNavigationBarInit];
     if ([aDecoder containsValueForKey:MDCNavigationBarTitleKey]) {
-      self.title = [aDecoder decodeObjectForKey:MDCNavigationBarTitleKey];
+      self.title = [aDecoder decodeObjectOfClass:[NSString class] forKey:MDCNavigationBarTitleKey];
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarTitleViewKey]) {
-      self.titleView = [aDecoder decodeObjectForKey:MDCNavigationBarTitleViewKey];
+      self.titleView =  [aDecoder decodeObjectOfClass:[UIView class]
+                                               forKey:MDCNavigationBarTitleViewKey];
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarTitleTextAttributesKey]) {
       self.titleTextAttributes =
-          [aDecoder decodeObjectForKey:MDCNavigationBarTitleTextAttributesKey];
+          [aDecoder decodeObjectOfClass:[NSDictionary class]
+                                 forKey:MDCNavigationBarTitleTextAttributesKey];
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarBackItemKey]) {
-      self.backItem = [aDecoder decodeObjectForKey:MDCNavigationBarBackItemKey];
+      self.backItem = [aDecoder decodeObjectOfClass:[UIBarButtonItem class]
+                                             forKey:MDCNavigationBarBackItemKey];
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarHidesBackButtonKey]) {
@@ -190,12 +193,15 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarLeadingBarItemsKey]) {
-      self.leadingBarButtonItems = [aDecoder decodeObjectForKey:MDCNavigationBarLeadingBarItemsKey];
+      self.leadingBarButtonItems =
+          [aDecoder decodeObjectOfClass:[NSArray class]
+                                 forKey:MDCNavigationBarLeadingBarItemsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarTrailingBarItemsKey]) {
       self.trailingBarButtonItems =
-          [aDecoder decodeObjectForKey:MDCNavigationBarTrailingBarItemsKey];
+          [aDecoder decodeObjectOfClass:[NSArray class]
+                                 forKey:MDCNavigationBarTrailingBarItemsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey]) {
