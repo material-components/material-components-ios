@@ -18,7 +18,7 @@
 set -e
 
 KOKORO_RUNNER_VERSION="v4.*"
-XCODE_MINIMUM_VERSION="8.2.1"
+XCODE_MINIMUM_VERSION="8.3.3"
 
 fix_bazel_imports() {
   if [ -z "$KOKORO_BUILD_NUMBER" ]; then
