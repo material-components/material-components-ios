@@ -70,7 +70,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   self = [super initWithCoder:aDecoder];
   if (self) {
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerHeaderViewKey]) {
-      _headerView = [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
+      _headerView = [aDecoder decodeObjectOfClass:[MDCFlexibleHeaderView class]
+                                           forKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey]) {
@@ -84,8 +85,10 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
   [aCoder encodeObject:self.headerView forKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
-  [aCoder encodeConditionalObject:self.layoutDelegate
-                           forKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
+  if (_layoutDelegate) {
+    [aCoder encodeConditionalObject:self.layoutDelegate
+                             forKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
+  }
 }
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {

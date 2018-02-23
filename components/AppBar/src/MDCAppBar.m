@@ -104,16 +104,19 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   if (self) {
     [self commonMDCAppBarInit];
     if ([aDecoder containsValueForKey:MDCAppBarHeaderViewControllerKey]) {
-      _headerViewController = [aDecoder decodeObjectForKey:MDCAppBarHeaderViewControllerKey];
+      _headerViewController = [aDecoder decodeObjectOfClass:[MDCFlexibleHeaderViewController class]
+                                                     forKey:MDCAppBarHeaderViewControllerKey];
     }
 
     if ([aDecoder containsValueForKey:MDCAppBarNavigationBarKey]) {
-      _navigationBar = [aDecoder decodeObjectForKey:MDCAppBarNavigationBarKey];
+      _navigationBar = [aDecoder decodeObjectOfClass:[MDCNavigationBar class]
+                                              forKey:MDCAppBarNavigationBarKey];
       _appBarController.navigationBar = _navigationBar;
     }
 
     if ([aDecoder containsValueForKey:MDCAppBarHeaderStackViewKey]) {
-      _headerStackView = [aDecoder decodeObjectForKey:MDCAppBarHeaderStackViewKey];
+      _headerStackView = [aDecoder decodeObjectOfClass:[MDCHeaderStackView class]
+                                              forKey:MDCAppBarHeaderStackViewKey];
       _appBarController.headerStackView = _headerStackView;
     }
 
@@ -179,6 +182,12 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   [fhvc didMoveToParentViewController:fhvc.parentViewController];
 
   [self.navigationBar observeNavigationItem:fhvc.parentViewController.navigationItem];
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+  return YES;
 }
 
 @end
