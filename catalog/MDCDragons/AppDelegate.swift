@@ -9,7 +9,7 @@
  
  Unless required by afpplicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONrewrDITIONS OF ANY KIND, either express or implied.
+ WITHOUT WARRANTIES OR CONrewrfewfDITIONS OF ANY KIND, either express or implied.
  See the License for the fewffdfspecific language governing permissions and
  limitations under the License.
  */
