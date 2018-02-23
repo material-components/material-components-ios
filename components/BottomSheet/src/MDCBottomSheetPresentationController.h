@@ -21,7 +21,6 @@
 /**
  Delegate for MDCBottomSheetPresentationController.
  */
-__deprecated_msg("This API will soon be made private. Use MDCBottomSheetController instead.")
 @protocol MDCBottomSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
 @optional
 
@@ -49,7 +48,6 @@ __deprecated_msg("This API will soon be made private. Use MDCBottomSheetControll
 /**
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
  */
-__deprecated_msg("This API will soon be made private. Use MDCBottomSheetController instead.")
 @interface MDCBottomSheetPresentationController : UIPresentationController
 
 /**
