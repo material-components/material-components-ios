@@ -26,11 +26,12 @@ static NSString *const MDCHeaderStackViewBottomBarKey = @"MDCHeaderStackViewBott
   self = [super initWithCoder:aDecoder];
   if (self) {
     if ([aDecoder containsValueForKey:MDCHeaderStackViewTopBarKey]) {
-      _topBar = [aDecoder decodeObjectForKey:MDCHeaderStackViewTopBarKey];
+      _topBar = [aDecoder decodeObjectOfClass:[UIView class] forKey:MDCHeaderStackViewTopBarKey];
     }
 
     if ([aDecoder containsValueForKey:MDCHeaderStackViewBottomBarKey]) {
-      _bottomBar = [aDecoder decodeObjectForKey:MDCHeaderStackViewBottomBarKey];
+      _bottomBar = [aDecoder decodeObjectOfClass:[UIView class]
+                                          forKey:MDCHeaderStackViewBottomBarKey];
     }
   }
   return self;
