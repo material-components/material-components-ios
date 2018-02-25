@@ -1,10 +1,10 @@
-# 46.0.0 #
+# 46.0.0
 
 ## Breaking changes
 
 ### BottomSheets
 
-Remove Material Motion as it was causing crashes on iOS 8.
+Remove Material Motion from the BottomSheets component as it was causing crashes on iOS 8.
 
 ---
 
