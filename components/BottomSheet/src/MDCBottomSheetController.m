@@ -17,29 +17,24 @@
 #import "MDCBottomSheetController.h"
 
 #import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetTransition.h"
+#import "MDCBottomSheetTransitionController.h"
 #import "UIViewController+MaterialBottomSheet.h"
 
-#import <MotionTransitioning/MotionTransitioning.h>
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
-#pragma clang diagnostic pop
 @end
 
 @implementation MDCBottomSheetController {
-  MDCBottomSheetTransition *_transition;
+  MDCBottomSheetTransitionController *_transitionController;
 }
 
 - (nonnull instancetype)initWithContentViewController:
     (nonnull UIViewController *)contentViewController {
-  self = [super initWithNibName:nil bundle:nil];
-  if (self) {
+  if (self = [super initWithNibName:nil bundle:nil]) {
     _contentViewController = contentViewController;
+    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
 
-    _transition = [[MDCBottomSheetTransition alloc] init];
-    self.mdm_transitionController.transition = _transition;
+    super.transitioningDelegate = _transitionController;
+    super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
 }
@@ -85,11 +80,24 @@
 }
 
 - (UIScrollView *)trackingScrollView {
-  return _transition.trackingScrollView;
+  return _transitionController.trackingScrollView;
 }
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
-  _transition.trackingScrollView = trackingScrollView;
+  _transitionController.trackingScrollView = trackingScrollView;
+}
+
+/* Disable setter. Always use internal transition controller */
+- (void)setTransitioningDelegate:
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+  NSAssert(NO, @"MDCBottomSheetController.transitioningDelegate cannot be changed.");
+  return;
+}
+
+/* Disable setter. Always use custom presentation style */
+- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
+  NSAssert(NO, @"MDCBottomSheetController.modalPresentationStyle cannot be changed.");
+  return;
 }
 
 #pragma clang diagnostic push
