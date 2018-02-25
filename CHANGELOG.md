@@ -1,14 +1,10 @@
-# #develop#
+# 46.0.0 #
 
 ## Breaking changes
 
-## New deprecations
+### BottomSheets
 
-## New features
-
-## API changes
-## Component changes
-
+Remove Material Motion as it was causing crashes on iOS 8.
 
 ---
 
