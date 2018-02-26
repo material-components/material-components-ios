@@ -79,6 +79,16 @@
   self.contentViewController.preferredContentSize = preferredContentSize;
 }
 
+- (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
+  [super preferredContentSizeDidChangeForChildContentContainer:container];
+  // Informing the presentation controller of the change in preferred content size needs to be done
+  // directly since the MDCBottomSheetController's preferredContentSize property is backed by
+  // contentViewController's preferredContentSize. Therefore |[super setPreferredContentSize:]| is
+  // never called, and UIKit never calls |preferredContentSizeDidChangeForChildContentContainer:|
+  // on the presentation controller.
+  [self.presentationController preferredContentSizeDidChangeForChildContentContainer:self];
+}
+
 - (UIScrollView *)trackingScrollView {
   return _transitionController.trackingScrollView;
 }
