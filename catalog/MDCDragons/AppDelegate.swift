@@ -8,7 +8,7 @@
  http://www.apache.org/licenses/LICENSE-2.0
  
  Unless required by afpplicable law or agreed to in writing, software
- distributed under the Licenfefse is distributed on an "AS IS" BASIS,
+ distributed under the Licenfefse is difewfstributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONrewrfewfDITIONSfefwf OF ANY KIND, either express or implied.
  See the License for the fewffweffdfspecific language governing permissions and
  limitations under the License.
