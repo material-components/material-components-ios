@@ -56,12 +56,17 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    _shadowElevations = [coder decodeObjectForKey:MDCCardCellShadowElevationsKey];
-    _shadowColors = [coder decodeObjectForKey:MDCCardCellShadowColorsKey];
-    _borderWidths = [coder decodeObjectForKey:MDCCardCellBorderWidthsKey];
-    _borderColors = [coder decodeObjectForKey:MDCCardCellBorderColorsKey];
-    _inkView = [coder decodeObjectForKey:MDCCardCellInkViewKey];
-    _selectedImageView = [coder decodeObjectForKey:MDCCardCellSelectedImageViewKey];
+    _shadowElevations = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                            forKey:MDCCardCellShadowElevationsKey];
+    _shadowColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                        forKey:MDCCardCellShadowColorsKey];
+    _borderWidths = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                        forKey:MDCCardCellBorderWidthsKey];
+    _borderColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                        forKey:MDCCardCellBorderColorsKey];
+    _inkView = [coder decodeObjectOfClass:[MDCInkView class] forKey:MDCCardCellInkViewKey];
+    _selectedImageView = [coder decodeObjectOfClass:[UIImageView class]
+                                             forKey:MDCCardCellSelectedImageViewKey];
     _state = [coder decodeIntegerForKey:MDCCardCellStateKey];
     _selectable = [coder decodeBoolForKey:MDCCardCellSelectableKey];
     if ([coder containsValueForKey:MDCCardCellCornerRadiusKey]) {
