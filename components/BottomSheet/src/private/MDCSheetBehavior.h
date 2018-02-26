@@ -14,17 +14,26 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-#import <MotionInterchange/MotionInterchange.h>
+@interface MDCSheetBehavior : UIDynamicBehavior
 
-@interface MDCBottomSheetMotionSpec: NSObject
+/**
+ * The final center-point for the item to arrive at.
+ */
+@property(nonatomic) CGPoint targetPoint;
 
-+ (MDMMotionTiming)scrimAppearance;
-+ (MDMMotionTiming)scrimDisappearance;
-+ (MDMMotionTiming)onDragRelease;
+/**
+ * The initial velocity for the behavior.
+ */
+@property(nonatomic) CGPoint velocity;
 
-// This object is not meant to be instantiated.
-- (instancetype)init NS_UNAVAILABLE;
+/**
+ * Initializes a @c MDCSheetBehavior.
+ * @param item The dynamic item (a view) to apply the sheet behavior to.
+ */
+- (nonnull instancetype)initWithItem:(nonnull id <UIDynamicItem>)item NS_DESIGNATED_INITIALIZER;
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end
