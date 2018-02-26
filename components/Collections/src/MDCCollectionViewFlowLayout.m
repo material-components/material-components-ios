@@ -405,7 +405,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // view rows.
   CGRect insetFrame = attr.frame;
   if (!CGRectIsEmpty(insetFrame)) {
-    UIEdgeInsets insets = self.sectionInset;
+    UIEdgeInsets insets;
 
     // Retrieve the insets from the Flow Layout delegate to maintain consistency with the CVC
     if ([self.collectionView.delegate

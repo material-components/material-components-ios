@@ -481,7 +481,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (CGFloat)trailingViewAlpha {
   // The trailing view has the same behavior as .rightView in UITextField: It has visual precedence
   // over the clear button.
-  CGFloat trailingViewAlpha = self.trailingView.alpha;
+  CGFloat trailingViewAlpha;
   switch (self.trailingViewMode) {
     case UITextFieldViewModeAlways:
       trailingViewAlpha = 1.f;
