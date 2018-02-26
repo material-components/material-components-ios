@@ -159,16 +159,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
-    _borderPath = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderPathKey];
-    _borderView = [aDecoder decodeObjectForKey:MDCTextInputFundamentBorderViewKey];
-    _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
+    _borderPath = [aDecoder decodeObjectOfClass:[UIBezierPath class]
+                                         forKey:MDCTextInputFundamentBorderPathKey];
+    _borderView = [aDecoder decodeObjectOfClass:[MDCTextInputBorderView class]
+                                         forKey:MDCTextInputFundamentBorderViewKey];
+    _clearButton = [aDecoder decodeObjectOfClass:[UIButton class]
+                                          forKey:MDCTextInputFundamentClearButtonKey];
     _hidesPlaceholderOnInput = [aDecoder decodeBoolForKey:MDCTextInputFundamentHidesPlaceholderKey];
-    _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentLeadingLabelKey];
+    _leadingUnderlineLabel = [aDecoder decodeObjectOfClass:[UILabel class]
+                                                    forKey:MDCTextInputFundamentLeadingLabelKey];
     _mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCTextInputFundamentMDCAdjustsFontsKey];
     _placeholderLabel = [aDecoder decodeObjectOfClass:[UILabel class]
                                                forKey:MDCTextInputFundamentPlaceholderLabelKey];
-    _textInput = [aDecoder decodeObjectOfClass:[UIView<MDCTextInput> class]
+    _textInput = [aDecoder decodeObjectOfClass:[UIView class]
                                         forKey:MDCTextInputFundamentTextInputKey];
     _textColor =
         [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputFundamentTextColorKey];

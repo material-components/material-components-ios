@@ -73,9 +73,12 @@ static inline NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin)
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    _borderFillColor = [coder decodeObjectForKey:MDCTextInputBorderViewBorderFillColorKey];
-    _borderPath = [coder decodeObjectForKey:MDCTextInputBorderViewBorderPathKey];
-    _borderStrokeColor = [coder decodeObjectForKey:MDCTextInputBorderViewBorderStrokeColorKey];
+    _borderFillColor = [coder decodeObjectOfClass:[UIColor class]
+                                           forKey:MDCTextInputBorderViewBorderFillColorKey];
+    _borderPath = [coder decodeObjectOfClass:[UIBezierPath class]
+                                     forKey:MDCTextInputBorderViewBorderPathKey];
+    _borderStrokeColor = [coder decodeObjectOfClass:[UIColor class]
+                                            forKey:MDCTextInputBorderViewBorderStrokeColorKey];
     [self commonMDCTextInputBorderViewInit];
   }
   return self;
