@@ -527,7 +527,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updatePlaceholderAlpha];
   [self.textInput sendSubviewToBack:_borderView];
 
-  if ([self needsUpdateConstraintsForPlaceholderToOverlayViewsPosition]) {
+  if ([self needsUpdateConstraintsForPlaceholderToTextInsets] ||
+      [self needsUpdateConstraintsForPlaceholderToOverlayViewsPosition]) {
     [self.textInput setNeedsUpdateConstraints];
   }
 
@@ -868,6 +869,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     self.trailingUnderlineLabel.font = textFont;
     self.placeholderLabel.font = textFont;
   }
+}
+
+- (BOOL)needsUpdateConstraintsForPlaceholderToTextInsets {
+  return (self.placeholderTop.constant != _textInput.textInsets.top ||
+          self.placeholderLeading.constant != _textInput.textInsets.left ||
+          self.placeholderTrailing.constant != -1 * _textInput.textInsets.right);
 }
 
 - (BOOL)needsUpdateConstraintsForPlaceholderToOverlayViewsPosition {
