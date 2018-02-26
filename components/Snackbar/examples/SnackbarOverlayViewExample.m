@@ -70,6 +70,8 @@ static const CGFloat kBottomBarHeight = 44.0f;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+
   [MDCSnackbarManager setBottomOffset:0];
 }
 
