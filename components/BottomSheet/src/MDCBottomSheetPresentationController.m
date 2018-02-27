@@ -119,7 +119,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _dimmingView.alpha = 0.0;
   [transitionCoordinator animateAlongsideTransition:
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-        _dimmingView.alpha = 1.0;
+        self->_dimmingView.alpha = 1.0;
       }                                  completion:nil];
 }
 
@@ -135,7 +135,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   [transitionCoordinator animateAlongsideTransition:
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-        _dimmingView.alpha = 0.0;
+        self->_dimmingView.alpha = 0.0;
       }                                  completion:nil];
 }
 
