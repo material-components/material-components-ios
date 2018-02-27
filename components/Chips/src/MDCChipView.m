@@ -230,26 +230,34 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   if (self = [super initWithCoder:aDecoder]) {
-    _imageView = [aDecoder decodeObjectForKey:MDCChipImageViewKey];
-    _selectedImageView = [aDecoder decodeObjectForKey:MDCChipSelectedImageViewKey];
-    _titleLabel = [aDecoder decodeObjectForKey:MDCChipTitleLabelKey];
-    _accessoryView = [aDecoder decodeObjectForKey:MDCChipAccessoryViewKey];
+    _imageView = [aDecoder decodeObjectOfClass:[UIImageView class] forKey:MDCChipImageViewKey];
+    _selectedImageView = [aDecoder decodeObjectOfClass:[UIImageView class]
+                                                forKey:MDCChipSelectedImageViewKey];
+    _titleLabel = [aDecoder decodeObjectOfClass:[UILabel class] forKey:MDCChipTitleLabelKey];
+    _accessoryView = [aDecoder decodeObjectOfClass:[UIView class] forKey:MDCChipAccessoryViewKey];
 
     _contentPadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipContentPaddingKey];
     _imagePadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipImagePaddingKey];
     _titlePadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipTitlePaddingKey];
     _accessoryPadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipAccessoryPaddingKey];
 
-    _inkView = [aDecoder decodeObjectForKey:MDCChipInkViewKey];
+    _inkView = [aDecoder decodeObjectOfClass:[MDCInkView class] forKey:MDCChipInkViewKey];
 
-    _backgroundColors = [aDecoder decodeObjectForKey:MDCChipBackgroundColorsKey];
-    _borderColors = [aDecoder decodeObjectForKey:MDCChipBorderColorsKey];
-    _borderWidths = [aDecoder decodeObjectForKey:MDCChipBorderWidthsKey];
-    _elevations = [aDecoder decodeObjectForKey:MDCChipElevationsKey];
-    _inkColors = [aDecoder decodeObjectForKey:MDCChipInkColorsKey];
-    _shadowColors = [aDecoder decodeObjectForKey:MDCChipShadowColorsKey];
-    _titleFont = [aDecoder decodeObjectForKey:MDCChipTitleFontKey];
-    _titleColors = [aDecoder decodeObjectForKey:MDCChipTitleColorsKey];
+    _backgroundColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                               forKey:MDCChipBackgroundColorsKey];
+    _borderColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                           forKey:MDCChipBorderColorsKey];
+    _borderWidths = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                           forKey:MDCChipBorderWidthsKey];
+    _elevations = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                         forKey:MDCChipElevationsKey];
+    _inkColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                        forKey:MDCChipInkColorsKey];
+    _shadowColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                           forKey:MDCChipShadowColorsKey];
+    _titleFont = [aDecoder decodeObjectOfClass:[UIFont class] forKey:MDCChipTitleFontKey];
+    _titleColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                          forKey:MDCChipTitleColorsKey];
 
     self.mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCChipAdjustsFontForContentSizeKey];
