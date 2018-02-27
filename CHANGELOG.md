@@ -1,3 +1,200 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### ActivityIndicator
+
+#### MDCActivityIndicator
+
+*new* method: `-setProgress:animated:` in `MDCActivityIndicator`
+
+### Themes
+
+#### MDCTonalPalette
+
+*modified* class: `MDCTonalPalette`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTonalPalette : NSObject, NSCoding, NSCopying` |
+| To: | `class MDCTonalPalette : NSObject, NSCopying, NSSecureCoding` |
+
+*modified* class: `MDCTonalPalette`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTonalPalette : NSObject <NSCoding, NSCopying>` |
+| To: | `@interface MDCTonalPalette : NSObject <NSCopying, NSSecureCoding>` |
+## Component changes
+
+
+### Tabs
+
+#### Changes
+
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### MaskedTransition
+
+#### Changes
+
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### AppBar
+
+#### Changes
+
+* [[MDCAppBar]Support NSSecureCoding for App bar. (#2959)](https://github.com/material-components/material-components-ios/commit/b4491c9c9ace370989f87f25a8d2b9f595d52c2c) (Mohammad Cazi)
+
+### Ink
+
+#### Changes
+
+* [[MDCBottomNavigationBar] NSSecureCoding. (#2973)](https://github.com/material-components/material-components-ios/commit/705b76f8a468878a9213d49ee6690386b34a7c2e) (Mohammad Cazi)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### CollectionCells
+
+#### Changes
+
+* [Add demonstration of #2911 (#2930)](https://github.com/material-components/material-components-ios/commit/117864b0b50a9d488a134aa69072a31ef5b11ce1) (ianegordon)
+* [Support images larger than 40x40 in MDCCollectionViewTextCell (#2912)](https://github.com/material-components/material-components-ios/commit/b089e47b4f10761e7fedfea9ae22ef9721b91f0f) (Ben Hamilton (Ben Gertzfield))
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### Buttons
+
+#### Changes
+
+* [[MDCButtonBar] add NSSecureCoding. (#2976)](https://github.com/material-components/material-components-ios/commit/cdea5d6836f529f75d211b8052a19ad86361663c) (Mohammad Cazi)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+* [fix local kokoro warnings and errors (#2964)](https://github.com/material-components/material-components-ios/commit/87f9f591921e829c60401b443d2fe48882388e5c) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [[MDCButtonBar] add NSSecureCoding. (#2976)](https://github.com/material-components/material-components-ios/commit/cdea5d6836f529f75d211b8052a19ad86361663c) (Mohammad Cazi)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### TextFields
+
+#### Changes
+
+* [Adding secure coding for all MDCTextfield and properties of it. (#2990)](https://github.com/material-components/material-components-ios/commit/c52bc7cc58e974a2ddac339579f259068dd11214) (Mohammad Cazi)
+* [Fix for GH #2985 (placeholder not moving when chips needs it to.) (#2989)](https://github.com/material-components/material-components-ios/commit/7007607b2e8bb763fe487d82517359fcfb618187) (Will Larche)
+* [Updating cursor color for state. (#2967)](https://github.com/material-components/material-components-ios/commit/002b83a15856df06c01bdde55292946811159c07) (Will Larche)
+* [[TextField] Fix MDCTextInputControllerUnderline usage description in README.md (#2950)](https://github.com/material-components/material-components-ios/commit/37e721791081a8d3dc20f6e5bdd7b034f5a84ee1) (yokoe)
+
+### Chips
+
+#### Changes
+
+* [ChipView class check for encoding. (#2993)](https://github.com/material-components/material-components-ios/commit/e1707dbcb23d96872a1d9634adcef48f16bb3468) (Mohammad Cazi)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### Snackbar
+
+#### Changes
+
+* [[SnackbarExmaples] Added required super call (#3005)](https://github.com/material-components/material-components-ios/commit/d10d499d80e3dd2dbecfe049903dcb7a3a9031eb) (Yura Samsoniuk)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### Cards
+
+#### Changes
+
+* [[CollectionCells] Add demonstration of #2911 (#2930)](https://github.com/material-components/material-components-ios/commit/117864b0b50a9d488a134aa69072a31ef5b11ce1) (ianegordon)
+* [[MDCCard] NSSecureCoding support. (#2984)](https://github.com/material-components/material-components-ios/commit/8d030b94652c3e6825d8592c9a1acafdef0fe097) (Mohammad Cazi)
+
+### BottomAppBar
+
+#### Changes
+
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### NavigationBar
+
+#### Changes
+
+* [[MDCAppBar]Support NSSecureCoding for App bar. (#2959)](https://github.com/material-components/material-components-ios/commit/b4491c9c9ace370989f87f25a8d2b9f595d52c2c) (Mohammad Cazi)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### ShadowLayer
+
+#### Changes
+
+* [Document default elevation of 0 (#2960)](https://github.com/material-components/material-components-ios/commit/c7a9b6966e356c6291107f59099d62e471d68aa6) (Robert Moore)
+
+### ActivityIndicator
+
+#### Changes
+
+* [Add setProgress:animated: (#2924)](https://github.com/material-components/material-components-ios/commit/872dacb68fef1b20e9ee4a5e44e0cba664fe029b) (ianegordon)
+* [Fixed ActivityIndicatorTests#testSetProgressStrokeAnimated test (#3006)](https://github.com/material-components/material-components-ios/commit/921c9f09e4ee604a72e7ecf2e1c08ad0410be475) (Yura Samsoniuk)
+* [Fixing Implicit Self inside blocks. (#2954)](https://github.com/material-components/material-components-ios/commit/5cb871e6fae545a6cba33ccf0ba83702316504eb) (Mohammad Cazi)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### BottomSheet
+
+#### Changes
+
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### BottomNavigation
+
+#### Changes
+
+* [Remove MaterialMath import (#2941)](https://github.com/material-components/material-components-ios/commit/df1893ce52770843a7228c2b0eede9fc2b43809e) (Robert Moore)
+* [[MDCBottomNavigationBar] NSSecureCoding. (#2973)](https://github.com/material-components/material-components-ios/commit/705b76f8a468878a9213d49ee6690386b34a7c2e) (Mohammad Cazi)
+
+### PageControl
+
+#### Changes
+
+* [Fixing Implicit Self inside blocks. (#2954)](https://github.com/material-components/material-components-ios/commit/5cb871e6fae545a6cba33ccf0ba83702316504eb) (Mohammad Cazi)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### Collections
+
+#### Changes
+
+* [Adding comment from .h to also the .m (#2955)](https://github.com/material-components/material-components-ios/commit/ee2647919c7822dba62c4dbe3a47e9ae7b9f6077) (Will Larche)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### HeaderStackView
+
+#### Changes
+
+* [[MDCAppBar]Support NSSecureCoding for App bar. (#2959)](https://github.com/material-components/material-components-ios/commit/b4491c9c9ace370989f87f25a8d2b9f595d52c2c) (Mohammad Cazi)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[MDCAppBar]Support NSSecureCoding for App bar. (#2959)](https://github.com/material-components/material-components-ios/commit/b4491c9c9ace370989f87f25a8d2b9f595d52c2c) (Mohammad Cazi)
+* [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
+
+### Themes
+
+#### Changes
+
+* [[MDCTonalPalette] Adding NSSecureCoding. #2904 (#2928)](https://github.com/material-components/material-components-ios/commit/dfa7555d15718a805da54583abe07628b9362e90) (Mohammad Cazi)
+* [fix local kokoro warnings and errors (#2964)](https://github.com/material-components/material-components-ios/commit/87f9f591921e829c60401b443d2fe48882388e5c) (Yarden Eitan)
+
+---
+
 # 46.0.0
 
 ## Breaking changes
