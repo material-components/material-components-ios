@@ -138,11 +138,11 @@ static CGFloat randomNumber() {
   // Make sure that the stroke layer updates accordingly when we set determinate progress.
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
   indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  [indicator startAnimating];
 
   [indicator setProgress:0.55f animated:YES];
   XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  //TODO(#2923): Stroke is not updated.  Wait until the animation is finished?
-  //XCTAssertEqual(indicator.strokeLayer.strokeEnd, 0.55f);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, 0.55f);
 }
 
 #pragma mark - Helpers
