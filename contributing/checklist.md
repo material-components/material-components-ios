@@ -348,7 +348,9 @@ that is sufficient.
 Tip: write a unit test for this.
 
 1. Implement `-initWithCoder:`.
+1. For decoding objects always use "decodeObjectOfClass:forKey:" whenever possible.
 1. Implement `-encodeWithCoder:`.
+1. Implement NSSecureCoding Protocol if all subclasses support NSSecureCoding. For example UIView and UIViewController do not support NSSecureCoding.
 1. If implementing NSSecureCoding, implement `+supportsSecureCoding`.
 1. Enter YES or NO
 
