@@ -18,9 +18,7 @@
 set -e
 
 KOKORO_RUNNER_VERSION="v4.*"
-
-# Kokoro only supports up to 8.2 for now. Once 8.3 support is introduced we will bump this version.
-XCODE_MINIMUM_VERSION="8.2.0"
+XCODE_MINIMUM_VERSION="8.3.3"
 
 fix_bazel_imports() {
   if [ -z "$KOKORO_BUILD_NUMBER" ]; then
@@ -88,7 +86,7 @@ run_bazel() {
   ./.kokoro-ios-runner/bazel.sh $COMMAND $TARGET \
       --min-xcode-version $XCODE_MINIMUM_VERSION \
       $verbosity_args \
-      --ios_minimum_os=8.0 \
+      --ios_minimum_os=10.3 \
       --ios_multi_cpus=i386,x86_64
 }
 
@@ -128,7 +126,7 @@ run_cocoapods() {
 
     scripts/prep_all
     scripts/build_all --verbose
-    if [ "$IS_RELEASE" -eq "1" ]; then
+    if [ -n "$IS_RELEASE" ]; then
       scripts/test_all
     else
       scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
@@ -181,13 +179,14 @@ if [ -n "$VERBOSE_OUTPUT" ]; then
 fi
 
 if [ ! -d .kokoro-ios-runner ]; then
-  git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
+  git clone https://github.com/yarneo/kokoro-ios-runner.git .kokoro-ios-runner
 fi
 
 pushd .kokoro-ios-runner
 git fetch > /dev/null
-TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
-git checkout "$TAG" > /dev/null
+# TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
+# git checkout "$TAG" > /dev/null
+git checkout develop > /dev/null
 popd
 
 case "$DEPENDENCY_SYSTEM" in

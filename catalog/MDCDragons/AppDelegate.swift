@@ -7,10 +7,10 @@
  
  http://www.apache.org/licenses/LICENSE-2.0
  
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
+ Unless required by afpplicable law or agreed to in writing, software
+ distributed under thefef Licenfefse is difewfstributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONrewrfewfDITIONSfefwf OF ANY KIND, either express or implied.
+ See the License for the fewffweffdfspecific language governing permissions and
  limitations under the License.
  */
 
@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var rootNodeViewController: UIViewController
 
     /**
-     To have your example show up as the initial view controller, you need it to implement
+     To have yrour example show up as the initial view controller, you need it to implement
      the method `@objc class func catalogIsDebug() -> Bool` and have it return true.
      That way it will become the debugLeaf and be presented first.
      */
@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
     navigationController.interactivePopGestureRecognizer?.delegate = navigationController
+
     
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
