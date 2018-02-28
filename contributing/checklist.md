@@ -124,7 +124,7 @@ You can do this manually or use a tool such as [autogen](https://github.com/mbru
 Sample:
 ```
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -234,7 +234,18 @@ See Apple's [Building Apps with Dynamic Type video](https://developer.apple.com/
 1. Enter YES, NO or N/A
 
 
-### Color Themer (If possible)
+### Custom Color Support (If necessary)
+
+
+Any component that has visual elements that can be colorized should include expose public properties. Each element
+should have its own UIColor property.
+
+1. For any rendered element (text, foreground view, stroke) that we may want to customize the color of, create a
+UIColor property that is annotated with UI_APPEARANCE_SELECTOR.
+1. Enter YES, NO or N/A
+
+
+### Color Themer (If necessary)
 
 
 Any component that has visual elements that can be colorized should include a [color themer](https://github.com/material-components/material-components-ios/tree/develop/components/Themes). A color themer applies a set of colors, known as a color scheme, to a component in a systematic way. The user of the color themer passes a color scheme and component to the color themer and the component is automatically colorized in the correct way.
@@ -398,6 +409,11 @@ Classes that set ivar values or perform other commands from the initializer, sho
 
 Components with text elements should allow clients to choose a custom font. Each text element should have 
 its own UIFont property.  (titleFont, bodyFont, etc.)
+
+### Font Themer Support (if necessary)
+
+If you added any custom font properties, create a font themer that will allow cliets to easily theme the component
+with a custom type hierarchy.
 
 ### Safe Area Support (if necessary)
 
