@@ -11,14 +11,6 @@
  limitations under the License.
  */
 
-//
-//  NavigationBarLayoutExample.m
-//  Pods
-//
-//  Created by Rob Moore on 7/28/17.
-//
-//
-
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
