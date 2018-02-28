@@ -135,7 +135,7 @@
   self.badgeCount++;
   self.bottomNavBar.items[1].badgeValue = [NSNumber numberWithInt:self.badgeCount].stringValue;
 
-  __weak __typeof__(self) weakSelf = self;
+  __weak BottomNavigationTypicalUseExample *weakSelf = self;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
     [weakSelf updateBadgeItemCount];
   });
