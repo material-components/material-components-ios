@@ -204,7 +204,7 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 
 
 1. Prefer .leading and .trailing over .left and .right when laying out view hierarchies.
-1. Prefer Natural or Left when setting the alignment of text fields and labels.
+1. Prefer Natural over Left when setting the alignment of text fields and labels.
 1. Add an example to our catalog.
 1. Enter YES, NO or N/A
 
@@ -217,6 +217,7 @@ See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.co
 
 1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
 1. Enter YES, NO or N/A
+
 
 ### Dynamic Type Support (If possible)
 
@@ -245,10 +246,10 @@ UIColor property that is annotated with UI_APPEARANCE_SELECTOR.
 1. Enter YES, NO or N/A
 
 
-### Color Themer (If necessary)
+### Color Themer (If possible)
 
 
-Any component that has visual elements that can be colorized should include a [color themer](https://github.com/material-components/material-components-ios/tree/develop/components/Themes). A color themer applies a set of colors, known as a color scheme, to a component in a systematic way. The user of the color themer passes a color scheme and component to the color themer and the component is automatically colorized in the correct way.
+Any component that has added custom color support should include a [color themer](https://github.com/material-components/material-components-ios/tree/develop/components/Themes). A color themer applies a set of colors, known as a color scheme, to a component in a systematic way. The user of the color themer passes a color scheme and component to the color themer and the component is automatically colorized in the correct way. Themers should operate on an instance of a component or its UIAppearance proxy.
 
 1. Make sure the color themer static method signatures adhere to existing conventions: `applyColorScheme:toComponent`.
 1. Add a `ColorThemer` directory with the color themer to the `src` directory of the component.
@@ -295,6 +296,7 @@ They should focus on educating thru the catalog’s visual result and the code i
 1. Include an example of typical usage.
 1. Include examples of additional features of the component, if possible.
 1. Enter YES or NO
+
 
 ### Interface Builder Support (If possible)
 
@@ -410,10 +412,20 @@ Classes that set ivar values or perform other commands from the initializer, sho
 Components with text elements should allow clients to choose a custom font. Each text element should have 
 its own UIFont property.  (titleFont, bodyFont, etc.)
 
-### Font Themer Support (if necessary)
+1. Add UIFont properties for each unique text element with a UIAPPEARANCE_SELECTOR annotation.
+1. Enter YES, NO or N/A
 
-If you added any custom font properties, create a font themer that will allow cliets to easily theme the component
-with a custom type hierarchy.
+### Font Themer Support (if possible)
+
+If a component exposes any custom font properties, create a font themer that will allow cliets to easily theme the component
+with a type hierarchy or MDCFontScheme. Themers should operate on an instance of a component or its UIAppearance proxy.
+
+
+1. Make sure the font themer static method signatures adhere to existing conventions: `applyFontScheme:toComponent`.
+1. Add a `FontThemer` directory with the themer to the `src` directory of the component.
+1. Update component entry in `MaterialComponents.podspec` to include the themer.
+1. Enter YES, NO or N/A
+
 
 ### Safe Area Support (if necessary)
 
