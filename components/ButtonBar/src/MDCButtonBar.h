@@ -111,7 +111,6 @@ IB_DESIGNABLE
  */
 - (CGSize)sizeThatFits:(CGSize)size;
 
-
 @end
 
 typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
