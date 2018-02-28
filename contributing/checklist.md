@@ -336,14 +336,20 @@ We want to avoid misuse of initializers both in the calling of existing classes 
 1. Enter YES or NO
 
 
-### NSCoding Support
+### NS(Secure)Coding Support
 
 
 Conforming to NSCoding is necessary for Interface Builder support in views and could be used to
-serialize non-view classes. Tip: write a unit test for this.
+serialize non-view classes. Prefer to implement
+[NSSecureCoding](https://developer.apple.com/documentation/foundation/nssecurecoding). If your superclass only support
+NSCoding,
+that is sufficient.
 
-1. Implement `initWithCoder:`.
-1. Implement `encodeWithCoder:`.
+Tip: write a unit test for this.
+
+1. Implement `-initWithCoder:`.
+1. Implement `-encodeWithCoder:`.
+1. If implementing NSSecureCoding, implement `+supportsSecureCoding`.
 1. Enter YES or NO
 
 

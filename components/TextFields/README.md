@@ -68,9 +68,9 @@ Text Fields provides both a single-line version based on `UITextField` and a mul
 
 The actual components (`MDCTextField` & `MDCMultilineTextField`) are 'dumb': they do not have styles, animations, or advanced features. They are designed to be controlled from the outside, via very liberal public API, with a text input controller.
 
-Most text input controllers included are based on `MDCTextInputControllerDefault` which manipulates the exposed elements of the text field to make placeholders float.
+Most text input controllers included are based on `MDCTextInputControllerUnderline` which manipulates the exposed elements of the text field to make placeholders float.
 
-There is also a text input controller for full-width forms (`MDCTextInputControllerFullWidth`). Like `MDCTextInputControllerDefault`, it also handles errors and character counting.
+There is also a text input controller for full-width forms (`MDCTextInputControllerFullWidth`). Like `MDCTextInputControllerUnderline`, it also handles errors and character counting.
 
 Customize the included text input controllers via their parameters or create your own to express your app's brand identity thru typography, color, and animation: if the placeholder should move, add constraints or change the frame. If the trailing label should display validation information, change the text and color it.
 
@@ -156,7 +156,7 @@ scrollView.addSubview(textFieldFloating)
 textFieldFloating.placeholder = "Full Name"
 textFieldFloating.delegate = self
 
-textFieldControllerFloating = MDCTextInputControllerDefault(input: textFieldFloating) // Hold on as a property
+textFieldControllerFloating = MDCTextInputControllerUnderline(input: textFieldFloating) // Hold on as a property
 ```
 
 #### Objective-C
@@ -168,7 +168,7 @@ MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
 textFieldFloating.placeholder = @"Full Name";
 textFieldFloating.delegate = self;
 
-self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
+self.textFieldControllerFloating = [[MDCTextInputControllerUnderline alloc] initWithTextInput:textFieldFloating];
 ```
 <!--</div>-->
 
@@ -186,7 +186,7 @@ textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
 textFieldDefaultCharMax.delegate = self
 
 // Second the controller is created to manage the text field
-textFieldControllerDefaultCharMax = MDCTextInputControllerDefault(input: textFieldDefaultCharMax) // Hold on as a property
+textFieldControllerDefaultCharMax = MDCTextInputControllerUnderline(input: textFieldDefaultCharMax) // Hold on as a property
 textFieldControllerDefaultCharMax.characterCountMax = 50
 textFieldControllerDefaultCharMax.isFloatingEnabled = false
 ```
@@ -202,7 +202,7 @@ textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
 textFieldDefaultCharMax.delegate = self;
 
 // Second the controller is created to manage the text field
-self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerDefault alloc] initWithTextInput: textFieldDefaultCharMax];
+self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerUnderline alloc] initWithTextInput: textFieldDefaultCharMax];
 self.textFieldControllerDefaultCharMax.characterCountMax = 50;
 self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
@@ -223,7 +223,7 @@ scrollView.addSubview(textFieldFloating)
 textFieldFloating.placeholder = "Full Name"
 textFieldFloating.textView.delegate = self
 
-textFieldControllerFloating = MDCTextInputControllerDefault(input: textFieldFloating) // Hold on as a property
+textFieldControllerFloating = MDCTextInputControllerUnderline(input: textFieldFloating) // Hold on as a property
 ```
 
 #### Objective-C
@@ -235,7 +235,7 @@ MDCMultilineTextField *textFieldFloating = [[MDCMultilineTextField alloc] init];
 textFieldFloating.placeholder = @"Full Name";
 textFieldFloating.textView.delegate = self;
 
-self.textFieldControllerFloating = [[MDCTextInputControllerDefault alloc] initWithTextInput:textFieldFloating];
+self.textFieldControllerFloating = [[MDCTextInputControllerUnderline alloc] initWithTextInput:textFieldFloating];
 ```
 <!--</div>-->
 
@@ -253,7 +253,7 @@ textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
 textFieldDefaultCharMax.textView.delegate = self
 
 // Second the controller is created to manage the text field
-textFieldControllerDefaultCharMax = MDCTextInputControllerDefault(input: textFieldDefaultCharMax) // Hold on as a property
+textFieldControllerDefaultCharMax = MDCTextInputControllerUnderline(input: textFieldDefaultCharMax) // Hold on as a property
 textFieldControllerDefaultCharMax.characterCountMax = 50
 textFieldControllerDefaultCharMax.isFloatingEnabled = false
 ```
@@ -269,7 +269,7 @@ textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
 textFieldDefaultCharMax.textView.delegate = self;
 
 // Second the controller is created to manage the text field
-self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerDefault alloc] initWithTextInput: textFieldDefaultCharMax];
+self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerUnderline alloc] initWithTextInput: textFieldDefaultCharMax];
 self.textFieldControllerDefaultCharMax.characterCountMax = 50;
 self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 ```

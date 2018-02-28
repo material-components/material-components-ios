@@ -178,12 +178,12 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   [coordinator animateAlongsideTransition:^(__unused
                    id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-    CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                                      toView:_featureHighlightView];
+    CGPoint point = [self->_highlightedView.superview convertPoint:self->_highlightedView.center
+                                                            toView:self->_featureHighlightView];
 
-    _featureHighlightView.highlightPoint = point;
-    [_featureHighlightView layoutIfNeeded];
-    [_featureHighlightView updateOuterHighlight];
+    self->_featureHighlightView.highlightPoint = point;
+    [self->_featureHighlightView layoutIfNeeded];
+    [self->_featureHighlightView updateOuterHighlight];
   }
                                completion:nil];
 }

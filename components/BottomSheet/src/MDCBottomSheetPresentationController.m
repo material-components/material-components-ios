@@ -96,8 +96,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
                                                 contentView:self.presentedViewController.view
                                                  scrollView:scrollView];
   _sheetView.delegate = self;
-  _sheetView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
   [containerView addSubview:_dimmingView];
   [containerView addSubview:_sheetView];
@@ -119,7 +118,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _dimmingView.alpha = 0.0;
   [transitionCoordinator animateAlongsideTransition:
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-        _dimmingView.alpha = 1.0;
+        self->_dimmingView.alpha = 1.0;
       }                                  completion:nil];
 }
 
@@ -135,7 +134,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   [transitionCoordinator animateAlongsideTransition:
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-        _dimmingView.alpha = 0.0;
+        self->_dimmingView.alpha = 0.0;
       }                                  completion:nil];
 }
 
@@ -151,8 +150,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   [coordinator animateAlongsideTransition:
       ^(__unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        _sheetView.frame = [self frameOfPresentedViewInContainerView];
-        [_sheetView layoutIfNeeded];
+        self->_sheetView.frame = [self frameOfPresentedViewInContainerView];
+        [self->_sheetView layoutIfNeeded];
         [self updatePreferredSheetHeight];
       }                        completion:nil];
 }

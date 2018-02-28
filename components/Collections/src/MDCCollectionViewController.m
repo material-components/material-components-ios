@@ -234,6 +234,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return CGSizeMake(width, height);
 }
 
+// Note that this method is only exposed temporarily until self-sizing cells are supported.
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section
                     collectionView:(UICollectionView *)collectionView {
   UIEdgeInsets contentInset = collectionView.contentInset;

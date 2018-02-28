@@ -247,7 +247,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderTrackingScrollViewKey]) {
-      _trackingScrollView = [aDecoder decodeObjectForKey:MDCFlexibleHeaderTrackingScrollViewKey];
+      _trackingScrollView = [aDecoder decodeObjectOfClass:[UIScrollView class] 
+                                                   forKey:MDCFlexibleHeaderTrackingScrollViewKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey]) {
@@ -1198,7 +1199,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
 
     // When the tracking scroll view is cleared we need a shadow update.
-    if (!_trackingScrollView) {
+    if (!self.trackingScrollView) {
       [self fhv_accumulatorDidChange];
     }
   };
