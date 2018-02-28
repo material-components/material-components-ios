@@ -1,4 +1,4 @@
-# #develop#
+# 46.1.0
 
 ## API changes
 
@@ -45,12 +45,6 @@
 #### Changes
 
 * [[Warnings Fix] Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior. (#2933)](https://github.com/material-components/material-components-ios/commit/261828a056690930decce47f5b57e768d3db4a36) (Mohammad Cazi)
-
-### AppBar
-
-#### Changes
-
-* [[MDCAppBar]Support NSSecureCoding for App bar. (#2959)](https://github.com/material-components/material-components-ios/commit/b4491c9c9ace370989f87f25a8d2b9f595d52c2c) (Mohammad Cazi)
 
 ### Ink
 
