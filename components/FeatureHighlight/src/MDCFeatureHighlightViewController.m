@@ -97,9 +97,9 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   _featureHighlightView.mdc_adjustsFontForContentSizeCategory =
       _mdc_adjustsFontForContentSizeCategory;
 
-  __weak __typeof__(self) weakSelf = self;
+  __weak MDCFeatureHighlightViewController *weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
-    __typeof__(self) strongSelf = weakSelf;
+    MDCFeatureHighlightViewController *strongSelf = weakSelf;
     [strongSelf dismiss:accepted];
   };
 
