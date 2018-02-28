@@ -64,6 +64,8 @@
  the shadow.
 
  Negative values act as if zero were specified.
+
+ The default value is 0.
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 

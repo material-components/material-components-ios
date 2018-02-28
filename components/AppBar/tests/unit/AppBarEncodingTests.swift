@@ -27,6 +27,12 @@ class AppBarEncodingTests: XCTestCase {
     appBar.headerViewController.headerView.shiftBehavior = .enabledWithStatusBar
     appBar.headerViewController.headerView.minimumHeight = 46.0
     appBar.headerViewController.headerView.maximumHeight = 112.0
+    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = true
+    appBar.headerViewController.headerView.shiftBehavior = .enabled
+    appBar.headerViewController.headerView.statusBarHintCanOverlapHeader = true
+    appBar.headerViewController.headerView.visibleShadowOpacity = 3.0
+    appBar.headerViewController.headerView.isInFrontOfInfiniteContent = true
+    appBar.headerViewController.headerView.sharedWithManyScrollViews = true
     appBar.headerViewController.headerView.contentIsTranslucent = true
     appBar.headerViewController.headerView.headerContentImportance = .high
     appBar.navigationBar.backgroundColor = UIColor.black
@@ -34,6 +40,8 @@ class AppBarEncodingTests: XCTestCase {
     appBar.navigationBar.title = "Title"
     appBar.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName: UIColor.white ]
     appBar.navigationBar.titleAlignment = .leading
+    appBar.navigationBar.hidesBackButton = true
+    appBar.navigationBar.leadingItemsSupplementBackButton = true
 
     // When
     let data = NSKeyedArchiver.archivedData(withRootObject: appBar)
@@ -42,6 +50,21 @@ class AppBarEncodingTests: XCTestCase {
     // Then
     XCTAssertEqual(appBar.headerViewController.headerView.shiftBehavior,
                    unarchivedAppBar?.headerViewController.headerView.shiftBehavior)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea,
+                   unarchivedAppBar?.headerViewController.headerView.minMaxHeightIncludesSafeArea)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.visibleShadowOpacity,
+                   unarchivedAppBar?.headerViewController.headerView.visibleShadowOpacity)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.statusBarHintCanOverlapHeader,
+                   unarchivedAppBar?.headerViewController.headerView.statusBarHintCanOverlapHeader)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.isInFrontOfInfiniteContent,
+                   unarchivedAppBar?.headerViewController.headerView.isInFrontOfInfiniteContent)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.sharedWithManyScrollViews,
+                   unarchivedAppBar?.headerViewController.headerView.sharedWithManyScrollViews)
 
     XCTAssertEqual(appBar.headerViewController.headerView.minimumHeight,
                    unarchivedAppBar?.headerViewController.headerView.minimumHeight)
@@ -63,6 +86,13 @@ class AppBarEncodingTests: XCTestCase {
 
     XCTAssertEqual(appBar.navigationBar.title,
                    unarchivedAppBar?.navigationBar.title)
+
+    XCTAssertEqual(appBar.navigationBar.hidesBackButton,
+                   unarchivedAppBar?.navigationBar.hidesBackButton)
+
+    XCTAssertEqual(appBar.navigationBar.leadingItemsSupplementBackButton,
+                   unarchivedAppBar?.navigationBar.leadingItemsSupplementBackButton)
+
 
     let foregroundColor =
         appBar.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName]

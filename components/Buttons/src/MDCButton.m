@@ -161,7 +161,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkColorKey]) {
-      self.inkView.inkColor = [aDecoder decodeObjectForKey:MDCButtonInkViewInkColorKey];
+      self.inkView.inkColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                     forKey:MDCButtonInkViewInkColorKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkMaxRippleRadiusKey]) {
@@ -181,7 +182,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorHintKey]) {
-      _underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
+      _underlyingColorHint = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                    forKey:MDCButtonUnderlyingColorHintKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
@@ -205,19 +207,23 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
-      _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
+      _userElevations = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                               forKey:MDCButtonUserElevationsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBorderColorsKey]) {
-      _borderColors = [aDecoder decodeObjectForKey:MDCButtonBorderColorsKey];
+      _borderColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                             forKey:MDCButtonBorderColorsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBorderWidthsKey]) {
-      _borderWidths = [aDecoder decodeObjectForKey:MDCButtonBorderWidthsKey];
+      _borderWidths = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                              forKey:MDCButtonBorderWidthsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBackgroundColorsKey]) {
-      _backgroundColors = [aDecoder decodeObjectForKey:MDCButtonBackgroundColorsKey];
+      _backgroundColors = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                                  forKey:MDCButtonBackgroundColorsKey];
     } else {
       // Storyboards will set the backgroundColor via the UIView backgroundColor setter, so we have
       // to write that in to our _backgroundColors dictionary.
@@ -226,15 +232,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     [self updateBackgroundColor];
 
     if ([aDecoder containsValueForKey:MDCButtonFontsKey]) {
-      _fonts = [aDecoder decodeObjectForKey:MDCButtonFontsKey];
+      _fonts = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class] forKey:MDCButtonFontsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonNontransformedTitlesKey]) {
-      _nontransformedTitles = [aDecoder decodeObjectForKey:MDCButtonNontransformedTitlesKey];
+      _nontransformedTitles = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                                      forKey:MDCButtonNontransformedTitlesKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonShadowColorsKey]) {
-      _shadowColors = [aDecoder decodeObjectForKey:MDCButtonShadowColorsKey];
+      _shadowColors = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                              forKey:MDCButtonShadowColorsKey];
     }
   }
   return self;
@@ -835,7 +843,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
   void (^animations)(void) = ^{
-    self.alpha = self.enabled ? _enabledAlpha : _disabledAlpha;
+    self.alpha = self.enabled ? self->_enabledAlpha : self.disabledAlpha;
     [self updateBackgroundColor];
   };
 

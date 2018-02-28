@@ -89,4 +89,10 @@ post_install do |installer|
     puts "Earl Grey submodule update failed. If this project is not a git "\
          "repository, then this is fine." 
   end
+
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['LD_RUNPATH_SEARCH_PATHS'] = [
+      '$(FRAMEWORK_SEARCH_PATHS)'
+    ]
+  end
 end

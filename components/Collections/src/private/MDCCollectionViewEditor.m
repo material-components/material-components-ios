@@ -138,8 +138,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
     [CATransaction setCompletionBlock:^{
       // Notify delegate did begin editing.
-      if ([_delegate respondsToSelector:@selector(collectionViewDidBeginEditing:)]) {
-        [_delegate collectionViewDidBeginEditing:_collectionView];
+      if ([self.delegate respondsToSelector:@selector(collectionViewDidBeginEditing:)]) {
+        [self.delegate collectionViewDidBeginEditing:self.collectionView];
       }
     }];
 
@@ -151,8 +151,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
     [CATransaction setCompletionBlock:^{
       // Notify delegate did end editing.
-      if ([_delegate respondsToSelector:@selector(collectionViewDidEndEditing:)]) {
-        [_delegate collectionViewDidEndEditing:_collectionView];
+      if ([self.delegate respondsToSelector:@selector(collectionViewDidEndEditing:)]) {
+        [self.delegate collectionViewDidEndEditing:self.collectionView];
       }
     }];
   }
@@ -395,22 +395,22 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
         void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
           // Notify delegate dragging has finished.
-          if ([_delegate
+          if ([self.delegate
                   respondsToSelector:@selector(collectionView:didEndDraggingItemAtIndexPath:)]) {
-            [_delegate collectionView:_collectionView
-                didEndDraggingItemAtIndexPath:_reorderingCellIndexPath];
+            [self.delegate collectionView:self.collectionView
+                didEndDraggingItemAtIndexPath:self->_reorderingCellIndexPath];
           }
           [self restoreEditingItem];
 
           // Re-enable scrolling.
-          [_collectionView setScrollEnabled:YES];
+          [self.collectionView setScrollEnabled:YES];
         };
 
         [UIView animateWithDuration:kDismissalAnimationDuration
                               delay:0
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                           _cellSnapshot.frame = attributes.frame;
+                           self->_cellSnapshot.frame = attributes.frame;
                          }
                          completion:completionBlock];
       }
@@ -661,8 +661,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
       delay:0
       options:UIViewAnimationOptionCurveEaseOut
       animations:^{
-        _cellSnapshot.layer.transform = CATransform3DMakeAffineTransform(transform);
-        _cellSnapshot.alpha = 0;
+        self->_cellSnapshot.layer.transform = CATransform3DMakeAffineTransform(transform);
+        self->_cellSnapshot.alpha = 0;
       }
       completion:^(__unused BOOL finished) {
         [self restoreEditingItem];
@@ -807,7 +807,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
                          CGPointMake(0, MAX(0, contentYOffset + yOffset));
 
                      // Transform snapshot position when panning.
-                     _cellSnapshot.layer.transform =
+                     self->_cellSnapshot.layer.transform =
                          CATransform3DMakeAffineTransform(snapshotTransform);
                    }
                    completion:nil];

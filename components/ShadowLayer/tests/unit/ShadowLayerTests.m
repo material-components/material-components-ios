@@ -57,4 +57,13 @@
   XCTAssertEqual(shadowLayer.shadowMaskEnabled, unarchivedLayer.shadowMaskEnabled);
 }
 
+- (void)testDefaultValues {
+  // Given
+  MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
+
+  // Then
+  XCTAssertEqualWithAccuracy(shadowLayer.elevation, 0, 0.0001);
+  XCTAssertTrue(shadowLayer.isShadowMaskEnabled);
+}
+
 @end

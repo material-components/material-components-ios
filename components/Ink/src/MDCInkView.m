@@ -96,7 +96,7 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
       self.maxRippleRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCInkViewMaxRippleRadiusKey];
     }
     if ([aDecoder containsValueForKey:MDCInkViewInkColorKey]) {
-      self.inkColor = [aDecoder decodeObjectForKey:MDCInkViewInkColorKey];
+      self.inkColor = [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCInkViewInkColorKey];
     }
   }
   return self;

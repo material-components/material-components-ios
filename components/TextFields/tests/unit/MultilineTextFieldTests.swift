@@ -131,7 +131,8 @@ class MultilineTextFieldTests: XCTestCase {
                    unserializedInput?.translatesAutoresizingMaskIntoConstraints)
     XCTAssertEqual(textField.text,
                    unserializedInput?.text)
-    XCTAssertEqual(textField.cursorColor, unserializedInput?.cursorColor)
+
+    XCTAssert(textField.cursorColor?.isEqualAsFloats(unserializedInput?.cursorColor) ?? false)
 
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)

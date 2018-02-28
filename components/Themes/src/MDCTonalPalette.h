@@ -24,7 +24,7 @@
  color and another of the color variations is designated as a dark color in relation to the main
  color.
  */
-@interface MDCTonalPalette : NSObject <NSCoding, NSCopying>
+@interface MDCTonalPalette : NSObject <NSCopying, NSSecureCoding>
 
 /**
  The colors that comprise a tonal palette.

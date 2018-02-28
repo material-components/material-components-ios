@@ -141,9 +141,9 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   transition.completion = ^{
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    _rotationContainer.hidden = YES;
-    [_refreshArrowContainer removeAllAnimations];
-    [_refreshArrowPoint removeAllAnimations];
+    self->_rotationContainer.hidden = YES;
+    [self->_refreshArrowContainer removeAllAnimations];
+    [self->_refreshArrowPoint removeAllAnimations];
     [CATransaction commit];
 
     dispatch_time_t stopTime =
@@ -167,7 +167,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
       }];
   transition.duration = kActivityIndicatorExampleAnimationDuration;
   transition.completion = ^{
-    _button.enabled = YES;
+    self->_button.enabled = YES;
   };
 
   [_activityIndicator stopAnimatingWithTransition:transition];

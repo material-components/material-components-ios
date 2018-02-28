@@ -187,7 +187,7 @@
                         delay:0
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
-                     _scrollView.contentOffset = offset;
+                     self->_scrollView.contentOffset = offset;
                    }
                    completion:nil];
 }

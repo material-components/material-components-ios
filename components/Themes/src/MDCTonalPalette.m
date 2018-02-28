@@ -59,7 +59,7 @@ static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkC
   self = [super init];
   if (self) {
     if ([coder containsValueForKey:MDCTonalPaletteColorsKey]) {
-      _colors = [coder decodeObjectForKey:MDCTonalPaletteColorsKey];
+      _colors = [coder decodeObjectOfClass:[NSArray class] forKey:MDCTonalPaletteColorsKey];
     }
 
     if ([coder containsValueForKey:MDCTonalPaletteMainColorIndexKey]) {
@@ -107,6 +107,12 @@ static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkC
     copy.darkColorIndex = [self darkColorIndex];
   }
   return copy;
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 @end

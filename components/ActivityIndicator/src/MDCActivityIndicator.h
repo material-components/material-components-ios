@@ -97,6 +97,12 @@ IB_DESIGNABLE
 @property(nonatomic, assign) IBInspectable float progress;
 
 /**
+ Set the determinate progress of the activity indicator when indicatorMode is
+ MDCActivityIndicatorModeDeterminate.
+ */
+- (void)setProgress:(float)progress animated:(BOOL)animated;
+
+/**
  The array of colors that are cycled through when animating the spinner. Populated with a set of
  default colors. 
  
