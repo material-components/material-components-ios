@@ -1,14 +1,12 @@
-# #develop#
+# 46.1.1
 
-## Breaking changes
-
-## New deprecations
-
-## New features
-
-## API changes
 ## Component changes
 
+### CollectionCells
+
+#### Changes
+
+* [[Collections] Fix image sizing (#3027)](https://github.com/material-components/material-components-ios/commit/aa266761061c12892259ab139a45ad209b7d9afd) (ianegordon)
 
 ---
 
