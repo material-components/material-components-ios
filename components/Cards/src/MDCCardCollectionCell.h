@@ -37,6 +37,20 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   MDCCardCellStateSelected
 };
 
+/**
+ The alignment of the image when in selectable mode (`selectable` is set to YES).
+ */
+typedef NS_ENUM(NSInteger, MDCCardCellImageAlignment) {
+  /** The alignment of the image is to the top left of the card. */
+  MDCCardCellImageAlignmentLeft = 0,
+
+  /** The alignment of the image is to the top center of the card. */
+  MDCCardCellImageAlignmentCenter,
+
+  /** The alignment of the image is to the top right of the card. */
+  MDCCardCellImageAlignmentRight
+};
+
 @interface MDCCardCollectionCell : UICollectionViewCell
 
 /**
@@ -141,16 +155,66 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
 - (nullable UIColor *)shadowColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
- The image for the selected state.
- Default is the checked circle image.
+ Returns the image when `selectable` is YES for an MDCCardCellStateNormal state
+
+ If no image has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then nil will be returned.
+
+ @param state MDCCardCellState the card state
+ @return The image for the requested state.
  */
-@property(nonatomic, strong, nullable) UIImage *selectedImage UI_APPEARANCE_SELECTOR;
+- (nullable UIImage *)imageForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
- The tint color for the selected image.
- Default is set to default UIImageView tintColor
+ Sets the image when `selectable` is YES for an MDCCardCellStateNormal state
+
+ @param image The image
+ @param state MDCCardCellState the card state
  */
-@property(nonatomic, strong, nullable) UIColor *selectedImageTintColor UI_APPEARANCE_SELECTOR;
+- (void)setImage:(nullable UIImage *)image forState:(MDCCardCellState)state
+UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the alignment for the image when `selectable` is YES for an MDCCardCellStateNormal state
+
+ If no alignment has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then MDCCardCellImageAlignmentRight will be returned.
+
+ @param state MDCCardCellState the card state
+ @return The alignment for the requested state.
+ */
+- (MDCCardCellImageAlignment)imageAlignmentForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ Sets the alignment for the image when `selectable` is YES for an MDCCardCellStateNormal state
+
+ @param imageAlignment The image alignment
+ @param state MDCCardCellState the card state
+ */
+- (void)setImageAlignment:(MDCCardCellImageAlignment)imageAlignment
+                         forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
+
+
+/**
+ Returns the image tint color when `selectable` is YES for an MDCCardCellStateNormal state
+
+ If no tint color has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then nil will be returned.
+
+ @param state MDCCardCellState the card state
+ @return The image tint color for the requested state.
+ */
+- (nullable UIColor *)imageTintColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ Sets the tint color for the image when `selectable` is YES for an MDCCardCellStateNormal state
+
+ @param imageTintColor The image tint color
+ @param state MDCCardCellState the card state
+ */
+- (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(MDCCardCellState)state
+UI_APPEARANCE_SELECTOR;
+
 
 /**
  The state of the card cell.
