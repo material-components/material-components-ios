@@ -224,6 +224,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 -(void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
   [aCoder encodeObject:self.items forKey:MDCTabBarItemsKey];
   [aCoder encodeObject:self.selectedItem forKey:MDCTabBarSelectedItemKey];
   [aCoder encodeConditionalObject:self.delegate forKey:MDCTabBarDelegateKey];
