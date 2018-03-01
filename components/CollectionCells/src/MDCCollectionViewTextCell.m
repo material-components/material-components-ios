@@ -188,7 +188,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   CGRect imageFrame = CGRectZero;
   imageFrame.size.width = MIN(_imageView.image.size.width, kImageSize);
   imageFrame.size.height = MIN(_imageView.image.size.height, kImageSize);
-  imageFrame.origin.x = kCellImagePaddingLeading + (kImageSize - imageFrame.size.width) / 2;
+  imageFrame.origin.x = kCellImagePaddingLeading;
   imageFrame.origin.y =
       (CGRectGetHeight(self.contentView.frame) / 2) - (imageFrame.size.height / 2);
 
