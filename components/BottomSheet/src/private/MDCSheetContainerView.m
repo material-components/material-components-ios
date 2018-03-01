@@ -38,6 +38,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 @property(nonatomic) MDCSheetBehavior *sheetBehavior;
 @property(nonatomic) BOOL isDragging;
 @property(nonatomic) CGFloat originalPreferredSheetHeight;
+@property(nonatomic) CGRect previousAnimatedBounds;
 
 @end
 
@@ -191,6 +192,14 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 #pragma mark - Layout
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  if (!CGRectEqualToRect(self.bounds, self.previousAnimatedBounds) && self.window) {
+    // Adjusts the pane to the correct snap point if we are visible.
+    [self animatePaneWithInitialVelocity:CGPointZero];
+  }
+}
+
 - (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
   self.originalPreferredSheetHeight = preferredSheetHeight;
 
@@ -273,6 +282,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 #pragma mark - Gesture-driven animation
 
 - (void)animatePaneWithInitialVelocity:(CGPoint)initialVelocity {
+  self.previousAnimatedBounds = self.bounds;
   self.sheetBehavior.targetPoint = [self targetPoint];
   self.sheetBehavior.velocity = initialVelocity;
   __weak MDCSheetContainerView *weakSelf = self;
