@@ -22,7 +22,7 @@
 static NSString *const MDCTabBarViewControllerViewControllersKey =
     @"MDCTabBarViewControllerViewControllersKey";
 static NSString *const MDCTabBarViewControllerSelectedViewControllerKey =
-    @"MDCTabBarViewControllerKey";
+    @"MDCTabBarViewControllerSelectedViewControllerKey";
 static NSString *const MDCTabBarViewControllerDelegateKey = @"MDCTabBarViewControllerDelegateKey";
 static NSString *const MDCTabBarViewControllerTabBarKey = @"MDCTabBarViewControllerTabBarKey";
 
@@ -78,12 +78,13 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _viewControllers = [aDecoder decodeObjectOfClass:[NSArray class]
-                                              forKey:MDCTabBarViewControllerViewControllersKey];
-    _selectedViewController =
+    self.viewControllers = [aDecoder decodeObjectOfClass:[NSArray class]
+                                                  forKey:MDCTabBarViewControllerViewControllersKey];
+    self.selectedViewController =
         [aDecoder decodeObjectOfClass:[UIViewController class]
                                forKey:MDCTabBarViewControllerSelectedViewControllerKey];
-    _tabBar = [aDecoder decodeObjectOfClass:[MDCTabBar class] forKey:MDCTabBarViewControllerTabBarKey];
+    _tabBar = [aDecoder decodeObjectOfClass:[MDCTabBar class]
+                                     forKey:MDCTabBarViewControllerTabBarKey];
     _delegate = [aDecoder decodeObjectForKey:MDCTabBarViewControllerDelegateKey];
   }
   return self;

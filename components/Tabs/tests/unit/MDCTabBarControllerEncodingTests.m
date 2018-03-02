@@ -18,6 +18,37 @@
 #import <XCTest/XCTest.h>
 #import "MaterialTabs.h"
 
+@interface MDCTabBarViewControllerDelegateExample : NSObject<MDCTabBarControllerDelegate, NSCoding>
+
+@property (nonatomic, assign) NSInteger exampleInteger;
+
+@end
+
+@implementation MDCTabBarViewControllerDelegateExample
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super init];
+  if (self) {
+    _exampleInteger = [aDecoder decodeIntegerForKey:@"exampleInteger"];
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeInteger:_exampleInteger forKey:@"exampleInteger"];
+}
+
+- (BOOL)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
+    shouldSelectViewController:(nonnull UIViewController *)viewController {
+  return YES;
+}
+
+- (void)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
+    didSelectViewController:(nonnull UIViewController *)viewController {
+
+}
+
+@end
 
 @interface MDCTabBarControllerEncodingTests : XCTestCase
 
@@ -36,19 +67,49 @@
   tabBarVC.viewControllers = @[vc1, vc2];
   tabBarVC.selectedViewController = vc1;
   tabBarVC.tabBar.tintColor = [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1.0f];
+  MDCTabBarViewControllerDelegateExample *delegate = [[MDCTabBarViewControllerDelegateExample alloc] init];
+  tabBarVC.delegate = delegate;
   // force view did load
 
   NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:tabBarVC];
-  MDCTabBarViewController *unarchivedtabBarVC =
+  MDCTabBarViewController *unarchivedTabBarVC =
       [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
-  XCTAssertEqual(unarchivedtabBarVC.view.subviews.count, tabBarVC.view.subviews.count);
-  XCTAssertEqual([[unarchivedtabBarVC.viewControllers[0] view] tag],
-                 [[tabBarVC.viewControllers[0] view] tag]);
-  XCTAssertEqual([[unarchivedtabBarVC.viewControllers[1] view] tag],
-                 [[tabBarVC.viewControllers[1] view] tag]);
-  XCTAssertEqual([unarchivedtabBarVC.selectedViewController.view tag],
-                 [tabBarVC.selectedViewController.view tag]);
-  XCTAssertEqual(unarchivedtabBarVC.tabBar.tintColor, tabBarVC.tabBar.tintColor);
+  XCTAssertEqual(unarchivedTabBarVC.view.subviews.count, tabBarVC.view.subviews.count);
+  XCTAssertEqual(unarchivedTabBarVC.viewControllers[0].view.tag,
+                 tabBarVC.viewControllers[0].view.tag);
+  XCTAssertEqual(unarchivedTabBarVC.viewControllers[1].view.tag,
+                 tabBarVC.viewControllers[1].view.tag);
+  XCTAssertEqual(unarchivedTabBarVC.selectedViewController.view.tag,
+                 tabBarVC.selectedViewController.view.tag);
+  XCTAssertEqualObjects(unarchivedTabBarVC.tabBar.tintColor, tabBarVC.tabBar.tintColor);
+  XCTAssertNil(unarchivedTabBarVC.delegate);
+}
+
+- (void)testTabBarControllerDelegateEncoding {
+  MDCTabBarViewController *tabBarVC = [[MDCTabBarViewController alloc] init];
+  [tabBarVC.view setBackgroundColor:[UIColor clearColor]];
+  MDCTabBarViewControllerDelegateExample *delegate =
+      [[MDCTabBarViewControllerDelegateExample alloc] init];
+  delegate.exampleInteger = 2;
+  tabBarVC.delegate = delegate;
+  NSMutableData *mutableArchivedData = [[NSMutableData alloc] init];
+  NSKeyedArchiver *keyedArchiver =
+      [[NSKeyedArchiver alloc] initForWritingWithMutableData:mutableArchivedData];
+  [keyedArchiver encodeObject:tabBarVC forKey:@"TabBarVC"];
+  [keyedArchiver encodeObject:delegate forKey:@"TabBarDelegate"];
+  [keyedArchiver finishEncoding];
+  NSKeyedUnarchiver *unarchiver =
+      [[NSKeyedUnarchiver alloc] initForReadingWithData:mutableArchivedData];
+  MDCTabBarViewController *unarchivedTabBarVC =
+      [unarchiver decodeObjectForKey:@"TabBarVC"];
+  MDCTabBarViewControllerDelegateExample *unarchivedDelegate =
+      [unarchiver decodeObjectForKey:@"TabBarDelegate"];
+  MDCTabBarViewControllerDelegateExample *tabBarVCDelegate =
+      (MDCTabBarViewControllerDelegateExample *)unarchivedTabBarVC.delegate;
+  XCTAssertNotNil(unarchivedTabBarVC.delegate);
+
+  XCTAssertEqual(tabBarVCDelegate.exampleInteger, unarchivedDelegate.exampleInteger);
+  XCTAssertEqual(delegate.exampleInteger, unarchivedDelegate.exampleInteger);
 }
 
 @end
