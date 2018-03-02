@@ -328,27 +328,54 @@ static UIImage *FakeImage(void) {
   XCTAssertNotEqual(color, [self.cell imageTintColorForState:MDCCardCellStateHighlighted]);
 }
 
-- (void)testSettingImageAlignmentForCell {
-  XCTAssertEqual([self.cell imageAlignmentForState:MDCCardCellStateNormal],
-                 MDCCardCellImageAlignmentRight);
-  [self.cell setImageAlignment:MDCCardCellImageAlignmentLeft forState:MDCCardCellStateNormal];
-  XCTAssertEqual([self.cell imageAlignmentForState:MDCCardCellStateNormal],
-                 MDCCardCellImageAlignmentLeft);
-  [self.cell setImageAlignment:MDCCardCellImageAlignmentCenter
-                      forState:MDCCardCellStateHighlighted];
-  [self.cell setImageAlignment:MDCCardCellImageAlignmentRight
-                      forState:MDCCardCellStateSelected];
-  XCTAssertEqual([self.cell imageAlignmentForState:MDCCardCellStateNormal],
-                 MDCCardCellImageAlignmentLeft);
-  XCTAssertEqual([self.cell imageAlignmentForState:MDCCardCellStateHighlighted],
-                 MDCCardCellImageAlignmentCenter);
-  XCTAssertEqual([self.cell imageAlignmentForState:MDCCardCellStateSelected],
-                 MDCCardCellImageAlignmentRight);
-  MDCCardCellImageAlignment alignment =
-      [self.cell imageAlignmentForState:MDCCardCellStateHighlighted];
-  [self.cell setImageAlignment:MDCCardCellImageAlignmentLeft
-                      forState:MDCCardCellStateHighlighted];
-  XCTAssertNotEqual(alignment, [self.cell imageAlignmentForState:MDCCardCellStateHighlighted]);
+- (void)testSettingHorizontalImageAlignmentForCell {
+  XCTAssertEqual([self.cell horizontalImageAlignmentForState:MDCCardCellStateNormal],
+                 MDCCardCellHorizontalImageAlignmentRight);
+  [self.cell setHorizontalImageAlignment:MDCCardCellHorizontalImageAlignmentLeft
+                                forState:MDCCardCellStateNormal];
+  XCTAssertEqual([self.cell horizontalImageAlignmentForState:MDCCardCellStateNormal],
+                 MDCCardCellHorizontalImageAlignmentLeft);
+  [self.cell setHorizontalImageAlignment:MDCCardCellHorizontalImageAlignmentCenter
+                                forState:MDCCardCellStateHighlighted];
+  [self.cell setHorizontalImageAlignment:MDCCardCellHorizontalImageAlignmentRight
+                                forState:MDCCardCellStateSelected];
+  XCTAssertEqual([self.cell horizontalImageAlignmentForState:MDCCardCellStateNormal],
+                 MDCCardCellHorizontalImageAlignmentLeft);
+  XCTAssertEqual([self.cell horizontalImageAlignmentForState:MDCCardCellStateHighlighted],
+                 MDCCardCellHorizontalImageAlignmentCenter);
+  XCTAssertEqual([self.cell horizontalImageAlignmentForState:MDCCardCellStateSelected],
+                 MDCCardCellHorizontalImageAlignmentRight);
+  MDCCardCellHorizontalImageAlignment alignment =
+  [self.cell horizontalImageAlignmentForState:MDCCardCellStateHighlighted];
+  [self.cell setHorizontalImageAlignment:MDCCardCellHorizontalImageAlignmentLeft
+                                forState:MDCCardCellStateHighlighted];
+  XCTAssertNotEqual(alignment,
+                    [self.cell horizontalImageAlignmentForState:MDCCardCellStateHighlighted]);
+}
+
+- (void)testSettingVerticalImageAlignmentForCell {
+  XCTAssertEqual([self.cell verticalImageAlignmentForState:MDCCardCellStateNormal],
+                 MDCCardCellVerticalImageAlignmentTop);
+  [self.cell setVerticalImageAlignment:MDCCardCellVerticalImageAlignmentBottom
+                              forState:MDCCardCellStateNormal];
+  XCTAssertEqual([self.cell verticalImageAlignmentForState:MDCCardCellStateNormal],
+                 MDCCardCellVerticalImageAlignmentBottom);
+  [self.cell setVerticalImageAlignment:MDCCardCellVerticalImageAlignmentCenter
+                                forState:MDCCardCellStateHighlighted];
+  [self.cell setVerticalImageAlignment:MDCCardCellVerticalImageAlignmentTop
+                                forState:MDCCardCellStateSelected];
+  XCTAssertEqual([self.cell verticalImageAlignmentForState:MDCCardCellStateNormal],
+                 MDCCardCellVerticalImageAlignmentBottom);
+  XCTAssertEqual([self.cell verticalImageAlignmentForState:MDCCardCellStateHighlighted],
+                 MDCCardCellVerticalImageAlignmentCenter);
+  XCTAssertEqual([self.cell verticalImageAlignmentForState:MDCCardCellStateSelected],
+                 MDCCardCellVerticalImageAlignmentTop);
+  MDCCardCellVerticalImageAlignment alignment =
+  [self.cell verticalImageAlignmentForState:MDCCardCellStateHighlighted];
+  [self.cell setVerticalImageAlignment:MDCCardCellVerticalImageAlignmentBottom
+                                forState:MDCCardCellStateHighlighted];
+  XCTAssertNotEqual(alignment,
+                    [self.cell verticalImageAlignmentForState:MDCCardCellStateHighlighted]);
 }
 
 - (void)testCellEncoding {
@@ -360,10 +387,18 @@ static UIImage *FakeImage(void) {
   [self.cell setImageTintColor:[UIColor blueColor] forState:MDCCardCellStateNormal];
   [self.cell setImageTintColor:[UIColor redColor] forState:MDCCardCellStateHighlighted];
   [self.cell setImageTintColor:[UIColor greenColor] forState:MDCCardCellStateSelected];
-  [self.cell setImageAlignment:MDCCardCellImageAlignmentLeft forState:MDCCardCellStateNormal];
-  [self.cell setImageAlignment:MDCCardCellImageAlignmentCenter
+  [self.cell setHorizontalImageAlignment:MDCCardCellHorizontalImageAlignmentLeft
+                                forState:MDCCardCellStateNormal];
+  [self.cell setHorizontalImageAlignment:MDCCardCellHorizontalImageAlignmentCenter
                       forState:MDCCardCellStateHighlighted];
-  [self.cell setImageAlignment:MDCCardCellImageAlignmentRight forState:MDCCardCellStateSelected];
+  [self.cell setHorizontalImageAlignment:MDCCardCellHorizontalImageAlignmentRight
+                                forState:MDCCardCellStateSelected];
+  [self.cell setVerticalImageAlignment:MDCCardCellVerticalImageAlignmentBottom
+                              forState:MDCCardCellStateNormal];
+  [self.cell setVerticalImageAlignment:MDCCardCellVerticalImageAlignmentCenter
+                      forState:MDCCardCellStateHighlighted];
+  [self.cell setVerticalImageAlignment:MDCCardCellVerticalImageAlignmentTop
+                              forState:MDCCardCellStateSelected];
   [self.cell setShadowElevation:2.f forState:MDCCardCellStateNormal];
   [self.cell setShadowElevation:4.f forState:MDCCardCellStateHighlighted];
   [self.cell setShadowElevation:6.f forState:MDCCardCellStateSelected];
@@ -434,12 +469,18 @@ static UIImage *FakeImage(void) {
                  [self.cell imageTintColorForState:MDCCardCellStateHighlighted]);
   XCTAssertEqual([unarchivedCell imageTintColorForState:MDCCardCellStateSelected],
                  [self.cell imageTintColorForState:MDCCardCellStateSelected]);
-  XCTAssertEqual([unarchivedCell imageAlignmentForState:MDCCardCellStateNormal],
-                 [self.cell imageAlignmentForState:MDCCardCellStateNormal]);
-  XCTAssertEqual([unarchivedCell imageAlignmentForState:MDCCardCellStateHighlighted],
-                 [self.cell imageAlignmentForState:MDCCardCellStateHighlighted]);
-  XCTAssertEqual([unarchivedCell imageAlignmentForState:MDCCardCellStateSelected],
-                 [self.cell imageAlignmentForState:MDCCardCellStateSelected]);
+  XCTAssertEqual([unarchivedCell horizontalImageAlignmentForState:MDCCardCellStateNormal],
+                 [self.cell horizontalImageAlignmentForState:MDCCardCellStateNormal]);
+  XCTAssertEqual([unarchivedCell horizontalImageAlignmentForState:MDCCardCellStateHighlighted],
+                 [self.cell horizontalImageAlignmentForState:MDCCardCellStateHighlighted]);
+  XCTAssertEqual([unarchivedCell horizontalImageAlignmentForState:MDCCardCellStateSelected],
+                 [self.cell horizontalImageAlignmentForState:MDCCardCellStateSelected]);
+  XCTAssertEqual([unarchivedCell verticalImageAlignmentForState:MDCCardCellStateNormal],
+                 [self.cell verticalImageAlignmentForState:MDCCardCellStateNormal]);
+  XCTAssertEqual([unarchivedCell verticalImageAlignmentForState:MDCCardCellStateHighlighted],
+                 [self.cell verticalImageAlignmentForState:MDCCardCellStateHighlighted]);
+  XCTAssertEqual([unarchivedCell verticalImageAlignmentForState:MDCCardCellStateSelected],
+                 [self.cell verticalImageAlignmentForState:MDCCardCellStateSelected]);
 }
 
 @end

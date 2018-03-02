@@ -29,7 +29,10 @@ static NSString *const MDCCardCellStateKey = @"MDCCardCellStateKey";
 static NSString *const MDCCardCellSelectableKey = @"MDCCardCellSelectableKey";
 static NSString *const MDCCardCellCornerRadiusKey = @"MDCCardCellCornerRadiusKey";
 static NSString *const MDCCardCellImagesKey = @"MDCCardCellImagesKey";
-static NSString *const MDCCardCellImageAlignmentsKey = @"MDCCardCellImageAlignmentsKey";
+static NSString *const MDCCardCellHorizontalImageAlignmentsKey =
+    @"MDCCardCellHorizontalImageAlignmentsKey";
+static NSString *const MDCCardCellVerticalImageAlignmentsKey =
+    @"MDCCardCellVerticalImageAlignmentsKey";
 static NSString *const MDCCardCellImageTintColorsKey = @"MDCCardCellImageTintColorsKey";
 
 static const CGFloat MDCCardCellSelectedImagePadding = 8;
@@ -49,7 +52,8 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, UIImage *> *_images;
-  NSMutableDictionary<NSNumber *, NSNumber *> *_imageAlignments;
+  NSMutableDictionary<NSNumber *, NSNumber *> *_horizontalImageAlignments;
+  NSMutableDictionary<NSNumber *, NSNumber *> *_verticalImageAlignments;
   NSMutableDictionary<NSNumber *, UIColor *> *_imageTintColors;
   CGPoint _lastTouch;
 }
@@ -76,8 +80,11 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
     _selectable = [coder decodeBoolForKey:MDCCardCellSelectableKey];
     _images = [coder decodeObjectOfClass:[NSMutableDictionary class]
                                   forKey:MDCCardCellImagesKey];
-    _imageAlignments = [coder decodeObjectOfClass:[NSMutableDictionary class]
-                                           forKey:MDCCardCellImageAlignmentsKey];
+    _horizontalImageAlignments =
+        [coder decodeObjectOfClass:[NSMutableDictionary class]
+                            forKey:MDCCardCellHorizontalImageAlignmentsKey];
+    _verticalImageAlignments = [coder decodeObjectOfClass:[NSMutableDictionary class]
+                                                   forKey:MDCCardCellVerticalImageAlignmentsKey];
     _imageTintColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
                                            forKey:MDCCardCellImageTintColorsKey];
     if ([coder containsValueForKey:MDCCardCellCornerRadiusKey]) {
@@ -145,9 +152,15 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
     _images[@(MDCCardCellStateSelected)] = circledCheck;
   }
 
-  if (_imageAlignments == nil) {
-    _imageAlignments = [NSMutableDictionary dictionary];
-    _imageAlignments[@(MDCCardCellStateNormal)] = @(MDCCardCellImageAlignmentRight);
+  if (_horizontalImageAlignments == nil) {
+    _horizontalImageAlignments = [NSMutableDictionary dictionary];
+    _horizontalImageAlignments[@(MDCCardCellStateNormal)] =
+        @(MDCCardCellHorizontalImageAlignmentRight);
+  }
+
+  if (_verticalImageAlignments == nil) {
+    _verticalImageAlignments = [NSMutableDictionary dictionary];
+    _verticalImageAlignments[@(MDCCardCellStateNormal)] = @(MDCCardCellVerticalImageAlignmentTop);
   }
 
   if (_imageTintColors == nil) {
@@ -174,7 +187,8 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   [coder encodeBool:_selectable forKey:MDCCardCellSelectableKey];
   [coder encodeDouble:self.layer.cornerRadius forKey:MDCCardCellCornerRadiusKey];
   [coder encodeObject:_images forKey:MDCCardCellImagesKey];
-  [coder encodeObject:_imageAlignments forKey:MDCCardCellImageAlignmentsKey];
+  [coder encodeObject:_horizontalImageAlignments forKey:MDCCardCellHorizontalImageAlignmentsKey];
+  [coder encodeObject:_verticalImageAlignments forKey:MDCCardCellVerticalImageAlignmentsKey];
   [coder encodeObject:_imageTintColors forKey:MDCCardCellImageTintColorsKey];
 }
 
@@ -362,28 +376,74 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   return image;
 }
 
-- (void)setImageAlignment:(MDCCardCellImageAlignment)imageAlignment
-                         forState:(MDCCardCellState)state {
-  _imageAlignments[@(state)] = @(imageAlignment);
+- (void)setHorizontalImageAlignment:(MDCCardCellHorizontalImageAlignment)horizontalImageAlignment
+                           forState:(MDCCardCellState)state {
+  _horizontalImageAlignments[@(state)] = @(horizontalImageAlignment);
 
   [self updateImageAlignment];
 }
 
-- (void)updateImageAlignment {
-  MDCCardCellImageAlignment imageAlignment = [self imageAlignmentForState:self.state];
+- (MDCCardCellHorizontalImageAlignment)horizontalImageAlignmentForState:(MDCCardCellState)state {
+  NSNumber *horizontalImageAlignment = _horizontalImageAlignments[@(state)];
+  if (state != MDCCardCellStateNormal && horizontalImageAlignment == nil) {
+    horizontalImageAlignment = _horizontalImageAlignments[@(MDCCardCellStateNormal)];
+  }
+  if (horizontalImageAlignment != nil) {
+    return (MDCCardCellHorizontalImageAlignment)[horizontalImageAlignment integerValue];
+  }
+  return MDCCardCellHorizontalImageAlignmentRight;
+}
 
-  CGFloat yAlignment = CGRectGetHeight(self.selectedImageView.frame)/2 +
-      MDCCardCellSelectedImagePadding;
+- (void)setVerticalImageAlignment:(MDCCardCellVerticalImageAlignment)verticalImageAlignment
+                         forState:(MDCCardCellState)state {
+  _verticalImageAlignments[@(state)] = @(verticalImageAlignment);
+
+  [self updateImageAlignment];
+}
+
+- (MDCCardCellVerticalImageAlignment)verticalImageAlignmentForState:(MDCCardCellState)state {
+  NSNumber *verticalImageAlignment = _verticalImageAlignments[@(state)];
+  if (state != MDCCardCellStateNormal && verticalImageAlignment == nil) {
+    verticalImageAlignment = _verticalImageAlignments[@(MDCCardCellStateNormal)];
+  }
+  if (verticalImageAlignment != nil) {
+    return (MDCCardCellVerticalImageAlignment)[verticalImageAlignment integerValue];
+  }
+  return MDCCardCellVerticalImageAlignmentTop;
+}
+
+- (void)updateImageAlignment {
+  MDCCardCellVerticalImageAlignment verticalImageAlignment =
+      [self verticalImageAlignmentForState:self.state];
+  MDCCardCellHorizontalImageAlignment horizontalImageAlignment =
+      [self horizontalImageAlignmentForState:self.state];
+
+  CGFloat yAlignment = 0;
   CGFloat xAlignment = 0;
 
-  switch (imageAlignment) {
-    case MDCCardCellImageAlignmentLeft:
-      xAlignment = MDCCardCellSelectedImagePadding + CGRectGetWidth(self.selectedImageView.frame)/2;
+  switch (verticalImageAlignment) {
+    case MDCCardCellVerticalImageAlignmentTop:
+      yAlignment =
+          MDCCardCellSelectedImagePadding + CGRectGetHeight(self.selectedImageView.frame)/2;
       break;
-    case MDCCardCellImageAlignmentCenter:
+    case MDCCardCellVerticalImageAlignmentCenter:
+      yAlignment = CGRectGetHeight(self.bounds)/2;
+      break;
+    case MDCCardCellVerticalImageAlignmentBottom:
+      yAlignment = CGRectGetHeight(self.bounds) - MDCCardCellSelectedImagePadding -
+          CGRectGetHeight(self.selectedImageView.frame)/2;
+      break;
+  }
+
+  switch (horizontalImageAlignment) {
+    case MDCCardCellHorizontalImageAlignmentLeft:
+      xAlignment =
+          MDCCardCellSelectedImagePadding + CGRectGetWidth(self.selectedImageView.frame)/2;
+      break;
+    case MDCCardCellHorizontalImageAlignmentCenter:
       xAlignment = CGRectGetWidth(self.bounds)/2;
       break;
-    case MDCCardCellImageAlignmentRight:
+    case MDCCardCellHorizontalImageAlignmentRight:
       xAlignment = CGRectGetWidth(self.bounds) - MDCCardCellSelectedImagePadding -
           CGRectGetWidth(self.selectedImageView.frame)/2;
       break;
@@ -391,17 +451,6 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 
   self.selectedImageView.center = CGPointMake(xAlignment,
                                               yAlignment);
-}
-
-- (MDCCardCellImageAlignment)imageAlignmentForState:(MDCCardCellState)state {
-  NSNumber *imageAlignment = _imageAlignments[@(state)];
-  if (state != MDCCardCellStateNormal && imageAlignment == nil) {
-    imageAlignment = _imageAlignments[@(MDCCardCellStateNormal)];
-  }
-  if (imageAlignment != nil) {
-    return (MDCCardCellImageAlignment)[imageAlignment integerValue];
-  }
-  return MDCCardCellImageAlignmentRight;
 }
 
 - (void)setImageTintColor:(UIColor *)imageTintColor forState:(MDCCardCellState)state {
