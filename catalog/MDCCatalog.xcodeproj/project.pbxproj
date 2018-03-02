@@ -28,7 +28,6 @@
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
 		7D6BB3DC630E39F27A3BA3F6 /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		A7FE21F720472B8F00CDCBA5 /* MDCCatalogThemer.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FE21F620472B8F00CDCBA5 /* MDCCatalogThemer.m */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -141,8 +140,6 @@
 		88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCActionExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		93314CA227FB65FEC87098C3 /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = Pods/EarlGrey/EarlGrey/EarlGrey.framework; sourceTree = SOURCE_ROOT; };
-		A7FE21F520472B8F00CDCBA5 /* MDCCatalogThemer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDCCatalogThemer.h; sourceTree = "<group>"; };
-		A7FE21F620472B8F00CDCBA5 /* MDCCatalogThemer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogThemer.m; sourceTree = "<group>"; };
 		BB1A0ED4DB4091C5905AE474 /* Pods-MDCEarlGreyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCEarlGreyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests.release.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
@@ -251,8 +248,6 @@
 				64F6D8821F915CA600AA4B24 /* MDCDebugSafeAreaInsetsView.swift */,
 				664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */,
 				665A34DE1C6BDAE700962055 /* Resources */,
-				A7FE21F520472B8F00CDCBA5 /* MDCCatalogThemer.h */,
-				A7FE21F620472B8F00CDCBA5 /* MDCCatalogThemer.m */,
 			);
 			path = MDCCatalog;
 			sourceTree = "<group>";
@@ -673,7 +668,6 @@
 				64F6D8831F915CA600AA4B24 /* MDCDebugSafeAreaInsetsView.swift in Sources */,
 				664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */,
 				DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */,
-				A7FE21F720472B8F00CDCBA5 /* MDCCatalogThemer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

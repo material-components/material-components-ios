@@ -18,6 +18,20 @@ import UIKit
 
 import CatalogByConvention
 
+import MaterialComponents.MDCActivityIndicatorColorThemer
+import MaterialComponents.MDCButtonBarColorThemer
+import MaterialComponents.MDCButtonColorThemer
+import MaterialComponents.MDCAlertColorThemer
+import MaterialComponents.MDCFeatureHighlightColorThemer
+import MaterialComponents.MDCFlexibleHeaderColorThemer
+import MaterialComponents.MDCHeaderStackViewColorThemer
+import MaterialComponents.MDCNavigationBarColorThemer
+import MaterialComponents.MDCPageControlColorThemer
+import MaterialComponents.MDCProgressViewColorThemer
+import MaterialComponents.MDCSliderColorThemer
+import MaterialComponents.MDCTabBarColorThemer
+import MaterialComponents.MaterialTextFields
+import MaterialComponents.MDCTextFieldColorThemer
 import MaterialComponents.MaterialThemes
 
 @UIApplicationMain
@@ -51,7 +65,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       primaryLightColor: .init(white: 0.7, alpha: 1),
                                       primaryDarkColor: .init(white: 0, alpha: 1))
 
-    MDCCatalogThemer.apply(colorScheme)
+    // Apply color scheme to material design components using component themers.
+    MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
+    MDCAlertColorThemer.apply(colorScheme)
+    MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
+    MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
+    let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
+    MDCButtonColorThemer.apply(clearScheme, to:MDCFlatButton.appearance())
+    MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
+    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+    MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())
+    MDCNavigationBarColorThemer.apply(colorScheme, to: MDCNavigationBar.appearance())
+    MDCPageControlColorThemer.apply(colorScheme, to: MDCPageControl.appearance())
+    MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
+    MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
+    MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
+
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerUnderline.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerLegacyDefault.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerFilled.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlined.self)
+    MDCTextFieldColorThemer.apply(colorScheme,
+                                  toAllControllersOfClass: MDCTextInputControllerOutlinedTextArea.self)
+
+    // Apply color scheme to UIKit components.
+    UISlider.appearance().tintColor = colorScheme?.primaryColor
+    UISwitch.appearance().onTintColor = colorScheme?.primaryColor
 
     return true
   }
