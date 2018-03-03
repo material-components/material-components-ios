@@ -495,6 +495,10 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     case UITextFieldViewModeNever:
       trailingViewAlpha = 0.f;
       break;
+    default:
+      NSAssert(NO, @"Invalid enumeration value %li.", (long)self.trailingViewMode);
+      trailingViewAlpha = self.trailingViewAlpha;
+      break;
   }
   return trailingViewAlpha;
 }
