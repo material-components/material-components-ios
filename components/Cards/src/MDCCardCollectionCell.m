@@ -472,6 +472,11 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   return imageTintColor;
 }
 
+- (void)tintColorDidChange {
+  [super tintColorDidChange];
+  [self setImageTintColor:self.tintColor forState:MDCCardCellStateNormal];
+}
+
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
