@@ -28,7 +28,7 @@
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the snackbar.
-NSTimeInterval const MDCSnackbarTransitionDuration = 5.25f;
+NSTimeInterval const MDCSnackbarTransitionDuration = 0.5f;
 NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5f;
 
 // How far from the bottom of the screen should the snackbar be.
@@ -493,18 +493,11 @@ static const CGFloat kMaximumHeight = 80.0f;
   animations.fillMode = kCAFillModeForwards;
   animations.removedOnCompletion = NO;
   animations.delegate = self;
-  NSMutableArray *animationsArray =
-  [[NSMutableArray alloc] initWithObjects:
-   [snackbarView animateContentOpacityFrom:fromContentOpacity
-                                        to:toContentOpacity
-                                  duration:MDCSnackbarTransitionDuration
-                            timingFunction:timingFunction], nil];
 
   if (snackbarView.message.usesLegacySnackbar) {
       _snackbarOnscreenConstraint.active = onscreen;
       _snackbarOffscreenConstraint.active = !onscreen;
       [_containingView setNeedsUpdateConstraints];
-
     // We use UIView animation inside a CATransaction in order to use the custom animation curve.
     [UIView animateWithDuration:MDCSnackbarTransitionDuration
                           delay:0
@@ -518,14 +511,17 @@ static const CGFloat kMaximumHeight = 80.0f;
 //                         completion();
 //                       }
                      }];
+    [snackbarView animateContentOpacityFrom:fromContentOpacity
+                                         to:toContentOpacity
+                                   duration:MDCSnackbarTransitionDuration
+                             timingFunction:timingFunction];
   } else {
-    [animationsArray addObject:[snackbarView animateSnackbarScaleFrom:fromScale
-                                                              toScale:toScale
-                                                             duration:MDCSnackbarTransitionDuration
-                                                       timingFunction:timingFunction]];
+    animations.animations = @[[snackbarView animateSnackbarOpacityFrom:fromContentOpacity
+                                                                   to:toContentOpacity],
+                              [snackbarView animateSnackbarScaleFrom:fromScale
+                                                             toScale:toScale]];
   }
 
-  animations.animations = animationsArray;
   [snackbarView.layer addAnimation:animations forKey:@"opacityAndScale"];
   [CATransaction commit];
 

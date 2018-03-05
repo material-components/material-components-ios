@@ -88,14 +88,15 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 
  Creates and commits a CATransaction to perform the animation.
  */
-- (CABasicAnimation *_Nullable)animateContentOpacityFrom:(CGFloat)fromOpacity
+- (void)animateContentOpacityFrom:(CGFloat)fromOpacity
                                to:(CGFloat)toOpacity
                          duration:(NSTimeInterval)duration
                    timingFunction:(CAMediaTimingFunction *_Nullable)timingFunction;
 
+- (CABasicAnimation *_Nullable)animateSnackbarOpacityFrom:(CGFloat)fromOpacity
+                                                       to:(CGFloat)toOpacity;
+
 - (CABasicAnimation *_Nullable)animateSnackbarScaleFrom:(CGFloat)fromScale
-                                                toScale:(CGFloat)toScale
-                      duration:(NSTimeInterval)duration
-                timingFunction:(CAMediaTimingFunction *_Nullable)timingFunction;
+                                                toScale:(CGFloat)toScale;
 
 @end
