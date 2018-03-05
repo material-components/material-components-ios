@@ -15,7 +15,6 @@
  */
 
 #import "MaterialFeatureHighlight.h"
-#import "MDCFeatureHighlightAccessibilityMutator.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightColorExample
@@ -31,8 +30,6 @@
   highlightController.titleText = @"So pretty!";
   highlightController.bodyText = @"What a nice color you've chosen.";
   highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
-  [MDCFeatureHighlightAccessibilityMutator
-      changeTitleAndBodyColorForFeatureHighlightViewControllerIfApplicable:highlightController];
   [self presentViewController:highlightController animated:YES completion:nil];
 }
 
