@@ -45,13 +45,18 @@ static const CGFloat kBorderWidth = 0;
  Shadow coloring.
  */
 static const CGFloat kShadowAlpha = 0.24f;
+
 static const CGSize kShadowOffset = (CGSize){0.0, 2.0};
+static const CGSize kLegacyShadowOffset = (CGSize){0.0, 1.0};
+
 static const CGFloat kShadowSpread = 4.0f;
+static const CGFloat kLegacyShadowSpread = 1.0f;
 
 /**
  The radius of the corners.
  */
 static const CGFloat kCornerRadius = 4;
+static const CGFloat kLegacyCornerRadius = 0;
 
 /**
  Padding between the edges of the snackbar and any content.
@@ -316,11 +321,11 @@ static const CGFloat kButtonInkRadius = 64.0f;
     _dismissalHandler = [handler copy];
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
-    self.layer.cornerRadius = kCornerRadius;
+    self.layer.cornerRadius = _message.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
-    self.layer.shadowOffset = kShadowOffset;
-    self.layer.shadowRadius = kShadowSpread;
+    self.layer.shadowOffset = _message.usesLegacySnackbar ? kLegacyShadowOffset : kShadowOffset;
+    self.layer.shadowRadius = _message.usesLegacySnackbar ? kLegacyShadowSpread : kShadowSpread;
 
     _anchoredToScreenEdge = YES;
 
@@ -332,7 +337,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
     _containerView.backgroundColor = [UIColor clearColor];
-    _containerView.layer.cornerRadius = kCornerRadius;
+    _containerView.layer.cornerRadius =
+        _message.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
     _containerView.layer.masksToBounds = YES;
 
     // Listen for taps on the background of the view.
@@ -789,7 +795,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
   // As our layout changes, make sure that the shadow path is kept up-to-date.
   UIBezierPath *path =
-      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:kCornerRadius];
+      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:
+          _message.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius];
   self.layer.shadowPath = path.CGPath;
 }
 
@@ -921,11 +928,17 @@ static const CGFloat kButtonInkRadius = 64.0f;
                          duration:(NSTimeInterval)duration
                    timingFunction:(CAMediaTimingFunction *)timingFunction {
   CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-//  opacityAnimation.duration = duration;
   opacityAnimation.fromValue = @(fromOpacity);
   opacityAnimation.toValue = @(toOpacity);
-//  opacityAnimation.timingFunction = timingFunction;
-//  [self.layer addAnimation:opacityAnimation forKey:@"opacity"];
+
+  if (_message.usesLegacySnackbar) {
+    // The text and the button do not share a common view that can be animated independently of the
+    // background color, so just animate them both independently here. If this becomes more
+    // complicated, refactor to add a containing view for both and animate that.
+    [self.contentView.layer addAnimation:opacityAnimation forKey:@"opacity"];
+    [self.buttonView.layer addAnimation:opacityAnimation forKey:@"opacity"];
+  }
+
   return opacityAnimation;
 }
 
@@ -936,11 +949,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
   CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
   scaleAnimation.fromValue = [NSNumber numberWithDouble:fromScale];
   scaleAnimation.toValue = [NSNumber numberWithDouble:toScale];
-//  scaleAnimation.duration = duration;
-//  scaleAnimation.timingFunction = timingFunction;
-//  scaleAnimation.fillMode = kCAFillModeForwards;
-//  scaleAnimation.removedOnCompletion = NO;
-//  [self.layer addAnimation:scaleAnimation forKey:@"transform.scale"];
   return scaleAnimation;
 }
 

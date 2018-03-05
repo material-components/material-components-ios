@@ -143,6 +143,11 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
  */
 @property(nonatomic, readonly, nullable) NSString *voiceNotificationText;
 
+/**
+ Use the older legacy version of snackbar. Default is NO.
+ */
+@property(nonatomic, assign) BOOL usesLegacySnackbar;
+
 @end
 
 /**
