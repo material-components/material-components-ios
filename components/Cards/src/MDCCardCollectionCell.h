@@ -46,8 +46,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellHorizontalImageAlignment) {
 
   /** The alignment of the image is to the left of the card. */
   MDCCardCellHorizontalImageAlignmentLeft,
-
-  // TODO: Add AlignmentLeading and AlignmentTrailing. See Github issue #3045
+ 
+ // TODO: Add AlignmentLeading and AlignmentTrailing. See Github issue #3045
 };
 
 /**
