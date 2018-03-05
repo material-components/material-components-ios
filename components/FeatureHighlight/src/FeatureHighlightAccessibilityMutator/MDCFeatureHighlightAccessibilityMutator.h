@@ -15,22 +15,14 @@
  */
 
 @class MDCFeatureHighlightViewController;
+@class MDCFeatureHighlightView;
 
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import <UIKit/UIKit.h>
 
-/**
- A Mutator that will change an instance of MDCFeatureHighlightViewController to have a high enough
- contrast text between its background.
- Calling this mutator can overwrite UIApperance values.
- */
 @interface MDCFeatureHighlightAccessibilityMutator : NSObject
 
-/**
- This method will change the title and body color of the feature highlight to ensure a high
- accessiblity contrast with its background if needed.
- */
-+ (void)mutate:(MDCFeatureHighlightViewController *)featureHighlightViewController;
++ (void)changeTitleAndBodyColorForFeatureHighlightViewControllerIfApplicable:
+    (MDCFeatureHighlightViewController *)featureHighlightViewController;
 
 @end
 

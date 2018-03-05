@@ -31,7 +31,8 @@
   highlightController.titleText = @"So pretty!";
   highlightController.bodyText = @"What a nice color you've chosen.";
   highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
-  [MDCFeatureHighlightAccessibilityMutator mutate:highlightController];
+  [MDCFeatureHighlightAccessibilityMutator
+      changeTitleAndBodyColorForFeatureHighlightViewControllerIfApplicable:highlightController];
   [self presentViewController:highlightController animated:YES completion:nil];
 }
 
