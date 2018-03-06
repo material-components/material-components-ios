@@ -1,9 +1,12 @@
 /*
  Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
+
  http://www.apache.org/licenses/LICENSE-2.0
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,9 +30,9 @@ static NSString *const MDCCardCellSelectableKey = @"MDCCardCellSelectableKey";
 static NSString *const MDCCardCellCornerRadiusKey = @"MDCCardCellCornerRadiusKey";
 static NSString *const MDCCardCellImagesKey = @"MDCCardCellImagesKey";
 static NSString *const MDCCardCellHorizontalImageAlignmentsKey =
-@"MDCCardCellHorizontalImageAlignmentsKey";
+    @"MDCCardCellHorizontalImageAlignmentsKey";
 static NSString *const MDCCardCellVerticalImageAlignmentsKey =
-@"MDCCardCellVerticalImageAlignmentsKey";
+    @"MDCCardCellVerticalImageAlignmentsKey";
 static NSString *const MDCCardCellImageTintColorsKey = @"MDCCardCellImageTintColorsKey";
 
 static const CGFloat MDCCardCellSelectedImagePadding = 8;
@@ -78,8 +81,8 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
     _images = [coder decodeObjectOfClass:[NSMutableDictionary class]
                                   forKey:MDCCardCellImagesKey];
     _horizontalImageAlignments =
-    [coder decodeObjectOfClass:[NSMutableDictionary class]
-                        forKey:MDCCardCellHorizontalImageAlignmentsKey];
+        [coder decodeObjectOfClass:[NSMutableDictionary class]
+                            forKey:MDCCardCellHorizontalImageAlignmentsKey];
     _verticalImageAlignments = [coder decodeObjectOfClass:[NSMutableDictionary class]
                                                    forKey:MDCCardCellVerticalImageAlignmentsKey];
     _imageTintColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
@@ -152,7 +155,7 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   if (_horizontalImageAlignments == nil) {
     _horizontalImageAlignments = [NSMutableDictionary dictionary];
     _horizontalImageAlignments[@(MDCCardCellStateNormal)] =
-    @(MDCCardCellHorizontalImageAlignmentRight);
+        @(MDCCardCellHorizontalImageAlignmentRight);
   }
 
   if (_verticalImageAlignments == nil) {
@@ -411,9 +414,9 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 
 - (void)updateImageAlignment {
   MDCCardCellVerticalImageAlignment verticalImageAlignment =
-  [self verticalImageAlignmentForState:self.state];
+      [self verticalImageAlignmentForState:self.state];
   MDCCardCellHorizontalImageAlignment horizontalImageAlignment =
-  [self horizontalImageAlignmentForState:self.state];
+      [self horizontalImageAlignmentForState:self.state];
 
   CGFloat yAlignment = 0;
   CGFloat xAlignment = 0;
@@ -421,28 +424,28 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   switch (verticalImageAlignment) {
     case MDCCardCellVerticalImageAlignmentTop:
       yAlignment =
-      MDCCardCellSelectedImagePadding + CGRectGetHeight(self.selectedImageView.frame)/2;
+          MDCCardCellSelectedImagePadding + CGRectGetHeight(self.selectedImageView.frame)/2;
       break;
     case MDCCardCellVerticalImageAlignmentCenter:
       yAlignment = CGRectGetHeight(self.bounds)/2;
       break;
     case MDCCardCellVerticalImageAlignmentBottom:
       yAlignment = CGRectGetHeight(self.bounds) - MDCCardCellSelectedImagePadding -
-      CGRectGetHeight(self.selectedImageView.frame)/2;
+          CGRectGetHeight(self.selectedImageView.frame)/2;
       break;
   }
 
   switch (horizontalImageAlignment) {
     case MDCCardCellHorizontalImageAlignmentLeft:
       xAlignment =
-      MDCCardCellSelectedImagePadding + CGRectGetWidth(self.selectedImageView.frame)/2;
+          MDCCardCellSelectedImagePadding + CGRectGetWidth(self.selectedImageView.frame)/2;
       break;
     case MDCCardCellHorizontalImageAlignmentCenter:
       xAlignment = CGRectGetWidth(self.bounds)/2;
       break;
     case MDCCardCellHorizontalImageAlignmentRight:
       xAlignment = CGRectGetWidth(self.bounds) - MDCCardCellSelectedImagePadding -
-      CGRectGetWidth(self.selectedImageView.frame)/2;
+          CGRectGetWidth(self.selectedImageView.frame)/2;
       break;
   }
 
