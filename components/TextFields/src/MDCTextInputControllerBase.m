@@ -256,9 +256,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeObjectOfClass:[UIColor class]
                                forKey:MDCTextInputControllerBaseTrailingUnderlineLabelTextColor];
     _underlineHeightActive =
-        [aDecoder decodeFloatForKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
+        (CGFloat)[aDecoder decodeDoubleForKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
     _underlineHeightNormal =
-        [aDecoder decodeFloatForKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
+        (CGFloat)[aDecoder decodeDoubleForKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
     _underlineViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseUnderlineViewModeKey];
 
@@ -336,10 +336,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerBaseTrailingUnderlineLabelFontKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerBaseTrailingUnderlineLabelTextColor];
-  [aCoder encodeFloat:(float)self.underlineHeightActive
-               forKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
-  [aCoder encodeFloat:(float)self.underlineHeightNormal
-               forKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
+  [aCoder encodeDouble:(double)self.underlineHeightActive
+                forKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
+  [aCoder encodeDouble:(double)self.underlineHeightNormal
+                forKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
   [aCoder encodeInteger:self.underlineViewMode
                  forKey:MDCTextInputControllerBaseUnderlineViewModeKey];
 }
