@@ -206,6 +206,13 @@ static const CGFloat kMaximumHeight = 80.0f;
 - (CGFloat)dynamicBottomMargin {
   CGFloat keyboardHeight = self.watcher.visibleKeyboardHeight;
   CGFloat userHeight = self.bottomOffset;
+  if (!_snackbarView.message.usesLegacySnackbar) {
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      userHeight += self.window.safeAreaInsets.bottom;
+    }
+#endif
+  }
 
   return MAX(keyboardHeight, userHeight);
 }
@@ -376,7 +383,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   // Maximum height must be extended to include the bottom content safe area.
   CGFloat maximumHeight = kMaximumHeight;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (self.anchoredToScreenEdge) {
+  if (self.anchoredToScreenEdge && self.snackbarView.message.usesLegacySnackbar) {
     if (@available(iOS 11.0, *)) {
       maximumHeight += self.safeAreaInsets.bottom;
     }
@@ -402,6 +409,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                 animated:(BOOL)animated
               completion:(void (^)(void))completion {
   self.snackbarView = snackbarView;  // Install the snackbar.
+  self.bottomConstraint.constant = -self.dynamicBottomMargin;
 
   if (animated) {
     [self slideInMessageView:snackbarView completion:completion];

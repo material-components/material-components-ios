@@ -821,9 +821,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
   height += self.safeContentMargin.top + self.safeContentMargin.bottom;
 
   // Make sure that the height of the image and text is larger than the minimum height;
-  height = MAX(kMinimumHeight, height);
-
   height = MAX(kMinimumHeight, height) + self.contentSafeBottomInset;
+
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
@@ -831,7 +830,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   // If a bottom offset has been set to raise the HUD, e.g. above a tab bar, we should ignore
   // any safeAreaInsets, since it is no longer 'anchored' to the bottom of the screen. This is set
   // by the MDCSnackbarOverlayView whenever the bottomOffset is non-zero.
-  if (!self.anchoredToScreenEdge) {
+  if (!self.anchoredToScreenEdge || !_message.usesLegacySnackbar) {
     return 0;
   }
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
