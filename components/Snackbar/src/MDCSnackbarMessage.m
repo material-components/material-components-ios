@@ -52,7 +52,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
   self = [super init];
   if (self) {
     _duration = kDefaultDuration;
-    _usesLegacySnackbar = NO;
+    _usesLegacySnackbar = YES;
   }
   return self;
 }
@@ -69,6 +69,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
   copy.accessibilityLabel = self.accessibilityLabel;
   copy.buttonTextColor = self.buttonTextColor;
   copy.highlightedButtonTextColor = self.highlightedButtonTextColor;
+  copy.usesLegacySnackbar = self.usesLegacySnackbar;
 
   // Unfortunately there's not really a concept of 'copying' a block (in the same way you would copy
   // a string, for example). A block's pointer is immutable once it is created and copied to the

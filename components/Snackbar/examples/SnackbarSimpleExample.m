@@ -19,7 +19,9 @@
 #import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
 
-@implementation SnackbarSimpleExample
+@implementation SnackbarSimpleExample {
+  BOOL _legacyMode;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -32,6 +34,21 @@
       @"De-Customize Font Example"
   ]];
   self.title = @"Snackbar";
+  _legacyMode = NO;
+  self.navigationItem.rightBarButtonItem =
+  [[UIBarButtonItem alloc] initWithTitle:@"New"
+                                   style:UIBarButtonItemStylePlain
+                                  target:self
+                                  action:@selector(toggleModes)];
+}
+
+- (void)toggleModes {
+  _legacyMode = !_legacyMode;
+  if (_legacyMode) {
+    [self.navigationItem.rightBarButtonItem setTitle:@"Legacy"];
+  } else {
+    [self.navigationItem.rightBarButtonItem setTitle:@"New"];
+  }
 }
 
 #pragma mark - Event Handling
@@ -39,12 +56,14 @@
 - (void)showSimpleSnackbar:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
+  message.usesLegacySnackbar = _legacyMode;
   [MDCSnackbarManager showMessage:message];
 }
 
 - (void)showSnackbarWithAction:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
+  message.usesLegacySnackbar = _legacyMode;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
@@ -57,10 +76,12 @@
 - (void)showLongSnackbarMessage:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"A red flair silhouetted the jagged edge of a sublime wing.";
+  message.usesLegacySnackbar = _legacyMode;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   MDCSnackbarMessageActionHandler actionHandler = ^() {
     MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
     answerMessage.text = @"The sky was cloudless and of a deep dark blue.";
+    answerMessage.usesLegacySnackbar = _legacyMode;
     [MDCSnackbarManager showMessage:answerMessage];
   };
   action.handler = actionHandler;
@@ -84,6 +105,7 @@
   [text appendAttributedString:[[NSAttributedString alloc]
                                 initWithString:@" go where no one has gone before."]];
   message.attributedText = text;
+  message.usesLegacySnackbar = _legacyMode;
 
   [MDCSnackbarManager showMessage:message];
 }
@@ -100,6 +122,7 @@
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Customized Fonts";
+  message.usesLegacySnackbar = _legacyMode;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Fancy";
   message.action = action;
@@ -112,6 +135,7 @@
   [MDCSnackbarMessageView appearance].buttonFont = nil;
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Back to the standard fonts";
+  message.usesLegacySnackbar = _legacyMode;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Okay";
   message.action = action;
