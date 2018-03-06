@@ -194,4 +194,8 @@ extension EditReorderCollectionViewController {
   @objc class func catalogIsDebug() -> Bool {
     return false
   }
+
+  @objc class func catalogIsPrimaryExample() -> Bool {
+    return true
+  }
 }
