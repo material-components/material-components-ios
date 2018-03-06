@@ -189,7 +189,6 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/ButtonBar/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/ButtonBar"
-      extension.dependency "MaterialComponents/NavigationBar"
       extension.dependency "MaterialComponents/Themes"
     end
   end
