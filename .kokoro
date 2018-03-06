@@ -74,6 +74,12 @@ run_bazel() {
 
   fix_bazel_imports
 
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    bazel version
+    use_bazel.sh 0.11.0
+    bazel version
+  fi
+
   if [ -n "$VERBOSE_OUTPUT" ]; then
     verbosity_args="-v"
   fi
