@@ -293,15 +293,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                                                         constant:[snackbarView maximumWidth]]];
       }
 
-      // Always pin the snackbar to the bottom of the container.
-//      [container
-//       addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-//                                                  attribute:NSLayoutAttributeBottom
-//                                                  relatedBy:NSLayoutRelationEqual
-//                                                     toItem:container
-//                                                  attribute:NSLayoutAttributeBottom
-//                                                 multiplier:1.0
-//                                                   constant:-bottomMargin]];
       _snackbarOnscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
                                                                  attribute:NSLayoutAttributeBottom
                                                                  relatedBy:NSLayoutRelationEqual
@@ -495,9 +486,9 @@ static const CGFloat kMaximumHeight = 80.0f;
   animations.delegate = self;
 
   if (snackbarView.message.usesLegacySnackbar) {
-      _snackbarOnscreenConstraint.active = onscreen;
-      _snackbarOffscreenConstraint.active = !onscreen;
-      [_containingView setNeedsUpdateConstraints];
+    _snackbarOnscreenConstraint.active = onscreen;
+    _snackbarOffscreenConstraint.active = !onscreen;
+    [_containingView setNeedsUpdateConstraints];
     // We use UIView animation inside a CATransaction in order to use the custom animation curve.
     [UIView animateWithDuration:MDCSnackbarTransitionDuration
                           delay:0
@@ -506,11 +497,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                        // Trigger snackbar animation.
                        [_containingView layoutIfNeeded];
                      }
-                     completion:^(__unused BOOL finished) {
-//                       if (completion) {
-//                         completion();
-//                       }
-                     }];
+                     completion:nil];
     [snackbarView animateContentOpacityFrom:fromContentOpacity
                                          to:toContentOpacity
                                    duration:MDCSnackbarTransitionDuration
