@@ -32,6 +32,9 @@ NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15f;
 NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075f;
 NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5f;
 
+// The scaling starting point for presenting the new snackbar.
+static const CGFloat MDCSnackbarEnterStartingScale = 0.8f;
+
 // How far from the bottom of the screen should the snackbar be.
 static const CGFloat MDCSnackbarBottomMargin_iPhone = 8.f;
 static const CGFloat MDCSnackbarBottomMargin_iPad = 24.f;
@@ -433,8 +436,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:(BOOL)onscreen
       fromContentOpacity:(CGFloat)fromContentOpacity
         toContentOpacity:(CGFloat)toContentOpacity
-               fromScale:(CGFloat)fromScale
-                 toScale:(CGFloat)toScale
               completion:(void (^)(void))completion {
   // Prepare to move the snackbar.
   NSTimeInterval duration = MDCSnackbarLegacyTransitionDuration;
@@ -474,8 +475,8 @@ static const CGFloat kMaximumHeight = 80.0f;
             [snackbarView animateSnackbarOpacityFrom:fromContentOpacity
                                                   to:toContentOpacity]];
     if (onscreen) {
-      [animations addObject:[snackbarView animateSnackbarScaleFrom:fromScale
-                                                           toScale:toScale]];
+      [animations addObject:[snackbarView animateSnackbarScaleFrom:MDCSnackbarEnterStartingScale
+                                                           toScale:1]];
     }
     animationsGroup.animations = animations;
     [snackbarView.layer addAnimation:animationsGroup forKey:@"snackbarAnimation"];
@@ -499,8 +500,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:YES
       fromContentOpacity:0
         toContentOpacity:1
-               fromScale:0.8
-                 toScale:1
               completion:completion];
 }
 
@@ -513,8 +512,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:NO
       fromContentOpacity:1
         toContentOpacity:0
-               fromScale:1
-                 toScale:0.8
               completion:completion];
 }
 
