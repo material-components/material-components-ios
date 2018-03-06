@@ -52,7 +52,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
   self = [super init];
   if (self) {
     _duration = kDefaultDuration;
-    _usesLegacySnackbar = YES;
+    _usesLegacySnackbar = NO;
   }
   return self;
 }

@@ -28,12 +28,13 @@
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the snackbar.
-NSTimeInterval const MDCSnackbarTransitionDuration = 0.5f;
+NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15f;
+NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075f;
 NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5f;
 
 // How far from the bottom of the screen should the snackbar be.
-static const CGFloat MDCSnackbarBottomMargin_iPhone = 16.f;
-static const CGFloat MDCSnackbarBottomMargin_iPad = 16.f;
+static const CGFloat MDCSnackbarBottomMargin_iPhone = 8.f;
+static const CGFloat MDCSnackbarBottomMargin_iPad = 24.f;
 static const CGFloat MDCSnackbarLegacyBottomMargin_iPhone = 0.f;
 static const CGFloat MDCSnackbarLegacyBottomMargin_iPad = 0.f;
 
@@ -426,42 +427,6 @@ static const CGFloat kMaximumHeight = 80.0f;
   }
 }
 
-#pragma mark - Fade Animation
-
-- (void)fadeInsnackbarView:(MDCSnackbarMessageView *)snackbarView
-                completion:(void (^)(void))completion {
-  snackbarView.alpha = 0;
-
-  // Make sure that the snackbar has been properly sized before fading in.
-  [self triggerSnackbarLayoutChange];
-
-  void (^animations)(void) = ^{
-    self.snackbarView.alpha = 1.0;
-  };
-  void (^realCompletion)(BOOL) = ^(__unused BOOL finished) {
-    if (completion) {
-      completion();
-    }
-  };
-
-  UIViewAnimationCurve curve = UIViewAnimationCurveEaseInOut;
-  CAMediaTimingFunction *function = nil;
-
-  MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
-  function = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
-
-  [MDCSnackbarOverlayView animateWithDuration:MDCSnackbarTransitionDuration
-                                        curve:materialCurve
-                                   animations:animations
-                                   completion:realCompletion];
-
-  // Notify the overlay system.
-  [self notifyOverlayChangeWithFrame:[self snackbarRectInScreenCoordinates]
-                            duration:MDCSnackbarTransitionDuration
-                               curve:curve
-                      timingFunction:function];
-}
-
 #pragma mark - Slide Animation
 
 - (void)slideMessageView:(MDCSnackbarMessageView *)snackbarView
@@ -472,25 +437,26 @@ static const CGFloat kMaximumHeight = 80.0f;
                  toScale:(CGFloat)toScale
               completion:(void (^)(void))completion {
   // Prepare to move the snackbar.
+  NSTimeInterval duration = MDCSnackbarLegacyTransitionDuration;
+  if (!snackbarView.message.usesLegacySnackbar) {
+    duration = onscreen ? MDCSnackbarEnterTransitionDuration : MDCSnackbarExitTransitionDuration;
+  }
   CAMediaTimingFunction *timingFunction =
   [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:timingFunction];
   [CATransaction setCompletionBlock:completion];
-  [CATransaction setAnimationDuration:MDCSnackbarTransitionDuration];
-  CAAnimationGroup *animations = [CAAnimationGroup animation];
-  animations.duration = MDCSnackbarTransitionDuration;
-  animations.timingFunction = timingFunction;
-  animations.fillMode = kCAFillModeForwards;
-  animations.removedOnCompletion = NO;
-  animations.delegate = self;
+  [CATransaction setAnimationDuration:duration];
+  CAAnimationGroup *animationsGroup = [CAAnimationGroup animation];
+  animationsGroup.fillMode = kCAFillModeForwards;
+  animationsGroup.removedOnCompletion = NO;
 
   if (snackbarView.message.usesLegacySnackbar) {
     _snackbarOnscreenConstraint.active = onscreen;
     _snackbarOffscreenConstraint.active = !onscreen;
     [_containingView setNeedsUpdateConstraints];
     // We use UIView animation inside a CATransaction in order to use the custom animation curve.
-    [UIView animateWithDuration:MDCSnackbarTransitionDuration
+    [UIView animateWithDuration:duration
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
@@ -500,21 +466,26 @@ static const CGFloat kMaximumHeight = 80.0f;
                      completion:nil];
     [snackbarView animateContentOpacityFrom:fromContentOpacity
                                          to:toContentOpacity
-                                   duration:MDCSnackbarTransitionDuration
+                                   duration:duration
                              timingFunction:timingFunction];
   } else {
-    animations.animations = @[[snackbarView animateSnackbarOpacityFrom:fromContentOpacity
-                                                                   to:toContentOpacity],
-                              [snackbarView animateSnackbarScaleFrom:fromScale
-                                                             toScale:toScale]];
+    NSMutableArray *animations =
+        [NSMutableArray arrayWithObject:
+            [snackbarView animateSnackbarOpacityFrom:fromContentOpacity
+                                                  to:toContentOpacity]];
+    if (onscreen) {
+      [animations addObject:[snackbarView animateSnackbarScaleFrom:fromScale
+                                                           toScale:toScale]];
+    }
+    animationsGroup.animations = animations;
+    [snackbarView.layer addAnimation:animationsGroup forKey:@"snackbarAnimation"];
   }
 
-  [snackbarView.layer addAnimation:animations forKey:@"opacityAndScale"];
   [CATransaction commit];
 
   // Notify the overlay system.
   [self notifyOverlayChangeWithFrame:[self snackbarRectInScreenCoordinates]
-                            duration:MDCSnackbarTransitionDuration
+                            duration:duration
                                curve:0
                       timingFunction:timingFunction];
 }

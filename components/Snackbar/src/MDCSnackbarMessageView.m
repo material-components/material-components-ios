@@ -321,11 +321,17 @@ static const CGFloat kButtonInkRadius = 64.0f;
     _dismissalHandler = [handler copy];
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
-    self.layer.cornerRadius = _message.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
-    self.layer.shadowOffset = _message.usesLegacySnackbar ? kLegacyShadowOffset : kShadowOffset;
-    self.layer.shadowRadius = _message.usesLegacySnackbar ? kLegacyShadowSpread : kShadowSpread;
+    if (_message.usesLegacySnackbar) {
+      self.layer.cornerRadius = kLegacyCornerRadius;
+      self.layer.shadowOffset = kLegacyShadowOffset;
+      self.layer.shadowRadius = kLegacyShadowSpread;
+    } else {
+      self.layer.cornerRadius = kCornerRadius;
+      self.layer.shadowOffset = kShadowOffset;
+      self.layer.shadowRadius = kShadowSpread;
+    }
 
     _anchoredToScreenEdge = YES;
 
@@ -346,17 +352,19 @@ static const CGFloat kButtonInkRadius = 64.0f;
                        action:@selector(handleBackgroundTapped:)
              forControlEvents:UIControlEventTouchUpInside];
 
-    UISwipeGestureRecognizer *swipeRightGesture =
-        [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                  action:@selector(handleBackgroundSwipedRight:)];
-    [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionRight];
-    [_containerView addGestureRecognizer:swipeRightGesture];
+    if (_message.usesLegacySnackbar) {
+      UISwipeGestureRecognizer *swipeRightGesture =
+          [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                    action:@selector(handleBackgroundSwipedRight:)];
+      [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionRight];
+      [_containerView addGestureRecognizer:swipeRightGesture];
 
-    UISwipeGestureRecognizer *swipeLeftGesture =
-        [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                  action:@selector(handleBackgroundSwipedLeft:)];
-    [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [_containerView addGestureRecognizer:swipeLeftGesture];
+      UISwipeGestureRecognizer *swipeLeftGesture =
+          [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                    action:@selector(handleBackgroundSwipedLeft:)];
+      [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
+      [_containerView addGestureRecognizer:swipeLeftGesture];
+    }
 
     _contentView = [[UIView alloc] init];
     [_contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -858,7 +866,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
   translationAnimation.toValue = [NSNumber numberWithDouble:-self.frame.size.width];
-  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.duration = MDCSnackbarLegacyTransitionDuration;
   translationAnimation.timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
   translationAnimation.delegate = self;
@@ -871,7 +879,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
   translationAnimation.toValue = [NSNumber numberWithDouble:self.frame.size.width];
-  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.duration = MDCSnackbarLegacyTransitionDuration;
   translationAnimation.timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
   translationAnimation.delegate = self;
