@@ -135,7 +135,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @".Collections", @"Empty Section Demo" ];
+  return @[ @"Collections", @"Empty Section Demo" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
