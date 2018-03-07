@@ -467,7 +467,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   BOOL isBottom = NO;
   BOOL hasSectionHeader = [_headerSections containsIndex:indexPath.section];
   BOOL hasSectionFooter = [_footerSections containsIndex:indexPath.section];
-  BOOL hasSectionItems = YES;
+  BOOL hasSectionItems = [self numberOfItemsInSection:indexPath.section] > 0;
 
   BOOL hidesHeaderBackground = NO;
   if ([self.styler.delegate
