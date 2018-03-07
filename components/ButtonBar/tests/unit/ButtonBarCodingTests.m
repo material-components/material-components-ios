@@ -26,7 +26,7 @@
 - (void)testBasicCoding {
   // Given
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] initWithFrame:CGRectZero];
-  buttonBar.buttonTitleBaseline = 2.1;
+  buttonBar.buttonTitleBaseline = (CGFloat)2.1;
   buttonBar.layoutPosition = 3;
   UIBarButtonItem *barButton1 = [[UIBarButtonItem alloc] initWithTitle:@"barButton1"
                                                                  style:UIBarButtonItemStyleDone
