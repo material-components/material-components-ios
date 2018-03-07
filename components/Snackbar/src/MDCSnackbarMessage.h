@@ -72,6 +72,11 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 + (nonnull instancetype)messageWithAttributedText:(nonnull NSAttributedString *)attributedText;
 
 /**
+ Use the older legacy version of snackbar. Default is YES.
+ */
+@property(class, nonatomic, assign) BOOL usesLegacySnackbar;
+
+/**
  The primary text of the message.
 
  Either @c text or @c attributedText must be set.
@@ -142,11 +147,6 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
  Text that should be read when the message appears on screen and VoiceOver is enabled.
  */
 @property(nonatomic, readonly, nullable) NSString *voiceNotificationText;
-
-/**
- Use the older legacy version of snackbar. Default is YES.
- */
-@property(nonatomic, assign) BOOL usesLegacySnackbar;
 
 @end
 

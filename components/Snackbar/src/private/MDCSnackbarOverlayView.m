@@ -151,6 +151,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 
     [self setupContainerConstraints];
   }
+
   return self;
 }
 
@@ -206,10 +207,10 @@ static const CGFloat kMaximumHeight = 80.0f;
 - (CGFloat)dynamicBottomMargin {
   CGFloat keyboardHeight = self.watcher.visibleKeyboardHeight;
   CGFloat userHeight = self.bottomOffset;
-  if (!_snackbarView.message.usesLegacySnackbar) {
+  if (!MDCSnackbarMessage.usesLegacySnackbar) {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
-      userHeight = MAX(userHeight, self.window.safeAreaInsets.bottom);
+      userHeight = MAX(userHeight, self.safeAreaInsets.bottom);
     }
 #endif
   }
@@ -221,7 +222,7 @@ static const CGFloat kMaximumHeight = 80.0f;
  The bottom margin which is dependent on device type and cannot change.
  */
 - (CGFloat)staticBottomMargin {
-  if (_snackbarView.message.usesLegacySnackbar) {
+  if (MDCSnackbarMessage.usesLegacySnackbar) {
     return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? MDCSnackbarLegacyBottomMargin_iPad
                                                                 : MDCSnackbarLegacyBottomMargin_iPhone;
   }
@@ -230,7 +231,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 }
 
 - (CGFloat)sideMargin {
-  if (_snackbarView.message.usesLegacySnackbar) {
+  if (MDCSnackbarMessage.usesLegacySnackbar) {
     return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? MDCSnackbarSideMargin_iPad
                                                                 : MDCSnackbarLegacySideMargin_iPhone;
   }
@@ -329,13 +330,13 @@ static const CGFloat kMaximumHeight = 80.0f;
                                                                  attribute:NSLayoutAttributeBottom
                                                                 multiplier:1.0
                                                                   constant:-bottomMargin];
-      _snackbarOnscreenConstraint.active = !_snackbarView.message.usesLegacySnackbar;
-      if (snackbarView.message.usesLegacySnackbar) {
+      _snackbarOnscreenConstraint.active = !MDCSnackbarMessage.usesLegacySnackbar;
+      if (MDCSnackbarMessage.usesLegacySnackbar) {
         _snackbarOnscreenConstraint.priority = UILayoutPriorityDefaultHigh;
       }
       [container addConstraint:_snackbarOnscreenConstraint];
 
-      if (snackbarView.message.usesLegacySnackbar) {
+      if (MDCSnackbarMessage.usesLegacySnackbar) {
         _snackbarOffscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
                                                                     attribute:NSLayoutAttributeTop
                                                                     relatedBy:NSLayoutRelationEqual
@@ -401,7 +402,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   // Maximum height must be extended to include the bottom content safe area.
   CGFloat maximumHeight = kMaximumHeight;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (self.anchoredToScreenEdge && self.snackbarView.message.usesLegacySnackbar) {
+  if (self.anchoredToScreenEdge && MDCSnackbarMessage.usesLegacySnackbar) {
     if (@available(iOS 11.0, *)) {
       maximumHeight += self.safeAreaInsets.bottom;
     }
@@ -465,7 +466,7 @@ static const CGFloat kMaximumHeight = 80.0f;
               completion:(void (^)(void))completion {
   // Prepare to move the snackbar.
   NSTimeInterval duration = MDCSnackbarLegacyTransitionDuration;
-  if (!snackbarView.message.usesLegacySnackbar) {
+  if (!MDCSnackbarMessage.usesLegacySnackbar) {
     duration = onscreen ? MDCSnackbarEnterTransitionDuration : MDCSnackbarExitTransitionDuration;
   }
   CAMediaTimingFunction *timingFunction =
@@ -478,14 +479,14 @@ static const CGFloat kMaximumHeight = 80.0f;
   animationsGroup.fillMode = kCAFillModeForwards;
   animationsGroup.removedOnCompletion = NO;
 
-  if (snackbarView.message.usesLegacySnackbar) {
+  if (MDCSnackbarMessage.usesLegacySnackbar) {
     _snackbarOnscreenConstraint.active = onscreen;
     _snackbarOffscreenConstraint.active = !onscreen;
     [_containingView setNeedsUpdateConstraints];
     // We use UIView animation inside a CATransaction in order to use the custom animation curve.
     [UIView animateWithDuration:duration
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
+                        options:0
                      animations:^{
                        // Trigger snackbar animation.
                        [_containingView layoutIfNeeded];

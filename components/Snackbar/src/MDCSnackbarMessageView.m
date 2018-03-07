@@ -323,7 +323,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
-    if (_message.usesLegacySnackbar) {
+    if (MDCSnackbarMessage.usesLegacySnackbar) {
       self.layer.cornerRadius = kLegacyCornerRadius;
       self.layer.shadowOffset = kLegacyShadowOffset;
       self.layer.shadowRadius = kLegacyShadowSpread;
@@ -344,7 +344,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
     _containerView.backgroundColor = [UIColor clearColor];
     _containerView.layer.cornerRadius =
-        _message.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
+        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
     _containerView.layer.masksToBounds = YES;
 
     // Listen for taps on the background of the view.
@@ -352,7 +352,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                        action:@selector(handleBackgroundTapped:)
              forControlEvents:UIControlEventTouchUpInside];
 
-    if (_message.usesLegacySnackbar) {
+    if (MDCSnackbarMessage.usesLegacySnackbar) {
       UISwipeGestureRecognizer *swipeRightGesture =
           [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                     action:@selector(handleBackgroundSwipedRight:)];
@@ -804,7 +804,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   // As our layout changes, make sure that the shadow path is kept up-to-date.
   UIBezierPath *path =
       [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:
-          _message.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius];
+          MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius];
   self.layer.shadowPath = path.CGPath;
 }
 
@@ -830,7 +830,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   // If a bottom offset has been set to raise the HUD, e.g. above a tab bar, we should ignore
   // any safeAreaInsets, since it is no longer 'anchored' to the bottom of the screen. This is set
   // by the MDCSnackbarOverlayView whenever the bottomOffset is non-zero.
-  if (!self.anchoredToScreenEdge || !_message.usesLegacySnackbar) {
+  if (!self.anchoredToScreenEdge || !MDCSnackbarMessage.usesLegacySnackbar) {
     return 0;
   }
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
