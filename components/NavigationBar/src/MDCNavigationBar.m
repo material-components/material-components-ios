@@ -372,7 +372,9 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize intrinsicContentSize = [self intrinsicContentSize];
-  return CGSizeMake(size.width, MIN(size.height, intrinsicContentSize.height));
+  CGFloat height =
+      size.height > 0 ? MIN(size.height, intrinsicContentSize.height) : intrinsicContentSize.height;
+  return CGSizeMake(size.width, height);
 }
 
 - (CGSize)intrinsicContentSize {
