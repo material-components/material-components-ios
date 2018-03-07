@@ -209,7 +209,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   if (!_snackbarView.message.usesLegacySnackbar) {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
-      userHeight += self.window.safeAreaInsets.bottom;
+      userHeight = MAX(userHeight, self.window.safeAreaInsets.bottom);
     }
 #endif
   }
@@ -245,7 +245,6 @@ static const CGFloat kMaximumHeight = 80.0f;
 
     CGFloat bottomMargin = [self staticBottomMargin];
     CGFloat sideMargin = [self sideMargin];
-
     BOOL fullWidth = UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad;
 
     UIView *container = self.containingView;
@@ -256,23 +255,42 @@ static const CGFloat kMaximumHeight = 80.0f;
       // Pin the snackbar to the bottom of the screen.
       [snackbarView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-      [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:container
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1.0
-                                                             constant:0]];
-
       if (fullWidth) {
+        CGFloat leftMargin = sideMargin;
+        CGFloat rightMargin = sideMargin;
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+        if (@available(iOS 11.0, *)) {
+          leftMargin += self.safeAreaInsets.left;
+          rightMargin += self.safeAreaInsets.right;
+        }
+#endif
+
         [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                              attribute:NSLayoutAttributeWidth
+                                                              attribute:NSLayoutAttributeLeading
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:container
-                                                              attribute:NSLayoutAttributeWidth
+                                                              attribute:NSLayoutAttributeLeading
                                                              multiplier:1.0
-                                                               constant:-2 * sideMargin]];
+                                                               constant:leftMargin]];
+
+        [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                              attribute:NSLayoutAttributeTrailing
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:container
+                                                              attribute:NSLayoutAttributeTrailing
+                                                             multiplier:1.0
+                                                               constant:-1 * rightMargin]];
       } else {
+
+        [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                              attribute:NSLayoutAttributeCenterX
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:container
+                                                              attribute:NSLayoutAttributeCenterX
+                                                             multiplier:1.0
+                                                               constant:0]];
+
         // If not full width, ensure that it doesn't get any larger than our own width.
         [container
             addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
