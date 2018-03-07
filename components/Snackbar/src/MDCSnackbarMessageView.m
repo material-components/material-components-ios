@@ -170,10 +170,16 @@ static const CGFloat kButtonInkRadius = 64.0f;
   NSMutableArray<MDCButton *> *_actionButtons;
 }
 
-+ (void)initialize {
-  [[self appearance] setSnackbarMessageViewShadowColor:MDCRGBAColor(0x00, 0x00, 0x00, 1.0f)];
-  [[self appearance] setSnackbarMessageViewBackgroundColor:MDCRGBAColor(0x32, 0x32, 0x32, 1.0f)];
-  [[self appearance] setSnackbarMessageViewTextColor:MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f)];
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+
+  if (self) {
+    _snackbarMessageViewTextColor = UIColor.whiteColor;
+    _snackbarMessageViewShadowColor = UIColor.blackColor;
+    _snackbarMessageViewBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1);
+  }
+
+  return self;
 }
 
 - (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
