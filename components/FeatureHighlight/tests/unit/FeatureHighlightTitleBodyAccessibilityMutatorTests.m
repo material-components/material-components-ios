@@ -20,11 +20,10 @@ static NSArray<UIColor *> *testColors(){
 
 @implementation FeatureHighlightTitleBodyAccessibilityMutatorTests
 
-- (void)testMutateChangesTextColor {
+- (void)testMutatorChangesTextColor {
   for (UIColor *color in testColors()) {
-    // Given
     MDCFeatureHighlightViewController *highlightVC =
-        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[UIView new]
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
                                                                 completion:nil];
     MDCFeatureHighlightView *highlightView = (MDCFeatureHighlightView *)highlightVC.view;
 
@@ -33,38 +32,60 @@ static NSArray<UIColor *> *testColors(){
     highlightView.titleColor = color;
     highlightView.bodyColor = color;
 
-    // When
     [MDCFeatureHighlightAccessibilityMutator
-        changeTitleAndBodyColorForFeatureHighlightViewControllerIfApplicable:highlightVC];
+        mutateTitleColorForFeatureHighlightViewControllerIfApplicable:highlightVC];
+    [MDCFeatureHighlightAccessibilityMutator
+        mutateBodyColorForFeatureHighlightViewControllerIfApplicable:highlightVC];
 
-    // Then
-    XCTAssertNotEqualObjects(highlightView.titleColor, color, @"Not same color");
-    XCTAssertNotEqualObjects(highlightView.bodyColor, color, @"Not same color");
+    XCTAssertNotNil(highlightView.titleColor);
+    XCTAssertNotNil(highlightView.bodyColor);
+    XCTAssertNotEqualObjects(highlightView.titleColor, color, @"");
+    XCTAssertNotEqualObjects(highlightView.bodyColor, color, @"");
   }
 }
 
-- (void)testMutateKeepsAccessibleTextColor {
+- (void)testMutatorKeepsAccessibleTextColor {
   NSDictionary* colors = @{ [UIColor redColor]: [UIColor blackColor]};
   for (UIColor *color in colors) {
- // Given
+    MDCFeatureHighlightViewController *highlightVC =
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
+                                                                completion:nil];
+    MDCFeatureHighlightView *highlightView = (MDCFeatureHighlightView *)highlightVC.view;
+
+    // Making the background color accessible with title/body color.
+    highlightView.outerHighlightColor = colors[color];
+    highlightView.titleColor = color;
+    highlightView.bodyColor = color;
+
+    [MDCFeatureHighlightAccessibilityMutator
+        mutateTitleColorForFeatureHighlightViewControllerIfApplicable:highlightVC];
+    [MDCFeatureHighlightAccessibilityMutator
+       mutateBodyColorForFeatureHighlightViewControllerIfApplicable:highlightVC];
+
+    XCTAssertEqualObjects(highlightView.titleColor, color, @"");
+    XCTAssertEqualObjects(highlightView.bodyColor, color, @"");
+  }
+}
+
+- (void)testMutatorSelectsTheRightColorWhenThereIsNoColorSet {
   MDCFeatureHighlightViewController *highlightVC =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[UIView new]
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
                                                               completion:nil];
   MDCFeatureHighlightView *highlightView = (MDCFeatureHighlightView *)highlightVC.view;
 
   // Making the background color accessible with title/body color.
-  highlightView.outerHighlightColor = colors[color];
-  highlightView.titleColor = color;
-  highlightView.bodyColor = color;
+  highlightView.outerHighlightColor = [UIColor blackColor];
 
-  // When
   [MDCFeatureHighlightAccessibilityMutator
-      changeTitleAndBodyColorForFeatureHighlightViewControllerIfApplicable:highlightVC];
+      mutateTitleColorForFeatureHighlightViewControllerIfApplicable:highlightVC];
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateBodyColorForFeatureHighlightViewControllerIfApplicable:highlightVC];
 
-  // Then
-  XCTAssertEqualObjects(highlightView.titleColor, color, @"Same color");
-  XCTAssertEqualObjects(highlightView.bodyColor, color, @"Same color");
-  }
+  XCTAssertNotNil(highlightView.titleColor);
+  XCTAssertNotNil(highlightView.bodyColor);
+  XCTAssertNotEqualObjects(highlightView.titleColor, [UIColor blackColor], @"");
+  XCTAssertNotEqualObjects(highlightView.bodyColor, [UIColor blackColor], @"");
 }
+
 
 @end
