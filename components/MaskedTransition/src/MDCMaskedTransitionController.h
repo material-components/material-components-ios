@@ -40,7 +40,7 @@
 /**
  Initializes the transition controller with a given source view.
  */
-- (nonnull instancetype)initWithSourceView:(nonnull UIView *)sourceView;
+- (nonnull instancetype)initWithSourceView:(nullable UIView *)sourceView;
 
 /**
  Initializes the transition controller without a source view.

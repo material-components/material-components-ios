@@ -28,7 +28,7 @@
   UIView *view = [[UIView alloc] init];
   MDCMaskedTransitionController *transitionController =
       [[MDCMaskedTransitionController alloc] initWithSourceView:view];
-  XCTAssertNotNil(transitionController);
+  XCTAssertEqual(transitionController.sourceView, view);
 }
 
 @end

@@ -70,22 +70,22 @@
     [self.containerView addSubview:self.scrimView];
   }
 
-  MDCMaskedTransitionMotionSpecContext spec =
+  MDCMaskedTransitionMotionSpec motionSpecification =
       MDCMaskedTransitionMotionSpecForContext(self.containerView, self.presentedViewController);
 
-  MDCMaskedTransitionMotionTiming motion = spec.expansion;
+  MDCMaskedTransitionMotionTiming motionTiming = motionSpecification.expansion;
 
   MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
-  [animator animateWithTiming:motion.scrimFade
+  [animator animateWithTiming:motionTiming.scrimFade
                       toLayer:self.scrimView.layer
                    withValues:@[ @0, @1 ]
                       keyPath:MDMKeyPathOpacity];
 }
 
 - (void)dismissalTransitionWillBegin {
-  MDCMaskedTransitionMotionSpecContext spec =
+  MDCMaskedTransitionMotionSpec motionSpecification =
       MDCMaskedTransitionMotionSpecForContext(self.containerView, self.presentedViewController);
-  if (spec.shouldSlideWhenCollapsed) {
+  if (motionSpecification.shouldSlideWhenCollapsed) {
     // Immediately reveal the source view because our presented view controller isn't collapsing
     // back to it.
     self.sourceView.alpha = 1;
@@ -96,10 +96,10 @@
         } completion:nil];
 
   } else {
-    MDCMaskedTransitionMotionTiming motion = spec.collapse;
+    MDCMaskedTransitionMotionTiming motionTiming = motionSpecification.collapse;
 
     MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
-    [animator animateWithTiming:motion.scrimFade
+    [animator animateWithTiming:motionTiming.scrimFade
                         toLayer:self.scrimView.layer
                      withValues:@[ @1, @0 ]
                         keyPath:MDMKeyPathOpacity];

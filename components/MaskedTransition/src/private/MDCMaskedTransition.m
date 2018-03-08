@@ -23,7 +23,7 @@
 
 #import "MDCMaskedPresentationController.h"
 #import "MDCMaskedTransitionMotionForContext.h"
-#import "MDCMaskedTransitionMotionSpec.h"
+#import "MDCMaskedTransitionMotionSpecs.h"
 
 // Math utilities
 
@@ -47,30 +47,30 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 }
 
 // TODO: Pull this out to MotionTransitioning.
-static NSArray <UIViewController *> *
+static void
 PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transitionContext,
                              MDMTransitionDirection direction) {
-  UIViewController *from =
+  UIViewController *fromViewController =
       [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
   if (fromView == nil) {
-    fromView = from.view;
+    fromView = fromViewController.view;
   }
-  if (fromView != nil && fromView == from.view) {
-    CGRect finalFrame = [transitionContext finalFrameForViewController:from];
+  if (fromView != nil && fromView == fromViewController.view) {
+    CGRect finalFrame = [transitionContext finalFrameForViewController:fromViewController];
     if (!CGRectIsEmpty(finalFrame)) {
       fromView.frame = finalFrame;
     }
   }
 
-  UIViewController *to =
+  UIViewController *toViewController =
       [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
   if (toView == nil) {
-    toView = to.view;
+    toView = toViewController.view;
   }
-  if (toView != nil && toView == to.view) {
-    CGRect finalFrame = [transitionContext finalFrameForViewController:to];
+  if (toView != nil && toView == toViewController.view) {
+    CGRect finalFrame = [transitionContext finalFrameForViewController:toViewController];
     if (!CGRectIsEmpty(finalFrame)) {
       toView.frame = finalFrame;
     }
@@ -89,11 +89,22 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
   }
 
   [toView layoutIfNeeded];
+}
+
+// TODO: Pull this out to MotionTransitioning.
+static NSArray <UIViewController *> *
+OrderedViewControllersWithTransitionContext(id<UIViewControllerContextTransitioning> transitionContext,
+                                            MDMTransitionDirection direction) {
+  
+  UIViewController *fromViewController =
+      [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  UIViewController *toViewController =
+      [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 
   if (direction == MDMTransitionDirectionForward) {
-    return @[from, to];
+    return @[fromViewController, toViewController];
   } else {
-    return @[to, from];
+    return @[toViewController, fromViewController];
   }
 }
 
@@ -115,15 +126,37 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.375;
+  NSArray<UIViewController *> *viewControllers =
+      OrderedViewControllersWithTransitionContext(transitionContext, _direction);
+  NSAssert([viewControllers count] == 2,
+           @"Expected two view controllers to be involved in a transition.");
+  if ([viewControllers count] != 2) {
+    return 0;
+  }
+  UIViewController *presentedViewController = viewControllers[1];
+  MDCMaskedTransitionMotionSpec motionSpecification =
+      MDCMaskedTransitionMotionSpecForContext(transitionContext.containerView,
+                                              presentedViewController);
+
+  MDCMaskedTransitionMotionTiming motion = ((_direction == MDMTransitionDirectionForward)
+                                            ? motionSpecification.expansion
+                                            : motionSpecification.collapse);
+
+  return motion.overallDuration;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-  NSArray<UIViewController *> *viewControllers = PrepareTransitionWithContext(transitionContext,
-                                                                              _direction);
+  PrepareTransitionWithContext(transitionContext, _direction);
+  NSArray<UIViewController *> *viewControllers =
+      OrderedViewControllersWithTransitionContext(transitionContext, _direction);
+  NSAssert([viewControllers count] == 2,
+           @"Expected two view controllers to be involved in a transition.");
+  if ([viewControllers count] != 2) {
+    [transitionContext completeTransition:YES];
+  }
   UIViewController *presentedViewController = viewControllers[1];
 
-  MDCMaskedTransitionMotionSpecContext spec =
+  MDCMaskedTransitionMotionSpec motionSpecification =
       MDCMaskedTransitionMotionSpecForContext(transitionContext.containerView,
                                               presentedViewController);
 
@@ -162,7 +195,7 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
   CGRect initialMaskedFrame;
   CGPoint corner;
   const CGPoint initialSourceCenter = CenterOfFrame(initialSourceFrame);
-  if (spec.isCentered) {
+  if (motionSpecification.isCentered) {
     initialMaskedFrame = FrameCenteredAround(initialSourceCenter, originalFrame.size);
     // Bottom right
     corner = CGPointMake(CGRectGetMaxX(initialMaskedFrame), CGRectGetMaxY(initialMaskedFrame));
@@ -219,8 +252,8 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
   }];
 
   MDCMaskedTransitionMotionTiming motion = ((_direction == MDMTransitionDirectionForward)
-                                            ? spec.expansion
-                                            : spec.collapse);
+                                            ? motionSpecification.expansion
+                                            : motionSpecification.collapse);
 
   MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
   animator.shouldReverseValues = _direction == MDMTransitionDirectionBackward;
