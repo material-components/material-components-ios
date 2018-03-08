@@ -244,6 +244,16 @@ OrderedViewControllersWithTransitionContext(id<UIViewControllerContextTransition
 
     self->_sourceView.frame = originalSourceFrame;
     self->_sourceView.backgroundColor = originalSourceBackgroundColor;
+    if (motionSpecification.shouldSlideWhenCollapsed
+        && transitionContext.presentationStyle != UIModalPresentationCustom) {
+      // If we're going to slide when collapsed then this transition won't be invoked. If we also
+      // don't have a presentation controller (because of the presentation style) then we need to
+      // restore the source view's visibility somehow. This is the only place I could think of to
+      // do so, but it unfortunately means if the presented view controller is somehow presented
+      // such that the source view is still visible then the source view will appear to flash back
+      // into existence at the end of the transition, breaking the illusion of continuity.
+      self->_sourceView.alpha = 1;
+    }
     [originalSourceSuperview addSubview:self->_sourceView];
 
     [maskedView removeFromSuperview];
