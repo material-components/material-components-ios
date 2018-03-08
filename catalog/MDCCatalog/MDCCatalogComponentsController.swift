@@ -351,8 +351,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                       containerView: UIView,
                       insets: UIEdgeInsets,
                       height: CGFloat) {
-    if let _ = titleLabelLeadingConstraint {
-      titleLabelLeadingConstraint!.constant = insets.left
+    if let constraint = titleLabelLeadingConstraint {
+      constraint.constant = insets.left
     } else {
       titleLabelLeadingConstraint = NSLayoutConstraint(
         item: label,
@@ -374,8 +374,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       multiplier: 1.0,
       constant: 0).isActive = true
 
-    if let _ = titleLabelBottomConstraint {
-      titleLabelBottomConstraint!.constant = -insets.bottom
+    if let constraint = titleLabelBottomConstraint {
+      constraint.constant = -insets.bottom
     } else {
       titleLabelBottomConstraint = NSLayoutConstraint(
         item: label,
@@ -388,8 +388,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       titleLabelBottomConstraint!.isActive = true
     }
 
-    if let _ = titleLabelHeightConstraint {
-      titleLabelHeightConstraint!.constant = height
+    if let constraint = titleLabelHeightConstraint {
+      constraint.constant = height
     } else {
       titleLabelHeightConstraint = NSLayoutConstraint(
         item: label,
