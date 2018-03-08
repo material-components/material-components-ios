@@ -45,13 +45,18 @@ static const CGFloat kBorderWidth = 0;
  Shadow coloring.
  */
 static const CGFloat kShadowAlpha = 0.24f;
-static const CGSize kShadowOffset = (CGSize){0.0, 1.0};
-static const CGFloat kShadowSpread = 1.0f;
+
+static const CGSize kShadowOffset = (CGSize){0.0, 2.0};
+static const CGSize kLegacyShadowOffset = (CGSize){0.0, 1.0};
+
+static const CGFloat kShadowSpread = 4.0f;
+static const CGFloat kLegacyShadowSpread = 1.0f;
 
 /**
  The radius of the corners.
  */
-static const CGFloat kCornerRadius = 0;
+static const CGFloat kCornerRadius = 4;
+static const CGFloat kLegacyCornerRadius = 0;
 
 /**
  Padding between the edges of the snackbar and any content.
@@ -322,11 +327,17 @@ static const CGFloat kButtonInkRadius = 64.0f;
     _dismissalHandler = [handler copy];
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
-    self.layer.cornerRadius = kCornerRadius;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
-    self.layer.shadowOffset = kShadowOffset;
-    self.layer.shadowRadius = kShadowSpread;
+    if (MDCSnackbarMessage.usesLegacySnackbar) {
+      self.layer.cornerRadius = kLegacyCornerRadius;
+      self.layer.shadowOffset = kLegacyShadowOffset;
+      self.layer.shadowRadius = kLegacyShadowSpread;
+    } else {
+      self.layer.cornerRadius = kCornerRadius;
+      self.layer.shadowOffset = kShadowOffset;
+      self.layer.shadowRadius = kShadowSpread;
+    }
 
     _anchoredToScreenEdge = YES;
 
@@ -338,7 +349,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
     _containerView.backgroundColor = [UIColor clearColor];
-    _containerView.layer.cornerRadius = kCornerRadius;
+    _containerView.layer.cornerRadius =
+        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
     _containerView.layer.masksToBounds = YES;
 
     // Listen for taps on the background of the view.
@@ -346,17 +358,19 @@ static const CGFloat kButtonInkRadius = 64.0f;
                        action:@selector(handleBackgroundTapped:)
              forControlEvents:UIControlEventTouchUpInside];
 
-    UISwipeGestureRecognizer *swipeRightGesture =
-        [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                  action:@selector(handleBackgroundSwipedRight:)];
-    [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionRight];
-    [_containerView addGestureRecognizer:swipeRightGesture];
+    if (MDCSnackbarMessage.usesLegacySnackbar) {
+      UISwipeGestureRecognizer *swipeRightGesture =
+          [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                    action:@selector(handleBackgroundSwipedRight:)];
+      [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionRight];
+      [_containerView addGestureRecognizer:swipeRightGesture];
 
-    UISwipeGestureRecognizer *swipeLeftGesture =
-        [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                  action:@selector(handleBackgroundSwipedLeft:)];
-    [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [_containerView addGestureRecognizer:swipeLeftGesture];
+      UISwipeGestureRecognizer *swipeLeftGesture =
+          [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                    action:@selector(handleBackgroundSwipedLeft:)];
+      [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
+      [_containerView addGestureRecognizer:swipeLeftGesture];
+    }
 
     _contentView = [[UIView alloc] init];
     [_contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -795,7 +809,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
   // As our layout changes, make sure that the shadow path is kept up-to-date.
   UIBezierPath *path =
-      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:kCornerRadius];
+      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:
+          MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius];
   self.layer.shadowPath = path.CGPath;
 }
 
@@ -812,9 +827,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
   height += self.safeContentMargin.top + self.safeContentMargin.bottom;
 
   // Make sure that the height of the image and text is larger than the minimum height;
-  height = MAX(kMinimumHeight, height);
-
   height = MAX(kMinimumHeight, height) + self.contentSafeBottomInset;
+
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
@@ -822,7 +836,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   // If a bottom offset has been set to raise the HUD, e.g. above a tab bar, we should ignore
   // any safeAreaInsets, since it is no longer 'anchored' to the bottom of the screen. This is set
   // by the MDCSnackbarOverlayView whenever the bottomOffset is non-zero.
-  if (!self.anchoredToScreenEdge) {
+  if (!self.anchoredToScreenEdge || !MDCSnackbarMessage.usesLegacySnackbar) {
     return 0;
   }
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
@@ -857,7 +871,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
   translationAnimation.toValue = [NSNumber numberWithDouble:-self.frame.size.width];
-  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.duration = MDCSnackbarLegacyTransitionDuration;
   translationAnimation.timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
   translationAnimation.delegate = self;
@@ -870,7 +884,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
   translationAnimation.toValue = [NSNumber numberWithDouble:self.frame.size.width];
-  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.duration = MDCSnackbarLegacyTransitionDuration;
   translationAnimation.timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
   translationAnimation.delegate = self;
@@ -927,7 +941,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
                          duration:(NSTimeInterval)duration
                    timingFunction:(CAMediaTimingFunction *)timingFunction {
   [CATransaction begin];
-
   CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
   opacityAnimation.duration = duration;
   opacityAnimation.fromValue = @(fromOpacity);
@@ -939,8 +952,23 @@ static const CGFloat kButtonInkRadius = 64.0f;
   // complicated, refactor to add a containing view for both and animate that.
   [self.contentView.layer addAnimation:opacityAnimation forKey:@"opacity"];
   [self.buttonView.layer addAnimation:opacityAnimation forKey:@"opacity"];
-
   [CATransaction commit];
+}
+
+- (CABasicAnimation *)animateSnackbarOpacityFrom:(CGFloat)fromOpacity
+                                              to:(CGFloat)toOpacity {
+  CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+  opacityAnimation.fromValue = @(fromOpacity);
+  opacityAnimation.toValue = @(toOpacity);
+  return opacityAnimation;
+}
+
+- (CABasicAnimation *)animateSnackbarScaleFrom:(CGFloat)fromScale
+                                       toScale:(CGFloat)toScale {
+  CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+  scaleAnimation.fromValue = [NSNumber numberWithDouble:fromScale];
+  scaleAnimation.toValue = [NSNumber numberWithDouble:toScale];
+  return scaleAnimation;
 }
 
 #pragma mark - Resource bundle

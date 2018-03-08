@@ -67,6 +67,10 @@ static NSString * const kCellIdentifier = @"Cell";
   return YES;
 }
 
++ (BOOL)catalogIsDebug {
+  return NO;
+}
+
 @end
 
 @implementation SnackbarOverlayViewExample (CatalogByConvention)

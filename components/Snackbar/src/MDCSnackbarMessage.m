@@ -32,7 +32,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
 @end
 
 @implementation MDCSnackbarMessage
-
+static BOOL _usesLegacySnackbar = YES;
 @synthesize accessibilityIdentifier;
 @dynamic text;
 
@@ -145,6 +145,14 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
       completion();
     }
   });
+}
+
++ (void)setUsesLegacySnackbar:(BOOL)usesLegacySnackbar {
+  _usesLegacySnackbar = usesLegacySnackbar;
+}
+
++ (BOOL)usesLegacySnackbar {
+  return _usesLegacySnackbar;
 }
 
 @end
