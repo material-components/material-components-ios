@@ -103,8 +103,10 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
 
     // Customize the transition
     transitionController.sourceView = fab
-    transitionController.calculateFrameOfPresentedView = target.calculateFrame
-    vc.modalPresentationStyle = .custom
+    if target.calculateFrame != nil {
+      transitionController.calculateFrameOfPresentedView = target.calculateFrame
+      vc.modalPresentationStyle = .custom
+    }
     vc.transitioningDelegate = transitionController
 
     showDetailViewController(vc, sender: self)
