@@ -21,4 +21,5 @@
 
 FOUNDATION_EXPORT
 MDCMaskedTransitionMotionSpecContext
-    MDCMaskedTransitionMotionSpecForContext(id<MDMTransitionContext> context);
+    MDCMaskedTransitionMotionSpecForContext(UIView *containerView,
+                                            UIViewController *presentedViewController);

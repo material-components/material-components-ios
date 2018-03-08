@@ -21,9 +21,9 @@
 
 #import <MotionAnimator/MotionAnimator.h>
 
-#import "private/MDCMaskedPresentationController.h"
-#import "private/MDCMaskedTransitionMotionForContext.h"
-#import "private/MDCMaskedTransitionMotionSpec.h"
+#import "MDCMaskedPresentationController.h"
+#import "MDCMaskedTransitionMotionForContext.h"
+#import "MDCMaskedTransitionMotionSpec.h"
 
 // Math utilities
 
@@ -46,83 +46,117 @@ static inline CGFloat LengthOfVector(CGVector vector) {
   return (CGFloat)hypot(vector.dx, vector.dy);
 }
 
-@interface MDCMaskedTransition () <MDMTransitionWithPresentation, MDMTransitionWithFeasibility>
-@end
+// TODO: Pull this out to MotionTransitioning.
+static NSArray <UIViewController *> *
+PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transitionContext,
+                             MDMTransitionDirection direction) {
+  UIViewController *from =
+      [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
+  if (fromView == nil) {
+    fromView = from.view;
+  }
+  if (fromView != nil && fromView == from.view) {
+    CGRect finalFrame = [transitionContext finalFrameForViewController:from];
+    if (!CGRectIsEmpty(finalFrame)) {
+      fromView.frame = finalFrame;
+    }
+  }
+
+  UIViewController *to =
+      [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
+  if (toView == nil) {
+    toView = to.view;
+  }
+  if (toView != nil && toView == to.view) {
+    CGRect finalFrame = [transitionContext finalFrameForViewController:to];
+    if (!CGRectIsEmpty(finalFrame)) {
+      toView.frame = finalFrame;
+    }
+
+    if (toView.superview == nil) {
+      switch (direction) {
+        case MDMTransitionDirectionForward:
+          [transitionContext.containerView addSubview:toView];
+          break;
+
+        case MDMTransitionDirectionBackward:
+          [transitionContext.containerView insertSubview:toView atIndex:0];
+          break;
+      }
+    }
+  }
+
+  [toView layoutIfNeeded];
+
+  if (direction == MDMTransitionDirectionForward) {
+    return @[from, to];
+  } else {
+    return @[to, from];
+  }
+}
 
 @implementation MDCMaskedTransition {
   UIView *_sourceView;
-  BOOL _shouldSlideWhenCollapsed;
+  MDMTransitionDirection _direction;
 }
 
-- (instancetype)initWithSourceView:(UIView *)sourceView {
+- (instancetype)initWithSourceView:(UIView *)sourceView
+                         direction:(MDMTransitionDirection)direction {
   self = [super init];
   if (self) {
     _sourceView = sourceView;
+    _direction = direction;
   }
   return self;
 }
 
-- (BOOL)canPerformTransitionWithContext:(__unused id<MDMTransitionContext>)context {
-  return _shouldSlideWhenCollapsed ? NO : YES;
+#pragma mark - UIViewControllerAnimatedTransitioning
+
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+  return 0.375;
 }
 
-#pragma mark - MDMTransitionWithPresentation
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+  NSArray<UIViewController *> *viewControllers = PrepareTransitionWithContext(transitionContext,
+                                                                              _direction);
+  UIViewController *foreViewController = viewControllers[1];
 
-- (UIModalPresentationStyle)defaultModalPresentationStyle {
-  return UIModalPresentationCustom;
-}
-
-- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented
-                                                      presentingViewController:(UIViewController *)presenting
-                                                          sourceViewController:(__unused UIViewController *)source {
-  MDCMaskedPresentationController *presentationController =
-      [[MDCMaskedPresentationController alloc] initWithPresentedViewController:presented
-                                                      presentingViewController:presenting
-                                                 calculateFrameOfPresentedView:_calculateFrameOfPresentedView];
-  presentationController.sourceView = _sourceView;
-  return presentationController;
-}
-
-- (void)startWithContext:(NSObject<MDMTransitionContext> *)context {
-  MDCMaskedTransitionMotionSpecContext spec = MDCMaskedTransitionMotionSpecForContext(context);
-  if (context.direction == MDMTransitionDirectionForward) {
-    _shouldSlideWhenCollapsed = spec.shouldSlideWhenCollapsed;
-  }
-
-  MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
-  animator.shouldReverseValues = context.direction == MDMTransitionDirectionBackward;
+  MDCMaskedTransitionMotionSpecContext spec =
+      MDCMaskedTransitionMotionSpecForContext(transitionContext.containerView, foreViewController);
 
   // Cache original state.
   // We're going to reparent the fore view, so keep this information for later.
-  UIView *originalSuperview = context.foreViewController.view.superview;
-  const CGRect originalFrame = context.foreViewController.view.frame;
+  UIView *originalSuperview = foreViewController.view.superview;
+  const CGRect originalFrame = foreViewController.view.frame;
   UIView *originalSourceSuperview = _sourceView.superview;
   const CGRect originalSourceFrame = _sourceView.frame;
   UIColor *originalSourceBackgroundColor = _sourceView.backgroundColor;
 
   // Reparent the fore view into a masked view.
-  UIView *maskedView = [[UIView alloc] initWithFrame:context.foreViewController.view.frame];
+  UIView *maskedView = [[UIView alloc] initWithFrame:foreViewController.view.frame];
   {
-    CGRect reparentedFrame = context.foreViewController.view.frame;
+    CGRect reparentedFrame = foreViewController.view.frame;
     reparentedFrame.origin = CGPointZero;
-    context.foreViewController.view.frame = reparentedFrame;
+    foreViewController.view.frame = reparentedFrame;
 
-    maskedView.layer.cornerRadius = context.foreViewController.view.layer.cornerRadius;
-    maskedView.clipsToBounds = context.foreViewController.view.clipsToBounds;
+    maskedView.layer.cornerRadius = foreViewController.view.layer.cornerRadius;
+    maskedView.clipsToBounds = foreViewController.view.clipsToBounds;
   }
-  [context.containerView addSubview:maskedView];
+  [transitionContext.containerView addSubview:maskedView];
 
-  UIView *floodFillView = [[UIView alloc] initWithFrame:context.foreViewController.view.bounds];
+  UIView *floodFillView = [[UIView alloc] initWithFrame:foreViewController.view.bounds];
   floodFillView.backgroundColor = _sourceView.backgroundColor;
 
   // TODO(featherless): Profile whether it's more performant to fade the flood fill out or to
   // fade the fore view in (what we're currently doing).
   [maskedView addSubview:floodFillView];
-  [maskedView addSubview:context.foreViewController.view];
+  [maskedView addSubview:foreViewController.view];
 
   // All frames are assumed to be relative to the container view unless named otherwise.
   const CGRect initialSourceFrame = [_sourceView convertRect:_sourceView.bounds
-                                                      toView:context.containerView];
+                                                      toView:transitionContext.containerView];
   const CGRect finalMaskedFrame = originalFrame;
   CGRect initialMaskedFrame;
   CGPoint corner;
@@ -133,7 +167,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     corner = CGPointMake(CGRectGetMaxX(initialMaskedFrame), CGRectGetMaxY(initialMaskedFrame));
 
   } else {
-    initialMaskedFrame = CGRectMake(CGRectGetMinX(context.containerView.bounds),
+    initialMaskedFrame = CGRectMake(CGRectGetMinX(transitionContext.containerView.bounds),
                                     CGRectGetMinY(initialSourceFrame) - 20,
                                     CGRectGetWidth(originalFrame),
                                     CGRectGetHeight(originalFrame));
@@ -148,7 +182,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 
   maskedView.frame = initialMaskedFrame;
   const CGRect initialSourceFrameInMask = [maskedView convertRect:initialSourceFrame
-                                                         fromView:context.containerView];
+                                                         fromView:transitionContext.containerView];
 
   const CGFloat initialRadius = CGRectGetWidth(_sourceView.bounds) / 2;
   const CGFloat finalRadius = LengthOfVector(CGVectorMake(initialSourceCenter.x - corner.x,
@@ -171,8 +205,8 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
-    context.foreViewController.view.frame = originalFrame;
-    [originalSuperview addSubview:context.foreViewController.view];
+    foreViewController.view.frame = originalFrame;
+    [originalSuperview addSubview:foreViewController.view];
 
     self->_sourceView.frame = originalSourceFrame;
     self->_sourceView.backgroundColor = originalSourceBackgroundColor;
@@ -180,10 +214,15 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 
     [maskedView removeFromSuperview];
 
-    [context transitionDidEnd]; // Hand off back to UIKit
+    [transitionContext completeTransition:YES]; // Hand off back to UIKit
   }];
 
-  MDCMaskedTransitionMotionTiming motion = (context.direction == MDMTransitionDirectionForward) ? spec.expansion : spec.collapse;
+  MDCMaskedTransitionMotionTiming motion = ((_direction == MDMTransitionDirectionForward)
+                                            ? spec.expansion
+                                            : spec.collapse);
+
+  MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
+  animator.shouldReverseValues = _direction == MDMTransitionDirectionBackward;
 
   [animator animateWithTiming:motion.iconFade
                       toLayer:_sourceView.layer
@@ -191,7 +230,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
                       keyPath:MDMKeyPathOpacity];
 
   [animator animateWithTiming:motion.contentFade
-                      toLayer:context.foreViewController.view.layer
+                      toLayer:foreViewController.view.layer
                    withValues:@[ @0, @1 ]
                       keyPath:MDMKeyPathOpacity];
 
@@ -202,7 +241,7 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     if (!initialColor) {
       initialColor = [UIColor clearColor];
     }
-    UIColor *finalColor = context.foreViewController.view.backgroundColor;
+    UIColor *finalColor = foreViewController.view.backgroundColor;
     if (!finalColor) {
       finalColor = [UIColor whiteColor];
     }
@@ -214,12 +253,12 @@ static inline CGFloat LengthOfVector(CGVector vector) {
 
   {
     void (^completion)(void) = nil;
-    if (context.direction == MDMTransitionDirectionForward) {
+    if (_direction == MDMTransitionDirectionForward) {
       completion = ^{
         // Upon completion of the animation we want all of the content to be visible, so we jump
         // to a full bounds mask.
         shapeLayer.transform = CATransform3DIdentity;
-        shapeLayer.path = [[UIBezierPath bezierPathWithRect:context.foreViewController.view.bounds]
+        shapeLayer.path = [[UIBezierPath bezierPathWithRect:foreViewController.view.bounds]
                            CGPath];
       };
     }

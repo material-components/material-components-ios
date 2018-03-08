@@ -19,12 +19,13 @@
 #import "MDCMaskedTransitionMotionForContext.h"
 
 MDCMaskedTransitionMotionSpecContext
-    MDCMaskedTransitionMotionSpecForContext(id<MDMTransitionContext> context) {
-  const CGRect foreBounds = context.foreViewController.view.bounds;
-  const CGRect foreFrame = context.foreViewController.view.frame;
-  const CGRect containerBounds = context.containerView.bounds;
+MDCMaskedTransitionMotionSpecForContext(UIView *containerView,
+                                        UIViewController *presentedViewController) {
+  const CGRect foreBounds = presentedViewController.view.bounds;
+  const CGRect foreFrame = presentedViewController.view.frame;
+  const CGRect containerBounds = containerView.bounds;
 
-  if (CGRectEqualToRect(context.foreViewController.view.frame, containerBounds)) {
+  if (CGRectEqualToRect(presentedViewController.view.frame, containerBounds)) {
     return MDCMaskedTransitionMotionSpec.fullscreen;
 
   } else if (foreBounds.size.width == containerBounds.size.width
