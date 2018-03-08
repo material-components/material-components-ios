@@ -243,7 +243,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                                    left: Constants.inset + view.safeAreaInsets.left,
                                    bottom: Constants.inset,
                                    right: Constants.inset + view.safeAreaInsets.right)
-    titleLabel.superview!.removeConstraints(titleLabel.superview!.constraints)
+
+    // Remove the leading, trailing, bottom constraints
+    titleLabel.superview!.constraints.forEach({ $0.isActive = false })
+    // Remove the height constraint
+    titleLabel.constraints.forEach({ $0.isActive = false })
     constrainLabel(label: titleLabel,
                    containerView: titleLabel.superview!,
                    insets: titleInsets,
