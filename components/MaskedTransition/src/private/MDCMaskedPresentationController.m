@@ -70,9 +70,8 @@
     [self.containerView addSubview:self.scrimView];
   }
 
-  NSArray *viewControllers = @[self.presentingViewController, self.presentedViewController];
   MDCMaskedTransitionMotionSpecContext spec =
-      MDCMaskedTransitionMotionSpecForContext(self.containerView, viewControllers[1]);
+      MDCMaskedTransitionMotionSpecForContext(self.containerView, self.presentedViewController);
 
   MDCMaskedTransitionMotionTiming motion = spec.expansion;
 
@@ -84,9 +83,8 @@
 }
 
 - (void)dismissalTransitionWillBegin {
-  NSArray *viewControllers = @[self.presentingViewController, self.presentedViewController];
   MDCMaskedTransitionMotionSpecContext spec =
-      MDCMaskedTransitionMotionSpecForContext(self.containerView, viewControllers[1]);
+      MDCMaskedTransitionMotionSpecForContext(self.containerView, self.presentedViewController);
   if (spec.shouldSlideWhenCollapsed) {
     // Immediately reveal the source view because our presented view controller isn't collapsing
     // back to it.
