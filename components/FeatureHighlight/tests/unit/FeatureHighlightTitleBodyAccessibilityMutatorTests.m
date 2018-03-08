@@ -87,5 +87,4 @@ static NSArray<UIColor *> *testColors(){
   XCTAssertNotEqualObjects(highlightView.bodyColor, [UIColor blackColor], @"");
 }
 
-
 @end
