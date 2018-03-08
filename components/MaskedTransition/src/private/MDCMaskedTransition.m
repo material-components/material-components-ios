@@ -121,38 +121,39 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   NSArray<UIViewController *> *viewControllers = PrepareTransitionWithContext(transitionContext,
                                                                               _direction);
-  UIViewController *foreViewController = viewControllers[1];
+  UIViewController *presentedViewController = viewControllers[1];
 
   MDCMaskedTransitionMotionSpecContext spec =
-      MDCMaskedTransitionMotionSpecForContext(transitionContext.containerView, foreViewController);
+      MDCMaskedTransitionMotionSpecForContext(transitionContext.containerView,
+                                              presentedViewController);
 
   // Cache original state.
   // We're going to reparent the fore view, so keep this information for later.
-  UIView *originalSuperview = foreViewController.view.superview;
-  const CGRect originalFrame = foreViewController.view.frame;
+  UIView *originalSuperview = presentedViewController.view.superview;
+  const CGRect originalFrame = presentedViewController.view.frame;
   UIView *originalSourceSuperview = _sourceView.superview;
   const CGRect originalSourceFrame = _sourceView.frame;
   UIColor *originalSourceBackgroundColor = _sourceView.backgroundColor;
 
   // Reparent the fore view into a masked view.
-  UIView *maskedView = [[UIView alloc] initWithFrame:foreViewController.view.frame];
+  UIView *maskedView = [[UIView alloc] initWithFrame:presentedViewController.view.frame];
   {
-    CGRect reparentedFrame = foreViewController.view.frame;
+    CGRect reparentedFrame = presentedViewController.view.frame;
     reparentedFrame.origin = CGPointZero;
-    foreViewController.view.frame = reparentedFrame;
+    presentedViewController.view.frame = reparentedFrame;
 
-    maskedView.layer.cornerRadius = foreViewController.view.layer.cornerRadius;
-    maskedView.clipsToBounds = foreViewController.view.clipsToBounds;
+    maskedView.layer.cornerRadius = presentedViewController.view.layer.cornerRadius;
+    maskedView.clipsToBounds = presentedViewController.view.clipsToBounds;
   }
   [transitionContext.containerView addSubview:maskedView];
 
-  UIView *floodFillView = [[UIView alloc] initWithFrame:foreViewController.view.bounds];
+  UIView *floodFillView = [[UIView alloc] initWithFrame:presentedViewController.view.bounds];
   floodFillView.backgroundColor = _sourceView.backgroundColor;
 
   // TODO(featherless): Profile whether it's more performant to fade the flood fill out or to
   // fade the fore view in (what we're currently doing).
   [maskedView addSubview:floodFillView];
-  [maskedView addSubview:foreViewController.view];
+  [maskedView addSubview:presentedViewController.view];
 
   // All frames are assumed to be relative to the container view unless named otherwise.
   const CGRect initialSourceFrame = [_sourceView convertRect:_sourceView.bounds
@@ -205,8 +206,8 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
 
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
-    foreViewController.view.frame = originalFrame;
-    [originalSuperview addSubview:foreViewController.view];
+    presentedViewController.view.frame = originalFrame;
+    [originalSuperview addSubview:presentedViewController.view];
 
     self->_sourceView.frame = originalSourceFrame;
     self->_sourceView.backgroundColor = originalSourceBackgroundColor;
@@ -230,7 +231,7 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
                       keyPath:MDMKeyPathOpacity];
 
   [animator animateWithTiming:motion.contentFade
-                      toLayer:foreViewController.view.layer
+                      toLayer:presentedViewController.view.layer
                    withValues:@[ @0, @1 ]
                       keyPath:MDMKeyPathOpacity];
 
@@ -241,7 +242,7 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
     if (!initialColor) {
       initialColor = [UIColor clearColor];
     }
-    UIColor *finalColor = foreViewController.view.backgroundColor;
+    UIColor *finalColor = presentedViewController.view.backgroundColor;
     if (!finalColor) {
       finalColor = [UIColor whiteColor];
     }
@@ -258,7 +259,7 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
         // Upon completion of the animation we want all of the content to be visible, so we jump
         // to a full bounds mask.
         shapeLayer.transform = CATransform3DIdentity;
-        shapeLayer.path = [[UIBezierPath bezierPathWithRect:foreViewController.view.bounds]
+        shapeLayer.path = [[UIBezierPath bezierPathWithRect:presentedViewController.view.bounds]
                            CGPath];
       };
     }
