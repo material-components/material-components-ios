@@ -511,8 +511,16 @@ static const CGFloat kMaximumHeight = 80.0f;
 
   [CATransaction commit];
 
+  // To support the MDCOverlayObserver seeing frame changes, we need to update the frame of the
+  // new snackbar for the observer, as now it doesn't change frame but rather change opacity.
+  // In future we should add support for opacity to our MDCOverlayObserver and not only frame.
+  CGRect snackbarRect = [self snackbarRectInScreenCoordinates];
+  if (!MDCSnackbarMessage.usesLegacySnackbar && !onscreen) {
+    snackbarRect.origin.y = self.bounds.size.height - [self dynamicBottomMargin];
+  }
+
   // Notify the overlay system.
-  [self notifyOverlayChangeWithFrame:[self snackbarRectInScreenCoordinates]
+  [self notifyOverlayChangeWithFrame:snackbarRect
                             duration:duration
                                curve:0
                       timingFunction:timingFunction];

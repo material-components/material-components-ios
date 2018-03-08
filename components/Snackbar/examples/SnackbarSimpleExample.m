@@ -36,10 +36,10 @@
   self.title = @"Snackbar";
   _legacyMode = YES;
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
-                                   style:UIBarButtonItemStylePlain
-                                  target:self
-                                  action:@selector(toggleModes)];
+      [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(toggleModes)];
 }
 
 - (void)toggleModes {
