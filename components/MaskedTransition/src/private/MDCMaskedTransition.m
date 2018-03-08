@@ -87,8 +87,6 @@ PrepareTransitionWithContext(id<UIViewControllerContextTransitioning> transition
       }
     }
   }
-
-  [toView layoutIfNeeded];
 }
 
 // TODO: Pull this out to MotionTransitioning.
