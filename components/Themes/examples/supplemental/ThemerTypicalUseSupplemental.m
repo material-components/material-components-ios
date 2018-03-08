@@ -22,6 +22,7 @@
 #import "ThemerTypicalUseSupplemental.h"
 
 #import "MaterialDialogs.h"
+#import "MDCFeatureHighlightAccessibilityMutator.h"
 
 @implementation ThemerTypicalUseViewController (Supplemental)
 
@@ -150,7 +151,15 @@
   MDCFeatureHighlightViewController *featureHighlightController =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.featureButton
                                                               completion:nil];
-  featureHighlightController.titleText = titleText;
+  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateBodyColorForFeatureHighlightViewController:featureHighlightController
+                          withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateTitleColorForFeatureHighlightViewController:featureHighlightController
+                           withTextAccessibilityOptions:options];
+
+ featureHighlightController.titleText = titleText;
   featureHighlightController.bodyText = bodyText;
   [self presentViewController:featureHighlightController animated:YES completion:nil];
 }

@@ -15,6 +15,7 @@
  */
 
 #import "MaterialFeatureHighlight.h"
+#import "MDCFeatureHighlightAccessibilityMutator.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightTypicalUseViewController
@@ -22,6 +23,14 @@
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
+  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateBodyColorForFeatureHighlightViewController:vc
+                          withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateTitleColorForFeatureHighlightViewController:vc
+                           withTextAccessibilityOptions:options];
+
   vc.mdc_adjustsFontForContentSizeCategory = YES;
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";

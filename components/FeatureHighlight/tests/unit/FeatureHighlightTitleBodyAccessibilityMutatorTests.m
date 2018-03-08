@@ -25,16 +25,25 @@ static NSArray<UIColor *> *testColors(){
            [UIColor greenColor], [UIColor blueColor], [UIColor grayColor]];
 }
 
-@interface FeatureHighlightTitleBodyAccessibilityMutatorTests : XCTestCase
 
+@interface FeatureHighlightTitleBodyAccessibilityMutatorTests : XCTestCase
+@property (nonatomic, strong) UIView *highlightedView;
+@property (nonatomic, strong) UIView *showView;
 @end
 
 @implementation FeatureHighlightTitleBodyAccessibilityMutatorTests
 
+- (void)setUp {
+  self.showView = [[UIView alloc] init];
+  self.highlightedView = [[UIView alloc] init];
+  [self.showView addSubview:self.highlightedView];
+}
+
 - (void)testMutatorChangesTextColor {
   for (UIColor *color in testColors()) {
     MDCFeatureHighlightViewController *hfvc =
-        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_highlightedView
+                                                               andShowView:_showView
                                                                 completion:nil];
     MDCFeatureHighlightView *hfv = (MDCFeatureHighlightView *)hfvc.view;
 
@@ -61,7 +70,8 @@ static NSArray<UIColor *> *testColors(){
   NSDictionary* colors = @{ [UIColor redColor]: [UIColor blackColor]};
   for (UIColor *color in colors) {
     MDCFeatureHighlightViewController *hfvc =
-        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_highlightedView
+                                                               andShowView:_showView
                                                                 completion:nil];
     MDCFeatureHighlightView *hfv = (MDCFeatureHighlightView *)hfvc.view;
 
@@ -85,7 +95,8 @@ static NSArray<UIColor *> *testColors(){
 
 - (void)testMutatorSelectsTheRightColorWhenThereIsNoColorSet {
   MDCFeatureHighlightViewController *hfvc =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_highlightedView
+                                                             andShowView:_showView
                                                               completion:nil];
   MDCFeatureHighlightView *hfv = (MDCFeatureHighlightView *)hfvc.view;
 

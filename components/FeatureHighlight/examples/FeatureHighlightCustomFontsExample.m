@@ -17,6 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight.h"
 #import "MaterialTypography.h"
+#import "MDCFeatureHighlightAccessibilityMutator.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightCustomFontsExample
@@ -58,6 +59,14 @@
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                               completion:nil];
+  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+  [MDCFeatureHighlightAccessibilityMutator
+       mutateBodyColorForFeatureHighlightViewController:vc
+                           withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateTitleColorForFeatureHighlightViewController:vc
+                           withTextAccessibilityOptions:options];
+
 
   vc.titleText = @"Feature Highlight can use custom fonts";
   vc.bodyText = @"The title and body font can be set individually.";

@@ -16,6 +16,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight.h"
+#import "MDCFeatureHighlightAccessibilityMutator.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightShownViewExample
@@ -36,7 +37,13 @@
                                                                   [self fabDidTap:fab];
                                                                 }
                                                               }];
-
+  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateBodyColorForFeatureHighlightViewController:vc
+                          withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateTitleColorForFeatureHighlightViewController:vc
+                           withTextAccessibilityOptions:options];
   vc.titleText = @"Shown views can be interactive";
   vc.bodyText = @"The shown button has custom tap animations.";
   [self presentViewController:vc animated:YES completion:nil];
