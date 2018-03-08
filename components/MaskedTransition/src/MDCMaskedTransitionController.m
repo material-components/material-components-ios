@@ -39,11 +39,17 @@
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
                                                                   presentingController:(UIViewController *)presenting
                                                                       sourceController:(UIViewController *)source {
+  if (_sourceView == nil) {
+    return nil;
+  }
   return [[MDCMaskedTransition alloc] initWithSourceView:_sourceView
                                                direction:MDMTransitionDirectionForward];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+  if (_sourceView == nil) {
+    return nil;
+  }
   MDCMaskedTransitionMotionSpecContext spec =
       MDCMaskedTransitionMotionSpecForContext(dismissed.presentingViewController.view.superview,
                                               dismissed);
