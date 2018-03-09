@@ -23,7 +23,7 @@
 
 @implementation MDCTabBarCodingTests
 
-- (void)testCardEncoding {
+- (void)testEncoding {
   MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"item1" image:nil tag:1];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"item2" image:nil tag:2];
