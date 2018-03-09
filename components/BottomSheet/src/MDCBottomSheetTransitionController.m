@@ -20,9 +20,6 @@
 
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
-@interface MDCBottomSheetTransitionController () <UIViewControllerAnimatedTransitioning>
-@end
-
 @implementation MDCBottomSheetTransitionController
 
 #pragma mark - UIViewControllerTransitioningDelegate
