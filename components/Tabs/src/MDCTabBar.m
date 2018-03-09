@@ -317,14 +317,16 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setUnselectedItemTitleFont:(UIFont *)unselectedItemTitleFont {
-  if (![unselectedItemTitleFont isEqual:_unselectedItemTitleFont]) {
+  if ((unselectedItemTitleFont != _unselectedItemTitleFont) &&
+      ![unselectedItemTitleFont isEqual:_unselectedItemTitleFont]) {
     _unselectedItemTitleFont = unselectedItemTitleFont;
     [self updateItemBarStyle];
   }
 }
 
 - (void)setSelectedItemTitleFont:(UIFont *)selectedItemTitleFont {
-  if (![selectedItemTitleFont isEqual:_selectedItemTitleFont]) {
+  if ((selectedItemTitleFont != _selectedItemTitleFont) &&
+      ![selectedItemTitleFont isEqual:_selectedItemTitleFont]) {
     _selectedItemTitleFont = selectedItemTitleFont;
     [self updateItemBarStyle];
   }
