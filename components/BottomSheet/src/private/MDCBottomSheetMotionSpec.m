@@ -18,6 +18,10 @@
 
 @implementation MDCBottomSheetMotionSpec
 
++ (NSTimeInterval)transitionDuration {
+  return 0.250;
+}
+
 + (MDMAnimationTraits *)onDragRelease {
   return MDMAnimationTraits.systemModalMovement;
 }

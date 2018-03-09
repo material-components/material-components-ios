@@ -17,8 +17,7 @@
 #import "MDCBottomSheetTransitionController.h"
 
 #import "MDCBottomSheetPresentationController.h"
-
-static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
+#import "private/MDCBottomSheetMotionSpec.h"
 
 @implementation MDCBottomSheetTransitionController
 
@@ -51,7 +50,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
 - (NSTimeInterval)transitionDuration:
     (nullable __unused id <UIViewControllerContextTransitioning>)transitionContext {
-  return MDCBottomSheetTransitionDuration;
+  return MDCBottomSheetMotionSpec.transitionDuration;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {

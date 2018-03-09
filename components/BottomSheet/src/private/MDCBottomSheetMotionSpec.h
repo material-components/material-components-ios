@@ -20,6 +20,8 @@
 
 @interface MDCBottomSheetMotionSpec: NSObject
 
++ (NSTimeInterval)transitionDuration;
+
 + (MDMAnimationTraits *)onDragRelease;
 
 // This object is not meant to be instantiated.
