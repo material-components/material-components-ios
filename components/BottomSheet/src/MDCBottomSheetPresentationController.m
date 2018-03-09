@@ -19,7 +19,9 @@
 #import "MDCBottomSheetController.h"
 
 #import "MaterialMath.h"
+#import "private/MDCBottomSheetMotionSpec.h"
 #import "private/MDCSheetContainerView.h"
+#import <MotionAnimator/MotionAnimator.h>
 
 static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) {
   UIScrollView *scrollView = nil;
@@ -120,6 +122,9 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self->_dimmingView.alpha = 1.0;
       }                                  completion:nil];
+
+  _sheetView.sheetState = MDCSheetStateClosed;
+  [_sheetView animateToSheetState:MDCSheetStatePreferred];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -136,6 +141,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self->_dimmingView.alpha = 0.0;
       }                                  completion:nil];
+
+  [_sheetView animateToSheetState:MDCSheetStateClosed];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
@@ -184,7 +191,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 #pragma mark - MDCSheetContainerViewDelegate
 
-- (void)sheetContainerViewDidHide:(nonnull __unused MDCSheetContainerView *)containerView {
+- (void)sheetContainerViewWillHide:(MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
