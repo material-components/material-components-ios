@@ -20,6 +20,9 @@
 
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
+@interface MDCBottomSheetTransitionController () <UIViewControllerAnimatedTransitioning>
+@end
+
 @implementation MDCBottomSheetTransitionController
 
 #pragma mark - UIViewControllerTransitioningDelegate
@@ -55,65 +58,24 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
-  // If a view in the transitionContext is nil, it likely hasn't been loaded by its ViewController
-  // yet.  Ask for it directly to initiate a loadView on the ViewController.
-  UIViewController *fromViewController =
-      [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-  UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
-  if (fromView == nil) {
-    fromView = fromViewController.view;
-  }
+  // We're only implementing UIViewControllerAnimatedTransitioning so that we can customize the
+  // transition's duration - all of the actual animation logic happens in
+  // MDCBottomSheetPresentationController (which can't customize the duration). In order to make
+  // UIKit believe that we're actually animating something, we create a temporary bogus view and
+  // animate it for the desired duration. This ensures that UIKit's default animations animate
+  // alongside our bogus animation (and therefor the corresponding duration).
 
-  UIViewController *toViewController =
-  [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-      UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
-  if (toView == nil) {
-    toView = toViewController.view;
-  }
+  UIView *bogusView = [[UIView alloc] init];
+  [transitionContext.containerView addSubview:bogusView];
 
-  UIViewController *toPresentingViewController = toViewController.presentingViewController;
-  BOOL presenting = (toPresentingViewController == fromViewController) ? YES : NO;
+  [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+    bogusView.alpha = 0;
 
-  UIViewController *animatingViewController = presenting ? toViewController : fromViewController;
-  UIView *animatingView = presenting ? toView : fromView;
+  } completion:^(BOOL finished) {
+    [bogusView removeFromSuperview];
 
-  UIView *containerView = transitionContext.containerView;
-
-  if (presenting) {
-    [containerView addSubview:toView];
-  }
-
-  CGRect onscreenFrame = [self frameOfPresentedViewController:animatingViewController
-                                              inContainerView:containerView];
-  CGRect offscreenFrame = CGRectOffset(onscreenFrame, 0, containerView.frame.size.height);
-
-  CGRect initialFrame = presenting ? offscreenFrame : onscreenFrame;
-  CGRect finalFrame = presenting ? onscreenFrame : offscreenFrame;
-
-  animatingView.frame = initialFrame;
-
-  NSTimeInterval transitionDuration = [self transitionDuration:transitionContext];
-  UIViewAnimationOptions options =
-      UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
-
-  [UIView animateWithDuration:transitionDuration
-                        delay:0.0
-                      options:options
-                   animations:^{
-                     animatingView.frame = finalFrame;
-                   }
-                   completion:^(__unused BOOL finished) {
-                     // If we're dismissing, remove the presented view from the hierarchy
-                     if (!presenting) {
-                       [fromView removeFromSuperview];
-                     }
-
-                     // From ADC : UIViewControllerContextTransitioning
-                     // When you do create transition animations, always call the
-                     // completeTransition: from an appropriate completion block to let UIKit know
-                     // when all of your animations have finished.
-                     [transitionContext completeTransition:YES];
-                   }];
+    [transitionContext completeTransition:YES];
+  }];
 }
 
 - (CGRect)frameOfPresentedViewController:(UIViewController *)presentedViewController
