@@ -138,9 +138,6 @@ static NSString *s_secondaryColorString;
 
 - (void)updateSchemeWithPrimaryColorString:(NSString *)primaryString
                       secondaryColorString:(NSString *)secondaryString {
-  UIColor *primaryColor = self.primaryColorPreView.backgroundColor;
-  UIColor *secondaryColor = self.secondaryColorPreView.backgroundColor;
-
   // Primary color
   unsigned int redInt, greenInt, blueInt;
 
@@ -153,10 +150,10 @@ static NSString *s_secondaryColorString;
     return;
   }
 
-  primaryColor = [UIColor colorWithRed:redInt / 255.0f
-                                 green:greenInt / 255.0f
-                                  blue:blueInt / 255.0f
-                                 alpha:1.0f];
+  UIColor *primaryColor = [UIColor colorWithRed:redInt / 255.0f
+                                          green:greenInt / 255.0f
+                                           blue:blueInt / 255.0f
+                                          alpha:1.0f];
   s_primaryColorString = primaryString;
   self.primaryColorPreView.backgroundColor = primaryColor;
 
@@ -170,10 +167,10 @@ static NSString *s_secondaryColorString;
     return;
   }
 
-  secondaryColor = [UIColor colorWithRed:redInt / 255.0f
-                                   green:greenInt / 255.0f
-                                    blue:blueInt / 255.0f
-                                   alpha:1.0f];
+  UIColor *secondaryColor = [UIColor colorWithRed:redInt / 255.0f
+                                            green:greenInt / 255.0f
+                                             blue:blueInt / 255.0f
+                                            alpha:1.0f];
   s_secondaryColorString = secondaryString;
   self.secondaryColorPreView.backgroundColor = secondaryColor;
 
