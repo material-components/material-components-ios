@@ -18,3 +18,4 @@
 #import "MDCFontScheme.h"
 #import "MDCTonalColorScheme.h"
 #import "MDCTonalPalette.h"
+#import "MDCExperimentalColorScheme.h"

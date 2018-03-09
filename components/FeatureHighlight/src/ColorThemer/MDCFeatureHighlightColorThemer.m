@@ -24,4 +24,11 @@
   featureHighlightView.outerHighlightColor = colorScheme.primaryColor;
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView {
+  featureHighlightView.innerHighlightColor = colorScheme.backgroundColor;
+  featureHighlightView.outerHighlightColor = colorScheme.primaryColor;
+  featureHighlightView.titleColor = colorScheme.textColor;
+  featureHighlightView.bodyColor = colorScheme.textColor;
+}
+
 @end

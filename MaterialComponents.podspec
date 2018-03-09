@@ -105,6 +105,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/NavigationBar"
+    component.dependency "MaterialComponents/Themes"
     component.dependency "MaterialComponents/private/Math"
   end
 
@@ -199,6 +200,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Themes"
     component.dependency "MaterialComponents/private/Icons/ic_check_circle"
     component.dependency "MaterialComponents/private/Math"
   end
@@ -519,6 +521,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/OverlayWindow"
+    component.dependency "MaterialComponents/Themes"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/KeyboardWatcher"

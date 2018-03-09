@@ -708,4 +708,28 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return [super accessibilityValue];
 }
 
+- (void)setMdc_textColor:(UIColor *)mdc_textColor {
+  self.textColor = mdc_textColor;
+}
+
+- (UIColor *)mdc_textColor {
+  return self.textColor;
+}
+
+- (void)setMdc_cursorColor:(UIColor *)mdc_cursorColor {
+  self.cursorColor = mdc_cursorColor;
+}
+
+- (UIColor *)mdc_cursorColor {
+  return self.cursorColor;
+}
+
+- (void)setMdc_backgroundColor:(UIColor *)mdc_backgroundColor {
+  self.backgroundColor = mdc_backgroundColor;
+}
+
+- (UIColor *)mdc_backgroundColor {
+  return self.backgroundColor;
+}
+
 @end

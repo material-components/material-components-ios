@@ -32,4 +32,9 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
                 toButton:(nonnull MDCButton *)button;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme
+                            toButton:(nullable MDCButton *)button;
+
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toFlatButton:(nullable MDCFlatButton *)button;
+
 @end

@@ -28,4 +28,11 @@
   flexibleHeaderController.headerView.backgroundColor = colorScheme.primaryColor;
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toFlexibleHeader:(MDCFlexibleHeaderView *)headerView {
+  headerView.backgroundColor = colorScheme.backgroundColor;
+}
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toFHVC:(MDCFlexibleHeaderViewController *)headerVC {
+  headerVC.headerView.backgroundColor = colorScheme.backgroundColor;
+}
+
 @end

@@ -32,6 +32,8 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
                 toSlider:(nonnull MDCSlider *)slider;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toSlider:(nullable MDCSlider *)slider;
+
 /**
  * A default color scheme for sliders displayed on light backgrounds. The primary color is blue and
  * the primary light and primary dark are gray.

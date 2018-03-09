@@ -32,4 +32,6 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
          toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toNavigationBar:(nullable MDCNavigationBar *)navigationBar;
+
 @end

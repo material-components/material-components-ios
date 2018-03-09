@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class MDCExperimentalColorScheme;
+@class MDCTextField;
 @protocol MDCColorScheme;
 @protocol MDCTextInputController;
 
@@ -50,4 +52,8 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
     NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
+
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toAllTextInputControllersOfClass:(nullable Class<MDCTextInputController>)textInputControllerClass;
+
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toTextField:(nullable MDCTextField *)textField;
 @end

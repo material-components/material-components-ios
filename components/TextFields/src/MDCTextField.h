@@ -42,4 +42,8 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
  */
 @property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
 
+@property(nullable, nonatomic, strong) UIColor *mdc_textColor UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) UIColor *mdc_backgroundColor UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) UIColor *mdc_cursorColor UI_APPEARANCE_SELECTOR;
+
 @end

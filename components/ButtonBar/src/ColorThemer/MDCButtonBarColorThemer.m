@@ -23,4 +23,9 @@
   buttonBar.backgroundColor = colorScheme.primaryColor;
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toButtonBar:(MDCButtonBar *)buttonBar {
+  buttonBar.backgroundColor = colorScheme.backgroundColor;
+  buttonBar.tintColor = colorScheme.textColor;
+}
+
 @end

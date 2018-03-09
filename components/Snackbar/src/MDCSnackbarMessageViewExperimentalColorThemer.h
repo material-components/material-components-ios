@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,5 +14,13 @@
  limitations under the License.
  */
 
-#import "MDCBottomAppBarView.h"
-#import "MDCBottomAppBarExperimentalColorThemer.h"
+#import <Foundation/Foundation.h>
+
+@class MDCExperimentalColorScheme;
+@class MDCSnackbarMessageView;
+
+@interface MDCSnackbarMessageViewExperimentalColorThemer : NSObject
+
++ (void)applyTheme:(nonnull MDCExperimentalColorScheme *)colorScheme toSnackbarMessageView:(nullable MDCSnackbarMessageView *)messageView;
+
+@end

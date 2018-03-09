@@ -32,4 +32,7 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
      toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator;
 
++ (void)applyExperimental:(nonnull MDCExperimentalColorScheme *)colorScheme
+      toActivityIndicator:(nullable MDCActivityIndicator *)activityIndicator;
+
 @end

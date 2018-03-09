@@ -24,4 +24,9 @@
   progressView.progressTintColor = colorScheme.primaryColor;
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toProgressView:(MDCProgressView *)progressView {
+  progressView.trackTintColor = colorScheme.selectionColor;
+  progressView.progressTintColor = colorScheme.primaryColor;
+}
+
 @end

@@ -32,4 +32,6 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
            toPageControl:(nonnull MDCPageControl *)pageControl;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toPageControl:(nullable MDCPageControl *)pageControl;
+
 @end

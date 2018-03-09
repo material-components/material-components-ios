@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
+#import <Foundation/Foundation.h>
 #import "MDCBottomNavigationBarColorThemer.h"
 
 @implementation MDCBottomNavigationBarColorThemer
@@ -23,6 +23,22 @@
   bottomNavigationBar.selectedItemTintColor = colorScheme.primaryLightColor;
   bottomNavigationBar.unselectedItemTintColor = colorScheme.primaryDarkColor;
   bottomNavigationBar.backgroundColor = colorScheme.secondaryColor;
+}
+
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toBottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar {
+  bottomNavigationBar.backgroundColor = colorScheme.backgroundColor;
+  bottomNavigationBar.selectedItemTintColor = colorScheme.primaryColor;
+  bottomNavigationBar.unselectedItemTintColor = colorScheme.textColor;
+}
+
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toUITabBarItem:(UITabBarItem *)tabBarItem {
+  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
+  if ([NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
+    tabBarItem.badgeColor = colorScheme.primaryColor;
+    NSMutableDictionary *badgeTextAttributes = [[tabBarItem badgeTextAttributesForState:UIControlStateNormal] mutableCopy];
+    badgeTextAttributes[NSForegroundColorAttributeName] = colorScheme.textColor;
+    [tabBarItem setBadgeTextAttributes:[badgeTextAttributes copy] forState:UIControlStateNormal];
+  }
 }
 
 @end

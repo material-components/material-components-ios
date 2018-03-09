@@ -34,4 +34,6 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toFeatureHighlightView:(nullable MDCFeatureHighlightView *)featureHighlightView;
+
 @end

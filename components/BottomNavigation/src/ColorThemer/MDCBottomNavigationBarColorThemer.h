@@ -33,4 +33,10 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toBottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme
+               toBottomNavigationBar:(nullable MDCBottomNavigationBar *)bottomNavigationBar;
+
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme
+                      toUITabBarItem:(nullable UITabBarItem *)tabBarItem;
+
 @end

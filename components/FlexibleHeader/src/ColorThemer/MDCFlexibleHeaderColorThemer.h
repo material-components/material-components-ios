@@ -42,4 +42,8 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toMDCFlexibleHeaderController:(nonnull MDCFlexibleHeaderViewController *)flexibleHeaderController;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toFlexibleHeader:(nullable MDCFlexibleHeaderView *)headerView;
+
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toFHVC:(nullable MDCFlexibleHeaderViewController *)headerVC;
+
 @end
