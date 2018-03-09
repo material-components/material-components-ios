@@ -19,9 +19,7 @@
 #import "MDCBottomSheetController.h"
 
 #import "MaterialMath.h"
-#import "private/MDCBottomSheetMotionSpec.h"
 #import "private/MDCSheetContainerView.h"
-#import <MotionAnimator/MotionAnimator.h>
 
 static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) {
   UIScrollView *scrollView = nil;
