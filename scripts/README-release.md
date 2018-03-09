@@ -35,6 +35,8 @@ integration should begin running. You can run local tests by running:
 
 Update the CHANGELOG.md with relevant release notes.
 
+    release notes
+
 Things to include:
 
 - API changes
