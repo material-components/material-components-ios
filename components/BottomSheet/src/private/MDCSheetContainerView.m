@@ -131,6 +131,9 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
   if (self.window) {
     [self setSheetState:self.sheetState animated:YES];
+  } else {
+    [_animator stopAllAnimations];
+    [self setSheetState:self.sheetState animated:NO];
   }
 }
 
