@@ -68,7 +68,6 @@
 
 ## Component changes
 
-
 ### Tabs
 
 #### Changes
@@ -129,6 +128,12 @@
 
 * [Fix license stanza (#3025)](https://github.com/material-components/material-components-ios/commit/70e9cbcbdf2e28d3e598e95e0ade79cd8de3ec19) (Robert Moore)
 * [[ButtonBar] Remove UIAppearance call in themer (#3020)](https://github.com/material-components/material-components-ios/commit/dcbe2e5cd70b1db54beb610e019e60cf9f24046b) (Robert Moore)
+
+### BottomSheet
+
+#### Changes
+
+* [Make MDCBottomSheetPresentationController react to preferred content size changes of the presented view controller.](https://github.com/material-components/material-components-ios/commit/293996a05a6230310442e3ee4b6d2ca0130ac102) (Material Components iOS Team)
 
 ### BottomNavigation
 
