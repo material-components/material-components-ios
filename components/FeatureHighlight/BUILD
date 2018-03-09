@@ -104,7 +104,8 @@ mdc_objc_library(
         ":FeatureHighlight",
         ":ColorThemer",
         ":FontThemer",
-        ":private",
+        "@material_text_accessibility_ios//:MDFTextAccessibility",
+       	":private",
     ],
     visibility = ["//visibility:private"],
 )
