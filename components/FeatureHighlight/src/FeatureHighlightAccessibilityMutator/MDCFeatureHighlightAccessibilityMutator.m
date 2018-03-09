@@ -21,16 +21,18 @@
 
 @implementation MDCFeatureHighlightAccessibilityMutator
 
-+ (void)mutateTitleColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)fhvc
++ (void)mutateTitleColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
+                                                                  featureHighlightViewController
                              withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options {
   MDCFeatureHighlightView *featureHighlightView =
-      (MDCFeatureHighlightView *)fhvc.view;
+      (MDCFeatureHighlightView *)featureHighlightViewController.view;
   if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
     NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
     return;
   }
-  UIColor *textColor = fhvc.titleColor;
-  UIColor *backgroundColor = [fhvc.outerHighlightColor colorWithAlphaComponent:1.0f];
+  UIColor *textColor = featureHighlightViewController.titleColor;
+  UIColor *backgroundColor =
+      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
   UIColor *titleColor =
       [MDCFeatureHighlightAccessibilityMutator accessibleColorForTextColor:textColor
                                                        withBackgroundColor:backgroundColor
@@ -46,27 +48,28 @@
                               onBackgroundColor:backgroundColor
                                         options:options];
   titleAlpha = MAX([MDCTypography titleFontOpacity], titleAlpha);
-  fhvc.titleColor = [titleColor colorWithAlphaComponent:titleAlpha];
+  featureHighlightViewController.titleColor = [titleColor colorWithAlphaComponent:titleAlpha];
 }
 
-+ (void)mutateBodyColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)fhvc
++ (void)mutateBodyColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
+                                                                featureHighlightViewController
                             withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options {
   MDCFeatureHighlightView *featureHighlightView =
-      (MDCFeatureHighlightView *)fhvc.view;
+      (MDCFeatureHighlightView *)featureHighlightViewController.view;
   if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
     NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
     return;
   }
-  UIColor *textColor = fhvc.bodyColor;
+  UIColor *textColor = featureHighlightViewController.bodyColor;
   UIColor *backgroundColor =
-      [fhvc.outerHighlightColor colorWithAlphaComponent:1.0f];
-  fhvc.bodyColor =
+      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
+  featureHighlightViewController.bodyColor =
       [MDCFeatureHighlightAccessibilityMutator accessibleColorForTextColor:textColor
                                                        withBackgroundColor:backgroundColor
                                                                    options:options];
 }
 
-#pragma mark - private
+#pragma mark - Private
 
 + (UIColor *)accessibleColorForTextColor:(UIColor *)textColor
                      withBackgroundColor:(UIColor *)backgroundColor

@@ -39,11 +39,16 @@ static NSArray<UIColor *> *testColors(){
   [self.showView addSubview:self.highlightedView];
 }
 
+- (void)tearDown {
+  self.showView = nil;
+  self.highlightedView = nil;
+}
+
 - (void)testMutatorChangesTextColor {
   for (UIColor *color in testColors()) {
     MDCFeatureHighlightViewController *hfvc =
-        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_highlightedView
-                                                               andShowView:_showView
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.highlightedView
+                                                               andShowView:self.showView
                                                                 completion:nil];
     MDCFeatureHighlightView *hfv = (MDCFeatureHighlightView *)hfvc.view;
 
@@ -61,8 +66,8 @@ static NSArray<UIColor *> *testColors(){
 
     XCTAssertNotNil(hfv.titleColor);
     XCTAssertNotNil(hfv.bodyColor);
-    XCTAssertNotEqualObjects(hfv.titleColor, color, @"");
-    XCTAssertNotEqualObjects(hfv.bodyColor, color, @"");
+    XCTAssertNotEqualObjects(hfv.titleColor, color);
+    XCTAssertNotEqualObjects(hfv.bodyColor, color);
   }
 }
 
@@ -88,8 +93,8 @@ static NSArray<UIColor *> *testColors(){
         mutateBodyColorForFeatureHighlightViewController:hfvc
                             withTextAccessibilityOptions:options];
 
-    XCTAssertEqualObjects(hfv.titleColor, color, @"");
-    XCTAssertEqualObjects(hfv.bodyColor, color, @"");
+    XCTAssertEqualObjects(hfv.titleColor, color);
+    XCTAssertEqualObjects(hfv.bodyColor, color);
   }
 }
 
@@ -113,8 +118,8 @@ static NSArray<UIColor *> *testColors(){
 
   XCTAssertNotNil(hfv.titleColor);
   XCTAssertNotNil(hfv.bodyColor);
-  XCTAssertNotEqualObjects(hfv.titleColor, [UIColor blackColor], @"");
-  XCTAssertNotEqualObjects(hfv.bodyColor, [UIColor blackColor], @"");
+  XCTAssertNotEqualObjects(hfv.titleColor, [UIColor blackColor]);
+  XCTAssertNotEqualObjects(hfv.bodyColor, [UIColor blackColor]);
 }
 
 @end

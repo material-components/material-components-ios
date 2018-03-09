@@ -74,7 +74,6 @@ mdc_objc_library(
     name = "FeatureHighlightAccessibilityMutator",
     srcs = native.glob(["src/FeatureHighlightAccessibilityMutator/*.m"]),
     hdrs = native.glob(["src/FeatureHighlightAccessibilityMutator/*.h"]),
-    includes = ["src/FeatureHighlightAccessibilityMutator"],
     deps = [
         ":FeatureHighlight",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
@@ -104,7 +103,7 @@ mdc_objc_library(
         ":FeatureHighlight",
         ":ColorThemer",
         ":FontThemer",
-	":FeatureHighlightAccessibilityMutator",
+        ":FeatureHighlightAccessibilityMutator",
        	":private",
     ],
     visibility = ["//visibility:private"],
