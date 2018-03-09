@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
   return 0.250;
 }
 
-+ (MDMAnimationTraits *)onDragRelease {
++ (MDMAnimationTraits *)onDragReleaseAnimationTraits {
   return MDMAnimationTraits.systemModalMovement;
 }
 

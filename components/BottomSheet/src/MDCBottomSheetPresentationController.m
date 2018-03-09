@@ -122,7 +122,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
       }                                  completion:nil];
 
   _sheetView.sheetState = MDCSheetStateClosed;
-  [_sheetView animateToSheetState:MDCSheetStatePreferred];
+  [_sheetView setSheetState:MDCSheetStatePreferred animated:YES];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -140,7 +140,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
         self->_dimmingView.alpha = 0.0;
       }                                  completion:nil];
 
-  [_sheetView animateToSheetState:MDCSheetStateClosed];
+  [_sheetView setSheetState:MDCSheetStateClosed animated:YES];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
