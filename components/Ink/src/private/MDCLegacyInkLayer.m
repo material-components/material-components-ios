@@ -330,7 +330,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundOpacityAnim.duration = opacityDuration + adjustedDuration;
 
     NSNumber *scaleVal = [self.presentationLayer valueForKeyPath:kInkLayerScale];
-    CGFloat scale = scaleVal != nil ? scaleVal.doubleValue : 0;
+    CGFloat scale = (CGFloat)(scaleVal != nil ? scaleVal.doubleValue : 0);
     CGFloat unboundedDuration = (CGFloat)sqrt(((1.f - scale) * self.radius) /
                                               (kInkLayerForegroundWaveTouchDownAcceleration +
                                                kInkLayerForegroundWaveTouchUpAcceleration));
@@ -424,7 +424,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   CGFloat duration = kInkLayerBackgroundBaseOpacityExitDuration;
   if (self.bounded) {
     // The end (tap release) animation should continue at the opacity level of the start animation.
-    CGFloat enterDuration = (1 - opacityVal.doubleValue / 1) * kInkLayerBackgroundFastEnterDuration;
+    CGFloat enterDuration =
+        (CGFloat)(1 - opacityVal.doubleValue / 1) * kInkLayerBackgroundFastEnterDuration;
     duration += enterDuration;
     _backgroundOpacityAnim = [self opacityAnimWithValues:@[ opacityVal, @1, @0 ]
                                                    times:@[ @0, @(enterDuration / duration), @1 ]];
