@@ -151,15 +151,9 @@
   MDCFeatureHighlightViewController *featureHighlightController =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.featureButton
                                                               completion:nil];
-  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  [MDCFeatureHighlightAccessibilityMutator
-      mutateBodyColorForFeatureHighlightViewController:featureHighlightController
-                          withTextAccessibilityOptions:options];
-  [MDCFeatureHighlightAccessibilityMutator
-      mutateTitleColorForFeatureHighlightViewController:featureHighlightController
-                           withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator mutate:featureHighlightController];
 
- featureHighlightController.titleText = titleText;
+  featureHighlightController.titleText = titleText;
   featureHighlightController.bodyText = bodyText;
   [self presentViewController:featureHighlightController animated:YES completion:nil];
 }

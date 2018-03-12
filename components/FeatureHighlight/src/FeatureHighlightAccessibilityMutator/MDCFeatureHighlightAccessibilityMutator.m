@@ -22,27 +22,23 @@
 @implementation MDCFeatureHighlightAccessibilityMutator
 
 
-+ (void)mutateFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
-                                                    featureHighlightViewController
-                withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options {
-  [MDCFeatureHighlightAccessibilityMutator
-      mutateTitleColorForFeatureHighlightViewController:featureHighlightViewController
-                           withTextAccessibilityOptions:options];
-  [MDCFeatureHighlightAccessibilityMutator
-       mutateBodyColorForFeatureHighlightViewController:featureHighlightViewController
-                           withTextAccessibilityOptions:options];
-
++ (void)mutate:(MDCFeatureHighlightViewController *)featureHighlightViewController {
+  [MDCFeatureHighlightAccessibilityMutator mutateTitleColor:featureHighlightViewController];
+  [MDCFeatureHighlightAccessibilityMutator mutateBodyColor:featureHighlightViewController];
 }
 
-+ (void)mutateTitleColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
-                                                                  featureHighlightViewController
-                             withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options {
++ (void)mutateTitleColor:(MDCFeatureHighlightViewController *)featureHighlightViewController{
   MDCFeatureHighlightView *featureHighlightView =
       (MDCFeatureHighlightView *)featureHighlightViewController.view;
   if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
     NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
     return;
   }
+  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightView.titleFont]) {
+    options |= MDFTextAccessibilityOptionsLargeFont;
+  }
+
   UIColor *textColor = featureHighlightViewController.titleColor;
   UIColor *backgroundColor =
       [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
@@ -64,15 +60,18 @@
   featureHighlightViewController.titleColor = [titleColor colorWithAlphaComponent:titleAlpha];
 }
 
-+ (void)mutateBodyColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
-                                                                featureHighlightViewController
-                            withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options {
++ (void)mutateBodyColor:(MDCFeatureHighlightViewController *)featureHighlightViewController {
   MDCFeatureHighlightView *featureHighlightView =
       (MDCFeatureHighlightView *)featureHighlightViewController.view;
   if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
     NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
     return;
   }
+  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightView.bodyFont]) {
+    options |= MDFTextAccessibilityOptionsLargeFont;
+  }
+
   UIColor *textColor = featureHighlightViewController.bodyColor;
   UIColor *backgroundColor =
       [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];

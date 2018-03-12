@@ -59,10 +59,7 @@ static NSArray<UIColor *> *testColors(){
     featureHighlightView.outerHighlightColor = color;
     featureHighlightView.titleColor = color;
     featureHighlightView.bodyColor = color;
-    MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-    [MDCFeatureHighlightAccessibilityMutator
-        mutateFeatureHighlightViewController:featureHighlightViewController
-                withTextAccessibilityOptions:options];
+    [MDCFeatureHighlightAccessibilityMutator mutate:featureHighlightViewController];
 
     XCTAssertNotNil(featureHighlightView.titleColor);
     XCTAssertNotNil(featureHighlightView.bodyColor);
@@ -87,10 +84,7 @@ static NSArray<UIColor *> *testColors(){
   featureHighlightView.outerHighlightColor = [UIColor whiteColor];
   featureHighlightView.titleColor = [UIColor whiteColor];
   featureHighlightView.bodyColor = [UIColor whiteColor];
-  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  [MDCFeatureHighlightAccessibilityMutator
-       mutateFeatureHighlightViewController:featureHighlightViewController
-               withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator mutate:featureHighlightViewController];
 
   XCTAssertNotNil(featureHighlightView.titleColor);
   XCTAssertNotNil(featureHighlightView.bodyColor);
@@ -118,10 +112,7 @@ static NSArray<UIColor *> *testColors(){
     featureHighlightView.titleColor = color;
     featureHighlightView.bodyColor = color;
 
-    MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-    [MDCFeatureHighlightAccessibilityMutator
-        mutateFeatureHighlightViewController:featureHighlightViewController
-                withTextAccessibilityOptions:options];
+    [MDCFeatureHighlightAccessibilityMutator mutate:featureHighlightViewController];
 
     XCTAssertEqualObjects(featureHighlightView.titleColor, color);
     XCTAssertEqualObjects(featureHighlightView.bodyColor, color);
@@ -139,10 +130,7 @@ static NSArray<UIColor *> *testColors(){
   // Making the background color accessible with title/body color.
   featureHighlightView.outerHighlightColor = [UIColor blackColor];
 
-  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  [MDCFeatureHighlightAccessibilityMutator
-       mutateFeatureHighlightViewController:featureHighlightViewController
-               withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator mutate:featureHighlightViewController];
 
   XCTAssertNotNil(featureHighlightView.titleColor);
   XCTAssertNotNil(featureHighlightView.bodyColor);

@@ -75,14 +75,7 @@
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                               completion:nil];
-
-  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  [MDCFeatureHighlightAccessibilityMutator
-      mutateBodyColorForFeatureHighlightViewController:vc
-                          withTextAccessibilityOptions:options];
-  [MDCFeatureHighlightAccessibilityMutator
-      mutateTitleColorForFeatureHighlightViewController:vc
-                           withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator mutate:vc];
 
   vc.titleText = @"Feature Highlight can use themers";
   vc.bodyText = @"The fonts and colors can be themed.";

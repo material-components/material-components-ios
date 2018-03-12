@@ -29,9 +29,7 @@
  This method will change the title and body color of the feature highlight to ensure a high
  accessiblity contrast with its background if needed.
  */
-+ (void)mutateFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
-                                                    featureHighlightViewController
-                withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options;
++ (void)mutate:(MDCFeatureHighlightViewController *)featureHighlightViewController;
 
 @end
 

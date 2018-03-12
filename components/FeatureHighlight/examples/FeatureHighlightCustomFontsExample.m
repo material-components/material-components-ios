@@ -59,14 +59,7 @@
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                               completion:nil];
-  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  [MDCFeatureHighlightAccessibilityMutator
-       mutateBodyColorForFeatureHighlightViewController:vc
-                           withTextAccessibilityOptions:options];
-  [MDCFeatureHighlightAccessibilityMutator
-      mutateTitleColorForFeatureHighlightViewController:vc
-                           withTextAccessibilityOptions:options];
-
+  [MDCFeatureHighlightAccessibilityMutator mutate:vc];
 
   vc.titleText = @"Feature Highlight can use custom fonts";
   vc.bodyText = @"The title and body font can be set individually.";

@@ -37,13 +37,7 @@
                                                                   [self fabDidTap:fab];
                                                                 }
                                                               }];
-  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  [MDCFeatureHighlightAccessibilityMutator
-      mutateBodyColorForFeatureHighlightViewController:vc
-                          withTextAccessibilityOptions:options];
-  [MDCFeatureHighlightAccessibilityMutator
-      mutateTitleColorForFeatureHighlightViewController:vc
-                           withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator mutate:vc];
   vc.titleText = @"Shown views can be interactive";
   vc.bodyText = @"The shown button has custom tap animations.";
   [self presentViewController:vc animated:YES completion:nil];
