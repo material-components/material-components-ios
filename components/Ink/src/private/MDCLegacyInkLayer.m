@@ -322,21 +322,16 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundScaleAnim.keyTimes = @[ @0, @1 ];
     _foregroundScaleAnim.duration = kInkLayerForegroundBoundedRadiusExitDuration;
   } else {
-    NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
-    if (!opacityVal) {
-      opacityVal = [NSNumber numberWithFloat:0];
-    }
     CGFloat adjustedDuration = kInkLayerForegroundBoundedPositionExitDuration;
-    CGFloat normOpacityVal = opacityVal.floatValue;
+    NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
+    CGFloat normOpacityVal = opacityVal != nil ? (CGFloat)opacityVal.doubleValue : 0;
     CGFloat opacityDuration = normOpacityVal / 3.f;
     _foregroundOpacityAnim.values = @[ opacityVal, @0 ];
     _foregroundOpacityAnim.duration = opacityDuration + adjustedDuration;
 
     NSNumber *scaleVal = [self.presentationLayer valueForKeyPath:kInkLayerScale];
-    if (!scaleVal) {
-      scaleVal = [NSNumber numberWithFloat:0];
-    }
-    CGFloat unboundedDuration = (CGFloat)sqrt(((1.f - scaleVal.floatValue) * self.radius) /
+    CGFloat scale = (CGFloat)(scaleVal != nil ? scaleVal.doubleValue : 0);
+    CGFloat unboundedDuration = (CGFloat)sqrt(((1.f - scale) * self.radius) /
                                               (kInkLayerForegroundWaveTouchDownAcceleration +
                                                kInkLayerForegroundWaveTouchUpAcceleration));
     _foregroundPositionAnim.duration = unboundedDuration + adjustedDuration;
@@ -423,13 +418,14 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 
   NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
-  if (!opacityVal) {
-    opacityVal = [NSNumber numberWithFloat:0];
+  if (opacityVal == nil) {
+    opacityVal = @(0.f);
   }
   CGFloat duration = kInkLayerBackgroundBaseOpacityExitDuration;
   if (self.bounded) {
     // The end (tap release) animation should continue at the opacity level of the start animation.
-    CGFloat enterDuration = (1 - opacityVal.floatValue / 1) * kInkLayerBackgroundFastEnterDuration;
+    CGFloat enterDuration =
+        (CGFloat)(1 - opacityVal.doubleValue / 1) * kInkLayerBackgroundFastEnterDuration;
     duration += enterDuration;
     _backgroundOpacityAnim = [self opacityAnimWithValues:@[ opacityVal, @1, @0 ]
                                                    times:@[ @0, @(enterDuration / duration), @1 ]];
