@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,13 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCButtonBarColorThemer.h"
+#import "MaterialCards.h"
 
-@implementation MDCButtonBarColorThemer
+@interface CardTintExampleCell : MDCCardCollectionCell
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar {
-  buttonBar.backgroundColor = colorScheme.primaryColor;
-}
+@property(nonatomic, readonly, strong, nonnull) UISwitch *switchView;
+@property(nonatomic, readonly, strong, nonnull) UISlider *sliderView;
 
 @end

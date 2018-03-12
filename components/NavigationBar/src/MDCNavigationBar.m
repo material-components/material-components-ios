@@ -220,6 +220,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   self = [super initWithFrame:frame];
   if (self) {
     [self commonMDCNavigationBarInit];
+    _leadingButtonBar.backgroundColor = nil;
+    _trailingButtonBar.backgroundColor = nil;
   }
   return self;
 }

@@ -405,7 +405,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // view rows.
   CGRect insetFrame = attr.frame;
   if (!CGRectIsEmpty(insetFrame)) {
-    UIEdgeInsets insets = self.sectionInset;
+    UIEdgeInsets insets;
 
     // Retrieve the insets from the Flow Layout delegate to maintain consistency with the CVC
     if ([self.collectionView.delegate
@@ -467,7 +467,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   BOOL isBottom = NO;
   BOOL hasSectionHeader = [_headerSections containsIndex:indexPath.section];
   BOOL hasSectionFooter = [_footerSections containsIndex:indexPath.section];
-  BOOL hasSectionItems = YES;
+  BOOL hasSectionItems = [self numberOfItemsInSection:indexPath.section] > 0;
 
   BOOL hidesHeaderBackground = NO;
   if ([self.styler.delegate

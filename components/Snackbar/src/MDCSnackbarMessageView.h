@@ -23,18 +23,24 @@
 
 /**
  The color for the background of the snackbar message view.
+
+ The default color is a dark gray color.
  */
 @property(nonatomic, strong, nullable)
     UIColor *snackbarMessageViewBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
  The color for the shadow color for the snackbar message view.
+
+ The default color is @c blackColor.
  */
 @property(nonatomic, strong, nullable)
     UIColor *snackbarMessageViewShadowColor UI_APPEARANCE_SELECTOR;
 
 /**
  The color for the message text in the snackbar message view.
+
+ The default color is @c whiteColor.
  */
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewTextColor UI_APPEARANCE_SELECTOR;
 

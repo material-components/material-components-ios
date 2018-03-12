@@ -19,7 +19,9 @@
 #import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
 
-@implementation SnackbarSimpleExample
+@implementation SnackbarSimpleExample {
+  BOOL _legacyMode;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -32,6 +34,22 @@
       @"De-Customize Font Example"
   ]];
   self.title = @"Snackbar";
+  _legacyMode = YES;
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(toggleModes)];
+}
+
+- (void)toggleModes {
+  _legacyMode = !_legacyMode;
+  if (_legacyMode) {
+    [self.navigationItem.rightBarButtonItem setTitle:@"Legacy"];
+  } else {
+    [self.navigationItem.rightBarButtonItem setTitle:@"New"];
+  }
+  MDCSnackbarMessage.usesLegacySnackbar = _legacyMode;
 }
 
 #pragma mark - Event Handling
@@ -45,7 +63,6 @@
 - (void)showSnackbarWithAction:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
-  [MDCSnackbarManager showMessage:message];
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
