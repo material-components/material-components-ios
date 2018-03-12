@@ -7,43 +7,32 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTabs.h"
-#import "MaterialThemes.h"
-#import "MDCTabBarColorThemer.h"
-
-@interface MDCTabBarTestColorScheme : NSObject <MDCColorScheme>
-
-@end
-
-@implementation MDCTabBarTestColorScheme
-
-- (UIColor *)primaryColor {
-  return [UIColor redColor];
-}
-
-- (UIColor *)primaryDarkColor {
-  return [UIColor darkGrayColor];
-}
-
-- (UIColor *)primaryLightColor {
-  return [UIColor yellowColor];
-}
-
-@end
-
 @interface MDCTabBarColorSchemeTests : XCTestCase
 
 @end
 
 @implementation MDCTabBarColorSchemeTests
 
-- (void)testTabBarColorThemerApplyColorSchemeProperly {
-  MDCTabBar *tabBar = [[MDCTabBar alloc] init];
-  MDCTabBarTestColorScheme *colorScheme = [[MDCTabBarTestColorScheme alloc] init];
-  [MDCTabBarColorThemer applyColorScheme:colorScheme toTabBar:tabBar];
-  XCTAssertEqualObjects(tabBar.selectedItemTintColor, colorScheme.primaryDarkColor);
-  XCTAssertEqualObjects(tabBar.unselectedItemTintColor, colorScheme.primaryLightColor);
-  XCTAssertEqualObjects(tabBar.inkColor, colorScheme.primaryLightColor);
+- (void)setUp {
+    [super setUp];
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+}
+
+- (void)tearDown {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [super tearDown];
+}
+
+- (void)testExample {
+    // This is an example of a functional test case.
+    // Use XCTAssert and related functions to verify your tests produce the correct results.
+}
+
+- (void)testPerformanceExample {
+    // This is an example of a performance test case.
+    [self measureBlock:^{
+        // Put the code you want to measure the time of here.
+    }];
 }
 
 @end
