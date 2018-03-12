@@ -20,8 +20,9 @@
 #import <UIKit/UIKit.h>
 
 /**
- A Mutator that will change an instance of MDCFeatureHighlightAccessibilityMutator to have a high
- enough contrast text between its background.
+ A Mutator that will change an instance of MDCFeatureHighlightViewController to have a high enough
+ contrast text between its background.
+ Calling this mutator can overwrite UIApperance values.
  */
 @interface MDCFeatureHighlightAccessibilityMutator : NSObject
 

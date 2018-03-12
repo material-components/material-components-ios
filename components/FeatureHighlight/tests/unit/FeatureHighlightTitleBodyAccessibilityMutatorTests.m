@@ -134,6 +134,8 @@ static NSArray<UIColor *> *testColors(){
 
   XCTAssertNotNil(featureHighlightView.titleColor);
   XCTAssertNotNil(featureHighlightView.bodyColor);
+  XCTAssertNotEqualObjects(featureHighlightView.titleColor, [UIColor clearColor]);
+  XCTAssertNotEqualObjects(featureHighlightView.bodyColor, [UIColor clearColor]);
   XCTAssertNotEqualObjects(featureHighlightView.titleColor, [UIColor blackColor]);
   XCTAssertNotEqualObjects(featureHighlightView.bodyColor, [UIColor blackColor]);
 }
