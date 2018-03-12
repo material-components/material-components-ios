@@ -35,4 +35,15 @@
   XCTAssertEqual([button elevationForState:UIControlStateSelected], MDCShadowElevationNone);
 }
 
+// TODO(#2782): Remove this test and replace it with default checks once UIAppearance is no longer
+//              used for overriding MDCButton
+- (void)testMDCFlatButtonDoesNotModifyInkColorInInit {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(flatButton.inkColor, button.inkColor);
+}
+
 @end
