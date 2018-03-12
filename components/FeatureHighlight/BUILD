@@ -105,7 +105,7 @@ mdc_objc_library(
         ":ColorThemer",
         ":FontThemer",
         ":FeatureHighlightAccessibilityMutator",
-       	":private",
+        ":private",
     ],
     visibility = ["//visibility:private"],
 )
