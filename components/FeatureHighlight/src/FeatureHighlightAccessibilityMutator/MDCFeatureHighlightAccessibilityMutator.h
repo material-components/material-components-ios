@@ -26,20 +26,12 @@
 @interface MDCFeatureHighlightAccessibilityMutator : NSObject
 
 /**
- This method will change the body color of the feature highlight to ensure a high accessiblity
- contrast with its background if needed.
+ This method will change the title and body color of the feature highlight to ensure a high
+ accessiblity contrast with its background if needed.
  */
-+ (void)mutateBodyColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
-                                                                featureHighlightViewController
-                            withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options;
-
-/**
- This method will change the title color of the feature highlight to ensure a high accessiblity
- contrast with its background if needed.
- */
-+ (void)mutateTitleColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
-                                                                  featureHighlightViewController
-                             withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options;
++ (void)mutateFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
+                                                    featureHighlightViewController
+                withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options;
 
 @end
 

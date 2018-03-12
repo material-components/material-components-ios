@@ -21,6 +21,19 @@
 
 @implementation MDCFeatureHighlightAccessibilityMutator
 
+
++ (void)mutateFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
+                                                    featureHighlightViewController
+                withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options {
+  [MDCFeatureHighlightAccessibilityMutator
+      mutateTitleColorForFeatureHighlightViewController:featureHighlightViewController
+                           withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator
+       mutateBodyColorForFeatureHighlightViewController:featureHighlightViewController
+                           withTextAccessibilityOptions:options];
+
+}
+
 + (void)mutateTitleColorForFeatureHighlightViewController:(MDCFeatureHighlightViewController *)
                                                                   featureHighlightViewController
                              withTextAccessibilityOptions:(MDFTextAccessibilityOptions)options {
