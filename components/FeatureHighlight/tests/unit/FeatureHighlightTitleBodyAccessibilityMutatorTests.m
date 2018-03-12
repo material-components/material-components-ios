@@ -74,6 +74,38 @@ static NSArray<UIColor *> *testColors(){
   }
 }
 
+- (void)testMutatorChangesTextColorToExpectedColor {
+  MDCFeatureHighlightViewController *featureHighlightViewController =
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.highlightedView
+                                                             andShowView:self.showView
+                                                              completion:nil];
+  MDCFeatureHighlightView *featureHighlightView =
+      (MDCFeatureHighlightView *)featureHighlightViewController.view;
+
+  // Making the background color the same as the title/body color.
+  featureHighlightView.outerHighlightColor = [UIColor whiteColor];
+  featureHighlightView.titleColor = [UIColor whiteColor];
+  featureHighlightView.bodyColor = [UIColor whiteColor];
+  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+  [MDCFeatureHighlightAccessibilityMutator
+       mutateTitleColorForFeatureHighlightViewController:featureHighlightViewController
+       withTextAccessibilityOptions:options];
+  [MDCFeatureHighlightAccessibilityMutator
+       mutateBodyColorForFeatureHighlightViewController:featureHighlightViewController
+       withTextAccessibilityOptions:options];
+
+  XCTAssertNotNil(featureHighlightView.titleColor);
+  XCTAssertNotNil(featureHighlightView.bodyColor);
+
+  // Hard coded values, if this test fails it only means that we could mean that we changed the
+  // accessible color we are returning.
+  XCTAssertEqualObjects(featureHighlightView.titleColor,
+                        [UIColor colorWithWhite:0 alpha:0.87000000476837158]);
+  XCTAssertEqualObjects(featureHighlightView.bodyColor,
+                        [UIColor colorWithWhite:0 alpha:0.54000002145767212]);
+
+}
+
 - (void)testMutatorKeepsAccessibleTextColor {
   NSDictionary* colors = @{ [UIColor redColor]: [UIColor blackColor]};
   for (UIColor *color in colors) {
@@ -115,11 +147,11 @@ static NSArray<UIColor *> *testColors(){
 
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
   [MDCFeatureHighlightAccessibilityMutator
-   mutateTitleColorForFeatureHighlightViewController:featureHighlightViewController
-   withTextAccessibilityOptions:options];
+       mutateTitleColorForFeatureHighlightViewController:featureHighlightViewController
+       withTextAccessibilityOptions:options];
   [MDCFeatureHighlightAccessibilityMutator
-   mutateBodyColorForFeatureHighlightViewController:featureHighlightViewController
-   withTextAccessibilityOptions:options];
+       mutateBodyColorForFeatureHighlightViewController:featureHighlightViewController
+       withTextAccessibilityOptions:options];
 
   XCTAssertNotNil(featureHighlightView.titleColor);
   XCTAssertNotNil(featureHighlightView.bodyColor);
