@@ -74,6 +74,10 @@ static NSArray<UIColor *> *testColors(){
   }
 }
 
+/**
+ * This test could fail even when our mutator is returning accessible color. In case MDF is
+ * returning a new accessible color
+ */
 - (void)testMutatorChangesTextColorToExpectedColor {
   MDCFeatureHighlightViewController *featureHighlightViewController =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.highlightedView
@@ -103,7 +107,6 @@ static NSArray<UIColor *> *testColors(){
                         [UIColor colorWithWhite:0 alpha:0.87000000476837158]);
   XCTAssertEqualObjects(featureHighlightView.bodyColor,
                         [UIColor colorWithWhite:0 alpha:0.54000002145767212]);
-
 }
 
 - (void)testMutatorKeepsAccessibleTextColor {
