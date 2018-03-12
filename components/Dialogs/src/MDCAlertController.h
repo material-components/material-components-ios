@@ -92,6 +92,7 @@
 
  Default value is NO.
  */
+// TODO : Deprecate in favor of MDCAlertControllerView
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
