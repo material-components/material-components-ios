@@ -19,6 +19,10 @@
 #import "MDCBottomSheetPresentationController.h"
 #import "private/MDCBottomSheetMotionSpec.h"
 
+@interface MDCBottomSheetTransition : NSObject <UIViewControllerAnimatedTransitioning>
+- (instancetype)initWithPresenting:(BOOL)presenting;
+@end
+
 @implementation MDCBottomSheetTransitionController
 
 #pragma mark - UIViewControllerTransitioningDelegate
@@ -38,11 +42,25 @@
     animationControllerForPresentedController:(__unused UIViewController *)presented
                          presentingController:(__unused UIViewController *)presenting
                              sourceController:(__unused UIViewController *)source {
-  return self;
+  return [[MDCBottomSheetTransition alloc] initWithPresenting:YES];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)
     animationControllerForDismissedController:(__unused UIViewController *)dismissed {
+  return [[MDCBottomSheetTransition alloc] initWithPresenting:NO];
+}
+
+@end
+
+@implementation MDCBottomSheetTransition {
+  BOOL _presenting;
+}
+
+- (instancetype)initWithPresenting:(BOOL)presenting {
+  self = [super init];
+  if (self) {
+    _presenting = presenting;
+  }
   return self;
 }
 
@@ -54,7 +72,41 @@
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
-  // We're only implementing UIViewControllerAnimatedTransitioning so that we can customize the
+  UIViewController *fromViewController =
+      [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
+  if (fromView == nil) {
+    fromView = fromViewController.view;
+  }
+  if (fromView != nil && fromView == fromViewController.view) {
+    CGRect finalFrame = [transitionContext finalFrameForViewController:fromViewController];
+    if (!CGRectIsEmpty(finalFrame)) {
+      fromView.frame = finalFrame;
+    }
+  }
+
+  UIViewController *toViewController =
+      [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
+  if (toView == nil) {
+    toView = toViewController.view;
+  }
+  if (toView != nil && toView == toViewController.view) {
+    CGRect finalFrame = [transitionContext finalFrameForViewController:toViewController];
+    if (!CGRectIsEmpty(finalFrame)) {
+      toView.frame = finalFrame;
+    }
+
+    if (toView.superview == nil) {
+      if (_presenting) {
+        [transitionContext.containerView addSubview:toView];
+      } else {
+        [transitionContext.containerView insertSubview:toView atIndex:0];
+      }
+    }
+  }
+
+  // We're primarily implementing UIViewControllerAnimatedTransitioning so that we can customize the
   // transition's duration - all of the actual animation logic happens in
   // MDCBottomSheetPresentationController (which can't customize the duration). In order to make
   // UIKit believe that we're actually animating something, we create a temporary bogus view and
@@ -72,20 +124,6 @@
 
     [transitionContext completeTransition:YES];
   }];
-}
-
-- (CGRect)frameOfPresentedViewController:(UIViewController *)presentedViewController
-                         inContainerView:(UIView *)containerView {
-  CGSize containerSize = containerView.frame.size;
-  CGSize preferredSize = presentedViewController.preferredContentSize;
-
-  if (preferredSize.width > 0 && preferredSize.width < containerSize.width) {
-    CGFloat width = preferredSize.width;
-    CGFloat leftPad = (containerSize.width - width) / 2;
-    return CGRectMake(leftPad, 0, width, containerSize.height);
-  } else {
-    return containerView.frame;
-  }
 }
 
 @end

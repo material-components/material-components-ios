@@ -31,8 +31,7 @@
  The presenting UIViewController then calls presentViewController:animated:completion:
  [rootViewController presentViewController:myDialogViewController animated:YES completion:...];
  */
-@interface MDCBottomSheetTransitionController : NSObject
-  <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+@interface MDCBottomSheetTransitionController : NSObject <UIViewControllerTransitioningDelegate>
 
 /**
  Interactions with the tracking scroll view will affect the bottom sheet's drag behavior.
