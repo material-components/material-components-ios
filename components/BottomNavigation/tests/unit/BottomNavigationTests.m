@@ -37,12 +37,12 @@
   self.bottomNavBar = nil;
 }
 
-- (void)testInit {
+- (void)testDefaultValues {
   // When
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
 
   // Then
-  XCTAssertNotNil(bar);
+  XCTAssertEqualObjects(bar.backgroundColor, UIColor.whiteColor);
 }
 
 #pragma mark - Fonts
