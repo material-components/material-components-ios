@@ -53,7 +53,7 @@
 /**
  The view from which the next masked transition should emanate.
  */
-@property(nonatomic, strong, nullable) UIView *sourceView;
+@property(nonatomic, strong, nullable, readonly) UIView *sourceView;
 
 /**
  An optional block that may be used to calculate the frame of the presented view controller's view.

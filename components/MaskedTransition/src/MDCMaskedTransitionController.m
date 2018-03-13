@@ -31,7 +31,8 @@
 }
 
 - (instancetype)init {
-  return [super init];
+  self = [super init];
+  return self;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
