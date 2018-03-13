@@ -182,141 +182,12 @@ static const CGFloat kButtonInkRadius = 64.0f;
     _snackbarMessageViewTextColor = UIColor.whiteColor;
     _snackbarMessageViewShadowColor = UIColor.blackColor;
     _snackbarMessageViewBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1);
+    _buttonTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+    _highlightedButtonTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f);
+    _labelTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
   }
 
   return self;
-}
-
-- (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
-  if (self.dismissalHandler) {
-    self.dismissalHandler(userInitiated, action);
-
-    // In case our dismissal handler has a reference to us, release the block.
-    self.dismissalHandler = nil;
-  }
-}
-
-#pragma mark - Subclass overrides
-
-+ (BOOL)requiresConstraintBasedLayout {
-  return YES;
-}
-
-- (CGFloat)minimumWidth {
-  return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? kMinimumViewWidth_iPad
-                                                              : kMinimumViewWidth_iPhone;
-}
-
-- (CGFloat)maximumWidth {
-  return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? kMaximumViewWidth_iPad
-                                                              : kMaximumViewWidth_iPhone;
-}
-
-#pragma mark - Styling the view
-
-- (UIColor *)snackbarButtonTextColor {
-  return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
-}
-
-- (UIColor *)snackbarButtonTextColorHighlighted {
-  return MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f);
-}
-
-- (UIColor *)snackbarSeparatorColor {
-  return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.5f);
-}
-
-- (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
-  _snackbarMessageViewBackgroundColor = snackbarMessageViewBackgroundColor;
-  self.backgroundColor = snackbarMessageViewBackgroundColor;
-}
-
-- (void)setSnackbarShadowColor:(UIColor *)snackbarMessageViewShadowColor {
-  _snackbarMessageViewShadowColor = snackbarMessageViewShadowColor;
-  self.layer.shadowColor = snackbarMessageViewShadowColor.CGColor;
-}
-
-- (void)setSnackbarMessageViewTextColor:(UIColor *)snackbarMessageViewTextColor {
-  _snackbarMessageViewTextColor = snackbarMessageViewTextColor;
-  self.label.textColor = _snackbarMessageViewTextColor;
-}
-
-- (void)addColorToMessageLabel:(UIColor *)color {
-  NSMutableAttributedString *messageString = [_label.attributedText mutableCopy];
-  [messageString addAttributes:@{
-    NSForegroundColorAttributeName : color,
-  }
-                         range:NSMakeRange(0, messageString.length)];
-  _label.attributedText = messageString;
-}
-
-- (UIFont *)messageFont {
-  return _messageFont;
-}
-
-- (void)setMessageFont:(UIFont *)font {
-  _messageFont = font;
-
-  [self updateMessageFont];
-}
-
-- (void)updateMessageFont {
-  // If we have a custom font apply it to the label.
-  // If not, fall back to the Material specified font.
-  if (_messageFont) {
-    _label.font = _messageFont;
-  } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    // If we are using the default (system) font loader, retrieve the
-    // font from the UIFont standardFont API.
-    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-      _label.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2];
-    } else {
-      // There is a custom font loader, retrieve the font from it.
-      _label.font = [MDCTypography body2Font];
-    }
-  }
-
-  [self setNeedsLayout];
-}
-
-- (UIFont *)buttonFont {
-  return _buttonFont;
-}
-
-- (void)setButtonFont:(UIFont *)font {
-  _buttonFont = font;
-
-  [self updateButtonFont];
-}
-
-- (void)updateButtonFont {
-  UIFont *finalButtonFont;
-
-  // If we have a custom font apply it to the button.
-  // If not, fall back to the Material specified font.
-  if (_buttonFont) {
-    finalButtonFont = _buttonFont;
-  } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    // If we are using the default (system) font loader, retrieve the
-    // font from the UIFont standardFont API.
-    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-      finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
-    } else {
-      // There is a custom font loader, retrieve the font from it.
-      finalButtonFont = [MDCTypography buttonFont];
-    }
-  }
-
-  for (MDCButton *button in _actionButtons) {
-    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
-    [button setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
-  }
-
-  [self setNeedsLayout];
 }
 
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
@@ -449,18 +320,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
       availableTextWidth -= kTitleButtonPadding;
     }
 
-    UIColor *textColor = [self snackbarButtonTextColor];
-    UIColor *textColorHighlighted = [self snackbarButtonTextColorHighlighted];
-
-    _label.textColor = _snackbarMessageViewTextColor;
-
-    if (message.buttonTextColor) {
-      textColor = message.buttonTextColor;
-    }
-
-    if (message.highlightedButtonTextColor) {
-      textColorHighlighted = message.highlightedButtonTextColor;
-    }
+    _label.textColor = _labelTextColor;
 
     // Add buttons to the view. We'll use this opportunity to determine how much space a button will
     // need, to inform the layout direction.
@@ -475,8 +335,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
         [button setTitleFont:_buttonFont forState:UIControlStateNormal];
         [button setTitleFont:_buttonFont forState:UIControlStateHighlighted];
       }
-      [button setTitleColor:textColor forState:UIControlStateNormal];
-      [button setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+      [button setTitleColor:_buttonTextColor forState:UIControlStateNormal];
+      [button setTitleColor:_highlightedButtonTextColor forState:UIControlStateHighlighted];
       [button setTranslatesAutoresizingMaskIntoConstraints:NO];
       button.tag = kButtonTagStart;
       [buttonView addSubview:button];
@@ -494,10 +354,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
       [button setTitle:message.action.title forState:UIControlStateNormal];
       [button setTitle:message.action.title forState:UIControlStateHighlighted];
-
-      if (message.buttonTextColor) {
-        [button setTitleColor:textColor forState:UIControlStateNormal];
-      }
 
       // Make sure the button doesn't get too compressed.
       [button setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -519,6 +375,126 @@ static const CGFloat kButtonInkRadius = 64.0f;
   }
 
   return self;
+}
+
+- (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
+  if (self.dismissalHandler) {
+    self.dismissalHandler(userInitiated, action);
+
+    // In case our dismissal handler has a reference to us, release the block.
+    self.dismissalHandler = nil;
+  }
+}
+
+#pragma mark - Subclass overrides
+
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
+}
+
+- (CGFloat)minimumWidth {
+  return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? kMinimumViewWidth_iPad
+                                                              : kMinimumViewWidth_iPhone;
+}
+
+- (CGFloat)maximumWidth {
+  return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? kMaximumViewWidth_iPad
+                                                              : kMaximumViewWidth_iPhone;
+}
+
+#pragma mark - Styling the view
+
+- (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
+  _snackbarMessageViewBackgroundColor = snackbarMessageViewBackgroundColor;
+  self.backgroundColor = snackbarMessageViewBackgroundColor;
+}
+
+- (void)setSnackbarShadowColor:(UIColor *)snackbarMessageViewShadowColor {
+  _snackbarMessageViewShadowColor = snackbarMessageViewShadowColor;
+  self.layer.shadowColor = snackbarMessageViewShadowColor.CGColor;
+}
+
+- (void)setSnackbarMessageViewTextColor:(UIColor *)snackbarMessageViewTextColor {
+  _snackbarMessageViewTextColor = snackbarMessageViewTextColor;
+  self.label.textColor = _snackbarMessageViewTextColor;
+}
+
+- (void)addColorToMessageLabel:(UIColor *)color {
+  NSMutableAttributedString *messageString = [_label.attributedText mutableCopy];
+  [messageString addAttributes:@{
+    NSForegroundColorAttributeName : color,
+  }
+                         range:NSMakeRange(0, messageString.length)];
+  _label.attributedText = messageString;
+}
+
+- (UIFont *)messageFont {
+  return _messageFont;
+}
+
+- (void)setMessageFont:(UIFont *)font {
+  _messageFont = font;
+
+  [self updateMessageFont];
+}
+
+- (void)updateMessageFont {
+  // If we have a custom font apply it to the label.
+  // If not, fall back to the Material specified font.
+  if (_messageFont) {
+    _label.font = _messageFont;
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      _label.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      _label.font = [MDCTypography body2Font];
+    }
+  }
+
+  [self setNeedsLayout];
+}
+
+- (UIFont *)buttonFont {
+  return _buttonFont;
+}
+
+- (void)setButtonFont:(UIFont *)font {
+  _buttonFont = font;
+
+  [self updateButtonFont];
+}
+
+- (void)updateButtonFont {
+  UIFont *finalButtonFont;
+
+  // If we have a custom font apply it to the button.
+  // If not, fall back to the Material specified font.
+  if (_buttonFont) {
+    finalButtonFont = _buttonFont;
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      finalButtonFont = [MDCTypography buttonFont];
+    }
+  }
+
+  for (MDCButton *button in _actionButtons) {
+    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+    [button setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
+  }
+
+  [self setNeedsLayout];
 }
 
 - (BOOL)shouldWaitForDismissalDuringVoiceover {
