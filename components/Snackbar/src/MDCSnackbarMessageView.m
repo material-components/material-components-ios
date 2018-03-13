@@ -262,7 +262,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     // Set up the title label.
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
     [_contentView addSubview:_label];
-
     // TODO(#2709): Migrate to a single source of truth for fonts
     // If we are using the default (system) font loader, retrieve the
     // font from the UIFont standardFont API.
@@ -293,6 +292,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     // Apply 'global' attributes along the whole string.
     _label.backgroundColor = [UIColor clearColor];
     _label.textAlignment = NSTextAlignmentNatural;
+    _label.adjustsFontSizeToFitWidth = YES;
     _label.attributedText = messageString;
     _label.numberOfLines = 0;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];

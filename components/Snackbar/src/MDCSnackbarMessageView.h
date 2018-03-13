@@ -68,6 +68,21 @@
  */
 @property(nonatomic, strong, nullable) UIColor *highlightedButtonTextColor UI_APPEARANCE_SELECTOR;
 
+/**
+ Indicates whether the snackbar should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ If set to YES, this button will base its message font on MDCFontTextStyleBody2
+ and its button font on MDCFontTextStyleButton.
+
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
 @end
 
 // clang-format off
