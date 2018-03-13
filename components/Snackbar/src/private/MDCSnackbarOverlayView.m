@@ -489,7 +489,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                         options:0
                      animations:^{
                        // Trigger snackbar animation.
-                       [_containingView layoutIfNeeded];
+                       [self->_containingView layoutIfNeeded];
                      }
                      completion:nil];
     [snackbarView animateContentOpacityFrom:fromContentOpacity
