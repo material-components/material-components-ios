@@ -16,46 +16,46 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MDCColorScheme;
+@class MDCExperimentalColorScheme;
 
 /** A function that will perform drawing operations in @c frame. */
-typedef void (*MDCDrawFunc)(CGRect frame, id<MDCColorScheme> colorScheme);
+typedef void (*MDCDrawFunc)(CGRect frame, MDCExperimentalColorScheme * colorScheme);
 
 /** Render the drawing operations in @c drawFunc into a new image. */
-UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, id<MDCColorScheme> colorScheme);
+UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, MDCExperimentalColorScheme * colorScheme);
 
 /* Draw logo. */
-void MDCCatalogDrawMDCLogoDark(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawMDCLogoLight(CGRect frame, id<MDCColorScheme> colorScheme);
+void MDCCatalogDrawMDCLogoDark(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawMDCLogoLight(CGRect frame, MDCExperimentalColorScheme * colorScheme);
 
 /* Draw various tiles. */
-void MDCCatalogDrawActivityIndicatorTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawAnimationTimingTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawAppBarTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawBottomAppBarTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawBottomNavTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawBottomSheetTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawButtonBarTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawButtonsTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawCollectionCellsTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawCollectionsTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawDialogsTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawFeatureHighlightTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawHeaderStackViewTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawInkTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawMaskedTransitionTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawMiscTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawNavigationBarTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawOverlayWindow(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawPageControlTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawPalettesTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawProgressViewTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawShadowLayerTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawSliderTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawSnackbarTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawTabsTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawTextFieldTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawThemesTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawTypographyTile(CGRect frame, id<MDCColorScheme> colorScheme);
-void MDCCatalogDrawTypographyCustomFontsTile(CGRect frame, id<MDCColorScheme> colorScheme);
+void MDCCatalogDrawActivityIndicatorTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawAnimationTimingTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawAppBarTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawBottomAppBarTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawBottomNavTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawBottomSheetTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawButtonBarTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawButtonsTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawCollectionCellsTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawCollectionsTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawDialogsTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawHeaderStackViewTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawInkTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawMaskedTransitionTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawMiscTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawNavigationBarTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawOverlayWindow(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawPageControlTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawPalettesTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawProgressViewTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawShadowLayerTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawSliderTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawSnackbarTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawTabsTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawTextFieldTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawThemesTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawTypographyTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);
+void MDCCatalogDrawTypographyCustomFontsTile(CGRect frame, MDCExperimentalColorScheme * colorScheme);

@@ -31,6 +31,10 @@ class NodeViewTableViewDemoCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     textLabel!.font = MDCTypography.subheadFont()
     imageView!.image = UIImage(named: "Demo")
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let colorScheme = appDelegate.colorScheme
+    detailTextLabel?.textColor = colorScheme.textColor
+    textLabel?.textColor = colorScheme.textColor
 
     // Ensure subtitile text is proportionally less pronounced than the title label
     let textLabelFont = textLabel!.font
@@ -44,7 +48,10 @@ class NodeViewTableViewDemoCell: UITableViewCell {
 
   override func prepareForReuse() {
     super.prepareForReuse()
-    textLabel!.textColor = UIColor.black
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let colorScheme = appDelegate.colorScheme
+    detailTextLabel?.textColor = colorScheme.textColor
+    textLabel?.textColor = colorScheme.textColor
     imageView!.image = UIImage(named: "Demo")
   }
 }
@@ -93,11 +100,11 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
-    MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
+//    MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
 
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.tintColor = colorScheme.textColor
     appBar.navigationBar.titleTextAttributes = [
-      NSForegroundColorAttributeName: UIColor.white,
+      NSForegroundColorAttributeName: colorScheme.textColor,
       NSFontAttributeName: appBarFont ]
     appBar.navigationBar.titleAlignment = .center
   }
@@ -113,7 +120,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.tableView.backgroundColor = UIColor.white
+
     self.tableView.separatorStyle = .none
 
     var charactersCount = 0
@@ -204,7 +211,7 @@ extension MDCNodeListViewController {
                           viewForHeaderInSection section: Int) -> UIView? {
     var sectionViewFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50)
     let sectionView = UIView(frame: sectionViewFrame)
-    sectionView.backgroundColor = UIColor.white
+    
 
     if section == 1 {
       let lineDivider =
@@ -385,18 +392,14 @@ extension MDCNodeListViewController {
             let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
             appBarFont = UIFont(descriptor: descriptor, size: 16)
         }
-        let container = MDCAppBarContainerViewController(contentViewController: contentVC)
-        container.appBar.navigationBar.titleAlignment = .center
-        container.appBar.navigationBar.tintColor = UIColor.white
-        container.appBar.navigationBar.titleTextAttributes =
-            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
-
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let colorScheme = appDelegate.colorScheme
-        MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
-        let textColor = UIColor.white
+        let container = MDCAppBarContainerViewController(contentViewController: contentVC)
+        container.appBar.navigationBar.titleAlignment = .center
+        container.appBar.navigationBar.titleTextAttributes =
+            [ NSForegroundColorAttributeName: colorScheme.textColor, NSFontAttributeName: appBarFont ]
         UIBarButtonItem.appearance().setTitleTextAttributes(
-          [NSForegroundColorAttributeName: textColor],
+          [NSForegroundColorAttributeName: colorScheme.textColor],
           for: UIControlState())
 
         // TODO(featherless): Remove once

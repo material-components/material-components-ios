@@ -67,6 +67,9 @@
   if ([textInputControllerClass respondsToSelector:@selector(setInlinePlaceholderColorDefault:)]) {
     [textInputControllerClass setInlinePlaceholderColorDefault:colorScheme.textColor];
   }
+  if ([textInputControllerClass respondsToSelector:@selector(setErrorColorDefault:)]) {
+    [textInputControllerClass setErrorColorDefault:colorScheme.errorColor];
+  }
   if ([textInputControllerClass respondsToSelector:@selector(setFloatingPlaceholderNormalColorDefault:)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> floatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;

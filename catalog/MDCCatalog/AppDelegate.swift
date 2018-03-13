@@ -46,13 +46,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   lazy var colorScheme: MDCExperimentalColorScheme = {
     let colorScheme = MDCExperimentalColorScheme()
     colorScheme.primaryColor = MDCPalette.purple.tint500
-    colorScheme.backgroundColor = UIColor.white
-    colorScheme.borderColor = MDCPalette.grey.tint300
-    colorScheme.shadowColor = MDCPalette.grey.tint600
+    colorScheme.backgroundColor = MDCPalette.grey.tint900
+    colorScheme.borderColor = MDCPalette.grey.tint600
+    colorScheme.shadowColor = MDCPalette.grey.tint300
     colorScheme.inkColor = MDCPalette.grey.tint200.withAlphaComponent(0.16)
-    colorScheme.textColor = MDCPalette.grey.tint700
-    colorScheme.disabledBackgroundColor = MDCPalette.grey.tint100
-    colorScheme.selectionColor = MDCPalette.purple.tint500
+    colorScheme.textColor = MDCPalette.grey.tint300
+    colorScheme.disabledBackgroundColor = MDCPalette.grey.tint800
+    colorScheme.selectionColor = MDCPalette.purple.tint700
+    colorScheme.errorColor = MDCPalette.red.tint300
+    colorScheme.badgeColor = MDCPalette.purple.tint400
     return colorScheme;
   }()
 
@@ -92,6 +94,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     //
     // Apply color scheme to UIKit components.
+//    UIView.appearance().backgroundColor = colorScheme.backgroundColor
+//    MDCInkView.appearance().backgroundColor = UIColor.clear
     UISlider.appearance().tintColor = colorScheme.primaryColor
     UISwitch.appearance().onTintColor = colorScheme.primaryColor
   }

@@ -10,5 +10,7 @@
 @property(nonatomic, strong) UIColor *borderColor;
 @property(nonatomic, strong) UIColor *inkColor;
 @property(nonatomic, strong) UIColor *shadowColor;
+@property(nonatomic, strong) UIColor *errorColor;
+@property(nonatomic, strong) UIColor *badgeColor;
 
 @end
