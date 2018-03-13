@@ -54,4 +54,25 @@
  */
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 
+/**
+ The color used for button text on the snackbar in normal state.
+
+ Default is white.
+ */
+@property(nonatomic, strong, nullable) UIColor *buttonTextColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The color used for label text on the snackbar in normal state.
+
+ Default is white.
+ */
+@property(nonatomic, strong, nullable) UIColor *labelTextColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The color used for button text on the snackbar in highlighted state.
+
+ Default is white.
+ */
+@property(nonatomic, strong, nullable) UIColor *highlightedButtonTextColor UI_APPEARANCE_SELECTOR;
+
 @end
