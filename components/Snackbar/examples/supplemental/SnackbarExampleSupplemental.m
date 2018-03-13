@@ -68,7 +68,7 @@ static NSString * const kCellIdentifier = @"Cell";
 }
 
 + (BOOL)catalogIsDebug {
-  return YES;
+  return NO;
 }
 
 @end

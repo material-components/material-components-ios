@@ -21,6 +21,7 @@
 
 @implementation SnackbarSimpleExample {
   BOOL _legacyMode;
+  BOOL _dynamicType;
 }
 
 - (void)viewDidLoad {
@@ -35,21 +36,36 @@
   ]];
   self.title = @"Snackbar";
   _legacyMode = YES;
-  self.navigationItem.rightBarButtonItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
-                                       style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(toggleModes)];
+  _dynamicType = NO;
+  self.navigationItem.rightBarButtonItems =
+      @[[[UIBarButtonItem alloc] initWithTitle:@"Legacy"
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(toggleModes)],
+        [[UIBarButtonItem alloc] initWithTitle:@"DT Off"
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(toggleDynamicType)]];
 }
 
 - (void)toggleModes {
   _legacyMode = !_legacyMode;
   if (_legacyMode) {
-    [self.navigationItem.rightBarButtonItem setTitle:@"Legacy"];
+    [self.navigationItem.rightBarButtonItems.firstObject setTitle:@"Legacy"];
   } else {
-    [self.navigationItem.rightBarButtonItem setTitle:@"New"];
+    [self.navigationItem.rightBarButtonItems.firstObject setTitle:@"New"];
   }
   MDCSnackbarMessage.usesLegacySnackbar = _legacyMode;
+}
+
+- (void)toggleDynamicType {
+  _dynamicType = !_dynamicType;
+  if (_dynamicType) {
+    [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT On"];
+  } else {
+    [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT Off"];
+  }
+  [MDCSnackbarMessageView appearance].mdc_adjustsFontForContentSizeCategory = _dynamicType;
 }
 
 #pragma mark - Event Handling
@@ -138,8 +154,6 @@
 
   [MDCSnackbarManager showMessage:message];
 }
-
-
 
 #pragma mark - UICollectionView
 
