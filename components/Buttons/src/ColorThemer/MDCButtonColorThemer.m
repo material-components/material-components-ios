@@ -26,6 +26,7 @@
 
 + (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toButton:(MDCButton *)button {
   [button setBorderColor:colorScheme.borderColor forState:UIControlStateNormal];
+  [button setBorderColor:colorScheme.textColor forState:UIControlStateDisabled];
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [button setBackgroundColor:colorScheme.disabledBackgroundColor forState:UIControlStateDisabled];
   [button setTitleColor:colorScheme.backgroundColor forState:UIControlStateNormal];

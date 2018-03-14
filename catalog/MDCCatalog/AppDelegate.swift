@@ -46,16 +46,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var colorScheme: MDCExperimentalColorScheme = {
     let colorScheme = MDCExperimentalColorScheme()
-    colorScheme.primaryColor = MDCPalette.purple.tint500
-    colorScheme.backgroundColor = MDCPalette.orange.tint50
-    colorScheme.borderColor = MDCPalette.orange.tint600
-    colorScheme.shadowColor = MDCPalette.grey.tint300
-    colorScheme.inkColor = MDCPalette.orange.tint200.withAlphaComponent(0.16)
-    colorScheme.textColor = MDCPalette.grey.tint900
+    colorScheme.primaryColor = MDCPalette.blue.tint500
+    colorScheme.backgroundColor = MDCPalette.grey.tint900
+    colorScheme.borderColor = MDCPalette.blue.tint700
+    colorScheme.shadowColor = MDCPalette.grey.tint600
+    colorScheme.inkColor = MDCPalette.blue.tint200.withAlphaComponent(0.16)
+    colorScheme.textColor = MDCPalette.grey.tint50
     colorScheme.disabledBackgroundColor = MDCPalette.grey.tint800
-    colorScheme.selectionColor = MDCPalette.purple.tint700
+    colorScheme.selectionColor = MDCPalette.blue.tint300
     colorScheme.errorColor = MDCPalette.red.tint300
-    colorScheme.badgeColor = MDCPalette.purple.tint400
+    colorScheme.badgeColor = MDCPalette.blue.tint600
     return colorScheme;
   }()
 

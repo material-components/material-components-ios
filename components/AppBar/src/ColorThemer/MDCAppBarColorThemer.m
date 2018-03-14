@@ -33,10 +33,6 @@
     titleTextAttributes = [@{} mutableCopy];
   }
   titleTextAttributes[NSForegroundColorAttributeName] = colorScheme.textColor;
-  appBar.navigationBar.titleTextAttributes = [titleTextAttributes copy];
-  MDCButtonBar *bar = [appBar.navigationBar valueForKey:@"trailingButtonBar"];
-  MDCButton *button = ((NSArray *)[bar valueForKey:@"buttonViews"]).firstObject;
-  NSLog(@"%@", button.inkColor);
 }
 
 @end
