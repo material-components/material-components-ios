@@ -34,6 +34,8 @@
   [MDCActivityIndicatorColorThemer applyColorScheme:self.colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
   [MDCAlertColorThemer applyColorScheme:self.colorScheme];
+  [MDCBottomAppBarColorThemer applyColorScheme:self.colorScheme
+                            toBottomAppBarView:MDCBottomAppBarView.appearance];
   [MDCButtonBarColorThemer applyColorScheme:self.colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:self.colorScheme toButton:[MDCButton appearance]];
   [MDCFeatureHighlightColorThemer applyColorScheme:self.colorScheme
