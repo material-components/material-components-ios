@@ -452,7 +452,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     UIColor *textColor = [self snackbarButtonTextColor];
     UIColor *textColorHighlighted = [self snackbarButtonTextColorHighlighted];
 
-    _label.textColor = textColor;
+    _label.textColor = _snackbarMessageViewTextColor;
 
     if (message.buttonTextColor) {
       textColor = message.buttonTextColor;
