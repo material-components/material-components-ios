@@ -18,6 +18,8 @@
 
 #import "MaterialThemes.h"
 
+@class MDCAlertController;
+
 /**
  Used to apply a color scheme to theme to MDCAlertController alert dialogs.
  */
@@ -29,5 +31,7 @@
  @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme;
+
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toInstancesOfClass:(nullable Class)alertController;
 
 @end
