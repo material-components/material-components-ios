@@ -29,6 +29,7 @@
 + (void)applyExperimentalTheme:(MDCExperimentalColorScheme *)colorScheme toCardCollectionCell:(MDCCardCollectionCell *)cell {
   [cell setBorderColor:colorScheme.borderColor forState:MDCCardCellStateNormal];
   [cell setShadowColor:colorScheme.shadowColor forState:MDCCardCellStateNormal];
+  [cell setImageTintColor:colorScheme.selectionColor forState:MDCCardCellStateSelected];
   cell.backgroundColor = colorScheme.backgroundColor;
 }
 
