@@ -23,10 +23,10 @@
 
 @implementation MDCButtonTitleColorAccessibilityMutator
 
-+ (UIColor *)passingPaletteColorForColor:(UIColor *)color
-                            onBackground:(UIColor *)background
-                                 options:(MDFTextAccessibilityOptions)options
-                      searchDarkerColors:(BOOL)searchDarkerColors {
++ (UIColor *)nearestPassingPaletteColorForColor:(UIColor *)color
+                                   onBackground:(UIColor *)background
+                                        options:(MDFTextAccessibilityOptions)options
+                             searchDarkerColors:(BOOL)searchDarkerColors {
 
   if (searchDarkerColors && [MDCPalette nextDarkerColorInPaletteForColor:color]) {
     UIColor *nextDarkerColor = [MDCPalette nextDarkerColorInPaletteForColor:color];
@@ -35,10 +35,10 @@
                                 options:options]) {
       return nextDarkerColor;
     }
-    return [[self class] passingPaletteColorForColor:nextDarkerColor
-                                        onBackground:background
-                                             options:options
-                                  searchDarkerColors:YES];
+    return [[self class] nearestPassingPaletteColorForColor:nextDarkerColor
+                                               onBackground:background
+                                                    options:options
+                                         searchDarkerColors:YES];
   }
   if (!searchDarkerColors && [MDCPalette nextLighterColorInPaletteForColor:color]) {
     UIColor *nextLighterColor = [MDCPalette nextLighterColorInPaletteForColor:color];
@@ -47,17 +47,17 @@
                                 options:options]) {
       return nextLighterColor;
     }
-    return [[self class] passingPaletteColorForColor:nextLighterColor
-                                        onBackground:background
-                                             options:options
-                                  searchDarkerColors:NO];
+    return [[self class] nearestPassingPaletteColorForColor:nextLighterColor
+                                               onBackground:background
+                                                    options:options
+                                         searchDarkerColors:NO];
   }
   return nil;
 }
 
-+ (UIColor *)passingPaletteColorForColor:(UIColor *)color
-                            onBackground:(UIColor *)background
-                                 options:(MDFTextAccessibilityOptions) options {
++ (UIColor *)nearestPassingPaletteColorForColor:(UIColor *)color
+                                   onBackground:(UIColor *)background
+                                        options:(MDFTextAccessibilityOptions) options {
   CGFloat colorContrast = [MDFTextAccessibility contrastRatioForTextColor:color
                                                         onBackgroundColor:background];
   if ([MDCPalette nextDarkerColorInPaletteForColor:color]) {
@@ -66,10 +66,10 @@
         [MDFTextAccessibility contrastRatioForTextColor:nextDarkerColor
                                       onBackgroundColor:background];
     if (darkerContrast > colorContrast) {
-      return [[self class] passingPaletteColorForColor:color
-                                          onBackground:background
-                                               options:options
-                                    searchDarkerColors:YES];
+      return [[self class] nearestPassingPaletteColorForColor:color
+                                                 onBackground:background
+                                                      options:options
+                                           searchDarkerColors:YES];
     }
   }
   if ([MDCPalette nextLighterColorInPaletteForColor:color]) {
@@ -78,10 +78,10 @@
         [MDFTextAccessibility contrastRatioForTextColor:nextLighterColor
                                       onBackgroundColor:background];
     if (lighterContrast > colorContrast) {
-      return [[self class] passingPaletteColorForColor:color
-                                          onBackground:background
-                                               options:options
-                                    searchDarkerColors:NO];
+      return [[self class] nearestPassingPaletteColorForColor:color
+                                                 onBackground:background
+                                                      options:options
+                                           searchDarkerColors:NO];
     }
   }
   return nil;
@@ -107,9 +107,9 @@
                    passesOnBackgroundColor:backgroundColor
                                    options:options]) {
 
-        UIColor *color = [[self class] passingPaletteColorForColor:existingColor
-                                                      onBackground:backgroundColor
-                                                           options:options];
+        UIColor *color = [[self class] nearestPassingPaletteColorForColor:existingColor
+                                                             onBackground:backgroundColor
+                                                                  options:options];
         if (!color) {
           color = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
                                                    targetTextAlpha:[MDCTypography buttonFontOpacity]
