@@ -36,7 +36,18 @@
 }
 
 + (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
-    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+            toTextField:(MDCTextField *)textField {
+  textField.font = fontScheme.body1;
+}
+
+// TODO: (larche) Drop this if defined and the pragmas when we drop Xcode 8 support.
+// This is to silence a warning that doesn't appear in Xcode 9 when you use Class as an object.
+#if !defined(__IPHONE_11_0)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-method-access"
+#endif
++ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
+toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   [textInputControllerClass setInlinePlaceholderFontDefault:fontScheme.body1];
   [textInputControllerClass setTrailingUnderlineLabelFontDefault:fontScheme.caption];
   [textInputControllerClass setLeadingUnderlineLabelFontDefault:fontScheme.caption];
@@ -44,14 +55,13 @@
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    double scale = fontScheme.caption.pointSize/fontScheme.body1.pointSize;
+    CGFloat scale = fontScheme.caption.pointSize/fontScheme.body1.pointSize;
     [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:scale];
   }
 }
+#if !defined(__IPHONE_11_0)
+#pragma clang diagnostic pop
+#endif
 
-+ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
-            toTextField:(MDCTextField *)textField {
-  textField.font = fontScheme.body1;
-}
 
 @end
