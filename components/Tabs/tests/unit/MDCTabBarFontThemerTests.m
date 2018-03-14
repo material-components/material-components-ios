@@ -20,10 +20,10 @@
 #import "MaterialThemes.h"
 #import "MDCTabBarFontThemer.h"
 
-@interface MDCTabBarFontSchemeTests : XCTestCase
+@interface MDCTabBarFontThemerTests : XCTestCase
 @end
 
-@implementation MDCTabBarFontSchemeTests
+@implementation MDCTabBarFontThemerTests
 
 - (void)testTabBarFontThemerApplyFontSchemeProperly {
   MDCTabBar *tabBar = [[MDCTabBar alloc] init];

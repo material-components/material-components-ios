@@ -40,11 +40,11 @@
 
 @end
 
-@interface MDCTabBarColorSchemeTests : XCTestCase
+@interface MDCTabBarColorThemerTests : XCTestCase
 
 @end
 
-@implementation MDCTabBarColorSchemeTests
+@implementation MDCTabBarColorThemerTests
 
 - (void)testTabBarColorThemerApplyColorSchemeProperly {
   MDCTabBar *tabBar = [[MDCTabBar alloc] init];

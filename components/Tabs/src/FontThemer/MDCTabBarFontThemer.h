@@ -1,5 +1,5 @@
 /*
-Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,6 +30,6 @@ limitations under the License.
  @param tabBar A MDCTabBar instance to apply a color scheme.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-               toTabBar:(nonnull MDCTabBar *)tabBar;
+               toTabBar:(nullable MDCTabBar *)tabBar;
 
 @end
