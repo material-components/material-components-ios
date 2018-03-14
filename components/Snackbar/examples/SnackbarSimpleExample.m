@@ -85,7 +85,7 @@
   [MDCSnackbarMessageView appearance].buttonTextColor =
       [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
   [MDCSnackbarMessageView appearance].highlightedButtonTextColor =
-      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:0.7];
+      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:0.7f];
   [MDCSnackbarManager showMessage:message];
 }
 
