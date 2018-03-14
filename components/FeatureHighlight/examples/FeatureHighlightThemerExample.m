@@ -18,9 +18,10 @@
 #import "MaterialFeatureHighlight.h"
 #import "MaterialThemes.h"
 #import "MaterialTypography.h"
-#import "supplemental/FeatureHighlightExampleSupplemental.h"
+#import "MDCFeatureHighlightAccessibilityMutator.h"
 #import "MDCFeatureHighlightColorThemer.h"
 #import "MDCFeatureHighlightFontThemer.h"
+#import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightThemerExample
 
@@ -74,6 +75,7 @@
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                               completion:nil];
+  [MDCFeatureHighlightAccessibilityMutator mutate:vc];
 
   vc.titleText = @"Feature Highlight can use themers";
   vc.bodyText = @"The fonts and colors can be themed.";

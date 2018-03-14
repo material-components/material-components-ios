@@ -268,7 +268,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   func inkViewForView(_ view: UIView) -> MDCInkView {
     let foundInkView = MDCInkView.injectedInkView(for: view)
-    foundInkView.inkStyle = .unbounded
+    foundInkView.inkStyle = .bounded
     foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
     return foundInkView
   }
