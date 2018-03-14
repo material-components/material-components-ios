@@ -83,6 +83,8 @@ mdc_objc_library(
     srcs = glob([
         "tests/unit/*.m",
         "tests/unit/*.h",
+        "tests/unit/supplemental/*.m",
+        "tests/unit/supplemental/*.h",
     ]),
     sdk_frameworks = [
         "UIKit",
@@ -95,6 +97,7 @@ mdc_objc_library(
         ":TitleColorAccessibilityMutator",
     ],
     visibility = ["//visibility:private"],
+    xibs = native.glob(["tests/unit/resources/*.xib"]),
 )
 
 ios_unit_test(
