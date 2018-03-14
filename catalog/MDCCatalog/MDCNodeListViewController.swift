@@ -35,6 +35,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
     let colorScheme = appDelegate.colorScheme
     detailTextLabel?.textColor = colorScheme.textColor
     textLabel?.textColor = colorScheme.textColor
+    backgroundColor = nil
 
     // Ensure subtitile text is proportionally less pronounced than the title label
     let textLabelFont = textLabel!.font
@@ -119,7 +120,9 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let colorScheme = appDelegate.colorScheme
+    tableView.backgroundColor = colorScheme.backgroundColor
 
     self.tableView.separatorStyle = .none
 
@@ -212,6 +215,8 @@ extension MDCNodeListViewController {
     var sectionViewFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50)
     let sectionView = UIView(frame: sectionViewFrame)
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let colorScheme = appDelegate.colorScheme
 
     if section == 1 {
       let lineDivider =
@@ -229,17 +234,21 @@ extension MDCNodeListViewController {
                           height: additionalExamplesSectionHeight)
     label.font = MDCTypography.body2Font()
     label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = colorScheme.textColor
     sectionView.addSubview(label)
     constrainView(view: label,
                  containerView: sectionView,
                  height: additionalExamplesSectionHeight,
                  top: 0)
+    sectionView.backgroundColor = nil
 
     if section == 0 {
       let textView = UITextView()
       textView.text = componentDescription
       textView.font = MDCTypography.captionFont()
       textView.alpha = MDCTypography.captionFontOpacity()
+      textView.backgroundColor = nil
+      textView.textColor = colorScheme.textColor
 
       if UIApplication.shared.userInterfaceLayoutDirection == .leftToRight {
         textView.contentInset = UIEdgeInsets(top: -8, left: -5, bottom: -8, right: 5)

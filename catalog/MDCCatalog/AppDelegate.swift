@@ -22,6 +22,7 @@ import MaterialComponents.MDCActivityIndicatorColorThemer
 import MaterialComponents.MDCButtonBarColorThemer
 import MaterialComponents.MDCButtonColorThemer
 import MaterialComponents.MDCAlertColorThemer
+import MaterialComponents.MaterialDialogs
 import MaterialComponents.MDCBottomNavigationBarColorThemer
 import MaterialComponents.MDCFeatureHighlightColorThemer
 import MaterialComponents.MDCFlexibleHeaderColorThemer
@@ -46,11 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   lazy var colorScheme: MDCExperimentalColorScheme = {
     let colorScheme = MDCExperimentalColorScheme()
     colorScheme.primaryColor = MDCPalette.purple.tint500
-    colorScheme.backgroundColor = MDCPalette.grey.tint900
-    colorScheme.borderColor = MDCPalette.grey.tint600
+    colorScheme.backgroundColor = MDCPalette.orange.tint50
+    colorScheme.borderColor = MDCPalette.orange.tint600
     colorScheme.shadowColor = MDCPalette.grey.tint300
-    colorScheme.inkColor = MDCPalette.grey.tint200.withAlphaComponent(0.16)
-    colorScheme.textColor = MDCPalette.grey.tint300
+    colorScheme.inkColor = MDCPalette.orange.tint200.withAlphaComponent(0.16)
+    colorScheme.textColor = MDCPalette.grey.tint900
     colorScheme.disabledBackgroundColor = MDCPalette.grey.tint800
     colorScheme.selectionColor = MDCPalette.purple.tint700
     colorScheme.errorColor = MDCPalette.red.tint300
@@ -82,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
     MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
     MDCSnackbarMessageViewExperimentalColorThemer.applyTheme(colorScheme, to: MDCSnackbarMessageView.appearance())
-
+    MDCAlertColorThemer.apply(colorScheme, toInstancesOf: MDCAlertController.self)
     MDCTextFieldColorThemer.apply(colorScheme, toAllTextInputControllersOfClass: MDCTextInputControllerUnderline.self)
     MDCTextFieldColorThemer.apply(colorScheme, toAllTextInputControllersOfClass: MDCTextInputControllerLegacyDefault.self)
     MDCTextFieldColorThemer.apply(colorScheme, toAllTextInputControllersOfClass: MDCTextInputControllerFilled.self)

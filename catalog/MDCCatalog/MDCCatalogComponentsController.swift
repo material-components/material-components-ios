@@ -129,6 +129,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     titleLabel.text = title!
     titleLabel.textColor = appDelegate.colorScheme.textColor
     titleLabel.font = UIFont.mdc_preferredFont(forMaterialTextStyle: .title)
+    self.collectionView?.backgroundColor = appDelegate.colorScheme.backgroundColor
     if #available(iOS 9.0, *) {
         titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFontWeightRegular)
     } else {
