@@ -86,7 +86,7 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 @property(nullable, nonatomic, copy) UIColor *backgroundColor NS_UNAVAILABLE;
 
 /**
- The color of the shadows below the bottom app bar.
+ The color of the shadow under the bottom app bar.
 
  To set the shadow color of the Floating Action Button, set it directly on the button.
  */
