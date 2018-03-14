@@ -55,18 +55,25 @@
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 
 /**
- The color used for button text on the snackbar in normal state.
+ Returns the button title color for a particular control state.
 
- Default is white.
+ Default for UIControlStateNormal is white.
+ Default for UIControlStatehighlighted is MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f).
+
+ @param state The control state.
+ @return The button title color for the requested state.
  */
-@property(nonatomic, strong, nullable) UIColor *buttonTextColor UI_APPEARANCE_SELECTOR;
+- (nullable UIColor *)buttonTitleColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /**
- The color used for button text on the snackbar in highlighted state.
+ Sets the button title color for a particular control state.
 
- Default is white.
+ @param titleColor The title color.
+ @param state The control state.
  */
-@property(nonatomic, strong, nullable) UIColor *highlightedButtonTextColor UI_APPEARANCE_SELECTOR;
+- (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state
+UI_APPEARANCE_SELECTOR;
+
 
 /**
  Indicates whether the snackbar should automatically update its font when the device’s

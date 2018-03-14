@@ -178,6 +178,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   // Holds the instances of MDCButton
   NSMutableArray<MDCButton *> *_actionButtons;
 
+  NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
+
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
@@ -188,8 +190,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _snackbarMessageViewShadowColor = UIColor.blackColor;
     _snackbarMessageViewBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1);
     _messageTextColor = UIColor.whiteColor;
-    _buttonTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
-    _highlightedButtonTextColor = UIColor.whiteColor;
+//    _buttonTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+//    _highlightedButtonTextColor = UIColor.whiteColor;
+    _buttonTitleColors = [NSMutableDictionary dictionary];
+    _buttonTitleColors[@(UIControlStateNormal)] = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+    _buttonTitleColors[@(UIControlStateHighlighted)] = UIColor.whiteColor;
   }
 
   return self;
@@ -357,8 +362,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       [button setTitleFont:_buttonFont forState:UIControlStateNormal];
       [button setTitleFont:_buttonFont forState:UIControlStateHighlighted];
     }
-    [button setTitleColor:_buttonTextColor forState:UIControlStateNormal];
-    [button setTitleColor:_highlightedButtonTextColor forState:UIControlStateHighlighted];
+    [button setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
+                 forState:UIControlStateNormal];
+    [button setTitleColor:_buttonTitleColors[@(UIControlStateHighlighted)]
+                 forState:UIControlStateHighlighted];
     [button setTranslatesAutoresizingMaskIntoConstraints:NO];
     button.tag = kButtonTagStart;
     [buttonView addSubview:button];
@@ -446,17 +453,15 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   self.label.textColor = _messageTextColor;
 }
 
-- (void)setButtonTextColor:(UIColor *)buttonTextColor {
-  _buttonTextColor = buttonTextColor;
-  for (MDCButton *button in _actionButtons) {
-    [button setTitleColor:buttonTextColor forState:UIControlStateNormal];
-  }
+- (nullable UIColor *)buttonTitleColorForState:(UIControlState)state {
+  return _buttonTitleColors[@(state)];
 }
 
-- (void)setHighlightedButtonTextColor:(UIColor *)highlightedButtonTextColor {
-  _highlightedButtonTextColor = highlightedButtonTextColor;
+- (void)setButtonTitleColor:(nullable UIColor *)buttonTitleColor forState:(UIControlState)state {
+  _buttonTitleColors[@(state)] = buttonTitleColor;
+
   for (MDCButton *button in _actionButtons) {
-    [button setTitleColor:highlightedButtonTextColor forState:UIControlStateHighlighted];
+    [button setTitleColor:buttonTitleColor forState:state];
   }
 }
 

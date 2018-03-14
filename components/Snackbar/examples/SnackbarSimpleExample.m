@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialPalettes.h"
 #import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
 
@@ -31,6 +32,7 @@
       @"Snackbar with Action Button",
       @"Snackbar with Long Text",
       @"Attributed Text Example",
+      @"Color Themed Snackbar",
       @"Customize Font Example",
       @"De-Customize Font Example"
   ]];
@@ -82,10 +84,6 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
-  [MDCSnackbarMessageView appearance].buttonTextColor =
-      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
-  [MDCSnackbarMessageView appearance].highlightedButtonTextColor =
-      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:0.7f];
   [MDCSnackbarManager showMessage:message];
 }
 
@@ -102,8 +100,6 @@
   action.handler = actionHandler;
   action.title = @"Action";
   message.action = action;
-  [MDCSnackbarMessageView appearance].buttonTextColor =
-      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
 
   [MDCSnackbarManager showMessage:message];
 }
@@ -124,6 +120,21 @@
   [MDCSnackbarManager showMessage:message];
 }
 
+- (void)showColorThemedSnackbar:(id)sender {
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Snackbar Message";
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  message.action = action;
+  [[MDCSnackbarMessageView appearance]
+      setButtonTitleColor:MDCPalette.purplePalette.tint400
+                 forState:UIControlStateNormal];
+  [[MDCSnackbarMessageView appearance]
+      setButtonTitleColor:MDCPalette.purplePalette.tint700
+                 forState:UIControlStateHighlighted];
+  [MDCSnackbarMessageView appearance].messageTextColor = MDCPalette.greenPalette.tint500;
+  [MDCSnackbarManager showMessage:message];
+}
 
 - (void)showCustomizedSnackbar:(id)sender {
   UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14.0f];
@@ -173,9 +184,12 @@
       [self showBoldSnackbar:nil];
       break;
     case 4:
-      [self showCustomizedSnackbar:nil];
+      [self showColorThemedSnackbar:nil];
       break;
     case 5:
+      [self showCustomizedSnackbar:nil];
+      break;
+    case 6:
       [self showDecustomizedSnackbar:nil];
       break;
     default:
