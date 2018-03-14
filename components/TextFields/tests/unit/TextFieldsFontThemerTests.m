@@ -26,6 +26,16 @@
 
 @implementation TextFieldsFontThemerTests
 
+- (void)tearDown {
+  [super tearDown];
+  // Reset class default values.
+  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
+  [MDCTextFieldFontThemer applyFontScheme:fontScheme
+         toAllTextInputControllersOfClass:[MDCTextInputControllerFullWidth class]];
+  [MDCTextFieldFontThemer applyFontScheme:fontScheme
+         toAllTextInputControllersOfClass:[MDCTextInputControllerBase class]];
+}
+
 - (void)testFontThemerSetsTheFontsForTextFieldProperly {
   MDCTextField *textField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   textField.font = [UIFont systemFontOfSize:28];
