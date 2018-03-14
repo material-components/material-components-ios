@@ -18,6 +18,7 @@
 
 #import "MDCButtonTitleColorAccessibilityMutator.h"
 #import "MaterialButtons.h"
+#import "MaterialPalettes.h"
 
 // A value greater than the largest value created by combining normal values of UIControlState.
 // This is a complete hack, but UIControlState doesn't expose anything useful here.
@@ -108,6 +109,39 @@ static NSString *controlStateDescription(UIControlState controlState);
                                @"for control state:%@ ", controlStateDescription(controlState));
     }
   }
+}
+
+- (void)testPalettableColorMutatorWithPaletteColorSucceeding {
+  // Given
+  MDCPalette *bluePalette = MDCPalette.bluePalette;
+  UIColor *backgroundColor = bluePalette.tint50;
+  UIColor *originalTextColor = backgroundColor;
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitleColor:originalTextColor forState:UIControlStateNormal];
+  [button setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+
+  // When
+  [MDCButtonTitleColorAccessibilityMutator changeTitleColorOfButton:button];
+
+  // Then
+  XCTAssertEqual([button titleColorForState:UIControlStateNormal], bluePalette.tint800);
+}
+
+- (void)testPalettableColorMuatatorWithPaletteColorFailing {
+  // Given
+  MDCPalette *bluePalette = MDCPalette.bluePalette;
+  UIColor *backgroundColor = bluePalette.tint500;
+  UIColor *originalTextColor = backgroundColor;
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitleColor:originalTextColor forState:UIControlStateNormal];
+  [button setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+
+  // When
+  [MDCButtonTitleColorAccessibilityMutator changeTitleColorOfButton:button];
+
+  // Then
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
+                        [UIColor colorWithWhite:0 alpha:0.87f]);
 }
 
 @end

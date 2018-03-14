@@ -215,4 +215,24 @@ CG_EXTERN const MDCPaletteAccent _Nonnull MDCPaletteAccent700Name;
 /** The A700 accent color, the darkest accent color. */
 @property(nonatomic, nullable, readonly) UIColor *accent700;
 
+/**
+ Returns the next darker color within the Palette and section (tint or accent). If no darker color
+ exists or @c color is not a predefined palette color, then @c nil is returned.
+
+ @param color used as the base color to perform a palette search for the next darker color.
+
+ @returns the next darker color in the palette, if it exists.
+ */
++ (nullable UIColor *)nextDarkerColorInPaletteForColor:(nullable UIColor *)color;
+
+/**
+ Returns the next lighter color within the Palette and section (tint or accent). If no lighter color
+ exists or @c color is not a predefined palette color, then @c nil is returned.
+
+ @param color used as the base color to perform a palette search for the next lighter color.
+
+ @returns the next lighter color in the palette, if it exists.
+ */
++ (nullable UIColor *)nextLighterColorInPaletteForColor:(nullable UIColor *)color;
+
 @end
