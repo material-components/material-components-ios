@@ -50,6 +50,21 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "FontThemer",
+    srcs = native.glob(["src/FontThemer/*.m"]),
+    hdrs = native.glob(["src/FontThemer/*.h"]),
+    includes = ["src/FontThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":TextFields",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
@@ -61,6 +76,7 @@ mdc_objc_library(
     deps = [
         ":TextFields",
         ":ColorThemer",
+        ":FontThemer",
     ],
     visibility = ["//visibility:private"],
 )
