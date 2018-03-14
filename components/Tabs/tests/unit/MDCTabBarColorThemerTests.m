@@ -40,6 +40,18 @@
 
 @end
 
+@interface MDCTabBarTestColorSchemeNoOptionalImplementation : NSObject <MDCColorScheme>
+
+@end
+
+@implementation MDCTabBarTestColorSchemeNoOptionalImplementation
+
+- (UIColor *)primaryColor {
+  return [UIColor redColor];
+}
+
+@end
+
 @interface MDCTabBarColorThemerTests : XCTestCase
 
 @end
@@ -53,6 +65,21 @@
   XCTAssertEqualObjects(tabBar.selectedItemTintColor, colorScheme.primaryDarkColor);
   XCTAssertEqualObjects(tabBar.unselectedItemTintColor, colorScheme.primaryLightColor);
   XCTAssertEqualObjects(tabBar.inkColor, colorScheme.primaryLightColor);
+}
+
+- (void)testTabBarColorThemerGracefullyHandlesColorSchemeWithNoOptionalImplementation {
+  MDCTabBar *tabBar = [[MDCTabBar alloc] init];
+  UIColor *color = [UIColor redColor];
+  tabBar.selectedItemTintColor = color;
+  tabBar.unselectedItemTintColor = color;
+  tabBar.inkColor = color;
+
+  MDCTabBarTestColorSchemeNoOptionalImplementation *colorScheme =
+      [[MDCTabBarTestColorSchemeNoOptionalImplementation alloc] init];
+  [MDCTabBarColorThemer applyColorScheme:colorScheme toTabBar:tabBar];
+  XCTAssertEqualObjects(tabBar.selectedItemTintColor, color);
+  XCTAssertEqualObjects(tabBar.unselectedItemTintColor, color);
+  XCTAssertEqualObjects(tabBar.inkColor, color);
 }
 
 @end

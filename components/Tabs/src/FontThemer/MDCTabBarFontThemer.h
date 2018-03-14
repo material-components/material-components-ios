@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#import "MaterialThemes.h"
 #import "MaterialTabs.h"
+#import "MaterialThemes.h"
 
 /**
  Used to apply a font scheme to theme MDCTabBar.
