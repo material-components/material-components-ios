@@ -73,8 +73,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @end
 
 @implementation MDCAlertController {
-  NSString *_alertTitle; //KM
-  NSString *_message; //KM
+  NSString *_alertTitle;
+  NSString *_message;
 
   NSMutableArray<MDCAlertAction *> *_actions;
 
@@ -202,14 +202,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 // Update the fonts used based on mdc_preferredFontForMaterialTextStyle and recalculate the
 // preferred content size.
 - (void)updateFontsForDynamicType {
-//  self.alertView.titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
-//  self.alertView.messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-
-  // The action MDCButtons handle their own resizing
+  [self.alertView updateFontsForDynamicType];
 
   // Our presentation controller reacts to changes to preferredContentSize to determine our
   // frame at the presented controller.
-  self.preferredContentSize = [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  self.preferredContentSize =
+      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
 - (void)actionButtonPressed:(id)sender {
@@ -230,6 +228,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)loadView {
   self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
   self.alertView = (MDCAlertControllerView *)self.view;
+  // Explicitly overwrite the view default if true
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
+  }
 }
 
 - (void)viewDidLoad {

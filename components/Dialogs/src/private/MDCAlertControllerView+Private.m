@@ -25,6 +25,7 @@
 // https://material.io/guidelines/components/dialogs.html#dialogs-specs
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
+static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 static const UIEdgeInsets MDCDialogContentInsets = {24.0, 24.0, 24.0, 24.0};
 static const CGFloat MDCDialogContentVerticalPadding = 20.0;
@@ -100,6 +101,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return self;
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (NSArray<UIButton *>*)actionButtons{
   return (NSArray<UIButton *>*)_actionButtons;
 }
@@ -114,6 +119,29 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 //  self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 
   [self setNeedsLayout];
+}
+
+- (void)addActionButtonTitle:(NSString *)actionTitle selector:(SEL)selector {
+  MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+  [actionButton setTitle:actionTitle forState:UIControlStateNormal];
+  if (_buttonColor) {
+    // We only set if _buttonColor since settingTitleColor to nil doesn't reset the title to the
+    // default
+    [actionButton setTitleColor:_buttonColor forState:UIControlStateNormal];
+  }
+  [actionButton setTitleFont:_buttonFont forState:UIControlStateNormal];
+  // TODO(#1726): Determine default text color values for Normal and Disabled
+  CGRect buttonRect = actionButton.bounds;
+  buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonHeight);
+  buttonRect.size.width = MAX(buttonRect.size.width, MDCDialogActionButtonMinimumWidth);
+  actionButton.frame = buttonRect;
+  [actionButton addTarget:nil
+                   action:selector
+         forControlEvents:UIControlEventTouchUpInside];
+  [self.actionsScrollView addSubview:actionButton];
+
+  [_actionButtons addObject:actionButton];
 }
 
 - (void)setTitleFont:(UIFont *)font {
@@ -237,21 +265,65 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   _messageLabel.textColor = messageColor;
 }
 
-- (void)addActionButtonTitle:(NSString *)actionTitle selector:(SEL)selector {
-  MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
-  actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
-  [actionButton setTitle:actionTitle forState:UIControlStateNormal];
-  // TODO(#1726): Determine default text color values for Normal and Disabled
-  CGRect buttonRect = actionButton.bounds;
-  buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonHeight);
-  buttonRect.size.width = MAX(buttonRect.size.width, MDCDialogActionButtonMinimumWidth);
-  actionButton.frame = buttonRect;
-  [actionButton addTarget:nil
-                   action:selector
-         forControlEvents:UIControlEventTouchUpInside];
-  [self.actionsScrollView addSubview:actionButton];
+- (void)setButtonFont:(UIFont *)font {
+  _buttonFont = font;
 
-  [_actionButtons addObject:actionButton];
+  [self updateButtonFont];
+}
+
+- (void)updateButtonFont {
+  // If we have a custom font apply it.
+  // If not, fall back to the Material specified font.
+  UIFont *finalButtonFont;
+  if (_buttonFont) {
+    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
+    if (_mdc_adjustsFontForContentSizeCategory) {
+      finalButtonFont =
+          [_buttonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                    scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    } else {
+      finalButtonFont = _buttonFont;
+    }
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    if (_mdc_adjustsFontForContentSizeCategory) {
+      // If we are using the default (system) font loader, retrieve the
+      // font from the UIFont preferredFont API.
+      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+        finalButtonFont = [UIFont mdc_preferredFontForMaterialTextStyle:kButtonTextStyle];
+      } else {
+        // There is a custom font loader, retrieve the font and scale it.
+        UIFont *customTypographyFont = [MDCTypography titleFont];
+        finalButtonFont =
+            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
+                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      }
+    } else {
+      // If we are using the default (system) font loader, retrieve the
+      // font from the UIFont standardFont API.
+      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+        finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:kButtonTextStyle];
+      } else {
+        // There is a custom font loader, retrieve the font from it.
+        finalButtonFont = [MDCTypography titleFont];
+      }
+    }
+  }
+
+  for (MDCFlatButton *button in self.actionButtons) {
+    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+  }
+
+  [self setNeedsLayout];
+}
+
+- (void)setButtonColor:(UIColor *)color {
+  _buttonColor = color;
+
+  for (MDCFlatButton *button in self.actionButtons) {
+    [button setTitleColor:_buttonColor forState:UIControlStateNormal];
+  }
 }
 
 #pragma mark - Internal
@@ -364,21 +436,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     [button sizeToFit];
   }
 
-//  // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
-//  if (CGRectGetWidth(self.bounds) != _previousLayoutSize.width ||
-//      CGRectGetHeight(self.bounds) != _previousLayoutSize.height) {
-//    CGSize currentPreferredContentSize = self.preferredContentSize;
-//    CGSize calculatedPreferredContentSize =
-//    [self calculatePreferredContentSizeForBounds:CGRectStandardize(self.bounds).size];
-//
-//    if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
-//      // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
-//      self.preferredContentSize = calculatedPreferredContentSize;
-//    }
-//
-//    _previousLayoutSize = CGRectStandardize(self.view.bounds).size;
-//  }
-//
   // Used to calculate the height of the scrolling content, so we limit the width.
   CGSize boundsSize = CGRectInfinite.size;
   boundsSize.width = CGRectGetWidth(self.bounds);
@@ -523,36 +580,16 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     button.mdc_adjustsFontForContentSizeCategory = adjusts;
   }
 
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    [self updateFontsForDynamicType];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentSizeCategoryDidChange:)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
-  } else {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIContentSizeCategoryDidChangeNotification
-                                                  object:nil];
-  }
-}
-
-// Handles UIContentSizeCategoryDidChangeNotifications
-- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
 }
 
-// Update the fonts used based on mdc_preferredFontForMaterialTextStyle and recalculate the
-// preferred content size.
+// Update the fonts used based on whether Dynamic Type is enabled
 - (void)updateFontsForDynamicType {
-  self.titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
-  self.messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  [self updateTitleFont];
+  [self updateMessageFont];
+  [self updateButtonFont];
 
-  // The action MDCButtons handle their own resizing
-
-  // Our presentation controller reacts to changes to preferredContentSize to determine our
-  // frame at the presented controller.
-  // TODO How to communicate to ViewController
-//  self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  [self setNeedsLayout];
 }
 
 

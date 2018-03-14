@@ -16,19 +16,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCFlatButton;
+
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
 @property(nonatomic, nonnull, strong) UILabel *messageLabel;
 
-@property(nonatomic, nonnull, strong, readonly) NSArray<UIButton *> *actionButtons;
+@property(nonatomic, nonnull, strong, readonly) NSArray<MDCFlatButton *> *actionButtons;
 
 - (void)addActionButtonTitle:(NSString *_Nonnull)actionTitle
                     selector:(SEL _Nonnull)selector;
 
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
 
-- (void)updateTitleFont;
-- (void)updateMessageFont;
+- (void)updateFontsForDynamicType;
 
 @end
