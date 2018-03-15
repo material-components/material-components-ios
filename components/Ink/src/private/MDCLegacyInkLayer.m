@@ -324,6 +324,9 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   } else {
     CGFloat adjustedDuration = kInkLayerForegroundBoundedPositionExitDuration;
     NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
+    if (!opacityVal) {
+      opacityVal = [NSNumber numberWithFloat:0];
+    }
     CGFloat normOpacityVal = opacityVal != nil ? (CGFloat)opacityVal.doubleValue : 0;
     CGFloat opacityDuration = normOpacityVal / 3.f;
     _foregroundOpacityAnim.values = @[ opacityVal, @0 ];
