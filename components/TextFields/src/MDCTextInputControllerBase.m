@@ -256,9 +256,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [aDecoder decodeObjectOfClass:[UIColor class]
                                forKey:MDCTextInputControllerBaseTrailingUnderlineLabelTextColor];
     _underlineHeightActive =
-        [aDecoder decodeFloatForKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
+        (CGFloat)[aDecoder decodeDoubleForKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
     _underlineHeightNormal =
-        [aDecoder decodeFloatForKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
+        (CGFloat)[aDecoder decodeDoubleForKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
     _underlineViewMode = (UITextFieldViewMode)
         [aDecoder decodeIntegerForKey:MDCTextInputControllerBaseUnderlineViewModeKey];
 
@@ -336,10 +336,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerBaseTrailingUnderlineLabelFontKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerBaseTrailingUnderlineLabelTextColor];
-  [aCoder encodeFloat:(float)self.underlineHeightActive
-               forKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
-  [aCoder encodeFloat:(float)self.underlineHeightNormal
-               forKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
+  [aCoder encodeDouble:(double)self.underlineHeightActive
+                forKey:MDCTextInputControllerBaseUnderlineHeightActiveKey];
+  [aCoder encodeDouble:(double)self.underlineHeightNormal
+                forKey:MDCTextInputControllerBaseUnderlineHeightNormalKey];
   [aCoder encodeInteger:self.underlineViewMode
                  forKey:MDCTextInputControllerBaseUnderlineViewModeKey];
 }
@@ -416,12 +416,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
       [_textInput respondsToSelector:@selector(setMinimumLines:)]) {
-    ((MDCMultilineTextField *)_textInput).minimumLines = self.minimumLines;
+    ((id<MDCMultilineTextInput>)_textInput).minimumLines = self.minimumLines;
   }
 
   if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
       [_textInput respondsToSelector:@selector(setExpandsOnOverflow:)]) {
-    ((MDCMultilineTextField *)_textInput).expandsOnOverflow = self.expandsOnOverflow;
+    ((id<MDCMultilineTextInput>)_textInput).expandsOnOverflow = self.expandsOnOverflow;
   }
 
   [self subscribeForNotifications];
@@ -998,7 +998,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _expandsOnOverflow = expandsOnOverflow;
     if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
         [_textInput respondsToSelector:@selector(setExpandsOnOverflow:)]) {
-      ((MDCMultilineTextField *)_textInput).expandsOnOverflow = expandsOnOverflow;
+      ((id<MDCMultilineTextInput>)_textInput).expandsOnOverflow = expandsOnOverflow;
     }
   }
 }
@@ -1190,7 +1190,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _minimumLines = minimumLines;
     if ([_textInput conformsToProtocol:@protocol(MDCMultilineTextInput)] &&
         [_textInput respondsToSelector:@selector(setMinimumLines:)]) {
-      ((MDCMultilineTextField *)_textInput).minimumLines = minimumLines;
+      ((id<MDCMultilineTextInput>)_textInput).minimumLines = minimumLines;
     }
   }
 }

@@ -30,6 +30,7 @@ components/ShadowElevations     ianegordon
 components/ShadowLayer          samnm
 components/Slider               ianegordon
 components/Tabs                 brianjmoore
+components/TextFields           willlarche
 components/Themes               jgunaratne
 components/Typography           ianegordon
 

@@ -14,15 +14,15 @@
  limitations under the License.
  */
 
-#import "CardsCollectionExample.h"
+#import "CardsCollectionTintingExample.h"
 #import "MaterialInk.h"
-#import "UICollectionViewController+MDCCardReordering.h"
+#import "CardTintExampleCell.h"
 
-@interface CardsCollectionExample ()
+@interface CardsCollectionTintingExample ()
 
 @end
 
-@implementation CardsCollectionExample
+@implementation CardsCollectionTintingExample
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 @synthesize collectionViewLayout = _collectionViewLayout;
@@ -49,11 +49,12 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
+  self.collectionView.allowsMultipleSelection = YES;
+  [self.collectionView setTintColor:[UIColor redColor]];
   // Register cell classes
-  [self.collectionView registerClass:[MDCCardCollectionCell class]
+  [self.collectionView registerClass:[CardTintExampleCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
-  [self mdc_setupCardReordering];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -69,10 +70,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCardCollectionCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
-                                            forIndexPath:indexPath];
-  [cell setBackgroundColor:[UIColor colorWithRed:107/255.f green:63/255.f blue:238/255.f alpha:1]];
+  CardTintExampleCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
+  [cell setTintColor:[UIColor redColor]];
+  [cell setNeedsDisplay];
   return cell;
 }
 
@@ -103,22 +105,10 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return 8.f;
 }
 
-#pragma mark - Reordering
-
-- (void)collectionView:(UICollectionView *)collectionView
-   moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
-           toIndexPath:(NSIndexPath *)destinationIndexPath {
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView
-canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
-  return YES;
-}
-
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Cards", @"Collection Card Cells" ];
+  return @[ @"Cards", @"Collection Card Tinting" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -130,7 +120,7 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 + (BOOL)catalogIsDebug {
@@ -138,7 +128,7 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (BOOL)catalogShouldHideNavigation {
-  return YES;
+  return NO;
 }
 
 @end

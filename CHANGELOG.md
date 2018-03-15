@@ -1,3 +1,168 @@
+# 47.0.0
+
+## Breaking changes
+
+### Cards
+
+#### MDCCardCollectionCell
+
+*removed* property: `selectedImageTintColor` in `MDCCardCollectionCell`
+
+*removed* property: `selectedImage` in `MDCCardCollectionCell`
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Cards
+
+#### MDCCardCollectionCell
+
+*new* method: `-setVerticalImageAlignment:forState:` in `MDCCardCollectionCell`
+
+*new* method: `-setImageTintColor:forState:` in `MDCCardCollectionCell`
+
+*new* method: `-horizontalImageAlignmentForState:` in `MDCCardCollectionCell`
+
+*new* method: `-imageForState:` in `MDCCardCollectionCell`
+
+*new* method: `-imageTintColorForState:` in `MDCCardCollectionCell`
+
+*new* method: `-setImage:forState:` in `MDCCardCollectionCell`
+
+*new* method: `-verticalImageAlignmentForState:` in `MDCCardCollectionCell`
+
+*new* method: `-setHorizontalImageAlignment:forState:` in `MDCCardCollectionCell`
+
+*removed* property: `selectedImageTintColor` in `MDCCardCollectionCell`
+
+*removed* property: `selectedImage` in `MDCCardCollectionCell`
+
+*modified* class: `MDCCardCollectionCell`
+
+#### MDCCardCellVerticalImageAlignment
+
+*new* enum value: `MDCCardCellVerticalImageAlignmentBottom` in `MDCCardCellVerticalImageAlignment`
+
+*new* typedef: `MDCCardCellVerticalImageAlignment`
+
+*new* enum: `MDCCardCellVerticalImageAlignment`
+
+*new* enum value: `MDCCardCellVerticalImageAlignmentCenter` in `MDCCardCellVerticalImageAlignment`
+
+*new* enum value: `MDCCardCellVerticalImageAlignmentTop` in `MDCCardCellVerticalImageAlignment`
+
+#### MDCCardCellHorizontalImageAlignment
+
+*new* enum value: `MDCCardCellHorizontalImageAlignmentRight` in `MDCCardCellHorizontalImageAlignment`
+
+*new* enum value: `MDCCardCellHorizontalImageAlignmentCenter` in `MDCCardCellHorizontalImageAlignment`
+
+*new* typedef: `MDCCardCellHorizontalImageAlignment`
+
+*new* enum: `MDCCardCellHorizontalImageAlignment`
+
+*new* enum value: `MDCCardCellHorizontalImageAlignmentLeft` in `MDCCardCellHorizontalImageAlignment`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [[MDCTabBarViewController] Added NSCoding support. (#3029)](https://github.com/material-components/material-components-ios/commit/ca02350c09360ca350750dd8c8d71580c3e44108) (Mohammad Cazi)
+* [[MDCTabBar] NSCoding support. (#3019)](https://github.com/material-components/material-components-ios/commit/5ffadf0697a48c48b61a4baab4123eb072ea21ed) (Mohammad Cazi)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Remove use of __typeof__ (#3018)](https://github.com/material-components/material-components-ios/commit/0c97e585d5ce04196d98ea0badc52d9bd96e33e2) (Robert Moore)
+
+### Ink
+
+#### Changes
+
+* [New bounded ink should ignore maxRippleRadius property (#2956)](https://github.com/material-components/material-components-ios/commit/a25ee2d848132490c02c62770c6c7bd5e359cbe8) (Robert Moore)
+
+### CollectionCells
+
+#### Changes
+
+* [[Collections] Fix image sizing (#3027)](https://github.com/material-components/material-components-ios/commit/7bc25ac4e6313c83886dd5784bd051880db22bd1) (ianegordon)
+
+### ButtonBar
+
+#### Changes
+
+* [Remove UIAppearance call in themer (#3020)](https://github.com/material-components/material-components-ios/commit/dcbe2e5cd70b1db54beb610e019e60cf9f24046b) (Robert Moore)
+* [Update bazel workspace and version to latest. (#3052)](https://github.com/material-components/material-components-ios/commit/58afde19c72de1a93a0f154fcf4b7e5b24bae97f) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Added test for MDCTextInputControllerBase (#3036)](https://github.com/material-components/material-components-ios/commit/9c4858c383d1acc81a15a8e229dbf151f010e0cc) (Yura Samsoniuk)
+* [Always encode/decode CGFloat as double (#3033)](https://github.com/material-components/material-components-ios/commit/af1bb4418f4b4865d995b879c5c99b32560d50f6) (Yura Samsoniuk)
+* [Cast to a protocol textInput conforms to (#3037)](https://github.com/material-components/material-components-ios/commit/f8364d89c4ef3f7fc71a059ee27cb1dd2021cab2) (Yura Samsoniuk)
+* [[Collections|TextFields|Themes] Removed dead store static analyzer errors (#2999)](https://github.com/material-components/material-components-ios/commit/32951859b45ef5983ca18a2a6b9a23a9085443d3) (Yura Samsoniuk)
+
+### Snackbar
+
+#### Changes
+
+* [Don't call UIAppearance in +initialize (#3048)](https://github.com/material-components/material-components-ios/commit/b56f296dabe92c3f7e5baa02646d986e9593e1ac) (Robert Moore)
+
+### Cards
+
+#### Changes
+
+* [Added customization of image, image alignment, and image tint for each state. (#3030)](https://github.com/material-components/material-components-ios/commit/bafdbf325c3522350b92a625db1e51b08a9d55bb) (Yarden Eitan)
+* [Dragons demo for Tint color in Cards (#3046)](https://github.com/material-components/material-components-ios/commit/7fc91d88b77ce0c7208cd755bbe3710a1f4688fc) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Fix license stanza (#3025)](https://github.com/material-components/material-components-ios/commit/70e9cbcbdf2e28d3e598e95e0ade79cd8de3ec19) (Robert Moore)
+* [[ButtonBar] Remove UIAppearance call in themer (#3020)](https://github.com/material-components/material-components-ios/commit/dcbe2e5cd70b1db54beb610e019e60cf9f24046b) (Robert Moore)
+
+### BottomSheet
+
+#### Changes
+
+* [Make MDCBottomSheetPresentationController react to preferred content size changes of the presented view controller.](https://github.com/material-components/material-components-ios/commit/293996a05a6230310442e3ee4b6d2ca0130ac102) (Material Components iOS Team)
+
+### BottomNavigation
+
+#### Changes
+
+* [Fix OS version check (#3015)](https://github.com/material-components/material-components-ios/commit/e34908bdbd50ae0f801991dadbe692fe6c17d2c5) (Robert Moore)
+* [Fix memory leak in example (#3017)](https://github.com/material-components/material-components-ios/commit/a2e31fc7f69d5e5cf668865d7d745becb5c024d1) (Robert Moore)
+
+### PageControl
+
+#### Changes
+
+* [Fixing example layout (#3059)](https://github.com/material-components/material-components-ios/commit/29af16e46d33c87d11fc274b085f109aed376d6e) (Robert Moore)
+
+### Collections
+
+#### Changes
+
+* [[Collections|TextFields|Themes] Removed dead store static analyzer errors (#2999)](https://github.com/material-components/material-components-ios/commit/32951859b45ef5983ca18a2a6b9a23a9085443d3) (Yura Samsoniuk)
+* [[MDCCollectionViewFlowLayout] Set hasSectionItems in ordinalPositionForListElementWithAttribute (#3049)](https://github.com/material-components/material-components-ios/commit/caf58f30894815c147b297990ce16a23b1d8e065) (strangewiz)
+
+### Themes
+
+#### Changes
+
+* [[Collections|TextFields|Themes] Removed dead store static analyzer errors (#2999)](https://github.com/material-components/material-components-ios/commit/32951859b45ef5983ca18a2a6b9a23a9085443d3) (Yura Samsoniuk)
+
+---
+
 # 46.1.1
 
 ## Component changes
