@@ -2,7 +2,32 @@
 
 ## Breaking changes
 
+*removed* property: `highlightedButtonTextColor` in `MDCSnackbarMessage`
+
+*removed* property: `buttonTextColor` in `MDCSnackbarMessage`
+
 ## New deprecations
+
+*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `Use messsageTextColor instead.` |
+
+*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarMessageView` |
+| To: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@2959` |
 
 ## New features
 
