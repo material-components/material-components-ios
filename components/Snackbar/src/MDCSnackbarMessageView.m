@@ -190,8 +190,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _snackbarMessageViewShadowColor = UIColor.blackColor;
     _snackbarMessageViewBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1);
     _messageTextColor = UIColor.whiteColor;
-//    _buttonTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
-//    _highlightedButtonTextColor = UIColor.whiteColor;
     _buttonTitleColors = [NSMutableDictionary dictionary];
     _buttonTitleColors[@(UIControlStateNormal)] = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
     _buttonTitleColors[@(UIControlStateHighlighted)] = UIColor.whiteColor;
@@ -362,10 +360,17 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       [button setTitleFont:_buttonFont forState:UIControlStateNormal];
       [button setTitleFont:_buttonFont forState:UIControlStateHighlighted];
     }
+
     [button setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
                  forState:UIControlStateNormal];
     [button setTitleColor:_buttonTitleColors[@(UIControlStateHighlighted)]
                  forState:UIControlStateHighlighted];
+
+    // TODO: Eventually remove this if statement, buttonTextColor is deprecated.
+    if (message.buttonTextColor) {
+      [button setTitleColor:message.buttonTextColor forState:UIControlStateNormal];
+    }
+
     [button setTranslatesAutoresizingMaskIntoConstraints:NO];
     button.tag = kButtonTagStart;
     [buttonView addSubview:button];
