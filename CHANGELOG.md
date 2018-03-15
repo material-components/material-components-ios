@@ -155,12 +155,6 @@
 * [[Collections|TextFields|Themes] Removed dead store static analyzer errors (#2999)](https://github.com/material-components/material-components-ios/commit/32951859b45ef5983ca18a2a6b9a23a9085443d3) (Yura Samsoniuk)
 * [[MDCCollectionViewFlowLayout] Set hasSectionItems in ordinalPositionForListElementWithAttribute (#3049)](https://github.com/material-components/material-components-ios/commit/caf58f30894815c147b297990ce16a23b1d8e065) (strangewiz)
 
-### FlexibleHeader
-
-#### Changes
-
-* [Forward taps on contentView in MDCFlexibleHeaderView to the tracking scroll view (#3032)](https://github.com/material-components/material-components-ios/commit/e733ffc751d82fcbf036340cd670362321256c91) (Siyu Song)
-
 ### Themes
 
 #### Changes
