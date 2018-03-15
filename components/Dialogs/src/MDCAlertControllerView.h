@@ -27,10 +27,6 @@
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR;
 
-// TODO: Document how to theme buttons via UIAppearance proxy
-//??? @property(nonatomic, strong, nullable) UIFont *actionFont UI_APPEARANCE_SELECTOR;
-//??? @property(nonatomic, strong, nullable) UIColor *actionColor UI_APPEARANCE_SELECTOR;
-
 /*
  Indicates whether the view's contents should automatically update their font when the device’s
  UIContentSizeCategory changes.

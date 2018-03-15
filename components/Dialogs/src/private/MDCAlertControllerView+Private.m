@@ -90,11 +90,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
     _actionButtons = [[NSMutableArray alloc] init];
 
-//    CGSize idealSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
-
-//    self.preferredContentSize = idealSize;
-//    _previousLayoutSize = CGSizeZero;
-
     [self setNeedsLayout];
   }
 
@@ -115,8 +110,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 - (void)setTitle:(NSString *)title {
   self.titleLabel.text = title;
-
-//  self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 
   [self setNeedsLayout];
 }
@@ -205,8 +198,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 - (void)setMessage:(NSString *)message {
   self.messageLabel.text = message;
-
-//  self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 
   [self setNeedsLayout];
 }

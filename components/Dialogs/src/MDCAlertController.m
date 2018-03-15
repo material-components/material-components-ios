@@ -63,7 +63,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @interface MDCAlertController ()
 
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
-//@property(nonatomic, nonnull, strong) NSMutableArray<UIButton *> *actionButtons;
 
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 
@@ -135,8 +134,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
-
-    [self.alertView setNeedsLayout];
   }
 }
 
@@ -151,8 +148,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
-
-    [self.alertView setNeedsLayout];
   }
 }
 
@@ -228,15 +223,15 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)loadView {
   self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
   self.alertView = (MDCAlertControllerView *)self.view;
-  // Explicitly overwrite the view default if true
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
-  }
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  // Explicitly overwrite the view default if true
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
+  }
   self.alertView.titleLabel.text = self.title;
   self.alertView.messageLabel.text = self.message;
 
