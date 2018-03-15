@@ -248,13 +248,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                      forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
     if ([aDecoder
             containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey]) {
-      _underlineHeightActive = (float)[aDecoder
-          decodeFloatForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey];
+      _underlineHeightActive = (CGFloat)[aDecoder
+          decodeDoubleForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey];
     }
     if ([aDecoder
             containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey]) {
-      _underlineHeightActive = (float)[aDecoder
-          decodeFloatForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey];
+      _underlineHeightActive = (CGFloat)[aDecoder
+          decodeDoubleForKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey];
     }
     if ([aDecoder containsValueForKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey]) {
       _underlineViewMode = (UITextFieldViewMode)
@@ -314,10 +314,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                 forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelFontKey];
   [aCoder encodeObject:self.trailingUnderlineLabelTextColor
                 forKey:MDCTextInputControllerLegacyDefaultTrailingUnderlineLabelTextColor];
-  [aCoder encodeFloat:(float)self.underlineHeightActive
-               forKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey];
-  [aCoder encodeFloat:(float)self.underlineHeightNormal
-               forKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey];
+  [aCoder encodeDouble:(double)self.underlineHeightActive
+                forKey:MDCTextInputControllerLegacyDefaultUnderlineHeightActiveKey];
+  [aCoder encodeDouble:(double)self.underlineHeightNormal
+                forKey:MDCTextInputControllerLegacyDefaultUnderlineHeightNormalKey];
   [aCoder encodeInteger:self.underlineViewMode
                  forKey:MDCTextInputControllerLegacyDefaultUnderlineViewModeKey];
 }

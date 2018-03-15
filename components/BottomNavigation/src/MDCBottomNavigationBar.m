@@ -13,6 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+#import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "MDCBottomNavigationBar.h"
@@ -433,7 +434,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
+    NSOperatingSystemVersion iOS10Version = {10, 0, 0};
+    if ([NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
       if (item.badgeColor) {
         itemView.badgeColor = item.badgeColor;
       }

@@ -57,7 +57,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _disabledColor =
         [coder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputUnderlineDisabledColorKey];
     _enabled = [coder decodeBoolForKey:MDCTextInputUnderlineEnabledKey];
-    _lineHeight = (CGFloat)[coder decodeFloatForKey:MDCTextInputUnderlineLineHeightKey];
+    _lineHeight = (CGFloat)[coder decodeDoubleForKey:MDCTextInputUnderlineLineHeightKey];
   }
   return self;
 }
@@ -79,7 +79,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [coder encodeObject:self.color forKey:MDCTextInputUnderlineColorKey];
   [coder encodeObject:self.disabledColor forKey:MDCTextInputUnderlineDisabledColorKey];
   [coder encodeBool:self.enabled forKey:MDCTextInputUnderlineEnabledKey];
-  [coder encodeFloat:(float)self.lineHeight forKey:MDCTextInputUnderlineLineHeightKey];
+  [coder encodeDouble:(double)self.lineHeight forKey:MDCTextInputUnderlineLineHeightKey];
 }
 
 - (instancetype)copyWithZone:(__unused NSZone *)zone {

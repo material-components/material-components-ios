@@ -23,14 +23,14 @@ static NSString *const MDCPaddedLabelHorizontalPaddingKey = @"MDCPaddedLabelHori
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _horizontalPadding = (CGFloat)[aDecoder decodeFloatForKey:MDCPaddedLabelHorizontalPaddingKey];
+    _horizontalPadding = (CGFloat)[aDecoder decodeDoubleForKey:MDCPaddedLabelHorizontalPaddingKey];
   }
   return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
-  [aCoder encodeFloat:(float)_horizontalPadding forKey:MDCPaddedLabelHorizontalPaddingKey];
+  [aCoder encodeDouble:(double)_horizontalPadding forKey:MDCPaddedLabelHorizontalPaddingKey];
 }
 
 #pragma mark - Setters

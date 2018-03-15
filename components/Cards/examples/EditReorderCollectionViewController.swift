@@ -106,7 +106,6 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCardCollectionCell
     cell.backgroundColor = .white
-    cell.selectedImageTintColor = .blue
     cell.isSelectable = (toggle == .edit)
     return cell
   }
@@ -194,5 +193,9 @@ extension EditReorderCollectionViewController {
 
   @objc class func catalogIsDebug() -> Bool {
     return false
+  }
+
+  @objc class func catalogIsPrimaryExample() -> Bool {
+    return true
   }
 }
