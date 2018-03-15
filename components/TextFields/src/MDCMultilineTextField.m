@@ -340,7 +340,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                         attribute:NSLayoutAttributeLeading
                                                        multiplier:1
                                                          constant:self.textInsets.left];
-//    self.textViewLeading.priority = UILayoutPriorityDefaultLow;
+    self.textViewLeading.priority = UILayoutPriorityDefaultLow;
     self.textViewLeading.active = YES;
   }
   self.textViewLeading.constant = self.textInsets.left;
@@ -354,7 +354,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                      attribute:NSLayoutAttributeBottom
                                     multiplier:1
                                       constant:-1 * MDCTextInputHalfPadding];
-//    self.textViewBottomSuperviewBottom.priority = UILayoutPriorityDefaultLow;
+    self.textViewBottomSuperviewBottom.priority = UILayoutPriorityDefaultLow;
     self.textViewBottomSuperviewBottom.active = YES;
   }
 
@@ -366,7 +366,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                     attribute:NSLayoutAttributeTop
                                                    multiplier:1
                                                      constant:self.textInsets.top];
-//    self.textViewTop.priority = UILayoutPriorityDefaultLow + 1;
+    self.textViewTop.priority = UILayoutPriorityDefaultLow + 1;
     self.textViewTop.active = YES;
   }
   self.textViewTop.constant = self.textInsets.top;
@@ -379,7 +379,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
                                                           constant:-1 * [self textInsets].right];
-//    self.textViewTrailing.priority = UILayoutPriorityDefaultLow;
+    self.textViewTrailing.priority = UILayoutPriorityDefaultLow;
     self.textViewTrailing.active = YES;
   }
   self.textViewTrailing.constant = -1 * [self textInsets].right;
