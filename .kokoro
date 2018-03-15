@@ -73,11 +73,11 @@ run_bazel() {
 
   fix_bazel_imports
 
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    bazel version
-    use_bazel.sh latest
-    bazel version
-  fi
+  # if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  #   bazel version
+  #   use_bazel.sh latest
+  #   bazel version
+  # fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
     verbosity_args="-v"
@@ -186,13 +186,15 @@ if [ -n "$VERBOSE_OUTPUT" ]; then
 fi
 
 if [ ! -d .kokoro-ios-runner ]; then
-  git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
+  # git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
+  git clone -b updatekokoro https://github.com/yarneo/kokoro-ios-runner.git .kokoro-ios-runner
 fi
 
 pushd .kokoro-ios-runner
 git fetch > /dev/null
-TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
-git checkout "$TAG" > /dev/null
+git checkout updatekokoro > /dev/null
+# TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
+# git checkout "$TAG" > /dev/null
 popd
 
 case "$DEPENDENCY_SYSTEM" in
