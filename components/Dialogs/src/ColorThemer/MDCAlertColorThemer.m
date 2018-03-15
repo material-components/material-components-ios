@@ -31,4 +31,15 @@
   #endif
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toInstancesOfClass:(__unsafe_unretained Class)alertController {
+  if (![alertController isSubclassOfClass:[MDCAlertController class]]) {
+    NSAssert(NO, @"This themer can only be applied to subclasses of MDCAlertController.");
+    return;
+  }
+  [alertController setAlertTitleColor:colorScheme.textColor];
+  [alertController setAlertBodyColor:[colorScheme.textColor colorWithAlphaComponent:0.54f]];
+  [alertController setAlertBackgroundColor:colorScheme.backgroundColor];
+  [alertController setAlertActionTitleColor:colorScheme.primaryColor];
+}
+
 @end

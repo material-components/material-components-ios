@@ -24,4 +24,9 @@
   pageControl.currentPageIndicatorTintColor = colorScheme.primaryDarkColor;
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toPageControl:(MDCPageControl *)pageControl {
+  pageControl.pageIndicatorTintColor = colorScheme.primaryColor;
+  pageControl.currentPageIndicatorTintColor = colorScheme.selectionColor;
+}
+
 @end

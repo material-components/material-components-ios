@@ -102,6 +102,11 @@
 /** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
+@property(class, nonatomic, strong, nullable) UIColor *alertBackgroundColor;
+@property(class, nonatomic, strong, nullable) UIColor *alertTitleColor;
+@property(class, nonatomic, strong, nullable) UIColor *alertBodyColor;
+@property(class, nonatomic, strong, nullable) UIColor *alertActionTitleColor;
+
 @end
 
 /**
@@ -133,6 +138,8 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
  Alert actions titles must be set in the actionWithTitle:handler: method.
  */
 @property(nonatomic, nullable, readonly) NSString *title;
+
+@property(nonatomic, strong, nullable) UIColor *titleColor;
 
 // TODO(iangordon): Add support for enabled property to match UIAlertAction
 

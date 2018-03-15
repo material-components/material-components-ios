@@ -64,6 +64,7 @@
                                                             handler:^(MDCAlertAction *action) {
                                                               NSLog(@"%@", @"DISAGREE pressed");
                                                             }];
+  disagreeAaction.titleColor = [UIColor colorWithWhite:0.4 alpha:1];
   [materialAlertController addAction:disagreeAaction];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
@@ -139,6 +140,7 @@
                                                             handler:^(MDCAlertAction *action) {
                                                               NSLog(@"%@", @"DISAGREE pressed");
                                                             }];
+  disagreeAaction.titleColor = UIColor.redColor;
   [materialAlertController addAction:disagreeAaction];
 
   // This code accesses the presentation controller and turns off dismiss on background tap.

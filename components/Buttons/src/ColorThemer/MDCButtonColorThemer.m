@@ -24,4 +24,26 @@
   [button setBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateDisabled];
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toButton:(MDCButton *)button {
+  [button setBorderColor:colorScheme.borderColor forState:UIControlStateNormal];
+  [button setBorderColor:colorScheme.textColor forState:UIControlStateDisabled];
+  [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [button setBackgroundColor:colorScheme.disabledBackgroundColor forState:UIControlStateDisabled];
+  [button setTitleColor:colorScheme.backgroundColor forState:UIControlStateNormal];
+  [button setTitleColor:colorScheme.textColor forState:UIControlStateDisabled];
+  button.tintColor = colorScheme.backgroundColor;
+  button.inkColor = colorScheme.inkColor;
+  [button setShadowColor:colorScheme.shadowColor forState:UIControlStateNormal];
+}
+
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toFlatButton:(MDCFlatButton *)button {
+  [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
+  [button setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
+  [button setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [button setTitleColor:colorScheme.textColor forState:UIControlStateDisabled];
+  button.tintColor = colorScheme.primaryColor;
+  button.inkColor = colorScheme.inkColor;
+  [button setShadowColor:colorScheme.shadowColor forState:UIControlStateNormal];
+}
+
 @end

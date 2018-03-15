@@ -28,7 +28,9 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   private lazy var label: UILabel = {
     let label = UILabel()
-    label.textColor = UIColor(white: 0, alpha: MDCTypography.buttonFontOpacity())
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let colorScheme = appDelegate.colorScheme
+    label.textColor = colorScheme.textColor
     label.font = MDCTypography.buttonFont()
 
     return label

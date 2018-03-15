@@ -32,4 +32,7 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
                 toAppBar:(nonnull MDCAppBar *)appBar;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme
+                            toAppBar:(nullable MDCAppBar *)appBar;
+
 @end

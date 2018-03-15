@@ -54,4 +54,33 @@
 #pragma clang diagnostic pop
 #endif
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+  if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
+    [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
+  }
+  if ([textInputControllerClass respondsToSelector:@selector(setNormalColorDefault:)]) {
+    [textInputControllerClass setNormalColorDefault:colorScheme.borderColor];
+  }
+  if ([textInputControllerClass respondsToSelector:@selector(setDisabledColorDefault:)]) {
+    [textInputControllerClass setDisabledColorDefault:colorScheme.disabledBackgroundColor];
+  }
+  if ([textInputControllerClass respondsToSelector:@selector(setInlinePlaceholderColorDefault:)]) {
+    [textInputControllerClass setInlinePlaceholderColorDefault:colorScheme.textColor];
+  }
+  if ([textInputControllerClass respondsToSelector:@selector(setErrorColorDefault:)]) {
+    [textInputControllerClass setErrorColorDefault:colorScheme.errorColor];
+  }
+  if ([textInputControllerClass respondsToSelector:@selector(setFloatingPlaceholderNormalColorDefault:)]) {
+    Class<MDCTextInputControllerFloatingPlaceholder> floatingPlaceholderClass =
+        (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
+    [floatingPlaceholderClass setFloatingPlaceholderNormalColorDefault:colorScheme.borderColor];
+  }
+}
+
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toTextField:(MDCTextField *)textField {
+//  textField.mdc_backgroundColor = colorScheme.backgroundColor;
+  textField.mdc_textColor = colorScheme.textColor;
+  textField.mdc_cursorColor = colorScheme.selectionColor;
+}
+
 @end

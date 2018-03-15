@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,5 +14,15 @@
  limitations under the License.
  */
 
-#import "MDCBottomAppBarView.h"
-#import "MDCBottomAppBarExperimentalColorThemer.h"
+#import <Foundation/Foundation.h>
+#import "MaterialThemes.h"
+@class MDCCard;
+@class MDCCardCollectionCell;
+
+@interface MDCCardExperimentalColorThemer : NSObject
+
++ (void)applyExperimentalTheme:(nonnull MDCExperimentalColorScheme *)colorScheme toCard:(nullable MDCCard *)card;
+
++ (void)applyExperimentalTheme:(nonnull MDCExperimentalColorScheme *)colorScheme toCardCollectionCell:(nonnull MDCCardCollectionCell *)cell;
+
+@end

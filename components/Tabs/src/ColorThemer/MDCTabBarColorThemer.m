@@ -29,4 +29,12 @@
   }
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toTabBar:(MDCTabBar *)tabBar {
+  tabBar.selectedItemTintColor = colorScheme.primaryColor;
+  tabBar.unselectedItemTintColor = colorScheme.textColor;
+  tabBar.inkColor = colorScheme.inkColor;
+  tabBar.tintColor = colorScheme.selectionColor;
+  tabBar.barTintColor = colorScheme.backgroundColor;
+}
+
 @end

@@ -15,12 +15,24 @@
  */
 
 #import "MDCAppBarColorThemer.h"
+#import "MaterialButtons.h"
+#import "MaterialButtonBar.h"
 
 @implementation MDCAppBarColorThemer
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toAppBar:(MDCAppBar *)appBar {
   appBar.headerViewController.headerView.backgroundColor = colorScheme.primaryColor;
+}
+
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toAppBar:(MDCAppBar *)appBar {
+  appBar.headerViewController.headerView.backgroundColor = colorScheme.backgroundColor;
+  appBar.headerViewController.headerView.tintColor = colorScheme.textColor;
+  NSMutableDictionary *titleTextAttributes = [appBar.navigationBar.titleTextAttributes mutableCopy];
+  if (!titleTextAttributes) {
+    titleTextAttributes = [@{} mutableCopy];
+  }
+  titleTextAttributes[NSForegroundColorAttributeName] = colorScheme.textColor;
 }
 
 @end

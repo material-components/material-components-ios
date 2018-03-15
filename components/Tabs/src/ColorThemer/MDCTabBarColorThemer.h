@@ -32,4 +32,6 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
                 toTabBar:(nonnull MDCTabBar *)tabBar;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toTabBar:(nullable MDCTabBar *)tabBar;
+
 @end

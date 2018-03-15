@@ -89,6 +89,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 @end
 
+static UIColor *MDCAlertControllerAlertTitleColor;
+static UIColor *MDCAlertControllerAlertBodyColor;
+static UIColor *MDCAlertControllerAlertBackgroundColor;
+static UIColor *MDCAlertControllerAlertActionTitleColor;
+
 @implementation MDCAlertController {
   NSString *_alertTitle;
   NSString *_message;
@@ -98,6 +103,45 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGSize _previousLayoutSize;
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
+}
+
++ (void)initialize {
+  MDCAlertControllerAlertTitleColor = UIColor.blackColor;
+  MDCAlertControllerAlertBodyColor = [UIColor colorWithWhite:0 alpha:MDCDialogMessageOpacity];
+  MDCAlertControllerAlertBackgroundColor = UIColor.whiteColor;
+  MDCAlertControllerAlertActionTitleColor = UIColor.blackColor;
+}
+
++ (void)setAlertTitleColor:(UIColor *)alertTitleColor {
+  MDCAlertControllerAlertTitleColor = alertTitleColor;
+}
+
++ (UIColor *)alertTitleColor {
+  return MDCAlertControllerAlertTitleColor;
+}
+
++ (void)setAlertBodyColor:(UIColor *)alertBodyColor {
+  MDCAlertControllerAlertBodyColor = alertBodyColor;
+}
+
++ (UIColor *)alertBodyColor {
+  return MDCAlertControllerAlertBodyColor;
+}
+
++ (void)setAlertBackgroundColor:(UIColor *)alertBackgroundColor {
+  MDCAlertControllerAlertBackgroundColor = alertBackgroundColor;
+}
+
++ (UIColor *)alertBackgroundColor {
+  return MDCAlertControllerAlertBackgroundColor;
+}
+
++ (void)setAlertActionTitleColor:(UIColor *)alertActionTitleColor {
+  MDCAlertControllerAlertActionTitleColor = alertActionTitleColor;
+}
+
++ (UIColor *)alertActionTitleColor {
+  return MDCAlertControllerAlertActionTitleColor;
 }
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
@@ -128,6 +172,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     _transitionController = [[MDCDialogTransitionController alloc] init];
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
+
+    self.view.backgroundColor = [self class].alertBackgroundColor;
   }
   return self;
 }
@@ -189,6 +235,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [actionButton addTarget:self
                    action:@selector(actionButtonPressed:)
          forControlEvents:UIControlEventTouchUpInside];
+  [actionButton setTitleColor:action.titleColor ?: [self class].alertActionTitleColor forState:UIControlStateNormal];
   [self.actionsScrollView addSubview:actionButton];
 
   [self.actionButtons addObject:actionButton];
@@ -259,14 +306,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
   self.view.autoresizesSubviews = NO;
   self.view.clipsToBounds = YES;
 
-  self.contentScrollView.backgroundColor = [UIColor whiteColor];
+//  self.contentScrollView.backgroundColor = [UIColor whiteColor];
   [self.view addSubview:self.contentScrollView];
 
-  self.actionsScrollView.backgroundColor = [UIColor whiteColor];
+//  self.actionsScrollView.backgroundColor = [UIColor whiteColor];
   [self.view addSubview:self.actionsScrollView];
 
   self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -277,6 +323,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   } else {
     self.titleLabel.font = [MDCTypography titleFont];
   }
+  self.titleLabel.textColor = [self class].alertTitleColor;
   [self.contentScrollView addSubview:self.titleLabel];
 
   self.messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -287,7 +334,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   } else {
     self.messageLabel.font = [MDCTypography body1Font];
   }
-  self.messageLabel.textColor = [UIColor colorWithWhite:0.0f alpha:MDCDialogMessageOpacity];
+  self.messageLabel.textColor = [self class].alertBodyColor;
   [self.contentScrollView addSubview:self.messageLabel];
 
   self.titleLabel.text = self.title;

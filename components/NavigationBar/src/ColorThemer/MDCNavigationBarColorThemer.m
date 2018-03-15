@@ -23,4 +23,15 @@
   navigationBar.backgroundColor = colorScheme.primaryColor;
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toNavigationBar:(MDCNavigationBar *)navigationBar {
+  navigationBar.backgroundColor = colorScheme.backgroundColor;
+  navigationBar.tintColor = colorScheme.textColor;
+  NSMutableDictionary *titleTextAttributes = [navigationBar.titleTextAttributes mutableCopy];
+  if (!titleTextAttributes) {
+    titleTextAttributes = [@{} mutableCopy];
+  }
+  titleTextAttributes[NSForegroundColorAttributeName] = colorScheme.textColor;
+  navigationBar.titleTextAttributes = [titleTextAttributes copy];
+}
+
 @end

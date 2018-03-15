@@ -32,4 +32,6 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
              toButtonBar:(nonnull MDCButtonBar *)buttonBar;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toButtonBar:(nullable MDCButtonBar *)buttonBar;
+
 @end

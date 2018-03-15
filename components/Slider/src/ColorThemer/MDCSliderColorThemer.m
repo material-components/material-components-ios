@@ -29,6 +29,12 @@ static const CGFloat kSliderThemerDarkAlpha = 0.3f;
   slider.disabledColor = colorScheme.primaryDarkColor;
 }
 
++ (void)applyExperimentalColorScheme:(MDCExperimentalColorScheme *)colorScheme toSlider:(MDCSlider *)slider {
+  slider.trackBackgroundColor = colorScheme.selectionColor;
+  slider.disabledColor = colorScheme.disabledBackgroundColor;
+  slider.color = colorScheme.primaryColor;
+}
+
 #pragma mark - Default color schemes
 
 + (MDCBasicColorScheme *)defaultSliderLightColorScheme {

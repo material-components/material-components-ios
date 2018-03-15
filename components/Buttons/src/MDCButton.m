@@ -69,7 +69,7 @@ static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 // https://material.io/guidelines/components/buttons.html#buttons-main-buttons
-static const CGFloat MDCButtonDisabledAlpha = 0.12f;
+static const CGFloat MDCButtonDisabledAlpha = 0.38f;
 
 // Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x191919;
@@ -866,10 +866,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Disabled buttons have very low opacity, so we full-opacity text color here to make the text
   // readable. Also, even for non-flat buttons with opaque backgrounds, the correct background color
   // to examine is the underlying color, since disabled buttons are so transparent.
-  BOOL darkBackground = [self isDarkColor:[self underlyingColorHint]];
-  // We call super here to distinguish between automatic title color assignments and that of users.
-  [super setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
-              forState:UIControlStateDisabled];
+//  BOOL darkBackground = [self isDarkColor:[self underlyingColorHint]];
+//  // We call super here to distinguish between automatic title color assignments and that of users.
+//  [super setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
+//              forState:UIControlStateDisabled];
 }
 
 - (void)setTitleColor:(UIColor *)color forState:(UIControlState)state {

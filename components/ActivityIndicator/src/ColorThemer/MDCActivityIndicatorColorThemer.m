@@ -23,4 +23,8 @@
   activityIndicator.cycleColors = @[ colorScheme.primaryColor ];
 }
 
++ (void)applyExperimental:(MDCExperimentalColorScheme *)colorScheme toActivityIndicator:(MDCActivityIndicator *)activityIndicator {
+  activityIndicator.cycleColors = @[ colorScheme.primaryColor ];
+}
+
 @end

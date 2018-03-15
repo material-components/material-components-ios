@@ -32,4 +32,6 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
           toProgressView:(nonnull MDCProgressView *)progressView;
 
++ (void)applyExperimentalColorScheme:(nonnull MDCExperimentalColorScheme *)colorScheme toProgressView:(nullable MDCProgressView *)progressView;
+
 @end

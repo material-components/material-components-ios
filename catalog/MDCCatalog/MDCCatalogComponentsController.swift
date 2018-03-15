@@ -89,7 +89,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
-    collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
 
@@ -103,8 +103,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func colorThemeChanged(notification: NSNotification) {
     let colorScheme = notification.userInfo?["colorScheme"]
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
-
+    appDelegate.colorScheme = (colorScheme as? MDCExperimentalColorScheme!)!
+    titleLabel.textColor = appDelegate.colorScheme.textColor
     collectionView?.collectionViewLayout.invalidateLayout()
     collectionView?.reloadData()
   }
@@ -119,6 +119,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     inkController.addInkView()
 
@@ -126,8 +127,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     titleLabel.text = title!
-    titleLabel.textColor = UIColor(white: 1, alpha: 1)
+    titleLabel.textColor = appDelegate.colorScheme.textColor
     titleLabel.font = UIFont.mdc_preferredFont(forMaterialTextStyle: .title)
+    self.collectionView?.backgroundColor = appDelegate.colorScheme.backgroundColor
     if #available(iOS 9.0, *) {
         titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFontWeightRegular)
     } else {
@@ -157,8 +159,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     headerViewController.headerView.forwardTouchEvents(for: containerView)
 
     headerViewController.headerView.addSubview(logo)
-
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     let image = MDCDrawImage(CGRect(x:0,
                                     y:0,
@@ -198,7 +198,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                        multiplier: 1,
                        constant: Constants.logoWidthHeight).isActive = true
 
-    headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+//    headerViewController.headerView.backgroundColor = appDelegate.colorScheme.backgroundColor
     headerViewController.headerView.trackingScrollView = collectionView
 
     headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
@@ -269,7 +269,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func inkViewForView(_ view: UIView) -> MDCInkView {
     let foundInkView = MDCInkView.injectedInkView(for: view)
     foundInkView.inkStyle = .bounded
-    foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
     return foundInkView
   }
 
@@ -296,7 +295,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let cell =
         collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
                                            for: indexPath)
-    cell.backgroundColor = UIColor.white
+    
 
     let componentName = node.children[indexPath.row].title
     if let catalogCell = cell as? MDCCatalogCollectionViewCell {
