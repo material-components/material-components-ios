@@ -19,6 +19,7 @@ import UIKit
 import CatalogByConvention
 
 import MaterialComponents.MDCActivityIndicatorColorThemer
+import MaterialComponents.MDCBottomAppBarColorThemer
 import MaterialComponents.MDCButtonBarColorThemer
 import MaterialComponents.MDCButtonColorThemer
 import MaterialComponents.MDCAlertColorThemer
@@ -68,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Apply color scheme to material design components using component themers.
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
     MDCAlertColorThemer.apply(colorScheme)
+    MDCBottomAppBarColorThemer.apply(colorScheme, to: MDCBottomAppBarView.appearance())
     MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
     MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
     let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
