@@ -17,6 +17,7 @@
 
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
+#import "MDCBottomAppBarColorThemer.h"
 #import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
 #import "MDCFeatureHighlightColorThemer.h"
@@ -185,6 +186,8 @@ static NSString *s_secondaryColorString;
   [MDCActivityIndicatorColorThemer applyColorScheme:colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
   [MDCAlertColorThemer applyColorScheme:colorScheme];
+  [MDCBottomAppBarColorThemer applyColorScheme:colorScheme
+                            toBottomAppBarView:MDCBottomAppBarView.appearance];
   [MDCButtonBarColorThemer applyColorScheme:colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.previewButton];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:[MDCButton appearance]];
