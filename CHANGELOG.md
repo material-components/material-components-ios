@@ -1,3 +1,126 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Snackbar
+
+#### MDCSnackbarMessageView
+
+*new* property: `messageTextColor` in `MDCSnackbarMessageView`
+
+*new* method: `-buttonTitleColorForState:` in `MDCSnackbarMessageView`
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarMessageView`
+
+*new* method: `-setButtonTitleColor:forState:` in `MDCSnackbarMessageView`
+
+#### MDCSnackbarMessage
+
+*new* property: `usesLegacySnackbar` in `MDCSnackbarMessage`
+
+*removed* property: `highlightedButtonTextColor` in `MDCSnackbarMessage`
+
+*removed* property: `buttonTextColor` in `MDCSnackbarMessage`
+
+#### MDCSnackbarMessageView()
+
+*new* method: `-snackbarMessageViewTextColor` in `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+*new* category: `MDCSnackbarMessageView()`
+
+*new* method: `-setSnackbarMessageViewTextColor:` in `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `Use messsageTextColor instead.` |
+
+*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarMessageView` |
+| To: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@2959` |
+## Component changes
+
+
+### Tabs
+
+#### Changes
+
+* [Don't call UIAppearance in +initialize (#3067)](https://github.com/material-components/material-components-ios/commit/fcd8ffdc199e4efa8dc93141b627c24f98c2033e) (Robert Moore)
+* [Font/Color Scheme support for tab bar. (#3083)](https://github.com/material-components/material-components-ios/commit/2cc00f431e2485316ce9ba0e6f67d511be81b8d4) (Mohammad Cazi)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Accessibility title and body mutator added to fix UIAppearance issue (#3043)](https://github.com/material-components/material-components-ios/commit/fa6a2f67d6886eb89d8182b809ecacab41d0a3ea) (Mohammad Cazi)
+
+### Ink
+
+#### Changes
+
+* [[Button|Ink|TextFields|Palettes] Fixed NSNumber conversion static analyzer errors (#2998)](https://github.com/material-components/material-components-ios/commit/62735c8baf1968e6b287ef30aaf6b17744c5c237) (Yura Samsoniuk)
+
+### Buttons
+
+#### Changes
+
+* [Set FlatButton inkColor via UIAppearance (#3069)](https://github.com/material-components/material-components-ios/commit/5fe8cf2752dcafad7b07d6f8935910f1597ed963) (Robert Moore)
+* [Support IB custom fonts (#3082)](https://github.com/material-components/material-components-ios/commit/328b4ba57dcd5caeb7f21cf341704237baac280c) (Robert Moore)
+* [[Button|Ink|TextFields|Palettes] Fixed NSNumber conversion static analyzer errors (#2998)](https://github.com/material-components/material-components-ios/commit/62735c8baf1968e6b287ef30aaf6b17744c5c237) (Yura Samsoniuk)
+
+### TextFields
+
+#### Changes
+
+* [[Button|Ink|TextFields|Palettes] Fixed NSNumber conversion static analyzer errors (#2998)](https://github.com/material-components/material-components-ios/commit/62735c8baf1968e6b287ef30aaf6b17744c5c237) (Yura Samsoniuk)
+
+### Snackbar
+
+#### Changes
+
+* [Fix compiler warning due to self reference in block (#3079)](https://github.com/material-components/material-components-ios/commit/1d796f2795706b98e55d935981a7e869fc2c7bdc) (featherless)
+* [New Snackbar implementation with legacy toggle to activate (#3055)](https://github.com/material-components/material-components-ios/commit/f3845d2fd1c8c57e3329cd969830b2b7a6ca4eb0) (Yarden Eitan)
+* [custom font and dynamic type support, UI_APPEARANCE support for color theming  (#3090)](https://github.com/material-components/material-components-ios/commit/9f735f15d9a912ea8479a78b1a99d99b36aa8d33) (Yarden Eitan)
+* [update snackbar text color to the initialized value (#3081)](https://github.com/material-components/material-components-ios/commit/40876a38123096edf43ce1c76a3bccfe7eb08479) (Yarden Eitan)
+
+### BottomSheet
+
+#### Changes
+
+* [Ensure BottomSheet adjusts its target point when its bounds change (#3028)](https://github.com/material-components/material-components-ios/commit/8e6866e80efd081b92c94cf92256e6d057df4772) (John Detloff)
+
+### Themes
+
+#### Changes
+
+* [[FeatureHighlight] Accessibility title and body mutator added to fix UIAppearance issue (#3043)](https://github.com/material-components/material-components-ios/commit/fa6a2f67d6886eb89d8182b809ecacab41d0a3ea) (Mohammad Cazi)
+
+### Palettes
+
+#### Changes
+
+* [[Button|Ink|TextFields|Palettes] Fixed NSNumber conversion static analyzer errors (#2998)](https://github.com/material-components/material-components-ios/commit/62735c8baf1968e6b287ef30aaf6b17744c5c237) (Yura Samsoniuk)
+
+---
+
 # 47.0.0
 
 ## Breaking changes
