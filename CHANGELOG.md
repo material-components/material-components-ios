@@ -4,9 +4,13 @@
 
 *removed* property: `highlightedButtonTextColor` in `MDCSnackbarMessage`
 
-*removed* property: `buttonTextColor` in `MDCSnackbarMessage`
-
 ## New deprecations
+
+#### MDCSnackbarMessage
+
+*deprecated* property: `buttonTextColor` in `MDCSnackbarMessage`
+
+#### MDCSnackbarMessageView()
 
 *modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
 
