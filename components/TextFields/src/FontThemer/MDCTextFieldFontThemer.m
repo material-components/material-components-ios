@@ -31,7 +31,7 @@
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
     if (!fontScheme.body1 || !fontScheme.caption || fontScheme.caption.pointSize <= 0) {
-      [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0];
+      [textInputControllerFloatingPlaceholder setFloatingPlaceholderScaleDefault:0];
     } else {
       textInputControllerFloatingPlaceholder.floatingPlaceholderScale =
           [NSNumber numberWithDouble:fontScheme.caption.pointSize/fontScheme.body1.pointSize];
@@ -60,7 +60,7 @@ toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControl
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
     if (!fontScheme.body1 || !fontScheme.caption || fontScheme.caption.pointSize <= 0) {
-      [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0];
+      [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0.75];
     } else {
       CGFloat scale = fontScheme.caption.pointSize/fontScheme.body1.pointSize;
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:scale];
