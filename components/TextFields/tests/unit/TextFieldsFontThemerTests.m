@@ -30,6 +30,8 @@
   [super tearDown];
   // Reset class default values.
   MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
+  fontScheme.body1 = nil;
+  fontScheme.caption = nil;
   [MDCTextFieldFontThemer applyFontScheme:fontScheme
          toAllTextInputControllersOfClass:[MDCTextInputControllerFullWidth class]];
   [MDCTextFieldFontThemer applyFontScheme:fontScheme

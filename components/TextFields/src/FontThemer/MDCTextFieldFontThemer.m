@@ -30,8 +30,12 @@
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
-    textInputControllerFloatingPlaceholder.floatingPlaceholderScale =
-        [NSNumber numberWithDouble:fontScheme.caption.pointSize/fontScheme.body1.pointSize];
+    if (!fontScheme.body1.pointSize || !fontScheme.caption.pointSize) {
+      [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0.75];
+    } else {
+      textInputControllerFloatingPlaceholder.floatingPlaceholderScale =
+          [NSNumber numberWithDouble:fontScheme.caption.pointSize/fontScheme.body1.pointSize];
+    }
   }
 }
 
@@ -55,8 +59,12 @@ toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControl
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    CGFloat scale = fontScheme.caption.pointSize/fontScheme.body1.pointSize;
-    [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:scale];
+    if (!fontScheme.body1.pointSize || !fontScheme.caption.pointSize) {
+      [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0.75];
+    } else {
+      CGFloat scale = fontScheme.caption.pointSize/fontScheme.body1.pointSize;
+      [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:scale];
+    }
   }
 }
 #if !defined(__IPHONE_11_0)
