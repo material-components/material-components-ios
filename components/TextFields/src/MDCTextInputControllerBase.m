@@ -1068,6 +1068,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (void)setFloatingPlaceholderScaleDefault:(CGFloat)floatingPlaceholderScaleDefault {
   _floatingPlaceholderScaleDefault = floatingPlaceholderScaleDefault;
+  if (floatingPlaceholderScaleDefault <= 0) {
+    _floatingPlaceholderScaleDefault =
+        MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDefault;
+  }
 }
 
 - (void)setHelperText:(NSString *)helperText {
