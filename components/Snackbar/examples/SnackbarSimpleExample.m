@@ -16,13 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialPalettes.h"
 #import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
 
 @implementation SnackbarSimpleExample {
   BOOL _legacyMode;
-  BOOL _dynamicType;
 }
 
 - (void)viewDidLoad {
@@ -32,42 +30,26 @@
       @"Snackbar with Action Button",
       @"Snackbar with Long Text",
       @"Attributed Text Example",
-      @"Color Themed Snackbar",
       @"Customize Font Example",
       @"De-Customize Font Example"
   ]];
   self.title = @"Snackbar";
   _legacyMode = YES;
-  _dynamicType = NO;
-  self.navigationItem.rightBarButtonItems =
-      @[[[UIBarButtonItem alloc] initWithTitle:@"Legacy"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(toggleModes)],
-        [[UIBarButtonItem alloc] initWithTitle:@"DT Off"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(toggleDynamicType)]];
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(toggleModes)];
 }
 
 - (void)toggleModes {
   _legacyMode = !_legacyMode;
   if (_legacyMode) {
-    [self.navigationItem.rightBarButtonItems.firstObject setTitle:@"Legacy"];
+    [self.navigationItem.rightBarButtonItem setTitle:@"Legacy"];
   } else {
-    [self.navigationItem.rightBarButtonItems.firstObject setTitle:@"New"];
+    [self.navigationItem.rightBarButtonItem setTitle:@"New"];
   }
   MDCSnackbarMessage.usesLegacySnackbar = _legacyMode;
-}
-
-- (void)toggleDynamicType {
-  _dynamicType = !_dynamicType;
-  if (_dynamicType) {
-    [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT On"];
-  } else {
-    [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT Off"];
-  }
-  [MDCSnackbarMessageView appearance].mdc_adjustsFontForContentSizeCategory = _dynamicType;
 }
 
 #pragma mark - Event Handling
@@ -84,6 +66,8 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
+  message.buttonTextColor =
+      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
   [MDCSnackbarManager showMessage:message];
 }
 
@@ -100,6 +84,8 @@
   action.handler = actionHandler;
   action.title = @"Action";
   message.action = action;
+  message.buttonTextColor =
+      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
 
   [MDCSnackbarManager showMessage:message];
 }
@@ -120,21 +106,6 @@
   [MDCSnackbarManager showMessage:message];
 }
 
-- (void)showColorThemedSnackbar:(id)sender {
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  message.text = @"Snackbar Message";
-  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  action.title = @"Tap Me";
-  message.action = action;
-  [[MDCSnackbarMessageView appearance]
-      setButtonTitleColor:MDCPalette.purplePalette.tint400
-                 forState:UIControlStateNormal];
-  [[MDCSnackbarMessageView appearance]
-      setButtonTitleColor:MDCPalette.purplePalette.tint700
-                 forState:UIControlStateHighlighted];
-  [MDCSnackbarMessageView appearance].messageTextColor = MDCPalette.greenPalette.tint500;
-  [MDCSnackbarManager showMessage:message];
-}
 
 - (void)showCustomizedSnackbar:(id)sender {
   UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14.0f];
@@ -166,6 +137,8 @@
   [MDCSnackbarManager showMessage:message];
 }
 
+
+
 #pragma mark - UICollectionView
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -184,12 +157,9 @@
       [self showBoldSnackbar:nil];
       break;
     case 4:
-      [self showColorThemedSnackbar:nil];
-      break;
-    case 5:
       [self showCustomizedSnackbar:nil];
       break;
-    case 6:
+    case 5:
       [self showDecustomizedSnackbar:nil];
       break;
     default:
