@@ -100,14 +100,6 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic, strong, nullable) MDCSnackbarMessageAction *action;
 
 /**
-  The color used for button text on the snackbar in normal state.
-
-  Default is MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f).
-  */
-@property(nonatomic, strong, nullable) UIColor *buttonTextColor
-    __deprecated_msg("Use MDCSnackbarMessageView's buttonTitleColorForState: instead.");
-
-/**
  How long the message should be displayed.
 
  Defaults to 4 seconds and can be set up to the maximum duration defined by
