@@ -35,7 +35,7 @@
                                          blue:(float)(0x32 / 255.0)
                                         alpha:1]);
   XCTAssertEqualObjects(messageView.snackbarMessageViewShadowColor, UIColor.blackColor);
-  XCTAssertEqualObjects(messageView.snackbarMessageViewTextColor, UIColor.whiteColor);
+  XCTAssertEqualObjects(messageView.messageTextColor, UIColor.whiteColor);
 }
 
 @end
