@@ -1,4 +1,4 @@
-# 47.1.0
+# 48.0.0
 
 ## Breaking changes
 
