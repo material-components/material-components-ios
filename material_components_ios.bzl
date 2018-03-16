@@ -1,7 +1,6 @@
 """Bazel macros for building MDC component libraries."""
 
 load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
-load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 
 def mdc_objc_library(
     name,
@@ -48,46 +47,4 @@ def mdc_public_objc_library(
       enable_modules = 1,
       **kwargs)
 
-def generate_older_runners():
-  ios_test_runner(
-      name = "IPHONE_5_IN_8_1_OLD",
-      device_type = "iPhone 5",
-      os_version = "8.1",
-  )
-  ios_test_runner(
-      name = "IPAD_PRO_12_9_IN_9_3_OLD",
-      device_type = "iPad Pro (12.9-inch)",
-      os_version = "9.3",
-  )
-  ios_test_runner(
-      name = "IPHONE_7_PLUS_IN_10_3_OLD",
-      device_type = "iPhone 7 Plus",
-      os_version = "10.3",
-  )
-
-  return [":IPHONE_5_IN_8_1_OLD", ":IPAD_PRO_12_9_IN_9_3_OLD", ":IPHONE_7_PLUS_IN_10_3_OLD"]
-
-def generate_newer_runners():
-  ios_test_runner(
-      name = "IPHONE_5_IN_8_1",
-      device_type = "iPhone 5",
-      os_version = "8.1",
-  )
-  ios_test_runner(
-      name = "IPAD_PRO_12_9_IN_9_3",
-      device_type = "iPad Pro (12.9-inch)",
-      os_version = "9.3",
-  )
-  ios_test_runner(
-      name = "IPHONE_7_PLUS_IN_10_3",
-      device_type = "iPhone 7 Plus",
-      os_version = "10.3",
-  )
-  ios_test_runner(
-      name = "IPHONE_X_IN_11_0",
-      device_type = "iPhone X",
-      os_version = "11.0",
-  )
-
-  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":IPHONE_X_IN_11_0"]
 
