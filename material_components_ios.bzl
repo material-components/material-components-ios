@@ -3,6 +3,11 @@
 load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 
+config_setting(
+    name = "older_xcode",
+    values = { "xcode_version_arg": "8.3.3" }
+)
+
 def mdc_objc_library(
     name,
     copts = [],
@@ -49,10 +54,6 @@ def mdc_public_objc_library(
       **kwargs)
 
 def generate_runners():
-  print("hahahhaha")
-  print(":xcodetest")
-  print(xcodetest)
-  print("huhuhuhuhu")
   ios_test_runner(
     name = "IPHONE_5_IN_8_1",
     device_type = "iPhone 5",
@@ -73,4 +74,8 @@ def generate_runners():
       device_type = "iPhone X",
       os_version = "11.0",
   )
-  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":IPHONE_X_IN_11_0"]
+  ret = select({
+          ":older_xcode": [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3"],
+          "//conditions:default": [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":IPHONE_X_IN_11_0"]
+        })
+  return ret
