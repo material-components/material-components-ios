@@ -358,7 +358,8 @@ serialize non-view classes. Prefer to implement
 NSCoding,
 that is sufficient.
 
-Tip: write a unit test for this.
+Tip: write a unit test for this. 
+Tip: NSCoding encodes UIColors as 32bits, so it is possible to lose precision by encoding and decoding when running in 64bits.
 
 1. Implement `-initWithCoder:`.
 1. For decoding objects always use `decodeObjectOfClass:forKey:` whenever possible.
