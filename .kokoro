@@ -95,7 +95,7 @@ run_bazel() {
       $verbosity_args \
       --ios_minimum_os=8.0 \
       --ios_multi_cpus=i386,x86_64 \
-      --xcode_version_arg=8.3.3
+      --define xcode_version_arg=8.3.3
 }
 
 run_cocoapods() {
