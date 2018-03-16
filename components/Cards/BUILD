@@ -58,5 +58,11 @@ ios_unit_test(
       ":unit_test_sources",
     ],
     minimum_os_version = "8.0",
+    runners = [
+        "//tools/objc/sim_devices:IPHONE_5_8_1_runner",
+        "//tools/objc/sim_devices:IPAD_PRO_12_9_IN_9_3_runner",
+        "//tools/objc/sim_devices:IPHONE_7_PLUS_10_3_runner",
+        "//tools/objc/sim_devices:IPHONE_X_11_0_runner",
+    ]
     visibility = ["//visibility:private"],
 )
