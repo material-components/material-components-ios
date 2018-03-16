@@ -50,9 +50,9 @@ def mdc_public_objc_library(
 
 def generate_older_runners():
   ios_test_runner(
-    name = "IPHONE_5_IN_8_1_OLD",
-    device_type = "iPhone 5",
-    os_version = "8.1",
+      name = "IPHONE_5_IN_8_1_OLD",
+      device_type = "iPhone 5",
+      os_version = "8.1",
   )
   ios_test_runner(
       name = "IPAD_PRO_12_9_IN_9_3_OLD",
@@ -69,9 +69,9 @@ def generate_older_runners():
 
 def generate_newer_runners():
   ios_test_runner(
-    name = "IPHONE_5_IN_8_1",
-    device_type = "iPhone 5",
-    os_version = "8.1",
+      name = "IPHONE_5_IN_8_1",
+      device_type = "iPhone 5",
+      os_version = "8.1",
   )
   ios_test_runner(
       name = "IPAD_PRO_12_9_IN_9_3",
@@ -83,7 +83,7 @@ def generate_newer_runners():
       device_type = "iPhone 7 Plus",
       os_version = "10.3",
   )
-    ios_test_runner(
+  ios_test_runner(
       name = "IPHONE_X_IN_11_0",
       device_type = "iPhone X",
       os_version = "11.0",
