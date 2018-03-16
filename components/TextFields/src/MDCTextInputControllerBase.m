@@ -1383,8 +1383,25 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)updateFontsForDynamicType {
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-    self.textInput.font = textFont;
+    UIFont *textFont = self.textInput.font;
+    self.textInput.font =
+        [textFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+
+    textFont = self.inlinePlaceholderFont;
+    self.inlinePlaceholderFont =
+        [textFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+
+    textFont = self.trailingUnderlineLabelFont;
+    self.trailingUnderlineLabelFont =
+        [textFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+
+    textFont = self.leadingUnderlineLabelFont;
+    self.leadingUnderlineLabelFont =
+        [textFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
 
     [self updateLayout];
   }

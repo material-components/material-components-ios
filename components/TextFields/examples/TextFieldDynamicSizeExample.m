@@ -107,13 +107,13 @@
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:customFontDynamicTextField];
   self.customFontDynamicController.placeholderText = @"Custom Font - Dynamic";
   self.customFontDynamicController.helperText = @"Helper";
-  self.customFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
   self.customFontDynamicController.leadingUnderlineLabelFont =
       [UIFont fontWithName:@"Zapfino" size:12];
   self.customFontDynamicController.trailingUnderlineLabelFont =
       [UIFont fontWithName:@"Chalkduster" size:12];
   self.customFontDynamicController.inlinePlaceholderFont = [UIFont fontWithName:@"Zapfino" size:12];
   self.customFontDynamicController.textInput.font = [UIFont fontWithName:@"Zapfino" size:16];
+  self.customFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
 
   [self.scrollView addSubview:customFontDynamicTextField];
 
@@ -152,7 +152,6 @@
       [[MDCTextInputControllerOutlinedTextArea alloc]
             initWithTextInput:multilineCustomDynamicTextField];
   self.multilineCustomFontDynamicController.placeholderText = @"Multiline Custom Font Dynamic Text";
-  self.multilineCustomFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
   self.multilineCustomFontDynamicController.leadingUnderlineLabelFont =
       [UIFont fontWithName:@"AmericanTypewriter" size:12];
   self.customFontDynamicController.trailingUnderlineLabelFont =
@@ -161,6 +160,7 @@
       [UIFont fontWithName:@"Zapfino" size:12];
   self.multilineCustomFontDynamicController.textInput.font =
       [UIFont fontWithName:@"AmericanTypewriter" size:16];
+  self.multilineCustomFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
 
 
   NSDictionary *views = @{
