@@ -3,7 +3,7 @@
 load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 
-config_setting(
+native.config_setting(
     name = "older_xcode",
     values = { "xcode_version_arg": "8.3.3" }
 )
