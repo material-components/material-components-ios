@@ -39,6 +39,7 @@ class SnackbarManagerSwiftTests: XCTestCase {
       XCTAssertNil(token, "Ensuring that the compiler knows we're reading this variable")
     }
     print("hi")
+        print("hi")
     // Then
     // Swift unit tests are sometimes slower, need to wait a little longer
     self.waitForExpectations(timeout: 3.0, handler: nil)
