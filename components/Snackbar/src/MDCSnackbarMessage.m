@@ -32,7 +32,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
 @end
 
 @implementation MDCSnackbarMessage
-
+static BOOL _usesLegacySnackbar = YES;
 @synthesize accessibilityIdentifier;
 @dynamic text;
 
@@ -67,7 +67,6 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
   copy.category = self.category;
   copy.accessibilityLabel = self.accessibilityLabel;
   copy.buttonTextColor = self.buttonTextColor;
-  copy.highlightedButtonTextColor = self.highlightedButtonTextColor;
 
   // Unfortunately there's not really a concept of 'copying' a block (in the same way you would copy
   // a string, for example). A block's pointer is immutable once it is created and copied to the
@@ -145,6 +144,14 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
       completion();
     }
   });
+}
+
++ (void)setUsesLegacySnackbar:(BOOL)usesLegacySnackbar {
+  _usesLegacySnackbar = usesLegacySnackbar;
+}
+
++ (BOOL)usesLegacySnackbar {
+  return _usesLegacySnackbar;
 }
 
 @end

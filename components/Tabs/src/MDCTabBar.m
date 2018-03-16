@@ -108,16 +108,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 #pragma mark - Initialization
 
-+ (void)initialize {
-  [MDCTabBar appearance].selectedItemTintColor = [UIColor whiteColor];
-  [MDCTabBar appearance].unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
-  [MDCTabBar appearance].inkColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
-  [MDCTabBar appearance].barTintColor = nil;
-
-  id<MDCTabBarIndicatorTemplate> template = [[MDCTabBarUnderlineIndicatorTemplate alloc] init];
-  [MDCTabBar appearance].selectionIndicatorTemplate = template;
-}
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
@@ -193,6 +183,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)commonMDCTabBarInit {
+  _selectedItemTintColor = [UIColor whiteColor];
+  _unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  _inkColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+
   self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;

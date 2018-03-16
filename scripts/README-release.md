@@ -33,7 +33,7 @@ integration should begin running. You can run local tests by running:
 
 ## Update CHANGELOG.md
 
-Update the CHANGELOG.md with relevant release notes.
+Update the CHANGELOG.md with information that you would like to call out as important from the generated `release notes`.
 
 Things to include:
 
