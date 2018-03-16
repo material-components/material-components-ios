@@ -69,4 +69,4 @@ def generate_runners():
         device_type = "iPhone X",
         os_version = "11.0",
     )
-    return [IPHONE_5_IN_8_1, IPAD_PRO_12_9_IN_9_3, IPHONE_7_PLUS_IN_10_3, IPHONE_X_IN_11_0]
+    return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":IPHONE_X_IN_11_0"]
