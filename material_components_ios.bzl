@@ -49,24 +49,26 @@ def mdc_public_objc_library(
       **kwargs)
 
 def generate_runners():
-    ios_test_runner(
-      name = "IPHONE_5_IN_8_1",
-      device_type = "iPhone 5",
-      os_version = "8.1",
-    )
-    ios_test_runner(
-        name = "IPAD_PRO_12_9_IN_9_3",
-        device_type = "iPad Pro (12.9-inch)",
-        os_version = "9.3",
-    )
-    ios_test_runner(
-        name = "IPHONE_7_PLUS_IN_10_3",
-        device_type = "iPhone 7 Plus",
-        os_version = "10.3",
-    )
-    ios_test_runner(
-        name = "IPHONE_X_IN_11_0",
-        device_type = "iPhone X",
-        os_version = "11.0",
-    )
-    return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":IPHONE_X_IN_11_0"]
+  print(":xcodetest")
+  print(xcodetest)
+  ios_test_runner(
+    name = "IPHONE_5_IN_8_1",
+    device_type = "iPhone 5",
+    os_version = "8.1",
+  )
+  ios_test_runner(
+      name = "IPAD_PRO_12_9_IN_9_3",
+      device_type = "iPad Pro (12.9-inch)",
+      os_version = "9.3",
+  )
+  ios_test_runner(
+      name = "IPHONE_7_PLUS_IN_10_3",
+      device_type = "iPhone 7 Plus",
+      os_version = "10.3",
+  )
+  ios_test_runner(
+      name = "IPHONE_X_IN_11_0",
+      device_type = "iPhone X",
+      os_version = "11.0",
+  )
+  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":IPHONE_X_IN_11_0"]
