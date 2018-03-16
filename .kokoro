@@ -94,7 +94,8 @@ run_bazel() {
       --min-xcode-version $XCODE_MINIMUM_VERSION \
       $verbosity_args \
       --ios_minimum_os=8.0 \
-      --ios_multi_cpus=i386,x86_64
+      --ios_multi_cpus=i386,x86_64 \
+      --define xcode_version_arg=8.3.3
 }
 
 run_cocoapods() {
