@@ -108,6 +108,16 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Math"
   end
 
+  mdc.subspec "BottomAppBar+Extensions" do |component|
+    component.subspec "ColorThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/BottomAppBar/src/ColorThemer/*.h"
+      extension.source_files = "components/BottomAppBar/src/ColorThemer/*.{h,m}"
+      extension.dependency "MaterialComponents/BottomAppBar"
+      extension.dependency "MaterialComponents/Themes"
+    end
+  end
+
   mdc.subspec "BottomNavigation" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
