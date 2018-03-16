@@ -58,7 +58,7 @@ def generate_runners():
     ios_test_runner(
         name = "IPAD_PRO_12_9_IN_9_3",
         device_type = "iPad Pro (12.9-inch)",
-        os_version = "9.3,
+        os_version = "9.3",
     ),
     ios_test_runner(
         name = "IPHONE_7_PLUS_IN_10_3",
