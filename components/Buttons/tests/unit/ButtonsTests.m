@@ -570,40 +570,42 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
   // Then
-  XCTAssertEqualObjects(button.inkColor, unarchivedButton.inkColor);
-  XCTAssertEqual(button.uppercaseTitle, unarchivedButton.uppercaseTitle);
-  XCTAssertEqual(button.inkStyle, unarchivedButton.inkStyle);
-  XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius,
-                             unarchivedButton.inkMaxRippleRadius,
+  XCTAssertEqualObjects(unarchivedButton.inkColor, button.inkColor);
+  XCTAssertEqual(unarchivedButton.uppercaseTitle, button.uppercaseTitle);
+  XCTAssertEqual(unarchivedButton.inkStyle, button.inkStyle);
+  XCTAssertEqualWithAccuracy(unarchivedButton.inkMaxRippleRadius,
+                             button.inkMaxRippleRadius,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom,
-                             unarchivedButton.hitAreaInsets.bottom,
+  XCTAssertEqualWithAccuracy(unarchivedButton.hitAreaInsets.bottom,
+                             button.hitAreaInsets.bottom,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.top,
-                             unarchivedButton.hitAreaInsets.top,
+  XCTAssertEqualWithAccuracy(unarchivedButton.hitAreaInsets.top,
+                             button.hitAreaInsets.top,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.right,
-                             unarchivedButton.hitAreaInsets.right,
+  XCTAssertEqualWithAccuracy(unarchivedButton.hitAreaInsets.right,
+                             button.hitAreaInsets.right,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.left,
-                             unarchivedButton.hitAreaInsets.left,
+  XCTAssertEqualWithAccuracy(unarchivedButton.hitAreaInsets.left,
+                             button.hitAreaInsets.left,
                              kEpsilonAccuracy);
-  XCTAssertEqualObjects(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
-  XCTAssertTrue(CGSizeEqualToSize(button.minimumSize, unarchivedButton.minimumSize));
-  XCTAssertTrue(CGSizeEqualToSize(button.maximumSize, unarchivedButton.maximumSize));
-  XCTAssertEqual(button.enabled, unarchivedButton.enabled);
-  XCTAssertEqualWithAccuracy(button.alpha, unarchivedButton.alpha, (CGFloat)0.0001);
+  XCTAssertEqualObjects(unarchivedButton.underlyingColorHint, button.underlyingColorHint);
+  XCTAssertTrue(CGSizeEqualToSize(unarchivedButton.minimumSize, button.minimumSize));
+  XCTAssertTrue(CGSizeEqualToSize(unarchivedButton.maximumSize, button.maximumSize));
+  XCTAssertEqual(unarchivedButton.enabled, button.enabled);
+  XCTAssertEqualWithAccuracy(unarchivedButton.alpha, button.alpha, (CGFloat)0.0001);
   unarchivedButton.enabled = YES;
-  XCTAssertEqualWithAccuracy(buttonAlpha, unarchivedButton.alpha, (CGFloat)0.0001);
-
+  XCTAssertEqualWithAccuracy(unarchivedButton.alpha, buttonAlpha, (CGFloat)0.0001);
+  XCTAssertEqualObjects(unarchivedButton.titleLabel.font, button.titleLabel.font);
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    XCTAssertEqualWithAccuracy([button elevationForState:controlState],
-                               [unarchivedButton elevationForState:controlState],
+    XCTAssertEqualWithAccuracy([unarchivedButton elevationForState:controlState],
+                               [button elevationForState:controlState],
                                kEpsilonAccuracy);
-    XCTAssertEqualObjects([button backgroundColorForState:controlState],
-                   [unarchivedButton backgroundColorForState:controlState]);
-    XCTAssertEqualObjects([button shadowColorForState:controlState],
-                          [unarchivedButton shadowColorForState:controlState]);
+    XCTAssertEqualObjects([unarchivedButton backgroundColorForState:controlState],
+                   [button backgroundColorForState:controlState]);
+    XCTAssertEqualObjects([unarchivedButton shadowColorForState:controlState],
+                          [button shadowColorForState:controlState]);
+    XCTAssertEqualObjects([unarchivedButton titleFontForState:controlState],
+                          [button titleFontForState:controlState]);
   }
 }
 
@@ -895,6 +897,14 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Then
   XCTAssertFalse(button.selected);
   XCTAssertFalse(button.state & UIControlStateSelected);
+}
+
+- (void)testDefaultFont {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(button.titleLabel.font, [MDCTypography buttonFont]);
 }
 
 - (void)testDefaultAdjustsFontProperty {

@@ -28,12 +28,21 @@ static const CGFloat kBottomBarHeight = 44.0f;
 @property(nonatomic, assign) CGFloat floatingButtonOffset;
 @end
 
-@implementation SnackbarOverlayViewExample
+@implementation SnackbarOverlayViewExample {
+  BOOL _legacyMode;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self setupExampleViews:@[ @"Show Snackbar", @"Toggle bottom bar" ]];
   self.title = @"Snackbar Overlay View";
+
+  _legacyMode = YES;
+  self.navigationItem.rightBarButtonItem =
+  [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
+                                   style:UIBarButtonItemStylePlain
+                                  target:self
+                                  action:@selector(toggleModes)];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
   [self.floatingButton sizeToFit];
@@ -73,6 +82,16 @@ static const CGFloat kBottomBarHeight = 44.0f;
   [super viewWillDisappear:animated];
 
   [MDCSnackbarManager setBottomOffset:0];
+}
+
+- (void)toggleModes {
+  _legacyMode = !_legacyMode;
+  if (_legacyMode) {
+    [self.navigationItem.rightBarButtonItem setTitle:@"Legacy"];
+  } else {
+    [self.navigationItem.rightBarButtonItem setTitle:@"New"];
+  }
+  MDCSnackbarMessage.usesLegacySnackbar = _legacyMode;
 }
 
 #pragma mark - Event Handling

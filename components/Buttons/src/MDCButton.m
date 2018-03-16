@@ -145,6 +145,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    // Set up title label attributes.
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    self.titleLabel.font = [MDCTypography buttonFont];
+
     [self commonMDCButtonInit];
     [self updateBackgroundColor];
   }
@@ -155,6 +160,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCButtonInit];
+
+    if (self.titleLabel.font) {
+      _fonts = [@{} mutableCopy];
+      _fonts[@(UIControlStateNormal)] = self.titleLabel.font;
+    }
 
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkStyleKey]) {
       self.inkView.inkStyle = [aDecoder decodeIntegerForKey:MDCButtonInkViewInkStyleKey];
@@ -298,11 +308,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
   self.showsTouchWhenHighlighted = NO;
-
-  // Set up title label attributes.
-  // TODO(#2709): Have a single source of truth for fonts
-  // Migrate to [UIFont standardFont] when possible
-  self.titleLabel.font = [MDCTypography buttonFont];
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
