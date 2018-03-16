@@ -46,5 +46,3 @@ def mdc_public_objc_library(
       includes = ["src"],
       enable_modules = 1,
       **kwargs)
-
-
