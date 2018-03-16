@@ -59,6 +59,12 @@ ios_test_runner(
     os_version = "8.1",
 )
 
+ios_test_runner(
+    name = "iphone6runner",
+    device_type = "iPhone 6",
+    os_version = "9.0",
+)
+
 ios_unit_test_suite(
     name = "unit_tests",
     deps = [
@@ -67,6 +73,7 @@ ios_unit_test_suite(
     minimum_os_version = "8.0",
     runners = [
         ":iphone5runner",
+        ":iphone6runner",
     ],
     visibility = ["//visibility:private"],
 )
