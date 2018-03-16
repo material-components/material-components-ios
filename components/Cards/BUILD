@@ -15,9 +15,9 @@
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
+     "mdc_objc_library",
+     "generate_runners")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
-load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -53,27 +53,12 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-ios_test_runner(
-    name = "iphone5runner",
-    device_type = "iPhone 5",
-    os_version = "8.1",
-)
-
-ios_test_runner(
-    name = "iphone6runner",
-    device_type = "iPhone 6",
-    os_version = "9.0",
-)
-
 ios_unit_test_suite(
     name = "unit_tests",
     deps = [
       ":unit_test_sources",
     ],
     minimum_os_version = "8.0",
-    runners = [
-        ":iphone5runner",
-        ":iphone6runner",
-    ],
+    runners = generate_runners(),
     visibility = ["//visibility:private"],
 )
