@@ -49,8 +49,10 @@ def mdc_public_objc_library(
       **kwargs)
 
 def generate_runners():
+  print("hahahhaha")
   print(":xcodetest")
   print(xcodetest)
+  print("huhuhuhuhu")
   ios_test_runner(
     name = "IPHONE_5_IN_8_1",
     device_type = "iPhone 5",
