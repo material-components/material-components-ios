@@ -17,7 +17,7 @@ load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
-load("@xctestrunner", "ios_test_runner")
+load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 
 licenses(["notice"])  # Apache 2.0
 
