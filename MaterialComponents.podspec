@@ -536,6 +536,25 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Overlay"
   end
 
+mdc.subspec "Snackbar+Extensions" do |component|
+  component.subspec "ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/Snackbar/src/#{extension.base_name}/*.h"
+    extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Snackbar"
+    extension.dependency "MaterialComponents/Themes"
+  end
+  component.subspec "FontThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/Snackbar/src/#{extension.base_name}/*.h"
+    extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Snackbar"
+    extension.dependency "MaterialComponents/Themes"
+  end
+end
+
   mdc.subspec "Tabs" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
