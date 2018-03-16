@@ -90,7 +90,7 @@ IB_DESIGNABLE
 /**
  The title view layout differs from the traditional behavior of UINavigationBar.
 
- Due to MDCNavigationBar being able to expand vertically, the titleView's height is updated to match
+ Due to MDCNavigationBard being able to expand vertically, the titleView's height is updated to match
  any changes in the MDCNavigationBar's height.
 
  You may wish to create a container view that is able to manage subview layout if your situation
