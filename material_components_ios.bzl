@@ -50,27 +50,22 @@ def mdc_public_objc_library(
 
 def generate_older_runners():
   ios_test_runner(
-    name = "IPHONE_5_IN_8_1",
+    name = "IPHONE_5_IN_8_1_OLD",
     device_type = "iPhone 5",
     os_version = "8.1",
   )
   ios_test_runner(
-      name = "IPAD_PRO_12_9_IN_9_3",
+      name = "IPAD_PRO_12_9_IN_9_3_OLD",
       device_type = "iPad Pro (12.9-inch)",
       os_version = "9.3",
   )
   ios_test_runner(
-      name = "IPHONE_7_PLUS_IN_10_3",
+      name = "IPHONE_7_PLUS_IN_10_3_OLD",
       device_type = "iPhone 7 Plus",
       os_version = "10.3",
   )
-  ios_test_runner(
-      name = "IPHONE_X_IN_11_0",
-      device_type = "iPhone X",
-      os_version = "11.0",
-  )
 
-  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":IPHONE_X_IN_11_0"]
+  return [":IPHONE_5_IN_8_1_OLD", ":IPAD_PRO_12_9_IN_9_3_OLD", ":IPHONE_7_PLUS_IN_10_3_OLD"]
 
 def generate_newer_runners():
   ios_test_runner(
@@ -88,6 +83,11 @@ def generate_newer_runners():
       device_type = "iPhone 7 Plus",
       os_version = "10.3",
   )
+    ios_test_runner(
+      name = "IPHONE_X_IN_11_0",
+      device_type = "iPhone X",
+      os_version = "11.0",
+  )
 
-  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3"]
+  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":IPHONE_X_IN_11_0"]
 
