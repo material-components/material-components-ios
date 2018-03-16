@@ -16,7 +16,8 @@
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library",
-     "generate_runners")
+     "generate_older_runners",
+     "generate_newer_runners")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 
 licenses(["notice"])  # Apache 2.0
@@ -53,12 +54,21 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
+config_setting(
+    name = "older_xcode",
+    values = { "xcode_version_arg": "8.3.3" }
+)
+
 ios_unit_test_suite(
     name = "unit_tests",
     deps = [
       ":unit_test_sources",
     ],
     minimum_os_version = "8.0",
-    runners = generate_runners(),
+    runners = select({
+                  ":older_xcode": generate_older_runners(),
+                  "//conditions:default": generate_newer_runners()
+              }),
     visibility = ["//visibility:private"],
 )
+
