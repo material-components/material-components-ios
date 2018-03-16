@@ -85,10 +85,10 @@ ios_unit_test_suite(
       ":unit_test_sources",
     ],
     minimum_os_version = "8.0",
-    runners = select({
-                  ":older_xcode": [":IPHONE_5_IN_8_1", ":IPHONE_7_PLUS_IN_10_3"],
-                  "//conditions:default": [":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3"]
-              }),
+    runners = [":IPHONE_7_PLUS_IN_10_3", select({
+                                                    ":older_xcode": ":IPHONE_5_IN_8_1",
+                                                    "//conditions:default": ":IPAD_PRO_12_9_IN_9_3",
+                                                })],
     visibility = ["//visibility:private"],
 )
 
