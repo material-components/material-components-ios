@@ -16,7 +16,7 @@
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library",
-     "RUNNERS")
+     "ios_runners")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 
 licenses(["notice"])  # Apache 2.0
@@ -59,7 +59,7 @@ ios_unit_test_suite(
       ":unit_test_sources",
     ],
     minimum_os_version = "8.0",
-    runners = RUNNERS,
+    runners = ios_runners(),
     visibility = ["//visibility:private"],
 )
 

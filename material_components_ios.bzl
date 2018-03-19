@@ -48,30 +48,31 @@ def mdc_public_objc_library(
       enable_modules = 1,
       **kwargs)
 
-ios_test_runner(
-  name = "IPHONE_5_IN_8_1",
-  device_type = "iPhone 5",
-  os_version = "8.1",
-)
-ios_test_runner(
-  name = "IPAD_PRO_12_9_IN_9_3",
-  device_type = "iPad Pro (12.9-inch)",
-  os_version = "9.3",
-)
-ios_test_runner(
-  name = "IPHONE_7_PLUS_IN_10_3",
-  device_type = "iPhone 7 Plus",
-  os_version = "10.3",
-)
-ios_test_runner(
-  name = "DYNAMIC_RUNNER",
-  device_type = select({ ":older_xcode": "iPad 2", "//conditions:default": "iPhone X" }),
-  os_version = select({ ":older_xcode": "8.4", "//conditions:default": "11.0" }), 
-)
+def ios_runners():
+  ios_test_runner(
+    name = "IPHONE_5_IN_8_1",
+    device_type = "iPhone 5",
+    os_version = "8.1",
+  )
+  ios_test_runner(
+    name = "IPAD_PRO_12_9_IN_9_3",
+    device_type = "iPad Pro (12.9-inch)",
+    os_version = "9.3",
+  )
+  ios_test_runner(
+    name = "IPHONE_7_PLUS_IN_10_3",
+    device_type = "iPhone 7 Plus",
+    os_version = "10.3",
+  )
+  ios_test_runner(
+    name = "DYNAMIC_RUNNER",
+    device_type = select({ ":older_xcode": "iPad 2", "//conditions:default": "iPhone X" }),
+    os_version = select({ ":older_xcode": "8.4", "//conditions:default": "11.0" }), 
+  )
 
-native.config_setting(
-    name = "older_xcode",
-    values = {"xcode_version": "8.3.3"},
-)
+  native.config_setting(
+      name = "older_xcode",
+      values = {"xcode_version": "8.3.3"},
+  )
 
-RUNNERS = [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":DYNAMIC_RUNNER"]
+  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":DYNAMIC_RUNNER"]
