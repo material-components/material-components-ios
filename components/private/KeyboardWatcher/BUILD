@@ -14,7 +14,8 @@
 
 load("//:material_components_ios.bzl",
      "mdc_objc_library",
-     "mdc_public_objc_library")
+     "mdc_public_objc_library",
+     "ios_runners")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 
 licenses(["notice"])  # Apache 2.0
