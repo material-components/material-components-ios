@@ -91,6 +91,9 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 /** The cell style. Not animated. @c setCellStyle:animated: for animated layout type changes. */
 @property(nonatomic, assign) MDCCollectionViewCellStyle cellStyle;
 
+/** The border radius of a card cell. Defaults to 1.5f */
+@property(nonatomic) CGFloat cardBorderRadius;
+
 /**
  Updates the cell style with/without animation.
 
