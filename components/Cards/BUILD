@@ -76,7 +76,7 @@ ios_test_runner(
 
 config_setting(
     name = "older_xcode",
-    values = { "xcode_version_arg": "8.3.3" }
+    values = {"--define": "xcode_version_arg=8.3.3"},
 )
 
 ios_unit_test_suite(
