@@ -15,7 +15,8 @@
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
+     "mdc_objc_library",
+     "RUNNERS")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 
@@ -53,39 +54,13 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-ios_test_runner(
-  name = "IPHONE_5_IN_8_1",
-  device_type = "iPhone 5",
-  os_version = "8.1",
-)
-ios_test_runner(
-  name = "IPAD_PRO_12_9_IN_9_3",
-  device_type = "iPad Pro (12.9-inch)",
-  os_version = "9.3",
-)
-ios_test_runner(
-  name = "IPHONE_7_PLUS_IN_10_3",
-  device_type = "iPhone 7 Plus",
-  os_version = "10.3",
-)
-ios_test_runner(
-  name = "DYNAMIC_RUNNER",
-  device_type = select({ ":older_xcode": "iPad 2", "//conditions:default": "iPhone X" }),
-  os_version = select({ ":older_xcode": "8.4", "//conditions:default": "11.0" }), 
-)
-
-config_setting(
-    name = "older_xcode",
-    values = {"xcode_version": "8.3.3"},
-)
-
 ios_unit_test_suite(
     name = "unit_tests",
     deps = [
       ":unit_test_sources",
     ],
     minimum_os_version = "8.0",
-    runners = [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":DYNAMIC_RUNNER"],
+    runners = RUNNERS,
     visibility = ["//visibility:private"],
 )
 
