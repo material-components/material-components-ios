@@ -20,9 +20,7 @@
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
     toBottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar {
-  bottomNavigationBar.selectedItemTintColor = colorScheme.primaryLightColor;
-  bottomNavigationBar.unselectedItemTintColor = colorScheme.primaryDarkColor;
-  bottomNavigationBar.barTintColor = colorScheme.secondaryColor;
+  bottomNavigationBar.selectedItemTintColor = colorScheme.primaryColor;
 }
 
 @end
