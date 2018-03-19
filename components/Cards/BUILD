@@ -69,9 +69,9 @@ ios_test_runner(
   os_version = "10.3",
 )
 ios_test_runner(
-  name = "IPHONE_X_IN_11_0",
-  device_type = "iPhone X",
-  os_version = "11.0",
+  name = "DYNAMIC_RUNNER",
+  device_type = select({ ":older_xcode": "iPad 2", "//conditions:default": "iPhone X"),
+  os_version = select({ ":older_xcode": "8.4", "//conditions:default": "11.0"), 
 )
 
 config_setting(
@@ -79,16 +79,13 @@ config_setting(
     values = { "xcode_version_arg": "8.3.3" }
 )
 
-LOL = select({ ":older_xcode": ":IPHONE_5_IN_8_1",
-               "//conditions:default": ":IPAD_PRO_12_9_IN_9_3"})]
-
 ios_unit_test_suite(
     name = "unit_tests",
     deps = [
       ":unit_test_sources",
     ],
     minimum_os_version = "8.0",
-    runners = [":IPHONE_7_PLUS_IN_10_3", LOL],
+    runners = [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":DYNAMIC_RUNNER"],
     visibility = ["//visibility:private"],
 )
 
