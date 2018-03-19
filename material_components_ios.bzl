@@ -69,7 +69,7 @@ ios_test_runner(
   os_version = select({ ":older_xcode": "8.4", "//conditions:default": "11.0" }), 
 )
 
-config_setting(
+native.config_setting(
     name = "older_xcode",
     values = {"xcode_version": "8.3.3"},
 )
