@@ -75,7 +75,7 @@ def ios_runners():
       values = {"xcode_version": "8.3.3"},
   )
 
-    native.config_setting(
+  native.config_setting(
       name = "xcode_9_0",
       values = {"xcode_version": "9.0"},
   )
