@@ -70,8 +70,8 @@ ios_test_runner(
 )
 ios_test_runner(
   name = "DYNAMIC_RUNNER",
-  device_type = select({ ":older_xcode": "iPad 2", "//conditions:default": "iPhone X"),
-  os_version = select({ ":older_xcode": "8.4", "//conditions:default": "11.0"), 
+  device_type = select({ ":older_xcode": "iPad 2", "//conditions:default": "iPhone X" }),
+  os_version = select({ ":older_xcode": "8.4", "//conditions:default": "11.0" }), 
 )
 
 config_setting(
