@@ -48,6 +48,7 @@ static UIImage *FakeImage(void) {
   chip.accessoryPadding = UIEdgeInsetsMake(4, 5, 6, 7);
   chip.shapeGenerator = [[MDCPillShapeGenerator alloc] init];
   chip.mdc_adjustsFontForContentSizeCategory = YES;
+  chip.minimumSize = CGSizeMake(78, 90);
   [chip setInkColor:UIColor.cyanColor forState:UIControlStateNormal];
   [chip setBackgroundColor:UIColor.orangeColor forState:UIControlStateNormal];
   [chip setTitleColor:UIColor.magentaColor forState:UIControlStateNormal];
@@ -99,6 +100,9 @@ static UIImage *FakeImage(void) {
                  [chip elevationForState:UIControlStateNormal]);
   XCTAssertEqualObjects([unarchivedChip shadowColorForState:UIControlStateNormal],
                         [chip shadowColorForState:UIControlStateNormal]);
+  XCTAssertTrue(CGSizeEqualToSize(unarchivedChip.minimumSize, chip.minimumSize),
+                @"(%@) is not equal to (%@)", NSStringFromCGSize(unarchivedChip.minimumSize),
+                NSStringFromCGSize(chip.minimumSize));
 }
 
 @end

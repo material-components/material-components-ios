@@ -22,6 +22,10 @@
   MDCChipView *_sizingChip;
 }
 
++ (void)initialize {
+  MDCChipView.appearance.mdc_adjustsFontForContentSizeCategory = YES;
+}
+
 - (instancetype)init {
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
@@ -31,6 +35,12 @@
     _sizingChip = [[MDCChipView alloc] init];
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIContentSizeCategoryDidChangeNotification
+                                                object:nil];
 }
 
 - (void)viewDidLoad {
@@ -46,6 +56,14 @@
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(clearSelected)];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange {
+  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)clearSelected {
@@ -86,6 +104,11 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:_sizingChip];
+  // Add and remove the sizing chip to the View hierarchy briefly so that it can receive
+  // any UIAppearance fonts
+  _sizingChip.hidden = YES;
+  [self.view addSubview:_sizingChip];
+  [_sizingChip removeFromSuperview];
   return [_sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
