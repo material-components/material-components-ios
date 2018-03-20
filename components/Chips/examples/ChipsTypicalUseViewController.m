@@ -22,10 +22,6 @@
   MDCChipView *_sizingChip;
 }
 
-+ (void)initialize {
-  MDCChipView.appearance.mdc_adjustsFontForContentSizeCategory = YES;
-}
-
 - (instancetype)init {
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
@@ -33,6 +29,7 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
+    _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
   }
   return self;
 }
@@ -83,6 +80,7 @@
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+  cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
   cell.alwaysAnimateResize = YES;
 
   ChipModel *model = self.model[indexPath.row];
@@ -104,11 +102,6 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:_sizingChip];
-  // Add and remove the sizing chip to the View hierarchy briefly so that it can receive
-  // any UIAppearance fonts
-  _sizingChip.hidden = YES;
-  [self.view addSubview:_sizingChip];
-  [_sizingChip removeFromSuperview];
   return [_sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
