@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,8 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCAlertController.h"
-#import "MDCAlertControllerView.h"
-#import "MDCDialogPresentationController.h"
-#import "MDCDialogTransitionController.h"
-#import "UIViewController+MaterialDialogs.h"
+#import "MDCSnackbarColorThemer.h"
+
+@implementation MDCSnackbarColorThemer
+
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
+  // TODO(yar): Currently a stub. Will need to update the color setting once we have concluded
+  // the proper color theming and scheme.
+}
+
+@end
