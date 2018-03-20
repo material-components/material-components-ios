@@ -2,6 +2,7 @@
 
 load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 
 def mdc_objc_library(
     name,
@@ -47,6 +48,36 @@ def mdc_public_objc_library(
       includes = ["src"],
       enable_modules = 1,
       **kwargs)
+
+
+ios_unit_test_suite(
+    name = "unit_tests",
+    deps = [
+      ":unit_test_sources",
+    ],
+    minimum_os_version = "8.0",
+    runners = ios_runners(),
+    visibility = ["//visibility:private"],
+    size = "small",
+)
+
+def mdc_unit_test_suite(
+    name = "unit_tests",
+    deps = [],
+    minimum_os_version = "8.0",
+    visibility = ["//visibility:private"],
+    size = "medium",
+    **kwargs):
+  """Declare a MDC unit_test_suite using the ios_runners matrix.
+  ios_unit_test_suite(
+    name = name,
+    deps = deps,
+    minimum_os_version = minimum_os_version,
+    runners = ios_runners(),
+    visibility = visibility,
+    size = size,
+    **kwargs
+  )
 
 def ios_runners():
   ios_test_runner(

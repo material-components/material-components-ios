@@ -16,8 +16,7 @@
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library",
-     "ios_runners")
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
+     "mdc_unit_test_suite")
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
@@ -75,14 +74,10 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-ios_unit_test_suite(
-    name = "unit_tests",
+mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
       ":unit_test_swift_sources",
     ],
-    minimum_os_version = "8.0",
-    runners = ios_runners(),
-    visibility = ["//visibility:private"],
 )
 
