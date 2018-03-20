@@ -1,4 +1,4 @@
-# #develop#
+# 48.1.0
 
 ## Breaking changes
 
@@ -37,8 +37,8 @@
 *new* property: `messageColor` in `MDCAlertControllerView`
 
 *new* property: `messageFont` in `MDCAlertControllerView`
-## Component changes
 
+## Component changes
 
 ### Snackbar
 
