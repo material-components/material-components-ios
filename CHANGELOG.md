@@ -16,8 +16,8 @@
 
 | Type of change: | Deprecation message |
 |---|---|
-| From: | `` |
-| To: | `Use messsageTextColor instead.` |
+| From: | `snackbarMessageViewTextColor` |
+| To: | `messsageTextColor` |
 
 *modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
 
