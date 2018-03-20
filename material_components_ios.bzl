@@ -49,36 +49,6 @@ def mdc_public_objc_library(
       enable_modules = 1,
       **kwargs)
 
-
-ios_unit_test_suite(
-    name = "unit_tests",
-    deps = [
-      ":unit_test_sources",
-    ],
-    minimum_os_version = "8.0",
-    runners = ios_runners(),
-    visibility = ["//visibility:private"],
-    size = "small",
-)
-
-def mdc_unit_test_suite(
-    name = "unit_tests",
-    deps = [],
-    minimum_os_version = "8.0",
-    visibility = ["//visibility:private"],
-    size = "medium",
-    **kwargs):
-  """Declare a MDC unit_test_suite using the ios_runners matrix.
-  ios_unit_test_suite(
-    name = name,
-    deps = deps,
-    minimum_os_version = minimum_os_version,
-    runners = ios_runners(),
-    visibility = visibility,
-    size = size,
-    **kwargs
-  )
-
 def ios_runners():
   ios_test_runner(
     name = "IPHONE_5_IN_8_1",
@@ -112,3 +82,21 @@ def ios_runners():
   )
 
   return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":DYNAMIC_RUNNER"]
+
+def mdc_unit_test_suite(
+    name = "unit_tests",
+    deps = [],
+    minimum_os_version = "8.0",
+    visibility = ["//visibility:private"],
+    size = "medium",
+    **kwargs):
+  """Declare a MDC unit_test_suite using the ios_runners matrix."""
+  ios_unit_test_suite(
+    name = name,
+    deps = deps,
+    minimum_os_version = minimum_os_version,
+    runners = ios_runners(),
+    visibility = visibility,
+    size = size,
+    **kwargs
+  )
