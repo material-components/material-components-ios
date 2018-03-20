@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "48.0.0"
+  mdc.version      = "49.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -106,6 +106,16 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/NavigationBar"
     component.dependency "MaterialComponents/private/Math"
+  end
+
+  mdc.subspec "BottomAppBar+Extensions" do |component|
+    component.subspec "ColorThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/BottomAppBar/src/ColorThemer/*.h"
+      extension.source_files = "components/BottomAppBar/src/ColorThemer/*.{h,m}"
+      extension.dependency "MaterialComponents/BottomAppBar"
+      extension.dependency "MaterialComponents/Themes"
+    end
   end
 
   mdc.subspec "BottomNavigation" do |component|
@@ -270,6 +280,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MDFInternationalization"
   end
@@ -524,6 +535,25 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Overlay"
   end
+
+mdc.subspec "Snackbar+Extensions" do |component|
+  component.subspec "ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/Snackbar/src/#{extension.base_name}/*.h"
+    extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Snackbar"
+    extension.dependency "MaterialComponents/Themes"
+  end
+  component.subspec "FontThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/Snackbar/src/#{extension.base_name}/*.h"
+    extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Snackbar"
+    extension.dependency "MaterialComponents/Themes"
+  end
+end
 
   mdc.subspec "Tabs" do |component|
     component.ios.deployment_target = '8.0'

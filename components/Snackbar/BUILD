@@ -40,6 +40,36 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Snackbar",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "FontThemer",
+    srcs = native.glob(["src/FontThemer/*.m"]),
+    hdrs = native.glob(["src/FontThemer/*.h"]),
+    includes = ["src/FontThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Snackbar",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
@@ -69,6 +99,8 @@ mdc_objc_library(
     ],
     deps = [
         ":Snackbar",
+        ":ColorThemer",
+        ":FontThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],

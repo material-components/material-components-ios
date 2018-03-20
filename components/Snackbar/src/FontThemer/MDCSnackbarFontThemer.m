@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,8 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCAlertController.h"
-#import "MDCAlertControllerView.h"
-#import "MDCDialogPresentationController.h"
-#import "MDCDialogTransitionController.h"
-#import "UIViewController+MaterialDialogs.h"
+#import "MDCSnackbarFontThemer.h"
+
+@implementation MDCSnackbarFontThemer
+
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
+    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
+  snackbarMessageView.messageFont = fontScheme.body2;
+  snackbarMessageView.buttonFont = fontScheme.button;
+}
+
+@end

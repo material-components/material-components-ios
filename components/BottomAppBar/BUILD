@@ -44,6 +44,21 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "Foundation",
+    ],
+    deps = [
+        ":BottomAppBar",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = native.glob([
@@ -56,6 +71,7 @@ mdc_objc_library(
     ],
     deps = [
         ":BottomAppBar",
+        ":ColorThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],

@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCSnackbarMessageView.h"
+#import "../MDCSnackbarMessageView.h"
 
 @class MDCSnackbarMessage;
 @class MDCSnackbarMessageAction;
