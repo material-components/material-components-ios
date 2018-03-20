@@ -1,3 +1,72 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### BottomAppBar
+
+#### MDCBottomAppBarView
+
+*new* property: `barTintColor` in `MDCBottomAppBarView`
+
+*new* property: `shadowColor` in `MDCBottomAppBarView`
+
+*new* property: `backgroundColor` in `MDCBottomAppBarView`
+
+### Dialogs
+
+#### MDCAlertControllerView
+
+*new* property: `titleColor` in `MDCAlertControllerView`
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCAlertControllerView`
+
+*new* class: `MDCAlertControllerView`
+
+*new* property: `titleFont` in `MDCAlertControllerView`
+
+*new* property: `buttonColor` in `MDCAlertControllerView`
+
+*new* property: `buttonFont` in `MDCAlertControllerView`
+
+*new* property: `messageColor` in `MDCAlertControllerView`
+
+*new* property: `messageFont` in `MDCAlertControllerView`
+## Component changes
+
+
+### Snackbar
+
+#### Changes
+
+* [Added Color and Font Themers (#3102)](https://github.com/material-components/material-components-ios/commit/b782d2462ab9bfdd10959d27ab6d112ec9e441e8) (Yarden Eitan)
+* [bring back buttonTextColor and deprecate it (#3104)](https://github.com/material-components/material-components-ios/commit/85c5351ec74354d5750fafb8d51bb2be0f58389e) (Yarden Eitan)
+
+### BottomAppBar
+
+#### Changes
+
+* [Add simple color themer (#3094)](https://github.com/material-components/material-components-ios/commit/c82fafba3ea3e17a5b4f3ee4bf5b9564d24bb3bb) (Robert Moore)
+
+### Dialogs
+
+#### Changes
+
+* [Enable custom fonts on MDCAlertController (#3097)](https://github.com/material-components/material-components-ios/commit/b22c8c2650a4a5b21c76cf37b3d1041de639e4e5) (ianegordon)
+
+### Themes
+
+#### Changes
+
+* [[BottomAppBar] Add simple color themer (#3094)](https://github.com/material-components/material-components-ios/commit/c82fafba3ea3e17a5b4f3ee4bf5b9564d24bb3bb) (Robert Moore)
+
+---
+
 # 48.0.0
 
 ## Breaking changes
