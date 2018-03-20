@@ -1,10 +1,12 @@
-# 48.1.0
+# 49.0.0
 
 ## Breaking changes
 
-## New deprecations
+### BottomAppBar
 
-## New features
+#### MDCBottomAppBarView
+
+*NS_UNAVAILABLE* property: `backgroundColor` in `MDCBottomAppBarView`
 
 ## API changes
 
@@ -13,6 +15,8 @@
 #### MDCBottomAppBarView
 
 *new* property: `barTintColor` in `MDCBottomAppBarView`
+
+*NS_UNAVAILABLE* property: `backgroundColor` in `MDCBottomAppBarView`
 
 *new* property: `shadowColor` in `MDCBottomAppBarView`
 
