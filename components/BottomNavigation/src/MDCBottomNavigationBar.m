@@ -389,6 +389,11 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
 }
 
+- (void)didCancelTouchesForButton:(UIButton *)button {
+  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
+  [itemView.inkView cancelAllAnimationsAnimated:NO];
+}
+
 #pragma mark - Setters
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
@@ -452,6 +457,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     [itemView.button addTarget:self
                         action:@selector(didTouchUpOutsideButton:)
               forControlEvents:UIControlEventTouchUpOutside];
+    [itemView.button addTarget:self
+                        action:@selector(didCancelTouchesForButton:)
+              forControlEvents:UIControlEventTouchCancel];
     [self.itemViews addObject:itemView];
     [self.containerView addSubview:itemView];
   }
