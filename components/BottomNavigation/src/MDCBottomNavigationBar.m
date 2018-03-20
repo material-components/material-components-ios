@@ -452,6 +452,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     [itemView.button addTarget:self
                         action:@selector(didTouchUpOutsideButton:)
               forControlEvents:UIControlEventTouchUpOutside];
+    [itemView.button addTarget:self
+                        action:@selector(didTouchUpOutsideButton:)
+              forControlEvents:UIControlEventTouchCancel];
     [self.itemViews addObject:itemView];
     [self.containerView addSubview:itemView];
   }
