@@ -157,6 +157,14 @@
 - (void)showDecustomizedSnackbar:(id)sender {
   [MDCSnackbarMessageView appearance].messageFont = nil;
   [MDCSnackbarMessageView appearance].buttonFont = nil;
+
+  //Setting back to the default colors
+  [[MDCSnackbarMessageView appearance] setButtonTitleColor:[UIColor colorWithWhite:1 alpha:0.6]
+                                                  forState:UIControlStateNormal];
+  [[MDCSnackbarMessageView appearance] setButtonTitleColor:UIColor.whiteColor
+                                                  forState:UIControlStateHighlighted];
+  [MDCSnackbarMessageView appearance].messageTextColor = UIColor.whiteColor;
+
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Back to the standard fonts";
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
