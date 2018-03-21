@@ -22,7 +22,7 @@
     toBottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar {
   bottomNavigationBar.selectedItemTintColor = colorScheme.primaryLightColor;
   bottomNavigationBar.unselectedItemTintColor = colorScheme.primaryDarkColor;
-  bottomNavigationBar.backgroundColor = colorScheme.secondaryColor;
+  bottomNavigationBar.barTintColor = colorScheme.secondaryColor;
 }
 
 @end

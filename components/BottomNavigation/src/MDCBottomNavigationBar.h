@@ -108,6 +108,16 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property (nonatomic, strong, readwrite, nonnull) UIColor *unselectedItemTintColor
     UI_APPEARANCE_SELECTOR;
 
+/**
+ Color of the background of bottom navigation bar and the bar items.
+ */
+@property(nonatomic, strong, nullable) UIColor *barTintColor UI_APPEARANCE_SELECTOR;
+
+/**
+ To color the background of the view use -barTintColor instead.
+ */
+@property(nullable, nonatomic,copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
+
 @end
 
 #pragma mark - MDCBottomNavigationBarDelegate
