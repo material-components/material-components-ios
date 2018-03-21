@@ -158,7 +158,7 @@
   [MDCSnackbarMessageView appearance].messageFont = nil;
   [MDCSnackbarMessageView appearance].buttonFont = nil;
 
-  //Setting back to the default colors
+  // Setting back to the default colors as defined in MDCSnackbarMessageView.h.
   [[MDCSnackbarMessageView appearance] setButtonTitleColor:[UIColor colorWithWhite:1 alpha:0.6]
                                                   forState:UIControlStateNormal];
   [[MDCSnackbarMessageView appearance] setButtonTitleColor:UIColor.whiteColor
