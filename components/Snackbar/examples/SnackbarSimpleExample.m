@@ -157,7 +157,9 @@
 - (void)showDecustomizedSnackbar:(id)sender {
   [MDCSnackbarMessageView appearance].messageFont = nil;
   [MDCSnackbarMessageView appearance].buttonFont = nil;
-  [[MDCSnackbarMessageView appearance] setButtonTitleColor:nil
+
+  // Setting back to the default colors as defined in MDCSnackbarMessageView.h.
+  [[MDCSnackbarMessageView appearance] setButtonTitleColor:[UIColor colorWithWhite:1 alpha:0.6f]
                                                   forState:UIControlStateNormal];
   [[MDCSnackbarMessageView appearance] setButtonTitleColor:nil
                                                   forState:UIControlStateHighlighted];
