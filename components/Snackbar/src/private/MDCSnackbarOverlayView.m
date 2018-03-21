@@ -18,7 +18,7 @@
 
 #import "MDCSnackbarOverlayView.h"
 
-#import "MDCSnackbarMessage.h"
+#import "../MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialApplication.h"

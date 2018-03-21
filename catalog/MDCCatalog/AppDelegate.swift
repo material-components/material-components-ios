@@ -18,6 +18,7 @@ import UIKit
 
 import CatalogByConvention
 
+import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MDCActivityIndicatorColorThemer
 import MaterialComponents.MDCBottomAppBarColorThemer
 import MaterialComponents.MDCButtonBarColorThemer

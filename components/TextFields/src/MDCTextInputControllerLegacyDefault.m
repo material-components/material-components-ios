@@ -984,8 +984,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (NSNumber *)floatingPlaceholderScale {
-  if (_floatingPlaceholderScale == nil) {
-    _floatingPlaceholderScale = @([self class].floatingPlaceholderScaleDefault);
+  if (!_floatingPlaceholderScale) {
+    _floatingPlaceholderScale =
+        [NSNumber numberWithFloat:(float)[self class].floatingPlaceholderScaleDefault];
   }
   return _floatingPlaceholderScale;
 }
@@ -993,9 +994,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)setFloatingPlaceholderScale:(NSNumber *)floatingPlaceholderScale {
   if (![_floatingPlaceholderScale isEqualToNumber:floatingPlaceholderScale]) {
     _floatingPlaceholderScale =
-        floatingPlaceholderScale != nil
+        floatingPlaceholderScale
             ? floatingPlaceholderScale
-            : @([self class].floatingPlaceholderScaleDefault);
+            : [NSNumber numberWithFloat:(float)[self class].floatingPlaceholderScaleDefault];
 
     [self updatePlaceholder];
     [self.textInput setNeedsUpdateConstraints];

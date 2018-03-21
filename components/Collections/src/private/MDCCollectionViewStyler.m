@@ -104,6 +104,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 @synthesize gridColumnCount = _gridColumnCount;
 @synthesize gridPadding = _gridPadding;
 @synthesize cellStyle = _cellStyle;
+@synthesize cardBorderRadius = _cardBorderRadius;
 @synthesize separatorColor = _separatorColor;
 @synthesize separatorInset = _separatorInset;
 @synthesize separatorLineHeight = _separatorLineHeight;
@@ -126,6 +127,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // Background color is 0xEEEEEE
     _collectionView.backgroundColor = MDCPalette.greyPalette.tint200;
     _inlaidIndexPathSet = [NSMutableSet set];
+    _cardBorderRadius = kCollectionViewCellDefaultBorderRadius;
 
     // Cell separator defaults.
     _separatorColor = MDCPalette.greyPalette.tint300;
@@ -501,7 +503,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // If not card or grouped style, revert @c isBottom to allow drawing separator at bottom.
     isBottom = NO;
   }
-  CGFloat borderRadius = (isCardStyle) ? kCollectionViewCellDefaultBorderRadius : 0.0f;
+  CGFloat borderRadius = (isCardStyle) ? _cardBorderRadius : 0.0f;
 
   // Allowance for grid decoration view.
   if (isGridLayout) {
