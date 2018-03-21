@@ -105,7 +105,10 @@ void MDCCatalogDrawMDCLogoLight(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawActivityIndicatorTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect activityIndicatorGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 7.67) * 0.89686 + 7.83) - 7.33);
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -127,7 +130,10 @@ void MDCCatalogDrawActivityIndicatorTile(CGRect frame, id<MDCColorScheme> colorS
 }
 
 void MDCCatalogDrawAnimationTimingTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect animationGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* ringsBezierPath = [UIBezierPath bezierPath];
@@ -173,7 +179,10 @@ void MDCCatalogDrawAnimationTimingTile(CGRect frame, id<MDCColorScheme> colorSch
 }
 
 void MDCCatalogDrawAppBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect appBarGroup = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), floor((frame.size.width) * 1.00000 + 0.5), floor((frame.size.height) * 1.00000 + 0.5));
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -201,7 +210,10 @@ void MDCCatalogDrawAppBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawBottomAppBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect bottomAppBarGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -243,7 +255,10 @@ void MDCCatalogDrawBottomAppBarTile(CGRect frame, id<MDCColorScheme> colorScheme
 }
 
 void MDCCatalogDrawBottomNavTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect bottomNavGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -271,7 +286,10 @@ void MDCCatalogDrawBottomNavTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawBottomSheetTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect bottomSheetGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -296,7 +314,10 @@ void MDCCatalogDrawBottomSheetTile(CGRect frame, id<MDCColorScheme> colorScheme)
 
 void MDCCatalogDrawButtonBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   UIColor* fillColor2 = [UIColor whiteColor];
   CGRect buttonBarGroup = CGRectMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame) + 24, floor((frame.size.width - 8) * 0.89189 + 0.5), floor((frame.size.height - 24) * 0.58621 + 0.5));
   {
@@ -326,7 +347,10 @@ void MDCCatalogDrawButtonBarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawButtonsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
 
   CGRect buttonsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
@@ -367,7 +391,10 @@ void MDCCatalogDrawButtonsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawCollectionCellsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect collectionCellsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* outlinesPath = [UIBezierPath bezierPath];
@@ -421,7 +448,10 @@ void MDCCatalogDrawCollectionCellsTile(CGRect frame, id<MDCColorScheme> colorSch
 }
 
 void MDCCatalogDrawCollectionsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect collectionsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* topLeftSquarePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(collectionsGroup) + floor(collectionsGroup.size.width * 0.15000 + 0.5), CGRectGetMinY(collectionsGroup) + floor(collectionsGroup.size.height * 0.15000 + 0.5), floor(collectionsGroup.size.width * 0.46825 + 0.04) - floor(collectionsGroup.size.width * 0.15000 + 0.5) + 0.46, floor(collectionsGroup.size.height * 0.46825 + 0.04) - floor(collectionsGroup.size.height * 0.15000 + 0.5) + 0.46)];
@@ -460,7 +490,10 @@ void MDCCatalogDrawCollectionsTile(CGRect frame, id<MDCColorScheme> colorScheme)
 }
 
 void MDCCatalogDrawDialogsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect dialogsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* squarePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(dialogsGroup) + floor(dialogsGroup.size.width * 0.25000 + 0.5), CGRectGetMinY(dialogsGroup) + floor(dialogsGroup.size.height * 0.25000 + 0.5), floor(dialogsGroup.size.width * 0.75000 + 0.5) - floor(dialogsGroup.size.width * 0.25000 + 0.5), floor(dialogsGroup.size.height * 0.75000 + 0.5) - floor(dialogsGroup.size.height * 0.25000 + 0.5))];
@@ -487,7 +520,10 @@ void MDCCatalogDrawDialogsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawFeatureHighlightTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect featureHighlightGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* circlePath = [UIBezierPath bezierPath];
@@ -524,7 +560,10 @@ void MDCCatalogDrawFeatureHighlightTile(CGRect frame, id<MDCColorScheme> colorSc
 }
 
 void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect flexibleHeaderGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98354 + 0.83) - 0.33, floor((frame.size.height - 1) * 0.98354 + 0.83) - 0.33);
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -550,7 +589,10 @@ void MDCCatalogDrawHeaderStackViewTile(CGRect frame, id<MDCColorScheme> colorSch
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* gradientColor = colorScheme.primaryColor;
-  UIColor* fillColor = colorScheme.primaryLightColor;
+  UIColor* fillColor = UIColor.lightGrayColor;
+  if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
+    fillColor = colorScheme.primaryLightColor;
+  }
 
   CGFloat fillColorRGBA[4];
   [fillColor getRed:&fillColorRGBA[0]
@@ -683,7 +725,10 @@ void MDCCatalogDrawHeaderStackViewTile(CGRect frame, id<MDCColorScheme> colorSch
 }
 
 void MDCCatalogDrawInkTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect inkGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -708,7 +753,10 @@ void MDCCatalogDrawInkTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawMaskedTransitionTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect maskedTransitionsGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* moonPath = [UIBezierPath bezierPath];
@@ -742,7 +790,10 @@ void MDCCatalogDrawMaskedTransitionTile(CGRect frame, id<MDCColorScheme> colorSc
 }
 
 void MDCCatalogDrawMiscTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect miscGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 7.67) * 0.89686 + 7.83) - 7.33);
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -785,7 +836,10 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, id<MDCColorScheme> colorSchem
 
   UIColor* gradientColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
   UIColor* fillColor = colorScheme.primaryColor;
-  UIColor* fillColor2 = colorScheme.primaryLightColor;
+  UIColor* fillColor2 = UIColor.lightGrayColor;
+  if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
+    fillColor2 = colorScheme.primaryLightColor;
+  }
   UIColor* textForeground = [fillColor colorWithAlphaComponent:0.2f];
   UIColor* gradientColor2 = colorScheme.primaryColor;
 
@@ -979,7 +1033,10 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, id<MDCColorScheme> colorSchem
 }
 
 void MDCCatalogDrawOverlayWindow(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryLightColor;
+  UIColor* fillColor = UIColor.lightGrayColor;
+  if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
+    fillColor = colorScheme.primaryLightColor;
+  }
   UIColor* fillColor2 = colorScheme.primaryColor;
   UIColor* fillColor3 = [UIColor colorWithWhite:0.5f alpha:1.0f];
 
@@ -1096,7 +1153,10 @@ void MDCCatalogDrawOverlayWindow(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawPageControlTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect pageControlGroup = CGRectMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame) + 34.5, floor((frame.size.width - 8) * 0.89189 + 0.5), floor((frame.size.height - 34.5) * 0.27368 + 0.5));
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -1157,7 +1217,10 @@ void MDCCatalogDrawPageControlTile(CGRect frame, id<MDCColorScheme> colorScheme)
 }
 
 void MDCCatalogDrawPalettesTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect palettesGroup = CGRectMake(CGRectGetMinX(frame) + 7.65, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.65) * 0.89688 + 7.82) - 7.32, floor((frame.size.height - 7.67) * 0.85202 + 8.17) - 7.67);
   {
     UIBezierPath* bucketPath = [UIBezierPath bezierPath];
@@ -1198,8 +1261,14 @@ void MDCCatalogDrawProgressViewTile(CGRect frame, id<MDCColorScheme> colorScheme
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
-  UIColor* fillColor2 = colorScheme.primaryDarkColor;
-  UIColor* gradientColor = colorScheme.primaryLightColor;
+  UIColor* fillColor2 = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor2 = colorScheme.primaryDarkColor;
+  }
+  UIColor* gradientColor = UIColor.lightGrayColor;
+  if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
+    gradientColor = colorScheme.primaryLightColor;
+  }
 
   CGFloat gradientLocations[] = {0.14, 1};
   CGGradientRef gradient = CGGradientCreateWithColors(
@@ -1276,7 +1345,10 @@ void MDCCatalogDrawProgressViewTile(CGRect frame, id<MDCColorScheme> colorScheme
 }
 
 void MDCCatalogDrawShadowLayerTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect shadowGroup = CGRectMake(CGRectGetMinX(frame) + 1, CGRectGetMinY(frame) + 1, floor((frame.size.width - 1) * 0.98765 + 0.5), floor((frame.size.height - 1) * 0.98765 + 0.5));
   {
     UIBezierPath* squarePath = [UIBezierPath bezierPath];
@@ -1310,7 +1382,10 @@ void MDCCatalogDrawShadowLayerTile(CGRect frame, id<MDCColorScheme> colorScheme)
 }
 
 void MDCCatalogDrawSliderTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect sliderGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 31, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 31) * 0.39216 + 0.5));
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -1335,7 +1410,10 @@ void MDCCatalogDrawSliderTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawSnackbarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect snackbarGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 7.67) * 0.89686 + 7.83) - 7.33);
   {
     UIBezierPath* outlinePath = [UIBezierPath bezierPath];
@@ -1357,7 +1435,10 @@ void MDCCatalogDrawSnackbarTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawTabsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect tabBarGroup = CGRectMake(CGRectGetMinX(frame) + 7.67, CGRectGetMinY(frame) + 7.67, floor((frame.size.width - 7.67) * 0.89686 + 7.83) - 7.33, floor((frame.size.height - 7.67) * 0.89686 + 7.83) - 7.33);
   {
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -1385,7 +1466,10 @@ void MDCCatalogDrawTabsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawTextFieldTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect textFieldGroup = CGRectMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame) + 11, floor((frame.size.width - 8) * 0.89189 + 0.5), floor((frame.size.height - 11) * 0.84507 + 0.5));
   {
     UIBezierPath* horizontalLinePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(textFieldGroup) + floor(textFieldGroup.size.width * 0.00000 + 0.5), CGRectGetMinY(textFieldGroup) + floor(textFieldGroup.size.height * 0.88333 + 0.5), floor(textFieldGroup.size.width * 1.00000 + 0.5) - floor(textFieldGroup.size.width * 0.00000 + 0.5), floor(textFieldGroup.size.height * 1.00000 + 0.5) - floor(textFieldGroup.size.height * 0.88333 + 0.5))];
@@ -1418,7 +1502,10 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, id<MDCColorScheme> colorScheme) {
 }
 
 void MDCCatalogDrawThemesTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
   CGRect themesGroup = CGRectMake(CGRectGetMinX(frame) + 11, CGRectGetMinY(frame) + 8, floor((frame.size.width - 11) * 0.88732 + 0.5), floor((frame.size.height - 8) * 0.89189 + 0.5));
   {
     UIBezierPath* trianglePath = [UIBezierPath bezierPath];
@@ -1566,8 +1653,11 @@ void MDCCatalogDrawTypographyTile(CGRect frame, id<MDCColorScheme> colorScheme) 
 }
 
 void MDCCatalogDrawTypographyCustomFontsTile(CGRect frame, id<MDCColorScheme> colorScheme) {
-  UIColor* fillColor = colorScheme.primaryDarkColor;
-
+  UIColor* fillColor = UIColor.blackColor;
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    fillColor = colorScheme.primaryDarkColor;
+  }
+  
   CGRect typographyCustomFontGroup = CGRectMake(CGRectGetMinX(frame) + 8.02, CGRectGetMinY(frame) + 8, floor((frame.size.width - 8.02) * 0.89213 + 0.5), floor((frame.size.height - 8) * 0.89189 + 0.5));
   {
     UIBezierPath* aPath = [UIBezierPath bezierPath];
