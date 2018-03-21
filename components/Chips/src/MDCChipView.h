@@ -131,6 +131,14 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
+/**
+ The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent
+ to no minimum for that dimension.
+
+ Defaults to a minimum height of 32 points, and no minimum width.
+ */
+@property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;
+
 /*
  A color used as the chip's @c backgroundColor for @c state.
 
