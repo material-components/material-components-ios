@@ -71,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
     MDCAlertColorThemer.apply(colorScheme)
     MDCBottomAppBarColorThemer.apply(colorScheme, to: MDCBottomAppBarView.appearance())
+    MDCBottomNavigationBarColorThemer.apply(colorScheme, to:MDCBottomNavigationBar.appearance())
     MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
     MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
     let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
