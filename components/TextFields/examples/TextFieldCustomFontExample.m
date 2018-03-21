@@ -235,7 +235,7 @@
       [UIFont fontWithName:@"Chalkduster" size:12];
   self.customFontController.inlinePlaceholderFont =
       [UIFont fontWithName:@"AmericanTypewriter" size:12];
-  self.customFontController.textInput.font = [UIFont fontWithName:@"Chalkduster" size:16];
+  self.customFontController.textInputFont = [UIFont fontWithName:@"Chalkduster" size:16];
   return customFontTextField;
 }
 
@@ -256,7 +256,7 @@
   self.customFontDynamicController.trailingUnderlineLabelFont =
       [UIFont fontWithName:@"Chalkduster" size:12];
   self.customFontDynamicController.inlinePlaceholderFont = [UIFont fontWithName:@"Zapfino" size:12];
-  self.customFontDynamicController.textInput.font = [UIFont fontWithName:@"Zapfino" size:16];
+  self.customFontDynamicController.textInputFont = [UIFont fontWithName:@"Zapfino" size:16];
   self.customFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
 
   [self.scrollView addSubview:customFontDynamicTextField];
@@ -308,7 +308,7 @@
       [UIFont fontWithName:@"Chalkduster" size:12];
   self.multilineCustomFontDynamicController.inlinePlaceholderFont =
       [UIFont fontWithName:@"Zapfino" size:12];
-  self.multilineCustomFontDynamicController.textInput.font =
+  self.multilineCustomFontDynamicController.textInputFont =
       [UIFont fontWithName:@"AmericanTypewriter" size:16];
   self.multilineCustomFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
   return multilineCustomDynamicTextField;
