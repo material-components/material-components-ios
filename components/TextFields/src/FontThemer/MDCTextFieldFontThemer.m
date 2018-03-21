@@ -42,9 +42,12 @@
 + (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
             toTextField:(MDCTextField *)textField {
   textField.font = fontScheme.body1;
+  textField.placeholderLabel.font = fontScheme.body1;
+  textField.leadingUnderlineLabel.font = fontScheme.caption;
+  textField.trailingUnderlineLabel.font = fontScheme.caption;
 }
 
-// TODO: (larche) Drop this if defined and the pragmas when we drop Xcode 8 support.
+// TODO: (larche) Drop this "#if !defined..." and the pragmas when we drop Xcode 8 support.
 // This is to silence a warning that doesn't appear in Xcode 9 when you use Class as an object.
 #if !defined(__IPHONE_11_0)
 #pragma clang diagnostic push

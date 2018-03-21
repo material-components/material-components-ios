@@ -29,27 +29,28 @@
 /**
  Applies a font scheme to theme to a MDCTextInputController instance.
 
- @param fontScheme The font scheme to apply to MDCTextInputController.
- @param textInputController a MDCTextInputController instance to apply a font scheme.
+ @param fontScheme The font scheme to apply to a MDCTextInputController.
+ @param textInputController A MDCTextInputController instance to apply a font scheme.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
   toTextInputController:(nullable id<MDCTextInputController>)textInputController;
 
 /**
- Applies a font scheme to theme to MDCTextInputController for a specific class type.
+ Applies a font scheme to theme to MDCTextInputController for a specific class type. Would not apply
+ to existing instances.
 
  @param fontScheme The font scheme to apply to MDCTextInputController.
- @param textInputControllerClass a MDCTextInputController class to apply the font scheme to.
+ @param textInputControllerClass A MDCTextInputController class to apply the font scheme to.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
   toAllTextInputControllersOfClass:(nullable Class<MDCTextInputController>)textInputControllerClass
   NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
 /**
- Applies a font scheme to theme to MDCTextField instance.
+ Applies a font scheme to theme to a MDCTextField instance.
 
  @param fontScheme The font scheme to apply to MDCTextField.
- @param textField a MDCTextField instance to apply the font scheme to.
+ @param textField A MDCTextField instance to apply the font scheme to.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
             toTextField:(nullable MDCTextField *)textField;

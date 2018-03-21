@@ -41,9 +41,16 @@
 - (void)testFontThemerSetsTheFontsForTextFieldProperly {
   MDCTextField *textField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   textField.font = [UIFont systemFontOfSize:28];
+  textField.leadingUnderlineLabel.font = [UIFont systemFontOfSize:28];
+  textField.trailingUnderlineLabel.font = [UIFont systemFontOfSize:28];
+  textField.placeholderLabel.font = [UIFont systemFontOfSize:28];
   MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
   fontScheme.body1 = [UIFont systemFontOfSize:20];
+  fontScheme.caption = [UIFont systemFontOfSize:16];
   [MDCTextFieldFontThemer applyFontScheme:fontScheme toTextField:textField];
+  XCTAssertEqualObjects(textField.leadingUnderlineLabel.font, fontScheme.caption);
+  XCTAssertEqualObjects(textField.trailingUnderlineLabel.font, fontScheme.caption);
+  XCTAssertEqualObjects(textField.placeholderLabel.font, fontScheme.body1);
   XCTAssertEqualObjects(textField.font, fontScheme.body1);
 }
 

@@ -16,7 +16,7 @@
 
 #import "MaterialTextFields.h"
 
-@interface TextFieldDynamicSizeExample : UIViewController <UITextFieldDelegate, UITextViewDelegate>
+@interface TextFieldCustomFontExample : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 
 @property(nonatomic) MDCTextInputControllerOutlined *systemFontController;
 @property(nonatomic) MDCTextInputControllerOutlined *systemFontDynamicController;
@@ -27,12 +27,13 @@
 @property(nonatomic) MDCTextInputControllerOutlinedTextArea *multilineDynamicController;
 @property(nonatomic) MDCTextInputControllerOutlinedTextArea *multilineCustomFontDynamicController;
 
+@property(nonatomic) UIFont *normalTextFont;
+
 @property(nonatomic) UIScrollView *scrollView;
 
-@property(nonatomic) UIFont *normalTextFont;
 @end
 
-@implementation TextFieldDynamicSizeExample
+@implementation TextFieldCustomFontExample
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -46,121 +47,27 @@
 
   [self setupScrollView];
 
-  // System Font TextField
-  MDCTextField *systemFontTextField = [[MDCTextField alloc] init];
-  self.normalTextFont = systemFontTextField.font;
-  systemFontTextField.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:systemFontTextField];
+  // Create a System Font TextField.
+  MDCTextField *systemFontTextField = [self setupSystemFontTextField];
 
-  systemFontTextField.delegate = self;
-  systemFontTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
-  systemFontTextField.backgroundColor = [UIColor whiteColor];
+  // Create a System Font Dynamic TextField.
+  MDCTextField *systemFontDynamicTextField = [self setupSystemFontDynamicTextField];
 
-  self.systemFontController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:systemFontTextField];
-  self.systemFontController.placeholderText = @"System Font";
-  self.systemFontController.mdc_adjustsFontForContentSizeCategory = NO;
+  // Create a Custom Font TextField.
+  MDCTextField *customFontTextField = [self setupCustomFontTextField];;
 
-  // System Font Dynamic TextField
-  MDCTextField *systemFontDynamicTextField = [[MDCTextField alloc] init];
-  systemFontDynamicTextField.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:systemFontDynamicTextField];
+  // Create a Custom Font Dynamic TextField.
+  MDCTextField *customFontDynamicTextField = [self setupCustomFontDynamicTextField];;
 
-  systemFontDynamicTextField.delegate = self;
-  systemFontDynamicTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
-  systemFontDynamicTextField.backgroundColor = [UIColor whiteColor];
+  // Create a System Multiline TextField.
+  MDCMultilineTextField *multilineTextField = [self setupSystemMultilineTextField];
 
-  self.systemFontDynamicController =
-      [[MDCTextInputControllerOutlined alloc] initWithTextInput:systemFontDynamicTextField];
-  self.systemFontDynamicController.placeholderText = @"System Font - Dynamic";
-  self.systemFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
+  // Create a System Multiline Dynamic TextField.
+  MDCMultilineTextField *multilineDynamicTextField = [self setupSystemMultilineDynamicTextField];
 
-  // Custom Font TextField
-  MDCTextField *customFontTextField = [[MDCTextField alloc] init];
-  customFontTextField.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:customFontTextField];
-
-  customFontTextField.delegate = self;
-  customFontTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
-  customFontTextField.backgroundColor = [UIColor whiteColor];
-
-  self.customFontController =
-      [[MDCTextInputControllerOutlined alloc] initWithTextInput:customFontTextField];
-  self.customFontController.placeholderText = @"Custom Font";
-  self.customFontController.mdc_adjustsFontForContentSizeCategory = NO;
-  self.customFontController.leadingUnderlineLabelFont =
-      [UIFont fontWithName:@"AmericanTypewriter" size:12];
-  self.customFontController.trailingUnderlineLabelFont =
-      [UIFont fontWithName:@"Chalkduster" size:12];
-  self.customFontController.inlinePlaceholderFont =
-      [UIFont fontWithName:@"AmericanTypewriter" size:12];
-  self.customFontController.textInput.font = [UIFont fontWithName:@"Chalkduster" size:16];
-
-  // Custom Font Dynamic TextField
-  MDCTextField *customFontDynamicTextField = [[MDCTextField alloc] init];
-  customFontDynamicTextField.translatesAutoresizingMaskIntoConstraints = NO;
-
-  customFontDynamicTextField.delegate = self;
-  customFontDynamicTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
-  customFontDynamicTextField.backgroundColor = [UIColor whiteColor];
-
-  self.customFontDynamicController =
-      [[MDCTextInputControllerOutlined alloc] initWithTextInput:customFontDynamicTextField];
-  self.customFontDynamicController.placeholderText = @"Custom Font - Dynamic";
-  self.customFontDynamicController.helperText = @"Helper";
-  self.customFontDynamicController.leadingUnderlineLabelFont =
-      [UIFont fontWithName:@"Zapfino" size:12];
-  self.customFontDynamicController.trailingUnderlineLabelFont =
-      [UIFont fontWithName:@"Chalkduster" size:12];
-  self.customFontDynamicController.inlinePlaceholderFont = [UIFont fontWithName:@"Zapfino" size:12];
-  self.customFontDynamicController.textInput.font = [UIFont fontWithName:@"Zapfino" size:16];
-  self.customFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
-
-  [self.scrollView addSubview:customFontDynamicTextField];
-
-  // System Multiline TextField
-  MDCMultilineTextField *multilineTextField = [[MDCMultilineTextField alloc] init];
-  multilineTextField.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:multilineTextField];
-
-  multilineTextField.textView.delegate = self;
-
-  self.multilineController =
-      [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:multilineTextField];
-  self.multilineController.placeholderText = @"Multiline Text";
-  self.multilineController.mdc_adjustsFontForContentSizeCategory = NO;
-
-  // System Multiline Dynamic TextField
-  MDCMultilineTextField *multilineDynamicTextField = [[MDCMultilineTextField alloc] init];
-  multilineDynamicTextField.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:multilineDynamicTextField];
-
-  multilineDynamicTextField.textView.delegate = self;
-
-  self.multilineDynamicController =
-      [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:multilineDynamicTextField];
-  self.multilineDynamicController.placeholderText = @"Multiline Dynamic Text";
-  self.multilineDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
-
-  // Custom Multiline Dyamic TextField
-  MDCMultilineTextField *multilineCustomDynamicTextField = [[MDCMultilineTextField alloc] init];
-  multilineCustomDynamicTextField.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:multilineCustomDynamicTextField];
-
-  multilineCustomDynamicTextField.textView.delegate = self;
-
-  self.multilineCustomFontDynamicController =
-      [[MDCTextInputControllerOutlinedTextArea alloc]
-            initWithTextInput:multilineCustomDynamicTextField];
-  self.multilineCustomFontDynamicController.placeholderText = @"Multiline Custom Font Dynamic Text";
-  self.multilineCustomFontDynamicController.leadingUnderlineLabelFont =
-      [UIFont fontWithName:@"AmericanTypewriter" size:12];
-  self.customFontDynamicController.trailingUnderlineLabelFont =
-      [UIFont fontWithName:@"Chalkduster" size:12];
-  self.multilineCustomFontDynamicController.inlinePlaceholderFont =
-      [UIFont fontWithName:@"Zapfino" size:12];
-  self.multilineCustomFontDynamicController.textInput.font =
-      [UIFont fontWithName:@"AmericanTypewriter" size:16];
-  self.multilineCustomFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
+  // Create a Custom Multiline Dyamic TextField.
+  MDCMultilineTextField *multilineCustomDynamicTextField =
+      [self setupCustomMultilineDynamicTextField];
 
 
   NSDictionary *views = @{
@@ -277,15 +184,141 @@
   [self.scrollView addGestureRecognizer:tapGestureRecognizer];
 }
 
+- (MDCTextField *)setupSystemFontTextField {
+  MDCTextField *systemFontTextField = [[MDCTextField alloc] init];
+  self.normalTextFont = systemFontTextField.font;
+  systemFontTextField.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:systemFontTextField];
+
+  systemFontTextField.delegate = self;
+  systemFontTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
+  systemFontTextField.backgroundColor = [UIColor whiteColor];
+
+  self.systemFontController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:systemFontTextField];
+  self.systemFontController.placeholderText = @"System Font";
+  self.systemFontController.mdc_adjustsFontForContentSizeCategory = NO;
+  return systemFontTextField;
+}
+
+- (MDCTextField *)setupSystemFontDynamicTextField {
+  MDCTextField *systemFontDynamicTextField = [[MDCTextField alloc] init];
+  systemFontDynamicTextField.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:systemFontDynamicTextField];
+
+  systemFontDynamicTextField.delegate = self;
+  systemFontDynamicTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
+  systemFontDynamicTextField.backgroundColor = [UIColor whiteColor];
+
+  self.systemFontDynamicController =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:systemFontDynamicTextField];
+  self.systemFontDynamicController.placeholderText = @"System Font - Dynamic";
+  self.systemFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
+  return systemFontDynamicTextField;
+}
+
+- (MDCTextField *)setupCustomFontTextField {
+  MDCTextField *customFontTextField = [[MDCTextField alloc] init];
+  customFontTextField.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:customFontTextField];
+
+  customFontTextField.delegate = self;
+  customFontTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
+  customFontTextField.backgroundColor = [UIColor whiteColor];
+
+  self.customFontController =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:customFontTextField];
+  self.customFontController.placeholderText = @"Custom Font";
+  self.customFontController.mdc_adjustsFontForContentSizeCategory = NO;
+  self.customFontController.leadingUnderlineLabelFont =
+      [UIFont fontWithName:@"AmericanTypewriter" size:12];
+  self.customFontController.trailingUnderlineLabelFont =
+      [UIFont fontWithName:@"Chalkduster" size:12];
+  self.customFontController.inlinePlaceholderFont =
+      [UIFont fontWithName:@"AmericanTypewriter" size:12];
+  self.customFontController.textInput.font = [UIFont fontWithName:@"Chalkduster" size:16];
+  return customFontTextField;
+}
+
+- (MDCTextField *)setupCustomFontDynamicTextField {
+  MDCTextField *customFontDynamicTextField = [[MDCTextField alloc] init];
+  customFontDynamicTextField.translatesAutoresizingMaskIntoConstraints = NO;
+
+  customFontDynamicTextField.delegate = self;
+  customFontDynamicTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
+  customFontDynamicTextField.backgroundColor = [UIColor whiteColor];
+
+  self.customFontDynamicController =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:customFontDynamicTextField];
+  self.customFontDynamicController.placeholderText = @"Custom Font - Dynamic";
+  self.customFontDynamicController.helperText = @"Helper";
+  self.customFontDynamicController.leadingUnderlineLabelFont =
+      [UIFont fontWithName:@"Zapfino" size:12];
+  self.customFontDynamicController.trailingUnderlineLabelFont =
+      [UIFont fontWithName:@"Chalkduster" size:12];
+  self.customFontDynamicController.inlinePlaceholderFont = [UIFont fontWithName:@"Zapfino" size:12];
+  self.customFontDynamicController.textInput.font = [UIFont fontWithName:@"Zapfino" size:16];
+  self.customFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  [self.scrollView addSubview:customFontDynamicTextField];
+  return customFontDynamicTextField;
+}
+
+- (MDCMultilineTextField *)setupSystemMultilineTextField {
+  MDCMultilineTextField *multilineTextField = [[MDCMultilineTextField alloc] init];
+  multilineTextField.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:multilineTextField];
+
+  multilineTextField.textView.delegate = self;
+
+  self.multilineController =
+      [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:multilineTextField];
+  self.multilineController.placeholderText = @"Multiline Text";
+  self.multilineController.mdc_adjustsFontForContentSizeCategory = NO;
+  return multilineTextField;
+}
+
+- (MDCMultilineTextField *)setupSystemMultilineDynamicTextField {
+  MDCMultilineTextField *multilineDynamicTextField = [[MDCMultilineTextField alloc] init];
+  multilineDynamicTextField.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:multilineDynamicTextField];
+
+  multilineDynamicTextField.textView.delegate = self;
+
+  self.multilineDynamicController =
+      [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:multilineDynamicTextField];
+  self.multilineDynamicController.placeholderText = @"Multiline Dynamic Text";
+  self.multilineDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
+  return multilineDynamicTextField;
+}
+
+- (MDCMultilineTextField *)setupCustomMultilineDynamicTextField {
+  MDCMultilineTextField *multilineCustomDynamicTextField = [[MDCMultilineTextField alloc] init];
+  multilineCustomDynamicTextField.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:multilineCustomDynamicTextField];
+
+  multilineCustomDynamicTextField.textView.delegate = self;
+
+  self.multilineCustomFontDynamicController =
+      [[MDCTextInputControllerOutlinedTextArea alloc]
+            initWithTextInput:multilineCustomDynamicTextField];
+  self.multilineCustomFontDynamicController.placeholderText = @"Multiline Custom Font Dynamic Text";
+  self.multilineCustomFontDynamicController.leadingUnderlineLabelFont =
+      [UIFont fontWithName:@"AmericanTypewriter" size:12];
+  self.customFontDynamicController.trailingUnderlineLabelFont =
+      [UIFont fontWithName:@"Chalkduster" size:12];
+  self.multilineCustomFontDynamicController.inlinePlaceholderFont =
+      [UIFont fontWithName:@"Zapfino" size:12];
+  self.multilineCustomFontDynamicController.textInput.font =
+      [UIFont fontWithName:@"AmericanTypewriter" size:16];
+  self.multilineCustomFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
+  return multilineCustomDynamicTextField;
+}
+
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
   [textField resignFirstResponder];
-
-//  if (textField == (UITextField *)self.phoneController.textInput &&
-//      ![self isValidPhoneNumber:textField.text partially:NO]) {
-//    [self.phoneController setErrorText:@"Invalid Phone Number" errorAccessibilityValue:nil];
-//  }
 
   return NO;
 }
@@ -393,10 +426,10 @@ replacementString:(NSString *)string {
 
 @end
 
-@implementation TextFieldDynamicSizeExample (CatalogByConvention)
+@implementation TextFieldCustomFontExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Dynamic Size Fonts (Objective-C)" ];
+  return @[ @"Text Field", @"Custom Fonts (Objective-C)" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -404,7 +437,7 @@ replacementString:(NSString *)string {
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
