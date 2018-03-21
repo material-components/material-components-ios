@@ -36,7 +36,9 @@ class MDCDragonsController: UIViewController,
     static let headerViewMaxHeight: CGFloat = 113
     static let headerViewMinHeight: CGFloat = 53
     static let bgColor = UIColor(white: 0.97, alpha: 1)
-    static let headerColor = UIColor(red: 0.298, green: 0.686, blue: 0.314, alpha: 1.0)
+    static let headerColor = UIColor(red: 0.384, green: 0, blue: 0.933, alpha: 1.0)
+    static let titleColor = UIColor(white: 0, alpha: 0.87)
+    static let subtitleColor = UIColor(white: 0, alpha: 0.60)
   }
   fileprivate var cellsBySection: [[DragonCell]]
   fileprivate var searched: [DragonCell]!
@@ -193,11 +195,21 @@ class MDCDragonsController: UIViewController,
     if !node.isExample() && !isSearchActive {
       if nodeData.expanded {
         cell.accessoryView = cell.expandedButton
+        cell.textLabel?.textColor = Constants.headerColor
       } else {
         cell.accessoryView = cell.defaultButton
+        cell.textLabel?.textColor = Constants.titleColor
       }
     } else {
       cell.accessoryView = nil
+      if indexPath.section != 0 {
+        cell.textLabel?.textColor = Constants.subtitleColor
+        if let text = cell.textLabel?.text {
+          cell.textLabel?.text = "  " + text
+        }
+      } else if isSearchActive {
+        cell.textLabel?.textColor = Constants.titleColor
+      }
     }
     return cell
   }
@@ -215,9 +227,11 @@ class MDCDragonsController: UIViewController,
       if nodeData.expanded {
         collapseCells(at: indexPath)
         cell.accessoryView = cell.defaultButton
+        cell.textLabel?.textColor = Constants.titleColor
       } else {
         expandCells(at: indexPath)
         cell.accessoryView = cell.expandedButton
+        cell.textLabel?.textColor = Constants.headerColor
       }
       self.tableView.endUpdates()
       nodeData.expanded = !nodeData.expanded
