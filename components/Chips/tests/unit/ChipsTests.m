@@ -41,11 +41,11 @@ static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
   return MDCColorDarken(color, -percent);
 }
 
-@interface ChipsNoopTest : XCTestCase
+@interface ChipsTests : XCTestCase
 
 @end
 
-@implementation ChipsNoopTest
+@implementation ChipsTests
 
 - (void)testDefaults {
   // Given
@@ -110,6 +110,74 @@ static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
                             MDCColorFromRGB(0xEBEBEB));
     }
   }
+}
+
+- (void)testMinimumSizeWithSizeToFit {
+  // Given
+  MDCChipView *chipWithoutMinimum = [[MDCChipView alloc] init];
+  MDCChipView *chipWithMinimumWidth = [[MDCChipView alloc] init];
+  MDCChipView *chipWithMinimumHeight = [[MDCChipView alloc] init];
+  MDCChipView *chipWithMinimumHeightAndWidth = [[MDCChipView alloc] init];
+  CGFloat minimumDimension = 1000;
+
+  // When
+  chipWithoutMinimum.minimumSize = CGSizeZero;
+  [chipWithoutMinimum sizeToFit];
+
+  chipWithMinimumWidth.minimumSize = CGSizeMake(minimumDimension, 0);
+  [chipWithMinimumWidth sizeToFit];
+
+  chipWithMinimumHeight.minimumSize = CGSizeMake(0, minimumDimension);
+  [chipWithMinimumHeight sizeToFit];
+
+  chipWithMinimumHeightAndWidth.minimumSize = CGSizeMake(minimumDimension, minimumDimension);
+  [chipWithMinimumHeightAndWidth sizeToFit];
+
+  // Then
+  XCTAssertLessThan(CGRectGetWidth(chipWithoutMinimum.bounds), minimumDimension);
+  XCTAssertLessThan(CGRectGetHeight(chipWithoutMinimum.bounds), minimumDimension);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(chipWithMinimumWidth.bounds), minimumDimension, 0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(chipWithMinimumWidth.bounds),
+                             CGRectGetHeight(chipWithoutMinimum.bounds), 0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(chipWithMinimumHeight.bounds),
+                             CGRectGetWidth(chipWithoutMinimum.bounds), 0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(chipWithMinimumHeight.bounds), minimumDimension,
+                             0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(chipWithMinimumHeightAndWidth.bounds), minimumDimension,
+                             0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(chipWithMinimumHeightAndWidth.bounds), minimumDimension,
+                             0.001);
+}
+
+- (void)testMinimumSizeWithIntrinsicContentSize {
+  // Given
+  MDCChipView *chipWithoutMinimum = [[MDCChipView alloc] init];
+  MDCChipView *chipWithMinimumWidth = [[MDCChipView alloc] init];
+  MDCChipView *chipWithMinimumHeight = [[MDCChipView alloc] init];
+  MDCChipView *chipWithMinimumHeightAndWidth = [[MDCChipView alloc] init];
+  CGFloat minimumDimension = 1000;
+
+  // When
+  chipWithoutMinimum.minimumSize = CGSizeZero;
+  chipWithMinimumWidth.minimumSize = CGSizeMake(minimumDimension, 0);
+  chipWithMinimumHeight.minimumSize = CGSizeMake(0, minimumDimension);
+  chipWithMinimumHeightAndWidth.minimumSize = CGSizeMake(minimumDimension, minimumDimension);
+
+  // Then
+  XCTAssertLessThan(chipWithoutMinimum.intrinsicContentSize.width, minimumDimension);
+  XCTAssertLessThan(chipWithoutMinimum.intrinsicContentSize.height, minimumDimension);
+  XCTAssertEqualWithAccuracy(chipWithMinimumWidth.intrinsicContentSize.width, minimumDimension,
+                             0.001);
+  XCTAssertEqualWithAccuracy(chipWithMinimumWidth.intrinsicContentSize.height,
+                             chipWithoutMinimum.intrinsicContentSize.height, 0.001);
+  XCTAssertEqualWithAccuracy(chipWithMinimumHeight.intrinsicContentSize.width,
+                             chipWithoutMinimum.intrinsicContentSize.width, 0.001);
+  XCTAssertEqualWithAccuracy(chipWithMinimumHeight.intrinsicContentSize.height, minimumDimension,
+                             0.001);
+  XCTAssertEqualWithAccuracy(chipWithMinimumHeightAndWidth.intrinsicContentSize.width,
+                             minimumDimension, 0.001);
+  XCTAssertEqualWithAccuracy(chipWithMinimumHeightAndWidth.intrinsicContentSize.height,
+                             minimumDimension, 0.001);
 }
 
 @end

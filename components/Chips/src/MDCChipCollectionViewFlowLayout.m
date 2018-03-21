@@ -49,7 +49,7 @@ static inline CGRect CGRectLeftAlign(CGRect rect) {
     UICollectionViewLayoutAttributes *attrs = [layoutAttributes[i] copy];
     UICollectionViewLayoutAttributes *prevAttrs = customLayoutAttributes[i - 1];
 
-    if (CGRectGetMidY(prevAttrs.frame) == CGRectGetMidY(attrs.frame)) {
+    if (CGRectGetMinY(prevAttrs.frame) == CGRectGetMinY(attrs.frame)) {
       attrs.frame =
           CGRectLeftAlignToRect(attrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
     } else {
