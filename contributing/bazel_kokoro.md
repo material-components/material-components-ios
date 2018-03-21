@@ -66,8 +66,8 @@ For a component written in Objective-C with only Objective-C tests and no resour
 ```
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
+     "mdc_objc_library",
+     "mdc_unit_test_suite")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -92,13 +92,10 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-ios_unit_test(
-    name = "unit_tests",
+mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
     ],
-    minimum_os_version = "8.0",
-    visibility = ["//visibility:private"],
 )
 ```
 
@@ -109,7 +106,7 @@ Dependencies are added as paths relative to the root of the MDC iOS repo:
 ```
 mdc_public_objc_library(
     name = "ComponentName",
-+    deps = ["//components/Palettes"],
+    deps = ["//components/Palettes"],
 )
 
 ```
@@ -122,20 +119,20 @@ with the following additions:
 ```
 mdc_public_objc_library(
     name = "ComponentName",
-+    bundles = [":Bundle"],
+    bundles = [":Bundle"],
 )
 
-+filegroup(
-+    name = "BundleFiles",
-+    srcs = glob([
-+        "src/ComponentName.bundle/**",
-+    ]),
-+)
-+
-+objc_bundle(
-+    name = "Bundle",
-+    bundle_imports = [":BundleFiles"],
-+)
+filegroup(
+    name = "BundleFiles",
+    srcs = glob([
+        "src/ComponentName.bundle/**",
+    ]),
+)
+
+objc_bundle(
+    name = "Bundle",
+    bundle_imports = [":BundleFiles"],
+)
 ```
 
 ### Exposing private APIs to unit tests
@@ -144,20 +141,20 @@ You can export private APIs such that they are only visible to unit test targets
 rules:
 
 ```
-+mdc_objc_library(
-+    name = "private",
-+    hdrs = native.glob(["src/private/*.h"]),
-+    deps = [":Ink"],
-+    includes = ["src/private"],
-+    visibility = [":test_targets"],
-+)
-+
-+package_group(
-+    name = "test_targets",
-+    packages = [
-+        "//components/ComponentName/...",
-+    ],
-+)
+mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    deps = [":Ink"],
+    includes = ["src/private"],
+    visibility = [":test_targets"],
+)
+
+package_group(
+    name = "test_targets",
+    packages = [
+        "//components/ComponentName/...",
+    ],
+)
 
 mdc_objc_library(
     name = "unit_test_sources",
@@ -170,7 +167,7 @@ mdc_objc_library(
     ],
     deps = [
         ":ComponentName",
-+        ":private"
+        ":private"
     ],
     visibility = ["//visibility:private"],
 )
@@ -179,22 +176,19 @@ mdc_objc_library(
 ### Adding Swift unit tests
 
 ```
-+load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
-+swift_library(
-+    name = "unit_test_swift_sources",
-+    srcs = glob(["tests/unit/*.swift"]),
-+    deps = [":ComponentName"],
-+    visibility = ["//visibility:private"],
-+)
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = glob(["tests/unit/*.swift"]),
+    deps = [":ComponentName"],
+    visibility = ["//visibility:private"],
+)
 
-ios_unit_test(
-    name = "unit_tests",
+mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
-+      ":unit_test_swift_sources"
+      ":unit_test_swift_sources"
     ],
-    minimum_os_version = "8.0",
-    visibility = ["//visibility:private"],
 )
 ```
