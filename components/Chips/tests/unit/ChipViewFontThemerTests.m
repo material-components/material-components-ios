@@ -20,65 +20,6 @@
 #import "MaterialChips.h"
 #import "MDCChipViewFontThemer.h"
 
-@interface FakeFontScheme : NSObject <MDCFontScheme>
-@end
-
-@implementation FakeFontScheme
-
-- (UIFont *)headline1 {
-  return nil;
-}
-
-- (UIFont *)headline2 {
-  return nil;
-}
-
-- (UIFont *)headline3 {
-  return nil;
-}
-
-- (UIFont *)headline4 {
-  return nil;
-}
-
-- (UIFont *)headline5 {
-  return nil;
-}
-
-- (UIFont *)headline6 {
-  return nil;
-}
-
-- (UIFont *)subtitle1 {
-  return nil;
-}
-
-- (UIFont *)subtitle2 {
-  return nil;
-}
-
-- (UIFont *)caption {
-  return nil;
-}
-
-- (UIFont *)overline {
-  return nil;
-}
-
-- (UIFont *)button {
-  return nil;
-}
-
-- (UIFont *)body1 {
-  return nil;
-}
-
-- (UIFont *)body2 {
-  return [UIFont systemFontOfSize:99];
-}
-
-@end
-
 @interface ChipViewFontThemerTests : XCTestCase
 
 @end
@@ -88,7 +29,8 @@
 - (void)testFontThemer {
   // Given
   MDCChipView *chip = [[MDCChipView alloc] init];
-  FakeFontScheme *fontScheme = [[FakeFontScheme alloc] init];
+  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
+  fontScheme.body2 = [UIFont systemFontOfSize:99];
 
   // When
   [MDCChipViewFontThemer applyFontScheme:fontScheme toChipView:chip];
