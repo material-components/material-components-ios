@@ -29,6 +29,6 @@
  @c barTintColor to color the background of the bar.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-      toBottomAppBarView:(nullable MDCBottomAppBarView *)bottomAppBarView;
+      toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
 
 @end

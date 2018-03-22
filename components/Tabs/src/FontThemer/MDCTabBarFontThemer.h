@@ -30,6 +30,6 @@ limitations under the License.
  @param tabBar A MDCTabBar instance to apply a color scheme.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-               toTabBar:(nullable MDCTabBar *)tabBar;
+               toTabBar:(nonnull MDCTabBar *)tabBar;
 
 @end
