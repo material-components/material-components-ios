@@ -74,8 +74,8 @@
     sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   } else if (@available(iOS 10.0, *)) {
-#endif
     sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
+#endif
   }
 
   return [UIFontDescriptor mdc_fontDescriptorForMaterialTextStyle:style sizeCategory:sizeCategory];
