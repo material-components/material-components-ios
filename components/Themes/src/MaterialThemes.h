@@ -16,5 +16,6 @@
 
 #import "MDCColorScheme.h"
 #import "MDCFontScheme.h"
+#import "MDCSemanticColorScheme.h"
 #import "MDCTonalColorScheme.h"
 #import "MDCTonalPalette.h"
