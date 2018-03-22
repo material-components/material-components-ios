@@ -17,41 +17,40 @@
 #import <Foundation/Foundation.h>
 #import "MDCColorScheme.h"
 
+/**
+ A simple color scheme that provides more semantic context for the colors it uses. Unlike
+ @c MDCColorScheme, there are no optional properties, so more consistent theming can be applied.
+ */
 @protocol MDCSemanticColorScheming <MDCColorScheme>
+
 /**
  Displayed most frequently across your app.
  */
-@property(nonnull, readonly) UIColor *primaryColor;
+@property(nonnull, readonly, nonatomic) UIColor *primaryColor;
 
 /**
  A tonal variation of primary color.
  */
-@property(nonnull, readonly) UIColor *primaryColorLightVariant;
+@property(nonnull, readonly, nonatomic) UIColor *primaryColorLightVariant;
 
 /**
  A tonal variation of primary color.
  */
-@property(nonnull, readonly) UIColor *primaryColorDarkVariant;
+@property(nonnull, readonly, nonatomic) UIColor *primaryColorDarkVariant;
 
 /**
  Accents select parts of your UI.
  */
-@property(nullable, readonly) UIColor *secondaryColor;
+@property(nullable, readonly, nonatomic) UIColor *secondaryColor;
 
 /**
  The color used to indicate error status. Defaults to a red color.
 */
-@property(nonnull, readonly) UIColor *errorColor;
+@property(nonnull, readonly, nonatomic) UIColor *errorColor;
 
 @end
 
 @interface MDCSemanticColorScheme : NSObject <MDCSemanticColorScheming>
-
-@property(nonnull, readonly, nonatomic) UIColor *primaryColor;
-@property(nonnull, readonly, nonatomic) UIColor *primaryColorLightVariant;
-@property(nonnull, readonly, nonatomic) UIColor *primaryColorDarkVariant;
-@property(nullable, readonly, nonatomic) UIColor *secondaryColor;
-@property(nonnull, readonly, nonatomic) UIColor *errorColor;
 
 #pragma mark - MDCColorScheme compatibility
 

@@ -18,6 +18,12 @@
 
 @implementation MDCSemanticColorScheme
 
+@synthesize primaryColor = _primaryColor;
+@synthesize primaryColorLightVariant = _primaryColorLightVariant;
+@synthesize primaryColorDarkVariant = _primaryColorDarkVariant;
+@synthesize secondaryColor = _secondaryColor;
+@synthesize errorColor = _errorColor;
+
 - (instancetype)initWithPrimaryColor:(UIColor *)primaryColor
             primaryColorLightVariant:(UIColor *)primaryColorLightVariant
              primaryColorDarkVariant:(UIColor *)primaryColorDarkVariant
