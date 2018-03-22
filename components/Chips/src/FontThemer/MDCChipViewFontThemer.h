@@ -29,6 +29,6 @@
  Applies the provided font scheme to the given Chip or its UIAppearance proxy.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-             toChipView:(nullable MDCChipView *)chipView;
+             toChipView:(nonnull MDCChipView *)chipView;
 
 @end
