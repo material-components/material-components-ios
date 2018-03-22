@@ -33,17 +33,17 @@
  @param textInputController A MDCTextInputController instance to apply a font scheme.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-  toTextInputController:(nullable id<MDCTextInputController>)textInputController;
+  toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
 
 /**
- Applies a font scheme to theme to MDCTextInputController for a specific class type. Would not apply
- to existing instances.
+ Applies a font scheme to theme specific class type responding to MDCTextInputController protocol.
+ Will not apply to existing instances.
 
  @param fontScheme The font scheme to apply to MDCTextInputController.
  @param textInputControllerClass A MDCTextInputController class to apply the font scheme to.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-  toAllTextInputControllersOfClass:(nullable Class<MDCTextInputController>)textInputControllerClass
+  toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
   NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
 /**
