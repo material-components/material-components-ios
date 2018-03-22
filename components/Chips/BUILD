@@ -28,19 +28,32 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Ink",
-        "//components/TextFields",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
+        "//components/TextFields",
         "//components/Typography",
         "//components/private/Math",
+        "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
 mdc_objc_library(
+    name = "FontThemer",
+    srcs = native.glob(["src/FontThemer/*.m"]),
+    hdrs = native.glob(["src/FontThemer/*.h"]),
+    includes = ["src/FontThemer"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Chips",
+        "//components/Themes",
+    ],
+)
+
+mdc_objc_library(
     name = "private",
+    testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
@@ -59,6 +72,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Chips",
+        ":FontThemer",
         ":private",
         "//components/private/ShapeLibrary",
     ],
