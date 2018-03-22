@@ -22,35 +22,35 @@
 @protocol MDCTextInputController;
 
 /**
- Used to apply a font scheme to theme to MDCTextField/MDCTextInputController.
+ Used to apply a font scheme to theme a MDCTextField/MDCTextInputController.
  */
 @interface MDCTextFieldFontThemer : NSObject
 
 /**
- Applies a font scheme to theme to a MDCTextInputController instance.
+ Applies a font scheme to theme a MDCTextInputController instance.
 
- @param fontScheme The font scheme to apply to a MDCTextInputController.
- @param textInputController A MDCTextInputController instance to apply a font scheme.
+ @param fontScheme The font scheme that applies to a MDCTextInputController.
+ @param textInputController A MDCTextInputController instance that font scheme will be applied to.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
   toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
 
 /**
- Applies a font scheme to theme specific class type responding to MDCTextInputController protocol.
+ Applies a font scheme to theme a specific class type responding to MDCTextInputController protocol.
  Will not apply to existing instances.
 
- @param fontScheme The font scheme to apply to MDCTextInputController.
- @param textInputControllerClass A MDCTextInputController class to apply the font scheme to.
+ @param fontScheme The font scheme that applies to a MDCTextInputController.
+ @param textInputControllerClass A MDCTextInputController class that font scheme will be applied to.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
   toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
   NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
 /**
- Applies a font scheme to theme to a MDCTextField instance.
+ Applies a font scheme to a MDCTextField instance.
 
- @param fontScheme The font scheme to apply to MDCTextField.
- @param textField A MDCTextField instance to apply the font scheme to.
+ @param fontScheme The font scheme that applies to MDCTextField.
+ @param textField A MDCTextField instance that font scheme will be applied to.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
             toTextField:(nullable MDCTextField *)textField;
