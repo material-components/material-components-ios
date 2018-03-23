@@ -89,7 +89,7 @@ version_for_platform() {
 # Creates a release-candidate branch based off the latest origin/develop
 cut_release() {
   isHotFix=false;
-  
+
   while test $# -gt 0; do
     case "$1" in
       --hotfix)
@@ -98,7 +98,7 @@ cut_release() {
         ;;
     esac
   done
-  
+
   if [ $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
     echo "${B}Release already cut.${N}"
     echo "Consider deleting your existing release-candidate branch."
@@ -108,7 +108,7 @@ cut_release() {
   git fetch
 
   git show develop >> /dev/null 2>&1 || { git checkout -b develop origin/develop; }
-  
+
   deviance=$(git log develop..origin/develop --oneline | wc -l)
   if [ $deviance -ne 0 ]; then
     echo
@@ -120,7 +120,7 @@ cut_release() {
     echo
     exit 1
   fi
-  
+
   deviance=$(git log origin/develop..develop --oneline | wc -l)
   if [ $deviance -ne "0" ]; then
     echo
@@ -410,12 +410,13 @@ publish_podspec() {
   echo "Verifying Cocoapod trunk permissions"
   pod trunk me > cocoapods_permissions.log
   if grep -Fq "MaterialComponents" cocoapods_permissions.log; then
-    echo "Running a pod trunk push..."
+    echo "Running a pod trunk push from stable..."
+    git checkout stable
     pod trunk push MaterialComponents.podspec
+    rm cocoapods_permissions.log
   else
-    echo "You do not have the right permissions to push the pod via the CocoaPods API."
+    echo "You do not have the right permissions to push the pod via the CocoaPods API. See cocoapods_permissions.log for more info."
   fi
-  rm cocoapods_permissions.log
 }
 
 # Generators
@@ -646,8 +647,8 @@ case "$1" in
   log)        generate_release_log ${@:2} ;;
   notes)      generate_release_notes ${@:2} ;;
   source)     generate_release_source ${@:2} ;;
-              
+
   abort)      abort_release ${@:2} ;;
-              
+
   *)          usage ;;
 esac

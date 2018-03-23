@@ -380,4 +380,20 @@ static const int kMDCButtonAnimationDuration = 200;
   [self showBarButtonItemsWithFloatingButtonPosition:self.floatingButtonPosition];
 }
 
+- (void)setBarTintColor:(UIColor *)barTintColor {
+  _bottomBarLayer.fillColor = barTintColor.CGColor;
+}
+
+- (UIColor *)barTintColor {
+  return [UIColor colorWithCGColor:_bottomBarLayer.fillColor];
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+  _bottomBarLayer.shadowColor = shadowColor.CGColor;
+}
+
+- (UIColor *)shadowColor {
+  return [UIColor colorWithCGColor:_bottomBarLayer.shadowColor];
+}
+
 @end

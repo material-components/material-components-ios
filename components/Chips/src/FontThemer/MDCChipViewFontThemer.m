@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,19 +14,14 @@
  limitations under the License.
  */
 
-#import <XCTest/XCTest.h>
-
+#import "MDCChipViewFontThemer.h"
 #import "MaterialChips.h"
+#import "MaterialThemes.h"
 
-@interface ChipsNoopTest : XCTestCase
+@implementation MDCChipViewFontThemer
 
-@end
-
-@implementation ChipsNoopTest
-
-- (void)testInit {
-  MDCChipView *chip = [[MDCChipView alloc] init];
-  XCTAssertNotNil(chip);
++ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme toChipView:(MDCChipView *)chipView {
+  chipView.titleFont = fontScheme.body2;
 }
 
 @end

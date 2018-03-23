@@ -43,8 +43,11 @@ static NSString *const MDCChipInkColorsKey = @"MDCChipInkColorsKey";
 static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
 static NSString *const MDCChipTitleFontKey = @"MDCChipTitleFontKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
+static NSString *const MDCChipMinimumSizeKey = @"MDCChipMinimumSizeKey";
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
+
+static const CGSize kMDCChipMinimumSizeDefault = (CGSize){(CGFloat)0, (CGFloat)32};
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
@@ -210,6 +213,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _imagePadding = MDCChipImagePadding;
     _titlePadding = MDCChipTitlePadding;
     _accessoryPadding = MDCChipAccessoryPadding;
+    _minimumSize = kMDCChipMinimumSizeDefault;
 
     // UIControl has a drag enter/exit boundary that is outside of the frame of the button itself.
     // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
@@ -258,6 +262,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _titleFont = [aDecoder decodeObjectOfClass:[UIFont class] forKey:MDCChipTitleFontKey];
     _titleColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
                                           forKey:MDCChipTitleColorsKey];
+    _minimumSize = kMDCChipMinimumSizeDefault;
+    if ([aDecoder containsValueForKey:MDCChipMinimumSizeKey]) {
+      _minimumSize = [aDecoder decodeCGSizeForKey:MDCChipMinimumSizeKey];
+    }
 
     self.mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCChipAdjustsFontForContentSizeKey];
@@ -286,6 +294,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [aCoder encodeObject:_shadowColors forKey:MDCChipShadowColorsKey];
   [aCoder encodeObject:_titleFont forKey:MDCChipTitleFontKey];
   [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
+  [aCoder encodeCGSize:_minimumSize forKey:MDCChipMinimumSizeKey];
 }
 
 - (void)dealloc {
@@ -705,6 +714,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
       CGSizeMake(imageSize.width + titleSize.width + accessorySize.width,
                  MAX(imageSize.height, MAX(titleSize.height, accessorySize.height)));
   CGSize chipSize = CGSizeExpandWithInsets(contentSize, self.contentPadding);
+  if (self.minimumSize.width > 0) {
+    chipSize.width = MAX(self.minimumSize.width, chipSize.width);
+  }
+  if (self.minimumSize.height > 0) {
+    chipSize.height = MAX(self.minimumSize.height, chipSize.height);
+  }
   return MDCSizeCeilWithScale(chipSize, self.pixelScale);
 }
 

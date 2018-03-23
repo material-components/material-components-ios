@@ -21,7 +21,9 @@
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toButton:(MDCButton *)button {
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateDisabled];
+  if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
+    [button setBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateDisabled];
+  }
 }
 
 @end
