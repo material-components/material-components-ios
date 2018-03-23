@@ -21,7 +21,7 @@
  A simple color scheme that provides more semantic context for the colors it uses. Unlike
  @c MDCColorScheme, there are no optional properties, so more consistent theming can be applied.
  */
-@protocol MDCSemanticColorScheming <MDCColorScheme>
+@protocol MDCSemanticColorScheming
 
 /**
  Displayed most frequently across your app.
@@ -41,16 +41,16 @@
 /**
  Accents select parts of your UI.
  */
-@property(nullable, readonly, nonatomic) UIColor *secondaryColor;
+@property(nonnull, readonly, nonatomic) UIColor *secondaryColor;
 
 /**
- The color used to indicate error status. Defaults to a red color.
+ The color used to indicate error status.
 */
 @property(nonnull, readonly, nonatomic) UIColor *errorColor;
 
 @end
 
-@interface MDCSemanticColorScheme : NSObject <MDCSemanticColorScheming>
+@interface MDCSemanticColorScheme : NSObject <MDCSemanticColorScheming, MDCColorScheme>
 
 #pragma mark - MDCColorScheme compatibility
 
@@ -68,13 +68,13 @@
  @param primaryColor Displayed most frequently across your app.
  @param primaryColorLightVariant A tonal variation of @c primaryColor.
  @param primaryColorDarkVariant A tonal variation of @c primaryColor.
- @param secondaryColor Accents select parts of your UI. If @c nil, defaults to @c primaryColor.
- @param errorColor The color used to indicate error status. If @c nil, defaults to a red color.
+ @param secondaryColor Accents select parts of your UI.
+ @param errorColor The color used to indicate error status.
 */
 - (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
                     primaryColorLightVariant:(nonnull UIColor *)primaryColorLightVariant
                      primaryColorDarkVariant:(nonnull UIColor *)primaryColorDarkVariant
-                              secondaryColor:(nullable UIColor *)secondaryColor
-                                  errorColor:(nullable UIColor *)errorColor;
+                              secondaryColor:(nonnull UIColor *)secondaryColor
+                                  errorColor:(nonnull UIColor *)errorColor;
 
 @end

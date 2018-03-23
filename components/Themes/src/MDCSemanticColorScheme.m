@@ -34,20 +34,8 @@
     _primaryColor = primaryColor;
     _primaryColorDarkVariant = primaryColorDarkVariant;
     _primaryColorLightVariant = primaryColorLightVariant;
-    if (errorColor) {
-      _errorColor = errorColor;
-    } else {
-      // Default is #ff1744
-      _errorColor = [[UIColor alloc] initWithRed:1
-                                           green:(float)(0x17 / 255.0)
-                                            blue:(float)(0x44 / 255.0)
-                                           alpha:1];
-    }
-    if (secondaryColor) {
-      _secondaryColor = secondaryColor;
-    } else {
-      _secondaryColor = primaryColor;
-    }
+    _errorColor = errorColor;
+    _secondaryColor = secondaryColor;
   }
   return self;
 }
