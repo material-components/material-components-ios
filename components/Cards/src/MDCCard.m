@@ -278,7 +278,6 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   }
 
   self.layer.shapeGenerator = shapeGenerator;
-//  self.layer.mask = self.layer.colorLayer;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
 }
