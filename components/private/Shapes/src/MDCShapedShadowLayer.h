@@ -63,4 +63,7 @@
  */
 @property(nonatomic, strong, nullable) id<MDCShapeGenerating> shapeGenerator;
 
+@property(nonatomic, strong, nonnull) CAShapeLayer *colorLayer;
+
+
 @end

@@ -18,6 +18,8 @@
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
+@protocol MDCShapeGenerating;
+
 @interface MDCCard : UIControl
 
 /**
@@ -112,5 +114,11 @@
  @return The shadow color for the requested state.
  */
 - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/*
+ The shape generator used to define the chip's shape.
+ */
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;
+
 
 @end
