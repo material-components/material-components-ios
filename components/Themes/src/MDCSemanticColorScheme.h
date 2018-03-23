@@ -50,17 +50,7 @@
 
 @end
 
-@interface MDCSemanticColorScheme : NSObject <MDCSemanticColorScheming, MDCColorScheme>
-
-#pragma mark - MDCColorScheme compatibility
-
-// Bound to @c primaryColorLightVariant
-@property(nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;
-
-// Bound to @c primaryColorDarkVariant
-@property(nonatomic, strong, nonnull, readonly) UIColor *primaryDarkColor;
-
-#pragma mark - Initializers
+@interface MDCSemanticColorScheme : NSObject <MDCSemanticColorScheming>
 
 /**
  Creates a new color scheme with the provided color parameters.
@@ -77,4 +67,13 @@
                               secondaryColor:(nonnull UIColor *)secondaryColor
                                   errorColor:(nonnull UIColor *)errorColor;
 
+@end
+
+@interface MDCSemanticColorScheme (MDCColorSchemeCompatibility) <MDCColorScheme>
+
+// Bound to @c primaryColorLightVariant
+@property(nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;
+
+// Bound to @c primaryColorDarkVariant
+@property(nonatomic, strong, nonnull, readonly) UIColor *primaryDarkColor;
 @end

@@ -40,6 +40,10 @@
   return self;
 }
 
+@end
+
+@implementation MDCSemanticColorScheme (MDCColorSchemeCompatibility)
+
 - (UIColor *)primaryDarkColor {
   return self.primaryColorDarkVariant;
 }

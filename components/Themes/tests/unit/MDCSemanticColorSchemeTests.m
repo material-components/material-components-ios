@@ -23,6 +23,23 @@
 
 @implementation MDCSemanticColorSchemeTests
 
+- (void)testInitializer {
+  // Given
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithPrimaryColor:UIColor.redColor
+                                  primaryColorLightVariant:UIColor.blueColor
+                                   primaryColorDarkVariant:UIColor.greenColor
+                                            secondaryColor:UIColor.orangeColor
+                                                errorColor:UIColor.yellowColor];
+
+  // Then
+  XCTAssertEqual(colorScheme.primaryColor, UIColor.redColor);
+  XCTAssertEqual(colorScheme.primaryColorLightVariant, UIColor.blueColor);
+  XCTAssertEqual(colorScheme.primaryColorDarkVariant, UIColor.greenColor);
+  XCTAssertEqual(colorScheme.secondaryColor, UIColor.orangeColor);
+  XCTAssertEqual(colorScheme.errorColor, UIColor.yellowColor);
+}
+
 - (void)testPrimaryColorVariantCompatibility {
   // Given
   MDCSemanticColorScheme *colorScheme =
