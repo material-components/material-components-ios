@@ -137,6 +137,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 static UIFont *_inlinePlaceholderFontDefault;
 static UIFont *_leadingUnderlineLabelFontDefault;
+static UIFont *_textInputFontDefault;
 static UIFont *_trailingUnderlineLabelFontDefault;
 
 static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileEditing;
@@ -159,6 +160,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   UIFont *_inlinePlaceholderFont;
   UIFont *_leadingUnderlineLabelFont;
+  UIFont *_textInputFont;
   UIFont *_trailingUnderlineLabelFont;
 }
 
@@ -509,7 +511,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 #pragma mark - Leading Label Customization
 
 - (void)updateLeadingUnderlineLabel {
-  self.textInput.leadingUnderlineLabel.font = self.leadingUnderlineLabelFont;
+  UIFont *font = self.leadingUnderlineLabelFont;
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    font =
+        [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                           scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+
+  }
+  self.textInput.leadingUnderlineLabel.font = font;
 
   self.textInput.leadingUnderlineLabel.textColor =
       (self.isDisplayingErrorText || self.isDisplayingCharacterCountError)
@@ -522,7 +531,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 // This updates the placeholder's visual characteristics and not its layout. See the section
 // "Placeholder Floating" for methods that update the layout.
 - (void)updatePlaceholder {
-  self.textInput.placeholderLabel.font = self.inlinePlaceholderFont;
+  UIFont *placeHolderFont = self.inlinePlaceholderFont;
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    placeHolderFont =
+        [placeHolderFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                                      scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+
+  }
+  self.textInput.placeholderLabel.font = placeHolderFont;
 
   if ([self isPlaceholderUp]) {
     UIColor *nonErrorColor =
@@ -748,6 +764,18 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return constant;
 }
 
+#pragma  mark - TextInput Customization
+
+- (void)updateTextInput {
+  UIFont *font = self.textInputFont;
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    font =
+        [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                           scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  }
+  self.textInput.font = font;
+}
+
 #pragma mark - Trailing Label Customization
 
 - (void)updateTrailingUnderlineLabel {
@@ -755,7 +783,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     self.textInput.trailingUnderlineLabel.text = nil;
   } else {
     self.textInput.trailingUnderlineLabel.text = [self characterCountText];
-    self.textInput.trailingUnderlineLabel.font = self.trailingUnderlineLabelFont;
+    UIFont *font = self.trailingUnderlineLabelFont;
+    if (self.mdc_adjustsFontForContentSizeCategory) {
+      font =
+          [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    }
+    self.textInput.trailingUnderlineLabel.font = font;
   }
 
   UIColor *textColor = self.trailingUnderlineLabelTextColor;
@@ -825,6 +859,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 #pragma mark - Underline Labels Fonts
+
++ (UIFont *)inputTextFont {
+  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+}
 
 + (UIFont *)placeholderFont {
   return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
@@ -1009,6 +1047,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (void)setFloatingPlaceholderScaleDefault:(CGFloat)floatingPlaceholderScaleDefault {
   _floatingPlaceholderScaleDefault = floatingPlaceholderScaleDefault;
+  if (floatingPlaceholderScaleDefault <= 0) {
+    _floatingPlaceholderScaleDefault =
+        MDCTextInputControllerLegacyDefaultFloatingPlaceholderScaleDefault;
+  }
 }
 
 - (void)setHelperText:(NSString *)helperText {
@@ -1192,6 +1234,25 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 }
 
+- (UIFont *)textInputFont {
+  return _textInputFont ?: [self class].textInputFontDefault;
+}
+
+- (void)setTextInputFont:(UIFont *)textInputFont {
+  if (![_textInputFont isEqual:textInputFont]) {
+    _textInputFont = textInputFont;
+    [self updateLayout];
+  }
+}
+
++ (UIFont *)textInputFontDefault {
+  return _textInputFontDefault ?: [[self class] inputTextFont];
+}
+
++ (void)setTextInputFontDefault:(UIFont *)textInputFontDefault {
+  _textInputFontDefault = textInputFontDefault;
+}
+
 - (UIFont *)trailingUnderlineLabelFont {
   return _trailingUnderlineLabelFont ?: [self class].trailingUnderlineLabelFontDefault;
 }
@@ -1304,17 +1365,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self updatePlaceholder];
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
+  [self updateTextInput];
   [self updateUnderline];
   [self updateBorder];
-}
-
-- (void)updateFontsForDynamicType {
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-    self.textInput.font = textFont;
-
-    [self updateLayout];
-  }
 }
 
 #pragma mark - MDCTextFieldPositioningDelegate
@@ -1526,9 +1579,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    [self updateFontsForDynamicType];
-  }
+  [self updateLayout];
 
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1552,7 +1603,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self updateFontsForDynamicType];
+  [self updateLayout];
 }
 
 @end
