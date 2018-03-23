@@ -20,9 +20,15 @@
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
     toBottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar {
-  bottomNavigationBar.selectedItemTintColor = colorScheme.primaryLightColor;
-  bottomNavigationBar.unselectedItemTintColor = colorScheme.primaryDarkColor;
-  bottomNavigationBar.barTintColor = colorScheme.secondaryColor;
+  if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
+    bottomNavigationBar.selectedItemTintColor = colorScheme.primaryLightColor;
+  }
+  if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
+    bottomNavigationBar.unselectedItemTintColor = colorScheme.primaryDarkColor;
+  }
+  if ([colorScheme respondsToSelector:@selector(secondaryColor)]) {
+    bottomNavigationBar.barTintColor = colorScheme.secondaryColor;
+  }
 }
 
 @end
