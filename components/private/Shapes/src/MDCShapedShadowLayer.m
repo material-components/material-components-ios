@@ -19,7 +19,7 @@
 #import "MDCShapeGenerating.h"
 
 @implementation MDCShapedShadowLayer {
-  CAShapeLayer *_colorLayer;
+//  CAShapeLayer *_colorLayer;
 }
 
 - (instancetype)init {
@@ -144,6 +144,10 @@
     self.borderWidth = 0;
     _colorLayer.lineWidth = _shapedBorderWidth;
   }
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  [super setElevation:elevation];
 }
 
 @end
