@@ -52,6 +52,8 @@
 
 @interface MDCSemanticColorScheme : NSObject <MDCSemanticColorScheming>
 
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
 /**
  Creates a new color scheme with the provided color parameters.
 
@@ -65,8 +67,12 @@
                     primaryColorLightVariant:(nonnull UIColor *)primaryColorLightVariant
                      primaryColorDarkVariant:(nonnull UIColor *)primaryColorDarkVariant
                               secondaryColor:(nonnull UIColor *)secondaryColor
-                                  errorColor:(nonnull UIColor *)errorColor;
+                                  errorColor:(nonnull UIColor *)errorColor
+    NS_DESIGNATED_INITIALIZER;
 
+@end
+
+@interface MDCSemanticColorScheme (NSSecureCoding) <NSSecureCoding>
 @end
 
 @interface MDCSemanticColorScheme (MDCColorSchemeCompatibility) <MDCColorScheme>

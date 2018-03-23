@@ -16,6 +16,17 @@
 
 #import "MDCSemanticColorScheme.h"
 
+static NSString *const kMDCSemanticColorSchemePrimaryColorKey =
+    @"kMDCSemanticColorSchemePrimaryColorKey";
+static NSString *const kMDCSemanticColorSchemePrimaryColorLightVariantKey =
+    @"kMDCSemanticColorSchemePrimaryColorLightVariantKey";
+static NSString *const kMDCSemanticColorSchemePrimaryColorDarkVariantKey =
+    @"kMDCSemanticColorSchemePrimaryColorDarkVariantKey";
+static NSString *const kMDCSemanticColorSchemeSecondaryColorKey =
+    @"kMDCSemanticColorSchemeSecondaryColorKey";
+static NSString *const kMDCSemanticColorSchemeErrorColorKey =
+    @"kMDCSemanticColorSchemeErrorColorKey";
+
 @implementation MDCSemanticColorScheme
 
 @synthesize primaryColor = _primaryColor;
@@ -24,11 +35,22 @@
 @synthesize secondaryColor = _secondaryColor;
 @synthesize errorColor = _errorColor;
 
+- (instancetype)init {
+  [self doesNotRecognizeSelector:_cmd];
+  return nil;
+}
+
 - (instancetype)initWithPrimaryColor:(UIColor *)primaryColor
             primaryColorLightVariant:(UIColor *)primaryColorLightVariant
              primaryColorDarkVariant:(UIColor *)primaryColorDarkVariant
                       secondaryColor:(UIColor *)secondaryColor
                           errorColor:(UIColor *)errorColor {
+  NSParameterAssert(primaryColor);
+  NSParameterAssert(primaryColorLightVariant);
+  NSParameterAssert(primaryColorDarkVariant);
+  NSParameterAssert(secondaryColor);
+  NSParameterAssert(errorColor);
+
   self = [super init];
   if (self) {
     _primaryColor = primaryColor;
@@ -38,6 +60,51 @@
     _secondaryColor = secondaryColor;
   }
   return self;
+}
+
+@end
+
+@implementation MDCSemanticColorScheme (NSSecureCoding)
+
++ (BOOL)supportsSecureCoding {
+  return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  UIColor *primaryColor;
+  UIColor *primaryColorLightVariant;
+  UIColor *primaryColorDarkVariant;
+  UIColor *secondaryColor;
+  UIColor *errorColor;
+
+  primaryColor = [aDecoder decodeObjectOfClass:UIColor.class
+                                        forKey:kMDCSemanticColorSchemePrimaryColorKey];
+  primaryColorLightVariant =
+      [aDecoder decodeObjectOfClass:UIColor.class
+                             forKey:kMDCSemanticColorSchemePrimaryColorLightVariantKey];
+  primaryColorDarkVariant =
+      [aDecoder decodeObjectOfClass:UIColor.class
+                             forKey:kMDCSemanticColorSchemePrimaryColorDarkVariantKey];
+  secondaryColor = [aDecoder decodeObjectOfClass:UIColor.class
+                                          forKey:kMDCSemanticColorSchemeSecondaryColorKey];
+  errorColor = [aDecoder decodeObjectOfClass:UIColor.class
+                                      forKey:kMDCSemanticColorSchemeErrorColorKey];
+
+  return [self initWithPrimaryColor:primaryColor
+           primaryColorLightVariant:primaryColorLightVariant
+            primaryColorDarkVariant:primaryColorDarkVariant
+                     secondaryColor:secondaryColor
+                         errorColor:errorColor];
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeObject:self.primaryColor forKey:kMDCSemanticColorSchemePrimaryColorKey];
+  [aCoder encodeObject:self.primaryColorLightVariant
+                forKey:kMDCSemanticColorSchemePrimaryColorLightVariantKey];
+  [aCoder encodeObject:self.primaryColorDarkVariant
+                forKey:kMDCSemanticColorSchemePrimaryColorDarkVariantKey];
+  [aCoder encodeObject:self.secondaryColor forKey:kMDCSemanticColorSchemeSecondaryColorKey];
+  [aCoder encodeObject:self.errorColor forKey:kMDCSemanticColorSchemeErrorColorKey];
 }
 
 @end

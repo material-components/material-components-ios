@@ -14,16 +14,31 @@
  limitations under the License.
  */
 
+#import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 #import "MaterialThemes.h"
 
 @interface MDCSemanticColorSchemeTests : XCTestCase
-
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation MDCSemanticColorSchemeTests
 
-- (void)testInitializer {
+- (void)setUp {
+  [super setUp];
+  self.colorScheme = [[MDCSemanticColorScheme alloc] initWithPrimaryColor:UIColor.redColor
+                                                 primaryColorLightVariant:UIColor.blueColor
+                                                  primaryColorDarkVariant:UIColor.greenColor
+                                                           secondaryColor:UIColor.orangeColor
+                                                               errorColor:UIColor.yellowColor];
+}
+
+- (void)tearDown {
+  self.colorScheme = nil;
+  [super tearDown];
+}
+
+- (void)testInitializerWithAllParameters {
   // Given
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithPrimaryColor:UIColor.redColor
@@ -40,18 +55,29 @@
   XCTAssertEqual(colorScheme.errorColor, UIColor.yellowColor);
 }
 
-- (void)testPrimaryColorVariantCompatibility {
-  // Given
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithPrimaryColor:UIColor.redColor
-                                  primaryColorLightVariant:UIColor.blueColor
-                                   primaryColorDarkVariant:UIColor.greenColor
-                                            secondaryColor:UIColor.orangeColor
-                                                errorColor:UIColor.yellowColor];
+- (void)testCoding {
+  // When
+  NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:self.colorScheme];
+  MDCSemanticColorScheme *unarchivedColorScheme =
+      [NSKeyedUnarchiver unarchiveObjectWithData:archiveData];
 
   // Then
-  XCTAssertEqual(colorScheme.primaryLightColor, colorScheme.primaryColorLightVariant);
-  XCTAssertEqual(colorScheme.primaryDarkColor, colorScheme.primaryColorDarkVariant);
+  XCTAssertEqualObjects(unarchivedColorScheme.primaryColor, self.colorScheme.primaryColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.primaryColorLightVariant,
+                        self.colorScheme.primaryLightColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.primaryColorDarkVariant,
+                        self.colorScheme.primaryColorDarkVariant);
+  XCTAssertEqualObjects(unarchivedColorScheme.secondaryColor, self.colorScheme.secondaryColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.errorColor, self.colorScheme.errorColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.primaryLightColor,
+                        self.colorScheme.primaryLightColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.primaryDarkColor, self.colorScheme.primaryDarkColor);
+}
+
+- (void)testPrimaryColorVariantCompatibility {
+  // Then
+  XCTAssertEqual(self.colorScheme.primaryLightColor, self.colorScheme.primaryColorLightVariant);
+  XCTAssertEqual(self.colorScheme.primaryDarkColor, self.colorScheme.primaryColorDarkVariant);
 }
 
 @end
