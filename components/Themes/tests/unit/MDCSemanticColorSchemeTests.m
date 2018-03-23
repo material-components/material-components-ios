@@ -62,6 +62,8 @@
       [NSKeyedUnarchiver unarchiveObjectWithData:archiveData];
 
   // Then
+  XCTAssertTrue([MDCSemanticColorScheme supportsSecureCoding]);
+
   XCTAssertEqualObjects(unarchivedColorScheme.primaryColor, self.colorScheme.primaryColor);
   XCTAssertEqualObjects(unarchivedColorScheme.primaryColorLightVariant,
                         self.colorScheme.primaryLightColor);
