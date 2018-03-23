@@ -50,6 +50,9 @@
 
 @end
 
+/**
+ A simple implementation of @c MDCSemanticColorScheming that also conforms to @c MDCColorScheme.
+ */
 @interface MDCSemanticColorScheme : NSObject <MDCSemanticColorScheming>
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
@@ -77,9 +80,14 @@
 
 @interface MDCSemanticColorScheme (MDCColorSchemeCompatibility) <MDCColorScheme>
 
-// Bound to @c primaryColorLightVariant
+/**
+ Returns @c primaryColorLightVariant.
+ */
 @property(nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;
 
-// Bound to @c primaryColorDarkVariant
+/**
+ Returns @c primaryColorDarkVariant.
+ */
 @property(nonatomic, strong, nonnull, readonly) UIColor *primaryDarkColor;
+
 @end
