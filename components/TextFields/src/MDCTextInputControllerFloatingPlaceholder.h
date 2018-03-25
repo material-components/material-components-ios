@@ -51,7 +51,7 @@
 
 /**
  Default value for the floating placeholder scale.
-
+ NOTE:Setting this value to 0 or lower would automatically set the scale to default.
  Default is 0.75.
  */
 @property(class, nonatomic, assign) CGFloat floatingPlaceholderScaleDefault;

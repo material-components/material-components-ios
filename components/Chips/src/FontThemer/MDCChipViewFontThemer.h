@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,16 +14,21 @@
  limitations under the License.
  */
 
-#import "MDCButtonColorThemer.h"
+#import <Foundation/Foundation.h>
 
-@implementation MDCButtonColorThemer
+@class MDCChipView;
+@protocol MDCFontScheme;
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-                toButton:(MDCButton *)button {
-  [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
-    [button setBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateDisabled];
-  }
-}
+/**
+ Themes @c MDCChipView objects to set their text font to the appropriate font trait given a font
+ scheme.
+ */
+@interface MDCChipViewFontThemer : NSObject
+
+/**
+ Applies the provided font scheme to the given Chip or its UIAppearance proxy.
+ */
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
+             toChipView:(nonnull MDCChipView *)chipView;
 
 @end

@@ -20,7 +20,9 @@
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
           toProgressView:(MDCProgressView *)progressView {
-  progressView.trackTintColor = colorScheme.primaryLightColor;
+  if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
+    progressView.trackTintColor = colorScheme.primaryLightColor;
+  }
   progressView.progressTintColor = colorScheme.primaryColor;
 }
 
