@@ -16,6 +16,7 @@
 
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
+
 #import "MaterialThemes.h"
 
 @interface MDCSemanticColorSchemeTests : XCTestCase
@@ -30,7 +31,10 @@
                                                  primaryColorLightVariant:UIColor.blueColor
                                                   primaryColorDarkVariant:UIColor.greenColor
                                                            secondaryColor:UIColor.orangeColor
-                                                               errorColor:UIColor.yellowColor];
+                                                               errorColor:UIColor.yellowColor
+                                                           onPrimaryColor:UIColor.purpleColor
+                                                         onSecondaryColor:UIColor.darkGrayColor
+                                                          backgroundColor:UIColor.blackColor];
 }
 
 - (void)tearDown {
@@ -45,7 +49,10 @@
                                   primaryColorLightVariant:UIColor.blueColor
                                    primaryColorDarkVariant:UIColor.greenColor
                                             secondaryColor:UIColor.orangeColor
-                                                errorColor:UIColor.yellowColor];
+                                                errorColor:UIColor.yellowColor
+                                            onPrimaryColor:UIColor.purpleColor
+                                          onSecondaryColor:UIColor.darkGrayColor
+                                           backgroundColor:UIColor.blackColor];
 
   // Then
   XCTAssertEqual(colorScheme.primaryColor, UIColor.redColor);
@@ -53,6 +60,9 @@
   XCTAssertEqual(colorScheme.primaryColorDarkVariant, UIColor.greenColor);
   XCTAssertEqual(colorScheme.secondaryColor, UIColor.orangeColor);
   XCTAssertEqual(colorScheme.errorColor, UIColor.yellowColor);
+  XCTAssertEqual(colorScheme.onPrimaryColor, UIColor.purpleColor);
+  XCTAssertEqual(colorScheme.onSecondaryColor, UIColor.darkGrayColor);
+  XCTAssertEqual(colorScheme.backgroundColor, UIColor.blackColor);
 }
 
 - (void)testCoding {
@@ -71,6 +81,9 @@
                         self.colorScheme.primaryColorDarkVariant);
   XCTAssertEqualObjects(unarchivedColorScheme.secondaryColor, self.colorScheme.secondaryColor);
   XCTAssertEqualObjects(unarchivedColorScheme.errorColor, self.colorScheme.errorColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.onPrimaryColor, self.colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.onSecondaryColor, self.colorScheme.onSecondaryColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.backgroundColor, self.colorScheme.backgroundColor);
   XCTAssertEqualObjects(unarchivedColorScheme.primaryLightColor,
                         self.colorScheme.primaryLightColor);
   XCTAssertEqualObjects(unarchivedColorScheme.primaryDarkColor, self.colorScheme.primaryDarkColor);

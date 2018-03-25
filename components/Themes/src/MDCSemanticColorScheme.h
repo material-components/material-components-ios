@@ -45,8 +45,25 @@
 
 /**
  The color used to indicate error status.
-*/
+ */
 @property(nonnull, readonly, nonatomic) UIColor *errorColor;
+
+/**
+ A color that passes accessibility guidelines for text/iconography when drawn on top of
+ @c primaryColor.
+ */
+@property(nonnull, readonly, nonatomic) UIColor *onPrimaryColor;
+
+/**
+ A color that passes accessibility guidelines for text/iconography when drawn on top of
+ @c secondaryColor.
+ */
+@property(nonnull, readonly, nonatomic) UIColor *onSecondaryColor;
+
+/**
+ The underlying color of an app’s content.
+ */
+@property(nonnull, readonly, nonatomic) UIColor *backgroundColor;
 
 @end
 
@@ -65,12 +82,20 @@
  @param primaryColorDarkVariant A tonal variation of @c primaryColor.
  @param secondaryColor Accents select parts of your UI.
  @param errorColor The color used to indicate error status.
+ @param onPrimaryColor A color that passes accessibility guidelines for text/iconography when drawn
+        on top of @c primaryColor.
+ @param onSecondaryColor A color that passes accessibility guidelines for text/iconography when
+        drawn on top of @c secondaryColor.
+ @param backgroundColor The underlying color of an app’s content.
 */
 - (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
                     primaryColorLightVariant:(nonnull UIColor *)primaryColorLightVariant
                      primaryColorDarkVariant:(nonnull UIColor *)primaryColorDarkVariant
                               secondaryColor:(nonnull UIColor *)secondaryColor
                                   errorColor:(nonnull UIColor *)errorColor
+                              onPrimaryColor:(nonnull UIColor *)onPrimaryColor
+                            onSecondaryColor:(nonnull UIColor *)onSecondaryColor
+                             backgroundColor:(nonnull UIColor *)backgroundColor
     NS_DESIGNATED_INITIALIZER;
 
 @end
