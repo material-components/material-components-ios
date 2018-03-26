@@ -459,7 +459,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)setMessageTextColor:(UIColor *)messageTextColor {
   _messageTextColor = messageTextColor;
-  self.label.textColor = _messageTextColor;
+  if (_messageTextColor) {
+    self.label.textColor = _messageTextColor;
+  } else {
+    self.label.textColor = UIColor.whiteColor;
+  }
 }
 
 - (nullable UIColor *)buttonTitleColorForState:(UIControlState)state {
@@ -468,10 +472,25 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)setButtonTitleColor:(nullable UIColor *)buttonTitleColor forState:(UIControlState)state {
   _buttonTitleColors[@(state)] = buttonTitleColor;
-
   for (MDCButton *button in _actionButtons) {
-    [button setTitleColor:buttonTitleColor forState:state];
+    if (_buttonTitleColors[@(state)]) {
+      [button setTitleColor:buttonTitleColor forState:state];
+    } else {
+      // Set to default
+      UIColor *defaultButtonTitleColor;
+      switch(state) {
+        case UIControlStateHighlighted:
+          defaultButtonTitleColor = UIColor.whiteColor;
+          break;
+        case UIControlStateNormal:
+        default:
+          defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+          break;
+      }
+      [button setTitleColor:defaultButtonTitleColor forState:state];
+    }
   }
+
 }
 
 - (void)addColorToMessageLabel:(UIColor *)color {
