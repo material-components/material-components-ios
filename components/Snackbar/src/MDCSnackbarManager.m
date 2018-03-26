@@ -319,8 +319,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   } else {
     // Find the most top view controller to display overlay.
     UIViewController *topViewController = [window rootViewController];
-    while ([topViewController presentedViewController]) {
-      topViewController = [topViewController presentedViewController];
+    for (UIViewController *presentedViewController = [topViewController presentedViewController];
+         presentedViewController != nil;) {
+      if (presentedViewController.isBeingDismissed) {
+        break;
+      }
+      topViewController = presentedViewController;
     }
     targetView = [topViewController view];
   }
