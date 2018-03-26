@@ -367,9 +367,13 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                  forState:UIControlStateHighlighted];
 
     // TODO: Eventually remove this if statement, buttonTextColor is deprecated.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     if (message.buttonTextColor) {
       [button setTitleColor:message.buttonTextColor forState:UIControlStateNormal];
     }
+#pragma clang diagnostic pop
+
 
     [button setTranslatesAutoresizingMaskIntoConstraints:NO];
     button.tag = kButtonTagStart;

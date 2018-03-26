@@ -66,7 +66,10 @@ static BOOL _usesLegacySnackbar = YES;
   copy.duration = self.duration;
   copy.category = self.category;
   copy.accessibilityLabel = self.accessibilityLabel;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   copy.buttonTextColor = self.buttonTextColor;
+#pragma clang diagnostic pop
 
   // Unfortunately there's not really a concept of 'copying' a block (in the same way you would copy
   // a string, for example). A block's pointer is immutable once it is created and copied to the
