@@ -300,8 +300,11 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     XCTAssertEqual(textField.frame.height, 70)
 
     controller.helperText = "Helper"
+    textField.setNeedsDisplay()
+    textField.layoutSubviews()
     textField.sizeToFit()
-    XCTAssertTrue(MDCCGFloatEqual(MDCCeil(textField.frame.height), 85.0))
+    let testVar = MDCCeil(textField.frame.height)
+    XCTAssertTrue(MDCCGFloatEqual(testVar, 85.0))
 
     controller.characterCountViewMode = .never
     XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)
@@ -363,8 +366,11 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
     XCTAssertEqual(controller.characterCountViewMode,
                    unserializedController?.characterCountViewMode)
+    let a = controller.isFloatingEnabled
+    let b = unserializedController?.isFloatingEnabled
+
     XCTAssertEqual(controller.disabledColor, unserializedController?.disabledColor)
-    XCTAssertEqual(controller.isFloatingEnabled, unserializedController?.isFloatingEnabled)
+    XCTAssertEqual(a, b)
     XCTAssertEqual(controller.floatingPlaceholderNormalColor,
                    unserializedController?.floatingPlaceholderNormalColor)
     XCTAssertEqual(controller.floatingPlaceholderScale,
