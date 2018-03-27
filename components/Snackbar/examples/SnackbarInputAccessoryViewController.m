@@ -22,7 +22,7 @@
 
 @interface SnackbarInputAccessoryViewController ()
 
-@property(nonatomic, strong) UITextField *inputTextField;
+@property(nonatomic, strong) UITextField *textField;
 
 @end
 
@@ -36,33 +36,33 @@
                                                   0,
                                                   UIScreen.mainScreen.bounds.size.width,
                                                   50)];
-  toolbar.backgroundColor = UIColor.lightGrayColor;
-
-  UITextView *textView =
-      [[UITextView alloc] initWithFrame:CGRectMake(0,
-                                                   5,
-                                                   UIScreen.mainScreen.bounds.size.width/4*3,
-                                                   50)];
-  textView.backgroundColor = UIColor.lightGrayColor;
-  UIBarButtonItem *inputItem = [[UIBarButtonItem alloc] initWithCustomView:textView];
-  UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 5, UIScreen.mainScreen.bounds.size.width/4-40, 50)];
+  UIButton *button =
+      [[UIButton alloc] initWithFrame:CGRectMake(0,
+                                                 0,
+                                                 UIScreen.mainScreen.bounds.size.width,
+                                                 50)];
   button.contentMode = UIViewContentModeCenter;
-  [button setTitle:@"Send" forState:UIControlStateNormal];
+  [button setTitle:@"Show Snackbar" forState:UIControlStateNormal];
   [button setTitleColor:UIColor.darkTextColor forState:UIControlStateNormal];
-  [button addTarget:self action:@selector(handleSend:) forControlEvents:UIControlEventTouchUpInside];
-  UIBarButtonItem *sendItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-  toolbar.items = @[inputItem, sendItem];
+  [button addTarget:self
+              action:@selector(handleSend:)
+    forControlEvents:UIControlEventTouchUpInside];
+  UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+  toolbar.items = @[buttonItem];
 
-  _inputTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 50)];
-  _inputTextField.inputAccessoryView = toolbar;
-  _inputTextField.backgroundColor = UIColor.lightGrayColor;
-  [self.view addSubview:_inputTextField];
-
-
+  _textField =
+      [[UITextField alloc] initWithFrame:CGRectMake(0,
+                                                    0,
+                                                    UIScreen.mainScreen.bounds.size.width,
+                                                    50)];
+  _textField.inputAccessoryView = toolbar;
+  _textField.backgroundColor = UIColor.whiteColor;
+  _textField.text = @"Tap Me";
+  [self.view addSubview:_textField];
 }
 
 - (void)viewWillLayoutSubviews {
-  _inputTextField.center = self.view.center;
+  _textField.center = self.view.center;
 }
 
 - (void)handleSend:(UIButton *)event {

@@ -412,7 +412,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 }
 
 - (BOOL)anchoredToScreenEdge {
-  return self.bottomOffset == 0;
+  return [self dynamicBottomMargin] == 0;
 }
 
 #pragma mark - Safe Area Insets
