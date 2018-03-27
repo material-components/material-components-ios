@@ -29,7 +29,7 @@
 
 + (void)mutateTitleColor:(MDCFeatureHighlightViewController *)featureHighlightViewController{
   MDCFeatureHighlightView *featureHighlightView =
-      (MDCFeatureHighlightView *)featureHighlightViewController.view;
+      featureHighlightViewController.featureHighlightView;
   if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
     NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
     return;
@@ -39,9 +39,9 @@
     options |= MDFTextAccessibilityOptionsLargeFont;
   }
 
-  UIColor *textColor = featureHighlightViewController.titleColor;
+  UIColor *textColor = featureHighlightView.titleColor;
   UIColor *backgroundColor =
-      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
+      [featureHighlightView.outerHighlightColor colorWithAlphaComponent:1.0f];
   UIColor *titleColor =
       [MDCFeatureHighlightAccessibilityMutator accessibleColorForTextColor:textColor
                                                        withBackgroundColor:backgroundColor
@@ -57,12 +57,12 @@
                               onBackgroundColor:backgroundColor
                                         options:options];
   titleAlpha = MAX([MDCTypography titleFontOpacity], titleAlpha);
-  featureHighlightViewController.titleColor = [titleColor colorWithAlphaComponent:titleAlpha];
+  featureHighlightView.titleColor = [titleColor colorWithAlphaComponent:titleAlpha];
 }
 
 + (void)mutateBodyColor:(MDCFeatureHighlightViewController *)featureHighlightViewController {
   MDCFeatureHighlightView *featureHighlightView =
-      (MDCFeatureHighlightView *)featureHighlightViewController.view;
+      featureHighlightViewController.featureHighlightView;
   if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
     NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
     return;
@@ -72,10 +72,10 @@
     options |= MDFTextAccessibilityOptionsLargeFont;
   }
 
-  UIColor *textColor = featureHighlightViewController.bodyColor;
+  UIColor *textColor = featureHighlightView.bodyColor;
   UIColor *backgroundColor =
-      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
-  featureHighlightViewController.bodyColor =
+      [featureHighlightView.outerHighlightColor colorWithAlphaComponent:1.0f];
+  featureHighlightView.bodyColor =
       [MDCFeatureHighlightAccessibilityMutator accessibleColorForTextColor:textColor
                                                        withBackgroundColor:backgroundColor
                                                                    options:options];
