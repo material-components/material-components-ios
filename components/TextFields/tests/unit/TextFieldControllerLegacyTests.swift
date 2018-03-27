@@ -290,7 +290,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
   func testPresentationLegacyDefault() {
     let textField = MDCTextField()
     let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
-
+    controller.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertEqual(controller.isFloatingEnabled, true)
     controller.isFloatingEnabled = false
     XCTAssertEqual(controller.isFloatingEnabled, false)
@@ -301,7 +301,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
 
     controller.helperText = "Helper"
     textField.sizeToFit()
-    XCTAssertTrue(MDCCGFloatEqual(MDCCeil(textField.frame.height), 85.0))
+    XCTAssertEqual(MDCCeil(textField.frame.height), 85.0)
 
     controller.characterCountViewMode = .never
     XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)
