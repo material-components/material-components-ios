@@ -173,7 +173,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.backgroundColor = [UIColor clearColor];
 
   self.textColor = _fundament.textColor;
-  self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  self.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
 
   _cursorColor = MDCTextInputCursorColor();

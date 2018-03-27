@@ -119,7 +119,7 @@ static inline UIColor *MDCTextInputControllerBaseDefaultTextErrorColorDefault() 
 #pragma mark - Class Properties
 
 static BOOL _floatingEnabledDefault = YES;
-static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
+static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = NO;
 
 static CGFloat _floatingPlaceholderScaleDefault =
     MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDefault;
@@ -889,11 +889,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (UIFont *)placeholderFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
 }
 
 + (UIFont *)underlineLabelsFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
 #pragma mark - Properties Implementation
