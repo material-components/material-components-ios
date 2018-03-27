@@ -291,7 +291,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           (UIRectCorner)[aDecoder decodeIntegerForKey:MDCTextInputControllerBaseRoundedCorners];
     }
 
-     // This should happen last because it relies on the state of a ton of properties.
+    // This should happen last because it relies on the state of a ton of properties.
     [self setupInput];
   }
   return self;
