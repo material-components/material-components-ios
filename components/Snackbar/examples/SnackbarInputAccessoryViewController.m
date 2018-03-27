@@ -20,181 +20,63 @@
 #import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
 
-@implementation SnackbarSimpleExample {
-  BOOL _legacyMode;
-  BOOL _dynamicType;
-}
+@interface SnackbarInputAccessoryViewController ()
+
+@property(nonatomic, strong) UITextField *inputTextField;
+
+@end
+
+@implementation SnackbarInputAccessoryViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self setupExampleViews:@[
-      @"Simple Snackbar",
-      @"Snackbar with Action Button",
-      @"Snackbar with Long Text",
-      @"Attributed Text Example",
-      @"Color Themed Snackbar",
-      @"Customize Font Example",
-      @"De-Customize Font Example"
-  ]];
-  self.title = @"Snackbar";
-  _legacyMode = YES;
-  _dynamicType = NO;
-  self.navigationItem.rightBarButtonItems =
-      @[[[UIBarButtonItem alloc] initWithTitle:@"Legacy"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(toggleModes)],
-        [[UIBarButtonItem alloc] initWithTitle:@"DT Off"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(toggleDynamicType)]];
+  self.view.backgroundColor = UIColor.whiteColor;
+  UIToolbar *toolbar =
+      [[UIToolbar alloc] initWithFrame:CGRectMake(0,
+                                                  0,
+                                                  UIScreen.mainScreen.bounds.size.width,
+                                                  50)];
+  toolbar.backgroundColor = UIColor.lightGrayColor;
+
+  UITextView *textView =
+      [[UITextView alloc] initWithFrame:CGRectMake(0,
+                                                   5,
+                                                   UIScreen.mainScreen.bounds.size.width/4*3,
+                                                   50)];
+  textView.backgroundColor = UIColor.lightGrayColor;
+  UIBarButtonItem *inputItem = [[UIBarButtonItem alloc] initWithCustomView:textView];
+  UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 5, UIScreen.mainScreen.bounds.size.width/4-40, 50)];
+  button.contentMode = UIViewContentModeCenter;
+  [button setTitle:@"Send" forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.darkTextColor forState:UIControlStateNormal];
+  [button addTarget:self action:@selector(handleSend:) forControlEvents:UIControlEventTouchUpInside];
+  UIBarButtonItem *sendItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+  toolbar.items = @[inputItem, sendItem];
+
+  _inputTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 50)];
+  _inputTextField.inputAccessoryView = toolbar;
+  _inputTextField.backgroundColor = UIColor.lightGrayColor;
+  [self.view addSubview:_inputTextField];
+
+
 }
 
-- (void)toggleModes {
-  _legacyMode = !_legacyMode;
-  if (_legacyMode) {
-    [self.navigationItem.rightBarButtonItems.firstObject setTitle:@"Legacy"];
-  } else {
-    [self.navigationItem.rightBarButtonItems.firstObject setTitle:@"New"];
-  }
-  MDCSnackbarMessage.usesLegacySnackbar = _legacyMode;
+- (void)viewWillLayoutSubviews {
+  _inputTextField.center = self.view.center;
 }
 
-- (void)toggleDynamicType {
-  _dynamicType = !_dynamicType;
-  if (_dynamicType) {
-    [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT On"];
-  } else {
-    [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT Off"];
-  }
-  [MDCSnackbarMessageView appearance].mdc_adjustsFontForContentSizeCategory = _dynamicType;
+- (void)handleSend:(UIButton *)event {
+  [self showSnackbarWithAction];
 }
 
-#pragma mark - Event Handling
 
-- (void)showSimpleSnackbar:(id)sender {
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  message.text = @"Snackbar Message";
-  [MDCSnackbarManager showMessage:message];
-}
-
-- (void)showSnackbarWithAction:(id)sender {
+- (void)showSnackbarWithAction {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
   [MDCSnackbarManager showMessage:message];
-}
-
-
-- (void)showLongSnackbarMessage:(id)sender {
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  message.text = @"A red flair silhouetted the jagged edge of a sublime wing.";
-  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  MDCSnackbarMessageActionHandler actionHandler = ^() {
-    MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
-    answerMessage.text = @"The sky was cloudless and of a deep dark blue.";
-    [MDCSnackbarManager showMessage:answerMessage];
-  };
-  action.handler = actionHandler;
-  action.title = @"Action";
-  message.action = action;
-
-  [MDCSnackbarManager showMessage:message];
-}
-
-
-- (void)showBoldSnackbar:(id)sender {
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
-  [text appendAttributedString:[[NSAttributedString alloc]
-                                initWithString:@"Boldly"
-                                attributes:@{
-                                             MDCSnackbarMessageBoldAttributeName : @YES
-                                             }]];
-  [text appendAttributedString:[[NSAttributedString alloc]
-                                initWithString:@" go where no one has gone before."]];
-  message.attributedText = text;
-
-  [MDCSnackbarManager showMessage:message];
-}
-
-- (void)showColorThemedSnackbar:(id)sender {
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  message.text = @"Snackbar Message";
-  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  action.title = @"Tap Me";
-  message.action = action;
-  [[MDCSnackbarMessageView appearance]
-      setButtonTitleColor:MDCPalette.purplePalette.tint400
-                 forState:UIControlStateNormal];
-  [[MDCSnackbarMessageView appearance]
-      setButtonTitleColor:MDCPalette.purplePalette.tint700
-                 forState:UIControlStateHighlighted];
-  [MDCSnackbarMessageView appearance].messageTextColor = MDCPalette.greenPalette.tint500;
-  [MDCSnackbarManager showMessage:message];
-}
-
-- (void)showCustomizedSnackbar:(id)sender {
-  UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14.0f];
-  NSAssert(customMessageFont, @"Unable to instantiate font");
-  [MDCSnackbarMessageView appearance].messageFont = customMessageFont;
-
-  UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
-  NSAssert(customButtonFont, @"Unable to instantiate font");
-  [MDCSnackbarMessageView appearance].buttonFont = customButtonFont;
-
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  message.text = @"Customized Fonts";
-  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  action.title = @"Fancy";
-  message.action = action;
-
-  [MDCSnackbarManager showMessage:message];
-}
-
-- (void)showDecustomizedSnackbar:(id)sender {
-  [MDCSnackbarMessageView appearance].messageFont = nil;
-  [MDCSnackbarMessageView appearance].buttonFont = nil;
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  message.text = @"Back to the standard fonts";
-  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  action.title = @"Okay";
-  message.action = action;
-
-  [MDCSnackbarManager showMessage:message];
-}
-
-#pragma mark - UICollectionView
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
-  switch (indexPath.row) {
-    case 0:
-      [self showSimpleSnackbar:nil];
-      break;
-    case 1:
-      [self showSnackbarWithAction:nil];
-      break;
-    case 2:
-      [self showLongSnackbarMessage:nil];
-      break;
-    case 3:
-      [self showBoldSnackbar:nil];
-      break;
-    case 4:
-      [self showColorThemedSnackbar:nil];
-      break;
-    case 5:
-      [self showCustomizedSnackbar:nil];
-      break;
-    case 6:
-      [self showDecustomizedSnackbar:nil];
-      break;
-    default:
-      break;
-  }
 }
 
 @end
