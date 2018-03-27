@@ -20,6 +20,7 @@ import CatalogByConvention
 
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MDCActivityIndicatorColorThemer
+import MaterialComponents.MDCBottomNavigationBarColorThemer
 import MaterialComponents.MDCBottomAppBarColorThemer
 import MaterialComponents.MDCButtonBarColorThemer
 import MaterialComponents.MDCButtonColorThemer
