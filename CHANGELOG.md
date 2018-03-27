@@ -1,11 +1,5 @@
 # 49.1.0
 
-## Breaking changes
-
-## New deprecations
-
-## New features
-
 ## API changes
 
 ### BottomNavigation
