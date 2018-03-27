@@ -72,7 +72,7 @@ static inline UIColor *MDCTextInputControllerLegacyFullWidthErrorColorDefault() 
 
 #pragma mark - Class Properties
 
-static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
+static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = NO;
 
 static UIColor *_errorColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
@@ -451,15 +451,15 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 #pragma mark - Underline Labels Fonts
 
 + (UIFont *)inputTextFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
 }
 
 + (UIFont *)placeholderFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
 }
 
 + (UIFont *)underlineLabelsFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
 #pragma mark - Properties Implementation
