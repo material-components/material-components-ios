@@ -67,6 +67,13 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   return CGPointMake(a.x + b.x, a.y + b.y);
 }
 
+@interface MDCFeatureHighlightView ()
+
+@property (class, nonatomic, readonly) UIFont *titleFontDefault;
+@property (class, nonatomic, readonly) UIFont *bodyFontDefault;
+
+@end
+
 @implementation MDCFeatureHighlightView {
   BOOL _forceConcentricLayout;
   UIView *_highlightView;
@@ -202,7 +209,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = _titleFont ?: [self defaultTitleFont];
+  UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
   if (_mdc_adjustsFontForContentSizeCategory) {
     _titleLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
@@ -219,7 +226,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _titleLabel.textColor = titleColor;
 }
 
-- (UIFont *)defaultTitleFont {
++ (UIFont *)titleFontDefault {
   if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
     return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
   }
@@ -231,7 +238,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   [self updateBodyFont];
 }
 
-- (UIFont *)defaultBodyFont {
++ (UIFont *)bodyFontDefault {
   if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
     return [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
   }
@@ -239,7 +246,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)updateBodyFont {
-  UIFont *bodyFont = _bodyFont ?: [self defaultBodyFont];
+  UIFont *bodyFont = _bodyFont ?: [[self class] bodyFontDefault];
   if (_mdc_adjustsFontForContentSizeCategory) {
     // If we are automatically adjusting for Dynamic Type resize the font based on the text style
     _bodyLabel.font =
