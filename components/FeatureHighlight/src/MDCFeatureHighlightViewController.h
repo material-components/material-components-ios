@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCFeatureHighlightView;
+
 /** The default alpha for the outer highlight circle. */
 extern const CGFloat kMDCFeatureHighlightOuterHighlightAlpha;
 
@@ -92,47 +94,9 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 @property(nonatomic, copy, nullable) NSString *bodyText;
 
 /**
- Sets the color to be used for the outer highlight. Defaults to blue with an alpha of
- kMDCFeatureHighlightOuterHighlightAlpha.
-
- Alpha should be set to kMDCFeatureHighlightOuterHighlightAlpha.
+ The MDCFeatureHighlightView instance that is being presented by this view controller.
  */
-@property(nonatomic, strong, null_resettable) UIColor *outerHighlightColor;
-
-/**
- Sets the color to be used for the inner highlight. Defaults to white.
-
- Should be opaque.
- */
-@property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;
-
-/**
- Sets the color to be used for the title text. If nil upon presentation, a color of sufficient
- contrast to the |outerHighlightColor| will be automatically chosen.
-
- Defaults to nil.
- */
-@property(nonatomic, strong, nullable) UIColor *titleColor;
-
-/**
- Sets the color to be used for the body text. If nil upon presentation, a color of sufficient
- contrast to the |outerHighlightColor| will be automatically chosen upon presentation.
-
- Defaults to nil.
- */
-@property(nonatomic, strong, nullable) UIColor *bodyColor;
-
-/**
- Indicates whether the feature highlight contents should automatically update their font when the
- device’s UIContentSizeCategory changes.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- Default value is NO.
- */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+@property(nonatomic, readonly, nullable) MDCFeatureHighlightView *featureHighlightView;
 
 /**
  Dismisses the feature highlight using the 'accept' style dismissal animation and triggers the
