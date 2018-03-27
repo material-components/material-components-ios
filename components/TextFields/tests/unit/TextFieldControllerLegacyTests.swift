@@ -290,7 +290,6 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
   func testPresentationLegacyDefault() {
     let textField = MDCTextField()
     let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
-    controller.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertEqual(controller.isFloatingEnabled, true)
     controller.isFloatingEnabled = false
     XCTAssertEqual(controller.isFloatingEnabled, false)
