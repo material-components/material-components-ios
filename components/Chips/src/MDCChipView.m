@@ -17,6 +17,7 @@
 #import "private/MDCChipView+Private.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
+#import <UIKit/UIGestureRecognizerSubclass.h>
 
 #import "MaterialInk.h"
 #import "MaterialMath.h"
@@ -24,6 +25,47 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
+@protocol MDCChipGestureRecognizerDelegate
+- (void)mdc_touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)mdc_touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)mdc_touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+@end
+
+@interface MDCChipGestureRecognizer : UIGestureRecognizer
+@property(nullable, nonatomic, strong) id<MDCChipGestureRecognizerDelegate> mdc_delegate;
+@end
+
+@implementation MDCChipGestureRecognizer
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  self.state = UIGestureRecognizerStateBegan;
+  [self.mdc_delegate mdc_touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  self.state = UIGestureRecognizerStateEnded;
+  [self.mdc_delegate mdc_touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  CGPoint locationInSelf = [touches.anyObject locationInView:self.view];
+  if (CGRectContainsPoint(self.view.bounds, locationInSelf)) {
+    self.state = UIGestureRecognizerStateChanged;
+  } else {
+    [self.mdc_delegate mdc_touchesCancelled:touches withEvent:event];
+    self.state = UIGestureRecognizerStateFailed;
+    [super reset];
+  }
+  NSLog(@"Moved");
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  self.state = UIGestureRecognizerStateFailed;
+  [self.mdc_delegate mdc_touchesCancelled:touches withEvent:event];
+  [super reset];
+}
+
+@end
 
 static NSString *const MDCChipImageViewKey = @"MDCChipImageViewKey";
 static NSString *const MDCChipSelectedImageViewKey = @"MDCChipSelectedImageViewKey";
@@ -122,7 +164,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
                     size.height - UIEdgeInsetsVertical(edgeInsets));
 }
 
-@interface MDCChipView ()
+@interface MDCChipView () <MDCChipGestureRecognizerDelegate>
 @property(nonatomic, readonly) CGRect contentRect;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @property(nonatomic, readonly) BOOL showImageView;
@@ -130,6 +172,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, readonly) BOOL showAccessoryView;
 @property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, readonly) CGFloat pixelScale;
+@property(nonatomic, strong) UIGestureRecognizer *tapRecognizer;
 @end
 
 @implementation MDCChipView {
@@ -227,6 +270,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
     self.layer.elevation = [self elevationForState:UIControlStateNormal];
 
+    self.tapRecognizer = [[MDCChipGestureRecognizer alloc] init];
+    ((MDCChipGestureRecognizer *)self.tapRecognizer).mdc_delegate = self;
+//    self.tapRecognizer.
+    [self addGestureRecognizer:self.tapRecognizer];
     [self updateBackgroundColor];
   }
   return self;
@@ -271,6 +318,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
         [aDecoder decodeBoolForKey:MDCChipAdjustsFontForContentSizeKey];
   }
   return self;
+}
+
+- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer {
+ // Do nothing!
+
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -750,18 +802,29 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 #pragma mark - Ink Touches
 
+- (void)mdc_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  [self touchesBegan:touches withEvent:event];
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+
   [super touchesBegan:touches withEvent:event];
 
   [_inkView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
 }
 
+- (void)mdc_touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  [self touchesEnded:touches withEvent:event];
+  [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+}
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-
+  self.highlighted = NO;
   [_inkView startTouchEndedAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
 }
-
+- (void)mdc_touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+  [self touchesCancelled:touches withEvent:event];
+}
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
 

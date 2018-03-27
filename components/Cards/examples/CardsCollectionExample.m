@@ -16,13 +16,55 @@
 
 #import "CardsCollectionExample.h"
 #import "MaterialInk.h"
+#import "MaterialChips.h"
 #import "UICollectionViewController+MDCCardReordering.h"
+
+@interface MDCCell : UICollectionViewCell <UIGestureRecognizerDelegate>
+@property(nonatomic, strong) UIButton *button;
+@property(nonatomic, strong) MDCChipView *chip;
+@end
+
+@implementation MDCCell
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    self.button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
+    self.button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+    self.chip = [[MDCChipView alloc] initWithFrame:CGRectMake(45, 0, 40, 20)];
+    self.chip.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self.button setTitle:@"B" forState:UIControlStateNormal];
+    self.chip.titleLabel.text = @"C";
+    [self addSubview:self.button];
+    [self addSubview:self.chip];
+  }
+  return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    self.button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
+    self.button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+    self.chip = [[MDCChipView alloc] initWithFrame:CGRectMake(45, 0, 40, 20)];
+    self.chip.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self.button setTitle:@"B" forState:UIControlStateNormal];
+    self.chip.titleLabel.text = @"C";
+    [self addSubview:self.button];
+    [self addSubview:self.chip];
+  }
+  return self;
+}
+
+@end
 
 @interface CardsCollectionExample ()
 
 @end
-
-@implementation CardsCollectionExample
+static NSUInteger nextCellIdentifier = 7U;
+@implementation CardsCollectionExample {
+  NSMutableDictionary<NSString *, UIGestureRecognizer *> *_gestureRecognizers;
+}
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 @synthesize collectionViewLayout = _collectionViewLayout;
@@ -39,6 +81,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     _collectionViewLayout = layout;
+    _gestureRecognizers = [@{} mutableCopy];
   }
   return self;
 }
@@ -50,7 +93,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   // Register cell classes
-  [self.collectionView registerClass:[MDCCardCollectionCell class]
+  [self.collectionView registerClass:[MDCCell  class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   [self mdc_setupCardReordering];
@@ -69,11 +112,37 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCardCollectionCell *cell =
+  MDCCell *cell =
   [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                             forIndexPath:indexPath];
+  if (!cell.accessibilityIdentifier) {
+    cell.accessibilityIdentifier = [NSString stringWithFormat:@"%lu", (unsigned long)nextCellIdentifier++];
+  }
   [cell setBackgroundColor:[UIColor colorWithRed:107/255.f green:63/255.f blue:238/255.f alpha:1]];
+  [cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+  [cell.button addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
+  [cell.chip removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+  [cell.chip addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
+  UIGestureRecognizer *oldRecognizer = _gestureRecognizers[cell.accessibilityIdentifier];
+  if (oldRecognizer) {
+    [cell removeGestureRecognizer:oldRecognizer];
+  }
+  UIGestureRecognizer *newRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+  _gestureRecognizers[cell.accessibilityIdentifier] = newRecognizer;
+  [cell addGestureRecognizer:newRecognizer];
   return cell;
+}
+
+- (void)didTap:(id)sender {
+  if ([sender class] == [MDCChipView class]) {
+    NSLog(@"Chip!");
+  }
+  else if ([sender class] == [UIButton class]) {
+    NSLog(@"Button!");
+  }
+  else {
+    NSLog(@"%@",sender);
+  }
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
