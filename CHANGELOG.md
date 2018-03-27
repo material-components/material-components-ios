@@ -1,3 +1,273 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `backgroundColor` in `MDCBottomNavigationBar`
+
+*new* property: `barTintColor` in `MDCBottomNavigationBar`
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `minimumSize` in `MDCChipView`
+
+*modified* class: `MDCChipView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCChipView : UIControl  /*  A UIImageView that leads the title label.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;  /*  A UIImageView that leads the title label. Appears in front of the imageView. Only visible when the  chip is selected.   This image view is typically used to show some icon that denotes the chip as selected, such as a  check mark. If imageView has no image then the chip will require resizing when selected or  deselected to account for the changing visibility of selectedImageView.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;  /*  A UIView that trails the title label.   It will be given a size based on the value returned from sizeThatFits:.  */ @property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;  /*  The title label.   @note The title color is controlled by setTitleColor:forState:.  @note The title font is controlled by setTitleFont.  */ @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;  /*  Padding around the chip content. Each subview can be further padded with their invidual padding  property.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (4, 4, 4, 4).  */ @property(nonatomic, assign) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the image view. Only used if the image view has a non-nil image.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;  /*  Padding around the accessory view. Only used if the accessory view is non-nil.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the title.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.  */ @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;  /*  Font used to render the title.   If nil, the chip will use the system font.  */ @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;  /*  The color of the ink ripple.  */ @property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR     __deprecated_msg("Use setInkColor:forState:");  /*  The shape generator used to define the chip's shape.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;  /*  Indicates whether the chip should automatically update its font when the device’s  UIContentSizeCategory is changed.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   If set to YES, this button will base its text font on MDCFontTextStyleButton.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /*  A color used as the chip's @c backgroundColor for @c state.   If no background color has been set for a given state, the returned value will fall back to the  value set for UIControlStateNormal.   @param state The control state.  @return The background color.  */ - (nullable UIColor *)backgroundColorForState:(UIControlState)state;  /*  A color used as the chip's @c backgroundColor.   Defaults to blue.   @param backgroundColor The background color.  @param state The control state.  */ - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border color for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state;  /*  Sets the border color for a particular control state.   @param borderColor The border color.  @param state The control state.  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border width for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state;  /*  Sets the border width for a particular control state.   @param borderWidth The border width.  @param state The control state.  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the elevation for a particular control state.   If no elevation has been set for a given state, the returned value will fall back to the value set  for UIControlStateNormal.   @param state The control state.  @return The elevation for the requested state.  */ - (MDCShadowElevation)elevationForState:(UIControlState)state;  /*  Sets the elevation for a particular control state.   @param elevation The elevation.  @param state The control state.  */ - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the ink color for a particular control state.   If no ink color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.   @param state The control state.  @return The ink color for the requested state.  */ - (nullable UIColor *)inkColorForState:(UIControlState)state;  /*  Sets the ink color for a particular control state.   @param inkColor The ink color.  @param state The control state.  */ - (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the shadow color for a particular control state.   If no shadow color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state;  /*  Sets the shadow color for a particular control state.   @param elevation The shadow color.  @param state The control state.  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the title color for a particular control state.   If no title color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The title color for the requested state.  */ - (nullable UIColor *)titleColorForState:(UIControlState)state;  /*  Sets the title color for a particular control state.   @param titleColor The title color.  @param state The control state.  */ - (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  @end` |
+| To: | `@interface MDCChipView : UIControl  /*  A UIImageView that leads the title label.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;  /*  A UIImageView that leads the title label. Appears in front of the imageView. Only visible when the  chip is selected.   This image view is typically used to show some icon that denotes the chip as selected, such as a  check mark. If imageView has no image then the chip will require resizing when selected or  deselected to account for the changing visibility of selectedImageView.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;  /*  A UIView that trails the title label.   It will be given a size based on the value returned from sizeThatFits:.  */ @property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;  /*  The title label.   @note The title color is controlled by setTitleColor:forState:.  @note The title font is controlled by setTitleFont.  */ @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;  /*  Padding around the chip content. Each subview can be further padded with their invidual padding  property.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (4, 4, 4, 4).  */ @property(nonatomic, assign) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the image view. Only used if the image view has a non-nil image.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;  /*  Padding around the accessory view. Only used if the accessory view is non-nil.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the title.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.  */ @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;  /*  Font used to render the title.   If nil, the chip will use the system font.  */ @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;  /*  The color of the ink ripple.  */ @property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR     __deprecated_msg("Use setInkColor:forState:");  /*  The shape generator used to define the chip's shape.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;  /*  Indicates whether the chip should automatically update its font when the device’s  UIContentSizeCategory is changed.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   If set to YES, this button will base its text font on MDCFontTextStyleButton.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent  to no minimum for that dimension.   Defaults to a minimum height of 32 points, and no minimum width.  */ @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;  /*  A color used as the chip's @c backgroundColor for @c state.   If no background color has been set for a given state, the returned value will fall back to the  value set for UIControlStateNormal.   @param state The control state.  @return The background color.  */ - (nullable UIColor *)backgroundColorForState:(UIControlState)state;  /*  A color used as the chip's @c backgroundColor.   Defaults to blue.   @param backgroundColor The background color.  @param state The control state.  */ - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border color for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state;  /*  Sets the border color for a particular control state.   @param borderColor The border color.  @param state The control state.  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border width for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state;  /*  Sets the border width for a particular control state.   @param borderWidth The border width.  @param state The control state.  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the elevation for a particular control state.   If no elevation has been set for a given state, the returned value will fall back to the value set  for UIControlStateNormal.   @param state The control state.  @return The elevation for the requested state.  */ - (MDCShadowElevation)elevationForState:(UIControlState)state;  /*  Sets the elevation for a particular control state.   @param elevation The elevation.  @param state The control state.  */ - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the ink color for a particular control state.   If no ink color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.   @param state The control state.  @return The ink color for the requested state.  */ - (nullable UIColor *)inkColorForState:(UIControlState)state;  /*  Sets the ink color for a particular control state.   @param inkColor The ink color.  @param state The control state.  */ - (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the shadow color for a particular control state.   If no shadow color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state;  /*  Sets the shadow color for a particular control state.   @param elevation The shadow color.  @param state The control state.  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the title color for a particular control state.   If no title color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The title color for the requested state.  */ - (nullable UIColor *)titleColorForState:(UIControlState)state;  /*  Sets the title color for a particular control state.   @param titleColor The title color.  @param state The control state.  */ - (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  @end` |
+
+### Collections
+
+#### MDCCollectionViewStyling
+
+*new* property: `cardBorderRadius` in `MDCCollectionViewStyling`
+
+### TextFields
+
+#### MDCTextInputController
+
+*new* property: `textInputFont` in `MDCTextInputController`
+
+*new* property: `textInputFontDefault` in `MDCTextInputController`
+## Component changes
+
+
+### Tabs
+
+#### Changes
+
+* [[BottomAppBar, Tabs] Make themer parameters nonnull (#3133)](https://github.com/material-components/material-components-ios/commit/8882cc904623b9af5d2d15f84d229b6bdb60fd97) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### MaskedTransition
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### AppBar
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Ink
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### CollectionCells
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Buttons
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/commit/7172657a7b1cd04839eadc10e9d66e895a71bee7) (Ali Rabbani)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### TextFields
+
+#### Changes
+
+* [Adding font themer (#3096)](https://github.com/material-components/material-components-ios/commit/91a376ffe1330c6c96344259d36c837c88188db3) (Mohammad Cazi)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Chips
+
+#### Changes
+
+* [Create a FontThemer (#3128)](https://github.com/material-components/material-components-ios/commit/6f1418df2a383f9fb72f476ebb34d502d0593428) (Robert Moore)
+* [Support Dynamic Type and show it in example. (#3123)](https://github.com/material-components/material-components-ios/commit/92fecd4cdeff37592d16ddbe556777299e870573) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Snackbar
+
+#### Changes
+
+* [../ (#3122)](https://github.com/material-components/material-components-ios/commit/6d432c7ea082dedc9fc271c7a204a2dfce2fe140) (Yarden Eitan)
+* [Don't traverse through dismissing presented child view controllers. (#3106)](https://github.com/material-components/material-components-ios/commit/26995ea72fde1889a28a3d2be448ed47eb35f3fa) (Yarden Eitan)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+* [suppress internal use of deprecated property (#3143)](https://github.com/material-components/material-components-ios/commit/d42a5e8500d3008101511af1cadc2a7b11524b7b) (Yarden Eitan)
+
+### Cards
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+* [fix: update link to material design guidelines (#3121)](https://github.com/material-components/material-components-ios/commit/b3b8f13bb05758c55ed7ff54c080989dae00dec0) (radeva)
+
+### BottomAppBar
+
+#### Changes
+
+* [[BottomAppBar, Tabs] Make themer parameters nonnull (#3133)](https://github.com/material-components/material-components-ios/commit/8882cc904623b9af5d2d15f84d229b6bdb60fd97) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Slider
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/commit/7172657a7b1cd04839eadc10e9d66e895a71bee7) (Ali Rabbani)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### OverlayWindow
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### LibraryInfo
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ShadowLayer
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### BottomSheet
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Typography
+
+#### Changes
+
+* [Support Dynamic Type in extensions for iOS >= 10. (#3127)](https://github.com/material-components/material-components-ios/commit/97465d22bb0df90e0e0f300de00935baa6ca8719) (Thomas-Redding-G)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Dialogs
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add `barTintColor` to replace `backgroundColor` (#3085)](https://github.com/material-components/material-components-ios/commit/a7ecc0b6500de5d5ba5c1e2dce05ff33893f540a) (Robert Moore)
+* [Remove ink for canceled touch (#3119)](https://github.com/material-components/material-components-ios/commit/5010e7c09d855b5f72e3a23539b5be5164dc5437) (Robert Moore)
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### PageControl
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Collections
+
+#### Changes
+
+* [Add custom cardBorderRadius to MDCCollectionViewStyler (#3114)](https://github.com/material-components/material-components-ios/commit/7f1aa7d28350c6ee845d5024a6ceac2a0a015b63) (strangewiz)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### HeaderStackView
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Themes
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ProgressView
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Palettes
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+---
+
 # 49.0.0
 
 ## Breaking changes
