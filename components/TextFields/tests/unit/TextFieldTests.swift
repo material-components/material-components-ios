@@ -58,7 +58,6 @@ class TextFieldTests: XCTestCase {
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
     textField.leadingViewMode = .unlessEditing
-    textField.mdc_adjustsFontForContentSizeCategory = true
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red

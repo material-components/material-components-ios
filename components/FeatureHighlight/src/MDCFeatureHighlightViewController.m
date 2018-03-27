@@ -94,8 +94,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   _featureHighlightView.displayedView = _displayedView;
   _featureHighlightView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _featureHighlightView.mdc_adjustsFontForContentSizeCategory =
-      _mdc_adjustsFontForContentSizeCategory;
 
   __weak MDCFeatureHighlightViewController *weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
@@ -160,38 +158,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                                completion:nil];
 }
 
-- (UIColor *)outerHighlightColor {
-  return self.view.outerHighlightColor;
-}
-
-- (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
-  self.view.outerHighlightColor = outerHighlightColor;
-}
-
-- (UIColor *)innerHighlightColor {
-  return self.view.innerHighlightColor;
-}
-
-- (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
-  self.view.innerHighlightColor = innerHighlightColor;
-}
-
-- (UIColor *)titleColor {
-  return self.view.titleColor;
-}
-
-- (void)setTitleColor:(UIColor *)titleColor {
-  self.view.titleColor = titleColor;
-}
-
-- (UIColor *)bodyColor {
-  return self.view.bodyColor;
-}
-
-- (void)setBodyColor:(UIColor *)bodyColor {
-  self.view.bodyColor = bodyColor;
-}
-
 - (void)acceptFeature {
   [self dismiss:YES];
 }
@@ -215,32 +181,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                            }];
 }
 
-#pragma mark - Dynamic Type
-
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    [self updateFontsForDynamicType];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentSizeCategoryDidChange:)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
-  } else {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIContentSizeCategoryDidChangeNotification
-                                                  object:nil];
-  }
-}
-
-- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self updateFontsForDynamicType];
-}
-
-- (void)updateFontsForDynamicType {
-  [_featureHighlightView updateTitleFont];
-  [_featureHighlightView updateBodyFont];
-  [_featureHighlightView layoutIfNeeded];
+- (MDCFeatureHighlightView *)featureHighlightView {
+  return self.view;
 }
 
 #pragma mark - Accessibility
