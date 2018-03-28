@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputController.h"
+#import "MDCTextInputControllerFullWidth.h"
 
 /**
  Material Design compliant text field. The logic for 'automagic' error states changes:
@@ -52,6 +52,6 @@
 
  Underline View Mode - While editing
  */
-@interface MDCTextInputControllerLegacyFullWidth : NSObject <MDCTextInputController>
+@interface MDCTextInputControllerLegacyFullWidth : MDCTextInputControllerFullWidth<NSSecureCoding>
 
 @end
