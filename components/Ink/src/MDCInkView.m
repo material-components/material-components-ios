@@ -259,7 +259,7 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
   if (self.usesLegacyInkRipple) {
     [self.inkLayer spreadFromPoint:point completion:completionBlock];
   } else {
-    self.startInkRippleCompletionBlock = [completionBlock copy];
+    self.startInkRippleCompletionBlock = completionBlock;
     MDCInkLayer *inkLayer = [MDCInkLayer layer];
     inkLayer.inkColor = self.inkColor;
     inkLayer.maxRippleRadius = self.maxRippleRadius;
@@ -281,7 +281,7 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
   if (self.usesLegacyInkRipple) {
     [self.inkLayer evaporateWithCompletion:completionBlock];
   } else {
-    self.endInkRippleCompletionBlock = [completionBlock copy];
+    self.endInkRippleCompletionBlock = completionBlock;
     [self.activeInkLayer endInkAtPoint:point animated:animated];
   }
 }
