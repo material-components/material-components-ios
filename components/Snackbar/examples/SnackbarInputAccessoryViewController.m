@@ -69,7 +69,6 @@
   [self showSnackbarWithAction];
 }
 
-
 - (void)showSnackbarWithAction {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
