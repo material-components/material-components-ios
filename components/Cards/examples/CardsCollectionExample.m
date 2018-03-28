@@ -52,15 +52,11 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//  _gesture.enabled = NO;
-//  _gesture.enabled = YES;
   _ignoreTap = YES;
   [super touchesBegan:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//  _gesture.enabled = NO;
-//  _gesture.enabled = YES;
   _ignoreTap = NO;
   [super touchesEnded:touches withEvent:event];
 }
@@ -99,8 +95,8 @@
 
 - (UIButton *)button {
   if (!_button) {
-    _button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    [_button setTitle:@"Button" forState:UIControlStateNormal];
+    _button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 20)];
+    [_button setTitle:@"BTN" forState:UIControlStateNormal];
     [self addSubview:_button];
   }
   return _button;
@@ -108,7 +104,7 @@
 
 - (MDCChipView *)chip {
   if (!_chip) {
-    _chip = [[MDCChipView alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+    _chip = [[MDCChipView alloc] initWithFrame:CGRectMake(0, 0, 80, 20)];
     _chip.titleLabel.text = @"Chip";
     [self addSubview:_chip];
   }

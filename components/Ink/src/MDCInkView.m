@@ -270,7 +270,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
     if (self.activeInkLayer) {
       [self.activeInkLayer removeFromSuperlayer];
       self.activeInkLayer = nil;
-//      NSLog(@"Sublayers: %lu", (unsigned long)self.layer.sublayers.count);
     }
     self.activeInkLayer = inkLayer;
     [inkLayer startInkAtPoint:point animated:animated];
