@@ -102,7 +102,7 @@ static const NSInteger kButtonTagStart = 20000;
  */
 static const CGFloat kButtonInkRadius = 64.0f;
 
-static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody2;
+static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
@@ -272,7 +272,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       _label.font = [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
     } else {
       // There is a custom font loader, retrieve the font from it.
-      _label.font = [MDCTypography body2Font];
+      _label.font = [MDCTypography body1Font];
     }
 
     NSMutableAttributedString *messageString = [message.attributedText mutableCopy];
@@ -459,7 +459,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)setMessageTextColor:(UIColor *)messageTextColor {
   _messageTextColor = messageTextColor;
-  self.label.textColor = _messageTextColor;
+  if (_messageTextColor) {
+    self.label.textColor = _messageTextColor;
+  } else {
+    self.label.textColor = UIColor.whiteColor;
+  }
 }
 
 - (nullable UIColor *)buttonTitleColorForState:(UIControlState)state {
@@ -468,10 +472,25 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)setButtonTitleColor:(nullable UIColor *)buttonTitleColor forState:(UIControlState)state {
   _buttonTitleColors[@(state)] = buttonTitleColor;
-
   for (MDCButton *button in _actionButtons) {
-    [button setTitleColor:buttonTitleColor forState:state];
+    if (_buttonTitleColors[@(state)]) {
+      [button setTitleColor:buttonTitleColor forState:state];
+    } else {
+      // Set to default
+      UIColor *defaultButtonTitleColor;
+      switch(state) {
+        case UIControlStateHighlighted:
+          defaultButtonTitleColor = UIColor.whiteColor;
+          break;
+        case UIControlStateNormal:
+        default:
+          defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+          break;
+      }
+      [button setTitleColor:defaultButtonTitleColor forState:state];
+    }
   }
+
 }
 
 - (void)addColorToMessageLabel:(UIColor *)color {
@@ -515,7 +534,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         _label.font = [UIFont mdc_preferredFontForMaterialTextStyle:kMessageTextStyle];
       } else {
         // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography body2Font];
+        UIFont *customTypographyFont = [MDCTypography body1Font];
         _label.font =
             [customTypographyFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -527,7 +546,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         _label.font = [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
       } else {
         // There is a custom font loader, retrieve the font from it.
-        _label.font = [MDCTypography body2Font];
+        _label.font = [MDCTypography body1Font];
       }
     }
   }
