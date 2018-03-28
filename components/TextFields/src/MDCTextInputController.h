@@ -184,6 +184,16 @@
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
 
 /**
+ The font applied to the text input.
+
+ Default is textInputFontDefault.
+ */
+@property(nonatomic, null_resettable, strong) UIFont *textInputFont;
+
+/** Default value for textInputFontDefault. */
+@property(class, nonatomic, null_resettable, strong) UIFont *textInputFontDefault;
+
+/**
  The font applied to the trailing side underline label.
 
  Default is trailingUnderlineLabelFontDefault.
