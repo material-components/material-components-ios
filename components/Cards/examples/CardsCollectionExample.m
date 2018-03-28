@@ -17,10 +17,74 @@
 #import "CardsCollectionExample.h"
 #import "MaterialInk.h"
 #import "MaterialChips.h"
+#import "MaterialButtons.h"
 #import "UICollectionViewController+MDCCardReordering.h"
+@interface MDCChipViewTapRecognizer : MDCChipView <UIGestureRecognizerDelegate>
+@end
+
+@implementation MDCChipViewTapRecognizer {
+  UIGestureRecognizer *_gesture;
+  BOOL _ignoreTap;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapEvent:)];
+    _gesture.delegate = self;
+    [self addGestureRecognizer:_gesture];
+  }
+  return self;
+}
+
+- (void)tapEvent:(UIGestureRecognizer *)gestureRecognizer {
+  if (_ignoreTap) {
+    return;
+  }
+  CGPoint touchPoint = [gestureRecognizer locationInView:self];
+  MDCInkView *inkView = [super valueForKey:@"_inkView"];
+  [inkView startTouchBeganAnimationAtPoint:touchPoint completion:^{
+    [inkView startTouchEndedAnimationAtPoint:touchPoint completion:nil];
+  }];
+  [self sendActionsForControlEvents:UIControlEventTouchDown];
+  [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//  _gesture.enabled = NO;
+//  _gesture.enabled = YES;
+  _ignoreTap = YES;
+  [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//  _gesture.enabled = NO;
+//  _gesture.enabled = YES;
+  _ignoreTap = NO;
+  [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  _ignoreTap = NO;
+  [super touchesCancelled:touches withEvent:event];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  if ([otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+    UITapGestureRecognizer *otherTapRecognizer = (UITapGestureRecognizer *)otherGestureRecognizer;
+    if (otherTapRecognizer.numberOfTapsRequired == 1 && otherTapRecognizer.numberOfTouchesRequired == 1) {
+      return NO;
+    }
+  }
+  return YES;
+}
+
+@end
+
 
 @interface MDCCell : UICollectionViewCell <UIGestureRecognizerDelegate>
-@property(nonatomic, strong) UIButton *button;
+@property(nonatomic, strong) MDCButton *button;
 @property(nonatomic, strong) MDCChipView *chip;
 @end
 
@@ -29,31 +93,26 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
-    self.button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
-    self.chip = [[MDCChipView alloc] initWithFrame:CGRectMake(45, 0, 40, 20)];
-    self.chip.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-    [self.button setTitle:@"B" forState:UIControlStateNormal];
-    self.chip.titleLabel.text = @"C";
-    [self addSubview:self.button];
-    [self addSubview:self.chip];
   }
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    self.button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
-    self.button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
-    self.chip = [[MDCChipView alloc] initWithFrame:CGRectMake(45, 0, 40, 20)];
-    self.chip.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-    [self.button setTitle:@"B" forState:UIControlStateNormal];
-    self.chip.titleLabel.text = @"C";
-    [self addSubview:self.button];
-    [self addSubview:self.chip];
+- (UIButton *)button {
+  if (!_button) {
+    _button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+    [_button setTitle:@"Button" forState:UIControlStateNormal];
+    [self addSubview:_button];
   }
-  return self;
+  return _button;
+}
+
+- (MDCChipView *)chip {
+  if (!_chip) {
+    _chip = [[MDCChipView alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+    _chip.titleLabel.text = @"Chip";
+    [self addSubview:_chip];
+  }
+  return _chip;
 }
 
 @end
@@ -119,30 +178,56 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     cell.accessibilityIdentifier = [NSString stringWithFormat:@"%lu", (unsigned long)nextCellIdentifier++];
   }
   [cell setBackgroundColor:[UIColor colorWithRed:107/255.f green:63/255.f blue:238/255.f alpha:1]];
-  [cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-  [cell.button addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
-  [cell.chip removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-  [cell.chip addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
+  if (indexPath.row % 3 == 0) {
+    [cell.chip removeFromSuperview];
+    cell.chip = nil;
+    [cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [cell.button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
+  } else if (indexPath.row % 3 == 1) {
+    [cell.button removeFromSuperview];
+    cell.button = nil;
+    [cell.chip removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [cell.chip addTarget:self action:@selector(didTapChip:) forControlEvents:UIControlEventTouchUpInside];
+  } else {
+    [cell.button removeFromSuperview];
+    cell.button = nil;
+    [cell.chip removeFromSuperview];
+    cell.chip = nil;
+    cell.chip = [[MDCChipViewTapRecognizer alloc] initWithFrame:CGRectMake(0, 0, 80, 20)];
+    cell.chip.titleLabel.text = @"C-Tap";
+    [cell addSubview:cell.chip];
+    [cell.chip removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [cell.chip addTarget:self action:@selector(didTapChipWithTap:) forControlEvents:UIControlEventTouchUpInside];
+  }
   UIGestureRecognizer *oldRecognizer = _gestureRecognizers[cell.accessibilityIdentifier];
   if (oldRecognizer) {
     [cell removeGestureRecognizer:oldRecognizer];
   }
-  UIGestureRecognizer *newRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+  UIGestureRecognizer *newRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerPerformed:)];
   _gestureRecognizers[cell.accessibilityIdentifier] = newRecognizer;
   [cell addGestureRecognizer:newRecognizer];
   return cell;
 }
 
-- (void)didTap:(id)sender {
-  if ([sender class] == [MDCChipView class]) {
-    NSLog(@"Chip!");
-  }
-  else if ([sender class] == [UIButton class]) {
-    NSLog(@"Button!");
-  }
-  else {
-    NSLog(@"%@",sender);
-  }
+- (void)didTapButton:(MDCButton *)sender {
+  NSLog(@"%@", sender.currentTitle);
+}
+
+- (void)didTapChip:(MDCChipView *)sender {
+  NSLog(@"%@", sender.titleLabel.text);
+}
+
+- (void)didTapChipWithTap:(MDCChipViewTapRecognizer *)sender {
+  NSLog(@"%@", sender.titleLabel.text);
+}
+
+- (void)gestureRecognizerPerformed:(UIGestureRecognizer *)gestureRecognizer {
+  NSLog(@"%@",gestureRecognizer.view);
+  UIColor *bgColor = gestureRecognizer.view.backgroundColor;
+  gestureRecognizer.view.backgroundColor = UIColor.redColor;
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    gestureRecognizer.view.backgroundColor = bgColor;
+  });
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>

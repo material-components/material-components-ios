@@ -217,6 +217,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     [CATransaction setCompletionBlock:^{
       self->_startAnimationActive = NO;
     }];
+//    NSLog(@"Start: %p", self);
     [self addAnimation:animGroup forKey:nil];
     [CATransaction commit];
   }
@@ -290,6 +291,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
       if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidEnd:)]) {
         [self.animationDelegate inkLayerAnimationDidEnd:self];
       }
+//      NSLog(@"Remove: %p", self);
       [self removeFromSuperlayer];
     }];
     [self addAnimation:fadeOutAnim forKey:nil];
