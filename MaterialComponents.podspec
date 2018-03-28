@@ -180,6 +180,7 @@ Pod::Spec.new do |mdc|
 
       extension.dependency 'MDFTextAccessibility'
       extension.dependency "MaterialComponents/Buttons"
+      extension.dependency "MaterialComponents/Palettes"
     end
   end
 

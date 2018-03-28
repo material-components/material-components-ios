@@ -18,6 +18,8 @@
 #import "private/MDCPaletteExpansions.h"
 #import "private/MDCPaletteNames.h"
 
+
+
 const MDCPaletteTint MDCPaletteTint50Name = MDC_PALETTE_TINT_50_INTERNAL_NAME;
 const MDCPaletteTint MDCPaletteTint100Name = MDC_PALETTE_TINT_100_INTERNAL_NAME;
 const MDCPaletteTint MDCPaletteTint200Name = MDC_PALETTE_TINT_200_INTERNAL_NAME;
@@ -42,14 +44,85 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+/**
+ Compares two UIColor objects for equivalence by checking the number of components in the backing
+ color and verifying that those component values are equal to 0.1% or less.
+ */
+// TODO(romoore): Check the color space to make sure we can't mix-up hsv/hsl/rgb spaces.
+static BOOL ColorEqualToColor(UIColor *color, UIColor *otherColor) {
+  if ((color == nil && otherColor != nil) ||
+      (color != nil && otherColor == nil)) {
+    return NO;
+  }
+  if (!color && !otherColor) {
+    return YES;
+  }
+  CGColorSpaceModel modelForColor = CGColorSpaceGetModel(CGColorGetColorSpace(color.CGColor));
+  CGColorSpaceModel modelForOtherColor =
+      CGColorSpaceGetModel(CGColorGetColorSpace(otherColor.CGColor));
+  if (modelForColor != modelForOtherColor) {
+    return NO;
+  }
+
+  size_t numComponents = CGColorGetNumberOfComponents(color.CGColor);
+  size_t otherNumComponents = CGColorGetNumberOfComponents(otherColor.CGColor);
+  if (numComponents != otherNumComponents) {
+    return NO;
+  }
+
+  const CGFloat *components = CGColorGetComponents(color.CGColor);
+  const CGFloat *otherComponents = CGColorGetComponents(otherColor.CGColor);
+  for (size_t i = 0; i < numComponents + 1; ++i) {
+    if (fabs(components[i] - otherComponents[i]) > 0.001) {
+      return NO;
+    }
+  }
+  return YES;
+}
+
 @interface MDCPalette () {
   NSDictionary<MDCPaletteTint, UIColor *> *_tints;
   NSDictionary<MDCPaletteAccent, UIColor *> *_accents;
 }
 
+@property (class, nonatomic, strong, readonly) NSCache *darkerColorForColor;
+@property (class, nonatomic, strong, readonly) NSCache *lighterColorForColor;
+
 @end
 
 @implementation MDCPalette
+
+- (void)cachePaletteColors {
+  [[self class].lighterColorForColor setObject:[NSNull null] forKey:self.tint50];
+  [[self class].darkerColorForColor setObject:self.tint100 forKey:self.tint50];
+  [[self class].lighterColorForColor setObject:self.tint50 forKey:self.tint100];
+  [[self class].darkerColorForColor setObject:self.tint200 forKey:self.tint100];
+  [[self class].lighterColorForColor setObject:self.tint100 forKey:self.tint200];
+  [[self class].darkerColorForColor setObject:self.tint300 forKey:self.tint200];
+  [[self class].lighterColorForColor setObject:self.tint200 forKey:self.tint300];
+  [[self class].darkerColorForColor setObject:self.tint400 forKey:self.tint300];
+  [[self class].lighterColorForColor setObject:self.tint300 forKey:self.tint400];
+  [[self class].darkerColorForColor setObject:self.tint500 forKey:self.tint400];
+  [[self class].lighterColorForColor setObject:self.tint400 forKey:self.tint500];
+  [[self class].darkerColorForColor setObject:self.tint600 forKey:self.tint500];
+  [[self class].lighterColorForColor setObject:self.tint500 forKey:self.tint600];
+  [[self class].darkerColorForColor setObject:self.tint700 forKey:self.tint600];
+  [[self class].lighterColorForColor setObject:self.tint600 forKey:self.tint700];
+  [[self class].darkerColorForColor setObject:self.tint800 forKey:self.tint700];
+  [[self class].lighterColorForColor setObject:self.tint700 forKey:self.tint800];
+  [[self class].darkerColorForColor setObject:self.tint900 forKey:self.tint800];
+  [[self class].lighterColorForColor setObject:self.tint800 forKey:self.tint900];
+  [[self class].darkerColorForColor setObject:[NSNull null] forKey:self.tint900];
+
+  [[self class].darkerColorForColor setObject:self.accent200 forKey:self.self.accent100];
+  [[self class].lighterColorForColor setObject:[NSNull null] forKey:self.self.accent100];
+  [[self class].darkerColorForColor setObject:self.accent400 forKey:self.self.accent200];
+  [[self class].lighterColorForColor setObject:self.accent100 forKey:self.self.accent200];
+  [[self class].darkerColorForColor setObject:self.accent700 forKey:self.self.accent400];
+  [[self class].lighterColorForColor setObject:self.accent200 forKey:self.self.accent400];
+  [[self class].darkerColorForColor setObject:[NSNull null] forKey:self.self.accent700];
+  [[self class].lighterColorForColor setObject:self.accent400 forKey:self.self.accent700];
+}
 
 + (MDCPalette *)redPalette {
   static MDCPalette *palette;
@@ -73,6 +146,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0xFF1744),
                                     MDCPaletteAccent700Name : ColorFromRGB(0xD50000)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -99,6 +173,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0xF50057),
                                     MDCPaletteAccent700Name : ColorFromRGB(0xC51162)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -125,6 +200,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0xD500F9),
                                     MDCPaletteAccent700Name : ColorFromRGB(0xAA00FF)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -151,6 +227,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0x651FFF),
                                     MDCPaletteAccent700Name : ColorFromRGB(0x6200EA)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -177,6 +254,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0x3D5AFE),
                                     MDCPaletteAccent700Name : ColorFromRGB(0x304FFE)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -203,6 +281,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0x2979FF),
                                     MDCPaletteAccent700Name : ColorFromRGB(0x2962FF)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -229,6 +308,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0x00B0FF),
                                     MDCPaletteAccent700Name : ColorFromRGB(0x0091EA)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -255,6 +335,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0x00E5FF),
                                     MDCPaletteAccent700Name : ColorFromRGB(0x00B8D4)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -281,6 +362,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0x1DE9B6),
                                     MDCPaletteAccent700Name : ColorFromRGB(0x00BFA5)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -307,6 +389,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0x00E676),
                                     MDCPaletteAccent700Name : ColorFromRGB(0x00C853)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -333,6 +416,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0x76FF03),
                                     MDCPaletteAccent700Name : ColorFromRGB(0x64DD17)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -359,6 +443,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0xC6FF00),
                                     MDCPaletteAccent700Name : ColorFromRGB(0xAEEA00)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -385,6 +470,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0xFFEA00),
                                     MDCPaletteAccent700Name : ColorFromRGB(0xFFD600)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -411,6 +497,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0xFFC400),
                                     MDCPaletteAccent700Name : ColorFromRGB(0xFFAB00)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -437,6 +524,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0xFF9100),
                                     MDCPaletteAccent700Name : ColorFromRGB(0xFF6D00)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -463,6 +551,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                                     MDCPaletteAccent400Name : ColorFromRGB(0xFF3D00),
                                     MDCPaletteAccent700Name : ColorFromRGB(0xDD2C00)
                                   }];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -484,6 +573,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
       MDCPaletteTint900Name : ColorFromRGB(0x3E2723)
     }
                                   accents:nil];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -505,7 +595,9 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
       MDCPaletteTint900Name : ColorFromRGB(0x212121)
     }
                                   accents:nil];
+    [palette cachePaletteColors];
   });
+
   return palette;
 }
 
@@ -526,6 +618,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
       MDCPaletteTint900Name : ColorFromRGB(0x263238)
     }
                                   accents:nil];
+    [palette cachePaletteColors];
   });
   return palette;
 }
@@ -650,6 +743,149 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
     MDCPaletteTint400Name, MDCPaletteTint500Name, MDCPaletteTint600Name, MDCPaletteTint700Name,
     MDCPaletteTint800Name, MDCPaletteTint900Name
   ]];
+}
+
+
+
++ (MDCPalette *)paletteForColor:(UIColor *)color
+                    darkerColor:(UIColor * __autoreleasing*)darkerColor
+                   lighterColor:(UIColor * __autoreleasing*)lighterColor {
+  static NSArray *palettes;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    palettes = @[MDCPalette.amberPalette,
+                 MDCPalette.blueGreyPalette,
+                 MDCPalette.bluePalette,
+                 MDCPalette.brownPalette,
+                 MDCPalette.cyanPalette,
+                 MDCPalette.deepOrangePalette,
+                 MDCPalette.deepPurplePalette,
+                 MDCPalette.greenPalette,
+                 MDCPalette.greyPalette,
+                 MDCPalette.indigoPalette,
+                 MDCPalette.lightBluePalette,
+                 MDCPalette.lightGreenPalette,
+                 MDCPalette.limePalette,
+                 MDCPalette.orangePalette,
+                 MDCPalette.pinkPalette,
+                 MDCPalette.purplePalette,
+                 MDCPalette.redPalette,
+                 MDCPalette.tealPalette,
+                 MDCPalette.yellowPalette];
+  });
+  for (MDCPalette *palette in palettes) {
+    static NSArray *tints;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+      tints = @[
+                palette.tint50,
+                palette.tint100,
+                palette.tint200,
+                palette.tint300,
+                palette.tint400,
+                palette.tint500,
+                palette.tint600,
+                palette.tint700,
+                palette.tint800,
+                palette.tint900];
+    });
+    for (NSUInteger i = 0; i < tints.count; ++i) {
+      UIColor *tint = tints[i];
+      if (ColorEqualToColor(color, tint)) {
+        if (lighterColor && i > 0) {
+          *lighterColor = tints[i-1];
+        }
+        if (darkerColor && i < tints.count-1) {
+          *darkerColor = tints[i+1];
+        }
+        return palette;
+      }
+    }
+    if (palette.accent100) {
+      static NSArray *accents;
+      static dispatch_once_t onceToken;
+      dispatch_once(&onceToken, ^{
+        accents = @[
+                     palette.accent100,
+                     palette.accent200,
+                     palette.accent400,
+                     palette.accent700];
+      });
+      for (NSUInteger i = 0; i < accents.count; ++i) {
+        UIColor *accent = accents[i];
+        if (ColorEqualToColor(color, accent)) {
+          if (lighterColor && i > 0) {
+            *lighterColor = accents[i-1];
+          }
+          if (darkerColor && i < accents.count-1) {
+            *darkerColor = accents[i+1];
+          }
+          return palette;
+        }
+      }
+    }
+  }
+  return nil;
+}
+
++ (NSCache *)darkerColorForColor {
+  static NSCache *s_cache;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    s_cache =  [[NSCache alloc] init];
+  });
+  return s_cache;
+}
+
++ (NSCache *)lighterColorForColor {
+  static NSCache *s_cache;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    s_cache =  [[NSCache alloc] init];
+  });
+  return s_cache;
+}
+
++ (UIColor *)nextDarkerColorInPaletteForColor:(UIColor *)color {
+  if (!color) {
+    return nil;
+  }
+
+  id darkerColorId = [[self class].darkerColorForColor objectForKey:color];
+  if (darkerColorId == [NSNull null]) {
+    return nil;
+  }
+
+  UIColor *darkerColor = (UIColor *)darkerColorId;
+  if (!darkerColor) {
+    UIColor *lighterColor;
+    [[self class] paletteForColor:color darkerColor:&darkerColor lighterColor:&lighterColor];
+
+    [[self class].darkerColorForColor setObject:(darkerColor ?: [NSNull null]) forKey:color];
+    [[self class].lighterColorForColor setObject:(lighterColor ?: [NSNull null]) forKey:color];
+  }
+  return darkerColor;
+}
+
++ (UIColor *)nextLighterColorInPaletteForColor:(UIColor *)color {
+  if (!color) {
+    return nil;
+  }
+
+  id lighterColorId = [[self class].lighterColorForColor objectForKey:color];
+  if (lighterColorId == [NSNull null]) {
+    return nil;
+  }
+
+  UIColor *lighterColor = (UIColor *)lighterColorId;
+  if (!lighterColor) {
+    UIColor *darkerColor;
+    [[self class] paletteForColor:color darkerColor:&darkerColor lighterColor:&lighterColor];
+
+    [[self class].lighterColorForColor setObject:(lighterColor ?: [NSNull null]) forKey:color];
+    [[self class].darkerColorForColor setObject:(darkerColor ?: [NSNull null]) forKey:color];
+  }
+  return lighterColor;
 }
 
 @end

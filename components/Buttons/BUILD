@@ -58,6 +58,7 @@ mdc_objc_library(
     includes = ["src/TitleColorAccessibilityMutator"],
     deps = [
         ":Buttons",
+        "//components/Palettes",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
     visibility = ["//visibility:public"],

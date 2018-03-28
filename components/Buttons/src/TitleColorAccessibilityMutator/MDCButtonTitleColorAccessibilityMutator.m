@@ -19,8 +19,73 @@
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "MaterialPalettes.h"
 
 @implementation MDCButtonTitleColorAccessibilityMutator
+
++ (UIColor *)nearestPassingPaletteColorForColor:(UIColor *)color
+                                   onBackground:(UIColor *)background
+                                        options:(MDFTextAccessibilityOptions)options
+                             searchDarkerColors:(BOOL)searchDarkerColors {
+
+  if (searchDarkerColors && [MDCPalette nextDarkerColorInPaletteForColor:color]) {
+    UIColor *nextDarkerColor = [MDCPalette nextDarkerColorInPaletteForColor:color];
+    if ([MDFTextAccessibility textColor:nextDarkerColor
+                passesOnBackgroundColor:background
+                                options:options]) {
+      return nextDarkerColor;
+    }
+    return [[self class] nearestPassingPaletteColorForColor:nextDarkerColor
+                                               onBackground:background
+                                                    options:options
+                                         searchDarkerColors:YES];
+  }
+  if (!searchDarkerColors && [MDCPalette nextLighterColorInPaletteForColor:color]) {
+    UIColor *nextLighterColor = [MDCPalette nextLighterColorInPaletteForColor:color];
+    if ([MDFTextAccessibility textColor:nextLighterColor
+                passesOnBackgroundColor:background
+                                options:options]) {
+      return nextLighterColor;
+    }
+    return [[self class] nearestPassingPaletteColorForColor:nextLighterColor
+                                               onBackground:background
+                                                    options:options
+                                         searchDarkerColors:NO];
+  }
+  return nil;
+}
+
++ (UIColor *)nearestPassingPaletteColorForColor:(UIColor *)color
+                                   onBackground:(UIColor *)background
+                                        options:(MDFTextAccessibilityOptions) options {
+  CGFloat colorContrast = [MDFTextAccessibility contrastRatioForTextColor:color
+                                                        onBackgroundColor:background];
+  if ([MDCPalette nextDarkerColorInPaletteForColor:color]) {
+    UIColor *nextDarkerColor = [MDCPalette nextDarkerColorInPaletteForColor:color];
+    CGFloat darkerContrast =
+        [MDFTextAccessibility contrastRatioForTextColor:nextDarkerColor
+                                      onBackgroundColor:background];
+    if (darkerContrast > colorContrast) {
+      return [[self class] nearestPassingPaletteColorForColor:color
+                                                 onBackground:background
+                                                      options:options
+                                           searchDarkerColors:YES];
+    }
+  }
+  if ([MDCPalette nextLighterColorInPaletteForColor:color]) {
+    UIColor *nextLighterColor = [MDCPalette nextLighterColorInPaletteForColor:color];
+    CGFloat lighterContrast =
+        [MDFTextAccessibility contrastRatioForTextColor:nextLighterColor
+                                      onBackgroundColor:background];
+    if (lighterContrast > colorContrast) {
+      return [[self class] nearestPassingPaletteColorForColor:color
+                                                 onBackground:background
+                                                      options:options
+                                           searchDarkerColors:NO];
+    }
+  }
+  return nil;
+}
 
 + (void)changeTitleColorOfButton:(MDCButton *)button {
   // This ensures title colors will be accessible against the buttons backgrounds.
@@ -41,10 +106,15 @@
       if (![MDFTextAccessibility textColor:existingColor
                    passesOnBackgroundColor:backgroundColor
                                    options:options]) {
-        UIColor *color =
-            [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                             targetTextAlpha:[MDCTypography buttonFontOpacity]
-                                                     options:options];
+
+        UIColor *color = [[self class] nearestPassingPaletteColorForColor:existingColor
+                                                             onBackground:backgroundColor
+                                                                  options:options];
+        if (!color) {
+          color = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                                   targetTextAlpha:[MDCTypography buttonFontOpacity]
+                                                           options:options];
+        }
         [button setTitleColor:color forState:controlState];
       }
     }
