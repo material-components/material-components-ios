@@ -18,6 +18,10 @@
 #import "MaterialInk.h"
 #import "UICollectionViewController+MDCCardReordering.h"
 
+@interface CardsCollectionExample ()
+
+@end
+
 @implementation CardsCollectionExample
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
@@ -46,7 +50,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   // Register cell classes
-  [self.collectionView registerClass:[MDCCardCollectionCell  class]
+  [self.collectionView registerClass:[MDCCardCollectionCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   [self mdc_setupCardReordering];
