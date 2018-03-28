@@ -14,11 +14,10 @@
  limitations under the License.
  */
 
-#import "CardsCollectionExample.h"
-#import "MaterialInk.h"
-#import "MaterialChips.h"
+#import "ChipsTapInterceptExample.h"
 #import "MaterialButtons.h"
-#import "UICollectionViewController+MDCCardReordering.h"
+#import "MaterialChips.h"
+
 @interface MDCChipViewTapRecognizer : MDCChipView <UIGestureRecognizerDelegate>
 @end
 
@@ -78,46 +77,9 @@
 
 @end
 
-
-@interface MDCCell : UICollectionViewCell <UIGestureRecognizerDelegate>
-@property(nonatomic, strong) MDCButton *button;
-@property(nonatomic, strong) MDCChipView *chip;
-@end
-
-@implementation MDCCell
-
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-  if (self) {
-  }
-  return self;
-}
-
-- (UIButton *)button {
-  if (!_button) {
-    _button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 20)];
-    [_button setTitle:@"BTN" forState:UIControlStateNormal];
-    [self addSubview:_button];
-  }
-  return _button;
-}
-
-- (MDCChipView *)chip {
-  if (!_chip) {
-    _chip = [[MDCChipView alloc] initWithFrame:CGRectMake(0, 0, 80, 20)];
-    _chip.titleLabel.text = @"Chip";
-    [self addSubview:_chip];
-  }
-  return _chip;
-}
-
-@end
-
-@interface CardsCollectionExample ()
-
-@end
 static NSUInteger nextCellIdentifier = 7U;
-@implementation CardsCollectionExample {
+
+@implementation ChipsTapInterceptExample {
   NSMutableDictionary<NSString *, UIGestureRecognizer *> *_gestureRecognizers;
 }
 
@@ -148,10 +110,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   // Register cell classes
-  [self.collectionView registerClass:[MDCCell  class]
+  [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
-
-  [self mdc_setupCardReordering];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -167,33 +127,36 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
-                                            forIndexPath:indexPath];
+  UICollectionViewCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
   if (!cell.accessibilityIdentifier) {
     cell.accessibilityIdentifier = [NSString stringWithFormat:@"%lu", (unsigned long)nextCellIdentifier++];
   }
-  [cell setBackgroundColor:[UIColor colorWithRed:107/255.f green:63/255.f blue:238/255.f alpha:1]];
-  if (indexPath.row % 3 == 0) {
-    [cell.chip removeFromSuperview];
-    cell.chip = nil;
-    [cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-    [cell.button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
-  } else if (indexPath.row % 3 == 1) {
-    [cell.button removeFromSuperview];
-    cell.button = nil;
-    [cell.chip removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-    [cell.chip addTarget:self action:@selector(didTapChip:) forControlEvents:UIControlEventTouchUpInside];
+  cell.backgroundColor = UIColor.greenColor;
+  NSArray<UIView *> *subviews = cell.subviews;
+  for (UIView *subview in subviews) {
+    [subview removeFromSuperview];
+  }
+  if (indexPath.row % 4 == 0) {
+    MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+    [button setTitleFont:@"Button" forState:UIControlStateNormal];
+    [cell addSubview:button];
+    [button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
+  } else if (indexPath.row % 4 == 1) {
+    MDCChipView *chip = [[MDCChipView alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+    chip.titleLabel.text = @"Chip";
+    [cell addSubview:chip];
+    [chip addTarget:self action:@selector(didTapChip:) forControlEvents:UIControlEventTouchUpInside];
+  } else if (indexPath.row % 4 == 2){
+    MDCChipView *chip = [[MDCChipViewTapRecognizer alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+    chip.titleLabel.text = @"C-Tap";
+    [cell addSubview:chip];
+    [chip addTarget:self action:@selector(didTapChipWithTap:) forControlEvents:UIControlEventTouchUpInside];
   } else {
-    [cell.button removeFromSuperview];
-    cell.button = nil;
-    [cell.chip removeFromSuperview];
-    cell.chip = nil;
-    cell.chip = [[MDCChipViewTapRecognizer alloc] initWithFrame:CGRectMake(0, 0, 80, 20)];
-    cell.chip.titleLabel.text = @"C-Tap";
-    [cell addSubview:cell.chip];
-    [cell.chip removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-    [cell.chip addTarget:self action:@selector(didTapChipWithTap:) forControlEvents:UIControlEventTouchUpInside];
+    UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+    [cell addSubview:aSwitch];
+    [aSwitch addTarget:self action:@selector(didTapSwitch:) forControlEvents:UIControlEventTouchUpInside];
   }
   UIGestureRecognizer *oldRecognizer = _gestureRecognizers[cell.accessibilityIdentifier];
   if (oldRecognizer) {
@@ -217,6 +180,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSLog(@"%@", sender.titleLabel.text);
 }
 
+- (void)didTapSwitch:(UISwitch *)aSwitch {
+  NSLog(@"Switch!");
+}
+
 - (void)gestureRecognizerPerformed:(UIGestureRecognizer *)gestureRecognizer {
   NSLog(@"%@",gestureRecognizer.view);
   UIColor *bgColor = gestureRecognizer.view.backgroundColor;
@@ -231,7 +198,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  CGFloat cardSize = (self.view.bounds.size.width / 3) - 12;
+  CGFloat cellSize = (self.view.bounds.size.width / 3) - 12;
   return CGSizeMake(cardSize, cardSize);
 }
 
@@ -268,19 +235,15 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Cards", @"Collection Card Cells" ];
+  return @[ @"Chips", @"Tap Gesture Recognizer Support" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
 }
 
-+ (NSString *)catalogDescription {
-  return @"Material Cards.";
-}
-
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 + (BOOL)catalogIsDebug {
@@ -288,7 +251,7 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (BOOL)catalogShouldHideNavigation {
-  return YES;
+  return NO;
 }
 
 @end

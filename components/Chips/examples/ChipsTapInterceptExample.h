@@ -15,8 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MaterialCards.h"
 
-@interface CardsCollectionExample : UICollectionViewController
+@interface ChipsTapInterceptExample : UICollectionViewController
 
 @end
