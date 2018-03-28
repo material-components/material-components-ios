@@ -25,7 +25,7 @@
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
   [MDCFeatureHighlightAccessibilityMutator mutate:vc];
 
-  vc.mdc_adjustsFontForContentSizeCategory = YES;
+  vc.featureHighlightView.mdc_adjustsFontForContentSizeCategory = YES;
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
   vc.bodyText = @"This is the description of the feature highlight view controller.";
