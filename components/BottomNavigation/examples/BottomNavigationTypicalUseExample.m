@@ -52,11 +52,6 @@
   _bottomNavBar.delegate = self;
   [self.view addSubview:_bottomNavBar];
 
-  MDCBasicColorScheme *scheme =
-      [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette purplePalette].tint700
-                                         secondaryColor:[UIColor whiteColor]];
-  [MDCBottomNavigationBarColorThemer applyColorScheme:scheme toBottomNavigationBar:_bottomNavBar];
-
   UITabBarItem *tabBarItem1 =
       [[UITabBarItem alloc] initWithTitle:@"Home"
                                     image:[UIImage imageNamed:@"Home"]

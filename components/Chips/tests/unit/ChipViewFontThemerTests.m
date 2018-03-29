@@ -14,21 +14,29 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
+#import <XCTest/XCTest.h>
 
-@class MDCBottomAppBarView;
-@protocol MDCColorScheme;
+#import "MaterialThemes.h"
+#import "MaterialChips.h"
+#import "MDCChipViewFontThemer.h"
 
-/**
- Applies a color scheme to an MDCBottomAppBarView or its UIAppearance proxy.
- */
-@interface MDCBottomAppBarColorThemer : NSObject
+@interface ChipViewFontThemerTests : XCTestCase
 
-/**
- Applies the secondary color (if present) of the colorScheme to the BottomAppBarView's
- @c barTintColor to color the background of the bar.
- */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-      toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
+@end
+
+@implementation ChipViewFontThemerTests
+
+- (void)testFontThemer {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
+  fontScheme.body2 = [UIFont systemFontOfSize:99];
+
+  // When
+  [MDCChipViewFontThemer applyFontScheme:fontScheme toChipView:chip];
+
+  // Then
+  XCTAssertEqualObjects(chip.titleFont, fontScheme.body2);
+}
 
 @end
