@@ -21,7 +21,6 @@
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
-#import "MaterialMath.h"
 #import "MaterialTypography.h"
 #import "private/MaterialSnackbarStrings.h"
 #import "private/MaterialSnackbarStrings_table.h"
