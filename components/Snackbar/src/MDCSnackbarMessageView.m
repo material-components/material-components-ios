@@ -21,6 +21,7 @@
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
 #import "private/MaterialSnackbarStrings.h"
 #import "private/MaterialSnackbarStrings_table.h"
@@ -754,7 +755,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                                metrics:metrics
                                                                                  views:views]];
     } else {
-      formatString = @"V:|[buttons]|";
+      [self snackbarMessageLineCount];
+      formatString = @"V:|-(>=kMinVerticalButtonPadding,<=kMaxVerticalButtonPadding)"
+          "-[buttons]-(>=kMinVerticalButtonPadding,<=kMaxVerticalButtonPadding)-|";
       [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
                                                                                options:0
                                                                                metrics:metrics
@@ -917,6 +920,16 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   }];
 
   return constraints;
+}
+
+- (CGFloat)snackbarMessageLineCount {
+  NSInteger lineCount = 0;
+  CGSize textSize = CGSizeMake(_label.frame.size.width, MAXFLOAT);
+  CGFloat rHeight = MDCRound([_label sizeThatFits:textSize].height);
+  CGFloat charSize = MDCRound(_label.font.lineHeight);
+  lineCount = NSInteger( MDCCeil(rHeight/charSize) );
+  NSLog(@"No of lines: %i",lineCount);
+  return lineCount;
 }
 
 - (void)layoutSubviews {
