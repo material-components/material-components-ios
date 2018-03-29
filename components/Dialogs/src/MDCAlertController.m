@@ -158,7 +158,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)addAction:(MDCAlertAction *)action {
   [_actions addObject:[action copy]];
   if (self.alertView) {
-    [self.alertView addActionButtonTitle:action.title selector:@selector(actionButtonPressed:)];
+    [self.alertView addActionButtonTitle:action.title
+                                  target:self
+                                selector:@selector(actionButtonPressed:)];
 
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
@@ -236,7 +238,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageLabel.text = self.message;
 
   for (MDCAlertAction *action in _actions) {
-    [self.alertView addActionButtonTitle:action.title selector:@selector(actionButtonPressed:)];
+    [self.alertView addActionButtonTitle:action.title
+                                  target:self
+                                selector:@selector(actionButtonPressed:)];
   }
 
   _previousLayoutSize = CGSizeZero;

@@ -26,6 +26,7 @@
 @property(nonatomic, nonnull, strong, readonly) NSArray<MDCFlatButton *> *actionButtons;
 
 - (void)addActionButtonTitle:(NSString *_Nonnull)actionTitle
+                      target:(nullable id)target
                     selector:(SEL _Nonnull)selector;
 
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
