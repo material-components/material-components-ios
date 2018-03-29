@@ -1,3 +1,264 @@
+# 50.0.0
+
+## Breaking change
+
+MDCTabBarFontThemer and MDCBottomAppBarColorThemer changed a argument to nonnull from nullable.
+
+## API changes
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `backgroundColor` in `MDCBottomNavigationBar`
+
+*new* property: `barTintColor` in `MDCBottomNavigationBar`
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `minimumSize` in `MDCChipView`
+
+### Collections
+
+#### MDCCollectionViewStyling
+
+*new* property: `cardBorderRadius` in `MDCCollectionViewStyling`
+
+### TextFields
+
+#### MDCTextInputController
+
+*new* property: `textInputFont` in `MDCTextInputController`
+
+*new* property: `textInputFontDefault` in `MDCTextInputController`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [[BottomAppBar, Tabs] Make themer parameters nonnull (#3133)](https://github.com/material-components/material-components-ios/commit/8882cc904623b9af5d2d15f84d229b6bdb60fd97) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### MaskedTransition
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### AppBar
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Ink
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### CollectionCells
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Buttons
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/commit/7172657a7b1cd04839eadc10e9d66e895a71bee7) (Ali Rabbani)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### TextFields
+
+#### Changes
+
+* [Adding font themer (#3096)](https://github.com/material-components/material-components-ios/commit/91a376ffe1330c6c96344259d36c837c88188db3) (Mohammad Cazi)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Chips
+
+#### Changes
+
+* [Create a FontThemer (#3128)](https://github.com/material-components/material-components-ios/commit/6f1418df2a383f9fb72f476ebb34d502d0593428) (Robert Moore)
+* [Support Dynamic Type and show it in example. (#3123)](https://github.com/material-components/material-components-ios/commit/92fecd4cdeff37592d16ddbe556777299e870573) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Snackbar
+
+#### Changes
+
+* [../ (#3122)](https://github.com/material-components/material-components-ios/commit/6d432c7ea082dedc9fc271c7a204a2dfce2fe140) (Yarden Eitan)
+* [Don't traverse through dismissing presented child view controllers. (#3106)](https://github.com/material-components/material-components-ios/commit/26995ea72fde1889a28a3d2be448ed47eb35f3fa) (Yarden Eitan)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+* [suppress internal use of deprecated property (#3143)](https://github.com/material-components/material-components-ios/commit/d42a5e8500d3008101511af1cadc2a7b11524b7b) (Yarden Eitan)
+
+### Cards
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+* [fix: update link to material design guidelines (#3121)](https://github.com/material-components/material-components-ios/commit/b3b8f13bb05758c55ed7ff54c080989dae00dec0) (radeva)
+
+### BottomAppBar
+
+#### Changes
+
+* [[BottomAppBar, Tabs] Make themer parameters nonnull (#3133)](https://github.com/material-components/material-components-ios/commit/8882cc904623b9af5d2d15f84d229b6bdb60fd97) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Slider
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/commit/7172657a7b1cd04839eadc10e9d66e895a71bee7) (Ali Rabbani)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### OverlayWindow
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### LibraryInfo
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ShadowLayer
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### BottomSheet
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Typography
+
+#### Changes
+
+* [Support Dynamic Type in extensions for iOS >= 10. (#3127)](https://github.com/material-components/material-components-ios/commit/97465d22bb0df90e0e0f300de00935baa6ca8719) (Thomas-Redding-G)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Dialogs
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add `barTintColor` to replace `backgroundColor` (#3085)](https://github.com/material-components/material-components-ios/commit/a7ecc0b6500de5d5ba5c1e2dce05ff33893f540a) (Robert Moore)
+* [Remove ink for canceled touch (#3119)](https://github.com/material-components/material-components-ios/commit/5010e7c09d855b5f72e3a23539b5be5164dc5437) (Robert Moore)
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### PageControl
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Collections
+
+#### Changes
+
+* [Add custom cardBorderRadius to MDCCollectionViewStyler (#3114)](https://github.com/material-components/material-components-ios/commit/7f1aa7d28350c6ee845d5024a6ceac2a0a015b63) (strangewiz)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### HeaderStackView
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Themes
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### ProgressView
+
+#### Changes
+
+* [Use safe selector access for color themers (#3126)](https://github.com/material-components/material-components-ios/commit/61277455f1c6b689a4b9fb80b0a9fc36fd283380) (Robert Moore)
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### Palettes
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[Kokoro / CI] Have Kokoro test multiple iOS versions and simulators on different Xcodes. (#3117)](https://github.com/material-components/material-components-ios/commit/7b742b574557adb5a499d469043738afe55ff6f7) (Yarden Eitan)
+
+---
+
 # 49.0.0
 
 ## Breaking changes
