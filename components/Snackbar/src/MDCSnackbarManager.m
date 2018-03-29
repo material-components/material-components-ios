@@ -318,8 +318,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     [overlayWindow activateOverlay:overlay withLevel:UIWindowLevelNormal];
   } else {
     // Find the most top view controller to display overlay.
-    UIViewController *topViewController =
-        [self topPresentedViewControllerOfViewController:[window rootViewController]];
+    UIViewController *topViewController = [window rootViewController];
+    while ([topViewController presentedViewController]) {
+      topViewController = [topViewController presentedViewController];
+    }
     targetView = [topViewController view];
   }
 
@@ -330,15 +332,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
     [targetView addSubview:overlay];
   }
-}
-
-- (UIViewController *)topPresentedViewControllerOfViewController:
-    (UIViewController *)rootViewController {
-  UIViewController *presentedViewController = rootViewController.presentedViewController;
-  if (presentedViewController != nil && !presentedViewController.isBeingDismissed) {
-    return [self topPresentedViewControllerOfViewController:presentedViewController];
-  }
-  return rootViewController;
 }
 
 - (UIWindow *)bestGuessWindow {
