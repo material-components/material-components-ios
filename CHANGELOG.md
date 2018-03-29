@@ -1,4 +1,8 @@
-# 49.1.0
+# 50.0.0
+
+## Breaking change
+
+MDCBottomAppBarColorThemer changed a argument to nonnull from nullable.
 
 ## API changes
 
