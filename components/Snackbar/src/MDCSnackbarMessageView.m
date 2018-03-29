@@ -81,6 +81,13 @@ static const CGFloat kTitleButtonPadding = 8.0f;
 static const CGFloat kLegacyButtonPadding = 5.0f;
 static const CGFloat kButtonPadding = 8.0f;
 
+
+/**
+ Min/Max Padding for the vertical padding of the buttons to the snackbar
+ */
+static const CGFloat kMinVerticalButtonPadding = 6.0f;
+static const CGFloat kMaxVerticalButtonPadding = 16.0f;
+
 /**
  The width of the snackbar.
  */
@@ -667,6 +674,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kTopMargin" : @(self.safeContentMargin.top),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
     @"kContentSafeBottomInset" : @(kBorderWidth +  self.contentSafeBottomInset),
+    @"kMinVerticalButtonPadding": @(kMinVerticalButtonPadding),
+    @"kMaxVerticalButtonPadding": @(kMaxVerticalButtonPadding),
   };
   NSDictionary *views = @{
     @"container" : self.containerView,
@@ -737,12 +746,20 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                              metrics:metrics
                                                                                views:views]];
 
-    // The buttons should take up the entire height of the container view.
-    formatString = @"V:|[buttons]|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
+    if (MDCSnackbarMessage.usesLegacySnackbar) {
+      // The buttons should take up the entire height of the container view.
+      formatString = @"V:|[buttons]|";
+      [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
+                                                                               options:0
+                                                                               metrics:metrics
+                                                                                 views:views]];
+    } else {
+      formatString = @"V:|[buttons]|";
+      [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
+                                                                               options:0
+                                                                               metrics:metrics
+                                                                                 views:views]];
+    }
 
     // Pin the content to the bottom of the container view, since there's nothing below.
     formatString = @"V:[content]-(==kBottomMargin)-|";
