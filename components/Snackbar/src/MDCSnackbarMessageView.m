@@ -84,10 +84,9 @@ static const CGFloat kButtonPadding = 8.0f;
 
 
 /**
- Min/Max Padding for the vertical padding of the buttons to the snackbar
+ Minimum padding for the vertical padding of the buttons to the snackbar
  */
 static const CGFloat kMinVerticalButtonPadding = 6.0f;
-static const CGFloat kMaxVerticalButtonPadding = 16.0f;
 
 /**
  The width of the snackbar.
@@ -394,7 +393,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     button.titleLabel.numberOfLines = 1;
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    button.contentEdgeInsets = UIEdgeInsetsMake(0, buttonContentPadding, 0, buttonContentPadding);
+    button.contentEdgeInsets = UIEdgeInsetsMake(buttonContentPadding,
+                                                buttonContentPadding,
+                                                buttonContentPadding,
+                                                buttonContentPadding);
 
     // Set up the button's accessibility values.
     button.accessibilityIdentifier = message.action.accessibilityIdentifier;
@@ -676,7 +678,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
     @"kContentSafeBottomInset" : @(kBorderWidth +  self.contentSafeBottomInset),
     @"kMinVerticalButtonPadding": @(kMinVerticalButtonPadding),
-    @"kMaxVerticalButtonPadding": @(kMaxVerticalButtonPadding),
   };
   NSDictionary *views = @{
     @"container" : self.containerView,
@@ -742,10 +743,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   } else {  // This is a horizontal layout, and there are buttons present.
     // Align the content and buttons horizontally.
     formatString = @"H:[content]-(==kTitleButtonPadding)-[buttons]-(==kRightMargin)-|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
+    [constraints addObjectsFromArray:
+        [NSLayoutConstraint constraintsWithVisualFormat:formatString
+                                                options:NSLayoutFormatAlignAllCenterY
+                                                metrics:metrics
+                                                  views:views]];
 
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       // The buttons should take up the entire height of the container view.
@@ -755,13 +757,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                                metrics:metrics
                                                                                  views:views]];
     } else {
-      [self snackbarMessageLineCount];
-      formatString = @"V:|-(>=kMinVerticalButtonPadding,<=kMaxVerticalButtonPadding)"
-          "-[buttons]-(>=kMinVerticalButtonPadding,<=kMaxVerticalButtonPadding)-|";
-      [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:views]];
+      formatString = @"V:|-(>=kMinVerticalButtonPadding)-[buttons]-(>=kMinVerticalButtonPadding)-|";
+      [constraints addObjectsFromArray:
+          [NSLayoutConstraint constraintsWithVisualFormat:formatString
+                                                  options:NSLayoutFormatAlignAllCenterY
+                                                  metrics:metrics
+                                                    views:views]];
     }
 
     // Pin the content to the bottom of the container view, since there's nothing below.
@@ -920,16 +921,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   }];
 
   return constraints;
-}
-
-- (CGFloat)snackbarMessageLineCount {
-  NSInteger lineCount = 0;
-  CGSize textSize = CGSizeMake(_label.frame.size.width, MAXFLOAT);
-  CGFloat rHeight = MDCRound([_label sizeThatFits:textSize].height);
-  CGFloat charSize = MDCRound(_label.font.lineHeight);
-  lineCount = NSInteger( MDCCeil(rHeight/charSize) );
-  NSLog(@"No of lines: %i",lineCount);
-  return lineCount;
 }
 
 - (void)layoutSubviews {
