@@ -114,7 +114,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self setNeedsLayout];
 }
 
-- (void)addActionButtonTitle:(NSString *)actionTitle selector:(SEL)selector {
+- (void)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
   MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:actionTitle forState:UIControlStateNormal];
@@ -129,7 +129,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonHeight);
   buttonRect.size.width = MAX(buttonRect.size.width, MDCDialogActionButtonMinimumWidth);
   actionButton.frame = buttonRect;
-  [actionButton addTarget:nil
+  [actionButton addTarget:target
                    action:selector
          forControlEvents:UIControlEventTouchUpInside];
   [self.actionsScrollView addSubview:actionButton];
