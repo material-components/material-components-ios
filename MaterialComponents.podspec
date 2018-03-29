@@ -37,6 +37,16 @@ Pod::Spec.new do |mdc|
   #  end
   #
 
+  mdc.subspec "schemes" do |scheme_spec|
+
+    scheme_spec.subspec "Color" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+    end
+
+  end
+
   mdc.subspec "ActivityIndicator" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
