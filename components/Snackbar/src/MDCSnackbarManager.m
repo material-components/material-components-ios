@@ -335,7 +335,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 - (UIViewController *)topPresentedViewControllerOfViewController:
     (UIViewController *)rootViewController {
   UIViewController *presentedViewController = rootViewController.presentedViewController;
-  if (!presentedViewController.isBeingDismissed) {
+  if (presentedViewController != nil && !presentedViewController.isBeingDismissed) {
     return [self topPresentedViewControllerOfViewController:presentedViewController];
   }
   return rootViewController;
