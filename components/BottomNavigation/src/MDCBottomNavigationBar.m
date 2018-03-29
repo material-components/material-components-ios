@@ -46,6 +46,8 @@ static NSString *const kMDCBottomNavigationBarItemsDistributedKey =
     @"kMDCBottomNavigationBarItemsDistributedKey";
 static NSString *const kMDCBottomNavigationBarTitleBelowItemKey =
     @"kMDCBottomNavigationBarTitleBelowItemKey";
+static NSString *const kMDCBottomNavigationBarBarTintColorKey =
+    @"kMDCBottomNavigationBarBarTintColorKey";
 
 static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
@@ -75,7 +77,6 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   self = [super initWithFrame:frame];
   if (self) {
     self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
-    self.backgroundColor = [UIColor whiteColor];
     self.isAccessibilityElement = NO;
     [self commonMDCBottomNavigationBarInit];
   }
@@ -127,6 +128,10 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
       self.selectedItem = [aDecoder decodeObjectOfClass:[UITabBarItem class]
                                                  forKey:kMDCBottomNavigationBarSelectedItemKey];
     }
+    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarBarTintColorKey]) {
+      self.barTintColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                 forKey:kMDCBottomNavigationBarBarTintColorKey];
+    }
   }
   return self;
 }
@@ -162,6 +167,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   _alignment = MDCBottomNavigationBarAlignmentJustified;
   _itemsDistributed = YES;
   _titleBelowItem = YES;
+  _barTintColor = [UIColor whiteColor];
+  self.backgroundColor = _barTintColor;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -389,6 +396,11 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
 }
 
+- (void)didCancelTouchesForButton:(UIButton *)button {
+  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
+  [itemView.inkView cancelAllAnimationsAnimated:NO];
+}
+
 #pragma mark - Setters
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
@@ -452,6 +464,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     [itemView.button addTarget:self
                         action:@selector(didTouchUpOutsideButton:)
               forControlEvents:UIControlEventTouchUpOutside];
+    [itemView.button addTarget:self
+                        action:@selector(didCancelTouchesForButton:)
+              forControlEvents:UIControlEventTouchCancel];
     [self.itemViews addObject:itemView];
     [self.containerView addSubview:itemView];
   }
@@ -511,6 +526,19 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.itemTitleFont = itemTitleFont;
   }
+}
+
+- (void)setBarTintColor:(UIColor *)barTintColor {
+  _barTintColor = barTintColor;
+  self.backgroundColor = barTintColor;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  super.backgroundColor = backgroundColor;
+}
+
+- (UIColor *)backgroundColor {
+  return super.backgroundColor;
 }
 
 #pragma mark - Resource bundle
