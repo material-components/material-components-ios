@@ -14,6 +14,9 @@
  limitations under the License.
  */
 
+#import <CoreGraphics/CoreGraphics.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "MDCMaskedPresentationController.h"
 
 #import <MotionTransitioning/MotionTransitioning.h>

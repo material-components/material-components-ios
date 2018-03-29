@@ -18,6 +18,7 @@
 
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
+#import "MDCTabBarTextTransform.h"
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
@@ -85,6 +86,26 @@ IB_DESIGNABLE
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /**
+ Font used for selected item titles.
+ By default this uses +[MDCTypography buttonFont]. Ignored for bottom-position tab bars.
+
+ Note: Tab sizes are determined based on their unselected state and do not vary based on selection.
+ To avoid clipped layouts and other layout issues, the font provided here should have similar
+ metrics to `unselectedItemTitleFont`.
+ */
+@property(nonatomic, strong, nonnull) UIFont *selectedItemTitleFont UI_APPEARANCE_SELECTOR;
+
+/**
+ Font used for unselected item titles.
+ By default this uses the MDCTypography button font. Ignored for bottom-position tab bars.
+
+ Note: Tab sizes are determined based on their unselected state and do not vary based on selection.
+ To avoid clipped layouts and other layout issues, the font provided here should have similar
+ metrics to `selectedItemTitleFont`.
+ */
+@property(nonatomic, strong, nonnull) UIFont *unselectedItemTitleFont UI_APPEARANCE_SELECTOR;
+
+/**
  Tint color to apply to the tab bar background.
 
  If nil, the receiver uses the default background appearance. Default: nil.
@@ -107,12 +128,22 @@ IB_DESIGNABLE
 @property(nonatomic) MDCTabBarItemAppearance itemAppearance;
 
 /**
- Indicates if all tab titles should be uppercased for display. If NO, item titles will be
- displayed verbatim.
+ Indicates if all tab titles should be uppercased for display. If NO, item titles will be displayed
+ verbatim.
 
  The default value is based on the position and is recommended for most applications.
+
+ NOTE: This property will be deprecated in a future release. Use `titleTextTransform` instead.
+ https://github.com/material-components/material-components-ios/issues/2552
  */
 @property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
+
+/**
+ Defines how tab bar item titles are transformed for display.
+
+ The default value is MDCTabBarTextTransformAutomatic.
+ */
+@property(nonatomic) MDCTabBarTextTransform titleTextTransform UI_APPEARANCE_SELECTOR;
 
 /**
  Template that defines the appearance of the selection indicator.

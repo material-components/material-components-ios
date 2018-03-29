@@ -15,151 +15,169 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "MaterialInk.h"
-#import "MDCInkLayer+Testing.h"
 
-#pragma mark - Property exposure
+#import "MDCInkLayer.h"
 
-@interface MDCInkLayer (UnitTests)
+#pragma mark - Fake classes
 
-@property(nonatomic, strong) NSMutableArray<MDCInkLayerForegroundRipple *> *foregroundRipples;
-@property(nonatomic, strong) NSMutableArray<MDCInkLayerBackgroundRipple *> *backgroundRipples;
+@interface CapturingMDCInkLayerSubclass : MDCInkLayer
+@property(nonatomic, strong) NSMutableArray *addedAnimations;
 
 @end
 
-@interface MDCInkLayerRipple (UnitTests)
+@implementation CapturingMDCInkLayerSubclass
 
-@property(nonatomic, weak) id<MDCInkLayerRippleDelegate> animationDelegate;
-
-@end
-
-#pragma mark - Subclasses for testing
-
-@interface MDCFakeForegroundRipple : MDCInkLayerForegroundRipple
-
-@property(nonatomic, assign) BOOL exitAnimationParameter;
-
-@end
-
-@implementation MDCFakeForegroundRipple
-
-- (void)exit:(BOOL)animated {
-  self.exitAnimationParameter = animated;
+- (void)addAnimation:(CAAnimation *)anim forKey:(NSString *)key {
+  if (!self.addedAnimations) {
+    self.addedAnimations = [NSMutableArray array];
+  }
+  [self.addedAnimations addObject:anim];
+  [super addAnimation:anim forKey:key];
 }
 
 @end
 
-@interface MDCFakeBackgroundRipple : MDCInkLayerBackgroundRipple
-
-@property(nonatomic, assign) BOOL exitAnimationParameter;
-
-@end
-
-@implementation MDCFakeBackgroundRipple
-
-- (void)exit:(BOOL)animated {
-  self.exitAnimationParameter = animated;
-}
-
-@end
-
-#pragma mark - XCTestCase
-
-@interface MDCInkLayerTests : XCTestCase <MDCInkLayerRippleDelegate>
-@property(nonatomic, strong) XCTestExpectation *expectation;
+@interface FakeMDCInkLayerAnimationDelegate : NSObject <MDCInkLayerDelegate, NSSecureCoding>
 @property(nonatomic, strong) MDCInkLayer *inkLayer;
+@end
+
+@implementation FakeMDCInkLayerAnimationDelegate
+
++ (BOOL)supportsSecureCoding {
+  return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super init];
+  if (self) {
+    _inkLayer = [aDecoder decodeObjectOfClass:[MDCInkLayer class] forKey:@"inkLayer"];
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeObject:self.inkLayer forKey:@"inkLayer"];
+}
+
+@end
+
+#pragma mark - Tests
+
+@interface MDCInkLayerTests : XCTestCase
+
 @end
 
 @implementation MDCInkLayerTests
 
-#pragma mark - <MDCInkLayerDelegate>
-
-- (void)animationDidStop:(CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
-                finished:(BOOL)finished {
-  [self.inkLayer animationDidStop:anim shapeLayer:shapeLayer finished:finished];
-  [self.expectation fulfill];
-}
-
-#pragma mark - Unit Tests
-
-- (void)tearDown {
-  self.expectation = nil;
-  self.inkLayer = nil;
-}
-
-- (void)testResetRipplesWithoutAnimation {
+- (void)testInit {
   // Given
   MDCInkLayer *inkLayer = [[MDCInkLayer alloc] init];
-  MDCFakeForegroundRipple *fakeForegroundRipple = [[MDCFakeForegroundRipple alloc] init];
-  MDCFakeBackgroundRipple *fakeBackgroundRipple = [[MDCFakeBackgroundRipple alloc] init];
-
-  // When
-  [inkLayer.foregroundRipples addObject:fakeForegroundRipple];
-  [inkLayer.backgroundRipples addObject:fakeBackgroundRipple];
-  [inkLayer resetAllInk:NO];
 
   // Then
-  XCTAssertFalse(fakeForegroundRipple.exitAnimationParameter,
-                 @"When calling without animation, the ripple should receive a 'NO' argument");
-  XCTAssertFalse(fakeBackgroundRipple.exitAnimationParameter,
-                 @"When calling without animation, the ripple should receive a 'NO' argument");
+  XCTAssertNil(inkLayer.delegate);
+  XCTAssertFalse(inkLayer.isStartAnimationActive);
+  XCTAssertEqualWithAccuracy(inkLayer.endAnimationDelay, 0, 0.0001);
+  XCTAssertEqualWithAccuracy(inkLayer.initialRadius, 0, 0.0001);
+  XCTAssertEqualWithAccuracy(inkLayer.finalRadius, 0, 0.0001);
+  XCTAssertEqualWithAccuracy(inkLayer.maxRippleRadius, 0, 0.0001);
+  XCTAssertEqualObjects(inkLayer.inkColor, [UIColor colorWithWhite:0 alpha:(CGFloat)0.08]);
 }
 
-- (void)testResetRipplesWithAnimation {
+- (void)testInitWithLayer {
   // Given
+  FakeMDCInkLayerAnimationDelegate *delegate = [[FakeMDCInkLayerAnimationDelegate alloc] init];
   MDCInkLayer *inkLayer = [[MDCInkLayer alloc] init];
-  MDCFakeForegroundRipple *fakeForegroundRipple = [[MDCFakeForegroundRipple alloc] init];
-  MDCFakeBackgroundRipple *fakeBackgroundRipple = [[MDCFakeBackgroundRipple alloc] init];
+  delegate.inkLayer = inkLayer;
+  inkLayer.delegate = delegate;
+  inkLayer.endAnimationDelay = 1;
+  inkLayer.initialRadius = 2;
+  inkLayer.finalRadius = 3;
+  inkLayer.maxRippleRadius = 4;
+  inkLayer.inkColor = UIColor.magentaColor;
 
   // When
-  [inkLayer.foregroundRipples addObject:fakeForegroundRipple];
-  [inkLayer.backgroundRipples addObject:fakeBackgroundRipple];
-  [inkLayer resetAllInk:YES];
+  MDCInkLayer *copiedLayer = [[MDCInkLayer alloc] initWithLayer:inkLayer];
 
   // Then
-  XCTAssertTrue(fakeForegroundRipple.exitAnimationParameter,
-                @"When calling without animation, the ripple should receive a 'NO' argument");
-  XCTAssertTrue(fakeBackgroundRipple.exitAnimationParameter,
-                @"When calling without animation, the ripple should receive a 'NO' argument");
+  XCTAssertNil(copiedLayer.delegate);
+  XCTAssertEqualWithAccuracy(copiedLayer.endAnimationDelay, inkLayer.endAnimationDelay, 0.0001);
+  XCTAssertEqualWithAccuracy(copiedLayer.initialRadius, inkLayer.initialRadius, 0.0001);
+  XCTAssertEqualWithAccuracy(copiedLayer.finalRadius, inkLayer.finalRadius, 0.0001);
+  XCTAssertEqualWithAccuracy(copiedLayer.maxRippleRadius, inkLayer.maxRippleRadius, 0.0001);
+  XCTAssertEqualObjects(copiedLayer.inkColor, inkLayer.inkColor);
+  XCTAssertEqual(copiedLayer.sublayers.count, inkLayer.sublayers.count);
 }
 
-- (void)testForegroundRippleExitWithoutAnimation {
+- (void)testEncoding {
   // Given
-  self.inkLayer = [[MDCInkLayer alloc] init];
-  MDCInkLayerForegroundRipple *foregroundRipple = [[MDCInkLayerForegroundRipple alloc] init];
-  foregroundRipple.animationDelegate = self;
-  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0U,
-                 @"There should be no foreground ripples at the start of the test.");
-  [self.inkLayer.foregroundRipples addObject:foregroundRipple];
-  self.expectation = [self expectationWithDescription:@"Background ripple completion"];
+  FakeMDCInkLayerAnimationDelegate *delegate = [[FakeMDCInkLayerAnimationDelegate alloc] init];
+  MDCInkLayer *inkLayer = [[MDCInkLayer alloc] init];
+  delegate.inkLayer = inkLayer;
+  inkLayer.animationDelegate = delegate;
+  inkLayer.endAnimationDelay = 1;
+  inkLayer.initialRadius = 2;
+  inkLayer.finalRadius = 3;
+  inkLayer.maxRippleRadius = 4;
+  inkLayer.inkColor = UIColor.magentaColor;
 
   // When
-  [self.inkLayer resetAllInk:NO];
+  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:delegate];
+  FakeMDCInkLayerAnimationDelegate *unarchivedDelegate =
+      [NSKeyedUnarchiver unarchiveObjectWithData:archive];
+  MDCInkLayer *unarchivedInkLayer = unarchivedDelegate.inkLayer;
 
   // Then
-  [self waitForExpectationsWithTimeout:5 handler:nil];
-  XCTAssertEqual(self.inkLayer.foregroundRipples.count, 0U,
-                 @"After exiting the only foreround ripple, the array should be empty.");
+  XCTAssertEqual(unarchivedInkLayer.animationDelegate, unarchivedDelegate);
+  XCTAssertEqualWithAccuracy(unarchivedInkLayer.endAnimationDelay,
+                             inkLayer.endAnimationDelay,
+                             0.0001);
+  XCTAssertEqualWithAccuracy(unarchivedInkLayer.initialRadius, inkLayer.initialRadius, 0.0001);
+  XCTAssertEqualWithAccuracy(unarchivedInkLayer.finalRadius, inkLayer.finalRadius, 0.0001);
+  XCTAssertEqualWithAccuracy(unarchivedInkLayer.maxRippleRadius, inkLayer.maxRippleRadius, 0.0001);
+  XCTAssertEqualObjects(unarchivedInkLayer.inkColor, inkLayer.inkColor);
+  XCTAssertEqual(unarchivedInkLayer.sublayers.count, inkLayer.sublayers.count);
 }
 
-- (void)testBackgroundRippleExitWithoutAnimation {
+- (void)testEndAnimationTimingInTimeScaledLayer {
   // Given
-  self.inkLayer = [[MDCInkLayer alloc] init];
-  MDCInkLayerBackgroundRipple *backgroundRipple = [[MDCInkLayerBackgroundRipple alloc] init];
-  backgroundRipple.animationDelegate = self;
-  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0U,
-                 @"There should be no background ripples at the start of the test.");
-  [self.inkLayer.backgroundRipples addObject:backgroundRipple];
-  self.expectation = [self expectationWithDescription:@"Background ripple completion"];
+  CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
+  inkLayer.bounds = CGRectMake(0, 0, 10, 10);
+  inkLayer.speed = 0.5f;
+  inkLayer.endAnimationDelay = (CGFloat)0.9;
 
   // When
-  [self.inkLayer resetAllInk:NO];
+  NSTimeInterval startTime = CACurrentMediaTime();
+  [inkLayer endAnimationAtPoint:CGPointMake(5, 5)];
+
 
   // Then
-  [self waitForExpectationsWithTimeout:5 handler:nil];
-  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0U,
-                 @"After exiting the only foreround ripple, the array should be empty.");
+  XCTAssertEqual(inkLayer.addedAnimations.count, 1U);
+  CAAnimation *animation = inkLayer.addedAnimations.firstObject;
+  if (animation) {
+    XCTAssertEqualWithAccuracy(animation.beginTime,
+                               [inkLayer convertTime:(startTime + 0.9) fromLayer:nil],
+                               0.005);
+  }
+}
+
+- (void)testChangeAnimationTimingInTimeScaledLayer {
+  // Given
+  CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
+  inkLayer.bounds = CGRectMake(0, 0, 10, 10);
+  inkLayer.speed = 0.5f;
+
+  // When
+  NSTimeInterval startTime = CACurrentMediaTime();
+  [inkLayer changeAnimationAtPoint:CGPointMake(5, 5)];
+
+  // Then
+  XCTAssertEqual(inkLayer.addedAnimations.count, 1U);
+  CAAnimation *animation = inkLayer.addedAnimations.firstObject;
+  if (animation) {
+    XCTAssertEqualWithAccuracy(animation.beginTime,
+                               [inkLayer convertTime:startTime fromLayer:nil],
+                               0.005);
+  }
 }
 
 @end

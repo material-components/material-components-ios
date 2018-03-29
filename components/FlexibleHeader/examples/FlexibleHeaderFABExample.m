@@ -77,7 +77,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,7 +88,10 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1]
+  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0f
+                                                          green:232/255.0f
+                                                           blue:94/255.0f
+                                                          alpha:1]
                                  forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   self.floatingButton.center = CGPointMake(

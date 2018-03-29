@@ -15,7 +15,11 @@
  */
 
 import Foundation
-import MaterialComponents
+import UIKit
+
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialBottomAppBar
+import MaterialComponents.MDCButtonColorThemer
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
@@ -131,6 +135,10 @@ extension BottomAppBarTypicalUseSwiftExample {
   }
 
   func catalogShouldHideNavigation() -> Bool {
+    return true
+  }
+
+  @objc class func catalogIsPresentable() -> Bool {
     return true
   }
 }

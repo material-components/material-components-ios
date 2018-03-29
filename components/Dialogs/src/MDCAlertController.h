@@ -16,18 +16,12 @@
 
 #import <UIKit/UIKit.h>
 
-#if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-#error "This component only supports iOS 8.0 and above."
-#endif
-
 @class MDCAlertAction;
 
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
 
  https://material.io/guidelines/components/dialogs.html
-
- MDCAlertController requires iOS 8 or later.
 
  MDCAlertController class is intended to be used as-is and does not support subclassing. The view
  hierarchy for this class is private and must not be modified.
@@ -99,7 +93,7 @@
  Default value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 /** MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:

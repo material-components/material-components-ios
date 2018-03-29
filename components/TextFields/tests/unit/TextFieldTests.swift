@@ -58,7 +58,6 @@ class TextFieldTests: XCTestCase {
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
     textField.leadingViewMode = .unlessEditing
-    textField.mdc_adjustsFontForContentSizeCategory = true
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
@@ -199,7 +198,6 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral, unserializedInput?.borderView?.borderPath?.bounds.integral)
     XCTAssertEqual(textField.borderView?.borderStrokeColor, unserializedInput?.borderView?.borderStrokeColor)
     XCTAssertEqual(textField.cursorColor, unserializedInput?.cursorColor)
-
 
     XCTAssertEqual(textField.leadingUnderlineLabel.text,
                    unserializedInput?.leadingUnderlineLabel.text)

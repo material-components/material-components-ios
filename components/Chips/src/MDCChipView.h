@@ -15,8 +15,10 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 
 /*
  A Material chip.
@@ -56,6 +58,7 @@
  The title label.
 
  @note The title color is controlled by setTitleColor:forState:.
+ @note The title font is controlled by setTitleFont.
  */
 @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;
 
@@ -97,9 +100,22 @@
 @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;
 
 /*
+ Font used to render the title.
+
+ If nil, the chip will use the system font.
+ */
+@property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;
+
+/*
  The color of the ink ripple.
  */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR
+    __deprecated_msg("Use setInkColor:forState:");
+
+/*
+ The shape generator used to define the chip's shape.
+ */
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;
 
 /*
  Indicates whether the chip should automatically update its font when the device’s
@@ -114,6 +130,14 @@
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
+/**
+ The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent
+ to no minimum for that dimension.
+
+ Defaults to a minimum height of 32 points, and no minimum width.
+ */
+@property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;
 
 /*
  A color used as the chip's @c backgroundColor for @c state.
@@ -194,6 +218,46 @@
  @param state The control state.
  */
 - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/*
+ Returns the ink color for a particular control state.
+
+ If no ink color has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.
+
+ @param state The control state.
+ @return The ink color for the requested state.
+ */
+- (nullable UIColor *)inkColorForState:(UIControlState)state;
+
+/*
+ Sets the ink color for a particular control state.
+
+ @param inkColor The ink color.
+ @param state The control state.
+ */
+- (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state
+    UI_APPEARANCE_SELECTOR;
+
+/*
+ Returns the shadow color for a particular control state.
+
+ If no shadow color has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The control state.
+ @return The shadow color for the requested state.
+ */
+- (nullable UIColor *)shadowColorForState:(UIControlState)state;
+
+/*
+ Sets the shadow color for a particular control state.
+
+ @param elevation The shadow color.
+ @param state The control state.
+ */
+- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state
     UI_APPEARANCE_SELECTOR;
 
 /*

@@ -42,7 +42,7 @@ static UIButton *DeleteButton() {
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
-  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7];
+  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7f];
   [button setImage:image forState:UIControlStateNormal];
 
   return button;
@@ -82,6 +82,10 @@ static UIButton *DeleteButton() {
   return NO;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 @interface ChipsCollectionExampleViewController (Supplemental)
@@ -94,6 +98,30 @@ static UIButton *DeleteButton() {
 }
 
 + (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
+@end
+
+@implementation ChipsCustomizedExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Customized" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (UIImage *)doneImage {
+  return DoneImage();
+}
+
++ (BOOL)catalogIsPresentable {
   return NO;
 }
 
@@ -111,6 +139,29 @@ static UIButton *DeleteButton() {
 
 - (UIImage *)doneImage {
   return DoneImage();
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
+@end
+
+@interface ChipsInputExampleViewController (Supplemental)
+@end
+
+@implementation ChipsInputExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Input" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end
@@ -133,6 +184,10 @@ static UIButton *DeleteButton() {
   return DeleteButton();
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 @implementation ChipsTypicalUseViewController (Supplemental)
@@ -147,6 +202,10 @@ static UIButton *DeleteButton() {
 
 - (UIImage *)doneImage {
   return DoneImage();
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

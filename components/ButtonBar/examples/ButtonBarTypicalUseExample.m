@@ -64,7 +64,7 @@
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 }
 
 #pragma mark - User actions
@@ -88,6 +88,10 @@
 + (NSString *)catalogDescription {
   return @"The Button Bar is a view that represents a list of UIBarButtonItems as"
           " horizontally-aligned buttons.";
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

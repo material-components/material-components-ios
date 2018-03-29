@@ -14,11 +14,12 @@
  limitations under the License.
  */
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "MDCBottomAppBarView.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCNavigationBarColorThemer.h"
 #import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
@@ -96,9 +97,7 @@ static const int kMDCButtonAnimationDuration = 200;
   _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self addSubview:_navBar];
 
-  MDCBasicColorScheme *clearScheme =
-      [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor clearColor]];
-  [MDCNavigationBarColorThemer applyColorScheme:clearScheme toNavigationBar:_navBar];
+  _navBar.backgroundColor = [UIColor clearColor];
   _navBar.tintColor = [UIColor blackColor];
 }
 
@@ -326,8 +325,8 @@ static const int kMDCButtonAnimationDuration = 200;
     [_floatingButton setElevation:1 forState:UIControlStateNormal];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kMDCButtonAnimationDuration * NSEC_PER_MSEC),
                    dispatch_get_main_queue(), ^{
-                     [self insertSubview:_floatingButton atIndex:subViewIndex];
-                     [_floatingButton setElevation:elevation forState:UIControlStateNormal];
+                     [self insertSubview:self.floatingButton atIndex:subViewIndex];
+                     [self.floatingButton setElevation:elevation forState:UIControlStateNormal];
                    });
   } else {
     [self insertSubview:_floatingButton atIndex:subViewIndex];
@@ -362,7 +361,7 @@ static const int kMDCButtonAnimationDuration = 200;
   if (floatingButtonHidden) {
     [self healBottomAppBarViewAnimated:animated];
     [_floatingButton collapse:animated completion:^{
-      _floatingButton.hidden = YES;
+      self.floatingButton.hidden = YES;
     }];
   } else {
     _floatingButton.hidden = NO;
@@ -379,6 +378,22 @@ static const int kMDCButtonAnimationDuration = 200;
 - (void)setTrailingBarButtonItems:(NSArray<UIBarButtonItem *> *)trailingBarButtonItems {
   _trailingBarButtonItems = [trailingBarButtonItems copy];
   [self showBarButtonItemsWithFloatingButtonPosition:self.floatingButtonPosition];
+}
+
+- (void)setBarTintColor:(UIColor *)barTintColor {
+  _bottomBarLayer.fillColor = barTintColor.CGColor;
+}
+
+- (UIColor *)barTintColor {
+  return [UIColor colorWithCGColor:_bottomBarLayer.fillColor];
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+  _bottomBarLayer.shadowColor = shadowColor.CGColor;
+}
+
+- (UIColor *)shadowColor {
+  return [UIColor colorWithCGColor:_bottomBarLayer.shadowColor];
 }
 
 @end

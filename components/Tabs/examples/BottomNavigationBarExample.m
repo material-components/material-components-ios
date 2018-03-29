@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-@import MaterialComponents.MaterialTabs;
+#import "MaterialTabs.h"
 
 @interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
 @end
@@ -34,8 +34,8 @@
   _bottomNavigationBar.barTintColor = [UIColor whiteColor];
   _bottomNavigationBar.selectedItemTintColor = nil;
   _bottomNavigationBar.unselectedItemTintColor = [UIColor colorWithWhite:0 alpha:0.50];
-  _bottomNavigationBar.tintColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:0.15];
+  _bottomNavigationBar.tintColor = [UIColor colorWithRed:0 green:0.5f blue:0 alpha:1];
+  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5f blue:0 alpha:0.15f];
 
   NSBundle *bundle = [NSBundle bundleForClass:[BottomNavigationBarExample class]];
   UIImage *infoImage =
@@ -116,6 +116,10 @@
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

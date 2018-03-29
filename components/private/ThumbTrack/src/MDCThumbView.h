@@ -16,10 +16,19 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowElevations.h"
+
 @interface MDCThumbView : UIView
 
 /** A boolean value indicating whether the thumb view has a shadow. */
-@property(nonatomic, assign) BOOL hasShadow;
+@property(nonatomic, assign) BOOL hasShadow __deprecated_msg("Use `elevation` instead.");
+
+/**
+ The elevation of the thumb view.
+
+ Default is MDCShadowElevationNone (no shadow).
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 /** The border width of the thumbview layer. */
 @property(nonatomic, assign) CGFloat borderWidth;

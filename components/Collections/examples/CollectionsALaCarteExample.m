@@ -49,7 +49,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
  */
 @implementation CollectionsALaCarteExample {
   CustomCollectionView *_customCollectionView;
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
 }
 
 - (void)viewDidLoad {
@@ -133,6 +133,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

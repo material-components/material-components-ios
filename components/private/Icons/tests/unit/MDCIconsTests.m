@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-@import XCTest;
+#import <XCTest/XCTest.h>
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_check.h"
 #import "MaterialIcons+ic_check_circle.h"
@@ -38,6 +38,17 @@
 
 - (void)testImageForReorder {
   XCTAssertNotNil([MDCIcons imageFor_ic_reorder], @"No image was returned for ic_reorder");
+}
+
+- (void)testBundleNamed {
+  // Given
+  NSString *badBundleName = @"someNameThatDoesNotExist";
+
+  // When
+  NSBundle *bundle = [MDCIcons bundleNamed:badBundleName];
+
+  // Then
+  XCTAssertNil(bundle);
 }
 
 - (void)testImageForArrowBackOldStyle {

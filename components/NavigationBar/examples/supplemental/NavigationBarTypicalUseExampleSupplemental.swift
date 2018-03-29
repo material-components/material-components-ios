@@ -38,6 +38,10 @@ extension NavigationBarTypicalUseSwiftExample {
     return true
   }
 
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
+
   override open func setupExampleViews() {
     /// Both self.viewDidLoad() and super.viewDidLoad() will add NavigationBars to the hierarchy.
     /// We only want to keep one.

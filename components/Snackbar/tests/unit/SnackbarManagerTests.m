@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-@import XCTest;
-#import "MaterialSnackBar.h"
+#import <XCTest/XCTest.h>
+#import "MaterialSnackbar.h"
 
 @interface SnackbarManagerTests : XCTestCase
 

@@ -16,4 +16,5 @@
 
 #import "MDCChipCollectionViewFlowLayout.h"
 #import "MDCChipCollectionViewCell.h"
+#import "MDCChipField.h"
 #import "MDCChipView.h"

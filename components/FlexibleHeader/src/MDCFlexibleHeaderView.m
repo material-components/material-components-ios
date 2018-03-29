@@ -247,7 +247,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderTrackingScrollViewKey]) {
-      _trackingScrollView = [aDecoder decodeObjectForKey:MDCFlexibleHeaderTrackingScrollViewKey];
+      _trackingScrollView = [aDecoder decodeObjectOfClass:[UIScrollView class] 
+                                                   forKey:MDCFlexibleHeaderTrackingScrollViewKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey]) {
@@ -424,6 +425,12 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [super willMoveToWindow:newWindow];
 
   _wasStatusBarHiddenIsValid = NO;
+}
+
+- (void)didMoveToWindow {
+  [super didMoveToWindow];
+
+  [_statusBarShifter didMoveToWindow];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -833,7 +840,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
 
-  if (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled) {
+  if (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled) {
     CGFloat contentHeight = self.computedMinimumHeight - MDCDeviceTopSafeAreaInset();
     CGFloat hideThreshold = kContentHidingThreshold;
     CGFloat alpha = MAX(contentHeight - boundedAccumulator / hideThreshold, 0) / contentHeight;
@@ -1089,13 +1096,11 @@ static BOOL isRunningiOS10_3OrAbove() {
   static BOOL isRunningiOS10_3OrAbove;
   dispatch_once(&onceToken, ^{
     NSProcessInfo *info = [NSProcessInfo processInfo];
-    if ([info respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-      isRunningiOS10_3OrAbove = [info isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){
-                                                                          .majorVersion = 10,
-                                                                          .minorVersion = 3,
-                                                                          .patchVersion = 0,
-                                                                      }];
-    }
+    isRunningiOS10_3OrAbove = [info isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion) {
+                                                                      .majorVersion = 10,
+                                                                      .minorVersion = 3,
+                                                                      .patchVersion = 0,
+                                                                    }];
   });
   return isRunningiOS10_3OrAbove;
 }
@@ -1194,7 +1199,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
 
     // When the tracking scroll view is cleared we need a shadow update.
-    if (!_trackingScrollView) {
+    if (!self.trackingScrollView) {
       [self fhv_accumulatorDidChange];
     }
   };

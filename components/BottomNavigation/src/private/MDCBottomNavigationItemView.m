@@ -13,6 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+#import <CoreGraphics/CoreGraphics.h>
 
 #import "MDCBottomNavigationItemView.h"
 
@@ -20,12 +21,28 @@
 
 #import "MaterialBottomNavigationStrings.h"
 #import "MaterialBottomNavigationStrings_table.h"
+#import "MaterialMath.h"
 #import "MDCBottomNavigationItemBadge.h"
 
-static const CGFloat kMDCBottomNavigationItemViewCircleLayerOffset = -6.f;
-static const CGFloat kMDCBottomNavigationItemViewCircleLayerDimension = 36.f;
-static const CGFloat kMDCBottomNavigationItemViewCircleOpacity = 0.150f;
-static const CGFloat kMDCBottomNavigationItemViewTitleFontSize = 12.f;
+static NSString *const MDCBottomNavigationItemViewTitleBelowIconKey =
+    @"MDCBottomNavigationItemViewTitleBelowIconKey";
+static NSString *const MDCBottomNavigationItemViewSelectedKey =
+    @"MDCBottomNavigationItemViewSelectedKey";
+static NSString *const MDCBottomNavigationItemViewTitleVisibilityKey =
+    @"MDCBottomNavigationItemViewTitleVisibilityKey";
+static NSString *const MDCBottomNavigationItemViewTitleKey = @"MDCBottomNavigationItemViewTitleKey";
+static NSString *const MDCBottomNavigationItemViewItemTitleFontKey =
+    @"MDCBottomNavigationItemViewItemTitleFontKey";
+static NSString *const MDCBottomNavigationItemViewBadgeColorKey =
+    @"MDCBottomNavigationItemViewBadgeColorKey";
+static NSString *const MDCBottomNavigationItemViewSelectedItemTintColorKey =
+    @"MDCBottomNavigationItemViewSelectedItemTintColorKey";
+static NSString *const MDCBottomNavigationItemViewUnselectedItemTintColorKey =
+    @"MDCBottomNavigationItemViewUnselectedItemTintColorKey";
+
+static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
+static const CGFloat kMDCBottomNavigationItemViewItemInset = 8.f;
+static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180f;
@@ -36,7 +53,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 @interface MDCBottomNavigationItemView ()
 
-@property(nonatomic, strong) CAShapeLayer *circleLayer;
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
@@ -48,6 +64,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    _titleBelowIcon = YES;
     [self commonMDCBottomNavigationItemViewInit];
   }
   return self;
@@ -56,52 +73,130 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    _titleBelowIcon = YES;
+
+    NSUInteger totalViewsProcessed = 0;
+    for (UIView *view in self.subviews) {
+      if ([view isKindOfClass:[MDCInkView class]]) {
+        _inkView = (MDCInkView *)view;
+        ++totalViewsProcessed;
+      } else if ([view isKindOfClass:[UIImageView class]]) {
+        _iconImageView = (UIImageView *)view;
+        _image = _iconImageView.image;
+        ++totalViewsProcessed;
+      } else if ([view isKindOfClass:[UILabel class]]) {
+        _label = (UILabel *)view;
+        ++totalViewsProcessed;
+      } else if ([view isKindOfClass:[MDCBottomNavigationItemBadge class]]) {
+        _badge = (MDCBottomNavigationItemBadge *)view;
+        ++totalViewsProcessed;
+      } else if ([view isKindOfClass:[UIButton class]]) {
+        _button = (UIButton *)view;
+        ++totalViewsProcessed;
+      }
+    }
+    NSAssert(totalViewsProcessed == self.subviews.count,
+             @"Unexpected number of subviews. Expected %lu but restored %lu. Unarchiving may fail.",
+             (unsigned long)self.subviews.count, (unsigned long)totalViewsProcessed);
+
+    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewTitleBelowIconKey]) {
+      _titleBelowIcon = [aDecoder decodeBoolForKey:MDCBottomNavigationItemViewTitleBelowIconKey];
+    }
+    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewSelectedKey]) {
+      _selected = [aDecoder decodeBoolForKey:MDCBottomNavigationItemViewSelectedKey];
+    }
+    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewTitleVisibilityKey]) {
+      _titleVisibility =
+          [aDecoder decodeIntegerForKey:MDCBottomNavigationItemViewTitleVisibilityKey];
+    }
+    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewTitleKey]) {
+      _title = [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewTitleKey];
+    }
+    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewItemTitleFontKey]) {
+      _itemTitleFont = [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewItemTitleFontKey];
+    }
+    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewBadgeColorKey]) {
+      _badgeColor = [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewBadgeColorKey];
+    }
+    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewSelectedItemTintColorKey]) {
+      _selectedItemTintColor =
+          [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewSelectedItemTintColorKey];
+    }
+    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewUnselectedItemTintColorKey]) {
+      _unselectedItemTintColor =
+      [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewUnselectedItemTintColorKey];
+    }
+
     [self commonMDCBottomNavigationItemViewInit];
   }
   return self;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  [aCoder encodeBool:self.titleBelowIcon forKey:MDCBottomNavigationItemViewTitleBelowIconKey];
+  [aCoder encodeBool:self.selected forKey:MDCBottomNavigationItemViewSelectedKey];
+  [aCoder encodeInteger:self.titleVisibility forKey:MDCBottomNavigationItemViewTitleVisibilityKey];
+  [aCoder encodeObject:self.title forKey:MDCBottomNavigationItemViewTitleKey];
+  [aCoder encodeObject:self.itemTitleFont forKey:MDCBottomNavigationItemViewItemTitleFontKey];
+  [aCoder encodeObject:self.badgeColor  forKey:MDCBottomNavigationItemViewBadgeColorKey];
+  [aCoder encodeObject:self.selectedItemTintColor
+                forKey:MDCBottomNavigationItemViewSelectedItemTintColorKey];
+  [aCoder encodeObject:self.unselectedItemTintColor
+                forKey:MDCBottomNavigationItemViewUnselectedItemTintColorKey];
+}
+
 - (void)commonMDCBottomNavigationItemViewInit {
-  _titleBelowIcon = YES;
-  _selectedItemTintColor = [UIColor blackColor];
-  _unselectedItemTintColor = [UIColor grayColor];
 
-  _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-  _iconImageView.isAccessibilityElement = NO;
-  [self addSubview:_iconImageView];
+  if (!_selectedItemTintColor) {
+    _selectedItemTintColor = [UIColor blackColor];
+  }
+  if (!_unselectedItemTintColor) {
+    _unselectedItemTintColor = [UIColor grayColor];
+  }
 
-  _label = [[UILabel alloc] initWithFrame:CGRectZero];
-  _label.text = _title;
-  _label.font = [UIFont systemFontOfSize:kMDCBottomNavigationItemViewTitleFontSize];
-  _label.textAlignment = NSTextAlignmentCenter;
-  _label.textColor = _selectedItemTintColor;
-  _label.isAccessibilityElement = NO;
-  [self addSubview:_label];
+  if (!_iconImageView) {
+    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    _iconImageView.isAccessibilityElement = NO;
+    [self addSubview:_iconImageView];
+  }
 
-  _badge = [[MDCBottomNavigationItemBadge alloc] initWithFrame:CGRectZero];
-  _badge.isAccessibilityElement = NO;
-  [self addSubview:_badge];
+  if (!_label) {
+    _label = [[UILabel alloc] initWithFrame:CGRectZero];
+    _label.text = _title;
+    _label.font = [UIFont systemFontOfSize:MDCBottomNavigationItemViewTitleFontSize];
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.textColor = _selectedItemTintColor;
+    _label.isAccessibilityElement = NO;
+    [self addSubview:_label];
+
+  }
+
+  if (!_badge) {
+    _badge = [[MDCBottomNavigationItemBadge alloc] initWithFrame:CGRectZero];
+    _badge.isAccessibilityElement = NO;
+    [self addSubview:_badge];
+  }
 
   if (!_badge.badgeValue) {
     _badge.hidden = YES;
   }
 
-  _circleLayer = [CAShapeLayer layer];
-  CGRect circleLayerRect = CGRectMake(kMDCBottomNavigationItemViewCircleLayerOffset,
-                                      kMDCBottomNavigationItemViewCircleLayerOffset,
-                                      kMDCBottomNavigationItemViewCircleLayerDimension,
-                                      kMDCBottomNavigationItemViewCircleLayerDimension);
-  UIBezierPath *bezierPath = [UIBezierPath bezierPathWithOvalInRect:circleLayerRect];
-  _circleLayer.path = bezierPath.CGPath;
-  _circleLayer.fillColor = _selectedItemTintColor.CGColor;
-  _circleLayer.opacity = 0;
-  [_iconImageView.layer addSublayer:_circleLayer];
+  if (!_inkView) {
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _inkView.usesLegacyInkRipple = NO;
+    _inkView.clipsToBounds = NO;
+    [self addSubview:_inkView];
+  }
 
-  _button = [[UIButton alloc] initWithFrame:self.bounds];
-  _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
-  _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
-  [self addSubview:_button];
+  if (!_button) {
+    _button = [[UIButton alloc] initWithFrame:self.bounds];
+    _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
+    _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
+    [self addSubview:_button];
+  }
 }
 
 - (void)layoutSubviews {
@@ -112,14 +207,16 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                                            attributes:@{ NSFontAttributeName:self.label.font }
                                               context:nil].size;
   self.label.frame = CGRectMake(0, 0, labelSize.width, labelSize.height);
+  self.inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
 }
 
 - (void)centerLayoutAnimated:(bool)animated {
   if (self.titleBelowIcon) {
     CGPoint iconImageViewCenter =
-        CGPointMake(CGRectGetMidX(self.bounds),
-                    CGRectGetMidY(self.bounds) - CGRectGetHeight(self.bounds) * 0.1f);
+        CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.iconImageView.bounds) / 2 +
+                    kMDCBottomNavigationItemViewItemInset);
     BOOL titleVisibilityNever = self.selected &&
         self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever;
     BOOL titleVisibilitySelectedNever = !self.selected &&
@@ -134,8 +231,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
         CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.iconImageView.bounds) / 2,
                     iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
     self.label.center =
-        CGPointMake(CGRectGetMidX(self.bounds),
-                    CGRectGetMidY(self.bounds) + CGRectGetHeight(self.bounds) * 0.25f);
+        CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.bounds) -
+                    CGRectGetHeight(self.label.bounds) / 2 - kMDCBottomNavigationItemViewItemInset);
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
         self.iconImageView.center = iconImageViewCenter;
@@ -249,25 +346,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   [self centerLayoutAnimated:animated];
 }
 
-- (void)setCircleHighlightHidden:(BOOL)circleHighlightHidden {
-  _circleHighlightHidden = circleHighlightHidden;
-  if (!circleHighlightHidden) {
-    self.circleLayer.opacity = kMDCBottomNavigationItemViewCircleOpacity;
-    self.iconImageView.tintColor = self.selectedItemTintColor;
-  } else {
-    self.circleLayer.opacity = 0;
-    if (self.selected) {
-      self.iconImageView.tintColor = self.selectedItemTintColor;
-    } else {
-      self.iconImageView.tintColor = self.unselectedItemTintColor;
-    }
-  }
-}
-
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
   _selectedItemTintColor = selectedItemTintColor;
   self.label.textColor = self.selectedItemTintColor;
-  self.circleLayer.fillColor = self.selectedItemTintColor.CGColor;
+  self.inkView.inkColor =
+      [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
@@ -280,6 +363,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {
+  // Due to KVO, badgeValue may be of type NSNull.
+  if ([badgeValue isKindOfClass:[NSNull class]]) {
+    badgeValue = nil;
+  }
   self.badge.badgeValue = badgeValue;
   self.button.accessibilityValue = badgeValue;
   if (badgeValue == nil || badgeValue.length == 0) {

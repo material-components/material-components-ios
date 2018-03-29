@@ -90,6 +90,10 @@ extension ButtonBarTypicalUseSwiftExample {
   @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
+
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
 }
 
 // MARK: - Typical application code (not Material-specific)

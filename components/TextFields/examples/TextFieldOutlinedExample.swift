@@ -78,7 +78,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     return message
   }()
 
-  var allTextFieldControllers = [MDCTextInputControllerDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerFloatingPlaceholder]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerOutlined(textInput: city)
@@ -313,17 +313,17 @@ extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
 
     if textField == state {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         stateController.setErrorText("Error: State can only contain letters",
                                      errorAccessibilityValue: nil)
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
-      } else if fullString.characters.count > 5 {
+      } else if fullString.characterCount > 5 {
         zipController.setErrorText("Error: Zip can only contain five digits",
                                    errorAccessibilityValue: nil)
       } else {
@@ -331,7 +331,7 @@ extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         cityController.setErrorText("Error: City can only contain letters",
                                     errorAccessibilityValue: nil)
       } else {
@@ -408,5 +408,9 @@ extension TextFieldOutlinedSwiftExample {
 extension TextFieldOutlinedSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Outlined Fields & Text Areas"]
+  }
+
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
   }
 }

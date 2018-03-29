@@ -76,13 +76,14 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     NSString *interfaceBuilderPlaceholder = super.placeholder;
 
     if ([aDecoder containsValueForKey:MDCTextFieldFundamentKey]) {
-      _fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey];
+      _fundament = [aDecoder decodeObjectOfClass:[MDCTextInputCommonFundament class]
+                                          forKey:MDCTextFieldFundamentKey];
     } else {
       _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
     }
 
     [self commonMDCTextFieldInitialization];
-    _cursorColor = [aDecoder decodeObjectForKey:MDCTextFieldCursorColorKey];;
+    _cursorColor = [aDecoder decodeObjectForKey:MDCTextFieldCursorColorKey];
 
     self.leftViewMode =
         (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldLeftViewModeKey];
@@ -200,7 +201,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (BOOL)needsUpdateUnderlinePosition {
-  return MDCCGFloatEqual(self.underlineY.constant, [self underlineYConstant]);
+  return !MDCCGFloatEqual(self.underlineY.constant, [self underlineYConstant]);
 }
 
 - (void)updateUnderlinePosition {
@@ -335,7 +336,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     return self.leftViewMode;
   }
-    return self.rightViewMode;
+  return self.rightViewMode;
 }
 
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
@@ -677,16 +678,9 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 // TODO: (larche) remove when we drop iOS 8
 // Prior to iOS 9 RTL was not automatically applied, so we need to apply fixes manually.
 - (BOOL)shouldManuallyEnforceRightToLeftLayoutForOverlayViews {
-  BOOL manuallyEnforceRTL = YES;
-
   NSOperatingSystemVersion iOS9Version = {9, 0, 0};
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
-      [processInfo isOperatingSystemAtLeastVersion:iOS9Version]) {
-      manuallyEnforceRTL = NO;
-  }
-
-  return manuallyEnforceRTL;
+  return ![processInfo isOperatingSystemAtLeastVersion:iOS9Version];
 }
 
 #pragma mark - Accessibility

@@ -20,8 +20,8 @@
 
 #import "TabBarViewControllerExampleSupplemental.h"
 
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialPalettes;
+#import "MaterialAppBar.h"
+#import "MaterialPalettes.h"
 
 @interface TBVCSampleView : UIView
 @end
@@ -104,7 +104,7 @@
   NSBundle *bundle = [NSBundle bundleForClass:[TabBarViewControllerExample class]];
   UIViewController *child1 =
       [TBVCSampleViewController sampleWithTitle:@"One" color:UIColor.redColor];
-  UIColor *blue = [UIColor colorWithRed:0x3A / 255. green:0x56 / 255. blue:0xFF / 255. alpha:1];
+  UIColor *blue = [UIColor colorWithRed:0x3A / 255.f green:0x56 / 255.f blue:0xFF / 255.f alpha:1];
   UIViewController *child2 = [TBVCSampleViewController sampleWithTitle:@"Two" color:blue];
   UIImage *starImage =
       [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
@@ -126,6 +126,10 @@
 }
 
 - (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
+
++ (BOOL)catalogIsPresentable {
   return YES;
 }
 

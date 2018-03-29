@@ -22,7 +22,7 @@ static const NSInteger kSectionItemCount = 5;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsSimpleDemo {
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
 }
 
 - (void)viewDidLoad {
@@ -82,6 +82,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return @"Material Collections enables a native collection view controller to have Material "
           "design layout and styling. It also provides editing and extensive customization "
           "capabilities.";
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

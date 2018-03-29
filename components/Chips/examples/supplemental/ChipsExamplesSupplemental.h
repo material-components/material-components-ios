@@ -33,6 +33,16 @@
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @end
 
+
+@interface ChipsCustomizedExampleViewController : UIViewController
+    <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@end
+
+@interface ChipsCustomizedExampleViewController (Supplemental)
+- (UIImage *)doneImage;
+@end
+
 @interface ChipsFilterExampleViewController : UIViewController
     <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
@@ -40,6 +50,9 @@
 
 @interface ChipsFilterExampleViewController (Supplemental)
 - (UIImage *)doneImage;
+@end
+
+@interface ChipsInputExampleViewController : UIViewController
 @end
 
 @interface ChipsSizingExampleViewController : UIViewController

@@ -66,4 +66,8 @@
   return @"SliderAutolayoutExample";
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end

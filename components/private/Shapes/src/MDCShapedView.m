@@ -23,9 +23,7 @@
 @property(nonatomic, readonly) CGSize pathSize;
 @end
 
-@implementation MDCShapedView {
-  UIColor *_fillColor;
-}
+@implementation MDCShapedView
 
 @dynamic layer;
 
@@ -34,10 +32,7 @@
 }
 
 - (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder {
-  if (self = [super initWithCoder:aDecoder]) {
-    _fillColor = [UIColor colorWithCGColor:self.layer.fillColor];
-  }
-  return self;
+  return [super initWithCoder:aDecoder];
 }
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame {
@@ -74,13 +69,11 @@
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   // We intentionally capture this and don't send it to super so that the UIView backgroundColor is
   // fixed to [UIColor clearColor].
-  _fillColor = backgroundColor;
-
-  self.layer.fillColor = backgroundColor.CGColor;
+  self.layer.shapedBackgroundColor = backgroundColor;
 }
 
 - (UIColor *)backgroundColor {
-  return _fillColor;
+  return self.layer.shapedBackgroundColor;
 }
 
 @end

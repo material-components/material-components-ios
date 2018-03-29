@@ -22,7 +22,7 @@
 OBJC_EXTERN NSString *const MDCSnackbarOverlayIdentifier;
 
 /** The time it takes to show or hide the snackbar. */
-OBJC_EXTERN NSTimeInterval const MDCSnackbarTransitionDuration;
+OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
 
 /**
  Custom overlay view for displaying snackbars.

@@ -11,14 +11,6 @@
  limitations under the License.
  */
 
-//
-//  NavigationBarLayoutExample.m
-//  Pods
-//
-//  Created by Rob Moore on 7/28/17.
-//
-//
-
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
@@ -106,15 +98,45 @@
   [self.view addSubview:self.trailingItemField];
   [self.view addSubview:self.titleField];
 
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
+  } else {
+#endif
+    [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.navigationBar
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1.0
+                                  constant:0].active = YES;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  }
+#endif
+  [NSLayoutConstraint constraintWithItem:self.navigationBar
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.leadingItemField
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.leadingItemField
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.titleField
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.titleField
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.trailingItemField
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0].active = YES;
+
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar, _leadingItemField,
                                                                _titleField, _trailingItemField);
-  [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:|[_navigationBar]-[_leadingItemField]"
-                                                          @"-[_titleField]-[_trailingItemField]"
-                                                  options:0
-                                                  metrics:nil
-                                                    views:viewsBindings]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_navigationBar]|"
                                                                   options:0
@@ -202,6 +224,10 @@
 }
 
 - (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
+
++ (BOOL)catalogIsPresentable {
   return YES;
 }
 

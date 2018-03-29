@@ -121,4 +121,8 @@ static NSString *const kExampleDetailText =
   "capabilities.";
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end

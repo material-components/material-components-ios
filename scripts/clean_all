@@ -17,7 +17,7 @@
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Clean out CocoaPods.
-"$SCRIPTS_DIR"/release/manage_pods.py clean
+"$SCRIPTS_DIR"/manage_pods.py clean
 
 # Clean out Xcode build products.
 # Note that Xcode seems to want to hold on to old Swift module maps, requiring a

@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCHeaderStackView.
  @param headerStackView A MDCHeaderStackView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-       toHeaderStackView:(MDCHeaderStackView *)headerStackView;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+       toHeaderStackView:(nonnull MDCHeaderStackView *)headerStackView;
 
 @end

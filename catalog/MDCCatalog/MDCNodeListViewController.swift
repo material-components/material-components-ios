@@ -93,7 +93,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
-    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+    MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
 
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
@@ -116,7 +116,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.tableView.backgroundColor = UIColor.white
     self.tableView.separatorStyle = .none
 
-    if node.title.characters.count > 0 {
+    var charactersCount = 0
+    #if swift(>=3.2)
+      charactersCount = node.title.count
+    #else
+      charactersCount = node.title.characters.count
+    #endif
+    if charactersCount > 0 {
       self.tableView.accessibilityIdentifier = "Table" + node.title
     } else {
       self.tableView.accessibilityIdentifier = "DemoTableList"
@@ -387,7 +393,7 @@ extension MDCNodeListViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let colorScheme = appDelegate.colorScheme
-        MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+        MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
         let textColor = UIColor.white
         UIBarButtonItem.appearance().setTitleTextAttributes(
           [NSForegroundColorAttributeName: textColor],

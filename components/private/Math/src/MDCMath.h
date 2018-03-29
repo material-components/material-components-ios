@@ -173,6 +173,23 @@ static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
 }
 
 /**
+ Expand `size' to the closest larger pixel-aligned value.
+ If @c scale is zero, then a CGSizeZero will be returned.
+
+ @param size the size to align.
+ @param scale the scale factor to use for pixel alignment.
+
+ @return the size aligned to the closest larger pixel-aligned value using the provided scale factor.
+ */
+static inline CGSize MDCSizeCeilWithScale(CGSize size, CGFloat scale) {
+  if (MDCCGFloatEqual(scale, 0)) {
+    return CGSizeZero;
+  }
+
+  return CGSizeMake(MDCCeil(size.width * scale) / scale, MDCCeil(size.height * scale) / scale);
+}
+
+/**
  Align the centerPoint of a view so that its origin is pixel-aligned to the nearest pixel.
  Returns @c CGRectZero if @c scale is zero or @c bounds is @c CGRectNull.
 

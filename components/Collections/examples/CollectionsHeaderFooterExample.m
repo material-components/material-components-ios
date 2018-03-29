@@ -22,7 +22,7 @@ static const NSInteger kSectionItemCount = 2;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsHeaderFooterExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
 }
 
 - (void)viewDidLoad {
@@ -137,6 +137,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

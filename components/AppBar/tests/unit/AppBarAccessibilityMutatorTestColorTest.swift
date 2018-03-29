@@ -15,7 +15,7 @@
  */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
 import MDFTextAccessibility
 
 // Tests confirming that the App Bar Accessibility Mutator correctly changes title font color and

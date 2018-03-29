@@ -45,17 +45,9 @@
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-  toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
     [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
-  }
-
-  if ([textInputControllerClass
-          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
-    Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
-        (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    [textInputControllerFloatingPlaceholderClass
-        setFloatingPlaceholderNormalColorDefault:colorScheme.primaryColor];
   }
 }
 #if !defined(__IPHONE_11_0)

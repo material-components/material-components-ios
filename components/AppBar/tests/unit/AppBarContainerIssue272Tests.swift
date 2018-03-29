@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
 
 // Tests confirming that MDCAppBarContainerViewController observes the content view controller's
 // navigation item.

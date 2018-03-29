@@ -37,9 +37,9 @@ if [ "$#" -lt 2 ]; then
 fi
 
 if [ ! -d "$1" ]; then
-  git clone "$MDC_ROOT" "$1" || { echo "Failed to clone."; exit 1; }
+  git clone "$MDC_ROOT" "$1" 2> /dev/null || { echo "Failed to clone."; exit 1; }
 fi
-pushd $1 >> /dev/null
-git fetch || { echo "Failed to update repo."; exit 1; }
-git checkout "$2"
+pushd "$1" >> /dev/null
+git fetch >> /dev/null || { echo "Failed to update repo."; exit 1; }
+git checkout -q "$2"
 popd >> /dev/null

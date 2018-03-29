@@ -15,7 +15,8 @@
  */
 
 import UIKit
-import MaterialComponents
+
+import MaterialComponents.MaterialButtons
 
 class ButtonsDynamicTypeViewController: UIViewController {
 
@@ -25,6 +26,10 @@ class ButtonsDynamicTypeViewController: UIViewController {
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
+  }
+
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
   }
 
   override func viewDidLoad() {

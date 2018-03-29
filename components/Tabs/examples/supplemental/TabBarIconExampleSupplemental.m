@@ -20,7 +20,7 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
-@import MaterialComponents.MaterialPalettes;
+#import "MaterialPalettes.h"
 
 // Exposing selectors defined in the main example class
 @interface TabBarIconExample ()
@@ -236,8 +236,8 @@
   [self.starPage addSubview:starView];
   [starView sizeToFit];
 
-  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1.0) / 100.0;  // 0 < x <=2
-  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1.0) / 100.0;  // 0 < y <=2
+  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1.0f) / 100.0f;  // 0 < x <=2
+  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1.0f) / 100.0f;  // 0 < y <=2
 
   [NSLayoutConstraint constraintWithItem:starView
                                attribute:NSLayoutAttributeCenterX
@@ -293,6 +293,10 @@
 }
 
 - (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
+
++ (BOOL)catalogIsPresentable {
   return YES;
 }
 

@@ -93,6 +93,10 @@ extension AppBarTypicalUseSwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
+
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
 }
 
 // MARK: - Typical application code (not Material-specific)

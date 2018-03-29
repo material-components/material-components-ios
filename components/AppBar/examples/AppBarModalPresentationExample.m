@@ -32,7 +32,7 @@
     [self addChildViewController:_appBar.headerViewController];
 
     // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
+    UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
     MDCAppBarTextColorAccessibilityMutator *mutator =
         [[MDCAppBarTextColorAccessibilityMutator alloc] init];
@@ -213,6 +213,10 @@
   return YES;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
 @end
 
 @implementation AppBarModalPresentationExample (TypicalUse)
@@ -228,7 +232,7 @@
 
     self.title = @"Modal Presentation";
 
-    UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
+    UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
     MDCAppBarTextColorAccessibilityMutator *mutator =
         [[MDCAppBarTextColorAccessibilityMutator alloc] init];

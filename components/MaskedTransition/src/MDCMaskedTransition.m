@@ -14,6 +14,9 @@
  limitations under the License.
  */
 
+#import <CoreGraphics/CoreGraphics.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "MDCMaskedTransition.h"
 
 #import <MotionAnimator/MotionAnimator.h>
@@ -171,9 +174,9 @@ static inline CGFloat LengthOfVector(CGVector vector) {
     context.foreViewController.view.frame = originalFrame;
     [originalSuperview addSubview:context.foreViewController.view];
 
-    _sourceView.frame = originalSourceFrame;
-    _sourceView.backgroundColor = originalSourceBackgroundColor;
-    [originalSourceSuperview addSubview:_sourceView];
+    self->_sourceView.frame = originalSourceFrame;
+    self->_sourceView.backgroundColor = originalSourceBackgroundColor;
+    [originalSourceSuperview addSubview:self->_sourceView];
 
     [maskedView removeFromSuperview];
 

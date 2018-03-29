@@ -29,7 +29,7 @@
  @param colorScheme The color scheme to apply to MDCNavigationBar.
  @param navigationBar A MDCNavigationBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-         toNavigationBar:(MDCNavigationBar *)navigationBar;
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+         toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;
 
 @end

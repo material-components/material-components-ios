@@ -39,11 +39,6 @@ When indicators are determinate they indicate how long an operation will take wh
 
 ## Installation
 
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
-
 ### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
@@ -52,6 +47,11 @@ To add this component to your Xcode project using CocoaPods, add the following t
 pod 'MaterialComponents/ActivityIndicator'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
+
+To add this component along with its themer and other related extensions, please add the following instead:
+``` bash
+pod 'MaterialComponents/ActivityIndicator+Extensions'
+```
 
 Then, run the following command:
 

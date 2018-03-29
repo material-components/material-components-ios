@@ -16,10 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-#error "This component only supports iOS 8.0 and above."
-#endif
-
 /**
  MDCDialogTransitionController is be used to setup a custom transition and animationed presentation
  and dismissal for material-styled alerts, simple dialogs and confirmation dialogs.

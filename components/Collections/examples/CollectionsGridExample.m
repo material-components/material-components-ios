@@ -21,7 +21,7 @@ static const NSInteger kSectionItemCount = 4;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsGridExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSMutableArray *>*_content;
   UIAlertController *_actionController;
 }
 
@@ -155,6 +155,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

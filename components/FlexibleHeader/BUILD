@@ -14,9 +14,9 @@
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
+     "mdc_objc_library",
+     "mdc_unit_test_suite")
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -33,10 +33,28 @@ mdc_public_objc_library(
     ],
 )
 
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":FlexibleHeader",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
-    deps = [":FlexibleHeader"],
+    deps = [
+        ":FlexibleHeader",
+        ":ColorThemer",
+    ],
     visibility = ["//visibility:private"],
 )
 
@@ -49,16 +67,16 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":FlexibleHeader"],
+    deps = [
+        ":FlexibleHeader",
+        ":ColorThemer",
+    ],
     visibility = ["//visibility:private"],
 )
 
-ios_unit_test(
-    name = "unit_tests",
+mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
       ":unit_test_swift_sources"
     ],
-    minimum_os_version = "8.0",
-    visibility = ["//visibility:private"],
 )

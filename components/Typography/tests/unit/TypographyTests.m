@@ -351,7 +351,15 @@ static const CGFloat kOpacityMedium = 0.87f;
     // When
     MDCFontTextStyle style = styleObject.integerValue;
     UIFont *mdcFont = [UIFont mdc_preferredFontForMaterialTextStyle:style];
-    UIFont *systemFont = [UIFont systemFontOfSize:mdcFont.pointSize weight:UIFontWeightRegular];
+    UIFont *systemFont;
+    if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+    systemFont = [UIFont systemFontOfSize:mdcFont.pointSize weight:UIFontWeightRegular];
+    } else {
+      systemFont = [UIFont systemFontOfSize:mdcFont.pointSize];
+    }
+#pragma clang diagnostic pop
 
     // Then
     XCTAssertEqualObjects(systemFont.familyName, mdcFont.familyName);

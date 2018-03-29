@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "MDCChipCollectionViewCell.h"
 
 #import "private/MDCChipView+Private.h"
@@ -66,8 +68,8 @@ static NSString *const MDCChipCollectionViewCellChipViewKey =
 
   if (animated) {
     [UIView animateWithDuration:0.25 animations:^{
-      _chipView.frame = self.bounds;
-      [_chipView layoutIfNeeded];
+      self.chipView.frame = self.bounds;
+      [self.chipView layoutIfNeeded];
     }];
   } else {
     _chipView.frame = self.bounds;

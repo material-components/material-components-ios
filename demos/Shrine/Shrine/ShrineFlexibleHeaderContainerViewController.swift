@@ -26,6 +26,12 @@ class ShrineFlexibleHeaderContainerViewController: MDCFlexibleHeaderContainerVie
                                        left: sectionInset,
                                        bottom: sectionInset,
                                        right: sectionInset)
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+        layout.sectionInsetReference = .fromSafeArea
+      }
+    #endif
+
     let collectionVC = ShrineCollectionViewController(collectionViewLayout: layout)
     super.init(contentViewController: collectionVC)
 

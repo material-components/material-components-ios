@@ -52,11 +52,6 @@
   _bottomNavBar.delegate = self;
   [self.view addSubview:_bottomNavBar];
 
-  MDCBasicColorScheme *scheme =
-      [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette purplePalette].tint700
-                                         secondaryColor:[UIColor whiteColor]];
-  [MDCBottomNavigationBarColorThemer applyColorScheme:scheme toBottomNavigationBar:_bottomNavBar];
-
   UITabBarItem *tabBarItem1 =
       [[UITabBarItem alloc] initWithTitle:@"Home"
                                     image:[UIImage imageNamed:@"Home"]
@@ -135,8 +130,9 @@
   self.badgeCount++;
   self.bottomNavBar.items[1].badgeValue = [NSNumber numberWithInt:self.badgeCount].stringValue;
 
+  __weak BottomNavigationTypicalUseExample *weakSelf = self;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-    [self updateBadgeItemCount];
+    [weakSelf updateBadgeItemCount];
   });
 }
 
@@ -160,7 +156,7 @@
 - (void)setupAppBar {
   _appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:_appBar.headerViewController];
-  UIColor *color = [UIColor colorWithWhite:0.2 alpha:1];
+  UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
   _appBar.headerViewController.headerView.backgroundColor = color;
   _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
   [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];

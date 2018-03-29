@@ -19,9 +19,9 @@
 
 #import <UIKit/UIKit.h>
 
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialCollections;
-@import MaterialComponents.MaterialTabs;
+#import "MaterialAppBar.h"
+#import "MaterialCollections.h"
+#import "MaterialTabs.h"
 
 @interface TabBarTextOnlyExample : MDCCollectionViewController
 

@@ -17,6 +17,8 @@
 
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
+#import "MDCBottomAppBarColorThemer.h"
+#import "MaterialBottomAppBar.h"
 #import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
 #import "MDCFeatureHighlightColorThemer.h"
@@ -65,7 +67,9 @@ static NSString *s_secondaryColorString;
     rangeStep = 1;
   }
 
-  unsigned int tempRed, tempGreen, tempBlue;
+  unsigned int tempRed = 0;
+  unsigned int tempGreen = 0;
+  unsigned int tempBlue = 0;
   NSScanner *scanner =
       [NSScanner scannerWithString:[string substringWithRange:NSMakeRange(rangeStart, rangeStep)]];
   rangeStart += rangeStep;
@@ -136,9 +140,6 @@ static NSString *s_secondaryColorString;
 
 - (void)updateSchemeWithPrimaryColorString:(NSString *)primaryString
                       secondaryColorString:(NSString *)secondaryString {
-  UIColor *primaryColor = self.primaryColorPreView.backgroundColor;
-  UIColor *secondaryColor = self.secondaryColorPreView.backgroundColor;
-
   // Primary color
   unsigned int redInt, greenInt, blueInt;
 
@@ -151,8 +152,10 @@ static NSString *s_secondaryColorString;
     return;
   }
 
-  primaryColor =
-      [UIColor colorWithRed:redInt / 255.0 green:greenInt / 255.0 blue:blueInt / 255.0 alpha:1.0];
+  UIColor *primaryColor = [UIColor colorWithRed:redInt / 255.0f
+                                          green:greenInt / 255.0f
+                                           blue:blueInt / 255.0f
+                                          alpha:1.0f];
   s_primaryColorString = primaryString;
   self.primaryColorPreView.backgroundColor = primaryColor;
 
@@ -166,8 +169,10 @@ static NSString *s_secondaryColorString;
     return;
   }
 
-  secondaryColor =
-      [UIColor colorWithRed:redInt / 255.0 green:greenInt / 255.0 blue:blueInt / 255.0 alpha:1.0];
+  UIColor *secondaryColor = [UIColor colorWithRed:redInt / 255.0f
+                                            green:greenInt / 255.0f
+                                             blue:blueInt / 255.0f
+                                            alpha:1.0f];
   s_secondaryColorString = secondaryString;
   self.secondaryColorPreView.backgroundColor = secondaryColor;
 
@@ -182,6 +187,8 @@ static NSString *s_secondaryColorString;
   [MDCActivityIndicatorColorThemer applyColorScheme:colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
   [MDCAlertColorThemer applyColorScheme:colorScheme];
+  [MDCBottomAppBarColorThemer applyColorScheme:colorScheme
+                            toBottomAppBarView:[MDCBottomAppBarView appearance]];
   [MDCButtonBarColorThemer applyColorScheme:colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.previewButton];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:[MDCButton appearance]];
@@ -200,7 +207,7 @@ static NSString *s_secondaryColorString;
   [MDCSliderColorThemer applyColorScheme:colorScheme toSlider:[MDCSlider appearance]];
   [MDCTabBarColorThemer applyColorScheme:colorScheme toTabBar:[MDCTabBar appearance]];
   [MDCTextFieldColorThemer applyColorScheme:colorScheme
-           toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
+           toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
   [MDCTextFieldColorThemer applyColorScheme:colorScheme
            toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
   [MDCTextFieldColorThemer applyColorScheme:colorScheme
@@ -267,6 +274,10 @@ static NSString *s_secondaryColorString;
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

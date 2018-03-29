@@ -95,6 +95,12 @@ static const CGFloat kSingleCycleRotation =
  */
 @property(nonatomic, strong, readonly, nullable) CAShapeLayer *trackLayer;
 
+/**
+ The currently queued stop transition, which will be run as soon as the current animation cycle
+ completes. At all other times should be nil.
+ */
+@property(nonatomic, strong, nullable) MDCActivityIndicatorTransition *stopTransition;
+
 @end
 
 @implementation MDCActivityIndicator {
@@ -129,13 +135,6 @@ static const CGFloat kSingleCycleRotation =
   return self;
 }
 
-+ (void)initialize {
-  // Ensure we do not set the UIAppearance proxy if subclasses are initialized
-  if (self == [MDCActivityIndicator class]) {
-    [MDCActivityIndicator appearance].cycleColors = [MDCActivityIndicator defaultCycleColors];
-  }
-}
-
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -145,12 +144,12 @@ static const CGFloat kSingleCycleRotation =
 
   [self applyPropertiesWithoutAnimation:^{
     // Resize and recenter rotation layer.
-    _outerRotationLayer.bounds = self.bounds;
-    _outerRotationLayer.position =
+    self.outerRotationLayer.bounds = self.bounds;
+    self.outerRotationLayer.position =
         CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
 
-    _strokeLayer.bounds = _outerRotationLayer.bounds;
-    _strokeLayer.position = _outerRotationLayer.position;
+    self.strokeLayer.bounds = self.outerRotationLayer.bounds;
+    self.strokeLayer.position = self.outerRotationLayer.position;
 
     [self updateStrokePath];
   }];
@@ -160,9 +159,15 @@ static const CGFloat kSingleCycleRotation =
   // Register notifications for foreground and background if needed.
   [self registerForegroundAndBackgroundNotificationObserversIfNeeded];
 
+  // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+  // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+  // symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   // The activity indicator reflects the passage of time (a spatial semantic context) and so
   // will not be mirrored in RTL languages.
   self.mdf_semanticContentAttribute = UISemanticContentAttributeSpatial;
+#pragma clang diagnostic pop
 
   _animator = [[MDMMotionAnimator alloc] init];
   _animator.additive = NO;
@@ -236,9 +241,73 @@ static const CGFloat kSingleCycleRotation =
 
   _animating = YES;
 
-  if (self.window && !_backgrounded) {
-    [self actuallyStartAnimating];
+  if (!self.window || _backgrounded) {
+    return;
   }
+  
+  [self actuallyStartAnimating];
+}
+
+- (void)startAnimatingWithTransition:(nonnull MDCActivityIndicatorTransition *)startTransition
+                     cycleStartIndex:(NSInteger)cycleStartIndex {
+  if (_animating) {
+    return;
+  }
+
+  BOOL indeterminate = self.indicatorMode == MDCActivityIndicatorModeIndeterminate;
+  NSAssert(indeterminate, @"startAnimatingWithStartAnimation requires an indeterminate mode.");
+  if (!indeterminate) {
+    return;
+  }
+
+  if (_animatingOut) {
+    if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+      [_delegate activityIndicatorAnimationDidFinish:self];
+    }
+    [self removeAnimations];
+  }
+
+  _animating = YES;
+
+  if (!self.window || _backgrounded) {
+    return;
+  }
+
+  _cycleStartIndex = cycleStartIndex;
+  _cycleCount = _cycleStartIndex;
+
+  _animationInProgress = YES;
+
+  [CATransaction begin];
+  {
+    [CATransaction setCompletionBlock:^{
+      self->_animationInProgress = NO;
+
+      [self actuallyStartAnimating];
+
+      self.cycleColorsIndex = self.cycleColors.count > 0 ? cycleStartIndex % self.cycleColors.count : 0;
+      [self applyPropertiesWithoutAnimation:^{
+        [self updateStrokeColor];
+      }];
+
+      if (startTransition.completion) {
+        startTransition.completion();
+      }
+    }];
+    [CATransaction setAnimationDuration:startTransition.duration];
+    [CATransaction setDisableActions:YES];
+
+    CGFloat outerRotation = kOuterRotationIncrement * _cycleStartIndex;
+    CGFloat innerRotation = _cycleStartIndex * (CGFloat)M_PI;
+    CGFloat strokeStart =
+        (CGFloat)fmod(innerRotation + outerRotation, 2 * M_PI) / (CGFloat)(2 * M_PI);
+
+    CGFloat strokeEnd = _minStrokeDifference + strokeStart;
+    strokeEnd = strokeEnd > 1 ? strokeEnd - 1 : strokeEnd;
+
+    startTransition.animation(strokeStart, strokeEnd);
+  }
+  [CATransaction commit];
 }
 
 - (void)stopAnimating {
@@ -249,6 +318,23 @@ static const CGFloat kSingleCycleRotation =
   _animating = NO;
 
   [self animateOut];
+}
+
+- (void)stopAnimatingWithTransition:(MDCActivityIndicatorTransition *)stopTransition {
+  if (!_animating) {
+    return;
+  }
+
+  BOOL indeterminate = self.indicatorMode == MDCActivityIndicatorModeIndeterminate;
+  NSAssert(indeterminate, @"stopAnimationWithTransition requires an indeterminate mode.");
+  if (!indeterminate) {
+    return;
+  }
+
+  _animating = NO;
+  _animatingOut = YES;
+
+  self.stopTransition = stopTransition;
 }
 
 - (void)stopAnimatingImmediately {
@@ -290,6 +376,10 @@ static const CGFloat kSingleCycleRotation =
         [self addTransitionToIndeterminateCycle];
         break;
     }
+  } else if (!_animating) {
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
   }
 }
 
@@ -298,19 +388,21 @@ static const CGFloat kSingleCycleRotation =
 }
 
 - (void)setProgress:(float)progress {
+  [self setProgress:progress animated:YES];
+}
+
+- (void)setProgress:(float)progress animated:(BOOL)animated {
   _progress = MAX(0.0f, MIN(progress, 1.0f));
-  if (_progress == _currentProgress) {
+  if (_indicatorMode == MDCActivityIndicatorModeIndeterminate || _progress == _currentProgress) {
     return;
   }
-  if (_animating && !_animationInProgress) {
-    switch (_indicatorMode) {
-      case MDCActivityIndicatorModeDeterminate:
-        // Currently animating the determinate mode but no animation queued.
-        [self addProgressAnimation];
-        break;
-      case MDCActivityIndicatorModeIndeterminate:
-        break;
+  if (animated) {
+    if (_animating && !_animationInProgress) {
+      // Currently animating the determinate mode but no animation queued.
+      [self addProgressAnimation];
     }
+  } else {
+    [self setDeterminateProgressWithoutAnimation];
   }
 }
 
@@ -381,10 +473,10 @@ static const CGFloat kSingleCycleRotation =
   _cycleCount = _cycleStartIndex;
 
   [self applyPropertiesWithoutAnimation:^{
-    _strokeLayer.strokeStart = 0.0f;
-    _strokeLayer.strokeEnd = 0.001f;
-    _strokeLayer.lineWidth = _strokeWidth;
-    _trackLayer.lineWidth = _strokeWidth;
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.001f;
+    self.strokeLayer.lineWidth = self.strokeWidth;
+    self.trackLayer.lineWidth = self.strokeWidth;
 
     [self resetStrokeColor];
     [self updateStrokePath];
@@ -407,8 +499,8 @@ static const CGFloat kSingleCycleRotation =
 
   [self removeAnimations];
   [self applyPropertiesWithoutAnimation:^{
-    _strokeLayer.strokeStart = 0.0f;
-    _strokeLayer.strokeEnd = 0.0f;
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.0f;
   }];
 }
 
@@ -422,6 +514,47 @@ static const CGFloat kSingleCycleRotation =
   if (self.cycleColors.count) {
     [self setStrokeColor:self.cycleColors[0]];
   }
+}
+
+- (void)addStopAnimation {
+  MDCActivityIndicatorTransition *stopTransition = self.stopTransition;
+
+  CGFloat innerRotation =
+      [[_strokeLayer valueForKeyPath:MDMKeyPathRotation] floatValue];
+  CGFloat outerRotation =
+      [[_outerRotationLayer valueForKeyPath:MDMKeyPathRotation] floatValue];
+  CGFloat totalRotation =
+      (CGFloat)fmod(innerRotation + outerRotation, 2 * M_PI) / (CGFloat)(2 * M_PI);
+
+  CGFloat strokeStart = _strokeLayer.strokeStart + totalRotation;
+  strokeStart = strokeStart > 1 ? strokeStart - 1 : strokeStart;
+
+  CGFloat strokeEnd = _strokeLayer.strokeEnd + totalRotation;
+  strokeEnd = strokeEnd > 1 ? strokeEnd - 1 : strokeEnd;
+
+  [self applyPropertiesWithoutAnimation:^{
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.0f;
+  }];
+
+  [CATransaction begin];
+  {
+    [CATransaction setCompletionBlock:^{
+      if (stopTransition.completion) {
+        stopTransition.completion();
+      }
+      if (stopTransition == self.stopTransition) {
+        if ([self.delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+          [self.delegate activityIndicatorAnimationDidFinish:self];
+        }
+        [self removeAnimations];
+      }
+    }];
+    [CATransaction setAnimationDuration:stopTransition.duration];
+    [CATransaction setDisableActions:YES];
+    stopTransition.animation(strokeStart, strokeEnd);
+  }
+  [CATransaction commit];
 }
 
 - (void)updateStrokePath {
@@ -516,6 +649,9 @@ static const CGFloat kSingleCycleRotation =
     // Special case for 0% progress.
     _cycleCount = nearestCycle;
     [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
     return;
   }
 
@@ -542,6 +678,9 @@ static const CGFloat kSingleCycleRotation =
     [CATransaction setCompletionBlock:^{
       [self
           strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
+      if ([self.delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+        [self.delegate activityIndicatorModeTransitionDidFinish:self];
+      }
     }];
     [CATransaction setDisableActions:YES];
 
@@ -582,6 +721,9 @@ static const CGFloat kSingleCycleRotation =
     _currentProgress = 0.0f;
     _lastProgress = _currentProgress;
     [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
   } else {
     _currentProgress = MAX(_progress, _minStrokeDifference);
 
@@ -600,6 +742,9 @@ static const CGFloat kSingleCycleRotation =
       [CATransaction setCompletionBlock:^{
         [self
             strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
+        if ([self.delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+          [self.delegate activityIndicatorModeTransitionDidFinish:self];
+        }
       }];
       [CATransaction setDisableActions:YES];
       [CATransaction mdm_setTimeScaleFactor:@(duration)];
@@ -661,12 +806,27 @@ static const CGFloat kSingleCycleRotation =
   _animationInProgress = YES;
 }
 
+- (void)setDeterminateProgressWithoutAnimation {
+  [self removeAnimations];
+  _animationInProgress = NO;
+  _currentProgress = MAX(_progress, _minStrokeDifference);
+  _strokeLayer.strokeStart = 0.0;
+  _strokeLayer.strokeEnd = _currentProgress;
+  _lastProgress = _currentProgress;
+}
+
 - (void)strokeRotationCycleFinishedFromState:(MDCActivityIndicatorState)state {
   _animationInProgress = NO;
 
   if (!_animationsAdded) {
     return;
   }
+
+  if (self.stopTransition) {
+    [self addStopAnimation];
+    return;
+  }
+
   if (state == MDCActivityIndicatorStateIndeterminate) {
     if (self.cycleColors.count > 0) {
       self.cycleColorsIndex = (self.cycleColorsIndex + 1) % self.cycleColors.count;
@@ -726,10 +886,10 @@ static const CGFloat kSingleCycleRotation =
   [CATransaction begin];
 
   [CATransaction setCompletionBlock:^{
-    if (_animatingOut) {
+    if (self->_animatingOut) {
       [self removeAnimations];
-      if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
-        [_delegate activityIndicatorAnimationDidFinish:self];
+      if ([self.delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+        [self.delegate activityIndicatorAnimationDidFinish:self];
       }
     }
   }];
@@ -744,6 +904,7 @@ static const CGFloat kSingleCycleRotation =
 - (void)removeAnimations {
   _animationsAdded = NO;
   _animatingOut = NO;
+  self.stopTransition = nil;
   [_strokeLayer removeAllAnimations];
   [_outerRotationLayer removeAllAnimations];
 
@@ -854,4 +1015,14 @@ static const CGFloat kSingleCycleRotation =
   }
 }
 
+@end
+
+@implementation MDCActivityIndicatorTransition
+- (nonnull instancetype)initWithAnimation:(_Nonnull MDCActivityIndicatorAnimation)animation {
+  self = [super init];
+  if (self) {
+    self.animation = animation;
+  }
+   return self;
+}
 @end

@@ -61,6 +61,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return titleLabel
   }()
 
+  private var titleLabelLeadingConstraint: NSLayoutConstraint?
+  private var titleLabelBottomConstraint: NSLayoutConstraint?
+  private var titleLabelHeightConstraint: NSLayoutConstraint?
+
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
 
@@ -243,7 +247,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                                    left: Constants.inset + view.safeAreaInsets.left,
                                    bottom: Constants.inset,
                                    right: Constants.inset + view.safeAreaInsets.right)
-    titleLabel.superview!.removeConstraints(titleLabel.superview!.constraints)
+
     constrainLabel(label: titleLabel,
                    containerView: titleLabel.superview!,
                    insets: titleInsets,
@@ -264,7 +268,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   func inkViewForView(_ view: UIView) -> MDCInkView {
     let foundInkView = MDCInkView.injectedInkView(for: view)
-    foundInkView.inkStyle = .unbounded
+    foundInkView.inkStyle = .bounded
     foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
     return foundInkView
   }
@@ -347,14 +351,19 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                       containerView: UIView,
                       insets: UIEdgeInsets,
                       height: CGFloat) {
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .leading,
-      multiplier: 1.0,
-      constant: insets.left).isActive = true
+    if let constraint = titleLabelLeadingConstraint {
+      constraint.constant = insets.left
+    } else {
+      titleLabelLeadingConstraint = NSLayoutConstraint(
+        item: label,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: containerView,
+        attribute: .leading,
+        multiplier: 1.0,
+        constant: insets.left)
+      titleLabelLeadingConstraint!.isActive = true
+    }
 
     _ = NSLayoutConstraint(
       item: label,
@@ -365,23 +374,33 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       multiplier: 1.0,
       constant: 0).isActive = true
 
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .bottom,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .bottom,
-      multiplier: 1.0,
-      constant: -insets.bottom).isActive = true
+    if let constraint = titleLabelBottomConstraint {
+      constraint.constant = -insets.bottom
+    } else {
+      titleLabelBottomConstraint = NSLayoutConstraint(
+        item: label,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: containerView,
+        attribute: .bottom,
+        multiplier: 1.0,
+        constant: -insets.bottom)
+      titleLabelBottomConstraint!.isActive = true
+    }
 
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .height,
-      relatedBy: .equal,
-      toItem: nil,
-      attribute: .notAnAttribute,
-      multiplier: 1.0,
-      constant: height).isActive = true
+    if let constraint = titleLabelHeightConstraint {
+      constraint.constant = height
+    } else {
+      titleLabelHeightConstraint = NSLayoutConstraint(
+        item: label,
+        attribute: .height,
+        relatedBy: .equal,
+        toItem: nil,
+        attribute: .notAnAttribute,
+        multiplier: 1.0,
+        constant: height)
+      titleLabelHeightConstraint!.isActive = true
+    }
   }
 
   func adjustLogoForScrollView(_ scrollView: UIScrollView) {

@@ -21,7 +21,7 @@ static const NSInteger kSectionItemCount = 5;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsSwipeToDismissSectionExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSArray *>*_content;
 }
 
 - (void)viewDidLoad {
@@ -100,6 +100,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

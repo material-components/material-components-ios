@@ -15,7 +15,9 @@
  */
 
 import Foundation
-import MaterialComponents
+import UIKit
+
+import MaterialComponents.MaterialButtons
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
@@ -107,4 +109,8 @@ extension ButtonsSimpleExampleSwiftViewController {
    @objc class func catalogIsPrimaryDemo() -> Bool {
       return false
    }
+
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
 }

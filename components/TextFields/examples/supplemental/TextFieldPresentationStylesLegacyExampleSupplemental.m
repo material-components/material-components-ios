@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 #import "TextFieldPresentationStylesLegacyExampleSupplemental.h"
 
 @implementation TextFieldPresentationStylesExample (Supplemental)
@@ -67,6 +69,10 @@
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

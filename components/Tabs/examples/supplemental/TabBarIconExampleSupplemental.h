@@ -17,11 +17,11 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialButtons;
-@import MaterialComponents.MaterialTabs;
+#import "MaterialAppBar.h"
+#import "MaterialButtons.h"
+#import "MaterialTabs.h"
 
 @interface TabBarIconExample : UIViewController <MDCTabBarDelegate>
 

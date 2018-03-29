@@ -15,3 +15,4 @@
  */
 
 #import "MDCButtonBar.h"
+#import "MDCButtonBarButton.h"

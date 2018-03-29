@@ -29,8 +29,8 @@
 
 @interface InkTypicalUseViewController : UIViewController
 
-@property(nonatomic, strong) ExampleShapes *boundedShapes;
-@property(nonatomic, strong) UIView *unboundedShape;
+@property(nonatomic, strong) ExampleShapes *shapes;
+@property(nonatomic, strong) UIView *legacyShape;
 
 @end
 

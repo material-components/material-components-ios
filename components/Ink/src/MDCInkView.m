@@ -16,16 +16,46 @@
 
 #import "MDCInkView.h"
 
+#import "MaterialMath.h"
 #import "private/MDCInkLayer.h"
+#import "private/MDCLegacyInkLayer.h"
 
-@interface MDCInkView ()
-@property(nonatomic, readonly) MDCInkLayer *inkLayer;
+static NSString *const MDCInkViewAnimationDelegateKey = @"MDCInkViewAnimationDelegateKey";
+static NSString *const MDCInkViewInkStyleKey = @"MDCInkViewInkStyleKey";
+static NSString *const MDCInkViewUsesLegacyInkRippleKey = @"MDCInkViewUsesLegacyInkRippleKey";
+static NSString *const MDCInkViewMaskLayerKey = @"MDCInkViewMaskLayerKey";
+static NSString *const MDCInkViewUsesCustomInkCenterKey = @"MDCInkViewUsesCustomInkCenterKey";
+static NSString *const MDCInkViewCustomInkCenterKey = @"MDCInkViewCustomInkCenterKey";
+static NSString *const MDCInkViewInkColorKey = @"MDCInkViewInkColorKey";
+static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiusKey";
+
+@interface MDCInkPendingAnimation : NSObject <CAAction>
+
+@property(nonatomic, weak) CALayer *animationSourceLayer;
+@property(nonatomic, strong) NSString *keyPath;
+@property(nonatomic, strong) id fromValue;
+@property(nonatomic, strong) id toValue;
+
 @end
 
-@implementation MDCInkView
+@interface MDCInkView () <CALayerDelegate, MDCInkLayerDelegate>
+
+@property(nonatomic, strong) CAShapeLayer *maskLayer;
+@property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
+@property(nonatomic, copy) MDCInkCompletionBlock endInkRippleCompletionBlock;
+@property(nonatomic, strong) MDCInkLayer *activeInkLayer;
+
+// Legacy ink ripple
+@property(nonatomic, readonly) MDCLegacyInkLayer *inkLayer;
+
+@end
+
+@implementation MDCInkView {
+  CGFloat _maxRippleRadius;
+}
 
 + (Class)layerClass {
-  return [MDCInkLayer class];
+  return [MDCLegacyInkLayer class];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -39,29 +69,123 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCInkViewInit];
+    if ([aDecoder containsValueForKey:MDCInkViewAnimationDelegateKey]) {
+      _animationDelegate = [aDecoder decodeObjectForKey:MDCInkViewAnimationDelegateKey];
+    }
+    if ([aDecoder containsValueForKey:MDCInkViewMaskLayerKey]) {
+      _maskLayer = [aDecoder decodeObjectForKey:MDCInkViewMaskLayerKey];
+      _maskLayer.delegate = self;
+    } else {
+      _maskLayer = [CAShapeLayer layer];
+      _maskLayer.delegate = self;
+    }
+    if ([aDecoder containsValueForKey:MDCInkViewUsesLegacyInkRippleKey]) {
+      _usesLegacyInkRipple = [aDecoder decodeBoolForKey:MDCInkViewUsesLegacyInkRippleKey];
+    } else {
+      _usesLegacyInkRipple = YES;
+    }
+    if ([aDecoder containsValueForKey:MDCInkViewInkStyleKey]) {
+      self.inkStyle = [aDecoder decodeIntegerForKey:MDCInkViewInkStyleKey];
+    }
+
+    // The following are derived properties, but `layer` may not have been encoded
+    if ([aDecoder containsValueForKey:MDCInkViewUsesCustomInkCenterKey]) {
+      self.usesCustomInkCenter = [aDecoder decodeBoolForKey:MDCInkViewUsesCustomInkCenterKey];
+    }
+    if ([aDecoder containsValueForKey:MDCInkViewCustomInkCenterKey]) {
+      self.customInkCenter = [aDecoder decodeCGPointForKey:MDCInkViewCustomInkCenterKey];
+    }
+    if ([aDecoder containsValueForKey:MDCInkViewMaxRippleRadiusKey]) {
+      self.maxRippleRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCInkViewMaxRippleRadiusKey];
+    }
+    if ([aDecoder containsValueForKey:MDCInkViewInkColorKey]) {
+      self.inkColor = [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCInkViewInkColorKey];
+    }
   }
   return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+
+  if (self.animationDelegate && [self.animationDelegate conformsToProtocol:@protocol(NSCoding)]) {
+    [aCoder encodeObject:self.animationDelegate forKey:MDCInkViewAnimationDelegateKey];
+  }
+  [aCoder encodeInteger:self.inkStyle forKey:MDCInkViewInkStyleKey];
+  [aCoder encodeBool:self.usesLegacyInkRipple forKey:MDCInkViewUsesLegacyInkRippleKey];
+  [aCoder encodeObject:self.maskLayer forKey:MDCInkViewMaskLayerKey];
+
+  // The following are derived properties, but `layer` may not get encoded by the superclass
+  [aCoder encodeBool:self.usesCustomInkCenter forKey:MDCInkViewUsesCustomInkCenterKey];
+  [aCoder encodeCGPoint:self.customInkCenter forKey:MDCInkViewCustomInkCenterKey];
+  [aCoder encodeDouble:self.maxRippleRadius forKey:MDCInkViewMaxRippleRadiusKey];
+  [aCoder encodeObject:self.inkColor forKey:MDCInkViewInkColorKey];
 }
 
 - (void)commonMDCInkViewInit {
   self.userInteractionEnabled = NO;
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+  self.layer.delegate = self;
   self.inkColor = self.defaultInkColor;
+  _usesLegacyInkRipple = YES;
+
+  // Use mask layer when the superview has a shadowPath.
+  _maskLayer = [CAShapeLayer layer];
+  _maskLayer.delegate = self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
+  if (self.superview.layer.shadowPath) {
+    self.maskLayer.path = self.superview.layer.shadowPath;
+    self.layer.mask = _maskLayer;
+    self.layer.masksToBounds = YES;
+  }
+
+  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+  self.layer.bounds = inkBounds;
+
+  // When bounds change ensure all ink layer bounds are changed too.
+  for (CALayer *layer in self.layer.sublayers) {
+    if ([layer isKindOfClass:[MDCInkLayer class]]) {
+      MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
+      inkLayer.bounds = inkBounds;
+    }
+  }
+
+  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
+  if (self.superview.layer.shadowPath) {
+    self.maskLayer.path = self.superview.layer.shadowPath;
+    self.layer.mask = _maskLayer;
+    self.layer.masksToBounds = YES;
+  }
 }
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkStyle = inkStyle;
-  switch (inkStyle) {
-    case MDCInkStyleBounded:
-      self.inkLayer.masksToBounds = YES;
-      self.inkLayer.bounded = YES;
-      break;
-    case MDCInkStyleUnbounded:
-      self.inkLayer.masksToBounds = NO;
-      self.inkLayer.bounded = NO;
-      break;
+  if (self.usesLegacyInkRipple) {
+    switch (inkStyle) {
+      case MDCInkStyleBounded:
+        self.inkLayer.masksToBounds = YES;
+        self.inkLayer.bounded = YES;
+        break;
+      case MDCInkStyleUnbounded:
+        self.inkLayer.masksToBounds = NO;
+        self.inkLayer.bounded = NO;
+        break;
+    }
+  } else {
+    switch(inkStyle) {
+      case MDCInkStyleBounded:
+        self.inkLayer.maxRippleRadius = 0;
+        break;
+      case MDCInkStyleUnbounded:
+        self.inkLayer.maxRippleRadius = _maxRippleRadius;
+        break;
+    }
   }
 }
 
@@ -81,9 +205,27 @@
 }
 
 - (void)setMaxRippleRadius:(CGFloat)radius {
-  if (self.inkLayer.maxRippleRadius != radius) {
+  // Keep track of the set value in case the caller will change inkStyle later
+  _maxRippleRadius = radius;
+  if (MDCCGFloatEqual(self.inkLayer.maxRippleRadius, radius)) {
+    return;
+  }
+
+  // Legacy Ink updates inkLayer.maxRippleRadius regardless of inkStyle
+  if (self.usesLegacyInkRipple) {
     self.inkLayer.maxRippleRadius = radius;
+    // This is required for legacy Ink so that the Ink bounds will be adjusted correctly
     [self setNeedsLayout];
+  } else {
+    // New Ink Bounded style ignores maxRippleRadius
+    switch(self.inkStyle) {
+      case MDCInkStyleUnbounded:
+        self.inkLayer.maxRippleRadius = radius;
+        break;
+      case MDCInkStyleBounded:
+        // No-op
+        break;
+    }
   }
 }
 
@@ -103,29 +245,69 @@
   self.inkLayer.customInkCenter = customInkCenter;
 }
 
-- (MDCInkLayer *)inkLayer {
-  return (MDCInkLayer *)self.layer;
+- (MDCLegacyInkLayer *)inkLayer {
+  return (MDCLegacyInkLayer *)self.layer;
 }
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer spreadFromPoint:point completion:completionBlock];
+  [self startTouchBeganAtPoint:point animated:YES withCompletion:completionBlock];
 }
 
-- (void)startTouchEndedAnimationAtPoint:(__unused CGPoint)point
+- (void)startTouchBeganAtPoint:(CGPoint)point animated:(BOOL)animated
+                withCompletion:(nullable MDCInkCompletionBlock)completionBlock {
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer spreadFromPoint:point completion:completionBlock];
+  } else {
+    self.startInkRippleCompletionBlock = completionBlock;
+    MDCInkLayer *inkLayer = [MDCInkLayer layer];
+    inkLayer.inkColor = self.inkColor;
+    inkLayer.maxRippleRadius = self.maxRippleRadius;
+    inkLayer.animationDelegate = self;
+    inkLayer.opacity = 0;
+    inkLayer.frame = self.bounds;
+    [self.layer addSublayer:inkLayer];
+    [inkLayer startInkAtPoint:point animated:animated];
+    self.activeInkLayer = inkLayer;
+  }
+}
+
+- (void)startTouchEndAtPoint:(CGPoint)point animated:(BOOL)animated
+              withCompletion:(nullable MDCInkCompletionBlock)completionBlock {
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer evaporateWithCompletion:completionBlock];
+  } else {
+    self.endInkRippleCompletionBlock = completionBlock;
+    [self.activeInkLayer endInkAtPoint:point animated:animated];
+  }
+}
+
+- (void)startTouchEndedAnimationAtPoint:(CGPoint)point
                              completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer evaporateWithCompletion:completionBlock];
+  [self startTouchEndAtPoint:point animated:YES withCompletion:completionBlock];
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  [self.inkLayer resetAllInk:animated];
+  if (self.usesLegacyInkRipple) {
+    [self.inkLayer resetAllInk:animated];
+  } else {
+    NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
+    for (CALayer *layer in sublayers) {
+      if ([layer isKindOfClass:[MDCInkLayer class]]) {
+        MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
+        if (animated) {
+          [inkLayer endAnimationAtPoint:CGPointZero];
+        } else {
+          [inkLayer removeFromSuperlayer];
+        }
+      }
+    }
+  }
 }
 
 - (UIColor *)defaultInkColor {
-  return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
+  return [[UIColor alloc] initWithWhite:0 alpha:0.14f];
 }
-
-#pragma mark
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {
   MDCInkView *foundInkView = nil;
@@ -142,6 +324,66 @@
     [view addSubview:foundInkView];
   }
   return foundInkView;
+}
+
+#pragma mark - MDCInkLayerDelegate
+
+- (void)inkLayerAnimationDidStart:(MDCInkLayer *)inkLayer {
+  if (self.activeInkLayer == inkLayer && self.startInkRippleCompletionBlock) {
+    self.startInkRippleCompletionBlock();
+  }
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidStart:)]) {
+    [self.animationDelegate inkAnimationDidStart:self];
+  }
+}
+
+- (void)inkLayerAnimationDidEnd:(MDCInkLayer *)inkLayer {
+  if (self.activeInkLayer == inkLayer && self.endInkRippleCompletionBlock) {
+    self.endInkRippleCompletionBlock();
+  }
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidEnd:)]) {
+    [self.animationDelegate inkAnimationDidEnd:self];
+  }
+}
+
+#pragma mark - CALayerDelegate
+
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
+  if ([event isEqualToString:@"path"] || [event isEqualToString:@"shadowPath"]) {
+
+    // We have to create a pending animation because if we are inside a UIKit animation block we
+    // won't know any properties of the animation block until it is commited.
+    MDCInkPendingAnimation *pendingAnim = [[MDCInkPendingAnimation alloc] init];
+    pendingAnim.animationSourceLayer = self.superview.layer;
+    pendingAnim.fromValue = [layer.presentationLayer valueForKey:event];
+    pendingAnim.toValue = nil;
+    pendingAnim.keyPath = event;
+
+    return pendingAnim;
+  }
+  return nil;
+}
+
+@end
+
+@implementation MDCInkPendingAnimation
+
+- (void)runActionForKey:(NSString *)event object:(id)anObject arguments:(NSDictionary *)dict {
+  if ([anObject isKindOfClass:[CAShapeLayer class]]) {
+    CAShapeLayer *layer = (CAShapeLayer *)anObject;
+
+    // In order to synchronize our animation with UIKit animations we have to fetch the resizing
+    // animation created by UIKit and copy the configuration to our custom animation.
+    CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
+    if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
+      CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
+      animation.keyPath = self.keyPath;
+      animation.fromValue = self.fromValue;
+      animation.toValue = self.toValue;
+
+      [layer addAnimation:animation forKey:event];
+    }
+  }
 }
 
 @end

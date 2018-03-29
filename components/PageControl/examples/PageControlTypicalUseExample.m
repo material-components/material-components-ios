@@ -35,9 +35,9 @@
   CGFloat boundsHeight = CGRectGetHeight(standardizedFrame);
 
   NSArray *pageColors = @[
-      [UIColor colorWithWhite:0.9 alpha:1.0],
-      [UIColor colorWithWhite:0.8 alpha:1.0],
-      [UIColor colorWithWhite:0.7 alpha:1.0],
+      [UIColor colorWithWhite:0.9f alpha:1.0f],
+      [UIColor colorWithWhite:0.8f alpha:1.0f],
+      [UIColor colorWithWhite:0.7f alpha:1.0f],
   ];
 
   // Scroll view configuration
@@ -57,7 +57,7 @@
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
     page.font = [UIFont systemFontOfSize:50];
-    page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
+    page.textColor = [UIColor colorWithWhite:0 alpha:0.8f];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask =
@@ -101,8 +101,7 @@
   [_scrollView setContentOffset:offset animated:NO];
   _scrollView.frame = self.view.bounds;
 
-  // We want the page control to span the bottom of the screen.
-	[_pageControl sizeThatFits:standardizedFrame.size];
+  // We want the page control to hug the bottom of the screen.
   UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -110,6 +109,7 @@
     edgeInsets = self.view.safeAreaInsets;
   }
 #endif
+  [_pageControl sizeToFit];
   CGFloat yOffset =
       CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
   _pageControl.frame =
@@ -150,6 +150,10 @@
 }
 
 + (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
++ (BOOL)catalogIsPresentable {
   return YES;
 }
 

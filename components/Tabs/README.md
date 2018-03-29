@@ -25,11 +25,6 @@ Tabs are bars of buttons used to navigate between groups of content.
 
 ## Installation
 
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 9.0 or higher.
-
 ### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the
@@ -39,6 +34,11 @@ following to your `Podfile`:
 pod 'MaterialComponents/Tabs'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
+
+To add this component along with its themer and other related extensions, please add the following instead:
+``` bash
+pod 'MaterialComponents/Tabs+Extensions'
+```
 
 Then, run the following command:
 
@@ -138,7 +138,7 @@ view.addSubview(tabBar)
 #### Objective-C
 
 ``` objc
-MDCTabBar *tabBar = [[MDCTabBar alloc] initWitFrame:self.view.bounds];
+MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:self.view.bounds];
 tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Favorites" image:[UIImage imageNamed:@"heart"] tag:0],

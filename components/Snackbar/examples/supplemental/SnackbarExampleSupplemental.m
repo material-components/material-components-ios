@@ -63,6 +63,14 @@ static NSString * const kCellIdentifier = @"Cell";
   return YES;
 }
 
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
++ (BOOL)catalogIsDebug {
+  return NO;
+}
+
 @end
 
 @implementation SnackbarOverlayViewExample (CatalogByConvention)
@@ -72,6 +80,30 @@ static NSString * const kCellIdentifier = @"Cell";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
+@end
+
+@implementation SnackbarInputAccessoryViewController (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Snackbar", @"Snackbar Input Accessory" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
++ (BOOL)catalogIsDebug {
   return NO;
 }
 
@@ -110,6 +142,10 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end

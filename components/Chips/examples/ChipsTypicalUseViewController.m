@@ -29,8 +29,15 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
+    _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIContentSizeCategoryDidChangeNotification
+                                                object:nil];
 }
 
 - (void)viewDidLoad {
@@ -46,6 +53,14 @@
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(clearSelected)];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange {
+  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)clearSelected {
@@ -65,6 +80,7 @@
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+  cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
   cell.alwaysAnimateResize = YES;
 
   ChipModel *model = self.model[indexPath.row];

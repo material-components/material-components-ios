@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import XCTest
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
 
 // Tests confirming that the App Bar container view controller's app bar properties are non-nil
 // immediately after initialization.

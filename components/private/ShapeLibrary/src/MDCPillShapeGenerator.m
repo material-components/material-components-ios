@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "MDCPillShapeGenerator.h"
 
 #import "MaterialMath.h"

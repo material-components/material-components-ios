@@ -374,7 +374,7 @@ First, add a function to ViewController that will be called when the button is t
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-func barButtonDidTap(_ sender: UIBarButtonItem) {
+@objc func barButtonDidTap(_ sender: UIBarButtonItem) {
   editor.isEditing = !editor.isEditing
 
   let buttonTitle =  editor.isEditing ? "Cancel" : "Edit"
@@ -454,7 +454,7 @@ class ViewController: MDCCollectionViewController {
 
   ...
 
-  func fabDidTap(_ sender: UIButton) {
+  @objc func fabDidTap(_ sender: UIButton) {
     sender.isSelected = !sender.isSelected
   }
 ```
@@ -596,13 +596,13 @@ class ViewController: MDCCollectionViewController {
     fab.addTarget(self, action: #selector(ViewController.fabDidTap(_:)), for: .touchUpInside)
   }
 
-  func barButtonDidTap(_ sender: UIBarButtonItem) {
+  @objc func barButtonDidTap(_ sender: UIBarButtonItem) {
     editor.isEditing = !editor.isEditing
 
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(_:)))
   }
 
-  func fabDidTap(_ sender: UIButton) {
+  @objc func fabDidTap(_ sender: UIButton) {
     sender.isSelected = !sender.isSelected
   }
 

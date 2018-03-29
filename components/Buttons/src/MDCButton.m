@@ -58,6 +58,8 @@ static NSString *const MDCButtonBorderWidthsKey = @"MDCButtonBorderWidthsKey";
 
 static NSString *const MDCButtonShadowColorsKey = @"MDCButtonShadowColorsKey";
 
+static NSString *const MDCButtonFontsKey = @"MDCButtonFontsKey";
+
 // Specified in Material Guidelines
 // https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
@@ -113,6 +115,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
+  NSMutableDictionary<NSNumber *, UIFont *> *_fonts;
 
   CGFloat _enabledAlpha;
   BOOL _hasCustomDisabledTitleColor;
@@ -142,6 +145,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    // Set up title label attributes.
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    self.titleLabel.font = [MDCTypography buttonFont];
+
     [self commonMDCButtonInit];
     [self updateBackgroundColor];
   }
@@ -153,12 +161,18 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (self) {
     [self commonMDCButtonInit];
 
+    if (self.titleLabel.font) {
+      _fonts = [@{} mutableCopy];
+      _fonts[@(UIControlStateNormal)] = self.titleLabel.font;
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkStyleKey]) {
       self.inkView.inkStyle = [aDecoder decodeIntegerForKey:MDCButtonInkViewInkStyleKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkColorKey]) {
-      self.inkView.inkColor = [aDecoder decodeObjectForKey:MDCButtonInkViewInkColorKey];
+      self.inkView.inkColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                     forKey:MDCButtonInkViewInkColorKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkMaxRippleRadiusKey]) {
@@ -178,7 +192,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorHintKey]) {
-      _underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
+      _underlyingColorHint = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                    forKey:MDCButtonUnderlyingColorHintKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
@@ -202,19 +217,23 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
-      _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
+      _userElevations = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                               forKey:MDCButtonUserElevationsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBorderColorsKey]) {
-      _borderColors = [aDecoder decodeObjectForKey:MDCButtonBorderColorsKey];
+      _borderColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                             forKey:MDCButtonBorderColorsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBorderWidthsKey]) {
-      _borderWidths = [aDecoder decodeObjectForKey:MDCButtonBorderWidthsKey];
+      _borderWidths = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                              forKey:MDCButtonBorderWidthsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBackgroundColorsKey]) {
-      _backgroundColors = [aDecoder decodeObjectForKey:MDCButtonBackgroundColorsKey];
+      _backgroundColors = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                                  forKey:MDCButtonBackgroundColorsKey];
     } else {
       // Storyboards will set the backgroundColor via the UIView backgroundColor setter, so we have
       // to write that in to our _backgroundColors dictionary.
@@ -222,12 +241,18 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
     [self updateBackgroundColor];
 
+    if ([aDecoder containsValueForKey:MDCButtonFontsKey]) {
+      _fonts = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class] forKey:MDCButtonFontsKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonNontransformedTitlesKey]) {
-      _nontransformedTitles = [aDecoder decodeObjectForKey:MDCButtonNontransformedTitlesKey];
+      _nontransformedTitles = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                                      forKey:MDCButtonNontransformedTitlesKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonShadowColorsKey]) {
-      _shadowColors = [aDecoder decodeObjectForKey:MDCButtonShadowColorsKey];
+      _shadowColors = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                              forKey:MDCButtonShadowColorsKey];
     }
   }
   return self;
@@ -257,6 +282,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_nontransformedTitles forKey:MDCButtonNontransformedTitlesKey];
   [aCoder encodeObject:_borderColors forKey:MDCButtonBorderColorsKey];
   [aCoder encodeObject:_borderWidths forKey:MDCButtonBorderWidthsKey];
+  [aCoder encodeObject:_fonts forKey:MDCButtonFontsKey];
   if (_shadowColors) {
     [aCoder encodeObject:_shadowColors forKey:MDCButtonShadowColorsKey];
   }
@@ -271,6 +297,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _nontransformedTitles = [NSMutableDictionary dictionary];
   _borderColors = [NSMutableDictionary dictionary];
   _borderWidths = [NSMutableDictionary dictionary];
+  _fonts = [NSMutableDictionary dictionary];
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -281,9 +308,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
   self.showsTouchWhenHighlighted = NO;
-
-  // Set up title label attributes.
-  self.titleLabel.font = [MDCTypography buttonFont];
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
@@ -301,6 +325,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+  _inkView.usesLegacyInkRipple = NO;
   [self insertSubview:_inkView belowSubview:self.imageView];
 
   // UIButton has a drag enter/exit boundary that is outside of the frame of the button itself.
@@ -362,7 +387,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
-  if (_inkView.inkStyle == MDCInkStyleUnbounded) {
+  if (_inkView.inkStyle == MDCInkStyleUnbounded && _inkView.usesLegacyInkRipple) {
     CGRect contentRect = [self contentRectForBounds:self.bounds];
     CGPoint contentCenterPoint =
         CGPointMake(CGRectGetMidX(contentRect), CGRectGetMidY(contentRect));
@@ -482,6 +507,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateBorderColor];
   [self updateBorderWidth];
   [self updateShadowColor];
+  [self updateTitleFont];
 }
 
 #pragma mark - Title Uppercasing
@@ -703,15 +729,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateBorderColor];
 }
 
-- (void)updateBorderColor {
-  UIColor *color = _borderColors[@(self.state)];
-  if (!color && self.state != UIControlStateNormal) {
-    // We fall back to UIControlStateNormal if there is no value for the current state.
-    color = _borderColors[@(UIControlStateNormal)];
-  }
-  self.layer.borderColor = color ? color.CGColor : NULL;
-}
-
 #pragma mark - Border Width
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
@@ -735,6 +752,18 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     width = _borderWidths[@(UIControlStateNormal)];
   }
   self.layer.borderWidth = width ? (CGFloat)width.doubleValue : 0;
+}
+
+#pragma mark - Title Font
+
+- (nullable UIFont *)titleFontForState:(UIControlState)state {
+  return _fonts[@(state)];
+}
+
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
+  _fonts[@(state)] = font;
+
+  [self updateTitleFont];
 }
 
 #pragma mark - Private methods
@@ -819,7 +848,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
   void (^animations)(void) = ^{
-    self.alpha = self.enabled ? _enabledAlpha : _disabledAlpha;
+    self.alpha = self.enabled ? self->_enabledAlpha : self.disabledAlpha;
     [self updateBackgroundColor];
   };
 
@@ -860,6 +889,42 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 }
 
+- (void)updateBorderColor {
+  UIColor *color = _borderColors[@(self.state)];
+  if (!color && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
+    color = _borderColors[@(UIControlStateNormal)];
+  }
+  self.layer.borderColor = color ? color.CGColor : NULL;
+}
+
+- (void)updateTitleFont {
+  // Retreive any custom font that has been set
+  UIFont *font = _fonts[@(self.state)];
+  if (!font && self.state != UIControlStateNormal) {
+    // We fall back to UIControlStateNormal if there is no value for the current state.
+    font = _fonts[@(UIControlStateNormal)];
+  }
+
+  if (!font) {
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    font = [MDCTypography buttonFont];
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    // Dynamic type is enabled so apply scaling
+    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                              scaledForDynamicType:YES];
+  }
+
+  self.titleLabel.font = font;
+
+  [self setNeedsLayout];
+}
+
+#pragma mark - Dynamic Type
+
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
 }
@@ -867,8 +932,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   if (_mdc_adjustsFontForContentSizeCategory) {
-    UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-    self.titleLabel.font = font;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contentSizeCategoryDidChange:)
                                                  name:UIContentSizeCategoryDidChangeNotification
@@ -878,11 +941,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                                                     name:UIContentSizeCategoryDidChangeNotification
                                                   object:nil];
   }
+
+  [self updateTitleFont];
 }
 
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-  self.titleLabel.font = font;
+  [self updateTitleFont];
+
   [self sizeToFit];
 }
 

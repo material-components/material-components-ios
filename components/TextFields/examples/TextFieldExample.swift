@@ -42,7 +42,7 @@ final class TextFieldSwiftExample: UIViewController {
     city.autocapitalizationType = .words
     return city
   }()
-  let cityController: MDCTextInputControllerDefault
+  let cityController: MDCTextInputControllerUnderline
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -50,14 +50,14 @@ final class TextFieldSwiftExample: UIViewController {
     state.autocapitalizationType = .allCharacters
     return state
   }()
-  let stateController: MDCTextInputControllerDefault
+  let stateController: MDCTextInputControllerUnderline
 
   let zip: MDCTextField = {
     let zip = MDCTextField()
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
-  let zipController: MDCTextInputControllerDefault
+  let zipController: MDCTextInputControllerUnderline
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -71,12 +71,12 @@ final class TextFieldSwiftExample: UIViewController {
     return message
   }()
 
-  var allTextFieldControllers = [MDCTextInputControllerDefault]()
+  var allTextFieldControllers = [MDCTextInputControllerUnderline]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    stateController = MDCTextInputControllerDefault(textInput: state)
-    cityController = MDCTextInputControllerDefault(textInput: city)
-    zipController = MDCTextInputControllerDefault(textInput: zip)
+    stateController = MDCTextInputControllerUnderline(textInput: state)
+    cityController = MDCTextInputControllerUnderline(textInput: city)
+    zipController = MDCTextInputControllerUnderline(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -109,7 +109,7 @@ final class TextFieldSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputControllerDefault(textInput: name)
+    let nameController = MDCTextInputControllerUnderline(textInput: name)
     name.delegate = self
     name.text = "Grace Hopper"
     nameController.placeholderText = "Name"
@@ -117,7 +117,7 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputControllerDefault(textInput: address)
+    let addressController = MDCTextInputControllerUnderline(textInput: address)
     address.delegate = self
     addressController.placeholderText = "Address"
     allTextFieldControllers.append(addressController)
@@ -145,13 +145,13 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputControllerDefault(textInput: phone)
+    let phoneController = MDCTextInputControllerUnderline(textInput: phone)
     phone.delegate = self
     phoneController.placeholderText = "Phone Number"
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
-    let messageController = MDCTextInputControllerDefault(textInput: message)
+    let messageController = MDCTextInputControllerUnderline(textInput: message)
     message.textView?.delegate = self
     #if swift(>=3.2)
       message.text = """
@@ -337,7 +337,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 
     if textField == state {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         stateController.setErrorText("Error: State can only contain letters",
                                    errorAccessibilityValue: nil)
       } else {
@@ -345,10 +345,10 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
       }
     } else if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
-      } else if fullString.characters.count > 5 {
+      } else if fullString.characterCount > 5 {
         zipController.setErrorText("Error: Zip can only contain five digits",
                                    errorAccessibilityValue: nil)
       } else {
@@ -356,7 +356,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         cityController.setErrorText("Error: City can only contain letters",
                                     errorAccessibilityValue: nil)
       } else {
@@ -450,5 +450,19 @@ extension TextFieldSwiftExample {
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
     return true
+  }
+
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
+}
+
+internal extension String {
+  var characterCount: Int {
+    #if swift(>=3.2)
+      return self.count
+    #else
+      return self.characters.count
+    #endif
   }
 }

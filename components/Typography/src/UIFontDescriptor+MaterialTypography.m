@@ -19,16 +19,8 @@
 
 @implementation UIFontDescriptor (MaterialTypography)
 
-+ (nonnull UIFontDescriptor *)mdc_preferredFontDescriptorForMaterialTextStyle:
-        (MDCFontTextStyle)style {
-  // iOS' default UIContentSizeCategory is Large.
-  NSString *sizeCategory = UIContentSizeCategoryLarge;
-
-  // If we are within an application, query the preferredContentSizeCategory.
-  if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  }
-
++ (nonnull UIFontDescriptor *)mdc_fontDescriptorForMaterialTextStyle:(MDCFontTextStyle)style
+                                                        sizeCategory:(NSString *)sizeCategory {
   // TODO(#1179): We should include our leading and tracking metrics when creating this descriptor.
   MDCFontTraits *materialTraits =
       [MDCFontTraits traitsForTextStyle:style sizeCategory:sizeCategory];
@@ -44,8 +36,11 @@
     UIFont *smallSystemFont;
     UIFont *largeSystemFont;
     if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
       smallSystemFont = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
       largeSystemFont = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
+#pragma clang diagnostic pop
     } else {
       // TODO: Remove this fallback once we are 8.2+
       smallSystemFont = [UIFont systemFontOfSize:12];
@@ -67,6 +62,32 @@
   UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] initWithFontAttributes:attributes];
 
   return fontDescriptor;
+}
+
++ (nonnull UIFontDescriptor *)mdc_preferredFontDescriptorForMaterialTextStyle:
+    (MDCFontTextStyle)style {
+  // iOS' default UIContentSizeCategory is Large.
+  NSString *sizeCategory = UIContentSizeCategoryLarge;
+
+  // If we are within an application, query the preferredContentSizeCategory.
+  if ([UIApplication mdc_safeSharedApplication]) {
+    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  } else if (@available(iOS 10.0, *)) {
+    sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
+#endif
+  }
+
+  return [UIFontDescriptor mdc_fontDescriptorForMaterialTextStyle:style sizeCategory:sizeCategory];
+}
+
++ (nonnull UIFontDescriptor *)mdc_standardFontDescriptorForMaterialTextStyle:
+    (MDCFontTextStyle)style {
+  // iOS' default UIContentSizeCategory is Large.
+  // Since we don't want to scale with Dynamic Type create the font descriptor based on that.
+  NSString *sizeCategory = UIContentSizeCategoryLarge;
+
+  return [UIFontDescriptor mdc_fontDescriptorForMaterialTextStyle:style sizeCategory:sizeCategory];
 }
 
 @end

@@ -73,4 +73,8 @@ extension ShadowElevationsTypicalUseExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
+
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
 }

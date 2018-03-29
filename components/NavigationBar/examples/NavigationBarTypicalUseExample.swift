@@ -37,14 +37,34 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
 
     navBar!.translatesAutoresizingMaskIntoConstraints = false
 
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+        self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.navBar!.topAnchor).isActive = true
+      } else {
+        NSLayoutConstraint(item: self.topLayoutGuide,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: self.navBar,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+      }
+    #else
+      NSLayoutConstraint(item: self.topLayoutGuide,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: self.navBar,
+                         attribute: .top,
+                         multiplier: 1,
+                         constant: 0).isActive = true
+    #endif
+
     let viewBindings = ["navBar": navBar!]
 
-    var constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[navBar]|",
-      options: [], metrics: nil, views: viewBindings)
-    constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[navBar]",
-      options: [], metrics: nil, views: viewBindings)
-
-    view.addConstraints(constraints)
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[navBar]|",
+                                                                options: [],
+                                                                metrics: nil,
+                                                                views: viewBindings))
     self.setupExampleViews()
   }
 

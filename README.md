@@ -42,6 +42,12 @@ Use `cmd-1` to open the project navigator within Xcode. Peal open the `Pods` pro
 
 ## Installation
 
+### Requirements
+
+- Xcode 8.0 or higher.
+- Minimum iOS deployment target of 8.0 or higher
+- Cocoapods
+
 ### Getting Started with a New Project
 
 Check out our [tutorial](howto/tutorial) for a step-by-step guide to setting up a new project using Material Components.
@@ -65,7 +71,7 @@ pod init
 ```
 
 Next, add the
-[Material Components for iOS pod](https://cocoapods.org/pods/MaterialComponentsIOS)
+[Material Components for iOS pod](https://cocoapods.org/pods/MaterialComponents)
 to your target in your Podfile:
 
 ``` ruby

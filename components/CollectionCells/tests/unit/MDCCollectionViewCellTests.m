@@ -15,7 +15,7 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "MaterialCollections.h"
+#import "MaterialCollectionCells.h"
 
 @interface MDCCollectionViewCellTests : XCTestCase
 

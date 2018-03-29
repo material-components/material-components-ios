@@ -18,7 +18,10 @@ import UIKit
 
 import CatalogByConvention
 
+import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MDCActivityIndicatorColorThemer
+import MaterialComponents.MDCBottomNavigationBarColorThemer
+import MaterialComponents.MDCBottomAppBarColorThemer
 import MaterialComponents.MDCButtonBarColorThemer
 import MaterialComponents.MDCButtonColorThemer
 import MaterialComponents.MDCAlertColorThemer
@@ -45,7 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
     UIApplication.shared.statusBarStyle = .lightContent
 
-    let tree = CBCCreateNavigationTree()
+    // The navigation tree will only take examples that implement
+    // and return YES to catalogIsPresentable.
+    let tree = CBCCreatePresentableNavigationTree()
 
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
@@ -66,6 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Apply color scheme to material design components using component themers.
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
     MDCAlertColorThemer.apply(colorScheme)
+    MDCBottomAppBarColorThemer.apply(colorScheme, to: MDCBottomAppBarView.appearance())
+    MDCBottomNavigationBarColorThemer.apply(colorScheme, to:MDCBottomNavigationBar.appearance())
     MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
     MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
     let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
@@ -80,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
 
     MDCTextFieldColorThemer.apply(colorScheme,
-                                  toAllControllersOfClass: MDCTextInputControllerDefault.self)
+                                  toAllControllersOfClass: MDCTextInputControllerUnderline.self)
     MDCTextFieldColorThemer.apply(colorScheme,
                                   toAllControllersOfClass: MDCTextInputControllerLegacyDefault.self)
     MDCTextFieldColorThemer.apply(colorScheme,

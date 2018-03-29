@@ -16,9 +16,9 @@
 
 #import "supplemental/TabBarIconExampleSupplemental.h"
 
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialPalettes;
-@import MaterialComponents.MaterialTabs;
+#import "MaterialAppBar.h"
+#import "MaterialPalettes.h"
+#import "MaterialTabs.h"
 
 @implementation TabBarIconExample
 
@@ -74,9 +74,9 @@
 
   UIColor *green =  [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
 
-  tabBar.barTintColor = [UIColor colorWithWhite:0.1f alpha:1.0];
+  tabBar.barTintColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
   tabBar.tintColor = green;
-  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1f];
   tabBar.selectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.87f];
   tabBar.unselectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.38f];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;

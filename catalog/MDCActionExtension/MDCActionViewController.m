@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  CBCNode *tree = CBCCreateNavigationTree();
+  CBCNode *tree = CBCCreatePresentableNavigationTree();
 
   CBCNodeListViewController *viewController = [[CBCNodeListViewController alloc] initWithNode:tree];
   viewController.title = @"Material Components";

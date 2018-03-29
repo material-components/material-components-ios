@@ -38,4 +38,8 @@ extension FlexibleHeaderTypicalUseViewControllerSwift {
     return true
   }
 
+  @objc class func catalogIsPresentable() -> Bool {
+    return true
+  }
+
 }

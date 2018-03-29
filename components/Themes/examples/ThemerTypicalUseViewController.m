@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialBottomAppBar.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialPalettes.h"
 #import "MaterialProgressView.h"
@@ -34,6 +35,8 @@
   [MDCActivityIndicatorColorThemer applyColorScheme:self.colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
   [MDCAlertColorThemer applyColorScheme:self.colorScheme];
+  [MDCBottomAppBarColorThemer applyColorScheme:self.colorScheme
+                            toBottomAppBarView:[MDCBottomAppBarView appearance]];
   [MDCButtonBarColorThemer applyColorScheme:self.colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:self.colorScheme toButton:[MDCButton appearance]];
   [MDCFeatureHighlightColorThemer applyColorScheme:self.colorScheme
@@ -52,7 +55,7 @@
   [MDCTabBarColorThemer applyColorScheme:self.colorScheme toTabBar:[MDCTabBar appearance]];
 
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
-           toAllTextInputControllersOfClass:[MDCTextInputControllerDefault class]];
+           toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme
            toAllTextInputControllersOfClass:[MDCTextInputControllerLegacyDefault class]];
   [MDCTextFieldColorThemer applyColorScheme:self.colorScheme

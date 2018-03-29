@@ -221,12 +221,14 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return font;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
   } else {
     font = [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
   }
-
+#pragma clang diagnostic pop
   if (font) {
     [self.fontCache setObject:font forKey:cacheKey];
   }
@@ -240,11 +242,14 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return font;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
   } else {
     font = [UIFont systemFontOfSize:fontSize];
   }
+#pragma clang diagnostic pop
 
   [self.fontCache setObject:font forKey:cacheKey];
 
@@ -258,11 +263,15 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return font;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
   } else {
     font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:fontSize];
   }
+#pragma clang diagnostic pop
+
   if (font) {
     [self.fontCache setObject:font forKey:cacheKey];
   }
@@ -276,11 +285,14 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return font;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
   } else {
     font = [UIFont boldSystemFontOfSize:fontSize];
   }
+  #pragma clang diagnostic pop
 
   [self.fontCache setObject:font forKey:cacheKey];
 
@@ -344,6 +356,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
 #pragma clang diagnostic ignored "-Wunreachable-code"
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if (&UIFontWeightMedium != NULL) {
     MDCFontWeightMedium = UIFontWeightMedium;
   }

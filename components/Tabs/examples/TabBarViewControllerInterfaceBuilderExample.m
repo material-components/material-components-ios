@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
-@import MaterialComponents.MaterialPalettes;
-@import MaterialComponents.MaterialTabs;
+#import "MaterialPalettes.h"
+#import "MaterialTabs.h"
 
 @interface TabBarViewControllerInterfaceBuilderExample : MDCTabBarViewController
 
@@ -66,6 +66,10 @@
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
 }
 
 @end
