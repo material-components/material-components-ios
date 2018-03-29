@@ -2,7 +2,7 @@
 
 ## Breaking change
 
-MDCBottomAppBarColorThemer changed a argument to nonnull from nullable.
+MDCTabBarFontThemer and MDCBottomAppBarColorThemer changed a argument to nonnull from nullable.
 
 ## API changes
 
