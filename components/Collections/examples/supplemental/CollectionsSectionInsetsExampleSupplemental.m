@@ -32,7 +32,7 @@
   for (NSInteger i = 0; i < kSectionCount; i++) {
     NSMutableArray *items = [NSMutableArray array];
     for (NSInteger j = 0; j < kSectionItemCount; j++) {
-      NSString *itemString = [NSString stringWithFormat:@"Section-%zd Item-%zd", i, j];
+      NSString *itemString = [NSString stringWithFormat:@"Section-%ld Item-%ld", (long)i, (long)j];
       [items addObject:itemString];
     }
     [self.content addObject:items];
