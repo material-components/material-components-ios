@@ -382,7 +382,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     }
 #pragma clang diagnostic pop
 
-    CGFloat buttonContentPadding = [self buttonContentPadding];
+    CGFloat buttonContentPadding =
+        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
     [button setTranslatesAutoresizingMaskIntoConstraints:NO];
     button.tag = kButtonTagStart;
     [buttonView addSubview:button];
@@ -624,10 +625,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   [self setNeedsLayout];
 }
 
-- (CGFloat)buttonContentPadding {
-  return MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
-}
-
 - (BOOL)shouldWaitForDismissalDuringVoiceover {
   return self.message.action != nil;
 }
@@ -859,7 +856,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kBorderMargin" : @(kBorderWidth),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
-    @"kButtonPadding" : @([self buttonContentPadding]),
+    @"kButtonPadding" :
+        @(MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding),
   };
 
   __block UIView *previousButton = nil;
