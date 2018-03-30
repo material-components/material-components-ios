@@ -62,7 +62,8 @@ static const CGFloat kLegacyCornerRadius = 0;
 /**
  Padding between the edges of the snackbar and any content.
  */
-static UIEdgeInsets kContentMargin = (UIEdgeInsets){18.0, 24.0, 18.0, 24.0};
+static UIEdgeInsets kContentMargin = (UIEdgeInsets){16.0, 16.0, 16.0, 8.0};
+static UIEdgeInsets kLegacyContentMargin = (UIEdgeInsets){18.0, 24.0, 18.0, 24.0};
 
 /**
  Padding between the image and the main title.
@@ -77,7 +78,14 @@ static const CGFloat kTitleButtonPadding = 8.0f;
 /**
  Padding on the edges of the buttons.
  */
-static const CGFloat kButtonPadding = 5.0f;
+static const CGFloat kLegacyButtonPadding = 5.0f;
+static const CGFloat kButtonPadding = 8.0f;
+
+
+/**
+ Minimum padding for the vertical padding of the buttons to the snackbar
+ */
+static const CGFloat kMinVerticalButtonPadding = 6.0f;
 
 /**
  The width of the snackbar.
@@ -374,7 +382,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     }
 #pragma clang diagnostic pop
 
-
+    CGFloat buttonContentPadding =
+        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
     [button setTranslatesAutoresizingMaskIntoConstraints:NO];
     button.tag = kButtonTagStart;
     [buttonView addSubview:button];
@@ -384,7 +393,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     button.titleLabel.numberOfLines = 1;
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    button.contentEdgeInsets = UIEdgeInsetsMake(0, kButtonPadding, 0, kButtonPadding);
+    button.contentEdgeInsets = UIEdgeInsetsMake(buttonContentPadding,
+                                                buttonContentPadding,
+                                                buttonContentPadding,
+                                                buttonContentPadding);
 
     // Set up the button's accessibility values.
     button.accessibilityIdentifier = message.action.accessibilityIdentifier;
@@ -404,7 +416,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     CGSize buttonSize = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX,CGFLOAT_MAX)];
     availableTextWidth -= buttonSize.width;
-    availableTextWidth -= 2 * kButtonPadding;
+    availableTextWidth -= 2 * buttonContentPadding;
 
     [actions addObject:buttonView];
   }
@@ -661,6 +673,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kTopMargin" : @(self.safeContentMargin.top),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
     @"kContentSafeBottomInset" : @(kBorderWidth +  self.contentSafeBottomInset),
+    @"kMinVerticalButtonPadding": @(kMinVerticalButtonPadding),
   };
   NSDictionary *views = @{
     @"container" : self.containerView,
@@ -726,17 +739,27 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   } else {  // This is a horizontal layout, and there are buttons present.
     // Align the content and buttons horizontally.
     formatString = @"H:[content]-(==kTitleButtonPadding)-[buttons]-(==kRightMargin)-|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
+    [constraints addObjectsFromArray:
+        [NSLayoutConstraint constraintsWithVisualFormat:formatString
+                                                options:NSLayoutFormatAlignAllCenterY
+                                                metrics:metrics
+                                                  views:views]];
 
-    // The buttons should take up the entire height of the container view.
-    formatString = @"V:|[buttons]|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
+    if (MDCSnackbarMessage.usesLegacySnackbar) {
+      // The buttons should take up the entire height of the container view.
+      formatString = @"V:|[buttons]|";
+      [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
+                                                                               options:0
+                                                                               metrics:metrics
+                                                                                 views:views]];
+    } else {
+      formatString = @"V:|-(>=kMinVerticalButtonPadding)-[buttons]-(>=kMinVerticalButtonPadding)-|";
+      [constraints addObjectsFromArray:
+          [NSLayoutConstraint constraintsWithVisualFormat:formatString
+                                                  options:NSLayoutFormatAlignAllCenterY
+                                                  metrics:metrics
+                                                    views:views]];
+    }
 
     // Pin the content to the bottom of the container view, since there's nothing below.
     formatString = @"V:[content]-(==kBottomMargin)-|";
@@ -833,7 +856,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kBorderMargin" : @(kBorderWidth),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
-    @"kButtonPadding" : @(kButtonPadding),
+    @"kButtonPadding" :
+        @(MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding),
   };
 
   __block UIView *previousButton = nil;
@@ -940,7 +964,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (UIEdgeInsets)safeContentMargin {
-  UIEdgeInsets contentMargin = kContentMargin;
+  UIEdgeInsets contentMargin =
+      MDCSnackbarMessage.usesLegacySnackbar ? kLegacyContentMargin : kContentMargin;
 
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
