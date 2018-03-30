@@ -15,4 +15,4 @@
  */
 
 #import "MDCFontScheme.h"
-#import "MDCLegacyColorScheme.h"
+#import "MDCColorSchemeMigration.h"

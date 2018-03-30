@@ -15,7 +15,6 @@
  */
 
 #import "MDCActivityIndicatorColorThemer.h"
-#import "MaterialColorScheme.h"
 
 @implementation MDCActivityIndicatorColorThemer
 
