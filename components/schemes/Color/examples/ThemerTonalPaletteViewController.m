@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialThemes.h"
 #import "MaterialPalettes.h"
 #import "supplemental/ThemerTypicalUseSupplemental.h"
 

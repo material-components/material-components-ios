@@ -134,10 +134,5 @@ NS_DESIGNATED_INITIALIZER;
 
 @end
 
-@interface MDCSemanticColorScheme (Initializers)
-
-
-@end
-
 @interface MDCSemanticColorScheme (NSSecureCoding) <NSSecureCoding>
 @end
