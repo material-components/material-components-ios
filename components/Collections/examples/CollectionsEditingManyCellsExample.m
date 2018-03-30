@@ -41,7 +41,8 @@ static const NSInteger kSectionItemCount = 50;
   for (NSInteger i = 0; i < kSectionCount; i++) {
     NSMutableArray *items = [NSMutableArray array];
     for (NSInteger j = 0; j < kSectionItemCount; j++) {
-      NSString *itemString = [NSString stringWithFormat:@"Section-%02zd Item-%02zd", i, j];
+      NSString *itemString =
+          [NSString stringWithFormat:@"Section-%02ld Item-%02ld", (long)i, (long)j];
       [items addObject:itemString];
     }
     [self.content addObject:items];

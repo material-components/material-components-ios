@@ -81,7 +81,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
       return MDCItemBarAlignmentCenterSelected;
   }
 
-  NSCAssert(0, @"Invalid alignment value %zd", alignment);
+  NSCAssert(0, @"Invalid alignment value %ld", (long)alignment);
   return MDCItemBarAlignmentLeading;
 }
 
@@ -486,7 +486,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
       break;
 
     default:
-      NSAssert(0, @"Invalid appearance value %zd", appearance);
+      NSAssert(0, @"Invalid appearance value %ld", (long)appearance);
       displayTitle = YES;
       break;
   }
@@ -496,7 +496,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   // Update default height
   CGFloat defaultHeight = [self defaultHeightForBarPosition:position itemAppearance:appearance];
   if (defaultHeight == 0) {
-    NSAssert(0, @"Missing default height for %zd", appearance);
+    NSAssert(0, @"Missing default height for %ld", (long)appearance);
     defaultHeight = kTitleOnlyBarHeight;
   }
   style.defaultHeight = defaultHeight;
