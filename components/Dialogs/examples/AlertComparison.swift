@@ -112,7 +112,7 @@ class DialogsAlertComparison: UIViewController {
     alertController.addAction(acceptAction)
 
     let considerAction = UIAlertAction(title:"Consider", style:.default)
-        { (_) in print("Consider") }
+      { (_) in print("Consider") }
     alertController.addAction(considerAction)
 
     let rejectAction = UIAlertAction(title:"Reject", style:.default) { (_) in print("Reject") }
