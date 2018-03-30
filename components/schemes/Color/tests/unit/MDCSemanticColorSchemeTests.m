@@ -19,6 +19,12 @@
 
 #import "MaterialThemes.h"
 
+static UIColor *ColorFromRGB(uint32_t colorValue) {
+  return [[UIColor alloc] initWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
+                                green:(CGFloat)(((colorValue >> 8) & 0xFF) / 255.0)
+                                 blue:(CGFloat)((colorValue & 0xFF) / 255.0) alpha:1];
+}
+
 @interface MDCSemanticColorSchemeTests : XCTestCase
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
@@ -28,13 +34,15 @@
 - (void)setUp {
   [super setUp];
   self.colorScheme = [[MDCSemanticColorScheme alloc] initWithPrimaryColor:UIColor.redColor
-                                                 primaryColorLightVariant:UIColor.blueColor
-                                                  primaryColorDarkVariant:UIColor.greenColor
+                                                      primaryColorVariant:UIColor.blueColor
                                                            secondaryColor:UIColor.orangeColor
                                                                errorColor:UIColor.yellowColor
+                                                             surfaceColor:UIColor.cyanColor
+                                                          backgroundColor:UIColor.magentaColor
                                                            onPrimaryColor:UIColor.purpleColor
                                                          onSecondaryColor:UIColor.darkGrayColor
-                                                          backgroundColor:UIColor.blackColor];
+                                                           onSurfaceColor:UIColor.darkTextColor
+                                                        onBackgroundColor:UIColor.brownColor];
 }
 
 - (void)tearDown {
@@ -46,23 +54,27 @@
   // Given
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithPrimaryColor:UIColor.redColor
-                                  primaryColorLightVariant:UIColor.blueColor
-                                   primaryColorDarkVariant:UIColor.greenColor
+                                       primaryColorVariant:UIColor.blueColor
                                             secondaryColor:UIColor.orangeColor
                                                 errorColor:UIColor.yellowColor
+                                              surfaceColor:UIColor.cyanColor
+                                           backgroundColor:UIColor.magentaColor
                                             onPrimaryColor:UIColor.purpleColor
                                           onSecondaryColor:UIColor.darkGrayColor
-                                           backgroundColor:UIColor.blackColor];
+                                            onSurfaceColor:UIColor.darkTextColor
+                                         onBackgroundColor:UIColor.brownColor];
 
   // Then
   XCTAssertEqual(colorScheme.primaryColor, UIColor.redColor);
-  XCTAssertEqual(colorScheme.primaryColorLightVariant, UIColor.blueColor);
-  XCTAssertEqual(colorScheme.primaryColorDarkVariant, UIColor.greenColor);
+  XCTAssertEqual(colorScheme.primaryColorVariant, UIColor.blueColor);
   XCTAssertEqual(colorScheme.secondaryColor, UIColor.orangeColor);
   XCTAssertEqual(colorScheme.errorColor, UIColor.yellowColor);
+  XCTAssertEqual(colorScheme.surfaceColor, UIColor.cyanColor);
+  XCTAssertEqual(colorScheme.backgroundColor, UIColor.magentaColor);
   XCTAssertEqual(colorScheme.onPrimaryColor, UIColor.purpleColor);
   XCTAssertEqual(colorScheme.onSecondaryColor, UIColor.darkGrayColor);
-  XCTAssertEqual(colorScheme.backgroundColor, UIColor.blackColor);
+  XCTAssertEqual(colorScheme.onSurfaceColor, UIColor.darkTextColor);
+  XCTAssertEqual(colorScheme.onBackgroundColor, UIColor.brownColor);
 }
 
 - (void)testCoding {
@@ -75,24 +87,53 @@
   XCTAssertTrue([MDCSemanticColorScheme supportsSecureCoding]);
 
   XCTAssertEqualObjects(unarchivedColorScheme.primaryColor, self.colorScheme.primaryColor);
-  XCTAssertEqualObjects(unarchivedColorScheme.primaryColorLightVariant,
-                        self.colorScheme.primaryLightColor);
-  XCTAssertEqualObjects(unarchivedColorScheme.primaryColorDarkVariant,
-                        self.colorScheme.primaryColorDarkVariant);
+  XCTAssertEqualObjects(unarchivedColorScheme.primaryColorVariant,
+                        self.colorScheme.primaryColorVariant);
   XCTAssertEqualObjects(unarchivedColorScheme.secondaryColor, self.colorScheme.secondaryColor);
   XCTAssertEqualObjects(unarchivedColorScheme.errorColor, self.colorScheme.errorColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.surfaceColor, self.colorScheme.surfaceColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.backgroundColor, self.colorScheme.backgroundColor);
   XCTAssertEqualObjects(unarchivedColorScheme.onPrimaryColor, self.colorScheme.onPrimaryColor);
   XCTAssertEqualObjects(unarchivedColorScheme.onSecondaryColor, self.colorScheme.onSecondaryColor);
-  XCTAssertEqualObjects(unarchivedColorScheme.backgroundColor, self.colorScheme.backgroundColor);
-  XCTAssertEqualObjects(unarchivedColorScheme.primaryLightColor,
-                        self.colorScheme.primaryLightColor);
-  XCTAssertEqualObjects(unarchivedColorScheme.primaryDarkColor, self.colorScheme.primaryDarkColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.onSurfaceColor, self.colorScheme.onSurfaceColor);
+  XCTAssertEqualObjects(unarchivedColorScheme.onBackgroundColor,
+                        self.colorScheme.onBackgroundColor);
 }
 
-- (void)testPrimaryColorVariantCompatibility {
+- (void)testInitMatchesInitWithMaterialDefaults {
+  // Given
+  MDCSemanticColorScheme *initScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *mdDefaultScheme = [[MDCSemanticColorScheme alloc]
+                                             initWithMaterialDefaults];
+
   // Then
-  XCTAssertEqual(self.colorScheme.primaryLightColor, self.colorScheme.primaryColorLightVariant);
-  XCTAssertEqual(self.colorScheme.primaryDarkColor, self.colorScheme.primaryColorDarkVariant);
+  XCTAssertEqualObjects(initScheme.primaryColor, mdDefaultScheme.primaryColor);
+  XCTAssertEqualObjects(initScheme.primaryColorVariant, mdDefaultScheme.primaryColorVariant);
+  XCTAssertEqualObjects(initScheme.secondaryColor, mdDefaultScheme.secondaryColor);
+  XCTAssertEqualObjects(initScheme.errorColor, mdDefaultScheme.errorColor);
+  XCTAssertEqualObjects(initScheme.surfaceColor, mdDefaultScheme.surfaceColor);
+  XCTAssertEqualObjects(initScheme.backgroundColor, mdDefaultScheme.backgroundColor);
+  XCTAssertEqualObjects(initScheme.onPrimaryColor, mdDefaultScheme.onPrimaryColor);
+  XCTAssertEqualObjects(initScheme.onSecondaryColor, mdDefaultScheme.onSecondaryColor);
+  XCTAssertEqualObjects(initScheme.onSurfaceColor, mdDefaultScheme.onSurfaceColor);
+  XCTAssertEqualObjects(initScheme.onBackgroundColor, mdDefaultScheme.onBackgroundColor);
+}
+
+- (void)testInitWithMaterialDefaults {
+  // Given
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithMaterialDefaults];
+
+  // Then
+  XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0x6200EE));
+  XCTAssertEqualObjects(colorScheme.primaryColorVariant, ColorFromRGB(0x3700B3));
+  XCTAssertEqualObjects(colorScheme.secondaryColor, ColorFromRGB(0x03DAC6));
+  XCTAssertEqualObjects(colorScheme.errorColor, ColorFromRGB(0xFF1744));
+  XCTAssertEqualObjects(colorScheme.surfaceColor, ColorFromRGB(0xFFFFFF));
+  XCTAssertEqualObjects(colorScheme.backgroundColor, ColorFromRGB(0xFFFFFF));
+  XCTAssertEqualObjects(colorScheme.onPrimaryColor, ColorFromRGB(0xFFFFFF));
+  XCTAssertEqualObjects(colorScheme.onSecondaryColor, ColorFromRGB(0x000000));
+  XCTAssertEqualObjects(colorScheme.onSurfaceColor, ColorFromRGB(0x000000));
+  XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0x000000));
 }
 
 @end
