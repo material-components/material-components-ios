@@ -108,6 +108,7 @@ OrderedViewControllersWithTransitionContext(id<UIViewControllerContextTransition
 
 @implementation MDCMaskedTransition {
   UIView *_sourceView;
+  CGFloat _initialSourceViewAlpha;
   MDMTransitionDirection _direction;
 }
 
@@ -151,6 +152,7 @@ OrderedViewControllersWithTransitionContext(id<UIViewControllerContextTransition
            @"Expected two view controllers to be involved in a transition.");
   if ([viewControllers count] != 2) {
     [transitionContext completeTransition:YES];
+    return;
   }
   UIViewController *presentedViewController = viewControllers[1];
 
@@ -266,9 +268,13 @@ OrderedViewControllersWithTransitionContext(id<UIViewControllerContextTransition
   MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
   animator.shouldReverseValues = _direction == MDMTransitionDirectionBackward;
 
+  if (_direction == MDMTransitionDirectionForward) {
+    _initialSourceViewAlpha = _sourceView.alpha;
+  }
+
   [animator animateWithTiming:motion.iconFade
                       toLayer:_sourceView.layer
-                   withValues:@[ @1, @0 ]
+                   withValues:@[ @(_initialSourceViewAlpha), @0 ]
                       keyPath:MDMKeyPathOpacity];
 
   [animator animateWithTiming:motion.contentFade

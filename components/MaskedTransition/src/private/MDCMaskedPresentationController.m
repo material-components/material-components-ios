@@ -26,6 +26,7 @@
 
 @implementation MDCMaskedPresentationController {
   CGRect (^_calculateFrameOfPresentedView)(UIPresentationController *);
+  CGFloat _initialSourceViewAlpha;
 }
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
@@ -35,6 +36,11 @@
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
+    _scrimView = [[UIView alloc] init];
+    _scrimView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
+                                   | UIViewAutoresizingFlexibleHeight);
+    _scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3f];
+
     _calculateFrameOfPresentedView = [calculateFrameOfPresentedView copy];
     _sourceView = sourceView;
   }
@@ -62,13 +68,10 @@
 }
 
 - (void)presentationTransitionWillBegin {
-  if (!self.scrimView) {
-    self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
-    self.scrimView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                       | UIViewAutoresizingFlexibleHeight);
-    self.scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3f];
-    [self.containerView addSubview:self.scrimView];
-  }
+  self.scrimView.frame = self.containerView.bounds;
+  [self.containerView addSubview:self.scrimView];
+
+  _initialSourceViewAlpha = self.sourceView.alpha;
 
   MDCMaskedTransitionMotionSpec motionSpecification =
       MDCMaskedTransitionMotionSpecForContext(self.containerView, self.presentedViewController);
@@ -88,7 +91,7 @@
   if (motionSpecification.shouldSlideWhenCollapsed) {
     // Immediately reveal the source view because our presented view controller isn't collapsing
     // back to it.
-    self.sourceView.alpha = 1;
+    self.sourceView.alpha = _initialSourceViewAlpha;
 
     [self.presentedViewController.transitionCoordinator
         animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
@@ -111,7 +114,7 @@
     [self.scrimView removeFromSuperview];
     self.scrimView = nil;
 
-    self.sourceView.alpha = 1;
+    self.sourceView.alpha = _initialSourceViewAlpha;
     self.sourceView = nil;
 
   } else {
