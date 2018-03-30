@@ -119,7 +119,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @implementation ThemerTonalPaletteViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Tonal Palette Example" ];
+  return @[ @"Color Scheme", @"Tonal Palette Example" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {

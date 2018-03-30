@@ -265,7 +265,7 @@ static NSString *s_secondaryColorString;
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Custom Colors" ];
+  return @[ @"Color Scheme", @"MDCBasicColorScheme with Custom Colors" ];
 }
 
 + (NSString *)catalogStoryboardName {

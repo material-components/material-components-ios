@@ -152,7 +152,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @implementation ThemerColorSchemeViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Theme Examples" ];
+  return @[ @"Color Scheme", @"MDCBasicColorScheme Examples" ];
 }
 
 + (NSString *)catalogDescription {
