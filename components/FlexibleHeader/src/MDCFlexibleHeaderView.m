@@ -910,6 +910,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
 - (void)fhv_updateLayout {
   if (!_trackingScrollView) {
+    [self fhv_commitAccumulatorToFrame];
     return;
   }
 
