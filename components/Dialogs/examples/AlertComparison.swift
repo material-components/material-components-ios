@@ -86,15 +86,18 @@ class DialogsAlertComparison: UIViewController {
     "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
     "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
 
-    let materialAlertController = MDCAlertController(title: nil, message: messageString)
+    let alertController = MDCAlertController(title: nil, message: messageString)
 
     let acceptAction = MDCAlertAction(title:"Accept") { (_) in print("Accept") }
-    materialAlertController.addAction(acceptAction)
+    alertController.addAction(acceptAction)
+
+    let considerAction = MDCAlertAction(title:"Consider") { (_) in print("Consider") }
+    alertController.addAction(considerAction)
 
     let rejectAction = MDCAlertAction(title:"Reject") { (_) in print("Reject") }
-    materialAlertController.addAction(rejectAction)
+    alertController.addAction(rejectAction)
 
-    self.present(materialAlertController, animated: true, completion: nil)
+    self.present(alertController, animated: true, completion: nil)
   }
 
   @objc func tapUIKit(_ sender: Any) {
@@ -107,6 +110,9 @@ class DialogsAlertComparison: UIViewController {
 
     let acceptAction = UIAlertAction(title:"Accept", style:.default)
     alertController.addAction(acceptAction)
+
+    let considerAction = UIAlertAction(title:"Consider", style:.default)
+    alertController.addAction(considerAction)
 
     let rejectAction = UIAlertAction(title:"Reject", style:.default)
     alertController.addAction(rejectAction)
@@ -128,4 +134,9 @@ extension DialogsAlertComparison {
   @objc class func catalogIsPresentable() -> Bool {
     return false
   }
+
+  @objc class func catalogIsDebug() -> Bool {
+    return false
+  }
+
 }
