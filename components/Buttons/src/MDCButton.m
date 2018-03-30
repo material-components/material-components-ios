@@ -691,10 +691,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _userElevations[@(state)];
-  if (state != UIControlStateNormal && !elevation) {
+  if (state != UIControlStateNormal && (elevation == nil)) {
     elevation = _userElevations[@(UIControlStateNormal)];
   }
-  if (elevation) {
+  if (elevation != nil) {
     return (CGFloat)[elevation doubleValue];
   }
   return 0;
@@ -733,7 +733,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
   NSNumber *borderWidth = _borderWidths[@(state)];
-  if (borderWidth) {
+  if (borderWidth != nil) {
     return (CGFloat)borderWidth.doubleValue;
   }
   return 0;
@@ -747,11 +747,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateBorderWidth {
   NSNumber *width = _borderWidths[@(self.state)];
-  if (!width && self.state != UIControlStateNormal) {
+  if ((width == nil) && self.state != UIControlStateNormal) {
     // We fall back to UIControlStateNormal if there is no value for the current state.
     width = _borderWidths[@(UIControlStateNormal)];
   }
-  self.layer.borderWidth = width ? (CGFloat)width.doubleValue : 0;
+  self.layer.borderWidth = (width != nil) ? (CGFloat)width.doubleValue : 0;
 }
 
 #pragma mark - Title Font
