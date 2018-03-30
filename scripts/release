@@ -151,7 +151,7 @@ cut_release() {
     # Add the new changelog contents in reverse order:
     echo -e "\n---\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     generate_release_notes | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
-    echo -e "## Component changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "\n## Component changes" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     cat "$CHANGELOG_PATH" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## API changes" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## New features\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
