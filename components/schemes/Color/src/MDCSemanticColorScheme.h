@@ -136,7 +136,7 @@
                             onSecondaryColor:(nonnull UIColor *)onSecondaryColor
                               onSurfaceColor:(nonnull UIColor *)onSurfaceColor
                            onBackgroundColor:(nonnull UIColor *)onBackgroundColor
-NS_DESIGNATED_INITIALIZER;
+    NS_DESIGNATED_INITIALIZER;
 
 @end
 
