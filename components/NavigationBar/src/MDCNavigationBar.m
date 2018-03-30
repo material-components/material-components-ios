@@ -627,10 +627,13 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
   [self.titleView removeFromSuperview];
   _titleView = titleView;
-  [self addSubview:_titleView];
+
+  if (_titleView != nil) {
+    [self addSubview:_titleView];
+  }
 
   _titleLabel.hidden = _titleView != nil;
-
+    
   [self setNeedsLayout];
 }
 

@@ -589,7 +589,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 - (UIFont *)leadingUnderlineLabelFont {
   // Not implemented. The leading underline label is never seen.
-  return nil;
+  return [[self class] leadingUnderlineLabelFontDefault];
 }
 
 - (void)setLeadingUnderlineLabelFont:(__unused UIColor *)leadingUnderlineLabelFont {
