@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "MaterialThemes.h"
+#import "MaterialColorScheme.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [[UIColor alloc] initWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)

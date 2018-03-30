@@ -13,14 +13,14 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+#import "MDCSemanticColorScheme.h"
+#import <UIKit/UIKit.h>
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [UIColor colorWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
                          green:(CGFloat)(((colorValue >> 8) & 0xFF) / 255.0)
                           blue:(CGFloat)((colorValue & 0xFF) / 255.0) alpha:1];
 }
-
-#import "MDCSemanticColorScheme.h"
 
 static NSString *const kMDCSemanticColorSchemePrimaryColorKey =
     @"kMDCSemanticColorSchemePrimaryColorKey";

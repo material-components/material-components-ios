@@ -79,8 +79,8 @@
 @end
 
 /**
- A simple implementation of @c MDCColorScheming that provides Material baseline values from which
- basic customizations can be made.
+ A simple implementation of @c MDCColorScheming that provides Material default color values from
+ which basic customizations can be made.
  */
 @interface MDCSemanticColorScheme : NSObject <MDCColorScheming>
 
@@ -102,7 +102,7 @@
 - (nonnull instancetype)init;
 
 /**
- Initializes an instance of MDCSemanticColorScheme with the Material baseline color values.
+ Initializes an instance of MDCSemanticColorScheme with the Material default color values.
  */
 - (nonnull instancetype)initWithMaterialDefaults;
 
