@@ -96,8 +96,14 @@
 @property(nonnull, readwrite, nonatomic) UIColor *onSurfaceColor;
 @property(nonnull, readwrite, nonatomic) UIColor *onBackgroundColor;
 
+/**
+ Convenience initializer that calls @c initWithMaterialDefaults.
+ */
 - (nonnull instancetype)init;
 
+/**
+ Initializes an instance of MDCSemanticColorScheme with the Material baseline color values.
+ */
 - (nonnull instancetype)initWithMaterialDefaults;
 
 /**
