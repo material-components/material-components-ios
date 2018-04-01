@@ -17,14 +17,74 @@
 import UIKit
 
 @available(iOS 9.0, *)
+class CardView: MDCCard {
+
+  let contentView = UIView()
+  let label = UILabel()
+  let imageView = UIImageView()
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    commonCardViewInit()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    commonCardViewInit()
+  }
+
+  func commonCardViewInit() {
+    self.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+    contentView.layoutMargins = .zero
+    contentView.translatesAutoresizingMaskIntoConstraints = false
+    contentView.isUserInteractionEnabled = false
+    self.addSubview(contentView)
+
+    label.text = "abcde fghi jklm nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jkl" +
+      "nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcdefg" +
+    "efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcd efgh ijkl abcd efghijkl"
+    label.numberOfLines = 0
+    label.translatesAutoresizingMaskIntoConstraints = false
+    self.contentView.addSubview(label)
+
+    imageView.clipsToBounds = true
+    imageView.contentMode = .scaleAspectFill
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    let bundle = Bundle(for: ShapedCardViewController.self)
+    imageView.image = UIImage(named: "sample-image", in: bundle, compatibleWith: nil)
+    self.contentView.addSubview(imageView)
+  }
+
+  override func layoutSubviews() {
+    contentView.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
+    contentView.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor).isActive = true
+    contentView.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor).isActive = true
+    contentView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor).isActive = true
+    let shapeLayer = (self.layer as! MDCShapedShadowLayer).shapeLayer
+    contentView.layer.mask = shapeLayer
+
+    let margins = self.contentView.layoutMarginsGuide
+    label.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+    label.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+    imageView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+    imageView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+
+    imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+    label.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
+
+    imageView.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
+    imageView.heightAnchor.constraint(equalTo: label.heightAnchor, multiplier: 1).isActive = true
+  }
+}
+
+@available(iOS 9.0, *)
 class ShapedCardViewController: UIViewController {
-  var card = MDCCard()
+  var card = CardView()
 
   override func viewDidLoad() {
     view.backgroundColor = .white
     super.viewDidLoad()
 
-    card.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
     let shapeGenerator = MDCRectangleShapeGenerator()
     let curvedCornerTreatment = MDCCurvedCornerTreatment()
     curvedCornerTreatment.size = CGSize(width: 10, height: 40)
@@ -33,58 +93,10 @@ class ShapedCardViewController: UIViewController {
     view.addSubview(card)
   }
 
-  override func viewDidLayoutSubviews() {
+  override func viewWillLayoutSubviews() {
+    let cardSize = min(self.view.bounds.height, self.view.bounds.width) - 80
+    card.frame = CGRect(x: 0, y: 0, width: cardSize, height: cardSize)
     card.center = view.center
-    card.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
-
-    let contentView = UIView()
-    contentView.layoutMargins = .zero
-    contentView.translatesAutoresizingMaskIntoConstraints = false
-    contentView.isUserInteractionEnabled = false
-    card.addSubview(contentView)
-    contentView.leadingAnchor.constraint(equalTo: card.layoutMarginsGuide.leadingAnchor).isActive = true
-    contentView.trailingAnchor.constraint(equalTo: card.layoutMarginsGuide.trailingAnchor).isActive = true
-    contentView.topAnchor.constraint(equalTo: card.layoutMarginsGuide.topAnchor).isActive = true
-    contentView.bottomAnchor.constraint(equalTo: card.layoutMarginsGuide.bottomAnchor).isActive = true
-    let shapeLayer = (card.layer as! MDCShapedShadowLayer).shapeLayer
-    contentView.layer.mask = shapeLayer
-
-//    let rect = CGRect(x: 20, y: 20, width: 20, height: 20)
-//
-//    // Cuts rectangle inside view, leaving 20pt borders around
-//    contentView.mask(withRect: rect, inverse: true)
-
-//    // Cuts 20pt borders around the view, keeping part inside rect intact
-//    targetView.mask(withRect: rect)
-    let label = UILabel()
-    label.text = "abcde fghi jklm nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jkl" +
-        "nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcdefg" +
-        "efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcd efgh ijkl abcd efghijkl"
-    label.numberOfLines = 0
-    label.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(label)
-
-    let imageView = UIImageView()
-    imageView.clipsToBounds = true
-    imageView.contentMode = .scaleAspectFill
-    imageView.translatesAutoresizingMaskIntoConstraints = false
-    let bundle = Bundle(for: ShapedCardViewController.self)
-    imageView.image = UIImage(named: "sample-image", in: bundle, compatibleWith: nil)
-    contentView.addSubview(imageView)
-
-    let margins = contentView.layoutMarginsGuide
-    label.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-    label.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
-    imageView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-    imageView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
-
-    imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-    label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-
-    imageView.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
-    imageView.heightAnchor.constraint(equalToConstant: card.bounds.height/2).isActive = true
-    label.heightAnchor.constraint(equalToConstant: card.bounds.height/2).isActive = true
-
   }
 
   override public var traitCollection: UITraitCollection {
