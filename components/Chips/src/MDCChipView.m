@@ -226,7 +226,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
    forControlEvents:UIControlEventTouchDragExit];
 
     self.layer.elevation = [self elevationForState:UIControlStateNormal];
-
     [self updateBackgroundColor];
   }
   return self;

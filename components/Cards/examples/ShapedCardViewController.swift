@@ -91,6 +91,12 @@ class ShapedCardViewController: UIViewController {
     shapeGenerator.setCorners(curvedCornerTreatment)
     card.shapeGenerator = shapeGenerator
     view.addSubview(card)
+
+    let barButton = UIBarButtonItem(title: "Change Shape",
+                                    style: .plain,
+                                    target: self,
+                                    action: #selector(changeShape))
+    self.navigationItem.rightBarButtonItem = barButton
   }
 
   override func viewWillLayoutSubviews() {
@@ -107,6 +113,36 @@ class ShapedCardViewController: UIViewController {
     return super.traitCollection
   }
 
+  func changeShape() {
+    switch(card.shapeGenerator) {
+    case is MDCRectangleShapeGenerator:
+      let shapeGenerator = MDCCurvedRectShapeGenerator(cornerSize: CGSize(width: 10,
+                                                                          height: 20))
+      card.shapeGenerator = shapeGenerator
+    case is MDCCurvedRectShapeGenerator:
+      let shapeGenerator = MDCPillShapeGenerator()
+      card.shapeGenerator = shapeGenerator
+    case is MDCPillShapeGenerator:
+      let shapeGenerator = MDCSlantedRectShapeGenerator()
+      shapeGenerator.slant = 10
+      card.shapeGenerator = shapeGenerator
+    case is MDCSlantedRectShapeGenerator:
+      fallthrough
+    default:
+      let shapeGenerator = MDCRectangleShapeGenerator()
+      let curvedCornerTreatment = MDCCurvedCornerTreatment()
+      curvedCornerTreatment.size = CGSize(width: 10, height: 40)
+      shapeGenerator.setCorners(curvedCornerTreatment)
+      card.shapeGenerator = shapeGenerator
+    }
+    card.setNeedsLayout()
+  }
+
+  func calculateContentInsetForShape() {
+    let shapeLayer = (card.layer as! MDCShapedShadowLayer).shapeLayer
+    let path = shapeLayer.path
+    
+  }
 }
 
 @available(iOS 9.0, *)

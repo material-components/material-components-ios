@@ -271,6 +271,17 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   return beginTracking;
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  if (self.layer.shapeGenerator) {
+    if (CGPathContainsPoint(self.layer.shapeLayer.path, nil, point, true)) {
+      return self;
+    } else {
+      return nil;
+    }
+  }
+  return [super hitTest:point withEvent:event];
+}
+
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
   if (shapeGenerator) {
     self.layer.cornerRadius = 0;
