@@ -22,7 +22,7 @@ load("//:material_components_ios.bzl",
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "ColorScheme",
+    name = "Color",
 )
 
 package_group(
@@ -44,7 +44,8 @@ mdc_objc_library(
         "XCTest",
     ],
     deps = [
-        ":ColorScheme"
+        ":Color",
+        "//components/Palettes",
     ],
     visibility = ["//visibility:private"],
 )
