@@ -3,29 +3,21 @@
 ## Breaking changes
 
 ### BottomNavigation
-* [Simplify color themer (#3116)](https://github.com/material-components/material-components-ios/commit/f0368d43838c35ae463afad3a5f75cead61753b5) (Robert Moore)
+* Color themer now only uses `primaryColor` and applies it to the `selectedItemTintColor`. It will no longer apply values to either `unselectedItemTintColor` or `barTintColor`.
 
 ### FeatureHighlight
-* [FeatureHighlightViewController should expose FeatureHighlightView as a property. (#3145)](https://github.com/material-components/material-components-ios/commit/24be789f57aedb732ceddecc36699f52875dc8d6) (Mohammad Cazi)
-
-### Snackbar
-* [Update content padding for new snackbar, leave old snackbar padding as is. (#3192)](https://github.com/material-components/material-components-ios/commit/8fb8e4c56b3be93c92af6ad7e5e1f7ecf6126120) (Yarden Eitan)
-* [font and color updates. (#3125)](https://github.com/material-components/material-components-ios/commit/28ef4730aaeb37663a377670b8db95215c090f92) (Yarden Eitan)
+* FeatureHighlightViewController exposes `featureHighlightView` as a property and has removed the following properties:
+* FeatureHighlightView has removed the following properties. They should be set on the FeatureHighlightView directly:
+  * `outerHighlightColor`
+  * `innerHighlightColor`
+  * `titleColor`
+  * `bodyColor`
+  * `mdc_adjustsFontForContentSizeCategory`
+  
 
 ### TextFields
-* [Make MDCTextInputControllerLegacyDefault a subclass of MDCTextInputControllerBase  (#3152)](https://github.com/material-components/material-components-ios/commit/cb0d00be93bab192e83b0c07b83b655619bf8122) (Mohammad Cazi)
-* [Make MDCTextInputControllerLegacyFullWidth a subclass of MDCTextInputControllerFullWidth (#3154)](https://github.com/material-components/material-components-ios/commit/19f2c0fd1be06e31e7405a42aadb1004c2af5bbf) (Mohammad Cazi)
-* [[MDCTextFields + Kokoro] Making textfields dynamic type off by default (#3149)](https://github.com/material-components/material-components-ios/commit/f91317ff0455bc6ecd7b7c728bdb9821cd036aa0) (Yarden Eitan)
+* TextFields will no longer default to using Dynamic Type.
 
-## API changes
-* FeatureHighlight - [FeatureHighlightViewController should expose FeatureHighlightView as a property. (#3145)](https://github.com/material-components/material-components-ios/commit/24be789f57aedb732ceddecc36699f52875dc8d6) (Mohammad Cazi)
-* TextFields
-  * [Make MDCTextInputControllerLegacyDefault a subclass of MDCTextInputControllerBase  (#3152)](https://github.com/material-components/material-components-ios/commit/cb0d00be93bab192e83b0c07b83b655619bf8122) (Mohammad Cazi)
-  * [Make MDCTextInputControllerLegacyFullWidth a subclass of MDCTextInputControllerFullWidth (#3154)](https://github.com/material-components/material-components-ios/commit/19f2c0fd1be06e31e7405a42aadb1004c2af5bbf) (Mohammad Cazi)
-
-### Color
-
-**New component.**
 
 ## Component changes
 
@@ -58,6 +50,10 @@
 #### Changes
 
 * [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
+
+### Color
+
+**New component.**
 
 ### Dialogs
 
