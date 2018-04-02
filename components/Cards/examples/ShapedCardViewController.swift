@@ -23,6 +23,9 @@ class CardView: MDCCard {
   let label = UILabel()
   let imageView = UIImageView()
 
+  var imageWidthConstraint: NSLayoutConstraint!
+  var shouldUpdateConstraints = true
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     commonCardViewInit()
@@ -53,56 +56,76 @@ class CardView: MDCCard {
     let bundle = Bundle(for: ShapedCardViewController.self)
     imageView.image = UIImage(named: "sample-image", in: bundle, compatibleWith: nil)
     self.contentView.addSubview(imageView)
+    setupConstraints()
   }
 
-  override func layoutSubviews() {
-    contentView.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
-    contentView.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor).isActive = true
-    contentView.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor).isActive = true
-    contentView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor).isActive = true
-    let shapeLayer = (self.layer as! MDCShapedShadowLayer).shapeLayer
-    contentView.layer.mask = shapeLayer
+  func setupConstraints() {
+    contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+    contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+    contentView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+    contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
     let margins = self.contentView.layoutMarginsGuide
     label.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
     label.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
-    imageView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-    imageView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+    imageView.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
 
     imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
     label.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
 
     imageView.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
     imageView.heightAnchor.constraint(equalTo: label.heightAnchor, multiplier: 1).isActive = true
+
+    imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
+    imageWidthConstraint.isActive = true
   }
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    let shapeLayer = (self.layer as! MDCShapedShadowLayer).shapeLayer
+    contentView.layer.mask = shapeLayer
+    imageWidthConstraint.constant = shapeLayer.path!.boundingBox.size.width
+  }
+
 }
 
 @available(iOS 9.0, *)
 class ShapedCardViewController: UIViewController {
   var card = CardView()
+  var primarySlider = UISlider()
+  var secondarySlider = UISlider()
 
   override func viewDidLoad() {
     view.backgroundColor = .white
     super.viewDidLoad()
 
-    let shapeGenerator = MDCRectangleShapeGenerator()
-    let curvedCornerTreatment = MDCCurvedCornerTreatment()
-    curvedCornerTreatment.size = CGSize(width: 10, height: 40)
-    shapeGenerator.setCorners(curvedCornerTreatment)
-    card.shapeGenerator = shapeGenerator
+    initialShape()
+
     view.addSubview(card)
+    view.addSubview(primarySlider)
+    view.addSubview(secondarySlider)
+
+    card.translatesAutoresizingMaskIntoConstraints = false
+    card.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 20).isActive = true
+    card.bottomAnchor.constraint(equalTo: primarySlider.topAnchor, constant: -20).isActive = true
+    card.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+    card.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
+
+    primarySlider.translatesAutoresizingMaskIntoConstraints = false
+    primarySlider.bottomAnchor.constraint(equalTo: secondarySlider.topAnchor, constant: -20).isActive = true
+    primarySlider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    primarySlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5, constant: 0).isActive = true
+
+    secondarySlider.translatesAutoresizingMaskIntoConstraints = false
+    secondarySlider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+    secondarySlider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    secondarySlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5, constant: 0).isActive = true
 
     let barButton = UIBarButtonItem(title: "Change Shape",
                                     style: .plain,
                                     target: self,
                                     action: #selector(changeShape))
     self.navigationItem.rightBarButtonItem = barButton
-  }
-
-  override func viewWillLayoutSubviews() {
-    let cardSize = min(self.view.bounds.height, self.view.bounds.width) - 80
-    card.frame = CGRect(x: 0, y: 0, width: cardSize, height: cardSize)
-    card.center = view.center
   }
 
   override public var traitCollection: UITraitCollection {
@@ -116,32 +139,31 @@ class ShapedCardViewController: UIViewController {
   func changeShape() {
     switch(card.shapeGenerator) {
     case is MDCRectangleShapeGenerator:
-      let shapeGenerator = MDCCurvedRectShapeGenerator(cornerSize: CGSize(width: 10,
-                                                                          height: 20))
+      let shapeGenerator = MDCCurvedRectShapeGenerator(cornerSize: CGSize(width: 20,
+                                                                          height: 100))
       card.shapeGenerator = shapeGenerator
     case is MDCCurvedRectShapeGenerator:
       let shapeGenerator = MDCPillShapeGenerator()
       card.shapeGenerator = shapeGenerator
     case is MDCPillShapeGenerator:
       let shapeGenerator = MDCSlantedRectShapeGenerator()
-      shapeGenerator.slant = 10
+      shapeGenerator.slant = 80
       card.shapeGenerator = shapeGenerator
     case is MDCSlantedRectShapeGenerator:
       fallthrough
     default:
-      let shapeGenerator = MDCRectangleShapeGenerator()
-      let curvedCornerTreatment = MDCCurvedCornerTreatment()
-      curvedCornerTreatment.size = CGSize(width: 10, height: 40)
-      shapeGenerator.setCorners(curvedCornerTreatment)
-      card.shapeGenerator = shapeGenerator
+      initialShape()
     }
     card.setNeedsLayout()
   }
 
-  func calculateContentInsetForShape() {
-    let shapeLayer = (card.layer as! MDCShapedShadowLayer).shapeLayer
-    let path = shapeLayer.path
-    
+  func initialShape() {
+    let shapeGenerator = MDCRectangleShapeGenerator()
+    let cutCornerTreatment = MDCCutCornerTreatment(cut: 100)
+    shapeGenerator.setCorners(cutCornerTreatment)
+    let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: 30, style: MDCTriangleEdgeStyleCut)
+    shapeGenerator.setEdges(triangleEdgeTreatment)
+    card.shapeGenerator = shapeGenerator
   }
 }
 

@@ -291,6 +291,14 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   self.layer.shapeGenerator = shapeGenerator;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
+  [self updateInkForShape];
+}
+
+- (void)updateInkForShape {
+  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+  self.inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+  self.inkView.layer.masksToBounds = NO;
 }
 
 - (id)shapeGenerator {

@@ -14,10 +14,28 @@
  limitations under the License.
  */
 
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCurvedRectShapeGenerator.h"
-#import "MDCPillShapeGenerator.h"
-#import "MDCRoundedCornerTreatment.h"
-#import "MDCSlantedRectShapeGenerator.h"
-#import "MDCTriangleEdgeTreatment.h"
-#import "MDCCutCornerTreatment.h"
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MaterialShapes.h"
+
+@interface MDCCutCornerTreatment : MDCCornerTreatment
+
+/**
+ The radius of the corner.
+ */
+@property(nonatomic, assign) CGFloat cut;
+
+/**
+ Initializes an MDCRoundedCornerTreatment instance with a given radius.
+ */
+- (nonnull instancetype)initWithCut:(CGFloat)cut NS_DESIGNATED_INITIALIZER;
+
+/**
+ Initializes an MDCRoundedCornerTreatment instance with a radius of zero.
+ */
+- (nonnull instancetype)init;
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+
+@end
