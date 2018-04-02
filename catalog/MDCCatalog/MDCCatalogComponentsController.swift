@@ -18,6 +18,7 @@ import CatalogByConvention
 import MaterialCatalog
 
 import MaterialComponents.MaterialFlexibleHeader
+import MaterialComponents.MDCFlexibleHeaderColorThemer
 import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialLibraryInfo
@@ -87,11 +88,32 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     headerViewController.headerView.maximumHeight = 128
     headerViewController.headerView.minimumHeight = 56
 
+    MDCFlexibleHeaderColorThemer.apply(AppTheme.globalTheme.colorScheme,
+                                       toMDCFlexibleHeaderController: headerViewController)
+
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
     collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.themeDidChange),
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
+  }
+
+  func themeDidChange(notification: NSNotification) {
+    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
+          as? MDCColorScheme else {
+      return
+    }
+    MDCFlexibleHeaderColorThemer.apply(colorScheme,
+                                       toMDCFlexibleHeaderController: headerViewController)
+
+    collectionView?.collectionViewLayout.invalidateLayout()
+    collectionView?.reloadData()
   }
 
   convenience init(node: CBCNode) {
@@ -148,7 +170,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                                     width: Constants.logoWidthHeight,
                                     height: Constants.logoWidthHeight),
                              { MDCCatalogDrawMDCLogoLight($0, $1) },
-                             AppDelegate.colorScheme)
+                             AppTheme.globalTheme.colorScheme)
     logo.image = image
 
     NSLayoutConstraint(item: logo,
@@ -181,7 +203,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                        multiplier: 1,
                        constant: Constants.logoWidthHeight).isActive = true
 
-    headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    MDCFlexibleHeaderColorThemer.apply(AppTheme.globalTheme.colorScheme,
+                                       toMDCFlexibleHeaderController: headerViewController)
+
     headerViewController.headerView.trackingScrollView = collectionView
 
     headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
