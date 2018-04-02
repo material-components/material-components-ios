@@ -101,9 +101,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   }
 
   func colorThemeChanged(notification: NSNotification) {
-    let colorScheme = notification.userInfo?["colorScheme"]
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
+    guard let colorScheme = notification.userInfo?["colorScheme"] as? MDCColorScheme else {
+      return
+    }
+    AppDelegate.colorScheme = colorScheme
 
     collectionView?.collectionViewLayout.invalidateLayout()
     collectionView?.reloadData()
@@ -158,14 +159,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     headerViewController.headerView.addSubview(logo)
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
     let image = MDCDrawImage(CGRect(x:0,
                                     y:0,
                                     width: Constants.logoWidthHeight,
                                     height: Constants.logoWidthHeight),
                              { MDCCatalogDrawMDCLogoLight($0, $1) },
-                             appDelegate.colorScheme)
+                             AppDelegate.colorScheme)
     logo.image = image
 
     NSLayoutConstraint(item: logo,
