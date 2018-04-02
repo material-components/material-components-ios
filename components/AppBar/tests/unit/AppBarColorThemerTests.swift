@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,11 +20,14 @@ import MaterialComponents.MaterialAppBar
 class AppBarColorThemerTests: XCTestCase {
 
   func testColorThemerAffectsSubComponents() {
+    // Given
     let appBar = MDCAppBar()
     let colorScheme = MDCBasicColorScheme(primaryColor: .red)
 
+    // When
     MDCAppBarColorThemer.apply(colorScheme, to: appBar)
 
+    // Then
     XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
                    colorScheme.primaryColor)
     XCTAssertEqual(appBar.navigationBar.backgroundColor,
