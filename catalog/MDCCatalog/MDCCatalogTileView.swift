@@ -74,7 +74,7 @@ class MDCCatalogTileView: UIView {
     var newImage: UIImage?
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let colorScheme = appDelegate.colorScheme
+    let colorScheme = AppDelegate.colorScheme
 
     switch componentNameString {
     case "Activity Indicator":
