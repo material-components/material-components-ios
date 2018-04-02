@@ -67,40 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
-    // Apply color scheme to material design components using component themers.
-    let colorScheme = AppDelegate.colorScheme
-    MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
-    MDCAlertColorThemer.apply(colorScheme)
-    MDCBottomAppBarColorThemer.apply(colorScheme, to: MDCBottomAppBarView.appearance())
-    MDCBottomNavigationBarColorThemer.apply(colorScheme, to:MDCBottomNavigationBar.appearance())
-    MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
-    MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
-    let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
-    MDCButtonColorThemer.apply(clearScheme, to:MDCFlatButton.appearance())
-    MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
-    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
-    MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())
-    MDCNavigationBarColorThemer.apply(colorScheme, to: MDCNavigationBar.appearance())
-    MDCPageControlColorThemer.apply(colorScheme, to: MDCPageControl.appearance())
-    MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
-    MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
-    MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
-
-    MDCTextFieldColorThemer.apply(colorScheme,
-                                  toAllControllersOfClass: MDCTextInputControllerUnderline.self)
-    MDCTextFieldColorThemer.apply(colorScheme,
-                                  toAllControllersOfClass: MDCTextInputControllerLegacyDefault.self)
-    MDCTextFieldColorThemer.apply(colorScheme,
-                                  toAllControllersOfClass: MDCTextInputControllerFilled.self)
-    MDCTextFieldColorThemer.apply(colorScheme,
-                                  toAllControllersOfClass: MDCTextInputControllerOutlined.self)
-    MDCTextFieldColorThemer.apply(colorScheme,
-                                  toAllControllersOfClass: MDCTextInputControllerOutlinedTextArea.self)
-
-    // Apply color scheme to UIKit components.
-    UISlider.appearance().tintColor = colorScheme.primaryColor
-    UISwitch.appearance().onTintColor = colorScheme.primaryColor
-
     return true
   }
 }
