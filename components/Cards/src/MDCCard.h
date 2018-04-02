@@ -116,7 +116,7 @@
 - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
- The shape generator used to define the chip's shape.
+ The shape generator used to define the card's shape.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;
 
