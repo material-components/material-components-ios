@@ -44,8 +44,7 @@ class CardView: MDCCard {
     self.addSubview(contentView)
 
     label.text = "abcde fghi jklm nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jkl" +
-      "nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcdefg" +
-    "efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcd efgh ijkl abcd efghijkl"
+        "nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcdefg"
     label.numberOfLines = 0
     label.translatesAutoresizingMaskIntoConstraints = false
     self.contentView.addSubview(label)
@@ -221,6 +220,6 @@ extension ShapedCardViewController {
   }
 
   @objc class func catalogIsDebug() -> Bool {
-    return true
+    return false
   }
 }

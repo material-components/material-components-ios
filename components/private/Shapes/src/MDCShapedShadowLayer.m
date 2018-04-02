@@ -150,8 +150,4 @@
   }
 }
 
-- (void)setElevation:(MDCShadowElevation)elevation {
-  [super setElevation:elevation];
-}
-
 @end

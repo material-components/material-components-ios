@@ -104,7 +104,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 
   if (_shadowColors == nil) {
     _shadowColors = [NSMutableDictionary dictionary];
-    _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
+    _shadowColors[@(UIControlStateNormal)] = UIColor.blackColor;
   }
 
   if (_borderColors == nil) {

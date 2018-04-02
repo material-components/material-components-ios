@@ -21,17 +21,17 @@
 @interface MDCCutCornerTreatment : MDCCornerTreatment
 
 /**
- The radius of the corner.
+ The cut of the corner.
  */
 @property(nonatomic, assign) CGFloat cut;
 
 /**
- Initializes an MDCRoundedCornerTreatment instance with a given radius.
+ Initializes an MDCCutCornerTreatment instance with a given cut.
  */
 - (nonnull instancetype)initWithCut:(CGFloat)cut NS_DESIGNATED_INITIALIZER;
 
 /**
- Initializes an MDCRoundedCornerTreatment instance with a radius of zero.
+ Initializes an MDCCutCornerTreatment instance with a cut of zero.
  */
 - (nonnull instancetype)init;
 
