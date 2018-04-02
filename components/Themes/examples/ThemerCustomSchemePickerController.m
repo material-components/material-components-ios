@@ -220,12 +220,6 @@ static NSString *s_secondaryColorString;
   // Apply color scheme to UIKit components.
   [UISlider appearance].tintColor = colorScheme.primaryColor;
   [UISwitch appearance].onTintColor = colorScheme.primaryColor;
-
-  // Send notification that color scheme has changed so existing components can update if necessary.
-  NSDictionary *userInfo = @{ @"colorScheme" : colorScheme };
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
-                                                      object:self
-                                                    userInfo:userInfo];
 }
 
 #pragma mark - Actions
