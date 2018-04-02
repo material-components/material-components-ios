@@ -37,7 +37,7 @@ class CardView: MDCCard {
   }
 
   func commonCardViewInit() {
-    self.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+    self.layoutMargins = .zero
     contentView.layoutMargins = .zero
     contentView.translatesAutoresizingMaskIntoConstraints = false
     contentView.isUserInteractionEnabled = false
@@ -112,17 +112,23 @@ class ShapedCardViewController: UIViewController {
     card.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
 
     primarySlider.translatesAutoresizingMaskIntoConstraints = false
-    primarySlider.bottomAnchor.constraint(equalTo: secondarySlider.topAnchor, constant: -20).isActive = true
+    primarySlider.bottomAnchor.constraint(equalTo: secondarySlider.topAnchor,
+                                          constant: -20).isActive = true
     primarySlider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    primarySlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5, constant: 0).isActive = true
+    primarySlider.widthAnchor.constraint(equalTo: view.widthAnchor,
+                                         multiplier: 0.5,
+                                         constant: 0).isActive = true
     primarySlider.addTarget(self,
                             action: #selector(didChangeSliderValue(slider:)),
                             for: .valueChanged)
 
     secondarySlider.translatesAutoresizingMaskIntoConstraints = false
-    secondarySlider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+    secondarySlider.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                            constant: -20).isActive = true
     secondarySlider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    secondarySlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5, constant: 0).isActive = true
+    secondarySlider.widthAnchor.constraint(equalTo: view.widthAnchor,
+                                           multiplier: 0.5,
+                                           constant: 0).isActive = true
     secondarySlider.addTarget(self,
                             action: #selector(didChangeSliderValue(slider:)),
                             for: .valueChanged)
@@ -143,15 +149,17 @@ class ShapedCardViewController: UIViewController {
   }
 
   func didChangeSliderValue(slider: UISlider) {
-    if slider == primarySlider {
-      let cutCornerTreatment = MDCCutCornerTreatment(cut: CGFloat(slider.value))
-      (card.shapeGenerator as! MDCRectangleShapeGenerator).setCorners(cutCornerTreatment)
-    } else if slider == secondarySlider {
-      let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: CGFloat(slider.value),
-                                                           style: MDCTriangleEdgeStyleCut)
-      (card.shapeGenerator as! MDCRectangleShapeGenerator).setEdges(triangleEdgeTreatment)
+    if let shape = card.shapeGenerator as? MDCRectangleShapeGenerator {
+      if slider == primarySlider {
+        let cutCornerTreatment = MDCCutCornerTreatment(cut: CGFloat(slider.value))
+        shape.setCorners(cutCornerTreatment)
+      } else if slider == secondarySlider {
+        let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: CGFloat(slider.value),
+                                                             style: MDCTriangleEdgeStyleCut)
+        shape.setEdges(triangleEdgeTreatment)
+      }
+      card.setNeedsLayout()
     }
-    card.setNeedsLayout()
   }
 
   override public var traitCollection: UITraitCollection {
@@ -167,16 +175,19 @@ class ShapedCardViewController: UIViewController {
     secondarySlider.isHidden = true
     switch(card.shapeGenerator) {
     case is MDCRectangleShapeGenerator:
-      let shapeGenerator = MDCCurvedRectShapeGenerator(cornerSize: CGSize(width: 20,
+      let shapeGenerator = MDCCurvedRectShapeGenerator(cornerSize: CGSize(width: 50,
                                                                           height: 100))
       card.shapeGenerator = shapeGenerator
+      card.contentView.layoutMargins = UIEdgeInsetsMake(0, 40, 0, 40)
     case is MDCCurvedRectShapeGenerator:
       let shapeGenerator = MDCPillShapeGenerator()
       card.shapeGenerator = shapeGenerator
+      card.contentView.layoutMargins = UIEdgeInsetsMake(0, 80, 0, 80)
     case is MDCPillShapeGenerator:
       let shapeGenerator = MDCSlantedRectShapeGenerator()
       shapeGenerator.slant = 40
       card.shapeGenerator = shapeGenerator
+      card.contentView.layoutMargins = UIEdgeInsetsMake(0, 40, 0, 40)
     case is MDCSlantedRectShapeGenerator:
       fallthrough
     default:
@@ -195,6 +206,7 @@ class ShapedCardViewController: UIViewController {
     let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: 0, style: MDCTriangleEdgeStyleCut)
     shapeGenerator.setEdges(triangleEdgeTreatment)
     card.shapeGenerator = shapeGenerator
+    card.contentView.layoutMargins = UIEdgeInsetsMake(0, 5, 0, 5)
   }
 }
 
