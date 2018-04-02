@@ -17,7 +17,8 @@
 
 ### TextFields
 * TextFields will no longer default to using Dynamic Type.
-
+* TextFields with floating placeholders now account for the placeholder when
+  computing their bounds.
 
 ## Component changes
 
