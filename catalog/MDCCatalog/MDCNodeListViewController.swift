@@ -388,6 +388,8 @@ extension MDCNodeListViewController {
         container.appBar.navigationBar.titleTextAttributes =
             [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
 
+        MDCAppBarColorThemer.apply(AppDelegate.colorScheme, to: container.appBar)
+
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.
         contentVC.title = node.title
