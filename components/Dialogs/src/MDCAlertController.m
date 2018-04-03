@@ -178,8 +178,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
   self.alertView.mdc_adjustsFontForContentSizeCategory = adjusts;
 
+  [self updateFontsForDynamicType];
   if (_mdc_adjustsFontForContentSizeCategory) {
-    [self updateFontsForDynamicType];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contentSizeCategoryDidChange:)
                                                  name:UIContentSizeCategoryDidChangeNotification
