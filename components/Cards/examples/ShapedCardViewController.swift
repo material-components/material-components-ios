@@ -216,7 +216,7 @@ extension ShapedCardViewController {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 
   @objc class func catalogIsDebug() -> Bool {
