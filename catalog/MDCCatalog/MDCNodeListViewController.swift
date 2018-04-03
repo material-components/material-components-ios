@@ -103,9 +103,8 @@ class MDCNodeListViewController: CBCNodeListViewController {
       appBarFont = UIFont(descriptor: descriptor, size: 16)
     }
 
-    MDCAppBarColorThemer.apply(AppTheme.globalTheme.colorScheme, to: appBar)
+    applyColorScheme(AppTheme.globalTheme.colorScheme)
 
-    appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
       NSFontAttributeName: appBarFont ]
@@ -162,7 +161,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
           as? MDCColorScheme else {
       return
     }
+    applyColorScheme(colorScheme)
+  }
+
+  private func applyColorScheme(_ colorScheme: MDCColorScheme) {
     MDCAppBarColorThemer.apply(colorScheme, to: appBar)
+
+    appBar.navigationBar.tintColor = UIColor.white
   }
 }
 
