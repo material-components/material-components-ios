@@ -22,13 +22,13 @@ load("//:material_components_ios.bzl",
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "FontScheme",
+    name = "TypographyScheme",
 )
 
 package_group(
     name = "test_targets",
     packages = [
-        "//components/schemes/Font/...",
+        "//components/schemes/TypographyScheme/...",
     ],
 )
 
