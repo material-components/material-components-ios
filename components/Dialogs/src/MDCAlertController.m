@@ -199,7 +199,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 // Update the fonts used based on mdc_preferredFontForMaterialTextStyle and recalculate the
 // preferred content size.
 - (void)updateFontsForDynamicType {
-  [self.alertView updateFontsForDynamicType];
+  [self.alertView updateFonts];
 
   // Our presentation controller reacts to changes to preferredContentSize to determine our
   // frame at the presented controller.
@@ -225,6 +225,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)loadView {
   self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
   self.alertView = (MDCAlertControllerView *)self.view;
+}
+
+- (MDCAlertControllerView *)alertControllerView {
+  return (MDCAlertControllerView *)self.view;
 }
 
 - (void)viewDidLoad {

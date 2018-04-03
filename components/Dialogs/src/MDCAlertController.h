@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 @class MDCAlertAction;
+@class MDCAlertControllerView;
 
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
@@ -68,6 +69,11 @@
  The order of the actions in the array matches the order in which they were added to the alert.
  */
 @property(nonatomic, nonnull, readonly) NSArray<MDCAlertAction *> *actions;
+
+/**
+ The MDCAlertControllerView instance that is being presented by this view controller.
+ */
+@property(nonatomic, nonnull, readonly) MDCAlertControllerView *alertControllerView;
 
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.
