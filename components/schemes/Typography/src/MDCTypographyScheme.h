@@ -16,7 +16,7 @@
 
 #import "MDCFontScheme.h"
 
-@interface MDCSemanticFontScheme : NSObject <MDCFontScheming>
+@interface MDCTypographyScheme : NSObject <MDCTypographyScheming>
 
 @property(nonatomic, nonnull, readwrite) UIFont *headline1;
 @property(nonatomic, nonnull, readwrite) UIFont *headline2;

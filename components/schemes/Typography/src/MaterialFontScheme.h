@@ -15,4 +15,4 @@
  */
 
 #import "MDCFontScheme.h"
-#import "MDCSemanticFontScheme.h"
+#import "MDCTypographyScheme.h"

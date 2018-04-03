@@ -34,7 +34,7 @@
   // fonts and color unless they are explicitly set.
   // See Apple > UIKit > UIAppearance
   // https://developer.apple.com/documentation/uikit/uiappearance
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.headline2 = [UIFont fontWithName:@"Zapfino" size:14.0];
   fontScheme.body2 = [UIFont fontWithName:@"Chalkduster" size:12.0];
   UIColor *primaryColor = [UIColor purpleColor];

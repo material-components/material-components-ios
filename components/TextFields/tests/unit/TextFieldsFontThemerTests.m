@@ -30,7 +30,7 @@
 - (void)tearDown {
   [super tearDown];
   // Reset class default values.
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.body1 = nil;
   fontScheme.caption = nil;
   [MDCTextFieldFontThemer applyFontScheme:fontScheme
@@ -45,7 +45,7 @@
   textField.leadingUnderlineLabel.font = [UIFont systemFontOfSize:28];
   textField.trailingUnderlineLabel.font = [UIFont systemFontOfSize:28];
   textField.placeholderLabel.font = [UIFont systemFontOfSize:28];
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.body1 = [UIFont systemFontOfSize:20];
   fontScheme.caption = [UIFont systemFontOfSize:16];
   [MDCTextFieldFontThemer applyFontScheme:fontScheme toTextField:textField];
@@ -56,7 +56,7 @@
 }
 
 - (void)testFontThemerSetsTheFontsForTextInputControllerClass {
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.body1 = [UIFont systemFontOfSize:20];
   fontScheme.caption = [UIFont systemFontOfSize:16];
   [MDCTextFieldFontThemer applyFontScheme:fontScheme
@@ -68,7 +68,7 @@
 }
 
 - (void)testFontThemerSetsTheFontsForTextInputControllerFloatingPlaceHolderClass {
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.body1 = [UIFont systemFontOfSize:20];
   fontScheme.caption = [UIFont systemFontOfSize:16];
   [MDCTextFieldFontThemer applyFontScheme:fontScheme
@@ -87,7 +87,7 @@
   MDCTextInputControllerFullWidth *inputController = [[MDCTextInputControllerFullWidth alloc] init];
   inputController.trailingUnderlineLabelFont = [UIFont systemFontOfSize:80];
   inputController.inlinePlaceholderFont = [UIFont systemFontOfSize:80];
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.body1 = [UIFont systemFontOfSize:20];
   fontScheme.caption = [UIFont systemFontOfSize:16];
   [MDCTextFieldFontThemer applyFontScheme:fontScheme toTextInputController:inputController];
@@ -100,7 +100,7 @@
   floatingInputController.trailingUnderlineLabelFont = [UIFont systemFontOfSize:80];
   floatingInputController.leadingUnderlineLabelFont = [UIFont systemFontOfSize:80];
   floatingInputController.inlinePlaceholderFont = [UIFont systemFontOfSize:80];
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.body1 = [UIFont systemFontOfSize:20];
   fontScheme.caption = [UIFont systemFontOfSize:16];
   [MDCTextFieldFontThemer applyFontScheme:fontScheme toTextInputController:floatingInputController];

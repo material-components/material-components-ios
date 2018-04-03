@@ -65,7 +65,7 @@
 
 @end
 
-@protocol MDCFontScheming
+@protocol MDCTypographyScheming
 
 @property(nonatomic, strong, nonnull, readonly) UIFont *headline1;
 @property(nonatomic, strong, nonnull, readonly) UIFont *headline2;

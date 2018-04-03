@@ -27,7 +27,7 @@
 
 - (void)testTabBarFontThemerApplyFontSchemeProperly {
   MDCTabBar *tabBar = [[MDCTabBar alloc] init];
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.button = [UIFont boldSystemFontOfSize:22];
   [MDCTabBarFontThemer applyFontScheme:fontScheme toTabBar:tabBar];
   XCTAssertEqualObjects(tabBar.selectedItemTitleFont, fontScheme.button);

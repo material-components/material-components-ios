@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCSemanticFontScheme.h"
+#import "MDCTypographyScheme.h"
 
 #import <CoreText/CoreText.h>
 
-@implementation MDCSemanticFontScheme
+@implementation MDCTypographyScheme
 
 - (instancetype)init {
   return [self initWithMaterialDefaults];

@@ -29,7 +29,7 @@
 - (void)testFontThemer {
   // Given
   MDCChipView *chip = [[MDCChipView alloc] init];
-  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.body2 = [UIFont systemFontOfSize:99];
 
   // When
