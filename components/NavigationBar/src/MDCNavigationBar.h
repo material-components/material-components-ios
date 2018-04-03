@@ -99,6 +99,13 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIView *titleView;
 
 /**
+ The font applied to the title of navigation bar. If titleTextAttributes is not nil, it will
+ overwrite this value.
+ Font size is enforced to 20.
+ */
+@property (nonatomic, strong, null_resettable) UIFont *titleFont;
+
+/**
  Display attributes for the titleView's title text.
 
  Setting this property will render an NSAttributedString with the assigned attributes across the
