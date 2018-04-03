@@ -16,11 +16,11 @@
 
 #import "MDCChipViewFontThemer.h"
 #import "MaterialChips.h"
-#import "MaterialThemes.h"
+#import "MaterialFontScheme.h"
 
 @implementation MDCChipViewFontThemer
 
-+ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme toChipView:(MDCChipView *)chipView {
++ (void)applyFontScheme:(id<MDCFontScheming>)fontScheme toChipView:(MDCChipView *)chipView {
   chipView.titleFont = fontScheme.body2;
 }
 

@@ -17,7 +17,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialTabs.h"
-#import "MaterialThemes.h"
+#import "MaterialFontScheme.h"
 #import "MDCTabBarFontThemer.h"
 
 @interface MDCTabBarFontThemerTests : XCTestCase
@@ -27,7 +27,7 @@
 
 - (void)testTabBarFontThemerApplyFontSchemeProperly {
   MDCTabBar *tabBar = [[MDCTabBar alloc] init];
-  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
+  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
   fontScheme.button = [UIFont boldSystemFontOfSize:22];
   [MDCTabBarFontThemer applyFontScheme:fontScheme toTabBar:tabBar];
   XCTAssertEqualObjects(tabBar.selectedItemTitleFont, fontScheme.button);

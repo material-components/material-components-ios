@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 
 @class MDCChipView;
-@protocol MDCFontScheme;
+@protocol MDCFontScheming;
 
 /**
  Themes @c MDCChipView objects to set their text font to the appropriate font trait given a font
@@ -28,7 +28,7 @@
 /**
  Applies the provided font scheme to the given Chip or its UIAppearance proxy.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
++ (void)applyFontScheme:(nonnull id<MDCFontScheming>)fontScheme
              toChipView:(nonnull MDCChipView *)chipView;
 
 @end

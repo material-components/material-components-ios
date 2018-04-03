@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialThemes.h"
 #import "MaterialChips.h"
+#import "MaterialFontScheme.h"
 #import "MDCChipViewFontThemer.h"
 
 @interface ChipViewFontThemerTests : XCTestCase
@@ -29,7 +29,7 @@
 - (void)testFontThemer {
   // Given
   MDCChipView *chip = [[MDCChipView alloc] init];
-  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
+  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
   fontScheme.body2 = [UIFont systemFontOfSize:99];
 
   // When
