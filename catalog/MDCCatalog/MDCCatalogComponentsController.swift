@@ -88,9 +88,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     headerViewController.headerView.maximumHeight = 128
     headerViewController.headerView.minimumHeight = 56
 
-    MDCFlexibleHeaderColorThemer.apply(AppTheme.globalTheme.colorScheme,
-                                       toMDCFlexibleHeaderController: headerViewController)
-
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
     collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)

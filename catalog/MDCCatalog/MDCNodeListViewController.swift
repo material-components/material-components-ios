@@ -103,15 +103,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
       appBarFont = UIFont(descriptor: descriptor, size: 16)
     }
 
-    let colorScheme = AppTheme.globalTheme.colorScheme
-    MDCAppBarColorThemer.apply(colorScheme, to: appBar)
+    MDCAppBarColorThemer.apply(AppTheme.globalTheme.colorScheme, to: appBar)
 
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
       NSFontAttributeName: appBarFont ]
     appBar.navigationBar.titleAlignment = .center
-    MDCAppBarColorThemer.apply(AppDelegate.colorScheme, to: appBar)
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
