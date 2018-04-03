@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialFontScheme.h"
 #import "MaterialTextFields.h"
+#import "MaterialTypographyScheme.h"
 #import "MaterialThemes.h"
 #import "MDCTextFieldFontThemer.h"
 

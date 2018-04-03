@@ -13,25 +13,4 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
-#import <XCTest/XCTest.h>
-
-#import "MaterialTabs.h"
 #import "MaterialTypographyScheme.h"
-#import "MDCTabBarFontThemer.h"
-
-@interface MDCTabBarFontThemerTests : XCTestCase
-@end
-
-@implementation MDCTabBarFontThemerTests
-
-- (void)testTabBarFontThemerApplyFontSchemeProperly {
-  MDCTabBar *tabBar = [[MDCTabBar alloc] init];
-  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
-  fontScheme.button = [UIFont boldSystemFontOfSize:22];
-  [MDCTabBarFontThemer applyFontScheme:fontScheme toTabBar:tabBar];
-  XCTAssertEqualObjects(tabBar.selectedItemTitleFont, fontScheme.button);
-  XCTAssertEqualObjects(tabBar.unselectedItemTitleFont, fontScheme.button);
-}
-
-@end

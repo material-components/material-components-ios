@@ -14,7 +14,25 @@
  limitations under the License.
  */
 
-#import "MDCFontScheme.h"
+#import <UIKit/UIKit.h>
+
+@protocol MDCTypographyScheming
+
+@property(nonatomic, nonnull, readonly) UIFont *headline1;
+@property(nonatomic, nonnull, readonly) UIFont *headline2;
+@property(nonatomic, nonnull, readonly) UIFont *headline3;
+@property(nonatomic, nonnull, readonly) UIFont *headline4;
+@property(nonatomic, nonnull, readonly) UIFont *headline5;
+@property(nonatomic, nonnull, readonly) UIFont *headline6;
+@property(nonatomic, nonnull, readonly) UIFont *subtitle1;
+@property(nonatomic, nonnull, readonly) UIFont *subtitle2;
+@property(nonatomic, nonnull, readonly) UIFont *body1;
+@property(nonatomic, nonnull, readonly) UIFont *body2;
+@property(nonatomic, nonnull, readonly) UIFont *caption;
+@property(nonatomic, nonnull, readonly) UIFont *button;
+@property(nonatomic, nonnull, readonly) UIFont *overline;
+
+@end
 
 @interface MDCTypographyScheme : NSObject <MDCTypographyScheming>
 

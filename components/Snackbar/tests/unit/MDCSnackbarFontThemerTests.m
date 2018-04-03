@@ -15,7 +15,7 @@
 
 #import "MaterialSnackbar.h"
 #import "MaterialThemes.h"
-#import "MaterialFontScheme.h"
+#import "MaterialTypographyScheme.h"
 #import "MDCSnackbarFontThemer.h"
 
 @interface MDCSnackbarFontThemerTests : XCTestCase
