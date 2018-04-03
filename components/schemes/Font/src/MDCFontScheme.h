@@ -1,5 +1,5 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,8 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
-#import <UIKit/UIKit.h>
 
 /**
  A font scheme comprised of set of UIFonts that are associated with various text styles.
@@ -67,23 +65,20 @@
 
 @end
 
-/**
- A basic font scheme implements the MDCFontScheme protocol.
- */
-@interface MDCBasicFontScheme : NSObject <MDCFontScheme>
+@protocol MDCFontScheming
 
-@property(nonatomic, nullable) UIFont *headline1;
-@property(nonatomic, nullable) UIFont *headline2;
-@property(nonatomic, nullable) UIFont *headline3;
-@property(nonatomic, nullable) UIFont *headline4;
-@property(nonatomic, nullable) UIFont *headline5;
-@property(nonatomic, nullable) UIFont *headline6;
-@property(nonatomic, nullable) UIFont *subtitle1;
-@property(nonatomic, nullable) UIFont *subtitle2;
-@property(nonatomic, nullable) UIFont *body1;
-@property(nonatomic, nullable) UIFont *body2;
-@property(nonatomic, nullable) UIFont *caption;
-@property(nonatomic, nullable) UIFont *button;
-@property(nonatomic, nullable) UIFont *overline;
+@property(nonatomic, strong, nonnull, readonly) UIFont *headline1;
+@property(nonatomic, strong, nonnull, readonly) UIFont *headline2;
+@property(nonatomic, strong, nonnull, readonly) UIFont *headline3;
+@property(nonatomic, strong, nonnull, readonly) UIFont *headline4;
+@property(nonatomic, strong, nonnull, readonly) UIFont *headline5;
+@property(nonatomic, strong, nonnull, readonly) UIFont *headline6;
+@property(nonatomic, strong, nonnull, readonly) UIFont *subtitle1;
+@property(nonatomic, strong, nonnull, readonly) UIFont *subtitle2;
+@property(nonatomic, strong, nonnull, readonly) UIFont *body1;
+@property(nonatomic, strong, nonnull, readonly) UIFont *body2;
+@property(nonatomic, strong, nonnull, readonly) UIFont *caption;
+@property(nonatomic, strong, nonnull, readonly) UIFont *button;
+@property(nonatomic, strong, nonnull, readonly) UIFont *overline;
 
 @end

@@ -17,6 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight.h"
 #import "MaterialThemes.h"
+#import "MaterialFontScheme.h"
 #import "MaterialTypography.h"
 #import "MDCFeatureHighlightAccessibilityMutator.h"
 #import "MDCFeatureHighlightColorThemer.h"
@@ -33,7 +34,7 @@
   // fonts and color unless they are explicitly set.
   // See Apple > UIKit > UIAppearance
   // https://developer.apple.com/documentation/uikit/uiappearance
-  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
+  MDCSemanticFontScheme *fontScheme = [[MDCSemanticFontScheme alloc] init];
   fontScheme.headline2 = [UIFont fontWithName:@"Zapfino" size:14.0];
   fontScheme.body2 = [UIFont fontWithName:@"Chalkduster" size:12.0];
   UIColor *primaryColor = [UIColor purpleColor];
