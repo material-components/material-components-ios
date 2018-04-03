@@ -92,21 +92,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
-
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.colorThemeChanged),
-      name: NSNotification.Name(rawValue: "ColorThemeChangeNotification"),
-      object: nil)
-  }
-
-  func colorThemeChanged(notification: NSNotification) {
-    let colorScheme = notification.userInfo?["colorScheme"]
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
-
-    collectionView?.collectionViewLayout.invalidateLayout()
-    collectionView?.reloadData()
   }
 
   convenience init(node: CBCNode) {
@@ -158,14 +143,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     headerViewController.headerView.addSubview(logo)
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
     let image = MDCDrawImage(CGRect(x:0,
                                     y:0,
                                     width: Constants.logoWidthHeight,
                                     height: Constants.logoWidthHeight),
                              { MDCCatalogDrawMDCLogoLight($0, $1) },
-                             appDelegate.colorScheme)
+                             AppDelegate.colorScheme)
     logo.image = image
 
     NSLayoutConstraint(item: logo,

@@ -18,6 +18,7 @@
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
 #import "MDCBottomAppBarColorThemer.h"
+#import "MaterialBottomAppBar.h"
 #import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
 #import "MDCFeatureHighlightColorThemer.h"
@@ -187,7 +188,7 @@ static NSString *s_secondaryColorString;
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
   [MDCAlertColorThemer applyColorScheme:colorScheme];
   [MDCBottomAppBarColorThemer applyColorScheme:colorScheme
-                            toBottomAppBarView:MDCBottomAppBarView.appearance];
+                            toBottomAppBarView:[MDCBottomAppBarView appearance]];
   [MDCButtonBarColorThemer applyColorScheme:colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.previewButton];
   [MDCButtonColorThemer applyColorScheme:colorScheme toButton:[MDCButton appearance]];
@@ -219,12 +220,6 @@ static NSString *s_secondaryColorString;
   // Apply color scheme to UIKit components.
   [UISlider appearance].tintColor = colorScheme.primaryColor;
   [UISwitch appearance].onTintColor = colorScheme.primaryColor;
-
-  // Send notification that color scheme has changed so existing components can update if necessary.
-  NSDictionary *userInfo = @{ @"colorScheme" : colorScheme };
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
-                                                      object:self
-                                                    userInfo:userInfo];
 }
 
 #pragma mark - Actions

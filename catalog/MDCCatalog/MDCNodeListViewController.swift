@@ -91,15 +91,12 @@ class MDCNodeListViewController: CBCNodeListViewController {
       appBarFont = UIFont(descriptor: descriptor, size: 16)
     }
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let colorScheme = appDelegate.colorScheme
-    MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
-
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
       NSFontAttributeName: appBarFont ]
     appBar.navigationBar.titleAlignment = .center
+    MDCAppBarColorThemer.apply(AppDelegate.colorScheme, to: appBar)
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -391,13 +388,7 @@ extension MDCNodeListViewController {
         container.appBar.navigationBar.titleTextAttributes =
             [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
 
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let colorScheme = appDelegate.colorScheme
-        MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
-        let textColor = UIColor.white
-        UIBarButtonItem.appearance().setTitleTextAttributes(
-          [NSForegroundColorAttributeName: textColor],
-          for: UIControlState())
+        MDCAppBarColorThemer.apply(AppDelegate.colorScheme, to: container.appBar)
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.

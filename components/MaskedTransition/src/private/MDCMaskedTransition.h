@@ -24,7 +24,7 @@
  It is presently assumed that the mask will be a circular mask and that the source view is a view
  with equal width and height and a corner radius equal to half the view's width.
  */
-@interface MDCMaskedTransition: NSObject <MDMTransition>
+@interface MDCMaskedTransition: NSObject <UIViewControllerAnimatedTransitioning>
 
 /**
  Initializes the transition with the view from which the mask should emanate.
@@ -33,6 +33,7 @@
                    presenting view controller's view hierarchy.
  */
 - (nonnull instancetype)initWithSourceView:(nonnull UIView *)sourceView
+                                 direction:(MDMTransitionDirection)direction
     NS_DESIGNATED_INITIALIZER;
 
 /**

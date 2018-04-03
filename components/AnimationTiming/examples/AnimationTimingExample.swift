@@ -44,7 +44,7 @@ class AnimationTimingExample: UIViewController {
    override func viewDidLoad() {
       super.viewDidLoad()
 
-      view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+      view.backgroundColor = .white
       title = "Animation Timing"
       setupExampleViews()
    }
@@ -107,16 +107,16 @@ extension AnimationTimingExample {
          let label: UILabel = UILabel()
          label.text = labelTitle
          label.font = MDCTypography.captionFont()
-         label.textColor = UIColor(white: 0, alpha: MDCTypography.captionFontOpacity())
+         label.textColor = UIColor(white: 0, alpha: MDCTypography.body2FontOpacity())
          label.sizeToFit()
          return label
       }
 
-      let defaultColors: [UIColor] = [UIColor.darkGray.withAlphaComponent(0.8),
-                                      UIColor.darkGray.withAlphaComponent(0.65),
-                                      UIColor.darkGray.withAlphaComponent(0.5),
-                                      UIColor.darkGray.withAlphaComponent(0.35),
-                                      UIColor.darkGray.withAlphaComponent(0.2)]
+      let defaultColors: [UIColor] = [UIColor.darkGray.withAlphaComponent(0.95),
+                                      UIColor.darkGray.withAlphaComponent(0.90),
+                                      UIColor.darkGray.withAlphaComponent(0.85),
+                                      UIColor.darkGray.withAlphaComponent(0.80),
+                                      UIColor.darkGray.withAlphaComponent(0.75)]
 
       scrollView.frame = view.bounds
       scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
