@@ -18,7 +18,7 @@
 
 @class MDCTextField;
 
-@protocol MDCFontScheming;
+@protocol MDCTypographyScheming;
 @protocol MDCTextInputController;
 
 /**
@@ -32,7 +32,7 @@
  @param fontScheme The font scheme that applies to a MDCTextInputController.
  @param textInputController A MDCTextInputController instance that font scheme will be applied to.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(nonnull id<MDCTypographyScheming>)fontScheme
   toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
 
 /**
@@ -42,7 +42,7 @@
  @param fontScheme The font scheme that applies to a MDCTextInputController.
  @param textInputControllerClass A MDCTextInputController class that font scheme will be applied to.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(nonnull id<MDCTypographyScheming>)fontScheme
   toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
   NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
@@ -52,7 +52,7 @@
  @param fontScheme The font scheme that applies to MDCTextField.
  @param textField A MDCTextField instance that font scheme will be applied to.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(nonnull id<MDCTypographyScheming>)fontScheme
             toTextField:(nullable MDCTextField *)textField;
 
 @end

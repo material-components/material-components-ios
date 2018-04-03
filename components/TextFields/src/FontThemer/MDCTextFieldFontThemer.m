@@ -21,7 +21,7 @@
 
 @implementation MDCTextFieldFontThemer
 
-+ (void)applyFontScheme:(id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(id<MDCTypographyScheming>)fontScheme
   toTextInputController:(id<MDCTextInputController>)textInputController {
   textInputController.inlinePlaceholderFont = fontScheme.body1;
   textInputController.leadingUnderlineLabelFont = fontScheme.caption;
@@ -39,7 +39,7 @@
   }
 }
 
-+ (void)applyFontScheme:(id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(id<MDCTypographyScheming>)fontScheme
             toTextField:(MDCTextField *)textField {
   textField.font = fontScheme.body1;
   textField.placeholderLabel.font = fontScheme.body1;
@@ -53,7 +53,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
-+ (void)applyFontScheme:(id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(id<MDCTypographyScheming>)fontScheme
 toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   [textInputControllerClass setInlinePlaceholderFontDefault:fontScheme.body1];
   [textInputControllerClass setTrailingUnderlineLabelFontDefault:fontScheme.caption];

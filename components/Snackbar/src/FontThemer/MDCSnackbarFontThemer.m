@@ -18,7 +18,7 @@
 
 @implementation MDCSnackbarFontThemer
 
-+ (void)applyFontScheme:(nonnull id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(nonnull id<MDCTypographyScheming>)fontScheme
     toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
   snackbarMessageView.messageFont = fontScheme.body2;
   snackbarMessageView.buttonFont = fontScheme.button;

@@ -31,7 +31,7 @@
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a font scheme. Use a
      UIAppearance proxy to apply a font scheme to all instances of MDCFeatureHighlightView.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(nonnull id<MDCTypographyScheming>)fontScheme
     toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView;
 
 @end

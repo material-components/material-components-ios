@@ -31,7 +31,7 @@
  @param snackbarMessageView A MDCSnackbarMessageView instance to apply a font scheme. Use a
      UIAppearance proxy to apply a font scheme to all instances of MDCSnackbarMessageView.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheming>)fontScheme
++ (void)applyFontScheme:(nonnull id<MDCTypographyScheming>)fontScheme
     toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView;
 
 @end
