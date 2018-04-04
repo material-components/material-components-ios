@@ -101,8 +101,8 @@ IB_DESIGNABLE
 /**
  The font applied to the title of navigation bar.
  Font size is enforced to 20.
- Default is MDCTypography's titleFont.
- Note that Font attribute will of titleTextAttributes take precedence over titleFont property.
+ Both Default and null_resettable value is MDCTypography's titleFont.
+ Note that the font attribute of titleTextAttributes will take precedence over this property.
  */
 @property (nonatomic, strong, null_resettable) UIFont *titleFont;
 
