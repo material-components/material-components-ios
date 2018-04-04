@@ -84,11 +84,7 @@
 /** The font applied to the button of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *buttonFont;
 
-/**
- The color applied to the button of Alert Controller.
-
- Default is leadingUnderlineLabelFontDefault.
- */
+/** The color applied to the button of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonColor;
 
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
