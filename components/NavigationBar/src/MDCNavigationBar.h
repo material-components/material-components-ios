@@ -99,10 +99,20 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIView *titleView;
 
 /**
+ The font applied to the title of navigation bar.
+ Font size is enforced to 20.
+ Both Default and null_resettable value is MDCTypography's titleFont.
+ Note that the font attribute of titleTextAttributes will take precedence over this property.
+ */
+@property (nonatomic, strong, null_resettable) UIFont *titleFont;
+
+/**
  Display attributes for the titleView's title text.
 
+ Font attribute will take precedence over titleFont property.
  Setting this property will render an NSAttributedString with the assigned attributes across the
  entire text.
+ Note: this property will be deprecated in future, please use title font instead.
  */
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 @property(nonatomic, copy, nullable)
@@ -192,6 +202,8 @@ IB_DESIGNABLE
 
 /* Equivalent to leadingItemsSupplementBackButton. */
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
+
+#pragma mark - Deprecated
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
