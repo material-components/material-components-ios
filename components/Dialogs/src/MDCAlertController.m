@@ -276,7 +276,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (MDCAlertControllerView *)alertView {
-  [self loadViewIfNeeded];
+  if (!self.viewLoaded) {
+    [self loadView];
+  }
   return _alertView;
 }
 
