@@ -91,9 +91,17 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
 /*
- The shape generator used to define the card's shape.
+ The shape generator used to define the card cell's shape.
+ When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
+ If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
+ unexpected behavior.
+
+ When the shapeGenerator is nil, MDCCardCollectionCell will work like a normal UIControl with
+ the default cornerRadius value of 4.
+
+ Default value for shapeGenerator is nil.
  */
-@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
  Sets the shadow elevation for an MDCCardViewState state

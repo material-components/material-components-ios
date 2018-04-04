@@ -142,8 +142,6 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 
   if (!self.layer.shapeGenerator) {
     self.layer.shadowPath = [self boundingPath].CGPath;
-  } else {
-    self.layer.cornerRadius = 0;
   }
 }
 
@@ -284,8 +282,9 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
   if (shapeGenerator) {
-    self.layer.cornerRadius = 0;
     self.layer.shadowPath = nil;
+  } else {
+    self.layer.shadowPath = [self boundingPath].CGPath;
   }
 
   self.layer.shapeGenerator = shapeGenerator;
@@ -294,15 +293,15 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   [self updateInkForShape];
 }
 
+- (id<MDCShapeGenerating>)shapeGenerator {
+  return self.layer.shapeGenerator;
+}
+
 - (void)updateInkForShape {
   CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
   self.inkView.maxRippleRadius =
       (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
   self.inkView.layer.masksToBounds = NO;
-}
-
-- (id)shapeGenerator {
-  return self.layer.shapeGenerator;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {

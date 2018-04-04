@@ -64,8 +64,11 @@
 @property(nonatomic, strong, nullable) id<MDCShapeGenerating> shapeGenerator;
 
 /*
- The created CAShapeLayer representing the generated shape layer for the implementing UIView
+ The created CAShapeLayer representing the generated shape path for the implementing UIView
  from the shapeGenerator.
+
+ This layer is exposed to easily mask subviews of the implementing UIView so they won't spill
+ outside the layer to fit the bounds.
  */
 @property(nonatomic, strong, nonnull) CAShapeLayer *shapeLayer;
 

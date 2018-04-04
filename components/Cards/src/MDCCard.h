@@ -117,8 +117,16 @@
 
 /*
  The shape generator used to define the card's shape.
+ When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
+ If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
+ unexpected behavior.
+
+ When the shapeGenerator is nil, MDCCard will work like a normal UIControl with
+ the default cornerRadius value of 4.
+
+ Default value for shapeGenerator is nil.
  */
-@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 
 @end

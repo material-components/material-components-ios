@@ -87,9 +87,7 @@
 - (void)setPath:(CGPathRef)path {
   self.shadowPath = path;
   _colorLayer.path = path;
-
   _shapeLayer.path = path;
-  _shapeLayer.fillRule = kCAFillRuleEvenOdd;
 
   if (CGPathIsEmpty(path)) {
     self.backgroundColor = self.shapedBackgroundColor.CGColor;
