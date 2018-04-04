@@ -15,21 +15,25 @@
  */
 
 import Foundation
-import MaterialComponents.MaterialPalettes
-import MaterialComponents.MaterialThemes
+import MaterialComponents.MaterialColorScheme
 
 final class AppTheme {
-  let colorScheme: MDCColorScheme
+  let colorScheme: MDCColorScheming
 
-  init(colorScheme: MDCColorScheme) {
+  init(colorScheme: MDCColorScheming) {
     self.colorScheme = colorScheme
   }
 
-  static let defaultTheme: AppTheme = AppTheme(colorScheme:
-    MDCBasicColorScheme(primaryColor: .init(white: 33 / 255.0, alpha: 1),
-                        primaryLightColor: .init(white: 0.7, alpha: 1),
-                        primaryDarkColor: .init(white: 0, alpha: 1))
-  )
+  static let defaultTheme: AppTheme = {
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.primaryColor = .init(white: 33 / 255.0, alpha: 1)
+    colorScheme.primaryColorVariant = .init(white: 0.7, alpha: 1)
+    colorScheme.secondaryColor = UIColor(red: CGFloat(0x00) / 255.0,
+                                         green: CGFloat(0xE6) / 255.0,
+                                         blue: CGFloat(0x76) / 255.0,
+                                         alpha: 1)
+    return AppTheme(colorScheme: colorScheme)
+  }()
 
   static var globalTheme: AppTheme = defaultTheme {
     didSet {

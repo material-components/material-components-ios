@@ -103,11 +103,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   func themeDidChange(notification: NSNotification) {
     guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
-          as? MDCColorScheme else {
+          as? MDCColorScheming else {
       return
     }
-    MDCFlexibleHeaderColorThemer.apply(colorScheme,
-                                       toMDCFlexibleHeaderController: headerViewController)
+    MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
+                                                          to: headerViewController.headerView)
 
     collectionView?.collectionViewLayout.invalidateLayout()
     collectionView?.reloadData()
@@ -202,8 +202,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                        multiplier: 1,
                        constant: Constants.logoWidthHeight).isActive = true
 
-    MDCFlexibleHeaderColorThemer.apply(colorScheme,
-                                       toMDCFlexibleHeaderController: headerViewController)
+    MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
+                                                          to: headerViewController.headerView)
 
     headerViewController.headerView.trackingScrollView = collectionView
 
