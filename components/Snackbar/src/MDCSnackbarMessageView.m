@@ -310,10 +310,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     }
 
     // Apply 'global' attributes along the whole string.
-    _label.attributedText = messageString;
     _label.backgroundColor = [UIColor clearColor];
     _label.textAlignment = NSTextAlignmentNatural;
-//    _label.adjustsFontSizeToFitWidth = YES;
+    _label.adjustsFontSizeToFitWidth = YES;
+    _label.attributedText = messageString;
     _label.numberOfLines = 0;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_label setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh
