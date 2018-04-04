@@ -18,8 +18,16 @@ import MaterialComponents.MaterialThemes
 import UIKit
 
 class MDCThemePickerViewController: UITableViewController {
-  init() {
-    super.init(style: .plain)
+  convenience init() {
+    self.init(style: .plain)
+  }
+
+  override init(style: UITableViewStyle) {
+    super.init(style: style)
+  }
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
   required init?(coder aDecoder: NSCoder) {
