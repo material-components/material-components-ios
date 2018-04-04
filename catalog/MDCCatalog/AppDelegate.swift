@@ -41,10 +41,6 @@ import MaterialComponents.MaterialThemes
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-  static var colorScheme: MDCColorScheme =
-      MDCBasicColorScheme(primaryColor: .init(white: 33 / 255.0, alpha: 1),
-                          primaryLightColor: .init(white: 0.7, alpha: 1),
-                          primaryDarkColor: .init(white: 0, alpha: 1))
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
