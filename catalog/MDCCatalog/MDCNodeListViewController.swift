@@ -82,12 +82,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
       childrenNodes.insert(primaryDemoNode, at: 0)
     }
 
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.themeDidChange),
-      name: AppTheme.didChangeGlobalThemeNotificationName,
-      object: nil)
-
     node.children = childrenNodes
 
     componentDescription = childrenNodes.first?.exampleDescription() ?? ""
@@ -140,12 +134,20 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.addSubviewsToParent()
 
     applyColorScheme(AppTheme.globalTheme.colorScheme)
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.themeDidChange),
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
+
+    applyColorScheme(AppTheme.globalTheme.colorScheme)
   }
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
@@ -161,9 +163,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
           as? MDCColorScheme else {
       return
     }
-    if isViewLoaded {
-      applyColorScheme(colorScheme)
-    }
+    applyColorScheme(colorScheme)
   }
 
   private func applyColorScheme(_ colorScheme: MDCColorScheme) {
