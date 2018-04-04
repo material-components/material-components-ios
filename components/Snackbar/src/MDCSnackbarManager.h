@@ -144,6 +144,8 @@
 /**
  When setting this BOOL to YES, then all the styling changes that are set using the class styling
  properties in this class, will apply on the currently presented snackbar too.
+
+ Default is set to NO.
  */
 @property(class, nonatomic, assign) BOOL applyStylingOnCurrentSnackbar;
 
@@ -173,6 +175,7 @@
  If set to YES, this button will base its message font on MDCFontTextStyleBody2
  and its button font on MDCFontTextStyleButton.
 
+ Default is set to NO.
  */
 @property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
