@@ -22,7 +22,7 @@
 
 @implementation MDCSnackbarFontThemerTests
 
-- (void)testSnackbarFontThemer {
+- (void)testSnackbarFontThemerUsingUIAppearance {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
   [MDCSnackbarManager showMessage:message];
@@ -34,6 +34,20 @@
   XCTAssertEqualObjects([MDCSnackbarMessageView appearance].messageFont,
                         fontScheme.body2);
   XCTAssertEqualObjects([MDCSnackbarMessageView appearance].buttonFont,
+                        fontScheme.button);
+}
+
+- (void)testSnackbarFontThemer {
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
+  [MDCSnackbarManager showMessage:message];
+  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
+  fontScheme.button = [UIFont boldSystemFontOfSize:12.f];
+  fontScheme.body2 = [UIFont systemFontOfSize:13.f];
+  [MDCSnackbarFontThemer applyFontScheme:fontScheme];
+  XCTAssertEqualObjects(MDCSnackbarManager.messageFont,
+                        fontScheme.body2);
+  XCTAssertEqualObjects(MDCSnackbarManager.buttonFont,
                         fontScheme.button);
 }
 

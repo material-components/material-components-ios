@@ -214,7 +214,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   Class viewClass = [message viewClass];
   snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
   self.currentSnackbar = snackbarView;
-
   self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
@@ -486,6 +485,15 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 @implementation MDCSnackbarManager
 
+static UIColor *_snackbarMessageViewBackgroundColor;
+static UIColor *_snackbarMessageViewShadowColor;
+static UIColor *_messageTextColor;
+static UIFont *_messageFont;
+static UIFont *_buttonFont;
+static NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
+static BOOL _mdc_adjustsFontForContentSizeCategory;
+static BOOL _applyStylingOnCurrentSnackbar;
+
 + (void)showMessage:(MDCSnackbarMessage *)inputMessage {
   if (!inputMessage) {
     return;
@@ -560,6 +568,133 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
   MDCSnackbarManagerSuspensionToken *token = (MDCSnackbarManagerSuspensionToken *)inToken;
   [self handleInvalidatedIdentifier:token.identifier forCategory:token.category];
+}
+
+#pragma mark - Styling
+
++ (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
+  if (snackbarMessageViewBackgroundColor != _snackbarMessageViewBackgroundColor) {
+    _snackbarMessageViewBackgroundColor = snackbarMessageViewBackgroundColor;
+    if (_applyStylingOnCurrentSnackbar) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+        [manager.currentSnackbar
+            setSnackbarMessageViewBackgroundColor:snackbarMessageViewBackgroundColor];
+      });
+    }
+  }
+}
+
++ (UIColor *)snackbarMessageViewBackgroundColor {
+  return _snackbarMessageViewBackgroundColor;
+}
+
++ (void)setSnackbarMessageViewShadowColor:(UIColor *)snackbarMessageViewShadowColor {
+  if (snackbarMessageViewShadowColor != _snackbarMessageViewShadowColor) {
+    _snackbarMessageViewShadowColor = snackbarMessageViewShadowColor;
+    if (_applyStylingOnCurrentSnackbar) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+        [manager.currentSnackbar setSnackbarMessageViewShadowColor:snackbarMessageViewShadowColor];
+      });
+    }
+  }
+}
+
++ (UIColor *)snackbarMessageViewShadowColor {
+  return _snackbarMessageViewShadowColor;
+}
+
++ (void)setMessageTextColor:(UIColor *)messageTextColor {
+  if (messageTextColor != _messageTextColor) {
+    _messageTextColor = messageTextColor;
+    if (_applyStylingOnCurrentSnackbar) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+        [manager.currentSnackbar setMessageTextColor:messageTextColor];
+      });
+    }
+  }
+}
+
++ (UIColor *)messageTextColor {
+  return _messageTextColor;
+}
+
++ (void)setMessageFont:(UIFont *)messageFont {
+  if (messageFont != _messageFont) {
+    _messageFont = messageFont;
+    if (_applyStylingOnCurrentSnackbar) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+        [manager.currentSnackbar setMessageFont:messageFont];
+      });
+    }
+  }
+}
+
++ (UIFont *)messageFont {
+  return _messageFont;
+}
+
++ (void)setButtonFont:(UIFont *)buttonFont {
+  if (buttonFont != _buttonFont) {
+    _buttonFont = buttonFont;
+    if (_applyStylingOnCurrentSnackbar) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+        [manager.currentSnackbar setButtonFont:buttonFont];
+      });
+    }
+  }
+}
+
++ (UIFont *)buttonFont {
+  return _buttonFont;
+}
+
++ (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
+  if (_buttonTitleColors == nil) {
+    _buttonTitleColors = [NSMutableDictionary dictionary];
+  }
+  if (titleColor != _buttonTitleColors[@(state)]) {
+    _buttonTitleColors[@(state)] = titleColor;
+    if (_applyStylingOnCurrentSnackbar) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+        [manager.currentSnackbar setButtonTitleColor:titleColor forState:state];
+      });
+    }
+  }
+}
+
++ (UIColor *)buttonTitleColorForState:(UIControlState)state {
+  return _buttonTitleColors[@(state)];
+}
+
++ (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)mdc_adjustsFontForContentSizeCategory {
+  if (mdc_adjustsFontForContentSizeCategory != _mdc_adjustsFontForContentSizeCategory) {
+    _mdc_adjustsFontForContentSizeCategory = mdc_adjustsFontForContentSizeCategory;
+    if (_applyStylingOnCurrentSnackbar) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+        [manager.currentSnackbar
+            mdc_setAdjustsFontForContentSizeCategory:mdc_adjustsFontForContentSizeCategory];
+      });
+    }
+  }
+}
+
++ (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
++ (void)setApplyStylingOnCurrentSnackbar:(BOOL)applyStylingOnCurrentSnackbar {
+  _applyStylingOnCurrentSnackbar = applyStylingOnCurrentSnackbar;
+}
+
++ (BOOL)applyStylingOnCurrentSnackbar {
+  return _applyStylingOnCurrentSnackbar;
 }
 
 @end
