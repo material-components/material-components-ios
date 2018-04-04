@@ -112,6 +112,7 @@ IB_DESIGNABLE
  Font attribute will take precedence over titleFont property.
  Setting this property will render an NSAttributedString with the assigned attributes across the
  entire text.
+ Note: this property will be deprecated in future, please use title font instead.
  */
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 @property(nonatomic, copy, nullable)
