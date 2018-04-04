@@ -103,8 +103,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
       appBarFont = UIFont(descriptor: descriptor, size: 16)
     }
 
-    applyColorScheme(AppTheme.globalTheme.colorScheme)
-
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
       NSFontAttributeName: appBarFont ]
@@ -140,6 +138,8 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()
+
+    applyColorScheme(AppTheme.globalTheme.colorScheme)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -161,7 +161,9 @@ class MDCNodeListViewController: CBCNodeListViewController {
           as? MDCColorScheme else {
       return
     }
-    applyColorScheme(colorScheme)
+    if isViewLoaded {
+      applyColorScheme(colorScheme)
+    }
   }
 
   private func applyColorScheme(_ colorScheme: MDCColorScheme) {

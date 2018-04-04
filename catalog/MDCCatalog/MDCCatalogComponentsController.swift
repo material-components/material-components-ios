@@ -162,12 +162,14 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     headerViewController.headerView.addSubview(logo)
 
+    let colorScheme = AppTheme.globalTheme.colorScheme
+
     let image = MDCDrawImage(CGRect(x:0,
                                     y:0,
                                     width: Constants.logoWidthHeight,
                                     height: Constants.logoWidthHeight),
                              { MDCCatalogDrawMDCLogoLight($0, $1) },
-                             AppTheme.globalTheme.colorScheme)
+                             colorScheme)
     logo.image = image
 
     NSLayoutConstraint(item: logo,
@@ -200,7 +202,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                        multiplier: 1,
                        constant: Constants.logoWidthHeight).isActive = true
 
-    MDCFlexibleHeaderColorThemer.apply(AppTheme.globalTheme.colorScheme,
+    MDCFlexibleHeaderColorThemer.apply(colorScheme,
                                        toMDCFlexibleHeaderController: headerViewController)
 
     headerViewController.headerView.trackingScrollView = collectionView
