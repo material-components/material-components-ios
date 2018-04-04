@@ -498,17 +498,6 @@ static const CGFloat MDCCardCellShadowElevationSelected = 8.f;
   [self setImageTintColor:self.tintColor forState:MDCCardCellStateNormal];
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-  if (self.layer.shapeGenerator) {
-    if (CGPathContainsPoint(self.layer.shapeLayer.path, nil, point, true)) {
-      return self;
-    } else {
-      return nil;
-    }
-  }
-  return [super hitTest:point withEvent:event];
-}
-
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
   if (shapeGenerator) {
     self.layer.shadowPath = nil;
