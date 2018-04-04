@@ -105,6 +105,21 @@ IB_DESIGNABLE
  */
 @property (nonatomic, strong, null_resettable) UIFont *titleFont;
 
+/**
+ Display attributes for the titleView's title text.
+
+ Font attribute will take precedence over titleFont property.
+ Setting this property will render an NSAttributedString with the assigned attributes across the
+ entire text.
+ */
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+#else
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+#endif
+
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
 
@@ -190,21 +205,5 @@ IB_DESIGNABLE
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
-
-/**
- Display attributes for the titleView's title text.
-
- Setting this property will render an NSAttributedString with the assigned attributes across the
- entire text.
- */
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR
-    __deprecated_msg("Use titleFont instead");
-#else
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR
-    __deprecated_msg("Use titleFont instead");
-#endif
 
 @end
