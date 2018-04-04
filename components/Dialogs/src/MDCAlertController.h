@@ -17,7 +17,6 @@
 #import <UIKit/UIKit.h>
 
 @class MDCAlertAction;
-@class MDCAlertControllerView;
 
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
@@ -70,10 +69,27 @@
  */
 @property(nonatomic, nonnull, readonly) NSArray<MDCAlertAction *> *actions;
 
+/** The font applied to the title of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIFont *titleFont;
+
+/** The color applied to the title of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *titleColor;
+
+/** The font applied to the message of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIFont *messageFont;
+
+/** The color applied to the message of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *messageColor;
+
+/** The font applied to the button of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIFont *buttonFont;
+
 /**
- The MDCAlertControllerView instance that is being presented by this view controller.
+ The color applied to the button of Alert Controller.
+
+ Default is leadingUnderlineLabelFontDefault.
  */
-@property(nonatomic, nonnull, readonly) MDCAlertControllerView *alertControllerView;
+@property(nonatomic, strong, nullable) UIColor *buttonColor;
 
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.

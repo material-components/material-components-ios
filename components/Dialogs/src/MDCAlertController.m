@@ -169,6 +169,54 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setTitleFont:(UIFont *)titleFont {
+  self.alertView.titleFont = titleFont;
+}
+
+- (UIFont *)titleFont {
+  return self.alertView.titleFont;
+}
+
+- (void)setMessageFont:(UIFont *)messageFont {
+  self.alertView.messageFont = messageFont;
+}
+
+- (UIFont *)messageFont {
+  return self.alertView.messageFont;
+}
+
+- (void)setButtonFont:(UIFont *)buttonFont {
+  self.alertView.buttonFont = buttonFont;
+}
+
+- (UIFont *)buttonFont {
+  return self.alertView.buttonFont;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+  self.alertView.titleColor = titleColor;
+}
+
+- (UIColor *)titleColor {
+  return self.alertView.titleColor;
+}
+
+- (void)setMessageColor:(UIColor *)messageColor {
+  self.alertView.messageColor = messageColor;
+}
+
+- (UIColor *)messageColor {
+  return self.alertView.messageColor;
+}
+
+- (void)setButtonColor:(UIColor *)buttonColor {
+  self.alertView.buttonColor = buttonColor;
+}
+
+- (UIColor *)buttonColor {
+  return self.alertView.buttonColor;
+}
+
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
 }
@@ -224,13 +272,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)loadView {
   self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
-  self.alertView = (MDCAlertControllerView *)self.view;
+  _alertView = (MDCAlertControllerView *)self.view;
 }
 
-- (MDCAlertControllerView *)alertControllerView {
-  // First make sure view is loaded. AlertView is viewController's view.
+- (MDCAlertControllerView *)alertView {
   [self loadViewIfNeeded];
-  return self.alertView;
+  return _alertView;
 }
 
 - (void)viewDidLoad {
