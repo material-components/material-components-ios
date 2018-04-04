@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialPalettes.h"
-#import "MaterialThemes.h"
+#import "MaterialColorScheme.h"
 #import "supplemental/ThemerTypicalUseSupplemental.h"
 
 #import "MaterialCollections.h"
@@ -152,7 +152,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @implementation ThemerColorSchemeViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Theme Examples" ];
+  return @[ @"Color Scheme", @"MDCBasicColorScheme Examples" ];
 }
 
 + (NSString *)catalogDescription {
