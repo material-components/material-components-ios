@@ -29,14 +29,14 @@
 - (void)testFontThemer {
   // Given
   MDCChipView *chip = [[MDCChipView alloc] init];
-  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
-  fontScheme.body2 = [UIFont systemFontOfSize:99];
+  MDCTypographyScheme *scheme = [[MDCTypographyScheme alloc] init];
+  scheme.body2 = [UIFont systemFontOfSize:99];
 
   // When
-  [MDCChipViewFontThemer applyFontScheme:fontScheme toChipView:chip];
+  [MDCChipViewFontThemer applyTypographyScheme:scheme toChipView:chip];
 
   // Then
-  XCTAssertEqualObjects(chip.titleFont, fontScheme.body2);
+  XCTAssertEqualObjects(chip.titleFont, scheme.body2);
 }
 
 @end

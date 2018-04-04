@@ -16,6 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ A simple typography scheme that provides semantic fonts. There are no optional
+ properties, all fonts must be provided, supporting more reliable typography theming.
+ */
 @protocol MDCTypographyScheming
 
 @property(nonatomic, nonnull, readonly) UIFont *headline1;
@@ -34,8 +38,13 @@
 
 @end
 
+/**
+ A simple implementation of @c MDCTypographyScheming that provides Material default fonts
+ from which basic customizations can be made.
+ */
 @interface MDCTypographyScheme : NSObject <MDCTypographyScheming>
 
+// Redeclare protocol properties as readwrite
 @property(nonatomic, nonnull, readwrite) UIFont *headline1;
 @property(nonatomic, nonnull, readwrite) UIFont *headline2;
 @property(nonatomic, nonnull, readwrite) UIFont *headline3;
@@ -50,8 +59,14 @@
 @property(nonatomic, nonnull, readwrite) UIFont *button;
 @property(nonatomic, nonnull, readwrite) UIFont *overline;
 
+/**
+ Convenience initializer that calls @c initWithMaterialDefaults.
+ */
 - (nonnull instancetype)init;
 
+/**
+ Initializes an instance of MDCSemanticColorScheme with the Material default fonts.
+ */
 - (nonnull instancetype)initWithMaterialDefaults;
 
 @end

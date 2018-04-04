@@ -68,7 +68,7 @@
 @end
 
 /**
- A basic font scheme implements the MDCFontScheme protocol.	+
+ A basic font scheme implements the MDCFontScheme protocol.
  */
 @interface MDCBasicFontScheme : NSObject <MDCFontScheme>
 

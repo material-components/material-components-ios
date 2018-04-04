@@ -20,8 +20,8 @@
 
 @implementation MDCChipViewFontThemer
 
-+ (void)applyFontScheme:(id<MDCTypographyScheming>)fontScheme toChipView:(MDCChipView *)chipView {
-  chipView.titleFont = fontScheme.body2;
++ (void)applyTypographyScheme:(id<MDCTypographyScheming>)scheme toChipView:(MDCChipView *)chipView {
+  chipView.titleFont = scheme.body2;
 }
 
 @end

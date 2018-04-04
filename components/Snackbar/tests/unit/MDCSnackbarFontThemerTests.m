@@ -30,7 +30,7 @@
   MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.button = [UIFont boldSystemFontOfSize:12.f];
   fontScheme.body2 = [UIFont systemFontOfSize:13.f];
-  [MDCSnackbarFontThemer applyFontScheme:fontScheme
+  [MDCSnackbarFontThemer applyTypographyScheme:fontScheme
                    toSnackbarMessageView:[MDCSnackbarMessageView appearance]];
   XCTAssertEqualObjects([MDCSnackbarMessageView appearance].messageFont,
                         fontScheme.body2);

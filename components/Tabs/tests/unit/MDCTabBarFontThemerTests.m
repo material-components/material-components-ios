@@ -29,7 +29,7 @@
   MDCTabBar *tabBar = [[MDCTabBar alloc] init];
   MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
   fontScheme.button = [UIFont boldSystemFontOfSize:22];
-  [MDCTabBarFontThemer applyFontScheme:fontScheme toTabBar:tabBar];
+  [MDCTabBarFontThemer applyTypographyScheme:fontScheme toTabBar:tabBar];
   XCTAssertEqualObjects(tabBar.selectedItemTitleFont, fontScheme.button);
   XCTAssertEqualObjects(tabBar.unselectedItemTitleFont, fontScheme.button);
 }
