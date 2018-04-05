@@ -56,7 +56,7 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/ActivityIndicator/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/ActivityIndicator"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
   end
 
