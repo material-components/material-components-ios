@@ -76,12 +76,12 @@
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                     toTextField:(nonnull MDCTextField *)textField {
-  textField.cursorColor = colorScheme.primaryColor;
-  textField.textColor = colorScheme.onSurfaceColor;
-  textField.placeholderLabel.textColor = colorScheme.onSurfaceColor;
-  textField.trailingUnderlineLabel.textColor = colorScheme.onSurfaceColor;
-  textField.leadingUnderlineLabel.textColor = colorScheme.onSurfaceColor;
+                     toTextInput:(nonnull id<MDCTextInput>)textInput {
+  textInput.cursorColor = colorScheme.primaryColor;
+  textInput.textColor = colorScheme.onSurfaceColor;
+  textInput.placeholderLabel.textColor = colorScheme.onSurfaceColor;
+  textInput.trailingUnderlineLabel.textColor = colorScheme.onSurfaceColor;
+  textInput.leadingUnderlineLabel.textColor = colorScheme.onSurfaceColor;
 }
 
 // TODO: (larche) Drop this if defined and the pragmas when we drop Xcode 8 support.

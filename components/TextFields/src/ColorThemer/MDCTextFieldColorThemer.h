@@ -55,10 +55,10 @@
  Applies a color scheme to theme an MDCTextField.
 
  @param colorScheme The color scheme to apply.
- @param textField A MDCTextField instance to apply a color scheme.
+ @param textInput A MDCTextInput instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                     toTextField:(nonnull MDCTextField *)textField;
+                     toTextInput:(nonnull id<MDCTextInput>)textInput;
 
 #pragma mark - Soon to be deprecated
 
