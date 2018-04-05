@@ -765,15 +765,6 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   }
 }
 
-- (void)setHeight:(CGFloat)height {
-  if (_height == height) {
-    return;
-  }
-  _height = height;
-  _leadingButtonBar.height = height;
-  _trailingButtonBar.height = height;
-}
-
 - (void)setInkColor:(UIColor *)inkColor {
   if (_inkColor == inkColor) {
     return;
