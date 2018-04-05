@@ -44,7 +44,7 @@ mdc_objc_library(
         "XCTest",
     ],
     deps = [
-        ":TypographyScheme"
+        ":Typography"
     ],
     visibility = ["//visibility:private"],
 )
