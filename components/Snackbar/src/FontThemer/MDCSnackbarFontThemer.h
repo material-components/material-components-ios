@@ -34,4 +34,11 @@
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme
         toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView;
 
+/**
+ Applies a font scheme to theme to a MDCSnackbarMessageView.
+
+ @param fontScheme The font scheme to apply to MDCSnackbarMessageView.
+ */
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme;
+
 @end
