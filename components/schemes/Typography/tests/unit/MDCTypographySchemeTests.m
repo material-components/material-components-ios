@@ -19,11 +19,11 @@
 
 #import "MaterialTypographyScheme.h"
 
-@interface MDCSemanticColorSchemeTests : XCTestCase
+@interface MDCTypographySchemeTests : XCTestCase
 @property(nonatomic, strong) MDCTypographyScheme *scheme;
 @end
 
-@implementation MDCSemanticColorSchemeTests
+@implementation MDCTypographySchemeTests
 
 - (void)setUp {
   [super setUp];
@@ -35,7 +35,7 @@
   [super tearDown];
 }
 
-- (void)testInitializerWithAllParameters {
+- (void)testInitializer {
   // Given
   MDCTypographyScheme *defaultScheme =
       [[MDCTypographyScheme alloc] initWithMaterialDefaults];
