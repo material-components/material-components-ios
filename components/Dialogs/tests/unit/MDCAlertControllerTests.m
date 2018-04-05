@@ -115,7 +115,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   UIColor *testColor = [UIColor redColor];
   alert.titleColor = testColor;
   alert.messageColor = testColor;
-  alert.buttonColor = testColor;
+  alert.buttonTitleColor = testColor;
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);

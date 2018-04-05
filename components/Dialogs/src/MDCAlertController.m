@@ -209,11 +209,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return self.alertView.messageColor;
 }
 
-- (void)setButtonColor:(UIColor *)buttonColor {
+- (void)setButtonTitleColor:(UIColor *)buttonColor {
   self.alertView.buttonColor = buttonColor;
 }
 
-- (UIColor *)buttonColor {
+- (UIColor *)buttonTitleColor {
   return self.alertView.buttonColor;
 }
 
