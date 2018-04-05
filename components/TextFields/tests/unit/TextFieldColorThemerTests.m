@@ -67,9 +67,9 @@
 - (void)setUp{
   [super setUp];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCTextFieldColorThemer applyColorScheme:colorScheme
+  [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
            toAllTextInputControllersOfClass:[MDCTextInputControllerFullWidth class]];
-  [MDCTextFieldColorThemer applyColorScheme:colorScheme
+  [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
            toAllTextInputControllersOfClass:[MDCTextInputControllerBase class]];
 
 }
@@ -116,14 +116,16 @@
   colorScheme.onSurfaceColor = [UIColor greenColor];
   colorScheme.errorColor = [UIColor redColor];
 
-  [MDCTextFieldColorThemer applyColorScheme:colorScheme toTextField:textField];
+  [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
+                                        toTextField:textField];
   XCTAssertEqualObjects(textField.cursorColor, colorScheme.primaryColor);
   XCTAssertEqualObjects(textField.textColor, colorScheme.onSurfaceColor);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor, colorScheme.onSurfaceColor);
   XCTAssertEqualObjects(textField.trailingUnderlineLabel.textColor, colorScheme.onSurfaceColor);
   XCTAssertEqualObjects(textField.leadingUnderlineLabel.textColor, colorScheme.onSurfaceColor);
 
-  [MDCTextFieldColorThemer applyColorScheme:colorScheme toTextInputController:baseInputController];
+  [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
+                              toTextInputController:baseInputController];
   XCTAssertEqualObjects(baseInputController.activeColor, colorScheme.primaryColor);
   XCTAssertEqualObjects(baseInputController.errorColor, colorScheme.errorColor);
   XCTAssertEqualObjects(baseInputController.normalColor, colorScheme.onSurfaceColor);
@@ -133,7 +135,7 @@
   XCTAssertEqualObjects(baseInputController.leadingUnderlineLabelTextColor,
                         colorScheme.onSurfaceColor);
 
-  [MDCTextFieldColorThemer applyColorScheme:colorScheme
+  [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
                       toTextInputController:fullWidthInputController];
   XCTAssertEqualObjects(fullWidthInputController.errorColor, colorScheme.errorColor);
   XCTAssertEqualObjects(fullWidthInputController.inlinePlaceholderColor,

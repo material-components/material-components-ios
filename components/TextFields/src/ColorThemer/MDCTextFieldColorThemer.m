@@ -21,8 +21,41 @@
 
 @implementation MDCTextFieldColorThemer
 
-+ (void)applyColorScheme:(id<MDCColorScheming>)colorScheme
-    toTextInputController:(id<MDCTextInputController>)textInputController {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
+   toTextInputController:(id<MDCTextInputController>)textInputController {
+  textInputController.activeColor = colorScheme.primaryColor;
+
+  if ([textInputController
+       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+    id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
+    (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
+
+    if ([textInputControllerFloatingPlaceholder
+         respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
+      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor =
+      colorScheme.primaryColor;
+    }
+  }
+}
+
+// TODO: (larche) Drop this if defined and the pragmas when we drop Xcode 8 support.
+// This is to silence a warning that doesn't appear in Xcode 9 when you use Class as an object.
+#if !defined(__IPHONE_11_0)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-method-access"
+#endif
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
+    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+  if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
+    [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
+  }
+}
+#if !defined(__IPHONE_11_0)
+#pragma clang diagnostic pop
+#endif
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+           toTextInputController:(id<MDCTextInputController>)textInputController {
   textInputController.activeColor = colorScheme.primaryColor;
   textInputController.errorColor = colorScheme.errorColor;
   textInputController.normalColor = colorScheme.onSurfaceColor;
@@ -43,8 +76,8 @@
   }
 }
 
-+ (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-             toTextField:(nonnull MDCTextField *)textField {
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                     toTextField:(nonnull MDCTextField *)textField {
   textField.cursorColor = colorScheme.primaryColor;
   textField.textColor = colorScheme.onSurfaceColor;
   textField.placeholderLabel.textColor = colorScheme.onSurfaceColor;
@@ -58,8 +91,8 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
-+ (void)applyColorScheme:(id<MDCColorScheming>)colorScheme
-    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
   [textInputControllerClass setErrorColorDefault:colorScheme.errorColor];
   [textInputControllerClass setNormalColorDefault:colorScheme.onSurfaceColor];
