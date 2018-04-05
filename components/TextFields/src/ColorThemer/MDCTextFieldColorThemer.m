@@ -21,9 +21,14 @@
 
 @implementation MDCTextFieldColorThemer
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheming>)colorScheme
     toTextInputController:(id<MDCTextInputController>)textInputController {
   textInputController.activeColor = colorScheme.primaryColor;
+  textInputController.errorColor = colorScheme.errorColor;
+  textInputController.normalColor = colorScheme.onSurfaceColor;
+  textInputController.inlinePlaceholderColor = colorScheme.onSurfaceColor;
+  textInputController.trailingUnderlineLabelTextColor = colorScheme.onSurfaceColor;
+  textInputController.leadingUnderlineLabelTextColor = colorScheme.onSurfaceColor;
 
   if ([textInputController
           conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
@@ -38,16 +43,36 @@
   }
 }
 
++ (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+             toTextField:(nonnull MDCTextField *)textField {
+  textField.cursorColor = colorScheme.primaryColor;
+  textField.textColor = colorScheme.onSurfaceColor;
+  textField.placeholderLabel.textColor = colorScheme.onSurfaceColor;
+  textField.trailingUnderlineLabel.textColor = colorScheme.onSurfaceColor;
+  textField.leadingUnderlineLabel.textColor = colorScheme.onSurfaceColor;
+}
+
 // TODO: (larche) Drop this if defined and the pragmas when we drop Xcode 8 support.
 // This is to silence a warning that doesn't appear in Xcode 9 when you use Class as an object.
 #if !defined(__IPHONE_11_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
++ (void)applyColorScheme:(id<MDCColorScheming>)colorScheme
     toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
-  if ([textInputControllerClass respondsToSelector:@selector(setActiveColorDefault:)]) {
-    [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
+  [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
+  [textInputControllerClass setErrorColorDefault:colorScheme.errorColor];
+  [textInputControllerClass setNormalColorDefault:colorScheme.onSurfaceColor];
+  [textInputControllerClass setInlinePlaceholderColorDefault:colorScheme.onSurfaceColor];
+  [textInputControllerClass setTrailingUnderlineLabelTextColorDefault:colorScheme.onSurfaceColor];
+  [textInputControllerClass setLeadingUnderlineLabelTextColorDefault:colorScheme.onSurfaceColor];
+
+  if ([textInputControllerClass
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+    Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
+        (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
+    [textInputControllerFloatingPlaceholderClass
+        setFloatingPlaceholderNormalColorDefault:colorScheme.primaryColor];
   }
 }
 #if !defined(__IPHONE_11_0)
