@@ -563,6 +563,15 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           : self.leadingUnderlineLabelTextColor;
 }
 
+#pragma  mark - TextInput Customization
+
+- (void)updateTextInput {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    self.textInput.font = textFont;
+  }
+}
+
 #pragma mark - Placeholder Customization
 
 // This updates the placeholder's visual characteristics and not its layout. See the section
@@ -1414,6 +1423,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [self updatePlaceholder];
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
+  [self updateTextInput];
   [self updateUnderline];
   [self updateBorder];
 }
