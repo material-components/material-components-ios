@@ -44,6 +44,7 @@ static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
 static NSString *const MDCChipTitleFontKey = @"MDCChipTitleFontKey";
 static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
 static NSString *const MDCChipMinimumSizeKey = @"MDCChipMinimumSizeKey";
+static NSString *const MDCChipShapeGeneratorKey = @"MDCChipShapeGeneratorKey";
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
@@ -269,6 +270,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
     self.mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCChipAdjustsFontForContentSizeKey];
+
+    if ([aDecoder containsValueForKey:MDCChipShapeGeneratorKey]) {
+      self.shapeGenerator = [aDecoder decodeObjectOfClass:[NSObject<MDCShapeGenerating> class]
+                                                   forKey:MDCChipShapeGeneratorKey];
+    }
   }
   return self;
 }
@@ -295,6 +301,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [aCoder encodeObject:_titleFont forKey:MDCChipTitleFontKey];
   [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
   [aCoder encodeCGSize:_minimumSize forKey:MDCChipMinimumSizeKey];
+  if (self.shapeGenerator) {
+    [aCoder encodeObject:self.shapeGenerator forKey:MDCChipShapeGeneratorKey];
+  }
 }
 
 - (void)dealloc {
@@ -316,7 +325,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateBackgroundColor];
 }
 
-- (id)shapeGenerator {
+- (id<MDCShapeGenerating>)shapeGenerator {
   return self.layer.shapeGenerator;
 }
 
