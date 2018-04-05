@@ -43,7 +43,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
     buttonBar.items = [actionItem, secondActionItem]
 
-    let scheme = MDCSemanticColorScheme(materialDefaults: ())
+    let scheme = MDCSemanticColorScheme(defaults: .material201804)
     MDCButtonBarColorThemer.applySemanticColorScheme(scheme, to: buttonBar)
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.

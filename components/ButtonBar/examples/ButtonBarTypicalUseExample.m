@@ -46,7 +46,8 @@
 
   buttonBar.items = @[ actionItem, secondActionItem ];
 
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] initWithMaterialDefaults];
+  MDCSemanticColorScheme *scheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   [MDCButtonBarColorThemer applySemanticColorScheme:scheme toButtonBar:buttonBar];
 
   // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
