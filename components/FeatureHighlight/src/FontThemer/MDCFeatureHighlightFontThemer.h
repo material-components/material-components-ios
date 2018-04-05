@@ -25,13 +25,13 @@
 @interface MDCFeatureHighlightFontThemer : NSObject
 
 /**
- Applies a font scheme to theme to a MDCFeatureHighlightView.
+ Applies a typography scheme to theme to a MDCFeatureHighlightView.
  
- @param fontScheme The font scheme to apply to MDCFeatureHighlightView.
+ @param scheme The typography scheme to apply to MDCFeatureHighlightView.
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a font scheme. Use a
      UIAppearance proxy to apply a font scheme to all instances of MDCFeatureHighlightView.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-    toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView;
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme
+       toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView;
 
 @end

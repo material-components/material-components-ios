@@ -14,29 +14,5 @@
  limitations under the License.
  */
 
-#import <XCTest/XCTest.h>
-
-#import "MaterialChips.h"
-#import "MaterialTypographyScheme.h"
-#import "MDCChipViewFontThemer.h"
-
-@interface ChipViewFontThemerTests : XCTestCase
-
-@end
-
-@implementation ChipViewFontThemerTests
-
-- (void)testFontThemer {
-  // Given
-  MDCChipView *chip = [[MDCChipView alloc] init];
-  MDCTypographyScheme *scheme = [[MDCTypographyScheme alloc] init];
-  scheme.body2 = [UIFont systemFontOfSize:99];
-
-  // When
-  [MDCChipViewFontThemer applyTypographyScheme:scheme toChipView:chip];
-
-  // Then
-  XCTAssertEqualObjects(chip.titleFont, scheme.body2);
-}
-
-@end
+#import "MDCFontScheme.h"
+#import "MDCTypographyScheme.h"
