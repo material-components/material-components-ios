@@ -15,7 +15,6 @@
 
 #import "MaterialSnackbar.h"
 #import "MaterialThemes.h"
-#import "MaterialTypographyScheme.h"
 #import "MDCSnackbarFontThemer.h"
 
 @interface MDCSnackbarFontThemerTests : XCTestCase
@@ -27,10 +26,10 @@
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
   [MDCSnackbarManager showMessage:message];
-  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
+  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
   fontScheme.button = [UIFont boldSystemFontOfSize:12.f];
   fontScheme.body2 = [UIFont systemFontOfSize:13.f];
-  [MDCSnackbarFontThemer applyTypographyScheme:fontScheme
+  [MDCSnackbarFontThemer applyFontScheme:fontScheme
                    toSnackbarMessageView:[MDCSnackbarMessageView appearance]];
   XCTAssertEqualObjects([MDCSnackbarMessageView appearance].messageFont,
                         fontScheme.body2);

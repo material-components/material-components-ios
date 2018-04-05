@@ -18,7 +18,7 @@
 
 @class MDCTextField;
 
-@protocol MDCTypographyScheming;
+@protocol MDCFontScheme;
 @protocol MDCTextInputController;
 
 /**
@@ -27,32 +27,32 @@
 @interface MDCTextFieldFontThemer : NSObject
 
 /**
- Applies a typography scheme to theme a MDCTextInputController instance.
+ Applies a font scheme to theme a MDCTextInputController instance.
 
- @param scheme The typography scheme that applies to a MDCTextInputController.
+ @param fontScheme The font scheme that applies to a MDCTextInputController.
  @param textInputController A MDCTextInputController instance that font scheme will be applied to.
  */
-+ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme
-        toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
+  toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
 
 /**
- Applies a typography scheme to theme a specific class type responding to MDCTextInputController
- protocol. Will not apply to existing instances.
+ Applies a font scheme to theme a specific class type responding to MDCTextInputController protocol.
+ Will not apply to existing instances.
 
- @param scheme The typography scheme that applies to a MDCTextInputController.
+ @param fontScheme The font scheme that applies to a MDCTextInputController.
  @param textInputControllerClass A MDCTextInputController class that font scheme will be applied to.
  */
-+ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
   toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
   NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
 /**
- Applies a typography scheme to a MDCTextField instance.
+ Applies a font scheme to a MDCTextField instance.
 
- @param scheme The typography scheme that applies to MDCTextField.
+ @param fontScheme The font scheme that applies to MDCTextField.
  @param textField A MDCTextField instance that font scheme will be applied to.
  */
-+ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme
-                  toTextField:(nullable MDCTextField *)textField;
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
+            toTextField:(nullable MDCTextField *)textField;
 
 @end
