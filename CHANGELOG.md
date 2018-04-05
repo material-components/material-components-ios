@@ -70,11 +70,11 @@
 
 * [Simplify color themer (#3116)](https://github.com/material-components/material-components-ios/commit/f0368d43838c35ae463afad3a5f75cead61753b5) (Robert Moore)
 
-### ButtonBar
+#r## ButtonBar
 
 #### Changes
 
-* [Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/pull/2974)
+* [Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/pull/2974) (Ali Rabbani)
 
 ### Buttons
 
@@ -126,7 +126,7 @@
 
 * [Fix RTL for titleView (#3193)](https://github.com/material-components/material-components-ios/commit/e661711251e0666385ce103ed95a354785fb6a01) (ianegordon)
 * [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
-* [Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/pull/2974)
+* [Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/pull/2974) (Ali Rabbani)
 
 ### PageControl
 
