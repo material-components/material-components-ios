@@ -39,7 +39,7 @@
  ordering. Ordering between completion blocks of different categories is not guaranteed. This method
  is safe to call from any thread.
  */
-+ (void)showMessage:(MDCSnackbarMessage *)message;
++ (void)showMessage:(nullable MDCSnackbarMessage *)message;
 
 /**
  MDCSnackbarManager will display the messages in this view.
@@ -55,7 +55,7 @@
  @note This method must be called from the main thread.
  @note Calling setPresentationHostView will not change the parent of the currently visible message.
  */
-+ (void)setPresentationHostView:(UIView *)hostView;
++ (void)setPresentationHostView:(nullable UIView *)hostView;
 
 /**
  Bypasses showing the messages of the given @c category.
@@ -64,7 +64,7 @@
  messages for the @c category. Calling this method with @c nil will dismiss all messages. This
  method is safe to call from any thread.
  */
-+ (void)dismissAndCallCompletionBlocksWithCategory:(NSString *)category;
++ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category;
 
 /**
  How far from the bottom of the screen messages are displayed.
@@ -88,7 +88,7 @@
  @return A token suitable for use in {@c +[MDCSnackbarManager resumeWithToken:]}. Letting this
  object deallocate is equivalent to calling {@c +[MDCSnackbarManager resumeMessagesWithToken:]}.
  */
-+ (id<MDCSnackbarSuspensionToken>)suspendAllMessages;
++ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages;
 
 /**
  Suspends the display of all messages in a given category.
@@ -101,7 +101,8 @@
  Letting this object dealloc is equivalent to calling
  {@c +[MDCSnackbarManager resumeMessagesWithToken:]}.
  */
-+ (id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:(NSString *)category;
++ (nullable id <MDCSnackbarSuspensionToken>)
+    suspendMessagesWithCategory:(nullable NSString *)category;
 
 /**
  Resumes the display of messages once there are no outstanding suspension tokens.
@@ -110,7 +111,74 @@
 
  @param token The suspension token to invalidate.
  */
-+ (void)resumeMessagesWithToken:(id<MDCSnackbarSuspensionToken>)token;
++ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token;
+
+#pragma mark Styling
+
+/**
+ The color for the background of the snackbar message view.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor;
+
+/**
+ The color for the shadow color for the snackbar message view.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
+
+/**
+ The color for the message text in the snackbar message view.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *messageTextColor;
+
+/**
+ The font for the message text in the snackbar message view.
+ */
+@property(class, nonatomic, strong, nullable) UIFont *messageFont;
+
+/**
+ The font for the button text in the snackbar message view.
+ */
+@property(class, nonatomic, strong, nullable) UIFont *buttonFont;
+
+
+/**
+ If enabled, modifications of class styling properties will be applied immediately
+ to the currently presented snackbar.
+
+ Default is set to NO.
+ */
+@property(class, nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars;
+
+/**
+ Returns the button title color for a particular control state.
+
+ @param state The control state.
+ @return The button title color for the requested state.
+ */
++ (nullable UIColor *)buttonTitleColorForState:(UIControlState)state;
+
+/**
+ Sets the button title color for a particular control state.
+
+ @param titleColor The title color.
+ @param state The control state.
+ */
++ (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
+
+/**
+ Indicates whether the snackbar should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ If set to YES, this button will base its message font on MDCFontTextStyleBody2
+ and its button font on MDCFontTextStyleButton.
+
+ Default is set to NO.
+ */
+@property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
 
