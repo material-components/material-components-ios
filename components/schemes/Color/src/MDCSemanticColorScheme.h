@@ -114,7 +114,7 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 - (nonnull instancetype)init;
 
 /**
- Initializes a new instance of MDCSemanticColorScheme with the given defaults.
+ Initializes the color scheme with the colors associated with the given defaults.
  */
 - (nonnull instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults;
 
