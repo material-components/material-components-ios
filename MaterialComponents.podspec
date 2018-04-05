@@ -362,7 +362,7 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/FlexibleHeader/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/FlexibleHeader"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
   end
 

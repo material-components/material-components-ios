@@ -78,6 +78,7 @@
  @c backgroundColor.
  */
 @property(nonnull, readonly, nonatomic) UIColor *onBackgroundColor;
+
 @end
 
 /**
