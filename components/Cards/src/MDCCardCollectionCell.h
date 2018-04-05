@@ -18,6 +18,8 @@
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
+@protocol MDCShapeGenerating;
+
 /**
  Through the lifecycle of the cell, the cell can go through one of the 3 states,
  normal, highlighted, and selected. The cell starts in its default state, normal.
@@ -87,6 +89,19 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  The inkView for the card that is initiated on tap
  */
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+
+/*
+ The shape generator used to define the card cell's shape.
+ When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
+ If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
+ unexpected behavior.
+
+ When the shapeGenerator is nil, MDCCardCollectionCell will use the default underlying layer with
+ its default settings.
+
+ Default value for shapeGenerator is nil.
+ */
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
  Sets the shadow elevation for an MDCCardViewState state
@@ -260,7 +275,6 @@ UI_APPEARANCE_SELECTOR;
  */
 - (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(MDCCardCellState)state
 UI_APPEARANCE_SELECTOR;
-
 
 /**
  The state of the card cell.

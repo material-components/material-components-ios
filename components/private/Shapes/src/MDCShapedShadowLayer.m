@@ -59,6 +59,7 @@
   self.backgroundColor = [UIColor clearColor].CGColor;
   _colorLayer = [CAShapeLayer layer];
   _colorLayer.delegate = self;
+  _shapeLayer = [CAShapeLayer layer];
   [self addSublayer:_colorLayer];
 }
 
@@ -86,6 +87,7 @@
 - (void)setPath:(CGPathRef)path {
   self.shadowPath = path;
   _colorLayer.path = path;
+  _shapeLayer.path = path;
 
   if (CGPathIsEmpty(path)) {
     self.backgroundColor = self.shapedBackgroundColor.CGColor;
