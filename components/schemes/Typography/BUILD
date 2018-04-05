@@ -1,4 +1,4 @@
-# Copyright 2017-present The Material Components for iOS Authors. All
+# Copyright 2018-present The Material Components for iOS Authors. All
 # Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,24 +15,20 @@
 # limitations under the License.
 
 load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
      "mdc_objc_library",
+     "mdc_public_objc_library",
      "mdc_unit_test_suite")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "Themes",
-    deps = [
-        "//components/schemes/Color",
-        "//components/schemes/Typography",
-    ],
+    name = "Typography",
 )
 
 package_group(
     name = "test_targets",
     packages = [
-        "//components/Themes/...",
+        "//components/schemes/Typography/...",
     ],
 )
 
@@ -48,8 +44,7 @@ mdc_objc_library(
         "XCTest",
     ],
     deps = [
-        ":Themes",
-        "//components/Palettes",
+        ":Typography"
     ],
     visibility = ["//visibility:private"],
 )
