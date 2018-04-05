@@ -15,6 +15,8 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #import "MDCColorScheme.h"
 
 /**
@@ -105,38 +107,6 @@
  Initializes an instance of MDCSemanticColorScheme with the Material default color values.
  */
 - (nonnull instancetype)initWithMaterialDefaults;
-
-/**
- Creates a new color scheme with the provided color parameters.
-
- @param primaryColor Displayed most frequently across your app.
- @param primaryColorVariant A tonal variation of @c primaryColor.
- @param secondaryColor Accents select parts of your UI.
- @param errorColor The color used to indicate error status.
- @param surfaceColor The color of surfaces such as cards, sheets, menus.
- @param backgroundColor The underlying color of an app’s content.
- @param onPrimaryColor A color that passes accessibility guidelines for text/iconography when drawn
-        on top of @c primaryColor.
- @param onSecondaryColor A color that passes accessibility guidelines for text/iconography when
-        drawn on top of @c secondaryColor.
- @param onSurfaceColor A color that passes accessibility guidelines for text/iconography when
-        drawn on top of @c surfaceColor.
- @param onBackgroundColor A color that passes accessibility guidelines for text/iconography when
-        drawn on top of @c backgroundColor.
-
- @returns a new color scheme with the provided values.
- */
-- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
-                         primaryColorVariant:(nonnull UIColor *)primaryColorVariant
-                              secondaryColor:(nonnull UIColor *)secondaryColor
-                                  errorColor:(nonnull UIColor *)errorColor
-                                surfaceColor:(nonnull UIColor *)surfaceColor
-                             backgroundColor:(nonnull UIColor *)backgroundColor
-                              onPrimaryColor:(nonnull UIColor *)onPrimaryColor
-                            onSecondaryColor:(nonnull UIColor *)onSecondaryColor
-                              onSurfaceColor:(nonnull UIColor *)onSurfaceColor
-                           onBackgroundColor:(nonnull UIColor *)onBackgroundColor
-    NS_DESIGNATED_INITIALIZER;
 
 @end
 
