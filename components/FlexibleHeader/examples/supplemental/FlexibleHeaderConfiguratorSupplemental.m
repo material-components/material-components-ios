@@ -85,19 +85,21 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
   self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
 
+  self.fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
   UILabel *titleLabel = [[UILabel alloc] init];
-  CGRect frame = self.fhvc.headerView.bounds;
-  frame.origin.y += 20;
-  frame.size.height -= 20;
-  titleLabel.frame = frame;
   titleLabel.text = self.title;
   titleLabel.textColor = [UIColor whiteColor];
   titleLabel.font = [UIFont systemFontOfSize:22];
   titleLabel.textAlignment = NSTextAlignmentCenter;
+  [titleLabel sizeToFit];
+  CGRect frame = self.fhvc.headerView.bounds;
+  titleLabel.frame = CGRectMake(0, 20, frame.size.width, frame.size.height - 20);
   titleLabel.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-
   [self.fhvc.headerView addSubview:titleLabel];
+
+  self.fhvc.headerView.minimumHeight = CGRectGetMaxY(titleLabel.frame);
 
   id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
       NSString *title, FlexibleHeaderConfiguratorField field) {
