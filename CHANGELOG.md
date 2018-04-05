@@ -58,61 +58,25 @@
 
 ## Component changes
 
-### AnimationTiming
+### Tabs
 
 #### Changes
 
-* [update contrast color for animation timing example (#3198)](https://github.com/material-components/material-components-ios/commit/1a9743ea7e6a6ca58a35b4ac9490ca312eaeec44) (Yarden Eitan)
+* [Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
 
-### BottomNavigation
-
-#### Changes
-
-* [Simplify color themer (#3116)](https://github.com/material-components/material-components-ios/commit/f0368d43838c35ae463afad3a5f75cead61753b5) (Robert Moore)
-
-### ButtonBar
+### schemes/Color
 
 #### Changes
 
-* [Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/pull/2974) (Ali Rabbani)
-
-### Buttons
-
-#### Changes
-
-* [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
-
-### Chips
-
-#### Changes
-
-* [Fix documentation for flow layout class](https://github.com/material-components/material-components-ios/commit/0d8f8c98f4c30a5d8446b9372a652d8020ea8eea) (Robert Moore)
-
-### Collections
-
-#### Changes
-
-* [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
-
-### Dialogs
-
-#### Changes
-
-* [Add a Dragons samples to compare UIKit -vs- Material (#3197)](https://github.com/material-components/material-components-ios/commit/481c5f1a2d1d79a7c4f26655a660780488dd2f22) (ianegordon)
-* [Fixed regression where in some cases tapping on the buttons in the alert would not do anything (#3182)](https://github.com/material-components/material-components-ios/commit/91f88a4da0070c3f09d1cedb8ac3dadd9aa56011) (Julien Poumailloux)
+* [Add initial scaffolding for the Color scheme target. (#3171)](https://github.com/material-components/material-components-ios/commit/bd67db7c4e9380a4b791e2f4952455f4f4d7593a) (featherless)
 
 ### FeatureHighlight
 
 #### Changes
 
 * [Copy block instead of assign (#3159)](https://github.com/material-components/material-components-ios/commit/85ed8aed96cd24d895f9dcaf5dceb49f891cf451) (Robert Moore)
-
-### FlexibleHeader
-
-#### Changes
-
-* [Check if contentView is nil before the comparison (#3098)](https://github.com/material-components/material-components-ios/commit/5674772cb71bb749cddcb442c31d917aec648994) (Siyu Song)
-* [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
+* [FeatureHighlightViewController should expose FeatureHighlightView as a property. (#3145)](https://github.com/material-components/material-components-ios/commit/24be789f57aedb732ceddecc36699f52875dc8d6) (Mohammad Cazi)
+* [Revert "FeatureHighlightViewController should expose FeatureHighlightView as a property. (#3145)" (#3231)](https://github.com/material-components/material-components-ios/commit/8e8d6f263b598cbeebdbc05e6fd00f50b33ea082) (Robert Moore)
 
 ### Ink
 
@@ -120,25 +84,35 @@
 
 * [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
 
-### NavigationBar
-
-#### Changes
-
-* [Fix RTL for titleView (#3193)](https://github.com/material-components/material-components-ios/commit/e661711251e0666385ce103ed95a354785fb6a01) (ianegordon)
-* [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
-* [Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)](https://github.com/material-components/material-components-ios/pull/2974) (Ali Rabbani)
-
-### PageControl
-
-#### Changes
-
-* [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
-
-### Palettes
+### Buttons
 
 #### Changes
 
 * [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
+
+### ButtonBar
+
+#### Changes
+
+* [Restore "[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)" (#3243)](https://github.com/material-components/material-components-ios/commit/aac78b8451f745a555742b9091f0a90eb57cc094) (Robert Moore)
+* [Revert "[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)" (#3241)](https://github.com/material-components/material-components-ios/commit/890340e0bae74918afcfbf6a45fcbb3bbedda173) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
+* [Make MDCTextInputControllerLegacyDefault a subclass of MDCTextInputControllerBase  (#3152)](https://github.com/material-components/material-components-ios/commit/cb0d00be93bab192e83b0c07b83b655619bf8122) (Mohammad Cazi)
+* [Make MDCTextInputControllerLegacyFullWidth a subclass of MDCTextInputControllerFullWidth (#3154)](https://github.com/material-components/material-components-ios/commit/19f2c0fd1be06e31e7405a42aadb1004c2af5bbf) (Mohammad Cazi)
+* [Restore Dynamic Type to textInput (#3239)](https://github.com/material-components/material-components-ios/commit/1edaa5625d7c931840f382e1db6398c72a4f9da5) (Robert Moore)
+* [Reverting textInputFont property on inputController. #3232](https://github.com/material-components/material-components-ios/commit/8d4d5ea1fc8f70e6fa644fc6d756aac282d12e3b) (Mohammad Cazi)
+* [[MDCTextFields + Kokoro] Making textfields dynamic type off by default (#3149)](https://github.com/material-components/material-components-ios/commit/f91317ff0455bc6ecd7b7c728bdb9821cd036aa0) (Yarden Eitan)
+
+### Chips
+
+#### Changes
+
+* [Fix documentation for flow layout class](https://github.com/material-components/material-components-ios/commit/0d8f8c98f4c30a5d8446b9372a652d8020ea8eea) (Robert Moore)
 
 ### Snackbar
 
@@ -149,28 +123,66 @@
 * [font and color updates. (#3125)](https://github.com/material-components/material-components-ios/commit/28ef4730aaeb37663a377670b8db95215c090f92) (Yarden Eitan)
 * [revert back to before #3106 as this code needs more thorough testing. (#3178)](https://github.com/material-components/material-components-ios/commit/a05140df1b8d2678cbd39fc5d7ea2a27cc1f1a74) (Yarden Eitan)
 
-### Tabs
+### NavigationBar
 
 #### Changes
 
-* [Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
+* [Fix RTL for titleView (#3193)](https://github.com/material-components/material-components-ios/commit/e661711251e0666385ce103ed95a354785fb6a01) (ianegordon)
+* [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
+* [Restore "[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)" (#3243)](https://github.com/material-components/material-components-ios/commit/aac78b8451f745a555742b9091f0a90eb57cc094) (Robert Moore)
+* [Revert "[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)" (#3241)](https://github.com/material-components/material-components-ios/commit/890340e0bae74918afcfbf6a45fcbb3bbedda173) (Robert Moore)
 
-### TextFields
+### LibraryInfo
+
+#### Changes
+
+* [Bumped version number to 52.0.0.](https://github.com/material-components/material-components-ios/commit/e500aa658720c9ca42361ab3cb5eb59b9a2cf9a2) (Rob Moore)
+
+### Dialogs
+
+#### Changes
+
+* [Add a Dragons samples to compare UIKit -vs- Material (#3197)](https://github.com/material-components/material-components-ios/commit/481c5f1a2d1d79a7c4f26655a660780488dd2f22) (ianegordon)
+* [Fixed regression where in some cases tapping on the buttons in the alert would not do anything (#3182)](https://github.com/material-components/material-components-ios/commit/91f88a4da0070c3f09d1cedb8ac3dadd9aa56011) (Julien Poumailloux)
+
+### BottomNavigation
+
+#### Changes
+
+* [Simplify color themer (#3116)](https://github.com/material-components/material-components-ios/commit/f0368d43838c35ae463afad3a5f75cead61753b5) (Robert Moore)
+
+### PageControl
+
+#### Changes
+
+* [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
+
+### AnimationTiming
+
+#### Changes
+
+* [update contrast color for animation timing example (#3198)](https://github.com/material-components/material-components-ios/commit/1a9743ea7e6a6ca58a35b4ac9490ca312eaeec44) (Yarden Eitan)
+
+### Collections
+
+#### Changes
+
+* [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Check if contentView is nil before the comparison (#3098)](https://github.com/material-components/material-components-ios/commit/5674772cb71bb749cddcb442c31d917aec648994) (Siyu Song)
+* [Fix bug where shadow layer's opacity wouldn't be set without a tracking scroll view. (#3201)](https://github.com/material-components/material-components-ios/commit/d0af3a729b987b8614b2eadc577ce658cd3d0dcc) (featherless)
+* [Revert "Fix bug where shadow layer's opacity wouldn't be set without a tracking scroll view. (#3201)" (#3230)](https://github.com/material-components/material-components-ios/commit/aea0b970687c1b78b2b90a00f734f56b34613242) (Robert Moore)
+* [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
+
+### Palettes
 
 #### Changes
 
 * [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
-* [Make MDCTextInputControllerLegacyDefault a subclass of MDCTextInputControllerBase  (#3152)](https://github.com/material-components/material-components-ios/commit/cb0d00be93bab192e83b0c07b83b655619bf8122) (Mohammad Cazi)
-* [Make MDCTextInputControllerLegacyFullWidth a subclass of MDCTextInputControllerFullWidth (#3154)](https://github.com/material-components/material-components-ios/commit/19f2c0fd1be06e31e7405a42aadb1004c2af5bbf) (Mohammad Cazi)
-* [[MDCTextFields + Kokoro] Making textfields dynamic type off by default (#3149)](https://github.com/material-components/material-components-ios/commit/f91317ff0455bc6ecd7b7c728bdb9821cd036aa0) (Yarden Eitan)
-  * [Reverting textInputFont property on inputController. #3232](https://github.com/material-components/material-components-ios/commit/8d4d5ea1fc8f70e6fa644fc6d756aac282d12e3b) (Mohammad Cazi)
-  * [Restore Dynamic Type to textInput (#3239)](https://github.com/material-components/material-components-ios/commit/1edaa5625d7c931840f382e1db6398c72a4f9da5) (Robert Moore)
-
-### schemes/Color
-
-#### Changes
-
-* [Add initial scaffolding for the Color scheme target. (#3171)](https://github.com/material-components/material-components-ios/commit/bd67db7c4e9380a4b791e2f4952455f4f4d7593a) (featherless)
 
 ---
 
