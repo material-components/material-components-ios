@@ -29,6 +29,48 @@ static UIImage *FakeImage(void) {
   return image;
 }
 
+@interface TestShapeGenerator : NSObject <MDCShapeGenerating>
+
+@property(nonatomic) NSInteger state;
+
+@end
+
+@implementation TestShapeGenerator
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+  return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super init];
+  if (self) {
+    _state = [aDecoder decodeIntegerForKey:@"state"];
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeInteger:self.state forKey:@"state"];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+  TestShapeGenerator *copy = [[[self class] alloc] init];
+  copy.state = self.state;
+  return copy;
+}
+
+#pragma mark - MDCShapeGenerating
+
+- (CGPathRef)pathForSize:(CGSize)size {
+  CGRect rect = {.origin = CGPointZero, .size = size};
+  UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
+  return path.CGPath;
+}
+
+@end
+
 @interface ChipsEncodingTests : XCTestCase
 
 @end
@@ -46,7 +88,9 @@ static UIImage *FakeImage(void) {
   chip.titlePadding = UIEdgeInsetsMake(2, 3, 4, 5);
   chip.contentPadding = UIEdgeInsetsMake(3, 4, 5, 6);
   chip.accessoryPadding = UIEdgeInsetsMake(4, 5, 6, 7);
-  chip.shapeGenerator = [[MDCPillShapeGenerator alloc] init];
+  TestShapeGenerator *shapeGenerator = [[TestShapeGenerator alloc] init];
+  shapeGenerator.state = 42;
+  chip.shapeGenerator = shapeGenerator;
   chip.mdc_adjustsFontForContentSizeCategory = YES;
   chip.minimumSize = CGSizeMake(78, 90);
   [chip setInkColor:UIColor.cyanColor forState:UIControlStateNormal];
@@ -84,8 +128,8 @@ static UIImage *FakeImage(void) {
                 @"%@ is not equal to %@.",
                 NSStringFromUIEdgeInsets(unarchivedChip.accessoryPadding),
                 NSStringFromUIEdgeInsets(chip.accessoryPadding));
-  // TODO(#2771): Support encoding shapeGenerator
-  XCTAssertNil(unarchivedChip.shapeGenerator);
+  XCTAssertNotNil(unarchivedChip.shapeGenerator);
+  XCTAssertEqual(((TestShapeGenerator *)unarchivedChip.shapeGenerator).state, shapeGenerator.state);
   XCTAssertTrue(unarchivedChip.mdc_adjustsFontForContentSizeCategory);
   XCTAssertEqualObjects([unarchivedChip backgroundColorForState:UIControlStateNormal],
                         [chip backgroundColorForState:UIControlStateNormal]);
