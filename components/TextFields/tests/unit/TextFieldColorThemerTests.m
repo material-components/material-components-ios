@@ -117,7 +117,7 @@
   colorScheme.errorColor = [UIColor redColor];
 
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                        toTextInput:textField];
+                                        toTextField:textField];
   XCTAssertEqualObjects(textField.cursorColor, colorScheme.primaryColor);
   XCTAssertEqualObjects(textField.textColor, colorScheme.onSurfaceColor);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor, colorScheme.onSurfaceColor);

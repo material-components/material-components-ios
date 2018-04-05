@@ -47,7 +47,7 @@
   MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
   fontScheme.body1 = [UIFont systemFontOfSize:20];
   fontScheme.caption = [UIFont systemFontOfSize:16];
-  [MDCTextFieldFontThemer applyTypographyScheme:fontScheme toTextInput:textField];
+  [MDCTextFieldFontThemer applyFontScheme:fontScheme toTextField:textField];
   XCTAssertEqualObjects(textField.leadingUnderlineLabel.font, fontScheme.caption);
   XCTAssertEqualObjects(textField.trailingUnderlineLabel.font, fontScheme.caption);
   XCTAssertEqualObjects(textField.placeholderLabel.font, fontScheme.body1);
