@@ -30,8 +30,8 @@
           toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView {
   featureHighlightView.innerHighlightColor = colorScheme.surfaceColor;
   featureHighlightView.outerHighlightColor = colorScheme.primaryColor;
-  featureHighlightView.titleColor = colorScheme.surfaceColor;
-  featureHighlightView.bodyColor = colorScheme.surfaceColor;
+  featureHighlightView.titleColor = colorScheme.onPrimaryColor;
+  featureHighlightView.bodyColor = colorScheme.onPrimaryColor;
 }
 
 @end
