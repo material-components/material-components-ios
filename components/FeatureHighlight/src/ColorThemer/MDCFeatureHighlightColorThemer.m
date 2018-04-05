@@ -26,4 +26,12 @@
   featureHighlightView.outerHighlightColor = colorScheme.primaryColor;
 }
 
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+          toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView {
+  featureHighlightView.innerHighlightColor = colorScheme.surfaceColor;
+  featureHighlightView.outerHighlightColor = colorScheme.primaryColor;
+  featureHighlightView.titleColor = colorScheme.surfaceColor;
+  featureHighlightView.bodyColor = colorScheme.surfaceColor;
+}
+
 @end
