@@ -107,6 +107,12 @@ IB_DESIGNABLE
 @property (nonatomic, strong, null_resettable) UIFont *titleFont;
 
 /**
+ The Material inkColor that is used for all buttons in trailing and leading button bars. Only
+ affects buttons that are created after changing the property.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
  Display attributes for the titleView's title text.
 
  Font attribute will take precedence over titleFont property.
