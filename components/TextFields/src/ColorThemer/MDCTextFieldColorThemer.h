@@ -16,6 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol MDCColorScheme;
 @protocol MDCColorScheming;
 @protocol MDCTextInputController;
 
@@ -35,8 +36,8 @@
  @param colorScheme The color scheme to apply.
  @param textInputController A MDCTextInputController instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-    toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+           toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
 
 /**
  Applies a color scheme to MDCTextField for all instances of the class
@@ -49,9 +50,9 @@
  @param colorScheme The color scheme to apply.
  @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
  */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-    toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
-    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
+NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
 /**
  Applies a color scheme to theme an MDCTextField.
@@ -59,7 +60,36 @@
  @param colorScheme The color scheme to apply.
  @param textField A MDCTextField instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-             toTextField:(nonnull MDCTextField *)textField;
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                     toTextField:(nonnull MDCTextField *)textField;
+
+#pragma mark - Soon to be deprecated
+
+/**
+ Applies a color scheme to theme MDCTextField in MDCTextInputController.
+
+ Performs introspection to determine if class passed conforms to
+ MDCTextInputControllerFloatingPlaceholder to set properties like .floatingPlaceholderNormalColor.
+
+ @param colorScheme The color scheme to apply.
+ @param textInputController A MDCTextInputController instance to apply a color scheme.
+ */
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+   toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
+
+/**
+ Applies a color scheme to MDCTextField for all instances of the class
+ using the default color class properties.
+
+ Performs introspection to determine if class passed conforms to
+ MDCTextInputControllerFloatingPlaceholder to set properties like
+ .floatingPlaceholderNormalColorDefault.
+
+ @param colorScheme The color scheme to apply.
+ @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
+ */
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+    toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
+    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
 @end
