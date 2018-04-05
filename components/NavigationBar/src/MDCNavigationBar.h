@@ -109,6 +109,8 @@ IB_DESIGNABLE
 /**
  The Material inkColor that is used for all buttons in trailing and leading button bars. Only
  affects buttons that are created after changing the property.
+
+ If set to nil, button bar buttons use default ink color.
  */
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 

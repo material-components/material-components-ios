@@ -43,7 +43,7 @@
     [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
 
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9 alpha:0.1];
+//    _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9 alpha:0.1];
     _appBar.navigationBar.titleTextAttributes = @{
                                             NSForegroundColorAttributeName : [UIColor whiteColor],
                                             };
