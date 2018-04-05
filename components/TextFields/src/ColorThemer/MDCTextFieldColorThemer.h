@@ -16,8 +16,10 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol MDCColorScheme;
+@protocol MDCColorScheming;
 @protocol MDCTextInputController;
+
+@class MDCTextField;
 
 /**
  Used to apply a color scheme to theme MDCTextField within MDCTextInputController.
@@ -33,7 +35,7 @@
  @param colorScheme The color scheme to apply.
  @param textInputController A MDCTextInputController instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
++ (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
     toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
 
 /**
@@ -47,7 +49,17 @@
  @param colorScheme The color scheme to apply.
  @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
  */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
++ (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
     NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
+
+/**
+ Applies a color scheme to theme an MDCTextField.
+
+ @param colorScheme The color scheme to apply.
+ @param textField A MDCTextField instance to apply a color scheme.
+ */
++ (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+             toTextField:(nonnull MDCTextField *)textField;
+
 @end
