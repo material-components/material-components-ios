@@ -24,6 +24,7 @@ licenses(["notice"])  # Apache 2.0
 mdc_public_objc_library(
     name = "Themes",
     deps = ["//components/schemes/Color"],
+    deps = ["//components/schemes/Typography"],
 )
 
 package_group(
