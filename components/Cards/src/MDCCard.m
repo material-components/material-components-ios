@@ -17,28 +17,38 @@
 #import "MDCCard.h"
 
 #import "MaterialMath.h"
+#import "MaterialShapes.h"
 
-static NSString *const MDCCardShadowElevationsKey = @"MDCCardShadowElevationsKey";
-static NSString *const MDCCardShadowColorsKey = @"MDCCardShadowColorsKey";
-static NSString *const MDCCardBorderWidthsKey = @"MDCCardBorderWidthsKey";
+static NSString *const MDCCardBackgroundColorsKey = @"MDCCardBackgroundColorsKey";
 static NSString *const MDCCardBorderColorsKey = @"MDCCardBorderColorsKey";
-static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
+static NSString *const MDCCardBorderWidthsKey = @"MDCCardBorderWidthsKey";
 static NSString *const MDCCardCornerRadiusKey = @"MDCCardCornerRadiusKey";
+static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
+static NSString *const MDCCardShadowColorsKey = @"MDCCardShadowColorsKey";
+static NSString *const MDCCardShadowElevationsKey = @"MDCCardShadowElevationsKey";
 
 static const CGFloat MDCCardShadowElevationNormal = 1.f;
 static const CGFloat MDCCardShadowElevationHighlighted = 8.f;
 static const CGFloat MDCCardCornerRadiusDefault = 4.f;
+
+
+@interface MDCCard ()
+@property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
+@end
 
 @implementation MDCCard {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
+  UIColor *_backgroundColor;
   CGPoint _lastTouch;
 }
 
+@dynamic layer;
+
 + (Class)layerClass {
-  return [MDCShadowLayer class];
+  return [MDCShapedShadowLayer class];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -57,6 +67,10 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
       self.layer.cornerRadius = (CGFloat)[coder decodeDoubleForKey:MDCCardCornerRadiusKey];
     } else {
       self.layer.cornerRadius = MDCCardCornerRadiusDefault;
+    }
+    if ([coder containsValueForKey:MDCCardBackgroundColorsKey]) {
+      [self.layer setShapedBackgroundColor:[coder decodeObjectOfClass:[UIColor class]
+                                                               forKey:MDCCardBackgroundColorsKey]];
     }
     [self commonMDCCardInit];
   }
@@ -90,7 +104,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 
   if (_shadowColors == nil) {
     _shadowColors = [NSMutableDictionary dictionary];
-    _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
+    _shadowColors[@(UIControlStateNormal)] = UIColor.blackColor;
   }
 
   if (_borderColors == nil) {
@@ -101,10 +115,15 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
     _borderWidths = [NSMutableDictionary dictionary];
   }
 
+  if (_backgroundColor == nil) {
+    _backgroundColor = UIColor.whiteColor;
+  }
+
   [self updateShadowElevation];
   [self updateShadowColor];
   [self updateBorderWidth];
   [self updateBorderColor];
+  [self updateBackgroundColor];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
@@ -115,11 +134,15 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   [coder encodeObject:_borderColors forKey:MDCCardBorderColorsKey];
   [coder encodeObject:_inkView forKey:MDCCardInkViewKey];
   [coder encodeDouble:self.layer.cornerRadius forKey:MDCCardCornerRadiusKey];
+  [coder encodeObject:self.layer.shapedBackgroundColor forKey:MDCCardBackgroundColorsKey];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.layer.shadowPath = [self boundingPath].CGPath;
+
+  if (!self.layer.shapeGenerator) {
+    self.layer.shadowPath = [self boundingPath].CGPath;
+  }
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
@@ -156,7 +179,9 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 - (void)updateShadowElevation {
   CGFloat elevation = [self shadowElevationForState:self.state];
   if (!MDCCGFloatEqual(((MDCShadowLayer *)self.layer).elevation, elevation)) {
-    self.layer.shadowPath = [self boundingPath].CGPath;
+    if (!self.layer.shapeGenerator) {
+      self.layer.shadowPath = [self boundingPath].CGPath;
+    }
     [(MDCShadowLayer *)self.layer setElevation:elevation];
   }
 }
@@ -169,7 +194,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 
 - (void)updateBorderWidth {
   CGFloat borderWidth = [self borderWidthForState:self.state];
-  self.layer.borderWidth = borderWidth;
+  self.layer.shapedBorderWidth = borderWidth;
 }
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
@@ -190,8 +215,8 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 }
 
 - (void)updateBorderColor {
-  CGColorRef borderColorRef = [self borderColorForState:self.state].CGColor;
-  self.layer.borderColor = borderColorRef;
+  UIColor *borderColor = [self borderColorForState:self.state];
+  self.layer.shapedBorderColor = borderColor;
 }
 
 - (UIColor *)borderColorForState:(UIControlState)state {
@@ -242,6 +267,54 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   CGPoint location = [touch locationInView:self];
   _lastTouch = location;
   return beginTracking;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  if (self.layer.shapeGenerator) {
+    if (CGPathContainsPoint(self.layer.shapeLayer.path, nil, point, true)) {
+      return self;
+    } else {
+      return nil;
+    }
+  }
+  return [super hitTest:point withEvent:event];
+}
+
+- (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
+  if (shapeGenerator) {
+    self.layer.shadowPath = nil;
+  } else {
+    self.layer.shadowPath = [self boundingPath].CGPath;
+  }
+
+  self.layer.shapeGenerator = shapeGenerator;
+  self.layer.shadowMaskEnabled = NO;
+  [self updateBackgroundColor];
+  [self updateInkForShape];
+}
+
+- (id<MDCShapeGenerating>)shapeGenerator {
+  return self.layer.shapeGenerator;
+}
+
+- (void)updateInkForShape {
+  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+  self.inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+  self.inkView.layer.masksToBounds = NO;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  _backgroundColor = backgroundColor;
+  [self updateBackgroundColor];
+}
+
+- (UIColor *)backgroundColor {
+  return _backgroundColor;
+}
+
+- (void)updateBackgroundColor {
+  self.layer.shapedBackgroundColor = _backgroundColor;
 }
 
 @end

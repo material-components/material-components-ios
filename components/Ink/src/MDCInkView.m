@@ -142,7 +142,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
   if (self.superview.layer.shadowPath) {
     self.maskLayer.path = self.superview.layer.shadowPath;
     self.layer.mask = _maskLayer;
-    self.layer.masksToBounds = YES;
   }
 
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
@@ -154,13 +153,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
     }
-  }
-
-  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
-  if (self.superview.layer.shadowPath) {
-    self.maskLayer.path = self.superview.layer.shadowPath;
-    self.layer.mask = _maskLayer;
-    self.layer.masksToBounds = YES;
   }
 }
 

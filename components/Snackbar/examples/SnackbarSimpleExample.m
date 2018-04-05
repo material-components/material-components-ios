@@ -67,7 +67,7 @@
   } else {
     [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT Off"];
   }
-  [MDCSnackbarMessageView appearance].mdc_adjustsFontForContentSizeCategory = _dynamicType;
+  [MDCSnackbarManager mdc_setAdjustsFontForContentSizeCategory:_dynamicType];
 }
 
 #pragma mark - Event Handling
@@ -126,24 +126,22 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
-  [[MDCSnackbarMessageView appearance]
-      setButtonTitleColor:MDCPalette.purplePalette.tint400
-                 forState:UIControlStateNormal];
-  [[MDCSnackbarMessageView appearance]
-      setButtonTitleColor:MDCPalette.purplePalette.tint700
-                 forState:UIControlStateHighlighted];
-  [MDCSnackbarMessageView appearance].messageTextColor = MDCPalette.greenPalette.tint500;
+  [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint400
+                                 forState:UIControlStateNormal];
+  [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint700
+                                 forState:UIControlStateHighlighted];
+  MDCSnackbarManager.messageTextColor = MDCPalette.greenPalette.tint500;
   [MDCSnackbarManager showMessage:message];
 }
 
 - (void)showCustomizedSnackbar:(id)sender {
   UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14.0f];
   NSAssert(customMessageFont, @"Unable to instantiate font");
-  [MDCSnackbarMessageView appearance].messageFont = customMessageFont;
+  MDCSnackbarManager.messageFont = customMessageFont;
 
   UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
   NSAssert(customButtonFont, @"Unable to instantiate font");
-  [MDCSnackbarMessageView appearance].buttonFont = customButtonFont;
+  MDCSnackbarManager.buttonFont = customButtonFont;
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Customized Fonts";
@@ -155,15 +153,11 @@
 }
 
 - (void)showDecustomizedSnackbar:(id)sender {
-  [MDCSnackbarMessageView appearance].messageFont = nil;
-  [MDCSnackbarMessageView appearance].buttonFont = nil;
-
-  // Setting back to the default colors as defined in MDCSnackbarMessageView.h.
-  [[MDCSnackbarMessageView appearance] setButtonTitleColor:[UIColor colorWithWhite:1 alpha:0.6f]
-                                                  forState:UIControlStateNormal];
-  [[MDCSnackbarMessageView appearance] setButtonTitleColor:nil
-                                                  forState:UIControlStateHighlighted];
-  [MDCSnackbarMessageView appearance].messageTextColor = nil;
+  MDCSnackbarManager.messageFont = nil;
+  MDCSnackbarManager.buttonFont = nil;
+  [MDCSnackbarManager setButtonTitleColor:nil forState:UIControlStateNormal];
+  [MDCSnackbarManager setButtonTitleColor:nil forState:UIControlStateHighlighted];
+  MDCSnackbarManager.messageTextColor = nil;
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Back to the standard snackbar";

@@ -15,6 +15,8 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #import "MDCColorScheme.h"
 
 /**
@@ -79,6 +81,16 @@
 @end
 
 /**
+ An enum of default color schemes that are supported.
+ */
+typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
+  /**
+   The Material defaults, circa April 2018.
+   */
+  MDCColorSchemeDefaultsMaterial201804
+};
+
+/**
  A simple implementation of @c MDCColorScheming that provides Material default color values from
  which basic customizations can be made.
  */
@@ -97,48 +109,13 @@
 @property(nonnull, readwrite, nonatomic) UIColor *onBackgroundColor;
 
 /**
- Convenience initializer that calls @c initWithMaterialDefaults.
+ Initializes the color scheme with the latest material defaults.
  */
 - (nonnull instancetype)init;
 
 /**
- Initializes an instance of MDCSemanticColorScheme with the Material default color values.
+ Initializes the color scheme with the colors associated with the given defaults.
  */
-- (nonnull instancetype)initWithMaterialDefaults;
+- (nonnull instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults;
 
-/**
- Creates a new color scheme with the provided color parameters.
-
- @param primaryColor Displayed most frequently across your app.
- @param primaryColorVariant A tonal variation of @c primaryColor.
- @param secondaryColor Accents select parts of your UI.
- @param errorColor The color used to indicate error status.
- @param surfaceColor The color of surfaces such as cards, sheets, menus.
- @param backgroundColor The underlying color of an app’s content.
- @param onPrimaryColor A color that passes accessibility guidelines for text/iconography when drawn
-        on top of @c primaryColor.
- @param onSecondaryColor A color that passes accessibility guidelines for text/iconography when
-        drawn on top of @c secondaryColor.
- @param onSurfaceColor A color that passes accessibility guidelines for text/iconography when
-        drawn on top of @c surfaceColor.
- @param onBackgroundColor A color that passes accessibility guidelines for text/iconography when
-        drawn on top of @c backgroundColor.
-
- @returns a new color scheme with the provided values.
- */
-- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
-                         primaryColorVariant:(nonnull UIColor *)primaryColorVariant
-                              secondaryColor:(nonnull UIColor *)secondaryColor
-                                  errorColor:(nonnull UIColor *)errorColor
-                                surfaceColor:(nonnull UIColor *)surfaceColor
-                             backgroundColor:(nonnull UIColor *)backgroundColor
-                              onPrimaryColor:(nonnull UIColor *)onPrimaryColor
-                            onSecondaryColor:(nonnull UIColor *)onSecondaryColor
-                              onSurfaceColor:(nonnull UIColor *)onSurfaceColor
-                           onBackgroundColor:(nonnull UIColor *)onBackgroundColor
-    NS_DESIGNATED_INITIALIZER;
-
-@end
-
-@interface MDCSemanticColorScheme (NSSecureCoding) <NSSecureCoding>
 @end

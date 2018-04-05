@@ -14,19 +14,23 @@
  limitations under the License.
  */
 
-#import "MDCSnackbarFontThemer.h"
+import XCTest
+import MaterialComponents.MaterialFlexibleHeader
+import MaterialComponents.MDCFlexibleHeaderColorThemer
 
-@implementation MDCSnackbarFontThemer
+class FlexibleHeaderColorThemerTests: XCTestCase {
 
-+ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
-  snackbarMessageView.messageFont = fontScheme.body2;
-  snackbarMessageView.buttonFont = fontScheme.button;
+  func testColorThemerChangesTheBackgroundColor() {
+    // Given
+    let colorScheme = MDCSemanticColorScheme()
+    let flexibleHeaderView = MDCFlexibleHeaderView()
+    colorScheme.primaryColor = .red
+    flexibleHeaderView.backgroundColor = .white
+
+    // When
+    MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: flexibleHeaderView)
+
+    // Then
+    XCTAssertEqual(flexibleHeaderView.backgroundColor, colorScheme.primaryColor)
+  }
 }
-
-+ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme {
-  MDCSnackbarManager.messageFont = fontScheme.body2;
-  MDCSnackbarManager.buttonFont = fontScheme.button;
-}
-
-@end
