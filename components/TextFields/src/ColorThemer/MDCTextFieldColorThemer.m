@@ -24,16 +24,15 @@
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
    toTextInputController:(id<MDCTextInputController>)textInputController {
   textInputController.activeColor = colorScheme.primaryColor;
-
   if ([textInputController
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
-    (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
+        (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
 
     if ([textInputControllerFloatingPlaceholder
-         respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
+            respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
       textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor =
-      colorScheme.primaryColor;
+          colorScheme.primaryColor;
     }
   }
 }
