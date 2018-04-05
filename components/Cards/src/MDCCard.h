@@ -121,9 +121,9 @@
  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
  unexpected behavior.
 
- When the shapeGenerator is nil, MDCCard will work like a normal UIControl with
- the default cornerRadius value of 4.
-
+ When the shapeGenerator is nil, MDCCard will use the default underlying layer with
+ its default settings.
+ 
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;

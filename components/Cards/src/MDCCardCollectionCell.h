@@ -96,8 +96,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
  unexpected behavior.
 
- When the shapeGenerator is nil, MDCCardCollectionCell will work like a normal UIControl with
- the default cornerRadius value of 4.
+ When the shapeGenerator is nil, MDCCardCollectionCell will use the default underlying layer with
+ its default settings.
 
  Default value for shapeGenerator is nil.
  */
