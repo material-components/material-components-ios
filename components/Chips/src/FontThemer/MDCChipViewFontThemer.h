@@ -17,18 +17,18 @@
 #import <Foundation/Foundation.h>
 
 @class MDCChipView;
-@protocol MDCTypographyScheming;
+@protocol MDCFontScheme;
 
 /**
- Themes @c MDCChipView objects to set their text font to the appropriate font trait given a
- typography scheme.
+ Themes @c MDCChipView objects to set their text font to the appropriate font trait given a font
+ scheme.
  */
 @interface MDCChipViewFontThemer : NSObject
 
 /**
- Applies the provided typography scheme to the given Chip or its UIAppearance proxy.
+ Applies the provided font scheme to the given Chip or its UIAppearance proxy.
  */
-+ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme
-                   toChipView:(nonnull MDCChipView *)chipView;
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
+             toChipView:(nonnull MDCChipView *)chipView;
 
 @end

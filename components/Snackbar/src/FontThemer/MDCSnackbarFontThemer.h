@@ -20,19 +20,19 @@
 #import "MaterialThemes.h"
 
 /**
- Used to apply a typography scheme to theme to MDCSnackbarMessageView.
+ Used to apply a font scheme to theme to MDCSnackbarMessageView.
  */
 @interface MDCSnackbarFontThemer : NSObject
 
 /**
- Applies a typography scheme to theme to a MDCSnackbarMessageView.
+ Applies a font scheme to theme to a MDCSnackbarMessageView.
  
- @param scheme The typography scheme to apply to MDCSnackbarMessageView.
+ @param fontScheme The font scheme to apply to MDCSnackbarMessageView.
  @param snackbarMessageView A MDCSnackbarMessageView instance to apply a font scheme. Use a
      UIAppearance proxy to apply a font scheme to all instances of MDCSnackbarMessageView.
  */
-+ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme
-        toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView;
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
+    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView;
 
 /**
  Applies a font scheme to theme to a MDCSnackbarMessageView.
