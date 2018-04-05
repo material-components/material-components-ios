@@ -25,22 +25,26 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 @implementation MDCSemanticColorScheme
 
 - (instancetype)init {
-  return [self initWithMaterialDefaults];
+  return [self initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 }
 
-- (instancetype)initWithMaterialDefaults {
+- (instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults {
   self = [super init];
   if (self) {
-    _primaryColor = ColorFromRGB(0x6200EE);
-    _primaryColorVariant = ColorFromRGB(0x3700B3);
-    _secondaryColor = ColorFromRGB(0x03DAC6);
-    _errorColor = ColorFromRGB(0xFF1744);
-    _surfaceColor = ColorFromRGB(0xFFFFFF);
-    _backgroundColor = ColorFromRGB(0xFFFFFF);
-    _onPrimaryColor = ColorFromRGB(0xFFFFFF);
-    _onSecondaryColor = ColorFromRGB(0x000000);
-    _onSurfaceColor = ColorFromRGB(0x000000);
-    _onBackgroundColor = ColorFromRGB(0x000000);
+    switch (defaults) {
+      case MDCColorSchemeDefaultsMaterial201804:
+        _primaryColor = ColorFromRGB(0x6200EE);
+        _primaryColorVariant = ColorFromRGB(0x3700B3);
+        _secondaryColor = ColorFromRGB(0x03DAC6);
+        _errorColor = ColorFromRGB(0xFF1744);
+        _surfaceColor = ColorFromRGB(0xFFFFFF);
+        _backgroundColor = ColorFromRGB(0xFFFFFF);
+        _onPrimaryColor = ColorFromRGB(0xFFFFFF);
+        _onSecondaryColor = ColorFromRGB(0x000000);
+        _onSurfaceColor = ColorFromRGB(0x000000);
+        _onBackgroundColor = ColorFromRGB(0x000000);
+        break;
+    }
   }
   return self;
 }
