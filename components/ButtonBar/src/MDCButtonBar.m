@@ -164,7 +164,8 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     totalWidth += width;
   }
 
-  CGFloat height = [self usePadHeight] ? kDefaultPadHeight : kDefaultHeight;
+  CGFloat maxHeight = [self usePadHeight] ? kDefaultPadHeight : kDefaultHeight;
+  CGFloat height = size.height > 0 ? MIN(size.height, maxHeight) : maxHeight;
   return CGSizeMake(totalWidth, height);
 }
 
