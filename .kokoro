@@ -77,8 +77,6 @@ run_bazel() {
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     bazel version
-    use_bazel.sh latest
-    bazel version
   fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
