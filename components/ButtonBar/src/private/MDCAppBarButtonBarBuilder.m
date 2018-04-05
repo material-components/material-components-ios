@@ -94,6 +94,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   button.disabledAlpha = kDisabledButtonAlpha;
 
   button.exclusiveTouch = YES;
+  button.inkColor = buttonBar.inkColor;
 
   [MDCAppBarButtonBarBuilder configureButton:button fromButtonItem:buttonItem];
 

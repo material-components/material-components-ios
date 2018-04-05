@@ -105,6 +105,12 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIView *titleView;
 
 /**
+ The Material inkColor that is used for all buttons in trailing and leading button bars. Only
+ affects buttons that are created after changing the property.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
  Display attributes for the titleView's title text.
 
  Setting this property will render an NSAttributedString with the assigned attributes across the

@@ -115,6 +115,12 @@ IB_DESIGNABLE
 /* If greater than zero, overrides the default Material height used in sizeThatFits. */
 @property(nonatomic, assign) CGFloat height;
 
+/**
+ The Material inkColor that is used for all buttons in the button bar. Only affects buttons that are
+ created after changing the property.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
 @end
 
 typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
