@@ -26,31 +26,16 @@
 @end
 
 @interface FeatureHighlightCustomFontTest : XCTestCase
-@property (nonatomic, strong) UIView *highlightedView;
-@property (nonatomic, strong) UIView *showView;
+
 @end
 
 @implementation FeatureHighlightCustomFontTest
 
-- (void)setUp {
-  [super setUp];
-  self.showView = [[UIView alloc] init];
-  self.highlightedView = [[UIView alloc] init];
-  [self.showView addSubview:self.highlightedView];
-}
-
-- (void)tearDown {
-  [super tearDown];
-  self.showView = nil;
-  self.highlightedView = nil;
-}
-
 - (void)testCustomTitleFontUpdateLabel {
-  MDCFeatureHighlightViewController *featureHighlightViewController =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.highlightedView
-                                                             andShowView:self.showView
-                                                              completion:nil];
-  MDCFeatureHighlightView *view = featureHighlightViewController.featureHighlightView;
+
+  // Given
+  MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
+
   // When
   NSString *customFontName = @"Zapfino";
   UIFont *customFont = [UIFont fontWithName:customFontName size:14.0];
@@ -65,11 +50,9 @@
 }
 
 - (void)testCustomBodyFontUpdateLabel {
-  MDCFeatureHighlightViewController *featureHighlightViewController =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.highlightedView
-                                                             andShowView:self.showView
-                                                              completion:nil];
-  MDCFeatureHighlightView *view = featureHighlightViewController.featureHighlightView;
+
+  // Given
+  MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
 
   // When
   NSString *customFontName = @"Chalkduster";

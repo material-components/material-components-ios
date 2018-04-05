@@ -30,8 +30,7 @@
                                                               completion:nil];
   highlightController.titleText = @"So pretty!";
   highlightController.bodyText = @"What a nice color you've chosen.";
-  MDCFeatureHighlightView *featureHighlightView = highlightController.featureHighlightView;
-  featureHighlightView.outerHighlightColor = cell.accessoryView.backgroundColor;
+  highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
   [MDCFeatureHighlightAccessibilityMutator mutate:highlightController];
   [self presentViewController:highlightController animated:YES completion:nil];
 }
