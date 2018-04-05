@@ -14,10 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCurvedRectShapeGenerator.h"
-#import "MDCPillShapeGenerator.h"
-#import "MDCRoundedCornerTreatment.h"
-#import "MDCSlantedRectShapeGenerator.h"
-#import "MDCTriangleEdgeTreatment.h"
-#import "MDCCutCornerTreatment.h"
+#import "MDCFontScheme.h"
+
+@implementation MDCBasicFontScheme	
+@end

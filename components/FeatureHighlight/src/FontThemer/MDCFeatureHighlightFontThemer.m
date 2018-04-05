@@ -18,10 +18,10 @@
 
 @implementation MDCFeatureHighlightFontThemer
 
-+ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
++ (void)applyTypographyScheme:(id<MDCTypographyScheming>)scheme
     toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView {
-  featureHighlightView.titleFont = fontScheme.headline2;
-  featureHighlightView.bodyFont = fontScheme.body2;
+  featureHighlightView.titleFont = scheme.headline2;
+  featureHighlightView.bodyFont = scheme.body2;
 }
 
 @end

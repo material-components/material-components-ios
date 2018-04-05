@@ -15,12 +15,28 @@
 
 #import "MaterialSnackbar.h"
 #import "MaterialThemes.h"
+#import "MaterialTypographyScheme.h"
 #import "MDCSnackbarFontThemer.h"
 
 @interface MDCSnackbarFontThemerTests : XCTestCase
 @end
 
 @implementation MDCSnackbarFontThemerTests
+
+- (void)testSnackbarFontThemerUsingUIAppearance {
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
+  [MDCSnackbarManager showMessage:message];
+  MDCTypographyScheme *fontScheme = [[MDCTypographyScheme alloc] init];
+  fontScheme.button = [UIFont boldSystemFontOfSize:12.f];
+  fontScheme.body2 = [UIFont systemFontOfSize:13.f];
+  [MDCSnackbarFontThemer applyTypographyScheme:fontScheme
+                   toSnackbarMessageView:[MDCSnackbarMessageView appearance]];
+  XCTAssertEqualObjects([MDCSnackbarMessageView appearance].messageFont,
+                        fontScheme.body2);
+  XCTAssertEqualObjects([MDCSnackbarMessageView appearance].buttonFont,
+                        fontScheme.button);
+}
 
 - (void)testSnackbarFontThemer {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
@@ -29,11 +45,10 @@
   MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
   fontScheme.button = [UIFont boldSystemFontOfSize:12.f];
   fontScheme.body2 = [UIFont systemFontOfSize:13.f];
-  [MDCSnackbarFontThemer applyFontScheme:fontScheme
-                   toSnackbarMessageView:[MDCSnackbarMessageView appearance]];
-  XCTAssertEqualObjects([MDCSnackbarMessageView appearance].messageFont,
+  [MDCSnackbarFontThemer applyFontScheme:fontScheme];
+  XCTAssertEqualObjects(MDCSnackbarManager.messageFont,
                         fontScheme.body2);
-  XCTAssertEqualObjects([MDCSnackbarMessageView appearance].buttonFont,
+  XCTAssertEqualObjects(MDCSnackbarManager.buttonFont,
                         fontScheme.button);
 }
 

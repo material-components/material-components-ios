@@ -14,29 +14,23 @@
  limitations under the License.
  */
 
-#import <XCTest/XCTest.h>
+import XCTest
+import MaterialComponents.MaterialFlexibleHeader
+import MaterialComponents.MDCFlexibleHeaderColorThemer
 
-#import "MaterialChips.h"
-#import "MaterialTypographyScheme.h"
-#import "MDCChipViewFontThemer.h"
+class FlexibleHeaderColorThemerTests: XCTestCase {
 
-@interface ChipViewFontThemerTests : XCTestCase
+  func testColorThemerChangesTheBackgroundColor() {
+    // Given
+    let colorScheme = MDCSemanticColorScheme()
+    let flexibleHeaderView = MDCFlexibleHeaderView()
+    colorScheme.primaryColor = .red
+    flexibleHeaderView.backgroundColor = .white
 
-@end
+    // When
+    MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: flexibleHeaderView)
 
-@implementation ChipViewFontThemerTests
-
-- (void)testFontThemer {
-  // Given
-  MDCChipView *chip = [[MDCChipView alloc] init];
-  MDCTypographyScheme *scheme = [[MDCTypographyScheme alloc] init];
-  scheme.body2 = [UIFont systemFontOfSize:99];
-
-  // When
-  [MDCChipViewFontThemer applyTypographyScheme:scheme toChipView:chip];
-
-  // Then
-  XCTAssertEqualObjects(chip.titleFont, scheme.body2);
+    // Then
+    XCTAssertEqual(flexibleHeaderView.backgroundColor, colorScheme.primaryColor)
+  }
 }
-
-@end

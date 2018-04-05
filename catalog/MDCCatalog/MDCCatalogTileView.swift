@@ -33,14 +33,34 @@ class MDCCatalogTileView: UIView {
   private lazy var imageView = UIImageView()
   private let imageCache = NSCache<AnyObject, UIImage>()
 
+  deinit {
+    NotificationCenter.default.removeObserver(self,
+                                              name: AppTheme.didChangeGlobalThemeNotificationName,
+                                              object: nil)
+  }
+
   override init(frame: CGRect) {
     super.init(frame: frame)
+
     self.backgroundColor = UIColor.clear
     self.addSubview(imageView)
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.themeDidChange),
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
   }
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+  }
+
+  func themeDidChange(notification: NSNotification) {
+    guard notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey] != nil else {
+        return
+    }
+    imageCache.removeAllObjects()
   }
 
   override func layoutSubviews() {
@@ -73,8 +93,7 @@ class MDCCatalogTileView: UIView {
   func createImage() -> UIImage {
     var newImage: UIImage?
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let colorScheme = AppDelegate.colorScheme
+    let colorScheme = AppTheme.globalTheme.colorScheme
 
     switch componentNameString {
     case "Activity Indicator":

@@ -18,10 +18,15 @@
 
 @implementation MDCSnackbarFontThemer
 
-+ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme
     toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
-  snackbarMessageView.messageFont = fontScheme.body2;
-  snackbarMessageView.buttonFont = fontScheme.button;
+  snackbarMessageView.messageFont = scheme.body2;
+  snackbarMessageView.buttonFont = scheme.button;
+}
+
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme {
+  MDCSnackbarManager.messageFont = fontScheme.body2;
+  MDCSnackbarManager.buttonFont = fontScheme.button;
 }
 
 @end

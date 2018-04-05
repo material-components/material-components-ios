@@ -31,6 +31,8 @@ mdc_public_objc_library(
         "//components/ShadowLayer",
         "//components/private/Math",
         "//components/private/Icons/icons/ic_check_circle",
+        "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
     ],
 )
 
