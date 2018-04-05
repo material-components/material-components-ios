@@ -119,6 +119,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
 @interface MDCNavigationBar (PrivateAPIs)
 
+/// titleLabel is hidden if there is a titleView. When not hidden, displays self.title.
 - (UILabel *)titleLabel;
 - (MDCButtonBar *)leadingButtonBar;
 - (MDCButtonBar *)trailingButtonBar;
@@ -324,6 +325,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
   UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
 
+  // textFrame is used to determine layout of both TitleLabel and TitleView
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
@@ -334,6 +336,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   }
 #endif
 
+  // Layout TitleLabel
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
   paraStyle.lineBreakMode = _titleLabel.lineBreakMode;
 
@@ -356,8 +359,12 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                                             withinBounds:textFrame
                                                alignment:titleVerticalAlignment];
   alignedFrame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
-
   _titleLabel.frame = MDCRectAlignToScale(alignedFrame, self.window.screen.scale);
+
+  // Layout TitleView
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    textFrame = MDFRectFlippedHorizontally(textFrame, CGRectGetWidth(self.bounds));
+  }
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
@@ -627,10 +634,13 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
   [self.titleView removeFromSuperview];
   _titleView = titleView;
-  [self addSubview:_titleView];
+
+  if (_titleView != nil) {
+    [self addSubview:_titleView];
+  }
 
   _titleLabel.hidden = _titleView != nil;
-
+    
   [self setNeedsLayout];
 }
 

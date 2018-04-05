@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputControllerFloatingPlaceholder.h"
+#import "MDCTextInputControllerBase.h"
 
 /**
  Material Design compliant text field from 2016. The logic for 'automagic' error states changes:
@@ -59,7 +59,6 @@
 
  Underline View Mode - While editing
 */
-@interface MDCTextInputControllerLegacyDefault
-    : NSObject <MDCTextInputControllerFloatingPlaceholder>
+@interface MDCTextInputControllerLegacyDefault : MDCTextInputControllerBase
 
 @end

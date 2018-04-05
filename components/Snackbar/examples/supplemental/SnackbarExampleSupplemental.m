@@ -89,6 +89,26 @@ static NSString * const kCellIdentifier = @"Cell";
 
 @end
 
+@implementation SnackbarInputAccessoryViewController (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Snackbar", @"Snackbar Input Accessory" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
++ (BOOL)catalogIsDebug {
+  return NO;
+}
+
+@end
+
 @implementation SnackbarSuspensionExample (CollectionView)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView

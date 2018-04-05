@@ -29,7 +29,7 @@ typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 @property(nonatomic, strong) UIView *displayedView;
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *bodyLabel;
-@property(nonatomic, strong) MDCFeatureHighlightInteractionBlock interactionBlock;
+@property(nonatomic, copy) MDCFeatureHighlightInteractionBlock interactionBlock;
 
 @end
 
