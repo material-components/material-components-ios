@@ -5,20 +5,56 @@
 ### BottomNavigation
 * Color themer now only uses `primaryColor` and applies it to the `selectedItemTintColor`. It will no longer apply values to either `unselectedItemTintColor` or `barTintColor`.
 
-### FeatureHighlight
-* FeatureHighlightViewController exposes `featureHighlightView` as a property and has removed the following properties:
-* FeatureHighlightView has removed the following properties. They should be set on the FeatureHighlightView directly:
-  * `outerHighlightColor`
-  * `innerHighlightColor`
-  * `titleColor`
-  * `bodyColor`
-  * `mdc_adjustsFontForContentSizeCategory`
-  
-
 ### TextFields
 * TextFields will no longer default to using Dynamic Type.
 * TextFields with floating placeholders now account for the placeholder when
   computing their bounds.
+
+## API Changes
+
+### TextFields
+
+#### MDCTextInputControllerLegacyDefault
+
+*modified* class: `MDCTextInputControllerLegacyDefault`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextInputControllerLegacyDefault : NSObject, MDCTextInputControllerFloatingPlaceholder` |
+| To: | `class MDCTextInputControllerLegacyDefault : MDCTextInputControllerBase` |
+
+*modified* class: `MDCTextInputControllerLegacyDefault`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextInputControllerLegacyDefault     : NSObject <MDCTextInputControllerFloatingPlaceholder>` |
+| To: | `@interface MDCTextInputControllerLegacyDefault : MDCTextInputControllerBase` |
+
+#### MDCTextInputControllerLegacyFullWidth
+
+*modified* class: `MDCTextInputControllerLegacyFullWidth`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextInputControllerLegacyFullWidth : NSObject, MDCTextInputController` |
+| To: | `class MDCTextInputControllerLegacyFullWidth : MDCTextInputControllerFullWidth, NSSecureCoding` |
+
+*modified* class: `MDCTextInputControllerLegacyFullWidth`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextInputControllerLegacyFullWidth     : NSObject <MDCTextInputController>` |
+| To: | `@interface MDCTextInputControllerLegacyFullWidth     : MDCTextInputControllerFullWidth <NSSecureCoding>` |
+
+#### MDCTextInputController
+
+*removed* property: `textInputFont` in `MDCTextInputController`
+
+*removed* property: `textInputFontDefault` in `MDCTextInputController`
+
+### Color
+
+**New component.**
 
 ## Component changes
 
@@ -52,10 +88,6 @@
 
 * [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
 
-### Color
-
-**New component.**
-
 ### Dialogs
 
 #### Changes
@@ -68,14 +100,12 @@
 #### Changes
 
 * [Copy block instead of assign (#3159)](https://github.com/material-components/material-components-ios/commit/85ed8aed96cd24d895f9dcaf5dceb49f891cf451) (Robert Moore)
-* [FeatureHighlightViewController should expose FeatureHighlightView as a property. (#3145)](https://github.com/material-components/material-components-ios/commit/24be789f57aedb732ceddecc36699f52875dc8d6) (Mohammad Cazi)
 
 ### FlexibleHeader
 
 #### Changes
 
 * [Check if contentView is nil before the comparison (#3098)](https://github.com/material-components/material-components-ios/commit/5674772cb71bb749cddcb442c31d917aec648994) (Siyu Song)
-* [Fix bug where shadow layer's opacity wouldn't be set without a tracking scroll view. (#3201)](https://github.com/material-components/material-components-ios/commit/d0af3a729b987b8614b2eadc577ce658cd3d0dcc) (featherless)
 * [[Tabs] Fix format string types in debug, examples (#3195)](https://github.com/material-components/material-components-ios/commit/2fd85a2c29026fb84ea339e1529300e312b3362d) (Robert Moore)
 
 ### Ink
@@ -103,15 +133,6 @@
 
 * [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
 
-### Snackbar
-
-#### Changes
-
-* [Update content padding for new snackbar, leave old snackbar padding as is. (#3192)](https://github.com/material-components/material-components-ios/commit/8fb8e4c56b3be93c92af6ad7e5e1f7ecf6126120) (Yarden Eitan)
-* [added inputAccessory with Snackbar dragon + Fix for it (#3156)](https://github.com/material-components/material-components-ios/commit/7a48b9171a1c3cbf7267ff337a027f28f429aa96) (Yarden Eitan)
-* [font and color updates. (#3125)](https://github.com/material-components/material-components-ios/commit/28ef4730aaeb37663a377670b8db95215c090f92) (Yarden Eitan)
-* [revert back to before #3106 as this code needs more thorough testing. (#3178)](https://github.com/material-components/material-components-ios/commit/a05140df1b8d2678cbd39fc5d7ea2a27cc1f1a74) (Yarden Eitan)
-
 ### Tabs
 
 #### Changes
@@ -126,6 +147,17 @@
 * [Make MDCTextInputControllerLegacyDefault a subclass of MDCTextInputControllerBase  (#3152)](https://github.com/material-components/material-components-ios/commit/cb0d00be93bab192e83b0c07b83b655619bf8122) (Mohammad Cazi)
 * [Make MDCTextInputControllerLegacyFullWidth a subclass of MDCTextInputControllerFullWidth (#3154)](https://github.com/material-components/material-components-ios/commit/19f2c0fd1be06e31e7405a42aadb1004c2af5bbf) (Mohammad Cazi)
 * [[MDCTextFields + Kokoro] Making textfields dynamic type off by default (#3149)](https://github.com/material-components/material-components-ios/commit/f91317ff0455bc6ecd7b7c728bdb9821cd036aa0) (Yarden Eitan)
+  * [Reverting textInputFont property on inputController. #3232](https://github.com/material-components/material-components-ios/commit/8d4d5ea1fc8f70e6fa644fc6d756aac282d12e3b) (Mohammad Cazi)
+  * [Restore Dynamic Type to textInput (#3239)](https://github.com/material-components/material-components-ios/commit/1edaa5625d7c931840f382e1db6398c72a4f9da5) (Robert Moore)
+
+### Snackbar
+
+#### Changes
+
+* [Update content padding for new snackbar, leave old snackbar padding as is. (#3192)](https://github.com/material-components/material-components-ios/commit/8fb8e4c56b3be93c92af6ad7e5e1f7ecf6126120) (Yarden Eitan)
+* [added inputAccessory with Snackbar dragon + Fix for it (#3156)](https://github.com/material-components/material-components-ios/commit/7a48b9171a1c3cbf7267ff337a027f28f429aa96) (Yarden Eitan)
+* [font and color updates. (#3125)](https://github.com/material-components/material-components-ios/commit/28ef4730aaeb37663a377670b8db95215c090f92) (Yarden Eitan)
+* [revert back to before #3106 as this code needs more thorough testing. (#3178)](https://github.com/material-components/material-components-ios/commit/a05140df1b8d2678cbd39fc5d7ea2a27cc1f1a74) (Yarden Eitan)
 
 ### schemes/Color
 
