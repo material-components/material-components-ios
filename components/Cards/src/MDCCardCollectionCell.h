@@ -18,6 +18,8 @@
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
+@protocol MDCShapeGenerating;
+
 /**
  Through the lifecycle of the cell, the cell can go through one of the 3 states,
  normal, highlighted, and selected. The cell starts in its default state, normal.
@@ -35,6 +37,36 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   
   /** The visual state when the cell has been selected. */
   MDCCardCellStateSelected
+};
+
+/**
+ The horizontal alignment of the image when in selectable mode (`selectable` is set to YES).
+ */
+typedef NS_ENUM(NSInteger, MDCCardCellHorizontalImageAlignment) {
+  /** The alignment of the image is to the right of the card. */
+  MDCCardCellHorizontalImageAlignmentRight = 0,
+
+  /** The alignment of the image is to the center of the card. */
+  MDCCardCellHorizontalImageAlignmentCenter,
+
+  /** The alignment of the image is to the left of the card. */
+  MDCCardCellHorizontalImageAlignmentLeft,
+ 
+ // TODO: Add AlignmentLeading and AlignmentTrailing. See Github issue #3045
+};
+
+/**
+ The vertical alignment of the image when in selectable mode (`selectable` is set to YES).
+ */
+typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
+  /** The alignment of the image is to the top of the card. */
+  MDCCardCellVerticalImageAlignmentTop = 0,
+
+  /** The alignment of the image is to the center of the card. */
+  MDCCardCellVerticalImageAlignmentCenter,
+
+  /** The alignment of the image is to the bottom of the card. */
+  MDCCardCellVerticalImageAlignmentBottom,
 };
 
 @interface MDCCardCollectionCell : UICollectionViewCell
@@ -57,6 +89,19 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
  The inkView for the card that is initiated on tap
  */
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+
+/*
+ The shape generator used to define the card cell's shape.
+ When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
+ If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
+ unexpected behavior.
+
+ When the shapeGenerator is nil, MDCCardCollectionCell will use the default underlying layer with
+ its default settings.
+
+ Default value for shapeGenerator is nil.
+ */
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
  Sets the shadow elevation for an MDCCardViewState state
@@ -141,16 +186,95 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
 - (nullable UIColor *)shadowColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
- The image for the selected state.
- Default is the checked circle image.
+ Returns the image for an MDCCardCellStateNormal state.
+
+ @note The image is only displayed when `selectable` is YES.
+ If no image has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then nil will be returned.
+ Default value for MDCCardCellStateSelected is ic_check_circle
+
+ @param state MDCCardCellState the card state
+ @return The image for the requested state.
  */
-@property(nonatomic, strong, nullable) UIImage *selectedImage UI_APPEARANCE_SELECTOR;
+- (nullable UIImage *)imageForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
- The tint color for the selected image.
- Default is set to default UIImageView tintColor
+ Sets the image for an MDCCardCellStateNormal state
+
+ @note The image is only displayed when `selectable` is YES.
+ @param image The image
+ @param state MDCCardCellState the card state
  */
-@property(nonatomic, strong, nullable) UIColor *selectedImageTintColor UI_APPEARANCE_SELECTOR;
+- (void)setImage:(nullable UIImage *)image forState:(MDCCardCellState)state
+UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the horizontal image alignment for an MDCCardCellStateNormal state
+
+ @note The image is only displayed when `selectable` is YES.
+ If no alignment has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then MDCCardCellImageHorizontalAlignmentRight will be returned.
+
+ @param state MDCCardCellState the card state
+ @return The horizontal alignment for the requested state.
+ */
+- (MDCCardCellHorizontalImageAlignment)horizontalImageAlignmentForState:(MDCCardCellState)state
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ Sets the image alignment for an MDCCardCellStateNormal state
+
+ @note The image is only displayed when `selectable` is YES.
+ @param horizontalImageAlignment The image alignment
+ @param state MDCCardCellState the card state
+ */
+- (void)setHorizontalImageAlignment:(MDCCardCellHorizontalImageAlignment)horizontalImageAlignment
+                           forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the vertical image alignment for an MDCCardCellStateNormal state
+
+ @note The image is only displayed when `selectable` is YES.
+ If no alignment has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then MDCCardCellImageVerticalAlignmentTop will be returned.
+
+ @param state MDCCardCellState the card state
+ @return The vertical alignment for the requested state.
+ */
+- (MDCCardCellVerticalImageAlignment)verticalImageAlignmentForState:(MDCCardCellState)state
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ Sets the image alignment for an MDCCardCellStateNormal state
+
+ @note The image is only displayed when `selectable` is YES.
+ @param verticalImageAlignment The image alignment
+ @param state MDCCardCellState the card state
+ */
+- (void)setVerticalImageAlignment:(MDCCardCellVerticalImageAlignment)verticalImageAlignment
+                         forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ Returns the image tint color for an MDCCardCellStateNormal state
+
+ @note The image is only displayed when `selectable` is YES.
+ If no tint color has been set for a state, it will check the value of UIControlStateNormal.
+ If that value also isn't set, then nil will be returned.
+
+ @param state MDCCardCellState the card state
+ @return The image tint color for the requested state.
+ */
+- (nullable UIColor *)imageTintColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ Sets the image tint color for an MDCCardCellStateNormal state
+
+ @note The image is only displayed when `selectable` is YES.
+ @param imageTintColor The image tint color
+ @param state MDCCardCellState the card state
+ */
+- (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(MDCCardCellState)state
+UI_APPEARANCE_SELECTOR;
 
 /**
  The state of the card cell.

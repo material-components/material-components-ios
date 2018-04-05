@@ -129,4 +129,80 @@
   XCTAssertEqualWithAccuracy(unarchivedInkView.maxRippleRadius, inkView.maxRippleRadius, 0.0001);
 }
 
+- (void)testNewInkUsesMaxRippleRadiusWhenUnbounded {
+  // Given
+  MDCInkView *inkViewStyleThenRadius = [[MDCInkView alloc] init];
+  MDCInkView *inkViewRadiusThenStyle = [[MDCInkView alloc] init];
+  inkViewStyleThenRadius.usesLegacyInkRipple = NO;
+  inkViewRadiusThenStyle.usesLegacyInkRipple = NO;
+
+  // When
+  inkViewStyleThenRadius.inkStyle = MDCInkStyleUnbounded;
+  inkViewStyleThenRadius.maxRippleRadius = 12;
+  inkViewRadiusThenStyle.maxRippleRadius = 12;
+  inkViewRadiusThenStyle.inkStyle = MDCInkStyleUnbounded;
+
+
+  // Then
+  XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);
+  XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 12, 0.0001);
+}
+
+- (void)testLegacyInkUsesMaxRippleRadiusWhenUnbounded {
+  // Given
+  MDCInkView *inkViewStyleThenRadius = [[MDCInkView alloc] init];
+  MDCInkView *inkViewRadiusThenStyle = [[MDCInkView alloc] init];
+  inkViewStyleThenRadius.usesLegacyInkRipple = YES;
+  inkViewRadiusThenStyle.usesLegacyInkRipple = YES;
+
+  // When
+  inkViewStyleThenRadius.inkStyle = MDCInkStyleUnbounded;
+  inkViewStyleThenRadius.maxRippleRadius = 12;
+  inkViewRadiusThenStyle.maxRippleRadius = 12;
+  inkViewRadiusThenStyle.inkStyle = MDCInkStyleUnbounded;
+
+
+  // Then
+  XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);
+  XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 12, 0.0001);
+}
+
+- (void)testNewInkIgnoresMaxRippleRadiusWhenBounded {
+  // Given
+  MDCInkView *inkViewStyleThenRadius = [[MDCInkView alloc] init];
+  MDCInkView *inkViewRadiusThenStyle = [[MDCInkView alloc] init];
+  inkViewStyleThenRadius.usesLegacyInkRipple = NO;
+  inkViewRadiusThenStyle.usesLegacyInkRipple = NO;
+
+  // When
+  inkViewStyleThenRadius.inkStyle = MDCInkStyleBounded;
+  inkViewStyleThenRadius.maxRippleRadius = 12;
+  inkViewRadiusThenStyle.maxRippleRadius = 12;
+  inkViewRadiusThenStyle.inkStyle = MDCInkStyleBounded;
+
+
+  // Then
+  XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 0, 0.0001);
+  XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 0, 0.0001);
+}
+
+- (void)testLegacyInkUsesMaxRippleRadiusWhenBounded {
+  // Given
+  MDCInkView *inkViewStyleThenRadius = [[MDCInkView alloc] init];
+  MDCInkView *inkViewRadiusThenStyle = [[MDCInkView alloc] init];
+  inkViewStyleThenRadius.usesLegacyInkRipple = YES;
+  inkViewRadiusThenStyle.usesLegacyInkRipple = YES;
+
+  // When
+  inkViewStyleThenRadius.inkStyle = MDCInkStyleBounded;
+  inkViewStyleThenRadius.maxRippleRadius = 12;
+  inkViewRadiusThenStyle.maxRippleRadius = 12;
+  inkViewRadiusThenStyle.inkStyle = MDCInkStyleBounded;
+
+
+  // Then
+  XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);
+  XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 12, 0.0001);
+}
+
 @end

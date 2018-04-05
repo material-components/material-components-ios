@@ -74,7 +74,17 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
 
     if ([coder containsValueForKey:MDCButtonBarItemsKey]) {
       // Force going through the setter to ensure KVO is observed for these items
-      self.items = [coder decodeObjectForKey:MDCButtonBarItemsKey];
+      NSArray *items = [coder decodeObjectOfClass:[NSArray class] forKey:MDCButtonBarItemsKey];
+      BOOL isValid = YES;
+      for (id item in items) {
+        if (![item isKindOfClass:[UIBarButtonItem class]]) {
+          isValid = NO;
+          NSAssert(NO, @"Wrong class type for MDCButtonBar items when decoding.");
+        }
+      }
+      if (isValid) {
+        self.items = [coder decodeObjectOfClass:[NSArray class] forKey:MDCButtonBarItemsKey];
+      }
     }
   }
   return self;
@@ -154,8 +164,8 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     totalWidth += width;
   }
 
-  CGFloat height =
-      self.height > 0 ? self.height : ([self usePadHeight] ? kDefaultPadHeight : kDefaultHeight);
+  CGFloat maxHeight = [self usePadHeight] ? kDefaultPadHeight : kDefaultHeight;
+  CGFloat height = size.height > 0 ? MIN(size.height, maxHeight) : maxHeight;
   return CGSizeMake(totalWidth, height);
 }
 

@@ -14,7 +14,5 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
-#import "MDCFontScheme.h"
-#import "MDCTonalColorScheme.h"
-#import "MDCTonalPalette.h"
+#import "MDCFontSchemeMigration.h"
+#import "MDCColorSchemeMigration.h"

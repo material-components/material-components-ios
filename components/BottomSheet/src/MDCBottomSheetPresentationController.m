@@ -17,12 +17,9 @@
 #import "MDCBottomSheetPresentationController.h"
 
 #import "MDCBottomSheetController.h"
-#import "private/MDCSheetContainerView.h"
-#import "private/MDCBottomSheetMotionSpec.h"
 
 #import "MaterialMath.h"
-#import <MotionAnimator/MotionAnimator.h>
-#import <MotionTransitioning/MotionTransitioning.h>
+#import "private/MDCSheetContainerView.h"
 
 static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) {
   UIScrollView *scrollView = nil;
@@ -33,12 +30,9 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     (void)viewController.view;
   }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   if ([viewController isKindOfClass:[MDCBottomSheetController class]]) {
     viewController = ((MDCBottomSheetController *)viewController).contentViewController;
   }
-#pragma clang diagnostic pop
 
   if ([viewController.view isKindOfClass:[UIScrollView class]]) {
     scrollView = (UIScrollView *)viewController.view;
@@ -50,10 +44,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   return scrollView;
 }
 
-@interface MDCBottomSheetPresentationController () <
-    MDCSheetContainerViewDelegate,
-    MDMTransition
->
+@interface MDCBottomSheetPresentationController () <MDCSheetContainerViewDelegate>
 @end
 
 @implementation MDCBottomSheetPresentationController {
@@ -105,8 +96,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
                                                 contentView:self.presentedViewController.view
                                                  scrollView:scrollView];
   _sheetView.delegate = self;
-  _sheetView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
   [containerView addSubview:_dimmingView];
   [containerView addSubview:_sheetView];
@@ -121,8 +111,15 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   containerView.userInteractionEnabled = YES;
   [containerView addGestureRecognizer:tapGesture];
 
+  id <UIViewControllerTransitionCoordinator> transitionCoordinator =
+      [[self presentingViewController] transitionCoordinator];
+
   // Fade in the dimming view during the transition.
   _dimmingView.alpha = 0.0;
+  [transitionCoordinator animateAlongsideTransition:
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+        self->_dimmingView.alpha = 1.0;
+      }                                  completion:nil];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -131,10 +128,27 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
 }
 
+- (void)dismissalTransitionWillBegin {
+  id <UIViewControllerTransitionCoordinator> transitionCoordinator =
+    [[self presentingViewController] transitionCoordinator];
+
+  [transitionCoordinator animateAlongsideTransition:
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+        self->_dimmingView.alpha = 0.0;
+      }                                  completion:nil];
+}
+
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
     [_dimmingView removeFromSuperview];
   }
+}
+
+- (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
+  [super preferredContentSizeDidChangeForChildContentContainer:container];
+  _sheetView.frame = [self frameOfPresentedViewInContainerView];
+  [_sheetView layoutIfNeeded];
+  [self updatePreferredSheetHeight];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
@@ -175,54 +189,9 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
 }
 
-#pragma mark - Accessibility
-
-- (BOOL)accessibilityPerformEscape {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  return YES;
-}
-
-#pragma mark - MDMTransitionWithCustomDuration
-
-- (NSTimeInterval)transitionDurationWithContext:(__unused id<MDMTransitionContext>)context {
-  return MDCBottomSheetMotionSpec.scrimAppearance.duration;
-}
-
-#pragma mark - MDMTransition
-
-- (void)startWithContext:(id<MDMTransitionContext>)context {
-  MDMMotionAnimator *animator = [[MDMMotionAnimator alloc] init];
-  animator.shouldReverseValues = context.direction == MDMTransitionDirectionBackward;
-
-  MDMMotionTiming spec = ((context.direction == MDMTransitionDirectionForward)
-                          ? MDCBottomSheetMotionSpec.scrimAppearance
-                          : MDCBottomSheetMotionSpec.scrimDisappearance);
-
-  [CATransaction begin];
-  [CATransaction setCompletionBlock:^{
-    [context transitionDidEnd];
-  }];
-
-  [animator animateWithTiming:spec
-                      toLayer:_dimmingView.layer
-                   withValues:@[@0, @1]
-                      keyPath:MDMKeyPathOpacity];
-
-  [CATransaction commit];
-
-  // We want the transition to give control back to the user ASAP, so we don't include the sheet's
-  // spring animation in our completion block.
-  if (context.direction == MDMTransitionDirectionForward) {
-    _sheetView.sheetState = MDCSheetStateClosed;
-    [_sheetView animateToSheetState:MDCSheetStatePreferred];
-  } else {
-    [_sheetView animateToSheetState:MDCSheetStateClosed];
-  }
-}
-
 #pragma mark - MDCSheetContainerViewDelegate
 
-- (void)sheetContainerViewWillHide:(nonnull __unused MDCSheetContainerView *)containerView {
+- (void)sheetContainerViewDidHide:(nonnull __unused MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
@@ -233,4 +202,3 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 @end
-

@@ -31,8 +31,6 @@
  The presenting UIViewController then calls presentViewController:animated:completion:
  [rootViewController presentViewController:myDialogViewController animated:YES completion:...];
  */
-__deprecated_msg("Assign an instance of MDCBottomSheetTransition to your view controller's "
-                 "mdm_transitionController.transition instead.")
 @interface MDCBottomSheetTransitionController
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 

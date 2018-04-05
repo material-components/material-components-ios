@@ -9,6 +9,12 @@ tested, and then merged into `stable`, which serves as the stable "vetted" branc
 
 ## Before you start
 
+### Create a clean clone
+
+Make sure you are working from a direct clone of the main Git repository.  The scripts involved 
+assume that the remote "origin" is the actual repository and not your fork.  Since most contributors 
+will be working day-to-day with a fork, consider creating a separate clone just for releases.
+
 ### Check for issues that might affect the release process
 
 Occasionally there are temporary issues with the release process, check the [`Blocking Release`

@@ -27,8 +27,7 @@ typedef NS_ENUM(NSUInteger, MDCSheetState) {
 @interface MDCSheetContainerView : UIView
 
 @property(nonatomic, weak, nullable) id<MDCSheetContainerViewDelegate> delegate;
-@property(nonatomic, assign) MDCSheetState sheetState;
-- (void)animateToSheetState:(MDCSheetState)sheetState;
+@property(nonatomic, readonly) MDCSheetState sheetState;
 @property(nonatomic) CGFloat preferredSheetHeight;
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame
@@ -42,6 +41,6 @@ typedef NS_ENUM(NSUInteger, MDCSheetState) {
 
 @protocol MDCSheetContainerViewDelegate <NSObject>
 
-- (void)sheetContainerViewWillHide:(nonnull MDCSheetContainerView *)containerView;
+- (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView;
 
 @end

@@ -15,8 +15,8 @@
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
+     "mdc_objc_library",
+     "mdc_unit_test_suite")
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
@@ -37,6 +37,36 @@ mdc_public_objc_library(
         "//components/private/KeyboardWatcher",
         "//components/private/Overlay",
     ],
+)
+
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Snackbar",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "FontThemer",
+    srcs = native.glob(["src/FontThemer/*.m"]),
+    hdrs = native.glob(["src/FontThemer/*.h"]),
+    includes = ["src/FontThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Snackbar",
+        "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -69,17 +99,17 @@ mdc_objc_library(
     ],
     deps = [
         ":Snackbar",
+        ":ColorThemer",
+        ":FontThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],
 )
 
-ios_unit_test(
-    name = "unit_tests",
+mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
       ":unit_test_swift_sources",
     ],
-    minimum_os_version = "8.0",
-    visibility = ["//visibility:private"],
 )
+

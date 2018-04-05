@@ -53,7 +53,7 @@ Occasionally it is necessary to hotfix the framework. See [hotfixing.md](hotfixi
 ## Finding an issue to work on
 
 MDC-iOS uses GitHub to file and track issues.
-To find an issue to work on, filter the issues list by the ["is:New Collaborator Friendly" label](https://github.com/material-components/material-components-ios/labels/is%3ANew%20Collaborator%20Friendly).
+To find an issue to work on, filter the issues list by the ["is:fixit" label](https://github.com/material-components/material-components-ios/labels/is%3Afixit).
 
 ## The small print
 

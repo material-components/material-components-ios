@@ -54,6 +54,7 @@
 
  AppBar depends on the FlexibleHeader, HeaderStackView, and NavigationBar Material Components.
  */
+//TODO: (#3012) Re-add NSSecureCoding
 @interface MDCAppBar : NSObject
 
 /**

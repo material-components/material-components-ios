@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "45.0.0"
+  mdc.version      = "50.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -108,6 +108,16 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Math"
   end
 
+  mdc.subspec "BottomAppBar+Extensions" do |component|
+    component.subspec "ColorThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/BottomAppBar/src/ColorThemer/*.h"
+      extension.source_files = "components/BottomAppBar/src/ColorThemer/*.{h,m}"
+      extension.dependency "MaterialComponents/BottomAppBar"
+      extension.dependency "MaterialComponents/Themes"
+    end
+  end
+
   mdc.subspec "BottomNavigation" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
@@ -139,8 +149,6 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MotionAnimator", "~> 2.3"
-    component.dependency "MotionTransitioning", "~> 5.0"
   end
 
   mdc.subspec "Buttons" do |component|
@@ -191,7 +199,6 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/ButtonBar/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/ButtonBar"
-      extension.dependency "MaterialComponents/NavigationBar"
       extension.dependency "MaterialComponents/Themes"
     end
   end
@@ -219,6 +226,17 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/ShapeLibrary"
     component.dependency "MaterialComponents/private/Shapes"
+  end
+  
+  mdc.subspec "Chips+Extensions" do |component|
+    component.subspec "FontThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Chips/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Chips/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Chips"
+      extension.dependency "MaterialComponents/Themes"
+    end
   end
 
   mdc.subspec "CollectionCells" do |component|
@@ -273,6 +291,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MDFInternationalization"
   end
@@ -316,6 +335,14 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/FeatureHighlight"
       extension.dependency "MaterialComponents/Themes"
     end
+    component.subspec "FeatureHighlightAccessibilityMutator" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/FeatureHighlight/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/FeatureHighlight/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/FeatureHighlight"
+      extension.dependency 'MDFTextAccessibility'
+    end
   end
 
   mdc.subspec "FlexibleHeader" do |component|
@@ -335,7 +362,7 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/FlexibleHeader/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/FlexibleHeader"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
   end
 
@@ -520,6 +547,25 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Overlay"
   end
 
+mdc.subspec "Snackbar+Extensions" do |component|
+  component.subspec "ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/Snackbar/src/#{extension.base_name}/*.h"
+    extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Snackbar"
+    extension.dependency "MaterialComponents/Themes"
+  end
+  component.subspec "FontThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/Snackbar/src/#{extension.base_name}/*.h"
+    extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Snackbar"
+    extension.dependency "MaterialComponents/Themes"
+  end
+end
+
   mdc.subspec "Tabs" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
@@ -544,6 +590,15 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/Tabs"
       extension.dependency "MaterialComponents/Themes"
     end
+    component.subspec "FontThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Tabs/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Tabs/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Tabs"
+      extension.dependency "MaterialComponents/Themes"
+    end
+
   end
 
   mdc.subspec "TextFields" do |component|
@@ -568,12 +623,24 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/TextFields"
       extension.dependency "MaterialComponents/Themes"
     end
+    component.subspec "FontThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/TextFields/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/TextFields/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/TextFields"
+      extension.dependency "MaterialComponents/Themes"
+    end
+
   end
 
   mdc.subspec "Themes" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/schemes/Color"
+    component.dependency "MaterialComponents/schemes/Typography"
   end
 
   mdc.subspec "Typography" do |component|
@@ -585,7 +652,6 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "private" do |private_spec|
-
     # Pull in icon dependencies
     # The implementation of this method is generated by running scripts/sync_icons.sh
     # and defined in scripts/generated/icons.rb
@@ -655,7 +721,18 @@ Pod::Spec.new do |mdc|
 
       component.dependency "MaterialComponents/private/Application"
     end
-
   end
 
+  mdc.subspec "schemes" do |scheme_spec|
+    scheme_spec.subspec "Color" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+    end
+    scheme_spec.subspec "Typography" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+    end
+  end
 end

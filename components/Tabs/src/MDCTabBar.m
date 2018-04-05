@@ -24,6 +24,22 @@
 #import "private/MDCItemBarAlignment.h"
 #import "private/MDCItemBarStyle.h"
 
+static NSString *const MDCTabBarItemsKey = @"MDCTabBarItemsKey";
+static NSString *const MDCTabBarSelectedItemKey = @"MDCTabBarSelectedItemKey";
+static NSString *const MDCTabBarDelegateKey = @"MDCTabBarDelegateKey";
+static NSString *const MDCTabBarTintColorKey = @"MDCTabBarTintColorKey";
+static NSString *const MDCTabBarSelectedItemTintColorKey = @"MDCTabBarSelectedItemTintColorKey";
+static NSString *const MDCTabBarUnselectedItemTintColorKey = @"MDCTabBarUnselectedItemTintColorKey";
+static NSString *const MDCTabBarInkColorKey = @"MDCTabBarInkColorKey";
+static NSString *const MDCTabBarSelectedItemTitleFontKey = @"MDCTabBarSelectedItemTitleFontKey";
+static NSString *const MDCTabBarUnselectedItemTitleFontKey = @"MDCTabBarUnselectedItemTitleFontKey";
+static NSString *const MDCTabBarBarTintColorKey = @"MDCTabBarBarTintColorKey";
+static NSString *const MDCTabBarAlignmentKey = @"MDCTabBarAlignmentKey";
+static NSString *const MDCTabBarItemApperanceKey = @"MDCTabBarItemApperanceKey";
+static NSString *const MDCTabBarDisplaysUppercaseTitlesKey = @"MDCTabBarDisplaysUppercaseTitlesKey";
+static NSString *const MDCTabBarTitleTextTransformKey = @"MDCTabBarTitleTextTransformKey";
+static NSString *const MDCTabBarSelectionIndicatorTemplateKey = @"MDCTabBarSelectionIndicatorTemplateKey";
+
 /// Padding between image and title in points, according to the spec.
 static const CGFloat kImageTitleSpecPadding = 10;
 
@@ -65,7 +81,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
       return MDCItemBarAlignmentCenterSelected;
   }
 
-  NSCAssert(0, @"Invalid alignment value %zd", alignment);
+  NSCAssert(0, @"Invalid alignment value %ld", (long)alignment);
   return MDCItemBarAlignmentLeading;
 }
 
@@ -92,20 +108,68 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 #pragma mark - Initialization
 
-+ (void)initialize {
-  [MDCTabBar appearance].selectedItemTintColor = [UIColor whiteColor];
-  [MDCTabBar appearance].unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
-  [MDCTabBar appearance].inkColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
-  [MDCTabBar appearance].barTintColor = nil;
-
-  id<MDCTabBarIndicatorTemplate> template = [[MDCTabBarUnderlineIndicatorTemplate alloc] init];
-  [MDCTabBar appearance].selectionIndicatorTemplate = template;
-}
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCTabBarInit];
+
+    // Use self. when setter needs to be called
+    if ([aDecoder containsValueForKey:MDCTabBarItemsKey]) {
+      self.items = [aDecoder decodeObjectOfClass:[NSArray class] forKey:MDCTabBarItemsKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarSelectedItemKey]) {
+      self.selectedItem = [aDecoder decodeObjectOfClass:[UIBarButtonItem class]
+                                                 forKey:MDCTabBarSelectedItemKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarDelegateKey]) {
+      self.delegate = [aDecoder decodeObjectForKey:MDCTabBarDelegateKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarTintColorKey]) {
+      self.tintColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                              forKey:MDCTabBarTintColorKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarSelectedItemTintColorKey]) {
+      _selectedItemTintColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                      forKey:MDCTabBarSelectedItemTintColorKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarUnselectedItemTintColorKey]) {
+      _unselectedItemTintColor =
+          [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCTabBarUnselectedItemTintColorKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarInkColorKey]) {
+      _inkColor = [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCTabBarInkColorKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarSelectedItemTitleFontKey]) {
+      _selectedItemTitleFont = [aDecoder decodeObjectOfClass:[UIFont class]
+                                                      forKey:MDCTabBarSelectedItemTitleFontKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarUnselectedItemTitleFontKey]) {
+      _unselectedItemTitleFont =
+          [aDecoder decodeObjectOfClass:[UIFont class] forKey:MDCTabBarUnselectedItemTitleFontKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCTabBarBarTintColorKey]) {
+      self.barTintColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                 forKey:MDCTabBarBarTintColorKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarAlignmentKey]) {
+      self.alignment = [aDecoder decodeIntegerForKey:MDCTabBarAlignmentKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarItemApperanceKey]) {
+      self.itemAppearance = [aDecoder decodeIntegerForKey:MDCTabBarItemApperanceKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarDisplaysUppercaseTitlesKey]) {
+      self.displaysUppercaseTitles = [aDecoder decodeBoolForKey:MDCTabBarDisplaysUppercaseTitlesKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarTitleTextTransformKey]) {
+      _titleTextTransform = [aDecoder decodeIntegerForKey:MDCTabBarTitleTextTransformKey];
+    }
+    if ([aDecoder containsValueForKey:MDCTabBarSelectionIndicatorTemplateKey]) {
+      _selectionIndicatorTemplate =
+          [aDecoder decodeObjectOfClass:[NSObject class]
+                                 forKey:MDCTabBarSelectionIndicatorTemplateKey];
+    }
+    [self updateItemBarStyle];
   }
   return self;
 }
@@ -119,6 +183,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)commonMDCTabBarInit {
+  _selectedItemTintColor = [UIColor whiteColor];
+  _unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  _inkColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+
   self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
@@ -147,6 +215,28 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   CGSize sizeThatFits = [_itemBar sizeThatFits:self.bounds.size];
   _itemBar.frame = CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height);
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  [aCoder encodeObject:self.items forKey:MDCTabBarItemsKey];
+  [aCoder encodeObject:self.selectedItem forKey:MDCTabBarSelectedItemKey];
+  [aCoder encodeConditionalObject:self.delegate forKey:MDCTabBarDelegateKey];
+  [aCoder encodeObject:self.tintColor forKey:MDCTabBarTintColorKey];
+  [aCoder encodeObject:_selectedItemTintColor forKey:MDCTabBarSelectedItemTintColorKey];
+  [aCoder encodeObject:_unselectedItemTintColor forKey:MDCTabBarUnselectedItemTintColorKey];
+  [aCoder encodeObject:_inkColor forKey:MDCTabBarInkColorKey];
+  [aCoder encodeObject:_selectedItemTitleFont forKey:MDCTabBarSelectedItemTitleFontKey];
+  [aCoder encodeObject:_unselectedItemTitleFont forKey:MDCTabBarUnselectedItemTitleFontKey];
+  [aCoder encodeObject:_barTintColor forKey:MDCTabBarBarTintColorKey];
+  [aCoder encodeInteger:_alignment forKey:MDCTabBarAlignmentKey];
+  [aCoder encodeInteger:_itemAppearance forKey:MDCTabBarItemApperanceKey];
+  [aCoder encodeBool:self.displaysUppercaseTitles forKey:MDCTabBarDisplaysUppercaseTitlesKey];
+  [aCoder encodeInteger:_titleTextTransform forKey:MDCTabBarTitleTextTransformKey];
+  if ([_selectionIndicatorTemplate conformsToProtocol:@protocol(NSCoding)]) {
+    [aCoder encodeObject:_selectionIndicatorTemplate
+                  forKey:MDCTabBarSelectionIndicatorTemplateKey];
+  }
 }
 
 #pragma mark - Public
@@ -396,7 +486,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
       break;
 
     default:
-      NSAssert(0, @"Invalid appearance value %zd", appearance);
+      NSAssert(0, @"Invalid appearance value %ld", (long)appearance);
       displayTitle = YES;
       break;
   }
@@ -406,7 +496,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   // Update default height
   CGFloat defaultHeight = [self defaultHeightForBarPosition:position itemAppearance:appearance];
   if (defaultHeight == 0) {
-    NSAssert(0, @"Missing default height for %zd", appearance);
+    NSAssert(0, @"Missing default height for %ld", (long)appearance);
     defaultHeight = kTitleOnlyBarHeight;
   }
   style.defaultHeight = defaultHeight;

@@ -122,7 +122,7 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return NO;
 }
 
 + (NSString *)catalogDescription {

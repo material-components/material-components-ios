@@ -15,8 +15,8 @@
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
+     "mdc_objc_library",
+     "mdc_unit_test_suite")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -71,6 +71,18 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "FeatureHighlightAccessibilityMutator",
+    srcs = native.glob(["src/FeatureHighlightAccessibilityMutator/*.m"]),
+    hdrs = native.glob(["src/FeatureHighlightAccessibilityMutator/*.h"]),
+    includes = ["src/FeatureHighlightAccessibilityMutator"],
+    deps = [
+        ":FeatureHighlight",
+        "@material_text_accessibility_ios//:MDFTextAccessibility",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
@@ -92,16 +104,14 @@ mdc_objc_library(
         ":FeatureHighlight",
         ":ColorThemer",
         ":FontThemer",
+        ":FeatureHighlightAccessibilityMutator",
         ":private",
     ],
     visibility = ["//visibility:private"],
 )
 
-ios_unit_test(
-    name = "unit_tests",
+mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
     ],
-    minimum_os_version = "8.0",
-    visibility = ["//visibility:private"],
 )

@@ -89,7 +89,7 @@ uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
 ### Collections of Chips
 It is easiest to show large groups of Chips by containing them in a UICollectionView. Use
-`MDCChipCollectionViewCell` and `MDCChipCollectionViewLayout` to configure a collection view to show
+`MDCChipCollectionViewCell` and `MDCChipCollectionViewFlowLayout` to configure a collection view to show
 chips.
 
 - - -

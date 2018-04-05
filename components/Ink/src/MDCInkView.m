@@ -16,6 +16,7 @@
 
 #import "MDCInkView.h"
 
+#import "MaterialMath.h"
 #import "private/MDCInkLayer.h"
 #import "private/MDCLegacyInkLayer.h"
 
@@ -49,7 +50,9 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 
 @end
 
-@implementation MDCInkView
+@implementation MDCInkView {
+  CGFloat _maxRippleRadius;
+}
 
 + (Class)layerClass {
   return [MDCLegacyInkLayer class];
@@ -96,7 +99,7 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
       self.maxRippleRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCInkViewMaxRippleRadiusKey];
     }
     if ([aDecoder containsValueForKey:MDCInkViewInkColorKey]) {
-      self.inkColor = [aDecoder decodeObjectForKey:MDCInkViewInkColorKey];
+      self.inkColor = [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCInkViewInkColorKey];
     }
   }
   return self;
@@ -139,7 +142,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
   if (self.superview.layer.shadowPath) {
     self.maskLayer.path = self.superview.layer.shadowPath;
     self.layer.mask = _maskLayer;
-    self.layer.masksToBounds = YES;
   }
 
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
@@ -151,13 +153,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
     }
-  }
-
-  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
-  if (self.superview.layer.shadowPath) {
-    self.maskLayer.path = self.superview.layer.shadowPath;
-    self.layer.mask = _maskLayer;
-    self.layer.masksToBounds = YES;
   }
 }
 
@@ -172,6 +167,15 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
       case MDCInkStyleUnbounded:
         self.inkLayer.masksToBounds = NO;
         self.inkLayer.bounded = NO;
+        break;
+    }
+  } else {
+    switch(inkStyle) {
+      case MDCInkStyleBounded:
+        self.inkLayer.maxRippleRadius = 0;
+        break;
+      case MDCInkStyleUnbounded:
+        self.inkLayer.maxRippleRadius = _maxRippleRadius;
         break;
     }
   }
@@ -193,9 +197,27 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 }
 
 - (void)setMaxRippleRadius:(CGFloat)radius {
-  if (self.inkLayer.maxRippleRadius != radius) {
+  // Keep track of the set value in case the caller will change inkStyle later
+  _maxRippleRadius = radius;
+  if (MDCCGFloatEqual(self.inkLayer.maxRippleRadius, radius)) {
+    return;
+  }
+
+  // Legacy Ink updates inkLayer.maxRippleRadius regardless of inkStyle
+  if (self.usesLegacyInkRipple) {
     self.inkLayer.maxRippleRadius = radius;
+    // This is required for legacy Ink so that the Ink bounds will be adjusted correctly
     [self setNeedsLayout];
+  } else {
+    // New Ink Bounded style ignores maxRippleRadius
+    switch(self.inkStyle) {
+      case MDCInkStyleUnbounded:
+        self.inkLayer.maxRippleRadius = radius;
+        break;
+      case MDCInkStyleBounded:
+        // No-op
+        break;
+    }
   }
 }
 

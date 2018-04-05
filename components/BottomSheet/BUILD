@@ -14,9 +14,9 @@
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
+     "mdc_objc_library",
+     "mdc_unit_test_suite")
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -29,9 +29,6 @@ mdc_public_objc_library(
     deps = [
       "//components/private/KeyboardWatcher",
       "//components/private/Math",
-      "@motion_animator_objc//:MotionAnimator",
-      "@motion_interchange_objc//:MotionInterchange",
-      "@motion_transitioning_objc//:MotionTransitioning",
     ],
 )
 
@@ -48,11 +45,8 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-ios_unit_test(
-    name = "unit_tests",
+mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
     ],
-    minimum_os_version = "8.0",
-    visibility = ["//visibility:private"],
 )

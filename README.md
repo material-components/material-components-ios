@@ -71,7 +71,7 @@ pod init
 ```
 
 Next, add the
-[Material Components for iOS pod](https://cocoapods.org/pods/MaterialComponentsIOS)
+[Material Components for iOS pod](https://cocoapods.org/pods/MaterialComponents)
 to your target in your Podfile:
 
 ``` ruby

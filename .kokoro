@@ -19,8 +19,7 @@ set -e
 
 KOKORO_RUNNER_VERSION="v4.*"
 
-# Kokoro only supports up to 8.2 for now. Once 8.3 support is introduced we will bump this version.
-XCODE_MINIMUM_VERSION="8.2.0"
+XCODE_MINIMUM_VERSION="8.3.0"
 
 fix_bazel_imports() {
   if [ -z "$KOKORO_BUILD_NUMBER" ]; then
@@ -41,6 +40,7 @@ fix_bazel_imports() {
   }
 
   stashed_dir=""
+  rewrite_tests "s/import MaterialComponents.MDC(.+)ColorThemer/import components_\1_ColorThemer/"
   rewrite_tests "s/import MaterialComponents.MaterialMath/import components_private_Math_Math/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
@@ -50,6 +50,7 @@ fix_bazel_imports() {
   stashed_dir="$(pwd)/"
   reset_imports() {
     # Undoes our source changes from above.
+    rewrite_tests "s/import components_(.+)_ColorThemer/import MaterialComponents.MDC\1ColorThemer/"
     rewrite_tests "s/import components_private_Math_Math/import MaterialComponents.MaterialMath/"
     rewrite_tests "s/import components_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
@@ -73,6 +74,12 @@ run_bazel() {
   echo "Running bazel builds..."
 
   fix_bazel_imports
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    bazel version
+    use_bazel.sh latest
+    bazel version
+  fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
     verbosity_args="-v"

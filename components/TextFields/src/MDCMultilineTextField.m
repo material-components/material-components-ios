@@ -173,7 +173,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.backgroundColor = [UIColor clearColor];
 
   self.textColor = _fundament.textColor;
-  self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  self.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
 
   _cursorColor = MDCTextInputCursorColor();
@@ -481,7 +481,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (CGFloat)trailingViewAlpha {
   // The trailing view has the same behavior as .rightView in UITextField: It has visual precedence
   // over the clear button.
-  CGFloat trailingViewAlpha = self.trailingView.alpha;
+  CGFloat trailingViewAlpha;
   switch (self.trailingViewMode) {
     case UITextFieldViewModeAlways:
       trailingViewAlpha = 1.f;
@@ -494,6 +494,10 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
       break;
     case UITextFieldViewModeNever:
       trailingViewAlpha = 0.f;
+      break;
+    default:
+      NSAssert(NO, @"Invalid enumeration value %li.", (long)self.trailingViewMode);
+      trailingViewAlpha = self.trailingViewAlpha;
       break;
   }
   return trailingViewAlpha;

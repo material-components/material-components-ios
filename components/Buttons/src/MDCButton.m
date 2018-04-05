@@ -145,6 +145,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    // Set up title label attributes.
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    self.titleLabel.font = [MDCTypography buttonFont];
+
     [self commonMDCButtonInit];
     [self updateBackgroundColor];
   }
@@ -156,12 +161,18 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (self) {
     [self commonMDCButtonInit];
 
+    if (self.titleLabel.font) {
+      _fonts = [@{} mutableCopy];
+      _fonts[@(UIControlStateNormal)] = self.titleLabel.font;
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkStyleKey]) {
       self.inkView.inkStyle = [aDecoder decodeIntegerForKey:MDCButtonInkViewInkStyleKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkColorKey]) {
-      self.inkView.inkColor = [aDecoder decodeObjectForKey:MDCButtonInkViewInkColorKey];
+      self.inkView.inkColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                     forKey:MDCButtonInkViewInkColorKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkMaxRippleRadiusKey]) {
@@ -181,7 +192,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorHintKey]) {
-      _underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
+      _underlyingColorHint = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                    forKey:MDCButtonUnderlyingColorHintKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
@@ -205,19 +217,23 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
-      _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
+      _userElevations = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                               forKey:MDCButtonUserElevationsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBorderColorsKey]) {
-      _borderColors = [aDecoder decodeObjectForKey:MDCButtonBorderColorsKey];
+      _borderColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                                             forKey:MDCButtonBorderColorsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBorderWidthsKey]) {
-      _borderWidths = [aDecoder decodeObjectForKey:MDCButtonBorderWidthsKey];
+      _borderWidths = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                              forKey:MDCButtonBorderWidthsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonBackgroundColorsKey]) {
-      _backgroundColors = [aDecoder decodeObjectForKey:MDCButtonBackgroundColorsKey];
+      _backgroundColors = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                                  forKey:MDCButtonBackgroundColorsKey];
     } else {
       // Storyboards will set the backgroundColor via the UIView backgroundColor setter, so we have
       // to write that in to our _backgroundColors dictionary.
@@ -226,15 +242,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     [self updateBackgroundColor];
 
     if ([aDecoder containsValueForKey:MDCButtonFontsKey]) {
-      _fonts = [aDecoder decodeObjectForKey:MDCButtonFontsKey];
+      _fonts = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class] forKey:MDCButtonFontsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonNontransformedTitlesKey]) {
-      _nontransformedTitles = [aDecoder decodeObjectForKey:MDCButtonNontransformedTitlesKey];
+      _nontransformedTitles = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                                      forKey:MDCButtonNontransformedTitlesKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonShadowColorsKey]) {
-      _shadowColors = [aDecoder decodeObjectForKey:MDCButtonShadowColorsKey];
+      _shadowColors = [aDecoder  decodeObjectOfClass:[NSMutableDictionary class]
+                                              forKey:MDCButtonShadowColorsKey];
     }
   }
   return self;
@@ -290,11 +308,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
   self.showsTouchWhenHighlighted = NO;
-
-  // Set up title label attributes.
-  // TODO(#2709): Have a single source of truth for fonts
-  // Migrate to [UIFont standardFont] when possible
-  self.titleLabel.font = [MDCTypography buttonFont];
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
@@ -678,10 +691,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _userElevations[@(state)];
-  if (state != UIControlStateNormal && !elevation) {
+  if (state != UIControlStateNormal && (elevation == nil)) {
     elevation = _userElevations[@(UIControlStateNormal)];
   }
-  if (elevation) {
+  if (elevation != nil) {
     return (CGFloat)[elevation doubleValue];
   }
   return 0;
@@ -720,7 +733,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
   NSNumber *borderWidth = _borderWidths[@(state)];
-  if (borderWidth) {
+  if (borderWidth != nil) {
     return (CGFloat)borderWidth.doubleValue;
   }
   return 0;
@@ -734,11 +747,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateBorderWidth {
   NSNumber *width = _borderWidths[@(self.state)];
-  if (!width && self.state != UIControlStateNormal) {
+  if ((width == nil) && self.state != UIControlStateNormal) {
     // We fall back to UIControlStateNormal if there is no value for the current state.
     width = _borderWidths[@(UIControlStateNormal)];
   }
-  self.layer.borderWidth = width ? (CGFloat)width.doubleValue : 0;
+  self.layer.borderWidth = (width != nil) ? (CGFloat)width.doubleValue : 0;
 }
 
 #pragma mark - Title Font

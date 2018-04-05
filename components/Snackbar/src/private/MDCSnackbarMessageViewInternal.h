@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCSnackbarMessageView.h"
+#import "../MDCSnackbarMessageView.h"
 
 @class MDCSnackbarMessage;
 @class MDCSnackbarMessageAction;
@@ -92,5 +92,27 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
                                to:(CGFloat)toOpacity
                          duration:(NSTimeInterval)duration
                    timingFunction:(CAMediaTimingFunction *_Nullable)timingFunction;
+
+
+/**
+ Animate the opacity of the snackbar view.
+
+ @param fromOpacity initial opacity to start animation.
+ @param toOpacity opacity to finish animation.
+ @return the opacity animation.
+ */
+- (CABasicAnimation *_Nullable)animateSnackbarOpacityFrom:(CGFloat)fromOpacity
+                                                       to:(CGFloat)toOpacity;
+
+
+/**
+ Animate the scale of the snackbar view.
+
+ @param fromScale initial scale to start animation.
+ @param toScale scale to finish animation.
+ @return the scale animation.
+ */
+- (CABasicAnimation *_Nullable)animateSnackbarScaleFrom:(CGFloat)fromScale
+                                                toScale:(CGFloat)toScale;
 
 @end

@@ -74,6 +74,24 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  */
 @property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *trailingBarButtonItems;
 
+
+/**
+ Color of the background of the bottom app bar.
+ */
+@property(nullable, nonatomic, strong) UIColor *barTintColor UI_APPEARANCE_SELECTOR;
+
+/**
+ To color the background of the view use -barTintColor instead.
+ */
+@property(nullable, nonatomic, copy) UIColor *backgroundColor NS_UNAVAILABLE;
+
+/**
+ The color of the shadow under the bottom app bar.
+
+ To set the shadow color of the Floating Action Button, set it directly on the button.
+ */
+@property(nullable, nonatomic, strong) UIColor *shadowColor UI_APPEARANCE_SELECTOR;
+
 /**
  Sets the visibility of the floating action button.
  

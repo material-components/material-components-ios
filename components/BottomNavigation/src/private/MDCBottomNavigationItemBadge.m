@@ -61,10 +61,12 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
       _yPadding = (CGFloat)[aDecoder decodeDoubleForKey:kMDCBottomNavigationItemBadgeYPaddingKey];
     }
     if ([aDecoder containsValueForKey:kMDCBottomNavigationItemBadgeValueKey]) {
-      _badgeValue = [aDecoder decodeObjectForKey:kMDCBottomNavigationItemBadgeValueKey];
+      _badgeValue = [aDecoder decodeObjectOfClass:[NSString class]
+                                           forKey:kMDCBottomNavigationItemBadgeValueKey];
     }
     if ([aDecoder containsValueForKey:kMDCBottomNavigationItemBadgeColorKey]) {
-      _badgeColor = [aDecoder decodeObjectForKey:kMDCBottomNavigationItemBadgeColorKey];
+      _badgeColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                           forKey:kMDCBottomNavigationItemBadgeColorKey];
     }
 
     [self commonMDCBottomNavigationItemBadgeInit];
