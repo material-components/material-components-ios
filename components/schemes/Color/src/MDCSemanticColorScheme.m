@@ -28,7 +28,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [self initWithDefaults:MDCColorSchemeDefaultsMaterial];
 }
 
-- (nonnull instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults {
+- (instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults {
   self = [super init];
   if (self) {
     switch (defaults) {
