@@ -70,7 +70,7 @@
 
 * [Simplify color themer (#3116)](https://github.com/material-components/material-components-ios/commit/f0368d43838c35ae463afad3a5f75cead61753b5) (Robert Moore)
 
-#r## ButtonBar
+### ButtonBar
 
 #### Changes
 
