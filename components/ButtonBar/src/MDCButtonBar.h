@@ -111,6 +111,12 @@ IB_DESIGNABLE
  */
 - (CGSize)sizeThatFits:(CGSize)size;
 
+/**
+ The Material inkColor that is used for all buttons in the button bar. Only affects buttons that are
+ created after changing the property.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
 @end
 
 typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {

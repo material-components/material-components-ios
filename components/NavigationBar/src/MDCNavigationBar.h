@@ -99,6 +99,12 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIView *titleView;
 
 /**
+ The Material inkColor that is used for all buttons in trailing and leading button bars. Only
+ affects buttons that are created after changing the property.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
  The font applied to the title of navigation bar.
  Font size is enforced to 20.
  Both Default and null_resettable value is MDCTypography's titleFont.

@@ -40,6 +40,7 @@
     UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
     _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+    _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9 alpha:0.1];
     [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
 
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
