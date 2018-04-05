@@ -27,6 +27,21 @@ static const CGFloat kSliderDefaultThumbRadius = 6.0f;
 static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
+static NSString *const MDCSliderColorKey = @"MDCSliderColorKey";
+static NSString *const MDCSliderDisabledColorKey = @"MDCSliderDisabledColorKey";
+static NSString *const MDCSliderTrackBackgroundColorKey = @"MDCSliderTrackBackgroundColorKey";
+static NSString *const MDCSliderThumbRadiusKey = @"MDCSliderThumbRadiusKey";
+static NSString *const MDCSliderThumbElevationKey = @"MDCSliderThumbElevationKey";
+static NSString *const MDCSliderNumberOfDiscreteValuesKey = @"MDCSliderNumberOfDiscreteValuesKey";
+static NSString *const MDCSliderValueKey = @"MDCSliderValueKey";
+static NSString *const MDCSliderMinimumValueKey = @"MDCSliderMinimumValueKey";
+static NSString *const MDCSliderMaximumValueKey = @"MDCSliderMaximumValueKey";
+static NSString *const MDCSliderIsContinuousKey = @"MDCSliderIsContinuousKey";
+static NSString *const MDCSliderFilledTrackAnchorValueKey = @"MDCSliderFilledTrackAnchorValueKey";
+static NSString *const MDCSliderShouldDisplayDiscreteValueLabelKey =
+    @"MDCSliderShouldDisplayDiscreteValueLabelKey";
+static NSString *const MDCSliderIsThumbHollowAtStartKey = @"MDCSliderIsThumbHollowAtStartKey";
+
 static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return MDCPalette.bluePalette.tint500;
 }
@@ -49,8 +64,47 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCSliderInit];
+    self.color = [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCSliderColorKey];
+    self.disabledColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                forKey:MDCSliderDisabledColorKey];
+    self.trackBackgroundColor = [aDecoder decodeObjectOfClass:[UIColor class]
+                                                       forKey:MDCSliderTrackBackgroundColorKey];
+    self.thumbRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCSliderThumbRadiusKey];
+    self.thumbElevation =
+        (MDCShadowElevation)[aDecoder decodeDoubleForKey:MDCSliderThumbElevationKey];
+    self.numberOfDiscreteValues =
+        (NSUInteger)[aDecoder decodeIntegerForKey:MDCSliderNumberOfDiscreteValuesKey];
+    self.value = (CGFloat)[aDecoder decodeDoubleForKey:MDCSliderValueKey];
+    self.minimumValue = (CGFloat)[aDecoder decodeDoubleForKey:MDCSliderMinimumValueKey];
+    self.maximumValue = (CGFloat)[aDecoder decodeDoubleForKey:MDCSliderMaximumValueKey];
+    self.continuous = [aDecoder decodeBoolForKey:MDCSliderIsContinuousKey];
+    self.filledTrackAnchorValue =
+        (CGFloat)[aDecoder decodeDoubleForKey:MDCSliderFilledTrackAnchorValueKey];
+    self.shouldDisplayDiscreteValueLabel =
+        [aDecoder decodeBoolForKey:MDCSliderShouldDisplayDiscreteValueLabelKey];
+    self.thumbHollowAtStart = [aDecoder decodeBoolForKey:MDCSliderIsThumbHollowAtStartKey];
   }
   return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  [aCoder encodeObject:self.color forKey:MDCSliderColorKey];
+  [aCoder encodeObject:self.disabledColor forKey:MDCSliderDisabledColorKey];
+  [aCoder encodeObject:self.trackBackgroundColor forKey:MDCSliderTrackBackgroundColorKey];
+  [aCoder encodeDouble:(double)self.thumbRadius forKey:MDCSliderThumbRadiusKey];
+  [aCoder encodeDouble:(double)self.thumbElevation forKey:MDCSliderThumbElevationKey];
+  [aCoder encodeInteger:(NSInteger)self.numberOfDiscreteValues
+                 forKey:MDCSliderNumberOfDiscreteValuesKey];
+  [aCoder encodeDouble:(double)self.value forKey:MDCSliderValueKey];
+  [aCoder encodeDouble:(double)self.minimumValue forKey:MDCSliderMinimumValueKey];
+  [aCoder encodeDouble:(double)self.maximumValue forKey:MDCSliderMaximumValueKey];
+  [aCoder encodeBool:self.continuous forKey:MDCSliderIsContinuousKey];
+  [aCoder encodeDouble:(double)self.filledTrackAnchorValue
+                forKey:MDCSliderFilledTrackAnchorValueKey];
+  [aCoder encodeBool:self.shouldDisplayDiscreteValueLabel
+              forKey:MDCSliderShouldDisplayDiscreteValueLabelKey];
+  [aCoder encodeBool:self.thumbHollowAtStart forKey:MDCSliderIsThumbHollowAtStartKey];
 }
 
 - (void)commonMDCSliderInit {
