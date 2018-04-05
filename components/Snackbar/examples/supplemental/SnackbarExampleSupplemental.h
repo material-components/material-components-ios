@@ -44,3 +44,7 @@
 - (void)handleSuspendStateChanged:(UISwitch *)sender;
 
 @end
+
+@interface SnackbarInputAccessoryViewController : UIViewController
+
+@end

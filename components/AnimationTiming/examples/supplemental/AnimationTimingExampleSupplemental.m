@@ -50,7 +50,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 @implementation AnimationTimingExample (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+  self.view.backgroundColor = UIColor.whiteColor;
   self.title = @"Animation Timing";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -137,7 +137,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 + (UILabel *)curveLabelWithTitle:(NSString *)text {
   UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
   label.font = [MDCTypography captionFont];
-  label.textColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  label.textColor = [UIColor colorWithWhite:0 alpha:[MDCTypography body2FontOpacity]];
   label.text = text;
   [label sizeToFit];
   return label;
@@ -149,11 +149,11 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   dispatch_once(&onceToken, ^{
     UIColor *primaryColor = [UIColor darkGrayColor];
     defaultColors = @[
-      [primaryColor colorWithAlphaComponent:0.8f],
-      [primaryColor colorWithAlphaComponent:0.65f],
-      [primaryColor colorWithAlphaComponent:0.5f],
-      [primaryColor colorWithAlphaComponent:0.35f],
-      [primaryColor colorWithAlphaComponent:0.2f]
+      [primaryColor colorWithAlphaComponent:0.95f],
+      [primaryColor colorWithAlphaComponent:0.90f],
+      [primaryColor colorWithAlphaComponent:0.85f],
+      [primaryColor colorWithAlphaComponent:0.80f],
+      [primaryColor colorWithAlphaComponent:0.75f]
     ];
   });
   return defaultColors;

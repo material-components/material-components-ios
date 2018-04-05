@@ -56,7 +56,7 @@
   for (NSUInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
-    page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
+    page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)(i + 1)];
     page.font = [UIFont systemFontOfSize:50];
     page.textColor = [UIColor colorWithWhite:0 alpha:0.8f];
     page.textAlignment = NSTextAlignmentCenter;

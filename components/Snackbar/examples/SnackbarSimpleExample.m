@@ -34,7 +34,7 @@
       @"Attributed Text Example",
       @"Color Themed Snackbar",
       @"Customize Font Example",
-      @"De-Customize Font Example"
+      @"De-Customize Example"
   ]];
   self.title = @"Snackbar";
   _legacyMode = YES;
@@ -157,8 +157,16 @@
 - (void)showDecustomizedSnackbar:(id)sender {
   [MDCSnackbarMessageView appearance].messageFont = nil;
   [MDCSnackbarMessageView appearance].buttonFont = nil;
+
+  // Setting back to the default colors as defined in MDCSnackbarMessageView.h.
+  [[MDCSnackbarMessageView appearance] setButtonTitleColor:[UIColor colorWithWhite:1 alpha:0.6f]
+                                                  forState:UIControlStateNormal];
+  [[MDCSnackbarMessageView appearance] setButtonTitleColor:nil
+                                                  forState:UIControlStateHighlighted];
+  [MDCSnackbarMessageView appearance].messageTextColor = nil;
+
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  message.text = @"Back to the standard fonts";
+  message.text = @"Back to the standard snackbar";
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Okay";
   message.action = action;

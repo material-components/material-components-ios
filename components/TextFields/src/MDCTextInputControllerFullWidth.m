@@ -70,13 +70,12 @@ static inline UIColor *MDCTextInputControllerFullWidthErrorColorDefault() {
 
 #pragma mark - Class Properties
 
-static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = YES;
+static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = NO;
 static UIColor *_errorColorDefault;
 static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 static UIFont *_inlinePlaceholderFontDefault;
-static UIFont *_textInputFontDefault;
 static UIFont *_trailingUnderlineLabelFontDefault;
 
 @interface MDCTextInputControllerFullWidth () {
@@ -89,7 +88,6 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   UIColor *_trailingUnderlineLabelTextColor;
 
   UIFont *_inlinePlaceholderFont;
-  UIFont *_textInputFont;
   UIFont *_trailingUnderlineLabelFont;
 }
 
@@ -339,18 +337,6 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   self.textInput.leadingUnderlineLabel.textColor = self.leadingUnderlineLabelTextColor;
 }
 
-#pragma  mark - TextInput Customization
-
-- (void)updateTextInput {
-  UIFont *font = self.textInputFont;
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    font =
-        [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
-                           scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-  }
-  self.textInput.font = font;
-}
-
 #pragma mark - Placeholder Customization
 
 - (void)updatePlaceholder {
@@ -420,16 +406,12 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 #pragma mark - Underline Labels Fonts
 
-+ (UIFont *)inputTextFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-}
-
 + (UIFont *)placeholderFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
 }
 
 + (UIFont *)underlineLabelsFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
 #pragma mark - Properties Implementation
@@ -589,7 +571,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 - (UIFont *)leadingUnderlineLabelFont {
   // Not implemented. The leading underline label is never seen.
-  return nil;
+  return [[self class] leadingUnderlineLabelFontDefault];
 }
 
 - (void)setLeadingUnderlineLabelFont:(__unused UIColor *)leadingUnderlineLabelFont {
@@ -682,25 +664,6 @@ static UIFont *_trailingUnderlineLabelFontDefault;
     _textInput = textInput;
     [self setupInput];
   }
-}
-
-- (UIFont *)textInputFont {
-  return _textInputFont ?: [self class].textInputFontDefault;
-}
-
-- (void)setTextInputFont:(UIFont *)textInputFont {
-  if (![_textInputFont isEqual:textInputFont]) {
-    _textInputFont = textInputFont;
-    [self updateLayout];
-  }
-}
-
-+ (UIFont *)textInputFontDefault {
-  return _textInputFontDefault ?: [[self class] inputTextFont];
-}
-
-+ (void)setTextInputFontDefault:(UIFont *)textInputFontDefault {
-  _textInputFontDefault = textInputFontDefault;
 }
 
 - (UIFont *)trailingUnderlineLabelFont {
@@ -817,7 +780,6 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   [self updatePlaceholder];
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
-  [self updateTextInput];
   [self updateUnderline];
   [self updateConstraints];
 }
