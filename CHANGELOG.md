@@ -140,6 +140,15 @@
 
 * [Fixing static analyzer warnings from Xcode 9.3 (#3196)](https://github.com/material-components/material-components-ios/commit/72283d6b4b8cdb223aadbc33a6685c835702abe9) (Robert Moore)
 
+### Snackbar
+
+#### Changes
+
+* [Update content padding for new snackbar, leave old snackbar padding as is. (#3192)](https://github.com/material-components/material-components-ios/commit/8fb8e4c56b3be93c92af6ad7e5e1f7ecf6126120) (Yarden Eitan)
+* [added inputAccessory with Snackbar dragon + Fix for it (#3156)](https://github.com/material-components/material-components-ios/commit/7a48b9171a1c3cbf7267ff337a027f28f429aa96) (Yarden Eitan)
+* [font and color updates. (#3125)](https://github.com/material-components/material-components-ios/commit/28ef4730aaeb37663a377670b8db95215c090f92) (Yarden Eitan)
+* [revert back to before #3106 as this code needs more thorough testing. (#3178)](https://github.com/material-components/material-components-ios/commit/a05140df1b8d2678cbd39fc5d7ea2a27cc1f1a74) (Yarden Eitan)
+
 ### Tabs
 
 #### Changes
@@ -156,15 +165,6 @@
 * [[MDCTextFields + Kokoro] Making textfields dynamic type off by default (#3149)](https://github.com/material-components/material-components-ios/commit/f91317ff0455bc6ecd7b7c728bdb9821cd036aa0) (Yarden Eitan)
   * [Reverting textInputFont property on inputController. #3232](https://github.com/material-components/material-components-ios/commit/8d4d5ea1fc8f70e6fa644fc6d756aac282d12e3b) (Mohammad Cazi)
   * [Restore Dynamic Type to textInput (#3239)](https://github.com/material-components/material-components-ios/commit/1edaa5625d7c931840f382e1db6398c72a4f9da5) (Robert Moore)
-
-### Snackbar
-
-#### Changes
-
-* [Update content padding for new snackbar, leave old snackbar padding as is. (#3192)](https://github.com/material-components/material-components-ios/commit/8fb8e4c56b3be93c92af6ad7e5e1f7ecf6126120) (Yarden Eitan)
-* [added inputAccessory with Snackbar dragon + Fix for it (#3156)](https://github.com/material-components/material-components-ios/commit/7a48b9171a1c3cbf7267ff337a027f28f429aa96) (Yarden Eitan)
-* [font and color updates. (#3125)](https://github.com/material-components/material-components-ios/commit/28ef4730aaeb37663a377670b8db95215c090f92) (Yarden Eitan)
-* [revert back to before #3106 as this code needs more thorough testing. (#3178)](https://github.com/material-components/material-components-ios/commit/a05140df1b8d2678cbd39fc5d7ea2a27cc1f1a74) (Yarden Eitan)
 
 ### schemes/Color
 
