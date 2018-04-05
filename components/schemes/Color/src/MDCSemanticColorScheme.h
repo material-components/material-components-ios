@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
   /**
    The Material defaults, circa April 2018.
    */
-  MDCColorSchemeDefaultsMaterial
+  MDCColorSchemeDefaultsMaterial201804
 };
 
 /**

@@ -25,14 +25,14 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 @implementation MDCSemanticColorScheme
 
 - (instancetype)init {
-  return [self initWithDefaults:MDCColorSchemeDefaultsMaterial];
+  return [self initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 }
 
 - (instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults {
   self = [super init];
   if (self) {
     switch (defaults) {
-      case MDCColorSchemeDefaultsMaterial:
+      case MDCColorSchemeDefaultsMaterial201804:
         _primaryColor = ColorFromRGB(0x6200EE);
         _primaryColorVariant = ColorFromRGB(0x3700B3);
         _secondaryColor = ColorFromRGB(0x03DAC6);
