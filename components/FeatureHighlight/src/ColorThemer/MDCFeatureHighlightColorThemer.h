@@ -28,16 +28,21 @@
  Applies a color scheme to theme to a MDCFeatureHighlightView.
 
  @param colorScheme The color scheme to apply to MDCFeatureHighlightView.
- @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme.
+ @param featureHighlightViewController A MDCFeatureHighlightViewController instance to apply a color
+ scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-          toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView;
+    toFeatureHighlightViewController:
+        (nonnull MDCFeatureHighlightViewController *)featureHighlightViewController;
 
 #pragma mark - Soon to be deprecated
 
 /**
  Applies a color scheme to theme to a MDCFeatureHighlightView.
- 
+
+ This method will soon be deprecated. Consider using
+ +applySemanticColorScheme:toFeatureHighlightView: instead.
+
  @param colorScheme The color scheme to apply to MDCFeatureHighlightView. 
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme. Use a
      UIAppearance proxy to apply a color scheme to all instances of MDCFeatureHighlightView.
