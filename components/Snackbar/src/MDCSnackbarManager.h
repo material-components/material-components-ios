@@ -142,12 +142,12 @@
 
 
 /**
- When setting this BOOL to YES, then all the styling changes that are set using the class styling
- properties in this class, will apply on the currently presented snackbar too.
+ If enabled, modifications of class styling properties will be applied immediately
+ to the currently presented snackbar.
 
  Default is set to NO.
  */
-@property(class, nonatomic, assign) BOOL applyStylingOnCurrentSnackbar;
+@property(class, nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars;
 
 /**
  Returns the button title color for a particular control state.
@@ -178,7 +178,7 @@
  Default is set to NO.
  */
 @property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
 
