@@ -20,3 +20,4 @@
 #import "MDCRoundedCornerTreatment.h"
 #import "MDCSlantedRectShapeGenerator.h"
 #import "MDCTriangleEdgeTreatment.h"
+#import "MDCCutCornerTreatment.h"
