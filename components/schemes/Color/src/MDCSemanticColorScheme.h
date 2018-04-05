@@ -109,6 +109,3 @@
 - (nonnull instancetype)initWithMaterialDefaults;
 
 @end
-
-@interface MDCSemanticColorScheme (NSSecureCoding) <NSSecureCoding>
-@end
