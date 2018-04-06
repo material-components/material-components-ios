@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCFontScheme.h"
+#import "MDCLegacyFontScheme.h"
 
 @implementation MDCBasicFontScheme	
 @end

@@ -14,5 +14,6 @@
  limitations under the License.
  */
 
-#import "MDCFontScheme.h"
+#import "MDCLegacyFontScheme.h"
+
 #import "MDCTypographyScheme.h"
