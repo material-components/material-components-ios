@@ -35,7 +35,7 @@
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.font, typographyScheme.headline6);
-  XCTAssertEqual(view.messageLabel.font, typographyScheme.body2);
+  XCTAssertEqual(view.messageLabel.font, typographyScheme.body1);
   for (UIButton *button in view.actionButtons) {
     XCTAssertEqual(button.titleLabel.font, typographyScheme.button);
   }
