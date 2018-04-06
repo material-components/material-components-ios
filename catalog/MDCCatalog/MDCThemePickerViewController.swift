@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
 import UIKit
 
