@@ -48,7 +48,7 @@
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   [MDCFeatureHighlightTypographyThemer applyTypographyScheme:typographyScheme
                             toFeatureHighlightViewController:featureHighlightViewController];
-  XCTAssertEqualObjects(featureHighlightViewController.titleFont, typographyScheme.headline2);
+  XCTAssertEqualObjects(featureHighlightViewController.titleFont, typographyScheme.headline6);
   XCTAssertEqualObjects(featureHighlightViewController.bodyFont, typographyScheme.body2);
  }
 
