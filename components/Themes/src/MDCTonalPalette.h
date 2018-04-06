@@ -14,4 +14,4 @@
  limitations under the License.
  */
 
-#import "MaterialTypographyScheme.h"
+#import "MaterialColorScheme.h"
