@@ -71,6 +71,18 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    deps = [
+        ":FeatureHighlight",
+        "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "FeatureHighlightAccessibilityMutator",
     srcs = native.glob(["src/FeatureHighlightAccessibilityMutator/*.m"]),
     hdrs = native.glob(["src/FeatureHighlightAccessibilityMutator/*.h"]),
@@ -105,6 +117,7 @@ mdc_objc_library(
         ":ColorThemer",
         ":FontThemer",
         ":FeatureHighlightAccessibilityMutator",
+        ":TypographyThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],
