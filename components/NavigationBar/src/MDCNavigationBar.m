@@ -271,6 +271,14 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   _titleLabel.font = _titleFont;
 }
 
+- (void)setTitleTextColor:(UIColor *)titleTextColor {
+  _titleLabel.textColor = titleTextColor;
+}
+
+- (UIColor *)titleTextColor {
+  return _titleLabel.textColor;
+}
+
 #pragma mark Accessibility
 
 - (NSArray<__kindof UIView *> *)accessibilityElements {
