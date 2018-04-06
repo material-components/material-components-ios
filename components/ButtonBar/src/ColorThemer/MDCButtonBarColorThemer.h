@@ -14,17 +14,30 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
 #import "MaterialButtonBar.h"
+#import "MaterialColorScheme.h"
 
 /**
- Used to apply a color scheme to theme MDCButtonBar.
+ A color themer for MDCButtonBar that implements the Material design color system mappings.
  */
 @interface MDCButtonBarColorThemer : NSObject
 
 /**
+ Applies a color scheme's properties to an MDCButtonBar.
+
+ @param colorScheme The color scheme to apply to MDCButtonBar.
+ @param buttonBar An MDCButtonBar instance to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                     toButtonBar:(nonnull MDCButtonBar *)buttonBar;
+
+#pragma mark - Soon to be deprecated
+
+/**
  Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
  all instances of MDCButtonBar.
+
+ This method will soon be deprecated. Consider using +applySemanticColorScheme:toButtonBar: instead.
 
  @param colorScheme The color scheme to apply to MDCButtonBar.
  @param buttonBar A MDCButtonBar instance to apply a color scheme.

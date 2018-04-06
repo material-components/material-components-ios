@@ -14,23 +14,5 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-@class MDCFlatButton;
-
-@interface MDCAlertControllerView ()
-
-@property(nonatomic, nonnull, strong) UILabel *titleLabel;
-@property(nonatomic, nonnull, strong) UILabel *messageLabel;
-
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCFlatButton *> *actionButtons;
-
-- (void)addActionButtonTitle:(NSString *_Nonnull)actionTitle
-                      target:(nullable id)target
-                    selector:(SEL _Nonnull)selector;
-
-- (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
-
-- (void)updateFonts;
-
-@end
+#import "MDCFontScheme.h"
+#import "MDCTypographyScheme.h"
