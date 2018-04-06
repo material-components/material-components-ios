@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialNavigationBar.h"
+#import "MDCNavigationBarColorThemer.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarTypicalUseExample ()
@@ -38,6 +39,9 @@
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
       [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
   [mutator mutate:self.navBar];
+
+  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme toNavigationBar:self.navBar];
 
   [self.view addSubview:self.navBar];
 
