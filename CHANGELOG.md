@@ -1,3 +1,21 @@
+# 53.0.0
+
+## Component Changes
+
+### ButtonBar
+
+#### Changes
+
+* [Revert "[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)" (#3276)](https://github.com/material-components/material-components-ios/commit/a5c0c8603e12075cb2f37334c6bf5af4584ee307) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [Revert "[AppBar] Make MDCNavigationBar and MDCButtonBar size dynamically (#2974)" (#3276)](https://github.com/material-components/material-components-ios/commit/a5c0c8603e12075cb2f37334c6bf5af4584ee307) (Robert Moore)
+
+---
+
 # 52.0.0
 
 ## Breaking changes
