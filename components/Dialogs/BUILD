@@ -68,6 +68,21 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Dialogs",
+        "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
@@ -88,6 +103,7 @@ mdc_objc_library(
     deps = [
         ":Dialogs",
         ":ColorThemer",
+        ":TypographyThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],
