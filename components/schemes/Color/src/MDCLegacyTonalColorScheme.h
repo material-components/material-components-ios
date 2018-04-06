@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCColorScheme.h"
+#import "MDCLegacyColorScheme.h"
 
 @class MDCTonalPalette;
 
