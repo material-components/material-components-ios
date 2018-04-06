@@ -17,6 +17,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
+#import "MaterialColorScheme.h"
+#import "MDCButtonBarColorThemer.h"
 
 @interface ButtonBarTypicalUseExample : UIViewController
 @end
@@ -42,16 +44,11 @@
                                       target:self
                                       action:@selector(didTapActionButton:)];
 
-  NSArray *items = @[ actionItem, secondActionItem ];
+  buttonBar.items = @[ actionItem, secondActionItem ];
 
-  // Set the title text attributes before assigning to buttonBar.items
-  // because of https://github.com/material-components/material-components-ios/issues/277
-  for (UIBarButtonItem *item in items) {
-    [item setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
-                        forState:UIControlStateNormal];
-  }
-
-  buttonBar.items = items;
+  MDCSemanticColorScheme *scheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  [MDCButtonBarColorThemer applySemanticColorScheme:scheme toButtonBar:buttonBar];
 
   // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
   CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];

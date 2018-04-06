@@ -18,6 +18,12 @@
 
 @implementation MDCButtonBarColorThemer
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                     toButtonBar:(nonnull MDCButtonBar *)buttonBar {
+  buttonBar.backgroundColor = colorScheme.primaryColor;
+  buttonBar.tintColor = colorScheme.onPrimaryColor;
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
              toButtonBar:(MDCButtonBar *)buttonBar {
   buttonBar.backgroundColor = colorScheme.primaryColor;
