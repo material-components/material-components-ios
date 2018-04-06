@@ -203,42 +203,15 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)updateTitleFont {
-  // If we have a custom font apply it to the label.
-  // If not, fall back to the Material specified font.
-  if (_titleFont) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      _titleLabel.font =
-          [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    } else {
-      _titleLabel.font = _titleFont;
-    }
+  if (!_titleFont) {
+    _titleFont = [MDCFeatureHighlightView defaultTitleFont];
+  }
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    _titleLabel.font =
+        [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kTitleTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography titleFont];
-        _titleLabel.font =
-            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        _titleLabel.font = [MDCTypography titleFont];
-      }
-    }
+    _titleLabel.font = _titleFont;
   }
 
   [self setNeedsLayout];
@@ -257,44 +230,16 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)updateBodyFont {
-  // If we have a custom font apply it to the label.
-  // If not, fall back to the Material specified font.
-  if (_bodyFont) {
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-      _bodyLabel.font =
-          [_bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
-                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    } else {
-      _bodyLabel.font = _bodyFont;
-    }
-  } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _bodyLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kBodyTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography body1Font];
-        _bodyLabel.font =
-            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
-                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        _bodyLabel.font = [MDCTypography body1Font];
-      }
-    }
+  if (!_bodyFont) {
+    _bodyFont = [MDCFeatureHighlightView defaultBodyFont];
   }
-
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    _bodyLabel.font =
+        [_bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  } else {
+    _bodyLabel.font = _bodyFont;
+  }
   [self setNeedsLayout];
 }
 
@@ -302,6 +247,20 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _bodyColor = bodyColor;
 
   _bodyLabel.textColor = bodyColor;
+}
+
++ (UIFont *)defaultBodyFont {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
+  }
+  return [MDCTypography body1Font];
+}
+
++ (UIFont *)defaultTitleFont {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+  }
+  return [MDCTypography titleFont];
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
