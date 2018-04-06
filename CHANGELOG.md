@@ -1,3 +1,442 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Cards
+
+#### MDCCardCollectionCell
+
+*new* property: `shapeGenerator` in `MDCCardCollectionCell`
+
+#### MDCCard
+
+*new* property: `shapeGenerator` in `MDCCard`
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `titleColor` in `MDCAlertController`
+
+*new* property: `titleFont` in `MDCAlertController`
+
+*new* property: `messageFont` in `MDCAlertController`
+
+*new* property: `buttonTitleColor` in `MDCAlertController`
+
+*new* property: `buttonFont` in `MDCAlertController`
+
+*new* property: `messageColor` in `MDCAlertController`
+
+### MaskedTransition
+
+#### MDCMaskedTransition
+
+*removed* class: `MDCMaskedTransition`
+
+*removed* method: `-init` in `MDCMaskedTransition`
+
+*removed* method: `-initWithSourceView:` in `MDCMaskedTransition`
+
+*removed* property: `calculateFrameOfPresentedView` in `MDCMaskedTransition`
+
+#### MDCMaskedTransitionController
+
+*new* property: `sourceView` in `MDCMaskedTransitionController`
+
+*new* method: `-initWithSourceView:` in `MDCMaskedTransitionController`
+
+*new* method: `-init` in `MDCMaskedTransitionController`
+
+*new* property: `calculateFrameOfPresentedView` in `MDCMaskedTransitionController`
+
+*new* class: `MDCMaskedTransitionController`
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `titleFont` in `MDCNavigationBar`
+
+*new* property: `titleTextColor` in `MDCNavigationBar`
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* class method: `+buttonTitleColorForState:` in `MDCSnackbarManager`
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager`
+
+*new* property: `snackbarMessageViewBackgroundColor` in `MDCSnackbarManager`
+
+*new* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager`
+
+*new* property: `buttonFont` in `MDCSnackbarManager`
+
+*new* class method: `+setButtonTitleColor:forState:` in `MDCSnackbarManager`
+
+*new* property: `snackbarMessageViewShadowColor` in `MDCSnackbarManager`
+
+*new* property: `messageTextColor` in `MDCSnackbarManager`
+
+*new* property: `messageFont` in `MDCSnackbarManager`
+
+*modified* class method: `+setPresentationHostView:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (void)setPresentationHostView:(UIView *)hostView;` |
+| To: | `+ (void)setPresentationHostView:(nullable UIView *)hostView;` |
+
+*modified* class method: `+dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (void)dismissAndCallCompletionBlocksWithCategory:(NSString *)category;` |
+| To: | `+ (void)dismissAndCallCompletionBlocksWithCategory:     (nullable NSString *)category;` |
+
+*modified* class method: `+suspendMessagesWithCategory:` in `MDCSnackbarManager`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class func suspendMessages(withCategory category: Any!) -> MDCSnackbarSuspensionToken!` |
+| To: | `class func suspendMessages(withCategory category: Any!) -> MDCSnackbarSuspensionToken?` |
+
+*modified* class method: `+suspendMessagesWithCategory:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:     (NSString *)category;` |
+| To: | `+ (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:     (nullable NSString *)category;` |
+
+*modified* class method: `+showMessage:` in `MDCSnackbarManager`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class func show(_ message: MDCSnackbarMessage!)` |
+| To: | `class func show(_ message: MDCSnackbarMessage?)` |
+
+*modified* class method: `+showMessage:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (void)showMessage:(MDCSnackbarMessage *)message;` |
+| To: | `+ (void)showMessage:(nullable MDCSnackbarMessage *)message;` |
+
+*modified* class method: `+suspendAllMessages` in `MDCSnackbarManager`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class func suspendAllMessages() -> MDCSnackbarSuspensionToken!` |
+| To: | `class func suspendAllMessages() -> MDCSnackbarSuspensionToken?` |
+
+*modified* class method: `+suspendAllMessages` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (id<MDCSnackbarSuspensionToken>)suspendAllMessages;` |
+| To: | `+ (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages;` |
+
+*modified* class method: `+resumeMessagesWithToken:` in `MDCSnackbarManager`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class func resumeMessages(with token: MDCSnackbarSuspensionToken!)` |
+| To: | `class func resumeMessages(with token: MDCSnackbarSuspensionToken?)` |
+
+*modified* class method: `+resumeMessagesWithToken:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (void)resumeMessagesWithToken:(id<MDCSnackbarSuspensionToken>)token;` |
+| To: | `+ (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token;` |
+
+### Themes
+
+#### MDCFontScheme
+
+*removed* property: `caption` in `MDCFontScheme`
+
+*removed* property: `headline6` in `MDCFontScheme`
+
+*removed* property: `headline3` in `MDCFontScheme`
+
+*removed* property: `subtitle2` in `MDCFontScheme`
+
+*removed* property: `subtitle1` in `MDCFontScheme`
+
+*removed* protocol: `MDCFontScheme`
+
+*removed* property: `body1` in `MDCFontScheme`
+
+*removed* property: `headline1` in `MDCFontScheme`
+
+*removed* property: `overline` in `MDCFontScheme`
+
+*removed* property: `headline2` in `MDCFontScheme`
+
+*removed* property: `headline5` in `MDCFontScheme`
+
+*removed* property: `body2` in `MDCFontScheme`
+
+*removed* property: `button` in `MDCFontScheme`
+
+*removed* property: `headline4` in `MDCFontScheme`
+
+#### MDCTonalPalette
+
+*removed* method: `-initWithCoder:` in `MDCTonalPalette`
+
+*removed* property: `lightColorIndex` in `MDCTonalPalette`
+
+*removed* class: `MDCTonalPalette`
+
+*removed* property: `colors` in `MDCTonalPalette`
+
+*removed* property: `darkColorIndex` in `MDCTonalPalette`
+
+*removed* property: `darkColor` in `MDCTonalPalette`
+
+*removed* method: `-init` in `MDCTonalPalette`
+
+*removed* property: `mainColor` in `MDCTonalPalette`
+
+*removed* property: `mainColorIndex` in `MDCTonalPalette`
+
+*removed* property: `lightColor` in `MDCTonalPalette`
+
+*removed* method: `-initWithColors:mainColorIndex:lightColorIndex:darkColorIndex:` in `MDCTonalPalette`
+
+#### MDCTonalColorScheme
+
+*removed* method: `-initWithPrimaryTonalPalette:secondaryTonalPalette:` in `MDCTonalColorScheme`
+
+*removed* property: `primaryDarkColor` in `MDCTonalColorScheme`
+
+*removed* property: `secondaryTonalPalette` in `MDCTonalColorScheme`
+
+*removed* property: `primaryColor` in `MDCTonalColorScheme`
+
+*removed* property: `secondaryLightColor` in `MDCTonalColorScheme`
+
+*removed* property: `primaryLightColor` in `MDCTonalColorScheme`
+
+*removed* method: `-init` in `MDCTonalColorScheme`
+
+*removed* property: `primaryTonalPalette` in `MDCTonalColorScheme`
+
+*removed* class: `MDCTonalColorScheme`
+
+*removed* property: `secondaryDarkColor` in `MDCTonalColorScheme`
+
+*removed* property: `secondaryColor` in `MDCTonalColorScheme`
+
+#### MDCColorScheme
+
+*removed* protocol: `MDCColorScheme`
+
+*removed* property: `secondaryColor` in `MDCColorScheme`
+
+*removed* property: `primaryDarkColor` in `MDCColorScheme`
+
+*removed* property: `primaryColor` in `MDCColorScheme`
+
+*removed* property: `secondaryLightColor` in `MDCColorScheme`
+
+*removed* property: `primaryLightColor` in `MDCColorScheme`
+
+*removed* property: `secondaryDarkColor` in `MDCColorScheme`
+
+#### MDCBasicColorScheme
+
+*removed* property: `primaryColor` in `MDCBasicColorScheme`
+
+*removed* property: `primaryDarkColor` in `MDCBasicColorScheme`
+
+*removed* method: `-initWithPrimaryColor:secondaryColor:` in `MDCBasicColorScheme`
+
+*removed* property: `secondaryColor` in `MDCBasicColorScheme`
+
+*removed* property: `secondaryLightColor` in `MDCBasicColorScheme`
+
+*removed* method: `-initWithPrimaryColor:primaryLightColor:primaryDarkColor:` in `MDCBasicColorScheme`
+
+*removed* method: `-initWithPrimaryColor:` in `MDCBasicColorScheme`
+
+*removed* property: `secondaryDarkColor` in `MDCBasicColorScheme`
+
+*removed* method: `-init` in `MDCBasicColorScheme`
+
+*removed* class: `MDCBasicColorScheme`
+
+*removed* property: `primaryLightColor` in `MDCBasicColorScheme`
+
+*removed* method: `-initWithPrimaryColor:primaryLightColor:primaryDarkColor:secondaryColor:secondaryLightColor:secondaryDarkColor:` in `MDCBasicColorScheme`
+
+#### MDCBasicFontScheme
+
+*removed* property: `caption` in `MDCBasicFontScheme`
+
+*removed* property: `subtitle2` in `MDCBasicFontScheme`
+
+*removed* property: `headline3` in `MDCBasicFontScheme`
+
+*removed* property: `headline4` in `MDCBasicFontScheme`
+
+*removed* property: `button` in `MDCBasicFontScheme`
+
+*removed* class: `MDCBasicFontScheme`
+
+*removed* property: `subtitle1` in `MDCBasicFontScheme`
+
+*removed* property: `headline6` in `MDCBasicFontScheme`
+
+*removed* property: `headline2` in `MDCBasicFontScheme`
+
+*removed* property: `body1` in `MDCBasicFontScheme`
+
+*removed* property: `body2` in `MDCBasicFontScheme`
+
+*removed* property: `headline5` in `MDCBasicFontScheme`
+
+*removed* property: `overline` in `MDCBasicFontScheme`
+
+*removed* property: `headline1` in `MDCBasicFontScheme`
+
+### Typography
+
+**New component.**
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Disable TabBar test throwing an exception (#3221)](https://github.com/material-components/material-components-ios/commit/d63d4fe79daf9242a5eba8d071ac27006b8be534) (ianegordon)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### MaskedTransition
+
+#### Changes
+
+* [Convert MaskedTransition from a MotionTransitioning Transition type to a vanilla UIKit type (#3070)](https://github.com/material-components/material-components-ios/commit/44515ba81a919bb6c4d61a86448985dab5d54730) (featherless)
+
+### schemes/Color
+
+#### Changes
+
+* [[Color] Implement a swift-friendly API for color scheme defaults. (#3246)](https://github.com/material-components/material-components-ios/commit/246ab9ed9baaab9d6d9e91ad1e4ec13ee34357c8) (featherless)
+* [[Color] Reduce the public API contract for MDCSemanticColorScheme. (#3234)](https://github.com/material-components/material-components-ios/commit/f0d9c792f8d9005ed01320aa0c8f723dd28b2870) (featherless)
+* [[Color] Remove straggling reference to NSCoding. (#3237)](https://github.com/material-components/material-components-ios/commit/7a93e933e74c7e27bce8909c7bf7a6e35e51b66f) (featherless)
+* [[Themes] Add new semantic color scheme (#3216)](https://github.com/material-components/material-components-ios/commit/2be6cd9de54743df7ec768e62c9d52c24333dbee) (featherless)
+
+### schemes/Typography
+
+#### Changes
+
+* [Partial roll-forward of "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3258)](https://github.com/material-components/material-components-ios/commit/6620da4d965890af8ea3f9e8fce0e518b9ed33b0) (featherless)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Fix build breakage due to missing implementation of MDCBasicFontScheme. (#3242)](https://github.com/material-components/material-components-ios/commit/94ae187e035103cbc799e50fb78a636e88861172) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Adding Color Themer. (#3260)](https://github.com/material-components/material-components-ios/commit/fa00c708b73b3276eb2f86a1274f098c14ffbcf0) (Mohammad Cazi)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### AppBar
+
+#### Changes
+
+* [Color Themer now composes to the FlexibleHeader and NavigationBar color themers. (#3210)](https://github.com/material-components/material-components-ios/commit/e68eda7c8cf7a40a34d1b79b088ad5ddee91e663) (featherless)
+
+### Ink
+
+#### Changes
+
+* [[Cards] Added Shapes support for MDCCard and MDCCardCollectionCell + 2 Examples (#3215)](https://github.com/material-components/material-components-ios/commit/af2a3c89d2db301ad05fd2d3eb1e6dae5f057e46) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [Implement new semantic color scheme themer APIs. (#3252)](https://github.com/material-components/material-components-ios/commit/5c09f5e625ab65dac2670cc1dabb9f1f5d28cb94) (featherless)
+* [Update documentation for the themer. (#3265)](https://github.com/material-components/material-components-ios/commit/9d9e8cd3bacd8feded1f89c7f0936c1293cc7ff2) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Adding Color Themer. (#3255)](https://github.com/material-components/material-components-ios/commit/75c81a1659e01fa13ba12e4868d3c4aa27f9741a) (Mohammad Cazi)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### Chips
+
+#### Changes
+
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### Snackbar
+
+#### Changes
+
+* [Removed dependency on UIAppearance entirely for color/font customization/theming. (#3223)](https://github.com/material-components/material-components-ios/commit/bbf1126b8fbf11c85e1dad8d0cad5cf912c0a8c8) (Yarden Eitan)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### Cards
+
+#### Changes
+
+* [Added Shapes support for MDCCard and MDCCardCollectionCell + 2 Examples (#3215)](https://github.com/material-components/material-components-ios/commit/af2a3c89d2db301ad05fd2d3eb1e6dae5f057e46) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Add an API for customizing the title label's text color. (#3266)](https://github.com/material-components/material-components-ios/commit/8c8b8d0a7e8512d9d9a7841d2e35f465ee3d2b5e) (featherless)
+* [[MDCNavigationBar] Exposing typography API. (#3217)](https://github.com/material-components/material-components-ios/commit/b0aaa07cb28c1c69df3ca61397d6a9baf027047f) (Mohammad Cazi)
+
+### Dialogs
+
+#### Changes
+
+* [Expose typography and color API. (#3218)](https://github.com/material-components/material-components-ios/commit/a61f529825418130b44227eeeed1822eedcdf67f) (Mohammad Cazi)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Implement a color themer API with the new MDCColorScheming type. (#3236)](https://github.com/material-components/material-components-ios/commit/1e2ed55efe872e35aeced9873968a6a627419d7b) (featherless)
+* [Revert "Fix bug where shadow layer's opacity wouldn't be set without a tracking scroll view. (#3201)" (#3225)](https://github.com/material-components/material-components-ios/commit/bcecad50f8a385ac641fd6b10f5968bec49c4dd9) (Robert Moore)
+* [Revert "Revert "Fix bug where shadow layer's opacity wouldn't be set without a tracking scroll view. (#3201)" (#3225)" (#3229)](https://github.com/material-components/material-components-ios/commit/aaf882e81103c9fac238be7ee15d4acb740aab0e) (Robert Moore)
+
+### Themes
+
+#### Changes
+
+* [Add new semantic color scheme (#3216)](https://github.com/material-components/material-components-ios/commit/2be6cd9de54743df7ec768e62c9d52c24333dbee) (featherless)
+* [Partial roll-forward of "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3258)](https://github.com/material-components/material-components-ios/commit/6620da4d965890af8ea3f9e8fce0e518b9ed33b0) (featherless)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Catalog] Remove the global theme change notifications. (#3213)](https://github.com/material-components/material-components-ios/commit/fcfe9d810e98df072ccbdd8d494f4c067e0f2cc1) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+---
+
 # 53.0.0
 
 ## Component Changes
