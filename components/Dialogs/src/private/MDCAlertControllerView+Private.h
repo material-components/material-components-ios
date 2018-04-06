@@ -31,6 +31,6 @@
 
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
 
-- (void)updateFontsForDynamicType;
+- (void)updateFonts;
 
 @end
