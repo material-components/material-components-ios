@@ -27,8 +27,8 @@
 
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarPadDefaultHeight = 64;
-static const UIEdgeInsets kTextInsets = {0, 16, 0, 16};
-static const UIEdgeInsets kTextPadInsets = {0, 16, 0, 16};
+static const UIEdgeInsets kTextInsets = {16, 16, 16, 16};
+static const UIEdgeInsets kTextPadInsets = {20, 16, 20, 16};
 
 // KVO contexts
 static char *const kKVOContextMDCNavigationBar = "kKVOContextMDCNavigationBar";
@@ -387,13 +387,12 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize intrinsicContentSize = [self intrinsicContentSize];
-  CGFloat height =
-      size.height > 0 ? MIN(size.height, intrinsicContentSize.height) : intrinsicContentSize.height;
-  return CGSizeMake(size.width, height);
+  return CGSizeMake(size.width, intrinsicContentSize.height);
 }
 
 - (CGSize)intrinsicContentSize {
-  CGFloat height = [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+
+  CGFloat height = ([self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
@@ -508,8 +507,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     case UIControlContentVerticalAlignmentTop: {
       // The title frame is vertically centered with the back button but will stick to the top of
       // the header regardless of the header's height.
-      CGFloat usableHeight = MIN(CGRectGetHeight(bounds), [self intrinsicContentSize].height);
-      CGFloat navigationBarCenteredY = MDCFloor((usableHeight - CGRectGetHeight(frame)) / 2);
+      CGFloat navigationBarCenteredY =
+          MDCFloor(([self intrinsicContentSize].height - CGRectGetHeight(frame)) / 2);
       navigationBarCenteredY = MAX(0, navigationBarCenteredY);
       return CGRectMake(CGRectGetMinX(frame), navigationBarCenteredY, CGRectGetWidth(frame),
                         CGRectGetHeight(frame));
