@@ -90,8 +90,14 @@ run_bazel() {
     TARGET="//components/..."
   fi
 
+  if [ -n "$XCODE_VERSION" ]; then
+    xcode_versions="--xcode-version $XCODE_VERSION"
+  else
+    xcode_versions="--min-xcode-version $XCODE_MINIMUM_VERSION"
+  fi
+
   ./.kokoro-ios-runner/bazel.sh $COMMAND $TARGET \
-      --min-xcode-version $XCODE_MINIMUM_VERSION \
+      $xcode_versions \
       $verbosity_args \
       --ios_minimum_os=8.0 \
       --ios_multi_cpus=i386,x86_64
