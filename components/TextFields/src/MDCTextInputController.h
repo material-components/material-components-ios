@@ -113,6 +113,17 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
 /**
+ The font applied to the text input.
+
+ Default is textInputFontDefault. if textInputFontDefault is nil, textInput.font will be default.
+ */
+@property(nonatomic, null_resettable, strong) UIFont *textInputFont;
+
+/** Default value for textInputFontDefault. if nil, textInput.font will be default.  */
+@property(class, nonatomic, nullable, strong) UIFont *textInputFontDefault;
+
+
+/**
  The font applied to the placeholder when inline (not floating).
 
  Default is inlinePlaceholderFontDefault;
