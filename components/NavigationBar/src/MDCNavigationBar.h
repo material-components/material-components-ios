@@ -104,14 +104,14 @@ IB_DESIGNABLE
  Both Default and null_resettable value is MDCTypography's titleFont.
  Note that the font attribute of titleTextAttributes will take precedence over this property.
  */
-@property (nonatomic, strong, null_resettable) UIFont *titleFont;
+@property(nonatomic, strong, null_resettable) UIFont *titleFont;
 
 /**
  The title label's text color.
 
  Default is nil (text draws black).
  */
-@property (nonatomic, strong, nullable) UIColor *titleTextColor;
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
