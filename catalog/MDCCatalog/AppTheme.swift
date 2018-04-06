@@ -25,9 +25,9 @@ final class AppTheme {
   }
 
   static let defaultTheme = AppTheme(colorScheme:
-    MDCBasicColorScheme(primaryColor: MDCPalette.purple.tint500,
-                        primaryLightColor: MDCPalette.purple.tint100,
-                        primaryDarkColor: MDCPalette.purple.tint900)
+    MDCBasicColorScheme(primaryColor: MDCSemanticColorScheme().primaryColor,
+                        primaryLightColor: MDCSemanticColorScheme().secondaryColor,
+                        primaryDarkColor: MDCSemanticColorScheme().primaryColorVariant)
   )
 
   static var globalTheme = defaultTheme {
