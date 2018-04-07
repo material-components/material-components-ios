@@ -1,6 +1,8 @@
 bazel-*
 .kokoro-ios-runner
 
+node_modules/
+
 # MDC
 
 build_tests/CocoapodsObjCApp/CocoapodsObjCApp.xcworkspace
