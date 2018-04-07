@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MDCAppBarColorThemer
 
 class AppBarImagerySwiftExample: UITableViewController {
   let appBar = MDCAppBar()
@@ -41,11 +42,8 @@ class AppBarImagerySwiftExample: UITableViewController {
     // The header view does not clip to bounds by default so we ensure that the image is clipped.
     imageView.clipsToBounds = true
 
-    // We want navigation bar + status bar tint color to be white, so we set tint color here and
-    // implement -preferredStatusBarStyle.
-    appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+    let colorScheme = MDCSemanticColorScheme()
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     // Make sure navigation bar background color is clear so the image view is visible.
     appBar.navigationBar.backgroundColor = UIColor.clear
