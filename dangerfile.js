@@ -1,5 +1,4 @@
 const {danger, warn, fail} = require('danger')
-const {path} = require('path')
 
 const affectedFiles = danger.git.modified_files
   .concat(danger.git.created_files)
@@ -18,7 +17,7 @@ const modifiedComponentFiles = affectedFiles.filter(p => p.includes("components/
 
 if (modifiedComponentFiles.length > 0) {
   const componentPaths = modifiedComponentFiles.map(f => {
-    var pathParts = path.dirname(f).split("/");
+    var pathParts = f.split("/");
     pathParts.shift(); // Drop "components/"
     var firstPathPart = pathParts.shift();
     if (firstPathPart[0] === firstPathPart[0].toUpperCase()) {
