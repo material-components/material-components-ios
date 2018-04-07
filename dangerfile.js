@@ -26,5 +26,5 @@ if (modifiedComponentFiles.length > 0) {
     return "where:" + firstPathPart + "/" + pathParts.shift();
   });
 
-  const result = await danger.github.api.issues.addLabels({"material-components", "material-components-ios", danger.github.thisPR.number, componentPaths});
+  danger.github.api.issues.addLabels({"material-components", "material-components-ios", danger.github.thisPR.number, componentPaths});
 }
