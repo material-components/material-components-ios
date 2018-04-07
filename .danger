@@ -20,6 +20,9 @@ set -e
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   # Move into our cloned repo
   cd github/repo
+
+  # Install danger
+  yarn add danger
 fi
 
 # Run Danger
