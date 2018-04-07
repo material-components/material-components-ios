@@ -23,7 +23,8 @@ if (modifiedComponentFiles.length > 0) {
     if (firstPathPart[0] === firstPathPart[0].toUpperCase()) {
       return firstPathPart;
     }
-    return firstPathPart + "/" + pathParts.shift();
-  })
-  message(componentPaths.join(", "))
+    return "where:" + firstPathPart + "/" + pathParts.shift();
+  });
+
+  const result = await danger.github.api.issues.addLabels({"material-components", "material-components-ios", danger.github.thisPR.number, componentPaths});
 }
