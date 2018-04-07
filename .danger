@@ -1,4 +1,6 @@
-# Copyright 2017-present The Material Components for iOS Authors. All Rights Reserved.
+#!/bin/bash
+#
+# Copyright 2018-present The Material Components for iOS Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl", "mdc_public_objc_library")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+# Fail on any error.
+set -e
 
-licenses(["notice"])  # Apache 2.0
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  # Move into our cloned repo
+  cd github/repo
 
-mdc_public_objc_library(
-    name = "Application",
-)
+  export DANGER_TEST_PR="$KOKORO_GITHUB_PULL_REQUEST_NUMBER"
 
-# Test
+  # Install danger
+  yarn add danger
+fi
+
+# We're not a supported CI, so we have to pretend to be one.
+export DANGER_FAKE_CI="YEP"
+export DANGER_TEST_REPO="material-components/material-components-ios"
+
+# Run Danger
+yarn danger ci
