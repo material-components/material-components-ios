@@ -22,4 +22,5 @@ if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   cd github/repo
 fi
 
+# Run Danger
 yarn danger ci
