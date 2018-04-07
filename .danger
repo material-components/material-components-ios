@@ -21,12 +21,12 @@ if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   # Move into our cloned repo
   cd github/repo
 
-  # We're not a supported CI, so we have to pretend to be one.
-  export DANGER_FAKE_CI="YEP"
-
   # Install danger
   yarn add danger
 fi
+
+# We're not a supported CI, so we have to pretend to be one.
+export DANGER_FAKE_CI="YEP"
 
 # Run Danger
 yarn danger ci
