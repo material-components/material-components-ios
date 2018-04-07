@@ -25,5 +25,5 @@ if (modifiedComponentFiles.length > 0) {
     }
     return firstPathPart + "/" + pathParts.shift();
   })
-  message(pathParts.join(", "))
+  message(componentPaths.join(", "))
 }
