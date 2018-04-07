@@ -11,4 +11,4 @@ if (!danger.github.pr.body.includes("pivotaltracker.com")
   fail('Please either provide a link to a pivotal story or include the text "No pivotal story required." in your PR description.');
 }
 
-message(modified)
+message(modified.join(", "))
