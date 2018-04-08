@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialCards
-import MaterialComponents.MDCCardColorThemer
+import MaterialComponents.MDCCardsColorThemer
 
 class CardColorThemerTests: XCTestCase {
 
@@ -28,7 +28,7 @@ class CardColorThemerTests: XCTestCase {
     card.backgroundColor = .white
 
     // When
-    MDCCardColorThemer.applySemanticColorScheme(colorScheme, to: card)
+    MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: card)
 
     // Then
     XCTAssertEqual(card.backgroundColor, colorScheme.surfaceColor)
@@ -42,7 +42,7 @@ class CardColorThemerTests: XCTestCase {
     cardCell.backgroundColor = .white
 
     // When
-    MDCCardColorThemer.applySemanticColorScheme(colorScheme, toCardCell: cardCell)
+    MDCCardsColorThemer.applySemanticColorScheme(colorScheme, toCardCell: cardCell)
 
     // Then
     XCTAssertEqual(cardCell.backgroundColor, colorScheme.surfaceColor)

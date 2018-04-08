@@ -106,7 +106,7 @@ class EditReorderCollectionViewController: UIViewController,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCardCollectionCell
-    MDCCardColorThemer.applySemanticColorScheme(colorScheme, toCardCell: cell)
+    MDCCardsColorThemer.applySemanticColorScheme(colorScheme, toCardCell: cell)
     cell.isSelectable = (toggle == .edit)
     return cell
   }

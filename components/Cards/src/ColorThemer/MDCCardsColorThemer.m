@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCCardColorThemer.h"
+#import "MDCCardsColorThemer.h"
 
-@implementation MDCCardColorThemer
+@implementation MDCCardsColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toCard:(nonnull MDCCard *)card {

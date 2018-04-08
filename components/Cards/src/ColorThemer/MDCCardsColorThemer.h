@@ -20,9 +20,9 @@
 #import "MaterialColorScheme.h"
 
 /**
- Used to apply a color scheme to theme to MDCCard.
+ Used to apply a color scheme to theme to MDCCard and MDCCardCollectionCell.
  */
-@interface MDCCardColorThemer : NSObject
+@interface MDCCardsColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCCard.

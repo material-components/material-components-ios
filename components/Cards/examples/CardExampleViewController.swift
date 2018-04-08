@@ -41,7 +41,7 @@ class CardExampleViewController: UIViewController {
     imageView.layer.mask = shapeLayer
 
     let colorScheme = MDCSemanticColorScheme()
-    MDCCardColorThemer.applySemanticColorScheme(colorScheme, to: card)
+    MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: card)
   }
 
   override func didReceiveMemoryWarning() {
