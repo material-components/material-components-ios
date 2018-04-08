@@ -49,7 +49,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Snackbar",
-        "//components/Themes",
+        "//components/Schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
