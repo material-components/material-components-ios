@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialSnackbar.h"
-#import "MaterialThemes.h"
 
 /**
  Used to apply a color scheme to theme to MDCSnackbarManager.
