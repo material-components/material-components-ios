@@ -82,6 +82,7 @@ swift_library(
     deps = [
         ":Snackbar",
         ":private",
+        ":ColorThemer",
     ],
     visibility = ["//visibility:private"],
 )
