@@ -264,7 +264,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  _titleFont = [titleFont fontWithSize:kTitleFontSize];
+  _titleFont = [UIFont fontWithName:titleFont.fontName size:kTitleFontSize];
   if (!_titleFont) {
     _titleFont = [MDCTypography titleFont];
   }

@@ -18,6 +18,7 @@
 
 #import "MaterialButtonBar.h"
 #import "MaterialNavigationBar.h"
+#import "UIFont+MaterialTypographyPrivate.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
@@ -101,7 +102,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   UIFont *testFont = [UIFont boldSystemFontOfSize:24];
   UIFont *resultFont = [UIFont boldSystemFontOfSize:20];
   navBar.titleFont = testFont;
-  XCTAssertEqual(navBar.titleLabel.font, resultFont);
+
+  // To enforce 20 point size we are using fontWithName:size: and for some reason even though the
+  // printout looks idential comparing the fonts returns false. (Using fontWithSize: did not work
+  // for system font medium, instead it returned a regular font).
+  XCTAssertEqualObjects(navBar.titleLabel.font.fontName, resultFont.fontName);
+  XCTAssertEqual(navBar.titleLabel.font.pointSize, resultFont.pointSize);
+  XCTAssertEqual(navBar.titleLabel.font.mdc_weight, resultFont.mdc_weight);
 }
 
 - (void)testEncoding {
