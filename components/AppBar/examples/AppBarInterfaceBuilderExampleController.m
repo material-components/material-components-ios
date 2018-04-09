@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MDCAppBarColorThemer.h"
 
 @interface AppBarInterfaceBuilderExample : UIViewController <UIScrollViewDelegate>
 
@@ -48,12 +49,9 @@
 - (void)commonAppBarInterfaceBuilderExampleSetup {
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
-  UIColor *headerColor = [UIColor colorWithWhite:0.2f alpha:1];
-  self.appBar.headerViewController.headerView.backgroundColor = headerColor;
 
-  MDCAppBarTextColorAccessibilityMutator *mutator =
-      [[MDCAppBarTextColorAccessibilityMutator alloc] init];
-  [mutator mutate:_appBar];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
 }
 
 - (void)viewDidLoad {
