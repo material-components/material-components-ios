@@ -159,6 +159,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
     var tag = 0
     for controller in allTextFieldControllers {
       guard let textField = controller.textInput as? MDCTextField else { continue }
+      style(textInputController: controller);
       textField.tag = tag
       tag += 1
     }
@@ -278,6 +279,10 @@ final class TextFieldFilledSwiftExample: UIViewController {
     scrollView.layoutMargins = margins
   }
 
+  func style(textInputController : MDCTextInputController) {
+    let colorScheme = MDCSemanticColorScheme()
+    MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to:textInputController)
+  }
   func addGestureRecognizer() {
     let tapRecognizer = UITapGestureRecognizer(target: self,
                                                action: #selector(tapDidTouch(sender: )))

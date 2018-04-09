@@ -25,6 +25,7 @@
 #import "MaterialTypography.h"
 
 
+static const NSUInteger kTitleFontSize = 20;
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarPadDefaultHeight = 64;
 static const UIEdgeInsets kTextInsets = {16, 16, 16, 16};
@@ -150,9 +151,10 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
 - (void)commonMDCNavigationBarInit {
   _observedNavigationItemLock = [[NSObject alloc] init];
+  _titleFont = [MDCTypography titleFont];
 
   _titleLabel = [[UILabel alloc] init];
-  _titleLabel.font = [MDCTypography titleFont];
+  _titleLabel.font = _titleFont;
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
   _titleLabel.textAlignment = NSTextAlignmentCenter;
   _leadingButtonBar = [[MDCButtonBar alloc] init];
@@ -259,6 +261,22 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   [aCoder encodeBool:self.leadingItemsSupplementBackButton
               forKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey];
   [aCoder encodeInteger:self.titleAlignment forKey:MDCNavigationBarTitleAlignmentKey];
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+  _titleFont = [titleFont fontWithSize:kTitleFontSize];
+  if (!_titleFont) {
+    _titleFont = [MDCTypography titleFont];
+  }
+  _titleLabel.font = _titleFont;
+}
+
+- (void)setTitleTextColor:(UIColor *)titleTextColor {
+  _titleLabel.textColor = titleTextColor;
+}
+
+- (UIColor *)titleTextColor {
+  return _titleLabel.textColor;
 }
 
 #pragma mark Accessibility

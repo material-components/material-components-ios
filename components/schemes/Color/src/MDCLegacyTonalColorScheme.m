@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCTonalColorScheme.h"
+#import "MDCLegacyTonalColorScheme.h"
 
-#import "MDCTonalPalette.h"
+#import "MDCLegacyTonalPalette.h"
 
 @interface MDCTonalColorScheme ()
 

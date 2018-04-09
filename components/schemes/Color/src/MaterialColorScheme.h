@@ -13,3 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+
+#import "MDCLegacyColorScheme.h"
+#import "MDCLegacyTonalColorScheme.h"
+#import "MDCLegacyTonalPalette.h"
+
+#import "MDCSemanticColorScheme.h"

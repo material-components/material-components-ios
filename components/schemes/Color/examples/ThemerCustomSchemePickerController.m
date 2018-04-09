@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-#import "ThemerTypicalUseSupplemental.h"
+#import "supplemental/ThemerTypicalUseSupplemental.h"
 
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
@@ -220,12 +220,6 @@ static NSString *s_secondaryColorString;
   // Apply color scheme to UIKit components.
   [UISlider appearance].tintColor = colorScheme.primaryColor;
   [UISwitch appearance].onTintColor = colorScheme.primaryColor;
-
-  // Send notification that color scheme has changed so existing components can update if necessary.
-  NSDictionary *userInfo = @{ @"colorScheme" : colorScheme };
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
-                                                      object:self
-                                                    userInfo:userInfo];
 }
 
 #pragma mark - Actions
@@ -265,7 +259,7 @@ static NSString *s_secondaryColorString;
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Custom Colors" ];
+  return @[ @"Color Scheme", @"MDCBasicColorScheme with Custom Colors" ];
 }
 
 + (NSString *)catalogStoryboardName {

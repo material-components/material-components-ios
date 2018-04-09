@@ -18,6 +18,11 @@
 
 @implementation MDCFlexibleHeaderColorThemer
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+            toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView {
+  flexibleHeaderView.backgroundColor = colorScheme.primaryColor;
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
     toFlexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView {
   flexibleHeaderView.backgroundColor = colorScheme.primaryColor;

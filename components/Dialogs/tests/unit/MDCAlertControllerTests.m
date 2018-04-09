@@ -17,6 +17,8 @@
 #import <XCTest/XCTest.h>
 #import "MaterialDialogs.h"
 
+#import "MDCAlertControllerView+Private.h"
+
 #pragma mark - Subclasses for testing
 
 static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertControllerSubclassValueKey";
@@ -89,6 +91,50 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertNil(unarchivedSubclass.title);
   XCTAssertNil(unarchivedSubclass.message);
   XCTAssertEqual(unarchivedSubclass.isModalInPopover, NO);
+}
+
+- (void)testAlertControllerTyphography {
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
+  UIFont *testFont = [UIFont boldSystemFontOfSize:30];
+  alert.titleFont = testFont;
+  alert.messageFont = testFont;
+  alert.buttonFont = testFont;
+
+  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  XCTAssertEqual(view.titleLabel.font, testFont);
+  XCTAssertEqual(view.messageLabel.font, testFont);
+  for (UIButton *button in view.actionButtons) {
+    XCTAssertEqual(button.titleLabel.font, testFont);
+  }
+}
+
+- (void)testAlertControllerColorSetting {
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
+  UIColor *testColor = [UIColor redColor];
+  alert.titleColor = testColor;
+  alert.messageColor = testColor;
+  alert.buttonTitleColor = testColor;
+
+  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  XCTAssertEqual(view.titleLabel.textColor, testColor);
+  XCTAssertEqual(view.messageLabel.textColor, testColor);
+  for (UIButton *button in view.actionButtons) {
+    XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
+  }
+}
+
+- (void)testAlertControllerSettingTitleAndMessage {
+  NSString *title = @"title";
+  NSString *message = @"message";
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:title
+                                                                   message:message];
+  alert.titleFont = [UIFont systemFontOfSize:25];
+
+  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  XCTAssertEqual(view.titleLabel.text, title);
+  XCTAssertEqual(view.messageLabel.text, message);
 }
 
 @end

@@ -99,18 +99,19 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIView *titleView;
 
 /**
- Display attributes for the titleView's title text.
-
- Setting this property will render an NSAttributedString with the assigned attributes across the
- entire text.
+ The font applied to the title of navigation bar.
+ Font size is enforced to 20.
+ Both Default and null_resettable value is MDCTypography's titleFont.
+ Note that the font attribute of titleTextAttributes will take precedence over this property.
  */
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#else
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#endif
+@property(nonatomic, strong, null_resettable) UIFont *titleFont;
+
+/**
+ The title label's text color.
+
+ Default is nil (text draws black).
+ */
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
@@ -192,6 +193,27 @@ IB_DESIGNABLE
 
 /* Equivalent to leadingItemsSupplementBackButton. */
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
+
+#pragma mark - To be deprecated
+
+/**
+ Display attributes for the titleView's title text.
+
+ Font attribute will take precedence over titleFont property.
+ Setting this property will render an NSAttributedString with the assigned attributes across the
+ entire text.
+
+ Note: this property will be deprecated in future, please use titleFont and titleTextColor instead.
+ */
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+#else
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+#endif
+
+#pragma mark - Deprecated
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");

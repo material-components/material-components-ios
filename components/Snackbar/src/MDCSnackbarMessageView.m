@@ -16,6 +16,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
 
@@ -195,12 +196,23 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   self = [super initWithFrame:frame];
 
   if (self) {
-    _snackbarMessageViewShadowColor = UIColor.blackColor;
-    _snackbarMessageViewBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1);
-    _messageTextColor = UIColor.whiteColor;
+    _snackbarMessageViewShadowColor =
+        MDCSnackbarManager.snackbarMessageViewShadowColor ?: UIColor.blackColor;
+    _snackbarMessageViewBackgroundColor =
+        MDCSnackbarManager.snackbarMessageViewBackgroundColor ?: MDCRGBAColor(0x32, 0x32, 0x32, 1);
+    _messageTextColor =
+        MDCSnackbarManager.messageTextColor ?: UIColor.whiteColor;
     _buttonTitleColors = [NSMutableDictionary dictionary];
-    _buttonTitleColors[@(UIControlStateNormal)] = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
-    _buttonTitleColors[@(UIControlStateHighlighted)] = UIColor.whiteColor;
+    _buttonTitleColors[@(UIControlStateNormal)] =
+        [MDCSnackbarManager buttonTitleColorForState:UIControlStateNormal] ?:
+            MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+    _buttonTitleColors[@(UIControlStateHighlighted)] =
+        [MDCSnackbarManager buttonTitleColorForState:UIControlStateHighlighted] ?:
+            UIColor.whiteColor;
+    _mdc_adjustsFontForContentSizeCategory =
+        MDCSnackbarManager.mdc_adjustsFontForContentSizeCategory;
+    _messageFont = MDCSnackbarManager.messageFont;
+    _buttonFont = MDCSnackbarManager.buttonFont;
   }
 
   return self;
@@ -276,29 +288,26 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     // TODO(#2709): Migrate to a single source of truth for fonts
     // If we are using the default (system) font loader, retrieve the
     // font from the UIFont standardFont API.
-    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-      _label.font = [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
-    } else {
-      // There is a custom font loader, retrieve the font from it.
-      _label.font = [MDCTypography body1Font];
-    }
+    [self updateMessageFont];
 
     NSMutableAttributedString *messageString = [message.attributedText mutableCopy];
 
-    // Find any of the bold attributes in the string, and set the proper font for those ranges.
-    // Use NSAttributedStringEnumerationLongestEffectiveRangeNotRequired as opposed to 0, otherwise
-    // it will only work if bold text is in the end.
-    [messageString
-        enumerateAttribute:MDCSnackbarMessageBoldAttributeName
-                   inRange:NSMakeRange(0, messageString.length)
-                   options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
-                usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
-                  UIFont *font = [MDCTypography body1Font];
-                  if ([value boolValue]) {
-                    font = [MDCTypography body2Font];
-                  }
-                  [messageString setAttributes:@{ NSFontAttributeName : font } range:range];
-                }];
+    if (!_messageFont && !_mdc_adjustsFontForContentSizeCategory) {
+      // Find any of the bold attributes in the string, and set the proper font for those ranges.
+      // Use NSAttributedStringEnumerationLongestEffectiveRangeNotRequired as opposed to 0, otherwise
+      // it will only work if bold text is in the end.
+      [messageString
+          enumerateAttribute:MDCSnackbarMessageBoldAttributeName
+                     inRange:NSMakeRange(0, messageString.length)
+                     options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+                  usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
+                    UIFont *font = [MDCTypography body1Font];
+                    if ([value boolValue]) {
+                      font = [MDCTypography body2Font];
+                    }
+                    [messageString setAttributes:@{ NSFontAttributeName : font } range:range];
+                  }];
+    }
 
     // Apply 'global' attributes along the whole string.
     _label.backgroundColor = [UIColor clearColor];
@@ -364,11 +373,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [_buttonView addSubview:buttonView];
 
     MDCButton *button = [[MDCSnackbarMessageViewButton alloc] init];
-    if (_buttonFont) {
-      [button setTitleFont:_buttonFont forState:UIControlStateNormal];
-      [button setTitleFont:_buttonFont forState:UIControlStateHighlighted];
-    }
-
     [button setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
                  forState:UIControlStateNormal];
     [button setTitleColor:_buttonTitleColors[@(UIControlStateHighlighted)]
@@ -422,6 +426,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   }
 
   self.buttons = actions;
+  [self updateButtonFont];
 }
 
 - (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
@@ -562,7 +567,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       }
     }
   }
-
   [self setNeedsLayout];
 }
 

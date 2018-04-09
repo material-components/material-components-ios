@@ -66,6 +66,8 @@ mdc_objc_library(
     deps = [
         ":AppBar",
         "//components/Themes",
+        "//components/FlexibleHeader:ColorThemer",
+        "//components/NavigationBar:ColorThemer",
     ],
     visibility = ["//visibility:public"],
 )

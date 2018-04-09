@@ -88,6 +88,22 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentCenter);
 }
 
+- (void)testTitleFontProperty {
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.title = @"this is a Title";
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
+  [navBar layoutIfNeeded];
+
+  XCTAssertNotNil(navBar.titleFont);
+  XCTAssertEqual(navBar.titleLabel.font, navBar.titleFont);
+
+  UIFont *testFont = [UIFont boldSystemFontOfSize:24];
+  UIFont *resultFont = [UIFont boldSystemFontOfSize:20];
+  navBar.titleFont = testFont;
+  XCTAssertEqual(navBar.titleLabel.font, resultFont);
+}
+
 - (void)testEncoding {
   // Given
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];

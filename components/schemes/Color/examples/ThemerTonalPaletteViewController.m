@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialThemes.h"
 #import "MaterialPalettes.h"
 #import "supplemental/ThemerTypicalUseSupplemental.h"
 
@@ -120,7 +119,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @implementation ThemerTonalPaletteViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Tonal Palette Example" ];
+  return @[ @"Color Scheme", @"Tonal Palette Example" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {

@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCMaskedTransitionMotionSpec.h"
+#import "MDCMaskedTransitionMotionSpecs.h"
 
-@implementation MDCMaskedTransitionMotionSpec
+@implementation MDCMaskedTransitionMotionSpecs
 
 + (MDMMotionCurve)easeInEaseOut {
   return MDMMotionCurveMakeBezier(0.4f, 0.0f, 0.2f, 1.0f);
@@ -30,10 +30,10 @@
   return MDMMotionCurveMakeBezier(0.0f, 0.0f, 0.2f, 1.0f);
 }
 
-+ (MDCMaskedTransitionMotionSpecContext)fullscreen {
++ (MDCMaskedTransitionMotionSpec)fullscreen {
   MDMMotionCurve easeInEaseOut = [self easeInEaseOut];
   MDMMotionCurve easeIn = [self easeIn];
-  return (MDCMaskedTransitionMotionSpecContext){
+  return (MDCMaskedTransitionMotionSpec){
     .expansion = {
       .iconFade = {
         .delay = 0.000, .duration = 0.075, .curve = easeInEaseOut,
@@ -53,17 +53,18 @@
       },
       .scrimFade = {
         .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      }
+      },
+      .overallDuration = 0.375
     },
     .shouldSlideWhenCollapsed = true,
     .isCentered = false
   };
 }
 
-+ (MDCMaskedTransitionMotionSpecContext)bottomSheet {
++ (MDCMaskedTransitionMotionSpec)bottomSheet {
   MDMMotionCurve easeInEaseOut = [self easeInEaseOut];
   MDMMotionCurve easeIn = [self easeIn];
-  return (MDCMaskedTransitionMotionSpecContext){
+  return (MDCMaskedTransitionMotionSpec){
     .expansion = {
       .iconFade = {
         .delay = 0.000, .duration = 0.075, .curve = easeInEaseOut, // No spec
@@ -83,18 +84,19 @@
       },
       .scrimFade = {
         .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      }
+      },
+      .overallDuration = 0.375
     },
     .shouldSlideWhenCollapsed = true,
     .isCentered = false
   };
 }
 
-+ (MDCMaskedTransitionMotionSpecContext)bottomCard {
++ (MDCMaskedTransitionMotionSpec)bottomCard {
   MDMMotionCurve easeInEaseOut = [self easeInEaseOut];
   MDMMotionCurve easeIn = [self easeIn];
   MDMMotionCurve easeOut = [self easeOut];
-  return (MDCMaskedTransitionMotionSpecContext){
+  return (MDCMaskedTransitionMotionSpec){
     .expansion = {
       .iconFade = {
         .delay = 0.000, .duration = 0.120, .curve = easeInEaseOut,
@@ -116,7 +118,8 @@
       },
       .scrimFade = {
         .delay = 0.075, .duration = 0.150, .curve = easeInEaseOut,
-      }
+      },
+      .overallDuration = 0.345
     },
     .collapse = {
       .iconFade = {
@@ -139,18 +142,19 @@
       },
       .scrimFade = {
         .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      }
+      },
+      .overallDuration = 0.300
     },
     .shouldSlideWhenCollapsed = false,
     .isCentered = true
   };
 }
 
-+ (MDCMaskedTransitionMotionSpecContext)toolbar {
++ (MDCMaskedTransitionMotionSpec)toolbar {
   MDMMotionCurve easeInEaseOut = [self easeInEaseOut];
   MDMMotionCurve easeIn = [self easeIn];
   MDMMotionCurve easeOut = [self easeOut];
-  return (MDCMaskedTransitionMotionSpecContext){
+  return (MDCMaskedTransitionMotionSpec){
     .expansion = {
       .iconFade = {
         .delay = 0.000, .duration = 0.120, .curve = easeInEaseOut,
@@ -172,7 +176,8 @@
       },
       .scrimFade = {
         .delay = 0.075, .duration = 0.150, .curve = easeInEaseOut,
-      }
+      },
+      .overallDuration = 0.300
     },
     .collapse = {
       .iconFade = {
@@ -195,7 +200,8 @@
       },
       .scrimFade = {
         .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      }
+      },
+      .overallDuration = 0.300
     },
     .shouldSlideWhenCollapsed = false,
     .isCentered = true
