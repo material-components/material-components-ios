@@ -192,6 +192,22 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   self.view.bodyColor = bodyColor;
 }
 
+- (void)setTitleFont:(UIFont *)titleFont {
+  self.view.titleFont = titleFont;
+}
+
+- (UIFont *)titleFont {
+  return self.view.titleFont;
+}
+
+- (void)setBodyFont:(UIFont *)bodyFont {
+  self.view.bodyFont = bodyFont;
+}
+
+- (UIFont *)bodyFont {
+  return self.view.bodyFont;
+}
+
 - (void)acceptFeature {
   [self dismiss:YES];
 }
