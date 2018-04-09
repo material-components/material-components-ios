@@ -1,10 +1,13 @@
-# #develop#
+# 54.0.0
 
 ## Breaking changes
 
-## New deprecations
+`MDCMaskedTransition` has been removed and replaced with `MDCMaskedTransitionController`. You may
+now use `MDCMaskedTransitionController` as a standard UIKit transitioning delegate.
 
 ## New features
+
+Many components now expose new public APIs for configuring typography, color, and shapes.
 
 ## API changes
 
@@ -162,155 +165,29 @@
 
 #### MDCFontScheme
 
-*removed* property: `caption` in `MDCFontScheme`
-
-*removed* property: `headline6` in `MDCFontScheme`
-
-*removed* property: `headline3` in `MDCFontScheme`
-
-*removed* property: `subtitle2` in `MDCFontScheme`
-
-*removed* property: `subtitle1` in `MDCFontScheme`
-
-*removed* protocol: `MDCFontScheme`
-
-*removed* property: `body1` in `MDCFontScheme`
-
-*removed* property: `headline1` in `MDCFontScheme`
-
-*removed* property: `overline` in `MDCFontScheme`
-
-*removed* property: `headline2` in `MDCFontScheme`
-
-*removed* property: `headline5` in `MDCFontScheme`
-
-*removed* property: `body2` in `MDCFontScheme`
-
-*removed* property: `button` in `MDCFontScheme`
-
-*removed* property: `headline4` in `MDCFontScheme`
+Moved to schemes/Typography.
 
 #### MDCTonalPalette
 
-*removed* method: `-initWithCoder:` in `MDCTonalPalette`
-
-*removed* property: `lightColorIndex` in `MDCTonalPalette`
-
-*removed* class: `MDCTonalPalette`
-
-*removed* property: `colors` in `MDCTonalPalette`
-
-*removed* property: `darkColorIndex` in `MDCTonalPalette`
-
-*removed* property: `darkColor` in `MDCTonalPalette`
-
-*removed* method: `-init` in `MDCTonalPalette`
-
-*removed* property: `mainColor` in `MDCTonalPalette`
-
-*removed* property: `mainColorIndex` in `MDCTonalPalette`
-
-*removed* property: `lightColor` in `MDCTonalPalette`
-
-*removed* method: `-initWithColors:mainColorIndex:lightColorIndex:darkColorIndex:` in `MDCTonalPalette`
+Moved to schemes/Color.
 
 #### MDCTonalColorScheme
 
-*removed* method: `-initWithPrimaryTonalPalette:secondaryTonalPalette:` in `MDCTonalColorScheme`
-
-*removed* property: `primaryDarkColor` in `MDCTonalColorScheme`
-
-*removed* property: `secondaryTonalPalette` in `MDCTonalColorScheme`
-
-*removed* property: `primaryColor` in `MDCTonalColorScheme`
-
-*removed* property: `secondaryLightColor` in `MDCTonalColorScheme`
-
-*removed* property: `primaryLightColor` in `MDCTonalColorScheme`
-
-*removed* method: `-init` in `MDCTonalColorScheme`
-
-*removed* property: `primaryTonalPalette` in `MDCTonalColorScheme`
-
-*removed* class: `MDCTonalColorScheme`
-
-*removed* property: `secondaryDarkColor` in `MDCTonalColorScheme`
-
-*removed* property: `secondaryColor` in `MDCTonalColorScheme`
+Moved to schemes/Color.
 
 #### MDCColorScheme
 
-*removed* protocol: `MDCColorScheme`
-
-*removed* property: `secondaryColor` in `MDCColorScheme`
-
-*removed* property: `primaryDarkColor` in `MDCColorScheme`
-
-*removed* property: `primaryColor` in `MDCColorScheme`
-
-*removed* property: `secondaryLightColor` in `MDCColorScheme`
-
-*removed* property: `primaryLightColor` in `MDCColorScheme`
-
-*removed* property: `secondaryDarkColor` in `MDCColorScheme`
+Moved to schemes/Color.
 
 #### MDCBasicColorScheme
 
-*removed* property: `primaryColor` in `MDCBasicColorScheme`
-
-*removed* property: `primaryDarkColor` in `MDCBasicColorScheme`
-
-*removed* method: `-initWithPrimaryColor:secondaryColor:` in `MDCBasicColorScheme`
-
-*removed* property: `secondaryColor` in `MDCBasicColorScheme`
-
-*removed* property: `secondaryLightColor` in `MDCBasicColorScheme`
-
-*removed* method: `-initWithPrimaryColor:primaryLightColor:primaryDarkColor:` in `MDCBasicColorScheme`
-
-*removed* method: `-initWithPrimaryColor:` in `MDCBasicColorScheme`
-
-*removed* property: `secondaryDarkColor` in `MDCBasicColorScheme`
-
-*removed* method: `-init` in `MDCBasicColorScheme`
-
-*removed* class: `MDCBasicColorScheme`
-
-*removed* property: `primaryLightColor` in `MDCBasicColorScheme`
-
-*removed* method: `-initWithPrimaryColor:primaryLightColor:primaryDarkColor:secondaryColor:secondaryLightColor:secondaryDarkColor:` in `MDCBasicColorScheme`
+Moved to schemes/Color.
 
 #### MDCBasicFontScheme
 
-*removed* property: `caption` in `MDCBasicFontScheme`
+Moved to schemes/Typography.
 
-*removed* property: `subtitle2` in `MDCBasicFontScheme`
-
-*removed* property: `headline3` in `MDCBasicFontScheme`
-
-*removed* property: `headline4` in `MDCBasicFontScheme`
-
-*removed* property: `button` in `MDCBasicFontScheme`
-
-*removed* class: `MDCBasicFontScheme`
-
-*removed* property: `subtitle1` in `MDCBasicFontScheme`
-
-*removed* property: `headline6` in `MDCBasicFontScheme`
-
-*removed* property: `headline2` in `MDCBasicFontScheme`
-
-*removed* property: `body1` in `MDCBasicFontScheme`
-
-*removed* property: `body2` in `MDCBasicFontScheme`
-
-*removed* property: `headline5` in `MDCBasicFontScheme`
-
-*removed* property: `overline` in `MDCBasicFontScheme`
-
-*removed* property: `headline1` in `MDCBasicFontScheme`
-
-### Typography
+### schemes/Typography
 
 **New component.**
 
