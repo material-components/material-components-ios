@@ -42,7 +42,7 @@ mdc_objc_library(
     includes = ["src/ColorThemer"],
     deps = [
         ":NavigationBar",
-        "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )

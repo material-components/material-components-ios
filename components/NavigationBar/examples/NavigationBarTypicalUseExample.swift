@@ -29,9 +29,11 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
     navBar = MDCNavigationBar()
     navBar!.observe(navigationItem)
 
-    navBar!.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     let mutator = MDCNavigationBarTextColorAccessibilityMutator()
     mutator.mutate(navBar!)
+
+    let colorScheme = MDCSemanticColorScheme()
+    MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: navBar!)
 
     view.addSubview(navBar!)
 

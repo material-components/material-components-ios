@@ -439,7 +439,7 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/NavigationBar/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/NavigationBar"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
   end
 
