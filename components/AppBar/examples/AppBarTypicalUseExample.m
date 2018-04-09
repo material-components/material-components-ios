@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MDCAppBarColorThemer.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 
@@ -36,16 +37,11 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
     _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
     [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
 
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes = @{
-                                            NSForegroundColorAttributeName : [UIColor whiteColor],
-                                            };
+    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
   }
   return self;
 }

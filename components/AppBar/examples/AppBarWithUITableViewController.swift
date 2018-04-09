@@ -16,6 +16,8 @@
 
 import UIKit
 
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MDCAppBarColorThemer
 
 // This example shows a bug when using an MDCFlexibleHeaderView in a UITableViewController.
 // When you scroll downwards until the header is down to its minimum size, try selecting
@@ -44,11 +46,12 @@ class AppBarWithUITableViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     appBar.addSubviewsToParent()
-    let color = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+
+    let colorScheme = MDCSemanticColorScheme()
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     let headerView = appBar.headerViewController.headerView
     headerView.trackingScrollView = self.tableView
