@@ -564,6 +564,14 @@ mdc.subspec "Snackbar+Extensions" do |component|
     extension.dependency "MaterialComponents/Snackbar"
     extension.dependency "MaterialComponents/Themes"
   end
+  component.subspec "TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/Snackbar/src/#{extension.base_name}/*.h"
+    extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Snackbar"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
 end
 
   mdc.subspec "Tabs" do |component|
