@@ -40,6 +40,12 @@ NavigationBar now exposes a Color themer API that makes use of the `MDCColorSche
 
 ---
 
+# 54.0.1
+
+Added missing CocoaPods dependencies from v54.0.0.
+
+---
+
 # 54.0.0
 
 ## Breaking changes
