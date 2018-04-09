@@ -125,4 +125,16 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   }
 }
 
+- (void)testAlertControllerSettingTitleAndMessage {
+  NSString *title = @"title";
+  NSString *message = @"message";
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:title
+                                                                   message:message];
+  alert.titleFont = [UIFont systemFontOfSize:25];
+
+  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  XCTAssertEqual(view.titleLabel.text, title);
+  XCTAssertEqual(view.messageLabel.text, message);
+}
+
 @end

@@ -23,6 +23,7 @@
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialNavigationBar.h"
+#import "MDCNavigationBarColorThemer.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarIconsExample ()
@@ -43,8 +44,11 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
-  self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : UIColor.whiteColor};
   [self.view addSubview:self.navigationBar];
+
+  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme
+                                        toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
@@ -53,7 +57,6 @@
               style:UIBarButtonItemStylePlain
              target:self
              action:@selector(didTapBackButton)];
-  //  backButtonItem.tintColor = UIColor.whiteColor;
 
   UIBarButtonItem *leadingButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[MDCIcons imageFor_ic_info]
@@ -61,16 +64,13 @@
               style:UIBarButtonItemStylePlain
              target:nil
              action:nil];
-  //  leadingButtonItem.tintColor = UIColor.whiteColor;
   UIBarButtonItem *trailingButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[MDCIcons imageFor_ic_reorder]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:nil
              action:nil];
-  //  trailingButtonItem.tintColor = UIColor.whiteColor;
 
-  self.navigationBar.tintColor = UIColor.whiteColor;
   self.leadingBarButtonItem = leadingButtonItem;
   self.trailingBarButtonItem = trailingButtonItem;
   self.navigationItem.hidesBackButton = NO;
