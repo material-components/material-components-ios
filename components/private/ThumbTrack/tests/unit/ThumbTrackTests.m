@@ -15,8 +15,8 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "MaterialThumbTrack.h"
 #import "MDCThumbTrack+Private.h"
+#import "MaterialThumbTrack.h"
 
 @interface ThumbTrackTests : XCTestCase
 
