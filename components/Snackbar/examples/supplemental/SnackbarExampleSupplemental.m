@@ -15,6 +15,7 @@
  */
 
 #import "SnackbarExampleSupplemental.h"
+#import "MDCSnackbarTypographyThemer.h"
 
 static NSString * const kCellIdentifier = @"Cell";
 
@@ -25,6 +26,8 @@ static NSString * const kCellIdentifier = @"Cell";
   self.view.backgroundColor = [UIColor whiteColor];
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCellIdentifier];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  [MDCSnackbarTypographyThemer applyTypographyScheme:typographyScheme];
 }
 
 #pragma mark - UICollectionView
