@@ -14,14 +14,13 @@
  limitations under the License.
  */
 
-#import "MDCChipViewFontThemer.h"
-#import "MaterialChips.h"
-#import "MaterialThemes.h"
+#import "MDCSnackbarTypographyThemer.h"
 
-@implementation MDCChipViewFontThemer
+@implementation MDCSnackbarTypographyThemer
 
-+ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme toChipView:(MDCChipView *)chipView {
-  chipView.titleFont = fontScheme.body2;
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme {
+  MDCSnackbarManager.buttonFont = typographyScheme.button;
+  MDCSnackbarManager.messageFont = typographyScheme.body2;
 }
 
 @end

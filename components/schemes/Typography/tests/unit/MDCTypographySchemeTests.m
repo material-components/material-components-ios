@@ -20,40 +20,30 @@
 #import "MaterialTypographyScheme.h"
 
 @interface MDCTypographySchemeTests : XCTestCase
-@property(nonatomic, strong) MDCTypographyScheme *scheme;
 @end
 
 @implementation MDCTypographySchemeTests
 
-- (void)setUp {
-  [super setUp];
-  self.scheme = [[MDCTypographyScheme alloc] init];
-}
-
-- (void)tearDown {
-  self.scheme = nil;
-  [super tearDown];
-}
-
 - (void)testInitializer {
   // Given
-  MDCTypographyScheme *defaultScheme =
-      [[MDCTypographyScheme alloc] initWithMaterialDefaults];
+  MDCTypographyScheme *latestScheme = [[MDCTypographyScheme alloc] init];
+  MDCTypographyScheme *scheme201804 =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   // Then
-  XCTAssertEqual(self.scheme.headline1, defaultScheme.headline1);
-  XCTAssertEqual(self.scheme.headline2, defaultScheme.headline2);
-  XCTAssertEqual(self.scheme.headline3, defaultScheme.headline3);
-  XCTAssertEqual(self.scheme.headline4, defaultScheme.headline4);
-  XCTAssertEqual(self.scheme.headline5, defaultScheme.headline5);
-  XCTAssertEqual(self.scheme.headline6, defaultScheme.headline6);
-  XCTAssertEqual(self.scheme.subtitle1, defaultScheme.subtitle1);
-  XCTAssertEqual(self.scheme.subtitle2, defaultScheme.subtitle2);
-  XCTAssertEqual(self.scheme.body1, defaultScheme.body1);
-  XCTAssertEqual(self.scheme.body2, defaultScheme.body2);
-  XCTAssertEqual(self.scheme.caption, defaultScheme.caption);
-  XCTAssertEqual(self.scheme.button, defaultScheme.button);
-  XCTAssertEqual(self.scheme.overline, defaultScheme.overline);
+  XCTAssertEqual(latestScheme.headline1, scheme201804.headline1);
+  XCTAssertEqual(latestScheme.headline2, scheme201804.headline2);
+  XCTAssertEqual(latestScheme.headline3, scheme201804.headline3);
+  XCTAssertEqual(latestScheme.headline4, scheme201804.headline4);
+  XCTAssertEqual(latestScheme.headline5, scheme201804.headline5);
+  XCTAssertEqual(latestScheme.headline6, scheme201804.headline6);
+  XCTAssertEqual(latestScheme.subtitle1, scheme201804.subtitle1);
+  XCTAssertEqual(latestScheme.subtitle2, scheme201804.subtitle2);
+  XCTAssertEqual(latestScheme.body1, scheme201804.body1);
+  XCTAssertEqual(latestScheme.body2, scheme201804.body2);
+  XCTAssertEqual(latestScheme.caption, scheme201804.caption);
+  XCTAssertEqual(latestScheme.button, scheme201804.button);
+  XCTAssertEqual(latestScheme.overline, scheme201804.overline);
 }
 
 @end

@@ -67,13 +67,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   return CGPointMake(a.x + b.x, a.y + b.y);
 }
 
-@interface MDCFeatureHighlightView ()
-
-@property (class, nonatomic, readonly) UIFont *titleFontDefault;
-@property (class, nonatomic, readonly) UIFont *bodyFontDefault;
-
-@end
-
 @implementation MDCFeatureHighlightView {
   BOOL _forceConcentricLayout;
   UIView *_highlightView;
@@ -205,18 +198,22 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (void)setTitleFont:(UIFont *)titleFont {
   _titleFont = titleFont;
-   [self updateTitleFont];
+
+  [self updateTitleFont];
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
+  if (!_titleFont) {
+    _titleFont = [MDCFeatureHighlightView defaultTitleFont];
+  }
   if (_mdc_adjustsFontForContentSizeCategory) {
     _titleLabel.font =
-        [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+        [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
-    _titleLabel.font = titleFont;
+    _titleLabel.font = _titleFont;
   }
+
   [self setNeedsLayout];
 }
 
@@ -226,34 +223,22 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _titleLabel.textColor = titleColor;
 }
 
-+ (UIFont *)titleFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
-  }
-  return [MDCTypography titleFont];
-}
-
 - (void)setBodyFont:(UIFont *)bodyFont {
   _bodyFont = bodyFont;
+
   [self updateBodyFont];
 }
 
-+ (UIFont *)bodyFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
-  }
-  return [MDCTypography body1Font];
-}
-
 - (void)updateBodyFont {
-  UIFont *bodyFont = _bodyFont ?: [[self class] bodyFontDefault];
+  if (!_bodyFont) {
+    _bodyFont = [MDCFeatureHighlightView defaultBodyFont];
+  }
   if (_mdc_adjustsFontForContentSizeCategory) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
     _bodyLabel.font =
-        [bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
-                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+        [_bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
-    _bodyLabel.font = bodyFont;
+    _bodyLabel.font = _bodyFont;
   }
   [self setNeedsLayout];
 }
@@ -262,6 +247,20 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _bodyColor = bodyColor;
 
   _bodyLabel.textColor = bodyColor;
+}
+
++ (UIFont *)defaultBodyFont {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
+  }
+  return [MDCTypography body1Font];
+}
+
++ (UIFont *)defaultTitleFont {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+  }
+  return [MDCTypography titleFont];
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
@@ -640,14 +639,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   [self updateTitleFont];
   [self updateBodyFont];
-  [self layoutIfNeeded];
 }
 
 // Handles UIContentSizeCategoryDidChangeNotifications
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateTitleFont];
   [self updateBodyFont];
-  [self layoutIfNeeded];
 }
 
 #pragma mark - UIGestureRecognizerDelegate (Tap)

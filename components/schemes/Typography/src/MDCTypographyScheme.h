@@ -39,6 +39,16 @@
 @end
 
 /**
+ An enum of default typography schemes that are supported.
+ */
+typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
+  /**
+   The Material defaults, circa April 2018.
+   */
+  MDCTypographySchemeDefaultsMaterial201804
+};
+
+/**
  A simple implementation of @c MDCTypographyScheming that provides Material default fonts
  from which basic customizations can be made.
  */
@@ -60,13 +70,13 @@
 @property(nonatomic, nonnull, readwrite) UIFont *overline;
 
 /**
- Convenience initializer that calls @c initWithMaterialDefaults.
+ Initializes the typography scheme with the latest material defaults.
  */
 - (nonnull instancetype)init;
 
 /**
- Initializes an instance of MDCSemanticColorScheme with the Material default fonts.
+ Initializes the typography scheme with the values associated with the given defaults.
  */
-- (nonnull instancetype)initWithMaterialDefaults;
+- (nonnull instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults;
 
 @end

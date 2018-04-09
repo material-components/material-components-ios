@@ -81,6 +81,16 @@
 @end
 
 /**
+ An enum of default color schemes that are supported.
+ */
+typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
+  /**
+   The Material defaults, circa April 2018.
+   */
+  MDCColorSchemeDefaultsMaterial201804
+};
+
+/**
  A simple implementation of @c MDCColorScheming that provides Material default color values from
  which basic customizations can be made.
  */
@@ -99,13 +109,13 @@
 @property(nonnull, readwrite, nonatomic) UIColor *onBackgroundColor;
 
 /**
- Convenience initializer that calls @c initWithMaterialDefaults.
+ Initializes the color scheme with the latest material defaults.
  */
 - (nonnull instancetype)init;
 
 /**
- Initializes an instance of MDCSemanticColorScheme with the Material default color values.
+ Initializes the color scheme with the colors associated with the given defaults.
  */
-- (nonnull instancetype)initWithMaterialDefaults;
+- (nonnull instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults;
 
 @end

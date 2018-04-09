@@ -14,14 +14,18 @@
  limitations under the License.
  */
 
-#import "MDCChipViewFontThemer.h"
-#import "MaterialChips.h"
-#import "MaterialThemes.h"
+#import "MaterialSnackbar.h"
+#import "MaterialTypographyScheme.h"
 
-@implementation MDCChipViewFontThemer
+/**
+ Used to apply a typography scheme to theme MDCSnackbarManager.
+ */
+@interface MDCSnackbarTypographyThemer : NSObject
 
-+ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme toChipView:(MDCChipView *)chipView {
-  chipView.titleFont = fontScheme.body2;
-}
+/**
+ Applies a typography scheme to theme a MDCSnackbarManager.
+ @param typographyScheme The typography scheme to apply to MDCSnackbarManager.
+ */
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme;
 
 @end

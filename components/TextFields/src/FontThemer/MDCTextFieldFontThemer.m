@@ -21,30 +21,30 @@
 
 @implementation MDCTextFieldFontThemer
 
-+ (void)applyTypographyScheme:(id<MDCTypographyScheming>)scheme
++ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
   toTextInputController:(id<MDCTextInputController>)textInputController {
-  textInputController.inlinePlaceholderFont = scheme.body1;
-  textInputController.leadingUnderlineLabelFont = scheme.caption;
-  textInputController.trailingUnderlineLabelFont = scheme.caption;
+  textInputController.inlinePlaceholderFont = fontScheme.body1;
+  textInputController.leadingUnderlineLabelFont = fontScheme.caption;
+  textInputController.trailingUnderlineLabelFont = fontScheme.caption;
   if ([textInputController
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
-    if (!scheme.body1 || !scheme.caption || scheme.caption.pointSize <= 0) {
+    if (!fontScheme.body1 || !fontScheme.caption || fontScheme.caption.pointSize <= 0) {
       [textInputControllerFloatingPlaceholder setFloatingPlaceholderScaleDefault:0];
     } else {
       textInputControllerFloatingPlaceholder.floatingPlaceholderScale =
-          [NSNumber numberWithDouble:scheme.caption.pointSize/scheme.body1.pointSize];
+          [NSNumber numberWithDouble:fontScheme.caption.pointSize/fontScheme.body1.pointSize];
     }
   }
 }
 
-+ (void)applyTypographyScheme:(id<MDCTypographyScheming>)scheme
++ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
             toTextField:(MDCTextField *)textField {
-  textField.font = scheme.body1;
-  textField.placeholderLabel.font = scheme.body1;
-  textField.leadingUnderlineLabel.font = scheme.caption;
-  textField.trailingUnderlineLabel.font = scheme.caption;
+  textField.font = fontScheme.body1;
+  textField.placeholderLabel.font = fontScheme.body1;
+  textField.leadingUnderlineLabel.font = fontScheme.caption;
+  textField.trailingUnderlineLabel.font = fontScheme.caption;
 }
 
 // TODO: (larche) Drop this "#if !defined..." and the pragmas when we drop Xcode 8 support.
@@ -53,19 +53,19 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
-+ (void)applyTypographyScheme:(id<MDCTypographyScheming>)scheme
++ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
 toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
-  [textInputControllerClass setInlinePlaceholderFontDefault:scheme.body1];
-  [textInputControllerClass setTrailingUnderlineLabelFontDefault:scheme.caption];
-  [textInputControllerClass setLeadingUnderlineLabelFontDefault:scheme.caption];
+  [textInputControllerClass setInlinePlaceholderFontDefault:fontScheme.body1];
+  [textInputControllerClass setTrailingUnderlineLabelFontDefault:fontScheme.caption];
+  [textInputControllerClass setLeadingUnderlineLabelFontDefault:fontScheme.caption];
   if ([textInputControllerClass
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    if (!scheme.body1 || !scheme.caption || scheme.caption.pointSize <= 0) {
+    if (!fontScheme.body1 || !fontScheme.caption || fontScheme.caption.pointSize <= 0) {
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0.75];
     } else {
-      CGFloat scale = scheme.caption.pointSize/scheme.body1.pointSize;
+      CGFloat scale = fontScheme.caption.pointSize/fontScheme.body1.pointSize;
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:scale];
     }
   }
