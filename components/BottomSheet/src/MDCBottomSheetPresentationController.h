@@ -59,6 +59,11 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
+ When set to false, the bottom sheet controller can't be dismissed by tapping outside of sheet area.
+ */
+@property(nonatomic, assign) BOOL dismissOnBackgroundTap;
+
+/**
  Delegate to tell the presenter when to dismiss.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomSheetPresentationControllerDelegate> delegate;
