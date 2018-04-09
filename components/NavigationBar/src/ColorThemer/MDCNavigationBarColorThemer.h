@@ -37,7 +37,8 @@
  Applies a color scheme to theme a MDCNavigationBar. Use a UIAppearance proxy to apply a color
  scheme to all instances of MDCNavigationBar.
 
- This method will soon be deprecated. Consider using +applySemanticColorScheme:toButtonBar: instead.
+ This method will soon be deprecated. Consider using +applySemanticColorScheme:toNavigationBar:
+ instead.
 
  @param colorScheme The color scheme to apply to MDCNavigationBar.
  @param navigationBar A MDCNavigationBar instance to apply a color scheme.
