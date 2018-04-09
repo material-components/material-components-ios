@@ -14,7 +14,4 @@
  limitations under the License.
  */
 
-#import "MDCFontScheme.h"
-
-@implementation MDCBasicFontScheme	
-@end
+#import "MaterialColorScheme.h"
