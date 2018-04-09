@@ -1,6 +1,50 @@
+# 54.1.0
+
+## New features
+
+Snackbar now has a Typography themer.
+
+NavigationBar now exposes a Color themer API that makes use of the `MDCColorScheming` type.
+
+## Component changes
+
+### FeatureHighlight
+
+#### Changes
+
+* [cleaning up dynamic type support for feature highlight by defining the default. (#3269)](https://github.com/material-components/material-components-ios/commit/98740fac547f863d5ed80b9ca56cceb650f6f8ab) (Mohammad Cazi)
+
+### Ink
+
+#### Changes
+
+* [Fix flaky test (#3290)](https://github.com/material-components/material-components-ios/commit/b5e2935b53ed4315dfafaedc24770b433f5b050f) (Yarden Eitan)
+
+### Snackbar
+
+#### Changes
+
+* [Implement a typography themer. (#3288)](https://github.com/material-components/material-components-ios/commit/0efc202c35b6c3facbb4f70a25513cfeb21d5dc5) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Implement a semantic color scheme color themer API. (#3267)](https://github.com/material-components/material-components-ios/commit/38595c65092358375f9423ed9cf181a760f8a4f1) (featherless)
+
+### Dialogs
+
+#### Changes
+
+* [Loading the view manually caused view did load not to be called.  (#3281)](https://github.com/material-components/material-components-ios/commit/de1119c21e1b7f471b82cd98bdaee471a51fb351) (Mohammad Cazi)
+
+---
+
 # 54.0.1
 
 Added missing CocoaPods dependencies from v54.0.0.
+
+---
 
 # 54.0.0
 
