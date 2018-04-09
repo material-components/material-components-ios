@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCTonalPalette.h"
+#import "MDCLegacyTonalPalette.h"
 
 static NSString *const MDCTonalPaletteColorsKey = @"MDCTonalPaletteColorsKey";
 static NSString *const MDCTonalPaletteMainColorIndexKey = @"MDCTonalPaletteMainColorIndexKey";

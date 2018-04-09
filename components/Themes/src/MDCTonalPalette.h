@@ -14,8 +14,4 @@
  limitations under the License.
  */
 
-#import "MDCLegacyColorScheme.h"
-#import "MDCLegacyTonalColorScheme.h"
-#import "MDCLegacyTonalPalette.h"
-
-#import "MDCSemanticColorScheme.h"
+#import "MaterialColorScheme.h"
