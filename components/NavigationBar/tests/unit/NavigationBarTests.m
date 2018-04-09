@@ -103,8 +103,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   UIFont *resultFont = [UIFont boldSystemFontOfSize:20];
   navBar.titleFont = testFont;
 
-  // To enforce 20 point size we are using fontWithName:size: and for some reason even though the
-  // printout looks idential comparing the fonts returns false. (Using fontWithSize: did not work
+  // To enforce 20 point size we are using "fontWithName:size:" and for some reason even though the
+  // printout looks identical comparing the fonts returns false. (Using "fontWithSize:" did not work
   // for system font medium, instead it returned a regular font).
   XCTAssertEqualObjects(navBar.titleLabel.font.fontName, resultFont.fontName);
   XCTAssertEqual(navBar.titleLabel.font.pointSize, resultFont.pointSize);
