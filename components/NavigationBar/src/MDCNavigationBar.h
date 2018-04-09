@@ -114,8 +114,7 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
 /**
- The Material inkColor that is used for all buttons in trailing and leading button bars. Only
- affects buttons that are created after changing the property.
+ The inkColor that is used for all buttons in trailing and leading button bars.
 
  If set to nil, button bar buttons use default ink color.
  */
