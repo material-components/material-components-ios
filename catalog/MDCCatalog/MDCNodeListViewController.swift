@@ -20,8 +20,9 @@ import CatalogByConvention
 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialCollections
-import MaterialComponents.MDCFlexibleHeaderColorThemer
 import MaterialComponents.MaterialTypography
+import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MDCFlexibleHeaderColorThemer
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
@@ -63,6 +64,12 @@ class MDCNodeListViewController: CBCNodeListViewController {
     case additionalExamples = 1
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self,
+                                              name: AppTheme.didChangeGlobalThemeNotificationName,
+                                              object: nil)
+  }
+
   override init(node: CBCNode) {
     super.init(node: node)
 
@@ -91,11 +98,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
       appBarFont = UIFont(descriptor: descriptor, size: 16)
     }
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let colorScheme = appDelegate.colorScheme
-    MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
-
-    appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
       NSFontAttributeName: appBarFont ]
@@ -131,12 +133,22 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()
+
+    applyColorScheme(AppTheme.globalTheme.colorScheme)
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.themeDidChange),
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
+
+    applyColorScheme(AppTheme.globalTheme.colorScheme)
   }
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
@@ -145,6 +157,20 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override var childViewControllerForStatusBarHidden: UIViewController? {
     return appBar.headerViewController
+  }
+
+  func themeDidChange(notification: NSNotification) {
+    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
+          as? MDCColorScheme else {
+      return
+    }
+    applyColorScheme(colorScheme)
+  }
+
+  private func applyColorScheme(_ colorScheme: MDCColorScheme) {
+    MDCAppBarColorThemer.apply(colorScheme, to: appBar)
+
+    appBar.navigationBar.tintColor = UIColor.white
   }
 }
 
@@ -391,13 +417,7 @@ extension MDCNodeListViewController {
         container.appBar.navigationBar.titleTextAttributes =
             [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
 
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let colorScheme = appDelegate.colorScheme
-        MDCFlexibleHeaderColorThemer.apply(colorScheme!, to: MDCFlexibleHeaderView.appearance())
-        let textColor = UIColor.white
-        UIBarButtonItem.appearance().setTitleTextAttributes(
-          [NSForegroundColorAttributeName: textColor],
-          for: UIControlState())
+        MDCAppBarColorThemer.apply(AppTheme.globalTheme.colorScheme, to: container.appBar)
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.

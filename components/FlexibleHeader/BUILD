@@ -43,7 +43,7 @@ mdc_objc_library(
     ],
     deps = [
         ":FlexibleHeader",
-        "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )

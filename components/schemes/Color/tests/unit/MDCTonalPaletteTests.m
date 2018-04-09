@@ -17,7 +17,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialPalettes.h"
-#import "MaterialThemes.h"
+#import "MaterialColorScheme.h"
 
 @interface MDCTonalPaletteTests : XCTestCase
 

@@ -25,21 +25,22 @@ typedef struct MDCMaskedTransitionMotionTiming {
   MDMMotionTiming horizontalMovement;
   MDMMotionTiming verticalMovement;
   MDMMotionTiming scrimFade;
+  NSTimeInterval overallDuration;
 } MDCMaskedTransitionMotionTiming;
 
-typedef struct MDCMaskedTransitionMotionSpecContext {
+typedef struct MDCMaskedTransitionMotionSpec {
   MDCMaskedTransitionMotionTiming expansion;
   MDCMaskedTransitionMotionTiming collapse;
   BOOL shouldSlideWhenCollapsed;
   BOOL isCentered;
-} MDCMaskedTransitionMotionSpecContext;
+} MDCMaskedTransitionMotionSpec;
 
-@interface MDCMaskedTransitionMotionSpec: NSObject
+@interface MDCMaskedTransitionMotionSpecs: NSObject
 
-@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext fullscreen;
-@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext bottomSheet;
-@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext bottomCard;
-@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpecContext toolbar;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpec fullscreen;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpec bottomSheet;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpec bottomCard;
+@property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpec toolbar;
 
 // This object is not meant to be instantiated.
 - (instancetype)init NS_UNAVAILABLE;

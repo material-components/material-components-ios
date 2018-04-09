@@ -18,32 +18,35 @@
 
 #import "MaterialMath.h"
 #import "MaterialIcons+ic_check_circle.h"
+#import "MaterialShapes.h"
 
-static NSString *const MDCCardCellShadowElevationsKey = @"MDCCardCellShadowElevationsKey";
-static NSString *const MDCCardCellShadowColorsKey = @"MDCCardCellShadowColorsKey";
+static NSString *const MDCCardCellBackgroundColorsKey = @"MDCCardCellBackgroundColorsKey";
 static NSString *const MDCCardCellBorderWidthsKey = @"MDCCardCellBorderWidthsKey";
 static NSString *const MDCCardCellBorderColorsKey = @"MDCCardCellBorderColorsKey";
-static NSString *const MDCCardCellInkViewKey = @"MDCCardCellInkViewKey";
-static NSString *const MDCCardCellSelectedImageViewKey = @"MDCCardCellSelectedImageViewKey";
-static NSString *const MDCCardCellStateKey = @"MDCCardCellStateKey";
-static NSString *const MDCCardCellSelectableKey = @"MDCCardCellSelectableKey";
 static NSString *const MDCCardCellCornerRadiusKey = @"MDCCardCellCornerRadiusKey";
-static NSString *const MDCCardCellImagesKey = @"MDCCardCellImagesKey";
 static NSString *const MDCCardCellHorizontalImageAlignmentsKey =
-    @"MDCCardCellHorizontalImageAlignmentsKey";
+@"MDCCardCellHorizontalImageAlignmentsKey";
+static NSString *const MDCCardCellImageTintColorsKey = @"MDCCardCellImageTintColorsKey";
+static NSString *const MDCCardCellImagesKey = @"MDCCardCellImagesKey";
+static NSString *const MDCCardCellInkViewKey = @"MDCCardCellInkViewKey";
+static NSString *const MDCCardCellSelectableKey = @"MDCCardCellSelectableKey";
+static NSString *const MDCCardCellSelectedImageViewKey = @"MDCCardCellSelectedImageViewKey";
+static NSString *const MDCCardCellShadowElevationsKey = @"MDCCardCellShadowElevationsKey";
+static NSString *const MDCCardCellShadowColorsKey = @"MDCCardCellShadowColorsKey";
+static NSString *const MDCCardCellStateKey = @"MDCCardCellStateKey";
 static NSString *const MDCCardCellVerticalImageAlignmentsKey =
     @"MDCCardCellVerticalImageAlignmentsKey";
-static NSString *const MDCCardCellImageTintColorsKey = @"MDCCardCellImageTintColorsKey";
 
-static const CGFloat MDCCardCellSelectedImagePadding = 8;
-static const CGFloat MDCCardCellShadowElevationNormal = 1.f;
-static const CGFloat MDCCardCellShadowElevationHighlighted = 8.f;
-static const CGFloat MDCCardCellShadowElevationSelected = 8.f;
 static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
+static const CGFloat MDCCardCellSelectedImagePadding = 8;
+static const CGFloat MDCCardCellShadowElevationHighlighted = 8.f;
+static const CGFloat MDCCardCellShadowElevationNormal = 1.f;
+static const CGFloat MDCCardCellShadowElevationSelected = 8.f;
 
 
 @interface MDCCardCollectionCell ()
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
+@property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @end
 
 @implementation MDCCardCollectionCell  {
@@ -55,11 +58,14 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   NSMutableDictionary<NSNumber *, NSNumber *> *_horizontalImageAlignments;
   NSMutableDictionary<NSNumber *, NSNumber *> *_verticalImageAlignments;
   NSMutableDictionary<NSNumber *, UIColor *> *_imageTintColors;
+  UIColor *_backgroundColor;
   CGPoint _lastTouch;
 }
 
+@dynamic layer;
+
 + (Class)layerClass {
-  return [MDCShadowLayer class];
+  return [MDCShapedShadowLayer class];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -91,6 +97,11 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
       self.layer.cornerRadius = (CGFloat)[coder decodeDoubleForKey:MDCCardCellCornerRadiusKey];
     } else {
       self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
+    }
+    if ([coder containsValueForKey:MDCCardCellBackgroundColorsKey]) {
+      [self.layer setShapedBackgroundColor:
+          [coder decodeObjectOfClass:[UIColor class]
+                              forKey:MDCCardCellBackgroundColorsKey]];
     }
     [self commonMDCCardCollectionCellInit];
   }
@@ -134,7 +145,7 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 
   if (_shadowColors == nil) {
     _shadowColors = [NSMutableDictionary dictionary];
-    _shadowColors[@(MDCCardCellStateNormal)] = [UIColor blackColor];
+    _shadowColors[@(MDCCardCellStateNormal)] = UIColor.blackColor;
   }
 
   if (_borderColors == nil) {
@@ -167,12 +178,17 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
     _imageTintColors = [NSMutableDictionary dictionary];
   }
 
+  if (_backgroundColor == nil) {
+    _backgroundColor = UIColor.whiteColor;
+  }
+
   [self updateShadowElevation];
   [self updateBorderColor];
   [self updateBorderWidth];
   [self updateShadowColor];
   [self updateImage];
   [self updateImageTintColor];
+  [self updateBackgroundColor];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
@@ -190,11 +206,14 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
   [coder encodeObject:_horizontalImageAlignments forKey:MDCCardCellHorizontalImageAlignmentsKey];
   [coder encodeObject:_verticalImageAlignments forKey:MDCCardCellVerticalImageAlignmentsKey];
   [coder encodeObject:_imageTintColors forKey:MDCCardCellImageTintColorsKey];
+  [coder encodeObject:self.layer.shapedBackgroundColor forKey:MDCCardCellBackgroundColorsKey];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.layer.shadowPath = [self boundingPath].CGPath;
+  if (!self.layer.shapeGenerator) {
+    self.layer.shadowPath = [self boundingPath].CGPath;
+  }
   [self updateImageAlignment];
 }
 
@@ -288,7 +307,9 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 - (void)updateShadowElevation {
   CGFloat elevation = [self shadowElevationForState:self.state];
   if (!MDCCGFloatEqual(((MDCShadowLayer *)self.layer).elevation, elevation)) {
-    self.layer.shadowPath = [self boundingPath].CGPath;
+    if (!self.layer.shapeGenerator) {
+      self.layer.shadowPath = [self boundingPath].CGPath;
+    }
     [(MDCShadowLayer *)self.layer setElevation:elevation];
   }
 }
@@ -301,7 +322,7 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 
 - (void)updateBorderWidth {
   CGFloat borderWidth = [self borderWidthForState:self.state];
-  self.layer.borderWidth = borderWidth;
+  self.layer.shapedBorderWidth = borderWidth;
 }
 
 - (CGFloat)borderWidthForState:(MDCCardCellState)state {
@@ -322,8 +343,8 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 }
 
 - (void)updateBorderColor {
-  CGColorRef borderColorRef = [self borderColorForState:self.state].CGColor;
-  self.layer.borderColor = borderColorRef;
+  UIColor *borderColor = [self borderColorForState:self.state];
+  self.layer.shapedBorderColor = borderColor;
 }
 
 - (UIColor *)borderColorForState:(MDCCardCellState)state {
@@ -475,6 +496,43 @@ static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
 - (void)tintColorDidChange {
   [super tintColorDidChange];
   [self setImageTintColor:self.tintColor forState:MDCCardCellStateNormal];
+}
+
+- (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
+  if (shapeGenerator) {
+    self.layer.shadowPath = nil;
+  } else {
+    self.layer.shadowPath = [self boundingPath].CGPath;
+  }
+
+  self.layer.shapeGenerator = shapeGenerator;
+  self.layer.shadowMaskEnabled = NO;
+  [self updateBackgroundColor];
+  [self updateInkForShape];
+}
+
+- (id)shapeGenerator {
+  return self.layer.shapeGenerator;
+}
+
+- (void)updateInkForShape {
+  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+  self.inkView.maxRippleRadius =
+  (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+  self.inkView.layer.masksToBounds = NO;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  _backgroundColor = backgroundColor;
+  [self updateBackgroundColor];
+}
+
+- (UIColor *)backgroundColor {
+  return _backgroundColor;
+}
+
+- (void)updateBackgroundColor {
+  self.layer.shapedBackgroundColor = _backgroundColor;
 }
 
 #pragma mark - UIResponder
