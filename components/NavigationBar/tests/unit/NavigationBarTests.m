@@ -108,7 +108,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   UIFont *titleFont = navBar.titleLabel.font;
   XCTAssertEqualObjects(titleFont.fontName, resultFont.fontName);
   XCTAssertEqual(titleFont.pointSize, resultFont.pointSize);
-  XCTAssertEqual([NavigationBarTests weightForFont:titleFont], resultFont.mdc_weight);
+  XCTAssertEqual([NavigationBarTests weightForFont:titleFont],
+                 [NavigationBarTests weightForFont:resultFont]);
 }
 
 - (void)testEncoding {
