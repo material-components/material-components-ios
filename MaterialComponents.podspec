@@ -460,6 +460,14 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/NavigationBar"
       extension.dependency "MaterialComponents/schemes/Color"
     end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/NavigationBar/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/NavigationBar/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/NavigationBar"
+      extension.dependency "MaterialComponents/schemes/Typography"
+    end
   end
 
   mdc.subspec "OverlayWindow" do |component|
