@@ -146,17 +146,15 @@
   inkLayer.endAnimationDelay = (CGFloat)0.9;
 
   // When
-  NSTimeInterval startTime = CACurrentMediaTime();
   [inkLayer endAnimationAtPoint:CGPointMake(5, 5)];
-
+  NSTimeInterval startTime = CACurrentMediaTime();
 
   // Then
   XCTAssertEqual(inkLayer.addedAnimations.count, 1U);
   CAAnimation *animation = inkLayer.addedAnimations.firstObject;
   if (animation) {
-    XCTAssertEqualWithAccuracy(animation.beginTime,
-                               [inkLayer convertTime:(startTime + 0.9) fromLayer:nil],
-                               0.005);
+    startTime = [inkLayer convertTime:(startTime + 0.9) fromLayer:nil];
+    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, 0.010);
   }
 }
 
@@ -167,16 +165,15 @@
   inkLayer.speed = 0.5f;
 
   // When
-  NSTimeInterval startTime = CACurrentMediaTime();
   [inkLayer changeAnimationAtPoint:CGPointMake(5, 5)];
+  NSTimeInterval startTime = CACurrentMediaTime();
 
   // Then
   XCTAssertEqual(inkLayer.addedAnimations.count, 1U);
   CAAnimation *animation = inkLayer.addedAnimations.firstObject;
   if (animation) {
-    XCTAssertEqualWithAccuracy(animation.beginTime,
-                               [inkLayer convertTime:startTime fromLayer:nil],
-                               0.005);
+    startTime = [inkLayer convertTime:startTime fromLayer:nil];
+    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, 0.010);
   }
 }
 
