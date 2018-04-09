@@ -45,7 +45,6 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
-  self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : UIColor.whiteColor};
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   [MDCNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
                                           toNavigationBar:self.navigationBar];
