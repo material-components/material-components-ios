@@ -76,6 +76,7 @@ static UIColor *_inlinePlaceholderColorDefault;
 static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 static UIFont *_inlinePlaceholderFontDefault;
+static UIFont *_textInputFontDefault;
 static UIFont *_trailingUnderlineLabelFontDefault;
 
 @interface MDCTextInputControllerFullWidth () {
@@ -88,6 +89,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   UIColor *_trailingUnderlineLabelTextColor;
 
   UIFont *_inlinePlaceholderFont;
+  UIFont *_textInputFont;
   UIFont *_trailingUnderlineLabelFont;
 }
 
@@ -328,6 +330,18 @@ static UIFont *_trailingUnderlineLabelFontDefault;
     _characterCountMax = characterCountMax;
     [self updateLayout];
   }
+}
+
+#pragma  mark - TextInput Customization
+
+- (void)updateTextInput {
+  UIFont *font = self.textInputFont;
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    font =
+        [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                           scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  }
+  self.textInput.font = font;
 }
 
 #pragma mark - Leading Label Customization
@@ -666,6 +680,28 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   }
 }
 
+- (UIFont *)textInputFont {
+  if (_textInputFont) {
+    return _textInputFont;
+  }
+  return [self class].textInputFontDefault ?: self.textInput.font;
+}
+
+- (void)setTextInputFont:(UIFont *)textInputFont {
+  if (![_textInputFont isEqual:textInputFont]) {
+    _textInputFont = textInputFont;
+    [self updateLayout];
+  }
+}
+
++ (UIFont *)textInputFontDefault {
+  return _textInputFontDefault;
+}
+
++ (void)setTextInputFontDefault:(UIFont *)textInputFontDefault {
+  _textInputFontDefault = textInputFontDefault;
+}
+
 - (UIFont *)trailingUnderlineLabelFont {
   return _trailingUnderlineLabelFont ?: [self class].trailingUnderlineLabelFontDefault;
 }
@@ -780,6 +816,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   [self updatePlaceholder];
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
+  [self updateTextInput];
   [self updateUnderline];
   [self updateConstraints];
 }
