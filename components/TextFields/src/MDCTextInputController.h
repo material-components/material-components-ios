@@ -115,11 +115,12 @@
 /**
  The font applied to the text input.
 
- Default is textInputFontDefault. if textInputFontDefault is nil, textInput.font will be default.
+ Default or in case this property is nil, the value will be textInputFontDefault.
+ If textInputFontDefault is nil, textInput.font would be the fallback.
  */
 @property(nonatomic, null_resettable, strong) UIFont *textInputFont;
 
-/** Default value for textInputFontDefault. if nil, textInput.font will be default.  */
+/** Default value for textInputFontDefault. If nil, textInput.font would be the fallback.  */
 @property(class, nonatomic, nullable, strong) UIFont *textInputFontDefault;
 
 
