@@ -1,12 +1,10 @@
 # #develop#
 
-## Breaking changes
-
-## New deprecations
-
 ## New features
 
-## API changes
+Snackbar now has a Typography themer.
+
+NavigationBar now exposes a Color themer API that makes use of the `MDCColorScheming` type.
 
 ## Component changes
 
