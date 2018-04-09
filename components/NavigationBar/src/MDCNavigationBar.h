@@ -107,19 +107,19 @@ IB_DESIGNABLE
 @property(nonatomic, strong, null_resettable) UIFont *titleFont;
 
 /**
+ The title label's text color.
+
+ Default is nil (text draws black).
+ */
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
+
+/**
  The Material inkColor that is used for all buttons in trailing and leading button bars. Only
  affects buttons that are created after changing the property.
 
  If set to nil, button bar buttons use default ink color.
  */
 @property(nonatomic, strong, nullable) UIColor *inkColor;
-
-/**
- The title label's text color.
-
- Default is nil (text draws black).
- */
-@property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
