@@ -16,6 +16,7 @@
 
 #import "MDCSlider.h"
 
+#import "private/MDCSlider+Private.h"
 #import "private/MDCSlider_Subclassable.h"
 #import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
@@ -160,8 +161,15 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (void)updateColorsForState {
+  if ((self.state & UIControlStateDisabled) == UIControlStateDisabled) {
+    _thumbTrack.thumbDisabledColor = [self thumbColorForState:self.state];
+  } else {
+    _thumbTrack.thumbEnabledColor = [self thumbColorForState:self.state];
+  }
   _thumbTrack.trackOffColor = [self trackBackgroundColorForState:self.state];
   _thumbTrack.primaryColor = [self trackFillColorForState:self.state];
+
+  _thumbTrack.trackDisabledColor = [self trackBackgroundColorForState:UIControlStateDisabled];
 }
 
 #pragma mark - ThumbTrack passthrough methods
@@ -434,6 +442,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (UIColor *)color {
   return _thumbTrack.primaryColor;
+}
+
+@end
+
+@implementation MDCSlider (Private)
+
+- (MDCThumbTrack *)thumbTrack {
+  return _thumbTrack;
 }
 
 @end

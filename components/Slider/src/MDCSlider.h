@@ -77,7 +77,7 @@ IB_DESIGNABLE
  @param backgroundColor The color of the inactive track.
  @param state The state of the slider.
  */
-- (void)setTrackBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
+//- (void)setTrackBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
 
 /**
  Returns the track background color associated with the specified state.
@@ -87,7 +87,7 @@ IB_DESIGNABLE
           specific state, this method returns the color associated with the @c UIControlStateNormal
           state.
  */
-- (nullable UIColor *)trackBackgroundColorForState:(UIControlState)state;
+//- (nullable UIColor *)trackBackgroundColorForState:(UIControlState)state;
 
 /**
  Sets the color of the filled track area to use for the specified state.
@@ -100,7 +100,7 @@ IB_DESIGNABLE
  @param fillColor The color of the filled track.
  @param state The state of the slider.
  */
-- (void)setTrackFillColor:(nullable UIColor *)fillColor forState:(UIControlState)state;
+//- (void)setTrackFillColor:(nullable UIColor *)fillColor forState:(UIControlState)state;
 
 /**
  Returns the track fill color associated with the specified state.
@@ -109,7 +109,7 @@ IB_DESIGNABLE
  @returns The track fill color for the specified state. If no color has been set for the specific
           state, this method returns the color associated with the @c UIControlStateNormal state.
  */
-- (nullable UIColor *)trackFillColorForState:(UIControlState)state;
+//- (nullable UIColor *)trackFillColorForState:(UIControlState)state;
 
 /**
  Sets the color of the ticks within the filled track to use for the specified state.

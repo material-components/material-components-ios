@@ -16,6 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCSlider+Private.h"
 #import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
 #import "MaterialSlider.h"
@@ -297,6 +298,31 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualObjects(self.slider.trackBackgroundColor, self.defaultGray);
+}
+
+- (void)testThumbColorForStateFallback {
+  // When
+  [self.slider setThumbColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.slider thumbColorForState:state], UIColor.purpleColor);
+  }
+}
+
+- (void)testThumbColorForStateAppliesToThumbTrack {
+  // When
+  [self.slider setThumbColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                          [self.slider thumbColorForState:state]);
+  }
 }
 
 #pragma mark Thumb
