@@ -1,6 +1,6 @@
 # 54.0.1
 
-Added a missing Shapes CocoaPods dependency to the Cards component.
+Added missing CocoaPods dependencies from v54.0.0.
 
 # 54.0.0
 
