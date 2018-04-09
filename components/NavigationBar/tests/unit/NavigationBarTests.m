@@ -295,7 +295,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // The default font weight is UIFontWeightRegular, which is 0.0.
   CGFloat weight = 0.0;
 
-  NSDictionary *fontTraits = [self.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
+  NSDictionary *fontTraits = [font.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
   if (fontTraits) {
     NSNumber *weightNumber = fontTraits[UIFontWeightTrait];
     if (weightNumber != nil) {
