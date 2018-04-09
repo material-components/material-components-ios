@@ -208,7 +208,7 @@ IB_DESIGNABLE
  
  Default is NO.
  
- NOTE: This property will be deprecated and the YES behavior replaces the current default behavior.
+ NOTE: This property will be deprecated and the YES behavior will replace the current behavior.
  All clients who rely on the titleView should set this to YES and implement proper alignment before
  deprecation.
  */
