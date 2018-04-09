@@ -14,6 +14,7 @@
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
+#import "MDCNavigationBarColorThemer.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
@@ -40,19 +41,11 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
-  self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : UIColor.whiteColor};
   [self.view addSubview:self.navigationBar];
 
-  self.navigationItem.hidesBackButton = NO;
-
-  UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
-      initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                        mdf_imageWithHorizontallyFlippedOrientation]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-              style:UIBarButtonItemStylePlain
-             target:self
-             action:@selector(didTapBackButton)];
-  backButtonItem.tintColor = UIColor.whiteColor;
+  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme
+                                        toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *leadingButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"L"
@@ -65,7 +58,6 @@
                                       target:nil
                                       action:nil];
 
-  self.navigationBar.tintColor = UIColor.whiteColor;
   self.leadingBarButtonItem = leadingButtonItem;
   self.trailingBarButtonItem = trailingButtonItem;
   self.navigationItem.hidesBackButton = NO;

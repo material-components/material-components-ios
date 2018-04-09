@@ -14,8 +14,13 @@
  limitations under the License.
  */
 
-#import "MDCLegacyColorScheme.h"
-#import "MDCLegacyTonalColorScheme.h"
-#import "MDCLegacyTonalPalette.h"
+#import "MDCSnackbarTypographyThemer.h"
 
-#import "MDCSemanticColorScheme.h"
+@implementation MDCSnackbarTypographyThemer
+
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme {
+  MDCSnackbarManager.buttonFont = typographyScheme.button;
+  MDCSnackbarManager.messageFont = typographyScheme.body2;
+}
+
+@end

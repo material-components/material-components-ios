@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "52.0.0"
+  mdc.version      = "54.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -447,7 +447,7 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/NavigationBar/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/NavigationBar"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
   end
 
@@ -572,6 +572,14 @@ mdc.subspec "Snackbar+Extensions" do |component|
     extension.dependency "MaterialComponents/Snackbar"
     extension.dependency "MaterialComponents/Themes"
   end
+  component.subspec "TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/Snackbar/src/#{extension.base_name}/*.h"
+    extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Snackbar"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
 end
 
   mdc.subspec "Tabs" do |component|
@@ -605,6 +613,14 @@ end
 
       extension.dependency "MaterialComponents/Tabs"
       extension.dependency "MaterialComponents/Themes"
+    end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Tabs/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Tabs/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Tabs"
+      extension.dependency "MaterialComponents/schemes/Typography"
     end
 
   end

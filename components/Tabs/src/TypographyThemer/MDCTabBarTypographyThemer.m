@@ -14,7 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCFontScheme.h"
+#import "MDCTabBarTypographyThemer.h"
 
-@implementation MDCBasicFontScheme	
+@implementation MDCTabBarTypographyThemer
+
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
+                     toTabBar:(nonnull MDCTabBar *)tabBar {
+  tabBar.selectedItemTitleFont = typographyScheme.button;
+  tabBar.unselectedItemTitleFont = typographyScheme.button;
+}
+
 @end
