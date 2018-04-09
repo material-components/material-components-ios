@@ -25,11 +25,13 @@ static const CGFloat kSliderThemerDarkAlpha = 0.3f;
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toSlider:(MDCSlider *)slider {
   if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
-    slider.trackBackgroundColor = colorScheme.primaryLightColor;
+    [slider setTrackBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateNormal];
   }
-  slider.color = colorScheme.primaryColor;
+  [slider setThumbColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [slider setTrackFillColor:colorScheme.primaryColor forState:UIControlStateNormal];
   if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
-    slider.disabledColor = colorScheme.primaryDarkColor;
+    [slider setThumbColor:colorScheme.primaryDarkColor forState:UIControlStateDisabled];
+    [slider setTrackFillColor:colorScheme.primaryDarkColor forState:UIControlStateDisabled];
   }
 }
 

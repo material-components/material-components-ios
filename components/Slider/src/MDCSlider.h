@@ -45,25 +45,128 @@ IB_DESIGNABLE
 @property(nullable, nonatomic, weak) id<MDCSliderDelegate> delegate;
 
 /**
- The color of the cursor (thumb) and filled in portion of the track (left side).
+ Sets the color of the thumb to use for the specified state.
 
- Default color is blue.
+ In general, if a property is not specified for a state, the default is to use the
+ @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the
+ normal state.
+
+ @param thumbColor The color of the thumb (cursor).
+ @param state The state of the slider.
  */
-@property(nonatomic, strong, null_resettable) UIColor *color UI_APPEARANCE_SELECTOR;
+- (void)setThumbColor:(nullable UIColor *)thumbColor forState:(UIControlState)state;
 
 /**
- The color of the cursor (thumb) and track while the slider is disabled.
+ Returns the thumb color associated with the specified state.
 
- Default color is gray.
+ @params state The state that uses the thumb color.
+ @returns The thumb color for the specified state. If no color has been set for the specific state,
+          this method returns the color associated with the @c UIControlStateNormal state.
  */
-@property(nonatomic, strong, null_resettable) UIColor *disabledColor UI_APPEARANCE_SELECTOR;
+- (nullable UIColor *)thumbColorForState:(UIControlState)state;
 
 /**
- The color of the unfilled track that the cursor moves along (right side).
+ Sets the color of the inactive (unfilled) track to use for the specified state.
 
- Default color is gray.
+ In general, if a property is not specified for a state, the default is to use the
+ @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the
+ normal state.
+
+ @param backgroundColor The color of the inactive track.
+ @param state The state of the slider.
  */
-@property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
+- (void)setTrackBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
+
+/**
+ Returns the track background color associated with the specified state.
+
+ @params state The state that uses the track background color.
+ @returns The track background color for the specified state. If no color has been set for the
+          specific state, this method returns the color associated with the @c UIControlStateNormal
+          state.
+ */
+- (nullable UIColor *)trackBackgroundColorForState:(UIControlState)state;
+
+/**
+ Sets the color of the filled track area to use for the specified state.
+
+ In general, if a property is not specified for a state, the default is to use the
+ @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the
+ normal state.
+
+ @param fillColor The color of the filled track.
+ @param state The state of the slider.
+ */
+- (void)setTrackFillColor:(nullable UIColor *)fillColor forState:(UIControlState)state;
+
+/**
+ Returns the track fill color associated with the specified state.
+
+ @params state The state that uses the track fill color.
+ @returns The track fill color for the specified state. If no color has been set for the specific
+          state, this method returns the color associated with the @c UIControlStateNormal state.
+ */
+- (nullable UIColor *)trackFillColorForState:(UIControlState)state;
+
+/**
+ Sets the color of the ticks within the filled track to use for the specified state.
+
+ In general, if a property is not specified for a state, the default is to use the
+ @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the
+ normal state.
+
+ @param tickColor The color of the tick marks within the filled track.
+ @param state The state of the slider.
+ */
+//- (void)setFilledTrackTickColor:(nullable UIColor *)tickColor forState:(UIControlState)state;
+
+/**
+ Returns the tick color for the filled track portion associated with the specified state.
+
+ @params state The state that uses the filled-track tick color.
+ @returns The filled-track tick color for the specified state. If no color has been set for the
+          specific state, this method returns the color associated with the @c UIControlStateNormal
+          state.
+ */
+//- (nullable UIColor *)filledTrackTickColorForState:(UIControlState)state;
+
+/**
+ Sets the color of the ticks for the background (unfilled) track to use for the specified state.
+
+ In general, if a property is not specified for a state, the default is to use the
+ @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the
+ normal state.
+
+ @param tickColor The color of the tick marks outside the filled track.
+ @param state The state of the slider.
+ */
+//- (void)setBackgroundTrackTickColor:(nullable UIColor *)tickColor forState:(UIControlState)state;
+
+/**
+ Returns the tick color for the background (unfilled) track portion associated with the specified
+ state.
+
+ @params state The state that uses the background-track tick color.
+ @returns The background-track tick color for the specified state. If no color has been set for the
+          specific state, this method returns the color associated with the @c UIControlStateNormal
+          state.
+ */
+//- (nullable UIColor *)backgroundTrackTickColor:(UIControlState)state;
+
+/**
+ The color of the discrete value label title text.
+ */
+@property(nullable, nonatomic, strong) UIColor *valueLabelTitleColor;
+
+/**
+ The background color of the discrete value label.
+ */
+@property(nullable, nonatomic, strong) UIColor *valueLabelBackgroundColor;
 
 /**
  The radius of the cursor (thumb).
@@ -174,6 +277,37 @@ IB_DESIGNABLE
  Defaults to YES.
  */
 @property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
+
+#pragma mark - To be deprecated
+
+/**
+ The color of the cursor (thumb) and track while the slider is disabled.
+
+ Default color is gray.
+
+ @note This API is planned for deprecation. Use @c setThumbColor:forState: and
+       @c setTrackFillColor:forState: instead.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *disabledColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The color of the unfilled track that the cursor moves along (right side).
+
+ Default color is gray.
+
+ @note This API is planned for deprecation. Use @c setTrackBackgroundColor:forState instead.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The color of the cursor (thumb) and filled in portion of the track (left side).
+
+ Default color is blue.
+
+ @note This API is planned for deprecation. Use @c setThumbColor:forState: and
+       @c setTrackFillColor:forState: instead.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *color UI_APPEARANCE_SELECTOR;
 
 @end
 
