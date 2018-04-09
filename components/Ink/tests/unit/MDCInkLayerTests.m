@@ -156,7 +156,7 @@
   if (animation) {
     XCTAssertEqualWithAccuracy(animation.beginTime,
                                [inkLayer convertTime:(startTime + 0.9) fromLayer:nil],
-                               0.005);
+                               0.010);
   }
 }
 
@@ -176,7 +176,7 @@
   if (animation) {
     XCTAssertEqualWithAccuracy(animation.beginTime,
                                [inkLayer convertTime:startTime fromLayer:nil],
-                               0.005);
+                               0.010);
   }
 }
 
