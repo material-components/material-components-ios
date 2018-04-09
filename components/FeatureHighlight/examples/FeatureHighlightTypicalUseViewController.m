@@ -16,6 +16,7 @@
 
 #import "MaterialFeatureHighlight.h"
 #import "MDCFeatureHighlightColorThemer.h"
+#import "MDCFeatureHighlightTypographyThemer.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightTypicalUseViewController
@@ -24,8 +25,11 @@
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   [MDCFeatureHighlightColorThemer applySemanticColorScheme:colorScheme
                           toFeatureHighlightViewController:vc];
+  [MDCFeatureHighlightTypographyThemer applyTypographyScheme:typographyScheme
+                            toFeatureHighlightViewController:vc];
 
   vc.mdc_adjustsFontForContentSizeCategory = YES;
 
