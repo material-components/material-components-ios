@@ -29,7 +29,7 @@
 /**
  The color of the thumb when enabled.
 
- Defaults to blue.
+ Defaults and resets to blue.
  */
 @property(null_resettable, nonatomic, strong) UIColor *thumbEnabledColor;
 
@@ -39,7 +39,7 @@
 /**
  The color of the 'on' portion of the track.
 
- Defaults to blue.
+ Defaults and resets to blue.
  */
 @property(null_resettable, nonatomic, strong) UIColor *trackOnColor;
 
@@ -55,14 +55,14 @@
 /**
  The color of the value label's text.
 
- Defaults to white.
+ Defaults and resets to white.
  */
 @property(null_resettable, nonatomic, strong) UIColor *valueLabelTextColor;
 
 /**
  The color of the value label's background.
 
- Defaults to blue.
+ Defaults and resets to blue.
  */
 @property(null_resettable, nonatomic, strong) UIColor *valueLabelBackgroundColor;
 

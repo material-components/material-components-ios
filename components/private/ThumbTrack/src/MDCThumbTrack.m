@@ -37,23 +37,23 @@ static const CGFloat kValueLabelHeight = 48.f;
 static const CGFloat kValueLabelWidth = 0.81f * kValueLabelHeight;
 static const CGFloat kValueLabelFontSize = 12.f;
 
-static UIColor *MDCThumbTrackValueLabelTextColorDefault() {
+static UIColor *ValueLabelTextColorDefault() {
   return UIColor.whiteColor;
 }
 
-static UIColor *MDCThumbTrackValueLabelBackgroundColorDefault() {
+static UIColor *ValueLabelBackgroundColorDefault() {
   return UIColor.blueColor;
 }
 
-static UIColor *MDCThumbTrackTrackOnColorDefault() {
+static UIColor *TrackOnColorDefault() {
   return UIColor.blueColor;
 }
 
-static UIColor *MDCThumbTrackThumbEnabledColorDefault() {
+static UIColor *ThumbEnabledColorDefault() {
   return UIColor.blueColor;
 }
 
-static UIColor *MDCThumbTrackInkColorDefault() {
+static UIColor *InkColorDefault() {
   return [UIColor.blueColor colorWithAlphaComponent:kTrackOnAlpha];
 }
 
@@ -194,14 +194,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
     _touchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
 
-    _primaryColor = onTintColor ?: MDCThumbTrackTrackOnColorDefault();
-    _thumbEnabledColor = onTintColor ?: MDCThumbTrackThumbEnabledColorDefault();
-    _trackOnColor = onTintColor ?: MDCThumbTrackTrackOnColorDefault();
-    _valueLabelBackgroundColor = onTintColor ?: MDCThumbTrackValueLabelBackgroundColorDefault();
+    _primaryColor = onTintColor ?: TrackOnColorDefault();
+    _thumbEnabledColor = onTintColor ?: ThumbEnabledColorDefault();
+    _trackOnColor = onTintColor ?: TrackOnColorDefault();
+    _valueLabelBackgroundColor = onTintColor ?: ValueLabelBackgroundColorDefault();
     _touchController.defaultInkView.inkColor = onTintColor ?
-        [onTintColor colorWithAlphaComponent:kTrackOnAlpha] : MDCThumbTrackInkColorDefault();
+        [onTintColor colorWithAlphaComponent:kTrackOnAlpha] : InkColorDefault();
     _clearColor = UIColor.clearColor;
-    _valueLabelTextColor = MDCThumbTrackValueLabelTextColorDefault();
+    _valueLabelTextColor = ValueLabelTextColorDefault();
     [self setNeedsLayout];
 
     // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
@@ -241,7 +241,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #pragma mark - Properties
 
 - (void)setPrimaryColor:(UIColor *)primaryColor {
-  _primaryColor = primaryColor ?: MDCThumbTrackTrackOnColorDefault();
+  _primaryColor = primaryColor ?: TrackOnColorDefault();
 
   _thumbEnabledColor = self.primaryColor;
   _trackOnColor = self.primaryColor;
@@ -261,12 +261,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setThumbEnabledColor:(UIColor *)thumbEnabledColor {
-  _thumbEnabledColor = thumbEnabledColor ?: MDCThumbTrackThumbEnabledColorDefault();
+  _thumbEnabledColor = thumbEnabledColor ?: ThumbEnabledColorDefault();
   [self setNeedsLayout];
 }
 
 - (void)setTrackOnColor:(UIColor *)trackOnColor {
-  _trackOnColor = trackOnColor ?: MDCThumbTrackTrackOnColorDefault();
+  _trackOnColor = trackOnColor ?: TrackOnColorDefault();
   [self setNeedsLayout];
 }
 
@@ -286,12 +286,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setValueLabelTextColor:(UIColor *)valueLabelTextColor {
-  _valueLabelTextColor = valueLabelTextColor ?: UIColor.whiteColor;
+  _valueLabelTextColor = valueLabelTextColor ?: ValueLabelTextColorDefault();
   [self setNeedsLayout];
 }
 
 - (void)setValueLabelBackgroundColor:(UIColor *)valueLabelBackgroundColor {
-  _valueLabelBackgroundColor = valueLabelBackgroundColor ?: UIColor.blueColor;
+  _valueLabelBackgroundColor = valueLabelBackgroundColor ?: ValueLabelBackgroundColorDefault();
   [self setNeedsLayout];
 }
 
