@@ -21,6 +21,7 @@
 
 /**
  Used to apply a font scheme to theme to MDCSnackbarMessageView.
+ This class will soon be deprecated, please use MDCSnackbarTypographyThemer instead.
  */
 @interface MDCSnackbarFontThemer : NSObject
 

@@ -24,6 +24,7 @@
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialNavigationBar.h"
+#import "MDCNavigationBarColorThemer.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarRTL : UIViewController
