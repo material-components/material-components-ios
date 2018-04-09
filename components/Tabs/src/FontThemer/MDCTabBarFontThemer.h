@@ -19,14 +19,13 @@ limitations under the License.
 
 /**
  Used to apply a font scheme to theme MDCTabBar.
- This Class will be deprcated soon please use MDCTabBarTypographyThemer instead.
+ This Class will be deprecated soon please use MDCTabBarTypographyThemer instead.
  */
 @interface MDCTabBarFontThemer : NSObject
 
 /**
  Applies a font scheme to theme a MDCTabBar. Use a UIAppearance proxy to apply a font scheme to
  all instances of MDCTabBar.
-
 
  @param fontScheme The font scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme.
