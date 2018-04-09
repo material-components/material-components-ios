@@ -123,6 +123,20 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 @property(nonatomic, strong, nullable) UIColor *bodyColor;
 
 /**
+ Sets the font to be used for the title text.
+
+ Defaults to nil.
+ */
+@property(nonatomic, strong, nullable) UIFont *titleFont;
+
+/**
+ Sets the font to be used for the body text.
+
+ Defaults to nil.
+ */
+@property(nonatomic, strong, nullable) UIFont *bodyFont;
+
+/**
  Indicates whether the feature highlight contents should automatically update their font when the
  device’s UIContentSizeCategory changes.
 
