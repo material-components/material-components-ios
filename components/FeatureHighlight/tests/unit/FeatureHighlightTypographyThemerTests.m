@@ -31,7 +31,6 @@
   [super setUp];
   self.showView = [[UIView alloc] init];
   self.highlightedView = [[UIView alloc] init];
-  [self.showView addSubview:self.highlightedView];
 }
 
 - (void)tearDown {
