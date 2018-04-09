@@ -93,6 +93,7 @@ Pod::Spec.new do |mdc|
       extension.public_header_files = "components/AppBar/src/#{extension.base_name}/*.h"
       extension.source_files = "components/AppBar/src/#{extension.base_name}/*.{h,m}", "components/AppBar/src/#{extension.base_name}/private/*.{h,m}"
       extension.dependency "MaterialComponents/AppBar"
+      extension.dependency "MaterialComponents/FlexibleHeader+Extensions/ColorThemer"
       extension.dependency "MaterialComponents/Themes"
     end
   end
