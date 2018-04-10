@@ -28,7 +28,7 @@
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
 
-    // if caption.pointSize <= 0 there is no meaningful ration so we fallback to default.
+    // if caption.pointSize <= 0 there is no meaningful ratio so we fallback to default.
     if (typographyScheme.caption.pointSize <= 0) {
       textInputControllerFloatingPlaceholder.floatingPlaceholderScale = nil;
     } else {
@@ -62,7 +62,7 @@
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    // if caption.pointSize <= 0 there is no meaningful ration so we fallback to default.
+    // if caption.pointSize <= 0 there is no meaningful ratio so we fallback to default.
   if (typographyScheme.caption.pointSize <= 0) {
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0];
     } else {
