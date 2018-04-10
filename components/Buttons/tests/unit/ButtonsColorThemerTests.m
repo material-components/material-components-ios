@@ -100,6 +100,7 @@
   XCTAssert(
       CGColorEqualToColor([button backgroundColorForState:UIControlStateDisabled].CGColor,
                           [colorScheme.primaryColor colorWithAlphaComponent:0.f].CGColor));
+  XCTAssertEqual(button.disabledAlpha, 1.f);
 }
 
 @end
