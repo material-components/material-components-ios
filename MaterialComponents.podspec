@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "54.1.0"
+  mdc.version      = "54.2.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -56,7 +56,7 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/ActivityIndicator/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/ActivityIndicator"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
   end
 
@@ -308,7 +308,15 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/Dialogs"
       extension.dependency "MaterialComponents/Themes"
     end
-  end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Dialogs/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Dialogs/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Dialogs"
+      extension.dependency "MaterialComponents/schemes/Typography"
+    end
+ end
 
   mdc.subspec "FeatureHighlight" do |component|
     component.ios.deployment_target = '8.0'
@@ -337,6 +345,14 @@ Pod::Spec.new do |mdc|
 
       extension.dependency "MaterialComponents/FeatureHighlight"
       extension.dependency "MaterialComponents/Themes"
+    end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/FeatureHighlight/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/FeatureHighlight/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/FeatureHighlight"
+      extension.dependency "MaterialComponents/schemes/Typography"
     end
     component.subspec "FeatureHighlightAccessibilityMutator" do |extension|
       extension.ios.deployment_target = '8.0'
@@ -609,6 +625,14 @@ end
       extension.dependency "MaterialComponents/Tabs"
       extension.dependency "MaterialComponents/Themes"
     end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Tabs/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Tabs/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Tabs"
+      extension.dependency "MaterialComponents/schemes/Typography"
+    end
 
   end
 
@@ -715,7 +739,7 @@ end
     private_spec.subspec "ThumbTrack" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
-      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
 
       component.dependency "MaterialComponents/Ink"
       component.dependency "MaterialComponents/ShadowElevations"

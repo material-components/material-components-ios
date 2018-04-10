@@ -17,6 +17,7 @@
 #import "supplemental/DialogsAlertViewControllerSupplemental.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "MDCAlertTypographyThemer.h"
 
 @implementation DialogsAlertViewController
 
@@ -66,6 +67,9 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme
+                                toAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
