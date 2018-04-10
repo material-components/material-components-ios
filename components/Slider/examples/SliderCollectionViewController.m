@@ -103,9 +103,9 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   _slider.filledTrackAnchorValue = model.anchorValue;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
   _slider.thumbHollowAtStart = model.hollowCircle;
-//  _slider.color = model.sliderColor;
   _slider.enabled = model.enabled;
   _slider.statefulAPIEnabled = YES;
+  // Don't apply a `nil` color, use the default
   if (model.sliderColor) {
     [_slider setTrackFillColor:model.sliderColor forState:UIControlStateNormal];
     [_slider setThumbColor:model.sliderColor forState:UIControlStateNormal];
