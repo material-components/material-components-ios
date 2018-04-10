@@ -171,6 +171,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (!self.isStatefulAPIEnabled) {
     return;
   }
+  NSLog(@"Update colors for state");
   if ((self.state & UIControlStateDisabled) == UIControlStateDisabled) {
     _thumbTrack.thumbDisabledColor = [self thumbColorForState:self.state];
     _thumbTrack.trackDisabledColor = [self trackBackgroundColorForState:self.state];

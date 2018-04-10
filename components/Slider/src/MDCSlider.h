@@ -58,8 +58,6 @@ IB_DESIGNABLE
  @param thumbColor The color of the thumb (cursor).
  @param state The state of the slider.
  */
-// For any disabled state, the default value is @c nil. For any enabled state, the default value
-// is blue.
 - (void)setThumbColor:(nullable UIColor *)thumbColor forState:(UIControlState)state;
 
 /**
