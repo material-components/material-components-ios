@@ -176,23 +176,16 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
     _thumbTrack.thumbDisabledColor = [self thumbColorForState:self.state];
     _thumbTrack.trackDisabledColor = [self trackBackgroundColorForState:self.state];
   } else {
+    // thumbEnabledColor is null_resettable, so explicitly set `clear` to get the correct effect
     _thumbTrack.thumbEnabledColor = [self thumbColorForState:self.state] ?: UIColor.clearColor;
     _thumbTrack.trackOffColor = [self trackBackgroundColorForState:self.state];
   }
+  // trackOnColor is null_resettable, so explicitly set `clear` to get the correct effect
   _thumbTrack.trackOnColor = [self trackFillColorForState:self.state] ?: UIColor.clearColor;
   _thumbTrack.inkColor = self.inkColor;
 }
 
 #pragma mark - ThumbTrack passthrough methods
-
-- (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
-  _thumbTrack.trackOffColor =
-      trackBackgroundColor ? trackBackgroundColor : [[self class] defaultTrackOffColor];
-}
-
-- (UIColor *)trackBackgroundColor {
-  return _thumbTrack.trackOffColor;
-}
 
 - (void)setThumbRadius:(CGFloat)thumbRadius {
   _thumbTrack.thumbRadius = thumbRadius;
@@ -454,6 +447,15 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 #pragma mark - To be deprecated
+
+- (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
+  _thumbTrack.trackOffColor =
+  trackBackgroundColor ? trackBackgroundColor : [[self class] defaultTrackOffColor];
+}
+
+- (UIColor *)trackBackgroundColor {
+  return _thumbTrack.trackOffColor;
+}
 
 - (void)setDisabledColor:(UIColor *)disabledColor {
   if (self.isStatefulAPIEnabled) {
