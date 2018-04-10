@@ -37,6 +37,15 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "private_headers",
+    testonly = 1,
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    deps = [":ThumbTrack"],
+    visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = native.glob([
@@ -49,6 +58,7 @@ mdc_objc_library(
     ],
     deps = [
         ":ThumbTrack",
+        ":private_headers",
     ],
     visibility = ["//visibility:private"],
 )

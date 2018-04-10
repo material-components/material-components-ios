@@ -739,7 +739,7 @@ end
     private_spec.subspec "ThumbTrack" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
-      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
 
       component.dependency "MaterialComponents/Ink"
       component.dependency "MaterialComponents/ShadowElevations"
