@@ -18,6 +18,7 @@
 
 #import "MaterialButtonBar.h"
 #import "MaterialNavigationBar.h"
+#import "MDCNavigationBarTypographyThemer.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
@@ -291,6 +292,28 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     MDCButtonBar *trailingButtonBar = (MDCButtonBar *)secondItem;
     XCTAssertEqual(2U, trailingButtonBar.subviews.count);
   }
+}
+
+#pragma mark - Typography
+
+- (void)testTypographyThemer {
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  MDCTypographyScheme *scheme = [[MDCTypographyScheme alloc] init];
+  [MDCNavigationBarTypographyThemer applyTypographyScheme:scheme toNavigationBar:navBar];
+
+  // To enforce 20 point size we are using fontWithName:size: and for some reason even though the
+  // printout looks idential comparing the fonts returns false. (Using fontWithSize: did not work
+  // for system font medium, instead it returned a regular font).
+  UIFont *titleFont = navBar.titleLabel.font;
+  XCTAssertEqualObjects(titleFont.fontName, scheme.headline6.fontName);
+  XCTAssertEqual(titleFont.pointSize, scheme.headline6.pointSize);
+
+  // Weight for Fonts was not introduced on iOS 8
+  // TODO: remove this when we drop iOS 8 support.
+#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
+  XCTAssertEqual([NavigationBarTests weightForFont:titleFont],
+                 [NavigationBarTests weightForFont:scheme.headline6]);
+#endif
 }
 
 // I really don't like doing this but just to make sure the font has the right weight for the test
