@@ -34,4 +34,8 @@
   [super touchesBegan:touches withEvent:event];
 }
 
+- (CGSize)sizeThatFits:(CGSize)size {
+
+}
+
 @end
