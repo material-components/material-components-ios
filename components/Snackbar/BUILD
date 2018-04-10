@@ -70,6 +70,18 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    deps = [
+        ":Snackbar",
+        "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
@@ -83,6 +95,7 @@ swift_library(
         ":Snackbar",
         ":private",
         ":ColorThemer",
+        ":TypographyThemer",
     ],
     visibility = ["//visibility:private"],
 )

@@ -14,7 +14,18 @@
  limitations under the License.
  */
 
-#import "MDCFontScheme.h"
+#import "MaterialSnackbar.h"
+#import "MaterialTypographyScheme.h"
 
-@implementation MDCBasicFontScheme	
+/**
+ Used to apply a typography scheme to theme MDCSnackbarManager.
+ */
+@interface MDCSnackbarTypographyThemer : NSObject
+
+/**
+ Applies a typography scheme to theme a MDCSnackbarManager.
+ @param typographyScheme The typography scheme to apply to MDCSnackbarManager.
+ */
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme;
+
 @end

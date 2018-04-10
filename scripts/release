@@ -606,6 +606,10 @@ generate_release_source() {
     | grep "src/"
 }
 
+generate_release_stories() {
+  generate_release_log | grep -i pivotal
+}
+
 if [ $# -eq 0 ]; then
   usage
   exit 1
@@ -647,6 +651,7 @@ case "$1" in
   log)        generate_release_log ${@:2} ;;
   notes)      generate_release_notes ${@:2} ;;
   source)     generate_release_source ${@:2} ;;
+  stories)    generate_release_stories ${@:2} ;;
 
   abort)      abort_release ${@:2} ;;
 
