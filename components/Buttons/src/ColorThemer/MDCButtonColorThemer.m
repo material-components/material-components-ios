@@ -51,6 +51,23 @@
   flatButton.disabledAlpha = 1.f;
 }
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                    toFlatButton:(nonnull MDCFlatButton *)flatButton {
+  [flatButton setBackgroundColor:[colorScheme.primaryColor colorWithAlphaComponent:0.f]
+                        forState:UIControlStateNormal];
+  [flatButton setBackgroundColor:[colorScheme.primaryColor colorWithAlphaComponent:0.f]
+                        forState:UIControlStateHighlighted];
+  [flatButton setBackgroundColor:[colorScheme.primaryColor colorWithAlphaComponent:0.f]
+                        forState:UIControlStateSelected];
+  [flatButton setBackgroundColor:[colorScheme.primaryColor colorWithAlphaComponent:0.f]
+                        forState:UIControlStateDisabled];
+  [flatButton setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [flatButton setTitleColor:colorScheme.primaryColor forState:UIControlStateHighlighted];
+  [flatButton setTitleColor:colorScheme.primaryColor forState:UIControlStateSelected];
+  [flatButton setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
+                   forState:UIControlStateDisabled];
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toButton:(MDCButton *)button {
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
