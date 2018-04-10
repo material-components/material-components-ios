@@ -30,6 +30,7 @@
   [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateSelected];
   [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
                forState:UIControlStateDisabled];
+  button.disabledAlpha = 1.f;
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
