@@ -13,4 +13,22 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-#import "MaterialColorScheme.h"
+
+#import "MaterialNavigationBar.h"
+#import "MaterialTypographyScheme.h"
+
+/**
+ Used to apply a typography scheme to theme MDCNavigationBar.
+ */
+@interface MDCNavigationBarTypographyThemer : NSObject
+
+/**
+ Applies a typography scheme to theme a MDCNavigationBar.
+
+ @param typographyScheme The typography scheme to apply to MDCNavigationBar.
+ @param navigationBar A MDCNavigationBar instance to apply a typography scheme.
+ */
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
+              toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;
+
+@end

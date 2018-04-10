@@ -15,6 +15,7 @@
  */
 
 import Foundation
+import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
 
 final class AppTheme {
@@ -24,13 +25,13 @@ final class AppTheme {
     self.colorScheme = colorScheme
   }
 
-  static let defaultTheme = AppTheme(colorScheme:
+  static let defaultTheme: AppTheme = AppTheme(colorScheme:
     MDCBasicColorScheme(primaryColor: .init(white: 33 / 255.0, alpha: 1),
                         primaryLightColor: .init(white: 0.7, alpha: 1),
                         primaryDarkColor: .init(white: 0, alpha: 1))
   )
 
-  static var globalTheme = defaultTheme {
+  static var globalTheme: AppTheme = defaultTheme {
     didSet {
       NotificationCenter.default.post(name: AppTheme.didChangeGlobalThemeNotificationName,
                                       object: nil,

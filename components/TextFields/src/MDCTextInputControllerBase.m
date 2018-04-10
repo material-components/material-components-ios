@@ -138,6 +138,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 static UIFont *_inlinePlaceholderFontDefault;
 static UIFont *_leadingUnderlineLabelFontDefault;
+static UIFont *_textInputFontDefault;
 static UIFont *_trailingUnderlineLabelFontDefault;
 
 static UIRectCorner _roundedCornersDefault = 0;
@@ -163,6 +164,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   UIFont *_inlinePlaceholderFont;
   UIFont *_leadingUnderlineLabelFont;
+  UIFont *_textInputFont;
   UIFont *_trailingUnderlineLabelFont;
 
   UIRectCorner _roundedCorners;
@@ -566,10 +568,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 #pragma  mark - TextInput Customization
 
 - (void)updateTextInput {
+  UIFont *font = self.textInputFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-    self.textInput.font = textFont;
+    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
+  self.textInput.font = font;
 }
 
 #pragma mark - Placeholder Customization
@@ -1309,6 +1313,28 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _textInput = textInput;
     [self setupInput];
   }
+}
+
+- (UIFont *)textInputFont {
+  if (_textInputFont) {
+    return _textInputFont;
+  }
+  return [self class].textInputFontDefault ?: self.textInput.font;
+}
+
+- (void)setTextInputFont:(UIFont *)textInputFont {
+  if (![_textInputFont isEqual:textInputFont]) {
+    _textInputFont = textInputFont;
+    [self updateLayout];
+  }
+}
+
++ (UIFont *)textInputFontDefault {
+  return _textInputFontDefault;
+}
+
++ (void)setTextInputFontDefault:(UIFont *)textInputFontDefault {
+    _textInputFontDefault = textInputFontDefault;
 }
 
 - (UIFont *)trailingUnderlineLabelFont {

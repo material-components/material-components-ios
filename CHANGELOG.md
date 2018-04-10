@@ -1,3 +1,447 @@
+# 54.2.0
+
+## New features
+
+Dialogs, FeatureHighlight, and TabBar now each have a Typography themer.
+
+ActivityIndicator and AppBar now have an updated Color themer.
+
+## API changes
+
+### FeatureHighlight
+
+#### MDCFeatureHighlightViewController
+
+*new* property: `titleFont` in `MDCFeatureHighlightViewController`
+
+*new* property: `bodyFont` in `MDCFeatureHighlightViewController`
+
+### TextFields
+
+#### MDCTextInputController
+
+*new* property: `textInputFont` in `MDCTextInputController`
+
+*new* property: `textInputFontDefault` in `MDCTextInputController`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Implementing TabBar Typography Themer. (#3278)](https://github.com/material-components/material-components-ios/commit/207e59d1b190fbae69a72bea6c4cb2321eb3fa5c) (Mohammad Cazi)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Implementation of Typography Themer. (#3268)](https://github.com/material-components/material-components-ios/commit/8563ec05c77973f76c28c694ea3cceb16c2a0c67) (Mohammad Cazi)
+* [exposing title and body font for FeatureHighlightViewController. (#3274)](https://github.com/material-components/material-components-ios/commit/2962b79503a27cc36319983ef237f399b2c7fdca) (Mohammad Cazi)
+
+### AppBar
+
+#### Changes
+
+* [Implement semantic color themer. (#3283)](https://github.com/material-components/material-components-ios/commit/0ad1f5dfb29cb6ff63b47085c7d33ece0610a0c7) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [expose input text font property on controller. (#3272)](https://github.com/material-components/material-components-ios/commit/a15a0a7e3a7535a172570282ea1d3be058db1229) (Mohammad Cazi)
+
+### Slider
+
+#### Changes
+
+* [Fix green Slider example color (#3292)](https://github.com/material-components/material-components-ios/commit/2b37db4c90118bd8a654cd5732e148ee17f8a493) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [Forcing Font size now does save the right FontName for every case. (#3299)](https://github.com/material-components/material-components-ios/commit/bc3b4e871bd34f137c61112db7eeeff5afd452a7) (Mohammad Cazi)
+
+### ActivityIndicator
+
+#### Changes
+
+* [Update Activity Indicator accessibility label and value (#3261)](https://github.com/material-components/material-components-ios/commit/7b38f3fa2d8e39c5c7e915ffb49fd438cf45fd87) (John Detloff)
+* [Update ActivityIndicator Color Themer (#3259)](https://github.com/material-components/material-components-ios/commit/eb3167032ff65c854dd5a8a8e3fe637aadda4f81) (John Detloff)
+
+### Dialogs
+
+#### Changes
+
+* [Implement MDCAlertController typography themer. (#3302)](https://github.com/material-components/material-components-ios/commit/7716981f1fd630e8ee5bb2132d6703ed23d393f4) (Mohammad Cazi)
+
+---
+
+# 54.1.0
+
+## New features
+
+Snackbar now has a Typography themer.
+
+NavigationBar now exposes a Color themer API that makes use of the `MDCColorScheming` type.
+
+## Component changes
+
+### FeatureHighlight
+
+#### Changes
+
+* [cleaning up dynamic type support for feature highlight by defining the default. (#3269)](https://github.com/material-components/material-components-ios/commit/98740fac547f863d5ed80b9ca56cceb650f6f8ab) (Mohammad Cazi)
+
+### Ink
+
+#### Changes
+
+* [Fix flaky test (#3290)](https://github.com/material-components/material-components-ios/commit/b5e2935b53ed4315dfafaedc24770b433f5b050f) (Yarden Eitan)
+
+### Snackbar
+
+#### Changes
+
+* [Implement a typography themer. (#3288)](https://github.com/material-components/material-components-ios/commit/0efc202c35b6c3facbb4f70a25513cfeb21d5dc5) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Implement a semantic color scheme color themer API. (#3267)](https://github.com/material-components/material-components-ios/commit/38595c65092358375f9423ed9cf181a760f8a4f1) (featherless)
+
+### Dialogs
+
+#### Changes
+
+* [Loading the view manually caused view did load not to be called.  (#3281)](https://github.com/material-components/material-components-ios/commit/de1119c21e1b7f471b82cd98bdaee471a51fb351) (Mohammad Cazi)
+
+---
+
+# 54.0.1
+
+Added missing CocoaPods dependencies from v54.0.0.
+
+---
+
+# 54.0.0
+
+## Breaking changes
+
+`MDCMaskedTransition` has been removed and replaced with `MDCMaskedTransitionController`. You may
+now use `MDCMaskedTransitionController` as a standard UIKit transitioning delegate.
+
+## New features
+
+Many components now expose new public APIs for configuring typography, color, and shapes.
+
+## API changes
+
+### Cards
+
+#### MDCCardCollectionCell
+
+*new* property: `shapeGenerator` in `MDCCardCollectionCell`
+
+#### MDCCard
+
+*new* property: `shapeGenerator` in `MDCCard`
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `titleColor` in `MDCAlertController`
+
+*new* property: `titleFont` in `MDCAlertController`
+
+*new* property: `messageFont` in `MDCAlertController`
+
+*new* property: `buttonTitleColor` in `MDCAlertController`
+
+*new* property: `buttonFont` in `MDCAlertController`
+
+*new* property: `messageColor` in `MDCAlertController`
+
+### MaskedTransition
+
+#### MDCMaskedTransition
+
+*removed* class: `MDCMaskedTransition`
+
+*removed* method: `-init` in `MDCMaskedTransition`
+
+*removed* method: `-initWithSourceView:` in `MDCMaskedTransition`
+
+*removed* property: `calculateFrameOfPresentedView` in `MDCMaskedTransition`
+
+#### MDCMaskedTransitionController
+
+*new* property: `sourceView` in `MDCMaskedTransitionController`
+
+*new* method: `-initWithSourceView:` in `MDCMaskedTransitionController`
+
+*new* method: `-init` in `MDCMaskedTransitionController`
+
+*new* property: `calculateFrameOfPresentedView` in `MDCMaskedTransitionController`
+
+*new* class: `MDCMaskedTransitionController`
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `titleFont` in `MDCNavigationBar`
+
+*new* property: `titleTextColor` in `MDCNavigationBar`
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* class method: `+buttonTitleColorForState:` in `MDCSnackbarManager`
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager`
+
+*new* property: `snackbarMessageViewBackgroundColor` in `MDCSnackbarManager`
+
+*new* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager`
+
+*new* property: `buttonFont` in `MDCSnackbarManager`
+
+*new* class method: `+setButtonTitleColor:forState:` in `MDCSnackbarManager`
+
+*new* property: `snackbarMessageViewShadowColor` in `MDCSnackbarManager`
+
+*new* property: `messageTextColor` in `MDCSnackbarManager`
+
+*new* property: `messageFont` in `MDCSnackbarManager`
+
+*modified* class method: `+setPresentationHostView:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (void)setPresentationHostView:(UIView *)hostView;` |
+| To: | `+ (void)setPresentationHostView:(nullable UIView *)hostView;` |
+
+*modified* class method: `+dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (void)dismissAndCallCompletionBlocksWithCategory:(NSString *)category;` |
+| To: | `+ (void)dismissAndCallCompletionBlocksWithCategory:     (nullable NSString *)category;` |
+
+*modified* class method: `+suspendMessagesWithCategory:` in `MDCSnackbarManager`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class func suspendMessages(withCategory category: Any!) -> MDCSnackbarSuspensionToken!` |
+| To: | `class func suspendMessages(withCategory category: Any!) -> MDCSnackbarSuspensionToken?` |
+
+*modified* class method: `+suspendMessagesWithCategory:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:     (NSString *)category;` |
+| To: | `+ (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:     (nullable NSString *)category;` |
+
+*modified* class method: `+showMessage:` in `MDCSnackbarManager`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class func show(_ message: MDCSnackbarMessage!)` |
+| To: | `class func show(_ message: MDCSnackbarMessage?)` |
+
+*modified* class method: `+showMessage:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (void)showMessage:(MDCSnackbarMessage *)message;` |
+| To: | `+ (void)showMessage:(nullable MDCSnackbarMessage *)message;` |
+
+*modified* class method: `+suspendAllMessages` in `MDCSnackbarManager`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class func suspendAllMessages() -> MDCSnackbarSuspensionToken!` |
+| To: | `class func suspendAllMessages() -> MDCSnackbarSuspensionToken?` |
+
+*modified* class method: `+suspendAllMessages` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (id<MDCSnackbarSuspensionToken>)suspendAllMessages;` |
+| To: | `+ (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages;` |
+
+*modified* class method: `+resumeMessagesWithToken:` in `MDCSnackbarManager`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class func resumeMessages(with token: MDCSnackbarSuspensionToken!)` |
+| To: | `class func resumeMessages(with token: MDCSnackbarSuspensionToken?)` |
+
+*modified* class method: `+resumeMessagesWithToken:` in `MDCSnackbarManager`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `+ (void)resumeMessagesWithToken:(id<MDCSnackbarSuspensionToken>)token;` |
+| To: | `+ (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token;` |
+
+### Themes
+
+#### MDCFontScheme
+
+Moved to schemes/Typography.
+
+#### MDCTonalPalette
+
+Moved to schemes/Color.
+
+#### MDCTonalColorScheme
+
+Moved to schemes/Color.
+
+#### MDCColorScheme
+
+Moved to schemes/Color.
+
+#### MDCBasicColorScheme
+
+Moved to schemes/Color.
+
+#### MDCBasicFontScheme
+
+Moved to schemes/Typography.
+
+### schemes/Typography
+
+**New component.**
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Disable TabBar test throwing an exception (#3221)](https://github.com/material-components/material-components-ios/commit/d63d4fe79daf9242a5eba8d071ac27006b8be534) (ianegordon)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### MaskedTransition
+
+#### Changes
+
+* [Convert MaskedTransition from a MotionTransitioning Transition type to a vanilla UIKit type (#3070)](https://github.com/material-components/material-components-ios/commit/44515ba81a919bb6c4d61a86448985dab5d54730) (featherless)
+
+### schemes/Color
+
+#### Changes
+
+* [[Color] Implement a swift-friendly API for color scheme defaults. (#3246)](https://github.com/material-components/material-components-ios/commit/246ab9ed9baaab9d6d9e91ad1e4ec13ee34357c8) (featherless)
+* [[Color] Reduce the public API contract for MDCSemanticColorScheme. (#3234)](https://github.com/material-components/material-components-ios/commit/f0d9c792f8d9005ed01320aa0c8f723dd28b2870) (featherless)
+* [[Color] Remove straggling reference to NSCoding. (#3237)](https://github.com/material-components/material-components-ios/commit/7a93e933e74c7e27bce8909c7bf7a6e35e51b66f) (featherless)
+* [[Themes] Add new semantic color scheme (#3216)](https://github.com/material-components/material-components-ios/commit/2be6cd9de54743df7ec768e62c9d52c24333dbee) (featherless)
+
+### schemes/Typography
+
+#### Changes
+
+* [Partial roll-forward of "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3258)](https://github.com/material-components/material-components-ios/commit/6620da4d965890af8ea3f9e8fce0e518b9ed33b0) (featherless)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Fix build breakage due to missing implementation of MDCBasicFontScheme. (#3242)](https://github.com/material-components/material-components-ios/commit/94ae187e035103cbc799e50fb78a636e88861172) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Adding Color Themer. (#3260)](https://github.com/material-components/material-components-ios/commit/fa00c708b73b3276eb2f86a1274f098c14ffbcf0) (Mohammad Cazi)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### AppBar
+
+#### Changes
+
+* [Color Themer now composes to the FlexibleHeader and NavigationBar color themers. (#3210)](https://github.com/material-components/material-components-ios/commit/e68eda7c8cf7a40a34d1b79b088ad5ddee91e663) (featherless)
+
+### Ink
+
+#### Changes
+
+* [[Cards] Added Shapes support for MDCCard and MDCCardCollectionCell + 2 Examples (#3215)](https://github.com/material-components/material-components-ios/commit/af2a3c89d2db301ad05fd2d3eb1e6dae5f057e46) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [Implement new semantic color scheme themer APIs. (#3252)](https://github.com/material-components/material-components-ios/commit/5c09f5e625ab65dac2670cc1dabb9f1f5d28cb94) (featherless)
+* [Update documentation for the themer. (#3265)](https://github.com/material-components/material-components-ios/commit/9d9e8cd3bacd8feded1f89c7f0936c1293cc7ff2) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Adding Color Themer. (#3255)](https://github.com/material-components/material-components-ios/commit/75c81a1659e01fa13ba12e4868d3c4aa27f9741a) (Mohammad Cazi)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### Chips
+
+#### Changes
+
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### Snackbar
+
+#### Changes
+
+* [Removed dependency on UIAppearance entirely for color/font customization/theming. (#3223)](https://github.com/material-components/material-components-ios/commit/bbf1126b8fbf11c85e1dad8d0cad5cf912c0a8c8) (Yarden Eitan)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+### Cards
+
+#### Changes
+
+* [Added Shapes support for MDCCard and MDCCardCollectionCell + 2 Examples (#3215)](https://github.com/material-components/material-components-ios/commit/af2a3c89d2db301ad05fd2d3eb1e6dae5f057e46) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Add an API for customizing the title label's text color. (#3266)](https://github.com/material-components/material-components-ios/commit/8c8b8d0a7e8512d9d9a7841d2e35f465ee3d2b5e) (featherless)
+* [[MDCNavigationBar] Exposing typography API. (#3217)](https://github.com/material-components/material-components-ios/commit/b0aaa07cb28c1c69df3ca61397d6a9baf027047f) (Mohammad Cazi)
+
+### Dialogs
+
+#### Changes
+
+* [Expose typography and color API. (#3218)](https://github.com/material-components/material-components-ios/commit/a61f529825418130b44227eeeed1822eedcdf67f) (Mohammad Cazi)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Implement a color themer API with the new MDCColorScheming type. (#3236)](https://github.com/material-components/material-components-ios/commit/1e2ed55efe872e35aeced9873968a6a627419d7b) (featherless)
+* [Revert "Fix bug where shadow layer's opacity wouldn't be set without a tracking scroll view. (#3201)" (#3225)](https://github.com/material-components/material-components-ios/commit/bcecad50f8a385ac641fd6b10f5968bec49c4dd9) (Robert Moore)
+* [Revert "Revert "Fix bug where shadow layer's opacity wouldn't be set without a tracking scroll view. (#3201)" (#3225)" (#3229)](https://github.com/material-components/material-components-ios/commit/aaf882e81103c9fac238be7ee15d4acb740aab0e) (Robert Moore)
+
+### Themes
+
+#### Changes
+
+* [Add new semantic color scheme (#3216)](https://github.com/material-components/material-components-ios/commit/2be6cd9de54743df7ec768e62c9d52c24333dbee) (featherless)
+* [Partial roll-forward of "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3258)](https://github.com/material-components/material-components-ios/commit/6620da4d965890af8ea3f9e8fce0e518b9ed33b0) (featherless)
+* [Revert "[Typography] Migrate from FontScheme to TypographyScheming (#3219)" (#3256)](https://github.com/material-components/material-components-ios/commit/83b9ea1735a6d38359896e79452713bd85341ef3) (featherless)
+* [[Catalog] Remove the global theme change notifications. (#3213)](https://github.com/material-components/material-components-ios/commit/fcfe9d810e98df072ccbdd8d494f4c067e0f2cc1) (featherless)
+* [[Typography] Migrate from FontScheme to TypographyScheming (#3219)](https://github.com/material-components/material-components-ios/commit/2e48edf99f8c73c81ba4d782f51a55faf06d23a8) (ianegordon)
+
+---
+
 # 53.0.0
 
 ## Component Changes

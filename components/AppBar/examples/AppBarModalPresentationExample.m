@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MDCAppBarColorThemer.h"
 
 @interface AppBarModalPresentationExamplePresented : UITableViewController
 @property(strong, nonatomic) MDCAppBar *appBar;
@@ -31,12 +32,8 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
-    MDCAppBarTextColorAccessibilityMutator *mutator =
-        [[MDCAppBarTextColorAccessibilityMutator alloc] init];
-    [mutator mutate:_appBar];
+    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
 
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -225,18 +222,12 @@
   self = [super init];
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     [self addChildViewController:_appBar.headerViewController];
 
-    self.title = @"Modal Presentation";
+    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
 
-    UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
-    MDCAppBarTextColorAccessibilityMutator *mutator =
-        [[MDCAppBarTextColorAccessibilityMutator alloc] init];
-    [mutator mutate:_appBar];
+    self.title = @"Modal Presentation";
   }
   return self;
 }

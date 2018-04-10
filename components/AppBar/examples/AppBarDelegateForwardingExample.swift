@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MDCAppBarColorThemer
 
 // This example builds upon AppBarTypicalUseExample.
 
@@ -30,18 +31,12 @@ class AppBarDelegateForwardingExample: UITableViewController {
   override init(style: UITableViewStyle) {
     super.init(style: style)
 
-    self.appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+    let colorScheme = MDCSemanticColorScheme()
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     self.addChildViewController(appBar.headerViewController)
 
     self.title = "Delegate Forwarding"
-
-    let color = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    let mutator = MDCAppBarTextColorAccessibilityMutator()
-    mutator.mutate(appBar)
   }
 
   override func viewDidLoad() {

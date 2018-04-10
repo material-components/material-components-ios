@@ -15,6 +15,7 @@
  */
 
 #import "MaterialCollections.h"
+#import "MaterialPalettes.h"
 #import "MaterialSlider.h"
 #import "MaterialTypography.h"
 #import "supplemental/SliderCollectionSupplemental.h"
@@ -102,6 +103,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   _slider.filledTrackAnchorValue = model.anchorValue;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
   _slider.thumbHollowAtStart = model.hollowCircle;
+  _slider.color = model.sliderColor;
   _slider.enabled = model.enabled;
 
   // Add target/action pair
@@ -185,6 +187,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Green slider without hollow circle at 0";
+    model.sliderColor = MDCPalette.greenPalette.tint800;
     model.hollowCircle = NO;
     model.value = 0.f;
     [_sliders addObject:model];

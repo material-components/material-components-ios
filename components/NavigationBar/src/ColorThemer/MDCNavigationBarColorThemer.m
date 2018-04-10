@@ -18,6 +18,13 @@
 
 @implementation MDCNavigationBarColorThemer
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                 toNavigationBar:(nonnull MDCNavigationBar *)navigationBar {
+  navigationBar.backgroundColor = colorScheme.primaryColor;
+  navigationBar.titleTextColor = colorScheme.onPrimaryColor;
+  navigationBar.tintColor = colorScheme.onPrimaryColor;
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
          toNavigationBar:(MDCNavigationBar *)navigationBar {
   navigationBar.backgroundColor = colorScheme.primaryColor;
