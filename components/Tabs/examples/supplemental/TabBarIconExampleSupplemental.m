@@ -21,6 +21,7 @@
 #import "TabBarIconExampleSupplemental.h"
 
 #import "MaterialPalettes.h"
+#import "MDCTabBarTypographyThemer.h"
 
 // Exposing selectors defined in the main example class
 @interface TabBarIconExample ()
@@ -37,6 +38,9 @@
   [self setupScrollingContent];
 
   [self setupAlignmentButton];
+
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  [MDCTabBarTypographyThemer applyTypographyScheme:typographyScheme toTabBar:self.tabBar];
 }
 
 - (void)setupAlignmentButton {

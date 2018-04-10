@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MDCAppBarColorThemer.h"
 
 @interface AppBarImageryExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
@@ -47,11 +48,8 @@
   // The header view does not clip to bounds by default so we ensure that the image is clipped.
   imageView.clipsToBounds = YES;
 
-  // We want navigation bar + status bar tint color to be white, so we set tint color here and
-  // implement -preferredStatusBarStyle.
-  self.appBar.navigationBar.tintColor = [UIColor whiteColor];
-  self.appBar.navigationBar.titleTextAttributes =
-      @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
 
   // Make sure navigation bar background color is clear so the image view is visible.
   self.appBar.navigationBar.backgroundColor = [UIColor clearColor];

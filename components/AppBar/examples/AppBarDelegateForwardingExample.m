@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MDCAppBarColorThemer.h"
 
 // This example builds upon AppBarTypicalUseExample.
 
@@ -106,11 +107,8 @@
 
     self.title = @"Delegate Forwarding";
 
-    UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
-    MDCAppBarTextColorAccessibilityMutator *mutator =
-        [[MDCAppBarTextColorAccessibilityMutator alloc] init];
-    [mutator mutate:_appBar];
+    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
   }
   return self;
 }

@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MDCAppBarColorThemer
 
 class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate {
   @IBOutlet weak var scrollView: UIScrollView!
@@ -37,11 +38,9 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
     addChildViewController(appBar.headerViewController)
-    let headerColor = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = headerColor
 
-    let mutator = MDCAppBarTextColorAccessibilityMutator()
-    mutator.mutate(appBar)
+    let colorScheme = MDCSemanticColorScheme()
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
   }
 
   override func viewDidLoad() {
