@@ -681,6 +681,14 @@ end
       extension.dependency "MaterialComponents/TextFields"
       extension.dependency "MaterialComponents/Themes"
     end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/TextFields/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/TextFields/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/TextFields"
+      extension.dependency "MaterialComponents/schemes/Typography"
+    end
 
   end
 
