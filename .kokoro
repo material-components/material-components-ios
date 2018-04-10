@@ -138,7 +138,7 @@ run_cocoapods() {
     echo "$xcode_version_as_number" >> "$SEEN_XCODES_FILE_PATH"
 
     if [ -n "$XCODE_VERSION" ]; then
-      if [ "$xcode_version_as_number" -ne "$XCODE_VERSION" ]; then
+      if [ "$xcode_version_as_number" -ne "$(version_as_number $XCODE_VERSION)" ]; then
         continue
       fi
     elif [ -n "$xcode_min_version_as_number" ]; then
