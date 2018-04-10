@@ -765,6 +765,50 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
       @(0.333));
 }
 
+- (void)testValueLabelTextColorDefalut {
+  // Then
+  XCTAssertEqualObjects(self.slider.valueLabelTextColor, UIColor.whiteColor);
+}
+
+- (void)testSetValueLabelTextColor {
+  // When
+  self.slider.valueLabelTextColor = UIColor.cyanColor;
+
+  // Then
+  XCTAssertEqualObjects(self.slider.thumbTrack.valueLabelTextColor, UIColor.cyanColor);
+}
+
+- (void)testValueLabelTextColorNullResettable {
+  // When
+  self.slider.valueLabelTextColor = UIColor.cyanColor;
+  self.slider.valueLabelTextColor = nil;
+
+  // Then
+  XCTAssertEqualObjects(self.slider.valueLabelTextColor, UIColor.whiteColor);
+}
+
+- (void)testValueLabelBackgroundColorDefault {
+  // Then
+  XCTAssertEqualObjects(self.slider.valueLabelBackgroundColor, MDCPalette.bluePalette.tint500);
+}
+
+- (void)testSetValueLabelBackgroundColor {
+  // When
+  self.slider.valueLabelBackgroundColor = UIColor.magentaColor;
+
+  // Then
+  XCTAssertEqualObjects(self.slider.thumbTrack.valueLabelBackgroundColor, UIColor.magentaColor);
+}
+
+- (void)testValueLabelBackgroundColorNullResettable {
+  // When
+  self.slider.valueLabelBackgroundColor = UIColor.magentaColor;
+  self.slider.valueLabelBackgroundColor = nil;
+
+  // Then
+  XCTAssertEqualObjects(self.slider.valueLabelBackgroundColor, MDCPalette.bluePalette.tint500);
+}
+
 #pragma mark Accessibility
 
 - (void)testAccessibilityValue {

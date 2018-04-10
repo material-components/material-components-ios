@@ -222,6 +222,20 @@ IB_DESIGNABLE
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
 
 /**
+ The color of the value label's text.
+
+ Defaults and resets to white.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *valueLabelTextColor;
+
+/**
+ The color of the value label's background.
+
+ Defaults and resets to blue.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *valueLabelBackgroundColor;
+
+/**
  Whether or not the thumb view should be a hollow circle when at the minimum value. For sliders
  where the minimum value indicates that the associated property is off (for example a volume slider
  where a value of 0 = muted), this should be set to YES. In cases where this doesn't make sense (for
@@ -263,7 +277,6 @@ IB_DESIGNABLE
  @note Has no effect if @c statefulAPIEnabled is @c YES.
  */
 @property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
-
 
 @end
 
