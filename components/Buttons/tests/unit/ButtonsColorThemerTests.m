@@ -59,7 +59,7 @@
   XCTAssert(
       CGColorEqualToColor([button backgroundColorForState:UIControlStateDisabled].CGColor,
                           [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
-  XCTAssertEqual(button.disabledAlpha, 1.f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
 }
 
 - (void)testMDCFlatButtonColorThemer {
@@ -100,7 +100,7 @@
   XCTAssert(
       CGColorEqualToColor([button backgroundColorForState:UIControlStateDisabled].CGColor,
                           [colorScheme.primaryColor colorWithAlphaComponent:0.f].CGColor));
-  XCTAssertEqual(button.disabledAlpha, 1.f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
 }
 
 @end
