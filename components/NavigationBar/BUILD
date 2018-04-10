@@ -48,6 +48,18 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    deps = [
+        ":NavigationBar",
+        "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = native.glob([
@@ -61,6 +73,7 @@ mdc_objc_library(
     deps = [
         ":NavigationBar",
         ":ColorThemer",
+        ":TypographyThemer",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
     visibility = ["//visibility:private"],

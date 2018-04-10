@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "54.0.1"
+  mdc.version      = "54.1.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -56,7 +56,7 @@ Pod::Spec.new do |mdc|
       extension.source_files = "components/ActivityIndicator/src/#{extension.base_name}/*.{h,m}"
 
       extension.dependency "MaterialComponents/ActivityIndicator"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
   end
 
@@ -173,7 +173,7 @@ Pod::Spec.new do |mdc|
       extension.public_header_files = "components/Buttons/src/#{extension.base_name}/*.h"
       extension.source_files = "components/Buttons/src/#{extension.base_name}/*.{h,m}", "components/Buttons/src/#{extension.base_name}/private/*.{h,m}"
       extension.dependency "MaterialComponents/Buttons"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
     component.subspec "TitleColorAccessibilityMutator" do |extension|
       extension.ios.deployment_target = '8.0'
@@ -459,6 +459,14 @@ Pod::Spec.new do |mdc|
 
       extension.dependency "MaterialComponents/NavigationBar"
       extension.dependency "MaterialComponents/schemes/Color"
+    end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/NavigationBar/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/NavigationBar/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/NavigationBar"
+      extension.dependency "MaterialComponents/schemes/Typography"
     end
   end
 
@@ -747,7 +755,7 @@ end
     private_spec.subspec "ThumbTrack" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
-      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
 
       component.dependency "MaterialComponents/Ink"
       component.dependency "MaterialComponents/ShadowElevations"
