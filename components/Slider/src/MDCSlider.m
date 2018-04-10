@@ -16,6 +16,7 @@
 
 #import "MDCSlider.h"
 
+#import "private/MDCSlider+Private.h"
 #import "private/MDCSlider_Subclassable.h"
 #import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
@@ -35,7 +36,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 @end
 
-@implementation MDCSlider
+@implementation MDCSlider {
+  NSMutableDictionary *_thumbColorsForState;
+  NSMutableDictionary *_trackFillColorsForState;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -84,7 +88,65 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   [_thumbTrack addTarget:self
                   action:@selector(thumbTrackTouchCanceled:)
         forControlEvents:UIControlEventTouchCancel];
+
+  _thumbColorsForState = [@{} mutableCopy];
+  _trackFillColorsForState = [@{} mutableCopy];
   [self addSubview:_thumbTrack];
+}
+
+#pragma mark - Color customization methods
+
+- (void)setTrackFillColor:(UIColor *)fillColor forState:(UIControlState)state {
+  _trackFillColorsForState[@(state)] = fillColor;
+  if (state == self.state) {
+    [self updateColorsForState];
+  }
+}
+
+- (UIColor *)trackFillColorForState:(UIControlState)state {
+  UIColor *color = _trackFillColorsForState[@(state)];
+  if (color) {
+    return color;
+  }
+
+  if (state != UIControlStateNormal) {
+    color = _trackFillColorsForState[@(UIControlStateNormal)];
+  }
+  if (color) {
+    return color;
+  }
+  return _thumbTrack.primaryColor;
+}
+
+- (void)setThumbColor:(UIColor *)thumbColor forState:(UIControlState)state {
+  _thumbColorsForState[@(state)] = thumbColor;
+  if (state == self.state) {
+    [self updateColorsForState];
+  }
+}
+
+- (UIColor *)thumbColorForState:(UIControlState)state {
+  UIColor *color = _thumbColorsForState[@(state)];
+  if (color) {
+    return color;
+  }
+  if (state != UIControlStateNormal) {
+    color = _thumbColorsForState[@(UIControlStateNormal)];
+  }
+  if (color) {
+    return color;
+  }
+  return _thumbTrack.thumbEnabledColor;
+}
+
+- (void)updateColorsForState {
+  if ((self.state & UIControlStateDisabled) == UIControlStateDisabled) {
+    _thumbTrack.thumbDisabledColor = [self thumbColorForState:self.state];
+  } else {
+    _thumbTrack.thumbEnabledColor = [self thumbColorForState:self.state];
+  }
+  _thumbTrack.trackOnColor = [self trackFillColorForState:self.state];
+  _thumbTrack.inkColor = self.inkColor;
 }
 
 #pragma mark - ThumbTrack passthrough methods
@@ -96,25 +158,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (UIColor *)trackBackgroundColor {
   return _thumbTrack.trackOffColor;
-}
-
-- (void)setDisabledColor:(UIColor *)disabledColor {
-  _thumbTrack.trackDisabledColor =
-      disabledColor ?: [[self class] defaultDisabledColor];
-  _thumbTrack.thumbDisabledColor =
-      disabledColor ?: [[self class] defaultDisabledColor];
-}
-
-- (UIColor *)disabledColor {
-  return _thumbTrack.trackDisabledColor;
-}
-
-- (void)setColor:(UIColor *)color {
-  _thumbTrack.primaryColor = color ? color : MDCThumbTrackDefaultColor();
-}
-
-- (UIColor *)color {
-  return _thumbTrack.primaryColor;
 }
 
 - (void)setThumbRadius:(CGFloat)thumbRadius {
@@ -201,6 +244,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.thumbIsHollowAtStart = thumbHollowAtStart;
 }
 
+- (void)setInkColor:(UIColor *)inkColor {
+  _thumbTrack.inkColor = inkColor;
+}
+
+- (UIColor *)inkColor {
+  return _thumbTrack.inkColor;
+}
+
 #pragma mark - MDCThumbTrackDelegate methods
 
 - (NSString *)thumbTrack:(__unused MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {
@@ -230,6 +281,17 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   _thumbTrack.enabled = enabled;
+  [self updateColorsForState];
+}
+
+- (void)setSelected:(BOOL)selected {
+  [super setSelected:selected];
+  [self updateColorsForState];
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+  [super setHighlighted:highlighted];
+  [self updateColorsForState];
 }
 
 - (BOOL)isTracking {
@@ -355,6 +417,33 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 + (UIColor *)defaultDisabledColor {
   return [[UIColor blackColor] colorWithAlphaComponent:kSliderLightThemeTrackAlpha];
+}
+
+#pragma mark - To be deprecated
+
+- (void)setDisabledColor:(UIColor *)disabledColor {
+  _thumbTrack.trackDisabledColor = disabledColor ?: [[self class] defaultDisabledColor];
+  _thumbTrack.thumbDisabledColor = disabledColor ?: [[self class] defaultDisabledColor];
+}
+
+- (UIColor *)disabledColor {
+  return _thumbTrack.trackDisabledColor;
+}
+
+- (void)setColor:(UIColor *)color {
+  _thumbTrack.primaryColor = color ? color : MDCThumbTrackDefaultColor();
+}
+
+- (UIColor *)color {
+  return _thumbTrack.primaryColor;
+}
+
+@end
+
+@implementation MDCSlider (Private)
+
+- (MDCThumbTrack *)thumbTrack {
+  return _thumbTrack;
 }
 
 @end

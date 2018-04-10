@@ -16,6 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCSlider+Private.h"
 #import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
 #import "MaterialSlider.h"
@@ -30,10 +31,10 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 @end
 
 @interface SliderTests : XCTestCase
-@property(nonatomic, nonnull) MDCSlider *slider;
-@property(nonatomic, nonnull) UIColor *aNonDefaultColor;
-@property(nonatomic, nonnull) UIColor *defaultBlue;
-@property(nonatomic, nonnull) UIColor *defaultGray;
+@property(nonatomic, nullable) MDCSlider *slider;
+@property(nonatomic, nullable) UIColor *aNonDefaultColor;
+@property(nonatomic, nullable) UIColor *defaultBlue;
+@property(nonatomic, nullable) UIColor *defaultGray;
 @end
 
 @implementation SliderTests
@@ -44,6 +45,14 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.aNonDefaultColor = [UIColor orangeColor];
   self.defaultBlue = MDCPalette.bluePalette.tint500;
   self.defaultGray = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
+}
+
+- (void)tearDown {
+  self.slider = nil;
+  self.aNonDefaultColor = nil;
+  self.defaultBlue = nil;
+  self.defaultGray = nil;
+  [super tearDown];
 }
 
 - (void)testValue {
@@ -255,7 +264,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   }
 }
 
-#pragma mark Colors
+#pragma mark - color
 
 - (void)testColorDefault {
   // Then
@@ -271,6 +280,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects(self.slider.color, self.defaultBlue);
 }
 
+#pragma mark - disabledColor
+
 - (void)testDisabledColorDefault {
   // Then
   XCTAssertEqualObjects(self.slider.disabledColor, self.defaultGray);
@@ -284,6 +295,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // Then
   XCTAssertEqualObjects(self.slider.disabledColor, self.defaultGray);
 }
+
+#pragma mark - trackBackgroundColor
 
 - (void)testTrackBackgroundColorDefault {
   // Then
@@ -299,7 +312,187 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects(self.slider.trackBackgroundColor, self.defaultGray);
 }
 
-#pragma mark Thumb
+#pragma mark - thumbColorForState
+
+- (void)testThumbColorForStateFallback {
+  // When
+  [self.slider setThumbColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.slider thumbColorForState:state], UIColor.purpleColor,
+                          @"(%@) is not equal to (%@) for state (%ld)",
+                          [self.slider thumbColorForState:state], UIColor.purpleColor, (long)state);
+  }
+}
+
+- (void)testThumbColorForStateAppliesToThumbTrack {
+  // When
+  [self.slider setThumbColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.slider setThumbColor:UIColor.redColor forState:UIControlStateHighlighted];
+  [self.slider setThumbColor:UIColor.cyanColor forState:UIControlStateSelected];
+  [self.slider setThumbColor:UIColor.grayColor forState:UIControlStateDisabled];
+  [self.slider setThumbColor:UIColor.blueColor
+                    forState:UIControlStateHighlighted | UIControlStateSelected];
+  [self.slider setThumbColor:UIColor.blackColor
+                    forState:UIControlStateDisabled | UIControlStateSelected];
+
+  // Then
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
+                        [self.slider thumbColorForState:UIControlStateDisabled]);
+  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                           [self.slider thumbColorForState:UIControlStateDisabled]);
+  self.slider.enabled = NO;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
+                        [self.slider thumbColorForState:UIControlStateDisabled |
+                         UIControlStateSelected]);
+  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                           [self.slider thumbColorForState:UIControlStateDisabled |
+                            UIControlStateSelected]);
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
+                        [self.slider thumbColorForState:UIControlStateDisabled]);
+  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                           [self.slider thumbColorForState:UIControlStateDisabled]);
+  self.slider.enabled = NO;
+  self.slider.selected = YES;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
+                        [self.slider thumbColorForState:UIControlStateDisabled |
+                         UIControlStateSelected]);
+  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                           [self.slider thumbColorForState:UIControlStateDisabled |
+                            UIControlStateSelected]);
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                        [self.slider thumbColorForState:UIControlStateNormal]);
+  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
+                           [self.slider thumbColorForState:UIControlStateNormal]);
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                        [self.slider thumbColorForState:UIControlStateSelected]);
+  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
+                           [self.slider thumbColorForState:UIControlStateSelected]);
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                        [self.slider thumbColorForState:UIControlStateHighlighted]);
+  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
+                           [self.slider thumbColorForState:UIControlStateHighlighted]);
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
+                        [self.slider thumbColorForState:UIControlStateHighlighted |
+                         UIControlStateSelected]);
+  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
+                           [self.slider thumbColorForState:UIControlStateHighlighted |
+                            UIControlStateSelected]);
+}
+
+#pragma mark - trackFillColorForState
+
+- (void)testTrackFillColorForStateFallback {
+  // When
+  [self.slider setTrackFillColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.slider trackFillColorForState:state], UIColor.purpleColor,
+                          @"(%@) is not equal to (%@) for state (%ld)",
+                          [self.slider trackFillColorForState:state], UIColor.purpleColor, (long)state);
+  }
+}
+
+- (void)testTrackFillColorForStateAppliesToThumbTrack {
+  // When
+  [self.slider setTrackFillColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.slider setTrackFillColor:UIColor.redColor forState:UIControlStateHighlighted];
+  [self.slider setTrackFillColor:UIColor.cyanColor forState:UIControlStateSelected];
+  [self.slider setTrackFillColor:UIColor.grayColor forState:UIControlStateDisabled];
+  [self.slider setTrackFillColor:UIColor.blueColor
+                        forState:UIControlStateHighlighted | UIControlStateSelected];
+  [self.slider setTrackFillColor:UIColor.blackColor
+                        forState:UIControlStateDisabled | UIControlStateSelected];
+
+  // Then
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
+                        [self.slider trackFillColorForState:UIControlStateDisabled]);
+  self.slider.enabled = NO;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
+                        [self.slider trackFillColorForState:UIControlStateDisabled |
+                         UIControlStateSelected]);
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
+                        [self.slider trackFillColorForState:UIControlStateDisabled]);
+  self.slider.enabled = NO;
+  self.slider.selected = YES;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
+                        [self.slider trackFillColorForState:UIControlStateDisabled |
+                         UIControlStateSelected]);
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
+                        [self.slider trackFillColorForState:UIControlStateNormal]);
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
+                        [self.slider trackFillColorForState:UIControlStateSelected]);
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
+                        [self.slider trackFillColorForState:UIControlStateHighlighted]);
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
+                        [self.slider trackFillColorForState:UIControlStateHighlighted |
+                         UIControlStateSelected]);
+}
+
+#pragma mark - InkColor
+
+- (void)testInkColorDefault {
+  // Then
+  XCTAssertEqualObjects(self.slider.inkColor, self.slider.thumbTrack.inkColor);
+}
+
+- (void)testSetInkColor {
+  // When
+  self.slider.inkColor = UIColor.orangeColor;
+
+  // Then
+  XCTAssertEqualObjects(self.slider.thumbTrack.inkColor, UIColor.orangeColor);
+}
+
+#pragma mark - Thumb
 
 - (void)testThumbRadiusDefault {
   // Then
