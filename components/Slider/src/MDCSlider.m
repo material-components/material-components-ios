@@ -39,6 +39,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 @implementation MDCSlider {
   NSMutableDictionary *_thumbColorsForState;
   NSMutableDictionary *_trackFillColorsForState;
+  NSMutableDictionary *_trackBackgroundColorsForState;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -91,6 +92,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
   _thumbColorsForState = [@{} mutableCopy];
   _trackFillColorsForState = [@{} mutableCopy];
+  _trackBackgroundColorsForState = [@{} mutableCopy];
   [self addSubview:_thumbTrack];
 }
 
@@ -136,14 +138,40 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (color) {
     return color;
   }
-  return _thumbTrack.thumbEnabledColor;
+  // MDCThumbTrack marks thumbOnColor as null-resettable to blue, but thumbDisabledColor is nullable
+  return ((state & UIControlStateDisabled) == UIControlStateDisabled) ?
+      color : UIColor.blueColor;
+}
+
+- (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor forState:(UIControlState)state {
+  _trackBackgroundColorsForState[@(state)] = trackBackgroundColor;
+  if (state == self.state) {
+    [self updateColorsForState];
+  }
+}
+
+- (UIColor *)trackBackgroundColorForState:(UIControlState)state {
+  UIColor *color = _trackBackgroundColorsForState[@(state)];
+  if (color) {
+    return color;
+  }
+  if (state != UIControlStateNormal) {
+    color = _trackBackgroundColorsForState[@(UIControlStateNormal)];
+  }
+  if (color) {
+    return color;
+  }
+  return ((state & UIControlStateDisabled) == UIControlStateDisabled) ?
+      _thumbTrack.trackDisabledColor : _thumbTrack.trackOffColor;
 }
 
 - (void)updateColorsForState {
   if ((self.state & UIControlStateDisabled) == UIControlStateDisabled) {
     _thumbTrack.thumbDisabledColor = [self thumbColorForState:self.state];
+    _thumbTrack.trackDisabledColor = [self trackBackgroundColorForState:self.state];
   } else {
     _thumbTrack.thumbEnabledColor = [self thumbColorForState:self.state];
+    _thumbTrack.trackOffColor = [self trackBackgroundColorForState:self.state];
   }
   _thumbTrack.trackOnColor = [self trackFillColorForState:self.state];
   _thumbTrack.inkColor = self.inkColor;

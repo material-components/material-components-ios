@@ -222,6 +222,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Disabled slider";
     model.value = 0.5f;
+    model.anchorValue = 0.1f;
     model.enabled = NO;
     [_sliders addObject:model];
   }

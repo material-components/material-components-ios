@@ -55,6 +55,8 @@ IB_DESIGNABLE
  @param thumbColor The color of the thumb (cursor).
  @param state The state of the slider.
  */
+// For any disabled state, the default value is @c nil. For any enabled state, the default value
+// is blue.
 - (void)setThumbColor:(nullable UIColor *)thumbColor forState:(UIControlState)state;
 
 /**
@@ -87,6 +89,29 @@ IB_DESIGNABLE
           state, this method returns the color associated with the @c UIControlStateNormal state.
  */
 - (nullable UIColor *)trackFillColorForState:(UIControlState)state;
+
+/**
+ Sets the color of the inactive (unfilled) track to use for the specified state.
+
+ In general, if a property is not specified for a state, the default is to use the
+ @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the
+ normal state.
+
+ @param backgroundColor The color of the inactive track.
+ @param state The state of the slider.
+ */
+- (void)setTrackBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
+
+/**
+ Returns the track background color associated with the specified state.
+
+ @params state The state that uses the track background color.
+ @returns The track background color for the specified state. If no color has been set for the
+          specific state, this method returns the color associated with the @c UIControlStateNormal
+          state.
+ */
+- (nullable UIColor *)trackBackgroundColorForState:(UIControlState)state;
 
 /**
  The color of the Ink ripple.
@@ -220,7 +245,7 @@ IB_DESIGNABLE
  Default color is gray.
 
  @note This API is planned for deprecation. Use @c inkColor, @c setThumbColor:forState:, and
-       @c setTrackFillColor:forState: instead.
+       @c setTrackBackgroundColor:forState: instead.
  */
 @property(nonatomic, strong, null_resettable) UIColor *disabledColor UI_APPEARANCE_SELECTOR;
 
