@@ -142,6 +142,13 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/BottomNavigation"
       extension.dependency "MaterialComponents/Themes"
     end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/BottomNavigation/src/TypographyThemer/*.h"
+      extension.source_files = "components/BottomNavigation/src/TypographyThemer/*.{h,m}"
+      extension.dependency "MaterialComponents/BottomNavigation"
+      extension.dependency "MaterialComponents/schemes/Typography"
+    end
   end
 
   mdc.subspec "BottomSheet" do |component|
