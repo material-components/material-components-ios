@@ -39,6 +39,7 @@
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:button];
+
   return button;
 }
 

@@ -25,6 +25,7 @@
 /**
  Applies a color scheme to theme to an MDCButton.
 
+ @param button An MDCButton instance to apply a color scheme.
  @param colorScheme The color scheme to apply to @c button.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
@@ -43,6 +44,7 @@
  Applies a color scheme to theme to a MDCRaisedButton.
 
  @param colorScheme The color scheme to apply to MDCRaisedButton.
+ @param raisedButton An MDCRaisedButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                   toRaisedButton:(nonnull MDCRaisedButton *)raisedButton;
