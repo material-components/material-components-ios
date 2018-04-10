@@ -28,8 +28,10 @@
                                  forState:UIControlStateNormal];
   [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
                                  forState:UIControlStateHighlighted];
+}
 
-  
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+   toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
 }
 
 @end
