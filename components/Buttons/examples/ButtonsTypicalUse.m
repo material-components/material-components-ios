@@ -44,6 +44,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
@@ -74,23 +76,25 @@
 
   MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
   [flatButton setTitle:@"Button" forState:UIControlStateNormal];
-  [flatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
   [flatButton sizeToFit];
   [flatButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
+
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:flatButton];
   [self.view addSubview:flatButton];
 
   // Disabled flat
 
   MDCFlatButton *disabledFlatButton = [[MDCFlatButton alloc] init];
   [disabledFlatButton setTitle:@"Button" forState:UIControlStateNormal];
-  [disabledFlatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
   [disabledFlatButton sizeToFit];
   [disabledFlatButton addTarget:self
                          action:@selector(didTap:)
                forControlEvents:UIControlEventTouchUpInside];
   [disabledFlatButton setEnabled:NO];
+
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:disabledFlatButton];
   [self.view addSubview:disabledFlatButton];
 
   // Custom stroked button
