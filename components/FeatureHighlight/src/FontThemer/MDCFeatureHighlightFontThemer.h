@@ -21,6 +21,7 @@
 
 /**
  Used to apply a font scheme to theme to MDCFeatureHighlightView.
+ This class will be deprecated soon please use MDCFeatureHighlightTypographyThemer instead.
  */
 @interface MDCFeatureHighlightFontThemer : NSObject
 

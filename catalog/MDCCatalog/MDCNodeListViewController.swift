@@ -20,8 +20,9 @@ import CatalogByConvention
 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialCollections
-import MaterialComponents.MDCFlexibleHeaderColorThemer
 import MaterialComponents.MaterialTypography
+import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MDCFlexibleHeaderColorThemer
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 

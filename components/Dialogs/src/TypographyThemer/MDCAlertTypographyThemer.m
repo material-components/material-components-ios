@@ -14,7 +14,15 @@
  limitations under the License.
  */
 
-#import "MDCFontScheme.h"
+#import "MDCAlertTypographyThemer.h"
 
-@implementation MDCBasicFontScheme	
+@implementation MDCAlertTypographyThemer
+
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
+            toAlertController:(nonnull MDCAlertController *)alertController {
+  alertController.titleFont = typographyScheme.headline6;
+  alertController.messageFont = typographyScheme.body1;
+  alertController.buttonFont = typographyScheme.button;
+}
+
 @end

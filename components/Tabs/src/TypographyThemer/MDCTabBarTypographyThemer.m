@@ -13,4 +13,15 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-#import "MaterialColorScheme.h"
+
+#import "MDCTabBarTypographyThemer.h"
+
+@implementation MDCTabBarTypographyThemer
+
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
+                     toTabBar:(nonnull MDCTabBar *)tabBar {
+  tabBar.selectedItemTitleFont = typographyScheme.button;
+  tabBar.unselectedItemTitleFont = typographyScheme.button;
+}
+
+@end

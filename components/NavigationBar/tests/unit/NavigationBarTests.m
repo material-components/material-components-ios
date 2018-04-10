@@ -101,7 +101,20 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   UIFont *testFont = [UIFont boldSystemFontOfSize:24];
   UIFont *resultFont = [UIFont boldSystemFontOfSize:20];
   navBar.titleFont = testFont;
-  XCTAssertEqual(navBar.titleLabel.font, resultFont);
+
+  // To enforce 20 point size we are using "fontWithName:size:" and for some reason even though the
+  // printout looks identical comparing the fonts returns false. (Using "fontWithSize:" did not work
+  // for system font medium, instead it returned a regular font).
+  UIFont *titleFont = navBar.titleLabel.font;
+  XCTAssertEqualObjects(titleFont.fontName, resultFont.fontName);
+  XCTAssertEqual(titleFont.pointSize, resultFont.pointSize);
+
+  // Weight for Fonts was not introduced on iOS 8
+  // TODO: remove this when we drop iOS 8 support.
+#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
+  XCTAssertEqual([NavigationBarTests weightForFont:titleFont],
+                 [NavigationBarTests weightForFont:resultFont]);
+#endif
 }
 
 - (void)testEncoding {
@@ -278,6 +291,25 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     MDCButtonBar *trailingButtonBar = (MDCButtonBar *)secondItem;
     XCTAssertEqual(2U, trailingButtonBar.subviews.count);
   }
+}
+
+// I really don't like doing this but just to make sure the font has the right weight for the test
+// I had to do this. Couldn't find any other way around it. When Apple support FontWithSize:
+// properly for all fonts we can get rid of this.
++ (CGFloat)weightForFont:(UIFont *)font {
+  // The default font weight is UIFontWeightRegular, which is 0.0.
+  CGFloat weight = 0.0;
+
+  NSDictionary *fontTraits = [font.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
+  if (fontTraits) {
+    NSNumber *weightNumber = fontTraits[UIFontWeightTrait];
+    if (weightNumber != nil) {
+      weight = [weightNumber floatValue];
+    }
+  }
+
+  return weight;
+
 }
 
 @end

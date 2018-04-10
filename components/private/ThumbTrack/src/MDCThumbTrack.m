@@ -15,6 +15,7 @@
  */
 
 #import "MDCThumbTrack.h"
+#import "private/MDCThumbTrack+Private.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
@@ -35,6 +36,26 @@ static const CGFloat kThumbSlopFactor = 3.5f;
 static const CGFloat kValueLabelHeight = 48.f;
 static const CGFloat kValueLabelWidth = 0.81f * kValueLabelHeight;
 static const CGFloat kValueLabelFontSize = 12.f;
+
+static UIColor *ValueLabelTextColorDefault() {
+  return UIColor.whiteColor;
+}
+
+static UIColor *ValueLabelBackgroundColorDefault() {
+  return UIColor.blueColor;
+}
+
+static UIColor *TrackOnColorDefault() {
+  return UIColor.blueColor;
+}
+
+static UIColor *ThumbEnabledColorDefault() {
+  return UIColor.blueColor;
+}
+
+static UIColor *InkColorDefault() {
+  return [UIColor.blueColor colorWithAlphaComponent:kTrackOnAlpha];
+}
 
 // Credit to the Beacon Tools iOS team for the idea for this implementations
 @interface MDCDiscreteDotView : UIView
@@ -106,8 +127,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 @implementation MDCThumbTrack {
   CGFloat _lastDispatchedValue;
-  UIColor *_thumbOnColor;
-  UIColor *_trackOnColor;
   UIColor *_clearColor;
   MDCInkTouchController *_touchController;
   UIView *_trackView;
@@ -126,6 +145,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   BOOL _didChangeValueDuringPan;
   CGFloat _panThumbGrabPosition;
 }
+
+@synthesize thumbEnabledColor = _thumbEnabledColor;
+@synthesize trackOnColor = _trackOnColor;
 
 // TODO(iangordon): ThumbView is not respecting the bounds of ThumbTrack
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -172,12 +194,15 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
     _touchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
 
-    // Set colors.
-    if (onTintColor == nil) {
-      onTintColor = [UIColor blueColor];
-    }
-    self.primaryColor = onTintColor;
-    _clearColor = [UIColor colorWithWhite:1.0f alpha:0.0f];
+    _primaryColor = onTintColor ?: TrackOnColorDefault();
+    _thumbEnabledColor = onTintColor ?: ThumbEnabledColorDefault();
+    _trackOnColor = onTintColor ?: TrackOnColorDefault();
+    _valueLabelBackgroundColor = onTintColor ?: ValueLabelBackgroundColorDefault();
+    _touchController.defaultInkView.inkColor = onTintColor ?
+        [onTintColor colorWithAlphaComponent:kTrackOnAlpha] : InkColorDefault();
+    _clearColor = UIColor.clearColor;
+    _valueLabelTextColor = ValueLabelTextColorDefault();
+    [self setNeedsLayout];
 
     // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
     // when we are dragging the thumb track, and can treat it accordingly. Specifically, without
@@ -216,19 +241,33 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #pragma mark - Properties
 
 - (void)setPrimaryColor:(UIColor *)primaryColor {
-  if (primaryColor == nil) {
-    primaryColor = [UIColor blueColor];  // YSNBH
-  }
-  _primaryColor = primaryColor;
-  _thumbOnColor = primaryColor;
-  _trackOnColor = primaryColor;
+  _primaryColor = primaryColor ?: TrackOnColorDefault();
 
-  _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
+  _thumbEnabledColor = self.primaryColor;
+  _trackOnColor = self.primaryColor;
+
+  _touchController.defaultInkView.inkColor =
+      [self.primaryColor colorWithAlphaComponent:kTrackOnAlpha];
   [self setNeedsLayout];
 }
 
-- (void)setThumbOffColor:(UIColor *)thumbOffColor {
-  _thumbOffColor = thumbOffColor;
+- (void)setInkColor:(UIColor *)inkColor {
+  _touchController.defaultInkView.inkColor = inkColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)inkColor {
+  return _touchController.defaultInkView.inkColor;
+}
+
+- (void)setThumbEnabledColor:(UIColor *)thumbEnabledColor {
+  _thumbEnabledColor = thumbEnabledColor ?: ThumbEnabledColorDefault();
+  [self setNeedsLayout];
+}
+
+- (void)setTrackOnColor:(UIColor *)trackOnColor {
+  _trackOnColor = trackOnColor ?: TrackOnColorDefault();
+  [self setNeedsLayout];
 }
 
 - (void)setThumbDisabledColor:(UIColor *)thumbDisabledColor {
@@ -243,6 +282,16 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)setTrackDisabledColor:(UIColor *)trackDisabledColor {
   _trackDisabledColor = trackDisabledColor;
+  [self setNeedsLayout];
+}
+
+- (void)setValueLabelTextColor:(UIColor *)valueLabelTextColor {
+  _valueLabelTextColor = valueLabelTextColor ?: ValueLabelTextColorDefault();
+  [self setNeedsLayout];
+}
+
+- (void)setValueLabelBackgroundColor:(UIColor *)valueLabelBackgroundColor {
+  _valueLabelBackgroundColor = valueLabelBackgroundColor ?: ValueLabelBackgroundColorDefault();
   [self setNeedsLayout];
 }
 
@@ -598,8 +647,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if (!_thumbIsHollowAtStart || ![self isValueAtMinimum]) {
       [self updateTrackMask];
 
-      _thumbView.backgroundColor = _thumbOnColor;
-      _thumbView.layer.borderColor = _thumbOnColor.CGColor;
+      _thumbView.backgroundColor = _thumbEnabledColor;
+      _thumbView.layer.borderColor = _thumbEnabledColor.CGColor;
     }
   } else {
     _thumbView.backgroundColor = _thumbDisabledColor;
@@ -639,8 +688,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // Note that "center" here doesn't refer to the actual center, but rather the anchor point,
     // which is re-defined to be slightly below the bottom of the label
     _valueLabel.center = [self numericValueLabelPositionForValue:_value];
-    _valueLabel.backgroundColor = _trackOnColor;
-    _valueLabel.textColor = [UIColor whiteColor];
+    _valueLabel.backgroundColor = self.valueLabelBackgroundColor;
+    _valueLabel.textColor = self.valueLabelTextColor;
     if ([_delegate respondsToSelector:@selector(thumbTrack:stringForValue:)]) {
       _valueLabel.text = [_delegate thumbTrack:self stringForValue:_value];
       if (CGRectGetWidth(_valueLabel.frame) > 1) {
@@ -1106,6 +1155,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (BOOL)isTracking {
   return _isDraggingThumb;
+}
+
+@end
+
+@implementation MDCThumbTrack (Private)
+
+- (MDCNumericValueLabel *)numericValueLabel {
+  return _valueLabel;
+}
+
+- (MDCInkTouchController *)touchController {
+  return _touchController;
 }
 
 @end
