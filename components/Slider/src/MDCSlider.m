@@ -33,7 +33,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 @interface MDCSlider () <MDCThumbTrackDelegate>
-
 @end
 
 @implementation MDCSlider {
@@ -91,8 +90,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
         forControlEvents:UIControlEventTouchCancel];
 
   _thumbColorsForState = [@{} mutableCopy];
+  _thumbColorsForState[@(UIControlStateNormal)] = MDCThumbTrackDefaultColor();
+  _thumbColorsForState[@(UIControlStateDisabled)] = [[self class] defaultDisabledColor];
   _trackFillColorsForState = [@{} mutableCopy];
+  _trackFillColorsForState[@(UIControlStateNormal)] = MDCThumbTrackDefaultColor();
   _trackBackgroundColorsForState = [@{} mutableCopy];
+  _trackBackgroundColorsForState[@(UIControlStateNormal)] = [[self class] defaultTrackOffColor];
+  _trackBackgroundColorsForState[@(UIControlStateDisabled)] = [[self class] defaultDisabledColor];
+
   [self addSubview:_thumbTrack];
 }
 
@@ -114,10 +119,27 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (state != UIControlStateNormal) {
     color = _trackFillColorsForState[@(UIControlStateNormal)];
   }
+  return color;
+}
+
+
+- (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor forState:(UIControlState)state {
+  _trackBackgroundColorsForState[@(state)] = trackBackgroundColor;
+  if (state == self.state) {
+    [self updateColorsForState];
+  }
+}
+
+- (UIColor *)trackBackgroundColorForState:(UIControlState)state {
+  UIColor *color = _trackBackgroundColorsForState[@(state)];
   if (color) {
     return color;
   }
-  return _thumbTrack.primaryColor;
+  if (state != UIControlStateNormal) {
+    color = _trackBackgroundColorsForState[@(UIControlStateNormal)];
+  }
+
+  return color;
 }
 
 - (void)setThumbColor:(UIColor *)thumbColor forState:(UIControlState)state {
@@ -135,45 +157,21 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (state != UIControlStateNormal) {
     color = _thumbColorsForState[@(UIControlStateNormal)];
   }
-  if (color) {
-    return color;
-  }
-  // MDCThumbTrack marks thumbOnColor as null-resettable to blue, but thumbDisabledColor is nullable
-  return ((state & UIControlStateDisabled) == UIControlStateDisabled) ?
-      color : UIColor.blueColor;
-}
-
-- (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor forState:(UIControlState)state {
-  _trackBackgroundColorsForState[@(state)] = trackBackgroundColor;
-  if (state == self.state) {
-    [self updateColorsForState];
-  }
-}
-
-- (UIColor *)trackBackgroundColorForState:(UIControlState)state {
-  UIColor *color = _trackBackgroundColorsForState[@(state)];
-  if (color) {
-    return color;
-  }
-  if (state != UIControlStateNormal) {
-    color = _trackBackgroundColorsForState[@(UIControlStateNormal)];
-  }
-  if (color) {
-    return color;
-  }
-  return ((state & UIControlStateDisabled) == UIControlStateDisabled) ?
-      _thumbTrack.trackDisabledColor : _thumbTrack.trackOffColor;
+  return color;
 }
 
 - (void)updateColorsForState {
+  if (!self.isStatefulAPIEnabled) {
+    return;
+  }
   if ((self.state & UIControlStateDisabled) == UIControlStateDisabled) {
     _thumbTrack.thumbDisabledColor = [self thumbColorForState:self.state];
     _thumbTrack.trackDisabledColor = [self trackBackgroundColorForState:self.state];
   } else {
-    _thumbTrack.thumbEnabledColor = [self thumbColorForState:self.state];
+    _thumbTrack.thumbEnabledColor = [self thumbColorForState:self.state] ?: UIColor.clearColor;
     _thumbTrack.trackOffColor = [self trackBackgroundColorForState:self.state];
   }
-  _thumbTrack.trackOnColor = [self trackFillColorForState:self.state];
+  _thumbTrack.trackOnColor = [self trackFillColorForState:self.state] ?: UIColor.clearColor;
   _thumbTrack.inkColor = self.inkColor;
 }
 
@@ -450,6 +448,9 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 #pragma mark - To be deprecated
 
 - (void)setDisabledColor:(UIColor *)disabledColor {
+  if (self.isStatefulAPIEnabled) {
+    return;
+  }
   _thumbTrack.trackDisabledColor = disabledColor ?: [[self class] defaultDisabledColor];
   _thumbTrack.thumbDisabledColor = disabledColor ?: [[self class] defaultDisabledColor];
 }
@@ -459,6 +460,9 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (void)setColor:(UIColor *)color {
+  if (self.isStatefulAPIEnabled) {
+    return;
+  }
   _thumbTrack.primaryColor = color ? color : MDCThumbTrackDefaultColor();
 }
 

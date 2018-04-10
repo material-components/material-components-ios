@@ -41,6 +41,9 @@
 IB_DESIGNABLE
 @interface MDCSlider : UIControl <NSSecureCoding>
 
+/** When @c YES, the new forState: APIs are enabled. Defaults to @c NO. */
+@property(nonatomic, assign, getter=isStatefulAPIEnabled) BOOL statefulAPIEnabled;
+
 /** The delegate for the slider. */
 @property(nullable, nonatomic, weak) id<MDCSliderDelegate> delegate;
 
@@ -119,13 +122,6 @@ IB_DESIGNABLE
  Defaults to transparent blue.
  */
 @property(nonatomic, strong, nullable) UIColor *inkColor;
-
-/**
- The color of the unfilled track that the cursor moves along (right side).
-
- Default color is gray.
- */
-@property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
  The radius of the cursor (thumb).
@@ -244,8 +240,9 @@ IB_DESIGNABLE
 
  Default color is gray.
 
- @note This API is planned for deprecation. Use @c inkColor, @c setThumbColor:forState:, and
+ @note This API is planned for deprecation. Use @c setThumbColor:forState: and
        @c setTrackBackgroundColor:forState: instead.
+ @note Has no effect if @c statefulAPIEnabled is @c YES.
  */
 @property(nonatomic, strong, null_resettable) UIColor *disabledColor UI_APPEARANCE_SELECTOR;
 
@@ -256,8 +253,19 @@ IB_DESIGNABLE
 
  @note This API is planned for deprecation. Use @c inkColor, @c setThumbColor:forState:, and
        @c setTrackFillColor:forState: instead.
+ @note Has no effect if @c statefulAPIEnabled is @c YES.
  */
 @property(nonatomic, strong, null_resettable) UIColor *color UI_APPEARANCE_SELECTOR;
+
+/**
+ The color of the unfilled track that the cursor moves along (right side).
+
+ Default color is gray.
+ @note This API is planned for deprecation. Use @c setTrackBackgroundColor:forState: instead.
+ @note Has no effect if @c statefulAPIEnabled is @c YES.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
+
 
 @end
 
