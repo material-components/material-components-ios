@@ -1,3 +1,83 @@
+# 54.2.0
+
+## New features
+
+Dialogs, FeatureHighlight, and TabBar now each have a Typography themer.
+
+ActivityIndicator and AppBar now have an updated Color themer.
+
+## API changes
+
+### FeatureHighlight
+
+#### MDCFeatureHighlightViewController
+
+*new* property: `titleFont` in `MDCFeatureHighlightViewController`
+
+*new* property: `bodyFont` in `MDCFeatureHighlightViewController`
+
+### TextFields
+
+#### MDCTextInputController
+
+*new* property: `textInputFont` in `MDCTextInputController`
+
+*new* property: `textInputFontDefault` in `MDCTextInputController`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Implementing TabBar Typography Themer. (#3278)](https://github.com/material-components/material-components-ios/commit/207e59d1b190fbae69a72bea6c4cb2321eb3fa5c) (Mohammad Cazi)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Implementation of Typography Themer. (#3268)](https://github.com/material-components/material-components-ios/commit/8563ec05c77973f76c28c694ea3cceb16c2a0c67) (Mohammad Cazi)
+* [exposing title and body font for FeatureHighlightViewController. (#3274)](https://github.com/material-components/material-components-ios/commit/2962b79503a27cc36319983ef237f399b2c7fdca) (Mohammad Cazi)
+
+### AppBar
+
+#### Changes
+
+* [Implement semantic color themer. (#3283)](https://github.com/material-components/material-components-ios/commit/0ad1f5dfb29cb6ff63b47085c7d33ece0610a0c7) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [expose input text font property on controller. (#3272)](https://github.com/material-components/material-components-ios/commit/a15a0a7e3a7535a172570282ea1d3be058db1229) (Mohammad Cazi)
+
+### Slider
+
+#### Changes
+
+* [Fix green Slider example color (#3292)](https://github.com/material-components/material-components-ios/commit/2b37db4c90118bd8a654cd5732e148ee17f8a493) (Robert Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [Forcing Font size now does save the right FontName for every case. (#3299)](https://github.com/material-components/material-components-ios/commit/bc3b4e871bd34f137c61112db7eeeff5afd452a7) (Mohammad Cazi)
+
+### ActivityIndicator
+
+#### Changes
+
+* [Update Activity Indicator accessibility label and value (#3261)](https://github.com/material-components/material-components-ios/commit/7b38f3fa2d8e39c5c7e915ffb49fd438cf45fd87) (John Detloff)
+* [Update ActivityIndicator Color Themer (#3259)](https://github.com/material-components/material-components-ios/commit/eb3167032ff65c854dd5a8a8e3fe637aadda4f81) (John Detloff)
+
+### Dialogs
+
+#### Changes
+
+* [Implement MDCAlertController typography themer. (#3302)](https://github.com/material-components/material-components-ios/commit/7716981f1fd630e8ee5bb2132d6703ed23d393f4) (Mohammad Cazi)
+
+---
+
 # 54.1.0
 
 ## New features
