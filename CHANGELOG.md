@@ -1,16 +1,12 @@
-# #develop#
-
-## Breaking changes
-
-## New deprecations
+# 54.2.0
 
 ## New features
 
+Dialogs, FeatureHighlight, and TabBar now each have a Typography themer.
+
+ActivityIndicator and AppBar now have an updated Color themer.
+
 ## API changes
-
-### Resources
-
-**New component.**
 
 ### FeatureHighlight
 
