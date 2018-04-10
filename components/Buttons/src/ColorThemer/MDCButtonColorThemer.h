@@ -34,7 +34,7 @@
  Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
  all instances of MDCButton.
 
- This method is deprecated. Consider using applySemanticColorScheme:colorScheme.
+ This method will soon be deprecated. Consider using applySemanticColorScheme:colorScheme.
 
  @param colorScheme The color scheme to apply to MDCButton.
  @param button A MDCButton instance to apply a color scheme.
