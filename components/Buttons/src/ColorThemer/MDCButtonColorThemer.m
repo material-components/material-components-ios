@@ -33,6 +33,11 @@
   button.disabledAlpha = 1.f;
 }
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                        toRaisedButton:(nonnull MDCRaisedButton *)raisedButton {
+  [self applySemanticColorScheme:colorScheme toButton:raisedButton];
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toButton:(MDCButton *)button {
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
