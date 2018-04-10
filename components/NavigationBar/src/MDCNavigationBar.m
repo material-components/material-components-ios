@@ -429,6 +429,11 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   return CGSizeMake(size.width, height);
 }
 
+- (CGSize)intrinsicContentSize {
+  CGFloat height = [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+  return CGSizeMake(UIViewNoIntrinsicMetric, height);
+}
+
 - (MDCNavigationBarTitleAlignment)titleAlignment {
   return [MDCNavigationBar titleAlignmentFromTextAlignment:_titleLabel.textAlignment];
 }
