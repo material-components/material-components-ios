@@ -48,6 +48,7 @@
   [flatButton setTitleColor:colorScheme.primaryColor forState:UIControlStateSelected];
   [flatButton setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
                    forState:UIControlStateDisabled];
+  flatButton.disabledAlpha = 1.f;
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
