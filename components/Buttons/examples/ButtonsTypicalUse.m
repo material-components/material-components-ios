@@ -34,7 +34,7 @@
   [button setBorderWidth:1.0 forState:UIControlStateNormal];
   [button setBorderColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
 
-  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   return button;
@@ -43,7 +43,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   UIColor *titleColor = [UIColor whiteColor];

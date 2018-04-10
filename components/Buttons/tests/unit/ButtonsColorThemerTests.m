@@ -34,31 +34,33 @@
   colorScheme.onPrimaryColor = UIColor.greenColor;
   colorScheme.onSurfaceColor = UIColor.blueColor;
   [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-  [button setTitleColor:UIColor.greenColor forState:UIControlStateHighlighted];
-  [button setTitleColor:UIColor.blueColor forState:UIControlStateSelected];
   [button setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
-  [button setBackgroundColor:UIColor.redColor forState:UIControlStateHighlighted];
-  [button setBackgroundColor:UIColor.blueColor forState:UIControlStateSelected];
   [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
 
   // Where
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
-  XCTAssertEqual([button titleColorForState:UIControlStateNormal], colorScheme.onPrimaryColor);
-  XCTAssertEqual([button titleColorForState:UIControlStateHighlighted], colorScheme.onPrimaryColor);
-  XCTAssertEqual([button titleColorForState:UIControlStateSelected], colorScheme.onPrimaryColor);
-  XCTAssert(
-      CGColorEqualToColor([button titleColorForState:UIControlStateDisabled].CGColor,
-                          [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
-  XCTAssertEqual([button backgroundColorForState:UIControlStateNormal], colorScheme.primaryColor);
-  XCTAssertEqual([button backgroundColorForState:UIControlStateHighlighted],
-                 colorScheme.primaryColor);
-  XCTAssertEqual([button backgroundColorForState:UIControlStateSelected], colorScheme.primaryColor);
-  XCTAssert(
-      CGColorEqualToColor([button backgroundColorForState:UIControlStateDisabled].CGColor,
-                          [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    if (state != UIControlStateDisabled) {
+      if ([button titleColorForState:state] != nil) {
+        XCTAssertEqual([button titleColorForState:state], colorScheme.onPrimaryColor);
+      }
+      if ([button backgroundColorForState:state] != nil) {
+        XCTAssertEqual([button backgroundColorForState:state], colorScheme.primaryColor);
+      }
+    } else {
+      XCTAssert(
+          CGColorEqualToColor([button titleColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
+      XCTAssert(
+          CGColorEqualToColor([button backgroundColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+    }
+  }
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
 }
 
@@ -70,36 +72,31 @@
   colorScheme.primaryColor = UIColor.redColor;
   colorScheme.onSurfaceColor = UIColor.blueColor;
   [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-  [button setTitleColor:UIColor.greenColor forState:UIControlStateHighlighted];
-  [button setTitleColor:UIColor.blueColor forState:UIControlStateSelected];
   [button setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
-  [button setBackgroundColor:UIColor.redColor forState:UIControlStateHighlighted];
-  [button setBackgroundColor:UIColor.blueColor forState:UIControlStateSelected];
   [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
 
   // Where
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:button];
 
   // Then
-  XCTAssertEqual([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
-  XCTAssertEqual([button titleColorForState:UIControlStateHighlighted], colorScheme.primaryColor);
-  XCTAssertEqual([button titleColorForState:UIControlStateSelected], colorScheme.primaryColor);
-  XCTAssert(
-      CGColorEqualToColor([button titleColorForState:UIControlStateDisabled].CGColor,
-                          [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
-  XCTAssert(
-      CGColorEqualToColor([button backgroundColorForState:UIControlStateNormal].CGColor,
-                          [colorScheme.primaryColor colorWithAlphaComponent:0.f].CGColor));
-  XCTAssert(
-      CGColorEqualToColor([button backgroundColorForState:UIControlStateHighlighted].CGColor,
-                          [colorScheme.primaryColor colorWithAlphaComponent:0.f].CGColor));
-  XCTAssert(
-      CGColorEqualToColor([button backgroundColorForState:UIControlStateSelected].CGColor,
-                          [colorScheme.primaryColor colorWithAlphaComponent:0.f].CGColor));
-  XCTAssert(
-      CGColorEqualToColor([button backgroundColorForState:UIControlStateDisabled].CGColor,
-                          [colorScheme.primaryColor colorWithAlphaComponent:0.f].CGColor));
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    if (state != UIControlStateDisabled) {
+      if ([button titleColorForState:state] != nil) {
+        XCTAssertEqual([button titleColorForState:state], colorScheme.primaryColor);
+      }
+      if ([button backgroundColorForState:state] != nil) {
+        XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor);
+      }
+    } else {
+      XCTAssert(
+          CGColorEqualToColor([button titleColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
+      XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor);
+    }
+  }
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
 }
 
