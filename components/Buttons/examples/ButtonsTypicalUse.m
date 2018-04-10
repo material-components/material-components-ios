@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import "MDCButtonColorThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
@@ -33,6 +34,9 @@
 
   [button setBorderWidth:1.0 forState:UIControlStateNormal];
   [button setBorderColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
+
+  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   return button;
 }

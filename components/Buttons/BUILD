@@ -46,7 +46,7 @@ mdc_objc_library(
     includes = ["src/ColorThemer"],
     deps = [
         ":Buttons",
-        "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )

@@ -173,7 +173,7 @@ Pod::Spec.new do |mdc|
       extension.public_header_files = "components/Buttons/src/#{extension.base_name}/*.h"
       extension.source_files = "components/Buttons/src/#{extension.base_name}/*.{h,m}", "components/Buttons/src/#{extension.base_name}/private/*.{h,m}"
       extension.dependency "MaterialComponents/Buttons"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
     component.subspec "TitleColorAccessibilityMutator" do |extension|
       extension.ios.deployment_target = '8.0'
