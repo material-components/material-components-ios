@@ -61,6 +61,8 @@
   [raisedButton addTarget:self
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
+
   [self.view addSubview:raisedButton];
 
   // Disabled raised button
@@ -74,6 +76,8 @@
                            action:@selector(didTap:)
                  forControlEvents:UIControlEventTouchUpInside];
   [disabledRaisedButton setEnabled:NO];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:disabledRaisedButton];
+
   [self.view addSubview:disabledRaisedButton];
 
   // Flat button
