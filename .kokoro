@@ -118,15 +118,30 @@ run_cocoapods() {
     pod --version
   fi
 
-  ls /Applications/ | grep "Xcode" | while read -r xcode_path; do
+  BUILDS_TMP_PATH=$(mktemp -d)
+  SEEN_XCODES_FILE_PATH="$BUILDS_TMP_PATH/seen_xcodes"
+  touch "$SEEN_XCODES_FILE_PATH"
+  xcodes=$(ls /Applications/ | grep "Xcode")
+  for xcode_path in $xcodes; do
     xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
       | grep "CFBundleShortVersionString" -A1 \
       | grep string \
       | cut -d'>' -f2 \
       | cut -d'<' -f1)
-    if [ -n "$xcode_min_version_as_number" ]; then
-      xcode_version_as_number="$(version_as_number $xcode_version)"
+    xcode_version_as_number="$(version_as_number $xcode_version)"
 
+    # Ignore duplicate Xcode installations
+    if grep -xq "$xcode_version_as_number" "$SEEN_XCODES_FILE_PATH"; then
+      continue
+    fi
+
+    echo "$xcode_version_as_number" >> "$SEEN_XCODES_FILE_PATH"
+
+    if [ -n "$XCODE_VERSION" ]; then
+      if [ "$xcode_version_as_number" -ne "$(version_as_number $XCODE_VERSION)" ]; then
+        continue
+      fi
+    elif [ -n "$xcode_min_version_as_number" ]; then
       if [ "$xcode_version_as_number" -lt "$xcode_min_version_as_number" ]; then
         continue
       fi
@@ -139,12 +154,17 @@ run_cocoapods() {
     # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
     launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
 
-    scripts/prep_all
-    scripts/build_all --verbose
-    if [ "$IS_RELEASE" -eq "1" ]; then
-      scripts/test_all
+    if [ "$xcode_version_as_number" -eq "920" ]; then
+      echo "Validating podspec with Xcode 9.2..."
+      pod lib lint MaterialComponents.podspec
+    fi
+
+    bash scripts/prep_all
+    bash scripts/build_all --verbose
+    if [ -n "$IS_RELEASE" ]; then
+      bash scripts/test_all
     else
-      scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+      bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
     fi
   done
 
