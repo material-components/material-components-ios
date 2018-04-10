@@ -53,7 +53,8 @@
       CGColorEqualToColor([button titleColorForState:UIControlStateDisabled].CGColor,
                           [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
   XCTAssertEqual([button backgroundColorForState:UIControlStateNormal], colorScheme.primaryColor);
-  XCTAssertEqual([button backgroundColorForState:UIControlStateHighlighted], colorScheme.primaryColor);
+  XCTAssertEqual([button backgroundColorForState:UIControlStateHighlighted],
+                 colorScheme.primaryColor);
   XCTAssertEqual([button backgroundColorForState:UIControlStateSelected], colorScheme.primaryColor);
   XCTAssert(
       CGColorEqualToColor([button backgroundColorForState:UIControlStateDisabled].CGColor,
