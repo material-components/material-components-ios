@@ -27,9 +27,9 @@
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
-    if (!typographyScheme.subtitle1 ||
-        !typographyScheme.caption ||
-        typographyScheme.caption.pointSize <= 0) {
+
+    // if caption.pointSize <= 0 there is no meaningful ration so we fallback to default.
+    if (typographyScheme.caption.pointSize <= 0) {
       textInputControllerFloatingPlaceholder.floatingPlaceholderScale = nil;
     } else {
       double ratio = typographyScheme.caption.pointSize/typographyScheme.subtitle1.pointSize;
@@ -62,9 +62,8 @@
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    if (!typographyScheme.subtitle1
-        || !typographyScheme.caption
-        || typographyScheme.caption.pointSize <= 0) {
+    // if caption.pointSize <= 0 there is no meaningful ration so we fallback to default.
+  if (typographyScheme.caption.pointSize <= 0) {
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0];
     } else {
       CGFloat scale = typographyScheme.caption.pointSize/typographyScheme.subtitle1.pointSize;
