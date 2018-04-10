@@ -45,8 +45,6 @@
   // Where
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
-  NSLog(@"%d",CGColorEqualToColor([button titleColorForState:UIControlStateDisabled].CGColor,
-                                  [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
   // Then
   XCTAssertEqual([button titleColorForState:UIControlStateNormal], colorScheme.onPrimaryColor);
   XCTAssertEqual([button titleColorForState:UIControlStateHighlighted], colorScheme.onPrimaryColor);
