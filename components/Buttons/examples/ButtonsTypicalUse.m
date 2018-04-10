@@ -43,6 +43,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
@@ -55,6 +57,8 @@
   [raisedButton addTarget:self
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
+
   [self.view addSubview:raisedButton];
 
   // Disabled raised button
@@ -67,6 +71,8 @@
                            action:@selector(didTap:)
                  forControlEvents:UIControlEventTouchUpInside];
   [disabledRaisedButton setEnabled:NO];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:disabledRaisedButton];
+
   [self.view addSubview:disabledRaisedButton];
 
   // Flat button

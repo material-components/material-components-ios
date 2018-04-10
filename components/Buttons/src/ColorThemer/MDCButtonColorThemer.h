@@ -31,6 +31,14 @@
                         toButton:(nonnull MDCButton *)button;
 
 /**
+ Applies a color scheme to theme to a MDCRaisedButton.
+
+ @param colorScheme The color scheme to apply to MDCRaisedButton.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                  toRaisedButton:(nonnull MDCRaisedButton *)raisedButton;
+
+/**
  Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
  all instances of MDCButton.
 
