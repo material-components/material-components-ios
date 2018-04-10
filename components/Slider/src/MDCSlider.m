@@ -103,6 +103,13 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 #pragma mark - Color customization methods
 
+- (void)setStatefulAPIEnabled:(BOOL)statefulAPIEnabled {
+  _statefulAPIEnabled = statefulAPIEnabled;
+  if (statefulAPIEnabled) {
+    [self updateColorsForState];
+  }
+}
+
 - (void)setTrackFillColor:(UIColor *)fillColor forState:(UIControlState)state {
   _trackFillColorsForState[@(state)] = fillColor;
   if (state == self.state) {

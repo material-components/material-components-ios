@@ -448,6 +448,21 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                     [self.slider thumbColorForState:UIControlStateNormal]);
 }
 
+- (void)testSettingThumbColorToNilResultsInClearColorOnThumbTrack {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+
+  // When
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self.slider setThumbColor:nil forState:state];
+  }
+
+  // Then
+  XCTAssertEqualObjects(self.slider.thumbTrack.thumbEnabledColor, UIColor.clearColor);
+}
+
 #pragma mark - trackFillColorForState
 
 - (void)testTrackFillColorForStateDefaults {
@@ -562,6 +577,21 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor, self.slider.color);
   XCTAssertNotEqualObjects(self.slider.thumbTrack.trackOnColor,
                            [self.slider trackFillColorForState:UIControlStateNormal]);
+}
+
+- (void)testSettingTrackFillColorToNilResultsInClearColorOnThumbTrack {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+
+  // When
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self.slider setTrackFillColor:nil forState:state];
+  }
+
+  // Then
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor, UIColor.clearColor);
 }
 
 #pragma mark - trackBackgroundColorForState
