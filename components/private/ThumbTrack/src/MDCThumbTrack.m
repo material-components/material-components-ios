@@ -248,6 +248,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   _touchController.defaultInkView.inkColor =
       [self.primaryColor colorWithAlphaComponent:kTrackOnAlpha];
+  _valueLabelBackgroundColor = self.primaryColor;
   [self setNeedsLayout];
 }
 
