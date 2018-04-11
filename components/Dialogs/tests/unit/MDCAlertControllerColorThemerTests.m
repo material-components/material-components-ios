@@ -21,11 +21,36 @@
 
 #import <XCTest/XCTest.h>
 
+#ifndef CGFLOAT_EPSILON
+#if CGFLOAT_IS_DOUBLE
+#define CGFLOAT_EPSILON DBL_EPSILON
+#else
+#define CGFLOAT_EPSILON FLT_EPSILON
+#endif
+#endif
+
 @interface MDCAlertControllerColorThemerTests : XCTestCase
 
 @end
 
 @implementation MDCAlertControllerColorThemerTests
+
+- (BOOL)color1:(UIColor *)color1 equalsColor2:(UIColor *)color2 {
+  CGFloat red1 = 0;
+  CGFloat green1 = 0;
+  CGFloat blue1 = 0;
+  CGFloat alpha1 = 0;
+  [color1 getRed:&red1 green:&green1 blue:&blue1 alpha:&alpha1];
+  CGFloat red2 = 0;
+  CGFloat green2 = 0;
+  CGFloat blue2 = 0;
+  CGFloat alpha2 = 0;
+  [color2 getRed:&red2 green:&green2 blue:&blue2 alpha:&alpha2];
+  return (fabs(red1 - red2) < CGFLOAT_EPSILON
+          && fabs(green1 - green2) < CGFLOAT_EPSILON
+          && fabs(blue1 - blue2) < CGFLOAT_EPSILON
+          && fabs(alpha1 - alpha2) < CGFLOAT_EPSILON);
+}
 
 - (void)testApplyingTypographyScheme {
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
@@ -34,12 +59,12 @@
   [MDCAlertColorThemer applySemanticColorScheme:colorScheme toAlertController:alert];
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
-  XCTAssertEqual(view.titleLabel.textColor,
-                 [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
-  XCTAssertEqual(view.messageLabel.textColor,
-                 [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60]);
+  XCTAssertTrue([self color1:view.titleLabel.textColor
+                equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]]);
+  XCTAssertTrue([self color1:view.messageLabel.textColor
+                equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60]]);
   for (UIButton *button in view.actionButtons) {
-    XCTAssertEqual(button.titleLabel.textColor, colorScheme.primaryColor);
+    XCTAssertTrue([self color1:button.titleLabel.textColor equalsColor2:colorScheme.primaryColor]);
   }
 }
 
