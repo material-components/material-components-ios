@@ -23,6 +23,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialThemes.h"
 #import "MDCBottomNavigationBarColorThemer.h"
+#import "MDCBottomNavigationBarTypographyThemer.h"
 
 @interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
 
@@ -50,6 +51,9 @@
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   _bottomNavBar.delegate = self;
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
+                                          toBottomNavigationBar:_bottomNavBar];
   [self.view addSubview:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =
