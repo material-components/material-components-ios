@@ -17,6 +17,7 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
+#import "MDCChipViewTypographyThemer.h"
 
 @implementation ChipsTypicalUseViewController {
   MDCChipView *_sizingChip;
@@ -30,6 +31,8 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
+    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+    [MDCChipViewTypographyThemer applyTypographyScheme:typographyScheme toChipView:_sizingChip];
   }
   return self;
 }
@@ -85,6 +88,8 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  [MDCChipViewTypographyThemer applyTypographyScheme:typographyScheme toChipView:cell.chipView];
 
   return cell;
 }

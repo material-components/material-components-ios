@@ -1,3 +1,59 @@
+# 54.3.0
+
+This release continues to expand our support for component Color and Typography theming.
+
+## New features
+
+Buttons and Snackbar now have a Color themer.
+
+BottomNavigationBar, Chips, NavigationBar, TextFields each now have a Typography themer.
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Implement a semantic color scheme color themer API. (#3306)](https://github.com/material-components/material-components-ios/commit/99fd914646bfa611d3ddb2845cb7b0b5d6bc3fae) (Yarden Eitan)
+
+### TextFields
+
+#### Changes
+
+* [Typography Themer implementation. (#3303)](https://github.com/material-components/material-components-ios/commit/0efdeb2a3f0d23a3521a35c748893c11d0458e7a) (Mohammad Cazi)
+
+### Chips
+
+#### Changes
+
+* [Chips typography implementation. (#3312)](https://github.com/material-components/material-components-ios/commit/81351551f633ae819f241830460e38c08eea637e) (Mohammad Cazi)
+
+### Snackbar
+
+#### Changes
+
+* [Implement a semantic color scheme color themer API. (#3287)](https://github.com/material-components/material-components-ios/commit/66f9b8702a25e1486620561bedeffe3489459a9b) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [typography implementation. (#3304)](https://github.com/material-components/material-components-ios/commit/8e83dcf3436accaf5367505f8e383bc152886b99) (Mohammad Cazi)
+
+### BottomNavigation
+
+#### Changes
+
+* [BottomNavigationBar Typography Implementation, (#3311)](https://github.com/material-components/material-components-ios/commit/fe10c83c5d8c95c6d5417b36a7ba62aed46ca342) (Mohammad Cazi)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix Flexible Header Configurator catalog example (#3254)](https://github.com/material-components/material-components-ios/commit/0797becc18f005263dfe72eb75e63246948c11e6) (John Detloff)
+
+---
+
 # 54.2.0
 
 ## New features

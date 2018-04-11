@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import "MDCButtonColorThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
@@ -29,10 +30,12 @@
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
   [button setTitleColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
   button.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
-  button.disabledAlpha = 0.38f;
 
   [button setBorderWidth:1.0 forState:UIControlStateNormal];
   [button setBorderColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
+
+  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   return button;
 }

@@ -32,7 +32,7 @@ import UIKit
 class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
 
   fileprivate struct Constants {
-    static let headerScrollThreshold: CGFloat = 50
+    static let headerScrollThreshold: CGFloat = 20
     static let inset: CGFloat = 16
     static let logoTitleVerticalSpacing: CGFloat = 32
     static let logoWidthHeight: CGFloat = 40
@@ -103,11 +103,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   func themeDidChange(notification: NSNotification) {
     guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
-          as? MDCColorScheme else {
+          as? MDCColorScheming else {
       return
     }
-    MDCFlexibleHeaderColorThemer.apply(colorScheme,
-                                       toMDCFlexibleHeaderController: headerViewController)
+    MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
+                                                          to: headerViewController.headerView)
 
     collectionView?.collectionViewLayout.invalidateLayout()
     collectionView?.reloadData()
@@ -202,8 +202,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                        multiplier: 1,
                        constant: Constants.logoWidthHeight).isActive = true
 
-    MDCFlexibleHeaderColorThemer.apply(colorScheme,
-                                       toMDCFlexibleHeaderController: headerViewController)
+    MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
+                                                          to: headerViewController.headerView)
 
     headerViewController.headerView.trackingScrollView = collectionView
 
@@ -411,7 +411,13 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   func adjustLogoForScrollView(_ scrollView: UIScrollView) {
     let offset = scrollView.contentOffset.y
-    let inset = scrollView.contentInset.top
+    var inset = scrollView.contentInset.top
+// On the iPhone X, we need to use the offset which might take into account the safe area.
+#if swift(>=3.2)
+    if #available(iOS 11, *) {
+      inset = scrollView.adjustedContentInset.top
+    }
+#endif
     let relativeOffset = inset + offset
 
     logo.alpha = 1 - (relativeOffset / Constants.headerScrollThreshold)

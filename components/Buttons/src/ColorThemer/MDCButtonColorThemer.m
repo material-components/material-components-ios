@@ -18,6 +18,21 @@
 
 @implementation MDCButtonColorThemer
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                        toButton:(nonnull MDCButton *)button {
+  [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateHighlighted];
+  [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateSelected];
+  [button setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]
+                    forState:UIControlStateDisabled];
+  [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
+  [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateHighlighted];
+  [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateSelected];
+  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
+               forState:UIControlStateDisabled];
+  button.disabledAlpha = 1.f;
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toButton:(MDCButton *)button {
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
