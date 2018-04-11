@@ -53,7 +53,6 @@ script:
   - xcodebuild -showsdks
   - pod --version
   - pod repo update
-  - pod lib lint MaterialComponents.podspec --verbose
   - scripts/prep_all
   - travis_wait scripts/build_all --verbose
   - travis_wait travis_retry scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
