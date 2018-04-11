@@ -60,7 +60,6 @@
   [raisedButton addTarget:self
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
-
   [self.view addSubview:raisedButton];
 
   // Disabled raised button
@@ -74,7 +73,6 @@
                            action:@selector(didTap:)
                  forControlEvents:UIControlEventTouchUpInside];
   [disabledRaisedButton setEnabled:NO];
-
   [self.view addSubview:disabledRaisedButton];
 
   // Flat button
@@ -87,7 +85,6 @@
   [flatButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
-
   [self.view addSubview:flatButton];
 
   // Disabled flat
@@ -101,7 +98,6 @@
                          action:@selector(didTap:)
                forControlEvents:UIControlEventTouchUpInside];
   [disabledFlatButton setEnabled:NO];
-
   [self.view addSubview:disabledFlatButton];
 
   // Custom stroked button
@@ -113,7 +109,6 @@
   [strokedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
-
   [self.view addSubview:strokedButton];
 
   // Disabled custom stroked button
@@ -126,7 +121,6 @@
                             action:@selector(didTap:)
                   forControlEvents:UIControlEventTouchUpInside];
   [disabledStrokedButton setEnabled:NO];
-
   [self.view addSubview:disabledStrokedButton];
 
   // Floating action button
