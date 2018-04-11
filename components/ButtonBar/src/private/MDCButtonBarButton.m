@@ -17,7 +17,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCButtonBarButton.h"
-#import "MDCButtonBarButton+Private.h"
 
 static const CGFloat kMinimumItemWidth = 36.f;
 
