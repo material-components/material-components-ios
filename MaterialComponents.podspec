@@ -190,6 +190,14 @@ Pod::Spec.new do |mdc|
       extension.dependency 'MDFTextAccessibility'
       extension.dependency "MaterialComponents/Buttons"
     end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Buttons/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Buttons/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Buttons"
+      extension.dependency "MaterialComponents/schemes/Typography"
+    end
   end
 
   mdc.subspec "ButtonBar" do |component|
