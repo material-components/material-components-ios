@@ -15,6 +15,7 @@
  */
 
 #import "MDCButtonColorThemer.h"
+#import "MDCButtonTypographyThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
@@ -36,7 +37,8 @@
 
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
-
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:button];
   return button;
 }
 
@@ -44,6 +46,7 @@
   [super viewDidLoad];
 
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
@@ -53,6 +56,7 @@
   MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitleColor:titleColor forState:UIControlStateNormal];
   [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
   [raisedButton sizeToFit];
   [raisedButton addTarget:self
                    action:@selector(didTap:)
@@ -64,6 +68,7 @@
   MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
   [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
   [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledRaisedButton];
   [disabledRaisedButton sizeToFit];
   [disabledRaisedButton addTarget:self
                            action:@selector(didTap:)
@@ -75,31 +80,32 @@
 
   MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
   [flatButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:flatButton];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:flatButton];
   [flatButton sizeToFit];
   [flatButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
-
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:flatButton];
   [self.view addSubview:flatButton];
 
   // Disabled flat
 
   MDCFlatButton *disabledFlatButton = [[MDCFlatButton alloc] init];
   [disabledFlatButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledFlatButton];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:disabledFlatButton];
   [disabledFlatButton sizeToFit];
   [disabledFlatButton addTarget:self
                          action:@selector(didTap:)
                forControlEvents:UIControlEventTouchUpInside];
   [disabledFlatButton setEnabled:NO];
-
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:disabledFlatButton];
   [self.view addSubview:disabledFlatButton];
 
   // Custom stroked button
 
   MDCButton *strokedButton = [self buildCustomStrokedButton];
   [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:strokedButton];
   [strokedButton sizeToFit];
   [strokedButton addTarget:self
                     action:@selector(didTap:)
@@ -110,6 +116,7 @@
 
   MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
   [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledStrokedButton];
   [disabledStrokedButton sizeToFit];
   [disabledStrokedButton addTarget:self
                             action:@selector(didTap:)
