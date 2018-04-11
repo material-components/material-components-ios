@@ -1,12 +1,12 @@
-# #develop#
+# 54.3.0
 
-## Breaking changes
-
-## New deprecations
+This release continues to expand our support for component Color and Typography theming.
 
 ## New features
 
-## API changes
+Buttons and Snackbar now have a Color themer.
+
+BottomNavigationBar, Chips, NavigationBar, TextFields each now have a Typography themer.
 
 ## Component changes
 
