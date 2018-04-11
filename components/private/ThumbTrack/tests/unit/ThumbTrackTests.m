@@ -46,6 +46,7 @@
   XCTAssertEqualObjects(thumbTrack.thumbEnabledColor, thumbTrack.primaryColor);
   XCTAssertEqualObjects(thumbTrack.inkColor,
                         [thumbTrack.primaryColor colorWithAlphaComponent:0.5f]);
+  XCTAssertEqualObjects(thumbTrack.valueLabelBackgroundColor, thumbTrack.primaryColor);
 }
 
 #pragma mark - thumbEnabledColor
