@@ -65,6 +65,21 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":TextFields",
+        "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
@@ -77,6 +92,7 @@ mdc_objc_library(
         ":TextFields",
         ":ColorThemer",
         ":FontThemer",
+        ":TypographyThemer",
     ],
     visibility = ["//visibility:private"],
 )

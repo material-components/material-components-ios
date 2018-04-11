@@ -102,6 +102,14 @@ class MDCNodeListViewController: CBCNodeListViewController {
       NSForegroundColorAttributeName: UIColor.white,
       NSFontAttributeName: appBarFont ]
     appBar.navigationBar.titleAlignment = .center
+
+    applyColorScheme(AppTheme.globalTheme.colorScheme)
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.themeDidChange),
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -133,14 +141,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()
-
-    applyColorScheme(AppTheme.globalTheme.colorScheme)
-
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.themeDidChange),
-      name: AppTheme.didChangeGlobalThemeNotificationName,
-      object: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -161,14 +161,14 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   func themeDidChange(notification: NSNotification) {
     guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
-          as? MDCColorScheme else {
+          as? MDCColorScheming else {
       return
     }
     applyColorScheme(colorScheme)
   }
 
-  private func applyColorScheme(_ colorScheme: MDCColorScheme) {
-    MDCAppBarColorThemer.apply(colorScheme, to: appBar)
+  private func applyColorScheme(_ colorScheme: MDCColorScheming) {
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     appBar.navigationBar.tintColor = UIColor.white
   }
@@ -417,7 +417,8 @@ extension MDCNodeListViewController {
         container.appBar.navigationBar.titleTextAttributes =
             [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
 
-        MDCAppBarColorThemer.apply(AppTheme.globalTheme.colorScheme, to: container.appBar)
+        MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
+                                                      to: container.appBar)
 
         // TODO(featherless): Remove once
         // https://github.com/material-components/material-components-ios/issues/367 is resolved.

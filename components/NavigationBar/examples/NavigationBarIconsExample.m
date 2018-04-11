@@ -24,6 +24,7 @@
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialNavigationBar.h"
 #import "MDCNavigationBarColorThemer.h"
+#import "MDCNavigationBarTypographyThemer.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarIconsExample ()
@@ -44,6 +45,9 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  [MDCNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
+                                          toNavigationBar:self.navigationBar];
   [self.view addSubview:self.navigationBar];
 
   id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];

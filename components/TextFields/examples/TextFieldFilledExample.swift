@@ -282,7 +282,10 @@ final class TextFieldFilledSwiftExample: UIViewController {
   func style(textInputController : MDCTextInputController) {
     let colorScheme = MDCSemanticColorScheme()
     MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to:textInputController)
+    let typographyScheme = MDCTypographyScheme()
+    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
   }
+  
   func addGestureRecognizer() {
     let tapRecognizer = UITapGestureRecognizer(target: self,
                                                action: #selector(tapDidTouch(sender: )))
