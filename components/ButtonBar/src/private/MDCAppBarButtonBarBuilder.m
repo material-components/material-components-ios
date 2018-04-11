@@ -189,7 +189,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
       } else {
         contentInsets.right += additionalInset;
       }
-    } else if (isFirstButton && layoutPosition == MDCButtonBarLayoutPositionLeading) {
+    } else if (isLastButton && layoutPosition == MDCButtonBarLayoutPositionLeading) {
       // Right-most button in LTR, and left-most button in RTL.
       if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
         contentInsets.right += additionalInset;
