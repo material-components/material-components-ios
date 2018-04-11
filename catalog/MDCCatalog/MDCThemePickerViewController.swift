@@ -18,6 +18,14 @@ import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
 import UIKit
 
+private func createSchemeWithPalette(_ palette: MDCPalette) -> MDCSemanticColorScheme {
+  let scheme = MDCSemanticColorScheme()
+  scheme.primaryColor = palette.tint500
+  scheme.primaryColorVariant = palette.tint900
+  scheme.secondaryColor = scheme.primaryColor
+  return scheme
+}
+
 class MDCThemePickerViewController: UITableViewController {
   convenience init() {
     self.init(style: .plain)
@@ -46,39 +54,27 @@ class MDCThemePickerViewController: UITableViewController {
   private let colorSchemeRows = [
     (
       name: "Blue",
-      colorScheme: MDCBasicColorScheme(primaryColor: MDCPalette.blue.tint500,
-                                       primaryLightColor: MDCPalette.blue.tint100,
-                                       primaryDarkColor: MDCPalette.blue.tint900)
+      colorScheme: { return createSchemeWithPalette(MDCPalette.blue) }
     ),
     (
       name: "Red",
-      colorScheme: MDCBasicColorScheme(primaryColor: MDCPalette.red.tint500,
-                                       primaryLightColor: MDCPalette.red.tint100,
-                                       primaryDarkColor: MDCPalette.red.tint900)
+      colorScheme: { return createSchemeWithPalette(MDCPalette.red) }
     ),
     (
       name: "Green",
-      colorScheme: MDCBasicColorScheme(primaryColor: MDCPalette.green.tint500,
-                                       primaryLightColor: MDCPalette.green.tint100,
-                                       primaryDarkColor: MDCPalette.green.tint900)
+      colorScheme: { return createSchemeWithPalette(MDCPalette.green) }
     ),
     (
       name: "Amber",
-      colorScheme: MDCBasicColorScheme(primaryColor: MDCPalette.amber.tint500,
-                                       primaryLightColor: MDCPalette.amber.tint100,
-                                       primaryDarkColor: MDCPalette.amber.tint900)
+      colorScheme: { return createSchemeWithPalette(MDCPalette.amber) }
     ),
     (
       name: "Pink",
-      colorScheme: MDCBasicColorScheme(primaryColor: MDCPalette.pink.tint500,
-                                       primaryLightColor: MDCPalette.pink.tint100,
-                                       primaryDarkColor: MDCPalette.pink.tint900)
+      colorScheme: { return createSchemeWithPalette(MDCPalette.pink) }
     ),
     (
       name: "Orange",
-      colorScheme: MDCBasicColorScheme(primaryColor: MDCPalette.orange.tint500,
-                                       primaryLightColor: MDCPalette.orange.tint100,
-                                       primaryDarkColor: MDCPalette.orange.tint900)
+      colorScheme: { return createSchemeWithPalette(MDCPalette.orange) }
     )
   ]
   private let cellReuseIdentifier = "cell"
@@ -97,7 +93,7 @@ class MDCThemePickerViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let row = colorSchemeRows[indexPath.row]
     let colorScheme = row.colorScheme
-    AppTheme.globalTheme = AppTheme(colorScheme: colorScheme)
+    AppTheme.globalTheme = AppTheme(colorScheme: colorScheme())
 
     navigationController?.popViewController(animated: true)
   }

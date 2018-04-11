@@ -52,6 +52,18 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Chips",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_objc_library(
     name = "private",
     testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
@@ -73,6 +85,7 @@ mdc_objc_library(
     deps = [
         ":Chips",
         ":FontThemer",
+        ":TypographyThemer",
         ":private",
         "//components/private/ShapeLibrary",
     ],
