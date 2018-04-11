@@ -596,7 +596,7 @@ mdc.subspec "Snackbar+Extensions" do |component|
     extension.source_files = "components/Snackbar/src/#{extension.base_name}/*.{h,m}"
 
     extension.dependency "MaterialComponents/Snackbar"
-    extension.dependency "MaterialComponents/Themes"
+    extension.dependency "MaterialComponents/schemes/Color"
   end
   component.subspec "FontThemer" do |extension|
     extension.ios.deployment_target = '8.0'

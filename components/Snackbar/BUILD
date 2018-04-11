@@ -49,7 +49,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Snackbar",
-        "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
@@ -94,6 +94,7 @@ swift_library(
     deps = [
         ":Snackbar",
         ":private",
+        ":ColorThemer",
         ":TypographyThemer",
     ],
     visibility = ["//visibility:private"],

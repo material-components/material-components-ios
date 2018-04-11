@@ -16,22 +16,31 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialSnackbar.h"
-#import "MaterialThemes.h"
 
 /**
- Used to apply a color scheme to theme to MDCSnackbarMessageView.
+ Used to apply a color scheme to theme to MDCSnackbarManager.
  */
 @interface MDCSnackbarColorThemer : NSObject
 
 /**
+ Applies a color scheme to theme to a MDCSnackbarManager.
+
+ @param colorScheme The color scheme to apply to MDCSnackbarManager.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme;
+
+/**
  Applies a color scheme to theme to a MDCSnackbarMessageView.
- 
+
+ This method is deprecated. Consider using applySemanticColorScheme:colorScheme.
+
  @param colorScheme The color scheme to apply to MDCSnackbarMessageView.
  @param snackbarMessageView A MDCSnackbarMessageView instance to apply a color scheme. Use a
-     UIAppearance proxy to apply a color scheme to all instances of MDCSnackbarMessageView.
+ UIAppearance proxy to apply a color scheme to all instances of MDCSnackbarMessageView.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView;
-
+   toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView
+       __deprecated_msg("use applySemanticColorScheme:colorScheme instead.");
 @end
