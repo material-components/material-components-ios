@@ -20,6 +20,7 @@
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button {
+  [self resetUIControlStatesForButtonTheming:button];
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [button setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]
                     forState:UIControlStateDisabled];
@@ -31,12 +32,22 @@
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                     toFlatButton:(nonnull MDCFlatButton *)flatButton {
+  [self resetUIControlStatesForButtonTheming:flatButton];
   [flatButton setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [flatButton setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
   [flatButton setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [flatButton setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
                    forState:UIControlStateDisabled];
   flatButton.disabledAlpha = 1.f;
+}
+
++ (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [button setBackgroundColor:nil forState:state];
+    [button setTitleColor:nil forState:state];
+  }
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme

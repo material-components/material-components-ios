@@ -34,8 +34,12 @@
   colorScheme.onPrimaryColor = UIColor.greenColor;
   colorScheme.onSurfaceColor = UIColor.blueColor;
   [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
+  [button setTitleColor:UIColor.whiteColor forState:UIControlStateSelected];
   [button setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateHighlighted];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateSelected];
   [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
 
   // Where
@@ -72,8 +76,12 @@
   colorScheme.primaryColor = UIColor.redColor;
   colorScheme.onSurfaceColor = UIColor.blueColor;
   [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
+  [button setTitleColor:UIColor.whiteColor forState:UIControlStateSelected];
   [button setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateHighlighted];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateSelected];
   [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
 
   // Where
