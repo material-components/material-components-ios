@@ -25,10 +25,8 @@ static const CGFloat kMinimumItemWidth = 36.f;
 
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize fitSize = [super sizeThatFits:size];
-  fitSize.height =
-      self.contentPadding.top + MAX(kMinimumItemWidth, fitSize.height) + self.contentPadding.bottom;
-  fitSize.width =
-      self.contentPadding.left + MAX(kMinimumItemWidth, fitSize.width) + self.contentPadding.right;
+  fitSize.height = MAX(kMinimumItemWidth, fitSize.height);
+  fitSize.width = MAX(kMinimumItemWidth, fitSize.width);
 
   return fitSize;
 }
