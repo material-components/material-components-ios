@@ -171,16 +171,16 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (!self.isStatefulAPIEnabled) {
     return;
   }
-  NSLog(@"Update colors for state");
+
   if ((self.state & UIControlStateDisabled) == UIControlStateDisabled) {
     _thumbTrack.thumbDisabledColor = [self thumbColorForState:self.state];
     _thumbTrack.trackDisabledColor = [self trackBackgroundColorForState:self.state];
   } else {
-    // thumbEnabledColor is null_resettable, so explicitly set `clear` to get the correct effect
+    // thumbEnabledColor is null_resettable, so explicitly set to `.clear` for the correct effect
     _thumbTrack.thumbEnabledColor = [self thumbColorForState:self.state] ?: UIColor.clearColor;
     _thumbTrack.trackOffColor = [self trackBackgroundColorForState:self.state];
   }
-  // trackOnColor is null_resettable, so explicitly set `clear` to get the correct effect
+  // trackOnColor is null_resettable, so explicitly set to `.clear` for the correct effect
   _thumbTrack.trackOnColor = [self trackFillColorForState:self.state] ?: UIColor.clearColor;
   _thumbTrack.inkColor = self.inkColor;
 }

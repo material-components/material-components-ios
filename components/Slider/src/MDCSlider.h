@@ -41,14 +41,14 @@
 IB_DESIGNABLE
 @interface MDCSlider : UIControl <NSSecureCoding>
 
-/** When @c YES, the new forState: APIs are enabled. Defaults to @c NO. */
+/** When @c YES, the forState: APIs are enabled. Defaults to @c NO. */
 @property(nonatomic, assign, getter=isStatefulAPIEnabled) BOOL statefulAPIEnabled;
 
 /** The delegate for the slider. */
 @property(nullable, nonatomic, weak) id<MDCSliderDelegate> delegate;
 
 /**
- Sets the color of the thumb to use for the specified state.
+ Sets the color of the thumb for the specified state.
 
  In general, if a property is not specified for a state, the default is to use the
  @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
@@ -70,7 +70,7 @@ IB_DESIGNABLE
 - (nullable UIColor *)thumbColorForState:(UIControlState)state;
 
 /**
- Sets the color of the filled track area to use for the specified state.
+ Sets the color of the filled track area for the specified state.
 
  In general, if a property is not specified for a state, the default is to use the
  @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
@@ -92,7 +92,7 @@ IB_DESIGNABLE
 - (nullable UIColor *)trackFillColorForState:(UIControlState)state;
 
 /**
- Sets the color of the inactive (unfilled) track to use for the specified state.
+ Sets the color of the background (unfilled) track for the specified state.
 
  In general, if a property is not specified for a state, the default is to use the
  @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
