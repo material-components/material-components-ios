@@ -162,9 +162,9 @@ run_cocoapods() {
       else
         bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
       fi
-      elif [ "$DEPENDENCY_SYSTEM" -eq "cocoapods-podspec" ]; then
-        pod lib lint MaterialComponents.podspec
-      fi
+    elif [ "$DEPENDENCY_SYSTEM" -eq "cocoapods-podspec" ]; then
+      pod lib lint MaterialComponents.podspec
+    fi
   done
 
   bash <(curl -s https://codecov.io/bash)
