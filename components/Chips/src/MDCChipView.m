@@ -125,6 +125,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @interface MDCChipView ()
 @property(nonatomic, readonly) CGRect contentRect;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
+@property(nonatomic, readonly, strong) UIView *chipView;
 @property(nonatomic, readonly) BOOL showImageView;
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
@@ -134,6 +135,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 @implementation MDCChipView {
   // For each UIControlState.
+  NSMutableDictionary<NSNumber *, UIColor *> *_chipColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_backgroundColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
@@ -166,6 +168,13 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
       _backgroundColors[@(UIControlStateDisabled)] = disabled;
       _backgroundColors[@(UIControlStateSelected)] = selected;
     }
+
+    _chipColors = [NSMutableDictionary dictionary];
+    _chipView = [[UIView alloc] initWithFrame:self.bounds];
+    _chipView.layer.mask = self.layer.shapeLayer;
+    [self addSubview:_chipView];
+
+
     _borderColors = [NSMutableDictionary dictionary];
     _borderWidths = [NSMutableDictionary dictionary];
 
@@ -361,6 +370,24 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   if (accessoryView) {
     [self insertSubview:accessoryView aboveSubview:_titleLabel];
   }
+}
+
+- (nullable UIColor *)chipColorForState:(UIControlState)state {
+  UIColor *backgroundColor = _chipColors[@(state)];
+  if (!backgroundColor && state != UIControlStateNormal) {
+    backgroundColor = _chipColors[@(UIControlStateNormal)];
+  }
+  return backgroundColor;
+}
+
+- (void)setChipColor:(nullable UIColor *)chipColor forState:(UIControlState)state {
+  _chipColors[@(state)] = chipColor;
+
+  [self updateChipColor];
+}
+
+- (void)updateChipColor {
+  self.chipView.backgroundColor = [self chipColorForState:self.state];
 }
 
 - (nullable UIColor *)backgroundColorForState:(UIControlState)state {
@@ -559,6 +586,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateState {
   [self updateBackgroundColor];
+  [self updateChipColor];
   [self updateBorderColor];
   [self updateBorderWidth];
   [self updateElevation];
@@ -594,6 +622,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  _chipView.frame = self.bounds;
   _inkView.frame = self.bounds;
   _imageView.frame = [self imageViewFrame];
   _selectedImageView.frame = [self selectedImageViewFrame];
@@ -608,6 +637,13 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     self.layer.shadowPath =
         [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
   }
+
+  CAShapeLayer *shapedLayer = (CAShapeLayer *)_chipView.layer.mask;
+  if (![shapedLayer isKindOfClass:[CAShapeLayer class]]) {
+    shapedLayer = [CAShapeLayer layer];
+    _chipView.layer.mask = shapedLayer;
+  }
+  shapedLayer.path = self.layer.shadowPath;
 
   // Handle RTL
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {

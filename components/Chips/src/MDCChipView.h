@@ -162,6 +162,27 @@
     UI_APPEARANCE_SELECTOR;
 
 /*
+ A color used as the chip's color for @c state.
+
+ If no chip color has been set for a given state, the returned value will fall back to the
+ value set for UIControlStateNormal.
+
+ @param state The control state.
+ @return The chip color.
+ */
+- (nullable UIColor *)chipColorForState:(UIControlState)state;
+
+/*
+ A color used as the chip's @c color.
+
+ Defaults to blue.
+
+ @param chipColor The chip color.
+ @param state The control state.
+ */
+- (void)setChipColor:(nullable UIColor *)chipColor forState:(UIControlState)state;
+
+/*
  Returns the border color for a particular control state.
 
  If no border width has been set for a given state, the returned value will fall back to the value
