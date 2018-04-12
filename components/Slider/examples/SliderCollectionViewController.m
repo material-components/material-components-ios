@@ -103,8 +103,14 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   _slider.filledTrackAnchorValue = model.anchorValue;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
   _slider.thumbHollowAtStart = model.hollowCircle;
-  _slider.color = model.sliderColor;
   _slider.enabled = model.enabled;
+  _slider.statefulAPIEnabled = YES;
+  // Don't apply a `nil` color, use the default
+  if (model.sliderColor) {
+    [_slider setTrackFillColor:model.sliderColor forState:UIControlStateNormal];
+    [_slider setThumbColor:model.sliderColor forState:UIControlStateNormal];
+    _slider.inkColor = model.sliderColor;
+  }
 
   // Add target/action pair
   [_slider addTarget:model
@@ -222,6 +228,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Disabled slider";
     model.value = 0.5f;
+    model.anchorValue = 0.1f;
     model.enabled = NO;
     [_sliders addObject:model];
   }
