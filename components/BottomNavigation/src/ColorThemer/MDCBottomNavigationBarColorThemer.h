@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
+#import "MaterialColorScheme.h"
 #import "MaterialBottomNavigation.h"
 
 /**
@@ -24,8 +24,23 @@
 @interface MDCBottomNavigationBarColorThemer : NSObject
 
 /**
+ Applies a color scheme's properties to an MDCBottomNavigationBar.
+
+ @param colorScheme The color scheme to apply to MDCBottomNavigationBar.
+ @param bottomNavigation An MDCBottomNavigationBar instance to which the color scheme should be
+ applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+              toBottomNavigation:(nonnull MDCBottomNavigationBar *)bottomNavigation;
+
+#pragma mark - Soon to be deprecated
+
+/**
  Applies a color scheme to theme a MDCBottomNavigationBar. Use a UIAppearance proxy to apply a color
  scheme to all instances of MDCBottomNavigationBar.
+
+ This method will soon be deprecated. Consider using +applySemanticColorScheme:toBottomNavigation:
+ instead.
 
  @param colorScheme The color scheme to apply to MDCBottomNavigationBar.
  @param bottomNavigationBar A MDCBottomNavigationBar instance to apply a color scheme.
