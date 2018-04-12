@@ -222,14 +222,14 @@ IB_DESIGNABLE
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
 
 /**
- The color of the value label's text.
+ The color of the discrete value label's text.
 
  Defaults and resets to white.
  */
 @property(nonatomic, strong, null_resettable) UIColor *valueLabelTextColor;
 
 /**
- The color of the value label's background.
+ The color of the discrete value label's background.
 
  Defaults and resets to blue.
  */
