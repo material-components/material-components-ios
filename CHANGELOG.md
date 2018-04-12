@@ -1,10 +1,10 @@
-# #develop#
-
-## Breaking changes
-
-## New deprecations
+# 54.4.0
 
 ## New features
+
+Buttons now has a Typography themer.
+
+MDCFlatButton now has a color themer API.
 
 ## API changes
 
