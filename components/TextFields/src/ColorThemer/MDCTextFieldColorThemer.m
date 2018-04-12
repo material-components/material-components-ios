@@ -55,8 +55,8 @@
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
            toTextInputController:(id<MDCTextInputController>)textInputController {
-  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87];
-  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
   textInputController.activeColor = colorScheme.primaryColor;
   textInputController.errorColor = colorScheme.errorColor;
   textInputController.normalColor = onSurface87Opacity;
@@ -71,7 +71,7 @@
 
     if ([textInputControllerFloatingPlaceholder
             respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
-      UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87];
+      UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
       textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = primary87Opacity;
     }
   }
@@ -79,8 +79,8 @@
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                      toTextInput:(nonnull id<MDCTextInput>)textInput {
-  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87];
-  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
   textInput.cursorColor = colorScheme.primaryColor;
   textInput.textColor = onSurface87Opacity;
   textInput.placeholderLabel.textColor = onSurface60Opacity;
@@ -96,8 +96,8 @@
 #endif
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
 toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
-  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87];
-  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
   [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
   [textInputControllerClass setErrorColorDefault:colorScheme.errorColor];
   [textInputControllerClass setNormalColorDefault:onSurface87Opacity];
@@ -109,7 +109,7 @@ toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControl
           conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87];
+    UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
     [textInputControllerFloatingPlaceholderClass
         setFloatingPlaceholderNormalColorDefault:primary87Opacity];
   }
