@@ -21,7 +21,6 @@
 #import "MaterialAppBar.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
-#import "MaterialThemes.h"
 #import "MDCBottomNavigationBarColorThemer.h"
 #import "MDCBottomNavigationBarTypographyThemer.h"
 
@@ -54,6 +53,9 @@
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
                                           toBottomNavigationBar:_bottomNavBar];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
+                                           toBottomNavigation:_bottomNavBar];
   [self.view addSubview:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =
