@@ -115,6 +115,53 @@ IB_DESIGNABLE
 - (nullable UIColor *)trackBackgroundColorForState:(UIControlState)state;
 
 /**
+ Sets the color of the ticks within the filled track to use for the specified state.
+
+ In general, if a property is not specified for a state, the default is to use the
+ @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the
+ normal state.
+
+ @param tickColor The color of the tick marks within the filled track.
+ @param state The state of the slider.
+ */
+- (void)setFilledTrackTickColor:(nullable UIColor *)tickColor forState:(UIControlState)state;
+
+/**
+ Returns the tick color for the filled track portion associated with the specified state.
+
+ @params state The state that uses the filled-track tick color.
+ @returns The filled-track tick color for the specified state. If no color has been set for the
+          specific state, this method returns the color associated with the @c UIControlStateNormal
+          state.
+ */
+- (nullable UIColor *)filledTrackTickColorForState:(UIControlState)state;
+
+/**
+ Sets the color of the ticks for the background (unfilled) track to use for the specified state.
+
+ In general, if a property is not specified for a state, the default is to use the
+ @c UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the
+ normal state.
+
+ @param tickColor The color of the tick marks outside the filled track.
+ @param state The state of the slider.
+ */
+- (void)setBackgroundTrackTickColor:(nullable UIColor *)tickColor forState:(UIControlState)state;
+
+/**
+ Returns the tick color for the background (unfilled) track portion associated with the specified
+ state.
+
+ @params state The state that uses the background-track tick color.
+ @returns The background-track tick color for the specified state. If no color has been set for the
+          specific state, this method returns the color associated with the @c UIControlStateNormal
+          state.
+ */
+- (nullable UIColor *)backgroundTrackTickColorForState:(UIControlState)state;
+
+/**
  The color of the Ink ripple.
 
  Defaults to transparent blue.
