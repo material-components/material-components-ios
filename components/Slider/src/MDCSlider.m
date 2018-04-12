@@ -39,6 +39,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   NSMutableDictionary *_thumbColorsForState;
   NSMutableDictionary *_trackFillColorsForState;
   NSMutableDictionary *_trackBackgroundColorsForState;
+  NSMutableDictionary *_filledTickColorsForState;
+  NSMutableDictionary *_backgroundTickColorsForState;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -97,6 +99,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _trackBackgroundColorsForState = [@{} mutableCopy];
   _trackBackgroundColorsForState[@(UIControlStateNormal)] = [[self class] defaultTrackOffColor];
   _trackBackgroundColorsForState[@(UIControlStateDisabled)] = [[self class] defaultDisabledColor];
+  _filledTickColorsForState = [@{} mutableCopy];
+  _filledTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
+  _backgroundTickColorsForState = [@{} mutableCopy];
+  _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
 
   [self addSubview:_thumbTrack];
 }
@@ -167,6 +173,42 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return color;
 }
 
+- (void)setFilledTrackTickColor:(UIColor *)tickColor forState:(UIControlState)state {
+  _filledTickColorsForState[@(state)] = tickColor;
+  if (state == self.state) {
+    [self updateColorsForState];
+  }
+}
+
+- (UIColor *)filledTrackTickColorForState:(UIControlState)state {
+  UIColor *color = _filledTickColorsForState[@(state)];
+  if (color) {
+    return color;
+  }
+  if (state != UIControlStateNormal) {
+    color = _filledTickColorsForState[@(UIControlStateNormal)];
+  }
+  return color;
+}
+
+- (void)setBackgroundTrackTickColor:(UIColor *)tickColor forState:(UIControlState)state {
+  _backgroundTickColorsForState[@(state)] = tickColor;
+  if (self.state == state) {
+    [self updateColorsForState];
+  }
+}
+
+- (UIColor *)backgroundTrackTickColorForState:(UIControlState)state {
+  UIColor *color = _backgroundTickColorsForState[@(state)];
+  if (color) {
+    return color;
+  }
+  if (state != UIControlStateNormal) {
+    color = _backgroundTickColorsForState[@(UIControlStateNormal)];
+  }
+  return color;
+}
+
 - (void)updateColorsForState {
   if (!self.isStatefulAPIEnabled) {
     return;
@@ -183,6 +225,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   // trackOnColor is null_resettable, so explicitly set to `.clear` for the correct effect
   _thumbTrack.trackOnColor = [self trackFillColorForState:self.state] ?: UIColor.clearColor;
   _thumbTrack.inkColor = self.inkColor;
+  _thumbTrack.trackOnTickColor = [self filledTrackTickColorForState:self.state];
+  _thumbTrack.trackOffTickColor = [self backgroundTrackTickColorForState:self.state];
 }
 
 #pragma mark - ThumbTrack passthrough methods

@@ -30,6 +30,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @property(nonatomic, assign) UIColor *labelColor;
 @property(nonatomic, assign) UIColor *bgColor;
 @property(nonatomic, nullable) UIColor *sliderColor;
+@property(nonatomic, nullable) UIColor *filledTickColor;
+@property(nonatomic, nullable) UIColor *backgroundTickColor;
 @property(nonatomic, nullable) UIColor *trackBackgroundColor;
 @property(nonatomic, assign) int numDiscreteValues;
 @property(nonatomic, assign) CGFloat value;
@@ -110,6 +112,18 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     [_slider setTrackFillColor:model.sliderColor forState:UIControlStateNormal];
     [_slider setThumbColor:model.sliderColor forState:UIControlStateNormal];
     _slider.inkColor = model.sliderColor;
+  }
+
+  if (model.filledTickColor) {
+    [_slider setFilledTrackTickColor:model.filledTickColor forState:UIControlStateNormal];
+  } else {
+    [_slider setFilledTrackTickColor:UIColor.blackColor forState:UIControlStateNormal];
+  }
+
+  if (model.backgroundTickColor) {
+    [_slider setBackgroundTrackTickColor:model.backgroundTickColor forState:UIControlStateNormal];
+  } else {
+    [_slider setBackgroundTrackTickColor:UIColor.blackColor forState:UIControlStateNormal];
   }
 
   // Add target/action pair
@@ -202,6 +216,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model.labelString = @"Discrete slider with numeric value label";
     model.numDiscreteValues = 5;
     model.value = 0.2f;
+    model.backgroundTickColor = UIColor.blackColor;
+    model.filledTickColor = MDCPalette.bluePalette.tint100;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
@@ -209,6 +225,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model.numDiscreteValues = 7;
     model.value = 1.f;
     model.discreteValueLabel = NO;
+    model.backgroundTickColor = UIColor.blackColor;
+    model.filledTickColor = MDCPalette.bluePalette.tint100;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];

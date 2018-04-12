@@ -712,6 +712,180 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                            [self.slider trackFillColorForState:UIControlStateDisabled]);
 }
 
+#pragma mark - filledTrackTickColorForState
+
+- (void)testFilledTrackTickColorForStateDefaults {
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.slider filledTrackTickColorForState:state],
+                          UIColor.blackColor);
+  }
+}
+
+- (void)testFilledTrackTickColorForStateFallback {
+  // When
+  [self.slider setFilledTrackTickColor:UIColor.orangeColor forState:UIControlStateNormal];
+
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.slider filledTrackTickColorForState:state], UIColor.orangeColor,
+                          @"(%@) is not equal to (%@) for state (%ld)",
+                          [self.slider filledTrackTickColorForState:state], UIColor.orangeColor,
+                          (long)state);
+  }
+}
+
+- (void)testFilledTrackTickColorForStateAppliesToThumbTrack {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+
+  // When
+  [self.slider setFilledTrackTickColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.slider setFilledTrackTickColor:UIColor.redColor forState:UIControlStateHighlighted];
+  [self.slider setFilledTrackTickColor:UIColor.cyanColor forState:UIControlStateSelected];
+  [self.slider setFilledTrackTickColor:UIColor.grayColor forState:UIControlStateDisabled];
+  [self.slider setFilledTrackTickColor:UIColor.orangeColor
+                              forState:UIControlStateHighlighted | UIControlStateSelected];
+  [self.slider setFilledTrackTickColor:UIColor.yellowColor
+                              forState:UIControlStateDisabled | UIControlStateSelected];
+
+  // Then
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
+                        [self.slider filledTrackTickColorForState:UIControlStateDisabled]);
+  self.slider.enabled = NO;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
+                        [self.slider filledTrackTickColorForState:UIControlStateDisabled |
+                         UIControlStateSelected]);
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
+                        [self.slider filledTrackTickColorForState:UIControlStateDisabled]);
+  self.slider.enabled = NO;
+  self.slider.selected = YES;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
+                        [self.slider filledTrackTickColorForState:UIControlStateDisabled |
+                         UIControlStateSelected]);
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
+                        [self.slider filledTrackTickColorForState:UIControlStateNormal]);
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
+                        [self.slider filledTrackTickColorForState:UIControlStateSelected]);
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
+                        [self.slider filledTrackTickColorForState:UIControlStateHighlighted]);
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
+                        [self.slider filledTrackTickColorForState:UIControlStateHighlighted |
+                         UIControlStateSelected]);
+}
+
+#pragma mark - backgroundTrackTickColorForState
+
+- (void)testBackgroundTrackTickColorForStateDefaults {
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.slider backgroundTrackTickColorForState:state],
+                          UIColor.blackColor);
+  }
+}
+
+- (void)testBackgroundTrackTickColorForStateFallback {
+  // When
+  [self.slider setBackgroundTrackTickColor:UIColor.orangeColor forState:UIControlStateNormal];
+
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.slider backgroundTrackTickColorForState:state], UIColor.orangeColor,
+                          @"(%@) is not equal to (%@) for state (%ld)",
+                          [self.slider backgroundTrackTickColorForState:state], UIColor.orangeColor,
+                          (long)state);
+  }
+}
+
+- (void)testBackgroundTrackTickColorForStateAppliesToThumbTrack {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+
+  // When
+  [self.slider setBackgroundTrackTickColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.slider setBackgroundTrackTickColor:UIColor.redColor forState:UIControlStateHighlighted];
+  [self.slider setBackgroundTrackTickColor:UIColor.cyanColor forState:UIControlStateSelected];
+  [self.slider setBackgroundTrackTickColor:UIColor.grayColor forState:UIControlStateDisabled];
+  [self.slider setBackgroundTrackTickColor:UIColor.orangeColor
+                                  forState:UIControlStateHighlighted | UIControlStateSelected];
+  [self.slider setBackgroundTrackTickColor:UIColor.yellowColor
+                                  forState:UIControlStateDisabled | UIControlStateSelected];
+
+  // Then
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
+                        [self.slider backgroundTrackTickColorForState:UIControlStateDisabled]);
+  self.slider.enabled = NO;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
+                        [self.slider backgroundTrackTickColorForState:UIControlStateDisabled |
+                         UIControlStateSelected]);
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
+                        [self.slider backgroundTrackTickColorForState:UIControlStateDisabled]);
+  self.slider.enabled = NO;
+  self.slider.selected = YES;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
+                        [self.slider backgroundTrackTickColorForState:UIControlStateDisabled |
+                         UIControlStateSelected]);
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
+                        [self.slider backgroundTrackTickColorForState:UIControlStateNormal]);
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
+                        [self.slider backgroundTrackTickColorForState:UIControlStateSelected]);
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
+                        [self.slider backgroundTrackTickColorForState:UIControlStateHighlighted]);
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = YES;
+  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
+                        [self.slider backgroundTrackTickColorForState:UIControlStateHighlighted |
+                         UIControlStateSelected]);
+}
+
 #pragma mark - InkColor
 
 - (void)testInkColorDefault {
