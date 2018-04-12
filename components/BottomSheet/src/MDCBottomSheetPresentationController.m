@@ -174,7 +174,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)dismissPresentedControllerIfNecessary:(UITapGestureRecognizer *)tapRecognizer {
-  if (_dismissOnBackgroundTap) {
+  if (!_dismissOnBackgroundTap) {
     return;
   }
   // Only dismiss if the tap is outside of the presented view.

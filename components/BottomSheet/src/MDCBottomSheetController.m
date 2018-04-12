@@ -35,6 +35,7 @@
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
+    self.dismissOnBackgroundTap = YES;
   }
   return self;
 }
@@ -67,7 +68,7 @@
 }
 
 - (BOOL)accessibilityPerformEscape {
-  if (self.dismissOnBackgroundTap) {
+  if (!self.dismissOnBackgroundTap) {
     return NO;
   }
   [self dismissViewControllerAnimated:YES completion:nil];
