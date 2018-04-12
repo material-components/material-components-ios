@@ -279,6 +279,22 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return _thumbTrack.inkColor;
 }
 
+- (void)setValueLabelTextColor:(UIColor *)valueLabelTextColor {
+  _thumbTrack.valueLabelTextColor = valueLabelTextColor;
+}
+
+- (UIColor *)valueLabelTextColor {
+  return _thumbTrack.valueLabelTextColor;
+}
+
+- (void)setValueLabelBackgroundColor:(UIColor *)valueLabelBackgroundColor {
+  _thumbTrack.valueLabelBackgroundColor = valueLabelBackgroundColor ?: MDCThumbTrackDefaultColor();
+}
+
+- (UIColor *)valueLabelBackgroundColor {
+  return _thumbTrack.valueLabelBackgroundColor;
+}
+
 #pragma mark - MDCThumbTrackDelegate methods
 
 - (NSString *)thumbTrack:(__unused MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {
