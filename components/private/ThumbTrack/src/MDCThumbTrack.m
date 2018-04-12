@@ -59,28 +59,6 @@ static UIColor *InkColorDefault() {
   return [UIColor.blueColor colorWithAlphaComponent:kTrackOnAlpha];
 }
 
-// Credit to the Beacon Tools iOS team for the idea for this implementations
-@interface MDCDiscreteDotView : UIView
-
-@property(nonatomic, assign) NSUInteger numDiscreteDots;
-
-/** The color of dots within the @c activeDotsSegment bounds. Defaults to black. */
-@property(nonatomic, strong, nonnull) UIColor *activeDotColor;
-
-/** The color of dots outside the @c activeDotsSegment bounds. Defaults to black. */
-@property(nonatomic, strong, nonnull) UIColor *inactiveDotColor;
-
-/**
- The segment of the track that uses @c activeDotColor. The horizontal dimension should be bound
- to [0..1]. The vertical dimension is ignored.
-
- @note Only the @c origin.x and @c size.width are used to determine whether a dot is in the active
-       segment.
- */
-@property(nonatomic, assign) CGRect activeDotsSegment;
-
-@end
-
 @implementation MDCDiscreteDotView
 
 - (instancetype)init {
@@ -254,6 +232,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
         [onTintColor colorWithAlphaComponent:kTrackOnAlpha] : InkColorDefault();
     _clearColor = UIColor.clearColor;
     _valueLabelTextColor = ValueLabelTextColorDefault();
+    _trackOnTickColor = UIColor.blackColor;
+    _trackOffTickColor = UIColor.blackColor;
     [self setNeedsLayout];
 
     // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
@@ -348,6 +328,22 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self setNeedsLayout];
 }
 
+- (void)setTrackOnTickColor:(UIColor *)trackOnTickColor {
+  _trackOnTickColor = trackOnTickColor;
+  if (_discreteDots) {
+    _discreteDots.activeDotColor = trackOnTickColor;
+    [self setNeedsLayout];
+  }
+}
+
+- (void)setTrackOffTickColor:(UIColor *)trackOffTickColor {
+  _trackOffTickColor = trackOffTickColor;
+  if (_discreteDots) {
+    _discreteDots.inactiveDotColor = trackOffTickColor;
+    [self setNeedsLayout];
+  }
+}
+
 - (void)setThumbElevation:(MDCShadowElevation)thumbElevation {
   _thumbView.elevation = thumbElevation;
 }
@@ -361,6 +357,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if (shouldDisplayDiscreteDots) {
       _discreteDots = [[MDCDiscreteDotView alloc] init];
       _discreteDots.alpha = 0.0;
+      _discreteDots.activeDotColor = self.trackOnTickColor;
+      _discreteDots.inactiveDotColor = self.trackOffTickColor;
       [_trackView addSubview:_discreteDots];
     } else {
       [_discreteDots removeFromSuperview];
@@ -1247,6 +1245,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (MDCInkTouchController *)touchController {
   return _touchController;
+}
+
+- (MDCDiscreteDotView *)discreteDotView {
+  return _discreteDots;
 }
 
 @end
