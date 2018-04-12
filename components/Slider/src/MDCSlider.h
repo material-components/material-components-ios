@@ -230,8 +230,6 @@ IB_DESIGNABLE
 
 /**
  The color of the discrete value label's background.
-
- Defaults and resets to blue.
  */
 @property(nonatomic, strong, null_resettable) UIColor *valueLabelBackgroundColor;
 
