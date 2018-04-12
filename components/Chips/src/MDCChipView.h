@@ -175,7 +175,7 @@
 /*
  A color used as the chip's background overlay @c color.
 
- @param backgroundOverlayColor The chip color.
+ @param backgroundOverlayColor The chip background overlay color.
  @param state The control state.
  */
 - (void)setBackgroundOverlayColor:(nullable UIColor *)backgroundOverlayColor

@@ -174,7 +174,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _backgroundOverlayView.layer.mask = self.layer.shapeLayer;
     [self addSubview:_backgroundOverlayView];
 
-
     _borderColors = [NSMutableDictionary dictionary];
     _borderWidths = [NSMutableDictionary dictionary];
 
