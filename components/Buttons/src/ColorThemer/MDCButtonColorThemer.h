@@ -41,9 +41,9 @@
                     toFlatButton:(nonnull MDCFlatButton *)flatButton;
 
 /**
- Applies a color scheme to theme to a MDCRaisedButton.
+ Applies a color scheme to theme to an MDCRaisedButton.
 
- @param colorScheme The color scheme to apply to MDCRaisedButton.
+ @param colorScheme The color scheme to apply to @c raisedButton.
  @param raisedButton An MDCRaisedButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme

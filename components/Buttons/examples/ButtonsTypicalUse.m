@@ -35,11 +35,6 @@
   [button setBorderWidth:1.0 forState:UIControlStateNormal];
   [button setBorderColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
 
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:button];
-
   return button;
 }
 
@@ -58,11 +53,11 @@
   [raisedButton setTitleColor:titleColor forState:UIControlStateNormal];
   [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
   [raisedButton sizeToFit];
   [raisedButton addTarget:self
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
 
   [self.view addSubview:raisedButton];
 
@@ -72,12 +67,12 @@
   [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
   [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledRaisedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:disabledRaisedButton];
   [disabledRaisedButton sizeToFit];
   [disabledRaisedButton addTarget:self
                            action:@selector(didTap:)
                  forControlEvents:UIControlEventTouchUpInside];
   [disabledRaisedButton setEnabled:NO];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:disabledRaisedButton];
 
   [self.view addSubview:disabledRaisedButton];
 
@@ -111,6 +106,7 @@
   MDCButton *strokedButton = [self buildCustomStrokedButton];
   [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:strokedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:strokedButton];
   [strokedButton sizeToFit];
   [strokedButton addTarget:self
                     action:@selector(didTap:)
@@ -122,6 +118,7 @@
   MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
   [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledStrokedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:disabledStrokedButton];
   [disabledStrokedButton sizeToFit];
   [disabledStrokedButton addTarget:self
                             action:@selector(didTap:)
