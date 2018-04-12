@@ -638,6 +638,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
         [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
   }
 
+  // make sure chipView layer has the same shape the component
   CAShapeLayer *shapedLayer = (CAShapeLayer *)_chipView.layer.mask;
   if (![shapedLayer isKindOfClass:[CAShapeLayer class]]) {
     shapedLayer = [CAShapeLayer layer];

@@ -175,8 +175,6 @@
 /*
  A color used as the chip's @c color.
 
- Defaults to blue.
-
  @param chipColor The chip color.
  @param state The control state.
  */
