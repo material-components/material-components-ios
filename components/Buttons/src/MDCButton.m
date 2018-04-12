@@ -927,6 +927,30 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self setNeedsLayout];
 }
 
+- (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
+  if (shapeGenerator) {
+    self.layer.shadowPath = nil;
+  } else {
+    self.layer.shadowPath = [self boundingPath].CGPath;
+  }
+
+  self.layer.shapeGenerator = shapeGenerator;
+  self.layer.shadowMaskEnabled = NO;
+  [self updateBackgroundColor];
+//  [self updateInkForShape];
+}
+
+- (void)updateInkForShape {
+  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+  self.inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+  self.inkView.layer.masksToBounds = NO;
+}
+
+- (id<MDCShapeGenerating>)shapeGenerator {
+  return self.layer.shapeGenerator;
+}
+
 #pragma mark - Dynamic Type
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
