@@ -1,3 +1,24 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Implement a color themer for an MDCFlatButton (#3308)](https://github.com/material-components/material-components-ios/commit/482bd56d46cb51e1e01e1b4359850d04a0b04a13) (Yarden Eitan)
+* [Implement a typography themer. (#3318)](https://github.com/material-components/material-components-ios/commit/2146d297b11a0c6353976f0fb63f055fcd92047a) (Yarden Eitan)
+
+---
+
 # 54.3.0
 
 This release continues to expand our support for component Color and Typography theming.
