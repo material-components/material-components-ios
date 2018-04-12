@@ -58,7 +58,6 @@
   [raisedButton addTarget:self
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
-
   [self.view addSubview:raisedButton];
 
   // Disabled raised button
@@ -73,7 +72,6 @@
                            action:@selector(didTap:)
                  forControlEvents:UIControlEventTouchUpInside];
   [disabledRaisedButton setEnabled:NO];
-
   [self.view addSubview:disabledRaisedButton];
 
   // Flat button
