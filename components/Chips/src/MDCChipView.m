@@ -639,13 +639,13 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
         [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
   }
 
-  // make sure chipView layer has the same shape the component
-  CAShapeLayer *shapedLayer = (CAShapeLayer *)_backgroundOverlayView.layer.mask;
-  if (![shapedLayer isKindOfClass:[CAShapeLayer class]]) {
-    shapedLayer = [CAShapeLayer layer];
-    _backgroundOverlayView.layer.mask = shapedLayer;
+  // make sure backgroundOverlayView layer has the same shape the component
+  CAShapeLayer *backgroundOverlayShapedLayer = (CAShapeLayer *)_backgroundOverlayView.layer.mask;
+  if (![backgroundOverlayShapedLayer isKindOfClass:[CAShapeLayer class]]) {
+    backgroundOverlayShapedLayer = [CAShapeLayer layer];
+    _backgroundOverlayView.layer.mask = backgroundOverlayShapedLayer;
   }
-  shapedLayer.path = self.layer.shadowPath;
+  backgroundOverlayShapedLayer.path = self.layer.shadowPath;
 
   // Handle RTL
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
