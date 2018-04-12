@@ -125,7 +125,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @interface MDCChipView ()
 @property(nonatomic, readonly) CGRect contentRect;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-@property(nonatomic, readonly, strong) UIView *chipView;
+@property(nonatomic, readonly, strong) UIView *backgroundOverlayView;
 @property(nonatomic, readonly) BOOL showImageView;
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
@@ -135,7 +135,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 @implementation MDCChipView {
   // For each UIControlState.
-  NSMutableDictionary<NSNumber *, UIColor *> *_chipColors;
+  NSMutableDictionary<NSNumber *, UIColor *> *_backgroundOverlayColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_backgroundColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
@@ -169,10 +169,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
       _backgroundColors[@(UIControlStateSelected)] = selected;
     }
 
-    _chipColors = [NSMutableDictionary dictionary];
-    _chipView = [[UIView alloc] initWithFrame:self.bounds];
-    _chipView.layer.mask = self.layer.shapeLayer;
-    [self addSubview:_chipView];
+    _backgroundOverlayColors = [NSMutableDictionary dictionary];
+    _backgroundOverlayView = [[UIView alloc] initWithFrame:self.bounds];
+    _backgroundOverlayView.layer.mask = self.layer.shapeLayer;
+    [self addSubview:_backgroundOverlayView];
 
 
     _borderColors = [NSMutableDictionary dictionary];
@@ -372,22 +372,24 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 }
 
-- (nullable UIColor *)chipColorForState:(UIControlState)state {
-  UIColor *backgroundColor = _chipColors[@(state)];
+- (nullable UIColor *)backgroundOverlayColorForState:(UIControlState)state {
+  UIColor *backgroundColor = _backgroundOverlayColors[@(state)];
   if (!backgroundColor && state != UIControlStateNormal) {
-    backgroundColor = _chipColors[@(UIControlStateNormal)];
+    backgroundColor = _backgroundOverlayColors[@(UIControlStateNormal)];
   }
   return backgroundColor;
+
 }
 
-- (void)setChipColor:(nullable UIColor *)chipColor forState:(UIControlState)state {
-  _chipColors[@(state)] = chipColor;
+- (void)setBackgroundOverlayColor:(nullable UIColor *)backgroundOverlayColor
+                         forState:(UIControlState)state {
+  _backgroundOverlayColors[@(state)] = backgroundOverlayColor;
 
-  [self updateChipColor];
+  [self updateBackgroundOverlayColor];
 }
 
-- (void)updateChipColor {
-  self.chipView.backgroundColor = [self chipColorForState:self.state];
+- (void)updateBackgroundOverlayColor {
+  self.backgroundOverlayView.backgroundColor = [self backgroundOverlayColorForState:self.state];
 }
 
 - (nullable UIColor *)backgroundColorForState:(UIControlState)state {
@@ -586,7 +588,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateState {
   [self updateBackgroundColor];
-  [self updateChipColor];
+  [self updateBackgroundOverlayColor];
   [self updateBorderColor];
   [self updateBorderWidth];
   [self updateElevation];
@@ -622,7 +624,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  _chipView.frame = self.bounds;
+  _backgroundOverlayView.frame = self.bounds;
   _inkView.frame = self.bounds;
   _imageView.frame = [self imageViewFrame];
   _selectedImageView.frame = [self selectedImageViewFrame];
@@ -639,10 +641,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 
   // make sure chipView layer has the same shape the component
-  CAShapeLayer *shapedLayer = (CAShapeLayer *)_chipView.layer.mask;
+  CAShapeLayer *shapedLayer = (CAShapeLayer *)_backgroundOverlayView.layer.mask;
   if (![shapedLayer isKindOfClass:[CAShapeLayer class]]) {
     shapedLayer = [CAShapeLayer layer];
-    _chipView.layer.mask = shapedLayer;
+    _backgroundOverlayView.layer.mask = shapedLayer;
   }
   shapedLayer.path = self.layer.shadowPath;
 
