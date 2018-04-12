@@ -21,6 +21,7 @@
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 #import "private/MDCButton+Subclassing.h"
 
@@ -127,7 +128,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 @property(nonatomic, strong) MDCInkView *inkView;
-@property(nonatomic, readonly, strong) MDCShadowLayer *layer;
+@property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @end
 
 @implementation MDCButton
@@ -135,7 +136,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 @dynamic layer;
 
 + (Class)layerClass {
-  return [MDCShadowLayer class];
+  return [MDCShapedShadowLayer class];
 }
 
 - (instancetype)init {
@@ -315,13 +316,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _maximumSize = CGSizeZero;
 
   self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
-  MDCShadowLayer *shadowLayer = self.layer;
-  shadowLayer.shadowPath = [self boundingPath].CGPath;
-  shadowLayer.shadowColor = [UIColor blackColor].CGColor;
-  shadowLayer.elevation = [self elevationForState:self.state];
+  if (!self.layer.shapeGenerator) {
+    self.layer.shadowPath = [self boundingPath].CGPath;
+  }
+  self.layer.shadowColor = [UIColor blackColor].CGColor;
+  self.layer.elevation = [self elevationForState:self.state];
 
   _shadowColors = [NSMutableDictionary dictionary];
-  _shadowColors[@(UIControlStateNormal)] = [UIColor colorWithCGColor:shadowLayer.shadowColor];
+  _shadowColors[@(UIControlStateNormal)] = [UIColor colorWithCGColor:self.layer.shadowColor];
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
@@ -378,7 +380,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.layer.shadowPath = [self boundingPath].CGPath;
+  if (!self.layer.shapeGenerator) {
+    self.layer.shadowPath = [self boundingPath].CGPath;
+  }
   if ([self respondsToSelector:@selector(cornerRadius)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -751,7 +755,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     // We fall back to UIControlStateNormal if there is no value for the current state.
     width = _borderWidths[@(UIControlStateNormal)];
   }
-  self.layer.borderWidth = (width != nil) ? (CGFloat)width.doubleValue : 0;
+  self.layer.shapedBorderWidth = (width != nil) ? (CGFloat)width.doubleValue : 0;
 }
 
 #pragma mark - Title Font
@@ -860,7 +864,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateBackgroundColor {
-  super.backgroundColor = self.currentBackgroundColor;
+  self.backgroundColor = self.currentBackgroundColor;
   [self updateDisabledTitleColor];
 }
 
@@ -895,7 +899,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     // We fall back to UIControlStateNormal if there is no value for the current state.
     color = _borderColors[@(UIControlStateNormal)];
   }
-  self.layer.borderColor = color ? color.CGColor : NULL;
+  self.layer.shapedBorderColor = color ?: NULL;
 }
 
 - (void)updateTitleFont {
