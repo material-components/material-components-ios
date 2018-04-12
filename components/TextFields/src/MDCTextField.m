@@ -93,6 +93,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
     }
+    self.placeholderLabel.backgroundColor = self.backgroundColor;
 
     [self setNeedsLayout];
   }
