@@ -20,6 +20,21 @@ load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
+mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = [":test_targets"],
+)
+
+package_group(
+    name = "test_targets",
+    packages = [
+        "//components/Chips/...",
+        "//components/TextFields/...",
+    ]
+)
+
 mdc_public_objc_library(
     name = "TextFields",
     sdk_frameworks = [

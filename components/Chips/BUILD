@@ -87,6 +87,7 @@ mdc_objc_library(
         ":FontThemer",
         ":TypographyThemer",
         ":private",
+        "//components/TextFields:private",
         "//components/private/ShapeLibrary",
     ],
     visibility = ["//visibility:private"],
@@ -97,4 +98,3 @@ mdc_unit_test_suite(
       ":unit_test_sources",
     ],
 )
-
