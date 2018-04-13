@@ -21,8 +21,9 @@
 #import "MaterialButtons.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
-static const CGFloat kDefaultHeight = 56;
-static const CGFloat kDefaultPadHeight = 64;
+static const CGFloat kButtonBarMaxHeight = 56;
+static const CGFloat kButtonBarMaxPadHeight = 64;
+static const CGFloat kButtonBarMinHeight = 24;
 
 // KVO contexts
 static char *const kKVOContextMDCButtonBar = "kKVOContextMDCButtonBar";
@@ -164,7 +165,9 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     totalWidth += width;
   }
 
-  CGFloat height = [self usePadHeight] ? kDefaultPadHeight : kDefaultHeight;
+  CGFloat maxHeight = [self usePadHeight] ? kButtonBarMaxPadHeight : kButtonBarMaxHeight;
+  CGFloat minHeight = kButtonBarMinHeight;
+  CGFloat height = MIN(MAX(size.height, minHeight), maxHeight);
   return CGSizeMake(totalWidth, height);
 }
 

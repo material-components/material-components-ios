@@ -42,6 +42,8 @@
 
     MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
     [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
+
+    _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
   }
   return self;
 }
