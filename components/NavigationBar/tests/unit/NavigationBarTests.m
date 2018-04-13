@@ -99,23 +99,19 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertNotNil(navBar.titleFont);
   XCTAssertEqual(navBar.titleLabel.font, navBar.titleFont);
 
-  UIFont *testFont = [UIFont boldSystemFontOfSize:24];
-  UIFont *resultFont = [UIFont boldSystemFontOfSize:20];
-  navBar.titleFont = testFont;
+  UIFont *font = [UIFont systemFontOfSize:24];
+  navBar.titleFont = font;
 
-  // To enforce 20 point size we are using "fontWithName:size:" and for some reason even though the
-  // printout looks identical comparing the fonts returns false. (Using "fontWithSize:" did not work
-  // for system font medium, instead it returned a regular font).
-  UIFont *titleFont = navBar.titleLabel.font;
-  XCTAssertEqualObjects(titleFont.fontName, resultFont.fontName);
-  XCTAssertEqual(titleFont.pointSize, resultFont.pointSize);
+  UIFont *resultFont = navBar.titleLabel.font;
+  XCTAssertEqualObjects(resultFont.fontName, font.fontName);
+  XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
 
-  // Weight for Fonts was not introduced on iOS 8
-  // TODO: remove this when we drop iOS 8 support.
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
-  XCTAssertEqual([NavigationBarTests weightForFont:titleFont],
-                 [NavigationBarTests weightForFont:resultFont]);
-#endif
+  NSDictionary <NSString *, NSNumber *> *fontTraits =
+      [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+  NSDictionary <NSString *, NSNumber *> *resultTraits =
+      [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+
+  XCTAssertEqual(fontTraits, resultTraits);
 }
 
 - (void)testEncoding {
