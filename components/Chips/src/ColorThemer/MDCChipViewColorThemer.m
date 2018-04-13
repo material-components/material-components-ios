@@ -19,9 +19,76 @@
 @implementation MDCChipViewColorThemer
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-                      toChipView:(MDCChipView *)chipView {
-  [chipView setBackgroundColor:colorScheme.surfaceColor forState:UIControlStateNormal];
-  [chipView setTitleColor:colorScheme.onSurfaceColor forState:UIControlStateNormal];
+                 toInputChipView:(MDCChipView *)inputChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:inputChipView stroked:NO];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+          toStrokedInputChipView:(MDCChipView *)strokedInputChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedInputChipView stroked:YES];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+                toChoiceChipView:(MDCChipView *)choiceChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:choiceChipView stroked:NO];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+         toStrokedChoiceChipView:(MDCChipView *)strokedChoiceChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedChoiceChipView stroked:YES];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+                toActionChipView:(MDCChipView *)actionChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:actionChipView stroked:NO];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+         toStrokedActionChipView:(MDCChipView *)strokedActionChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedActionChipView stroked:YES];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+                toFilterChipView:(MDCChipView *)filterChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:filterChipView stroked:NO];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+         toStrokedFilterChipView:(MDCChipView *)strokedFilterChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedFilterChipView stroked:YES];
+}
+
+
++ (void)applyBaseSemanticColorScheme:(id<MDCColorScheming>)colorScheme
+                          toChipView:(MDCChipView *)chipView
+                             stroked:(BOOL)stroked {
+  UIColor *onSurface12Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+
+  UIColor *backgroundColor =
+      [MDCSemanticColorScheme mergeColor:onSurface12Opacity
+                     withBackgroundColor:colorScheme.surfaceColor];
+  UIColor *textColor =
+      [MDCSemanticColorScheme mergeColor:onSurface87Opacity
+                     withBackgroundColor:colorScheme.surfaceColor];
+
+  [MDCChipViewColorThemer resetUIControlStatesForChipTheming:chipView];
+  [chipView setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+  [chipView setTitleColor:textColor forState:UIControlStateNormal];
+  if (stroked) {
+    [chipView setBackgroundColor:colorScheme.surfaceColor forState:UIControlStateNormal];
+    [chipView setBorderColor:backgroundColor forState:UIControlStateNormal];
+  }
+}
+
++ (void)resetUIControlStatesForChipTheming:(nonnull MDCChipView *)chipView {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [chipView setBackgroundColor:nil forState:state];
+    [chipView setTitleColor:nil forState:state];
+    [chipView setBorderColor:nil forState:state];
+  }
 }
 
 @end

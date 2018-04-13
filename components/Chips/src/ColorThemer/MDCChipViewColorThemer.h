@@ -27,9 +27,72 @@
  Applies a color scheme's properties to @c MDCChipView.
 
  @param colorScheme The color scheme to apply to @c MDCChipView.
- @param chipView @c MDCChipView to which the color scheme should be applied.
+ @param inputChipView @c MDCChipView to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                      toChipView:(nonnull MDCChipView *)chipView;
+                 toInputChipView:(nonnull MDCChipView *)inputChipView;
+
+/**
+ Applies a color scheme's properties to @c MDCChipView.
+
+ @param colorScheme The color scheme to apply to @c MDCChipView.
+ @param strokedInputChipView @c MDCChipView to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+          toStrokedInputChipView:(nonnull MDCChipView *)strokedInputChipView;
+
+/**
+ Applies a color scheme's properties to @c MDCChipView.
+
+ @param colorScheme The color scheme to apply to @c MDCChipView.
+ @param choiceChipView @c MDCChipView to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                toChoiceChipView:(nonnull MDCChipView *)choiceChipView;
+
+/**
+ Applies a color scheme's properties to @c MDCChipView.
+
+ @param colorScheme The color scheme to apply to @c MDCChipView.
+ @param strokedChoiceChipView @c MDCChipView to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+         toStrokedChoiceChipView:(nonnull MDCChipView *)strokedChoiceChipView;
+
+/**
+ Applies a color scheme's properties to @c MDCChipView.
+
+ @param colorScheme The color scheme to apply to @c MDCChipView.
+ @param actionChipView @c MDCChipView to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                toActionChipView:(nonnull MDCChipView *)actionChipView;
+
+/**
+ Applies a color scheme's properties to @c MDCChipView.
+
+ @param colorScheme The color scheme to apply to @c MDCChipView.
+ @param strokedActionChipView @c MDCChipView to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+         toStrokedActionChipView:(nonnull MDCChipView *)strokedActionChipView;
+
+/**
+ Applies a color scheme's properties to @c MDCChipView.
+
+ @param colorScheme The color scheme to apply to @c MDCChipView.
+ @param filterChipView @c MDCChipView to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                toFilterChipView:(nonnull MDCChipView *)filterChipView;
+
+/**
+ Applies a color scheme's properties to @c MDCChipView.
+
+ @param colorScheme The color scheme to apply to @c MDCChipView.
+ @param strokedFilterChipView @c MDCChipView to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+         toStrokedFilterChipView:(nonnull MDCChipView *)strokedFilterChipView;
 
 @end
