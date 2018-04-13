@@ -67,4 +67,58 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0x000000));
 }
 
+- (void)testColorMergeForOpaqueColor {
+  UIColor *backgroundColor = [UIColor whiteColor];
+  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
+  UIColor *expectedColor =
+      [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1.0f];
+  UIColor *resultColor =
+      [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
+  XCTAssertEqualObjects(resultColor, expectedColor);
+}
+
+- (void)testColorMergeFor50OpacityBlackOnWhite {
+  UIColor *backgroundColor = [UIColor whiteColor];
+  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+  UIColor *expectedColor =
+      [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
+  UIColor *resultColor =
+      [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
+  XCTAssertEqualObjects(resultColor, expectedColor);
+}
+
+- (void)testColorMergeFor60GrayOpacityOnWhite {
+  UIColor *backgroundColor = [UIColor whiteColor];
+  UIColor *blendColor =
+      [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:0.60f];
+  UIColor *resultColor =
+      [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
+  UIColor *expectedColor =
+      [UIColor colorWithRed:240.0f/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                    secondColor:expectedColor]);
+}
+
+- (void)testColorMergeFor50OpacityWhiteOnBlack {
+  UIColor *backgroundColor = [UIColor blackColor];
+  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
+  UIColor *expectedColor =
+      [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
+  UIColor *resultColor =
+      [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
+  XCTAssertEqualObjects(resultColor, expectedColor);
+}
+- (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
+                                      secondColor:(UIColor *)secondColor {
+  CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;
+  [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
+  CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
+  [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
+  return (roundf(fRed) == roundf(sRed) &&
+          roundf(fGreen) == roundf(sGreen) &&
+          roundf(fBlue) == roundf(sBlue) &&
+          roundf(fAlpha) == roundf(sAlpha));
+}
+
 @end
