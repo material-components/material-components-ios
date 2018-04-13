@@ -159,6 +159,80 @@
   XCTAssertEqualObjects(thumbTrack.trackOffColor, UIColor.yellowColor);
 }
 
+#pragma mark - trackOnTickColor
+
+- (void)testTrackOnTickColorDefaults {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.trackOnTickColor, UIColor.blackColor);
+}
+
+- (void)testSetTrackOnTickColor {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+
+  // When
+  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.trackOnTickColor = UIColor.cyanColor;
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.trackOnTickColor, UIColor.cyanColor);
+  XCTAssertEqualObjects(thumbTrack.discreteDotView.activeDotColor, thumbTrack.trackOnTickColor);
+}
+
+- (void)testTrackOnTickColorWorksBeforeEnablingDiscreteDots {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+
+  // When
+  thumbTrack.shouldDisplayDiscreteDots = NO;
+  thumbTrack.trackOnTickColor = UIColor.cyanColor;
+  thumbTrack.shouldDisplayDiscreteDots = YES;
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.trackOnTickColor, UIColor.cyanColor);
+  XCTAssertEqualObjects(thumbTrack.discreteDotView.activeDotColor, thumbTrack.trackOnTickColor);
+}
+
+#pragma mark - trackOffTickColor
+
+- (void)testTrackOffTickColorDefaults {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.trackOffTickColor, UIColor.blackColor);
+}
+
+- (void)testSetTrackOffTickColor {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+
+  // When
+  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.trackOffTickColor = UIColor.cyanColor;
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.trackOffTickColor, UIColor.cyanColor);
+  XCTAssertEqualObjects(thumbTrack.discreteDotView.inactiveDotColor, thumbTrack.trackOffTickColor);
+}
+
+- (void)testTrackOffTickColorWorksBeforeEnablingDiscreteDots {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+
+  // When
+  thumbTrack.shouldDisplayDiscreteDots = NO;
+  thumbTrack.trackOffTickColor = UIColor.cyanColor;
+  thumbTrack.shouldDisplayDiscreteDots = YES;
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.trackOffTickColor, UIColor.cyanColor);
+  XCTAssertEqualObjects(thumbTrack.discreteDotView.inactiveDotColor, thumbTrack.trackOffTickColor);
+}
+
 #pragma mark - inkColor
 
 - (void)testInkColorDefault {

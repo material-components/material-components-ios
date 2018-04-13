@@ -16,12 +16,22 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialThemes.h"
+#import "MaterialColorScheme.h"
+#import "MaterialDialogs.h"
 
 /**
  Used to apply a color scheme to theme to MDCAlertController alert dialogs.
  */
 @interface MDCAlertColorThemer : NSObject
+
+/**
+ Applies a color scheme to theme to all MDCAlertController alert dialogs.
+
+ @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+ @param alertController An MDCAlertController instance to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+               toAlertController:(nonnull MDCAlertController *)alertController;
 
 /**
  Applies a color scheme to theme to all MDCAlertController alert dialogs.

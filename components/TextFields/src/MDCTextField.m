@@ -23,6 +23,7 @@
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
+#import "private/MDCTextField+Testing.h"
 #import "private/MDCTextInputCommonFundament.h"
 
 #import "MaterialMath.h"
@@ -93,6 +94,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
     }
+    self.placeholderLabel.backgroundColor = self.backgroundColor;
 
     [self setNeedsLayout];
   }
@@ -706,6 +708,12 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   }
 
   return [super accessibilityValue];
+}
+
+#pragma mark - Testing
+
+- (void)clearButtonDidTouch {
+  [_fundament clearButtonDidTouch];
 }
 
 @end

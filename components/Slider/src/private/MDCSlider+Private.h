@@ -14,14 +14,9 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "MDCSlider.h"
+#import "MaterialThumbTrack.h"
 
-@interface MDCButtonBarButton ()
-
-/**
- Content padding for the button.
- */
-//TODO(#2851): Can't we do this with the existing contentEdgeInsets
-@property(nonatomic) UIEdgeInsets contentPadding;
-
+@interface MDCSlider (Private)
+@property(nonatomic, nonnull, readonly) MDCThumbTrack *thumbTrack;
 @end
