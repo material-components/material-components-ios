@@ -418,8 +418,9 @@ its own UIFont property.  (titleFont, bodyFont, etc.)
 
 ### Font Themer Support (if possible)
 
-If a component exposes any custom font properties, create a font themer that will allow cliets to easily theme the component
-with a type hierarchy or MDCFontScheme. Themers should operate on an instance of a component or its UIAppearance proxy.
+If a component exposes any custom font properties, create a font themer that will allow clients to easily theme the
+component with a type hierarchy or MDCFontScheme. Themers should operate on an instance of a component or its
+UIAppearance proxy.
 
 
 1. Make sure the font themer static method signatures adhere to existing conventions: `applyFontScheme:toComponent`.
