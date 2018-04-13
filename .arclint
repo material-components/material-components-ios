@@ -1,6 +1,6 @@
 {
   "linters": {
-    "clang-format": {
+    "clang-formaxt": {
       "type": "clang-format",
       "include": "(\\.(m|h|mm)$)",
       "exclude": "(/Pods/)"
