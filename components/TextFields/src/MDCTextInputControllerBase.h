@@ -64,6 +64,13 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
 
  Default is borderFillColorDefault.
  */
+@property(nonatomic, nullable, strong) UIColor *backgroundColor;
+
+/**
+ The color behind the input and label that defines the preferred tap zone.
+
+ Default is borderFillColorDefault.
+ */
 @property(nonatomic, nullable, strong) UIColor *borderFillColor;
 
 /**
