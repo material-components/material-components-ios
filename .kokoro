@@ -106,49 +106,7 @@ run_bazel() {
 }
 
 run_cocoapods() {
-  echo "Running cocoapods builds..."
-
-  xcode_min_version_as_number="$(version_as_number $XCODE_MINIMUM_VERSION)"
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    # Move into our cloned repo
-    cd github/repo
-
-    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
-    pod --version
-  fi
-
-  ls /Applications/ | grep "Xcode" | while read -r xcode_path; do
-    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
-      | grep "CFBundleShortVersionString" -A1 \
-      | grep string \
-      | cut -d'>' -f2 \
-      | cut -d'<' -f1)
-    if [ -n "$xcode_min_version_as_number" ]; then
-      xcode_version_as_number="$(version_as_number $xcode_version)"
-
-      if [ "$xcode_version_as_number" -lt "$xcode_min_version_as_number" ]; then
-        continue
-      fi
-    fi
-
-    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
-    xcodebuild -version
-
-    # Resolves the following crash when switching Xcode versions:
-    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
-    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
-
-    scripts/prep_all
-    scripts/build_all --verbose
-    if [ "$IS_RELEASE" -eq "1" ]; then
-      scripts/test_all
-    else
-      scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
-    fi
-  done
-
-  bash <(curl -s https://codecov.io/bash)
+  echo "Skipping cocoapods builds..."
 }
 
 POSITIONAL=()
@@ -201,6 +159,7 @@ popd
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
   "cocoapods")  run_cocoapods ;;
+  "cocoapods-podspec")  run_cocoapods ;;
 
   *)            run_bazel ;;
 esac
