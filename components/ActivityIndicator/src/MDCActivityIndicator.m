@@ -970,7 +970,7 @@ static const CGFloat kSingleCycleRotation =
 #pragma mark - Accessibility
 
 - (BOOL)isAccessibilityElement {
-  return YES;
+  return self.isAnimating;
 }
 
 - (NSString *)accessibilityLabel {

@@ -58,7 +58,7 @@ mdc_objc_library(
     ],
     deps = [
         ":BottomNavigation",
-        "//components/Themes",
+        "//components/Schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )

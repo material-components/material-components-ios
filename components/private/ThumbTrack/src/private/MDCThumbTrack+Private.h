@@ -18,9 +18,32 @@
 #import "MDCNumericValueLabel.h"
 #import "MaterialInk.h"
 
+// Credit to the Beacon Tools iOS team for the idea for this implementations
+@interface MDCDiscreteDotView : UIView
+
+@property(nonatomic, assign) NSUInteger numDiscreteDots;
+
+/** The color of dots within the @c activeDotsSegment bounds. Defaults to black. */
+@property(nonatomic, strong, nonnull) UIColor *activeDotColor;
+
+/** The color of dots outside the @c activeDotsSegment bounds. Defaults to black. */
+@property(nonatomic, strong, nonnull) UIColor *inactiveDotColor;
+
+/**
+ The segment of the track that uses @c activeDotColor. The horizontal dimension should be bound
+ to [0..1]. The vertical dimension is ignored.
+
+ @note Only the @c origin.x and @c size.width are used to determine whether a dot is in the active
+ segment.
+ */
+@property(nonatomic, assign) CGRect activeDotsSegment;
+
+@end
+
 @interface MDCThumbTrack (Private)
 
 @property(nonatomic, nonnull, readonly) MDCNumericValueLabel *numericValueLabel;
 @property(nonatomic, nonnull, readonly) MDCInkTouchController *touchController;
+@property(nonatomic, nonnull, readonly) MDCDiscreteDotView *discreteDotView;
 
 @end

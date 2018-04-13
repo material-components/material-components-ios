@@ -154,7 +154,7 @@ run_cocoapods() {
     # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
     launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
 
-    if [ "$DEPENDENCY_SYSTEM" -eq "cocoapods" ]; then
+    if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
       bash scripts/prep_all
       bash scripts/build_all --verbose
       if [ -n "$IS_RELEASE" ]; then
@@ -162,7 +162,7 @@ run_cocoapods() {
       else
         bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
       fi
-    elif [ "$DEPENDENCY_SYSTEM" -eq "cocoapods-podspec" ]; then
+    elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
       pod lib lint MaterialComponents.podspec
     fi
   done

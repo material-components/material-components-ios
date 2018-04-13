@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 #import "MDCBottomNavigationBarColorThemer.h"
+#import "MaterialColorScheme.h"
 #import "MaterialBottomNavigation.h"
-#import "MaterialThemes.h"
 
 @interface FakeColorScheme : NSObject<MDCColorScheme>
 @property(nonatomic, strong) UIColor *primaryColor;
@@ -30,6 +30,24 @@
 @end
 
 @implementation BottomNavigationBarColorThemerTests
+
+- (void)testColorScheming {
+  // Given
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  colorScheme.primaryColor = [UIColor redColor];
+  colorScheme.onPrimaryColor = [UIColor blueColor];
+  MDCBottomNavigationBar *bottomNavigationBar = [[MDCBottomNavigationBar alloc] init];
+  bottomNavigationBar.barTintColor = [UIColor greenColor];
+  bottomNavigationBar.selectedItemTintColor = [UIColor yellowColor];
+  
+  // When
+  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
+                                           toBottomNavigation:bottomNavigationBar];
+
+  // Then
+  XCTAssertEqualObjects(bottomNavigationBar.barTintColor, colorScheme.primaryColor);
+  XCTAssertEqualObjects(bottomNavigationBar.selectedItemTintColor, colorScheme.onPrimaryColor);
+}
 
 - (void)testColorSchemeWithoutOptionalColorProperties {
   // Given
