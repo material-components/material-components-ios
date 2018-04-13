@@ -1,3 +1,94 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Slider
+
+#### MDCSlider
+
+*new* method: `-setBackgroundTrackTickColor:forState:` in `MDCSlider`
+
+*new* property: `valueLabelTextColor` in `MDCSlider`
+
+*new* method: `-trackFillColorForState:` in `MDCSlider`
+
+*new* method: `-backgroundTrackTickColorForState:` in `MDCSlider`
+
+*new* method: `-setThumbColor:forState:` in `MDCSlider`
+
+*new* method: `-trackBackgroundColorForState:` in `MDCSlider`
+
+*new* method: `-setFilledTrackTickColor:forState:` in `MDCSlider`
+
+*new* method: `-filledTrackTickColorForState:` in `MDCSlider`
+
+*new* method: `-thumbColorForState:` in `MDCSlider`
+
+*new* method: `-setTrackBackgroundColor:forState:` in `MDCSlider`
+
+*new* property: `inkColor` in `MDCSlider`
+
+*new* property: `statefulAPIEnabled` in `MDCSlider`
+
+*new* property: `valueLabelBackgroundColor` in `MDCSlider`
+
+*new* method: `-setTrackFillColor:forState:` in `MDCSlider`
+
+## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [Fix insets for the trailing button bar (#3324)](https://github.com/material-components/material-components-ios/commit/9947b8fa2bc901979822cf9aef12ee6d5b4bde16) (Ali Rabbani)
+
+### TextFields
+
+#### Changes
+
+* [Placeholder background color (#3333)](https://github.com/material-components/material-components-ios/commit/7b262bb952dcd3696c616eb1d2d4d1594ed72a01) (Will Larche)
+* [[Chips] Ensure MDCChipField notifies delegate when clear button is tapped (#3341)](https://github.com/material-components/material-components-ios/commit/9d4c218a0a0d2693b6fed4839eb050b3132a276e) (Ben Hamilton (Ben Gertzfield))
+
+### Chips
+
+#### Changes
+
+* [Ensure MDCChipField notifies delegate when clear button is tapped (#3341)](https://github.com/material-components/material-components-ios/commit/9d4c218a0a0d2693b6fed4839eb050b3132a276e) (Ben Hamilton (Ben Gertzfield))
+
+### Slider
+
+#### Changes
+
+* [Add inkColor, thumbColorForState:, trackFillColorForState: (#3310)](https://github.com/material-components/material-components-ios/commit/b7d2999215e4a3cce690ca24866eef92ed69ece7) (Robert Moore)
+* [Add text, background color to value label (#3330)](https://github.com/material-components/material-components-ios/commit/54d7fdf8da7beea1cc7548eb6aa59b4a781aed60) (Robert Moore)
+* [Add tick color API (#3344)](https://github.com/material-components/material-components-ios/commit/3cbd58837bca64f95fbaf7f543411d580be813c6) (Robert Moore)
+
+### ActivityIndicator
+
+#### Changes
+
+* [MDCActivityIndicator shouldnt register as accessibility element when hidden (#3331)](https://github.com/material-components/material-components-ios/commit/d70fce4cf53f6723f3ced505a6c93965a94582c4) (John Detloff)
+
+### Dialogs
+
+#### Changes
+
+* [Implement a semantic color themer. (#3313)](https://github.com/material-components/material-components-ios/commit/4f1c9fa382d41b2677ba80ed649ccc931732b475) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [Update BottomNavigationBar color themer (#3316)](https://github.com/material-components/material-components-ios/commit/f31cd3010dd3568e22b41bc637ef8c7a3df59119) (John Detloff)
+
+---
+
 # 54.4.0
 
 ## New features
