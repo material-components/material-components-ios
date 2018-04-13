@@ -303,7 +303,8 @@ They should focus on educating thru the catalog’s visual result and the code i
 
 Our users create their views both in code and in Interface Builder. It’s important to support both usages. Almost all components should be able to be added to a view hierarchy thru Interface Builder.
 
-1. UIView subclasses must support initWithCoder along with initWithFrame. The recommended practice is to override both init methods and have them both call a commonInit method with required initialization logic.
+1. UIView subclasses must support initWithCoder along with initWithFrame. The recommended practice is to override both init methods and have them both call a [common*Init](#commonmdcclassinit-if-necessary) method with required initialization logic.
+    1. Remember to call the `common*Init` before unarchiving the values from the decoder.
 1. Do not include @IBIspectable as it interferes with UIAppearance support.
 1. Enter YES, NO or N/A
 
