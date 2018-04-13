@@ -73,7 +73,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   UIColor *expectedColor =
       [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1.0f];
   UIColor *resultColor =
-      [MDCSemanticColorScheme mergeColor:blendColor withBackgroundColor:backgroundColor];
+      [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
@@ -83,7 +83,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   UIColor *expectedColor =
       [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
   UIColor *resultColor =
-      [MDCSemanticColorScheme mergeColor:blendColor withBackgroundColor:backgroundColor];
+      [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
@@ -92,15 +92,23 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   UIColor *blendColor =
       [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:0.60f];
   UIColor *resultColor =
-      [MDCSemanticColorScheme mergeColor:blendColor withBackgroundColor:backgroundColor];
+      [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   UIColor *expectedColor =
       [UIColor colorWithRed:240.0f/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
 
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
-
 }
 
+- (void)testColorMergeFor50OpacityWhiteOnBlack {
+  UIColor *backgroundColor = [UIColor blackColor];
+  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
+  UIColor *expectedColor =
+      [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
+  UIColor *resultColor =
+      [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
+  XCTAssertEqualObjects(resultColor, expectedColor);
+}
 - (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
                                       secondColor:(UIColor *)secondColor {
   CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;

@@ -116,8 +116,14 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
  */
 - (nonnull instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults;
 
-/** RGBA to RGB conversion */
-+ (nonnull UIColor *)mergeColor:(nonnull UIColor *)color
+/**
+ Blending a color over a background color using Alpha compositing technique.
+ More info about Alpha compositing: https://en.wikipedia.org/wiki/Alpha_compositing
+
+ @param color UIColor value that sits on top.
+ @param backgroundColor UIColor on the background.
+ */
++ (nonnull UIColor *)blendColor:(nonnull UIColor *)color
             withBackgroundColor:(nonnull UIColor *)backgroundColor;
 
 @end

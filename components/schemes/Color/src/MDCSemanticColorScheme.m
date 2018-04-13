@@ -22,6 +22,10 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
                           blue:(CGFloat)((colorValue & 0xFF) / 255.0) alpha:1];
 }
 
+static double blendColorChannel(double value, double bValue, double alpha, double bAlpha) {
+  return ((1 - alpha) * bValue * bAlpha + alpha * value)/(alpha + bAlpha*(1 - alpha));
+}
+
 @implementation MDCSemanticColorScheme
 
 - (instancetype)init {
@@ -49,18 +53,16 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   return self;
 }
 
-+ (UIColor *)mergeColor:(UIColor *)color  withBackgroundColor:(UIColor *)backgroundColor {
++ (UIColor *)blendColor:(UIColor *)color withBackgroundColor:(UIColor *)backgroundColor {
   double red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
   [color getRed:&red green:&green blue:&blue alpha:&alpha];
   double bRed = 0.0, bGreen = 0.0, bBlue = 0.0, bAlpha = 0.0;
   [backgroundColor getRed:&bRed green:&bGreen blue:&bBlue alpha:&bAlpha];
 
-  NSAssert(bAlpha == 1, @"Background color with opacity is not supported.");
-
-  return [UIColor colorWithRed:(1 - alpha) * bRed + alpha * red
-                         green:(1 - alpha) * bGreen + alpha * green
-                          blue:(1 - alpha) * bBlue + alpha * blue
-                         alpha:1];
+  return [UIColor colorWithRed:blendColorChannel(red, bRed, alpha, bAlpha)
+                         green:blendColorChannel(green, bGreen, alpha, bAlpha)
+                          blue:blendColorChannel(blue, bBlue, alpha, bAlpha)
+                         alpha:alpha + bAlpha*(1 - alpha)];
 }
 
 @end
