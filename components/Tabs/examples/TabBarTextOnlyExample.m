@@ -19,7 +19,9 @@
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
+#import "MDCTabBarColorThemer.h"
 #import "supplemental/TabBarTextOnlyExampleSupplemental.h"
 
 @implementation TabBarTextOnlyExample
@@ -66,10 +68,8 @@
                                     tag:0],
   ];
 
-  // Give change the selected item tint color and the tab bar tint color. For other color properties
-  // rely on the UIAppearance proxy.
-  self.tabBar.selectedItemTintColor = [UIColor whiteColor];
-  self.tabBar.tintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
+  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:self.tabBar];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
