@@ -1,10 +1,14 @@
-# #develop#
+# 54.5.0
 
-## Breaking changes
-
-## New deprecations
+This release includes bug fixes and increased coverage of our themer APIs for components.
 
 ## New features
+
+Slider now exposes a variety of properties for customizing color, including new stateful color APIs.
+To make use of the new stateful APIs, you must enable `statefulAPIEnabled` on the MDCSlider
+instance.
+
+BottomNavigationBar and Dialogs now both have a semantic color themer.
 
 ## API changes
 
