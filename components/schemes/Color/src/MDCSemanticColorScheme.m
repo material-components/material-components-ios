@@ -50,9 +50,9 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 }
 
 + (UIColor *)mergeColor:(UIColor *)color  withBackgroundColor:(UIColor *)backgroundColor {
-  CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
+  double red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
   [color getRed:&red green:&green blue:&blue alpha:&alpha];
-  CGFloat bRed = 0.0, bGreen = 0.0, bBlue = 0.0, bAlpha = 0.0;
+  double bRed = 0.0, bGreen = 0.0, bBlue = 0.0, bAlpha = 0.0;
   [backgroundColor getRed:&bRed green:&bGreen blue:&bBlue alpha:&bAlpha];
 
   NSAssert(bAlpha == 1, @"Background color with opacity is not supported.");
