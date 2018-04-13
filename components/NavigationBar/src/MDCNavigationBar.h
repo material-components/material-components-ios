@@ -113,6 +113,13 @@ IB_DESIGNABLE
  */
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
+/**
+ The inkColor that is used for all buttons in trailing and leading button bars.
+
+ If set to nil, button bar buttons use default ink color.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
 

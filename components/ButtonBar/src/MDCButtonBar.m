@@ -222,6 +222,15 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   }
 }
 
+- (void)updateButtonsWithInkColor:(UIColor *)inkColor {
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
+      MDCButton *buttonView = (MDCButton *)viewObj;
+      buttonView.inkColor = inkColor;
+    }
+  }
+}
+
 - (NSArray<UIView *> *)viewsForItems:(NSArray<UIBarButtonItem *> *)barButtonItems {
   if (![barButtonItems count]) {
     return nil;
@@ -421,6 +430,14 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   _buttonTitleBaseline = buttonTitleBaseline;
 
   [self setNeedsLayout];
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  if (_inkColor == inkColor) {
+    return;
+  }
+  _inkColor = inkColor;
+  [self updateButtonsWithInkColor:_inkColor];
 }
 
 - (void)reloadButtonViews {

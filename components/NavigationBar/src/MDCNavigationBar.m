@@ -773,6 +773,15 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   [self setNeedsLayout];
 }
 
+- (void)setInkColor:(UIColor *)inkColor {
+  if (_inkColor == inkColor) {
+    return;
+  }
+  _inkColor = inkColor;
+  _leadingButtonBar.inkColor = inkColor;
+  _trailingButtonBar.inkColor = inkColor;
+}
+
 - (void)setObservedNavigationItem:(UINavigationItem *)navigationItem {
   @synchronized(_observedNavigationItemLock) {
     if (navigationItem == _observedNavigationItem) {
