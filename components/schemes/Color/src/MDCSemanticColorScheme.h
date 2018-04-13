@@ -116,4 +116,8 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
  */
 - (nonnull instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults;
 
+/** RGBA to RGB conversion */
++ (UIColor *)mergeColor:(nonnull UIColor *)color
+    withBackgroundColor:(nonnull UIColor *)backgroundColor;
+
 @end
