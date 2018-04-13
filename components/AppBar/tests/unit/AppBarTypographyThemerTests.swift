@@ -21,18 +21,14 @@ import MaterialComponents.MaterialTypography
 
 class AppBarTypographyThemerTests: XCTestCase {
 
-  func weightForFont(_ font: UIFont) -> Float {
-    // The default font weight is UIFontWeightRegular, which is 0.0.
-    var weight: Float = 0.0
-
-    if let fontTraits =
-          font.fontDescriptor.object(forKey: UIFontDescriptorTraitsAttribute) as? [String: Any] {
-      if let weightNumber = fontTraits[UIFontWeightTrait] as? NSNumber {
-        weight = weightNumber.floatValue
-      }
+  func traitsForFont(_ font: UIFont) -> [String: NSNumber] {
+    guard let fontTraits =
+          font.fontDescriptor.object(forKey: UIFontDescriptorTraitsAttribute) as? [String: NSNumber]
+      else {
+        return [:]
     }
 
-    return weight
+    return fontTraits
   }
 
   func testTypographyThemerAffectsSubComponents() {
@@ -46,7 +42,7 @@ class AppBarTypographyThemerTests: XCTestCase {
     // Then
     XCTAssertEqual(appBar.navigationBar.titleFont.fontName, typographyScheme.headline6.fontName)
     XCTAssertEqual(appBar.navigationBar.titleFont.pointSize, typographyScheme.headline6.pointSize)
-    XCTAssertEqual(weightForFont(appBar.navigationBar.titleFont),
-                   weightForFont(typographyScheme.headline6))
+    XCTAssertEqual(traitsForFont(appBar.navigationBar.titleFont),
+                   traitsForFont(typographyScheme.headline6))
   }
 }
