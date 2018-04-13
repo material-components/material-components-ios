@@ -17,6 +17,7 @@ limitations under the License.
 import Foundation
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MDCAppBarTypographyThemer
 
 class AppBarTypicalUseSwiftExample: UITableViewController {
 
@@ -33,6 +34,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     let colorScheme = MDCSemanticColorScheme()
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+
+    let typographyScheme = MDCTypographyScheme()
+    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)
   }
 
   required init?(coder aDecoder: NSCoder) {
