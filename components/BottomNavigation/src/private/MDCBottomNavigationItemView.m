@@ -348,13 +348,22 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
   _selectedItemTintColor = selectedItemTintColor;
-  self.label.textColor = self.selectedItemTintColor;
-  self.inkView.inkColor =
-      [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
+  if (self.selected) {
+    self.iconImageView.tintColor = self.selectedItemTintColor;
+    self.label.textColor = self.selectedItemTintColor;
+    self.inkView.inkColor =
+        [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
+  }
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
   _unselectedItemTintColor = unselectedItemTintColor;
+  if (!self.selected) {
+    self.iconImageView.tintColor = self.unselectedItemTintColor;
+    self.label.textColor = self.unselectedItemTintColor;
+    CGFloat alpha = MDCBottomNavigationItemViewInkOpacity;
+    self.inkView.inkColor = [self.unselectedItemTintColor colorWithAlphaComponent:alpha];
+  }
 }
 
 - (void)setBadgeColor:(UIColor *)badgeColor {

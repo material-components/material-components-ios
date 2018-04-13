@@ -49,6 +49,12 @@
 /** The color of the track when disabled. */
 @property(nullable, nonatomic, strong) UIColor *trackDisabledColor;
 
+/** The color of the discrete "ticks" in the "on" portion of the track. */
+@property(nullable, nonatomic, strong) UIColor *trackOnTickColor;
+
+/** The color of the discrete "ticks" in the "off" portion of the track. */
+@property(nullable, nonatomic, strong) UIColor *trackOffTickColor;
+
 /** The color of the Ink ripple. */
 @property(nullable, nonatomic, strong) UIColor *inkColor;
 

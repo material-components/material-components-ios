@@ -17,12 +17,20 @@
 #import "supplemental/DialogsAlertViewControllerSupplemental.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "MDCAlertColorThemer.h"
 #import "MDCAlertTypographyThemer.h"
 
-@implementation DialogsAlertViewController
+@implementation DialogsAlertViewController {
+  MDCSemanticColorScheme *_colorScheme;
+  MDCTypographyScheme *_typographyScheme;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  _colorScheme = [[MDCSemanticColorScheme alloc] init];
+  _typographyScheme = [[MDCTypographyScheme alloc] init];
+
   [self loadCollectionView:
     @[ @"Show Alert",
        @"Show Long Alert",
@@ -60,6 +68,12 @@
   }
 }
 
+- (void)themeAlertController:(MDCAlertController *)alertController {
+  [MDCAlertColorThemer applySemanticColorScheme:_colorScheme toAlertController:alertController];
+  [MDCAlertTypographyThemer applyTypographyScheme:_typographyScheme
+                                toAlertController:alertController];
+}
+
 - (IBAction)didTapShowAlert {
 
   NSString *titleString = @"Using Material alert controller?";
@@ -67,9 +81,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme
-                                toAlertController:materialAlertController];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
@@ -128,6 +140,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
                                                      handler:^(MDCAlertAction *action) {
@@ -145,6 +158,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                         handler:^(MDCAlertAction *action) {
@@ -177,6 +191,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
@@ -242,6 +257,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
+  [self themeAlertController:materialAlertController];
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
@@ -297,6 +313,7 @@
 
   MDCAlertController *materialAlertController =
     [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
@@ -329,6 +346,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {

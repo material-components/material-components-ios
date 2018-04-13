@@ -14,14 +14,18 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "MDCCardsColorThemer.h"
 
-@interface MDCButtonBarButton ()
+@implementation MDCCardsColorThemer
 
-/**
- Content padding for the button.
- */
-//TODO(#2851): Can't we do this with the existing contentEdgeInsets
-@property(nonatomic) UIEdgeInsets contentPadding;
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                          toCard:(nonnull MDCCard *)card {
+  card.backgroundColor = colorScheme.surfaceColor;
+}
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                      toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
+  cardCell.backgroundColor = colorScheme.surfaceColor;
+}
 
 @end

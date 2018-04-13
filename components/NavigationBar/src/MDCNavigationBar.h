@@ -113,6 +113,13 @@ IB_DESIGNABLE
  */
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
+/**
+ The inkColor that is used for all buttons in trailing and leading button bars.
+
+ If set to nil, button bar buttons use default ink color.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
 
@@ -195,6 +202,24 @@ IB_DESIGNABLE
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
 
 #pragma mark - To be deprecated
+
+/**
+ Makes the navigation bar use flexible top and bottom insets for buttons and titles, by vertically
+ positioning them based on the height of the navigation bar. Default insets do not allow the height
+ of the navigation bar to be set to anything less than 56.0f, so this property has to be set to YES
+ in that case.
+ 
+ When this is set to YES, the custom titleView is aligned with the button bars and has the same
+ height as them, regardless of the height of the navigation bar. This allows vertically aligning the
+ content of the titleView with the buttons, by vertically centering the content of the titleView.
+ 
+ Default is NO.
+ 
+ NOTE: This property will be deprecated and the YES behavior will replace the current behavior.
+ All clients who rely on the titleView should set this to YES and implement proper alignment before
+ deprecation.
+ */
+@property(nonatomic) BOOL useFlexibleTopBottomInsets;
 
 /**
  Display attributes for the titleView's title text.

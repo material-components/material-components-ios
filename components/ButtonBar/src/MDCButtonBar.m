@@ -21,8 +21,9 @@
 #import "MaterialButtons.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
-static const CGFloat kDefaultHeight = 56;
-static const CGFloat kDefaultPadHeight = 64;
+static const CGFloat kButtonBarMaxHeight = 56;
+static const CGFloat kButtonBarMaxPadHeight = 64;
+static const CGFloat kButtonBarMinHeight = 24;
 
 // KVO contexts
 static char *const kKVOContextMDCButtonBar = "kKVOContextMDCButtonBar";
@@ -164,7 +165,9 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     totalWidth += width;
   }
 
-  CGFloat height = [self usePadHeight] ? kDefaultPadHeight : kDefaultHeight;
+  CGFloat maxHeight = [self usePadHeight] ? kButtonBarMaxPadHeight : kButtonBarMaxHeight;
+  CGFloat minHeight = kButtonBarMinHeight;
+  CGFloat height = MIN(MAX(size.height, minHeight), maxHeight);
   return CGSizeMake(totalWidth, height);
 }
 
@@ -215,6 +218,15 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     if ([viewObj isKindOfClass:[MDCButton class]]) {
       MDCButton *buttonView = (MDCButton *)viewObj;
       [buttonView setTitleColor:self.tintColor forState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)updateButtonsWithInkColor:(UIColor *)inkColor {
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
+      MDCButton *buttonView = (MDCButton *)viewObj;
+      buttonView.inkColor = inkColor;
     }
   }
 }
@@ -418,6 +430,14 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   _buttonTitleBaseline = buttonTitleBaseline;
 
   [self setNeedsLayout];
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  if (_inkColor == inkColor) {
+    return;
+  }
+  _inkColor = inkColor;
+  [self updateButtonsWithInkColor:_inkColor];
 }
 
 - (void)reloadButtonViews {

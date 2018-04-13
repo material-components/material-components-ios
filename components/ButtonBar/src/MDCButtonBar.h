@@ -106,6 +106,13 @@ IB_DESIGNABLE
 @property(nonatomic) MDCButtonBarLayoutPosition layoutPosition;
 
 /**
+ The inkColor that is used for all buttons in the button bar.
+
+ If set to nil, button bar buttons use default ink color.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
  Returns a height adhering to the Material spec for Bars and a width that is able to accommodate
  every item present in the `items` property. The provided size is ignored.
  */

@@ -21,6 +21,13 @@
 
 @implementation MDCAlertColorThemer
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+               toAlertController:(nonnull MDCAlertController *)alertController {
+  alertController.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  alertController.buttonTitleColor = colorScheme.primaryColor;
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {
   #if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
   [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]

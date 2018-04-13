@@ -53,9 +53,9 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     bottomNavBar.alignment = .centered
 
     // Theme the bottom navigation bar.
-    let scheme = MDCBasicColorScheme(primaryColor: MDCPalette.purple.tint700,
-                                     secondaryColor: .white)
-    MDCBottomNavigationBarColorThemer.apply(scheme, to: bottomNavBar)
+    let scheme = MDCSemanticColorScheme();
+    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(scheme,
+                                                               toBottomNavigation: bottomNavBar);
 
     // Add items to the bottom navigation bar.
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)

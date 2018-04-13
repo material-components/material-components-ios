@@ -31,6 +31,7 @@ class EditReorderCollectionViewController: UIViewController,
   var longPressGesture: UILongPressGestureRecognizer!
   var toggle = ToggleMode.reorder
   var toggleButton: UIButton!
+  let colorScheme = MDCSemanticColorScheme()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -105,7 +106,7 @@ class EditReorderCollectionViewController: UIViewController,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCardCollectionCell
-    cell.backgroundColor = .white
+    MDCCardsColorThemer.applySemanticColorScheme(colorScheme, toCardCell: cell)
     cell.isSelectable = (toggle == .edit)
     return cell
   }
