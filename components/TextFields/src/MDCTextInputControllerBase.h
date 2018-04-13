@@ -60,11 +60,11 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
 @interface MDCTextInputControllerBase : NSObject <MDCTextInputControllerFloatingPlaceholder>
 
 /**
- The color behind the input and label that defines the preferred tap zone.
+ Color for background for the various views making up a text field.
 
- Default is borderFillColorDefault.
+ Default is backgroundColorDefault.
  */
-@property(nonatomic, nullable, strong) UIColor *backgroundColor;
+@property(nonatomic, null_resettable, strong) UIColor *backgroundColor;
 
 /**
  The color behind the input and label that defines the preferred tap zone.
