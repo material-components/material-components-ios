@@ -198,6 +198,14 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/Buttons"
       extension.dependency "MaterialComponents/schemes/Typography"
     end
+    component.subspec "TextButton" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Buttons/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Buttons/src/#{extension.base_name}/*.{h,m}", "components/Buttons/src/#{extension.base_name}/private/*.{h,m}"
+      extension.dependency "MaterialComponents/Buttons"
+      extension.dependency "MaterialComponents/Buttons+Extensions/ColorThemer"
+      extension.dependency "MaterialComponents/Buttons+Extensions/TypographyThemer"
+    end
   end
 
   mdc.subspec "ButtonBar" do |component|
@@ -256,7 +264,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/ShapeLibrary"
     component.dependency "MaterialComponents/private/Shapes"
   end
-  
+
   mdc.subspec "Chips+Extensions" do |component|
     component.subspec "FontThemer" do |extension|
       extension.ios.deployment_target = '8.0'

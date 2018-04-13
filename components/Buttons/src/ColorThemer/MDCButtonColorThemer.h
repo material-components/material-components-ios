@@ -38,7 +38,7 @@
  @param flatButton An MDCFlatButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                    toFlatButton:(nonnull MDCFlatButton *)flatButton;
+                    toFlatButton:(nonnull MDCButton *)flatButton;
 
 /**
  Applies a color scheme to theme to an MDCRaisedButton.
@@ -47,7 +47,7 @@
  @param raisedButton An MDCRaisedButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                  toRaisedButton:(nonnull MDCRaisedButton *)raisedButton;
+                  toRaisedButton:(nonnull MDCButton *)raisedButton;
 
 /**
  Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
