@@ -18,6 +18,7 @@
 
 #import "MaterialAppBar.h"
 #import "MDCAppBarColorThemer.h"
+#import "MDCAppBarTypographyThemer.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 
@@ -44,6 +45,8 @@
 
     MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
     [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
+    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+    [MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:_appBar];
 
     _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
   }
