@@ -20,14 +20,13 @@
  */
 
 #import "ButtonsTypicalUseSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 #pragma mark - ButtonsTypicalUseViewController
 
-@implementation ButtonsTypicalUseViewController (CatalogByConvention)
+@implementation ButtonsTypicalUseExampleViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Buttons", @"Buttons" ];
@@ -48,7 +47,28 @@
 
 @end
 
-@implementation ButtonsTypicalUseViewController (Supplemental)
+
+@implementation ButtonsShapesExampleViewController (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Buttons", @"Shaped Buttons" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
++ (BOOL)catalogIsDebug {
+  return YES;
+}
+
+@end
+
+@implementation ButtonsTypicalUseViewController
 
 - (UILabel *)addLabelWithText:(NSString *)text {
   UILabel *label = [[UILabel alloc] init];

@@ -20,11 +20,11 @@
 #import "MaterialTypography.h"
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
-@interface ButtonsTypicalUseViewController ()
+@interface ButtonsTypicalUseExampleViewController ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
 @end
 
-@implementation ButtonsTypicalUseViewController
+@implementation ButtonsTypicalUseExampleViewController
 
 - (MDCButton *)buildCustomStrokedButton {
   MDCButton *button = [[MDCButton alloc] init];
@@ -52,6 +52,8 @@
   MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitleColor:titleColor forState:UIControlStateNormal];
   [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
+  UIImage *plusImage = [UIImage imageNamed:@"Plus"];
+  [raisedButton setImage:plusImage forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
   [raisedButton sizeToFit];
@@ -132,8 +134,6 @@
   [self.floatingButton addTarget:self
                           action:@selector(didTap:)
                 forControlEvents:UIControlEventTouchUpInside];
-
-  UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.view addSubview:self.floatingButton];
 
@@ -142,7 +142,7 @@
     disabledStrokedButton, self.floatingButton
   ];
 
-  [self setupExampleViews];
+  [super setupExampleViews];
 }
 
 - (void)didTap:(id)sender {
