@@ -63,7 +63,7 @@
 }
 
 + (BOOL)catalogIsDebug {
-  return YES;
+  return NO;
 }
 
 @end
