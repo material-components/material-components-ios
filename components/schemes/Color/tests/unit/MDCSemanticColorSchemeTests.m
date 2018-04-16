@@ -114,7 +114,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   UIColor *backgroundColor =  [UIColor colorWithRed:0.4f green:0.6f blue:0.9f alpha:0.8f];
   UIColor *blendColor = [UIColor colorWithRed:0.1 green:0.8 blue:0.8 alpha:0.2f];
   UIColor *expectedColor =
-      [UIColor colorWithRed:0.328571f green:0.647619f blue:0.87619f alpha:0.84f];
+      [UIColor colorWithRed:0.328571439f green:0.647619068f blue:0.876190483f alpha:0.840000033f];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
@@ -125,7 +125,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   UIColor *backgroundColor =  [UIColor colorWithHue:0.7f saturation:0.6f brightness:0.2f alpha:0.7f];
   UIColor *blendColor = [UIColor colorWithRed:0.3f green:0.3f blue:0.2f alpha:0.8f];
   UIColor *expectedColor =
-      [UIColor colorWithRed:0.270809f green:0.267234f blue:0.2f alpha:0.94f];
+      [UIColor colorWithRed:0.270808518f green:0.267234057f blue:0.200000003f alpha:0.939999997f];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
@@ -136,7 +136,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   UIColor *backgroundColor =  [UIColor colorWithWhite:0.3f alpha:0.8f];
   UIColor *blendColor = [UIColor colorWithRed:0.9f green:0.82f blue:0.1f alpha:0.6f];
   UIColor *expectedColor =
-      [UIColor colorWithRed:0.691304f green:0.63913f blue:0.169565f alpha:0.92f];
+      [UIColor colorWithRed:0.691304326f green:0.639130473f blue:0.169565216f alpha:0.9200000016f];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
@@ -149,10 +149,11 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
   CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
   [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
-  return (roundf(fRed) == roundf(sRed) &&
-          roundf(fGreen) == roundf(sGreen) &&
-          roundf(fBlue) == roundf(sBlue) &&
-          roundf(fAlpha) == roundf(sAlpha));
+
+  return ((float)fRed == (float)sRed &&
+          (float)(fGreen) == (float)(sGreen) &&
+          (float)(fBlue) == (float)(sBlue) &&
+          (float)(fAlpha) == (float)(sAlpha));
 }
 
 @end
