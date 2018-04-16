@@ -54,10 +54,6 @@
   return @[ @"Buttons", @"Shaped Buttons" ];
 }
 
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
 + (BOOL)catalogIsPresentable {
   return YES;
 }
