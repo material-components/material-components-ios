@@ -52,11 +52,8 @@
   MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitleColor:titleColor forState:UIControlStateNormal];
   [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
-  UIImage *plusImage = [UIImage imageNamed:@"Plus"];
-  [raisedButton setImage:plusImage forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
-  raisedButton.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
 
   [raisedButton sizeToFit];
   [raisedButton addTarget:self
