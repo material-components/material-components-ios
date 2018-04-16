@@ -68,11 +68,11 @@
   cell.alwaysAnimateResize = YES;
   if (indexPath.row % 2) {
     [cell.chipView setBorderWidth:0 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChoiceChipView:cell.chipView];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:cell.chipView];
   } else {
     [cell.chipView setBorderWidth:1 forState:UIControlStateNormal];
     [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme
-                             toStrokedChoiceChipView:cell.chipView];
+                                   toStrokedChipView:cell.chipView];
   }
   return cell;
 }

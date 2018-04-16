@@ -18,46 +18,15 @@
 
 @implementation MDCChipViewColorThemer
 
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-                 toInputChipView:(MDCChipView *)inputChipView {
-  [self applyBaseSemanticColorScheme:colorScheme toChipView:inputChipView stroked:NO];
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                      toChipView:(nonnull MDCChipView *)chipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:chipView stroked:NO];
 }
 
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-          toStrokedInputChipView:(MDCChipView *)strokedInputChipView {
-  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedInputChipView stroked:YES];
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+               toStrokedChipView:(nonnull MDCChipView *)strokedChipView {
+  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedChipView stroked:YES];
 }
-
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-                toChoiceChipView:(MDCChipView *)choiceChipView {
-  [self applyBaseSemanticColorScheme:colorScheme toChipView:choiceChipView stroked:NO];
-}
-
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-         toStrokedChoiceChipView:(MDCChipView *)strokedChoiceChipView {
-  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedChoiceChipView stroked:YES];
-}
-
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-                toActionChipView:(MDCChipView *)actionChipView {
-  [self applyBaseSemanticColorScheme:colorScheme toChipView:actionChipView stroked:NO];
-}
-
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-         toStrokedActionChipView:(MDCChipView *)strokedActionChipView {
-  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedActionChipView stroked:YES];
-}
-
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-                toFilterChipView:(MDCChipView *)filterChipView {
-  [self applyBaseSemanticColorScheme:colorScheme toChipView:filterChipView stroked:NO];
-}
-
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-         toStrokedFilterChipView:(MDCChipView *)strokedFilterChipView {
-  [self applyBaseSemanticColorScheme:colorScheme toChipView:strokedFilterChipView stroked:YES];
-}
-
 
 + (void)applyBaseSemanticColorScheme:(id<MDCColorScheming>)colorScheme
                           toChipView:(MDCChipView *)chipView

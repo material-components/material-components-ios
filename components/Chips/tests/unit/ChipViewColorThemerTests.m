@@ -39,42 +39,12 @@
 }
 
 - (void)testInputChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toInputChipView:self.chip];
+  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:self.chip];
   [self verifyColorsWithColorScheme:self.colorScheme ChipView:self.chip stroked:NO];
 }
 
-- (void)testChoiceChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChoiceChipView:self.chip];
-  [self verifyColorsWithColorScheme:self.colorScheme ChipView:self.chip stroked:NO];
-}
-
-- (void)testFilterChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toFilterChipView:self.chip];
-  [self verifyColorsWithColorScheme:self.colorScheme ChipView:self.chip stroked:NO];
-}
-
-- (void)testActionChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toActionChipView:self.chip];
-  [self verifyColorsWithColorScheme:self.colorScheme ChipView:self.chip stroked:NO];
-}
-
-- (void)testStrokedInputChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedInputChipView:self.chip];
-  [self verifyColorsWithColorScheme:self.colorScheme ChipView:self.chip stroked:YES];
-}
-
-- (void)testStrokedChoiceChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChoiceChipView:self.chip];
-  [self verifyColorsWithColorScheme:self.colorScheme ChipView:self.chip stroked:YES];
-}
-
-- (void)testStrokedFilterChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedFilterChipView:self.chip];
-  [self verifyColorsWithColorScheme:self.colorScheme ChipView:self.chip stroked:YES];
-}
-
-- (void)testStrokedActionChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedActionChipView:self.chip];
+- (void)testStrokedChipViewColorThemer {
+  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:self.chip];
   [self verifyColorsWithColorScheme:self.colorScheme ChipView:self.chip stroked:YES];
 }
 
