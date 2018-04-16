@@ -15,9 +15,11 @@
  */
 
 #import "MaterialCollections.h"
+#import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
 #import "MaterialTypography.h"
+#import "MDCSliderColorThemer.h"
 #import "supplemental/SliderCollectionSupplemental.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
@@ -100,13 +102,16 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   _label.text = model.labelString;
   _label.textColor = model.labelColor;
   self.contentView.backgroundColor = model.bgColor;
+  _slider.statefulAPIEnabled = YES;
+  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCSliderColorThemer applySemanticColorScheme:scheme toSlider:_slider];
   _slider.numberOfDiscreteValues = model.numDiscreteValues;
   _slider.value = model.value;
   _slider.filledTrackAnchorValue = model.anchorValue;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
   _slider.thumbHollowAtStart = model.hollowCircle;
   _slider.enabled = model.enabled;
-  _slider.statefulAPIEnabled = YES;
+  
   // Don't apply a `nil` color, use the default
   if (model.sliderColor) {
     [_slider setTrackFillColor:model.sliderColor forState:UIControlStateNormal];
@@ -114,16 +119,16 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     _slider.inkColor = model.sliderColor;
   }
 
+  if (model.trackBackgroundColor) {
+    [_slider setTrackBackgroundColor:model.trackBackgroundColor forState:UIControlStateNormal];
+  }
+  
   if (model.filledTickColor) {
     [_slider setFilledTrackTickColor:model.filledTickColor forState:UIControlStateNormal];
-  } else {
-    [_slider setFilledTrackTickColor:UIColor.blackColor forState:UIControlStateNormal];
   }
 
   if (model.backgroundTickColor) {
     [_slider setBackgroundTrackTickColor:model.backgroundTickColor forState:UIControlStateNormal];
-  } else {
-    [_slider setBackgroundTrackTickColor:UIColor.blackColor forState:UIControlStateNormal];
   }
 
   // Add target/action pair
@@ -216,8 +221,6 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model.labelString = @"Discrete slider with numeric value label";
     model.numDiscreteValues = 5;
     model.value = 0.2f;
-    model.backgroundTickColor = UIColor.blackColor;
-    model.filledTickColor = MDCPalette.bluePalette.tint100;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
@@ -225,14 +228,13 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model.numDiscreteValues = 7;
     model.value = 1.f;
     model.discreteValueLabel = NO;
-    model.backgroundTickColor = UIColor.blackColor;
-    model.filledTickColor = MDCPalette.bluePalette.tint100;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Dark themed slider";
     model.labelColor = [UIColor whiteColor];
     model.trackBackgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3f];
+    model.sliderColor = MDCPalette.bluePalette.tint500;
     model.bgColor = [UIColor darkGrayColor];
     model.value = 0.2f;
     [_sliders addObject:model];
