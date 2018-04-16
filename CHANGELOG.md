@@ -1,3 +1,139 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### BottomSheet
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `dismissOnBackgroundTap` in `MDCBottomSheetPresentationController`
+
+#### MDCBottomSheetTransitionController
+
+*new* property: `dismissOnBackgroundTap` in `MDCBottomSheetTransitionController`
+
+#### MDCBottomSheetController
+
+*new* property: `dismissOnBackgroundTap` in `MDCBottomSheetController`
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* property: `inkColor` in `MDCButtonBar`
+
+### Chips
+
+#### MDCChipView
+
+*new* method: `-backgroundOverlayColorForState:` in `MDCChipView`
+
+*new* method: `-setBackgroundOverlayColor:forState:` in `MDCChipView`
+
+*modified* class: `MDCChipView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCChipView : UIControl  /*  A UIImageView that leads the title label.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;  /*  A UIImageView that leads the title label. Appears in front of the imageView. Only visible when the  chip is selected.   This image view is typically used to show some icon that denotes the chip as selected, such as a  check mark. If imageView has no image then the chip will require resizing when selected or  deselected to account for the changing visibility of selectedImageView.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;  /*  A UIView that trails the title label.   It will be given a size based on the value returned from sizeThatFits:.  */ @property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;  /*  The title label.   @note The title color is controlled by setTitleColor:forState:.  @note The title font is controlled by setTitleFont.  */ @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;  /*  Padding around the chip content. Each subview can be further padded with their invidual padding  property.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (4, 4, 4, 4).  */ @property(nonatomic, assign) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the image view. Only used if the image view has a non-nil image.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;  /*  Padding around the accessory view. Only used if the accessory view is non-nil.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the title.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.  */ @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;  /*  Font used to render the title.   If nil, the chip will use the system font.  */ @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;  /*  The color of the ink ripple.  */ @property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR     __deprecated_msg("Use setInkColor:forState:");  /*  The shape generator used to define the chip's shape.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;  /*  Indicates whether the chip should automatically update its font when the device’s  UIContentSizeCategory is changed.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   If set to YES, this button will base its text font on MDCFontTextStyleButton.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent  to no minimum for that dimension.   Defaults to a minimum height of 32 points, and no minimum width.  */ @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;  /*  A color used as the chip's @c backgroundColor for @c state.   If no background color has been set for a given state, the returned value will fall back to the  value set for UIControlStateNormal.   @param state The control state.  @return The background color.  */ - (nullable UIColor *)backgroundColorForState:(UIControlState)state;  /*  A color used as the chip's @c backgroundColor.   Defaults to blue.   @param backgroundColor The background color.  @param state The control state.  */ - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border color for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state;  /*  Sets the border color for a particular control state.   @param borderColor The border color.  @param state The control state.  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border width for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state;  /*  Sets the border width for a particular control state.   @param borderWidth The border width.  @param state The control state.  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the elevation for a particular control state.   If no elevation has been set for a given state, the returned value will fall back to the value set  for UIControlStateNormal.   @param state The control state.  @return The elevation for the requested state.  */ - (MDCShadowElevation)elevationForState:(UIControlState)state;  /*  Sets the elevation for a particular control state.   @param elevation The elevation.  @param state The control state.  */ - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the ink color for a particular control state.   If no ink color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.   @param state The control state.  @return The ink color for the requested state.  */ - (nullable UIColor *)inkColorForState:(UIControlState)state;  /*  Sets the ink color for a particular control state.   @param inkColor The ink color.  @param state The control state.  */ - (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the shadow color for a particular control state.   If no shadow color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state;  /*  Sets the shadow color for a particular control state.   @param elevation The shadow color.  @param state The control state.  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the title color for a particular control state.   If no title color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The title color for the requested state.  */ - (nullable UIColor *)titleColorForState:(UIControlState)state;  /*  Sets the title color for a particular control state.   @param titleColor The title color.  @param state The control state.  */ - (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  @end` |
+| To: | `@interface MDCChipView : UIControl  /*  A UIImageView that leads the title label.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;  /*  A UIImageView that leads the title label. Appears in front of the imageView. Only visible when the  chip is selected.   This image view is typically used to show some icon that denotes the chip as selected, such as a  check mark. If imageView has no image then the chip will require resizing when selected or  deselected to account for the changing visibility of selectedImageView.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;  /*  A UIView that trails the title label.   It will be given a size based on the value returned from sizeThatFits:.  */ @property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;  /*  The title label.   @note The title color is controlled by setTitleColor:forState:.  @note The title font is controlled by setTitleFont.  */ @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;  /*  Padding around the chip content. Each subview can be further padded with their invidual padding  property.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (4, 4, 4, 4).  */ @property(nonatomic, assign) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the image view. Only used if the image view has a non-nil image.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;  /*  Padding around the accessory view. Only used if the accessory view is non-nil.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the title.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.  */ @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;  /*  Font used to render the title.   If nil, the chip will use the system font.  */ @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;  /*  The color of the ink ripple.  */ @property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR     __deprecated_msg("Use setInkColor:forState:");  /*  The shape generator used to define the chip's shape.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;  /*  Indicates whether the chip should automatically update its font when the device’s  UIContentSizeCategory is changed.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   If set to YES, this button will base its text font on MDCFontTextStyleButton.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent  to no minimum for that dimension.   Defaults to a minimum height of 32 points, and no minimum width.  */ @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;  /*  A color used as the chip's @c backgroundColor for @c state.   If no background color has been set for a given state, the returned value will fall back to the  value set for UIControlStateNormal.   @param state The control state.  @return The background color.  */ - (nullable UIColor *)backgroundColorForState:(UIControlState)state;  /*  A color used as the chip's @c backgroundColor.   Defaults to blue.   @param backgroundColor The background color.  @param state The control state.  */ - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  A color used as the chip's background overlay color for @c state.   If no background overlay color has been set for a given state, the returned value will fall back to  the value set for UIControlStateNormal.   @param state The control state.  @return The background overlay color.  */ - (nullable UIColor *)backgroundOverlayColorForState:(UIControlState)state;  /*  A color used as the chip's background overlay @c color.   @param backgroundOverlayColor The chip background overlay color.  @param state The control state.  */ - (void)setBackgroundOverlayColor:(nullable UIColor *)backgroundOverlayColor                          forState:(UIControlState)state;  /*  Returns the border color for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state;  /*  Sets the border color for a particular control state.   @param borderColor The border color.  @param state The control state.  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border width for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state;  /*  Sets the border width for a particular control state.   @param borderWidth The border width.  @param state The control state.  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the elevation for a particular control state.   If no elevation has been set for a given state, the returned value will fall back to the value set  for UIControlStateNormal.   @param state The control state.  @return The elevation for the requested state.  */ - (MDCShadowElevation)elevationForState:(UIControlState)state;  /*  Sets the elevation for a particular control state.   @param elevation The elevation.  @param state The control state.  */ - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the ink color for a particular control state.   If no ink color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.   @param state The control state.  @return The ink color for the requested state.  */ - (nullable UIColor *)inkColorForState:(UIControlState)state;  /*  Sets the ink color for a particular control state.   @param inkColor The ink color.  @param state The control state.  */ - (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the shadow color for a particular control state.   If no shadow color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state;  /*  Sets the shadow color for a particular control state.   @param elevation The shadow color.  @param state The control state.  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the title color for a particular control state.   If no title color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The title color for the requested state.  */ - (nullable UIColor *)titleColorForState:(UIControlState)state;  /*  Sets the title color for a particular control state.   @param titleColor The title color.  @param state The control state.  */ - (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  @end` |
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `inkColor` in `MDCNavigationBar`
+
+*new* property: `useFlexibleTopBottomInsets` in `MDCNavigationBar`
+
+### TextFields
+
+#### MDCTextInputControllerBase
+
+*new* property: `backgroundColor` in `MDCTextInputControllerBase`
+
+#### MDCTextInputController
+
+*new* property: `backgroundColorDefault` in `MDCTextInputController`
+
+*new* property: `backgroundColor` in `MDCTextInputController`
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Add a Typography themer. (#3359)](https://github.com/material-components/material-components-ios/commit/ab8c104262f471cde821a7af83367a130c10843c) (featherless)
+* [[ButtonBar] Allow customizing the inkColor of the buttons (#3250)](https://github.com/material-components/material-components-ios/commit/8af9e9fc8180fbcbc72250f963d2074772aedfcd) (Ali Rabbani)
+* [[NavigationBar] Allow flexible height/insets in MDCNavigationBar (#3305)](https://github.com/material-components/material-components-ios/commit/992d58148194d43aed366562da6f12a889767bf2) (Ali Rabbani)
+
+### Buttons
+
+#### Changes
+
+* [Implement a color themer for an MDCRaisedButton (#3335)](https://github.com/material-components/material-components-ios/commit/2869609c2eb48826fa2c4de773746779c53224c9) (Yarden Eitan)
+* [[Button Examples] Moved most examples into dragons so that only beautiful demos are in the main catalog. (#3358)](https://github.com/material-components/material-components-ios/commit/53dddde6cf3205e5ec871df503271627207b52f7) (Randall Li)
+
+### ButtonBar
+
+#### Changes
+
+* [Allow customizing the inkColor of the buttons (#3250)](https://github.com/material-components/material-components-ios/commit/8af9e9fc8180fbcbc72250f963d2074772aedfcd) (Ali Rabbani)
+* [[NavigationBar] Allow flexible height/insets in MDCNavigationBar (#3305)](https://github.com/material-components/material-components-ios/commit/992d58148194d43aed366562da6f12a889767bf2) (Ali Rabbani)
+
+### TextFields
+
+#### Changes
+
+* [Add backgroundColor property (#3357)](https://github.com/material-components/material-components-ios/commit/abeb391ebaec1438738fc6a8f7d308e87f6412ba) (ianegordon)
+* [Adding the expected opacities to color themer. (#3347)](https://github.com/material-components/material-components-ios/commit/3c22a8d18b2fbe3ebb1efa839725a424063fb8d1) (Mohammad Cazi)
+
+### Chips
+
+#### Changes
+
+* [Exposed a color API for background overlay. (#3345)](https://github.com/material-components/material-components-ios/commit/777cf22f68642625aab7df4759c18bfbf397f254) (Mohammad Cazi)
+
+### Cards
+
+#### Changes
+
+* [Implement a semantic color scheme color themer API. (#3289)](https://github.com/material-components/material-components-ios/commit/bd8760b94b47bdc50d7e62d86111dac8b4a6010f) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Allow flexible height/insets in MDCNavigationBar (#3305)](https://github.com/material-components/material-components-ios/commit/992d58148194d43aed366562da6f12a889767bf2) (Ali Rabbani)
+* [Fix bug where system font traits would be lost. (#3360)](https://github.com/material-components/material-components-ios/commit/d259ebed7d0fff6ffacbc74fed8c751bce28b035) (featherless)
+* [[ButtonBar] Allow customizing the inkColor of the buttons (#3250)](https://github.com/material-components/material-components-ios/commit/8af9e9fc8180fbcbc72250f963d2074772aedfcd) (Ali Rabbani)
+
+### ActivityIndicator
+
+#### Changes
+
+* [[bazel] Fix BUILD file paths to match file system casing (#3363)](https://github.com/material-components/material-components-ios/commit/1832b072b405577d348968af8e60bce442df35b9) (featherless)
+
+### BottomSheet
+
+#### Changes
+
+* [Adds a setting to make sheets impossible to dismiss. (#3325)](https://github.com/material-components/material-components-ios/commit/a1c66214558904284e6d3d6ed533c64202c29933) (John Detloff)
+
+### BottomNavigation
+
+#### Changes
+
+* [[bazel] Fix BUILD file paths to match file system casing (#3363)](https://github.com/material-components/material-components-ios/commit/1832b072b405577d348968af8e60bce442df35b9) (featherless)
+
+---
+
 # 54.5.0
 
 This release includes bug fixes and increased coverage of our themer APIs for components.
