@@ -46,7 +46,8 @@ mdc_objc_library(
     deps = [
         ":Color",
         "//components/Palettes",
-    ],
+        "//components/private/Math",
+   ],
     visibility = ["//visibility:private"],
 )
 

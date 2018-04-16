@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
 #import "MaterialColorScheme.h"
+#import "MDCMath.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [[UIColor alloc] initWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
@@ -79,7 +79,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor50OpacityBlackOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+  UIColor *blendColor = [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f];
   UIColor *expectedColor =
       [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
   UIColor *resultColor =
@@ -90,11 +90,14 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 - (void)testColorMergeFor60GrayOpacityOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
   UIColor *blendColor =
-      [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:0.60f];
+      [UIColor colorWithRed:(CGFloat)0.9 green:(CGFloat)0.9 blue:(CGFloat)0.9 alpha:(CGFloat)0.6];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   UIColor *expectedColor =
-      [UIColor colorWithRed:240.0f/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+      [UIColor colorWithRed:(CGFloat)0.94000000000000006
+                      green:(CGFloat)0.94000000000000006
+                       blue:(CGFloat)0.94000000000000006
+                      alpha:(CGFloat)1];
 
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
@@ -102,7 +105,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
   UIColor *backgroundColor = [UIColor blackColor];
-  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
+  UIColor *blendColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.5f];
   UIColor *expectedColor =
       [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
   UIColor *resultColor =
@@ -111,10 +114,15 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 }
 
 - (void)testBasicColorMergeTest {
-  UIColor *backgroundColor =  [UIColor colorWithRed:0.4f green:0.6f blue:0.9f alpha:0.8f];
-  UIColor *blendColor = [UIColor colorWithRed:0.1 green:0.8 blue:0.8 alpha:0.2f];
+  UIColor *backgroundColor =
+      [UIColor colorWithRed:(CGFloat)0.4 green:(CGFloat)0.6 blue:(CGFloat)0.9 alpha:(CGFloat)0.8];
+  UIColor *blendColor =
+      [UIColor colorWithRed:(CGFloat)0.1 green:(CGFloat)0.8 blue:(CGFloat)0.8 alpha:(CGFloat)0.2];
   UIColor *expectedColor =
-      [UIColor colorWithRed:0.328571f green:0.647619f blue:0.87619f alpha:0.84f];
+      [UIColor colorWithRed:(CGFloat)0.32857142857142863
+                      green:(CGFloat)0.64761904761904765
+                       blue:(CGFloat)0.87619047619047618
+                      alpha:(CGFloat)0.84000000000000008];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
@@ -122,10 +130,17 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 }
 
 - (void)testHBSColorMergeTest {
-  UIColor *backgroundColor =  [UIColor colorWithHue:0.7f saturation:0.6f brightness:0.2f alpha:0.7f];
-  UIColor *blendColor = [UIColor colorWithRed:0.3f green:0.3f blue:0.2f alpha:0.8f];
+  UIColor *backgroundColor = [UIColor colorWithHue:(CGFloat)0.7
+                                        saturation:(CGFloat)0.6
+                                        brightness:(CGFloat)0.2
+                                             alpha:(CGFloat)0.7];
+  UIColor *blendColor =
+      [UIColor colorWithRed:(CGFloat)0.3 green:(CGFloat)0.3 blue:(CGFloat)0.2 alpha:(CGFloat)0.8];
   UIColor *expectedColor =
-      [UIColor colorWithRed:0.270809f green:0.267234f blue:0.2f alpha:0.94f];
+      [UIColor colorWithRed:(CGFloat)0.27080851063829786
+                      green:(CGFloat)0.2672340425531915
+                       blue:(CGFloat)0.20000000000000004
+                      alpha:(CGFloat)0.93999999999999994];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
@@ -133,10 +148,14 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 }
 
 - (void)testGrayScaleColorMergeTest {
-  UIColor *backgroundColor =  [UIColor colorWithWhite:0.3f alpha:0.8f];
-  UIColor *blendColor = [UIColor colorWithRed:0.9f green:0.82f blue:0.1f alpha:0.6f];
+  UIColor *backgroundColor =  [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.8];
+  UIColor *blendColor =
+      [UIColor colorWithRed:(CGFloat)0.9 green:(CGFloat)0.82 blue:(CGFloat)0.1 alpha:(CGFloat)0.6];
   UIColor *expectedColor =
-      [UIColor colorWithRed:0.691304f green:0.63913f blue:0.169565f alpha:0.92f];
+      [UIColor colorWithRed:(CGFloat)0.69130434782608696
+                      green:(CGFloat)0.63913043478260867
+                       blue:(CGFloat)0.16956521739130434
+                      alpha:(CGFloat)0.92000000000000004];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
@@ -149,10 +168,11 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
   CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
   [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
-  return (roundf(fRed) == roundf(sRed) &&
-          roundf(fGreen) == roundf(sGreen) &&
-          roundf(fBlue) == roundf(sBlue) &&
-          roundf(fAlpha) == roundf(sAlpha));
+
+  return (MDCCGFloatEqual(fRed, sRed) &&
+          MDCCGFloatEqual(fGreen, sGreen) &&
+          MDCCGFloatEqual(fBlue, sBlue) &&
+          MDCCGFloatEqual(fAlpha, sAlpha));
 }
 
 @end
