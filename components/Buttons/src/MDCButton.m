@@ -863,7 +863,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateBackgroundColor {
   self.layer.shapedBackgroundColor = self.currentBackgroundColor;
-//  super.backgroundColor = self.currentBackgroundColor;
   [self updateDisabledTitleColor];
 }
 
@@ -947,10 +946,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.inkView.maxRippleRadius =
       (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
   self.inkView.layer.masksToBounds = NO;
-}
-
-- (void)setImage:(UIImage *)image forState:(UIControlState)state {
-  [super setImage:image forState:state];
 }
 
 #pragma mark - Dynamic Type

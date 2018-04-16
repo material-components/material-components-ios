@@ -18,7 +18,6 @@
 #import "MDCCurvedRectShapeGenerator.h"
 #import "MDCPillShapeGenerator.h"
 #import "MDCRoundedCornerTreatment.h"
-#import "MDCRoundedEdgeTreatment.h"
 #import "MDCSlantedRectShapeGenerator.h"
 #import "MDCTriangleEdgeTreatment.h"
 #import "MDCCutCornerTreatment.h"
