@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "54.5.0"
+  mdc.version      = "54.6.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -96,6 +96,13 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/FlexibleHeader+Extensions/ColorThemer"
       extension.dependency "MaterialComponents/NavigationBar+Extensions/ColorThemer"
       extension.dependency "MaterialComponents/Themes"
+    end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/AppBar/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/AppBar/src/#{extension.base_name}/*.{h,m}", "components/AppBar/src/#{extension.base_name}/private/*.{h,m}"
+      extension.dependency "MaterialComponents/AppBar"
+      extension.dependency "MaterialComponents/NavigationBar+Extensions/TypographyThemer"
     end
   end
 
@@ -229,6 +236,17 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Icons/ic_check_circle"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/Shapes"
+  end
+
+  mdc.subspec "Cards+Extensions" do |component|
+    component.subspec "ColorThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Cards/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Cards/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Cards"
+      extension.dependency "MaterialComponents/schemes/Color"
+    end
   end
 
   mdc.subspec "Chips" do |component|

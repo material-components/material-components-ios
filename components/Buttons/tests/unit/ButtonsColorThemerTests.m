@@ -108,4 +108,47 @@
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
 }
 
+- (void)testMDCRaisedButtonColorThemer {
+  // Given
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCRaisedButton *button = [[MDCRaisedButton alloc] init];
+  [button setTitle:@"Hello World" forState:UIControlStateNormal];
+  colorScheme.primaryColor = UIColor.redColor;
+  colorScheme.onPrimaryColor = UIColor.greenColor;
+  colorScheme.onSurfaceColor = UIColor.blueColor;
+  [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
+  [button setTitleColor:UIColor.whiteColor forState:UIControlStateSelected];
+  [button setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateHighlighted];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateSelected];
+  [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
+
+  // Where
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
+
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    if (state != UIControlStateDisabled) {
+      if ([button titleColorForState:state] != nil) {
+        XCTAssertEqual([button titleColorForState:state], colorScheme.onPrimaryColor);
+      }
+      if ([button backgroundColorForState:state] != nil) {
+        XCTAssertEqual([button backgroundColorForState:state], colorScheme.primaryColor);
+      }
+    } else {
+      XCTAssert(
+          CGColorEqualToColor([button titleColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
+      XCTAssert(
+          CGColorEqualToColor([button backgroundColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+    }
+  }
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+}
+
 @end

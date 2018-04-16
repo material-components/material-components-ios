@@ -82,26 +82,39 @@
 
 - (void)testDefaultValuesAreSet {
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
+
   XCTAssertEqualObjects(MDCTextInputControllerBase.activeColorDefault, colorScheme.primaryColor);
   XCTAssertEqualObjects(MDCTextInputControllerBase.errorColorDefault, colorScheme.errorColor);
-  XCTAssertEqualObjects(MDCTextInputControllerBase.normalColorDefault, colorScheme.onSurfaceColor);
+  XCTAssertEqualObjects(MDCTextInputControllerBase.normalColorDefault, onSurface87Opacity);
   XCTAssertEqualObjects(MDCTextInputControllerBase.inlinePlaceholderColorDefault,
-                        colorScheme.onSurfaceColor);
+                        onSurface60Opacity);
   XCTAssertEqualObjects(MDCTextInputControllerBase.trailingUnderlineLabelTextColorDefault,
-                        colorScheme.onSurfaceColor);
+                        onSurface60Opacity);
   XCTAssertEqualObjects(MDCTextInputControllerBase.leadingUnderlineLabelTextColorDefault,
-                        colorScheme.onSurfaceColor);
+                        onSurface60Opacity);
   XCTAssertEqualObjects(MDCTextInputControllerBase.floatingPlaceholderNormalColorDefault,
-                        colorScheme.primaryColor);
+                        primary87Opacity);
 
   XCTAssertEqualObjects(MDCTextInputControllerFullWidth.errorColorDefault, colorScheme.errorColor);
   XCTAssertEqualObjects(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault,
-                        colorScheme.onSurfaceColor);
+                        onSurface60Opacity);
   XCTAssertEqualObjects(MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault,
-                        colorScheme.onSurfaceColor);
+                        onSurface60Opacity);
 }
 
 - (void)testInstanceColorValuesAreSet {
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  colorScheme.primaryColor = [UIColor blueColor];
+  colorScheme.errorColor = [UIColor yellowColor];
+  colorScheme.onSurfaceColor = [UIColor greenColor];
+  colorScheme.errorColor = [UIColor redColor];
+
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
+  
   MDCTextField *textField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   MDCTextField *baseTextField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   MDCTextField *fullWidthTextField = [[MDCTextField alloc] initWithFrame:CGRectZero];
@@ -110,38 +123,30 @@
   MDCTextInputControllerFullWidth *fullWidthInputController =
       [[MDCTextInputControllerFullWidth alloc] initWithTextInput:fullWidthTextField];
 
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  colorScheme.primaryColor = [UIColor blueColor];
-  colorScheme.errorColor = [UIColor yellowColor];
-  colorScheme.onSurfaceColor = [UIColor greenColor];
-  colorScheme.errorColor = [UIColor redColor];
 
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
                                         toTextInput:textField];
   XCTAssertEqualObjects(textField.cursorColor, colorScheme.primaryColor);
-  XCTAssertEqualObjects(textField.textColor, colorScheme.onSurfaceColor);
-  XCTAssertEqualObjects(textField.placeholderLabel.textColor, colorScheme.onSurfaceColor);
-  XCTAssertEqualObjects(textField.trailingUnderlineLabel.textColor, colorScheme.onSurfaceColor);
-  XCTAssertEqualObjects(textField.leadingUnderlineLabel.textColor, colorScheme.onSurfaceColor);
+  XCTAssertEqualObjects(textField.textColor, onSurface87Opacity);
+  XCTAssertEqualObjects(textField.placeholderLabel.textColor, onSurface60Opacity);
+  XCTAssertEqualObjects(textField.trailingUnderlineLabel.textColor, onSurface60Opacity);
+  XCTAssertEqualObjects(textField.leadingUnderlineLabel.textColor, onSurface60Opacity);
 
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
                               toTextInputController:baseInputController];
   XCTAssertEqualObjects(baseInputController.activeColor, colorScheme.primaryColor);
   XCTAssertEqualObjects(baseInputController.errorColor, colorScheme.errorColor);
-  XCTAssertEqualObjects(baseInputController.normalColor, colorScheme.onSurfaceColor);
-  XCTAssertEqualObjects(baseInputController.inlinePlaceholderColor, colorScheme.onSurfaceColor);
-  XCTAssertEqualObjects(baseInputController.trailingUnderlineLabelTextColor,
-                        colorScheme.onSurfaceColor);
-  XCTAssertEqualObjects(baseInputController.leadingUnderlineLabelTextColor,
-                        colorScheme.onSurfaceColor);
+  XCTAssertEqualObjects(baseInputController.normalColor, onSurface87Opacity);
+  XCTAssertEqualObjects(baseInputController.inlinePlaceholderColor, onSurface60Opacity);
+  XCTAssertEqualObjects(baseInputController.trailingUnderlineLabelTextColor, onSurface60Opacity);
+  XCTAssertEqualObjects(baseInputController.leadingUnderlineLabelTextColor, onSurface60Opacity);
 
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
                       toTextInputController:fullWidthInputController];
   XCTAssertEqualObjects(fullWidthInputController.errorColor, colorScheme.errorColor);
-  XCTAssertEqualObjects(fullWidthInputController.inlinePlaceholderColor,
-                        colorScheme.onSurfaceColor);
+  XCTAssertEqualObjects(fullWidthInputController.inlinePlaceholderColor, onSurface60Opacity);
   XCTAssertEqualObjects(fullWidthInputController.trailingUnderlineLabelTextColor,
-                        colorScheme.onSurfaceColor);
+                        onSurface60Opacity);
 }
 
 @end

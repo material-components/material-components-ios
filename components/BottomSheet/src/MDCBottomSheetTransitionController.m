@@ -32,6 +32,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
       [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                            presentingViewController:presenting];
   presentationController.trackingScrollView = self.trackingScrollView;
+  presentationController.dismissOnBackgroundTap = self.dismissOnBackgroundTap;
   return presentationController;
 }
 

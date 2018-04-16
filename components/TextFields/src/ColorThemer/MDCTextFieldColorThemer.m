@@ -55,12 +55,15 @@
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
            toTextInputController:(id<MDCTextInputController>)textInputController {
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
   textInputController.activeColor = colorScheme.primaryColor;
   textInputController.errorColor = colorScheme.errorColor;
-  textInputController.normalColor = colorScheme.onSurfaceColor;
-  textInputController.inlinePlaceholderColor = colorScheme.onSurfaceColor;
-  textInputController.trailingUnderlineLabelTextColor = colorScheme.onSurfaceColor;
-  textInputController.leadingUnderlineLabelTextColor = colorScheme.onSurfaceColor;
+  textInputController.normalColor = onSurface87Opacity;
+  textInputController.inlinePlaceholderColor = onSurface60Opacity;
+  textInputController.trailingUnderlineLabelTextColor = onSurface60Opacity;
+  textInputController.leadingUnderlineLabelTextColor = onSurface60Opacity;
+  textInputController.backgroundColor = colorScheme.surfaceColor;
 
   if ([textInputController
           conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
@@ -69,19 +72,21 @@
 
     if ([textInputControllerFloatingPlaceholder
             respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
-      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor =
-          colorScheme.primaryColor;
+      UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
+      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = primary87Opacity;
     }
   }
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                      toTextInput:(nonnull id<MDCTextInput>)textInput {
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
   textInput.cursorColor = colorScheme.primaryColor;
-  textInput.textColor = colorScheme.onSurfaceColor;
-  textInput.placeholderLabel.textColor = colorScheme.onSurfaceColor;
-  textInput.trailingUnderlineLabel.textColor = colorScheme.onSurfaceColor;
-  textInput.leadingUnderlineLabel.textColor = colorScheme.onSurfaceColor;
+  textInput.textColor = onSurface87Opacity;
+  textInput.placeholderLabel.textColor = onSurface60Opacity;
+  textInput.trailingUnderlineLabel.textColor = onSurface60Opacity;
+  textInput.leadingUnderlineLabel.textColor = onSurface60Opacity;
 }
 
 // TODO: (larche) Drop this if defined and the pragmas when we drop Xcode 8 support.
@@ -92,19 +97,22 @@
 #endif
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
 toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
   [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];
   [textInputControllerClass setErrorColorDefault:colorScheme.errorColor];
-  [textInputControllerClass setNormalColorDefault:colorScheme.onSurfaceColor];
-  [textInputControllerClass setInlinePlaceholderColorDefault:colorScheme.onSurfaceColor];
-  [textInputControllerClass setTrailingUnderlineLabelTextColorDefault:colorScheme.onSurfaceColor];
-  [textInputControllerClass setLeadingUnderlineLabelTextColorDefault:colorScheme.onSurfaceColor];
+  [textInputControllerClass setNormalColorDefault:onSurface87Opacity];
+  [textInputControllerClass setInlinePlaceholderColorDefault:onSurface60Opacity];
+  [textInputControllerClass setTrailingUnderlineLabelTextColorDefault:onSurface60Opacity];
+  [textInputControllerClass setLeadingUnderlineLabelTextColorDefault:onSurface60Opacity];
 
   if ([textInputControllerClass
           conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
+    UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
     [textInputControllerFloatingPlaceholderClass
-        setFloatingPlaceholderNormalColorDefault:colorScheme.primaryColor];
+        setFloatingPlaceholderNormalColorDefault:primary87Opacity];
   }
 }
 #if !defined(__IPHONE_11_0)
