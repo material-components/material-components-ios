@@ -162,26 +162,6 @@
     UI_APPEARANCE_SELECTOR;
 
 /*
- A color used as the chip's background overlay color for @c state.
-
- If no background overlay color has been set for a given state, the returned value will fall back to
- the value set for UIControlStateNormal.
-
- @param state The control state.
- @return The background overlay color.
- */
-- (nullable UIColor *)backgroundOverlayColorForState:(UIControlState)state;
-
-/*
- A color used as the chip's background overlay @c color.
-
- @param backgroundOverlayColor The chip background overlay color.
- @param state The control state.
- */
-- (void)setBackgroundOverlayColor:(nullable UIColor *)backgroundOverlayColor
-                         forState:(UIControlState)state;
-
-/*
  Returns the border color for a particular control state.
 
  If no border width has been set for a given state, the returned value will fall back to the value

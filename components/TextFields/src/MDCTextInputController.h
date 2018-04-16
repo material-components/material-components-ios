@@ -37,6 +37,19 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *activeColorDefault;
 
 /**
+ Color for background for the various views making up a text field.
+
+ Default is backgroundColorDefault.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *backgroundColor;
+
+/**
+ Default value for backgroundColor.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *backgroundColorDefault;
+
+
+/**
  The character counter. Override to use a custom character counter.
 
  Default is an internal instance MDCTextInputAllCharactersCounter. Setting this property to null

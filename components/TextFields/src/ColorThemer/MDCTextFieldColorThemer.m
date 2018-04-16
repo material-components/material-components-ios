@@ -63,6 +63,7 @@
   textInputController.inlinePlaceholderColor = onSurface60Opacity;
   textInputController.trailingUnderlineLabelTextColor = onSurface60Opacity;
   textInputController.leadingUnderlineLabelTextColor = onSurface60Opacity;
+  textInputController.backgroundColor = colorScheme.surfaceColor;
 
   if ([textInputController
           conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
