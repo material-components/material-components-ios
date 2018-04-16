@@ -836,8 +836,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     cornerRadius = [self cornerRadius];
 #pragma clang diagnostic pop
   }
-
-
   return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
 }
 
@@ -937,7 +935,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.layer.shapeGenerator = shapeGenerator;
   self.layer.colorLayer.zPosition = -1;
   [self updateBackgroundColor];
-//  [self updateImageViewLayerZPosition];
   [self updateInkForShape];
 }
 
@@ -954,18 +951,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setImage:(UIImage *)image forState:(UIControlState)state {
   [super setImage:image forState:state];
-  [self updateImageViewLayerZPosition];
 }
-
-- (void)updateImageViewLayerZPosition {
-  if (self.layer.shapeGenerator) {
-  } else {
-    self.imageView.layer.zPosition = 0;
-  }
-}
-
-
-
 
 #pragma mark - Dynamic Type
 
