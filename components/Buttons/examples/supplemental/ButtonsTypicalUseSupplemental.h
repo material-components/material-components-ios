@@ -25,7 +25,7 @@
 
 @property(nonatomic, strong) NSArray *buttons;
 @property(nonatomic, strong) NSArray *labels;
-- (void)setupExampleViews;
+- (UILabel *)addLabelWithText:(NSString *)text;
 
 @end
 

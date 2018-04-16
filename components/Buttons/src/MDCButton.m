@@ -328,7 +328,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   _inkView.usesLegacyInkRipple = NO;
-  [self addSubview:_inkView];
+//  [self addSubview:_inkView];
+  [self insertSubview:_inkView belowSubview:self.imageView];
   // UIButton has a drag enter/exit boundary that is outside of the frame of the button itself.
   // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
   // change ink state. So instead we fall back on adding target/actions for these specific events.
@@ -865,7 +866,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)updateBackgroundColor {
   self.layer.shapedBackgroundColor = self.currentBackgroundColor;
 //  super.backgroundColor = self.currentBackgroundColor;
-//  [self updateDisabledTitleColor];
+  [self updateDisabledTitleColor];
 }
 
 - (void)updateDisabledTitleColor {
@@ -933,11 +934,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   } else {
     self.layer.shadowPath = [self boundingPath].CGPath;
   }
-
   self.layer.shapeGenerator = shapeGenerator;
-  self.layer.shadowMaskEnabled = NO;
+  self.layer.colorLayer.zPosition = -1;
   [self updateBackgroundColor];
-  [self updateImageViewLayerZPosition];
+//  [self updateImageViewLayerZPosition];
   [self updateInkForShape];
 }
 
@@ -959,7 +959,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateImageViewLayerZPosition {
   if (self.layer.shapeGenerator) {
-    self.imageView.layer.zPosition = 1;
   } else {
     self.imageView.layer.zPosition = 0;
   }
