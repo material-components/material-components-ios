@@ -22,7 +22,17 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
                           blue:(CGFloat)((colorValue & 0xFF) / 255.0) alpha:1];
 }
 
-static double blendColorChannel(double value, double bValue, double alpha, double bAlpha) {
+/**
+ Helper method to blend a color channel with a background color channel using alpha composition.
+ More info about Alpha compositing: https://en.wikipedia.org/wiki/Alpha_compositing
+
+ @params value is the value of color channel
+ @params bValue is the value of background color channel
+ @params alpha is the alpha of color channel
+ @params bAlpha is the alpha of background color channel
+ */
+
+static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, CGFloat bAlpha) {
   return ((1 - alpha) * bValue * bAlpha + alpha * value)/(alpha + bAlpha*(1 - alpha));
 }
 
@@ -54,9 +64,9 @@ static double blendColorChannel(double value, double bValue, double alpha, doubl
 }
 
 + (UIColor *)blendColor:(UIColor *)color withBackgroundColor:(UIColor *)backgroundColor {
-  double red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
+  CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
   [color getRed:&red green:&green blue:&blue alpha:&alpha];
-  double bRed = 0.0, bGreen = 0.0, bBlue = 0.0, bAlpha = 0.0;
+  CGFloat bRed = 0.0, bGreen = 0.0, bBlue = 0.0, bAlpha = 0.0;
   [backgroundColor getRed:&bRed green:&bGreen blue:&bBlue alpha:&bAlpha];
 
   return [UIColor colorWithRed:blendColorChannel(red, bRed, alpha, bAlpha)
