@@ -1,3 +1,135 @@
+# 54.6.0
+
+This release introduces new APIs and themers for customizing typography and color. This release
+also fixes a bug in NavigationBar affecting title label kerning for system fonts. This may result
+in visual changes for navigation bar instances.
+
+## New features
+
+AppBar now has a Typography themer.
+
+Buttons now has a raised button color themer.
+
+BottomSheets background tap-to-dismiss behavior can now be disabled with `dismissOnBackgroundTap`.
+
+ButtonBar and NavigationBar's ink color can now be customized.
+
+Cars now has a Color themer.
+
+NavigationBar has a new opt-in behavioral change gated by the `useFlexibleTopBottomInsets` property.
+Enabling this property will result in new layout behavior for the navigation bar's titleView. This
+flag will be enabled by default in the future. Consider enabling this flag on your navigation bar
+instances in order to verify that the new behavior will not cause regressions in your app.
+
+TextFields now expose a backgroundColor property.
+
+## API changes
+
+### BottomSheet
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `dismissOnBackgroundTap` in `MDCBottomSheetPresentationController`
+
+#### MDCBottomSheetTransitionController
+
+*new* property: `dismissOnBackgroundTap` in `MDCBottomSheetTransitionController`
+
+#### MDCBottomSheetController
+
+*new* property: `dismissOnBackgroundTap` in `MDCBottomSheetController`
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* property: `inkColor` in `MDCButtonBar`
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `inkColor` in `MDCNavigationBar`
+
+*new* property: `useFlexibleTopBottomInsets` in `MDCNavigationBar`
+
+### TextFields
+
+#### MDCTextInputControllerBase
+
+*new* property: `backgroundColor` in `MDCTextInputControllerBase`
+
+#### MDCTextInputController
+
+*new* property: `backgroundColorDefault` in `MDCTextInputController`
+
+*new* property: `backgroundColor` in `MDCTextInputController`
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Add a Typography themer. (#3359)](https://github.com/material-components/material-components-ios/commit/ab8c104262f471cde821a7af83367a130c10843c) (featherless)
+* [[ButtonBar] Allow customizing the inkColor of the buttons (#3250)](https://github.com/material-components/material-components-ios/commit/8af9e9fc8180fbcbc72250f963d2074772aedfcd) (Ali Rabbani)
+* [[NavigationBar] Allow flexible height/insets in MDCNavigationBar (#3305)](https://github.com/material-components/material-components-ios/commit/992d58148194d43aed366562da6f12a889767bf2) (Ali Rabbani)
+
+### Buttons
+
+#### Changes
+
+* [Implement a color themer for an MDCRaisedButton (#3335)](https://github.com/material-components/material-components-ios/commit/2869609c2eb48826fa2c4de773746779c53224c9) (Yarden Eitan)
+* [[Button Examples] Moved most examples into dragons so that only beautiful demos are in the main catalog. (#3358)](https://github.com/material-components/material-components-ios/commit/53dddde6cf3205e5ec871df503271627207b52f7) (Randall Li)
+
+### ButtonBar
+
+#### Changes
+
+* [Allow customizing the inkColor of the buttons (#3250)](https://github.com/material-components/material-components-ios/commit/8af9e9fc8180fbcbc72250f963d2074772aedfcd) (Ali Rabbani)
+* [[NavigationBar] Allow flexible height/insets in MDCNavigationBar (#3305)](https://github.com/material-components/material-components-ios/commit/992d58148194d43aed366562da6f12a889767bf2) (Ali Rabbani)
+
+### TextFields
+
+#### Changes
+
+* [Add backgroundColor property (#3357)](https://github.com/material-components/material-components-ios/commit/abeb391ebaec1438738fc6a8f7d308e87f6412ba) (ianegordon)
+* [Adding the expected opacities to color themer. (#3347)](https://github.com/material-components/material-components-ios/commit/3c22a8d18b2fbe3ebb1efa839725a424063fb8d1) (Mohammad Cazi)
+
+### Cards
+
+#### Changes
+
+* [Implement a semantic color scheme color themer API. (#3289)](https://github.com/material-components/material-components-ios/commit/bd8760b94b47bdc50d7e62d86111dac8b4a6010f) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Allow flexible height/insets in MDCNavigationBar (#3305)](https://github.com/material-components/material-components-ios/commit/992d58148194d43aed366562da6f12a889767bf2) (Ali Rabbani)
+* [Fix bug where system font traits would be lost. (#3360)](https://github.com/material-components/material-components-ios/commit/d259ebed7d0fff6ffacbc74fed8c751bce28b035) (featherless)
+* [[ButtonBar] Allow customizing the inkColor of the buttons (#3250)](https://github.com/material-components/material-components-ios/commit/8af9e9fc8180fbcbc72250f963d2074772aedfcd) (Ali Rabbani)
+
+### ActivityIndicator
+
+#### Changes
+
+* [[bazel] Fix BUILD file paths to match file system casing (#3363)](https://github.com/material-components/material-components-ios/commit/1832b072b405577d348968af8e60bce442df35b9) (featherless)
+
+### BottomSheet
+
+#### Changes
+
+* [Adds a setting to make sheets impossible to dismiss. (#3325)](https://github.com/material-components/material-components-ios/commit/a1c66214558904284e6d3d6ed533c64202c29933) (John Detloff)
+
+### BottomNavigation
+
+#### Changes
+
+* [[bazel] Fix BUILD file paths to match file system casing (#3363)](https://github.com/material-components/material-components-ios/commit/1832b072b405577d348968af8e60bce442df35b9) (featherless)
+
+---
+
 # 54.5.0
 
 This release includes bug fixes and increased coverage of our themer APIs for components.

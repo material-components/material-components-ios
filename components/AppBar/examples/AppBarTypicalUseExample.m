@@ -18,6 +18,7 @@
 
 #import "MaterialAppBar.h"
 #import "MDCAppBarColorThemer.h"
+#import "MDCAppBarTypographyThemer.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 
@@ -40,8 +41,14 @@
     _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
     [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
 
+    _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
+
     MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
     [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
+    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+    [MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:_appBar];
+
+    _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
   }
   return self;
 }

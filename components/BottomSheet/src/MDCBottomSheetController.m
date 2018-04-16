@@ -35,6 +35,7 @@
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
+    self.dismissOnBackgroundTap = YES;
   }
   return self;
 }
@@ -67,6 +68,9 @@
 }
 
 - (BOOL)accessibilityPerformEscape {
+  if (!self.dismissOnBackgroundTap) {
+    return NO;
+  }
   [self dismissViewControllerAnimated:YES completion:nil];
   return YES;
 }
@@ -95,6 +99,15 @@
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
   _transitionController.trackingScrollView = trackingScrollView;
+}
+
+- (BOOL)dismissOnBackgroundTap {
+  return _transitionController.dismissOnBackgroundTap;
+}
+
+- (void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
+  _transitionController.dismissOnBackgroundTap = dismissOnBackgroundTap;
+  self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
 }
 
 /* Disable setter. Always use internal transition controller */
