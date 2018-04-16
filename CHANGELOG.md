@@ -1,14 +1,14 @@
-# #develop#
+# 54.6.1
 
-## Breaking changes
-
-## New deprecations
-
-## New features
-
-## API changes
+This is a hotfix release fixing a bug in ButtonBar that was introduced in 54.6.0.
 
 ## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [[NavigationBar]Restore the changed default inkColor](https://github.com/material-components/material-components-ios/commit/367048d4b2f40eb84f0c3161c218db69798461d5) (Ali Rabbani)
 
 ---
 
