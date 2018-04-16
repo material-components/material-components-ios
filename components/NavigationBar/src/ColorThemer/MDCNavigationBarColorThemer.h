@@ -23,13 +23,28 @@
 @interface MDCNavigationBarColorThemer : NSObject
 
 /**
- Applies a color scheme's properties to an MDCNavigationBar.
+ Applies a color scheme's properties to an MDCNavigationBar using the "primary" variant theme.
+
+ The primary variant applies the scheme's primary color to the navigation bar's background and uses
+ onPrimary for text and iconography colors.
 
  @param colorScheme The color scheme to apply to MDCNavigationBar.
  @param navigationBar An MDCNavigationBar instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                  toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;
+
+/**
+ Applies a color scheme's properties to an MDCNavigationBar using the "surface" variant theme.
+
+ The surface variant applies the scheme's surface color to the navigation bar's background and uses
+ onSurface for text and iconography colors.
+
+ @param colorScheme The color scheme to apply to MDCNavigationBar.
+ @param navigationBar An MDCNavigationBar instance to which the color scheme should be applied.
+ */
++ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                           toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;
 
 #pragma mark - Soon to be deprecated
 
