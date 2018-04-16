@@ -66,10 +66,10 @@
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
 
   UIColor *backgroundColor =
-      [MDCSemanticColorScheme mergeColor:onSurface12Opacity
+      [MDCSemanticColorScheme blendColor:onSurface12Opacity
                      withBackgroundColor:colorScheme.surfaceColor];
   UIColor *textColor =
-      [MDCSemanticColorScheme mergeColor:onSurface87Opacity
+      [MDCSemanticColorScheme blendColor:onSurface87Opacity
                      withBackgroundColor:colorScheme.surfaceColor];
 
   [MDCChipViewColorThemer resetUIControlStatesForChipTheming:chipView];
