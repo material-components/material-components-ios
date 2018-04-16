@@ -54,7 +54,6 @@
   [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
-
   [raisedButton sizeToFit];
   [raisedButton addTarget:self
                    action:@selector(didTap:)
