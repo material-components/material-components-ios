@@ -123,12 +123,12 @@
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
- The shape generator used to define the card's shape.
- When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
- If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
- unexpected behavior.
+ The shape generator used to define the button's shape.
 
- When the shapeGenerator is nil, MDCCard will use the default underlying layer with
+ note: If a layer property is explicitly set after the shapeGenerator has been set,
+ it can lead to unexpected behavior.
+
+ When the shapeGenerator is nil, MDCButton will use the default underlying layer with
  its default settings.
 
  Default value for shapeGenerator is nil.
