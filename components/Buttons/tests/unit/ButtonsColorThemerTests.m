@@ -151,4 +151,32 @@
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
 }
 
+- (void)testMDCFloatingButtonColorThemer {
+  // Given
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
+  colorScheme.primaryColor = UIColor.redColor;
+  colorScheme.onSurfaceColor = UIColor.blueColor;
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateHighlighted];
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateSelected];
+  [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
+
+  // Where
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFloatingButton:button];
+
+  // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    if (state != UIControlStateDisabled) {
+       if ([button backgroundColorForState:state] != nil) {
+        XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
+      }
+    } else {
+        XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
+    }
+  }
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+}
 @end

@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MDCButtonColorThemer.h"
 
 @interface FloatingButtonExampleViewController : UIViewController
 @property(nonatomic, strong) UILabel *iPadLabel;
@@ -32,10 +33,13 @@
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
 
-  UIImage *plusImage = [UIImage imageNamed:@"Plus"];
+  UIImage *plusImage =
+      [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   UIImage *plusImage36 = [UIImage imageNamed:@"plus_white_36"
                                     inBundle:[NSBundle bundleForClass:[self class]]
                compatibleWithTraitCollection:self.traitCollection];
+  plusImage36 = [plusImage36 imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   self.iPadLabel = [[UILabel alloc] init];
   self.iPadLabel.text = @"Try me on an iPad!";
@@ -47,10 +51,17 @@
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
                                  forShape:MDCFloatingButtonShapeMini
                                    inMode:MDCFloatingButtonModeExpanded];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme
+                                toFloatingButton:self.miniFloatingButton];
+  [self.miniFloatingButton setTintColor:colorScheme.onSecondaryColor];
+
 
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   self.defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme
+                                toFloatingButton:self.defaultFloatingButton];
+  [self.defaultFloatingButton setTintColor:colorScheme.onSecondaryColor];
 
   self.largeIconFloatingButton = [[MDCFloatingButton alloc] init];
   self.largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -58,6 +69,9 @@
   [self.largeIconFloatingButton setContentEdgeInsets:UIEdgeInsetsMake(-6, -6, -6, 0)
                                             forShape:MDCFloatingButtonShapeDefault
                                               inMode:MDCFloatingButtonModeExpanded];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme
+                                toFloatingButton:self.largeIconFloatingButton];
+  [self.largeIconFloatingButton setTintColor:colorScheme.onSecondaryColor];
 
   [self.view addSubview:self.iPadLabel];
   [self.view addSubview:self.miniFloatingButton];
