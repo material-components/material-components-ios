@@ -117,13 +117,3 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 - (nonnull instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults;
 
 @end
-
-//@interface MDCScheme : NSObject
-//@property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;
-//@property(nonnull, readwrite, nonatomic) MDCTypographyScheme *typographyScheme;
-//
-//+ (void)applyScheme:(nonnull id<MDCScheming>)scheme
-//       toTextButton:(nonnull MDCButton *)button;
-//
-//@end
-
