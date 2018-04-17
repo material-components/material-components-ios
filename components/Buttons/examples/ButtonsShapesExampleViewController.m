@@ -53,12 +53,12 @@
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [raisedButton setImage:plusImage forState:UIControlStateNormal];
-  [raisedButton setTitleColor:[UIColor colorWithRed:71/255.0 green:50/255.0 blue:50/255.0 alpha:1]
+  [raisedButton setTitleColor:[UIColor colorWithRed:71/255.0f green:50/255.0f blue:50/255.0f alpha:1]
                      forState:UIControlStateNormal];
   raisedButton.imageView.tintColor =
-      [UIColor colorWithRed:71/255.0 green:50/255.0 blue:50/255.0 alpha:1];
+      [UIColor colorWithRed:71/255.0f green:50/255.0f blue:50/255.0f alpha:1];
   [raisedButton setBackgroundColor:
-      [UIColor colorWithRed:242/255.0 green:174/255.0 blue:178/255.0 alpha:1]];
+      [UIColor colorWithRed:242/255.0f green:174/255.0f blue:178/255.0f alpha:1]];
 
   MDCRectangleShapeGenerator *raisedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
