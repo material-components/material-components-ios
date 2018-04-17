@@ -18,25 +18,6 @@
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
 
-@implementation MDCButton (TextButton)
-
-- (instancetype)initTextButton {
-  self = [self init];
-  if (self) {
-    MDCSemanticColorScheme *colorScheme  = [[MDCSemanticColorScheme alloc] init];
-    [MDCButtonColorThemer applySemanticColorScheme:colorScheme
-                                      toFlatButton:self];
-    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-    [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme
-                                            toButton:self];
-    self.minimumSize = CGSizeMake(0, 36);
-    self.layer.cornerRadius = (CGFloat)4;
-  }
-  return self;
-}
-
-@end
-
 @implementation MDCButtonScheme
 
 - (instancetype)init {

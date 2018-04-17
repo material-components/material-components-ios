@@ -23,28 +23,10 @@
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
-@interface TextButtonTests : XCTestCase
+@interface ButtonThemerTests : XCTestCase
 @end
 
-@implementation TextButtonTests
-
-- (void)testTextButtonDefaults {
-  // Given
-
-  // When
-  MDCButton *button = [[MDCButton alloc] initTextButton];
-
-  // Then
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  XCTAssertEqualWithAccuracy(button.minimumSize.height, 36, kEpsilonAccuracy);
-  XCTAssertEqualObjects(button.backgroundColor, [UIColor clearColor]);
-  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
-  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, 4, kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateNormal], 0, kEpsilonAccuracy);
-  XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
-  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
-}
+@implementation ButtonThemerTests
 
 - (void)testTextButtonThemer {
   // Given

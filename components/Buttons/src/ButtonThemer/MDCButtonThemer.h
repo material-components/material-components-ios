@@ -18,12 +18,6 @@
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
 
-@interface MDCButton (TextButton)
-
-- (nonnull instancetype)initTextButton;
-
-@end
-
 @protocol MDCButtonScheming
 @property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
 @property(nonnull, readonly, nonatomic) id <MDCTypographyScheming> typographyScheme;
