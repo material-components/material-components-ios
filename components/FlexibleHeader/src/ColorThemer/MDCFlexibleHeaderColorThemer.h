@@ -39,7 +39,7 @@
 
  Uses the surface color as the most important color for the component.
 
- @param colorScheme The color scheme to apply to MDCNavigationBar.
+ @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderView An MDCFlexibleHeaderView instance to which the color scheme should be
  applied.
  */
