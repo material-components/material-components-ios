@@ -265,6 +265,14 @@ Pod::Spec.new do |mdc|
   end
   
   mdc.subspec "Chips+Extensions" do |component|
+    component.subspec "ColorThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Chips/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Chips/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Chips"
+      extension.dependency "MaterialComponents/schemes/Color"
+    end
     component.subspec "FontThemer" do |extension|
       extension.ios.deployment_target = '8.0'
       extension.public_header_files = "components/Chips/src/#{extension.base_name}/*.h"

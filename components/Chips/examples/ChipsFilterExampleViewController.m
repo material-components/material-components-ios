@@ -17,14 +17,18 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
+#import "MDCChipViewColorThemer.h"
 
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
+  MDCSemanticColorScheme *_colorScheme;
 }
 
 - (void)loadView {
   [super loadView];
+
+  _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
@@ -62,6 +66,14 @@
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   cell.chipView.selectedImageView.image = [self doneImage];
   cell.alwaysAnimateResize = YES;
+  if (indexPath.row % 2) {
+    [cell.chipView setBorderWidth:0 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:cell.chipView];
+  } else {
+    [cell.chipView setBorderWidth:1 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme
+                                   toStrokedChipView:cell.chipView];
+  }
   return cell;
 }
 
