@@ -30,11 +30,8 @@
 
 - (MDCButton *)buildCustomStrokedButton {
   MDCButton *button = [[MDCButton alloc] init];
-  button.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
-
   [button setBorderWidth:1.0 forState:UIControlStateNormal];
   [button setBorderColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
-
   return button;
 }
 

@@ -238,7 +238,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     } else {
       // Storyboards will set the backgroundColor via the UIView backgroundColor setter, so we have
       // to write that in to our _backgroundColors dictionary.
-      _backgroundColors[@(UIControlStateNormal)] = super.backgroundColor;
+      _backgroundColors[@(UIControlStateNormal)] = self.layer.shapedBackgroundColor;
     }
     [self updateBackgroundColor];
 
