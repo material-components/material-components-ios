@@ -21,7 +21,6 @@
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
-#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 #import "private/MDCButton+Subclassing.h"
 
@@ -933,7 +932,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     self.layer.shadowPath = [self boundingPath].CGPath;
   }
   self.layer.shapeGenerator = shapeGenerator;
-  self.layer.colorLayer.zPosition = -1;
+  // The imageView is added slightly later in the lifecycle of a UIButton, therefore we need to move
+  // the colorLayer behind the imageView otherwise the image will not show.
+  // Because the inkView needs to go below the imageView, but above the colorLayer
+  // we need to have the colorLayer be right at the back.
+  [self.layer.colorLayer removeFromSuperlayer];
+  [self.layer insertSublayer:self.layer.colorLayer atIndex:0];
   [self updateBackgroundColor];
   [self updateInkForShape];
 }
