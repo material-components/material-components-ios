@@ -18,21 +18,47 @@
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
 
+/** Defines a readonly immutable interface for button style data to be applied by a themer. */
 @protocol MDCButtonScheming
+
+/** The color scheme to apply to buttons. */
 @property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
+
+/** The typography scheme to apply to buttons. */
 @property(nonnull, readonly, nonatomic) id <MDCTypographyScheming> typographyScheme;
+
+/**
+ The corner radius to be applied to buttons.
+
+ Note: When Shapes becomes a subsystem this property will need to be migrated to that system.
+ */
 @property(readonly, nonatomic) CGFloat cornerRadius;
+
+/** The minimum hight applied to buttions. */
 @property(readonly, nonatomic) CGFloat minimumHeight;
+
 @end
 
+/** Defines the button style data that will be applied to a button by a themer. */
 @interface MDCButtonScheme : NSObject <MDCButtonScheming>
+
+// Redeclare protocol properties as readwrite
 @property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;
 @property(nonnull, readwrite, nonatomic) MDCTypographyScheme *typographyScheme;
 @property(readwrite, nonatomic) CGFloat cornerRadius;
 @property(readwrite, nonatomic) CGFloat minimumHeight;
+
 @end
 
+/** Applies button style data to MDCButton objects. */
 @interface MDCButtonThemer : NSObject
+
+/**
+ Applies the text button style using the button scheme data.
+
+ @param scheme The button style data that should be used to change the @c button.
+ @param button A MDCButton instance to apply the @c scheme
+ */
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
        toTextButton:(nonnull MDCButton *)button;
 @end
