@@ -25,8 +25,8 @@
 @end
 
 @protocol MDCButtonScheming
-@property(nonnull, readonly, nonatomic) MDCSemanticColorScheme *colorScheme;
-@property(nonnull, readonly, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
+@property(nonnull, readonly, nonatomic) id <MDCTypographyScheming> typographyScheme;
 @property(readonly, nonatomic) CGFloat cornerRadius;
 @property(readonly, nonatomic) CGFloat minimumHeight;
 @end
