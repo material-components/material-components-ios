@@ -18,6 +18,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
@@ -83,7 +84,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   return [string copy];
 }
 
-@interface FakeShadowLayer : MDCShadowLayer
+@interface FakeShadowLayer : MDCShapedShadowLayer
 @property(nonatomic, assign) NSInteger elevationAssignmentCount;
 @end
 

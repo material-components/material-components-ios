@@ -35,6 +35,8 @@ mdc_public_objc_library(
         "//components/ShadowLayer",
         "//components/Typography",
         "//components/private/Math",
+        "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )

@@ -19,6 +19,7 @@
 
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 
 /**
  A Material flat, raised or floating button.
@@ -119,6 +120,19 @@
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
+/**
+ The shape generator used to define the button's shape.
+
+ note: If a layer property is explicitly set after the shapeGenerator has been set,
+ it can lead to unexpected behavior.
+
+ When the shapeGenerator is nil, MDCButton will use the default underlying layer with
+ its default settings.
+
+ Default value for shapeGenerator is nil.
+ */
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
  A color used as the button's @c backgroundColor for @c state.
