@@ -18,8 +18,9 @@ import UIKit
 import CoreGraphics
 
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialPalettes
+import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTabs
+import MaterialComponents.MDCTabBarColorThemer
 
 class TabBarIndicatorTemplateExample: UIViewController {
 
@@ -52,6 +53,9 @@ class TabBarIndicatorTemplateExample: UIViewController {
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
     tabBar.alignment = .justified
+
+    let scheme = MDCSemanticColorScheme()
+    MDCTabBarColorThemer.applySemanticColorScheme(scheme, toTabs: tabBar);
 
     let bundle = Bundle(for: TabBarIndicatorTemplateExample.self)
     let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)
