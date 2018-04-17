@@ -27,9 +27,7 @@
 /** The typography scheme to apply to buttons. */
 @property(nonnull, readonly, nonatomic) id <MDCTypographyScheming> typographyScheme;
 
-/**
- The corner radius to be applied to buttons.
- */
+/** The corner radius to be applied to buttons. */
 @property(readonly, nonatomic) CGFloat cornerRadius;
 
 /** The minimum hight applied to buttions. */
