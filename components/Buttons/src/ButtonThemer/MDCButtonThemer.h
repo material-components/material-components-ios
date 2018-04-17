@@ -30,7 +30,7 @@
 /** The corner radius to be applied to buttons. */
 @property(readonly, nonatomic) CGFloat cornerRadius;
 
-/** The minimum hight applied to buttions. */
+/** The minimum height applied to buttons. */
 @property(readonly, nonatomic) CGFloat minimumHeight;
 
 @end
