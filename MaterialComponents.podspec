@@ -179,6 +179,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/Shapes"
   end
 
   mdc.subspec "Buttons+Extensions" do |component|

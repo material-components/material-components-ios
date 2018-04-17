@@ -21,17 +21,18 @@
 
 #import <UIKit/UIKit.h>
 
-@class ButtonsTypicalUseViewController;
-
 @interface ButtonsTypicalUseViewController : UIViewController
 
 @property(nonatomic, strong) NSArray *buttons;
 @property(nonatomic, strong) NSArray *labels;
+- (UILabel *)addLabelWithText:(NSString *)text;
 
 @end
 
-@interface ButtonsTypicalUseViewController (Supplemental)
+@interface ButtonsTypicalUseExampleViewController : ButtonsTypicalUseViewController
 
-- (void)setupExampleViews;
+@end
+
+@interface ButtonsShapesExampleViewController : ButtonsTypicalUseViewController
 
 @end
