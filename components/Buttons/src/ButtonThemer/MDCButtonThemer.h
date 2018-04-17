@@ -29,8 +29,6 @@
 
 /**
  The corner radius to be applied to buttons.
-
- Note: When Shapes becomes a subsystem this property will need to be migrated to that system.
  */
 @property(readonly, nonatomic) CGFloat cornerRadius;
 
