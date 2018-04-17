@@ -25,8 +25,7 @@
 /**
  Applies a color scheme's properties to an MDCNavigationBar using the primary mapping.
 
- Calls through to applySemanticColorScheme:toNavigationBar:withVariant: with the
- MDCNavigationBarColorThemerVariantPrimary variant.
+ Uses the primary color as the most important color for the component.
 
  @param colorScheme The color scheme to apply to MDCNavigationBar.
  @param navigationBar An MDCNavigationBar instance to which the color scheme should be applied.
@@ -37,8 +36,7 @@
 /**
  Applies a color scheme's properties to an MDCNavigationBar using the surface variant.
 
- The surface variant applies the scheme's surface color to the navigation bar's background and uses
- onSurface for text and iconography colors.
+ Uses the surface color as the most important color for the component.
 
  @param colorScheme The color scheme to apply to MDCNavigationBar.
  @param navigationBar An MDCNavigationBar instance to which the color scheme should be applied.
