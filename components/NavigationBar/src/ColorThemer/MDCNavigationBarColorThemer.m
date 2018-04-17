@@ -22,7 +22,7 @@
                  toNavigationBar:(nonnull MDCNavigationBar *)navigationBar {
   [self applySemanticColorScheme:colorScheme
                  toNavigationBar:navigationBar
-                     withVariant:MDCNavigationBarColorThemerVariantPrimary];
+                    usingVariant:MDCNavigationBarColorThemerVariantPrimary];
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
