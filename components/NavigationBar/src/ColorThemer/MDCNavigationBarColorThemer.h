@@ -18,23 +18,6 @@
 #import "MaterialNavigationBar.h"
 
 /**
- The possible theming variants that can be applied to a navigation bar.
- */
-typedef NS_ENUM(NSInteger, MDCNavigationBarColorThemerVariant) {
-  /**
-   Applies the scheme's primary color to the navigation bar's background and uses onPrimary for
-   text and iconography colors.
-   */
-  MDCNavigationBarColorThemerVariantPrimary,
-
-  /**
-   Applies the scheme's surface color to the navigation bar's background and uses onSurface for
-   text and iconography colors.
-   */
-  MDCNavigationBarColorThemerVariantSurface,
-};
-
-/**
  A color themer for MDCNavigationBar that implements the Material design color system mappings.
  */
 @interface MDCNavigationBarColorThemer : NSObject
@@ -52,18 +35,16 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarColorThemerVariant) {
                  toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;
 
 /**
- Applies a color scheme's properties to an MDCNavigationBar using the surface mapping.
+ Applies a color scheme's properties to an MDCNavigationBar using the surface variant.
 
- The surface mapping applies the scheme's surface color to the navigation bar's background and uses
+ The surface variant applies the scheme's surface color to the navigation bar's background and uses
  onSurface for text and iconography colors.
 
  @param colorScheme The color scheme to apply to MDCNavigationBar.
  @param navigationBar An MDCNavigationBar instance to which the color scheme should be applied.
- @param variant The theming variant to use.
  */
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                 toNavigationBar:(nonnull MDCNavigationBar *)navigationBar
-                    usingVariant:(MDCNavigationBarColorThemerVariant)variant;
++ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                           toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;
 
 #pragma mark - Soon to be deprecated
 

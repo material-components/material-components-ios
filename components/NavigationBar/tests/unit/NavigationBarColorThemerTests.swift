@@ -50,9 +50,7 @@ class NavigationBarColorThemerTests: XCTestCase {
     navigationBar.tintColor = .white
 
     // When
-    MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                         to: navigationBar,
-                                                         using: .surface)
+    MDCNavigationBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, to: navigationBar)
 
     // Then
     XCTAssertEqual(navigationBar.backgroundColor, colorScheme.surfaceColor)
