@@ -23,9 +23,11 @@
 - (instancetype)initTextButton {
   self = [self init];
   if (self) {
-    [MDCButtonColorThemer applySemanticColorScheme:[[MDCSemanticColorScheme alloc] init]
+    MDCSemanticColorScheme *colorScheme  = [[MDCSemanticColorScheme alloc] init];
+    [MDCButtonColorThemer applySemanticColorScheme:colorScheme
                                       toFlatButton:self];
-    [MDCButtonTypographyThemer applyTypographyScheme:[[MDCTypographyScheme alloc] init]
+    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+    [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme
                                             toButton:self];
     self.minimumSize = CGSizeMake(0, 36);
     self.layer.cornerRadius = (CGFloat)4;
@@ -34,3 +36,30 @@
 }
 
 @end
+
+@implementation MDCButtonScheme
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _minimumHeight = 36;
+    _cornerRadius = (CGFloat)4;
+  }
+  return self;
+}
+@end
+
+@implementation MDCButtonThemer
+
++ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
+       toTextButton:(nonnull MDCButton *)button {
+  [MDCButtonColorThemer applySemanticColorScheme:scheme.colorScheme toFlatButton:button];
+  [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
+  button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
+  button.layer.cornerRadius = scheme.cornerRadius;
+}
+
+@end
+

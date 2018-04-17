@@ -30,13 +30,33 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTextButtonDefaults {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
 
   // When
   MDCButton *button = [[MDCButton alloc] initTextButton];
 
   // Then
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  XCTAssertEqualWithAccuracy(button.minimumSize.height, 36, kEpsilonAccuracy);
+  XCTAssertEqualObjects(button.backgroundColor, [UIColor clearColor]);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
+  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, 4, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateNormal], 0, kEpsilonAccuracy);
+  XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
+}
+
+- (void)testTextButtonThemer {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
+
+  // When
+  [MDCButtonThemer applyScheme:scheme toTextButton:button];
+
+  // Then
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   XCTAssertEqualWithAccuracy(button.minimumSize.height, 36, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.backgroundColor, [UIColor clearColor]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);

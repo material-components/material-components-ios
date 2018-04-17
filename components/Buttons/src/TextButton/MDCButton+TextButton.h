@@ -15,9 +15,30 @@
  */
 
 #import "MDCButton.h"
+#import "MDCButtonColorThemer.h"
+#import "MDCButtonTypographyThemer.h"
 
 @interface MDCButton (TextButton)
 
-- (instancetype)initTextButton;
+- (nonnull instancetype)initTextButton;
 
+@end
+
+@protocol MDCButtonScheming
+@property(nonnull, readonly, nonatomic) MDCSemanticColorScheme *colorScheme;
+@property(nonnull, readonly, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(readonly, nonatomic) CGFloat cornerRadius;
+@property(readonly, nonatomic) CGFloat minimumHeight;
+@end
+
+@interface MDCButtonScheme : NSObject <MDCButtonScheming>
+@property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;
+@property(nonnull, readwrite, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(readwrite, nonatomic) CGFloat cornerRadius;
+@property(readwrite, nonatomic) CGFloat minimumHeight;
+@end
+
+@interface MDCButtonThemer : NSObject
++ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
+       toTextButton:(nonnull MDCButton *)button;
 @end
