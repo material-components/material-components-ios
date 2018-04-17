@@ -25,6 +25,13 @@
   navigationBar.tintColor = colorScheme.onPrimaryColor;
 }
 
++ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                           toNavigationBar:(nonnull MDCNavigationBar *)navigationBar {
+  navigationBar.backgroundColor = colorScheme.surfaceColor;
+  navigationBar.titleTextColor = colorScheme.onSurfaceColor;
+  navigationBar.tintColor = colorScheme.onSurfaceColor;
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
          toNavigationBar:(MDCNavigationBar *)navigationBar {
   navigationBar.backgroundColor = colorScheme.primaryColor;
