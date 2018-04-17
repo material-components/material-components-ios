@@ -71,4 +71,12 @@ extension CardExampleViewController {
   @objc class func catalogIsDebug() -> Bool {
     return false
   }
+
+  @objc class func catalogIsPrimaryDemo() -> Bool {
+    return true
+  }
+
+  @objc class func catalogDescription() -> String {
+    return "Material Cards."
+  }
 }
