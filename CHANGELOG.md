@@ -1,3 +1,35 @@
+# 54.7.0
+
+This release introduces a new API for compositing colors for use by color themers.
+
+## API diff
+
+### schemes/Color
+
+*new* method: `MDCSemanticColorScheme` `+blendColor:withBackgroundColor:`
+
+## Component changes
+
+### schemes/Color
+
+#### Changes
+
+* [Adding a helper to merge two colors with different opacities. (#3355)](https://github.com/material-components/material-components-ios/commit/900384cd75c6cd49ef6c9ad02e04e60fb868cfe6) (Mohammad Cazi)
+
+### ButtonBar
+
+#### Changes
+
+* [[NavigationBar]Restore the changed default inkColor](https://github.com/material-components/material-components-ios/commit/65091d5e36c5ccfa4ff624bd8c0be3605020e6b9) (Ali Rabbani)
+
+### Cards
+
+#### Changes
+
+* [organize cards examples (#3369)](https://github.com/material-components/material-components-ios/commit/755dcb052372497c0c2e9e525ed6058ff4f7119e) (Yarden Eitan)
+
+---
+
 # 54.6.1
 
 This is a hotfix release fixing a bug in ButtonBar that was introduced in 54.6.0.
