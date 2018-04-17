@@ -1,6 +1,12 @@
-# 54.6.2
+# 54.7.0
 
-This release introduces no new public APIs or behavior.
+This release introduces a new API for compositing colors for use by color themers.
+
+## API diff
+
+### schemes/Color
+
+*new* method: `MDCSemanticColorScheme` `+blendColor:withBackgroundColor:`
 
 ## Component changes
 
