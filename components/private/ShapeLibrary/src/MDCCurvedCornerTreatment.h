@@ -29,4 +29,16 @@
  */
 @property(nonatomic, assign) CGSize size;
 
+/**
+ Initializes an MDCCurvedCornerTreatment instance with a given corner size.
+ */
+- (nonnull instancetype)initWithSize:(CGSize)size NS_DESIGNATED_INITIALIZER;
+
+/**
+ Initializes an MDCCurvedCornerTreatment instance with a corner size of zero.
+ */
+- (nonnull instancetype)init;
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
 @end

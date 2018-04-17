@@ -20,6 +20,17 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
 
 @implementation MDCCurvedCornerTreatment
 
+- (instancetype)init {
+  return [self initWithSize:CGSizeZero];
+}
+
+- (instancetype)initWithSize:(CGSize)size {
+  if (self = [super init]) {
+    _size = size;
+  }
+  return self;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   if (self = [super initWithCoder:aDecoder]) {
     _size = [aDecoder decodeCGSizeForKey:MDCCurvedCornerTreatmentSizeKey];
