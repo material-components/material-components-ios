@@ -25,4 +25,15 @@
 /** The underlying color for the bar button items. */
 @property(nonatomic, strong) UIColor *buttonUnderlyingColor;
 
+/**
+ Sets the desired button title font for a given state. Will only affect buttons created after this
+ invocation.
+ */
+- (void)setTitleFont:(UIFont *)font forState:(UIControlState)state;
+
+/**
+ Gets the desired button title font for a given state.
+ */
+- (UIFont *)titleFontForState:(UIControlState)state;
+
 @end

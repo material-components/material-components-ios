@@ -99,6 +99,19 @@ IB_DESIGNABLE
 @property(nonatomic) CGFloat buttonTitleBaseline;
 
 /**
+ Sets the button title font for the given state.
+
+ @param font The font that should be displayed on text buttons for the given state.
+ @param state The state for which the font should be displayed.
+ */
+- (void)setButtonTitleFont:(nullable UIFont *)font forState:(UIControlState)state;
+
+/**
+ Returns the font used by text button titles for @c state.
+ */
+- (nullable UIFont *)buttonTitleFontForState:(UIControlState)state;
+
+/**
  The position of the button bar, usually positioned on the leading or trailing edge of the screen.
 
  Default: MDCBarButtonLayoutPositionNone
