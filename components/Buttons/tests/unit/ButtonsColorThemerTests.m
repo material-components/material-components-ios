@@ -19,11 +19,71 @@
 #import "MaterialButtons.h"
 #import "MDCButtonColorThemer.h"
 
+static const CGFloat kEpsilonAccuracy = 0.001f;
+
 @interface ButtonsColorThemerTests : XCTestCase
 
 @end
 
 @implementation ButtonsColorThemerTests
+
+- (void)testTextButtonColorThemer {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+  // When
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toTextButton:button];
+
+  // Then
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
+  XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal], UIColor.clearColor);
+  XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
+                        UIColor.clearColor);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]);
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    if ((state == UIControlStateNormal)||(state == UIControlStateDisabled))  {
+      continue; // These two states are manually checked above.
+    }
+    XCTAssertNil([button backgroundColorForState:state], @"state:%lu", (unsigned long)state);
+    XCTAssertEqualObjects([button titleColorForState:state], colorScheme.primaryColor, @"state:%lu",
+                          (unsigned long)state);
+  }
+}
+
+- (void)testContainedButtonColorThemer {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+  // When
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toContainedButton:button];
+
+  // Then
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
+  XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
+                        colorScheme.primaryColor);
+  XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
+                        colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]);
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    if ((state == UIControlStateNormal)||(state == UIControlStateDisabled))  {
+      continue; // These two states are manually checked above.
+    }
+    XCTAssertNil([button backgroundColorForState:state], @"state:%lu", (unsigned long)state);
+    XCTAssertEqualObjects([button titleColorForState:state], colorScheme.onPrimaryColor,
+                          @"state:%lu", (unsigned long)state);
+  }
+}
 
 - (void)testMDCButtonColorThemer {
   // Given
@@ -42,7 +102,7 @@
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateSelected];
   [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
 
-  // Where
+  // When
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
@@ -125,7 +185,7 @@
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateSelected];
   [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
 
-  // Where
+  // When
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then

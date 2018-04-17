@@ -31,6 +31,39 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button;
 
+
+/**
+ Applies a color scheme to theme to an text button.
+
+ @param colorScheme The color scheme to apply to @c flatButton.
+ @param textButton An MDCButton instance to apply a color scheme.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                    toTextButton:(nonnull MDCButton *)textButton;
+
+/**
+ Applies a color scheme to theme to an contained button.
+
+ @param colorScheme The color scheme to apply to @c flatButton.
+ @param containedButton An MDCFlatButton instance to apply a color scheme.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+               toContainedButton:(nonnull MDCButton *)containedButton;
+
+#pragma mark will deprecate
+
+/**
+ Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
+ all instances of MDCButton.
+
+ This method will soon be deprecated. Consider using applySemanticColorScheme:colorScheme.
+
+ @param colorScheme The color scheme to apply to @c button.
+ @param button An MDCButton instance to apply a color scheme.
+ */
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+                toButton:(nonnull MDCButton *)button;
+
 /**
  Applies a color scheme to theme to an MDCFlatButton.
 
@@ -49,16 +82,5 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                   toRaisedButton:(nonnull MDCButton *)raisedButton;
 
-/**
- Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButton.
-
- This method will soon be deprecated. Consider using applySemanticColorScheme:colorScheme.
-
- @param colorScheme The color scheme to apply to @c button.
- @param button An MDCButton instance to apply a color scheme.
- */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-                toButton:(nonnull MDCButton *)button;
 
 @end
