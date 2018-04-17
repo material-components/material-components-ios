@@ -159,21 +159,6 @@
   ];
 }
 
-- (void)setupExampleViews {
-  UILabel *raisedButtonLabel = [self addLabelWithText:@"Raised"];
-  UILabel *disabledRaisedButtonLabel = [self addLabelWithText:@"Disabled Raised"];
-  UILabel *flatButtonLabel = [self addLabelWithText:@"Flat"];
-  UILabel *disabledFlatButtonLabel = [self addLabelWithText:@"Disabled Flat"];
-  UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
-  UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Disabled Stroked"];
-  UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
-
-  self.labels = @[
-    raisedButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
-    strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
-  ];
-}
-
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
   if (sender == self.floatingButton) {
