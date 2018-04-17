@@ -17,8 +17,9 @@
 #import "supplemental/TabBarIconExampleSupplemental.h"
 
 #import "MaterialAppBar.h"
-#import "MaterialPalettes.h"
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
+#import "MDCTabBarColorThemer.h"
 
 @implementation TabBarIconExample
 
@@ -72,13 +73,10 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  UIColor *green =  [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
-
-  tabBar.barTintColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
-  tabBar.tintColor = green;
+  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:tabBar];
+  
   tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1f];
-  tabBar.selectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.87f];
-  tabBar.unselectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.38f];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
 
   self.tabBar = tabBar;

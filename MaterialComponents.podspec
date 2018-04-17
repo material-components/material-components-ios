@@ -672,8 +672,8 @@ end
       extension.public_header_files = "components/Tabs/src/#{extension.base_name}/*.h"
       extension.source_files = "components/Tabs/src/#{extension.base_name}/*.{h,m}"
 
+      extension.dependency "MaterialComponents/schemes/Color"
       extension.dependency "MaterialComponents/Tabs"
-      extension.dependency "MaterialComponents/Themes"
     end
     component.subspec "FontThemer" do |extension|
       extension.ios.deployment_target = '8.0'
