@@ -31,7 +31,7 @@
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                    toFlatButton:(nonnull MDCButton *)flatButton {
+                    toFlatButton:(nonnull MDCFlatButton *)flatButton {
   [self resetUIControlStatesForButtonTheming:flatButton];
   [flatButton setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [flatButton setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
@@ -51,7 +51,7 @@
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                  toRaisedButton:(nonnull MDCButton *)raisedButton {
+                  toRaisedButton:(nonnull MDCRaisedButton *)raisedButton {
   [self applySemanticColorScheme:colorScheme toButton:raisedButton];
 }
 
