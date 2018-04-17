@@ -33,4 +33,19 @@ class FlexibleHeaderColorThemerTests: XCTestCase {
     // Then
     XCTAssertEqual(flexibleHeaderView.backgroundColor, colorScheme.primaryColor)
   }
+
+  func testSurfaceVariantColorThemerChangesTheBackgroundColor() {
+    // Given
+    let colorScheme = MDCSemanticColorScheme()
+    let flexibleHeaderView = MDCFlexibleHeaderView()
+    colorScheme.surfaceColor = .red
+    flexibleHeaderView.backgroundColor = .white
+
+    // When
+    MDCFlexibleHeaderColorThemer.applySurfaceVariant(withColorScheme: colorScheme,
+                                                     to: flexibleHeaderView)
+
+    // Then
+    XCTAssertEqual(flexibleHeaderView.backgroundColor, colorScheme.surfaceColor)
+  }
 }

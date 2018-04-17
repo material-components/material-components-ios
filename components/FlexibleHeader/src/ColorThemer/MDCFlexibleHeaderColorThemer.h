@@ -25,12 +25,26 @@
 /**
  Applies a color scheme's properties to an MDCFlexibleHeaderView.
 
+ Uses the primary color as the most important color for the component.
+
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderView An MDCFlexibleHeaderView instance to which the color scheme should be
  applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
             toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
+
+/**
+ Applies a color scheme's properties to an MDCFlexibleHeaderView using the surface variant.
+
+ Uses the surface color as the most important color for the component.
+
+ @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
+ @param flexibleHeaderView An MDCFlexibleHeaderView instance to which the color scheme should be
+ applied.
+ */
++ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                      toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 #pragma mark - Soon to be deprecated
 
