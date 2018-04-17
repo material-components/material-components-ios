@@ -861,6 +861,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateBackgroundColor {
+  // When shapeGenerator is unset then self.layer.shapedBackgroundColor sets the layer's
+  // backgroundColor. Whereas when shapeGenerator is set the sublayer's fillColor is set.
   self.layer.shapedBackgroundColor = self.currentBackgroundColor;
   [self updateDisabledTitleColor];
 }
