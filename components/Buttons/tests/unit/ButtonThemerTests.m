@@ -34,7 +34,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
 
   // When
-  [MDCButtonThemer applyScheme:scheme toTextButton:button];
+  [MDCTextButtonThemer applyScheme:scheme toButton:button];
 
   // Then
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];

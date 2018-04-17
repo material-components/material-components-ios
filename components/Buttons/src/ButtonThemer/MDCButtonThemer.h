@@ -46,8 +46,8 @@
 
 @end
 
-/** Applies button style data to MDCButton objects. */
-@interface MDCButtonThemer : NSObject
+/** Applies text button style data to MDCButton objects. */
+@interface MDCTextButtonThemer : NSObject
 
 /**
  Applies the text button style using the button scheme data.
@@ -56,5 +56,5 @@
  @param button A MDCButton instance to apply the @c scheme
  */
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-       toTextButton:(nonnull MDCButton *)button;
+           toButton:(nonnull MDCButton *)button;
 @end
