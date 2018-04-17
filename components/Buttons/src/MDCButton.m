@@ -932,7 +932,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     self.layer.shadowPath = [self boundingPath].CGPath;
   }
   self.layer.shapeGenerator = shapeGenerator;
-  // The imageView is added slightly later in the lifecycle of a UIButton, therefore we need to move
+  // The imageView is added very early in the lifecycle of a UIButton, therefore we need to move
   // the colorLayer behind the imageView otherwise the image will not show.
   // Because the inkView needs to go below the imageView, but above the colorLayer
   // we need to have the colorLayer be right at the back.
