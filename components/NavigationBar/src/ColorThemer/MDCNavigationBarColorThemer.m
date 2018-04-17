@@ -20,16 +20,27 @@
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                  toNavigationBar:(nonnull MDCNavigationBar *)navigationBar {
-  navigationBar.backgroundColor = colorScheme.primaryColor;
-  navigationBar.titleTextColor = colorScheme.onPrimaryColor;
-  navigationBar.tintColor = colorScheme.onPrimaryColor;
+  [self applySemanticColorScheme:colorScheme
+                 toNavigationBar:navigationBar
+                     withVariant:MDCNavigationBarColorThemerVariantPrimary];
 }
 
-+ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                           toNavigationBar:(nonnull MDCNavigationBar *)navigationBar {
-  navigationBar.backgroundColor = colorScheme.surfaceColor;
-  navigationBar.titleTextColor = colorScheme.onSurfaceColor;
-  navigationBar.tintColor = colorScheme.onSurfaceColor;
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                 toNavigationBar:(nonnull MDCNavigationBar *)navigationBar
+                    usingVariant:(MDCNavigationBarColorThemerVariant)variant {
+  switch (variant) {
+    case MDCNavigationBarColorThemerVariantPrimary:
+      navigationBar.backgroundColor = colorScheme.primaryColor;
+      navigationBar.titleTextColor = colorScheme.onPrimaryColor;
+      navigationBar.tintColor = colorScheme.onPrimaryColor;
+      break;
+
+    case MDCNavigationBarColorThemerVariantSurface:
+      navigationBar.backgroundColor = colorScheme.surfaceColor;
+      navigationBar.titleTextColor = colorScheme.onSurfaceColor;
+      navigationBar.tintColor = colorScheme.onSurfaceColor;
+      break;
+  }
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
