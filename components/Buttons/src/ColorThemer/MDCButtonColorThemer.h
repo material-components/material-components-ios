@@ -23,16 +23,6 @@
 @interface MDCButtonColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to an MDCButton.
-
- @param colorScheme The color scheme to apply to @c button.
- @param button A MDCButton instance to apply a color scheme.
- */
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                        toButton:(nonnull MDCButton *)button;
-
-
-/**
  Applies a color scheme to theme to an text button.
 
  @param colorScheme The color scheme to apply to @c flatButton.
@@ -56,7 +46,8 @@
  Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
  all instances of MDCButton.
 
- This method will soon be deprecated. Consider using applySemanticColorScheme:colorScheme.
+ This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:
+ or @c applySemanticColorScheme:toTextButton:.
 
  @param colorScheme The color scheme to apply to @c button.
  @param button An MDCButton instance to apply a color scheme.
@@ -65,7 +56,21 @@
                 toButton:(nonnull MDCButton *)button;
 
 /**
+ Applies a color scheme to theme to an MDCButton.
+
+ This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:
+ or @c applySemanticColorScheme:toTextButton:.
+
+ @param colorScheme The color scheme to apply to @c button.
+ @param button A MDCButton instance to apply a color scheme.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                        toButton:(nonnull MDCButton *)button;
+
+/**
  Applies a color scheme to theme to an MDCFlatButton.
+
+ This method will soon be deprecated. Consider using @c applySemanticColorScheme:toTextButton:.
 
  @param colorScheme The color scheme to apply to @c flatButton.
  @param flatButton An MDCFlatButton instance to apply a color scheme.
@@ -75,6 +80,8 @@
 
 /**
  Applies a color scheme to theme to an MDCRaisedButton.
+
+ This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:.
 
  @param colorScheme The color scheme to apply to @c raisedButton.
  @param raisedButton An MDCRaisedButton instance to apply a color scheme.
