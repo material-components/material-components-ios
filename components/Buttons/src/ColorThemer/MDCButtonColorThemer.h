@@ -18,7 +18,7 @@
 #import "MaterialColorScheme.h"
 
 /**
- Used to apply a color scheme to theme MDCTabBar.
+ Used to apply a color scheme to theme MDCButton.
  */
 @interface MDCButtonColorThemer : NSObject
 
@@ -26,7 +26,7 @@
  Applies a color scheme to theme to an MDCButton.
 
  @param colorScheme The color scheme to apply to @c button.
- @param button An MDCButton instance to apply a color scheme.
+ @param button A MDCButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button;
@@ -38,7 +38,7 @@
  @param flatButton An MDCFlatButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                    toFlatButton:(nonnull MDCFlatButton *)flatButton;
+                    toFlatButton:(nonnull MDCButton *)flatButton;
 
 /**
  Applies a color scheme to theme to an MDCRaisedButton.
@@ -47,7 +47,7 @@
  @param raisedButton An MDCRaisedButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                  toRaisedButton:(nonnull MDCRaisedButton *)raisedButton;
+                  toRaisedButton:(nonnull MDCButton *)raisedButton;
 
 /**
  Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
