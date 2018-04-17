@@ -19,7 +19,7 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
-#import "MDCButton+TextButton.h"
+#import "MDCButtonThemer.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 

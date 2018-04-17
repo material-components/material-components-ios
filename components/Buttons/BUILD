@@ -76,10 +76,10 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
-    name = "TextButton",
-    srcs = native.glob(["src/TextButton/*.m"]),
-    hdrs = native.glob(["src/TextButton/*.h"]),
-    includes = ["src/TextButton"],
+    name = "ButtonThemer",
+    srcs = native.glob(["src/ButtonThemer/*.m"]),
+    hdrs = native.glob(["src/ButtonThemer/*.h"]),
+    includes = ["src/ButtonThemer"],
     deps = [
         ":Buttons",
         ":TypographyThemer",
@@ -119,7 +119,7 @@ mdc_objc_library(
         ":Buttons",
         ":private",
         ":ColorThemer",
-        ":TextButton",
+        ":ButtonThemer",
         ":TitleColorAccessibilityMutator",
         ":TypographyThemer",
     ],

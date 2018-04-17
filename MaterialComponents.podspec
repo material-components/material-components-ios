@@ -198,7 +198,7 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/Buttons"
       extension.dependency "MaterialComponents/schemes/Typography"
     end
-    component.subspec "TextButton" do |extension|
+    component.subspec "ButtonThemer" do |extension|
       extension.ios.deployment_target = '8.0'
       extension.public_header_files = "components/Buttons/src/#{extension.base_name}/*.h"
       extension.source_files = "components/Buttons/src/#{extension.base_name}/*.{h,m}", "components/Buttons/src/#{extension.base_name}/private/*.{h,m}"

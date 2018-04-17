@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCButton+TextButton.h"
+#import "MDCButtonThemer.h"
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
 
