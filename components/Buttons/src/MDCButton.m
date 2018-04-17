@@ -935,9 +935,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // The imageView is added very early in the lifecycle of a UIButton, therefore we need to move
   // the colorLayer behind the imageView otherwise the image will not show.
   // Because the inkView needs to go below the imageView, but above the colorLayer
-  // we need to have the colorLayer be right at the back.
+  // we need to have the colorLayer be at the back
   [self.layer.colorLayer removeFromSuperlayer];
-  [self.layer insertSublayer:self.layer.colorLayer atIndex:0];
+  [self.layer insertSublayer:self.layer.colorLayer below:self.inkView.layer];
   [self updateBackgroundColor];
   [self updateInkForShape];
 }
