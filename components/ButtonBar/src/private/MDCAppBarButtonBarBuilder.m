@@ -54,7 +54,29 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
 @end
 
-@implementation MDCAppBarButtonBarBuilder
+@implementation MDCAppBarButtonBarBuilder {
+  NSMutableDictionary<NSNumber *, UIFont *> *_fonts;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _fonts = [NSMutableDictionary dictionary];
+  }
+  return self;
+}
+
+- (nullable UIFont *)titleFontForState:(UIControlState)state {
+  UIFont *font = _fonts[@(state)];
+  if (!font && state != UIControlStateNormal) {
+    font = _fonts[@(UIControlStateNormal)];
+  }
+  return font;
+}
+
+- (void)setTitleFont:(UIFont *)font forState:(UIControlState)state {
+  _fonts[@(state)] = font;
+}
 
 #pragma mark - MDCBarButtonItemBuilding
 
@@ -98,6 +120,10 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
   [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
   [button setUnderlyingColorHint:self.buttonUnderlyingColor];
+  for (NSNumber *state in _fonts) {
+    UIFont *font = _fonts[state];
+    [button setTitleFont:font forState:(UIControlState)state.intValue];
+  }
 
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];
 
