@@ -19,7 +19,7 @@
 #import "MDCButtonTypographyThemer.h"
 #import "MDCButtonScheme.h"
 
-/** Applies text button style data to MDCButton objects. */
+/** Applies text button style to MDCButton objects. */
 @interface MDCTextButtonThemer : NSObject
 
 /**
