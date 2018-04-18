@@ -35,7 +35,7 @@
   layout.minimumInteritemSpacing = 10;
 
 
-  // Action chips should allow single selection, collection view default is based on signle
+  // Action chips should allow single selection, collection view default is based on single
   // selection. Note that MDCChipCollectionViewCell manages the state of the chip accordingly.
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
 
