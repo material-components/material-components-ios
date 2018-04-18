@@ -23,10 +23,10 @@
 @interface MDCContainedButtonColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to an contained button.
+ Applies a color scheme to theme to a contained button.
 
- @param colorScheme The color scheme to apply to @c flatButton.
- @param containedButton An MDCFlatButton instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to @c button.
+ @param containedButton A MDCButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)containedButton;
