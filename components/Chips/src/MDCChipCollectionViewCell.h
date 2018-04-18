@@ -20,6 +20,8 @@
 
 /*
  A collection view cell containing a single MDCChipView.
+ MDCChipCollectionViewCell manages the state of its chipView based on its own states.
+ E.g: setting the state of the cell to selected will automatically apply to its chipView as well.
  */
 @interface MDCChipCollectionViewCell : UICollectionViewCell
 
