@@ -43,6 +43,7 @@ mdc_objc_library(
     ],
     deps = [
         ":ButtonBar",
+        "//components/NavigationBar",
         "//components/Themes",
     ],
     visibility = ["//visibility:public"],
