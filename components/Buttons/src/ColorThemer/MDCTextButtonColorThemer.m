@@ -19,14 +19,14 @@
 @implementation MDCTextButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                        toButton:(nonnull MDCButton *)textButton {
-  [self resetUIControlStatesForButtonTheming:textButton];
-  [textButton setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
-  [textButton setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
-  [textButton setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [textButton setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
+                        toButton:(nonnull MDCButton *)button {
+  [self resetUIControlStatesForButtonTheming:button];
+  [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
+  [button setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
+  [button setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
                    forState:UIControlStateDisabled];
-  textButton.disabledAlpha = 1.f;
+  button.disabledAlpha = 1.f;
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {

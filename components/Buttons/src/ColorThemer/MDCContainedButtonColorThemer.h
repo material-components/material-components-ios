@@ -26,9 +26,9 @@
  Applies a color scheme to theme to a contained button.
 
  @param colorScheme The color scheme to apply to @c button.
- @param containedButton A MDCButton instance to apply a color scheme.
+ @param button A MDCButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                        toButton:(nonnull MDCButton *)containedButton;
+                        toButton:(nonnull MDCButton *)button;
 
 @end
