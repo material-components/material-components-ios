@@ -109,6 +109,9 @@ IB_DESIGNABLE
 /**
  Returns the font set for @c state that was set by setButtonsTitleFont:forState:.
 
+ If no font has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
  @param state The state for which the font should be returned.
  @return The font associated with the given state.
  */

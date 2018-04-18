@@ -67,7 +67,11 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 }
 
 - (nullable UIFont *)titleFontForState:(UIControlState)state {
-  return _fonts[@(state)];
+  UIFont *font = _fonts[@(state)];
+  if (!font && state != UIControlStateNormal) {
+    font = _fonts[@(UIControlStateNormal)];
+  }
+  return font;
 }
 
 - (void)setTitleFont:(UIFont *)font forState:(UIControlState)state {

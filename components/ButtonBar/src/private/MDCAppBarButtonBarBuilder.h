@@ -37,6 +37,9 @@
 /**
  Gets the desired button title font for a given state.
 
+ If no font has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
  @param state The state for which the font should be returned.
  @return The font associated with the given state.
  */
