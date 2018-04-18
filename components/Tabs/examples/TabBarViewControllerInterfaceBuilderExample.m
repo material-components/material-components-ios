@@ -16,8 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialPalettes.h"
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
+#import "MDCTabBarColorThemer.h"
 
 @interface TabBarViewControllerInterfaceBuilderExample : MDCTabBarViewController
 
@@ -32,9 +33,8 @@
     [self.storyboard instantiateViewControllerWithIdentifier:@"blue"],
     [self.storyboard instantiateViewControllerWithIdentifier:@"green"],
   ];
-  self.tabBar.backgroundColor = MDCPalette.greyPalette.tint100;
-  self.tabBar.unselectedItemTintColor = MDCPalette.greyPalette.tint900;
-  self.tabBar.selectedItemTintColor = MDCPalette.bluePalette.tint500;
+  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:self.tabBar];
 }
 
 @end

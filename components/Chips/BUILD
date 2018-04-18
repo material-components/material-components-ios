@@ -52,6 +52,18 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Chips",
+        "//components/schemes/Color",
+    ],
+)
+
+mdc_objc_library(
     name = "TypographyThemer",
     srcs = native.glob(["src/TypographyThemer/*.m"]),
     hdrs = native.glob(["src/TypographyThemer/*.h"]),
@@ -84,6 +96,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Chips",
+        ":ColorThemer",
         ":FontThemer",
         ":TypographyThemer",
         ":private",

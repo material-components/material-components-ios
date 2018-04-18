@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "54.7.0"
+  mdc.version      = "54.8.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -179,6 +179,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/Shapes"
   end
 
   mdc.subspec "Buttons+Extensions" do |component|
@@ -204,6 +205,14 @@ Pod::Spec.new do |mdc|
 
       extension.dependency "MaterialComponents/Buttons"
       extension.dependency "MaterialComponents/schemes/Typography"
+    end
+    component.subspec "ButtonThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Buttons/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Buttons/src/#{extension.base_name}/*.{h,m}", "components/Buttons/src/#{extension.base_name}/private/*.{h,m}"
+      extension.dependency "MaterialComponents/Buttons"
+      extension.dependency "MaterialComponents/Buttons+Extensions/ColorThemer"
+      extension.dependency "MaterialComponents/Buttons+Extensions/TypographyThemer"
     end
   end
 
@@ -263,8 +272,16 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/ShapeLibrary"
     component.dependency "MaterialComponents/private/Shapes"
   end
-  
+
   mdc.subspec "Chips+Extensions" do |component|
+    component.subspec "ColorThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Chips/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Chips/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Chips"
+      extension.dependency "MaterialComponents/schemes/Color"
+    end
     component.subspec "FontThemer" do |extension|
       extension.ios.deployment_target = '8.0'
       extension.public_header_files = "components/Chips/src/#{extension.base_name}/*.h"
@@ -663,8 +680,8 @@ end
       extension.public_header_files = "components/Tabs/src/#{extension.base_name}/*.h"
       extension.source_files = "components/Tabs/src/#{extension.base_name}/*.{h,m}"
 
+      extension.dependency "MaterialComponents/schemes/Color"
       extension.dependency "MaterialComponents/Tabs"
-      extension.dependency "MaterialComponents/Themes"
     end
     component.subspec "FontThemer" do |extension|
       extension.ios.deployment_target = '8.0'

@@ -38,4 +38,23 @@ class NavigationBarColorThemerTests: XCTestCase {
     XCTAssertEqual(navigationBar.titleTextColor, colorScheme.onPrimaryColor)
     XCTAssertEqual(navigationBar.tintColor, colorScheme.onPrimaryColor)
   }
+
+  func testSurfaceVariantColorThemerChangesTheCorrectParameters() {
+    // Given
+    let colorScheme = MDCSemanticColorScheme()
+    let navigationBar = MDCNavigationBar()
+    colorScheme.surfaceColor = .red
+    colorScheme.onSurfaceColor = .blue
+    navigationBar.backgroundColor = .white
+    navigationBar.titleTextColor = .white
+    navigationBar.tintColor = .white
+
+    // When
+    MDCNavigationBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, to: navigationBar)
+
+    // Then
+    XCTAssertEqual(navigationBar.backgroundColor, colorScheme.surfaceColor)
+    XCTAssertEqual(navigationBar.titleTextColor, colorScheme.onSurfaceColor)
+    XCTAssertEqual(navigationBar.tintColor, colorScheme.onSurfaceColor)
+  }
 }

@@ -18,9 +18,7 @@
 
 #import "MDCShapeGenerating.h"
 
-@implementation MDCShapedShadowLayer {
-  CAShapeLayer *_colorLayer;
-}
+@implementation MDCShapedShadowLayer
 
 - (instancetype)init {
   self = [super init];
