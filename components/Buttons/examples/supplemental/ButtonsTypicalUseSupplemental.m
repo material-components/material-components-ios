@@ -20,14 +20,13 @@
  */
 
 #import "ButtonsTypicalUseSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 #pragma mark - ButtonsTypicalUseViewController
 
-@implementation ButtonsTypicalUseViewController (CatalogByConvention)
+@implementation ButtonsTypicalUseExampleViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Buttons", @"Buttons" ];
@@ -48,7 +47,24 @@
 
 @end
 
-@implementation ButtonsTypicalUseViewController (Supplemental)
+
+@implementation ButtonsShapesExampleViewController (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Buttons", @"Shaped Buttons" ];
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
++ (BOOL)catalogIsDebug {
+  return NO;
+}
+
+@end
+
+@implementation ButtonsTypicalUseViewController
 
 - (UILabel *)addLabelWithText:(NSString *)text {
   UILabel *label = [[UILabel alloc] init];
@@ -59,21 +75,6 @@
   [self.view addSubview:label];
 
   return label;
-}
-
-- (void)setupExampleViews {
-  UILabel *raisedButtonLabel = [self addLabelWithText:@"Raised"];
-  UILabel *disabledRaisedButtonLabel = [self addLabelWithText:@"Disabled Raised"];
-  UILabel *flatButtonLabel = [self addLabelWithText:@"Flat"];
-  UILabel *disabledFlatButtonLabel = [self addLabelWithText:@"Disabled Flat"];
-  UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
-  UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Disabled Stroked"];
-  UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
-
-  self.labels = @[
-    raisedButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
-    strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
-  ];
 }
 
 - (void)viewDidLayoutSubviews {

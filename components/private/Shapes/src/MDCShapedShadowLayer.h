@@ -72,4 +72,12 @@
  */
 @property(nonatomic, strong, nonnull) CAShapeLayer *shapeLayer;
 
+/*
+ A sublayer of @c shapeLayer that is responsible for the background color of the shape layer.
+
+ The colorLayer imitates the path of shapeLayer and is added as a sublayer. It is updated when
+ shapedBackgroundColor is set on the layer.
+ */
+@property(nonatomic, strong, nonnull) CAShapeLayer *colorLayer;
+
 @end

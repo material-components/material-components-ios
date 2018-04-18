@@ -78,8 +78,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    self.viewControllers = [aDecoder decodeObjectOfClass:[NSArray class]
-                                                  forKey:MDCTabBarViewControllerViewControllersKey];
+    _viewControllers = [aDecoder decodeObjectOfClass:[NSArray class]
+                                              forKey:MDCTabBarViewControllerViewControllersKey];
     self.selectedViewController =
         [aDecoder decodeObjectOfClass:[UIViewController class]
                                forKey:MDCTabBarViewControllerSelectedViewControllerKey];

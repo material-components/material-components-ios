@@ -17,8 +17,10 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
 #import "MaterialTabs.h"
+#import "MDCTabBarColorThemer.h"
 #import "supplemental/TabBarViewControllerExampleSupplemental.h"
 
 @implementation TabBarViewControllerExample
@@ -68,6 +70,9 @@
   [button addTarget:self
                 action:@selector(toggleTabBar)
       forControlEvents:UIControlEventTouchUpInside];
+  
+  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:self.tabBar];
 }
 
 @end

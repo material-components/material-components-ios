@@ -17,12 +17,17 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
+#import "MDCChipViewColorThemer.h"
 
-@implementation ChipsChoiceExampleViewController
+@implementation ChipsChoiceExampleViewController {
+  MDCSemanticColorScheme *_colorScheme;
+}
 
 - (void)loadView {
   [super loadView];
   self.view.backgroundColor = [UIColor whiteColor];
+
+  _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   CGSize estimatedItemSize = CGSizeMake(60, 33);
   CGRect collectionStartingRect = CGRectMake(0, 0, 100, estimatedItemSize.height);
@@ -48,7 +53,8 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  _collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 33);
+  // increased the height so bottom slider doesn't overlap with chips
+  _collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 45);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -61,6 +67,15 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
+  // Every other chip is stroked
+  if (indexPath.row % 2) {
+    [cell.chipView setBorderWidth:0 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:cell.chipView];
+  } else {
+    [cell.chipView setBorderWidth:1 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme
+                                   toStrokedChipView:cell.chipView];
+  }
   return cell;
 }
 
