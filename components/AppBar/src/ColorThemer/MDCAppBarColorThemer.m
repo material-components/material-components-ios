@@ -29,6 +29,15 @@
                                 toNavigationBar:appBar.navigationBar];
 }
 
++ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                                  toAppBar:(nonnull MDCAppBar *)appBar {
+  [MDCFlexibleHeaderColorThemer applySurfaceVariantWithColorScheme:colorScheme
+                                              toFlexibleHeaderView:
+      appBar.headerViewController.headerView];
+  [MDCNavigationBarColorThemer applySurfaceVariantWithColorScheme:colorScheme
+                                                  toNavigationBar:appBar.navigationBar];
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toAppBar:(MDCAppBar *)appBar {
   [MDCFlexibleHeaderColorThemer applyColorScheme:colorScheme
