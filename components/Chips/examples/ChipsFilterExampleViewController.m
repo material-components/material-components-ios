@@ -30,19 +30,27 @@
 
   _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
+  // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
 
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  // Filter chips should allow multiSelection, MDCChipCollectionViewCell manages the state of the
+  // chip accordingly.
+  _collectionView.allowsMultipleSelection = YES;
+
+  // Since there is no scrolling turning off the delaysContentTouches makes the cells respond faster
+  _collectionView.delaysContentTouches = NO;
+
+  // Collection view setup
   _collectionView.dataSource = self;
   _collectionView.delegate = self;
-  _collectionView.allowsMultipleSelection = YES;
   _collectionView.backgroundColor = [UIColor whiteColor];
-  _collectionView.delaysContentTouches = NO;
   _collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"Cell"];
 
+  // This is used to calculate the size of each chip based on the chip setup
   _sizingChip = [[MDCChipView alloc] init];
 
   [self.view addSubview:_collectionView];
@@ -63,17 +71,13 @@
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  cell.chipView.titleLabel.text = self.titles[indexPath.row];
-  cell.chipView.selectedImageView.image = [self doneImage];
+  MDCChipView *chipView = cell.chipView;
+
+  // Customize Chip
+  chipView.titleLabel.text = self.titles[indexPath.row];
+  chipView.selectedImageView.image = [self doneImage];
   cell.alwaysAnimateResize = YES;
-  if (indexPath.row % 2) {
-    [cell.chipView setBorderWidth:0 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:cell.chipView];
-  } else {
-    [cell.chipView setBorderWidth:1 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme
-                                   toStrokedChipView:cell.chipView];
-  }
+
   return cell;
 }
 
@@ -81,6 +85,8 @@
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
+
+  // The size of the chip depends on title, image and selection state.
   _sizingChip.selected = [selectedPaths containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
   _sizingChip.selectedImageView.image = [self doneImage];
@@ -89,11 +95,13 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  // Animating Chip Selection
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+  // Animating Chip Deselection
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
