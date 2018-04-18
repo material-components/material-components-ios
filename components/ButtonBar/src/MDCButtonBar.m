@@ -415,11 +415,7 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   }
 }
 
-- (nullable UIFont *)buttonTitleFontForState:(UIControlState)state {
-  return [_defaultBuilder titleFontForState:state];
-}
-
-- (void)setButtonTitleFont:(UIFont *)font forState:(UIControlState)state {
+- (void)setButtonsTitleFont:(UIFont *)font forState:(UIControlState)state {
   [_defaultBuilder setTitleFont:font forState:state];
 
   for (UIView *viewObj in _buttonViews) {
@@ -428,6 +424,10 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
       [button setTitleFont:font forState:state];
     }
   }
+}
+
+- (nullable UIFont *)buttonsTitleFontForState:(UIControlState)state {
+  return [_defaultBuilder titleFontForState:state];
 }
 
 // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier

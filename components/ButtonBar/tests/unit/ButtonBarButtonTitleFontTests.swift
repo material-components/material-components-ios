@@ -45,7 +45,7 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
     let font = UIFont.systemFont(ofSize: 100)
 
     // When
-    buttonBar.setButtonTitleFont(font, for: .normal)
+    buttonBar.setButtonsTitleFont(font, for: .normal)
     buttonBar.items = items
 
     // Then
@@ -63,7 +63,7 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
 
     // When
     buttonBar.items = items
-    buttonBar.setButtonTitleFont(font, for: .normal)
+    buttonBar.setButtonsTitleFont(font, for: .normal)
 
     // Then
     for view in buttonBar.subviews {
@@ -79,7 +79,7 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
     let font = UIFont.systemFont(ofSize: 100)
 
     // When
-    buttonBar.setButtonTitleFont(font, for: .selected)
+    buttonBar.setButtonsTitleFont(font, for: .selected)
     buttonBar.items = items
 
     // Then
