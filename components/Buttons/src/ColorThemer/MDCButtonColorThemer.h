@@ -38,7 +38,8 @@
 /**
  Applies a color scheme to theme to an MDCButton.
 
- This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:
+ This method will soon be deprecated. Consider using MDCContainedButtonColorThemer's
+ applySemanticColorScheme:toButton:
  or @c applySemanticColorScheme:toTextButton:.
 
  @param colorScheme The color scheme to apply to @c button.
@@ -50,7 +51,8 @@
 /**
  Applies a color scheme to theme to an MDCFlatButton.
 
- This method will soon be deprecated. Consider using @c applySemanticColorScheme:toTextButton:.
+ This method will soon be deprecated. Consider using MDCTextButtonColorThemer's
+ applySemanticColorScheme:toButton:
 
  @param colorScheme The color scheme to apply to @c flatButton.
  @param flatButton An MDCFlatButton instance to apply a color scheme.
@@ -61,7 +63,8 @@
 /**
  Applies a color scheme to theme to an MDCRaisedButton.
 
- This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:.
+ This method will soon be deprecated. Consider using MDCContainedButtonColorThemer's
+ applySemanticColorScheme:toButton:
 
  @param colorScheme The color scheme to apply to @c raisedButton.
  @param raisedButton An MDCRaisedButton instance to apply a color scheme.
