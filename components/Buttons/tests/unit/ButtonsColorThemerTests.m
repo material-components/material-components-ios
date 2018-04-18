@@ -18,6 +18,8 @@
 
 #import "MaterialButtons.h"
 #import "MDCButtonColorThemer.h"
+#import "MDCTextButtonColorThemer.h"
+#import "MDCContainedButtonColorThemer.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
@@ -33,7 +35,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // When
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toTextButton:button];
+  [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
@@ -61,7 +63,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // When
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toContainedButton:button];
+  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
