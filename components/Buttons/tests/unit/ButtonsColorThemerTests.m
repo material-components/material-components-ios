@@ -166,17 +166,18 @@
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFloatingButton:button];
 
   // Then
-  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+  NSUInteger maximumStateValue =
+      UIControlStateSelected | UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    if (state != UIControlStateDisabled) {
-       if ([button backgroundColorForState:state] != nil) {
-        XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
-      }
+    if (state == UIControlStateNormal) {
+      XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
     } else {
-        XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
+      XCTAssertEqual([button backgroundColorForState:state], nil);
     }
   }
+
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
 }
+
+
 @end

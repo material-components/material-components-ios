@@ -45,7 +45,6 @@
                 toFloatingButton:(nonnull MDCFloatingButton *)floatingButton {
   [self resetUIControlStatesForButtonTheming:floatingButton];
   [floatingButton setBackgroundColor:colorScheme.secondaryColor forState:UIControlStateNormal];
-  [floatingButton setBackgroundColor:colorScheme.secondaryColor forState:UIControlStateDisabled];
   floatingButton.disabledAlpha = 1.f;
 }
 
