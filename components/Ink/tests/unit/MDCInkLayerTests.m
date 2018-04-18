@@ -173,7 +173,7 @@
   CAAnimation *animation = inkLayer.addedAnimations.firstObject;
   if (animation) {
     startTime = [inkLayer convertTime:startTime fromLayer:nil];
-    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, 0.010);
+    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, 0.1f);
   }
 }
 
