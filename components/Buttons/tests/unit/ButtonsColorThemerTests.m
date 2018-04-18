@@ -155,8 +155,7 @@
   // Given
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
-  colorScheme.primaryColor = UIColor.redColor;
-  colorScheme.onSurfaceColor = UIColor.blueColor;
+  colorScheme.surfaceColor = UIColor.redColor;
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateHighlighted];
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateSelected];
