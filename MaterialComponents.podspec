@@ -614,7 +614,7 @@ Pod::Spec.new do |mdc|
 
       extension.dependency "MaterialComponents/Palettes"
       extension.dependency "MaterialComponents/Slider"
-      extension.dependency "MaterialComponents/Themes"
+      extension.dependency "MaterialComponents/schemes/Color"
     end
   end
 
