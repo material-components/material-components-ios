@@ -78,6 +78,29 @@
   XCTAssertEqualObjects(tabBar.selectedItemTintColor, colorScheme.onPrimaryColor);
 }
 
+- (void)testSurfaceVariantColorScheming {
+  // Given
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  colorScheme.primaryColor = [UIColor redColor];
+  colorScheme.onPrimaryColor = [UIColor blueColor];
+  colorScheme.surfaceColor = [UIColor orangeColor];
+  colorScheme.onSurfaceColor = [UIColor greenColor];
+  MDCTabBar *tabBar = [[MDCTabBar alloc] init];
+  tabBar.barTintColor = [UIColor greenColor];
+  tabBar.tintColor = [UIColor yellowColor];
+  tabBar.selectedItemTintColor = [UIColor yellowColor];
+
+  // When
+  [MDCTabBarColorThemer applySurfaceVariantWithColorScheme:colorScheme toTabs:tabBar];
+
+  // Then
+  XCTAssertEqualObjects(tabBar.barTintColor, colorScheme.surfaceColor);
+  XCTAssertEqualObjects(tabBar.tintColor, colorScheme.primaryColor);
+  XCTAssertEqualObjects(tabBar.selectedItemTintColor, colorScheme.primaryColor);
+  XCTAssertEqualObjects(tabBar.unselectedItemTintColor,
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6f]);
+}
+
 - (void)testTabBarColorThemerApplyColorSchemeProperly {
   MDCTabBar *tabBar = [[MDCTabBar alloc] init];
   MDCTabBarTestColorScheme *colorScheme = [[MDCTabBarTestColorScheme alloc] init];
