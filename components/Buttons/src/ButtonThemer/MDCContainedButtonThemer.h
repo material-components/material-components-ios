@@ -19,11 +19,11 @@
 #import "MDCButtonTypographyThemer.h"
 #import "MDCButtonScheme.h"
 
-/** Applies text button style to MDCButton objects. */
-@interface MDCTextButtonThemer : NSObject
+/** Applies contained button style to MDCButton objects. */
+@interface MDCContainedButtonThemer : NSObject
 
 /**
- Applies the text button style using the button scheme data.
+ Applies the contaied button style using the button scheme data.
 
  @param scheme The button style data that should be used to change the @c button.
  @param button A MDCButton instance to apply the @c scheme
