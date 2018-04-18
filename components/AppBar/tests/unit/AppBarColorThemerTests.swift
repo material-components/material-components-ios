@@ -59,10 +59,10 @@ class AppBarColorThemerTests: XCTestCase {
 
     // Then
     XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
-                   colorScheme.primaryColor)
-    XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.primaryColor)
-    XCTAssertEqual(appBar.navigationBar.titleTextColor, colorScheme.onPrimaryColor)
-    XCTAssertEqual(appBar.navigationBar.tintColor, colorScheme.onPrimaryColor)
+                   colorScheme.surfaceColor)
+    XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.surfaceColor)
+    XCTAssertEqual(appBar.navigationBar.titleTextColor, colorScheme.onSurfaceColor)
+    XCTAssertEqual(appBar.navigationBar.tintColor, colorScheme.onSurfaceColor)
   }
 
   func testColorThemerAffectsSubComponents() {
