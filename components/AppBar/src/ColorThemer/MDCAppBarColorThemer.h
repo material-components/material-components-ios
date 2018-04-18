@@ -25,7 +25,7 @@
 /**
  Applies a color scheme's properties to an MDCAppBar.
 
- @param colorScheme The color scheme to apply to MDCAppBar.
+ @param colorScheme The color scheme to apply to appBar.
  @param appBar An MDCAppBar instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
@@ -36,7 +36,7 @@
 
  Uses the surface color as the most important color for the component.
 
- @param colorScheme The color scheme to apply to MDCAppBar.
+ @param colorScheme The color scheme to apply to appBar.
  @param appBar An MDCAppBar instance to which the color scheme should be applied.
  */
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
