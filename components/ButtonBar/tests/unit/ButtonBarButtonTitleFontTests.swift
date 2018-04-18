@@ -76,24 +76,24 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
   func testCustomFontFallbackBehavior() {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
-    let font = UIFont.systemFont(ofSize: 100)
+    let normalFont = UIFont.systemFont(ofSize: 100)
+    let selectedFont = UIFont.systemFont(ofSize: 50)
 
     // When
-    buttonBar.setButtonsTitleFont(font, for: .selected)
+    buttonBar.setButtonsTitleFont(normalFont, for: .normal)
+    buttonBar.setButtonsTitleFont(selectedFont, for: .selected)
     buttonBar.items = items
 
     // Then
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
-        let defaultFont = button.titleLabel?.font
-
         button.isSelected = true
 
-        XCTAssertEqual(button.titleLabel?.font, font)
+        XCTAssertEqual(button.titleLabel?.font, selectedFont)
 
         button.isSelected = false
 
-        XCTAssertEqual(button.titleLabel?.font, defaultFont)
+        XCTAssertEqual(button.titleLabel?.font, normalFont)
       }
     }
   }
