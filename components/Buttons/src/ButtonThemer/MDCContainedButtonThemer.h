@@ -14,20 +14,20 @@
  limitations under the License.
  */
 
-#import "MDCTextButtonThemer.h"
-
+#import "MDCButton.h"
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
+#import "MDCButtonScheme.h"
 
-@implementation MDCTextButtonThemer
+/** Applies text button style data to MDCButton objects. */
+@interface MDCContainedButtonThemer : NSObject
 
+/**
+ Applies the text button style using the button scheme data.
+
+ @param scheme The button style data that should be used to change the @c button.
+ @param button A MDCButton instance to apply the @c scheme
+ */
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button {
-  [MDCButtonColorThemer applySemanticColorScheme:scheme.colorScheme toFlatButton:button];
-  [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
-  button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
-  button.layer.cornerRadius = scheme.cornerRadius;
-}
-
+           toButton:(nonnull MDCButton *)button;
 @end
-
