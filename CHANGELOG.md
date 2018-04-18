@@ -1,3 +1,56 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Buttons
+
+#### MDCButton
+
+*new* property: `shapeGenerator` in `MDCButton`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Fix crasher within tab example (#3370)](https://github.com/material-components/material-components-ios/commit/4bede1313cdbcfdb0ce57d815504080a9837fb9d) (John Detloff)
+* [Update MDCTabBar color themer (#3361)](https://github.com/material-components/material-components-ios/commit/7799a15025ca4be0eb9dd0e7cbac1c3acb7c7db6) (John Detloff)
+
+### Buttons
+
+#### Changes
+
+* [Added Shapes Support (#3368)](https://github.com/material-components/material-components-ios/commit/67a68d3d3c05c95cac107d36c0e3e56d618f2db5) (Yarden Eitan)
+* [[Button] Color themer: Changed class of argument to be MDCButton rather than be a subclass. (#3382)](https://github.com/material-components/material-components-ios/commit/ac89ec985da7fce5f344f2417aa85e550ae00a99) (Randall Li)
+* [[Button] Created button themer that aggregates multiple subsystems to style buttons. (#3362)](https://github.com/material-components/material-components-ios/commit/25c0a953647e8749cf050bde3c4a74fe011ec910) (Randall Li)
+
+### Chips
+
+#### Changes
+
+* [color themer implementation. (#3372)](https://github.com/material-components/material-components-ios/commit/8336003a11b24c1df4de8f56ec7377eb5cdf8dea) (Mohammad Cazi)
+
+### NavigationBar
+
+#### Changes
+
+* [Add surface variant theme. (#3376)](https://github.com/material-components/material-components-ios/commit/6b2de0f3a36213231bfa063ec1c2befa807fc73a) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add a surface variant color themer API. (#3380)](https://github.com/material-components/material-components-ios/commit/c2ab8fa9c4be04d4a89332d02435534e54499c7d) (featherless)
+
+---
+
 # 54.7.0
 
 This release introduces a new API for compositing colors for use by color themers.
