@@ -39,7 +39,9 @@ class ShapesShadows: UIView {
     shapeGenerator.topLeftCorner = MDCCutCornerTreatment(cut: 20)
     layer.shapeGenerator = shapeGenerator
     layer.shapedBackgroundColor = .red
-    layer.elevation = ShadowElevation(4)
+    layer.shadowOffset = CGSize(width: 0, height: -3)
+    layer.shadowRadius = 4
+    layer.shadowOpacity = 0.4
   }
 }
 
@@ -67,11 +69,11 @@ extension ShapesShadowsController {
   
   // MARK: Catalog by convention
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["ShapesShadows"]
+    return [ "Shadow", "Shape & Shadow" ]
   }
   
   @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
+    return false
   }
 
   @objc class func catalogIsPresentable() -> Bool {
