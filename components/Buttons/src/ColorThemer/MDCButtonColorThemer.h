@@ -50,6 +50,15 @@
                   toRaisedButton:(nonnull MDCButton *)raisedButton;
 
 /**
+ Applies a color scheme to theme to an MDCFloatingButton.
+
+ @param colorScheme The color scheme to apply to @c floatingButton.
+ @param floatingButton An MDCFloatingButton instance to apply a color scheme.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                toFloatingButton:(nonnull MDCFloatingButton *)floatingButton;
+
+/**
  Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
  all instances of MDCButton.
 
