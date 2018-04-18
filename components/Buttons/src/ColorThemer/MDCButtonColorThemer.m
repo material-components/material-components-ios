@@ -41,6 +41,13 @@
   flatButton.disabledAlpha = 1.f;
 }
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                toFloatingButton:(nonnull MDCFloatingButton *)floatingButton {
+  [self resetUIControlStatesForButtonTheming:floatingButton];
+  [floatingButton setBackgroundColor:colorScheme.secondaryColor forState:UIControlStateNormal];
+  floatingButton.disabledAlpha = 1.f;
+}
+
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
