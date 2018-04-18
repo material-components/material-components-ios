@@ -26,7 +26,7 @@
  Applies a color scheme to theme to a text button.
 
  @param colorScheme The color scheme to apply to @c button.
- @param textButton A MDCButton instance to apply a color scheme.
+ @param button A MDCButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button;
