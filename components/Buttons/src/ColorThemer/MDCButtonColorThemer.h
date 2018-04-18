@@ -23,19 +23,6 @@
 @interface MDCButtonColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButton.
-
- This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:
- or @c applySemanticColorScheme:toTextButton:.
-
- @param colorScheme The color scheme to apply to @c button.
- @param button An MDCButton instance to apply a color scheme.
- */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-                toButton:(nonnull MDCButton *)button;
-
-/**
  Applies a color scheme to theme to an MDCButton.
 
  This method will soon be deprecated. Consider using MDCContainedButtonColorThemer's
@@ -72,5 +59,16 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                   toRaisedButton:(nonnull MDCButton *)raisedButton;
 
+/**
+ Applies a color scheme to theme a MDCButton.
+
+ This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:
+ or @c applySemanticColorScheme:toTextButton:.
+
+ @param colorScheme The color scheme to apply to @c button.
+ @param button An MDCButton instance to apply a color scheme.
+ */
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+                toButton:(nonnull MDCButton *)button;
 
 @end
