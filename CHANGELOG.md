@@ -1,10 +1,37 @@
-# #develop#
+# 54.8.0
 
-## Breaking changes
-
-## New deprecations
+This new release introduces shapes support to buttons and a variety of new themer APIs for many
+components.
 
 ## New features
+
+Buttons can now be styled with different shape outlines. Example usage:
+
+```objc
+MDCRectangleShapeGenerator *raisedShapeGenerator =
+    [[MDCRectangleShapeGenerator alloc] init];
+[raisedShapeGenerator setCorners:[[MDCCutCornerTreatment alloc] initWithCut:8.f]];
+button.shapeGenerator = raisedShapeGenerator;
+```
+
+There is a new Text Button API for theming an MDCButton to make complete use of typography, color,
+and other configurable properties of a button's design. A button themed as a text button is closely
+equivalent to the `MDCFlatButton` class, `MDCFlatButton` will soon be deprecated as a result in
+favor of the following pattern:
+
+```swift
+// Define your button's scheme somewhere centrally in your app.
+let buttonScheme = MDCButtonScheme()
+buttonScheme.colorScheme = myAppColorScheme
+
+// Apply the button scheme to an MDCButton to give it the appearance of a text button.
+// button: MDCButton
+MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
+```
+
+NavigationBar and FlexibleHeader now both have a surface variant themer.
+
+Chips and Tabs have updated color themers.
 
 ## API changes
 
