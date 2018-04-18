@@ -52,6 +52,7 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
         XCTAssertEqual(button.titleFont(for: .normal), font)
+        XCTAssertEqual(button.titleLabel?.font, font)
       }
     }
   }
@@ -69,6 +70,7 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
         XCTAssertEqual(button.titleFont(for: .normal), font)
+        XCTAssertEqual(button.titleLabel?.font, font)
       }
     }
   }
