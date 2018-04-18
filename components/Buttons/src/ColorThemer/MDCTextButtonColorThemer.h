@@ -18,15 +18,15 @@
 #import "MaterialColorScheme.h"
 
 /**
- Used to apply a color scheme to theme MDCButton.
+ A color themer for a Material Text Button.
  */
 @interface MDCTextButtonColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to an text button.
+ Applies a color scheme to theme to a text button.
 
  @param colorScheme The color scheme to apply to @c flatButton.
- @param textButton An MDCButton instance to apply a color scheme.
+ @param textButton A MDCButton instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)textButton;
