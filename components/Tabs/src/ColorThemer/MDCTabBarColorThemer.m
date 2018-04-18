@@ -18,6 +18,7 @@
 
 static const CGFloat kUnselectedTitleOpacity = 0.6f;
 static const CGFloat kUnselectedImageOpacity = 0.54f;
+static const CGFloat kBottomDividerOpacity = 0.12f;
 
 @implementation MDCTabBarColorThemer
 
@@ -33,6 +34,8 @@ static const CGFloat kUnselectedImageOpacity = 0.54f;
       [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
   [tabBar setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
   [tabBar setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
+  tabBar.bottomDividerColor =
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity];
 }
 
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
@@ -47,6 +50,8 @@ static const CGFloat kUnselectedImageOpacity = 0.54f;
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
   [tabBar setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
   [tabBar setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
+  tabBar.bottomDividerColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity];
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
