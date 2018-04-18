@@ -61,19 +61,17 @@
        forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:textButton];
 
-  // Disabled raised button
+  // Disabled Text button
 
-  MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
-  [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledRaisedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:disabledRaisedButton];
-  [disabledRaisedButton sizeToFit];
-  [disabledRaisedButton addTarget:self
-                           action:@selector(didTap:)
-                 forControlEvents:UIControlEventTouchUpInside];
-  [disabledRaisedButton setEnabled:NO];
-  [self.view addSubview:disabledRaisedButton];
+  MDCButton *disabledTextButton = [[MDCButton alloc] init];
+  [disabledTextButton setTitle:@"Disabled button" forState:UIControlStateNormal];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:disabledTextButton];
+  [disabledTextButton sizeToFit];
+  [disabledTextButton addTarget:self
+                         action:@selector(didTap:)
+               forControlEvents:UIControlEventTouchUpInside];
+  [disabledTextButton setEnabled:NO];
+  [self.view addSubview:disabledTextButton];
 
   // Flat button
 
@@ -142,7 +140,7 @@
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    textButton, disabledRaisedButton, flatButton, disabledFlatButton, strokedButton,
+    textButton, disabledTextButton, flatButton, disabledFlatButton, strokedButton,
     disabledStrokedButton, self.floatingButton
   ];
 
@@ -151,7 +149,7 @@
 
 - (void)setupExampleViews {
   UILabel *textButtonLabel = [self addLabelWithText:@"Text button"];
-  UILabel *disabledRaisedButtonLabel = [self addLabelWithText:@"Disabled Raised"];
+  UILabel *disabledTextButtonLabel = [self addLabelWithText:@"Disabled text button"];
   UILabel *flatButtonLabel = [self addLabelWithText:@"Flat"];
   UILabel *disabledFlatButtonLabel = [self addLabelWithText:@"Disabled Flat"];
   UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
@@ -159,7 +157,7 @@
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
-    textButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
+    textButtonLabel, disabledTextButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
     strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
   ];
 }
