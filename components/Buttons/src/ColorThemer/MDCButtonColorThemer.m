@@ -36,6 +36,15 @@
   floatingButton.disabledAlpha = 1.f;
 }
 
++ (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [button setBackgroundColor:nil forState:state];
+    [button setTitleColor:nil forState:state];
+  }
+}
+
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                   toRaisedButton:(nonnull MDCButton *)raisedButton {
   [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:raisedButton];
