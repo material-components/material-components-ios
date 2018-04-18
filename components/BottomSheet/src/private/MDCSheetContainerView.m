@@ -17,8 +17,9 @@
 #import "MDCSheetContainerView.h"
 
 #import "MaterialKeyboardWatcher.h"
+#import "MDCBottomSheetMotionSpec.h"
 #import "MDCDraggableView.h"
-#import "MDCSheetBehavior.h"
+#import <MotionAnimator/MotionAnimator.h>
 
 // KVO key for monitoring the content size for the content view if it is a scrollview.
 static NSString *kContentSizeKey = nil;
@@ -30,15 +31,12 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 @interface MDCSheetContainerView () <MDCDraggableViewDelegate>
 
-@property(nonatomic) MDCSheetState sheetState;
-@property(nonatomic) MDCDraggableView *sheet;
-@property(nonatomic) UIView *contentView;
+@property(nonatomic, strong) MDCDraggableView *sheet;
+@property(nonatomic, strong) UIView *contentView;
 
-@property(nonatomic) UIDynamicAnimator *animator;
-@property(nonatomic) MDCSheetBehavior *sheetBehavior;
-@property(nonatomic) BOOL isDragging;
-@property(nonatomic) CGFloat originalPreferredSheetHeight;
-@property(nonatomic) CGRect previousAnimatedBounds;
+@property(nonatomic, strong) MDMMotionAnimator *animator;
+@property(nonatomic, assign) BOOL isDragging;
+@property(nonatomic, assign) CGFloat originalPreferredSheetHeight;
 
 @end
 
@@ -56,7 +54,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
                    scrollView:(UIScrollView *)scrollView {
   self = [super initWithFrame:frame];
   if (self) {
-    _sheetState = MDCSheetStatePreferred;
+    _sheetState = MDCSheetStateClosed;
 
     // Don't set the frame yet because we're going to change the anchor point.
     _sheet = [[MDCDraggableView alloc] initWithFrame:CGRectZero scrollView:scrollView];
@@ -76,7 +74,9 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     [_sheet addSubview:_contentView];
     [self addSubview:_sheet];
 
-    _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
+    [self updateSheetFrame];
+
+    _animator = [[MDMMotionAnimator alloc] init];
 
     [scrollView addObserver:self
                  forKeyPath:kContentSizeKey
@@ -120,8 +120,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 - (void)voiceOverStatusDidChange {
   if (self.window && UIAccessibilityIsVoiceOverRunning()) {
-    // Adjust the sheet height as necessary for VO.
-    [self animatePaneWithInitialVelocity:CGPointZero];
+    [self setSheetState:self.sheetState animated:YES];
   }
 }
 
@@ -129,14 +128,12 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 - (void)didMoveToWindow {
   [super didMoveToWindow];
+
   if (self.window) {
-    if (!self.sheetBehavior) {
-      self.sheetBehavior = [[MDCSheetBehavior alloc] initWithItem:self.sheet];
-    }
-    [self animatePaneWithInitialVelocity:CGPointZero];
+    [self setSheetState:self.sheetState animated:YES];
   } else {
-    [self.animator removeAllBehaviors];
-    self.sheetBehavior = nil;
+    [_animator stopAllAnimations];
+    [self setSheetState:self.sheetState animated:NO];
   }
 }
 
@@ -150,7 +147,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   [self updateSheetFrame];
   // Adjusts the pane to the correct snap point, e.g. after a rotation.
   if (self.window) {
-    [self animatePaneWithInitialVelocity:CGPointZero];
+    [self setSheetState:self.sheetState animated:YES];
   }
 }
 
@@ -166,7 +163,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     self.sheet.scrollView.contentInset = contentInset;
 
     CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
-    scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width,
+    scrollViewFrame.size = CGSizeMake(CGRectGetWidth(scrollViewFrame),
                                       CGRectGetHeight(self.frame) - self.safeAreaInsets.top);
     self.sheet.scrollView.frame = scrollViewFrame;
   }
@@ -183,7 +180,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     NSValue *oldValue = change[NSKeyValueChangeOldKey];
     NSValue *newValue = change[NSKeyValueChangeNewKey];
     if (self.window && !self.isDragging && ![oldValue isEqual:newValue]) {
-      [self animatePaneWithInitialVelocity:CGPointZero];
+      [self setSheetState:self.sheetState animated:YES];
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -191,14 +188,6 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 }
 
 #pragma mark - Layout
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  if (!CGRectEqualToRect(self.bounds, self.previousAnimatedBounds) && self.window) {
-    // Adjusts the pane to the correct snap point if we are visible.
-    [self animatePaneWithInitialVelocity:CGPointZero];
-  }
-}
 
 - (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
   self.originalPreferredSheetHeight = preferredSheetHeight;
@@ -219,16 +208,18 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
   // Adjusts the pane to the correct snap point if we are visible.
   if (self.window) {
-    [self animatePaneWithInitialVelocity:CGPointZero];
+    [self setSheetState:self.sheetState animated:YES];
   }
 }
 
-// Slides the sheet position downwards, so the right amount peeks above the bottom of the superview.
 - (void)updateSheetFrame {
-  [self.animator removeAllBehaviors];
+  [_animator stopAllAnimations];
 
   CGRect sheetRect = self.bounds;
-  sheetRect.origin.y = CGRectGetMaxY(self.bounds) - [self truncatedPreferredSheetHeight];
+  CGPoint targetPoint = [self targetPointForState:self.sheetState];
+  sheetRect.origin.x = targetPoint.x - CGRectGetWidth(sheetRect) * self.sheet.layer.anchorPoint.x;
+  sheetRect.origin.y = (targetPoint.y
+                        - [self truncatedPreferredSheetHeight] * self.sheet.layer.anchorPoint.y);
   sheetRect.size.height += kSheetBounceBuffer;
 
   self.sheet.frame = sheetRect;
@@ -243,10 +234,32 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   self.contentView.frame = contentFrame;
 }
 
-- (void)updateSheetState {
-  CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
-  self.sheetState = (currentSheetHeight >= [self maximumSheetHeight] ?
-                     MDCSheetStateExtended : MDCSheetStatePreferred);
+- (void)setSheetState:(MDCSheetState)sheetState {
+  [self setSheetState:sheetState withInitialVelocity:CGPointZero animated:NO];
+}
+
+- (void)setSheetState:(MDCSheetState)sheetState animated:(BOOL)animated {
+  [self setSheetState:sheetState withInitialVelocity:CGPointZero animated:animated];
+}
+
+- (void)setSheetState:(MDCSheetState)sheetState
+  withInitialVelocity:(CGPoint)initialVelocity
+             animated:(BOOL)animated {
+  _sheetState = sheetState;
+
+  if (self.window && animated) {
+    MDMAnimationTraits *traits = MDCBottomSheetMotionSpec.onDragReleaseAnimationTraits;
+    if ([traits.timingCurve isKindOfClass:[MDMSpringTimingCurve class]]) {
+      MDMSpringTimingCurve *springTimingCurve = (MDMSpringTimingCurve *)traits.timingCurve;
+      springTimingCurve.initialVelocity = initialVelocity.y;
+    }
+    [self.animator animateWithTraits:traits animations:^{
+      self.sheet.layer.position = [self targetPointForState:sheetState];
+    }];
+
+  } else {
+    [self updateSheetFrame];
+  }
 }
 
 // Returns |preferredSheetHeight|, truncated as necessary, so that it never exceeds the height of
@@ -281,25 +294,14 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 #pragma mark - Gesture-driven animation
 
-- (void)animatePaneWithInitialVelocity:(CGPoint)initialVelocity {
-  self.previousAnimatedBounds = self.bounds;
-  self.sheetBehavior.targetPoint = [self targetPoint];
-  self.sheetBehavior.velocity = initialVelocity;
-  __weak MDCSheetContainerView *weakSelf = self;
-  self.sheetBehavior.action = ^{
-    [weakSelf sheetBehaviorDidUpdate];
-  };
-  [self.animator addBehavior:self.sheetBehavior];
-}
-
 // Calculates the snap-point for the view to spring to.
-- (CGPoint)targetPoint {
+- (CGPoint)targetPointForState:(MDCSheetState)state {
   CGRect bounds = self.bounds;
   CGFloat keyboardOffset = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
   CGFloat midX = CGRectGetMidX(bounds);
-  CGFloat bottomY = CGRectGetMaxY(bounds) - keyboardOffset;
+  CGFloat bottomY = CGRectGetHeight(bounds) - keyboardOffset;
 
-  switch(self.sheetState) {
+  switch(state) {
     case MDCSheetStatePreferred:
       return CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
     case MDCSheetStateExtended:
@@ -309,24 +311,11 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   }
 }
 
-- (void)sheetBehaviorDidUpdate {
-  // If sheet has been dragged off the bottom, we can trigger a dismiss.
-  if (self.sheetState == MDCSheetStateClosed &&
-      CGRectGetMinY(self.sheet.frame) > CGRectGetMaxY(self.bounds)) {
-    [self.delegate sheetContainerViewDidHide:self];
-
-    [self.animator removeAllBehaviors];
-
-    // Reset the state to preferred once we are dismissed.
-    self.sheetState = MDCSheetStatePreferred;
-  }
-}
-
 #pragma mark - Notifications
 
 - (void)keyboardStateChangedWithNotification:(__unused NSNotification *)notification {
   if (self.window) {
-    [self animatePaneWithInitialVelocity:CGPointZero];
+    [self setSheetState:self.sheetState animated:YES];
   }
 }
 
@@ -338,9 +327,11 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
 - (BOOL)draggableView:(__unused MDCDraggableView *)view
     shouldBeginDraggingWithVelocity:(CGPoint)velocity {
-  [self updateSheetState];
+  CGFloat currentSheetHeight = CGRectGetHeight(self.bounds) - CGRectGetMinY(self.sheet.frame);
+  MDCSheetState state = (currentSheetHeight >= [self maximumSheetHeight] ?
+                         MDCSheetStateExtended : MDCSheetStatePreferred);
 
-  switch(self.sheetState) {
+  switch (state) {
     case MDCSheetStatePreferred:
       return YES;
     case MDCSheetStateExtended: {
@@ -364,28 +355,35 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   }
 }
 
+// @return YES if the sheet can be extended beyond its preferredHeight, else NO
+- (BOOL)canExtend {
+  return self.preferredSheetHeight != [self maximumSheetHeight];
+}
+
 - (void)draggableView:(__unused MDCDraggableView *)view
     draggingEndedWithVelocity:(CGPoint)velocity {
   MDCSheetState targetState;
-  if (self.preferredSheetHeight == [self maximumSheetHeight]) {
-    // Cannot be extended, only closed.
-    targetState = (velocity.y >= 0 ? MDCSheetStateClosed : MDCSheetStatePreferred);
-  } else {
-    CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
+  if ([self canExtend]) {
+    CGFloat currentSheetHeight = CGRectGetHeight(self.bounds) - CGRectGetMinY(self.sheet.frame);
     if (currentSheetHeight >= self.preferredSheetHeight) {
       targetState = (velocity.y >= 0 ? MDCSheetStatePreferred : MDCSheetStateExtended);
     } else {
       targetState = (velocity.y >= 0 ? MDCSheetStateClosed : MDCSheetStatePreferred);
     }
+  } else {
+    targetState = (velocity.y >= 0 ? MDCSheetStateClosed : MDCSheetStatePreferred);
   }
   self.isDragging = NO;
-  self.sheetState = targetState;
-  [self animatePaneWithInitialVelocity:velocity];
+  if (targetState == MDCSheetStateClosed) {
+    [self.delegate sheetContainerViewWillHide:self];
+  }
+  [self setSheetState:targetState withInitialVelocity:velocity animated:YES];
 }
 
 - (void)draggableViewBeganDragging:(__unused MDCDraggableView *)view {
-  [self.animator removeAllBehaviors];
   self.isDragging = YES;
+
+  [_animator stopAllAnimations];
 }
 
 @end

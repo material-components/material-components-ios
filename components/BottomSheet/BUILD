@@ -27,8 +27,10 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-      "//components/private/KeyboardWatcher",
-      "//components/private/Math",
+        "//components/private/KeyboardWatcher",
+        "//components/private/Math",
+        "@motion_interchange_objc//:MotionInterchange",
+        "@motion_animator_objc//:MotionAnimator",
     ],
 )
 

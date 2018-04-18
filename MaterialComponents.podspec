@@ -165,6 +165,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
+    component.dependency "MotionAnimator", "~> 2.0"
   end
 
   mdc.subspec "Buttons" do |component|

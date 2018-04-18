@@ -120,6 +120,9 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self->_dimmingView.alpha = 1.0;
       }                                  completion:nil];
+
+  _sheetView.sheetState = MDCSheetStateClosed;
+  [_sheetView setSheetState:MDCSheetStatePreferred animated:YES];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -136,6 +139,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self->_dimmingView.alpha = 0.0;
       }                                  completion:nil];
+
+  [_sheetView setSheetState:MDCSheetStateClosed animated:YES];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
@@ -194,7 +199,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 #pragma mark - MDCSheetContainerViewDelegate
 
-- (void)sheetContainerViewDidHide:(nonnull __unused MDCSheetContainerView *)containerView {
+- (void)sheetContainerViewWillHide:(MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
