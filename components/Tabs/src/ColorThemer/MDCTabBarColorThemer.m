@@ -29,6 +29,15 @@ static const CGFloat kUnselectedOpacity = 0.6f;
       [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
 }
 
++ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                                    toTabs:(nonnull MDCTabBar *)tabBar {
+  tabBar.barTintColor = colorScheme.surfaceColor;
+  tabBar.tintColor = colorScheme.primaryColor;
+  tabBar.selectedItemTintColor = colorScheme.primaryColor;
+  tabBar.unselectedItemTintColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toTabBar:(MDCTabBar *)tabBar {
   if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
