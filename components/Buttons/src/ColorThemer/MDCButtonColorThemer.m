@@ -15,32 +15,20 @@
  */
 
 #import "MDCButtonColorThemer.h"
+#import "MDCContainedButtonColorThemer.h"
+#import "MDCTextButtonColorThemer.h"
 
 @implementation MDCButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button {
-  [self resetUIControlStatesForButtonTheming:button];
-  [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]
-                    forState:UIControlStateDisabled];
-  [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
-  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
-               forState:UIControlStateDisabled];
-  button.disabledAlpha = 1.f;
+  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                     toFlatButton:(nonnull MDCButton *)flatButton {
-  [self resetUIControlStatesForButtonTheming:flatButton];
-  [flatButton setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
-  [flatButton setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
-  [flatButton setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [flatButton setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
-                   forState:UIControlStateDisabled];
-  flatButton.disabledAlpha = 1.f;
+  [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:flatButton];
 }
-
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                 toFloatingButton:(nonnull MDCFloatingButton *)floatingButton {
   [self resetUIControlStatesForButtonTheming:floatingButton];
@@ -59,7 +47,7 @@
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                   toRaisedButton:(nonnull MDCButton *)raisedButton {
-  [self applySemanticColorScheme:colorScheme toButton:raisedButton];
+  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:raisedButton];
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
