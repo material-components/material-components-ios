@@ -21,6 +21,17 @@
 @implementation MDCButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                        toButton:(nonnull MDCButton *)button {
+  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
+}
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                    toFlatButton:(nonnull MDCButton *)flatButton {
+  [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:flatButton];
+}
+
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                   toRaisedButton:(nonnull MDCButton *)raisedButton {
   [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:raisedButton];
 }
@@ -33,13 +44,4 @@
   }
 }
 
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                    toFlatButton:(nonnull MDCButton *)flatButton {
-  [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:flatButton];
-}
-
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                        toButton:(nonnull MDCButton *)button {
-  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
-}
 @end
