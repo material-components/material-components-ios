@@ -16,8 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialTabs.h"
+#import "MDCTabBarColorThemer.h"
 
 @interface TabBarInterfaceBuilderExample : UIViewController <MDCTabBarDelegate>
 
@@ -43,6 +45,9 @@
     MDCPalette.redPalette.tint500, MDCPalette.greenPalette.tint500
   ];
 
+  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:self.tabBar];
+  
   self.view.backgroundColor = self.colors[0];
 }
 

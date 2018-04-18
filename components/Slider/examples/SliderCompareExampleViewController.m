@@ -16,8 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialMath.h"
 #import "MaterialSlider.h"
+#import "MDCSliderColorThemer.h"
 
 @interface SliderCompareExampleViewController : UIViewController
 
@@ -31,6 +33,9 @@
 
   // Load your Material Component here.
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  slider.statefulAPIEnabled = YES;
+  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCSliderColorThemer applySemanticColorScheme:scheme toSlider:slider];
   [slider addTarget:self
                 action:@selector(didChangeMDCSliderValue:)
       forControlEvents:UIControlEventValueChanged];

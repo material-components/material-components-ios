@@ -16,7 +16,18 @@
 
 #import "MDCTabBarColorThemer.h"
 
+static const CGFloat kUnselectedOpacity = 0.6f;
+
 @implementation MDCTabBarColorThemer
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                          toTabs:(nonnull MDCTabBar *)tabBar {
+  tabBar.barTintColor = colorScheme.primaryColor;
+  tabBar.tintColor = colorScheme.onPrimaryColor;
+  tabBar.selectedItemTintColor = colorScheme.onPrimaryColor;
+  tabBar.unselectedItemTintColor =
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
+}
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toTabBar:(MDCTabBar *)tabBar {

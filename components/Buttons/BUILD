@@ -35,6 +35,8 @@ mdc_public_objc_library(
         "//components/ShadowLayer",
         "//components/Typography",
         "//components/private/Math",
+        "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
@@ -76,6 +78,19 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "ButtonThemer",
+    srcs = native.glob(["src/ButtonThemer/*.m"]),
+    hdrs = native.glob(["src/ButtonThemer/*.h"]),
+    includes = ["src/ButtonThemer"],
+    deps = [
+        ":Buttons",
+        ":TypographyThemer",
+        ":ColorThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
@@ -106,6 +121,7 @@ mdc_objc_library(
         ":Buttons",
         ":private",
         ":ColorThemer",
+        ":ButtonThemer",
         ":TitleColorAccessibilityMutator",
         ":TypographyThemer",
     ],
