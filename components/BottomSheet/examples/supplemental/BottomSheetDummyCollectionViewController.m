@@ -43,6 +43,8 @@
   [super viewDidLoad];
 
   self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.contentSize =
+      CGSizeMake(self.view.bounds.size.width, (self.view.bounds.size.width / 3) * _numItems);
 
   [self.collectionView registerClass:[DummyCollectionViewCell class]
           forCellWithReuseIdentifier:NSStringFromClass([DummyCollectionViewCell class])];

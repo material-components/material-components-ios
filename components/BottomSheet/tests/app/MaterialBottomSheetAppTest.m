@@ -6,6 +6,10 @@
 static CGSize const kContentSize = {200, 74};
 static NSTimeInterval const kExpectationTimeout = 1;
 
+#define MDCAssertEqualCGSizes(size1, size2)                            \
+  XCTAssertTrue(CGSizeEqualToSize((size1), (size2)), @"Size %@ != %@", \
+                NSStringFromCGSize((size1)), NSStringFromCGSize((size2)));
+
 #define MDCAssertEqualUIEdgeInsets(insets1, insets2)                                     \
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets((insets1), (insets2)), @"Insets %@ != %@", \
                 NSStringFromUIEdgeInsets((insets1)), NSStringFromUIEdgeInsets((insets2)));
@@ -82,6 +86,18 @@ static NSTimeInterval const kExpectationTimeout = 1;
 
 #pragma mark - Test cases
 
+- (void)testPlainViewControllerUsesPreferredContentSize {
+  [self presentViewControllerInBottomSheetWithTrackingScrollView:nil];
+
+  CGSize expectedSize = kContentSize;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    expectedSize.height += self.viewController.view.safeAreaInsets.bottom;
+  }
+#endif
+  MDCAssertEqualCGSizes(self.viewController.view.bounds.size, expectedSize);
+}
+
 - (void)testCollectionViewControllerSetsContentInset {
   [self presentCollectionViewControllerInBottomSheet];
 
@@ -93,6 +109,18 @@ static NSTimeInterval const kExpectationTimeout = 1;
 #endif
   MDCAssertEqualUIEdgeInsets(self.collectionViewController.collectionView.contentInset,
                              expectedEdgeInsets);
+}
+
+- (void)testCollectionViewControllerSetsBoundsToPreferredContentSize {
+  [self presentCollectionViewControllerInBottomSheet];
+
+  CGSize expectedSize = kContentSize;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    expectedSize.height += self.collectionViewController.view.safeAreaInsets.bottom;
+  }
+#endif
+  MDCAssertEqualCGSizes(self.collectionViewController.view.bounds.size, expectedSize);
 }
 
 - (void)testViewControllerWithTrackingScrollViewSetsContentInset {
@@ -107,6 +135,20 @@ static NSTimeInterval const kExpectationTimeout = 1;
   }
 #endif
   MDCAssertEqualUIEdgeInsets(scrollView.contentInset, expectedEdgeInsets);
+}
+
+- (void)testViewControllerWithTrackingScrollViewSetsBoundsToPreferredSize {
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  scrollView.contentSize = kContentSize;
+  [self presentViewControllerInBottomSheetWithTrackingScrollView:scrollView];
+
+  CGSize expectedSize = kContentSize;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    expectedSize.height += self.viewController.view.safeAreaInsets.bottom;
+  }
+#endif
+  MDCAssertEqualCGSizes(self.viewController.view.bounds.size, expectedSize);
 }
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
@@ -125,6 +167,18 @@ static NSTimeInterval const kExpectationTimeout = 1;
     UIEdgeInsets expectedEdgeInsets = UIEdgeInsetsZero;
     expectedEdgeInsets.bottom = self.viewController.view.safeAreaInsets.bottom;
     MDCAssertEqualUIEdgeInsets(scrollView.contentInset, expectedEdgeInsets);
+  }
+}
+
+- (void)testViewControllerWithTrackingScrollViewAndContentInsetAdjustmentAlwaysSetsBounds {
+  if (@available(iOS 11.0, *)) {
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    scrollView.contentSize = kContentSize;
+    scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+    [self presentViewControllerInBottomSheetWithTrackingScrollView:scrollView];
+    CGSize expectedSize = kContentSize;
+    expectedSize.height += self.viewController.view.safeAreaInsets.bottom;
+    MDCAssertEqualCGSizes(self.viewController.view.bounds.size, expectedSize);
   }
 }
 
