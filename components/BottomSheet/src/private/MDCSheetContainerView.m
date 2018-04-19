@@ -234,11 +234,17 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   self.sheet.frame = sheetRect;
 
   CGRect contentFrame = self.sheet.bounds;
-  contentFrame.size.height -= kSheetBounceBuffer;
   if (!self.sheet.scrollView) {
     // If the content doesn't scroll then we have to set its frame to the size we are making
     // visible. This ensures content using autolayout lays out correctly.
     contentFrame.size.height = [self truncatedPreferredSheetHeight];
+  } else if (self.sheet.scrollView.contentSize.height > 0) {
+    // If the content does scroll and has contentSize set, make it the
+    // larger of the contentSize height and the preferred height (if
+    // we don't set the frame at all, it has whatever random size
+    // UIKit assigned to it).
+    contentFrame.size.height =
+        MAX(self.sheet.scrollView.contentSize.height, [self truncatedPreferredSheetHeight]);
   }
   self.contentView.frame = contentFrame;
 }
