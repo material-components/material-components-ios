@@ -17,6 +17,8 @@
 import XCTest
 import MaterialComponents.MaterialButtonBar
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialTypographyScheme
+import MaterialComponents.MDCButtonBarTypographyThemer
 
 class ButtonBarButtonTypographyThemerTests: XCTestCase {
 
