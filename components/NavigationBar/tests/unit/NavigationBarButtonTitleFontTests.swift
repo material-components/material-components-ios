@@ -18,21 +18,25 @@ import XCTest
 import MaterialComponents.MaterialButtonBar
 import MaterialComponents.MaterialButtons
 
-class ButtonBarButtonTitleFontTests: XCTestCase {
+class NavigationBarButtonTitleFontTests: XCTestCase {
 
-  var buttonBar: MDCButtonBar!
+  var navigationBar: MDCNavigationBar!
 
   override func setUp() {
-    buttonBar = MDCButtonBar()
+    navigationBar = MDCNavigationBar()
   }
 
   func testDefaultFontBehavior() {
     // Given
-    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
-    buttonBar.items = items
+    navigationBar.leadingBarButtonItems = [
+      UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)
+    ]
+    navigationBar.trailingBarButtonItems = [
+      UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil)
+    ]
 
     // Then
-    for view in buttonBar.subviews {
+    for view in navigationBar.subviews {
       if let button = view as? MDCButton {
         XCTAssertNil(button.titleFont(for: .normal))
       }
@@ -41,15 +45,19 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
 
   func testCustomFontIsSetForNewButtons() {
     // Given
-    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
     let font = UIFont.systemFont(ofSize: 100)
 
     // When
-    buttonBar.setButtonsTitleFont(font, for: .normal)
-    buttonBar.items = items
+    navigationBar.setButtonsTitleFont(font, for: .normal)
+    navigationBar.leadingBarButtonItems = [
+      UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)
+    ]
+    navigationBar.trailingBarButtonItems = [
+      UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil)
+    ]
 
     // Then
-    for view in buttonBar.subviews {
+    for view in navigationBar.subviews {
       if let button = view as? MDCButton {
         XCTAssertEqual(button.titleFont(for: .normal), font)
         XCTAssertEqual(button.titleLabel?.font, font)
@@ -59,15 +67,19 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
 
   func testCustomFontIsSetForExistingButtons() {
     // Given
-    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
     let font = UIFont.systemFont(ofSize: 100)
 
     // When
-    buttonBar.items = items
-    buttonBar.setButtonsTitleFont(font, for: .normal)
+    navigationBar.leadingBarButtonItems = [
+      UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)
+    ]
+    navigationBar.trailingBarButtonItems = [
+      UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil)
+    ]
+    navigationBar.setButtonsTitleFont(font, for: .normal)
 
     // Then
-    for view in buttonBar.subviews {
+    for view in navigationBar.subviews {
       if let button = view as? MDCButton {
         XCTAssertEqual(button.titleFont(for: .normal), font)
         XCTAssertEqual(button.titleLabel?.font, font)
@@ -77,17 +89,21 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
 
   func testCustomFontFallbackBehavior() {
     // Given
-    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
     let normalFont = UIFont.systemFont(ofSize: 100)
     let selectedFont = UIFont.systemFont(ofSize: 50)
 
     // When
-    buttonBar.setButtonsTitleFont(normalFont, for: .normal)
-    buttonBar.setButtonsTitleFont(selectedFont, for: .selected)
-    buttonBar.items = items
+    navigationBar.setButtonsTitleFont(normalFont, for: .normal)
+    navigationBar.setButtonsTitleFont(selectedFont, for: .selected)
+    navigationBar.leadingBarButtonItems = [
+      UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)
+    ]
+    navigationBar.trailingBarButtonItems = [
+      UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil)
+    ]
 
     // Then
-    for view in buttonBar.subviews {
+    for view in navigationBar.subviews {
       if let button = view as? MDCButton {
         button.isSelected = true
 

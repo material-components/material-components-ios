@@ -709,6 +709,15 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   }
 }
 
+- (void)setButtonsTitleFont:(UIFont *)font forState:(UIControlState)state {
+  [_leadingButtonBar setButtonsTitleFont:font forState:state];
+  [_trailingButtonBar setButtonsTitleFont:font forState:state];
+}
+
+- (UIFont *)buttonsTitleFontForState:(UIControlState)state {
+  return [_leadingButtonBar buttonsTitleFontForState:state];
+}
+
 - (void)setLeadingBarButtonItems:(NSArray<UIBarButtonItem *> *)leadingBarButtonItems {
   _leadingBarButtonItems = [leadingBarButtonItems copy];
   _leadingButtonBar.items = [self mdc_buttonItemsForLeadingBar];
