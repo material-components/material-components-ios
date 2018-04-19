@@ -72,7 +72,7 @@ for xcode_path in $xcodes; do
   fi
   if [ -f "$error_path" ]; then
     nested_error_path=$(cat "$error_path" | grep "stderr output is available in" | cut -d' ' -f6)
-    if [ -f "$nested_error_path"]; then
+    if [ -f "$nested_error_path" ]; then
       cat "$nested_error_path"
     fi
   fi
