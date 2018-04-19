@@ -24,9 +24,10 @@
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
   [button setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
-                   forState:UIControlStateDisabled];
+  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f]
+               forState:UIControlStateDisabled];
   button.disabledAlpha = 1.f;
+  button.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f];
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
