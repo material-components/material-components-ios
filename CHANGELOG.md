@@ -1,10 +1,16 @@
-# #develop#
+# 54.9.0
 
-## Breaking changes
-
-## New deprecations
+This release continues to improve the support for our themer APIs across all components.
 
 ## New features
+
+Button Bar now allows button typography to be configured.
+
+Floating buttons and contained buttons now have themers.
+
+AppBar and Tabs now have a surface variant color themer API.
+
+Slider now has a color themer.
 
 ## API changes
 
