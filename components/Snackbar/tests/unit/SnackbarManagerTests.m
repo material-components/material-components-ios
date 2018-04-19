@@ -23,7 +23,8 @@
 
 @implementation SnackbarManagerTests
 
-- (void)testMessagesResumedWhenTokenIsDeallocated {
+// Disabled due to flakiness in CI.
+- (void)disabled_testMessagesResumedWhenTokenIsDeallocated {
   // Given
   MDCSnackbarMessage *suspendedMessage = [MDCSnackbarMessage messageWithText:@"foo1"];
   suspendedMessage.duration = 0.05;
