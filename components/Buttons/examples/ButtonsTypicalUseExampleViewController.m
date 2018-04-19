@@ -50,6 +50,33 @@
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
+  // Raised button
+
+  MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
+  [raisedButton setTitleColor:titleColor forState:UIControlStateNormal];
+  [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
+  [raisedButton sizeToFit];
+  [raisedButton addTarget:self
+                   action:@selector(didTap:)
+         forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:raisedButton];
+
+  // Disabled raised button
+
+  MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
+  [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
+  [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledRaisedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:disabledRaisedButton];
+  [disabledRaisedButton sizeToFit];
+  [disabledRaisedButton addTarget:self
+                           action:@selector(didTap:)
+                 forControlEvents:UIControlEventTouchUpInside];
+  [disabledRaisedButton setEnabled:NO];
+  [self.view addSubview:disabledRaisedButton];
+
   // Text button
 
   MDCButton *textButton = [[MDCButton alloc] init];
@@ -72,31 +99,6 @@
                forControlEvents:UIControlEventTouchUpInside];
   [disabledTextButton setEnabled:NO];
   [self.view addSubview:disabledTextButton];
-
-  // Flat button
-
-  MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
-  [flatButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:flatButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:flatButton];
-  [flatButton sizeToFit];
-  [flatButton addTarget:self
-                 action:@selector(didTap:)
-       forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:flatButton];
-
-  // Disabled flat
-
-  MDCFlatButton *disabledFlatButton = [[MDCFlatButton alloc] init];
-  [disabledFlatButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledFlatButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:disabledFlatButton];
-  [disabledFlatButton sizeToFit];
-  [disabledFlatButton addTarget:self
-                         action:@selector(didTap:)
-               forControlEvents:UIControlEventTouchUpInside];
-  [disabledFlatButton setEnabled:NO];
-  [self.view addSubview:disabledFlatButton];
 
   // Custom stroked button
 
@@ -140,7 +142,7 @@
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    textButton, disabledTextButton, flatButton, disabledFlatButton, strokedButton,
+    raisedButton, disabledRaisedButton, textButton, disabledTextButton, strokedButton,
     disabledStrokedButton, self.floatingButton
   ];
 
@@ -148,16 +150,16 @@
 }
 
 - (void)setupExampleViews {
+  UILabel *raisedButtonLabel = [self addLabelWithText:@"Raised"];
+  UILabel *disabledRaisedButtonLabel = [self addLabelWithText:@"Disabled Raised"];
   UILabel *textButtonLabel = [self addLabelWithText:@"Text button"];
   UILabel *disabledTextButtonLabel = [self addLabelWithText:@"Disabled text button"];
-  UILabel *flatButtonLabel = [self addLabelWithText:@"Flat"];
-  UILabel *disabledFlatButtonLabel = [self addLabelWithText:@"Disabled Flat"];
   UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
   UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Disabled Stroked"];
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
-    textButtonLabel, disabledTextButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
+    raisedButtonLabel, disabledRaisedButtonLabel, textButtonLabel, disabledTextButtonLabel,
     strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
   ];
 }
