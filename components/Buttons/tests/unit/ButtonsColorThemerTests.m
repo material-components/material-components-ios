@@ -44,7 +44,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                         UIColor.clearColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.primaryColor colorWithAlphaComponent:0.37f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
@@ -163,7 +163,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     } else {
       XCTAssert(
           CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.primaryColor colorWithAlphaComponent:0.37f].CGColor),
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f].CGColor),
           @"state:%lu", (unsigned long)state);
       XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor, @"state:%lu",
                      (unsigned long)state);
