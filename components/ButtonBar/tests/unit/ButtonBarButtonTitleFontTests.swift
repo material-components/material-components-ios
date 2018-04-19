@@ -99,4 +99,5 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
       }
     }
   }
+
 }
