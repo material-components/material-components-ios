@@ -81,7 +81,7 @@
 
   MDCButton *textButton = [[MDCButton alloc] init];
   [MDCTextButtonThemer applyScheme:buttonScheme toButton:textButton];
-  [textButton setTitle:@"Text button" forState:UIControlStateNormal];
+  [textButton setTitle:@"Button" forState:UIControlStateNormal];
   [textButton sizeToFit];
   [textButton addTarget:self
                  action:@selector(didTap:)
@@ -91,7 +91,7 @@
   // Disabled Text button
 
   MDCButton *disabledTextButton = [[MDCButton alloc] init];
-  [disabledTextButton setTitle:@"Disabled button" forState:UIControlStateNormal];
+  [disabledTextButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCTextButtonThemer applyScheme:buttonScheme toButton:disabledTextButton];
   [disabledTextButton sizeToFit];
   [disabledTextButton addTarget:self
