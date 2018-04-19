@@ -15,7 +15,7 @@
  */
 
 import XCTest
-import MaterialComponents.MaterialButtonBar
+import MaterialComponents.MaterialNavigationBar
 import MaterialComponents.MaterialButtons
 
 class NavigationBarButtonTitleFontTests: XCTestCase {
