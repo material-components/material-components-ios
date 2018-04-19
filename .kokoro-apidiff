@@ -29,6 +29,9 @@ version_as_number() {
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   # Move into our cloned repo
   cd github/repo
+
+  # Install sourcekitten, a dependency of the apidiff tool
+  brew install sourcekitten
 fi
 
 BUILDS_TMP_PATH=$(mktemp -d)
@@ -65,7 +68,16 @@ for xcode_path in $xcodes; do
 
   ./scripts/release apidiff "$base_sha" | tee "$BUILDS_TMP_PATH/api_diff"
   changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
+  error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
 
-  cat "$changelog_path"
+  if [ -f "$changelog_path" ]; then
+    cat "$changelog_path"
+  fi
+  if [ -f "$error_path" ]; then
+    nested_error_path=$(cat "$error_path" | grep "stderr output is available in" | cut -d' ' -f6)
+    if [ -f "$nested_error_path" ]; then
+      cat "$nested_error_path"
+    fi
+  fi
 done
 

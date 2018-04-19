@@ -63,6 +63,11 @@
  */
 - (void)addSubviewsToParent;
 
+/**
+ Please ignore.
+ */
+- (void)testingAddingANewAPI;
+
 /** The header view controller instance manages the App Bar's flexible header view behavior. */
 @property(nonatomic, strong, nonnull, readonly)
     MDCFlexibleHeaderViewController *headerViewController;
