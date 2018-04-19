@@ -310,8 +310,31 @@ generate_apidiff() {
     ./scripts/release apidiff "$base_sha" | tee "$BUILDS_TMP_PATH/api_diff"
     changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
     error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
+ 
+    pushd scripts/github-comment >> /dev/null
 
-    # TODO: Post the results to a GitHub comment.
+    if [ -f "$changelog_path" ]; then
+      echo "## API diff detected the following changes" > "$changelog_path.tmp"
+      cat "$changelog_path" >> "$changelog_path.tmp"
+
+      swift run github-comment \
+        --repo=material-components/material-components-ios \
+        --github_token="$GITHUB_API_TOKEN" \
+        --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+        --identifier=apidiff \
+        --comment_body="$changelog_path.tmp"
+
+    else
+      # No changelog, so delete any existing comment
+      swift run github-comment \
+        --repo=material-components/material-components-ios \
+        --github_token="$GITHUB_API_TOKEN" \
+        --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+        --identifier=apidiff \
+        --delete
+    fi
+
+    popd >> /dev/null
 
     if [ -f "$error_path" ]; then
       nested_error_path=$(cat "$error_path" | grep "stderr output is available in" | cut -d' ' -f6)
