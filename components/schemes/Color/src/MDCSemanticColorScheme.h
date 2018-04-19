@@ -80,6 +80,8 @@
 @optional
 /**
  A second tonal variation of primary color.
+
+ Note: This property is currently optional but will become required in the near future.
  */
 @property(nonnull, readonly, nonatomic) UIColor *primaryColorVariant2;
 
