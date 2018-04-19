@@ -25,6 +25,10 @@
 /**
  Applies a color scheme to theme to an MDCButton.
 
+ This method will soon be deprecated. Consider using MDCContainedButtonColorThemer's
+ applySemanticColorScheme:toButton:
+ or @c applySemanticColorScheme:toTextButton:.
+
  @param colorScheme The color scheme to apply to @c button.
  @param button A MDCButton instance to apply a color scheme.
  */
@@ -33,6 +37,9 @@
 
 /**
  Applies a color scheme to theme to an MDCFlatButton.
+
+ This method will soon be deprecated. Consider using MDCTextButtonColorThemer's
+ applySemanticColorScheme:toButton:
 
  @param colorScheme The color scheme to apply to @c flatButton.
  @param flatButton An MDCFlatButton instance to apply a color scheme.
@@ -43,6 +50,9 @@
 /**
  Applies a color scheme to theme to an MDCRaisedButton.
 
+ This method will soon be deprecated. Consider using MDCContainedButtonColorThemer's
+ applySemanticColorScheme:toButton:
+
  @param colorScheme The color scheme to apply to @c raisedButton.
  @param raisedButton An MDCRaisedButton instance to apply a color scheme.
  */
@@ -50,10 +60,19 @@
                   toRaisedButton:(nonnull MDCButton *)raisedButton;
 
 /**
- Applies a color scheme to theme a MDCButton. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButton.
+ Applies a color scheme to theme to an MDCFloatingButton.
 
- This method will soon be deprecated. Consider using applySemanticColorScheme:colorScheme.
+ @param colorScheme The color scheme to apply to @c floatingButton.
+ @param floatingButton An MDCFloatingButton instance to apply a color scheme.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                toFloatingButton:(nonnull MDCFloatingButton *)floatingButton;
+
+/**
+ Applies a color scheme to theme a MDCButton.
+
+ This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:
+ or @c applySemanticColorScheme:toTextButton:.
 
  @param colorScheme The color scheme to apply to @c button.
  @param button An MDCButton instance to apply a color scheme.

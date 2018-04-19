@@ -28,6 +28,12 @@
 @property(nonatomic, strong) UICollectionView *collectionView;
 @end
 
+@interface ChipsActionExampleViewController : UIViewController
+    <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@end
+
 @interface ChipsCollectionExampleViewController : ExampleChipCollectionViewController
     <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;

@@ -42,7 +42,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Slider",
-        "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
