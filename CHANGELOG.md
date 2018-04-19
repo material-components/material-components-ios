@@ -1,3 +1,76 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* method: `-setButtonsTitleFont:forState:` in `MDCButtonBar`
+
+*new* method: `-buttonsTitleFontForState:` in `MDCButtonBar`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Add a surface variant color themer API. (#3388)](https://github.com/material-components/material-components-ios/commit/61cf85c9c2afe0dcaf63555f211dd10469104434) (featherless)
+
+### AppBar
+
+#### Changes
+
+* [Add surface variant color themer API. (#3383)](https://github.com/material-components/material-components-ios/commit/90ec60ed8480adb589792db670d4872350d9514e) (featherless)
+
+### Ink
+
+#### Changes
+
+* [Increase range of accuracy in test to +/-.1. (#3392)](https://github.com/material-components/material-components-ios/commit/b1c3a030eb4603ebc18eba82ee60284a0e9c4dbc) (Randall Li)
+
+### Buttons
+
+#### Changes
+
+* [Created contained button themer. (#3391)](https://github.com/material-components/material-components-ios/commit/c39386679f8ee805c50b23bb571662248ceee36f) (Randall Li)
+* [[Button] Renamed color themer styles to text and contained (#3384)](https://github.com/material-components/material-components-ios/commit/aa0fc7c6224b0a02d43abc19dd9a0f74039b7249) (Randall Li)
+* [[Button] Split files into more appropriate names: TextButtonThemer and ButtonScheme. (#3385)](https://github.com/material-components/material-components-ios/commit/d2e2fd88e1e17d6ec71c14ada98e68a585a494a5) (Randall Li)
+* [[MDCFloatingButton] Color Themer added. (#3381)](https://github.com/material-components/material-components-ios/commit/c818048a1c97b53b6b622bb315af7864026e3cea) (Mohammad Cazi)
+
+### ButtonBar
+
+#### Changes
+
+* [Expose APIs for setting custom button fonts. (#3389)](https://github.com/material-components/material-components-ios/commit/e11d24a110fa490aaf016f5964edc1575638eb67) (featherless)
+
+### Chips
+
+#### Changes
+
+* [Adding Examples/Documentation for all chips types. (#3393)](https://github.com/material-components/material-components-ios/commit/dd0c0123c658a88ffaa4e9d8c86191b747c38260) (Mohammad Cazi)
+
+### Slider
+
+#### Changes
+
+* [Update color themer (#3375)](https://github.com/material-components/material-components-ios/commit/3c139cc00d5acc5ca12ffa5c779c63f7533c8c37) (John Detloff)
+
+### ShadowLayer
+
+#### Changes
+
+* [[Shapes] Example using Shapes and Shadows with animation (#3394)](https://github.com/material-components/material-components-ios/commit/d1767c0086af1d4b7dfc55305f05c964137210bb) (Yarden Eitan)
+
+---
+
 # 54.8.0
 
 This new release introduces shapes support to buttons and a variety of new themer APIs for many
