@@ -88,6 +88,25 @@ static UIButton *DeleteButton() {
 
 @end
 
+@interface ChipsActionExampleViewController (Supplemental)
+@end
+
+@implementation ChipsActionExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Action" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
+@end
+
 @interface ChipsCollectionExampleViewController (Supplemental)
 @end
 

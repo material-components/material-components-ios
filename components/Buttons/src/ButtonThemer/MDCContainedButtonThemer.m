@@ -14,32 +14,21 @@
  limitations under the License.
  */
 
-#import "MDCButtonThemer.h"
+#import "MDCContainedButtonThemer.h"
+
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
 
-@implementation MDCButtonScheme
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
-    _minimumHeight = 36;
-    _cornerRadius = (CGFloat)4;
-  }
-  return self;
-}
-@end
-
-@implementation MDCTextButtonThemer
+@implementation MDCContainedButtonThemer
 
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
            toButton:(nonnull MDCButton *)button {
-  [MDCButtonColorThemer applySemanticColorScheme:scheme.colorScheme toFlatButton:button];
+  [MDCButtonColorThemer applySemanticColorScheme:scheme.colorScheme toRaisedButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
   button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
   button.layer.cornerRadius = scheme.cornerRadius;
+  [button setElevation:(CGFloat)2 forState:UIControlStateNormal];
+  [button setElevation:(CGFloat)8 forState:UIControlStateHighlighted];
 }
 
 @end

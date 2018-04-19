@@ -45,16 +45,3 @@
 @property(readwrite, nonatomic) CGFloat minimumHeight;
 
 @end
-
-/** Applies text button style data to MDCButton objects. */
-@interface MDCTextButtonThemer : NSObject
-
-/**
- Applies the text button style using the button scheme data.
-
- @param scheme The button style data that should be used to change the @c button.
- @param button A MDCButton instance to apply the @c scheme
- */
-+ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button;
-@end

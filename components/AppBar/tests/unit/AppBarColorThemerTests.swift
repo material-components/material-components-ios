@@ -21,6 +21,50 @@ import MaterialComponents.MaterialThemes
 
 class AppBarColorThemerTests: XCTestCase {
 
+  func testSemanticColorThemerAffectsSubComponents() {
+    // Given
+    let appBar = MDCAppBar()
+    appBar.headerViewController.headerView.backgroundColor = .red
+    appBar.navigationBar.backgroundColor = .blue
+    appBar.navigationBar.titleTextColor = .green;
+    appBar.navigationBar.tintColor = .orange;
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.primaryColor = .purple
+    colorScheme.onPrimaryColor = .lightGray
+
+    // When
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+
+    // Then
+    XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
+                   colorScheme.primaryColor)
+    XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.primaryColor)
+    XCTAssertEqual(appBar.navigationBar.titleTextColor, colorScheme.onPrimaryColor)
+    XCTAssertEqual(appBar.navigationBar.tintColor, colorScheme.onPrimaryColor)
+  }
+
+  func testSurfaceVariantColorThemerAffectsSubComponents() {
+    // Given
+    let appBar = MDCAppBar()
+    appBar.headerViewController.headerView.backgroundColor = .red
+    appBar.navigationBar.backgroundColor = .blue
+    appBar.navigationBar.titleTextColor = .green;
+    appBar.navigationBar.tintColor = .orange;
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.surfaceColor = .purple
+    colorScheme.onSurfaceColor = .lightGray
+
+    // When
+    MDCAppBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, to: appBar)
+
+    // Then
+    XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
+                   colorScheme.surfaceColor)
+    XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.surfaceColor)
+    XCTAssertEqual(appBar.navigationBar.titleTextColor, colorScheme.onSurfaceColor)
+    XCTAssertEqual(appBar.navigationBar.tintColor, colorScheme.onSurfaceColor)
+  }
+
   func testColorThemerAffectsSubComponents() {
     // Given
     let appBar = MDCAppBar()
