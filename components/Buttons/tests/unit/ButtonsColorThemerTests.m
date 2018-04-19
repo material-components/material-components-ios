@@ -70,7 +70,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
                         colorScheme.primaryColor);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
                         colorScheme.onPrimaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
@@ -124,7 +124,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                               [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
       XCTAssert(
           CGColorEqualToColor([button backgroundColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f].CGColor));
     }
   }
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
@@ -209,7 +209,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                               [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
       XCTAssert(
           CGColorEqualToColor([button backgroundColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f].CGColor));
     }
   }
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);

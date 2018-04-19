@@ -22,12 +22,13 @@
                         toButton:(nonnull MDCButton *)button {
   [self resetUIControlStatesForButtonTheming:button];
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]
+  [button setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f]
                     forState:UIControlStateDisabled];
   [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
-  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]
+  [button setTitleColor:[colorScheme.surfaceColor colorWithAlphaComponent:0.26f]
                forState:UIControlStateDisabled];
   button.disabledAlpha = 1.f;
+  button.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:0.32f];
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
