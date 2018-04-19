@@ -65,7 +65,13 @@ for xcode_path in $xcodes; do
 
   ./scripts/release apidiff "$base_sha" | tee "$BUILDS_TMP_PATH/api_diff"
   changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
+  error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
 
-  cat "$changelog_path"
+  if [ -f "$changelog_path" ]; then
+    cat "$changelog_path"
+  fi
+  if [ -f "$error_path" ]; then
+    cat "$error_path"
+  fi
 done
 
