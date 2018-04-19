@@ -75,6 +75,20 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
     }
   }
 
+  func testCustomFontChangesButtonFrames() {
+    // Given
+    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
+    let font = UIFont.systemFont(ofSize: 100)
+
+    // When
+    buttonBar.items = items
+    let initialFrames = buttonBar.subviews.map { $0.frame }
+    buttonBar.setButtonsTitleFont(font, for: .normal)
+    let updatedFrames = buttonBar.subviews.map { $0.frame }
+
+    XCTAssertNotEqual(initialFrames, updatedFrames)
+  }
+
   func testCustomFontFallbackBehavior() {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
