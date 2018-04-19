@@ -34,11 +34,6 @@
 @property(nonnull, readonly, nonatomic) UIColor *primaryColorVariant;
 
 /**
- A second tonal variation of primary color.
- */
-@property(nonnull, readonly, nonatomic) UIColor *primaryColorVariant2;
-
-/**
  Accents select parts of your UI.
  */
 @property(nonnull, readonly, nonatomic) UIColor *secondaryColor;
@@ -81,6 +76,13 @@
  @c backgroundColor.
  */
 @property(nonnull, readonly, nonatomic) UIColor *onBackgroundColor;
+
+@optional
+/**
+ A second tonal variation of primary color.
+ */
+@property(nonnull, readonly, nonatomic) UIColor *primaryColorVariant2;
+
 @end
 
 /**
