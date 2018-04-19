@@ -29,6 +29,9 @@ version_as_number() {
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   # Move into our cloned repo
   cd github/repo
+
+  # Install sourcekitten, a dependency of the apidiff tool
+  brew install sourcekitten
 fi
 
 BUILDS_TMP_PATH=$(mktemp -d)
