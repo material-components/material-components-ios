@@ -26,6 +26,14 @@ class NavigationBarButtonTitleFontTests: XCTestCase {
     navigationBar = MDCNavigationBar()
   }
 
+  private func recursiveSubviews(of superview: UIView) -> [UIView] {
+    var subviews = superview.subviews
+    for subview in superview.subviews {
+      subviews.append(contentsOf: recursiveSubviews(of: subview))
+    }
+    return subviews
+  }
+
   func testDefaultFontBehavior() {
     // Given
     navigationBar.leadingBarButtonItems = [
@@ -36,7 +44,7 @@ class NavigationBarButtonTitleFontTests: XCTestCase {
     ]
 
     // Then
-    for view in navigationBar.subviews {
+    for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
         XCTAssertNil(button.titleFont(for: .normal))
       }
@@ -57,7 +65,7 @@ class NavigationBarButtonTitleFontTests: XCTestCase {
     ]
 
     // Then
-    for view in navigationBar.subviews {
+    for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
         XCTAssertEqual(button.titleFont(for: .normal), font)
         XCTAssertEqual(button.titleLabel?.font, font)
@@ -79,7 +87,7 @@ class NavigationBarButtonTitleFontTests: XCTestCase {
     navigationBar.setButtonsTitleFont(font, for: .normal)
 
     // Then
-    for view in navigationBar.subviews {
+    for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
         XCTAssertEqual(button.titleFont(for: .normal), font)
         XCTAssertEqual(button.titleLabel?.font, font)
@@ -103,7 +111,7 @@ class NavigationBarButtonTitleFontTests: XCTestCase {
     ]
 
     // Then
-    for view in navigationBar.subviews {
+    for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
         button.isSelected = true
 
