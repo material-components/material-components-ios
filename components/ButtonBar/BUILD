@@ -96,6 +96,7 @@ swift_library(
     deps = [
         ":ButtonBar",
         ":ColorThemer",
+        ":TypographyThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],
