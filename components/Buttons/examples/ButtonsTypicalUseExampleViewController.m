@@ -47,7 +47,7 @@
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
+  self.view.backgroundColor = [UIColor whiteColor];
   UIColor *titleColor = [UIColor whiteColor];
 
   // Raised button
