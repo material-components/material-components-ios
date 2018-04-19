@@ -60,8 +60,10 @@ for xcode_path in $xcodes; do
   # Resolves the following crash when switching Xcode versions:
   # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
   launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
+  
+  base_sha=$(git merge-base origin/develop HEAD)
 
-  ./scripts/release apidiff origin/develop | tee "$BUILDS_TMP_PATH/api_diff"
+  ./scripts/release apidiff "$base_sha" | tee "$BUILDS_TMP_PATH/api_diff"
   changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
 
   cat "$changelog_path"
