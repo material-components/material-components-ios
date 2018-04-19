@@ -69,7 +69,7 @@ Material design suggest the usage of chips collection in four context: Input Chi
 ### Input Chips
 Input chips represent a complex piece of information in compact form, such as an entity (person, place, or thing) or text. They enable user input and verify that input by converting text into chips.
 
-TODO: Insert Screen shot
+![input chip](https://user-images.githubusercontent.com/36271115/39001900-547fa5a2-43c5-11e8-9dcd-b9b263f1b4a2.png)
 
 #### Implementation
 We currently provide an implementation of Input Chips called `MDCChipField`. 
@@ -80,7 +80,7 @@ Choice chips allow selection of a single chip from a set of options.
 
 Choice chips clearly delineate and display options in a compact area. They are a good alternative to toggle buttons, radio buttons, and single select menus.
 
-TODO: Insert Screen shot
+![choice chip](https://user-images.githubusercontent.com/36271115/39001866-489e0a3a-43c5-11e8-865d-1b2693283e2c.png)
 
 #### Implementation
 It is easiest to create choice Chips using a `UICollectionView`:
@@ -127,7 +127,7 @@ Filter chips use tags or descriptive words to filter content.
 
 Filter chips clearly delineate and display options in a compact area. They are a good alternative to toggle buttons or checkboxes.
 
-TODO: Insert Screen shot
+![filterchip](https://user-images.githubusercontent.com/36271115/39001771-14624844-43c5-11e8-8144-b05a1195245b.png)
 
 #### Implementation
 It is easiest to create filter Chips using a `UICollectionView`:
@@ -179,7 +179,7 @@ Action chips offer actions related to primary content. They should appear dynami
 
 An alternative to action chips are buttons, which should appear persistently and consistently.
 
-TODO: Insert Screen shot
+![action chip](https://user-images.githubusercontent.com/36271115/39001911-5dd1fd12-43c5-11e8-95f3-5dd3d713d98a.png)
 
 #### Implementation
 It is easiest to create action Chips using a `UICollectionView`:
