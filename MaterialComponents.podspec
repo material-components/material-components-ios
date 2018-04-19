@@ -234,6 +234,14 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/ButtonBar"
       extension.dependency "MaterialComponents/Themes"
     end
+    component.subspec "TypographyThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/ButtonBar/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/ButtonBar/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/ButtonBar"
+      extension.dependency "MaterialComponents/schemes/Typography"
+    end
   end
 
   mdc.subspec "Cards" do |component|
