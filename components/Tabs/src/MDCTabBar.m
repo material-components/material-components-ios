@@ -99,6 +99,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   // For properties which have been set, these store the new fixed values.
   MDCTabBarAlignment _alignmentOverride;
   MDCTabBarItemAppearance _itemAppearanceOverride;
+
+  UIColor *_selectedTitleColor;
+  UIColor *_unselectedTitleColor;
 }
 // Inherit UIView's tintColor logic.
 @dynamic tintColor;
@@ -185,6 +188,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)commonMDCTabBarInit {
   _selectedItemTintColor = [UIColor whiteColor];
   _unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  _selectedTitleColor = _selectedItemTintColor;
+  _unselectedTitleColor = _unselectedItemTintColor;
   _inkColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
 
   self.clipsToBounds = YES;
@@ -262,6 +267,52 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance {
   return [self defaultHeightForBarPosition:UIBarPositionAny itemAppearance:appearance];
+}
+
+- (void)setTitleColor:(nullable UIColor *)color forState:(MDCTabBarItemState)state {
+  switch (state) {
+    case MDCTabBarItemStateNormal:
+      _unselectedTitleColor = color;
+      break;
+    case MDCTabBarItemStateSelected:
+      _selectedTitleColor = color;
+      break;
+  }
+  [self updateItemBarStyle];
+}
+
+- (nullable UIColor *)titleColorForState:(MDCTabBarItemState)state {
+  switch (state) {
+    case MDCTabBarItemStateNormal:
+      return _unselectedTitleColor;
+      break;
+    case MDCTabBarItemStateSelected:
+      return _selectedTitleColor;
+      break;
+  }
+}
+
+- (void)setImageTintColor:(nullable UIColor *)color forState:(MDCTabBarItemState)state {
+  switch (state) {
+    case MDCTabBarItemStateNormal:
+      _unselectedItemTintColor = color;
+      break;
+    case MDCTabBarItemStateSelected:
+      _selectedItemTintColor = color;
+      break;
+  }
+  [self updateItemBarStyle];
+}
+
+- (nullable UIColor *)imageTintColorForState:(MDCTabBarItemState)state {
+  switch (state) {
+    case MDCTabBarItemStateNormal:
+      return _unselectedItemTintColor;
+      break;
+    case MDCTabBarItemStateSelected:
+      return _selectedItemTintColor;
+      break;
+  }
 }
 
 - (void)setDelegate:(id<MDCTabBarDelegate>)delegate {
@@ -346,6 +397,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   if (_selectedItemTintColor != selectedItemTintColor &&
       ![_selectedItemTintColor isEqual:selectedItemTintColor]) {
     _selectedItemTintColor = selectedItemTintColor;
+    _selectedTitleColor = selectedItemTintColor;
 
     [self updateItemBarStyle];
   }
@@ -355,6 +407,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   if (_unselectedItemTintColor != unselectedItemTintColor &&
       ![_unselectedItemTintColor isEqual:unselectedItemTintColor]) {
     _unselectedItemTintColor = unselectedItemTintColor;
+    _unselectedTitleColor = unselectedItemTintColor;
 
     [self updateItemBarStyle];
   }
@@ -639,9 +692,12 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
-  style.selectedTitleColor = (_selectedItemTintColor ? _selectedItemTintColor : self.tintColor);
-  style.titleColor = _unselectedItemTintColor;
   style.displaysUppercaseTitles = self.displaysUppercaseTitles;
+
+  style.selectedTitleColor = _selectedTitleColor ?: self.tintColor;
+  style.titleColor = _unselectedTitleColor;
+  style.selectedImageTintColor = _selectedItemTintColor ?: self.tintColor;
+  style.imageTintColor = _unselectedItemTintColor;
 
   [_itemBar applyStyle:style];
 
