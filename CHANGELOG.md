@@ -1,10 +1,12 @@
-# #develop#
+# 54.10.0
 
-## Breaking changes
-
-## New deprecations
+This release continues to increase coverage of themers across our components.
 
 ## New features
+
+ButtonBar now has a Typography themer.
+
+NavigationBar now has APIs for customizing title button fonts.
 
 ## API changes
 
