@@ -29,6 +29,7 @@
   button.layer.cornerRadius = scheme.cornerRadius;
   [button setElevation:(CGFloat)2 forState:UIControlStateNormal];
   [button setElevation:(CGFloat)8 forState:UIControlStateHighlighted];
+  [button setElevation:(CGFloat)0 forState:UIControlStateDisabled];
 }
 
 @end
