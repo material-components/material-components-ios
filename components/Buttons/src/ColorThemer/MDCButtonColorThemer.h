@@ -62,6 +62,9 @@
 /**
  Applies a color scheme to theme to an MDCFloatingButton.
 
+ This method will soon be deprecated. Consider using MDCFloatingButtonColorThemer's
+ applySemanticColorScheme:toButton:
+
  @param colorScheme The color scheme to apply to @c floatingButton.
  @param floatingButton An MDCFloatingButton instance to apply a color scheme.
  */

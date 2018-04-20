@@ -14,26 +14,20 @@
  limitations under the License.
  */
 
-#import "MDCContainedButtonColorThemer.h"
+#import "MDCFloatingButtonColorThemer.h"
 
-@implementation MDCContainedButtonColorThemer
+@implementation MDCFloatingButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                        toButton:(nonnull MDCButton *)button {
+                        toButton:(nonnull MDCFloatingButton *)button {
   [self resetUIControlStatesForButtonTheming:button];
-  [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]
-                    forState:UIControlStateDisabled];
-  [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
-  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
-               forState:UIControlStateDisabled];
+  [button setBackgroundColor:colorScheme.secondaryColor forState:UIControlStateNormal];
   button.disabledAlpha = 1.f;
-  button.inkColor = [colorScheme.onPrimaryColor colorWithAlphaComponent:0.32f];
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [button setBackgroundColor:nil forState:state];
     [button setTitleColor:nil forState:state];
