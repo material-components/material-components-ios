@@ -203,7 +203,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerUnderline.roundedCornersDefault = [.bottomRight]
     XCTAssertEqual(MDCTextInputControllerUnderline.roundedCornersDefault, [.bottomRight])
 
-    // Test that the changes to the class properties can propogate to an instance.
+    // Test that the changes to the class properties can propagate to an instance.
     controller = MDCTextInputControllerUnderline(textInput: textField)
 
     XCTAssertEqual(controller.errorColor, MDCTextInputControllerUnderline.errorColorDefault)
@@ -347,7 +347,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault,
                    UIFont.systemFont(ofSize: 6))
 
-    // Test the changes to the class properties can propogate to an instance.
+    // Test the changes to the class properties can propagate to an instance.
     controller = MDCTextInputControllerFullWidth(textInput: textField)
 
     XCTAssertEqual(controller.disabledColor, .clear)
