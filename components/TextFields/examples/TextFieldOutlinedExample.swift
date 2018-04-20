@@ -105,28 +105,23 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
   }
 
   func setupTextFields() {
-    let colorScheme = MDCSemanticColorScheme()
-    
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerOutlined(textInput: name)
     name.delegate = self
     name.text = "Grace Hopper"
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: nameController)
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
     let addressController = MDCTextInputControllerOutlined(textInput: address)
     address.delegate = self
     addressController.placeholderText = "Address"
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: addressController)
     allTextFieldControllers.append(addressController)
 
     scrollView.addSubview(city)
     city.delegate = self
     cityController.placeholderText = "City"
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: cityController)
     allTextFieldControllers.append(cityController)
 
     // In iOS 9+, you could accomplish this with a UILayoutGuide.
@@ -138,21 +133,18 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     stateZip.addSubview(state)
     state.delegate = self
     stateController.placeholderText = "State"
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: stateController)
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
     zip.delegate = self
     zipController.placeholderText = "Zip Code"
     zipController.helperText = "XXXXX"
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: zipController)
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
     let phoneController = MDCTextInputControllerOutlined(textInput: phone)
     phone.delegate = self
     phoneController.placeholderText = "Phone Number"
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: phoneController)
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
@@ -168,7 +160,6 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
       message.text = "This is where you could put a multi-line message like an email. It can even handle new lines./n"
     #endif
     messageController.placeholderText = "Message"
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: messageController)
     allTextFieldControllers.append(messageController)
 
     messageController.characterCountMax = 150
