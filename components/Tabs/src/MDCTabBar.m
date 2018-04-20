@@ -66,6 +66,9 @@ static const CGFloat kBottomNavigationMaximumItemWidth = 168;
 /// Title-image padding for bottom navigation bars, in points.
 static const CGFloat kBottomNavigationTitleImagePadding = 3;
 
+/// Height for the bottom divider.
+static const CGFloat kBottomNavigationBarDividerHeight = 1;
+
 static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignment alignment) {
   switch (alignment) {
     case MDCTabBarAlignmentCenter:
@@ -91,6 +94,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 @implementation MDCTabBar {
   /// Item bar responsible for displaying the actual tab bar content.
   MDCItemBar *_itemBar;
+
+  UIView *_dividerBar;
 
   // Flags tracking if properties are unset and using default values.
   BOOL _hasDefaultAlignment;
@@ -186,6 +191,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)commonMDCTabBarInit {
+  _bottomDividerColor = [UIColor clearColor];
   _selectedItemTintColor = [UIColor whiteColor];
   _unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
   _selectedTitleColor = _selectedItemTintColor;
@@ -211,6 +217,17 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _itemBar.delegate = self;
   _itemBar.alignment = MDCItemBarAlignmentForTabBarAlignment(_alignment);
   [self addSubview:_itemBar];
+
+  CGFloat dividerTop = CGRectGetMaxY(self.bounds) - kBottomNavigationBarDividerHeight;
+  _dividerBar =
+      [[UIView alloc] initWithFrame:CGRectMake(0,
+                                               dividerTop,
+                                               CGRectGetWidth(self.bounds),
+                                               kBottomNavigationBarDividerHeight)];
+  _dividerBar.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+  _dividerBar.backgroundColor = _bottomDividerColor;
+  [self addSubview:_dividerBar];
 
   [self updateItemBarStyle];
 }
@@ -445,6 +462,13 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
   _selectionIndicatorTemplate = template;
   [self updateItemBarStyle];
+}
+
+- (void)setBottomDividerColor:(UIColor *)bottomDividerColor {
+  if (_bottomDividerColor != bottomDividerColor) {
+    _bottomDividerColor = bottomDividerColor;
+    _dividerBar.backgroundColor = _bottomDividerColor;
+  }
 }
 
 #pragma mark - MDCAccessibility

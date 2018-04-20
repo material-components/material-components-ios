@@ -95,6 +95,9 @@ IB_DESIGNABLE
 /** Ink color for taps on tab bar items. Default: Semi-transparent white. */
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
+/** Color for the bottom divider. Default: Clear. */
+@property(nonatomic, nonnull) UIColor *bottomDividerColor;
+
 /**
  Font used for selected item titles.
  By default this uses +[MDCTypography buttonFont]. Ignored for bottom-position tab bars.
