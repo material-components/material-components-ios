@@ -1,3 +1,53 @@
+# 54.10.0
+
+This release continues to increase coverage of themers across our components.
+
+## New features
+
+ButtonBar now has a Typography themer.
+
+NavigationBar now has APIs for customizing title button fonts.
+
+## API changes
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* method: `-setButtonsTitleFont:forState:` in `MDCNavigationBar`
+
+*new* method: `-buttonsTitleFontForState:` in `MDCNavigationBar`
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [[Button] Changed text button disabled to do 37% opacity, Ink to use onSurface 16% (#3406)](https://github.com/material-components/material-components-ios/commit/1fa5bdf0b30f6c3741c22585a895ec9803b4b1e9) (Randall Li)
+
+### ButtonBar
+
+#### Changes
+
+* [Add a Typography Themer. (#3395)](https://github.com/material-components/material-components-ios/commit/289223a5bb3ecafc1b3c733b404a80cfd7546ee5) (featherless)
+
+### Chips
+
+#### Changes
+
+* [Update README.md](https://github.com/material-components/material-components-ios/commit/bf5c69504571d721fe8ce6cd13719d8ad4e404ea) (Mohammad Cazi)
+* [Updating Readme documentation for chips. (#3405)](https://github.com/material-components/material-components-ios/commit/0414aa15f6d0f9d1c40c5b21713d1761b061f816) (Mohammad Cazi)
+* [Updating Readme documentation for chips.](https://github.com/material-components/material-components-ios/commit/425f177ffb3581ff20e574777bce8c18e1a074d8) (Mohammad Cazi)
+
+### NavigationBar
+
+#### Changes
+
+* [Add an API for customizing button fonts. (#3412)](https://github.com/material-components/material-components-ios/commit/610d1ab58a44d204b7576bb654a2c6a99a7a0742) (featherless)
+
+---
+
 # 54.9.0
 
 This release continues to improve the support for our themer APIs across all components.

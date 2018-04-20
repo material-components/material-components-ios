@@ -120,6 +120,25 @@ IB_DESIGNABLE
  */
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
+/**
+ Sets the title font for the given state for all buttons.
+
+ @param font The font that should be displayed on text buttons for the given state.
+ @param state The state for which the font should be displayed.
+ */
+- (void)setButtonsTitleFont:(nullable UIFont *)font forState:(UIControlState)state;
+
+/**
+ Returns the font set for @c state that was set by setButtonsTitleFont:forState:.
+
+ If no font has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The state for which the font should be returned.
+ @return The font associated with the given state.
+ */
+- (nullable UIFont *)buttonsTitleFontForState:(UIControlState)state;
+
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
 
