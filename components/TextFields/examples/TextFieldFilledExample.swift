@@ -108,31 +108,23 @@ final class TextFieldFilledSwiftExample: UIViewController {
   }
 
   func setupTextFields() {
-    let colorScheme = MDCSemanticColorScheme()
-
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerFilled(textInput: name)
     name.delegate = self
     name.text = "Grace Hopper"
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
-//    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
-//                                                           toTextInputController: nameController)
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
     let addressController = MDCTextInputControllerFilled(textInput: address)
     address.delegate = self
     addressController.placeholderText = "Address"
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
-                                                           toTextInputController: addressController)
     allTextFieldControllers.append(addressController)
 
     scrollView.addSubview(city)
     city.delegate = self
     cityController.placeholderText = "City"
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
-                                                           toTextInputController: cityController)
     allTextFieldControllers.append(cityController)
 
     // In iOS 9+, you could accomplish this with a UILayoutGuide.
@@ -144,32 +136,24 @@ final class TextFieldFilledSwiftExample: UIViewController {
     stateZip.addSubview(state)
     state.delegate = self
     stateController.placeholderText = "State"
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
-                                                           toTextInputController: stateController)
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
     zip.delegate = self
     zipController.placeholderText = "Zip Code"
     zipController.helperText = "XXXXX"
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
-                                                           toTextInputController: zipController)
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
     let phoneController = MDCTextInputControllerFilled(textInput: phone)
     phone.delegate = self
     phoneController.placeholderText = "Phone Number"
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
-                                                           toTextInputController: phoneController)
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerFilled(textInput: message)
     message.textView?.delegate = self
     messageController.placeholderText = "Message"
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
-                                                           toTextInputController: messageController)
     allTextFieldControllers.append(messageController)
 
     var tag = 0
@@ -295,9 +279,9 @@ final class TextFieldFilledSwiftExample: UIViewController {
     scrollView.layoutMargins = margins
   }
 
-  func style(textInputController : MDCTextInputController) {
+  func style(textInputController : MDCTextInputControllerFilled) {
     let colorScheme = MDCSemanticColorScheme()
-    MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to:textInputController)
+    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
     let typographyScheme = MDCTypographyScheme()
     MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
   }

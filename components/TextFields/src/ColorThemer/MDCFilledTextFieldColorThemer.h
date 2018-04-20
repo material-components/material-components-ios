@@ -34,7 +34,7 @@
  @param textInputControllerFilled A MDCTextInputControllerFilled instance to apply a color scheme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-           toTextInputController:(nonnull MDCTextInputControllerFilled *)textInputControllerFilled;
+     toTextInputControllerFilled:(nonnull MDCTextInputControllerFilled *)textInputControllerFilled;
 
 @end
 
