@@ -705,7 +705,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateImageTintColor {
+  if (!self.isImageTintStatefulAPIEnabled) {
+    return;
+  }
   self.imageView.tintColor = [self imageTintColorForState:self.state];
+}
+
+- (void)setImageTintStatefulAPIEnabled:(BOOL)imageTintStatefulAPIEnabled {
+  _imageTintStatefulAPIEnabled = imageTintStatefulAPIEnabled;
+  if (imageTintStatefulAPIEnabled) {
+    [self updateImageTintColor];
+  }
 }
 
 #pragma mark - Elevations
@@ -970,10 +980,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.inkView.maxRippleRadius =
       (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
   self.inkView.layer.masksToBounds = NO;
-}
-
-- (void)updateState {
-  [self updateImageTintColor];
 }
 
 #pragma mark - Dynamic Type

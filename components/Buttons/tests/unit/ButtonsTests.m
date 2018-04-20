@@ -368,6 +368,12 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 #pragma mark - imageTintColor:forState:
 
+- (void)testTintColorStatefullAPIDefault {
+  MDCButton *button = [[MDCButton alloc] init];
+
+  XCTAssertFalse(button.isImageTintStatefulAPIEnabled);
+}
+
 - (void)testRemovedImageTintColorForState {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
@@ -415,8 +421,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
-- (void)testImageTintColorForStateSetsImageViewTintColor {
+- (void)testImageTintColorForStateFallsBackToDefault {
   MDCButton *button = [[MDCButton alloc] init];
+  button.imageTintStatefulAPIEnabled = NO;
   UIColor *normalTint = [UIColor yellowColor];
   UIColor *selectedTint = [UIColor redColor];
 
@@ -426,7 +433,36 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal], normalTint);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateSelected], selectedTint);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateHighlighted], normalTint);
+}
 
+- (void)testImageTintColorForStateSetsImageViewTintColor {
+  MDCButton *button = [[MDCButton alloc] init];
+  button.imageTintStatefulAPIEnabled = YES;
+  UIColor *normalTint = [UIColor yellowColor];
+  UIColor *selectedTint = [UIColor redColor];
+
+  [button setImageTintColor:normalTint forState:UIControlStateNormal];
+  [button setImageTintColor:selectedTint forState:UIControlStateSelected];
+
+  XCTAssertEqualObjects(button.imageView.tintColor, normalTint);
+
+  button.selected = YES;
+  XCTAssertEqualObjects(button.imageView.tintColor, selectedTint);
+}
+
+- (void)testImageTintColorStateAPISetting {
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalTint = [UIColor yellowColor];
+  UIColor *selectedTint = [UIColor redColor];
+  UIColor *expectedTintColor = [UIColor blueColor];
+  button.imageView.tintColor = expectedTintColor;
+  [button setImageTintColor:normalTint forState:UIControlStateNormal];
+  [button setImageTintColor:selectedTint forState:UIControlStateSelected];
+
+  XCTAssertEqualObjects(button.imageView.tintColor, expectedTintColor);
+
+  button.selected = YES;
+  XCTAssertEqualObjects(button.imageView.tintColor, expectedTintColor);
 }
 
 #pragma mark - backgroundColor:forState:
