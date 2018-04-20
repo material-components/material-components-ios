@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCTextButtonColorThemer.h"
+#import "MDCHairlineButtonColorThemer.h"
 
 #import "MDCPalettes.h"
 
-@implementation MDCTextButtonColorThemer
+@implementation MDCHairlineButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button {
@@ -28,8 +28,6 @@
   [button setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
                forState:UIControlStateDisabled];
-  [button setImageTintColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f] forState:UIControlStateDisabled];
   button.disabledAlpha = 1.f;
   button.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f];
   [button setBorderColor:MDCPalette.greyPalette.tint300 forState:UIControlStateNormal];
@@ -38,7 +36,7 @@
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [button setBackgroundColor:nil forState:state];
     [button setTitleColor:nil forState:state];
