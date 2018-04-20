@@ -27,14 +27,27 @@
 
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                            toNavigationBar:(nonnull MDCNavigationBar *)navigationBar {
+  [self resetUIControlStatesForNavigationBar:navigationBar];
+
   navigationBar.backgroundColor = colorScheme.surfaceColor;
-  navigationBar.titleTextColor = colorScheme.onSurfaceColor;
-  navigationBar.tintColor = colorScheme.onSurfaceColor;
+  // Note that we must set the tint color before setting the buttons title color. Otherwise the
+  // button title colors will be set with the tint color.
+  navigationBar.tintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  navigationBar.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  [navigationBar setButtonsTitleColor:navigationBar.titleTextColor forState:UIControlStateNormal];
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
          toNavigationBar:(MDCNavigationBar *)navigationBar {
   navigationBar.backgroundColor = colorScheme.primaryColor;
+}
+
++ (void)resetUIControlStatesForNavigationBar:(nonnull MDCNavigationBar *)navigationBar {
+  NSUInteger maximumStateValue = (UIControlStateNormal | UIControlStateSelected |
+                                  UIControlStateHighlighted | UIControlStateDisabled);
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [navigationBar setButtonsTitleColor:nil forState:state];
+  }
 }
 
 @end
