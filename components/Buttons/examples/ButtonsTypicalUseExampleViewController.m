@@ -18,6 +18,9 @@
 #import "MDCButtonTypographyThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "MDCTextButtonThemer.h"
+#import "MDCContainedButtonThemer.h"
+
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
 @interface ButtonsTypicalUseExampleViewController ()
@@ -40,11 +43,11 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
+  self.view.backgroundColor = [UIColor whiteColor];
   UIColor *titleColor = [UIColor whiteColor];
 
   // Raised button
@@ -74,30 +77,28 @@
   [disabledRaisedButton setEnabled:NO];
   [self.view addSubview:disabledRaisedButton];
 
-  // Flat button
+  // Text button
 
-  MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
-  [flatButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:flatButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:flatButton];
-  [flatButton sizeToFit];
-  [flatButton addTarget:self
+  MDCButton *textButton = [[MDCButton alloc] init];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:textButton];
+  [textButton setTitle:@"Button" forState:UIControlStateNormal];
+  [textButton sizeToFit];
+  [textButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:flatButton];
+  [self.view addSubview:textButton];
 
-  // Disabled flat
+  // Disabled Text button
 
-  MDCFlatButton *disabledFlatButton = [[MDCFlatButton alloc] init];
-  [disabledFlatButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledFlatButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:disabledFlatButton];
-  [disabledFlatButton sizeToFit];
-  [disabledFlatButton addTarget:self
+  MDCButton *disabledTextButton = [[MDCButton alloc] init];
+  [disabledTextButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:disabledTextButton];
+  [disabledTextButton sizeToFit];
+  [disabledTextButton addTarget:self
                          action:@selector(didTap:)
                forControlEvents:UIControlEventTouchUpInside];
-  [disabledFlatButton setEnabled:NO];
-  [self.view addSubview:disabledFlatButton];
+  [disabledTextButton setEnabled:NO];
+  [self.view addSubview:disabledTextButton];
 
   // Custom stroked button
 
@@ -141,7 +142,7 @@
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    raisedButton, disabledRaisedButton, flatButton, disabledFlatButton, strokedButton,
+    raisedButton, disabledRaisedButton, textButton, disabledTextButton, strokedButton,
     disabledStrokedButton, self.floatingButton
   ];
 
@@ -151,14 +152,14 @@
 - (void)setupExampleViews {
   UILabel *raisedButtonLabel = [self addLabelWithText:@"Raised"];
   UILabel *disabledRaisedButtonLabel = [self addLabelWithText:@"Disabled Raised"];
-  UILabel *flatButtonLabel = [self addLabelWithText:@"Flat"];
-  UILabel *disabledFlatButtonLabel = [self addLabelWithText:@"Disabled Flat"];
+  UILabel *textButtonLabel = [self addLabelWithText:@"Text button"];
+  UILabel *disabledTextButtonLabel = [self addLabelWithText:@"Disabled text button"];
   UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
   UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Disabled Stroked"];
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
-    raisedButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
+    raisedButtonLabel, disabledRaisedButtonLabel, textButtonLabel, disabledTextButtonLabel,
     strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
   ];
 }
