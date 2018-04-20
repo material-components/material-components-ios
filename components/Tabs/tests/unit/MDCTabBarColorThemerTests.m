@@ -98,7 +98,7 @@
   XCTAssertEqualObjects(tabBar.tintColor, colorScheme.primaryColor);
   XCTAssertEqualObjects(tabBar.selectedItemTintColor, colorScheme.primaryColor);
   XCTAssertEqualObjects(tabBar.unselectedItemTintColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54f]);
 }
 
 - (void)testTabBarColorThemerApplyColorSchemeProperly {
