@@ -49,6 +49,7 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
       case MDCColorSchemeDefaultsMaterial201804:
         _primaryColor = ColorFromRGB(0x6200EE);
         _primaryColorVariant = ColorFromRGB(0x3700B3);
+        _primaryColorVariant2 = ColorFromRGB(0xBB86FC);
         _secondaryColor = ColorFromRGB(0x03DAC6);
         _errorColor = ColorFromRGB(0xFF1744);
         _surfaceColor = ColorFromRGB(0xFFFFFF);

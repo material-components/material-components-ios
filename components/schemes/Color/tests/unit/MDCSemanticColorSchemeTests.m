@@ -39,6 +39,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   // Then
   XCTAssertEqualObjects(initScheme.primaryColor, mdDefaultScheme.primaryColor);
   XCTAssertEqualObjects(initScheme.primaryColorVariant, mdDefaultScheme.primaryColorVariant);
+  XCTAssertEqualObjects(initScheme.primaryColorVariant2, mdDefaultScheme.primaryColorVariant2);
   XCTAssertEqualObjects(initScheme.secondaryColor, mdDefaultScheme.secondaryColor);
   XCTAssertEqualObjects(initScheme.errorColor, mdDefaultScheme.errorColor);
   XCTAssertEqualObjects(initScheme.surfaceColor, mdDefaultScheme.surfaceColor);
@@ -57,6 +58,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   // Then
   XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0x6200EE));
   XCTAssertEqualObjects(colorScheme.primaryColorVariant, ColorFromRGB(0x3700B3));
+  XCTAssertEqualObjects(colorScheme.primaryColorVariant2, ColorFromRGB(0xBB86FC));
   XCTAssertEqualObjects(colorScheme.secondaryColor, ColorFromRGB(0x03DAC6));
   XCTAssertEqualObjects(colorScheme.errorColor, ColorFromRGB(0xFF1744));
   XCTAssertEqualObjects(colorScheme.surfaceColor, ColorFromRGB(0xFFFFFF));

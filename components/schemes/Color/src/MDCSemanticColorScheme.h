@@ -76,6 +76,15 @@
  @c backgroundColor.
  */
 @property(nonnull, readonly, nonatomic) UIColor *onBackgroundColor;
+
+@optional
+/**
+ A second tonal variation of primary color.
+
+ Note: This property is currently optional but will become required in the near future.
+ */
+@property(nonnull, readonly, nonatomic) UIColor *primaryColorVariant2;
+
 @end
 
 /**
@@ -97,6 +106,7 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 // Redeclare protocol properties as readwrite
 @property(nonnull, readwrite, nonatomic) UIColor *primaryColor;
 @property(nonnull, readwrite, nonatomic) UIColor *primaryColorVariant;
+@property(nonnull, readwrite, nonatomic) UIColor *primaryColorVariant2;
 @property(nonnull, readwrite, nonatomic) UIColor *secondaryColor;
 @property(nonnull, readwrite, nonatomic) UIColor *errorColor;
 @property(nonnull, readwrite, nonatomic) UIColor *surfaceColor;
