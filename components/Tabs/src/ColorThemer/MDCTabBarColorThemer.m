@@ -39,9 +39,14 @@ static const CGFloat kUnselectedImageOpacity = 0.54f;
                                     toTabs:(nonnull MDCTabBar *)tabBar {
   tabBar.barTintColor = colorScheme.surfaceColor;
   tabBar.tintColor = colorScheme.primaryColor;
-  tabBar.selectedItemTintColor = colorScheme.primaryColor;
-  tabBar.unselectedItemTintColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
+  [tabBar setTitleColor:colorScheme.primaryColor forState:MDCTabBarItemStateSelected];
+  [tabBar setImageTintColor:colorScheme.primaryColor forState:MDCTabBarItemStateSelected];
+  UIColor *unselectedTitleColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+  UIColor *unselectedImageColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
+  [tabBar setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
+  [tabBar setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
