@@ -120,6 +120,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   CGFloat _enabledAlpha;
   BOOL _hasCustomDisabledTitleColor;
+  BOOL _imageTintStatefulAPIEnabled;
 
   // Cached accessibility settings.
   NSMutableDictionary<NSNumber *, NSString *> *_nontransformedTitles;
@@ -701,21 +702,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(UIControlState)state {
   _imageTintColors[@(state)] = imageTintColor;
+  _imageTintStatefulAPIEnabled = YES;
   [self updateImageTintColor];
 }
 
 - (void)updateImageTintColor {
-  if (!self.isImageTintStatefulAPIEnabled) {
+  if (!_imageTintStatefulAPIEnabled) {
     return;
   }
   self.imageView.tintColor = [self imageTintColorForState:self.state];
-}
-
-- (void)setImageTintStatefulAPIEnabled:(BOOL)imageTintStatefulAPIEnabled {
-  _imageTintStatefulAPIEnabled = imageTintStatefulAPIEnabled;
-  if (imageTintStatefulAPIEnabled) {
-    [self updateImageTintColor];
-  }
 }
 
 #pragma mark - Elevations

@@ -47,7 +47,6 @@
   // Raised button
 
   MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
-  raisedButton.imageTintStatefulAPIEnabled = YES;
   [raisedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
 
@@ -158,7 +157,6 @@
   // Floating action button
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  self.floatingButton.imageTintStatefulAPIEnabled = YES;
   [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
   [self.floatingButton setImageTintColor:UIColor.whiteColor forState:UIControlStateNormal];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];

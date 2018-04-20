@@ -290,10 +290,6 @@
  */
 - (nullable UIColor *)shadowColorForState:(UIControlState)state;
 
-/** When @c YES, the imageTintColor forState: APIs are enabled. Defaults to @c NO. */
-@property(nonatomic, assign, getter=isImageTintStatefulAPIEnabled) BOOL imageTintStatefulAPIEnabled;
-
-
 #pragma mark - UIButton changes
 
 /**
