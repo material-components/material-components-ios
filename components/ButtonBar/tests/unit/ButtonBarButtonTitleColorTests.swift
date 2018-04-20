@@ -91,9 +91,15 @@ class ButtonBarButtonTitleColorTests: XCTestCase {
       if let button = view as? MDCButton {
         button.isSelected = true
 
+        XCTAssertEqual(button.titleColor(for: .normal), normalColor)
+        XCTAssertEqual(button.titleColor(for: .selected), selectedColor)
+
         XCTAssertEqual(button.titleLabel?.textColor, selectedColor)
 
         button.isSelected = false
+
+        XCTAssertEqual(button.titleColor(for: .normal), normalColor)
+        XCTAssertEqual(button.titleColor(for: .selected), selectedColor)
 
         XCTAssertEqual(button.titleLabel?.textColor, normalColor)
       }
