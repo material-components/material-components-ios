@@ -154,6 +154,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (!_unselectedItemTintColor) {
     _unselectedItemTintColor = [UIColor grayColor];
   }
+  _selectedItemTitleColor = _selectedItemTintColor;
 
   if (!_iconImageView) {
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -166,7 +167,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _label.text = _title;
     _label.font = [UIFont systemFontOfSize:MDCBottomNavigationItemViewTitleFontSize];
     _label.textAlignment = NSTextAlignmentCenter;
-    _label.textColor = _selectedItemTintColor;
+    _label.textColor = _selectedItemTitleColor;
     _label.isAccessibilityElement = NO;
     [self addSubview:_label];
 
@@ -311,7 +312,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   _selected = selected;
   if (selected) {
-    self.label.textColor = self.selectedItemTintColor;
+    self.label.textColor = self.selectedItemTitleColor;
     self.iconImageView.tintColor = self.selectedItemTintColor;
     self.button.accessibilityTraits |= UIAccessibilityTraitSelected;
 
@@ -348,9 +349,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
   _selectedItemTintColor = selectedItemTintColor;
+  _selectedItemTitleColor = selectedItemTintColor;
   if (self.selected) {
     self.iconImageView.tintColor = self.selectedItemTintColor;
-    self.label.textColor = self.selectedItemTintColor;
+    self.label.textColor = self.selectedItemTitleColor;
     self.inkView.inkColor =
         [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
   }
@@ -363,6 +365,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     self.label.textColor = self.unselectedItemTintColor;
     CGFloat alpha = MDCBottomNavigationItemViewInkOpacity;
     self.inkView.inkColor = [self.unselectedItemTintColor colorWithAlphaComponent:alpha];
+  }
+}
+
+- (void)setSelectedItemTitleColor:(UIColor *)selectedItemTitleColor {
+  _selectedItemTitleColor = selectedItemTitleColor;
+  if (self.selected) {
+    self.label.textColor = self.selectedItemTitleColor;
   }
 }
 
