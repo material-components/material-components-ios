@@ -426,13 +426,15 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
 
       if (i < [_items count]) {
         UIBarButtonItem *item = _items[i];
-        [button sizeToFit];
 
+        CGRect frame = button.frame;
         if (item.width > 0) {
-          CGRect frame = button.frame;
           frame.size.width = item.width;
-          button.frame = frame;
+        } else {
+          frame.size.width = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width;
         }
+        button.frame = frame;
+
         [self setNeedsLayout];
       }
     }
