@@ -19,6 +19,7 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "MDCTextButtonThemer.h"
+#import "MDCFloatingButtonColorThemer.h"
 #import "MDCContainedButtonThemer.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
@@ -133,7 +134,7 @@
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFloatingButton:self.floatingButton];
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme toButton:self.floatingButton];
   [self.floatingButton setTintColor:colorScheme.onSecondaryColor];
   [self.view addSubview:self.floatingButton];
 

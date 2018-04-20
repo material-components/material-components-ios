@@ -18,6 +18,7 @@
 
 #import "MaterialButtons.h"
 #import "MDCButtonColorThemer.h"
+#import "MDCFloatingButtonColorThemer.h"
 #import "MDCTextButtonColorThemer.h"
 #import "MDCContainedButtonColorThemer.h"
 
@@ -226,7 +227,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
 
   // Where
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFloatingButton:button];
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
   NSUInteger maximumStateValue =
