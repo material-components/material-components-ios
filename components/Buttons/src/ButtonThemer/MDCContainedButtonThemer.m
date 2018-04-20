@@ -16,14 +16,14 @@
 
 #import "MDCContainedButtonThemer.h"
 
-#import "MDCButtonColorThemer.h"
+#import "MDCContainedButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
 
 @implementation MDCContainedButtonThemer
 
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
            toButton:(nonnull MDCButton *)button {
-  [MDCButtonColorThemer applySemanticColorScheme:scheme.colorScheme toRaisedButton:button];
+  [MDCContainedButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
   button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
   button.layer.cornerRadius = scheme.cornerRadius;
