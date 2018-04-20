@@ -46,6 +46,7 @@
 
   self.miniFloatingButton = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
                                                                shape:MDCFloatingButtonShapeMini];
+  self.miniFloatingButton.imageTintStatefulAPIEnabled = YES;
   self.miniFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.miniFloatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
@@ -58,6 +59,7 @@
 
 
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
+  self.defaultFloatingButton.imageTintStatefulAPIEnabled = YES;
   self.defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme
@@ -66,6 +68,7 @@
                                        forState:UIControlStateNormal];
 
   self.largeIconFloatingButton = [[MDCFloatingButton alloc] init];
+  self.largeIconFloatingButton.imageTintStatefulAPIEnabled = YES;
   self.largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.largeIconFloatingButton setImage:plusImage36 forState:UIControlStateNormal];
   [self.largeIconFloatingButton setContentEdgeInsets:UIEdgeInsetsMake(-6, -6, -6, 0)

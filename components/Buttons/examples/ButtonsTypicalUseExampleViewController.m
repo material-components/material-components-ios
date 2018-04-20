@@ -128,6 +128,7 @@
   // Floating action button
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
+  self.floatingButton.imageTintStatefulAPIEnabled = YES;
   [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   [self.floatingButton addTarget:self
