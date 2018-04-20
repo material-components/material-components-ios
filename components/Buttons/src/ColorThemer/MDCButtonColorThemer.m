@@ -29,6 +29,7 @@
                     toFlatButton:(nonnull MDCButton *)flatButton {
   [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:flatButton];
 }
+
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                 toFloatingButton:(nonnull MDCFloatingButton *)floatingButton {
   [self resetUIControlStatesForButtonTheming:floatingButton];
