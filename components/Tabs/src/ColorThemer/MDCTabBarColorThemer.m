@@ -16,7 +16,8 @@
 
 #import "MDCTabBarColorThemer.h"
 
-static const CGFloat kUnselectedOpacity = 0.6f;
+static const CGFloat kUnselectedTitleOpacity = 0.6f;
+static const CGFloat kUnselectedImageOpacity = 0.54f;
 
 @implementation MDCTabBarColorThemer
 
@@ -24,9 +25,14 @@ static const CGFloat kUnselectedOpacity = 0.6f;
                           toTabs:(nonnull MDCTabBar *)tabBar {
   tabBar.barTintColor = colorScheme.primaryColor;
   tabBar.tintColor = colorScheme.onPrimaryColor;
-  tabBar.selectedItemTintColor = colorScheme.onPrimaryColor;
-  tabBar.unselectedItemTintColor =
-      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
+  [tabBar setTitleColor:colorScheme.onPrimaryColor forState:MDCTabBarItemStateSelected];
+  [tabBar setImageTintColor:colorScheme.onPrimaryColor forState:MDCTabBarItemStateSelected];
+  UIColor *unselectedTitleColor =
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+  UIColor *unselectedImageColor =
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
+  [tabBar setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
+  [tabBar setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
 }
 
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
