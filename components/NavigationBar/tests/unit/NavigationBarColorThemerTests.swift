@@ -53,8 +53,10 @@ class NavigationBarColorThemerTests: XCTestCase {
     MDCNavigationBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, to: navigationBar)
 
     // Then
-    XCTAssertEqual(navigationBar.backgroundColor, colorScheme.surfaceColor)
-    XCTAssertEqual(navigationBar.titleTextColor, colorScheme.onSurfaceColor)
-    XCTAssertEqual(navigationBar.tintColor, colorScheme.onSurfaceColor)
+    XCTAssertEqual(navigationBar.titleTextColor,
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(navigationBar.buttonsTitleColor(for: .normal),
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(navigationBar.tintColor, colorScheme.onSurfaceColor.withAlphaComponent(0.54))
   }
 }
