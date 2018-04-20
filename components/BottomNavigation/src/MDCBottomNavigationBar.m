@@ -163,6 +163,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 - (void)commonMDCBottomNavigationBarInit {
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
+  _selectedItemTitleColor = _selectedItemTintColor;
   _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _alignment = MDCBottomNavigationBarAlignmentJustified;
   _itemsDistributed = YES;
@@ -423,6 +424,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     itemView.title = item.title;
     itemView.itemTitleFont = self.itemTitleFont;
     itemView.selectedItemTintColor = self.selectedItemTintColor;
+    itemView.selectedItemTitleColor = self.selectedItemTitleColor;
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
@@ -502,6 +504,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
   _selectedItemTintColor = selectedItemTintColor;
+  _selectedItemTitleColor = selectedItemTintColor;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.selectedItemTintColor = selectedItemTintColor;
   }
@@ -511,6 +514,13 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   _unselectedItemTintColor = unselectedItemTintColor;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.unselectedItemTintColor = unselectedItemTintColor;
+  }
+}
+
+- (void)setSelectedItemTitleColor:(UIColor *)selectedItemTitleColor {
+  _selectedItemTitleColor = selectedItemTitleColor;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.selectedItemTitleColor = selectedItemTitleColor;
   }
 }
 
