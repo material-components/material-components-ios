@@ -53,7 +53,8 @@
                                    inMode:MDCFloatingButtonModeExpanded];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme
                                 toFloatingButton:self.miniFloatingButton];
-  [self.miniFloatingButton setTintColor:colorScheme.onSecondaryColor];
+  [self.miniFloatingButton setImageTintColor:colorScheme.onSecondaryColor
+                                    forState:UIControlStateNormal];
 
 
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
@@ -61,7 +62,8 @@
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme
                                 toFloatingButton:self.defaultFloatingButton];
-  [self.defaultFloatingButton setTintColor:colorScheme.onSecondaryColor];
+  [self.defaultFloatingButton setImageTintColor:colorScheme.onSecondaryColor
+                                       forState:UIControlStateNormal];
 
   self.largeIconFloatingButton = [[MDCFloatingButton alloc] init];
   self.largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -71,7 +73,8 @@
                                               inMode:MDCFloatingButtonModeExpanded];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme
                                 toFloatingButton:self.largeIconFloatingButton];
-  [self.largeIconFloatingButton setTintColor:colorScheme.onSecondaryColor];
+  [self.largeIconFloatingButton setImageTintColor:colorScheme.onSecondaryColor
+                                         forState:UIControlStateNormal];
 
   [self.view addSubview:self.iPadLabel];
   [self.view addSubview:self.miniFloatingButton];

@@ -215,6 +215,28 @@
     UI_APPEARANCE_SELECTOR;
 
 /**
+ A color used as the button's imageView tint color @c imageTintColor for @c state.
+
+ If no image tint color has been set for a given state, the returned value will fall back to the
+ value set for UIControlStateNormal.
+
+ @param state The state.
+ @return The tint color.
+ */
+- (nullable UIColor *)imageTintColorForState:(UIControlState)state;
+
+/**
+ Sets the image view tint color for a particular control state.
+
+ If left unset or reset to nil for a given state, it falls back to UIControlStateNormal setting.
+
+ @param imageTintColor The imageView tint color to set.
+ @param state The state to set.
+ */
+- (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(UIControlState)state;
+
+
+/**
  The value set for the button's @c borderWidth for @c state.
 
  @param state The state.

@@ -115,6 +115,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
+  NSMutableDictionary<NSNumber *, UIColor *> *_imageTintColors;
   NSMutableDictionary<NSNumber *, UIFont *> *_fonts;
 
   CGFloat _enabledAlpha;
@@ -296,6 +297,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _userElevations = [NSMutableDictionary dictionary];
   _nontransformedTitles = [NSMutableDictionary dictionary];
   _borderColors = [NSMutableDictionary dictionary];
+  _imageTintColors = [NSMutableDictionary dictionary];
   _borderWidths = [NSMutableDictionary dictionary];
   _fonts = [NSMutableDictionary dictionary];
 
@@ -510,6 +512,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateBorderWidth];
   [self updateShadowColor];
   [self updateTitleFont];
+  [self updateImageTintColor];
 }
 
 #pragma mark - Title Uppercasing
@@ -687,6 +690,22 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
   _backgroundColors[@(state)] = backgroundColor;
   [self updateAlphaAndBackgroundColorAnimated:NO];
+}
+
+#pragma mark - Image Tint Color
+
+- (nullable UIColor *)imageTintColorForState:(UIControlState)state {
+
+  return _imageTintColors[@(state)] ?: _imageTintColors[@(UIControlStateNormal)];
+}
+
+- (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(UIControlState)state {
+  _imageTintColors[@(state)] = imageTintColor;
+  [self updateImageTintColor];
+}
+
+- (void)updateImageTintColor {
+  self.imageView.tintColor = [self imageTintColorForState:self.state];
 }
 
 #pragma mark - Elevations
@@ -951,6 +970,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.inkView.maxRippleRadius =
       (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
   self.inkView.layer.masksToBounds = NO;
+}
+
+- (void)updateState {
+  [self updateImageTintColor];
 }
 
 #pragma mark - Dynamic Type
