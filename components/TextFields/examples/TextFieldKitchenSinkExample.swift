@@ -280,6 +280,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldControllerUnderlineCustomFontFloating.trailingUnderlineLabelFont =
       UIFont.preferredFont(forTextStyle: .subheadline)
     textFieldCustomFontFloating.clearButton.tintColor = MDCPalette.red.accent400
+    textFieldControllerUnderlineCustomFontFloating.floatingPlaceholderNormalColor = .yellow
+    textFieldControllerUnderlineCustomFontFloating.floatingPlaceholderActiveColor = .orange
 
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
     let leadingViewImage = UIImage(named: "ic_search", in: bundle, compatibleWith: nil)!
