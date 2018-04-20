@@ -111,11 +111,11 @@ static NSString *const kExampleDetailText =
   MDCCollectionViewTextCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
-//  cell.textLabel.text = _content[indexPath.item][0];
-//  cell.textLabel.textAlignment = [_content[indexPath.item][1] integerValue];
-//  cell.detailTextLabel.text = _content[indexPath.item][2];
-//  cell.detailTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
-//
+  cell.textLabel.text = _content[indexPath.item][0];
+  cell.textLabel.textAlignment = [_content[indexPath.item][1] integerValue];
+  cell.detailTextLabel.text = _content[indexPath.item][2];
+  cell.detailTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
+  cell.detailTextLabel.numberOfLines = 0;
 //  if (indexPath.item % 5 == 4) {
 //    cell.detailTextLabel.numberOfLines = 2;
 //  }

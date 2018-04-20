@@ -15,5 +15,5 @@
  */
 
 #import "MDCCollectionViewCell.h"
-#import "MDCCollectionViewListCell.h"
 #import "MDCCollectionViewTextCell.h"
+#import "MDCCollectionViewListCell.h"
