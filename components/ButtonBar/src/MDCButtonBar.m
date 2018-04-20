@@ -418,14 +418,14 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
 - (void)setButtonsTitleFont:(UIFont *)font forState:(UIControlState)state {
   [_defaultBuilder setTitleFont:font forState:state];
 
-  for (NSUInteger ix = 0; ix < [_buttonViews count]; ++ix) {
-    UIView *viewObj = _buttonViews[ix];
+  for (NSUInteger i = 0; i < [_buttonViews count]; ++i) {
+    UIView *viewObj = _buttonViews[i];
     if ([viewObj isKindOfClass:[UIButton class]]) {
       MDCButton *button = (MDCButton *)viewObj;
       [button setTitleFont:font forState:state];
 
-      if (ix < [_items count]) {
-        UIBarButtonItem *item = _items[ix];
+      if (i < [_items count]) {
+        UIBarButtonItem *item = _items[i];
         [button sizeToFit];
 
         if (item.width > 0) {
