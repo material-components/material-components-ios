@@ -26,8 +26,6 @@ static CGFloat const kOutlinedTextFieldDisabledAlpha = 0.38f;
            toTextInputController:(id<MDCTextInputController>)textInputController {
   UIColor *onSurfaceOpacity =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldOnSurfaceAlpha];
-  UIColor *primaryOpacity =
-      [colorScheme.primaryColor colorWithAlphaComponent:kOutlinedTextFieldActiveAlpha];
   textInputController.activeColor = colorScheme.primaryColor;
   textInputController.errorColor = colorScheme.errorColor;
   textInputController.trailingUnderlineLabelTextColor = onSurfaceOpacity;
@@ -45,7 +43,8 @@ static CGFloat const kOutlinedTextFieldDisabledAlpha = 0.38f;
     (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
     if ([textInputControllerFloatingPlaceholder
          respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
-      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = primaryOpacity;
+      textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor =
+          [colorScheme.primaryColor colorWithAlphaComponent:kOutlinedTextFieldActiveAlpha];
     }
   }
 }

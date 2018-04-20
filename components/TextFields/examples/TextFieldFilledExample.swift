@@ -116,8 +116,8 @@ final class TextFieldFilledSwiftExample: UIViewController {
     name.text = "Grace Hopper"
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
-                                                           toTextInputController: nameController)
+//    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme,
+//                                                           toTextInputController: nameController)
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
