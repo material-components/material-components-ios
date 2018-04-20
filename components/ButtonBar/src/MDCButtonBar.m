@@ -445,6 +445,21 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   return [_defaultBuilder titleFontForState:state];
 }
 
+- (void)setButtonsTitleColor:(nullable UIColor *)color forState:(UIControlState)state {
+  [_defaultBuilder setTitleColor:color forState:state];
+
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[UIButton class]]) {
+      MDCButton *button = (MDCButton *)viewObj;
+      [button setTitleColor:color forState:state];
+    }
+  }
+}
+
+- (UIColor *)buttonsTitleColorForState:(UIControlState)state {
+  return [_defaultBuilder titleColorForState:state];
+}
+
 // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
 // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
 // symbol.
