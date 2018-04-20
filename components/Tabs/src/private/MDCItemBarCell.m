@@ -202,6 +202,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
     [self updateDisplayedTitle];
     [self updateTitleTextColor];
+    [self updateImageTintColor];
     [self updateInk];
     [self updateSubviews];
     [self updateTitleLines];
@@ -312,6 +313,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [super tintColorDidChange];
 
   [self updateTitleTextColor];
+  [self updateImageTintColor];
 }
 
 - (void)didMoveToWindow {
@@ -330,6 +332,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 - (void)prepareForReuse {
   [super prepareForReuse];
   [self updateTitleTextColor];
+  [self updateImageTintColor];
   [self updateAccessibilityTraits];
   [_inkTouchController cancelInkTouchProcessing];
 }
@@ -342,6 +345,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   [super setSelected:selected];
   [self updateTitleTextColor];
+  [self updateImageTintColor];
   [self updateAccessibilityTraits];
   [self updateTransformsAnimated:animate];
   [self updateTitleFont];
@@ -350,6 +354,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
   [self updateTitleTextColor];
+  [self updateImageTintColor];
 }
 
 #pragma mark - UIAccessibility
@@ -427,6 +432,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
       // Display our image in the new image view.
       [self updateDisplayedImage];
+
+      [self updateImageTintColor];
     }
 
     _imageView.hidden = NO;
@@ -475,6 +482,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 - (void)updateColors {
   [self updateTitleTextColor];
+  [self updateImageTintColor];
   [self updateInk];
 }
 
@@ -485,7 +493,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   }
   _titleLabel.textColor = textColor;
   _badgeLabel.textColor = textColor;
-  _imageView.tintColor = textColor;
+}
+
+- (void)updateImageTintColor {
+  UIColor *imageTintColor = _style.imageTintColor;
+  if (self.isHighlighted || self.isSelected) {
+    imageTintColor = _style.selectedImageTintColor;
+  }
+  _imageView.tintColor = imageTintColor;
 }
 
 - (void)updateTransformsAnimated:(BOOL)animated {
