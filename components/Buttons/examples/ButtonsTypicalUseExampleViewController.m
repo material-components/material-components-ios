@@ -16,10 +16,12 @@
 
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
-#import "MaterialButtons.h"
-#import "MaterialTypography.h"
+#import "MDCHairlineButtonColorThemer.h"
+#import "MDCHairlineButtonThemer.h"
 #import "MDCTextButtonThemer.h"
 #import "MDCContainedButtonThemer.h"
+#import "MaterialButtons.h"
+#import "MaterialTypography.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
@@ -28,18 +30,6 @@
 @end
 
 @implementation ButtonsTypicalUseExampleViewController
-
-- (MDCButton *)buildCustomStrokedButton {
-  MDCButton *button = [[MDCButton alloc] init];
-  [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
-  [button setTitleColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
-  button.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
-
-  [button setBorderWidth:1.0 forState:UIControlStateNormal];
-  [button setBorderColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
-
-  return button;
-}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -96,30 +86,34 @@
   [disabledTextButton setEnabled:NO];
   [self.view addSubview:disabledTextButton];
 
-  // Custom stroked button
+  // Hairline button
 
-  MDCButton *strokedButton = [self buildCustomStrokedButton];
-  [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:strokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:strokedButton];
-  [strokedButton sizeToFit];
-  [strokedButton addTarget:self
+  MDCButton *hairlineButton = [[MDCButton alloc] init];
+  [MDCHairlineButtonThemer applyScheme:buttonScheme toButton:hairlineButton];
+  [hairlineButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:hairlineButton];
+  [MDCHairlineButtonColorThemer applySemanticColorScheme:colorScheme
+                                                toButton:hairlineButton];
+  [hairlineButton sizeToFit];
+  [hairlineButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:strokedButton];
+  [self.view addSubview:hairlineButton];
 
-  // Disabled custom stroked button
+  // Disabled custom hairline button
 
-  MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
-  [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledStrokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:disabledStrokedButton];
-  [disabledStrokedButton sizeToFit];
-  [disabledStrokedButton addTarget:self
+  MDCButton *disabledHairlineButton = [[MDCButton alloc] init];
+  [MDCHairlineButtonThemer applyScheme:buttonScheme toButton:disabledHairlineButton];
+  [disabledHairlineButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledHairlineButton];
+  [MDCHairlineButtonColorThemer applySemanticColorScheme:colorScheme
+                                                toButton:disabledHairlineButton];
+  [disabledHairlineButton sizeToFit];
+  [disabledHairlineButton addTarget:self
                             action:@selector(didTap:)
                   forControlEvents:UIControlEventTouchUpInside];
-  [disabledStrokedButton setEnabled:NO];
-  [self.view addSubview:disabledStrokedButton];
+  [disabledHairlineButton setEnabled:NO];
+  [self.view addSubview:disabledHairlineButton];
 
   // Floating action button
 
@@ -138,8 +132,8 @@
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    containedButton, disabledContainedButton, textButton, disabledTextButton, strokedButton,
-    disabledStrokedButton, self.floatingButton
+    containedButton, disabledContainedButton, textButton, disabledTextButton, hairlineButton,
+    disabledHairlineButton, self.floatingButton
   ];
 
   [self setupExampleViews];
@@ -150,13 +144,13 @@
   UILabel *disabledContainedButtonLabel = [self addLabelWithText:@"Disabled Contained"];
   UILabel *textButtonLabel = [self addLabelWithText:@"Text button"];
   UILabel *disabledTextButtonLabel = [self addLabelWithText:@"Disabled text button"];
-  UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
-  UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Disabled Stroked"];
+  UILabel *hairlineButtonLabel = [self addLabelWithText:@"Hairline"];
+  UILabel *disabledHairlineButtonLabel = [self addLabelWithText:@"Disabled Hairline"];
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
     containedButtonLabel, disabledContainedButtonLabel, textButtonLabel, disabledTextButtonLabel,
-    strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
+    hairlineButtonLabel, disabledHairlineButtonLabel, floatingButtonLabel
   ];
 }
 

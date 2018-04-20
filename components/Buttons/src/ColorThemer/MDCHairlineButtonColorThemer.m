@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCTextButtonColorThemer.h"
+#import "MDCHairlineButtonColorThemer.h"
 
 #import "MDCPalettes.h"
 
-@implementation MDCTextButtonColorThemer
+@implementation MDCHairlineButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button {
@@ -36,7 +36,7 @@
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [button setBackgroundColor:nil forState:state];
     [button setTitleColor:nil forState:state];
