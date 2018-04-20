@@ -366,6 +366,91 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+#pragma mark - imageTintColor:forState:
+
+- (void)testRemovedImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // When
+  [button setImageTintColor:nil forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertNil([button imageTintColorForState:UIControlStateNormal]);
+  XCTAssertNil([button imageTintColorForState:UIControlStateHighlighted]);
+}
+
+- (void)testDefaultImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertNil([button imageTintColorForState:UIControlStateSelected]);
+}
+
+- (void)testImageTintForUnspecifiedStateEqualsNormalState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *color = randomColor();
+
+  // When
+  [button setImageTintColor:color forState:UIControlStateNormal];
+
+  XCTAssertEqual([button imageTintColorForState:UIControlStateHighlighted], color);
+}
+
+- (void)testImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // And given
+    UIColor *color = randomColor();
+
+    // When
+    [button setImageTintColor:color forState:controlState];
+
+    // Then
+    XCTAssertEqualObjects([button imageTintColorForState:controlState], color);
+  }
+}
+
+- (void)testImageTintColorForStateFallsBackToDefault {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalTint = [UIColor yellowColor];
+  UIColor *selectedTint = [UIColor redColor];
+
+  // When
+  [button setImageTintColor:normalTint forState:UIControlStateNormal];
+  [button setImageTintColor:selectedTint forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal], normalTint);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateSelected], selectedTint);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateHighlighted], normalTint);
+}
+
+- (void)testImageTintColorForStateSetsImageViewTintColor {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalTint = [UIColor yellowColor];
+  UIColor *selectedTint = [UIColor redColor];
+
+  // When
+  [button setImageTintColor:normalTint forState:UIControlStateNormal];
+  [button setImageTintColor:selectedTint forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects(button.imageView.tintColor, normalTint);
+
+  // When
+  button.selected = YES;
+
+  // Then
+  XCTAssertEqualObjects(button.imageView.tintColor, selectedTint);
+}
+
 #pragma mark - backgroundColor:forState:
 
 - (void)testCurrentBackgroundColorNormal {
