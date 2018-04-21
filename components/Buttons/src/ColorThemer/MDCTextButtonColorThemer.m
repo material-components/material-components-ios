@@ -26,6 +26,8 @@
   [button setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
                forState:UIControlStateDisabled];
+  [button setImageTintColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [button setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f] forState:UIControlStateDisabled];
   button.disabledAlpha = 1.f;
   button.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f];
 }
