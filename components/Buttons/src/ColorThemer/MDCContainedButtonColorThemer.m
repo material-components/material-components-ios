@@ -27,6 +27,9 @@
   [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
   [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
                forState:UIControlStateDisabled];
+  [button setImageTintColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
+  [button setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
+                   forState:UIControlStateDisabled];
   button.disabledAlpha = 1.f;
   button.inkColor = [colorScheme.onPrimaryColor colorWithAlphaComponent:0.32f];
 }
@@ -37,6 +40,7 @@
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [button setBackgroundColor:nil forState:state];
     [button setTitleColor:nil forState:state];
+    [button setImageTintColor:nil forState:state];
   }
 }
 
