@@ -21,10 +21,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCSemanticColorScheme;
+@class MDCTypographyScheme;
+
 @interface ButtonsTypicalUseViewController : UIViewController
 
 @property(nonatomic, strong) NSArray *buttons;
 @property(nonatomic, strong) NSArray *labels;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+
 - (UILabel *)addLabelWithText:(NSString *)text;
 
 @end

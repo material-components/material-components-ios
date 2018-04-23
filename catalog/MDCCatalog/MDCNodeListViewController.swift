@@ -165,6 +165,11 @@ class MDCNodeListViewController: CBCNodeListViewController {
       return
     }
     applyColorScheme(colorScheme)
+    let vc = self.navigationController?.popViewController(animated: false)
+    
+    self.navigationController?.pushViewController(vc, animated: false)
+
+    
   }
 
   private func applyColorScheme(_ colorScheme: MDCColorScheming) {
@@ -398,51 +403,69 @@ extension MDCNodeListViewController {
 
     var vc: UIViewController
     if node.isExample() {
-      let contentVC = node.createExampleViewController()
-      if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
-        vc = contentVC
-      } else {
-        let appBarFont: UIFont
-        if #available(iOS 9.0, *) {
-            appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
-        } else {
-            let attribute: [String: UIFontDescriptorSymbolicTraits] =
-                [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
-            let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
-            appBarFont = UIFont(descriptor: descriptor, size: 16)
-        }
-        let container = MDCAppBarContainerViewController(contentViewController: contentVC)
-        container.appBar.navigationBar.titleAlignment = .center
-        container.appBar.navigationBar.tintColor = UIColor.white
-        container.appBar.navigationBar.titleTextAttributes =
-            [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
-
-        MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
-                                                      to: container.appBar)
-
-        // TODO(featherless): Remove once
-        // https://github.com/material-components/material-components-ios/issues/367 is resolved.
-        contentVC.title = node.title
-
-        let headerView = container.appBar.headerViewController.headerView
-        if let collectionVC = contentVC as? MDCCollectionViewController {
-          headerView.trackingScrollView = collectionVC.collectionView
-        } else if let scrollView = contentVC.view as? UIScrollView {
-          headerView.trackingScrollView = scrollView
-        } else {
-          // TODO(chuga): This is bad. We should be adjusting for Safe Area changes.
-          var contentFrame = container.contentViewController.view.frame
-          let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
-          contentFrame.origin.y = headerSize.height
-          contentFrame.size.height = self.view.bounds.height - headerSize.height
-          container.contentViewController.view.frame = contentFrame
-        }
-
-        vc = container
-      }
+      vc = setupExampleViewController()
     } else {
       vc = MDCNodeListViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
+  }
+
+  func setupExampleViewController() -> UIViewController {
+    var vc: UIViewController
+    let contentVC = node.createExampleViewController()
+    themeExample(vc: contentVC)
+    if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
+      vc = contentVC
+    } else {
+      let appBarFont: UIFont
+      if #available(iOS 9.0, *) {
+        appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+      } else {
+        let attribute: [String: UIFontDescriptorSymbolicTraits] =
+          [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+        let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+        appBarFont = UIFont(descriptor: descriptor, size: 16)
+      }
+      let container = MDCAppBarContainerViewController(contentViewController: contentVC)
+      container.appBar.navigationBar.titleAlignment = .center
+      container.appBar.navigationBar.tintColor = UIColor.white
+      container.appBar.navigationBar.titleTextAttributes =
+        [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
+
+      MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
+                                                    to: container.appBar)
+
+      // TODO(featherless): Remove once
+      // https://github.com/material-components/material-components-ios/issues/367 is resolved.
+      contentVC.title = node.title
+
+      let headerView = container.appBar.headerViewController.headerView
+      if let collectionVC = contentVC as? MDCCollectionViewController {
+        headerView.trackingScrollView = collectionVC.collectionView
+      } else if let scrollView = contentVC.view as? UIScrollView {
+        headerView.trackingScrollView = scrollView
+      } else {
+        // TODO(chuga): This is bad. We should be adjusting for Safe Area changes.
+        var contentFrame = container.contentViewController.view.frame
+        let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
+        contentFrame.origin.y = headerSize.height
+        contentFrame.size.height = self.view.bounds.height - headerSize.height
+        container.contentViewController.view.frame = contentFrame
+      }
+
+      vc = container
+    }
+    return vc
+  }
+
+  func themeExample(vc: UIViewController) {
+    let colorSel = NSSelectorFromString("setColorScheme:");
+    if vc.responds(to: colorSel) {
+      vc.perform(colorSel, with: AppTheme.globalTheme.colorScheme)
+    }
+    let typoSel = NSSelectorFromString("setTypographyScheme:");
+    if vc.responds(to: typoSel) {
+      vc.perform(typoSel, with: AppTheme.globalTheme.typographyScheme)
+    }
   }
 }
