@@ -59,7 +59,7 @@
 
   _isStroked = NO;
   self.navigationItem.rightBarButtonItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Strocked Style"
+      [[UIBarButtonItem alloc] initWithTitle:@"Stroked Style"
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(switchStyle)];
@@ -68,7 +68,7 @@
 
 - (void)switchStyle {
   _isStroked = !_isStroked;
-  NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Strocked Style";
+  NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Stroked Style";
   [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
   NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
   [_collectionView reloadData];
