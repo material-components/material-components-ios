@@ -1,14 +1,7 @@
-# #develop#
-
-## Breaking changes
-
-## New deprecations
-
-## New features
-
-## API changes
+# 54.11.1
 
 ## Component changes
+[ButtonBar] Left and right insets for buttons in the button bar are now consistent.
 
 ---
 
