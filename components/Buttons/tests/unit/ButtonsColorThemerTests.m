@@ -235,7 +235,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if (state == UIControlStateNormal) {
       XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
-    } else {
+      XCTAssertEqual([button imageTintColorForState:state], colorScheme.onSecondaryColor);
+   } else {
       XCTAssertEqual([button backgroundColorForState:state], nil);
     }
   }
