@@ -41,14 +41,6 @@ static NSString *const MDCChipCollectionViewCellChipViewKey =
   return self;
 }
 
-- (void)prepareForReuse {
-  [super prepareForReuse];
-
-  // When reload data we want to make sure we always reset the state. (Other wise animating layout
-  // could break the chip selection state).
-  self.selected = NO;
-}
-
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
 
