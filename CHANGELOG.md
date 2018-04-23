@@ -1,3 +1,148 @@
+# 54.11.0
+
+This release is the final push towards supporting themers on our components.
+
+We will now shift focus to polishing APIs, documentation, and examples and to fixing bugs.
+
+## New features
+
+It is now possible to configure colors on BottomNavigation, ButtonBar, NavigationBar, and Tabs
+statefully.
+
+TextFields now allows customization of the active floating placeholder color.
+
+MDCTabBar now allows the display of a bottom divider using the `bottomDividerColor` API.
+
+## API changes
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `selectedItemTitleColor` in `MDCBottomNavigationBar`
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* method: `-buttonsTitleColorForState:` in `MDCButtonBar`
+
+*new* method: `-setButtonsTitleColor:forState:` in `MDCButtonBar`
+
+### Buttons
+
+#### MDCButton
+
+*new* method: `-imageTintColorForState:` in `MDCButton`
+
+*new* method: `-setImageTintColor:forState:` in `MDCButton`
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* method: `-setButtonsTitleColor:forState:` in `MDCNavigationBar`
+
+*new* method: `-buttonsTitleColorForState:` in `MDCNavigationBar`
+
+### Tabs
+
+#### MDCTabBarItemState
+
+*new* typedef: `MDCTabBarItemState`
+
+*new* enum value: `MDCTabBarItemStateSelected` in `MDCTabBarItemState`
+
+*new* enum: `MDCTabBarItemState`
+
+*new* enum value: `MDCTabBarItemStateNormal` in `MDCTabBarItemState`
+
+#### MDCTabBar
+
+*new* method: `-imageTintColorForState:` in `MDCTabBar`
+
+*new* method: `-titleColorForState:` in `MDCTabBar`
+
+*new* method: `-setImageTintColor:forState:` in `MDCTabBar`
+
+*new* property: `bottomDividerColor` in `MDCTabBar`
+
+*new* method: `-setTitleColor:forState:` in `MDCTabBar`
+
+### TextFields
+
+#### MDCTextInputControllerFloatingPlaceholder
+
+*new* property: `floatingPlaceholderActiveColorDefault` in `MDCTextInputControllerFloatingPlaceholder`
+
+*new* property: `floatingPlaceholderActiveColor` in `MDCTextInputControllerFloatingPlaceholder`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Fix MDCTabBarColorThemerTests (#3428)](https://github.com/material-components/material-components-ios/commit/b3e9d45d73b57a1b0381576dc00afe7913b08301) (John Detloff)
+* [Fix build breakage (#3425)](https://github.com/material-components/material-components-ios/commit/178a1595819dea623d0b65660bb2f33b00ea1f9e) (John Detloff)
+* [[TabBar] Add a 1 pt bottom divider to MDCTabBar (#3390)](https://github.com/material-components/material-components-ios/commit/0922329df1c5895cf068d85285337ce777b5b751) (John Detloff)
+* [[TabBars] Add titleColorForState and imageTintColorForState (#3396)](https://github.com/material-components/material-components-ios/commit/f082d88099c62a280544e564bd0738d77c2f9386) (John Detloff)
+
+### AppBar
+
+#### Changes
+
+* [[NavigationBar] Fix the surface variation themer's text/icon colors to match spec. (#3416)](https://github.com/material-components/material-components-ios/commit/bd05a69c88f9e647ccfbc503ef4841ba383eb7db) (featherless)
+
+### Buttons
+
+#### Changes
+
+* [ [Button] Contained: Changed colors for ink and disabled (#3419)](https://github.com/material-components/material-components-ios/commit/3d1a7c2791de6d87589c601624f50639ae1c6872) (Randall Li)
+* [Create a separate class for MDCFloatingButton color themer. (#3429)](https://github.com/material-components/material-components-ios/commit/82d19ae5d0645387fc5f789ef4906449e8f4c704) (Mohammad Cazi)
+* [[Button] Button Themers calling direct color themers. (#3434)](https://github.com/material-components/material-components-ios/commit/807373e0101c18cabab47ddb561bc6b5a1885156) (Randall Li)
+* [[Button] Contained color image themer using tint APIs. (#3439)](https://github.com/material-components/material-components-ios/commit/fb16a6d0e46c57e0f3c17c9abc820e2ba33528f3) (Randall Li)
+* [[Button] Fixed catalog description of typical use example (#3435)](https://github.com/material-components/material-components-ios/commit/827552a84049420637a5355df2d9fc987511b614) (Randall Li)
+* [[Button] Text button color image themer using tint APIs. (#3440)](https://github.com/material-components/material-components-ios/commit/b2c8738975090ae9d73fdd8829c85ffdc1f00eb3) (Randall Li)
+* [[MDCButton] Added new API for coloring image tint color for state. (#3423)](https://github.com/material-components/material-components-ios/commit/ece3c1457b38bcb98f1a9bb9b20d123ffd35e324) (Mohammad Cazi)
+* [update disabled alpha (#3420)](https://github.com/material-components/material-components-ios/commit/e094209c2983dfe2159a1f5ff70cc67ca20714b1) (Yarden Eitan)
+
+### ButtonBar
+
+#### Changes
+
+* [Add a stateful buttons title color API. (#3414)](https://github.com/material-components/material-components-ios/commit/5a372de8fc94f743bbec58da0706757bbfb3576a) (featherless)
+* [Fix layout behavior when using custom button title font. (#3410)](https://github.com/material-components/material-components-ios/commit/a400ff0b30baeaf273b229f85e78c824c185d76c) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Adding a floating placeholder active color override. (#3433)](https://github.com/material-components/material-components-ios/commit/b49156ad4d74b2623eb9c170bb209b75a25ba572) (Will Larche)
+* [Unit tests for more classes of controller (#3436)](https://github.com/material-components/material-components-ios/commit/128bd79416f4e43915166c286c2cd8b7a164d35d) (Will Larche)
+* [[Textfields] Added Filled and Outlined themers (#3438)](https://github.com/material-components/material-components-ios/commit/8717640dbd20fcf56deebc4f7375d0eff834c57a) (Yarden Eitan)
+
+### Snackbar
+
+#### Changes
+
+* [Disable flaky test -[SnackbarManagerTests testMessagesResumedWhenTokenIsDeallocated] (#3426)](https://github.com/material-components/material-components-ios/commit/aa30cd064c5bb1d0520e0db6a8642c865580546e) (Ben Hamilton (Ben Gertzfield))
+
+### NavigationBar
+
+#### Changes
+
+* [Add a stateful buttons title color API. (#3415)](https://github.com/material-components/material-components-ios/commit/8d3f54246ef89055c7d614c9f54130584be3c833) (featherless)
+* [Fix the surface variation themer's text/icon colors to match spec. (#3416)](https://github.com/material-components/material-components-ios/commit/bd05a69c88f9e647ccfbc503ef4841ba383eb7db) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add separate property for selected title color (#3430)](https://github.com/material-components/material-components-ios/commit/d2db639402e99a6f11487ca035aad5addbf1b900) (John Detloff)
+
+---
+
 # 54.10.0
 
 This release continues to increase coverage of themers across our components.

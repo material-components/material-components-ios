@@ -19,6 +19,7 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "MDCTextButtonThemer.h"
+#import "MDCFloatingButtonColorThemer.h"
 #import "MDCContainedButtonThemer.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
@@ -50,32 +51,28 @@
   self.view.backgroundColor = [UIColor whiteColor];
   UIColor *titleColor = [UIColor whiteColor];
 
-  // Raised button
+  // Contained button
 
-  MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
-  [raisedButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:raisedButton];
-  [raisedButton sizeToFit];
-  [raisedButton addTarget:self
-                   action:@selector(didTap:)
-         forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:raisedButton];
+  MDCButton *containedButton = [[MDCButton alloc] init];
+  [containedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
+  [containedButton sizeToFit];
+  [containedButton addTarget:self
+                      action:@selector(didTap:)
+            forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:containedButton];
 
-  // Disabled raised button
+  // Disabled contained button
 
-  MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
-  [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledRaisedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:disabledRaisedButton];
-  [disabledRaisedButton sizeToFit];
-  [disabledRaisedButton addTarget:self
-                           action:@selector(didTap:)
-                 forControlEvents:UIControlEventTouchUpInside];
-  [disabledRaisedButton setEnabled:NO];
-  [self.view addSubview:disabledRaisedButton];
+  MDCButton *disabledContainedButton = [[MDCButton alloc] init];
+  [disabledContainedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:disabledContainedButton];
+  [disabledContainedButton sizeToFit];
+  [disabledContainedButton addTarget:self
+                              action:@selector(didTap:)
+                    forControlEvents:UIControlEventTouchUpInside];
+  [disabledContainedButton setEnabled:NO];
+  [self.view addSubview:disabledContainedButton];
 
   // Text button
 
@@ -137,12 +134,13 @@
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFloatingButton:self.floatingButton];
-  [self.floatingButton setTintColor:colorScheme.onSecondaryColor];
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme toButton:self.floatingButton];
+  [self.floatingButton setImageTintColor:colorScheme.onSecondaryColor
+                                forState:UIControlStateNormal];
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    raisedButton, disabledRaisedButton, textButton, disabledTextButton, strokedButton,
+    containedButton, disabledContainedButton, textButton, disabledTextButton, strokedButton,
     disabledStrokedButton, self.floatingButton
   ];
 
@@ -150,8 +148,8 @@
 }
 
 - (void)setupExampleViews {
-  UILabel *raisedButtonLabel = [self addLabelWithText:@"Raised"];
-  UILabel *disabledRaisedButtonLabel = [self addLabelWithText:@"Disabled Raised"];
+  UILabel *containedButtonLabel = [self addLabelWithText:@"Contained"];
+  UILabel *disabledContainedButtonLabel = [self addLabelWithText:@"Disabled Contained"];
   UILabel *textButtonLabel = [self addLabelWithText:@"Text button"];
   UILabel *disabledTextButtonLabel = [self addLabelWithText:@"Disabled text button"];
   UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
@@ -159,7 +157,7 @@
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
-    raisedButtonLabel, disabledRaisedButtonLabel, textButtonLabel, disabledTextButtonLabel,
+    containedButtonLabel, disabledContainedButtonLabel, textButtonLabel, disabledTextButtonLabel,
     strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
   ];
 }

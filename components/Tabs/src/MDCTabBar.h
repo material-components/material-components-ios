@@ -24,6 +24,13 @@
 @protocol MDCTabBarDelegate;
 @protocol MDCTabBarIndicatorTemplate;
 
+typedef NS_ENUM(NSInteger, MDCTabBarItemState) {
+  /** State for unselected tab bar item. */
+  MDCTabBarItemStateNormal,
+  /** State for selected tab bar item. */
+  MDCTabBarItemStateSelected,
+};
+
 /**
  A material tab bar for switching between views of grouped content.
 
@@ -74,16 +81,22 @@ IB_DESIGNABLE
 @property(nonatomic, strong, null_resettable) UIColor *tintColor;
 
 /**
- Tint color for selected items. If nil, selected items will be tinted using the tab bar's
- inherited tintColor instead. Default: Opaque white.
+ Tint color for selected items. If set overrides titleColorForState: and imageTintColorForState:
+ for MDCTabBarItemStateSelected. Returns imageTintColorForState: for MDCTabBarItemStateSelected.
  */
 @property(nonatomic, nullable) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
 
-/** Tint color for unselected items. Default: Semi-transparent white. */
+/**
+ Tint color for unselected items. If set overrides titleColorForState: and imageTintColorForState:
+ for MDCTabBarItemStateNormal. Returns imageTintColorForState: for MDCTabBarItemStateNormal.
+ */
 @property(nonatomic, nonnull) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 
 /** Ink color for taps on tab bar items. Default: Semi-transparent white. */
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+
+/** Color for the bottom divider. Default: Clear. */
+@property(nonatomic, nonnull) UIColor *bottomDividerColor;
 
 /**
  Font used for selected item titles.
@@ -162,6 +175,28 @@ IB_DESIGNABLE
 
 /** Updates the alignment with optional animation. */
 - (void)setAlignment:(MDCTabBarAlignment)alignment animated:(BOOL)animated;
+
+/**
+ Sets the color of the title for the specified state.
+ 
+ If the @c MDCTabBarItemState value is not set, then defaults to a default value. Therefore,
+ at a minimum, you should set the value for MDCTabBarItemStateNormal.
+ */
+- (void)setTitleColor:(nullable UIColor *)color forState:(MDCTabBarItemState)state;
+
+/** Returns the title color associated with the specified state. */
+- (nullable UIColor *)titleColorForState:(MDCTabBarItemState)state;
+
+/**
+ Sets the tint color of the image for the specified state.
+
+ If the @c MDCTabBarItemState value is not set, then defaults to a default value. Therefore,
+ at a minimum, you should set the value for MDCTabBarItemStateNormal.
+ */
+- (void)setImageTintColor:(nullable UIColor *)color forState:(MDCTabBarItemState)state;
+
+/** Returns the image tint color associated with the specified state. */
+- (nullable UIColor *)imageTintColorForState:(MDCTabBarItemState)state;
 
 @end
 

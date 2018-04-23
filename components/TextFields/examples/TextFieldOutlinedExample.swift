@@ -167,6 +167,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     var tag = 0
     for controller in allTextFieldControllers {
       guard let textField = controller.textInput as? MDCTextField else { continue }
+      style(textInputController: controller);
       textField.tag = tag
       tag += 1
     }
@@ -285,6 +286,13 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
 
     scrollView.layoutMargins = margins
+  }
+
+  func style(textInputController : MDCTextInputController) {
+    let colorScheme = MDCSemanticColorScheme()
+    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
+    let typographyScheme = MDCTypographyScheme()
+    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
   }
 
   func addGestureRecognizer() {
