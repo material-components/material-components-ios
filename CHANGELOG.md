@@ -1,5 +1,7 @@
 # 54.11.1
 
+## Component changes
+
 ### ButtonBar
 
 #### Changes
