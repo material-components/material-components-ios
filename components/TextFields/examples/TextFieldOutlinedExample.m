@@ -411,7 +411,7 @@
 @implementation TextFieldOutlinedObjectiveCExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Text Field Typical Use (Objective-C)" ];
+  return @[ @"Text Field", @"Text Field Typical Use" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
