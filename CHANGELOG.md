@@ -1,7 +1,10 @@
 # 54.11.1
 
-## Component changes
-[ButtonBar] Left and right insets for buttons in the button bar are now consistent.
+### ButtonBar
+
+#### Changes
+
+* [Make left/right insets for image and text buttons consistent (#3397)](https://github.com/material-components/material-components-ios/commit/a9c250aa08035f74e0e49af86b4d28f0356c03fe) (Ali Rabbani)
 
 ---
 
