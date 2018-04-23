@@ -46,7 +46,6 @@
   [super viewDidLoad];
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
 
   self.view.backgroundColor = [UIColor whiteColor];
   UIColor *titleColor = [UIColor whiteColor];
