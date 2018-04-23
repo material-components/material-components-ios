@@ -135,8 +135,6 @@
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
   [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme toButton:self.floatingButton];
-  [self.floatingButton setImageTintColor:colorScheme.onSecondaryColor
-                                forState:UIControlStateNormal];
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
