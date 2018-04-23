@@ -54,6 +54,10 @@
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @end
 
+@interface ChipsFilterAnimatedExampleViewController : ChipsFilterExampleViewController
+<UICollectionViewDelegate, UICollectionViewDataSource>
+@end
+
 @interface ChipsFilterExampleViewController (Supplemental)
 - (UIImage *)doneImage;
 @end

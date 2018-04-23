@@ -23,12 +23,14 @@
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
   MDCSemanticColorScheme *_colorScheme;
+  NSMutableArray *_selectedIndecies;
   BOOL _isStroked;
 }
 
 - (void)loadView {
   [super loadView];
 
+  _selectedIndecies = [NSMutableArray new];
   _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // Our preferred CollectionView Layout For chips
@@ -72,9 +74,8 @@
   _isStroked = !_isStroked;
   NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Strocked Style";
   [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
-  NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
   [_collectionView reloadData];
-  for (NSIndexPath *path in indexPaths) {
+  for (NSIndexPath *path in _selectedIndecies) {
     [_collectionView selectItemAtIndexPath:path
                                   animated:NO
                             scrollPosition:UICollectionViewScrollPositionNone];
@@ -103,6 +104,8 @@
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   chipView.selectedImageView.tintColor = [_colorScheme.onSurfaceColor colorWithAlphaComponent:0.54];
+  chipView.selected = [_selectedIndecies containsObject:indexPath];
+  cell.alwaysAnimateResize = [self shouldAnimateResize];
  
   if (_isStroked) {
     [chipView setBorderWidth:1 forState:UIControlStateNormal];
@@ -118,10 +121,8 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
-
   // The size of the chip depends on title, image and selection state.
-  _sizingChip.selected = [selectedPaths containsObject:indexPath];
+  _sizingChip.selected = [_selectedIndecies containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
   _sizingChip.selectedImageView.image = [self doneImage];
   return [_sizingChip sizeThatFits:collectionView.bounds.size];
@@ -129,12 +130,14 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [_selectedIndecies addObject:indexPath];
   // Animating Chip Selection
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [_selectedIndecies removeObject:indexPath];
   // Animating Chip Deselection
   [collectionView performBatchUpdates:nil completion:nil];
 }
@@ -156,6 +159,10 @@
                 ];
   }
   return _titles;
+}
+
+- (BOOL)shouldAnimateResize {
+  return NO;
 }
 
 @end
