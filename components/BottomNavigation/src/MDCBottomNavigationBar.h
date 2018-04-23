@@ -95,11 +95,16 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, strong, nonnull) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
- Color of selected item. Applies color to items' icons and text.
- Default color is black.
+ Color of selected item. Applies color to items' icons and text. If set also sets
+ selectedItemTitleColor. Default color is black.
  */
 @property (nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTintColor
     UI_APPEARANCE_SELECTOR;
+
+/**
+ Color of the selected item's title text. Default color is black.
+ */
+@property(nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTitleColor;
 
 /**
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.

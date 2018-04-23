@@ -279,9 +279,9 @@ final class TextFieldFilledSwiftExample: UIViewController {
     scrollView.layoutMargins = margins
   }
 
-  func style(textInputController : MDCTextInputController) {
+  func style(textInputController : MDCTextInputControllerFilled) {
     let colorScheme = MDCSemanticColorScheme()
-    MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to:textInputController)
+    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
     let typographyScheme = MDCTypographyScheme()
     MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
   }

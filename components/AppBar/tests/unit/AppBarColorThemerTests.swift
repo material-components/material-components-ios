@@ -61,8 +61,12 @@ class AppBarColorThemerTests: XCTestCase {
     XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
                    colorScheme.surfaceColor)
     XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.surfaceColor)
-    XCTAssertEqual(appBar.navigationBar.titleTextColor, colorScheme.onSurfaceColor)
-    XCTAssertEqual(appBar.navigationBar.tintColor, colorScheme.onSurfaceColor)
+    XCTAssertEqual(appBar.navigationBar.titleTextColor,
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(appBar.navigationBar.buttonsTitleColor(for: .normal),
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(appBar.navigationBar.tintColor,
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.54))
   }
 
   func testColorThemerAffectsSubComponents() {

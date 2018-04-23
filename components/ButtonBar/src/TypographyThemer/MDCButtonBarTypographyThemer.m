@@ -14,20 +14,18 @@
  limitations under the License.
  */
 
-#import "MDCTextButtonThemer.h"
+#import "MDCButtonBarTypographyThemer.h"
 
-#import "MDCTextButtonColorThemer.h"
-#import "MDCButtonTypographyThemer.h"
+@implementation MDCButtonBarTypographyThemer
 
-@implementation MDCTextButtonThemer
-
-+ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button {
-  [MDCTextButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
-  [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
-  button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
-  button.layer.cornerRadius = scheme.cornerRadius;
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
+                   toButtonBar:(nonnull MDCButtonBar *)buttonBar {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [buttonBar setButtonsTitleFont:nil forState:state];
+  }
+  [buttonBar setButtonsTitleFont:typographyScheme.button forState:UIControlStateNormal];
 }
 
 @end
-

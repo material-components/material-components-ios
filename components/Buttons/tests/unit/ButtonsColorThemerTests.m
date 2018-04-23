@@ -18,6 +18,7 @@
 
 #import "MaterialButtons.h"
 #import "MDCButtonColorThemer.h"
+#import "MDCFloatingButtonColorThemer.h"
 #import "MDCTextButtonColorThemer.h"
 #import "MDCContainedButtonColorThemer.h"
 
@@ -44,7 +45,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                         UIColor.clearColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
@@ -74,7 +75,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
                         colorScheme.onPrimaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
@@ -121,7 +122,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     } else {
       XCTAssert(
           CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
       XCTAssert(
           CGColorEqualToColor([button backgroundColorForState:state].CGColor,
                               [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
@@ -163,7 +164,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     } else {
       XCTAssert(
           CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.37f].CGColor),
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor),
           @"state:%lu", (unsigned long)state);
       XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor, @"state:%lu",
                      (unsigned long)state);
@@ -206,7 +207,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     } else {
       XCTAssert(
           CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.26f].CGColor));
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
       XCTAssert(
           CGColorEqualToColor([button backgroundColorForState:state].CGColor,
                               [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
@@ -226,7 +227,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [button setBackgroundColor:UIColor.darkGrayColor forState:UIControlStateDisabled];
 
   // Where
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFloatingButton:button];
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
   NSUInteger maximumStateValue =

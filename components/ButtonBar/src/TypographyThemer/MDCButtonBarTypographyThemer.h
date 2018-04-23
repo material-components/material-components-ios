@@ -14,20 +14,22 @@
  limitations under the License.
  */
 
-#import "MDCTextButtonThemer.h"
+#import "MaterialButtonBar.h"
+#import "MaterialTypographyScheme.h"
 
-#import "MDCTextButtonColorThemer.h"
-#import "MDCButtonTypographyThemer.h"
+/**
+ A typography themer for MDCButtonBar that implements the Material design typography system
+ mappings.
+ */
+@interface MDCButtonBarTypographyThemer : NSObject
 
-@implementation MDCTextButtonThemer
+/**
+ Applies a typography scheme's properties to an MDCButtonBar.
 
-+ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button {
-  [MDCTextButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
-  [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
-  button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
-  button.layer.cornerRadius = scheme.cornerRadius;
-}
+ @param typographyScheme The typography scheme to apply to MDCButtonBar.
+ @param buttonBar An MDCButtonBar instance to which the typography scheme should be applied.
+ */
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
+                  toButtonBar:(nonnull MDCButtonBar *)buttonBar;
 
 @end
-
