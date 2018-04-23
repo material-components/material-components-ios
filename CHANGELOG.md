@@ -1,10 +1,17 @@
-# #develop#
+# 54.11.0
 
-## Breaking changes
+This release is the final push towards supporting themers on our components.
 
-## New deprecations
+We will now shift focus to polishing APIs, documentation, and examples and to fixing bugs.
 
 ## New features
+
+It is now possible to configure colors on BottomNavigation, ButtonBar, NavigationBar, and Tabs
+statefully.
+
+TextFields now allows customization of the active floating placeholder color.
+
+MDCTabBar now allows the display of a bottom divider using the `bottomDividerColor` API.
 
 ## API changes
 
