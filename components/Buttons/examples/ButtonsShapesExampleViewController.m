@@ -53,11 +53,9 @@
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [raisedButton setImage:plusImage forState:UIControlStateNormal];
-  [raisedButton setTitleColor:
-      [UIColor colorWithRed:71/255.0f green:50/255.0f blue:50/255.0f alpha:1]
-                     forState:UIControlStateNormal];
-  raisedButton.imageView.tintColor =
-      [UIColor colorWithRed:71/255.0f green:50/255.0f blue:50/255.0f alpha:1];
+  UIColor *titleAndImageColor = [UIColor colorWithRed:71/255.0f green:50/255.0f blue:50/255.0f alpha:1];
+  [raisedButton setTitleColor:titleAndImageColor forState:UIControlStateNormal];
+  [raisedButton setImageTintColor:titleAndImageColor forState:UIControlStateNormal];
   [raisedButton setBackgroundColor:
       [UIColor colorWithRed:242/255.0f green:174/255.0f blue:178/255.0f alpha:1]];
 
@@ -160,7 +158,7 @@
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
   [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
-  self.floatingButton.imageView.tintColor = UIColor.whiteColor;
+  [self.floatingButton setImageTintColor:UIColor.whiteColor forState:UIControlStateNormal];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
 

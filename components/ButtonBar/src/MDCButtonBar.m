@@ -418,16 +418,46 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
 - (void)setButtonsTitleFont:(UIFont *)font forState:(UIControlState)state {
   [_defaultBuilder setTitleFont:font forState:state];
 
-  for (UIView *viewObj in _buttonViews) {
+  for (NSUInteger i = 0; i < [_buttonViews count]; ++i) {
+    UIView *viewObj = _buttonViews[i];
     if ([viewObj isKindOfClass:[UIButton class]]) {
       MDCButton *button = (MDCButton *)viewObj;
       [button setTitleFont:font forState:state];
+
+      if (i < [_items count]) {
+        UIBarButtonItem *item = _items[i];
+
+        CGRect frame = button.frame;
+        if (item.width > 0) {
+          frame.size.width = item.width;
+        } else {
+          frame.size.width = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width;
+        }
+        button.frame = frame;
+
+        [self setNeedsLayout];
+      }
     }
   }
 }
 
 - (nullable UIFont *)buttonsTitleFontForState:(UIControlState)state {
   return [_defaultBuilder titleFontForState:state];
+}
+
+- (void)setButtonsTitleColor:(nullable UIColor *)color forState:(UIControlState)state {
+  [_defaultBuilder setTitleColor:color forState:state];
+
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[UIButton class]]) {
+      MDCButton *button = (MDCButton *)viewObj;
+      [button setTitleColor:color forState:state];
+    }
+  }
+}
+
+- (UIColor *)buttonsTitleColorForState:(UIControlState)state {
+  return [_defaultBuilder titleColorForState:state];
 }
 
 // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier

@@ -22,6 +22,7 @@
   self = [super init];
   if (self) {
     _titleColor = [UIColor whiteColor];
+    _imageTintColor = [UIColor whiteColor];
     _displaysUppercaseTitles = YES;
     _shouldDisplayTitle = YES;
     _shouldDisplaySelectionIndicator = YES;
@@ -44,6 +45,8 @@
   newStyle.shouldGrowOnSelection = _shouldGrowOnSelection;
   newStyle.titleColor = _titleColor;
   newStyle.selectedTitleColor = _selectedTitleColor;
+  newStyle.imageTintColor = _imageTintColor;
+  newStyle.selectedImageTintColor = _selectedImageTintColor;
   newStyle.selectedTitleFont = _selectedTitleFont;
   newStyle.unselectedTitleFont = _unselectedTitleFont;
   newStyle.inkStyle = _inkStyle;
