@@ -23,6 +23,7 @@
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
   MDCSemanticColorScheme *_colorScheme;
+  BOOL _isStroked;
 }
 
 - (void)loadView {
@@ -56,6 +57,30 @@
   [self.view addSubview:_collectionView];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  _isStroked = NO;
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Strocked Style"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(switchStyle)];
+}
+
+- (void)switchStyle {
+  _isStroked = !_isStroked;
+  NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Strocked Style";
+  [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
+  NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
+  [_collectionView reloadData];
+  for (NSIndexPath *path in indexPaths) {
+    [_collectionView selectItemAtIndexPath:path
+                                  animated:NO
+                            scrollPosition:UICollectionViewScrollPositionNone];
+  }
+}
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
@@ -75,8 +100,17 @@
 
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
-  chipView.selectedImageView.image = [self doneImage];
-  cell.alwaysAnimateResize = YES;
+  chipView.selectedImageView.image =
+      [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  chipView.selectedImageView.tintColor = [_colorScheme.onSurfaceColor colorWithAlphaComponent:0.54];
+ 
+  if (_isStroked) {
+    [chipView setBorderWidth:1 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toStrokedChipView:chipView];
+  } else {
+    [chipView setBorderWidth:0 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:chipView];
+  }
 
   return cell;
 }
@@ -108,18 +142,18 @@
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-      @"Doorman",
-      @"Elevator",
-      @"Garage Parking",
-      @"Gym",
-      @"Laundry in Building",
-      @"Green Building",
-      @"Parking Available",
-      @"Pets Allowed",
-      @"Pied-a-Terre Allowed",
-      @"Swimming Pool",
-      @"Smoke-free",
-    ];
+                @"Doorman",
+                @"Elevator",
+                @"Garage Parking",
+                @"Gym",
+                @"Laundry in Building",
+                @"Green Building",
+                @"Parking Available",
+                @"Pets Allowed",
+                @"Pied-a-Terre Allowed",
+                @"Swimming Pool",
+                @"Smoke-free",
+                ];
   }
   return _titles;
 }

@@ -23,14 +23,31 @@
   [MDCChipViewColorThemer resetUIControlStatesForChipTheming:chipView];
   UIColor *onSurface12Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface16Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f];
+
   UIColor *backgroundColor =
       [MDCSemanticColorScheme blendColor:onSurface12Opacity
                      withBackgroundColor:colorScheme.surfaceColor];
+  UIColor *selectedBackgroundColor =
+      [MDCSemanticColorScheme blendColor:onSurface12Opacity
+                     withBackgroundColor:backgroundColor];
   UIColor *textColor =
       [MDCSemanticColorScheme blendColor:onSurface87Opacity
-                     withBackgroundColor:colorScheme.surfaceColor];
+                     withBackgroundColor:backgroundColor];
+  UIColor *selectedTextColor =
+      [MDCSemanticColorScheme blendColor:onSurface87Opacity
+                     withBackgroundColor:selectedBackgroundColor];
+
+  [chipView setInkColor:onSurface16Opacity forState:UIControlStateNormal];
   [chipView setTitleColor:textColor forState:UIControlStateNormal];
   [chipView setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+
+  [chipView setTitleColor:selectedTextColor forState:UIControlStateSelected];
+  [chipView setBackgroundColor:selectedBackgroundColor forState:UIControlStateSelected];
+
+  [chipView setTitleColor:[textColor colorWithAlphaComponent:0.38] forState:UIControlStateDisabled];
+  [chipView setBackgroundColor:[backgroundColor colorWithAlphaComponent:0.38]
+                      forState:UIControlStateDisabled];
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
@@ -38,15 +55,35 @@
   [MDCChipViewColorThemer resetUIControlStatesForChipTheming:strokedChipView];
   UIColor *onSurface12Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *onSurface16Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f];
+  UIColor *selectedBackgroundColor =
+      [MDCSemanticColorScheme blendColor:onSurface12Opacity
+                     withBackgroundColor:colorScheme.surfaceColor];
   UIColor *borderColor =
       [MDCSemanticColorScheme blendColor:onSurface12Opacity
                      withBackgroundColor:colorScheme.surfaceColor];
   UIColor *textColor =
       [MDCSemanticColorScheme blendColor:onSurface87Opacity
                      withBackgroundColor:colorScheme.surfaceColor];
+  UIColor *selectedTextColor =
+      [MDCSemanticColorScheme blendColor:onSurface87Opacity
+                     withBackgroundColor:selectedBackgroundColor];
+
+  [strokedChipView setInkColor:onSurface16Opacity forState:UIControlStateNormal];
   [strokedChipView setTitleColor:textColor forState:UIControlStateNormal];
   [strokedChipView setBackgroundColor:colorScheme.surfaceColor forState:UIControlStateNormal];
   [strokedChipView setBorderColor:borderColor forState:UIControlStateNormal];
+
+  [strokedChipView setTitleColor:selectedTextColor forState:UIControlStateSelected];
+  [strokedChipView setBackgroundColor:selectedBackgroundColor forState:UIControlStateSelected];
+  [strokedChipView setBorderColor:[UIColor clearColor] forState:UIControlStateSelected];
+
+  [strokedChipView setTitleColor:[textColor colorWithAlphaComponent:0.38]
+                        forState:UIControlStateDisabled];
+  [strokedChipView setBackgroundColor:[colorScheme.surfaceColor colorWithAlphaComponent:0.38]
+                             forState:UIControlStateDisabled];
+  [strokedChipView setBorderColor:[borderColor colorWithAlphaComponent:0.38]
+                         forState:UIControlStateDisabled];
 }
 
 + (void)resetUIControlStatesForChipTheming:(nonnull MDCChipView *)chipView {

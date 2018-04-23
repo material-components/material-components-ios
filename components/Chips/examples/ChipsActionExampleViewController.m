@@ -23,6 +23,7 @@
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
   MDCSemanticColorScheme *_colorScheme;
+  BOOL _isStroked;
 }
 
 - (void)loadView {
@@ -56,6 +57,31 @@
   [self.view addSubview:_collectionView];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  _isStroked = NO;
+  self.navigationItem.rightBarButtonItem =
+  [[UIBarButtonItem alloc] initWithTitle:@"Strocked Style"
+                                   style:UIBarButtonItemStylePlain
+                                  target:self
+                                  action:@selector(switchStyle)];
+}
+
+- (void)switchStyle {
+  _isStroked = !_isStroked;
+  NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Strocked Style";
+  [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
+  NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
+  [_collectionView reloadData];
+  for (NSIndexPath *path in indexPaths) {
+    [_collectionView selectItemAtIndexPath:path
+                                  animated:NO
+                            scrollPosition:UICollectionViewScrollPositionNone];
+  }
+}
+
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
@@ -77,7 +103,13 @@
   chipView.titleLabel.text = self.titles[indexPath.row];
 
   // Apply Theming
-  [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:cell.chipView];
+  if (_isStroked) {
+    [chipView setBorderWidth:1 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toStrokedChipView:chipView];
+  } else {
+    [chipView setBorderWidth:0 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:chipView];
+  }
 
   return cell;
 }
