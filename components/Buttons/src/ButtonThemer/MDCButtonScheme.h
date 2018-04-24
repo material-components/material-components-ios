@@ -15,8 +15,8 @@
  */
 
 #import "MaterialButtons.h"
-#import "MaterialButtons+ColorThemer.h"
-#import "MaterialButtons+TypographyThemer.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 #import <Foundation/Foundation.h>
 

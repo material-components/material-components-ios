@@ -16,8 +16,8 @@
 
 #import "MDCTextButtonThemer.h"
 
-#import "MDCTextButtonColorThemer.h"
-#import "MDCButtonTypographyThemer.h"
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+TypographyThemer.h"
 
 @implementation MDCTextButtonThemer
 
