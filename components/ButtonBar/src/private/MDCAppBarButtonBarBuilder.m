@@ -23,7 +23,7 @@
 #import "MDCButtonBarButton.h"
 #import "MDCButtonBar+Private.h"
 
-// Additional insets for the left-most or right-most items, primarily for image buttons.
+// Additional insets for the left-most or right-most items.
 static const CGFloat kEdgeButtonAdditionalMarginPhone = 4.f;
 static const CGFloat kEdgeButtonAdditionalMarginPad = 12.f;
 
@@ -32,11 +32,8 @@ static const CGFloat kEdgeButtonAdditionalMarginPad = 12.f;
 // button should look like when it is disabled.
 static const CGFloat kDisabledButtonAlpha = 0.45f;
 
-// Content insets for text-only buttons.
-static const UIEdgeInsets kTextOnlyButtonInset = {0, 24.f, 0, 24.f};
-
-// Content insets for image-only buttons.
-static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
+// Default content inset for buttons.
+static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
 
 // Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
 // and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
@@ -190,23 +187,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
                            layoutHints:(MDCBarButtonItemLayoutHints)layoutHints
                        layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection
                     userInterfaceIdiom:(UIUserInterfaceIdiom)userInterfaceIdiom {
-  UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-
-  UIEdgeInsets (^addInsets)(UIEdgeInsets, UIEdgeInsets) = ^(UIEdgeInsets i1, UIEdgeInsets i2) {
-    UIEdgeInsets sum = i1;
-    sum.left += i2.left;
-    sum.top += i2.top;
-    sum.right += i2.right;
-    sum.bottom += i2.bottom;
-    return sum;
-  };
-
-  if ([[button currentTitle] length]) {  // Text-only buttons.
-    contentInsets = addInsets(contentInsets, kTextOnlyButtonInset);
-
-  } else if ([button currentImage]) {  // Image-only buttons.
-    contentInsets = addInsets(contentInsets, kImageOnlyButtonInset);
-
+  UIEdgeInsets contentInsets = kButtonInset;
+  if ([button currentImage] || [button currentTitle].length) {
     BOOL isPad = userInterfaceIdiom == UIUserInterfaceIdiomPad;
     CGFloat additionalInset =
         (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
