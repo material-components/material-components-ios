@@ -17,7 +17,7 @@
 import UIKit
 
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 // This example shows a bug when using an MDCFlexibleHeaderView in a UITableViewController.
 // When you scroll downwards until the header is down to its minimum size, try selecting
