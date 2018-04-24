@@ -33,7 +33,7 @@
 #import "MDCFeatureHighlightColorThemer.h"
 #import "MDCFlexibleHeaderColorThemer.h"
 #import "MDCHeaderStackViewColorThemer.h"
-#import "MDCNavigationBarColorThemer.h"
+#import "MaterialNavigationBar+ColorThemer.h"
 #import "MDCPageControlColorThemer.h"
 #import "MDCProgressViewColorThemer.h"
 #import "MaterialSlider+ColorThemer.h"
