@@ -17,7 +17,7 @@
 
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
-#import "MDCBottomAppBarColorThemer.h"
+#import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
 #import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
