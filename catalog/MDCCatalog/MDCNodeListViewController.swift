@@ -430,7 +430,7 @@ extension MDCNodeListViewController {
 
   func createViewController(from node: CBCNode) -> UIViewController {
     var vc: UIViewController
-    let contentVC = selectedNode!.createExampleViewController()
+    let contentVC = node.createExampleViewController()
     themeExample(vc: contentVC)
     if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
       vc = contentVC
@@ -454,7 +454,7 @@ extension MDCNodeListViewController {
 
       // TODO(featherless): Remove once
       // https://github.com/material-components/material-components-ios/issues/367 is resolved.
-      contentVC.title = selectedNode!.title
+      contentVC.title = node.title
       let headerView = container.appBar.headerViewController.headerView
       if let collectionVC = contentVC as? MDCCollectionViewController {
         headerView.trackingScrollView = collectionVC.collectionView
