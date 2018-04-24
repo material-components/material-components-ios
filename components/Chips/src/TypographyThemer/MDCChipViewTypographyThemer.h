@@ -17,6 +17,8 @@
 #import "MaterialChips.h"
 #import "MaterialTypographyScheme.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  Used to apply a typography scheme to theme MDCChipView.
  */

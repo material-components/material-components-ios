@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialNavigationBar
-import MaterialComponents.MDCNavigationBarColorThemer
+import MaterialComponents.MaterialNavigationBar_ColorThemer
 
 class NavigationBarColorThemerTests: XCTestCase {
 
