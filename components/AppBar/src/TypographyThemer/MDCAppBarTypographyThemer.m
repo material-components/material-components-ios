@@ -16,7 +16,7 @@
 
 #import "MDCAppBarTypographyThemer.h"
 
-#import "MDCNavigationBarTypographyThemer.h"
+#import "MaterialNavigationBar+TypographyThemer.h"
 
 @implementation MDCAppBarTypographyThemer
 

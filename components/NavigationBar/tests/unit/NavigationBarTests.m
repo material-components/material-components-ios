@@ -18,7 +18,7 @@
 
 #import "MaterialButtonBar.h"
 #import "MaterialNavigationBar.h"
-#import "MDCNavigationBarTypographyThemer.h"
+#import "MaterialNavigationBar+TypographyThemer.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 

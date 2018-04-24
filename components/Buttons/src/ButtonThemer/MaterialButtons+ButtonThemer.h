@@ -14,20 +14,6 @@
  limitations under the License.
  */
 
+#import "MDCButtonScheme.h"
+#import "MDCContainedButtonThemer.h"
 #import "MDCTextButtonThemer.h"
-
-#import "MaterialButtons+ColorThemer.h"
-#import "MaterialButtons+TypographyThemer.h"
-
-@implementation MDCTextButtonThemer
-
-+ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button {
-  [MDCTextButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
-  [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
-  button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
-  button.layer.cornerRadius = scheme.cornerRadius;
-}
-
-@end
-

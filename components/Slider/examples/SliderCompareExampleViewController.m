@@ -19,7 +19,7 @@
 #import "MaterialColorScheme.h"
 #import "MaterialMath.h"
 #import "MaterialSlider.h"
-#import "MDCSliderColorThemer.h"
+#import "MaterialSlider+ColorThemer.h"
 
 @interface SliderCompareExampleViewController : UIViewController
 
