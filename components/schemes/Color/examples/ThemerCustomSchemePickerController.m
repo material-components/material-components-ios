@@ -26,7 +26,7 @@
 #import "MDCFlexibleHeaderColorThemer.h"
 #import "MaterialHeaderStackView+ColorThemer.h"
 #import "MaterialNavigationBar+ColorThemer.h"
-#import "MDCPageControlColorThemer.h"
+#import "MaterialPageControl+ColorThemer.h"
 #import "MaterialProgressView+ColorThemer.h"
 #import "MaterialSlider+ColorThemer.h"
 #import "MDCTabBarColorThemer.h"
