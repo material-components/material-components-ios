@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialSnackbar
-import MaterialComponents.MDCSnackbarTypographyThemer
+import MaterialComponents.MaterialSnackbar_TypographyThemer
 
 class MDCSnackbarTypographyThemerTests: XCTestCase {
     
