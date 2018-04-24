@@ -17,6 +17,8 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  A color themer for a Material Text Button.
  */

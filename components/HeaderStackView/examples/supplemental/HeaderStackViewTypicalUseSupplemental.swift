@@ -37,6 +37,6 @@ extension HeaderStackViewTypicalUseSwiftExample {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 }
