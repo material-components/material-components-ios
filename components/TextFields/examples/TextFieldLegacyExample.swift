@@ -419,9 +419,4 @@ extension TextFieldLegacySwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "[Legacy] Typical Use"]
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-
 }

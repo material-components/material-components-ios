@@ -269,7 +269,7 @@
 @implementation TextFieldStatesViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"States (Objective-C)" ];
+  return @[ @"Text Field", @"States" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {

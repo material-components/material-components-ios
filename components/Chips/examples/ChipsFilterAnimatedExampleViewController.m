@@ -14,21 +14,13 @@
  limitations under the License.
  */
 
-#import "MaterialBottomAppBar.h"
-#import "MaterialColorScheme.h"
+#import "ChipsExamplesSupplemental.h"
 
-#import <Foundation/Foundation.h>
+@implementation ChipsFilterAnimatedExampleViewController
 
-/**
- Applies a color scheme to an MDCBottomAppBarView or its UIAppearance proxy.
- */
-@interface MDCBottomAppBarColorThemer : NSObject
-
-/**
- Applies the secondary color (if present) of the colorScheme to the BottomAppBarView's
- @c barTintColor to color the background of the bar.
- */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-      toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
+- (BOOL)shouldAnimateResize {
+  return YES;
+}
 
 @end
+
