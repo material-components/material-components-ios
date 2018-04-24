@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCButtonColorThemer.h"
-#import "MDCButtonTypographyThemer.h"
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialShapes.h"
 #import "MaterialShapeLibrary.h"

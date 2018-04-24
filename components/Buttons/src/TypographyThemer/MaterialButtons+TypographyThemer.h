@@ -14,23 +14,4 @@
  limitations under the License.
  */
 
-#import "MaterialButtons.h"
-#import "MaterialColorScheme.h"
-
-#import <Foundation/Foundation.h>
-
-/**
- A color themer for a Material Text Button.
- */
-@interface MDCTextButtonColorThemer : NSObject
-
-/**
- Applies a color scheme to theme to a text button.
-
- @param colorScheme The color scheme to apply to @c button.
- @param button A MDCButton instance to apply a color scheme.
- */
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                        toButton:(nonnull MDCButton *)button;
-
-@end
+#import "MDCButtonTypographyThemer.h"

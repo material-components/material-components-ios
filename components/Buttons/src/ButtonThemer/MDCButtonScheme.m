@@ -15,8 +15,6 @@
  */
 
 #import "MDCButtonScheme.h"
-#import "MDCButtonColorThemer.h"
-#import "MDCButtonTypographyThemer.h"
 
 @implementation MDCButtonScheme
 
