@@ -36,7 +36,7 @@
 #import "MDCNavigationBarColorThemer.h"
 #import "MDCPageControlColorThemer.h"
 #import "MDCProgressViewColorThemer.h"
-#import "MDCSliderColorThemer.h"
+#import "MaterialSlider+ColorThemer.h"
 #import "MDCTabBarColorThemer.h"
 #import "MDCTextFieldColorThemer.h"
 
