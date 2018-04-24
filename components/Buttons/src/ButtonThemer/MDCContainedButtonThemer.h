@@ -14,10 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCButton.h"
-#import "MDCButtonColorThemer.h"
-#import "MDCButtonTypographyThemer.h"
 #import "MDCButtonScheme.h"
+
+#import "MaterialButtons.h"
+
+#import <Foundation/Foundation.h>
 
 /** Applies contained button style to MDCButton objects. */
 @interface MDCContainedButtonThemer : NSObject
@@ -30,4 +31,5 @@
  */
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
            toButton:(nonnull MDCButton *)button;
+
 @end

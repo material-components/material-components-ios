@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@class MDCButton;
+#import "MaterialButtons.h"
 
 /**
  A Mutator that will change an instance of MDCButton to have a high enough contrast text between
