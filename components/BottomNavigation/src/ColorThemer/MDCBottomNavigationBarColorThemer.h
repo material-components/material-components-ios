@@ -36,8 +36,7 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCBottomNavigationBar. Use a UIAppearance proxy to apply a color
- scheme to all instances of MDCBottomNavigationBar.
+ Applies a color scheme to theme a MDCBottomNavigationBar.
 
  This method will soon be deprecated. Consider using +applySemanticColorScheme:toBottomNavigation:
  instead.

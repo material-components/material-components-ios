@@ -24,8 +24,7 @@ limitations under the License.
 @interface MDCTabBarFontThemer : NSObject
 
 /**
- Applies a font scheme to theme a MDCTabBar. Use a UIAppearance proxy to apply a font scheme to
- all instances of MDCTabBar.
+ Applies a font scheme to theme a MDCTabBar.
 
  @param fontScheme The font scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme.
