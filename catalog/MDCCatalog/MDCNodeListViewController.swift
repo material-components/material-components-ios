@@ -20,6 +20,7 @@ import CatalogByConvention
 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialTypography
 import MaterialComponents.MDCFlexibleHeaderColorThemer
@@ -50,11 +51,71 @@ class NodeViewTableViewDemoCell: UITableViewCell {
   }
 }
 
+class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
+
+  let containedButton = MDCButton()
+
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setupContaintButton()
+  }
+
+  required init(coder: NSCoder) {
+    super.init(coder: coder)!
+  }
+
+  override func prepareForReuse() {
+    super.prepareForReuse()
+  }
+
+  func setupContaintButton() {
+    containedButton.setTitle("Start Demo", for: .normal)
+    let buttonScheme = MDCButtonScheme()
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to:containedButton)
+    containedButton.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(containedButton)
+
+    // constraints
+    NSLayoutConstraint(item: contentView,
+                       attribute: .left,
+                       relatedBy: .equal,
+                       toItem: containedButton,
+                       attribute: .left,
+                       multiplier: 1,
+                       constant: -16).isActive = true
+    NSLayoutConstraint(item: contentView,
+                       attribute: .right,
+                       relatedBy: .equal,
+                       toItem: containedButton,
+                       attribute: .right,
+                       multiplier: 1,
+                       constant: 16).isActive = true
+    NSLayoutConstraint(item: contentView,
+                       attribute: .top,
+                       relatedBy: .equal,
+                       toItem: containedButton,
+                       attribute: .top,
+                       multiplier: 1,
+                       constant: -8).isActive = true
+    NSLayoutConstraint(item: contentView,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: containedButton,
+                       attribute: .bottom,
+                       multiplier: 1,
+                       constant: 8).isActive = true
+  }
+
+}
+
+
+
 class MDCNodeListViewController: CBCNodeListViewController {
   let appBar = MDCAppBar()
   let sectionNames = ["Description", "Additional Examples"]
   let descriptionSectionHeight = CGFloat(100)
   let additionalExamplesSectionHeight = CGFloat(50)
+  let demoRowHeight = CGFloat(60)
   let rowHeight = CGFloat(50)
   let padding = CGFloat(20)
   var componentDescription = ""
@@ -319,34 +380,55 @@ extension MDCNodeListViewController {
 
   override func tableView(_ tableView: UITableView,
                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
-    if cell == nil {
-      cell = NodeViewTableViewDemoCell.init(style: .subtitle,
-                                            reuseIdentifier: "NodeViewTableViewDemoCell")
-    }
-
-    var subtitleText: String?
+    var cell : UITableViewCell?
     if indexPath.section == Section.description.rawValue {
-      subtitleText = node.children[indexPath.row].exampleViewControllerName()
-      cell!.textLabel!.text = "Demo"
-    } else {
-      subtitleText = node.children[indexPath.row + 1].exampleViewControllerName()
-      cell!.textLabel!.text = node.children[indexPath.row + 1].title
-    }
-    if subtitleText != nil {
-      if let swiftModuleRange = subtitleText?.range(of: ".") {
-        subtitleText = subtitleText!.substring(from: swiftModuleRange.upperBound)
+      cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewPrimaryDemoCell")
+      if cell == nil {
+        cell =
+          NodeViewTableViewPrimaryDemoCell.init(style: .default,
+                                                reuseIdentifier: "NodeViewTableViewPrimaryDemoCell")
+        cell?.selectionStyle = .none
+        let primaryDemoCell = cell as! NodeViewTableViewPrimaryDemoCell
+        let button = primaryDemoCell.containedButton
+        button.addTarget(self, action: #selector(primaryDemoButtonClicked), for: .touchUpInside)
       }
-      cell!.detailTextLabel?.text = subtitleText!
-    }
-    cell!.accessoryType = .disclosureIndicator
+    } else {
+      cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
+      if cell == nil {
+        cell = NodeViewTableViewDemoCell.init(style: .subtitle,
+                                              reuseIdentifier: "NodeViewTableViewDemoCell")
+      }
 
-    cell!.accessibilityIdentifier = "Cell" + cell!.textLabel!.text!
+      var subtitleText: String?
+      if indexPath.section == Section.description.rawValue {
+        subtitleText = node.children[indexPath.row].exampleViewControllerName()
+        cell!.textLabel!.text = "Demo"
+      } else {
+        subtitleText = node.children[indexPath.row + 1].exampleViewControllerName()
+        cell!.textLabel!.text = node.children[indexPath.row + 1].title
+      }
+      if subtitleText != nil {
+        if let swiftModuleRange = subtitleText?.range(of: ".") {
+          subtitleText = subtitleText!.substring(from: swiftModuleRange.upperBound)
+        }
+        cell!.detailTextLabel?.text = subtitleText!
+      }
+      cell!.accessibilityIdentifier = "Cell" + cell!.textLabel!.text!
+      cell!.accessoryType = .disclosureIndicator
+    }
+
     return cell!
   }
 
+  func primaryDemoButtonClicked () {
+    let indexPath = IndexPath(row: 0, section: Section.description.rawValue)
+    self.tableView(self.tableView, didSelectRowAt: indexPath)
+  }
   override func tableView(_ tableView: UITableView,
                           heightForRowAt indexPath: IndexPath) -> CGFloat {
+    if indexPath.section == Section.description.rawValue {
+      return demoRowHeight
+    }
     return rowHeight
   }
 
