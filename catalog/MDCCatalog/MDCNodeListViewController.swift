@@ -112,17 +112,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
       object: nil)
   }
 
-  func lol() {
-    AppTheme.globalTheme = {
-      let colorScheme = MDCSemanticColorScheme()
-      colorScheme.primaryColor = .green
-      colorScheme.primaryColorVariant = .blue
-      colorScheme.secondaryColor = .red
-      let typographyScheme = MDCTypographyScheme()
-      return AppTheme(colorScheme: colorScheme, typographyScheme: typographyScheme)
-    }()
-  }
-
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
@@ -176,24 +165,27 @@ class MDCNodeListViewController: CBCNodeListViewController {
       return
     }
     applyColorScheme(colorScheme)
-
-    guard let topVC = self.navigationController?.topViewController,
-      topVC is MDCAppBarContainerViewController ||
-      topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
-      return
-    }
-    guard self.navigationController!.popViewController(animated: false) != nil,
-      selectedNode != nil else {
-      return
-    }
-    let vc = setupExample()
-    self.navigationController?.pushViewController(vc, animated: false)
+    applyThemeOnCurrentExample()
   }
 
   private func applyColorScheme(_ colorScheme: MDCColorScheming) {
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     appBar.navigationBar.tintColor = UIColor.white
+  }
+
+  func applyThemeOnCurrentExample() {
+    guard let topVC = self.navigationController?.topViewController,
+      topVC is MDCAppBarContainerViewController ||
+        topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
+          return
+    }
+    guard self.navigationController!.popViewController(animated: false) != nil,
+      selectedNode != nil else {
+        return
+    }
+    let vc = setupExample()
+    self.navigationController?.pushViewController(vc, animated: false)
   }
 }
 
@@ -455,8 +447,6 @@ extension MDCNodeListViewController {
       // TODO(featherless): Remove once
       // https://github.com/material-components/material-components-ios/issues/367 is resolved.
       contentVC.title = selectedNode!.title
-      contentVC.navigationItem.rightBarButtonItem =
-        UIBarButtonItem(title: "Color", style: .done, target: self, action: #selector(lol))
       let headerView = container.appBar.headerViewController.headerView
       if let collectionVC = contentVC as? MDCCollectionViewController {
         headerView.trackingScrollView = collectionVC.collectionView
