@@ -19,9 +19,11 @@ import MaterialComponents.MaterialColorScheme
 
 final class AppTheme {
   let colorScheme: MDCColorScheming
+  let typographyScheme: MDCTypographyScheming
 
-  init(colorScheme: MDCColorScheming) {
+  init(colorScheme: MDCColorScheming, typographyScheme: MDCTypographyScheming) {
     self.colorScheme = colorScheme
+    self.typographyScheme = typographyScheme
   }
 
   static let defaultTheme: AppTheme = {
@@ -35,7 +37,8 @@ final class AppTheme {
                                          green: CGFloat(0xE6) / 255.0,
                                          blue: CGFloat(0x76) / 255.0,
                                          alpha: 1)
-    return AppTheme(colorScheme: colorScheme)
+    let typographyScheme = MDCTypographyScheme()
+    return AppTheme(colorScheme: colorScheme, typographyScheme: typographyScheme)
   }()
 
   static var globalTheme: AppTheme = defaultTheme {
@@ -43,11 +46,14 @@ final class AppTheme {
       NotificationCenter.default.post(name: AppTheme.didChangeGlobalThemeNotificationName,
                                       object: nil,
                                       userInfo:
-        [AppTheme.globalThemeNotificationColorSchemeKey: AppTheme.globalTheme.colorScheme]
+        [AppTheme.globalThemeNotificationColorSchemeKey: AppTheme.globalTheme.colorScheme,
+         AppTheme.globalThemeNotificationTypographySchemeKey: AppTheme.globalTheme.typographyScheme]
       )
     }
   }
 
-  static let didChangeGlobalThemeNotificationName = Notification.Name("MDCCatalogDidChangeGlobalTheme")
+  static let didChangeGlobalThemeNotificationName =
+    Notification.Name("MDCCatalogDidChangeGlobalTheme")
   static let globalThemeNotificationColorSchemeKey = "colorScheme"
+  static let globalThemeNotificationTypographySchemeKey = "typographyScheme"
 }
