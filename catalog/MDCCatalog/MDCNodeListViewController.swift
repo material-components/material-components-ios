@@ -58,6 +58,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   let rowHeight = CGFloat(50)
   let padding = CGFloat(20)
   var componentDescription = ""
+  var selectedNode: CBCNode? = nil
 
   enum Section: Int {
     case description = 0
@@ -176,18 +177,16 @@ class MDCNodeListViewController: CBCNodeListViewController {
     }
     applyColorScheme(colorScheme)
 
-    guard let topVC = self.navigationController?.topViewController, topVC is MDCAppBarContainerViewController ||
+    guard let topVC = self.navigationController?.topViewController,
+      topVC is MDCAppBarContainerViewController ||
       topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
       return
     }
-    guard let vc = self.navigationController!.popViewController(animated: false) else {
+    guard self.navigationController!.popViewController(animated: false) != nil,
+      selectedNode != nil else {
       return
     }
-    if let vc = vc as? MDCAppBarContainerViewController {
-      themeExample(vc: vc.contentViewController)
-    } else {
-      themeExample(vc: vc)
-    }
+    let vc = setupExample()
     self.navigationController?.pushViewController(vc, animated: false)
   }
 
@@ -421,52 +420,59 @@ extension MDCNodeListViewController {
     }
     var vc: UIViewController
     if node.isExample() {
-      let contentVC = node.createExampleViewController()
-      themeExample(vc: contentVC)
-      if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
-        vc = contentVC
-      } else {
-        let appBarFont: UIFont
-        if #available(iOS 9.0, *) {
-          appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
-        } else {
-          let attribute: [String: UIFontDescriptorSymbolicTraits] =
-            [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
-          let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
-          appBarFont = UIFont(descriptor: descriptor, size: 16)
-        }
-        let container = MDCAppBarContainerViewController(contentViewController: contentVC)
-        container.appBar.navigationBar.titleAlignment = .center
-        container.appBar.navigationBar.tintColor = UIColor.white
-        container.appBar.navigationBar.titleTextAttributes =
-          [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
-        MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
-                                                      to: container.appBar)
-
-        // TODO(featherless): Remove once
-        // https://github.com/material-components/material-components-ios/issues/367 is resolved.
-        contentVC.title = node.title
-        contentVC.navigationItem.rightBarButtonItem =
-          UIBarButtonItem(title: "Color", style: .done, target: self, action: #selector(lol))
-        let headerView = container.appBar.headerViewController.headerView
-        if let collectionVC = contentVC as? MDCCollectionViewController {
-          headerView.trackingScrollView = collectionVC.collectionView
-        } else if let scrollView = contentVC.view as? UIScrollView {
-          headerView.trackingScrollView = scrollView
-        } else {
-          // TODO(chuga): This is bad. We should be adjusting for Safe Area changes.
-          var contentFrame = container.contentViewController.view.frame
-          let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
-          contentFrame.origin.y = headerSize.height
-          contentFrame.size.height = self.view.bounds.height - headerSize.height
-          container.contentViewController.view.frame = contentFrame
-        }
-        vc = container
-      }
+      selectedNode = node
+      vc = setupExample()
     } else {
       vc = MDCNodeListViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
+  }
+
+  func setupExample() -> UIViewController {
+    var vc: UIViewController
+    let contentVC = selectedNode!.createExampleViewController()
+    themeExample(vc: contentVC)
+    if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
+      vc = contentVC
+    } else {
+      let appBarFont: UIFont
+      if #available(iOS 9.0, *) {
+        appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+      } else {
+        let attribute: [String: UIFontDescriptorSymbolicTraits] =
+          [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
+        let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
+        appBarFont = UIFont(descriptor: descriptor, size: 16)
+      }
+      let container = MDCAppBarContainerViewController(contentViewController: contentVC)
+      container.appBar.navigationBar.titleAlignment = .center
+      container.appBar.navigationBar.tintColor = UIColor.white
+      container.appBar.navigationBar.titleTextAttributes =
+        [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
+      MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
+                                                    to: container.appBar)
+
+      // TODO(featherless): Remove once
+      // https://github.com/material-components/material-components-ios/issues/367 is resolved.
+      contentVC.title = selectedNode!.title
+      contentVC.navigationItem.rightBarButtonItem =
+        UIBarButtonItem(title: "Color", style: .done, target: self, action: #selector(lol))
+      let headerView = container.appBar.headerViewController.headerView
+      if let collectionVC = contentVC as? MDCCollectionViewController {
+        headerView.trackingScrollView = collectionVC.collectionView
+      } else if let scrollView = contentVC.view as? UIScrollView {
+        headerView.trackingScrollView = scrollView
+      } else {
+        // TODO(chuga): This is bad. We should be adjusting for Safe Area changes.
+        var contentFrame = container.contentViewController.view.frame
+        let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
+        contentFrame.origin.y = headerSize.height
+        contentFrame.size.height = self.view.bounds.height - headerSize.height
+        container.contentViewController.view.frame = contentFrame
+      }
+      vc = container
+    }
+    return vc
   }
 
   func themeExample(vc: UIViewController) {
