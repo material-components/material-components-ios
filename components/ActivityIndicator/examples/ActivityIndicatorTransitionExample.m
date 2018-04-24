@@ -126,8 +126,6 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
                                                           endAngle:3.0f * (CGFloat)M_PI_2
                                                          clockwise:YES];
   _refreshStrokeLayer.path = strokePath.CGPath;
-
-  [CATransaction commit];
 }
 
 - (void)startRefreshing {
