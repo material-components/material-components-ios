@@ -15,7 +15,7 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "MDCBottomNavigationBarColorThemer.h"
+#import "MaterialBottomNavigation+ColorThemer.h"
 #import "MaterialColorScheme.h"
 #import "MaterialBottomNavigation.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
