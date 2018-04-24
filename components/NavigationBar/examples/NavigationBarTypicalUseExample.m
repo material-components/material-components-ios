@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialNavigationBar.h"
-#import "MDCNavigationBarColorThemer.h"
+#import "MaterialNavigationBar+ColorThemer.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarTypicalUseExample ()
