@@ -18,7 +18,7 @@
 
 #import "MaterialThemes.h"
 #import "MaterialChips.h"
-#import "MDCChipViewFontThemer.h"
+#import "MaterialChips+FontThemer.h"
 
 @interface ChipViewFontThemerTests : XCTestCase
 

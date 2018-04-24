@@ -18,7 +18,7 @@
 
 #import "MaterialChips.h"
 #import "MaterialTextFields.h"
-#import "MDCChipViewColorThemer.h"
+#import "MaterialChips+ColorThemer.h"
 
 @interface ChipsInputExampleViewController () <MDCChipFieldDelegate>
 @end

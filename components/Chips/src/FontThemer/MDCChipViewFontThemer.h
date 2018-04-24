@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
+#import "MaterialChips.h"
+#import "MaterialTypographyScheme.h"
 
-@class MDCChipView;
-@protocol MDCFontScheme;
+#import <Foundation/Foundation.h>
 
 /**
  Themes @c MDCChipView objects to set their text font to the appropriate font trait given a font

@@ -14,15 +14,13 @@
  limitations under the License.
  */
 
-#import "MDCChipViewFontThemer.h"
+#import "ChipsExamplesSupplemental.h"
 
-#import "MaterialChips.h"
-#import "MaterialThemes.h"
+@implementation ChipsFilterAnimatedExampleViewController
 
-@implementation MDCChipViewFontThemer
-
-+ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme toChipView:(MDCChipView *)chipView {
-  chipView.titleFont = fontScheme.body2;
+- (BOOL)shouldAnimateResize {
+  return YES;
 }
 
 @end
+
