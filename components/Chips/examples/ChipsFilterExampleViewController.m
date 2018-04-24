@@ -103,7 +103,8 @@
   chipView.titleLabel.text = self.titles[indexPath.row];
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  chipView.selectedImageView.tintColor = [_colorScheme.onSurfaceColor colorWithAlphaComponent:0.54];
+  chipView.selectedImageView.tintColor =
+      [_colorScheme.onSurfaceColor colorWithAlphaComponent:0.54f];
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
  
