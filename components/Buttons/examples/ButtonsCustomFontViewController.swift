@@ -32,8 +32,6 @@ class ButtonsCustomFontViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = .white
-
     // Define our design data
     let buttonScheme = MDCButtonScheme()
     if let customFont = UIFont(name:"Zapfino", size:14.0) {
@@ -41,6 +39,8 @@ class ButtonsCustomFontViewController: UIViewController {
     }
 
     // Apply our design data using the Material themers
+    view.backgroundColor = buttonScheme.colorScheme.backgroundColor
+
     let flatButtonStatic = MDCButton()
     MDCContainedButtonThemer.applyScheme(buttonScheme, to: flatButtonStatic)
     flatButtonStatic.setTitle("Static", for: UIControlState())
