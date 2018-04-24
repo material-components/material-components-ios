@@ -39,7 +39,7 @@ extension NavigationBarTypicalUseSwiftExample {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 
   override open func setupExampleViews() {
