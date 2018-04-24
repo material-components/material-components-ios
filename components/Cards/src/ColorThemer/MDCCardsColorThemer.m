@@ -16,6 +16,8 @@
 
 #import "MDCCardsColorThemer.h"
 
+static const CGFloat kStrokeVariantBorderOpacity = 0.37f;
+
 @implementation MDCCardsColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
@@ -26,6 +28,36 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
   cardCell.backgroundColor = colorScheme.surfaceColor;
+}
+
++ (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                                     toCard:(nonnull MDCCard *)card {
+  NSUInteger maximumStateValue =
+      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
+      UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [card setBorderColor:nil forState:state];
+  }
+  
+  card.backgroundColor = colorScheme.surfaceColor;
+  UIColor *borderColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kStrokeVariantBorderOpacity];
+  [card setBorderColor:borderColor forState:UIControlStateNormal];
+}
+
++ (void)applyOutlinedVariantWithColorScheme:(id<MDCColorScheming>)colorScheme
+                                 toCardCell:(MDCCardCollectionCell *)cardCell {
+  NSUInteger maximumStateValue =
+      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
+      UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [cardCell setBorderColor:nil forState:state];
+  }
+  
+  cardCell.backgroundColor = colorScheme.surfaceColor;
+  UIColor *borderColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kStrokeVariantBorderOpacity];
+  [cardCell setBorderColor:borderColor forState:MDCCardCellStateNormal];
 }
 
 @end
