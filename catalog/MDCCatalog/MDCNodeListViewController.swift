@@ -186,7 +186,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
         topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
           return
     }
-    guard self.navigationController!.popViewController(animated: false) != nil else {
+    guard navigationController.popViewController(animated: false) != nil else {
         return
     }
     guard let selectedNode = selectedNode else {
