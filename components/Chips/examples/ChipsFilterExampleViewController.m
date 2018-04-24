@@ -23,11 +23,14 @@
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
   MDCSemanticColorScheme *_colorScheme;
+  NSMutableArray *_selectedIndecies;
+  BOOL _isStroked;
 }
 
 - (void)loadView {
   [super loadView];
 
+  _selectedIndecies = [NSMutableArray new];
   _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // Our preferred CollectionView Layout For chips
@@ -56,6 +59,29 @@
   [self.view addSubview:_collectionView];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  _isStroked = NO;
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Stroked Style"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(switchStyle)];
+}
+
+- (void)switchStyle {
+  _isStroked = !_isStroked;
+  NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Stroked Style";
+  [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
+  [_collectionView reloadData];
+  for (NSIndexPath *path in _selectedIndecies) {
+    [_collectionView selectItemAtIndexPath:path
+                                  animated:NO
+                            scrollPosition:UICollectionViewScrollPositionNone];
+  }
+}
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
@@ -75,8 +101,20 @@
 
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
-  chipView.selectedImageView.image = [self doneImage];
-  cell.alwaysAnimateResize = YES;
+  chipView.selectedImageView.image =
+      [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  chipView.selectedImageView.tintColor =
+      [_colorScheme.onSurfaceColor colorWithAlphaComponent:0.54f];
+  chipView.selected = [_selectedIndecies containsObject:indexPath];
+  cell.alwaysAnimateResize = [self shouldAnimateResize];
+ 
+  if (_isStroked) {
+    [chipView setBorderWidth:1 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toStrokedChipView:chipView];
+  } else {
+    [chipView setBorderWidth:0 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:chipView];
+  }
 
   return cell;
 }
@@ -84,10 +122,8 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
-
   // The size of the chip depends on title, image and selection state.
-  _sizingChip.selected = [selectedPaths containsObject:indexPath];
+  _sizingChip.selected = [_selectedIndecies containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
   _sizingChip.selectedImageView.image = [self doneImage];
   return [_sizingChip sizeThatFits:collectionView.bounds.size];
@@ -95,12 +131,14 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [_selectedIndecies addObject:indexPath];
   // Animating Chip Selection
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [_selectedIndecies removeObject:indexPath];
   // Animating Chip Deselection
   [collectionView performBatchUpdates:nil completion:nil];
 }
@@ -108,20 +146,24 @@
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-      @"Doorman",
-      @"Elevator",
-      @"Garage Parking",
-      @"Gym",
-      @"Laundry in Building",
-      @"Green Building",
-      @"Parking Available",
-      @"Pets Allowed",
-      @"Pied-a-Terre Allowed",
-      @"Swimming Pool",
-      @"Smoke-free",
-    ];
+                @"Doorman",
+                @"Elevator",
+                @"Garage Parking",
+                @"Gym",
+                @"Laundry in Building",
+                @"Green Building",
+                @"Parking Available",
+                @"Pets Allowed",
+                @"Pied-a-Terre Allowed",
+                @"Swimming Pool",
+                @"Smoke-free",
+                ];
   }
   return _titles;
+}
+
+- (BOOL)shouldAnimateResize {
+  return NO;
 }
 
 @end
