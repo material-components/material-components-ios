@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialCards
-import MaterialComponents.MDCCardsColorThemer
+import MaterialComponents.MaterialCards_ColorThemer
 
 class CardColorThemerTests: XCTestCase {
 
