@@ -17,7 +17,7 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
-#import "MDCChipViewTypographyThemer.h"
+#import "MaterialChips+TypographyThemer.h"
 
 @implementation ChipsTypicalUseViewController {
   MDCChipView *_sizingChip;

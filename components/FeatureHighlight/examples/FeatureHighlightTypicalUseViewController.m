@@ -15,8 +15,8 @@
  */
 
 #import "MaterialFeatureHighlight.h"
-#import "MDCFeatureHighlightColorThemer.h"
-#import "MDCFeatureHighlightTypographyThemer.h"
+#import "MaterialFeatureHighlight+ColorThemer.h"
+#import "MaterialFeatureHighlight+TypographyThemer.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightTypicalUseViewController

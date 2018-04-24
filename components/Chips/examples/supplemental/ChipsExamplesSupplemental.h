@@ -59,6 +59,10 @@
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
+@interface ChipsFilterAnimatedExampleViewController : ChipsFilterExampleViewController
+<UICollectionViewDelegate, UICollectionViewDataSource>
+@end
+
 @interface ChipsFilterExampleViewController (Supplemental)
 - (UIImage *)doneImage;
 @end

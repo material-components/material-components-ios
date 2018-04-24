@@ -17,8 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
-#import "MDCButtonColorThemer.h"
-#import "MDCFloatingButtonColorThemer.h"
+#import "MaterialButtons+ColorThemer.h"
 
 @interface FloatingButtonExampleViewController : UIViewController
 @property(nonatomic, strong) UILabel *iPadLabel;

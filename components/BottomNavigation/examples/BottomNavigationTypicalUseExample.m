@@ -21,8 +21,8 @@
 #import "MaterialAppBar.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
-#import "MDCBottomNavigationBarColorThemer.h"
-#import "MDCBottomNavigationBarTypographyThemer.h"
+#import "MaterialBottomNavigation+ColorThemer.h"
+#import "MaterialBottomNavigation+TypographyThemer.h"
 
 @interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
 

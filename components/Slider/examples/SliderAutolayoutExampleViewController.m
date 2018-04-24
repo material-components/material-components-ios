@@ -18,7 +18,7 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
-#import "MDCSliderColorThemer.h"
+#import "MaterialSlider+ColorThemer.h"
 
 @interface SliderAutolayoutExampleViewController ()
 @property(weak, nonatomic) IBOutlet MDCSlider *materialSlider;

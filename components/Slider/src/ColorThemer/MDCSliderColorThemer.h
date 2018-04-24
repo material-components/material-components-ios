@@ -17,6 +17,8 @@
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  Used to apply a color scheme to theme MDCSlider.
  */
