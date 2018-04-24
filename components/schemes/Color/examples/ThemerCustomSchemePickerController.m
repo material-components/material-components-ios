@@ -19,6 +19,7 @@
 #import "MDCAlertColorThemer.h"
 #import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
+#import "MaterialButtonBar+ColorThemer.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MDCButtonBarColorThemer.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
