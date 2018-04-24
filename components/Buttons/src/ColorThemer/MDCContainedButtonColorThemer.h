@@ -17,6 +17,8 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  Used to apply a color scheme to theme MDCButton.
  */

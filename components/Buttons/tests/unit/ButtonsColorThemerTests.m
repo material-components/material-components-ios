@@ -17,10 +17,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtons.h"
-#import "MDCButtonColorThemer.h"
-#import "MDCFloatingButtonColorThemer.h"
-#import "MDCTextButtonColorThemer.h"
-#import "MDCContainedButtonColorThemer.h"
+#import "MaterialButtons+ColorThemer.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
