@@ -18,15 +18,15 @@
 #import "MaterialTypographyScheme.h"
 
 /**
- A Typography themer for MDCAppBar that implements the Material design Typography system mappings.
+ The Material Design typography system's themer for instances of MDCAppBar.
  */
 @interface MDCAppBarTypographyThemer : NSObject
 
 /**
- Applies a Typography scheme's properties to an MDCAppBar.
+ Applies a typography scheme's properties to an MDCAppBar.
 
- @param typographyScheme The Typography scheme to apply to MDCAppBar.
- @param appBar An MDCAppBar instance to which the Typography scheme should be applied.
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param appBar A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                      toAppBar:(nonnull MDCAppBar *)appBar;

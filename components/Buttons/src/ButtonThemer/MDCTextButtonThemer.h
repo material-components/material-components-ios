@@ -20,14 +20,16 @@
 
 #import <Foundation/Foundation.h>
 
-/** Applies text button style to MDCButton objects. */
+/**
+ The Material Design text button themer for instances of MDCButton.
+ */
 @interface MDCTextButtonThemer : NSObject
 
 /**
- Applies the text button style using the button scheme data.
+ Applies a button scheme's properties to an MDCButton using the text button style.
 
- @param scheme The button style data that should be used to change the @c button.
- @param button A MDCButton instance to apply the @c scheme
+ @param scheme The button scheme to apply to the component instance.
+ @param button A component instance to which the scheme should be applied.
  */
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
            toButton:(nonnull MDCButton *)button;

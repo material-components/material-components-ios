@@ -20,25 +20,24 @@
 #import <Foundation/Foundation.h>
 
 /**
- Themes @c MDCChipView objects to set their color properties to the appropriate color trait given a
- color scheme.
+ The Material Design color system's themer for instances of MDCChipView.
  */
 @interface MDCChipViewColorThemer : NSObject
 
 /**
- Applies a color scheme's properties to @c MDCChipView.
+ Applies a color scheme's properties to an MDCChipView.
 
- @param colorScheme The color scheme to apply to @c MDCChipView.
- @param chipView @c MDCChipView to which the color scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param chipView A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toChipView:(nonnull MDCChipView *)chipView;
 
 /**
- Applies a color scheme's properties to @c MDCChipView.
+ Applies a color scheme's properties to a stroked MDCChipView.
 
- @param colorScheme The color scheme to apply to @c MDCChipView.
- @param strokedChipView @c MDCChipView to which the color scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param strokedChipView A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                toStrokedChipView:(nonnull MDCChipView *)strokedChipView;

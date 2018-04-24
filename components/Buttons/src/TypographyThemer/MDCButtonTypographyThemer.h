@@ -20,14 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a typography scheme to theme MDCButton.
+ The Material Design typography system's themer for instances of MDCButton.
  */
 @interface MDCButtonTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme an MDCButton.
- @param typographyScheme The typography scheme to apply to @c button.
- @param button An MDCButton instance to apply a color scheme.
+ Applies a typography scheme's properties to an MDCButton.
+
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param button A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                      toButton:(nonnull MDCButton *)button;

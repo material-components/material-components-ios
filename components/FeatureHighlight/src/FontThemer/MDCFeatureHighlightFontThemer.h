@@ -19,14 +19,21 @@
 #import "MaterialFeatureHighlight.h"
 #import "MaterialThemes.h"
 
+#pragma mark - Soon to be deprecated
+
 /**
  Used to apply a font scheme to theme to MDCFeatureHighlightView.
- This class will be deprecated soon please use MDCFeatureHighlightTypographyThemer instead.
+
+ @warning This class will soon be deprecated. Please consider using
+ MDCFeatureHighlightTypographyThemer instead.
  */
 @interface MDCFeatureHighlightFontThemer : NSObject
 
 /**
  Applies a font scheme to theme to a MDCFeatureHighlightView.
+
+ @warning This API will soon be deprecated. Please consider using
+ MDCFeatureHighlightTypographyThemer instead.
  
  @param fontScheme The font scheme to apply to MDCFeatureHighlightView.
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a font scheme.

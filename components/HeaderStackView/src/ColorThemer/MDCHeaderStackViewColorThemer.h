@@ -20,15 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a color scheme to theme MDCSlider.
+ The Material Design color system's themer for instances of MDCHeaderStackView.
  */
 @interface MDCHeaderStackViewColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCHeaderStackView.
+ Applies a color scheme's properties to an MDCHeaderStackView.
 
- @param colorScheme The color scheme to apply to MDCHeaderStackView.
- @param headerStackView A MDCHeaderStackView instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param headerStackView A component instance to which the color scheme should be applied.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
        toHeaderStackView:(nonnull MDCHeaderStackView *)headerStackView;

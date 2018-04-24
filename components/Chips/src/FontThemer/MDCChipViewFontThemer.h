@@ -19,9 +19,14 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - Soon to be deprecated
+
 /**
  Themes @c MDCChipView objects to set their text font to the appropriate font trait given a font
  scheme.
+
+ @warning This class will soon be deprecated. Please consider using MDCChipViewTypographyThemer
+ instead.
  */
 @interface MDCChipViewFontThemer : NSObject
 
