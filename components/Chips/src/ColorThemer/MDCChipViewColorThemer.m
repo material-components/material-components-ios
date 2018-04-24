@@ -44,8 +44,9 @@
   [chipView setTitleColor:selectedTextColor forState:UIControlStateSelected];
   [chipView setBackgroundColor:selectedBackgroundColor forState:UIControlStateSelected];
 
-  [chipView setTitleColor:[textColor colorWithAlphaComponent:0.38] forState:UIControlStateDisabled];
-  [chipView setBackgroundColor:[backgroundColor colorWithAlphaComponent:0.38]
+  [chipView setTitleColor:[textColor colorWithAlphaComponent:0.38f]
+                 forState:UIControlStateDisabled];
+  [chipView setBackgroundColor:[backgroundColor colorWithAlphaComponent:0.38f]
                       forState:UIControlStateDisabled];
 }
 
@@ -77,11 +78,11 @@
   [strokedChipView setBackgroundColor:selectedBackgroundColor forState:UIControlStateSelected];
   [strokedChipView setBorderColor:[UIColor clearColor] forState:UIControlStateSelected];
 
-  [strokedChipView setTitleColor:[textColor colorWithAlphaComponent:0.38]
+  [strokedChipView setTitleColor:[textColor colorWithAlphaComponent:0.38f]
                         forState:UIControlStateDisabled];
-  [strokedChipView setBackgroundColor:[colorScheme.surfaceColor colorWithAlphaComponent:0.38]
+  [strokedChipView setBackgroundColor:[colorScheme.surfaceColor colorWithAlphaComponent:0.38f]
                              forState:UIControlStateDisabled];
-  [strokedChipView setBorderColor:[borderColor colorWithAlphaComponent:0.38]
+  [strokedChipView setBorderColor:[borderColor colorWithAlphaComponent:0.38f]
                          forState:UIControlStateDisabled];
 }
 
