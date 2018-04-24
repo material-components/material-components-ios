@@ -15,7 +15,7 @@
  */
 
 
-#import "MDCFeatureHighlightAccessibilityMutator.h"
+#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "MaterialFeatureHighlight.h"
 
 #import <XCTest/XCTest.h>
