@@ -18,12 +18,12 @@
 #import "MaterialColorScheme.h"
 
 /**
- A color themer for a Material Hairline Button.
+ A color themer for a Material Outlined Button.
  */
-@interface MDCHairlineButtonColorThemer : NSObject
+@interface MDCOutlinedButtonColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to a Hairline button.
+ Applies a color scheme to theme to an outlined button.
 
  @param colorScheme The color scheme to apply to @c button.
  @param button A MDCButton instance to apply a color scheme.

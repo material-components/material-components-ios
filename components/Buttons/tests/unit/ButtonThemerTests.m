@@ -17,7 +17,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCContainedButtonThemer.h"
-#import "MDCHairlineButtonThemer.h"
+#import "MDCOutlinedButtonThemer.h"
 #import "MDCPalettes.h"
 #import "MDCTextButtonThemer.h"
 #import "MaterialButtons.h"
@@ -37,7 +37,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
 
   // When
-  [MDCHairlineButtonThemer applyScheme:scheme toButton:button];
+  [MDCOutlinedButtonThemer applyScheme:scheme toButton:button];
 
   // Then
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
@@ -58,13 +58,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                              kEpsilonAccuracy);
 }
 
-- (void)testHairlineButtonThemer {
+- (void)testOutlinedButtonThemer {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
   MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
 
   // When
-  [MDCHairlineButtonThemer applyScheme:scheme toButton:button];
+  [MDCOutlinedButtonThemer applyScheme:scheme toButton:button];
 
   // Then
   // Color

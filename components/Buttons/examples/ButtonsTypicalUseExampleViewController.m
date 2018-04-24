@@ -16,10 +16,10 @@
 
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
-#import "MDCHairlineButtonColorThemer.h"
-#import "MDCHairlineButtonThemer.h"
-#import "MDCTextButtonThemer.h"
 #import "MDCContainedButtonThemer.h"
+#import "MDCOutlinedButtonColorThemer.h"
+#import "MDCOutlinedButtonThemer.h"
+#import "MDCTextButtonThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
@@ -86,34 +86,34 @@
   [disabledTextButton setEnabled:NO];
   [self.view addSubview:disabledTextButton];
 
-  // Hairline button
+  // Outlined button
 
-  MDCButton *hairlineButton = [[MDCButton alloc] init];
-  [MDCHairlineButtonThemer applyScheme:buttonScheme toButton:hairlineButton];
-  [hairlineButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:hairlineButton];
-  [MDCHairlineButtonColorThemer applySemanticColorScheme:colorScheme
-                                                toButton:hairlineButton];
-  [hairlineButton sizeToFit];
-  [hairlineButton addTarget:self
+  MDCButton *outlinedButton = [[MDCButton alloc] init];
+  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:outlinedButton];
+  [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:outlinedButton];
+  [MDCOutlinedButtonColorThemer applySemanticColorScheme:colorScheme
+                                                toButton:outlinedButton];
+  [outlinedButton sizeToFit];
+  [outlinedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:hairlineButton];
+  [self.view addSubview:outlinedButton];
 
-  // Disabled custom hairline button
+  // Disabled custom outlined button
 
-  MDCButton *disabledHairlineButton = [[MDCButton alloc] init];
-  [MDCHairlineButtonThemer applyScheme:buttonScheme toButton:disabledHairlineButton];
-  [disabledHairlineButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledHairlineButton];
-  [MDCHairlineButtonColorThemer applySemanticColorScheme:colorScheme
-                                                toButton:disabledHairlineButton];
-  [disabledHairlineButton sizeToFit];
-  [disabledHairlineButton addTarget:self
+  MDCButton *disabledOutlinedButton = [[MDCButton alloc] init];
+  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:disabledOutlinedButton];
+  [disabledOutlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledOutlinedButton];
+  [MDCOutlinedButtonColorThemer applySemanticColorScheme:colorScheme
+                                                toButton:disabledOutlinedButton];
+  [disabledOutlinedButton sizeToFit];
+  [disabledOutlinedButton addTarget:self
                             action:@selector(didTap:)
                   forControlEvents:UIControlEventTouchUpInside];
-  [disabledHairlineButton setEnabled:NO];
-  [self.view addSubview:disabledHairlineButton];
+  [disabledOutlinedButton setEnabled:NO];
+  [self.view addSubview:disabledOutlinedButton];
 
   // Floating action button
 
@@ -132,8 +132,8 @@
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    containedButton, disabledContainedButton, textButton, disabledTextButton, hairlineButton,
-    disabledHairlineButton, self.floatingButton
+    containedButton, disabledContainedButton, textButton, disabledTextButton, outlinedButton,
+    disabledOutlinedButton, self.floatingButton
   ];
 
   [self setupExampleViews];
@@ -144,13 +144,13 @@
   UILabel *disabledContainedButtonLabel = [self addLabelWithText:@"Disabled Contained"];
   UILabel *textButtonLabel = [self addLabelWithText:@"Text button"];
   UILabel *disabledTextButtonLabel = [self addLabelWithText:@"Disabled text button"];
-  UILabel *hairlineButtonLabel = [self addLabelWithText:@"Hairline"];
-  UILabel *disabledHairlineButtonLabel = [self addLabelWithText:@"Disabled Hairline"];
+  UILabel *outlinedButtonLabel = [self addLabelWithText:@"Outlined"];
+  UILabel *disabledOutlinedButtonLabel = [self addLabelWithText:@"Disabled Outlined"];
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
     containedButtonLabel, disabledContainedButtonLabel, textButtonLabel, disabledTextButtonLabel,
-    hairlineButtonLabel, disabledHairlineButtonLabel, floatingButtonLabel
+    outlinedButtonLabel, disabledOutlinedButtonLabel, floatingButtonLabel
   ];
 }
 

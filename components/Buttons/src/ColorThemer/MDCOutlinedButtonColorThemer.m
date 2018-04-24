@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCHairlineButtonColorThemer.h"
+#import "MDCOutlinedButtonColorThemer.h"
 
 #import "MDCPalettes.h"
 
-@implementation MDCHairlineButtonColorThemer
+@implementation MDCOutlinedButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button {

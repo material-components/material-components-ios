@@ -14,20 +14,23 @@
  limitations under the License.
  */
 
-#import "MDCButton.h"
+#import "MDCOutlinedButtonThemer.h"
+
 #import "MDCButtonColorThemer.h"
 #import "MDCButtonTypographyThemer.h"
-#import "MDCButtonScheme.h"
+#import "MDCOutlinedButtonColorThemer.h"
 
-/** Applies the stroked button style to MDCButton objects. */
-@interface MDCHairlineButtonThemer : NSObject
+@implementation MDCOutlinedButtonThemer
 
-/**
- Applies the stroked button style using the button scheme data.
-
- @param scheme The button style data that should be used to change the @c button.
- @param button A MDCButton instance to apply the @c scheme
- */
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button;
+           toButton:(nonnull MDCButton *)button {
+  [MDCOutlinedButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
+  [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
+  button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
+  button.layer.cornerRadius = scheme.cornerRadius;
+
+  [button setBorderWidth:1.0f forState:UIControlStateNormal];
+  [button setBorderWidth:0 forState:UIControlStateHighlighted];
+}
+
 @end
