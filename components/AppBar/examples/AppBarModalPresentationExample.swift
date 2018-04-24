@@ -16,7 +16,7 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
