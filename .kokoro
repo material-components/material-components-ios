@@ -40,6 +40,7 @@ fix_bazel_imports() {
   }
 
   stashed_dir=""
+  rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_tests "s/import MaterialComponents.MDC(.+)ColorThemer/import components_\1_ColorThemer/"
   rewrite_tests "s/import MaterialComponents.MDC(.+)TypographyThemer/import components_\1_TypographyThemer/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
@@ -52,6 +53,7 @@ fix_bazel_imports() {
   stashed_dir="$(pwd)/"
   reset_imports() {
     # Undoes our source changes from above.
+    rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_ColorThemer/import MaterialComponents.MDC\1ColorThemer/"
     rewrite_tests "s/import components_(.+)_TypographyThemer/import MaterialComponents.MDC\1TypographyThemer/"
     rewrite_tests "s/import components_private_Math_Math/import MaterialComponents.MaterialMath/"
