@@ -17,8 +17,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
-#import "MDCAppBarColorThemer.h"
-#import "MDCAppBarTypographyThemer.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 

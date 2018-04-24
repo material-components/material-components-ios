@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MaterialAppBar_ColorThemer
 import MaterialComponents.MaterialThemes
 
 class AppBarColorThemerTests: XCTestCase {
