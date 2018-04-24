@@ -21,11 +21,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialActivityIndicator+ColorThemer.h"
 #import "MaterialAppBar.h"
 #import "MaterialThemes.h"
 #import "MaterialTextFields.h"
 
-#import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
 #import "MDCBottomAppBarColorThemer.h"
 #import "MDCButtonBarColorThemer.h"
