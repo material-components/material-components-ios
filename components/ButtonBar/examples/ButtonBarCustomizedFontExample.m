@@ -17,8 +17,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
-#import "MDCButtonBarColorThemer.h"
-#import "MDCButtonBarTypographyThemer.h"
+#import "MaterialButtonBar+ColorThemer.h"
+#import "MaterialButtonBar+TypographyThemer.h"
 
 @interface ButtonBarCustomizedFontExample : UIViewController
 @end
