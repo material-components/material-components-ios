@@ -14,16 +14,4 @@
  limitations under the License.
  */
 
-#import "MDCAppBarTypographyThemer.h"
-
-#import "MaterialNavigationBar+TypographyThemer.h"
-
-@implementation MDCAppBarTypographyThemer
-
-+ (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
-                     toAppBar:(MDCAppBar *)appBar {
-  [MDCNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
-                                          toNavigationBar:appBar.navigationBar];
-}
-
-@end
+#import "MDCNavigationBarTypographyThemer.h"
