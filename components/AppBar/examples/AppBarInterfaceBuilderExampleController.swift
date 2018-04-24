@@ -21,6 +21,7 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate {
   @IBOutlet weak var scrollView: UIScrollView!
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -39,7 +40,6 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
     addChildViewController(appBar.headerViewController)
 
-    let colorScheme = MDCSemanticColorScheme()
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
   }
 

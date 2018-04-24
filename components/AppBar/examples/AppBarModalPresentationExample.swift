@@ -21,6 +21,7 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -29,7 +30,6 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
     self.addChildViewController(appBar.headerViewController)
 
-    let colorScheme = MDCSemanticColorScheme()
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
     self.modalPresentationStyle = .formSheet
     self.modalTransitionStyle = .coverVertical
@@ -94,6 +94,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 class AppBarModalPresentationSwiftExample: UITableViewController {
 
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -102,7 +103,6 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 
     self.addChildViewController(appBar.headerViewController)
 
-    let colorScheme = MDCSemanticColorScheme()
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
   }
 

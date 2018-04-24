@@ -25,7 +25,6 @@
 
 @implementation ChipsInputExampleViewController {
   MDCChipField *_chipField;
-  MDCSemanticColorScheme *_colorScheme;
 }
 
 - (void)viewDidLoad {
@@ -33,7 +32,6 @@
 
   self.view.backgroundColor = [UIColor lightGrayColor];
   
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";

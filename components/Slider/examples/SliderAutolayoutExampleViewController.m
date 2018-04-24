@@ -41,8 +41,7 @@
   
   self.materialSlider.statefulAPIEnabled = YES;
   
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCSliderColorThemer applySemanticColorScheme:scheme toSlider:self.materialSlider];
+  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:self.materialSlider];
 }
 
 - (IBAction)materialSliderDidChange:(id)sender {

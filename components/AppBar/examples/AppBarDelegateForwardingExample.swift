@@ -23,6 +23,7 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 class AppBarDelegateForwardingExample: UITableViewController {
 
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   convenience init() {
     self.init(style: .plain)
@@ -30,8 +31,6 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
-
-    let colorScheme = MDCSemanticColorScheme()
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     self.addChildViewController(appBar.headerViewController)

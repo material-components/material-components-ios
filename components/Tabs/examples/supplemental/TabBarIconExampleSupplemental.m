@@ -39,8 +39,7 @@
 
   [self setupAlignmentButton];
 
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCTabBarTypographyThemer applyTypographyScheme:typographyScheme toTabBar:self.tabBar];
+  [MDCTabBarTypographyThemer applyTypographyScheme:self.typographyScheme toTabBar:self.tabBar];
 }
 
 - (void)setupAlignmentButton {

@@ -20,6 +20,7 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarImagerySwiftExample: UITableViewController {
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -42,7 +43,6 @@ class AppBarImagerySwiftExample: UITableViewController {
     // The header view does not clip to bounds by default so we ensure that the image is clipped.
     imageView.clipsToBounds = true
 
-    let colorScheme = MDCSemanticColorScheme()
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     // Make sure navigation bar background color is clear so the image view is visible.

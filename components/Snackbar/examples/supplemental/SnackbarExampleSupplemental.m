@@ -27,10 +27,8 @@ static NSString * const kCellIdentifier = @"Cell";
   self.view.backgroundColor = [UIColor whiteColor];
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCellIdentifier];
-  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCSnackbarTypographyThemer applyTypographyScheme:typographyScheme];
+  [MDCSnackbarColorThemer applySemanticColorScheme:self.colorScheme];
+  [MDCSnackbarTypographyThemer applyTypographyScheme:self.typographyScheme];
 }
 
 #pragma mark - UICollectionView

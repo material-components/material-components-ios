@@ -21,6 +21,7 @@
 
 @interface AppBarModalPresentationExamplePresented : UITableViewController
 @property(strong, nonatomic) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation AppBarModalPresentationExamplePresented
@@ -32,8 +33,7 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
+    [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -132,6 +132,7 @@
 
 @interface AppBarModalPresentationExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation AppBarModalPresentationExample
@@ -224,8 +225,7 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
+    [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 
     self.title = @"Modal Presentation";
   }

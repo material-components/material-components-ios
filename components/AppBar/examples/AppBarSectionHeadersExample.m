@@ -23,6 +23,7 @@
 
 // Step 1: Create an App Bar.
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
@@ -37,8 +38,7 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
+    [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
   }
   return self;
 }

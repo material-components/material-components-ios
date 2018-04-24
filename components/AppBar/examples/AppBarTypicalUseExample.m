@@ -24,6 +24,8 @@
 
 // Step 1: Create an App Bar.
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 
@@ -43,10 +45,8 @@
 
     _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
 
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
-    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-    [MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:_appBar];
+    [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+    [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
 
     _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
   }

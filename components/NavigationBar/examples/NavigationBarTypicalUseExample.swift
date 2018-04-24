@@ -20,7 +20,6 @@ import MaterialComponents.MaterialNavigationBar
 open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
 
   override open func viewDidLoad() {
-
     super.viewDidLoad()
     view.backgroundColor = .white
 
@@ -32,8 +31,7 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
     let mutator = MDCNavigationBarTextColorAccessibilityMutator()
     mutator.mutate(navBar!)
 
-    let colorScheme = MDCSemanticColorScheme()
-    MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: navBar!)
+    MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme!, to: navBar!)
 
     view.addSubview(navBar!)
 

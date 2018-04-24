@@ -23,6 +23,7 @@
 
 @property(nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
@@ -50,8 +51,7 @@
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 }
 
 - (void)viewDidLoad {

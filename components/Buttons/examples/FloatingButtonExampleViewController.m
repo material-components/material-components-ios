@@ -25,6 +25,7 @@
 @property(nonatomic, strong) MDCFloatingButton *miniFloatingButton;
 @property(nonatomic, strong) MDCFloatingButton *defaultFloatingButton;
 @property(nonatomic, strong) MDCFloatingButton *largeIconFloatingButton;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation FloatingButtonExampleViewController
@@ -40,7 +41,6 @@
                                     inBundle:[NSBundle bundleForClass:[self class]]
                compatibleWithTraitCollection:self.traitCollection];
   plusImage36 = [plusImage36 imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   self.iPadLabel = [[UILabel alloc] init];
   self.iPadLabel.text = @"Try me on an iPad!";
@@ -52,13 +52,13 @@
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
                                  forShape:MDCFloatingButtonShapeMini
                                    inMode:MDCFloatingButtonModeExpanded];
-  [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
                                                 toButton:self.miniFloatingButton];
 
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   self.defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
                                                 toButton:self.defaultFloatingButton];
 
   self.largeIconFloatingButton = [[MDCFloatingButton alloc] init];
@@ -67,7 +67,7 @@
   [self.largeIconFloatingButton setContentEdgeInsets:UIEdgeInsetsMake(-6, -6, -6, 0)
                                             forShape:MDCFloatingButtonShapeDefault
                                               inMode:MDCFloatingButtonModeExpanded];
-  [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
                                                 toButton:self.largeIconFloatingButton];
 
   [self.view addSubview:self.iPadLabel];

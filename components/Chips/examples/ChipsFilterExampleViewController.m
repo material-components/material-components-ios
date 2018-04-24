@@ -22,13 +22,10 @@
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
-  MDCSemanticColorScheme *_colorScheme;
 }
 
 - (void)loadView {
   [super loadView];
-
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];

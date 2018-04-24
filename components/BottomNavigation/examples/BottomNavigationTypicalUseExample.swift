@@ -20,6 +20,7 @@ import MaterialComponents
 class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
@@ -53,8 +54,7 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     bottomNavBar.alignment = .centered
 
     // Theme the bottom navigation bar.
-    let scheme = MDCSemanticColorScheme();
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(scheme,
+    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
                                                                toBottomNavigation: bottomNavBar);
 
     // Add items to the bottom navigation bar.

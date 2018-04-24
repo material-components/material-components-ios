@@ -20,15 +20,12 @@
 #import "MDCChipViewColorThemer.h"
 
 @implementation ChipsChoiceExampleViewController {
-  MDCSemanticColorScheme *_colorScheme;
   MDCChipView *_sizingChip;
 }
 
 - (void)loadView {
   [super loadView];
   self.view.backgroundColor = [UIColor whiteColor];
-
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // This is used to calculate the size of each chip based on the chip setup
   _sizingChip = [[MDCChipView alloc] init];

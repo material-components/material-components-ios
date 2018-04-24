@@ -75,6 +75,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @end
 
 @interface MDCSliderExampleCollectionViewCell : UICollectionViewCell
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 - (void)applyModel:(MDCSliderModel *)model;
 
@@ -103,8 +104,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   _label.textColor = model.labelColor;
   self.contentView.backgroundColor = model.bgColor;
   _slider.statefulAPIEnabled = YES;
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCSliderColorThemer applySemanticColorScheme:scheme toSlider:_slider];
+  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:_slider];
   _slider.numberOfDiscreteValues = model.numDiscreteValues;
   _slider.value = model.value;
   _slider.filledTrackAnchorValue = model.anchorValue;

@@ -29,7 +29,6 @@
 @property(nonatomic, assign) int badgeCount;
 @property(nonatomic, strong) MDCAppBar *appBar;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
-
 @end
 
 @implementation BottomNavigationTypicalUseExample
@@ -50,11 +49,9 @@
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   _bottomNavBar.delegate = self;
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
+  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toBottomNavigationBar:_bottomNavBar];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
+  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
                                            toBottomNavigation:_bottomNavBar];
   [self.view addSubview:_bottomNavBar];
 
