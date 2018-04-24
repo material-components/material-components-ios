@@ -175,6 +175,9 @@ class MDCNodeListViewController: CBCNodeListViewController {
   }
 
   func applyThemeOnCurrentExample() {
+    // This is a short term solution of applying the theme instantly on the
+    // currently presented example. A better solution would be to re-theme the example's components
+    // and not reload the example entirely with a pop-push.
     guard let topVC = self.navigationController?.topViewController,
       topVC is MDCAppBarContainerViewController ||
         topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
