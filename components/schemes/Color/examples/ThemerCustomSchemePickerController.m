@@ -16,7 +16,7 @@
 #import "supplemental/ThemerTypicalUseSupplemental.h"
 
 #import "MaterialActivityIndicator+ColorThemer.h"
-#import "MDCAlertColorThemer.h"
+#import "MaterialDialogs+ColorThemer.h"
 #import "MDCBottomAppBarColorThemer.h"
 #import "MaterialBottomAppBar.h"
 #import "MDCButtonBarColorThemer.h"

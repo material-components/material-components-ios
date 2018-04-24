@@ -26,7 +26,7 @@
 #import "MaterialThemes.h"
 #import "MaterialTextFields.h"
 
-#import "MDCAlertColorThemer.h"
+#import "MaterialDialogs+ColorThemer.h"
 #import "MDCBottomAppBarColorThemer.h"
 #import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
