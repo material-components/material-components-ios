@@ -20,7 +20,7 @@ import CoreGraphics
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MDCTabBarColorThemer
+import MaterialComponents.MaterialTabs_ColorThemer
 
 class TabBarIndicatorTemplateExample: UIViewController {
 

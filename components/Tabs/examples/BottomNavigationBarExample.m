@@ -16,7 +16,7 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
-#import "MDCTabBarColorThemer.h"
+#import "MaterialTabs+ColorThemer.h"
 
 @interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
