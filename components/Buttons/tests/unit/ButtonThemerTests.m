@@ -16,11 +16,13 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCContainedButtonThemer.h"
+#import "MDCOutlinedButtonThemer.h"
+#import "MDCPalettes.h"
+#import "MDCTextButtonThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
-#import "MDCTextButtonThemer.h"
-#import "MDCContainedButtonThemer.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
@@ -35,7 +37,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
 
   // When
-  [MDCTextButtonThemer applyScheme:scheme toButton:button];
+  [MDCOutlinedButtonThemer applyScheme:scheme toButton:button];
 
   // Then
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
@@ -51,8 +53,54 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
   XCTAssertEqualObjects(button.inkColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f]);
-  XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled], [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
-  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled], [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled],
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+  XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateNormal], 1,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateHighlighted], 0,
+                             kEpsilonAccuracy);
+}
+
+- (void)testOutlinedButtonThemer {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
+
+  // When
+  [MDCOutlinedButtonThemer applyScheme:scheme toButton:button];
+
+  // Then
+  // Color
+  XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
+                        [UIColor clearColor]);
+  XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
+                        [UIColor clearColor]);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
+                        scheme.colorScheme.primaryColor);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
+  XCTAssertEqualObjects(button.inkColor,
+                        [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f]);
+  XCTAssertEqualObjects([button borderColorForState:UIControlStateNormal],
+                        MDCPalette.greyPalette.tint300);
+  XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled],
+                        MDCPalette.greyPalette.tint100);
+
+  // Typography
+  XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal],
+                        scheme.typographyScheme.button);
+
+  // Other
+  XCTAssertEqualWithAccuracy(button.minimumSize.height, scheme.minimumHeight, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, scheme.cornerRadius, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateNormal], 0, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateHighlighted], 0,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateNormal], 1,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateHighlighted], 0,
+                             kEpsilonAccuracy);
 }
 
 - (void)testContainedButtonThemer {
@@ -84,7 +132,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
-  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled], [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled],
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
 }
 
 @end
