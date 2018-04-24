@@ -108,9 +108,14 @@
     [self addChildViewController:_appBar.headerViewController];
 
     self.title = @"Delegate Forwarding";
-    [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
   }
   return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {

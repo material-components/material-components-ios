@@ -50,13 +50,13 @@
 - (void)commonAppBarInterfaceBuilderExampleSetup {
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
-
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  
   self.appBar.headerViewController.headerView.trackingScrollView = self.scrollView;
 
   self.scrollView.delegate = self.appBar.headerViewController;

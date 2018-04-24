@@ -59,6 +59,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   let padding = CGFloat(20)
   var componentDescription = ""
   var selectedNode: CBCNode? = nil
+  var kk = 1
 
   enum Section: Int {
     case description = 0
@@ -427,6 +428,23 @@ extension MDCNodeListViewController {
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }
+  func lol() {
+    AppTheme.globalTheme = {
+      let colorScheme = MDCSemanticColorScheme()
+      if self.kk % 2 == 0 {
+      colorScheme.primaryColor = .green
+      colorScheme.primaryColorVariant = .blue
+      colorScheme.secondaryColor = .red
+      } else {
+        colorScheme.primaryColor = .yellow
+        colorScheme.primaryColorVariant = .red
+        colorScheme.secondaryColor = .black
+      }
+      self.kk+=1
+      let typographyScheme = MDCTypographyScheme()
+      return AppTheme(colorScheme: colorScheme, typographyScheme: typographyScheme)
+    }()
+  }
 
   func createViewController(from node: CBCNode) -> UIViewController {
     var vc: UIViewController
@@ -455,6 +473,8 @@ extension MDCNodeListViewController {
       // TODO(featherless): Remove once
       // https://github.com/material-components/material-components-ios/issues/367 is resolved.
       contentVC.title = node.title
+      contentVC.navigationItem.rightBarButtonItem =
+        UIBarButtonItem(title: "Color", style: .done, target: self, action: #selector(lol))
       let headerView = container.appBar.headerViewController.headerView
       if let collectionVC = contentVC as? MDCCollectionViewController {
         headerView.trackingScrollView = collectionVC.collectionView

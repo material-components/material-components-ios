@@ -49,10 +49,6 @@
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   _bottomNavBar.delegate = self;
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toBottomNavigationBar:_bottomNavBar];
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-                                           toBottomNavigation:_bottomNavBar];
   [self.view addSubview:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =
@@ -101,7 +97,13 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   [self.appBar addSubviewsToParent];
+
+  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toBottomNavigationBar:_bottomNavBar];
+  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+                                           toBottomNavigation:_bottomNavBar];
 }
 
 - (void)viewWillLayoutSubviews {

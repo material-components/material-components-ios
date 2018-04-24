@@ -31,8 +31,6 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-
     self.addChildViewController(appBar.headerViewController)
 
     self.title = "Delegate Forwarding"
@@ -41,6 +39,8 @@ class AppBarDelegateForwardingExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    
     // UITableViewController's tableView.delegate is self by default. We're setting it here for
     // emphasis.
     self.tableView.delegate = self

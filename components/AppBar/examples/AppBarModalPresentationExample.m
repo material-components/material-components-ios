@@ -33,8 +33,6 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
-
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
     [self setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
@@ -47,6 +45,8 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 
   // UITableViewController's tableView.delegate is self by default. We're setting it here for
   // emphasis.
@@ -225,11 +225,15 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
-
     self.title = @"Modal Presentation";
   }
   return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {

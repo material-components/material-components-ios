@@ -45,9 +45,6 @@
 
     _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
 
-    [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
-    [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
-
     _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
   }
   return self;
@@ -56,6 +53,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
+  
   // Recommended step: Set the tracking scroll view.
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
 

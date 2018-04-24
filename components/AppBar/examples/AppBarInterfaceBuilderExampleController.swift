@@ -39,13 +39,13 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
     addChildViewController(appBar.headerViewController)
-
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    
     appBar.headerViewController.headerView.trackingScrollView = scrollView
 
     scrollView.delegate = appBar.headerViewController

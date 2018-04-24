@@ -53,10 +53,6 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     // Cluster and center the bottom navigation bar items.
     bottomNavBar.alignment = .centered
 
-    // Theme the bottom navigation bar.
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar);
-
     // Add items to the bottom navigation bar.
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
     let tabBarItem2 =
@@ -93,7 +89,12 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     appBar.addSubviewsToParent()
+
+    // Theme the bottom navigation bar.
+    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
+                                                               toBottomNavigation: bottomNavBar);
   }
 
   override func viewWillAppear(_ animated: Bool) {
