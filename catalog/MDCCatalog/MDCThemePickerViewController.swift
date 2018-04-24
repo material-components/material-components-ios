@@ -93,7 +93,8 @@ class MDCThemePickerViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let row = colorSchemeRows[indexPath.row]
     let colorScheme = row.colorScheme
-    AppTheme.globalTheme = AppTheme(colorScheme: colorScheme())
+    AppTheme.globalTheme = AppTheme(colorScheme: colorScheme(),
+                                    typographyScheme: AppTheme.globalTheme.typographyScheme)
 
     navigationController?.popViewController(animated: true)
   }

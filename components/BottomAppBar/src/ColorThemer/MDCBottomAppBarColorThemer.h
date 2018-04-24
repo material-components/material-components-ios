@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
+#import "MaterialBottomAppBar.h"
+#import "MaterialColorScheme.h"
 
-@class MDCBottomAppBarView;
-@protocol MDCColorScheme;
+#import <Foundation/Foundation.h>
 
 /**
  Applies a color scheme to an MDCBottomAppBarView or its UIAppearance proxy.

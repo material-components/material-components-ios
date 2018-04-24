@@ -115,8 +115,4 @@ extension BottomNavigationTypicalUseSwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
 }
