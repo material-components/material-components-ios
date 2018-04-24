@@ -18,25 +18,6 @@ import UIKit
 
 import CatalogByConvention
 
-import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MDCActivityIndicatorColorThemer
-import MaterialComponents.MDCBottomNavigationBarColorThemer
-import MaterialComponents.MDCBottomAppBarColorThemer
-import MaterialComponents.MDCButtonBarColorThemer
-import MaterialComponents.MDCButtonColorThemer
-import MaterialComponents.MDCAlertColorThemer
-import MaterialComponents.MDCFeatureHighlightColorThemer
-import MaterialComponents.MDCFlexibleHeaderColorThemer
-import MaterialComponents.MDCHeaderStackViewColorThemer
-import MaterialComponents.MDCNavigationBarColorThemer
-import MaterialComponents.MDCPageControlColorThemer
-import MaterialComponents.MDCProgressViewColorThemer
-import MaterialComponents.MDCSliderColorThemer
-import MaterialComponents.MDCTabBarColorThemer
-import MaterialComponents.MaterialTextFields
-import MaterialComponents.MDCTextFieldColorThemer
-import MaterialComponents.MaterialThemes
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
