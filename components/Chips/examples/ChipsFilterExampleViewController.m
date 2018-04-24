@@ -17,7 +17,7 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
-#import "MDCChipViewColorThemer.h"
+#import "MaterialChips+ColorThemer.h"
 
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
