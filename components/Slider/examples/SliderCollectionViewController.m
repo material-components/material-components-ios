@@ -19,7 +19,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
 #import "MaterialTypography.h"
-#import "MDCSliderColorThemer.h"
+#import "MaterialSlider+ColorThemer.h"
 #import "supplemental/SliderCollectionSupplemental.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
