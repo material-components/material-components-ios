@@ -85,56 +85,25 @@
   // Outlined button
 
   MDCButton *outlinedButton = [[MDCButton alloc] init];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:outlinedButton];
   [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:outlinedButton];
-  [MDCOutlinedButtonColorThemer applySemanticColorScheme:colorScheme
-                                                toButton:outlinedButton];
+  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:outlinedButton];
   [outlinedButton sizeToFit];
   [outlinedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
-<<<<<<< HEAD
-<<<<<<< HEAD
-  [self.view addSubview:hairlineButton];
-
-  // Disabled custom hairline button
-
-  MDCButton *disabledHairlineButton = [[MDCButton alloc] init];
-  [MDCHairlineButtonThemer applyScheme:buttonScheme toButton:disabledHairlineButton];
-  [disabledHairlineButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledHairlineButton];
-  [MDCHairlineButtonColorThemer applySemanticColorScheme:colorScheme
-                                                toButton:disabledHairlineButton];
-  [disabledHairlineButton sizeToFit];
-  [disabledHairlineButton addTarget:self
-                             action:@selector(didTap:)
-                  forContro lEvents:UIControlEventTouchUpInside];
-  [disabledHairlineButton setEnabled:NO];
-  [self.view addSubview:disabledHairlineButton];
-=======
-=======
->>>>>>> 29b08a147e5cd6eafb8423ade81b6b3bfd8da7f7
   [self.view addSubview:outlinedButton];
 
-  // Disabled custom outlined button
+  // Disabled outlined button
 
   MDCButton *disabledOutlinedButton = [[MDCButton alloc] init];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:disabledOutlinedButton];
   [disabledOutlinedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledOutlinedButton];
-  [MDCOutlinedButtonColorThemer applySemanticColorScheme:colorScheme
-                                                toButton:disabledOutlinedButton];
+  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:disabledOutlinedButton];
   [disabledOutlinedButton sizeToFit];
   [disabledOutlinedButton addTarget:self
-                            action:@selector(didTap:)
-                  forControlEvents:UIControlEventTouchUpInside];
+                             action:@selector(didTap:)
+                   forControlEvents:UIControlEventTouchUpInside];
   [disabledOutlinedButton setEnabled:NO];
   [self.view addSubview:disabledOutlinedButton];
-<<<<<<< HEAD
->>>>>>> Renamed "hairline" to "outlined".
-=======
->>>>>>> 29b08a147e5cd6eafb8423ade81b6b3bfd8da7f7
 
   // Floating action button
 
