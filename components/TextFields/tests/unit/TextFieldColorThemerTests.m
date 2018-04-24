@@ -19,7 +19,7 @@
 #import "MaterialTextFields.h"
 #import "MaterialTypographyScheme.h"
 #import "MaterialThemes.h"
-#import "MDCTextFieldColorThemer.h"
+#import "MaterialTextFields+ColorThemer.h"
 #import "MDCSemanticColorScheme.h"
 
 @interface MDCTextFieldColorThemer (ResetDefaults)

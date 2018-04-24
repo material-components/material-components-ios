@@ -17,7 +17,6 @@
 #import "MaterialTextFields.h"
 #import "MaterialTypographyScheme.h"
 
-
 /**
  Used to apply a typography scheme to theme an MDCTextField/MDCTextInputController.
  */

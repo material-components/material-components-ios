@@ -38,7 +38,7 @@
 #import "MDCProgressViewColorThemer.h"
 #import "MDCSliderColorThemer.h"
 #import "MDCTabBarColorThemer.h"
-#import "MDCTextFieldColorThemer.h"
+#import "MaterialTextFields+ColorThemer.h"
 
 static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 

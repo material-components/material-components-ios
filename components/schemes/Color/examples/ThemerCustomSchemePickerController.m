@@ -29,7 +29,7 @@
 #import "MDCProgressViewColorThemer.h"
 #import "MDCSliderColorThemer.h"
 #import "MDCTabBarColorThemer.h"
-#import "MDCTextFieldColorThemer.h"
+#import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields.h"
 #import "MaterialThemes.h"
 
