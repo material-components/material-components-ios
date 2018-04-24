@@ -21,8 +21,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCSemanticColorScheme;
-@class MDCTypographyScheme;
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ButtonsTypicalUseViewController : UIViewController
 

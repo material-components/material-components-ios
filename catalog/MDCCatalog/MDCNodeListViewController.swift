@@ -165,7 +165,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
       return
     }
     applyColorScheme(colorScheme)
-    applyThemeOnCurrentExample()
+    applyThemeToCurrentExample()
   }
 
   private func applyColorScheme(_ colorScheme: MDCColorScheming) {
@@ -174,20 +174,25 @@ class MDCNodeListViewController: CBCNodeListViewController {
     appBar.navigationBar.tintColor = UIColor.white
   }
 
-  func applyThemeOnCurrentExample() {
+  func applyThemeToCurrentExample() {
     // This is a short term solution of applying the theme instantly on the
     // currently presented example. A better solution would be to re-theme the example's components
     // and not reload the example entirely with a pop-push.
-    guard let topVC = self.navigationController?.topViewController,
+    guard let navigationController = self.navigationController else {
+      return
+    }
+    guard let topVC = navigationController.topViewController,
       topVC is MDCAppBarContainerViewController ||
         topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
           return
     }
-    guard self.navigationController!.popViewController(animated: false) != nil,
-      selectedNode != nil else {
+    guard self.navigationController!.popViewController(animated: false) != nil else {
         return
     }
-    let vc = setupExample()
+    guard let selectedNode = selectedNode else {
+      return
+    }
+    let vc = createViewController(from: selectedNode)
     self.navigationController?.pushViewController(vc, animated: false)
   }
 }
@@ -416,14 +421,14 @@ extension MDCNodeListViewController {
     var vc: UIViewController
     if node.isExample() {
       selectedNode = node
-      vc = setupExample()
+      vc = createViewController(from: node)
     } else {
       vc = MDCNodeListViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }
 
-  func setupExample() -> UIViewController {
+  func createViewController(from node: CBCNode) -> UIViewController {
     var vc: UIViewController
     let contentVC = selectedNode!.createExampleViewController()
     themeExample(vc: contentVC)
