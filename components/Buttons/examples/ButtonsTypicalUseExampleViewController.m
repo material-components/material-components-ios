@@ -95,6 +95,7 @@
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
 <<<<<<< HEAD
+<<<<<<< HEAD
   [self.view addSubview:hairlineButton];
 
   // Disabled custom hairline button
@@ -112,6 +113,8 @@
   [disabledHairlineButton setEnabled:NO];
   [self.view addSubview:disabledHairlineButton];
 =======
+=======
+>>>>>>> 29b08a147e5cd6eafb8423ade81b6b3bfd8da7f7
   [self.view addSubview:outlinedButton];
 
   // Disabled custom outlined button
@@ -128,7 +131,10 @@
                   forControlEvents:UIControlEventTouchUpInside];
   [disabledOutlinedButton setEnabled:NO];
   [self.view addSubview:disabledOutlinedButton];
+<<<<<<< HEAD
 >>>>>>> Renamed "hairline" to "outlined".
+=======
+>>>>>>> 29b08a147e5cd6eafb8423ade81b6b3bfd8da7f7
 
   // Floating action button
 
