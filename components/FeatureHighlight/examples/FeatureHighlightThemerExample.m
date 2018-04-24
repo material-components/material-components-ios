@@ -18,9 +18,9 @@
 #import "MaterialFeatureHighlight.h"
 #import "MaterialThemes.h"
 #import "MaterialTypography.h"
-#import "MDCFeatureHighlightAccessibilityMutator.h"
-#import "MDCFeatureHighlightColorThemer.h"
-#import "MDCFeatureHighlightFontThemer.h"
+#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
+#import "MaterialFeatureHighlight+ColorThemer.h"
+#import "MaterialFeatureHighlight+FontThemer.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightThemerExample
