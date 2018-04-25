@@ -194,6 +194,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
       self.tableView.accessibilityIdentifier = "DemoTableList"
     }
 
+    self.tableView.register(NodeViewTableViewPrimaryDemoCell.self,
+                            forCellReuseIdentifier: "NodeViewTableViewPrimaryDemoCell")
+    self.tableView.register(NodeViewTableViewDemoCell.self,
+                            forCellReuseIdentifier: "NodeViewTableViewDemoCell")
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()

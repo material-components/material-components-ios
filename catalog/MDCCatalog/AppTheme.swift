@@ -25,9 +25,10 @@ final class AppTheme {
   init(colorScheme: MDCColorScheming, typographyScheme: MDCTypographyScheming) {
     self.colorScheme = colorScheme
     self.typographyScheme = typographyScheme
-    self.buttonScheme = MDCButtonScheme()
-    self.buttonScheme.colorScheme = colorScheme
-    self.buttonScheme.typographyScheme = typographyScheme
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    self.buttonScheme = buttonScheme
   }
 
   static let defaultTheme: AppTheme = {
