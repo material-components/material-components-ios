@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
 #import "MaterialColorScheme.h"
 #import "MaterialDialogs.h"
+
+#import <Foundation/Foundation.h>
 
 /**
  Used to apply a color scheme to theme to MDCAlertController alert dialogs.

@@ -26,6 +26,7 @@
 #import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialButtonBar+ColorThemer.h"
 #import "MaterialButtons+ColorThemer.h"
+#import "MaterialDialogs+ColorThemer.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
 #import "MaterialFlexibleHeader+ColorThemer.h"
 #import "MaterialHeaderStackView+ColorThemer.h"
@@ -36,7 +37,6 @@
 #import "MaterialThemes.h"
 #import "MaterialTextFields.h"
 
-#import "MDCAlertColorThemer.h"
 #import "MDCTabBarColorThemer.h"
 #import "MDCTextFieldColorThemer.h"
 

@@ -17,8 +17,8 @@
 #import "supplemental/DialogsAlertViewControllerSupplemental.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
-#import "MDCAlertColorThemer.h"
-#import "MDCAlertTypographyThemer.h"
+#import "MaterialDialogs+ColorThemer.h"
+#import "MaterialDialogs+TypographyThemer.h"
 
 @implementation DialogsAlertViewController {
   MDCSemanticColorScheme *_colorScheme;
