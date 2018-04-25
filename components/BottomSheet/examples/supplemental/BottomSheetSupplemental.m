@@ -92,7 +92,7 @@
 
 + (NSString *)catalogDescription {
   return @"Bottom sheets are surfaces anchored to the bottom of the screen containing supplementary"
-          "content, actions, or navigation.";
+          " content, actions, or navigation.";
 }
 
 + (BOOL)catalogIsPresentable {
