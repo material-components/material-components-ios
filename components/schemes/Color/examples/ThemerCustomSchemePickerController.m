@@ -17,6 +17,7 @@
 
 #import "MaterialActivityIndicator+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
+#import "MaterialButtonBar+ColorThemer.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialDialogs+ColorThemer.h"
 #import "MDCButtonBarColorThemer.h"
@@ -24,7 +25,7 @@
 #import "MDCFlexibleHeaderColorThemer.h"
 #import "MaterialHeaderStackView+ColorThemer.h"
 #import "MaterialNavigationBar+ColorThemer.h"
-#import "MDCPageControlColorThemer.h"
+#import "MaterialPageControl+ColorThemer.h"
 #import "MaterialProgressView+ColorThemer.h"
 #import "MaterialSlider+ColorThemer.h"
 #import "MDCTabBarColorThemer.h"
