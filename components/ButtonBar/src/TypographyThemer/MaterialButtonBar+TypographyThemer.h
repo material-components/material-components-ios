@@ -14,24 +14,4 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
-#import "MaterialPageControl.h"
-
-#import <Foundation/Foundation.h>
-
-/**
- Used to apply a color scheme to theme MDCSlider.
- */
-@interface MDCPageControlColorThemer : NSObject
-
-/**
- Applies a color scheme to theme a MDCPageControl. Use a UIAppearance proxy to apply a color scheme
- to all instances of MDCPageControl.
-
- @param colorScheme The color scheme to apply to MDCPageControl.
- @param pageControl A MDCPageControl instance to apply a color scheme.
- */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-           toPageControl:(nonnull MDCPageControl *)pageControl;
-
-@end
+#import "MDCButtonBarTypographyThemer.h"
