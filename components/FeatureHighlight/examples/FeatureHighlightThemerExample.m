@@ -56,7 +56,7 @@
 
   // Typography theming.
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  typographyScheme.headline2 = [UIFont fontWithName:@"Zapfino" size:14.0];
+  typographyScheme.headline6 = [UIFont fontWithName:@"Zapfino" size:14.0];
   typographyScheme.body2 = [UIFont fontWithName:@"Chalkduster" size:12.0];
   [MDCFeatureHighlightTypographyThemer applyTypographyScheme:typographyScheme
                             toFeatureHighlightViewController:vc];
