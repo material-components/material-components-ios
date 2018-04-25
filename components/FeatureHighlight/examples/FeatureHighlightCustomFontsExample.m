@@ -17,7 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight.h"
 #import "MaterialTypography.h"
-#import "MDCFeatureHighlightAccessibilityMutator.h"
+#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightCustomFontsExample

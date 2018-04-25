@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialFlexibleHeader
-import MaterialComponents.MDCFlexibleHeaderColorThemer
+import MaterialComponents.MaterialFlexibleHeader_ColorThemer
 
 class FlexibleHeaderColorThemerTests: XCTestCase {
 

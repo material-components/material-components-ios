@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCFlexibleHeaderColorThemer.h"
+#import "MaterialFlexibleHeader+ColorThemer.h"
 #import "MaterialFlexibleHeader.h"
 #import "supplemental/FlexibleHeaderTypicalUseSupplemental.h"
 

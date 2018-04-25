@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
 #import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
+
+#import <Foundation/Foundation.h>
 
 /**
  Used to apply a typography scheme to theme a MDCAlertController alert dialogs.

@@ -17,6 +17,8 @@
 #import "MaterialColorScheme.h"
 #import "MaterialNavigationBar.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  A color themer for MDCNavigationBar that implements the Material design color system mappings.
  */

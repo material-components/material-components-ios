@@ -15,7 +15,7 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "MDCBottomNavigationBarTypographyThemer.h"
+#import "MaterialBottomNavigation+TypographyThemer.h"
 #import "MaterialBottomNavigation.h"
 
 @interface BottomNavigationTypographyThemerTests : XCTestCase

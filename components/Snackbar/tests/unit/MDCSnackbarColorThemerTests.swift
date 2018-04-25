@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialSnackbar
-import MaterialComponents.MDCSnackbarColorThemer
+import MaterialComponents.MaterialSnackbar_ColorThemer
 
 class SnackbarColorThemerTests: XCTestCase {
 
