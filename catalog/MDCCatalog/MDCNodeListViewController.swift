@@ -57,20 +57,17 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    setupContaintButton()
+    setupContainedButton()
   }
 
   required init(coder: NSCoder) {
     super.init(coder: coder)!
+    setupContainedButton()
   }
 
-  override func prepareForReuse() {
-    super.prepareForReuse()
-  }
-
-  func setupContaintButton() {
+  func setupContainedButton() {
     containedButton.setTitle("Start Demo", for: .normal)
-    let buttonScheme = MDCButtonScheme()
+    let buttonScheme = AppTheme.globalTheme.buttonScheme
     MDCContainedButtonThemer.applyScheme(buttonScheme, to:containedButton)
     containedButton.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(containedButton)
