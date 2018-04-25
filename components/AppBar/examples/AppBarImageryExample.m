@@ -59,6 +59,10 @@
 
   // Typical use
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+
+  // Choice: If you do not need to implement any delegate methods and you are not using a
+  //         collection view, you can use the headerViewController as the delegate.
+  // Alternative: See AppBarTypicalUseExample.
   self.tableView.delegate = self.appBar.headerViewController;
 
   [self.appBar addSubviewsToParent];
