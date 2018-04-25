@@ -77,6 +77,6 @@ extension CardExampleViewController {
   }
 
   @objc class func catalogDescription() -> String {
-    return "Material Cards."
+    return "Cards contain content and actions about a single subject."
   }
 }

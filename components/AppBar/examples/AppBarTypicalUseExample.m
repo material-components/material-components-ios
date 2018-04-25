@@ -104,8 +104,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The App Bar is a flexible navigation bar designed to provide a typical Material Design"
-          " navigation experience.";
+  return @"The top app bar displays information and actions relating to the current view.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
