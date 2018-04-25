@@ -454,6 +454,12 @@ extension MDCNodeListViewController {
 
       // TODO(featherless): Remove once
       // https://github.com/material-components/material-components-ios/issues/367 is resolved.
+      let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
+      contentVC.navigationItem.rightBarButtonItem =
+        UIBarButtonItem(image: dotsImage,
+                        style: .plain,
+                        target: self,
+                        action: #selector(presentMenu))
       contentVC.title = node.title
       let headerView = container.appBar.headerViewController.headerView
       if let collectionVC = contentVC as? MDCCollectionViewController {
@@ -482,5 +488,17 @@ extension MDCNodeListViewController {
     if vc.responds(to: typoSel) {
       vc.perform(typoSel, with: AppTheme.globalTheme.typographyScheme)
     }
+  }
+
+  func presentMenu() {
+    let bottomSheet = MDCBottomSheetController(contentViewController: )
+    BottomSheetDummyCollectionViewController *viewController =
+      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
+    viewController.preferredContentSize = CGSizeMake(500, 200);
+
+    MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+    bottomSheet.trackingScrollView = viewController.collectionView;
+    [self presentViewController:bottomSheet animated:YES completion:nil];
   }
 }
