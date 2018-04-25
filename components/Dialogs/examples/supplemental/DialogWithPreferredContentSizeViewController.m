@@ -26,6 +26,8 @@
 
 @interface DialogWithPreferredContentSizeViewController()
 @property(nonatomic, strong) IBOutlet MDCButton *button;
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation DialogWithPreferredContentSizeViewController
@@ -34,6 +36,8 @@
   [super viewDidLoad];
 
   MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
   [MDCContainedButtonThemer applyScheme:scheme toButton:self.button];
 }
 
