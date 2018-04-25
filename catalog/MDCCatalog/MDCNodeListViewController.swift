@@ -22,7 +22,7 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_ColorThemer
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialTypography
-import MaterialComponents.MDCFlexibleHeaderColorThemer
+import MaterialComponents.MaterialFlexibleHeader_ColorThemer
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
