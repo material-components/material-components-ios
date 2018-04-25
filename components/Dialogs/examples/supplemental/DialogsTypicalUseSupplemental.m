@@ -61,8 +61,8 @@ static NSString * const kReusableIdentifierItem = @"cell";
 }
 
 + (NSString *)catalogDescription {
-  return @"Dialogs includes a presentation controller that displays your modal interfaces in a"
-          " Material spec defined context.";
+  return @"Dialogs inform users about a task and can contain critical information, require"
+          " decisions, or involve multiple tasks.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

@@ -292,7 +292,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
+  return @"Tabs organize content across different screens, data sets, and other interactions.";
 }
 
 - (BOOL)catalogShouldHideNavigation {

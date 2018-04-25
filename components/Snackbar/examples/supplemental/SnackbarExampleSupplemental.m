@@ -59,8 +59,7 @@ static NSString * const kCellIdentifier = @"Cell";
 }
 
 + (NSString *)catalogDescription {
-  return @"Snackbars provide brief feedback about an operation through a message at the bottom of"
-          " the screen.";
+  return @"Snackbars provide brief messages about app processes at the bottom of the screen.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

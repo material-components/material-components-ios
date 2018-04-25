@@ -25,7 +25,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"A bottom navigation component stylized according to material design specs.";
+  return @"Bottom navigation bars allow movement between primary destinations in an app.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
