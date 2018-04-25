@@ -235,6 +235,10 @@ static UIButton *DeleteButton() {
   return @[ @"Chips", @"Chips" ];
 }
 
++ (NSString *)catalogDescription {
+  return @"Chips are compact elements that represent an input, attribute, or action.";
+}
+
 + (BOOL)catalogIsPrimaryDemo {
   return YES;
 }

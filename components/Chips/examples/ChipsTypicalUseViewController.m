@@ -31,8 +31,6 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
-    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-    [MDCChipViewTypographyThemer applyTypographyScheme:typographyScheme toChipView:_sizingChip];
   }
   return self;
 }
@@ -46,6 +44,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toChipView:_sizingChip];
+  
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.delaysContentTouches = NO;
   self.collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
@@ -88,8 +89,8 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCChipViewTypographyThemer applyTypographyScheme:typographyScheme toChipView:cell.chipView];
+  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toChipView:cell.chipView];
 
   return cell;
 }

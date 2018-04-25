@@ -23,6 +23,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
   // Step 1: Create and initialize an App Bar.
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -31,12 +33,6 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
-
-    let colorScheme = MDCSemanticColorScheme()
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-
-    let typographyScheme = MDCTypographyScheme()
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -46,6 +42,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)
+    
     // Recommended step: Set the tracking scroll view.
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
