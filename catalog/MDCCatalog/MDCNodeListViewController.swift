@@ -67,8 +67,6 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
 
   func setupContainedButton() {
     containedButton.setTitle("Start Demo", for: .normal)
-    let buttonScheme = AppTheme.globalTheme.buttonScheme
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to:containedButton)
     containedButton.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(containedButton)
 
@@ -224,6 +222,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     }
     applyColorScheme(colorScheme)
     applyThemeToCurrentExample()
+    self.tableView.reloadData()
   }
 
   private func applyColorScheme(_ colorScheme: MDCColorScheming) {
@@ -380,22 +379,14 @@ extension MDCNodeListViewController {
     var cell : UITableViewCell?
     if indexPath.section == Section.description.rawValue {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewPrimaryDemoCell")
-      if cell == nil {
-        cell =
-          NodeViewTableViewPrimaryDemoCell.init(style: .default,
-                                                reuseIdentifier: "NodeViewTableViewPrimaryDemoCell")
-        cell?.selectionStyle = .none
-        let primaryDemoCell = cell as! NodeViewTableViewPrimaryDemoCell
-        let button = primaryDemoCell.containedButton
-        button.addTarget(self, action: #selector(primaryDemoButtonClicked), for: .touchUpInside)
-      }
+      cell?.selectionStyle = .none
+      let primaryDemoCell = cell as! NodeViewTableViewPrimaryDemoCell
+      let button = primaryDemoCell.containedButton
+      let buttonScheme = AppTheme.globalTheme.buttonScheme
+      MDCContainedButtonThemer.applyScheme(buttonScheme, to:button)
+      button.addTarget(self, action: #selector(primaryDemoButtonClicked), for: .touchUpInside)
     } else {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
-      if cell == nil {
-        cell = NodeViewTableViewDemoCell.init(style: .subtitle,
-                                              reuseIdentifier: "NodeViewTableViewDemoCell")
-      }
-
       var subtitleText: String?
       if indexPath.section == Section.description.rawValue {
         subtitleText = node.children[indexPath.row].exampleViewControllerName()
