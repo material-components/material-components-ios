@@ -20,7 +20,7 @@ import MaterialComponents.MDCIcons
 class MDCMenuViewController: UITableViewController {
 
   let tableData =
-    [("Setting", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate)),
+    [("Settings", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate)),
      ("Themes", MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate)),
      ("Help", MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate))]
   let cellIdentifier = "MenuCell"
