@@ -117,5 +117,16 @@ def registerIcons(s)
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
     end
+
+    iss.subspec "ic_settings" do |ss|
+      ss.public_header_files = "components/private/Icons/icons/ic_settings/src/*.h"
+      ss.source_files = "components/private/Icons/icons/ic_settings/src/*.{h,m}"
+      ss.resource_bundles = {
+        "MaterialIcons_ic_settings" => [
+          "components/private/Icons/icons/ic_settings/src/MaterialIcons_ic_settings.bundle/*.png",
+        ]
+      }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
+    end
   end
 end
