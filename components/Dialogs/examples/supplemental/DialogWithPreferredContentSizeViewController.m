@@ -21,7 +21,21 @@
 
 #import "DialogWithPreferredContentSizeViewController.h"
 
+#import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
+
+@interface DialogWithPreferredContentSizeViewController()
+@property(nonatomic, strong) IBOutlet MDCButton *button;
+@end
+
 @implementation DialogWithPreferredContentSizeViewController
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
+  [MDCContainedButtonThemer applyScheme:scheme toButton:self.button];
+}
 
 - (IBAction)buttonPushed:(id)sender {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
