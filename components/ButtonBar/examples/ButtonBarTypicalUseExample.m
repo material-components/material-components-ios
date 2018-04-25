@@ -18,7 +18,7 @@
 
 #import "MaterialButtonBar.h"
 #import "MaterialColorScheme.h"
-#import "MDCButtonBarColorThemer.h"
+#import "MaterialButtonBar+ColorThemer.h"
 
 @interface ButtonBarTypicalUseExample : UIViewController
 @end

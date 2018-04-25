@@ -16,8 +16,8 @@ limitations under the License.
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarColorThemer
-import MaterialComponents.MDCAppBarTypographyThemer
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
 
 class AppBarTypicalUseSwiftExample: UITableViewController {
 
@@ -94,10 +94,6 @@ extension AppBarTypicalUseSwiftExample {
   }
 
   func catalogShouldHideNavigation() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
     return true
   }
 }

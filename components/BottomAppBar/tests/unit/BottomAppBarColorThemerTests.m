@@ -16,7 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCBottomAppBarColorThemer.h"
+#import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
 #import "MaterialThemes.h"
 

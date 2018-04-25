@@ -16,7 +16,7 @@ limitations under the License.
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarImagerySwiftExample: UITableViewController {
   let appBar = MDCAppBar()
@@ -96,11 +96,6 @@ extension AppBarImagerySwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-  
 }
 
 // MARK: - Typical application code (not Material-specific)

@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarTypographyThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialTypography
 
 class AppBarTypographyThemerTests: XCTestCase {

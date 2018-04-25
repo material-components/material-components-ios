@@ -753,29 +753,27 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
 
-  [_inkView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
+  [self startTouchBeganAnimationAtPoint:[self locationFromTouches:touches]];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
 
-  [_inkView startTouchEndedAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
+  [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
 
-  [_inkView startTouchEndedAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
+  [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
 }
 
 - (void)touchDragEnter:(__unused MDCChipView *)button forEvent:(UIEvent *)event {
-  [_inkView startTouchBeganAnimationAtPoint:[self locationFromTouches:event.allTouches]
-                                 completion:nil];
+  [self startTouchBeganAnimationAtPoint:[self locationFromTouches:event.allTouches]];
 }
 
 - (void)touchDragExit:(__unused MDCChipView *)button forEvent:(UIEvent *)event {
-  [_inkView startTouchEndedAnimationAtPoint:[self locationFromTouches:event.allTouches]
-                                 completion:nil];
+  [self startTouchEndedAnimationAtPoint:[self locationFromTouches:event.allTouches]];
 }
 
 - (CGPoint)locationFromTouches:(NSSet *)touches {
@@ -788,6 +786,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @implementation MDCChipView (Private)
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point {
+  if (!self.enabled) {
+    return;
+  }
   CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat widthDiff = 24.f; // Difference between unselected and selected frame widths.
   _inkView.maxRippleRadius =
@@ -797,6 +798,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point {
+  if (!self.enabled) {
+    return;
+  }
   [_inkView startTouchEndedAnimationAtPoint:point completion:nil];
 }
 

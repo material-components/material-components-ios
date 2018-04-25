@@ -429,7 +429,7 @@ replacementString:(NSString *)string {
 @implementation TextFieldCustomFontExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Custom Fonts (Objective-C)" ];
+  return @[ @"Text Field", @"Custom Fonts" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {

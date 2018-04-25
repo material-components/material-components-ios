@@ -16,7 +16,7 @@ limitations under the License.
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate {
   @IBOutlet weak var scrollView: UIScrollView!
@@ -76,9 +76,4 @@ extension AppBarInterfaceBuilderSwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-
 }

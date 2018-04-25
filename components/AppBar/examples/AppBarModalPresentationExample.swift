@@ -16,7 +16,7 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
@@ -156,10 +156,6 @@ extension AppBarModalPresentationSwiftExample {
   }
 
   func catalogShouldHideNavigation() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
     return true
   }
 }
