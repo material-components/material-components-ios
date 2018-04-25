@@ -28,15 +28,15 @@
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialDialogs+ColorThemer.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
-#import "MaterialThemes.h"
-#import "MaterialTextFields.h"
-
-#import "MDCFlexibleHeaderColorThemer.h"
+#import "MaterialFlexibleHeader+ColorThemer.h"
 #import "MaterialHeaderStackView+ColorThemer.h"
 #import "MaterialNavigationBar+ColorThemer.h"
 #import "MaterialPageControl+ColorThemer.h"
 #import "MaterialProgressView+ColorThemer.h"
 #import "MaterialSlider+ColorThemer.h"
+#import "MaterialThemes.h"
+#import "MaterialTextFields.h"
+
 #import "MDCTabBarColorThemer.h"
 #import "MDCTextFieldColorThemer.h"
 
