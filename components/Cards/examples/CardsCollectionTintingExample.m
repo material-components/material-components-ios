@@ -115,10 +115,6 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return NO;
 }
 
-+ (NSString *)catalogDescription {
-  return @"Cards contain content and actions about a single subject.";
-}
-
 + (BOOL)catalogIsPresentable {
   return NO;
 }

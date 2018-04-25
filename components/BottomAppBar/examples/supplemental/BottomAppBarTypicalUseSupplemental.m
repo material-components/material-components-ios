@@ -23,7 +23,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"A bottom app bar displays navigation and key actions at the bottom of mobile screens.";
+  return @"A bottom app bar displays navigation and key actions at the bottom of the screen.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
