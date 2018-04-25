@@ -454,12 +454,7 @@ extension MDCNodeListViewController {
 
       // TODO(featherless): Remove once
       // https://github.com/material-components/material-components-ios/issues/367 is resolved.
-      let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
-      contentVC.navigationItem.rightBarButtonItem =
-        UIBarButtonItem(image: dotsImage,
-                        style: .plain,
-                        target: self.navigationController,
-                        action: #selector(UINavigationController.presentMenu))
+      self.navigationController?.setMenuBarButton(for: contentVC)
       contentVC.title = node.title
       let headerView = container.appBar.headerViewController.headerView
       if let collectionVC = contentVC as? MDCCollectionViewController {

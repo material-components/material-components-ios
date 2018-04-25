@@ -20,11 +20,11 @@ import MaterialComponents.MDCIcons
 class MDCMenuViewController: UITableViewController {
 
   let tableData =
-    [("Settings", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate)),
-     ("Themes", MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate)),
-     ("Help", MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate))]
+    [(title: "Settings", icon: MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate)),
+     (title: "Themes", icon: MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate)),
+     (title: "Help", icon: MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate))]
   let cellIdentifier = "MenuCell"
-  let iconColor = UIColor(red: 100/255.0, green: 100/255.0, blue: 100/255.0, alpha: 1)
+  let iconColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -36,9 +36,9 @@ class MDCMenuViewController: UITableViewController {
                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     let cellData = tableData[indexPath.item]
-    cell.textLabel?.text = cellData.0
+    cell.textLabel?.text = cellData.title
     cell.textLabel?.textColor = iconColor
-    cell.imageView?.image = cellData.1
+    cell.imageView?.image = cellData.icon
     cell.imageView?.tintColor = iconColor
     return cell
   }

@@ -61,4 +61,13 @@ extension UINavigationController {
     let bottomSheet = MDCBottomSheetController(contentViewController: menuViewController)
     self.present(bottomSheet, animated: true, completion: nil)
   }
+
+  func setMenuBarButton(for viewController: UIViewController) {
+    let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
+    viewController.navigationItem.rightBarButtonItem =
+      UIBarButtonItem(image: dotsImage,
+                      style: .plain,
+                      target: self,
+                      action: #selector(self.presentMenu))
+  }
 }
