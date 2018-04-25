@@ -37,7 +37,6 @@
 #import "MaterialTextFields.h"
 
 #import "MDCAlertColorThemer.h"
-#import "MDCFlexibleHeaderColorThemer.h"
 #import "MDCTabBarColorThemer.h"
 #import "MDCTextFieldColorThemer.h"
 
