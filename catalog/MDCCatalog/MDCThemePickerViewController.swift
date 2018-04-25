@@ -96,7 +96,7 @@ class MDCThemePickerViewController: UITableViewController {
     AppTheme.globalTheme = AppTheme(colorScheme: colorScheme(),
                                     typographyScheme: AppTheme.globalTheme.typographyScheme)
 
-    navigationController?.popViewController(animated: true)
+//    navigationController?.popViewController(animated: true)
   }
 }
 
