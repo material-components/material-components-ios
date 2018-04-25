@@ -20,36 +20,13 @@
 #import "MaterialTypography.h"
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
-#import "MaterialFeatureHighlight+FontThemer.h"
+#import "MDCFeatureHighlightTypographyThemer.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightThemerExample
 
-- (void)applyFeatureHighlightTheming {
-  // You would normally set your UIAppearance properties in your AppDelegate in
-  // applicationDidFinishLoading.  We are doing it here to keep the revalent
-  // code in the sample.
-  // Once this code has been executed ALL MDCFeatureHighlightView's will have the following
-  // fonts and color unless they are explicitly set.
-  // See Apple > UIKit > UIAppearance
-  // https://developer.apple.com/documentation/uikit/uiappearance
-  MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
-  fontScheme.headline2 = [UIFont fontWithName:@"Zapfino" size:14.0];
-  fontScheme.body2 = [UIFont fontWithName:@"Chalkduster" size:12.0];
-  UIColor *primaryColor = [UIColor purpleColor];
-  MDCBasicColorScheme *colorScheme =
-      [[MDCBasicColorScheme alloc] initWithPrimaryColor:primaryColor];
-
-  [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
-                            toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
-  [MDCFeatureHighlightFontThemer applyFontScheme:fontScheme
-                          toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  [self applyFeatureHighlightTheming];
 
   self.view.backgroundColor = [UIColor whiteColor];
 
@@ -76,6 +53,19 @@
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                               completion:nil];
   [MDCFeatureHighlightAccessibilityMutator mutate:vc];
+
+  // Typography theming.
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  typographyScheme.headline2 = [UIFont fontWithName:@"Zapfino" size:14.0];
+  typographyScheme.body2 = [UIFont fontWithName:@"Chalkduster" size:12.0];
+  [MDCFeatureHighlightTypographyThemer applyTypographyScheme:typographyScheme
+                            toFeatureHighlightViewController:vc];
+
+  // Color Theming
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  colorScheme.primaryColor = [UIColor purpleColor];
+  [MDCFeatureHighlightColorThemer applySemanticColorScheme:colorScheme
+                          toFeatureHighlightViewController:vc];
 
   vc.titleText = @"Feature Highlight can use themers";
   vc.bodyText = @"The fonts and colors can be themed.";
