@@ -52,8 +52,7 @@ static NSString * const kCell = @"Cell";
 @implementation ActivityIndicatorExample (Supplemental)
 
 - (void)setupExampleViews {
-  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
-          forCellWithReuseIdentifier:kCell];
+  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCell];
 
   // Set up container view of three activity indicators.
   UIView *indicators =
@@ -92,6 +91,9 @@ static NSString * const kCell = @"Cell";
 
   self.activityIndicator2.progress = self.slider.value;
   self.activityIndicator3.progress = self.slider.value;
+
+  self.tableView.layoutMargins = UIEdgeInsetsZero;
+  self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
 - (void)didChangeOnSwitch:(UISwitch *)onSwitch {
@@ -120,31 +122,27 @@ static NSString * const kCell = @"Cell";
   self.activityIndicator1.progress = slider.value;
   self.activityIndicator2.progress = slider.value;
   self.activityIndicator3.progress = slider.value;
-  MDCCollectionViewTextCell *cell =
-      (MDCCollectionViewTextCell *)[self.collectionView cellForItemAtIndexPath:
-                                        [NSIndexPath indexPathForRow:1 inSection:0]];
+  UITableViewCell *cell =
+      [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
   cell.textLabel.text = [NSString stringWithFormat:@"%.00f%%", slider.value * 100];
   [cell setNeedsDisplay];
 }
 
 #pragma mark -
 
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   return 4;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView
-    cellHeightAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.row == 0) return 160;
   return 56;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewTextCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kCell forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  UITableViewCell *cell =
+      [tableView dequeueReusableCellWithIdentifier:kCell forIndexPath:indexPath];
   cell.textLabel.text = @"";
   switch (indexPath.row) {
     case 0:
@@ -169,6 +167,5 @@ static NSString * const kCell = @"Cell";
   }
   return cell;
 }
-
 
 @end
