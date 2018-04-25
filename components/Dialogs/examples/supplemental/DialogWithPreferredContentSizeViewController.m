@@ -26,8 +26,6 @@
 
 @interface DialogWithPreferredContentSizeViewController()
 @property(nonatomic, strong) IBOutlet MDCButton *button;
-@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation DialogWithPreferredContentSizeViewController
