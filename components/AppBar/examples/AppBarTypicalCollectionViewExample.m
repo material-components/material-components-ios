@@ -23,10 +23,12 @@
 @interface AppBarTypicalCollectionViewExample : UICollectionViewController
 
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+
 
 @end
 @implementation AppBarTypicalCollectionViewExample
-
 
 - (id)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -40,11 +42,6 @@
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
-
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
-    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-    [MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:_appBar];
   }
   return self;
 }
@@ -66,6 +63,8 @@
   headerView.maximumHeight = 200;
 
   [self.appBar addSubviewsToParent];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 }
 
 
@@ -80,13 +79,13 @@
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   switch (indexPath.row%3) {
     case 0:
-      cell.backgroundColor = [UIColor colorWithWhite:0.2 alpha:1.0];
+      cell.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
       break;
     case 1:
-      cell.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+      cell.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1.0f];
       break;
     case 2:
-      cell.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+      cell.backgroundColor = [UIColor colorWithWhite:0.7f alpha:1.0f];
       break;
     default:
       break;
@@ -99,7 +98,7 @@
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
-  return CGSizeMake(collectionViewFrame.size.width/2.0 - 14, 40);
+  return CGSizeMake(collectionViewFrame.size.width/2.f - 14.f, 40.f);
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -124,7 +123,9 @@
     [headerView trackingScrollViewDidEndDecelerating];
   }
 }
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
   MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
   if (scrollView == headerView.trackingScrollView) {
     [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
