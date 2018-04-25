@@ -133,6 +133,10 @@
   }
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
 @end
 
 @implementation AppBarTypicalCollectionViewExample (CatalogByConvention)
