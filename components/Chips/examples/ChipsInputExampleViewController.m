@@ -25,7 +25,6 @@
 
 @implementation ChipsInputExampleViewController {
   MDCChipField *_chipField;
-  MDCSemanticColorScheme *_colorScheme;
 }
 
 - (void)viewDidLoad {
@@ -33,7 +32,6 @@
 
   self.view.backgroundColor = [UIColor lightGrayColor];
   
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
@@ -57,10 +55,10 @@
   // Every other chip is stroked
   if (chipField.chips.count%2) {
     [chip setBorderWidth:1 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toStrokedChipView:chip];
+    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:chip];
   } else {
     [chip setBorderWidth:0 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:chip];
+    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:chip];
   }
 
 }

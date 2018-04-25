@@ -49,13 +49,13 @@ class TabBarIndicatorTemplateExample: UIViewController {
   lazy var alignmentButton: MDCRaisedButton = self.makeAlignmentButton()
   lazy var appearanceButton: MDCRaisedButton = self.makeAppearanceButton()
   lazy var appBar: MDCAppBar = self.makeAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
     tabBar.alignment = .justified
 
-    let scheme = MDCSemanticColorScheme()
-    MDCTabBarColorThemer.applySemanticColorScheme(scheme, toTabs: tabBar);
+    MDCTabBarColorThemer.applySemanticColorScheme(self.colorScheme, toTabs: tabBar);
 
     let bundle = Bundle(for: TabBarIndicatorTemplateExample.self)
     let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)

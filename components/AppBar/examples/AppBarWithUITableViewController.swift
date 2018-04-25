@@ -28,6 +28,7 @@ class AppBarWithUITableViewController: UITableViewController {
 
   let appBar = MDCAppBar()
   var numberOfRows = 50
+  var colorScheme = MDCSemanticColorScheme()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -49,7 +50,6 @@ class AppBarWithUITableViewController: UITableViewController {
     
     appBar.addSubviewsToParent()
 
-    let colorScheme = MDCSemanticColorScheme()
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
     
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")

@@ -20,16 +20,10 @@
 #import "MaterialDialogs+ColorThemer.h"
 #import "MaterialDialogs+TypographyThemer.h"
 
-@implementation DialogsAlertViewController {
-  MDCSemanticColorScheme *_colorScheme;
-  MDCTypographyScheme *_typographyScheme;
-}
+@implementation DialogsAlertViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
-  _typographyScheme = [[MDCTypographyScheme alloc] init];
 
   [self loadCollectionView:
     @[ @"Show Alert",
@@ -69,8 +63,8 @@
 }
 
 - (void)themeAlertController:(MDCAlertController *)alertController {
-  [MDCAlertColorThemer applySemanticColorScheme:_colorScheme toAlertController:alertController];
-  [MDCAlertTypographyThemer applyTypographyScheme:_typographyScheme
+  [MDCAlertColorThemer applySemanticColorScheme:self.colorScheme toAlertController:alertController];
+  [MDCAlertTypographyThemer applyTypographyScheme:self.typographyScheme
                                 toAlertController:alertController];
 }
 
