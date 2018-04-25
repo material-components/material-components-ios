@@ -14,22 +14,4 @@
  limitations under the License.
  */
 
-#import "MaterialDialogs.h"
-#import "MaterialTypographyScheme.h"
-
-#import <Foundation/Foundation.h>
-
-/**
- Used to apply a typography scheme to theme a MDCAlertController alert dialogs.
- */
-@interface MDCAlertTypographyThemer : NSObject
-
-/**
- Applies a typography scheme to theme a MDCAlertController alert dialogs.
- 
- @param typographyScheme The typography scheme to apply to a MDCAlertController alert dialogs.
- */
-+ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-            toAlertController:(nonnull MDCAlertController *)alertController;
-
-@end
+#import "MDCAlertTypographyThemer.h"
