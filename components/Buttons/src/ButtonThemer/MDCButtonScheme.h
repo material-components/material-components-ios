@@ -41,8 +41,8 @@
 @interface MDCButtonScheme : NSObject <MDCButtonScheming>
 
 // Redeclare protocol properties as readwrite
-@property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;
-@property(nonnull, readwrite, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme;
+@property(nonnull, readwrite, nonatomic) id<MDCTypographyScheming> typographyScheme;
 @property(readwrite, nonatomic) CGFloat cornerRadius;
 @property(readwrite, nonatomic) CGFloat minimumHeight;
 
