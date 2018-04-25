@@ -349,6 +349,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     } else {
       vc = MDCNodeListViewController(node: node)
     }
+    let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
+    vc.navigationItem.rightBarButtonItem =
+      UIBarButtonItem(image: dotsImage,
+                      style: .plain,
+                      target: self.navigationController,
+                      action: #selector(UINavigationController.presentMenu))
     self.navigationController?.pushViewController(vc, animated: true)
   }
 
