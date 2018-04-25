@@ -20,6 +20,7 @@ class CardExampleViewController: UIViewController {
   @IBOutlet var contentView: UIView!
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var card: MDCCard!
+  var colorScheme = MDCSemanticColorScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -40,7 +41,6 @@ class CardExampleViewController: UIViewController {
     shapeLayer.path = bezierPath.cgPath
     imageView.layer.mask = shapeLayer
 
-    let colorScheme = MDCSemanticColorScheme()
     MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: card)
   }
 

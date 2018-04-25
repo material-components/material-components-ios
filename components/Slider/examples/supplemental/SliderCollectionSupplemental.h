@@ -20,6 +20,9 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MaterialColorScheme.h"
 
 @interface SliderCollectionViewController : UICollectionViewController
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+
 @end

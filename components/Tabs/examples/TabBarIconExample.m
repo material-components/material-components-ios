@@ -73,8 +73,7 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:tabBar];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:tabBar];
 
   tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1f];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;

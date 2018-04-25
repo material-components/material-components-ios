@@ -38,9 +38,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
@@ -48,12 +45,13 @@
 
   MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:raisedButton];
+  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme toButton:raisedButton];
 
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [raisedButton setImage:plusImage forState:UIControlStateNormal];
-  UIColor *titleAndImageColor = [UIColor colorWithRed:71/255.0f green:50/255.0f blue:50/255.0f alpha:1];
+  UIColor *titleAndImageColor =
+      [UIColor colorWithRed:71/255.0f green:50/255.0f blue:50/255.0f alpha:1];
   [raisedButton setTitleColor:titleAndImageColor forState:UIControlStateNormal];
   [raisedButton setImageTintColor:titleAndImageColor forState:UIControlStateNormal];
   [raisedButton setBackgroundColor:
@@ -74,8 +72,10 @@
 
   MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
   [disabledRaisedButton setTitle:@"Disabled" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledRaisedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toRaisedButton:disabledRaisedButton];
+  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toButton:disabledRaisedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
+                                  toRaisedButton:disabledRaisedButton];
 
   MDCRectangleShapeGenerator *disabledRaisedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
@@ -95,8 +95,10 @@
 
   MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
   [flatButton setTitle:@"Oval Flat" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:flatButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toFlatButton:flatButton];
+  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toButton:flatButton];
+  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
+                                    toFlatButton:flatButton];
 
   MDCPillShapeGenerator *flatShapeGenerator = [[MDCPillShapeGenerator alloc] init];
   flatButton.shapeGenerator = flatShapeGenerator;
@@ -111,8 +113,8 @@
 
   MDCButton *strokedButton = [self buildCustomStrokedButton];
   [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:strokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:strokedButton];
+  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme toButton:strokedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:strokedButton];
 
   MDCSlantedRectShapeGenerator *strokedShapeGenerator =
       [[MDCSlantedRectShapeGenerator alloc] init];
@@ -129,8 +131,10 @@
 
   MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
   [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledStrokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:disabledStrokedButton];
+  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toButton:disabledStrokedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
+                                        toButton:disabledStrokedButton];
 
   MDCRectangleShapeGenerator *disabledStrokedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];

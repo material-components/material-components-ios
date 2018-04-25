@@ -75,8 +75,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @end
 
 @interface MDCSliderExampleCollectionViewCell : UICollectionViewCell
-
-- (void)applyModel:(MDCSliderModel *)model;
+- (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme;
 
 @end
 
@@ -98,13 +97,12 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   return self;
 }
 
-- (void)applyModel:(MDCSliderModel *)model {
+- (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme {
   _label.text = model.labelString;
   _label.textColor = model.labelColor;
   self.contentView.backgroundColor = model.bgColor;
   _slider.statefulAPIEnabled = YES;
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCSliderColorThemer applySemanticColorScheme:scheme toSlider:_slider];
+  [MDCSliderColorThemer applySemanticColorScheme:colorScheme toSlider:_slider];
   _slider.numberOfDiscreteValues = model.numDiscreteValues;
   _slider.value = model.value;
   _slider.filledTrackAnchorValue = model.anchorValue;
@@ -269,8 +267,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   MDCSliderModel *model = [_sliders objectAtIndex:indexPath.item];
-
-  [cell applyModel:model];
+  [cell applyModel:model withColorScheme:self.colorScheme];
   return cell;
 }
 

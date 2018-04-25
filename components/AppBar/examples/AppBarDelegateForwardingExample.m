@@ -23,6 +23,8 @@
 
 @interface AppBarDelegateForwardingExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+
 @end
 
 @implementation AppBarDelegateForwardingExample
@@ -106,11 +108,14 @@
     [self addChildViewController:_appBar.headerViewController];
 
     self.title = @"Delegate Forwarding";
-
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
   }
   return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {

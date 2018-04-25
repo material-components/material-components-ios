@@ -25,6 +25,7 @@
 
 @property(weak, nonatomic) IBOutlet MDCTabBar *tabBar;
 @property(nonatomic) NSArray<UIColor *> *colors;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
@@ -45,8 +46,7 @@
     MDCPalette.redPalette.tint500, MDCPalette.greenPalette.tint500
   ];
 
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:self.tabBar];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
   
   self.view.backgroundColor = self.colors[0];
 }

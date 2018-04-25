@@ -45,13 +45,11 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
+  [MDCNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toNavigationBar:self.navigationBar];
   [self.view addSubview:self.navigationBar];
 
-  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme
+  [MDCNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
                                         toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
