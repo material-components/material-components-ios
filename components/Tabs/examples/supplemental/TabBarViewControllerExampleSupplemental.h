@@ -20,10 +20,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
 
 @interface TabBarViewControllerExample : MDCTabBarViewController
-
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
 @end
 
 @interface TabBarViewControllerExample (Supplemental)

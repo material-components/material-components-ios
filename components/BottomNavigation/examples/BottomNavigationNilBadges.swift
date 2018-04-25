@@ -20,6 +20,7 @@ import MaterialComponents
 class BottomNavigationNilBadges : UIViewController {
 
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
@@ -51,11 +52,6 @@ class BottomNavigationNilBadges : UIViewController {
 
     // Cluster and center the bottom navigation bar items.
     bottomNavBar.alignment = .centered
-
-    // Theme the bottom navigation bar.
-    let scheme = MDCSemanticColorScheme();
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(scheme,
-                                                               toBottomNavigation: bottomNavBar);
 
     // Add items to the bottom navigation bar.
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
@@ -95,7 +91,12 @@ class BottomNavigationNilBadges : UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     appBar.addSubviewsToParent()
+
+    // Theme the bottom navigation bar.
+    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
+                                                               toBottomNavigation: bottomNavBar);
   }
 
   override func viewWillAppear(_ animated: Bool) {

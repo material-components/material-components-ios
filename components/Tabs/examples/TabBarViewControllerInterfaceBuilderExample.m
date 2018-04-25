@@ -21,7 +21,7 @@
 #import "MDCTabBarColorThemer.h"
 
 @interface TabBarViewControllerInterfaceBuilderExample : MDCTabBarViewController
-
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation TabBarViewControllerInterfaceBuilderExample
@@ -33,8 +33,7 @@
     [self.storyboard instantiateViewControllerWithIdentifier:@"blue"],
     [self.storyboard instantiateViewControllerWithIdentifier:@"green"],
   ];
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:self.tabBar];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
 }
 
 @end
