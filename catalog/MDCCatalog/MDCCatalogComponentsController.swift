@@ -349,7 +349,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     } else {
       vc = MDCNodeListViewController(node: node)
     }
-    self.navigationController?.setMenuBarButton(for: vc)
     self.navigationController?.pushViewController(vc, animated: true)
   }
 
