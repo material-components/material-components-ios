@@ -25,6 +25,7 @@
   [button setImageTintColor:colorScheme.onSecondaryColor forState:UIControlStateNormal];
 
   button.disabledAlpha = 1.f;
+  button.inkColor = [colorScheme.onSecondaryColor colorWithAlphaComponent:0.32f];
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {

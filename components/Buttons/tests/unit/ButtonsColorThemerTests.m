@@ -239,6 +239,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   }
 
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualObjects(button.inkColor,
+                        [colorScheme.onSecondaryColor colorWithAlphaComponent:0.32f]);
 }
 
 
