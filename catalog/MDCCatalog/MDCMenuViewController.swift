@@ -56,14 +56,18 @@ class MDCMenuViewController: UITableViewController {
     guard let navController = self.presentingViewController as? UINavigationController else {
       return
     }
-    self.dismiss(animated: true, completion: {
-      let themeViewController = MDCThemePickerViewController()
-      let presentingViewController =
-        UINavigationController.embedExampleWithinAppBarContainer(using: themeViewController,
-                                                                 currentBounds: self.view.bounds,
-                                                                 named: "Themes")
-      navController.pushViewController(presentingViewController, animated: true)
-    })
+    if (indexPath.item == 1) {
+      self.dismiss(animated: true, completion: {
+        let themeViewController = MDCThemePickerViewController()
+        let presentingViewController =
+          UINavigationController.embedExampleWithinAppBarContainer(using: themeViewController,
+                                                                   currentBounds: self.view.bounds,
+                                                                   named: "Themes")
+        navController.pushViewController(presentingViewController, animated: true)
+      })
+    } else {
+      self.dismiss(animated: true, completion: nil)
+    }
 
   }
 
