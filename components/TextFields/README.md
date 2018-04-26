@@ -142,6 +142,91 @@ import MaterialComponents.MaterialTextFields
 ```
 <!--</div>-->
 
+### Theming
+
+You can theme textFields components with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
+
+You must first add the Themer extensions to your project:
+
+``` bash
+pod 'MaterialComponents/TextFields+Extensions/ColorThemer'
+pod 'MaterialComponents/TextFields+Extensions/TypographyThemer'
+```
+
+You can then import the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+import MaterialComponents.MaterialTextFields_ColorThemer
+import MaterialComponents.MaterialTextFields_FontThemer
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialTextFields+ColorThemer.h"
+#import "MaterialTextFields+TypographyThemer.h"
+```
+<!--</div>-->
+
+MDCTextFieldColorThemer allows you to theme an MDCTextInput or an MDCInputController with your app's color scheme. 
+
+MDCTextFieldTypographyThemer allows you to theme an MDCTextInput or an MDCInputController with your app's typography scheme.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+let colorScheme = MDCSemanticColorScheme()
+let typographyScheme = MDCTypographyScheme()
+
+// Applying theme to a text input
+let textField = MDCTextField()
+MDCTextFieldColorThemer.apply(colorScheme, to: textField)
+MDCTextFieldTypographyThemer.apply(typographyScheme, to: textField)
+
+// Applying theme to an input controller
+let textField = MDCTextField()
+let inputController = MDCTextInputControllerUnderline(textInput: inputController)
+MDCTextFieldColorThemer.apply(colorScheme, to: inputController)
+MDCTextFieldTypographyThemer.apply(typographyScheme, to: inputController)
+
+// Applying theme to an specific class type of inputController
+MDCTextFieldColorThemer.apply(colorScheme, 
+                              toAllControllersOfClass: MDCTextInputControllerUnderline.self)
+MDCTextFieldTypographyThemer.apply(typographyScheme, 
+                                   toAllControllersOfClass: MDCTextInputControllerUnderline.self)  
+  
+```
+
+#### Objective-C
+
+``` objc
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Applying theme to a text input
+id<MDCTextInput> textField = [[MDCTextField alloc] init];
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme toTextInput:textField];
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:textField];
+
+// Applying theme to an input controller
+id<MDCTextInput> textField = [[MDCTextField alloc] init];
+MDCTextInputControllerUnderline *inputController = 
+    [[MDCTextInputControllerUnderline alloc] initWithTextInput:textField];
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme toTextInputController:inputController];
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme 
+                               toTextInputController:inputController];
+
+// Applying theme to an specific class type of inputController
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme 
+                 toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme 
+                   toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
+
+```
+<!--</div>-->
+
 ## Examples - Single-line
 
 ### Text Field with Floating Placeholder
