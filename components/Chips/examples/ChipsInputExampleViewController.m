@@ -54,10 +54,8 @@
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
   // Every other chip is stroked
   if (chipField.chips.count%2) {
-    [chip setBorderWidth:1 forState:UIControlStateNormal];
     [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:chip];
   } else {
-    [chip setBorderWidth:0 forState:UIControlStateNormal];
     [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:chip];
   }
 
