@@ -277,6 +277,7 @@ import MaterialComponents.MaterialAppBar_TypographyThemer
 <!--</div>-->
 
 MDCAppBarColorThemer allows you to theme an app bar with your app's color scheme. 
+MDCAppBarTypographyThemer allows you to theme an app bar with your app's typography scheme. 
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
