@@ -245,7 +245,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
     guard let topVC = navigationController.topViewController,
       topVC is MDCAppBarContainerViewController ||
         topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
-          print("woohoo")
           return
     }
     navigationController.popViewController(animated: false)
