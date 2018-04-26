@@ -245,11 +245,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
     guard let topVC = navigationController.topViewController,
       topVC is MDCAppBarContainerViewController ||
         topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
+          print("woohoo")
           return
     }
-    guard navigationController.popViewController(animated: false) != nil else {
-        return
-    }
+    navigationController.popViewController(animated: false)
     guard let selectedNode = selectedNode else {
       return
     }
@@ -510,8 +509,9 @@ extension MDCNodeListViewController {
       vc = contentVC
     } else {
       self.navigationController?.setMenuBarButton(for: contentVC)
-      vc = self.navigationController!.embedExampleWithinAppBarContainer(using: contentVC,
-                                                                        with: node.title)
+      vc = UINavigationController.embedExampleWithinAppBarContainer(using: contentVC,
+                                                                    currentBounds: view.bounds,
+                                                                    named: node.title)
     }
     return vc
   }
