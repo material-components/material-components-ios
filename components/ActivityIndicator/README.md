@@ -179,7 +179,7 @@ import MaterialComponents.MaterialActivityIndicator_ColorThemer
 <!--</div>-->
 
 MDCActivityIndicatorColorThemer allows you to theme an activity indicator with your app's color
-scheme. This themer will apply your color scheme's primary color to the activity indicator.
+scheme.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
