@@ -289,7 +289,7 @@ let colorScheme = MDCSemanticColorScheme()
 let typographyScheme = MDCTypographyScheme()
 
 let appBar = MDCAppBar()
-MDCAppBarColorThemer.apply(colorScheme, to: appBar)
+MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 MDCAppBarTypographyThemer.apply(typographyScheme, to: appBar)
 ```
 
