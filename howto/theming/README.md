@@ -1,0 +1,100 @@
+<!--docs:
+title: "Theming"
+layout: landing
+section: docs
+path: /docs/theming/
+-->
+
+# Theming Material Components
+
+Material Theming is a consistent way to apply a uniform design across your iOS application when using Material Components for iOS.
+
+The Material Theming pattern for iOS consists of two primary patterns: schemes and themers.
+
+*Schemes* store your design in a semantic manner that is well understood by MDC components.
+
+*Themers* are the glue that bind scheme values to components.
+
+For example, the Typography Scheme type represents the Material typographic font hierarchy. There is
+also a Color Scheme which represents the Material color system's symbols.
+
+## Sensible defaults, yet highly configurable
+
+By default, an instance of a scheme is initialized with the Material defaults. You can use these
+defaults as a baseline, but at a minimum we encourage you to tweak your color scheme's primary and
+secondary colors to match your brand colors.
+
+### Example: Creating a scheme
+
+In order to access the scheme APIs you'll first need to add the scheme target to your Podfile:
+
+``` bash
+pod 'MaterialComponents/schemes/Color'
+pod 'MaterialComponents/schemes/Typography'
+```
+
+You can now create schemes. Consider where you will want to store your schemes so that they are
+accessible by your components. One solution is to have a global singleton that exposes shared
+scheme instances as we've done in the MDCCatalog, but the approach you take should be influenced
+by your app's architecture.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+``` swift
+import MaterialColorScheme
+import MaterialTypographyScheme
+
+let colorScheme = MDCSemanticColorScheme()
+let typographyScheme = MDCTypographyScheme()
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
+
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+```
+<!--</div>-->
+
+### Example: Applying a scheme
+
+To apply a scheme to a component you must first add the component's themers to your project's
+Podfile. You can see which themers a given component supports by looking at the component's src/
+directory.
+
+``` bash
+pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
+pod 'MaterialComponents/AppBar+Extensions/TypographyThemer'
+```
+
+You can now access the AppBar themers.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+``` swift
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
+
+func applyGlobalTheme(to appBar: MDCAppBar) {
+  MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+  MDCAppBarTypographyThemer.apply(typographyScheme, to: appBar)
+}
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
+
+void ApplyGlobalThemeToAppBar(MDCAppBar *appBar) {
+  [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:appBar];
+  [MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:appBar];
+}
+```
+<!--</div>-->
