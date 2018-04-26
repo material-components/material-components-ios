@@ -22,10 +22,11 @@
 
 @interface AppBarTypicalCollectionViewExample : UICollectionViewController
 
+// Step 1: Create an App Bar.
 @property(nonatomic, strong) MDCAppBar *appBar;
+
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-
 
 @end
 @implementation AppBarTypicalCollectionViewExample
