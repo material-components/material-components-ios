@@ -356,6 +356,44 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 ```
 <!--</div>-->
 
+### Theming
+
+You can theme a Flexible Header with your app's color scheme using the ColorThemer and extension.
+
+You must first add the ColorThemer extensions to your project:
+
+``` bash
+pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
+```
+
+You can then make use of the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+``` swift
+import MaterialComponents.MaterialFlexibleHeader_ColorThemer
+
+let colorScheme = MDCSemanticColorScheme()
+
+let headerViewController: MDCFlexibleHeaderViewController
+MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
+                                                      to: headerViewController.headerView)
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialFlexibleHeader+ColorThemer.h"
+
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+MDCFlexibleHeaderViewController *headerViewController;
+[MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme
+                                  toFlexibleHeaderView:headerViewController.headerView];
+```
+<!--</div>-->
+
 ### Reacting to frame changes
 
 In order to react to Flexible Header frame changes you can set yourself as the
