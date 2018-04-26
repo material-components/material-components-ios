@@ -92,6 +92,61 @@ import MaterialComponents.MaterialNavigationBar
 ```
 <!--</div>-->
 
+### Theming
+
+You can theme a navigation bar with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
+
+You must first add the themer extensions to your project:
+
+``` bash
+pod 'MaterialComponents/NavigationBar+Extensions/ColorThemer'
+pod 'MaterialComponents/NavigationBar+Extensions/TypographyThemer'
+```
+
+You can then import the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+import MaterialComponents.MaterialNavigationBar_ColorThemer
+import MaterialComponents.MaterialNavigationBar_TypographyThemer
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialNavigationBar+ColorThemer.h"
+#import "MaterialNavigationBar+TypographyThemer.h"
+```
+<!--</div>-->
+
+MDCNavigationBarColorThemer allows you to theme a navigation bar with your app's color scheme.
+
+MDCNavigationBarTypographyThemer allows you to theme a navigation bar with your app's typography scheme.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+let colorScheme: MDCSemanticColorScheme()
+let typographyScheme: MDCTypographycheme()
+
+let navigationBar = MDCNavigationBar()
+MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: navigationBar)
+MDCNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme, to: navigationBar)
+```
+
+#### Objective-C
+
+``` objc
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
+[MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toNavigationBar:navigationBar];
+[MDCSnackbarTypographyThemer applTypographyScheme:typographyScheme toNavigationBar:navigationBar];
+```
+<!--</div>-->
+
 ### Observing UINavigationItem instances
 
 MDCNavigationBar can observe changes made to a navigation item property much like how a
