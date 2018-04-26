@@ -139,6 +139,12 @@
  */
 @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;
 
+/**
+ Custom insets to use when computing touch targets. A positive inset value will shrink the hit
+ area for the Chip.
+ */
+@property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
+
 /*
  A color used as the chip's @c backgroundColor for @c state.
 
