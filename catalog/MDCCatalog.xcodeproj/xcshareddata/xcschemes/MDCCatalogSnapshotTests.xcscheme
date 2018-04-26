@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "66FB8ABB20915C27002459A2"
-               BuildableName = "MDCCatalogUITests.xctest"
-               BlueprintName = "MDCCatalogUITests"
+               BuildableName = "MDCCatalogSnapshotTests.xctest"
+               BlueprintName = "MDCCatalogSnapshotTests"
                ReferencedContainer = "container:MDCCatalog.xcodeproj">
             </BuildableReference>
          </TestableReference>

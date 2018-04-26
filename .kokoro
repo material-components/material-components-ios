@@ -174,7 +174,7 @@ run_cocoapods() {
       xcodebuild test \
         -workspace MDCCatalog.xcworkspace \
         -scheme MDCCatalogSnapshotTests \
-          -destination "platform=iOS Simulator,name=iPhone 7,OS=latest"
+          -destination "platform=iOS Simulator,name=iPhone 7,OS=latest" | xcpretty
     fi
   done
 
