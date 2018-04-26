@@ -123,7 +123,9 @@ import MaterialComponents.MaterialCards
 ```
 <!--</div>-->
 
-### How to theme a card
+### Theming
+
+You can theme a card with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
