@@ -197,7 +197,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
 [MDCActivityIndicatorColorThemer applySemanticColorScheme:colorScheme
-                                      toActivityIndicator:activityIndicator1];
+                                      toActivityIndicator:activityIndicator];
 ```
 <!--</div>-->
 
