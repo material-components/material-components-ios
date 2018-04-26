@@ -73,6 +73,10 @@ import MaterialComponents.MaterialBottomAppBar
 ```
 <!--</div>-->
 
+### How to theme
+
+Currently BottomAppBar does not provide sufficient API to theme it properly. Supporting API will be provided soon. 
+
 ## Examples
 
 ### Bottom App Bar with floating action button and navigation
