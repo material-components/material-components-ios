@@ -25,8 +25,7 @@
 @interface MDCInkColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCInkView. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCInkView.
+ Applies a color scheme to theme a MDCInkView.
 
  @param colorScheme The color scheme to apply to MDCInkView.
  @param inkView A MDCInkView instance to apply a color scheme.

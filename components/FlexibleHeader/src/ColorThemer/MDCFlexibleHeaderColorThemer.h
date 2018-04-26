@@ -51,8 +51,7 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCFlexibleHeaderView. Use a UIAppearance proxy to apply a color
- scheme to all instances of MDCFlexibleHeaderView.
+ Applies a color scheme to theme a MDCFlexibleHeaderView.
 
  This method will soon be deprecated. Consider using +applySemanticColorScheme:toFlexibleHeaderView:
  instead.
@@ -64,8 +63,7 @@
     toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 /**
- Applies a color scheme to theme a MDCFlexibleHeaderViewController. Use a UIAppearance proxy to
- apply a color scheme to all instances of MDCFlexibleHeaderViewController.
+ Applies a color scheme to theme a MDCFlexibleHeaderViewController.
 
  This method will soon be deprecated. Consider using +applySemanticColorScheme:toFlexibleHeaderView:
  instead.

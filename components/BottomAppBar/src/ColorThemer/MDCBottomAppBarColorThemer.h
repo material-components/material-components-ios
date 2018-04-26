@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- Applies a color scheme to an MDCBottomAppBarView or its UIAppearance proxy.
+ Applies a color scheme to an MDCBottomAppBarView.
  */
 @interface MDCBottomAppBarColorThemer : NSObject
 

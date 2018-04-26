@@ -25,8 +25,7 @@
 @interface MDCHeaderStackViewColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCHeaderStackView. Use a UIAppearance proxy to apply a color
- scheme to all instances of MDCHeaderStackView.
+ Applies a color scheme to theme a MDCHeaderStackView.
 
  @param colorScheme The color scheme to apply to MDCHeaderStackView.
  @param headerStackView A MDCHeaderStackView instance to apply a color scheme.
