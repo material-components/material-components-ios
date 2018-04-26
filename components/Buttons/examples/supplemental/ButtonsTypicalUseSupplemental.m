@@ -33,8 +33,8 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"Buttons is a collection of Material Design buttons, including a text button, a contained"
-          " button and a floating action button.";
+  return @"Buttons allow users to take actions, and make choices, with a single tap.\nA floating"
+          " action button (FAB) represents the primary action of a screen.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

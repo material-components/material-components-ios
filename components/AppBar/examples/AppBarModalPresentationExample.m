@@ -17,10 +17,11 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
-#import "MDCAppBarColorThemer.h"
+#import "MaterialAppBar+ColorThemer.h"
 
 @interface AppBarModalPresentationExamplePresented : UITableViewController
 @property(strong, nonatomic) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation AppBarModalPresentationExamplePresented
@@ -31,9 +32,6 @@
     // Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
-
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
 
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -47,6 +45,8 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 
   // UITableViewController's tableView.delegate is self by default. We're setting it here for
   // emphasis.
@@ -132,6 +132,7 @@
 
 @interface AppBarModalPresentationExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation AppBarModalPresentationExample
@@ -224,12 +225,15 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
-
     self.title = @"Modal Presentation";
   }
   return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {

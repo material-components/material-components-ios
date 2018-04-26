@@ -30,7 +30,7 @@ static const CGFloat kActivityInitialProgress = 0.6f;
 @class ActivityIndicatorExample;
 @class MDCActivityIndicator;
 
-@interface ActivityIndicatorExample : MDCCollectionViewController <MDCActivityIndicatorDelegate>
+@interface ActivityIndicatorExample : UITableViewController <MDCActivityIndicatorDelegate>
 
 @property(nonatomic, strong) MDCActivityIndicator *activityIndicator1;
 @property(nonatomic, strong) MDCActivityIndicator *activityIndicator2;

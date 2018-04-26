@@ -31,8 +31,8 @@ class EditReorderCollectionViewController: UIViewController,
   var longPressGesture: UILongPressGestureRecognizer!
   var toggle = ToggleMode.reorder
   var toggleButton: UIButton!
-  let colorScheme = MDCSemanticColorScheme()
-  
+  var colorScheme = MDCSemanticColorScheme()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -185,7 +185,7 @@ class EditReorderCollectionViewController: UIViewController,
 
 extension EditReorderCollectionViewController {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Cards", "Edit/Reorder (Swift)"]
+    return ["Cards", "Edit/Reorder"]
   }
 
   @objc class func catalogIsPresentable() -> Bool {

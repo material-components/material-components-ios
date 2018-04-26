@@ -16,23 +16,30 @@
 
 import Foundation
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialTypographyScheme
 
 final class AppTheme {
   let colorScheme: MDCColorScheming
+  let typographyScheme: MDCTypographyScheming
 
-  init(colorScheme: MDCColorScheming) {
+  init(colorScheme: MDCColorScheming, typographyScheme: MDCTypographyScheming) {
     self.colorScheme = colorScheme
+    self.typographyScheme = typographyScheme
   }
 
   static let defaultTheme: AppTheme = {
     let colorScheme = MDCSemanticColorScheme()
-    colorScheme.primaryColor = .init(white: 33 / 255.0, alpha: 1)
+    colorScheme.primaryColor =  UIColor(red: CGFloat(0x21) / 255.0,
+                                        green: CGFloat(0x21) / 255.0,
+                                        blue: CGFloat(0x21) / 255.0,
+                                        alpha: 1)
     colorScheme.primaryColorVariant = .init(white: 0.7, alpha: 1)
     colorScheme.secondaryColor = UIColor(red: CGFloat(0x00) / 255.0,
                                          green: CGFloat(0xE6) / 255.0,
                                          blue: CGFloat(0x76) / 255.0,
                                          alpha: 1)
-    return AppTheme(colorScheme: colorScheme)
+    let typographyScheme = MDCTypographyScheme()
+    return AppTheme(colorScheme: colorScheme, typographyScheme: typographyScheme)
   }()
 
   static var globalTheme: AppTheme = defaultTheme {
@@ -40,11 +47,14 @@ final class AppTheme {
       NotificationCenter.default.post(name: AppTheme.didChangeGlobalThemeNotificationName,
                                       object: nil,
                                       userInfo:
-        [AppTheme.globalThemeNotificationColorSchemeKey: AppTheme.globalTheme.colorScheme]
+        [AppTheme.globalThemeNotificationColorSchemeKey: AppTheme.globalTheme.colorScheme,
+         AppTheme.globalThemeNotificationTypographySchemeKey: AppTheme.globalTheme.typographyScheme]
       )
     }
   }
 
-  static let didChangeGlobalThemeNotificationName = Notification.Name("MDCCatalogDidChangeGlobalTheme")
+  static let didChangeGlobalThemeNotificationName =
+    Notification.Name("MDCCatalogDidChangeGlobalTheme")
   static let globalThemeNotificationColorSchemeKey = "colorScheme"
+  static let globalThemeNotificationTypographySchemeKey = "typographyScheme"
 }

@@ -22,7 +22,7 @@
 #import "ThemerTypicalUseSupplemental.h"
 
 #import "MaterialDialogs.h"
-#import "MDCFeatureHighlightAccessibilityMutator.h"
+#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 
 @implementation ThemerTypicalUseViewController (Supplemental)
 

@@ -18,7 +18,7 @@ import CatalogByConvention
 import MaterialCatalog
 
 import MaterialComponents.MaterialFlexibleHeader
-import MaterialComponents.MDCFlexibleHeaderColorThemer
+import MaterialComponents.MaterialFlexibleHeader_ColorThemer
 import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialLibraryInfo

@@ -15,7 +15,7 @@
  */
 
 #import "MaterialDialogs.h"
-#import "MDCAlertColorThemer.h"
+#import "MaterialDialogs+ColorThemer.h"
 
 #import "MDCAlertControllerView+Private.h"
 

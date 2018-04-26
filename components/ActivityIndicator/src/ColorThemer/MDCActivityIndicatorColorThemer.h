@@ -14,8 +14,10 @@
  limitations under the License.
  */
 
-#import "MaterialColorScheme.h"
 #import "MaterialActivityIndicator.h"
+#import "MaterialColorScheme.h"
+
+#import <Foundation/Foundation.h>
 
 /**
  Used to apply a color scheme to theme MDCActivityIndicator.

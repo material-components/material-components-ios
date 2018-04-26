@@ -270,8 +270,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 }
 
 + (NSString *)catalogDescription {
-  return @"Progress View is a visual indication of an app loading content. It can display how "
-         @"long an operation will take.";
+  return @"Progress indicators display the length of a process or express an unspecified wait "
+          "time.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

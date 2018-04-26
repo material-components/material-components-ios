@@ -17,18 +17,16 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
-#import "MDCChipViewColorThemer.h"
+#import "MaterialChips+ColorThemer.h"
 
 @implementation ChipsActionExampleViewController {
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
-  MDCSemanticColorScheme *_colorScheme;
+  BOOL _isStroked;
 }
 
 - (void)loadView {
   [super loadView];
-
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
@@ -56,6 +54,31 @@
   [self.view addSubview:_collectionView];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  _isStroked = NO;
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Stroked Style"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(switchStyle)];
+}
+
+- (void)switchStyle {
+  _isStroked = !_isStroked;
+  NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Stroked Style";
+  [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
+  NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
+  [_collectionView reloadData];
+  for (NSIndexPath *path in indexPaths) {
+    [_collectionView selectItemAtIndexPath:path
+                                  animated:NO
+                            scrollPosition:UICollectionViewScrollPositionNone];
+  }
+}
+
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
@@ -70,14 +93,20 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
 
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
 
   // Apply Theming
-  [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:cell.chipView];
+  if (_isStroked) {
+    [chipView setBorderWidth:1 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:chipView];
+  } else {
+    [chipView setBorderWidth:0 forState:UIControlStateNormal];
+    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:chipView];
+  }
 
   return cell;
 }

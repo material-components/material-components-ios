@@ -14,9 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCButton.h"
-#import "MDCButtonColorThemer.h"
-#import "MDCButtonTypographyThemer.h"
+#import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
+
+#import <Foundation/Foundation.h>
 
 /** Defines a readonly immutable interface for button style data to be applied by a themer. */
 @protocol MDCButtonScheming
@@ -39,8 +41,8 @@
 @interface MDCButtonScheme : NSObject <MDCButtonScheming>
 
 // Redeclare protocol properties as readwrite
-@property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;
-@property(nonnull, readwrite, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme;
+@property(nonnull, readwrite, nonatomic) id<MDCTypographyScheming> typographyScheme;
 @property(readwrite, nonatomic) CGFloat cornerRadius;
 @property(readwrite, nonatomic) CGFloat minimumHeight;
 

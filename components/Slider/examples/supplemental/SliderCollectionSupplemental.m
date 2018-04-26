@@ -28,8 +28,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The MDCSlider object is a Material Design control used to select a value from a"
-          " continuous range or discrete set of values.";
+  return @"Sliders allow users to make selections from a range of values.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

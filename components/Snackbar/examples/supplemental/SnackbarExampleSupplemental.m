@@ -15,8 +15,8 @@
  */
 
 #import "SnackbarExampleSupplemental.h"
-#import "MDCSnackbarColorThemer.h"
-#import "MDCSnackbarTypographyThemer.h"
+#import "MaterialSnackbar+ColorThemer.h"
+#import "MaterialSnackbar+TypographyThemer.h"
 
 static NSString * const kCellIdentifier = @"Cell";
 
@@ -27,10 +27,8 @@ static NSString * const kCellIdentifier = @"Cell";
   self.view.backgroundColor = [UIColor whiteColor];
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCellIdentifier];
-  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCSnackbarTypographyThemer applyTypographyScheme:typographyScheme];
+  [MDCSnackbarColorThemer applySemanticColorScheme:self.colorScheme];
+  [MDCSnackbarTypographyThemer applyTypographyScheme:self.typographyScheme];
 }
 
 #pragma mark - UICollectionView
@@ -61,8 +59,7 @@ static NSString * const kCellIdentifier = @"Cell";
 }
 
 + (NSString *)catalogDescription {
-  return @"Snackbars provide brief feedback about an operation through a message at the bottom of"
-          " the screen.";
+  return @"Snackbars provide brief messages about app processes at the bottom of the screen.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

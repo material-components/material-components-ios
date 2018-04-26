@@ -16,7 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialActivityIndicator
-import MaterialComponents.MDCActivityIndicatorColorThemer
+import MaterialComponents.MaterialActivityIndicator_ColorThemer
 
 class ActivityIndicatorColorThemerTests: XCTestCase {
 
