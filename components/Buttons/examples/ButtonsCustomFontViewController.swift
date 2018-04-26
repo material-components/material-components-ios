@@ -35,7 +35,9 @@ class ButtonsCustomFontViewController: UIViewController {
     // Define our design data
     let buttonScheme = MDCButtonScheme()
     if let customFont = UIFont(name:"Zapfino", size:14.0) {
-      buttonScheme.typographyScheme.button = customFont
+      let typographyScheme = MDCTypographyScheme()
+      typographyScheme.button = customFont
+      buttonScheme.typographyScheme = typographyScheme
     }
 
     // Apply our design data using the Material themers
