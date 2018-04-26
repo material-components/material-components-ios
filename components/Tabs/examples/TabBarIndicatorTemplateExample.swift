@@ -46,9 +46,9 @@ class TabBarIndicatorTemplateExample: UIViewController {
     }
   }
 
-  lazy var alignmentButton = self.makeAlignmentButton()
-  lazy var appearanceButton = self.makeAppearanceButton()
-  lazy var appBar = self.makeAppBar()
+  lazy var alignmentButton: MDCButton = self.makeAlignmentButton()
+  lazy var appearanceButton: MDCButton = self.makeAppearanceButton()
+  lazy var appBar: MDCAppBar = self.makeAppBar()
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
 
