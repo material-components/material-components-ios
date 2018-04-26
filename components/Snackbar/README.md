@@ -85,6 +85,59 @@ import MaterialComponents.MaterialSnackbar
 ```
 <!--</div>-->
 
+### Theming
+
+You can theme a snackbar with your app's color scheme using the ColorThemer and typographyThemer extensions.
+
+You must first add the Themer extension to your project:
+
+``` bash
+pod 'MaterialComponents/Snackbar+Extensions/ColorThemer'
+pod 'MaterialComponents/Snackbar+Extensions/TypographyThemer'
+```
+
+You can then import the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+import MaterialComponents.MaterialSnackbar_ColorThemer
+import MaterialComponents.MaterialSnackbar_TypographyThemer
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialSnackbar+ColorThemer.h"
+#import "MaterialSnackbar+TypographyThemer.h"
+```
+<!--</div>-->
+
+MDCSnackbarColorThemer allows you to theme a snackbar with your app's color scheme.
+
+MDCSnackbarTypographyThemer allows you to theme a snackbar with your app's typography scheme.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+let colorScheme: MDCSemanticColorScheme()
+let typographyScheme: MDCTypographycheme()
+
+MDCSnackbarColorThemer.applySemanticColorScheme(colorScheme)
+MDCSnackbarTypographyThemer.applyTypographyScheme(typographyScheme)
+```
+
+#### Objective-C
+
+``` objc
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+[MDCSnackbarColorThemer applySemanticColorScheme:colorScheme];
+[MDCSnackbarTypographyThemer applTypographyScheme:typographyScheme];
+```
+<!--</div>-->
+
 - - -
 
 ## Examples
