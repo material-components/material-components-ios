@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
 #import "MaterialTabs.h"
@@ -52,8 +53,14 @@
   UIViewController *child0 = viewControllers[0];
   self.selectedViewController = child0;
   UIViewController *child1 = viewControllers[1];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+
   // Put the button under the header.
-  MDCRaisedButton *button = [[MDCRaisedButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
   [button setTitle:@"Push and Hide Tab" forState:UIControlStateNormal];
   [button sizeToFit];
   [child1.view addSubview:button];
@@ -63,7 +70,8 @@
 
   UIViewController *child2 = viewControllers[2];
   // Put the button under the header.
-  button = [[MDCRaisedButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
+  button = [[MDCButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
   [button setTitle:@"Toggle Tab Bar" forState:UIControlStateNormal];
   [button sizeToFit];
   [child2.view addSubview:button];
