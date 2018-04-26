@@ -188,12 +188,12 @@ MDCTextFieldTypographyThemer.apply(typographyScheme, to: textField)
 // Applying theme to an input controller
 let textField = MDCTextField()
 let inputController = MDCTextInputControllerUnderline(textInput: inputController)
-MDCTextFieldColorThemer.apply(colorScheme, to: inputController)
+MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: inputController)
 MDCTextFieldTypographyThemer.apply(typographyScheme, to: inputController)
 
 // Applying theme to an specific class type of inputController
-MDCTextFieldColorThemer.apply(colorScheme, 
-                              toAllControllersOfClass: MDCTextInputControllerUnderline.self)
+MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, 
+                                                 toAllControllersOfClass: MDCTextInputControllerUnderline.self)
 MDCTextFieldTypographyThemer.apply(typographyScheme, 
                                    toAllControllersOfClass: MDCTextInputControllerUnderline.self)  
   
