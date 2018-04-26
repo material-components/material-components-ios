@@ -23,7 +23,7 @@ final class AppTheme {
   let typographyScheme: MDCTypographyScheming
   let buttonScheme: MDCButtonScheming
 
-  init(colorScheme: MDCSemanticColorScheme, typographyScheme: MDCTypographyScheme) {
+  init(colorScheme: MDCColorScheming, typographyScheme: MDCTypographyScheming) {
     self.colorScheme = colorScheme
     self.typographyScheme = typographyScheme
     let buttonScheme = MDCButtonScheme()

@@ -24,10 +24,10 @@
 @protocol MDCButtonScheming
 
 /** The color scheme to apply to buttons. */
-@property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
+@property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
 
 /** The typography scheme to apply to buttons. */
-@property(nonnull, readonly, nonatomic) id <MDCTypographyScheming> typographyScheme;
+@property(nonnull, readonly, nonatomic) id<MDCTypographyScheming> typographyScheme;
 
 /** The corner radius to be applied to buttons. */
 @property(readonly, nonatomic) CGFloat cornerRadius;
@@ -41,8 +41,8 @@
 @interface MDCButtonScheme : NSObject <MDCButtonScheming>
 
 // Redeclare protocol properties as readwrite
-@property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;
-@property(nonnull, readwrite, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme;
+@property(nonnull, readwrite, nonatomic) id<MDCTypographyScheming> typographyScheme;
 @property(readwrite, nonatomic) CGFloat cornerRadius;
 @property(readwrite, nonatomic) CGFloat minimumHeight;
 
