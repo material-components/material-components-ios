@@ -99,6 +99,7 @@
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
   _transitionController.trackingScrollView = trackingScrollView;
+  self.mdc_bottomSheetPresentationController.trackingScrollView = trackingScrollView;
 }
 
 - (BOOL)dismissOnBackgroundTap {
