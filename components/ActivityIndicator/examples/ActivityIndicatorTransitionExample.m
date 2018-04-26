@@ -18,14 +18,16 @@
 
 #import "MaterialActivityIndicator.h"
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
 
 static const CGFloat kActivityIndicatorExampleArrowHeadSize = 5.0f;
 static const CGFloat kActivityIndicatorExampleStrokeWidth = 2.0f;
 
 static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3.0;
 
-
 @interface ActivityIndicatorTransitionExample : UIViewController <MDCActivityIndicatorDelegate>
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation ActivityIndicatorTransitionExample {
@@ -42,13 +44,14 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   self = [super init];
   if (self) {
     self.title = @"Activity Indicator Transition";
-    self.view.backgroundColor = [UIColor whiteColor];
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  self.view.backgroundColor = self.colorScheme.backgroundColor;
 
   _activityIndicator = [[MDCActivityIndicator alloc] initWithFrame:CGRectZero];
   [_activityIndicator sizeToFit];
@@ -57,6 +60,10 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   [self.view addSubview:_activityIndicator];
 
   _button = [[MDCButton alloc] init];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:_button];
   [_button addTarget:self
               action:@selector(startRefreshing)
     forControlEvents:UIControlEventTouchUpInside];
