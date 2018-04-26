@@ -37,4 +37,3 @@
      toTextInputControllerFilled:(nonnull MDCTextInputControllerFilled *)textInputControllerFilled;
 
 @end
-

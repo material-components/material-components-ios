@@ -18,7 +18,7 @@
 
 #import "MaterialTextFields.h"
 #import "MaterialThemes.h"
-#import "MDCTextFieldFontThemer.h"
+#import "MaterialTextFields+FontThemer.h"
 
 @interface TextFieldsFontThemerTests : XCTestCase
 
