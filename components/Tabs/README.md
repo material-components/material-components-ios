@@ -157,7 +157,7 @@ let typographyScheme = MDCTypographyScheme()
 let tabBar = MDCTabBar()
 
 // Apply regular style
-MDCTabBarColorThemer.apply(colorScheme, toTabs: tabBar)
+MDCTabBarColorThemer.applySemanticColorScheme(colorScheme, toTabs: tabBar)
 
 // Or Surface Variant
 MDCTabBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, toTabs: tabBar)
