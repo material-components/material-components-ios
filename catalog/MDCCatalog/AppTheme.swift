@@ -28,10 +28,7 @@ final class AppTheme {
 
   static let defaultTheme: AppTheme = {
     let colorScheme = MDCSemanticColorScheme()
-    colorScheme.primaryColor =  UIColor(red: CGFloat(0x21) / 255.0,
-                                        green: CGFloat(0x21) / 255.0,
-                                        blue: CGFloat(0x21) / 255.0,
-                                        alpha: 1)
+    colorScheme.primaryColor =  .red
     colorScheme.primaryColorVariant = .init(white: 0.7, alpha: 1)
     colorScheme.secondaryColor = UIColor(red: CGFloat(0x00) / 255.0,
                                          green: CGFloat(0xE6) / 255.0,

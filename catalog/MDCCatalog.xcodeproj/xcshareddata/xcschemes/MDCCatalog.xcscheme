@@ -31,7 +31,7 @@
       codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "66CB712B1C853DB30099B932"
@@ -41,12 +41,22 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "36683DBD1EF3212B002EF2E6"
                BuildableName = "MDCEarlGreyTests.xctest"
                BlueprintName = "MDCEarlGreyTests"
+               ReferencedContainer = "container:MDCCatalog.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "66FB8ABB20915C27002459A2"
+               BuildableName = "MDCCatalogUITests.xctest"
+               BlueprintName = "MDCCatalogUITests"
                ReferencedContainer = "container:MDCCatalog.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -64,6 +74,16 @@
          <EnvironmentVariable
             key = "DYLD_INSERT_LIBRARIES"
             value = "@executable_path/EarlGrey.framework/EarlGrey"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "IMAGE_DIFF_DIR"
+            value = "$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/FailureDiffs"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "FB_REFERENCE_IMAGE_DIR"
+            value = "$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/ReferenceImages"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

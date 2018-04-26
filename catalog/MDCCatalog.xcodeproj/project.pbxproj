@@ -28,8 +28,10 @@
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		66CD19292072A54000DE6340 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CD19282072A54000DE6340 /* AppTheme.swift */; };
 		66D3389520730A3E00FFA1AB /* MDCThemePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D3389420730A3E00FFA1AB /* MDCThemePickerViewController.swift */; };
+		66FB8ABF20915C27002459A2 /* MDCCatalogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FB8ABE20915C27002459A2 /* MDCCatalogUITests.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
 		7D6BB3DC630E39F27A3BA3F6 /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8E98AE03A84BE589EA9C268C /* Pods_MDCCatalogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96ED41AC794E26DEC51AA222 /* Pods_MDCCatalogUITests.framework */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +50,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 64307B371DF74FEF004AE4AC;
 			remoteInfo = MDCActionExtension;
+		};
+		66FB8AC120915C27002459A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 664524AB1C6BA62A001ADBF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 664524B21C6BA62A001ADBF8;
+			remoteInfo = MDCCatalog;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -88,6 +97,7 @@
 		36683DC21EF3212B002EF2E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36683DC91EF3262F002EF2E6 /* MDCEarlGreyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCEarlGreyTests.swift; sourceTree = "<group>"; };
 		36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Medium.ttf"; sourceTree = "<group>"; };
+		3FF4879E6718A22F87415B27 /* Pods-MDCCatalogUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalogUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalogUITests/Pods-MDCCatalogUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		5D090E351C9AEB8C0061344A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E361C9AEB8C0061344A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -141,9 +151,14 @@
 		6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileView.swift; sourceTree = "<group>"; };
 		66CD19282072A54000DE6340 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		66D3389420730A3E00FFA1AB /* MDCThemePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCThemePickerViewController.swift; sourceTree = "<group>"; };
+		66FB8ABC20915C27002459A2 /* MDCCatalogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCCatalogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		66FB8ABE20915C27002459A2 /* MDCCatalogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCCatalogUITests.swift; sourceTree = "<group>"; };
+		66FB8AC020915C27002459A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7B089D6AFB3863922D1230F0 /* Pods-MDCCatalogUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalogUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalogUITests/Pods-MDCCatalogUITests.release.xcconfig"; sourceTree = "<group>"; };
 		88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCActionExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		93314CA227FB65FEC87098C3 /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = Pods/EarlGrey/EarlGrey/EarlGrey.framework; sourceTree = SOURCE_ROOT; };
+		96ED41AC794E26DEC51AA222 /* Pods_MDCCatalogUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCCatalogUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB1A0ED4DB4091C5905AE474 /* Pods-MDCEarlGreyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCEarlGreyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests.release.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
@@ -173,6 +188,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66FB8AB920915C27002459A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E98AE03A84BE589EA9C268C /* Pods_MDCCatalogUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +245,7 @@
 				664524B51C6BA62A001ADBF8 /* MDCCatalog */,
 				64307B391DF74FEF004AE4AC /* MDCActionExtension */,
 				36683DBF1EF3212B002EF2E6 /* MDCEarlGreyTests */,
+				66FB8ABD20915C27002459A2 /* MDCCatalogUITests */,
 				664524B41C6BA62A001ADBF8 /* Products */,
 				E165A9868676B4998575E09A /* Pods */,
 				C18E275F798D7A4D3C533DF1 /* Frameworks */,
@@ -235,6 +259,7 @@
 				E94681B7591B9CD40924C92C /* EarlGrey.framework */,
 				64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */,
 				36683DBE1EF3212B002EF2E6 /* MDCEarlGreyTests.xctest */,
+				66FB8ABC20915C27002459A2 /* MDCCatalogUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -272,6 +297,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		66FB8ABD20915C27002459A2 /* MDCCatalogUITests */ = {
+			isa = PBXGroup;
+			children = (
+				66FB8ABE20915C27002459A2 /* MDCCatalogUITests.swift */,
+				66FB8AC020915C27002459A2 /* Info.plist */,
+			);
+			path = MDCCatalogUITests;
+			sourceTree = "<group>";
+		};
 		C18E275F798D7A4D3C533DF1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +313,7 @@
 				88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */,
 				0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */,
 				93314CA227FB65FEC87098C3 /* EarlGrey.framework */,
+				96ED41AC794E26DEC51AA222 /* Pods_MDCCatalogUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -292,6 +327,8 @@
 				1259AD212C335B693CDA9EEA /* Pods-MDCActionExtension.release.xcconfig */,
 				34BE42412FB69BDDF92EA27E /* Pods-MDCEarlGreyTests.debug.xcconfig */,
 				BB1A0ED4DB4091C5905AE474 /* Pods-MDCEarlGreyTests.release.xcconfig */,
+				3FF4879E6718A22F87415B27 /* Pods-MDCCatalogUITests.debug.xcconfig */,
+				7B089D6AFB3863922D1230F0 /* Pods-MDCCatalogUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -359,13 +396,33 @@
 			productReference = 664524B31C6BA62A001ADBF8 /* MDCCatalog.app */;
 			productType = "com.apple.product-type.application";
 		};
+		66FB8ABB20915C27002459A2 /* MDCCatalogUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66FB8AC520915C27002459A2 /* Build configuration list for PBXNativeTarget "MDCCatalogUITests" */;
+			buildPhases = (
+				2A4D9C47C046B4C338E14393 /* [CP] Check Pods Manifest.lock */,
+				66FB8AB820915C27002459A2 /* Sources */,
+				66FB8AB920915C27002459A2 /* Frameworks */,
+				66FB8ABA20915C27002459A2 /* Resources */,
+				157674071970984790E87713 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				66FB8AC220915C27002459A2 /* PBXTargetDependency */,
+			);
+			name = MDCCatalogUITests;
+			productName = MDCCatalogUITests;
+			productReference = 66FB8ABC20915C27002459A2 /* MDCCatalogUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		664524AB1C6BA62A001ADBF8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Google;
 				TargetAttributes = {
@@ -386,6 +443,11 @@
 						DevelopmentTeam = EQHXZ8M8AV;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
+					};
+					66FB8ABB20915C27002459A2 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 664524B21C6BA62A001ADBF8;
 					};
 				};
 			};
@@ -438,6 +500,7 @@
 				664524B21C6BA62A001ADBF8 /* MDCCatalog */,
 				64307B371DF74FEF004AE4AC /* MDCActionExtension */,
 				36683DBD1EF3212B002EF2E6 /* MDCEarlGreyTests */,
+				66FB8ABB20915C27002459A2 /* MDCCatalogUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -472,9 +535,54 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		66FB8ABA20915C27002459A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		157674071970984790E87713 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MDCCatalogUITests/Pods-MDCCatalogUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CatalogByConvention/CatalogByConvention.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSSnapshotTestCase/FBSnapshotTestCase.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CatalogByConvention.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCCatalogUITests/Pods-MDCCatalogUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2A4D9C47C046B4C338E14393 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MDCCatalogUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		560A1413D58190AAFD66FEB1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -631,6 +739,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		66FB8AB820915C27002459A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66FB8ABF20915C27002459A2 /* MDCCatalogUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -643,6 +759,11 @@
 			isa = PBXTargetDependency;
 			target = 64307B371DF74FEF004AE4AC /* MDCActionExtension */;
 			targetProxy = 64307B411DF74FEF004AE4AC /* PBXContainerItemProxy */;
+		};
+		66FB8AC220915C27002459A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 664524B21C6BA62A001ADBF8 /* MDCCatalog */;
+			targetProxy = 66FB8AC120915C27002459A2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -927,6 +1048,55 @@
 			};
 			name = Release;
 		};
+		66FB8AC320915C27002459A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3FF4879E6718A22F87415B27 /* Pods-MDCCatalogUITests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MDCCatalogUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalogUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
+			};
+			name = Debug;
+		};
+		66FB8AC420915C27002459A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B089D6AFB3863922D1230F0 /* Pods-MDCCatalogUITests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MDCCatalogUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalogUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -962,6 +1132,15 @@
 			buildConfigurations = (
 				664524C61C6BA62A001ADBF8 /* Debug */,
 				664524C71C6BA62A001ADBF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		66FB8AC520915C27002459A2 /* Build configuration list for PBXNativeTarget "MDCCatalogUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66FB8AC320915C27002459A2 /* Debug */,
+				66FB8AC420915C27002459A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
