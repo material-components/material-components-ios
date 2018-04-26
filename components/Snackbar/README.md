@@ -89,7 +89,7 @@ import MaterialComponents.MaterialSnackbar
 
 You can theme a snackbar with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
 
-You must first add the Themer extension to your project:
+You must first add the themer extensions to your project:
 
 ``` bash
 pod 'MaterialComponents/Snackbar+Extensions/ColorThemer'
