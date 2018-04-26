@@ -363,7 +363,7 @@ You can theme a Flexible Header with your app's color scheme using the ColorThem
 You must first add the ColorThemer extension to your project:
 
 ``` bash
-pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
+pod 'MaterialComponents/FlexibleHeader+Extensions/ColorThemer'
 ```
 
 You can then make use of the theming APIs:
