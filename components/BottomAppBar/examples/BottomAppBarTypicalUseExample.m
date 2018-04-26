@@ -45,9 +45,9 @@
   [self.bottomBarView.floatingButton setImage:addImage forState:UIControlStateNormal];
 
   // Theme the floating button.
-  MDCBasicColorScheme *colorScheme =
-      [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor whiteColor]];
-  [MDCButtonColorThemer applyColorScheme:colorScheme toButton:self.bottomBarView.floatingButton];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme
+                                toFloatingButton:self.bottomBarView.floatingButton];
 
   // Configure the navigation buttons to be shown on the bottom app bar.
   UIBarButtonItem *barButtonLeadingItem =
