@@ -37,8 +37,7 @@
  This method is deprecated. Consider using applySemanticColorScheme:colorScheme.
 
  @param colorScheme The color scheme to apply to MDCSnackbarMessageView.
- @param snackbarMessageView A MDCSnackbarMessageView instance to apply a color scheme. Use a
- UIAppearance proxy to apply a color scheme to all instances of MDCSnackbarMessageView.
+ @param snackbarMessageView A MDCSnackbarMessageView instance to apply a color scheme.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView

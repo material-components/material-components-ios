@@ -45,8 +45,7 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCAppBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCAppBar.
+ Applies a color scheme to theme a MDCAppBar.
 
  This method will soon be deprecated. Consider using +applySemanticColorScheme:toAppBar: instead.
 

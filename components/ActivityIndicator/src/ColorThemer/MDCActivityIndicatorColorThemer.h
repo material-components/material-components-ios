@@ -37,8 +37,7 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCActivityIndicator. Use a UIAppearance proxy to apply a color
- scheme to all instances of MDCActivityIndicator.
+ Applies a color scheme to theme a MDCActivityIndicator.
 
  This method will soon be deprecated. Consider using +applySemanticColorScheme:toActivityIndicator:
  instead.
