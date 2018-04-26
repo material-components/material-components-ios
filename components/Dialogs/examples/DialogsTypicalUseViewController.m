@@ -16,6 +16,7 @@
 
 #import "MaterialDialogs.h"
 #import "supplemental/DialogsTypicalUseSupplemental.h"
+#import "supplemental/DialogWithPreferredContentSizeViewController.h"
 
 @interface DialogsTypicalUseViewController ()
 
@@ -86,11 +87,12 @@
       [UIStoryboard storyboardWithName:@"DialogWithPreferredContentSize" bundle:bundle];
   NSString *identifier = @"DialogID";
 
-  UIViewController *viewController =
+  DialogWithPreferredContentSizeViewController *viewController =
       [storyboard instantiateViewControllerWithIdentifier:identifier];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
-
+  viewController.colorScheme = self.colorScheme;
+  viewController.typographyScheme = self.typographyScheme;
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
