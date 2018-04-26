@@ -144,15 +144,15 @@ import MaterialComponents.MaterialTabs_TypographyThemer
 ```
 <!--</div>-->
 
-MDCTabBarColorThemer allows you to theme an app bar with your app's color scheme. 
+MDCTabBarColorThemer allows you to theme a tab bar with your app's color scheme. 
 
-MDCTabBarTypographyThemer allows you to theme an app bar with your app's typography scheme. 
+MDCTabBarTypographyThemer allows you to theme a tab bar with your app's typography scheme. 
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let colorScheme: MDCSemanticColorScheme()
-let typographyScheme: MDCTypographyScheme()
+let colorScheme = MDCSemanticColorScheme()
+let typographyScheme = MDCTypographyScheme()
 
 let tabBar = MDCTabBar()
 
@@ -160,7 +160,8 @@ let tabBar = MDCTabBar()
 MDCTabBarColorThemer.apply(colorScheme, toTabs: tabBar)
 
 // Or Surface Variant
-MDCTabBarColorThemer.apply(colorScheme, toTabs: tabBar)
+MDCTabBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, toTabs: tabBar)
+  
 
 MDCTabBarTypographyThemer.apply(typographyScheme, to: tabBar)
 ```
