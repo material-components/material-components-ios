@@ -77,6 +77,8 @@ import MaterialComponents.MaterialActivityIndicator
 indicators express an unspecified wait time, while determinate indicators represent the length of a
 process. Activity indicators are indeterminate by default.
 
+## Usage
+
 ### Typical use: Indeterminate
 
 MDCActivityIndicator instances are indeterminate by default.
