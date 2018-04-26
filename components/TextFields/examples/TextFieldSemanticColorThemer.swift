@@ -72,12 +72,10 @@ final class TextFieldSemanticColorThemer: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(textfieldStandard)
-    textfieldStandard.delegate = self
     textfieldStandard.text = "Grace Hopper"
     standardController.placeholderText = "Standard"
 
     scrollView.addSubview(textfieldAlternative)
-    textfieldAlternative.delegate = self
     textfieldAlternative.text = ""
     alternativeController.placeholderText = "Alternative"
 
@@ -139,19 +137,19 @@ final class TextFieldSemanticColorThemer: UIViewController {
     }
     #else
     constraints += [NSLayoutConstraint(item: textfieldStandard,
-    attribute: .top,
-    relatedBy: .equal,
-    toItem: scrollView,
-    attribute: .top,
-    multiplier: 1,
-    constant: 20),
-    NSLayoutConstraint(item: textfieldAlternative,
-    attribute: .bottom,
-    relatedBy: .equal,
-    toItem: scrollView,
-    attribute: .bottomMargin,
-    multiplier: 1,
-    constant: -20)]
+                                       attribute: .top,
+                                       relatedBy: .equal,
+                                       toItem: scrollView,
+                                       attribute: .top,
+                                       multiplier: 1,
+                                       constant: 20),
+                    NSLayoutConstraint(item: textfieldAlternative,
+                                       attribute: .bottom,
+                                       relatedBy: .equal,
+                                       toItem: scrollView,
+                                       attribute: .bottomMargin,
+                                       multiplier: 1,
+                                       constant: -20)]
     #endif
 
     NSLayoutConstraint.activate(constraints)
@@ -161,11 +159,10 @@ final class TextFieldSemanticColorThemer: UIViewController {
     view.addSubview(scrollView)
     scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
-      withVisualFormat: "V:|[scrollView]|",
-      options: [],
-      metrics: nil,
-      views: ["scrollView": scrollView]))
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|",
+                                                               options: [],
+                                                               metrics: nil,
+                                                               views: ["scrollView": scrollView]))
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
                                                                options: [],
                                                                metrics: nil,
@@ -189,28 +186,6 @@ final class TextFieldSemanticColorThemer: UIViewController {
     self.view.endEditing(true)
   }
 
-}
-
-extension TextFieldSemanticColorThemer: UITextFieldDelegate {
-  func textField(_ textField: UITextField,
-                 shouldChangeCharactersIn range: NSRange,
-                 replacementString string: String) -> Bool {
-    guard let _ = textField.text else {
-      return true
-    }
-
-    return true
-  }
-
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    return false
-  }
-}
-
-extension TextFieldSemanticColorThemer: UITextViewDelegate {
-  func textViewDidEndEditing(_ textView: UITextView) {
-    print(textView.text)
-  }
 }
 
 // MARK: - Keyboard Handling
@@ -246,7 +221,7 @@ extension TextFieldSemanticColorThemer {
   }
 
   @objc func keyboardWillHide(notif: Notification) {
-    scrollView.contentInset = UIEdgeInsets()
+    scrollView.contentInset = UIEdgeInsets.zero
   }
 }
 
@@ -256,4 +231,9 @@ extension TextFieldSemanticColorThemer {
   @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Theming Text Fields"]
   }
+
+  @objc class func catalogIsDebug() -> Bool {
+    return true
+  }
+
 }
