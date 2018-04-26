@@ -59,11 +59,6 @@
   // Recommended step: Set the tracking scroll view.
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
 
-  // Choice: If you do not need to implement any delegate methods and you are not using a
-  //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarDelegateForwardingExample.
-  self.tableView.delegate = self.appBar.headerViewController;
-
   // Step 3: Register the App Bar views.
   [self.appBar addSubviewsToParent];
 
@@ -93,6 +88,38 @@
   [super viewWillAppear:animated];
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                          targetContentOffset:targetContentOffset];
+  }
 }
 
 @end
