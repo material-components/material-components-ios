@@ -43,16 +43,19 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualWithAccuracy(button.minimumSize.height, 36, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.backgroundColor, [UIColor clearColor]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
-  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal], colorScheme.primaryColor);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal],
+                        colorScheme.primaryColor);
   XCTAssertEqualWithAccuracy(button.layer.cornerRadius, 4, kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateNormal], 0, kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateHighlighted], 0,
                              kEpsilonAccuracy);
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
   XCTAssertEqualObjects(button.inkColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f]);
-  XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled], [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
-  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled], [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.primaryColor colorWithAlphaComponent:0.16f]);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled],
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
 }
 
 - (void)testContainedButtonThemer {
