@@ -123,6 +123,52 @@ import MaterialComponents.MaterialCards
 ```
 <!--</div>-->
 
+### How to theme a card
+
+You must first add the Color Themer extension to your project:
+
+``` bash
+pod 'MaterialComponents/Cards+Extensions/ColorThemer'
+```
+
+You can then import the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+import MaterialComponents.MaterialCards_ColorThemer
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialCards+ColorThemer.h"
+```
+<!--</div>-->
+
+MDCCardsColorThemer allows you to theme a card with your app's color
+scheme.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+let colorScheme: MDCSemanticColorScheme()
+
+let card = MDCCard()
+MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: card)
+```
+
+#### Objective-C
+
+``` objc
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+MDCCard *card = [[MDCCard alloc] init];
+[MDCCardsColorThemer applySemanticColorScheme:colorScheme
+                                       toCard:card];
+```
+<!--</div>-->
+
 ## Examples
 
 ### Use `MDCCard` as a base class for your custom card

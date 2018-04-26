@@ -178,7 +178,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     self.tableView.backgroundColor = UIColor.white
     self.tableView.separatorStyle = .none
 

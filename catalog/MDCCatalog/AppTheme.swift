@@ -57,7 +57,6 @@ final class AppTheme {
       )
     }
   }
-
   static let didChangeGlobalThemeNotificationName =
     Notification.Name("MDCCatalogDidChangeGlobalTheme")
   static let globalThemeNotificationColorSchemeKey = "colorScheme"
