@@ -101,10 +101,8 @@
 
   // Apply Theming
   if (_isStroked) {
-    [chipView setBorderWidth:1 forState:UIControlStateNormal];
     [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:chipView];
   } else {
-    [chipView setBorderWidth:0 forState:UIControlStateNormal];
     [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:chipView];
   }
 

@@ -84,6 +84,7 @@
                              forState:UIControlStateDisabled];
   [strokedChipView setBorderColor:[borderColor colorWithAlphaComponent:0.38f]
                          forState:UIControlStateDisabled];
+  [strokedChipView setBorderWidth:1 forState:UIControlStateNormal];
 }
 
 + (void)resetUIControlStatesForChipTheming:(nonnull MDCChipView *)chipView {
@@ -93,6 +94,7 @@
     [chipView setBackgroundColor:nil forState:state];
     [chipView setTitleColor:nil forState:state];
     [chipView setBorderColor:nil forState:state];
+    [chipView setBorderWidth:0 forState:state];
   }
 }
 
