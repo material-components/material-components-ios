@@ -249,3 +249,55 @@ recommendation for building interactive background views is the following:
    [Usage](../FlexibleHeader/#usage) docs.
 3. Add your views to this flexible header instance.
 4. Create a Navigation Bar if you need one. Treat it like any other custom view.
+
+### How to theme
+
+You must first add the Color and Typography Themer extension to your project:
+
+``` bash
+pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
+pod 'MaterialComponents/AppBar+Extensions/TypographyThemer'
+```
+
+You can then import the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
+```
+<!--</div>-->
+
+MDCAppBarColorThemer allows you to theme an app bar with your app's color scheme. 
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+let colorScheme: MDCSemanticColorScheme()
+let typographyScheme: MDCTypographyScheme()
+
+let appBar = MDCAppBar()
+MDCAppBarColorThemer.apply(colorScheme, to: appBar)
+MDCAppBarTypographyThemer.apply(typographyScheme, to: appBar)
+```
+
+#### Objective-C
+
+``` objc
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+MDCAppBar *appBar = [[MDCAppBar alloc] init];
+[MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:appBar];
+[MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:appBar];
+
+```
+<!--</div>-->
