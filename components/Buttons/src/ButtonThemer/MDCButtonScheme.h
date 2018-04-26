@@ -24,10 +24,10 @@
 @protocol MDCButtonScheming
 
 /** The color scheme to apply to buttons. */
-@property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
+@property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
 
 /** The typography scheme to apply to buttons. */
-@property(nonnull, readonly, nonatomic) id <MDCTypographyScheming> typographyScheme;
+@property(nonnull, readonly, nonatomic) id<MDCTypographyScheming> typographyScheme;
 
 /** The corner radius to be applied to buttons. */
 @property(readonly, nonatomic) CGFloat cornerRadius;
