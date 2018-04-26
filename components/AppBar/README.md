@@ -250,9 +250,11 @@ recommendation for building interactive background views is the following:
 3. Add your views to this flexible header instance.
 4. Create a Navigation Bar if you need one. Treat it like any other custom view.
 
-### How to theme
+### Theming
 
-You must first add the Color and Typography Themer extension to your project:
+You can theme an AppBar with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
+
+You must first add the Themer extensions to your project:
 
 ``` bash
 pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
@@ -277,6 +279,7 @@ import MaterialComponents.MaterialAppBar_TypographyThemer
 <!--</div>-->
 
 MDCAppBarColorThemer allows you to theme an app bar with your app's color scheme. 
+
 MDCAppBarTypographyThemer allows you to theme an app bar with your app's typography scheme. 
 
 <!--<div class="material-code-render" markdown="1">-->
