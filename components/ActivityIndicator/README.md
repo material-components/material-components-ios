@@ -11,8 +11,10 @@ api_doc_root: true
 # Activity Indicators
 
 Material Design progress indicators display the length of a process or express an unspecified wait
-time. There are two styles of progress indicators in Material Design: linear and circular. Circular
-progress indicators are implemented on iOS as Activity Indicators.
+time. There are two styles of progress indicators: linear and circular.
+
+This component only provides the circular implementation. See [Progress View](../ProgressView) for
+the linear implementation.
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/activityindicator.gif" alt="An animation showing a determinate and indeterminate activity indicator." width="115">
