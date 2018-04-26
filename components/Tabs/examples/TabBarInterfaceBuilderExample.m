@@ -19,7 +19,7 @@
 #import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialTabs.h"
-#import "MDCTabBarColorThemer.h"
+#import "MaterialTabs+ColorThemer.h"
 
 @interface TabBarInterfaceBuilderExample : UIViewController <MDCTabBarDelegate>
 

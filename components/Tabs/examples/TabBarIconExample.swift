@@ -19,8 +19,8 @@ import UIKit
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTabs
+import MaterialComponents.MaterialTabs_ColorThemer
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MDCTabBarColorThemer
 
 class TabBarIconSwiftExample: UIViewController {
 
