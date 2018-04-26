@@ -87,7 +87,7 @@ import MaterialComponents.MaterialSnackbar
 
 ### Theming
 
-You can theme a snackbar with your app's color scheme using the ColorThemer and typographyThemer extensions.
+You can theme a snackbar with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
 
 You must first add the Themer extension to your project:
 
