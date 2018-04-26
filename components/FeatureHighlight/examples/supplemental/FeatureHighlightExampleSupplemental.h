@@ -17,10 +17,14 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialCollections.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface FeatureHighlightTypicalUseViewController : UIViewController
 @property(nonatomic) UILabel *infoLabel;
 @property(nonatomic) UIButton *button;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 - (void)didTapButton:(id)sender;
 @end

@@ -21,15 +21,14 @@
 #import "MaterialAppBar.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
-#import "MDCBottomNavigationBarColorThemer.h"
-#import "MDCBottomNavigationBarTypographyThemer.h"
+#import "MaterialBottomNavigation+ColorThemer.h"
+#import "MaterialBottomNavigation+TypographyThemer.h"
 
 @interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
 
 @property(nonatomic, assign) int badgeCount;
 @property(nonatomic, strong) MDCAppBar *appBar;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
-
 @end
 
 @implementation BottomNavigationTypicalUseExample
@@ -50,12 +49,6 @@
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   _bottomNavBar.delegate = self;
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
-                                          toBottomNavigationBar:_bottomNavBar];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
-                                           toBottomNavigation:_bottomNavBar];
   [self.view addSubview:_bottomNavBar];
 
   UITabBarItem *tabBarItem1 =
@@ -104,7 +97,13 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   [self.appBar addSubviewsToParent];
+
+  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toBottomNavigationBar:_bottomNavBar];
+  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+                                           toBottomNavigation:_bottomNavBar];
 }
 
 - (void)viewWillLayoutSubviews {

@@ -14,7 +14,7 @@
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
-#import "MDCNavigationBarColorThemer.h"
+#import "MaterialNavigationBar+ColorThemer.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
@@ -28,6 +28,7 @@
 @property(nonatomic, strong) MDCTextField *titleField;
 @property(nonatomic, weak) UIBarButtonItem *trailingBarButtonItem;
 @property(nonatomic, weak) UIBarButtonItem *leadingBarButtonItem;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 @implementation NavigationBarLayoutExample
@@ -43,8 +44,7 @@
   [self.navigationBar observeNavigationItem:self.navigationItem];
   [self.view addSubview:self.navigationBar];
 
-  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme
+  [MDCNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
                                         toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *leadingButtonItem =

@@ -18,12 +18,12 @@ import Foundation
 import MaterialComponents
 
 class ButtonBarTypicalUseSwiftExample: UIViewController {
+  var colorScheme = MDCSemanticColorScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     let buttonBar = MDCButtonBar()
-
     // MDCButtonBar ignores the style of UIBarButtonItem.
     let ignored: UIBarButtonItemStyle = .done
 
@@ -43,8 +43,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
     buttonBar.items = [actionItem, secondActionItem]
 
-    let scheme = MDCSemanticColorScheme(defaults: .material201804)
-    MDCButtonBarColorThemer.applySemanticColorScheme(scheme, to: buttonBar)
+    MDCButtonBarColorThemer.applySemanticColorScheme(colorScheme, to: buttonBar)
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
     let size = buttonBar.sizeThatFits(self.view.bounds.size)
@@ -83,10 +82,6 @@ extension ButtonBarTypicalUseSwiftExample {
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
     return false
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
   }
 }
 

@@ -4,6 +4,13 @@ load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 
+DEFAULT_IOS_RUNNER_TARGETS = [
+    "//components/testing/runners:IPHONE_5_IN_8_1",
+    "//components/testing/runners:IPAD_PRO_12_9_IN_9_3",
+    "//components/testing/runners:IPHONE_7_PLUS_IN_10_3",
+    "//components/testing/runners:DYNAMIC_RUNNER",
+]
+
 def mdc_objc_library(
     name,
     copts = [],
@@ -49,40 +56,6 @@ def mdc_public_objc_library(
       enable_modules = 1,
       **kwargs)
 
-def ios_runners():
-  ios_test_runner(
-    name = "IPHONE_5_IN_8_1",
-    device_type = "iPhone 5",
-    os_version = "8.1",
-  )
-  ios_test_runner(
-    name = "IPAD_PRO_12_9_IN_9_3",
-    device_type = "iPad Pro (12.9-inch)",
-    os_version = "9.3",
-  )
-  ios_test_runner(
-    name = "IPHONE_7_PLUS_IN_10_3",
-    device_type = "iPhone 7 Plus",
-    os_version = "10.3",
-  )
-  ios_test_runner(
-    name = "DYNAMIC_RUNNER",
-    device_type = select({ ":xcode8_3_3": "iPad 2", ":xcode_9_0": "iPhone2017-C", "//conditions:default": "iPhone X" }),
-    os_version = select({ ":xcode8_3_3": "8.4", "//conditions:default": "11.0" }), 
-  )
-
-  native.config_setting(
-      name = "xcode8_3_3",
-      values = {"xcode_version": "8.3.3"},
-  )
-
-  native.config_setting(
-      name = "xcode_9_0",
-      values = {"xcode_version": "9.0"},
-  )
-
-  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":DYNAMIC_RUNNER"]
-
 def mdc_unit_test_suite(
     name = "unit_tests",
     deps = [],
@@ -95,7 +68,7 @@ def mdc_unit_test_suite(
     name = name,
     deps = deps,
     minimum_os_version = minimum_os_version,
-    runners = ios_runners(),
+    runners = DEFAULT_IOS_RUNNER_TARGETS,
     visibility = visibility,
     size = size,
     **kwargs

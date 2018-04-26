@@ -18,7 +18,7 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
-#import "MDCSliderColorThemer.h"
+#import "MaterialSlider+ColorThemer.h"
 
 @interface SliderAutolayoutExampleViewController ()
 @property(weak, nonatomic) IBOutlet MDCSlider *materialSlider;
@@ -41,8 +41,7 @@
   
   self.materialSlider.statefulAPIEnabled = YES;
   
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCSliderColorThemer applySemanticColorScheme:scheme toSlider:self.materialSlider];
+  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:self.materialSlider];
 }
 
 - (IBAction)materialSliderDidChange:(id)sender {

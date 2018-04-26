@@ -17,6 +17,8 @@
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  Themes @c MDCChipView objects to set their color properties to the appropriate color trait given a
  color scheme.

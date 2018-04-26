@@ -16,13 +16,14 @@ limitations under the License.
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MDCAppBarColorThemer
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 // This example builds upon AppBarTypicalUseExample.
 
 class AppBarDelegateForwardingExample: UITableViewController {
 
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   convenience init() {
     self.init(style: .plain)
@@ -30,10 +31,6 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
-
-    let colorScheme = MDCSemanticColorScheme()
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-
     self.addChildViewController(appBar.headerViewController)
 
     self.title = "Delegate Forwarding"
@@ -42,6 +39,8 @@ class AppBarDelegateForwardingExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    
     // UITableViewController's tableView.delegate is self by default. We're setting it here for
     // emphasis.
     self.tableView.delegate = self
@@ -120,10 +119,6 @@ extension AppBarDelegateForwardingExample {
   }
 
   func catalogShouldHideNavigation() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
     return true
   }
 }

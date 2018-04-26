@@ -34,12 +34,10 @@ class TabBarIconSwiftExample: UIViewController {
   }
 
   lazy var alignmentButton: MDCRaisedButton = self.setupAlignmentButton()
-
   lazy var appBar: MDCAppBar = self.setupAppBar()
-
   lazy var scrollView: UIScrollView = self.setupScrollView()
-
   lazy var starPage: UIView = self.setupStarPage()
+  var colorScheme = MDCSemanticColorScheme()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -54,8 +52,7 @@ class TabBarIconSwiftExample: UIViewController {
                     UITabBarItem(title: "Stars", image: star, tag:0)]
     tabBar.items[1].badgeValue = "1"
 
-    let scheme = MDCSemanticColorScheme()
-    MDCTabBarColorThemer.applySemanticColorScheme(scheme, toTabs: tabBar);
+    MDCTabBarColorThemer.applySemanticColorScheme(self.colorScheme, toTabs: tabBar);
 
     let blue = MDCPalette.blue.tint500
     tabBar.inkColor = blue

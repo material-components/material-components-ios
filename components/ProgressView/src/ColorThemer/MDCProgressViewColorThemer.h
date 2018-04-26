@@ -17,6 +17,8 @@
 #import "MaterialThemes.h"
 #import "MaterialProgressView.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  Used to apply a color scheme to theme MDCProgressView.
  */

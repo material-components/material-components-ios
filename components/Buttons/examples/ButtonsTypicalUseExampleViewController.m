@@ -14,13 +14,12 @@
  limitations under the License.
  */
 
-#import "MDCButtonColorThemer.h"
-#import "MDCButtonTypographyThemer.h"
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+TypographyThemer.h"
 #import "MaterialTypography.h"
 #import "MDCTextButtonThemer.h"
-#import "MDCFloatingButtonColorThemer.h"
-#import "MDCContainedButtonThemer.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
@@ -45,9 +44,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-
   self.view.backgroundColor = [UIColor whiteColor];
   UIColor *titleColor = [UIColor whiteColor];
 
@@ -101,8 +97,8 @@
 
   MDCButton *strokedButton = [self buildCustomStrokedButton];
   [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:strokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:strokedButton];
+  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme toButton:strokedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:strokedButton];
   [strokedButton sizeToFit];
   [strokedButton addTarget:self
                     action:@selector(didTap:)
@@ -113,8 +109,10 @@
 
   MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
   [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:disabledStrokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:disabledStrokedButton];
+  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toButton:disabledStrokedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
+                                        toButton:disabledStrokedButton];
   [disabledStrokedButton sizeToFit];
   [disabledStrokedButton addTarget:self
                             action:@selector(didTap:)
@@ -134,9 +132,8 @@
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingButtonColorThemer applySemanticColorScheme:colorScheme toButton:self.floatingButton];
-  [self.floatingButton setImageTintColor:colorScheme.onSecondaryColor
-                                forState:UIControlStateNormal];
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
+                                                toButton:self.floatingButton];
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
