@@ -374,9 +374,10 @@ You can then make use of the theming APIs:
 ``` swift
 import MaterialComponents.MaterialFlexibleHeader_ColorThemer
 
+// Define your color scheme
 let colorScheme = MDCSemanticColorScheme()
 
-let headerViewController: MDCFlexibleHeaderViewController
+// Apply the color scheme to a flexible header
 MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                       to: headerViewController.headerView)
 ```
@@ -386,9 +387,10 @@ MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
 ``` objc
 #import "MaterialFlexibleHeader+ColorThemer.h"
 
+// Define your color scheme
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
-MDCFlexibleHeaderViewController *headerViewController;
+// Apply the color scheme to a flexible header
 [MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme
                                   toFlexibleHeaderView:headerViewController.headerView];
 ```
