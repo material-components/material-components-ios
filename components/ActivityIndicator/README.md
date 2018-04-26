@@ -10,8 +10,10 @@ api_doc_root: true
 
 # Activity Indicators
 
-<div class="article__asset article__asset--screenshot" style="align:center">
-  <img src="docs/assets/activityindicator.gif" alt="Activity Indicator" width="127">
+<div class="article__asset article__asset--screenshot">
+  <p align="center">
+    <img src="docs/assets/activityindicator.gif" alt="Activity Indicator" width="127">
+  </p>
 </div>
 
 Material Design progress indicators display the length of a process or express an unspecified wait
