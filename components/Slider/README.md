@@ -113,7 +113,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 
 ### Theming
 
-You can theme an Slider with your app's color scheme using the ColorThemer extension.
+You can theme a Slider with your app's color scheme using the ColorThemer extension.
 
 You must first add the color themer extension to your project:
 
