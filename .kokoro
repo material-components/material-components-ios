@@ -171,8 +171,10 @@ run_cocoapods() {
     elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-snapshot" ]; then
       cd catalog
       pod install
-      xcodebuild test -workspace  -scheme $scheme -destination "platform=iOS Simulator,name=iPhone 7,OS=latest"
-      pod lib lint MaterialComponents.podspec
+      xcodebuild test \
+        -workspace MDCCatalog.xcworkspace \
+        -scheme MDCCatalogSnapshotTests \
+          -destination "platform=iOS Simulator,name=iPhone 7,OS=latest"
     fi
   done
 

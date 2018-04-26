@@ -25,8 +25,11 @@ class MDCCatalogUITests: FBSnapshotTestCase {
   override func setUp() {
     super.setUp()
 
+    self.isDeviceAgnostic = true
+    self.agnosticOptions = [.device, .OS, .screenSize]
+
     // Uncomment me to record tests.
-    //self.recordMode = true
+    self.recordMode = true
   }
 
   func testRoot() {
