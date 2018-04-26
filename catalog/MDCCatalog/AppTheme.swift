@@ -16,6 +16,7 @@
 
 import Foundation
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialTypographyScheme
 
 final class AppTheme {
   let colorScheme: MDCColorScheming
