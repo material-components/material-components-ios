@@ -285,8 +285,8 @@ MDCAppBarTypographyThemer allows you to theme an app bar with your app's typogra
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let colorScheme: MDCSemanticColorScheme()
-let typographyScheme: MDCTypographyScheme()
+let colorScheme = MDCSemanticColorScheme()
+let typographyScheme = MDCTypographyScheme()
 
 let appBar = MDCAppBar()
 MDCAppBarColorThemer.apply(colorScheme, to: appBar)
