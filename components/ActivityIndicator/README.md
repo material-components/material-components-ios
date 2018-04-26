@@ -90,10 +90,10 @@ let activityIndicator = MDCActivityIndicator()
 activityIndicator.sizeToFit()
 view.addSubview(activityIndicator)
 
-// Start animation
+// To make the activity indicator appear:
 activityIndicator.startAnimating()
 
-// Stop animation
+// To make the activity indicator disappear:
 activityIndicator.stopAnimating()
 ```
 
@@ -104,10 +104,10 @@ MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
 [activityIndicator sizeToFit];
 [view addSubview:activityIndicator];
 
-// Start animation
+// To make the activity indicator appear:
 [activityIndicator startAnimating];
 
-// Stop animation
+// To make the activity indicator disappear:
 [activityIndicator stopAnimating];
 ```
 <!--</div>-->
@@ -131,10 +131,10 @@ activityIndicator.indicatorMode = .determinate
 activityIndicator.progress = 0.5
 view.addSubview(activityIndicator)
 
-// Show the indicator
+// To make the activity indicator appear:
 activityIndicator.startAnimating()
 
-// Hide the indicator
+// To make the activity indicator disappear:
 activityIndicator.stopAnimating()
 ```
 
@@ -147,15 +147,17 @@ activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
 activityIndicator.progress = 0.5;
 [view addSubview:activityIndicator];
 
-// Show the indicator
+// To make the activity indicator appear:
 [activityIndicator startAnimating];
 
-// Hide the indicator
+// To make the activity indicator disappear:
 [activityIndicator stopAnimating];
 ```
 <!--</div>-->
 
-### How to theme an activity indicator
+### Theming
+
+You can theme an activity indicator with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
@@ -187,7 +189,7 @@ scheme.
 let colorScheme: MDCSemanticColorScheme()
 
 let activityIndicator = MDCActivityIndicator()
-MDCActivityIndicatorColorThemer.apply(colorScheme, to: activityIndicator)
+MDCActivityIndicatorColorThemer.applySemanticColorScheme(colorScheme, to: activityIndicator)
 ```
 
 #### Objective-C
@@ -201,7 +203,7 @@ MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
 ```
 <!--</div>-->
 
-### How to set multiple indeterminate colors
+### Showing multiple indeterminate colors
 
 Indeterminate activity indicators support showing multiple colors via the `cycleColors` API.
 Consider using this property if your brand consists of more than one primary color.
@@ -217,9 +219,9 @@ activityIndicator.cycleColors = [.blue, .red, .green, .yellow]
 
 ``` objc
 MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
-activityIndicator.cycleColors =  @[ [UIColor blueColor],
-                                    [UIColor redColor],
-                                    [UIColor greenColor],
-                                    [UIColor yellowColor] ];
+activityIndicator.cycleColors =  @[ UIColor.blueColor,
+                                    UIColor.redColor,
+                                    UIColor.greenColor,
+                                    UIColor.yellowColor ];
 ```
 <!--</div>-->
