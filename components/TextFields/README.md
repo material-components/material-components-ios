@@ -142,9 +142,11 @@ import MaterialComponents.MaterialTextFields
 ```
 <!--</div>-->
 
-### How to theme
+### Theming
 
-You must first add the Color and Typography Themer extension to your project:
+You can theme textFields components with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
+
+You must first add the Themer extensions to your project:
 
 ``` bash
 pod 'MaterialComponents/TextFields+Extensions/ColorThemer'
@@ -169,6 +171,7 @@ import MaterialComponents.MaterialTextFields_FontThemer
 <!--</div>-->
 
 MDCTextFieldColorThemer allows you to theme a TextInput or an InputController with your app's color scheme. 
+
 MDCTextFieldTypographyThemer allows you to theme a TextInput or an InputController with your app's typography scheme.
 
 <!--<div class="material-code-render" markdown="1">-->
