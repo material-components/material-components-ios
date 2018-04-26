@@ -47,11 +47,6 @@ pod 'MaterialComponents/ActivityIndicator'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
-pod 'MaterialComponents/ActivityIndicator+Extensions'
-```
-
 Then, run the following command:
 
 ``` bash
@@ -160,6 +155,27 @@ activityIndicator.progress = 0.5;
 <!--</div>-->
 
 ### How to theme an activity indicator
+
+You must first add the Color Themer extension to your project:
+
+``` bash
+pod 'MaterialComponents/ActivityIndicator+Extensions/ColorThemer'
+```
+
+You can then import the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+import MaterialComponents.MaterialActivityIndicator_ColorThemer
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialActivityIndicator+ColorThemer.h"
+```
+<!--</div>-->
 
 MDCActivityIndicatorColorThemer allows you to theme an activity indicator with your app's color
 scheme. This themer will apply your color scheme's primary color to the activity indicator.
