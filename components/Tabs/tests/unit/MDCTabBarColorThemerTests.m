@@ -18,7 +18,7 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
-#import "MDCTabBarColorThemer.h"
+#import "MaterialTabs+ColorThemer.h"
 
 @interface MDCTabBarTestColorScheme : NSObject <MDCColorScheme>
 
