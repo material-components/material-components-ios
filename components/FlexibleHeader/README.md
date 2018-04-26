@@ -358,7 +358,7 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 
 ### Theming
 
-You can theme a Flexible Header with your app's color scheme using the ColorThemer and extension.
+You can theme a Flexible Header with your app's color scheme using the ColorThemer extension.
 
 You must first add the ColorThemer extensions to your project:
 
