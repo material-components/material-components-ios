@@ -23,7 +23,7 @@ target "MDCUnitTests" do
   use_frameworks!
 end
 
-target "MDCCatalogUITests" do
+target "MDCCatalogSnapshotTests" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
 
