@@ -116,9 +116,11 @@ navigation bar. The bar will automatically update with the appropriate styling.
 
 - - -
 
-### How to theme
+### Theming
 
-You must first add the Color and Typography Themer extension to your project:
+You can theme a TabBar with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
+
+You must first add the Themer extensions to your project:
 
 ``` bash
 pod 'MaterialComponents/Tabs+Extensions/ColorThemer'
