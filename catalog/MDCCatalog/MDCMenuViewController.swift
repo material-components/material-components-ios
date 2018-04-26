@@ -52,7 +52,23 @@ class MDCMenuViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    self.dismiss(animated: true, completion: nil)
+    tableView.deselectRow(at: indexPath, animated: true)
+    guard let navController = self.presentingViewController as? UINavigationController else {
+      return
+    }
+    if (indexPath.item == 1) {
+      self.dismiss(animated: true, completion: {
+        let themeViewController = MDCThemePickerViewController()
+        let presentingViewController =
+          UINavigationController.embedExampleWithinAppBarContainer(using: themeViewController,
+                                                                   currentBounds: self.view.bounds,
+                                                                   named: "Themes")
+        navController.pushViewController(presentingViewController, animated: true)
+      })
+    } else {
+      self.dismiss(animated: true, completion: nil)
+    }
+
   }
 
 }
