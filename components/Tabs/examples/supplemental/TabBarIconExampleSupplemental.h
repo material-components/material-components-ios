@@ -25,11 +25,10 @@
 #import "MaterialTabs.h"
 #import "MaterialTypographyScheme.h"
 
-
 @interface TabBarIconExample : UIViewController <MDCTabBarDelegate>
 
 @property(nonatomic, nullable) MDCTabBar * tabBar;
-@property(nonatomic, nullable) MDCRaisedButton * alignmentButton;
+@property(nonatomic, nullable) MDCButton * alignmentButton;
 @property(nonatomic, nullable) MDCAppBar * appBar;
 @property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, nullable) MDCTypographyScheme *typographyScheme;

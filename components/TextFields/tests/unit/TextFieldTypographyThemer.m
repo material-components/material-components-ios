@@ -18,7 +18,7 @@
 
 #import "MaterialTextFields.h"
 #import "MaterialThemes.h"
-#import "MDCTextFieldTypographyThemer.h"
+#import "MaterialTextFields+TypographyThemer.h"
 
 @interface MDCTextFieldTypographyThemer (ResetDefaults)
 

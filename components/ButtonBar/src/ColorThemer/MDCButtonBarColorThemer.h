@@ -34,8 +34,7 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButtonBar.
+ Applies a color scheme to theme a MDCButtonBar.
 
  This method will soon be deprecated. Consider using +applySemanticColorScheme:toButtonBar: instead.
 

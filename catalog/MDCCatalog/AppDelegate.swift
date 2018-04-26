@@ -17,6 +17,7 @@ limitations under the License.
 import UIKit
 
 import CatalogByConvention
+import MaterialComponents.MDCBottomSheetController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -51,5 +52,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension UINavigationController: UIGestureRecognizerDelegate {
   public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
     return viewControllers.count > 1
+  }
+}
+
+extension UINavigationController {
+  func presentMenu() {
+    let menuViewController = MDCMenuViewController(style: .plain)
+    let bottomSheet = MDCBottomSheetController(contentViewController: menuViewController)
+    self.present(bottomSheet, animated: true, completion: nil)
+  }
+
+  func setMenuBarButton(for viewController: UIViewController) {
+    let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
+    viewController.navigationItem.rightBarButtonItem =
+      UIBarButtonItem(image: dotsImage,
+                      style: .plain,
+                      target: self,
+                      action: #selector(self.presentMenu))
   }
 }

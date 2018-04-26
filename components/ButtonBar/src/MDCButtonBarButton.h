@@ -18,9 +18,6 @@
 
 /**
  The MDCButtonBarButton class is used by MDCButtonBar.
-
- This is publically declared to inform clients they can use the UIAppearance proxy to customize the
- appearance of button bar buttons.
  */
 @interface MDCButtonBarButton : MDCFlatButton
 

@@ -55,6 +55,9 @@
 
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
+
+  // Need to update the status bar style after applying the theme.
+  [self setNeedsStatusBarAppearanceUpdate];
   
   // Recommended step: Set the tracking scroll view.
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
