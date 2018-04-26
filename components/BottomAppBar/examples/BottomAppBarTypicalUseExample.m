@@ -46,7 +46,6 @@
 
   // Theme the floating button.
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  colorScheme.secondaryColor = [UIColor whiteColor];
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme
                                 toFloatingButton:self.bottomBarView.floatingButton];
 
