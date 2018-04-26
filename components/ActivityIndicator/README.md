@@ -11,7 +11,7 @@ api_doc_root: true
 # Activity Indicators
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/activityindicator.gif" alt="An animation showing a determinate and indeterminate activity indicator." width="284">
+  <img src="docs/assets/activityindicator.gif" alt="An animation showing a determinate and indeterminate activity indicator." width="115">
 </div>
 
 Material Design progress indicators display the length of a process or express an unspecified wait
