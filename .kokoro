@@ -168,6 +168,11 @@ run_cocoapods() {
       fi
     elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
       pod lib lint MaterialComponents.podspec
+    elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-snapshot" ]; then
+      cd catalog
+      pod install
+      xcodebuild test -workspace  -scheme $scheme -destination "platform=iOS Simulator,name=iPhone 7,OS=latest"
+      pod lib lint MaterialComponents.podspec
     fi
   done
 
@@ -225,6 +230,7 @@ case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
   "cocoapods")  run_cocoapods ;;
   "cocoapods-podspec")  run_cocoapods ;;
+  "cocoapods-snapshot") run_cocoapods ;;
 
   *)            run_bazel ;;
 esac
