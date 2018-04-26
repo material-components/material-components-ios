@@ -41,7 +41,6 @@ class ActivityIndicatorSwiftController: UIViewController {
       activityIndicator1.indicatorMode = .determinate
       activityIndicator1.sizeToFit()
       activityIndicator1.startAnimating()
-    MDCActivityIndicatorColorThemer.apply(<#T##colorScheme: MDCColorScheme##MDCColorScheme#>, to: <#T##MDCActivityIndicator#>)
 
       // Initialize indeterminate indicator
       let frame2: CGRect = CGRect(x: width - 16, y: height - 16, width: 32, height: 32)
