@@ -68,7 +68,7 @@
   // Indeterminate activity indicator with custom colors.
   self.activityIndicator3 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator3.delegate = self;
-  self.activityIndicator3.cycleColors =  @[ [UIColor redColor],
+  self.activityIndicator3.cycleColors =  @[ [MDCPalette bluePalette].tint500,
                                             [MDCPalette redPalette].tint500,
                                             [MDCPalette greenPalette].tint500,
                                             [MDCPalette yellowPalette].tint500 ];
