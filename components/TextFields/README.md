@@ -170,15 +170,15 @@ import MaterialComponents.MaterialTextFields_FontThemer
 ```
 <!--</div>-->
 
-MDCTextFieldColorThemer allows you to theme a TextInput or an InputController with your app's color scheme. 
+MDCTextFieldColorThemer allows you to theme an MDCTextInput or an MDCInputController with your app's color scheme. 
 
-MDCTextFieldTypographyThemer allows you to theme a TextInput or an InputController with your app's typography scheme.
+MDCTextFieldTypographyThemer allows you to theme an MDCTextInput or an MDCInputController with your app's typography scheme.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let colorScheme: MDCSemanticColorScheme()
-let typographyScheme: MDCTypographyScheme()
+let colorScheme = MDCSemanticColorScheme()
+let typographyScheme = MDCTypographyScheme()
 
 // Applying theme to a text input
 let textField = MDCTextField()
