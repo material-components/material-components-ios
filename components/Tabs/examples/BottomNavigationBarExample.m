@@ -19,6 +19,7 @@
 #import "MDCTabBarColorThemer.h"
 
 @interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation BottomNavigationBarExample {
@@ -32,9 +33,7 @@
   _bottomNavigationBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
   _bottomNavigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   _bottomNavigationBar.delegate = self;
-
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:_bottomNavigationBar];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:_bottomNavigationBar];
   
   _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5f blue:0 alpha:0.15f];
 

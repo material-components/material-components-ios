@@ -21,6 +21,7 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -28,9 +29,6 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     self.title = "Modal Presentation (Swift)"
 
     self.addChildViewController(appBar.headerViewController)
-
-    let colorScheme = MDCSemanticColorScheme()
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
     self.modalPresentationStyle = .formSheet
     self.modalTransitionStyle = .coverVertical
   }
@@ -41,6 +39,8 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
     self.tableView.delegate = appBar.headerViewController
@@ -94,6 +94,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 class AppBarModalPresentationSwiftExample: UITableViewController {
 
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -101,9 +102,6 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     self.title = "Modal Presentation (Swift)"
 
     self.addChildViewController(appBar.headerViewController)
-
-    let colorScheme = MDCSemanticColorScheme()
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -112,6 +110,8 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
     self.tableView.delegate = appBar.headerViewController

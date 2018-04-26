@@ -46,8 +46,8 @@
       [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
   [mutator mutate:self.navBar];
 
-  id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme toNavigationBar:self.navBar];
+  [MDCNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+                                        toNavigationBar:self.navBar];
 
   [self.view addSubview:self.navBar];
 

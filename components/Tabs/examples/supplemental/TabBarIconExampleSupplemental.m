@@ -39,8 +39,7 @@
 
   [self setupAlignmentButton];
 
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCTabBarTypographyThemer applyTypographyScheme:typographyScheme toTabBar:self.tabBar];
+  [MDCTabBarTypographyThemer applyTypographyScheme:self.typographyScheme toTabBar:self.tabBar];
 }
 
 - (void)setupAlignmentButton {
@@ -293,7 +292,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
+  return @"Tabs organize content across different screens, data sets, and other interactions.";
 }
 
 - (BOOL)catalogShouldHideNavigation {

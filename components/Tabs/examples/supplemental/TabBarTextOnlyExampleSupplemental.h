@@ -21,11 +21,13 @@
 
 #import "MaterialAppBar.h"
 #import "MaterialCollections.h"
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
 
 @interface TabBarTextOnlyExample : MDCCollectionViewController
 
 @property(nonatomic, nullable) MDCAppBar *appBar;
+@property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, nullable) MDCTabBar *tabBar;
 @property(nonatomic, nullable) NSArray *choices;
 @end

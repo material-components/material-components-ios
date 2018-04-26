@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SliderAutolayoutExampleViewController : UIViewController
+#import "MaterialColorScheme.h"
 
+@interface SliderAutolayoutExampleViewController : UIViewController
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end

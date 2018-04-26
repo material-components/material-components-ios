@@ -68,8 +68,7 @@
                                     tag:0],
   ];
 
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCTabBarColorThemer applySemanticColorScheme:scheme toTabs:self.tabBar];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;

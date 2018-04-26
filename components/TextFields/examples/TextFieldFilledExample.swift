@@ -21,6 +21,8 @@ import MaterialComponents.MaterialTextFields
 final class TextFieldFilledSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -280,9 +282,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
   }
 
   func style(textInputController : MDCTextInputControllerFilled) {
-    let colorScheme = MDCSemanticColorScheme()
     MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
-    let typographyScheme = MDCTypographyScheme()
     MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
   }
   
