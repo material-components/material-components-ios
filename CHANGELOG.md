@@ -1,3 +1,225 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### schemes/Color
+
+#### Changes
+
+* [[ActivityIndicator] Add an umbrella header for the ColorThemer target. (#3455)](https://github.com/material-components/material-components-ios/commit/ecc5266537036cfd156dabc8d99a92dfde92dddb) (featherless)
+* [[BottomAppBar] Add umbrella headers for all extension targets. (#3459)](https://github.com/material-components/material-components-ios/commit/d6e1110e566d9a4661c0d26e65395b85729a957e) (featherless)
+* [[ButtonBar] Add umbrella headers for all extension targets. (#3462)](https://github.com/material-components/material-components-ios/commit/a448657a2360225dd69b9e835955b693da27e879) (featherless)
+* [[Buttons] Add umbrella headers for all extension targets. (#3454)](https://github.com/material-components/material-components-ios/commit/d4f727e16f2cfb90f84f94c305935278f629fd4d) (featherless)
+* [[Dialogs] Add umbrella headers for all extension targets. (#3465)](https://github.com/material-components/material-components-ios/commit/e3dd4c12cedf1494af6e8d5224b9acde91a18ce1) (featherless)
+* [[FeatureHighlight] Add umbrella headers for all extension targets. (#3466)](https://github.com/material-components/material-components-ios/commit/bb9324ecae5a407e71d6efd8a3f46c1e5495e6ff) (featherless)
+* [[FlexibleHeader] Add umbrella headers for all extension targets. (#3467)](https://github.com/material-components/material-components-ios/commit/7bbee66f9b4649c0df5c4ae936820494f1ba698d) (featherless)
+* [[HeaderStackView] Add umbrella headers for all extension targets. (#3468)](https://github.com/material-components/material-components-ios/commit/ce8efd3e27605057b49aea5515200b55b7576de9) (featherless)
+* [[NavigationBar] Add umbrella headers for all extension targets. (#3471)](https://github.com/material-components/material-components-ios/commit/e5679888fe81ccf96ccd51fa4d5fbb7bc6b95187) (featherless)
+* [[PageControl] Add umbrella headers for all extension targets. (#3472)](https://github.com/material-components/material-components-ios/commit/f8d8de3fb3c95fb2d459c59d322ce8aec1868f02) (featherless)
+* [[ProgressView] Add umbrella headers for all extension targets. (#3473)](https://github.com/material-components/material-components-ios/commit/d36136e361dfefdecdf14e30b5d8cdade5320887) (featherless)
+* [[Slider] Add umbrella headers for all extension targets. (#3474)](https://github.com/material-components/material-components-ios/commit/0cc6b487ae2154ea80f7ae35499ddd0d3cfcd102) (featherless)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3466)](https://github.com/material-components/material-components-ios/commit/bb9324ecae5a407e71d6efd8a3f46c1e5495e6ff) (featherless)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+
+### AppBar
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3458)](https://github.com/material-components/material-components-ios/commit/09c3a65e6ebbab6f37fc15a379d2293e82bf2b07) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+* [[FlexibleHeader] Add umbrella headers for all extension targets. (#3467)](https://github.com/material-components/material-components-ios/commit/7bbee66f9b4649c0df5c4ae936820494f1ba698d) (featherless)
+* [[NavigationBar] Add umbrella headers for all extension targets. (#3471)](https://github.com/material-components/material-components-ios/commit/e5679888fe81ccf96ccd51fa4d5fbb7bc6b95187) (featherless)
+
+### Ink
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3469)](https://github.com/material-components/material-components-ios/commit/962d9abcc02764acdd34b7118f957e4a95bffa8c) (featherless)
+
+### Buttons
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3454)](https://github.com/material-components/material-components-ios/commit/d4f727e16f2cfb90f84f94c305935278f629fd4d) (featherless)
+* [Added ImageTintColor for theming FAB Button. (#3442)](https://github.com/material-components/material-components-ios/commit/238b6d7b067a2f039d7b1b88e8260139dda9fa59) (Mohammad Cazi)
+* [Changing ButtonScheme Header to accept protocols instead of actual class. (#3488)](https://github.com/material-components/material-components-ios/commit/61df0f001711add45abe7559cbea7fe6b88803bb) (Mohammad Cazi)
+* [Replace MDCRaisedButton with contained button APIs in content edge insets example. (#3453)](https://github.com/material-components/material-components-ios/commit/7c6248ccc0604511b95d724c63900bc3ad653790) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Implement API for setting app-wide theming (#3461)](https://github.com/material-components/material-components-ios/commit/27eac8c05c00202dd18fa79ac01d88ad2d37b953) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### ButtonBar
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3462)](https://github.com/material-components/material-components-ios/commit/a448657a2360225dd69b9e835955b693da27e879) (featherless)
+* [Make left/right insets for image and text buttons consistent (#3397)](https://github.com/material-components/material-components-ios/commit/3c112ae350adb70695828ce896fdeff5a6d9a3d9) (Ali Rabbani)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### Chips
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3464)](https://github.com/material-components/material-components-ios/commit/819d321eed40e0d27728d98ee030794bc341d888) (featherless)
+* [Reset cell selection state to NO on prepare for reuse. (#3444)](https://github.com/material-components/material-components-ios/commit/847ebd5957369726fa226657a45fe408fc24485c) (Mohammad Cazi)
+* [Revert "Reset cell selection state to NO on prepare for reuse." (#3447)](https://github.com/material-components/material-components-ios/commit/93e688fbf0f359f5707e2282d47eb8f7d977868f) (Mohammad Cazi)
+* [We should not display ink when the chip is disabled. (#3445)](https://github.com/material-components/material-components-ios/commit/4acc0039f0549f866dc8661c1ecdff94de3e278d) (Mohammad Cazi)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[chips] Updating chips color Themer. (#3452)](https://github.com/material-components/material-components-ios/commit/9144699e2dee0d28a8f6b6ff724419aa3e7bd1d2) (Mohammad Cazi)
+* [color themer update. (#3448)](https://github.com/material-components/material-components-ios/commit/beac5b37de29ba6e4b545b942167a422c4eb4a0f) (Mohammad Cazi)
+
+### Snackbar
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3475)](https://github.com/material-components/material-components-ios/commit/330d9f608409ea26876d2d8a2880462fca9f17e0) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+
+### Cards
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3463)](https://github.com/material-components/material-components-ios/commit/a132eb2106149bd08c3fd0319e572b604ef99336) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### BottomAppBar
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3459)](https://github.com/material-components/material-components-ios/commit/d6e1110e566d9a4661c0d26e65395b85729a957e) (featherless)
+* [[Buttons] Add umbrella headers for all extension targets. (#3454)](https://github.com/material-components/material-components-ios/commit/d4f727e16f2cfb90f84f94c305935278f629fd4d) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### Slider
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3474)](https://github.com/material-components/material-components-ios/commit/0cc6b487ae2154ea80f7ae35499ddd0d3cfcd102) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3471)](https://github.com/material-components/material-components-ios/commit/e5679888fe81ccf96ccd51fa4d5fbb7bc6b95187) (featherless)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### ActivityIndicator
+
+#### Changes
+
+* [Add an umbrella header for the ColorThemer target. (#3455)](https://github.com/material-components/material-components-ios/commit/ecc5266537036cfd156dabc8d99a92dfde92dddb) (featherless)
+* [Replace collection view with table view in indicator example (#3451)](https://github.com/material-components/material-components-ios/commit/2cc61dfb14d36d950079242d86af4090920d1842) (John Detloff)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+* [remove line (#3479)](https://github.com/material-components/material-components-ios/commit/05994dfd7c00b5d807a1fa3a0e12e776dac69918) (Yarden Eitan)
+
+### BottomSheet
+
+#### Changes
+
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+
+### Dialogs
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3465)](https://github.com/material-components/material-components-ios/commit/e3dd4c12cedf1494af6e8d5224b9acde91a18ce1) (featherless)
+* [Remove unused DialogsTypicalUseViewController.storyboard. (#3496)](https://github.com/material-components/material-components-ios/commit/1da207b483ddb8d79f086af7c84b651317bf620e) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3460)](https://github.com/material-components/material-components-ios/commit/683d2f5e748d2acb1a80afc82bad60eadff512a7) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+* [[Catalog] Expose colorScheme + typographyScheme properties for all examples to use app wide theming (#3478)](https://github.com/material-components/material-components-ios/commit/7f7bc36202cb416eeb1e924ecde9430e3b467c1b) (Yarden Eitan)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3472)](https://github.com/material-components/material-components-ios/commit/f8d8de3fb3c95fb2d459c59d322ce8aec1868f02) (featherless)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### HeaderStackView
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3468)](https://github.com/material-components/material-components-ios/commit/ce8efd3e27605057b49aea5515200b55b7576de9) (featherless)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3467)](https://github.com/material-components/material-components-ios/commit/7bbee66f9b4649c0df5c4ae936820494f1ba698d) (featherless)
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Catalog] Make all swift copycat demos be dragons. (#3443)](https://github.com/material-components/material-components-ios/commit/23110ef1166f56b90f0410bd0d2de2e572261ee6) (featherless)
+
+### ProgressView
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3473)](https://github.com/material-components/material-components-ios/commit/d36136e361dfefdecdf14e30b5d8cdade5320887) (featherless)
+* [[Catalog] Component descriptions update. (#3490)](https://github.com/material-components/material-components-ios/commit/5ee14ab92ec45335f851e4c7d30f4b992ab786b1) (Mohammad Cazi)
+
+---
+
 # 54.11.1
 
 ## Component changes
