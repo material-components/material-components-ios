@@ -1,10 +1,28 @@
-# #develop#
+# 54.12.0
 
-## Breaking changes
+This release introduces umbrella headers for all themer targets. We encourage you to start using the
+new umbrella headers for all themer APIs.
 
-## New deprecations
+For example, Swift imports would change like so:
 
-## New features
+```swift
+// Before
+import MaterialComponents.MDCActivityIndicatorColorThemer
+// After
+import MaterialComponents.MaterialActivityIndicator_ColorThemer
+```
+
+While Objective-C imports would change like so:
+
+```objc
+// Before
+#import "MDCAppBarColorThemer.h"
+// After
+#import "MaterialAppBar+ColorThemer.h"
+```
+
+We are focused on polishing the Catalog with the new theming systems and updating our component
+documentation accordingly. Few new features, if any, will be added over the next few releases.
 
 ## API changes
 
