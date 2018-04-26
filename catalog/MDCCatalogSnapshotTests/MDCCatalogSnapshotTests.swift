@@ -29,7 +29,7 @@ class MDCCatalogSnapshotTests: FBSnapshotTestCase {
     self.agnosticOptions = [.device, .OS, .screenSize]
 
     // Uncomment me to record tests.
-    self.recordMode = true
+    //self.recordMode = true
   }
 
   func testRoot() {
