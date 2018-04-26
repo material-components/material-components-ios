@@ -21,6 +21,8 @@ import MaterialComponents.MaterialTextFields
 final class TextFieldOutlinedSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -289,9 +291,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
   }
 
   func style(textInputController : MDCTextInputController) {
-    let colorScheme = MDCSemanticColorScheme()
     MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
-    let typographyScheme = MDCTypographyScheme()
     MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
   }
 
@@ -416,9 +416,5 @@ extension TextFieldOutlinedSwiftExample {
 extension TextFieldOutlinedSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Outlined Fields & Text Areas"]
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
   }
 }

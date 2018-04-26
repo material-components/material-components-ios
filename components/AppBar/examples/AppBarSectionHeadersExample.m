@@ -23,6 +23,7 @@
 
 // Step 1: Create an App Bar.
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
@@ -36,9 +37,6 @@
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
-
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
   }
   return self;
 }
@@ -46,12 +44,14 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+
   // Recommended step: Set the tracking scroll view.
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
 
   // Choice: If you do not need to implement any delegate methods and you are not using a
   //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarDelegateForwardingExample.
+  // Alternative: See AppBarTypicalUseExample.
   self.tableView.delegate = self.appBar.headerViewController;
 
   // Step 3: Register the App Bar views.

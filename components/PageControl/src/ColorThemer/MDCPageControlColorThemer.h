@@ -17,14 +17,15 @@
 #import "MaterialThemes.h"
 #import "MaterialPageControl.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  Used to apply a color scheme to theme MDCSlider.
  */
 @interface MDCPageControlColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCPageControl. Use a UIAppearance proxy to apply a color scheme
- to all instances of MDCPageControl.
+ Applies a color scheme to theme a MDCPageControl.
 
  @param colorScheme The color scheme to apply to MDCPageControl.
  @param pageControl A MDCPageControl instance to apply a color scheme.

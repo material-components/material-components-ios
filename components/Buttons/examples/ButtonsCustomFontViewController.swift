@@ -17,6 +17,7 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 class ButtonsCustomFontViewController: UIViewController {
 
@@ -31,25 +32,27 @@ class ButtonsCustomFontViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white: 0.9, alpha:1.0)
-    let titleColor = UIColor.white
-    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
-    let customFont = UIFont(name:"Zapfino", size:14.0)
+    // Define our design data
+    let buttonScheme = MDCButtonScheme()
+    if let customFont = UIFont(name:"Zapfino", size:14.0) {
+      let typographyScheme = MDCTypographyScheme()
+      typographyScheme.button = customFont
+      buttonScheme.typographyScheme = typographyScheme
+    }
 
-    let flatButtonStatic = MDCRaisedButton()
-    flatButtonStatic.setTitleColor(titleColor, for: .normal)
-    flatButtonStatic.setTitleFont(customFont, for: .normal)
-    flatButtonStatic.setBackgroundColor(backgroundColor, for: .normal)
+    // Apply our design data using the Material themers
+    view.backgroundColor = buttonScheme.colorScheme.backgroundColor
+
+    let flatButtonStatic = MDCButton()
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: flatButtonStatic)
     flatButtonStatic.setTitle("Static", for: UIControlState())
     flatButtonStatic.sizeToFit()
     flatButtonStatic.translatesAutoresizingMaskIntoConstraints = false
     flatButtonStatic.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(flatButtonStatic)
 
-    let flatButtonDynamic = MDCRaisedButton()
-    flatButtonDynamic.setTitleColor(titleColor, for: .normal)
-    flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
-    flatButtonDynamic.setTitleFont(customFont, for: .normal)
+    let flatButtonDynamic = MDCButton()
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: flatButtonDynamic)
     flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
     flatButtonDynamic.sizeToFit()
     flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false

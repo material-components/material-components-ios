@@ -17,19 +17,16 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
-#import "MDCChipViewColorThemer.h"
+#import "MaterialChips+ColorThemer.h"
 
 @implementation ChipsActionExampleViewController {
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
-  MDCSemanticColorScheme *_colorScheme;
   BOOL _isStroked;
 }
 
 - (void)loadView {
   [super loadView];
-
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
@@ -105,10 +102,10 @@
   // Apply Theming
   if (_isStroked) {
     [chipView setBorderWidth:1 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toStrokedChipView:chipView];
+    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:chipView];
   } else {
     [chipView setBorderWidth:0 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:chipView];
+    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:chipView];
   }
 
   return cell;

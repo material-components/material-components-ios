@@ -17,10 +17,12 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
-#import "MDCButtonBarColorThemer.h"
-#import "MDCButtonBarTypographyThemer.h"
+#import "MaterialButtonBar+ColorThemer.h"
+#import "MaterialButtonBar+TypographyThemer.h"
 
 @interface ButtonBarCustomizedFontExample : UIViewController
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation ButtonBarCustomizedFontExample
@@ -30,12 +32,10 @@
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
 
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  typographyScheme.button = [UIFont fontWithName:@"American Typewriter" size:10.0f];
-  [MDCButtonBarTypographyThemer applyTypographyScheme:typographyScheme toButtonBar:buttonBar];
+  self.typographyScheme.button = [UIFont fontWithName:@"American Typewriter" size:10.0f];
+  [MDCButtonBarTypographyThemer applyTypographyScheme:self.typographyScheme toButtonBar:buttonBar];
 
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCButtonBarColorThemer applySemanticColorScheme:colorScheme toButtonBar:buttonBar];
+  [MDCButtonBarColorThemer applySemanticColorScheme:self.colorScheme toButtonBar:buttonBar];
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;

@@ -24,6 +24,8 @@
 
 // Step 1: Create an App Bar.
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 
@@ -43,11 +45,6 @@
 
     _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
 
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
-    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-    [MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:_appBar];
-
     _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
   }
   return self;
@@ -56,13 +53,14 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
+
+  // Need to update the status bar style after applying the theme.
+  [self setNeedsStatusBarAppearanceUpdate];
+  
   // Recommended step: Set the tracking scroll view.
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
-
-  // Choice: If you do not need to implement any delegate methods and you are not using a
-  //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarDelegateForwardingExample.
-  self.tableView.delegate = self.appBar.headerViewController;
 
   // Step 3: Register the App Bar views.
   [self.appBar addSubviewsToParent];
@@ -95,6 +93,38 @@
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                          targetContentOffset:targetContentOffset];
+  }
+}
+
 @end
 
 @implementation AppBarTypicalUseExample (CatalogByConvention)
@@ -104,8 +134,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The App Bar is a flexible navigation bar designed to provide a typical Material Design"
-          " navigation experience.";
+  return @"The top app bar displays information and actions relating to the current view.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

@@ -19,7 +19,9 @@ limitations under the License.
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialNavigationBar.h"
+#import "MaterialTypographyScheme.h"
 
 @class ExampleInstructionsViewNavigationBarTypicalUseExample;
 
@@ -27,6 +29,7 @@ limitations under the License.
 
 @property(nonatomic) ExampleInstructionsViewNavigationBarTypicalUseExample *_Nullable exampleView;
 @property(nonatomic) MDCNavigationBar *_Nullable navBar;
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
 
 @end
 
@@ -43,6 +46,8 @@ limitations under the License.
 @end
 
 @interface NavigationBarIconsExample : UIViewController
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @end
 
 

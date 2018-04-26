@@ -45,8 +45,7 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCTabBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCTabBar.
+ Applies a color scheme to theme a MDCTabBar.
 
  @param colorScheme The color scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme. 

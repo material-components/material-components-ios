@@ -20,6 +20,7 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialPalettes.h"
 #import "MDCTabBarTypographyThemer.h"
 
@@ -39,12 +40,17 @@
 
   [self setupAlignmentButton];
 
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCTabBarTypographyThemer applyTypographyScheme:typographyScheme toTabBar:self.tabBar];
+  [MDCTabBarTypographyThemer applyTypographyScheme:self.typographyScheme toTabBar:self.tabBar];
 }
 
 - (void)setupAlignmentButton {
-  self.alignmentButton = [[MDCRaisedButton alloc] init];
+  self.alignmentButton = [[MDCButton alloc] init];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.alignmentButton];
+
   [self.view addSubview:self.alignmentButton];
 
   self.alignmentButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -66,8 +72,6 @@
       .active = YES;
 
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [self.alignmentButton setBackgroundColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [self.alignmentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.alignmentButton addTarget:self
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -293,7 +297,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
+  return @"Tabs organize content across different screens, data sets, and other interactions.";
 }
 
 - (BOOL)catalogShouldHideNavigation {

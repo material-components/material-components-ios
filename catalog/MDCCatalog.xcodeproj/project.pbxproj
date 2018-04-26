@@ -14,6 +14,7 @@
 		36C870B81E8AD6A20032EA7D /* RobotoMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */; };
 		404564F21E007C5E004C9D0A /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */; };
 		4097C8B59D0DD1F00845D250 /* Pods_MDCActionExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */; };
+		5CBA08372090E4DF009EA9D0 /* MDCMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBA08362090E4DF009EA9D0 /* MDCMenuViewController.swift */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
 		64307B3C1DF74FEF004AE4AC /* MDCActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64307B3B1DF74FEF004AE4AC /* MDCActionViewController.m */; };
 		64307B3F1DF74FEF004AE4AC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64307B3D1DF74FEF004AE4AC /* MainInterface.storyboard */; };
@@ -89,6 +90,7 @@
 		36683DC91EF3262F002EF2E6 /* MDCEarlGreyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCEarlGreyTests.swift; sourceTree = "<group>"; };
 		36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Medium.ttf"; sourceTree = "<group>"; };
 		404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		5CBA08362090E4DF009EA9D0 /* MDCMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCMenuViewController.swift; sourceTree = "<group>"; };
 		5D090E351C9AEB8C0061344A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E361C9AEB8C0061344A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E371C9AEB8C0061344A /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				64F6D8821F915CA600AA4B24 /* MDCDebugSafeAreaInsetsView.swift */,
 				664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */,
 				66D3389420730A3E00FFA1AB /* MDCThemePickerViewController.swift */,
+				5CBA08362090E4DF009EA9D0 /* MDCMenuViewController.swift */,
 				665A34DE1C6BDAE700962055 /* Resources */,
 			);
 			path = MDCCatalog;
@@ -624,6 +627,7 @@
 				66CD19292072A54000DE6340 /* AppTheme.swift in Sources */,
 				664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */,
 				64F6D8811F91522A00AA4B24 /* MDCCatalogDebugAlert.swift in Sources */,
+				5CBA08372090E4DF009EA9D0 /* MDCMenuViewController.swift in Sources */,
 				64F6D8831F915CA600AA4B24 /* MDCDebugSafeAreaInsetsView.swift in Sources */,
 				66D3389520730A3E00FFA1AB /* MDCThemePickerViewController.swift in Sources */,
 				664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */,

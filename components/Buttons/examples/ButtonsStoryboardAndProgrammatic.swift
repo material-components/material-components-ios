@@ -21,14 +21,11 @@ import MaterialComponents.MaterialButtons
 
 class ButtonsSwiftAndStoryboardController: UIViewController {
 
-  let raisedButton = MDCRaisedButton()
+  let containedButton = MDCButton()
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()
 
-  // UIAppearance colors will overwrite values set in storyboards. In order to see the values set in
-  // ButtonsStoryboardAndProgrammatic.storyboard comment out the MDCButtonColorThemer.apply(...)
-  // call in AppDelegate.swift.
-  @IBOutlet weak var storyboardRaised: MDCRaisedButton!
+  @IBOutlet weak var storyboardContained: MDCButton!
   @IBOutlet weak var storyboardFlat: MDCFlatButton!
   @IBOutlet weak var storyboardFloating: MDCFloatingButton!
 
@@ -135,16 +132,17 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   }
 
   private func buttonSetup() {
-    let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
-    raisedButton.setTitle("Programmatic", for: .normal)
-    raisedButton.setTitleColor(titleColor, for: .normal)
-    raisedButton.backgroundColor = backgroundColor
-    raisedButton.sizeToFit()
-    raisedButton.translatesAutoresizingMaskIntoConstraints = false
-    raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    innerContainerView.addSubview(raisedButton)
+    let buttonScheme = MDCButtonScheme()
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: containedButton)
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: storyboardContained)
+
+    containedButton.setTitle("Programmatic", for: .normal)
+    containedButton.sizeToFit()
+    containedButton.translatesAutoresizingMaskIntoConstraints = false
+    containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    innerContainerView.addSubview(containedButton)
 
     flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Programmatic", for: .normal)
@@ -161,13 +159,13 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
   private func addButtonConstraints() {
     let views = [
-      "raised": raisedButton,
+      "raised": containedButton,
       "flat": flatButton,
       "floating": floatingButton
     ]
 
     view.addConstraint(NSLayoutConstraint(
-      item: raisedButton,
+      item: containedButton,
       attribute: .leading,
       relatedBy: .equal,
       toItem: innerContainerView,
@@ -176,7 +174,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       constant: 0))
 
     view.addConstraint(NSLayoutConstraint(
-      item: raisedButton,
+      item: containedButton,
       attribute: .trailing,
       relatedBy: .equal,
       toItem: innerContainerView,
@@ -185,7 +183,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       constant: 0))
 
     view.addConstraint(NSLayoutConstraint(
-      item: raisedButton,
+      item: containedButton,
       attribute: .top,
       relatedBy: .equal,
       toItem: innerContainerView,

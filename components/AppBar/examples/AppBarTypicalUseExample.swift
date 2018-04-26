@@ -23,6 +23,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
   // Step 1: Create and initialize an App Bar.
   let appBar = MDCAppBar()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -31,12 +33,6 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
-
-    let colorScheme = MDCSemanticColorScheme()
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-
-    let typographyScheme = MDCTypographyScheme()
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -46,15 +42,13 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)
+    
     // Recommended step: Set the tracking scroll view.
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
-    // Choice: If you do not need to implement any delegate methods and you are not using a
-    //         collection view, you can use the headerViewController as the delegate.
-    // Alternative: See AppBarDelegateForwardingExample.
-    self.tableView.delegate = appBar.headerViewController
-
-    // Step 3: Register the App Bar views.
+    // Step 2: Register the App Bar views.
     appBar.addSubviewsToParent()
 
     self.tableView.layoutMargins = UIEdgeInsets.zero
@@ -81,6 +75,33 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
+
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
+    }
+  }
+
+  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+    }
+  }
+
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    let headerView = appBar.headerViewController.headerView
+    if scrollView == headerView.trackingScrollView {
+      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let headerView = appBar.headerViewController.headerView
+    if scrollView == headerView.trackingScrollView {
+      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
+  }
+
 }
 
 // MARK: Catalog by convention
@@ -94,10 +115,6 @@ extension AppBarTypicalUseSwiftExample {
   }
 
   func catalogShouldHideNavigation() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
     return true
   }
 }

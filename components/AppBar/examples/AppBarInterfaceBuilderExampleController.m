@@ -23,6 +23,7 @@
 
 @property(nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
@@ -49,16 +50,18 @@
 - (void)commonAppBarInterfaceBuilderExampleSetup {
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
-
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  
   self.appBar.headerViewController.headerView.trackingScrollView = self.scrollView;
 
+  // Choice: If you do not need to implement any delegate methods and you are not using a
+  //         collection view, you can use the headerViewController as the delegate.
+  // Alternative: See AppBarTypicalUseExample.
   self.scrollView.delegate = self.appBar.headerViewController;
 
   [self.appBar addSubviewsToParent];

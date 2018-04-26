@@ -21,6 +21,7 @@
 
 @interface AppBarImageryExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation AppBarImageryExample
@@ -48,8 +49,7 @@
   // The header view does not clip to bounds by default so we ensure that the image is clipped.
   imageView.clipsToBounds = YES;
 
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 
   // Make sure navigation bar background color is clear so the image view is visible.
   self.appBar.navigationBar.backgroundColor = [UIColor clearColor];
@@ -59,6 +59,10 @@
 
   // Typical use
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+
+  // Choice: If you do not need to implement any delegate methods and you are not using a
+  //         collection view, you can use the headerViewController as the delegate.
+  // Alternative: See AppBarTypicalUseExample.
   self.tableView.delegate = self.appBar.headerViewController;
 
   [self.appBar addSubviewsToParent];

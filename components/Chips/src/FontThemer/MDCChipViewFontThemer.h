@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
+#import "MaterialChips.h"
+#import "MaterialTypographyScheme.h"
 
-@class MDCChipView;
-@protocol MDCFontScheme;
+#import <Foundation/Foundation.h>
 
 /**
  Themes @c MDCChipView objects to set their text font to the appropriate font trait given a font
@@ -26,7 +26,7 @@
 @interface MDCChipViewFontThemer : NSObject
 
 /**
- Applies the provided font scheme to the given Chip or its UIAppearance proxy.
+ Applies the provided font scheme to the given Chip.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
              toChipView:(nonnull MDCChipView *)chipView;

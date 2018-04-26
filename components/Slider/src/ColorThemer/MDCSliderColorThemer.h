@@ -17,6 +17,8 @@
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  Used to apply a color scheme to theme MDCSlider.
  */
@@ -34,8 +36,7 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCSlider. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCSlider.
+ Applies a color scheme to theme a MDCSlider.
 
  This method will soon be deprecated. Consider using +applySemanticColorScheme:toSlider: instead.
 
