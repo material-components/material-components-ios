@@ -29,7 +29,7 @@ import MaterialComponents.MaterialButtons_TypographyThemer
 let typographyScheme = MDCTypographyScheme()
 
 // Step 3: Apply the typography scheme to your component
-<#typography_themer_api#>.applyTypographyScheme(typographyScheme, to: component)
+MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
 ```
 
 #### Objective-C
@@ -42,7 +42,7 @@ let typographyScheme = MDCTypographyScheme()
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
-[<#typography_themer_api#> applyTypographyScheme:colorScheme
+[MDCButtonTypographyThemer applyTypographyScheme:colorScheme
      toButton:component];
 ```
 <!--</div>-->

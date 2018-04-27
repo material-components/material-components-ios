@@ -29,7 +29,7 @@ import MaterialComponents.MaterialSnackbar_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-MDCSnackbarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+MDCSnackbarColorThemer.applySemanticColorScheme(colorScheme)
 ```
 
 #### Objective-C
@@ -42,7 +42,6 @@ MDCSnackbarColorThemer.applySemanticColorScheme(colorScheme, to: component)
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
-[MDCSnackbarColorThemer applySemanticColorScheme:colorScheme
-     to<#themer_parameter_name#>:component];
+[MDCSnackbarColorThemer applySemanticColorScheme:colorScheme];
 ```
 <!--</div>-->

@@ -34,6 +34,15 @@ For more information on text field styles, and animated images of each style in 
   </li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
+- - -
+
 ## Installation
 
 ### Requirements

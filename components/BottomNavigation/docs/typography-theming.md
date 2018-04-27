@@ -43,6 +43,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
 [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:colorScheme
-     to<#themer_parameter_name#>:component];
+     toBottomNavigationBar:component];
 ```
 <!--</div>-->

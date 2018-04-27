@@ -43,6 +43,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
 [MDCTabBarTypographyThemer applyTypographyScheme:colorScheme
-     to<#themer_parameter_name#>:component];
+     toTabBar:component];
 ```
 <!--</div>-->

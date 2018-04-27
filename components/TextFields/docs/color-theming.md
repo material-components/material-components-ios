@@ -29,7 +29,8 @@ import MaterialComponents.MaterialTextFields_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: component)
+// Each text field style has a different themer API. Please look at the APIs
+// in the extension for more details.
 ```
 
 #### Objective-C
@@ -42,7 +43,7 @@ MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: component)
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
-[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
-     to<#themer_parameter_name#>:component];
+// Each text field style has a different themer API. Please look at the APIs
+// in the extension for more details.
 ```
 <!--</div>-->

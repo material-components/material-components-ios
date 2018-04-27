@@ -29,7 +29,7 @@ import MaterialComponents.MaterialSnackbar_TypographyThemer
 let typographyScheme = MDCTypographyScheme()
 
 // Step 3: Apply the typography scheme to your component
-MDCSnackbarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+MDCSnackbarTypographyThemer.applyTypographyScheme(typographyScheme)
 ```
 
 #### Objective-C
@@ -42,7 +42,6 @@ MDCSnackbarTypographyThemer.applyTypographyScheme(typographyScheme, to: componen
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
-[MDCSnackbarTypographyThemer applyTypographyScheme:colorScheme
-     to<#themer_parameter_name#>:component];
+[MDCSnackbarTypographyThemer applyTypographyScheme:colorScheme];
 ```
 <!--</div>-->

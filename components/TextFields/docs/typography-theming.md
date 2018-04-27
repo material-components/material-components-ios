@@ -29,7 +29,8 @@ import MaterialComponents.MaterialTextFields_TypographyThemer
 let typographyScheme = MDCTypographyScheme()
 
 // Step 3: Apply the typography scheme to your component
-MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+// Each text field style has a different themer API. Please look at the APIs
+// in the extension for more details.
 ```
 
 #### Objective-C
@@ -42,7 +43,7 @@ MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: compone
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
-[MDCTextFieldTypographyThemer applyTypographyScheme:colorScheme
-     to<#themer_parameter_name#>:component];
+// Each text field style has a different themer API. Please look at the APIs
+// in the extension for more details.
 ```
 <!--</div>-->
