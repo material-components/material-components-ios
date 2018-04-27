@@ -78,6 +78,63 @@ import MaterialComponents.MaterialBottomNavigation
 ```
 <!--</div>-->
 
+### Theming
+
+You can theme a bottom navigation bar with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
+
+You must first add the themer extensions to your project:
+
+``` bash
+pod 'MaterialComponents/BottomNavigation+Extensions/ColorThemer'
+pod 'MaterialComponents/BottomNavigation+Extensions/TypographyThemer'
+```
+
+You can then import the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponents.MaterialBottomNavigation_TypographyThemer
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialBottomNavigation+ColorThemer.h"
+#import "MaterialBottomNavigation+TypographyThemer.h"
+```
+<!--</div>-->
+
+MDCBottomNavigationBarColorThemer allows you to theme a bottom navigation bar with your app's color scheme.
+
+MDCBottomNavigationBarTypographyThemer allows you to theme a bottom navigation bar with your app's typography scheme.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+let colorScheme = MDCSemanticColorScheme()
+let typographyScheme = MDCTypographycheme()
+
+let bottomNavBar = MDCBottomNavigationBar()
+MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: bottomNavBar)
+MDCBottomNavigationBarTypographyThemer.applyTypography(typographyScheme, to: bottomNavBar)
+```
+
+#### Objective-C
+
+``` objc
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+MDCBottomNavigationBar *bottomNavBar = [[MDCBottomNavigationBar alloc] init];
+[MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
+                                         toBottomNavigation:bottomNavBar];
+[MDCBottomNavigationBarTypographyThemer applyTypography:typographyScheme
+                                     toBottomNavigation:bottomNavBar];
+```
+<!--</div>-->
+
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
