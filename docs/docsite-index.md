@@ -65,8 +65,6 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     ```
     <!--{: .code-renderer.code-renderer--install }-->
 
-    If you are using Swift, you may want to add `use_frameworks!` to your Podfile.
-
     Then run the command:
 
     ``` bash
