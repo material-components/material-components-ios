@@ -985,7 +985,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 #pragma mark Accessibility
 
-- (void)testAccessibilityValue {
+- (void)disabled_testAccessibilityValue {
   // Given
   CGFloat newValue = [self randomPercent];
 
