@@ -267,7 +267,7 @@ Pod::Spec.new do |mdc|
     component.subspec "CardThemer" do |extension|
       extension.ios.deployment_target = '8.0'
       extension.public_header_files = "components/Cards/src/#{extension.base_name}/*.h"
-      extension.source_files = "components/Cards/src/#{extension.base_name}/*.{h,m}", "components/Slider/src/#{extension.base_name}/private/*.{h,m}"
+      extension.source_files = "components/Cards/src/#{extension.base_name}/*.{h,m}"
       extension.dependency "MaterialComponents/Cards"
       extension.dependency "MaterialComponents/Cards+Extensions/ColorThemer"
     end
