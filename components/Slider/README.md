@@ -111,6 +111,32 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 ```
 <!--</div>-->
 
+### Stateful API
+
+`MDCSlider` exposes stateful API to customize the colors for different `UIControlState`. In order to enable this API `statefulAPIEnabled` property of `MDCSlider` should be set to true.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+``` swift
+ let slider = MDCSlider()
+ slider.isStatefulAPIEnabled = true
+    
+ // Setting a thumb color for selected state.
+ slider.setThumbColor(.red, for: .selected)
+```
+
+#### Objective C
+
+``` objc
+ MDCSlider *slider = [[MDCSlider alloc] init];
+ slider.statefulAPIEnabled = YES;
+ 
+ // Setting a thumb color for selected state.
+ [slider setThumbColor:[UIColor redColor] forState:UIControlStateSelected];
+```
+<!--</div>-->
+
 ### Theming
 
 You can theme a Slider with your app's color scheme using the ColorThemer extension.
