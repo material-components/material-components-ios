@@ -11,12 +11,12 @@ Material Theming is a consistent way to apply a uniform design across your app w
 
 Material Theming on iOS consists of two primary patterns: schemes and themers.
 
-*Schemes* store your design in a semantic manner that is well understood by MDC components.
+**Schemes** represent your design as systemized symbols.
 
-*Themers* are the glue that bind scheme values to components.
+**Themers** are the glue that apply scheme symbols to components.
 
-For example, the Typography Scheme type represents the Material typographic font hierarchy. There is
-also a Color Scheme which represents the Material color system's symbols.
+For example, `MDCTypographyScheme` represents the Material typography system symbols, and `MDCSemanticColorScheme` represents the Material color system symbols. `MDCAppBarColorThemer` is
+a themer that applies a color scheme to an app bar.
 
 ## Sensible defaults, yet highly configurable
 
