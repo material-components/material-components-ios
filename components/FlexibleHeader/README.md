@@ -28,6 +28,12 @@ UIScrollViewDelegate events.
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">API: MDCFlexibleHeaderViewLayoutDelegate</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation
@@ -353,55 +359,6 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return _headerViewController;
 }
-```
-<!--</div>-->
-
-### Theming
-
-You can theme a Flexible Header with your app's color scheme using the ColorThemer extension.
-
-You must first add the Themer extensions to your project:
-
-``` bash
-pod 'MaterialComponents/FlexibleHeader+Extensions/ColorThemer'
-```
-
-You can then import the theming APIs:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-import MaterialComponents.MaterialFlexibleHeader_ColorThemer
-```
-
-#### Objective-C
-
-``` objc
-#import "MaterialFlexibleHeader+ColorThemer.h"
-```
-<!--</div>-->
-
-MDCFlexibleHeaderColorThemer allows you to theme a flexible header with your app's color scheme. 
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-let colorScheme = MDCSemanticColorScheme()
-
-let headerViewController: MDCFlexibleHeaderViewController
-MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
-                                                      to: headerViewController.headerView)
-```
-
-#### Objective-C
-
-``` objc
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-
-MDCFlexibleHeaderViewController *headerViewController;
-[MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme
-                                  toFlexibleHeaderView:headerViewController.headerView];
-
 ```
 <!--</div>-->
 

@@ -18,6 +18,13 @@ Chips represent complex entities, such as a contact, in small blocks.
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/chips.html">Material Design guidelines: Chips</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation

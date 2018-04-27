@@ -23,6 +23,13 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/button-bars/api-docs/Protocols/MDCButtonBarDelegate.html">API: MDCButtonBarDelegate</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation
@@ -35,11 +42,6 @@ To add this component to your Xcode project using CocoaPods, add the following t
 pod 'MaterialComponents/ButtonBar'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
-
-To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
-pod 'MaterialComponents/ButtonBar+Extensions'
-```
 
 Then, run the following command:
 

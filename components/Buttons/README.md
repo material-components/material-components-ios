@@ -26,6 +26,14 @@ floating action button.
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">API: MDCFloatingButton</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/theming.md">Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
 - - -
 
 ## Button Types
@@ -64,11 +72,6 @@ To add this component to your Xcode project using CocoaPods, add the following t
 pod 'MaterialComponents/Buttons'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
-
-To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
-pod 'MaterialComponents/Buttons+Extensions'
-```
 
 Then, run the following command:
 
