@@ -112,7 +112,7 @@ scheme.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let colorScheme: MDCSemanticColorScheme()
+let colorScheme = MDCSemanticColorScheme()
 
 let inkView = MDCInkView()
 MDCInkColorThemer.applySemanticColorScheme(colorScheme, to: inkView)
