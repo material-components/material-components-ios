@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "How to theme Snackbar using the Material Design typography system."
 iconId: toast
-path: /catalog/sliders/typography-theming/
+path: /catalog/snackbar/typography-theming/
 -->
 
 # Snackbar Typography Theming
