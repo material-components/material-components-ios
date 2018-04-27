@@ -113,7 +113,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 
 ### Stateful API
 
-`MDCSlider` exposes stateful API to customize the colors for different `UIControlState`. In order to enable this API `statefulAPIEnabled` property of `MDCSlider` should be set to true.
+`MDCSlider` exposes stateful APIs to customize the colors for different control states. In order to use this API you must enable `statefulAPIEnabled` on your `MDCSlider` instances.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -121,7 +121,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 ``` swift
  let slider = MDCSlider()
  slider.isStatefulAPIEnabled = true
-    
+
  // Setting a thumb color for selected state.
  slider.setThumbColor(.red, for: .selected)
 ```
