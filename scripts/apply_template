@@ -15,9 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-COMPONENT="$1"
-TEMPLATE_PATH="$2"
-
 usage() {
   echo "Usage: $0 <ComponentName> <path_to_.template_file>"
   echo
@@ -26,6 +23,14 @@ usage() {
   echo
   echo "Example usage: $0 ActivityIndicator scripts/templates/component/docs/ColorTheming.md.template"
 }
+
+if [ "$#" -ne 2 ]; then
+  usage
+  exit 1
+fi
+
+COMPONENT="$1"
+TEMPLATE_PATH="$2"
 
 if [ ! -f "$TEMPLATE_PATH" ]; then
   echo "$TEMPLATE_PATH is not a file."
