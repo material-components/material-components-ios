@@ -32,7 +32,7 @@ scheme.
 let colorScheme: MDCSemanticColorScheme()
 
 let component: <#component_symbol#>
-<#ThemerAPI#>.applySemanticColorScheme(colorScheme, to: component)
+<#themer_api#>.applySemanticColorScheme(colorScheme, to: component)
 ```
 
 #### Objective-C
@@ -41,7 +41,7 @@ let component: <#component_symbol#>
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 <#component_symbol#> *component;
-[<#ThemerAPI#> applySemanticColorScheme:colorScheme
+[<#themer_api#> applySemanticColorScheme:colorScheme
                               to<#component_parameter#>:component];
 ```
 <!--</div>-->

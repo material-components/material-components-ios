@@ -33,7 +33,7 @@ scheme.
 let typographyScheme: MDCSemanticTypographyScheme()
 
 let component: <#component_symbol#>
-<#ThemerAPI#>.applyTypographyScheme(typographyScheme, to: component)
+<#themer_api#>.applyTypographyScheme(typographyScheme, to: component)
 ```
 
 #### Objective-C
@@ -42,7 +42,7 @@ let component: <#component_symbol#>
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 <#component_symbol#> *component;
-[<#ThemerAPI#> applyTypographyScheme:colorScheme
+[<#themer_api#> applyTypographyScheme:colorScheme
                   to<#component_parameter#>:component];
 ```
 <!--</div>-->
