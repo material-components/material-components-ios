@@ -81,6 +81,55 @@ and can be placed anywhere in your view hierarchy.
 `UITapGestureRecognizer` instance to conveniently drive the ink ripples from the
 user's touches.
 
+### Theming
+
+You can theme ink with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+``` bash
+pod 'MaterialComponents/Ink+Extensions/ColorThemer'
+```
+
+You can then import the theming APIs:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+import MaterialComponents.MaterialInk_ColorThemer
+```
+
+#### Objective-C
+
+``` objc
+#import "MaterialInk+ColorThemer.h"
+```
+<!--</div>-->
+
+MDCInkColorThemer allows you to theme ink with your app's color
+scheme.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+``` swift
+let colorScheme = MDCSemanticColorScheme()
+
+let inkView = MDCInkView()
+MDCInkColorThemer.applySemanticColorScheme(colorScheme, to: inkView)
+```
+
+#### Objective-C
+
+``` objc
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+MDCInkView *inkView = [[MDCInkView alloc] init];
+[MDCInkColorThemer applySemanticColorScheme:colorScheme
+                                  toInkView:inkView];
+```
+<!--</div>-->
+
+
 ### MDCInkTouchController
 
 The simplest method of using ink in your views is to use a
