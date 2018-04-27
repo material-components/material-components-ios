@@ -57,7 +57,7 @@ COMPONENT_VARS="components/$COMPONENT/.vars"
 
 cp "$TEMPLATE_PATH" "$DESTINATION_PATH"
 
-cat $COMPONENT_VARS | while read line; do
+cat $COMPONENT_VARS | grep -v "^#" | while read line; do
   variable=$(echo "$line" | cut -d'=' -f1)
   replacement=$(echo "$line" | cut -d'=' -f2-)
 
