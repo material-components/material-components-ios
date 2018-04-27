@@ -29,8 +29,16 @@ import MaterialComponents.MaterialTextFields_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-// Each text field style has a different themer API. Please look at the APIs
-// in the extension for more details.
+
+// Applying to a text field
+MDCTextFieldColorThemer.apply(colorScheme, to: textField)
+
+// Applying to an input controller
+MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: inputController)
+
+// Applying to a specific class type of inputController
+MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, 
+    toAllControllersOfClass: MDCTextInputControllerUnderline.self)
 ```
 
 #### Objective-C
@@ -43,7 +51,16 @@ let colorScheme = MDCSemanticColorScheme()
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
-// Each text field style has a different themer API. Please look at the APIs
-// in the extension for more details.
+
+// Applying to a text field
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme toTextInput:textField];
+
+// Applying to an input controller
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
+                            toTextInputController:inputController];
+
+// Applying to a specific class type of inputController
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme 
+                 toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
 ```
 <!--</div>-->

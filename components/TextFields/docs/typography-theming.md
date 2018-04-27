@@ -29,8 +29,16 @@ import MaterialComponents.MaterialTextFields_TypographyThemer
 let typographyScheme = MDCTypographyScheme()
 
 // Step 3: Apply the typography scheme to your component
-// Each text field style has a different themer API. Please look at the APIs
-// in the extension for more details.
+
+// Applying to a text field
+MDCTextFieldTypographyThemer.apply(typographyScheme, to: textField)
+
+// Applying to an input controller
+MDCTextFieldTypographyThemer.apply(typographyScheme, to: inputController)
+
+// Applying to a specific class type of inputController
+MDCTextFieldTypographyThemer.apply(typographyScheme, 
+    toAllControllersOfClass: MDCTextInputControllerUnderline.self) 
 ```
 
 #### Objective-C
@@ -43,7 +51,16 @@ let typographyScheme = MDCTypographyScheme()
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
-// Each text field style has a different themer API. Please look at the APIs
-// in the extension for more details.
+
+// Applying to a text field
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:textField];
+
+// Applying to an input controller
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
+                              toTextInputController:inputController];
+
+// Applying to a specific class type of inputController
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme 
+                   toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
 ```
 <!--</div>-->
