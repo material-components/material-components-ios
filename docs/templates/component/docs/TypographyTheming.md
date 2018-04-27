@@ -3,6 +3,7 @@ title: "Typography Theming"
 layout: detail
 section: components
 excerpt: "How to theme <#component_name#> using the Material Design typography system."
+iconId: <#icon_id#>
 path: <#root_path#>/TypographyTheming/
 -->
 

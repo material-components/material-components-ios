@@ -3,6 +3,7 @@ title: "Color Theming"
 layout: detail
 section: components
 excerpt: "How to theme <#component_name#> using the Material Design color system."
+iconId: <#icon_id#>
 path: <#root_path#>/ColorTheming/
 -->
 
