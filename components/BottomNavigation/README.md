@@ -14,6 +14,15 @@ api_doc_root: true
   <img src="docs/assets/bottomnavigation.png" alt="Bottom Navigation" width="375">
 </div>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
+- - -
+
 [Bottom navigation](https://material.io/guidelines/components/bottom-navigation.html) makes it easy to explore and switch between top-level views in a single tap. Tapping on a bottom navigation icon takes you directly to the associated view or refreshes the currently active view.
 
 Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app. 

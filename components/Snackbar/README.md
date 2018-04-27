@@ -23,6 +23,13 @@ contain a text action, but no icons.
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/snackbars-toasts.html">Material Design guidelines: Snackbars</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation

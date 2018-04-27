@@ -30,7 +30,7 @@ the linear implementation.
 ## Extensions
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/ColorTheming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
 </ul>
 
 ## Related Components

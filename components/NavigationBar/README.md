@@ -26,6 +26,13 @@ Consistent with iOS design guidelines, the title in the navigation bar is center
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Protocols/MDCUINavigationItemObservables.html">API: MDCUINavigationItemObservables</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation

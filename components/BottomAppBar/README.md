@@ -14,6 +14,14 @@ api_doc_root: true
   <img src="docs/assets/bottomappbar.png" alt="Text Fields" width="375">
 </div>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+</ul>
+
+- - -
+
 A bottom app bar provides a docked bar at the bottom of the screen for common application actions. The bottom app bar includes a <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">floating button</a> for a primary action and a <a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/">navigation bar</a> area for secondary actions. Transition animations are provided when the floating button shifts left or right, based on the application navigation state, and when the floating action button changes elevation or is hidden.
 
 ## Installation
