@@ -61,7 +61,9 @@
     [chip setBorderWidth:0 forState:UIControlStateNormal];
     [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:chip];
   }
-
+  [chip sizeToFit];
+  CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);
+  chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0);
 }
 
 @end
