@@ -68,7 +68,7 @@ have for the document site.
 
 - other assets: images, js, thirdparty
 
-Attention should be paid that *components*, *contributing*, *howto* are all copied files and will be
+Attention should be paid that *components*, *contributing*, *docs* are all copied files and will be
 override at the time when document site is built. So if you are trying to modify the content of
 these files, please read [Site Content Update](/site_content_update.md).
 

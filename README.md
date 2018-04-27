@@ -12,7 +12,7 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 
 ## Useful Links
 
-- [How To Use MDC-iOS](howto/)
+- [How To Use MDC-iOS](docs/)
 - [All Components](components/)
 - [Demo Apps](demos/)
 - [Contributing](contributing/)
@@ -50,7 +50,7 @@ Use `cmd-1` to open the project navigator within Xcode. Peal open the `Pods` pro
 
 ### Getting Started with a New Project
 
-Check out our [tutorial](howto/tutorial) for a step-by-step guide to setting up a new project using Material Components.
+Check out our [tutorial](docs/tutorial) for a step-by-step guide to setting up a new project using Material Components.
 
 ### Adding Material Components to an Existing Project
 

@@ -101,7 +101,7 @@ Use the `supplemental` folder to keep your example code clean and instructive.
 
 ## Useful Links
 
-- [How To Use MDC-iOS](../howto/)
+- [How To Use MDC-iOS](../docs/)
 - [All Components](../components/)
 - [Demo Apps](../demos/)
 - [Contributing](../contributing/)
