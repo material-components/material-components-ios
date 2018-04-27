@@ -26,6 +26,13 @@ navigation experience.
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">API: MDCAppBarContainerViewController</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation
@@ -249,59 +256,3 @@ recommendation for building interactive background views is the following:
    [Usage](../FlexibleHeader/#usage) docs.
 3. Add your views to this flexible header instance.
 4. Create a Navigation Bar if you need one. Treat it like any other custom view.
-
-### Theming
-
-You can theme an AppBar with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
-
-You must first add the Themer extensions to your project:
-
-``` bash
-pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
-pod 'MaterialComponents/AppBar+Extensions/TypographyThemer'
-```
-
-You can then import the theming APIs:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
-```
-
-#### Objective-C
-
-``` objc
-#import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
-```
-<!--</div>-->
-
-MDCAppBarColorThemer allows you to theme an app bar with your app's color scheme. 
-
-MDCAppBarTypographyThemer allows you to theme an app bar with your app's typography scheme. 
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-let colorScheme = MDCSemanticColorScheme()
-let typographyScheme = MDCTypographyScheme()
-
-let appBar = MDCAppBar()
-MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-MDCAppBarTypographyThemer.apply(typographyScheme, to: appBar)
-```
-
-#### Objective-C
-
-``` objc
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-MDCAppBar *appBar = [[MDCAppBar alloc] init];
-[MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:appBar];
-[MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:appBar];
-
-```
-<!--</div>-->

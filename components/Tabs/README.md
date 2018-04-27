@@ -21,6 +21,13 @@ Tabs are bars of buttons used to navigate between groups of content.
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/tabs.html">Material Design guidelines: Tabs</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation
@@ -115,76 +122,6 @@ Implement `positionForBar:` and return `UIBarPositionBottom` to configure the ta
 navigation bar. The bar will automatically update with the appropriate styling.
 
 - - -
-
-### Theming
-
-You can theme a TabBar with your app's color scheme and typography scheme using the ColorThemer and TypographyThemer extensions.
-
-You must first add the Themer extensions to your project:
-
-``` bash
-pod 'MaterialComponents/Tabs+Extensions/ColorThemer'
-pod 'MaterialComponents/Tabs+Extensions/TypographyThemer'
-```
-
-You can then import the theming APIs:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-import MaterialComponents.MaterialTabs_ColorThemer
-import MaterialComponents.MaterialTabs_TypographyThemer
-```
-
-#### Objective-C
-
-``` objc
-#import "MaterialTabs+ColorThemer.h"
-#import "MaterialTabs+TypographyThemer.h"
-```
-<!--</div>-->
-
-MDCTabBarColorThemer allows you to theme a tab bar with your app's color scheme. 
-
-MDCTabBarTypographyThemer allows you to theme a tab bar with your app's typography scheme. 
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-let colorScheme = MDCSemanticColorScheme()
-let typographyScheme = MDCTypographyScheme()
-
-let tabBar = MDCTabBar()
-
-// Apply regular style
-MDCTabBarColorThemer.applySemanticColorScheme(colorScheme, toTabs: tabBar)
-
-// Or Surface Variant
-MDCTabBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, toTabs: tabBar)
-  
-
-MDCTabBarTypographyThemer.apply(typographyScheme, to: tabBar)
-```
-
-#### Objective-C
-
-``` objc
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-MDCTabBar *tabBar = [[MDCTabBar alloc] init];
-
-// Apply regular style
-[MDCTabBarColorThemer applySemanticColorScheme:colorScheme toTabs:tabBar];
-
-// Or Surface Variant
-[MDCTabBarColorThemer applySurfaceVariantWithColorScheme:colorScheme toTabs:tabBar];
-
-// Apply typography scheme.
-[MDCTabBarTypographyThemer applyTypographyScheme:typographyScheme toTabBar:tabBar];
-
-```
-<!--</div>-->
 
 ## Example
 

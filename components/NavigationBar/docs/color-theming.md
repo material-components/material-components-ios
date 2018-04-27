@@ -2,19 +2,19 @@
 title: "Color Theming"
 layout: detail
 section: components
-excerpt: "How to theme Activity Indicator using the Material Design color system."
-iconId: progress_activity
-path: /catalog/progress-indicators/activity-indicators/ColorTheming/
+excerpt: "How to theme Navigation Bar using the Material Design color system."
+iconId: toolbar
+path: /catalog/flexible-headers/navigation-bars/color-theming/
 -->
 
-# Activity Indicator Color Theming
+# Navigation Bar Color Theming
 
-You can theme an activity indicator with your app's color scheme using the ColorThemer extension.
+You can theme a navigation bar with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
 ``` bash
-pod 'MaterialComponents/ActivityIndicator+Extensions/ColorThemer'
+pod 'MaterialComponents/NavigationBar+Extensions/ColorThemer'
 ```
 
 ## Example code
@@ -23,26 +23,26 @@ pod 'MaterialComponents/ActivityIndicator+Extensions/ColorThemer'
 #### Swift
 ``` swift
 // Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialActivityIndicator_ColorThemer
+import MaterialComponents.MaterialNavigationBar_ColorThemer
 
 // Step 2: Create or get a color scheme
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-MDCActivityIndicatorColorThemer.applySemanticColorScheme(colorScheme, to: component)
+MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
 ```
 
 #### Objective-C
 
 ``` objc
 // Step 1: Import the ColorThemer extension
-#import "MaterialActivityIndicator+ColorThemer.h"
+#import "MaterialNavigationBar+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
-[MDCActivityIndicatorColorThemer applySemanticColorScheme:colorScheme
-     toActivityIndicator:component];
+[MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme
+     toNavigationBar:component];
 ```
 <!--</div>-->

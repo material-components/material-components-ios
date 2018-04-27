@@ -29,6 +29,15 @@ Cards adhere to Material Design layout and styling.
   </li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/theming.md">Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+</ul>
+
+- - -
+
 ## Installation
 
 ### Installation with CocoaPods

@@ -24,6 +24,12 @@ or discrete set of values.
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/sliders/api-docs/Classes/MDCSlider.html">API: MDCSlider</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation
@@ -111,52 +117,6 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 ```
 <!--</div>-->
 
-### Theming
-
-You can theme a Slider with your app's color scheme using the ColorThemer extension.
-
-You must first add the color themer extension to your project:
-
-``` bash
-pod 'MaterialComponents/Slider+Extensions/ColorThemer'
-```
-
-You can then import the theming APIs:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-import MaterialComponents.MaterialSlider_ColorThemer
-```
-
-#### Objective-C
-
-``` objc
-#import "MaterialSlider+ColorThemer.h"
-```
-<!--</div>-->
-
-MDCSliderColorThemer allows you to theme an slider with your app's color scheme. 
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-let colorScheme = MDCSemanticColorScheme()
-
-let slider = MDCSlider()
-MDCSliderColorThemer.applySemanticColorScheme(colorScheme, to: slider)
-```
-
-#### Objective-C
-
-``` objc
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-
-MDCSlider *slider = [[MDCSlider alloc] init];
-[MDCSliderColorThemer applySemanticColorScheme:colorScheme toSlider:slider];
-
-```
-<!--</div>-->
 ### The differences between the UISlider class and the MDCSlider class:
 
 Does not have api to:
