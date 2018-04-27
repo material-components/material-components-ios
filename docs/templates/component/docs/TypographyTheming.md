@@ -23,22 +23,26 @@ pod 'MaterialComponents/<#component#>+Extensions/TypographyThemer'
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
+// Step 1: Import the TypographyThemer extension
 import MaterialComponents.Material<#component#>_TypographyThemer
 
+// Step 2: Create or get a typography scheme
 let typographyScheme = MDCTypographyScheme()
 
-let component: <#component_symbol#>
+// Step 3: Apply the color scheme to your component
 <#themer_api#>.applyTypographyScheme(typographyScheme, to: component)
 ```
 
 #### Objective-C
 
 ``` objc
+// Step 1: Import the TypographyThemer extension
 #import "Material<#component#>+TypographyThemer.h"
 
+// Step 2: Create or get a typography scheme
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
-<#component_symbol#> *component;
+// Step 3: Apply the color scheme to your component
 [<#themer_api#> applyTypographyScheme:colorScheme
                   to<#component_parameter#>:component];
 ```

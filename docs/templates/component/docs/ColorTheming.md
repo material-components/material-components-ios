@@ -23,22 +23,26 @@ scheme.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
+// Step 1: Import the ColorThemer extension
 import MaterialComponents.Material<#component#>_ColorThemer
 
+// Step 2: Create or get a color scheme
 let colorScheme = MDCSemanticColorScheme()
 
-let component: <#component_symbol#>
+// Step 3: Apply the color scheme to your component
 <#themer_api#>.applySemanticColorScheme(colorScheme, to: component)
 ```
 
 #### Objective-C
 
 ``` objc
+// Step 1: Import the ColorThemer extension
 #import "Material<#component#>+ColorThemer.h"
 
+// Step 2: Create or get a color scheme
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
-<#component_symbol#> *component;
+// Step 3: Apply the color scheme to your component
 [<#themer_api#> applySemanticColorScheme:colorScheme
                               to<#component_parameter#>:component];
 ```
