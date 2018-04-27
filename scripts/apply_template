@@ -20,6 +20,17 @@ usage() {
   echo "Copies the template into the component directory and replaces all of the symbols defined"
   echo "in the component's .vars file."
   echo
+  echo ".vars files should be placed in the root of the component's directory."
+  echo "Example: components/ActivityIndicator/.vars"
+  echo
+  echo "Each line of the .vars file should be of the form symbol=replacement."
+  echo "Example:"
+  echo "component=ActivityIndicator"
+  echo "component_name=Activity Indicator"
+  echo
+  echo "This script will replace all instances of <#symbol#> in the .template with the given"
+  echo "replacement."
+  echo
   echo "Example usage: $0 ActivityIndicator scripts/templates/component/docs/ColorTheming.md.template"
 }
 
