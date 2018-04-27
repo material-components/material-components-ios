@@ -30,8 +30,8 @@ to [Writing READMES](./writing_readmes.md) for the syntax we use.
 The document site and GitHub README.md have the exact 1:1 mapping structure, except for the homepage.
 
 - homepage -> site-index.md
-- howto -> howto/README.md
-- howto/[tutorial_name] -> howto/[tutorial_name]/README.md
+- docs -> docs/README.md
+- docs/[tutorial_name] -> docs/[tutorial_name]/README.md
 - components -> components/README.md
 - components/[component_name] -> components/[component_name]/README.md
 - contributing -> contributing/README.md

@@ -132,7 +132,7 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 
 ## Useful Links
 
-- [How To Use MDC-iOS](../howto/)
+- [How To Use MDC-iOS](../docs/)
 - [Demo Apps](../demos/)
 - [Contributing](../contributing/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
