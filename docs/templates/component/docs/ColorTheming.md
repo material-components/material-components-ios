@@ -6,7 +6,7 @@ excerpt: "How to theme <#component_name#> using the Material Design color system
 path: <#root_path#>/ColorTheming/
 -->
 
-### <#component_name#> Color Theming
+# <#component_name#> Color Theming
 
 You can theme <#a_component_name#> with your app's color scheme using the ColorThemer extension.
 
