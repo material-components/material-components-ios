@@ -7,9 +7,9 @@ path: /docs/theming/
 
 # Theming Material Components
 
-Material Theming is a consistent way to apply a uniform design across your iOS application when using Material Components for iOS.
+Material Theming is a consistent way to apply a uniform design across your app when using Material Components for iOS.
 
-The Material Theming pattern for iOS consists of two primary patterns: schemes and themers.
+Material Theming on iOS consists of two primary patterns: schemes and themers.
 
 *Schemes* store your design in a semantic manner that is well understood by MDC components.
 
