@@ -1,6 +1,14 @@
-### Theming
+<!--docs:
+title: "Typography Theming"
+layout: detail
+section: components
+excerpt: "How to theme <#component_name#> using the Material Design typography system."
+path: <#root_path#>/TypographyTheming/
+-->
 
-You can theme a <#component_name#> with your app's typography scheme using the TypographyThemer
+# <#component_name#> Typography Theming
+
+You can theme <#a_component_name#> with your app's typography scheme using the TypographyThemer
 extension.
 
 You must first add the Typography Themer extension to your project:
@@ -9,28 +17,14 @@ You must first add the Typography Themer extension to your project:
 pod 'MaterialComponents/<#component#>+Extensions/TypographyThemer'
 ```
 
-You can then import the theming APIs:
+## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
 import MaterialComponents.Material<#component#>_TypographyThemer
-```
 
-#### Objective-C
-
-``` objc
-#import "Material<#component#>+TypographyThemer.h"
-```
-<!--</div>-->
-
-<#themer_api#> allows you to theme a <#component_name#> with your app's typography
-scheme.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-let typographyScheme: MDCSemanticTypographyScheme()
+let typographyScheme = MDCTypographyScheme()
 
 let component: <#component_symbol#>
 <#themer_api#>.applyTypographyScheme(typographyScheme, to: component)
@@ -39,6 +33,8 @@ let component: <#component_symbol#>
 #### Objective-C
 
 ``` objc
+#import "Material<#component#>+TypographyThemer.h"
+
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 <#component_symbol#> *component;

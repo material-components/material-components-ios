@@ -1,6 +1,14 @@
-### Theming
+<!--docs:
+title: "Color Theming"
+layout: detail
+section: components
+excerpt: "How to theme <#component_name#> using the Material Design color system."
+path: <#root_path#>/ColorTheming/
+-->
 
-You can theme a <#component_name#> with your app's color scheme using the ColorThemer extension.
+### <#component_name#> Color Theming
+
+You can theme <#a_component_name#> with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
@@ -8,28 +16,15 @@ You must first add the Color Themer extension to your project:
 pod 'MaterialComponents/<#component#>+Extensions/ColorThemer'
 ```
 
-You can then import the theming APIs:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-import MaterialComponents.Material<#component#>_ColorThemer
-```
-
-#### Objective-C
-
-``` objc
-#import "Material<#component#>+ColorThemer.h"
-```
-<!--</div>-->
-
-<#themer_api#> allows you to theme a <#component_name#> with your app's color
+<#themer_api#> allows you to theme <#a_component_name#> with your app's color
 scheme.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let colorScheme: MDCSemanticColorScheme()
+import MaterialComponents.Material<#component#>_ColorThemer
+
+let colorScheme = MDCSemanticColorScheme()
 
 let component: <#component_symbol#>
 <#themer_api#>.applySemanticColorScheme(colorScheme, to: component)
@@ -38,6 +33,8 @@ let component: <#component_symbol#>
 #### Objective-C
 
 ``` objc
+#import "Material<#component#>+ColorThemer.h"
+
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 <#component_symbol#> *component;
