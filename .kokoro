@@ -180,10 +180,7 @@ generate_website() {
     cd github/repo
 
     ./scripts/build_site.sh
-    
-    echo "Node version:"
-    node -v
-    
+
     gem install bundler --no-rdoc --no-ri --no-document --quiet
     brew update
     brew install yarn --without-node
