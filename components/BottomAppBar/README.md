@@ -73,9 +73,9 @@ import MaterialComponents.MaterialBottomAppBar
 ```
 <!--</div>-->
 
-### How to theme
+### Theming
 
-Currently BottomAppBar does not provide sufficient API to theme it properly. Supporting API will be provided soon. 
+BottomAppBar does not support Material Theming yet. Please follow this [tracking issue](https://www.pivotaltracker.com/story/show/157095394) to track progress. 
 
 ## Examples
 
