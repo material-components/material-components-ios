@@ -16,16 +16,17 @@ Material Theming on iOS consists of two primary patterns: schemes and themers.
 **Themers** are the glue that apply scheme symbols to components.
 
 For example, there is a scheme for both the Material Design typography system and the Material
-Design color system. Each component has its own themer that accepts one of these schemes and applies
-it to a component instance.
+Design color system. Most components have a themer for at least one of these systems.
 
-## Sensible defaults, yet highly configurable
+### Sensible defaults, yet highly configurable
 
 By default, an instance of a scheme is initialized with the Material defaults. You can use these
 defaults as a baseline, but at a minimum we encourage you to tweak your color scheme's primary and
 secondary colors to match your brand colors.
 
-### Example: Creating a scheme
+## Examples
+
+### Creating a scheme
 
 In order to access the scheme APIs you'll first need to add the scheme target to your Podfile:
 
@@ -34,10 +35,9 @@ pod 'MaterialComponents/schemes/Color'
 pod 'MaterialComponents/schemes/Typography'
 ```
 
-You can now create schemes. Consider where you will want to store your schemes so that they are
-accessible by your components. One solution is to have a global singleton that exposes shared
-scheme instances as we've done in the MDCCatalog, but the approach you take should be influenced
-by your app's architecture.
+Consider where you will want to store your schemes so that they are accessible by your components.
+One solution is to have a global singleton that exposes shared scheme instances as we've done in
+the MDCCatalog, but the approach you take should be influenced by your app's architecture.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -61,9 +61,9 @@ MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
 ```
 <!--</div>-->
 
-### Example: Applying a scheme
+### Applying a scheme
 
-To apply a scheme to a component you must first add the component's themers to your project's
+To apply a scheme to a component you must first add the component's themers to your
 Podfile. You can see which themers a given component supports by looking at the component's src/
 directory.
 
