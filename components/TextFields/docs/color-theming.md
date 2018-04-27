@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "How to theme Text Fields using the Material Design color system."
 iconId: text_field
-path: /catalog/tabs/color-theming/
+path: /catalog/textfields/color-theming/
 -->
 
 # Text Fields Color Theming

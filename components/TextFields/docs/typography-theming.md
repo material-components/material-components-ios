@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "How to theme Text Fields using the Material Design typography system."
 iconId: text_field
-path: /catalog/tabs/typography-theming/
+path: /catalog/textfields/typography-theming/
 -->
 
 # Text Fields Typography Theming
