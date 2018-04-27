@@ -29,7 +29,10 @@ import MaterialComponents.MaterialTabs_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-MDCTabBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+// Primary variant
+MDCTabBarColorThemer.applySemanticColorScheme(colorScheme, toTabs: component)
+// Or surface variant
+MDCTabBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, toTabs: component)
 ```
 
 #### Objective-C
@@ -42,7 +45,9 @@ MDCTabBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
-[MDCTabBarColorThemer applySemanticColorScheme:colorScheme
-     toTabs:component];
+// Primary variant
+[MDCTabBarColorThemer applySemanticColorScheme:colorScheme toTabs:component];
+// Or surface variant
+[MDCTabBarColorThemer applySurfaceVariantWithColorScheme:colorScheme toTabs:component];
 ```
 <!--</div>-->
