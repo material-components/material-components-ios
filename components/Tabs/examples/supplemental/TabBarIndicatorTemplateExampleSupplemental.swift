@@ -17,17 +17,27 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 extension TabBarIndicatorTemplateExample {
 
-  func makeAlignmentButton() -> MDCRaisedButton {
-    let button = MDCRaisedButton()
+  private func themeButton(_ button: MDCButton) {
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+  }
+
+  func makeAlignmentButton() -> MDCButton {
+    let button = MDCButton()
+    themeButton(button)
     button.setTitle("Change Alignment", for: .normal)
     return button
   }
 
-  func makeAppearanceButton() -> MDCRaisedButton {
-    let button = MDCRaisedButton()
+  func makeAppearanceButton() -> MDCButton {
+    let button = MDCButton()
+    themeButton(button)
     button.setTitle("Change Appearance", for: .normal)
     return button
   }
