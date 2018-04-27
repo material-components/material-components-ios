@@ -73,6 +73,10 @@ import MaterialComponents.MaterialBottomAppBar
 ```
 <!--</div>-->
 
+### Theming
+
+BottomAppBar does not support Material Theming yet. Please follow this [tracking issue](https://www.pivotaltracker.com/story/show/157095394) to track progress. 
+
 ## Examples
 
 ### Bottom App Bar with floating action button and navigation
