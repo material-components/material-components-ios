@@ -355,6 +355,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateTitleFont];
 }
 
+#pragma mark - Property support
+
 - (void)setAccessoryView:(UIView *)accessoryView {
   [_accessoryView removeFromSuperview];
   _accessoryView = accessoryView;
@@ -566,6 +568,13 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateShadowColor];
   [self updateTitleFont];
   [self updateTitleColor];
+}
+
+#pragma mark - Custom touch handling
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
+  CGRect hitAreaRect = UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), self.hitAreaInsets);
+  return CGRectContainsPoint(hitAreaRect, point);
 }
 
 #pragma mark - Control
