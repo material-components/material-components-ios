@@ -43,6 +43,6 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
 [MDCBottomAppBarColorThemer applySemanticColorScheme:colorScheme
-     to<#themer_parameter_name#>:component];
+     toBottomAppBarView:component];
 ```
 <!--</div>-->
