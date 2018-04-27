@@ -16,9 +16,7 @@ time. There are two styles of progress indicators: linear and circular.
 This component only provides the circular implementation. See [Progress View](../ProgressView) for
 the linear implementation.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/activityindicator.gif" alt="An animation showing a determinate and indeterminate activity indicator." width="115">
-</div>
+<img src="docs/assets/activityindicator.gif" alt="An animation showing a determinate and indeterminate activity indicator." width="115">
 
 ## Design & API Documentation
 
