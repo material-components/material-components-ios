@@ -120,8 +120,8 @@ MDCSnackbarTypographyThemer allows you to theme your snackbars with your app's t
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let colorScheme: MDCSemanticColorScheme()
-let typographyScheme: MDCTypographycheme()
+let colorScheme = MDCSemanticColorScheme()
+let typographyScheme = MDCTypographycheme()
 
 MDCSnackbarColorThemer.applySemanticColorScheme(colorScheme)
 MDCSnackbarTypographyThemer.applyTypographyScheme(typographyScheme)
