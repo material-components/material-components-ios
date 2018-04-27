@@ -22,7 +22,7 @@
 
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialPalettes.h"
-#import "MDCTabBarTypographyThemer.h"
+#import "MaterialTabs+TypographyThemer.h"
 
 // Exposing selectors defined in the main example class
 @interface TabBarIconExample ()
