@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "How to theme Navigation Bar using the Material Design typography system."
 iconId: toolbar
-path: /catalog/navigation-bars/typography-theming/
+path: /catalog/flexible-headers/navigation-bars/typography-theming/
 -->
 
 # Navigation Bar Typography Theming

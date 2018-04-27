@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "How to theme Navigation Bar using the Material Design color system."
 iconId: toolbar
-path: /catalog/navigation-bars/color-theming/
+path: /catalog/flexible-headers/navigation-bars/color-theming/
 -->
 
 # Navigation Bar Color Theming

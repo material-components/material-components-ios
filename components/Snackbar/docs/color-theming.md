@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "How to theme Snackbar using the Material Design color system."
 iconId: toast
-path: /catalog/snackbar/color-theming/
+path: /catalog/snackbars/color-theming/
 -->
 
 # Snackbar Color Theming
