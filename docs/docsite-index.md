@@ -65,9 +65,6 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     ```
     <!--{: .code-renderer.code-renderer--install }-->
 
-    If you are using Swift, don’t forget to uncomment the `use_frameworks!` line
-    at the top of your Podfile.
-
     Then run the command:
 
     ``` bash
@@ -96,14 +93,14 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     - (void)viewDidLoad {
       [super viewDidLoad];
 
-      MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
-      [raisedButton setTitle:@"Raised Button" forState:UIControlStateNormal];
-      [raisedButton sizeToFit];
-      [raisedButton addTarget:self
-                       action:@selector(tapped:)
-             forControlEvents:UIControlEventTouchUpInside];
+      MDCButton *button = [[MDCButton alloc] init];
+      [button setTitle:@"Button" forState:UIControlStateNormal];
+      [button sizeToFit];
+      [button addTarget:self
+                 action:@selector(tapped:)
+       forControlEvents:UIControlEventTouchUpInside];
 
-      [self.view addSubview:raisedButton];
+      [self.view addSubview:button];
     }
 
     - (void)tapped:(id)sender {
@@ -122,11 +119,12 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
       override func viewDidLoad() {
         super.viewDidLoad()
-        let raisedButton = MDCRaisedButton()
-        raisedButton.setTitle("Raised Button", for: .normal)
-        raisedButton.sizeToFit()
-        raisedButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
-        self.view.addSubview(raisedButton)
+        
+        let button = MDCButton()
+        button.setTitle("Button", for: .normal)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        self.view.addSubview(button)
       }
 
       func tapped(sender: UIButton?){
