@@ -15,8 +15,9 @@ Material Theming on iOS consists of two primary patterns: schemes and themers.
 
 **Themers** are the glue that apply scheme symbols to components.
 
-For example, `MDCTypographyScheme` represents the Material typography system symbols, and `MDCSemanticColorScheme` represents the Material color system symbols. `MDCAppBarColorThemer` is
-a themer that applies a color scheme to an app bar.
+For example, `MDCTypographyScheme` represents the Material Design typography system symbols, and
+`MDCSemanticColorScheme` represents the Material Design color system symbols.
+`MDCAppBarColorThemer` is a themer that applies a color scheme to an app bar.
 
 ## Sensible defaults, yet highly configurable
 
