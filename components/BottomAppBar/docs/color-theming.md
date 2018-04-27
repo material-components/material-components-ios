@@ -29,7 +29,7 @@ import MaterialComponents.MaterialBottomAppBar_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-<#color_themer_api#>.applySemanticColorScheme(colorScheme, to: component)
+MDCBottomAppBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
 ```
 
 #### Objective-C
@@ -42,7 +42,7 @@ let colorScheme = MDCSemanticColorScheme()
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
-[<#color_themer_api#> applySemanticColorScheme:colorScheme
+[MDCBottomAppBarColorThemer applySemanticColorScheme:colorScheme
      to<#themer_parameter_name#>:component];
 ```
 <!--</div>-->
