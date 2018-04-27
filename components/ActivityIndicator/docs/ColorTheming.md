@@ -17,8 +17,7 @@ You must first add the Color Themer extension to your project:
 pod 'MaterialComponents/ActivityIndicator+Extensions/ColorThemer'
 ```
 
-`MDCActivityIndicatorColorThemer` allows you to theme an activity indicator with your app's color
-scheme.
+## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -44,6 +43,6 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
 [MDCActivityIndicatorColorThemer applySemanticColorScheme:colorScheme
-                                      toActivityIndicator:component];
+     toActivityIndicator:component];
 ```
 <!--</div>-->
