@@ -154,7 +154,7 @@ scheme.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let colorScheme: MDCSemanticColorScheme()
+let colorScheme = MDCSemanticColorScheme()
 
 let card = MDCCard()
 MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: card)
