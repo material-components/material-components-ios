@@ -19,15 +19,22 @@
 #import "MaterialSnackbar.h"
 #import "MaterialThemes.h"
 
+#pragma mark - Soon to be deprecated
+
 /**
  Used to apply a font scheme to theme to MDCSnackbarMessageView.
- This class will soon be deprecated, please use MDCSnackbarTypographyThemer instead.
+ 
+ @warning This class will soon be deprecated. Please consider using MDCSnackbarTypographyThemer
+ instead.
  */
 @interface MDCSnackbarFontThemer : NSObject
 
 /**
  Applies a font scheme to theme to a MDCSnackbarMessageView.
- 
+
+ @warning This API will soon be deprecated. Please consider using MDCSnackbarTypographyThemer
+ instead.
+
  @param fontScheme The font scheme to apply to MDCSnackbarMessageView.
  @param snackbarMessageView A MDCSnackbarMessageView instance to apply a font scheme.
  */
@@ -36,6 +43,9 @@
 
 /**
  Applies a font scheme to theme to a MDCSnackbarMessageView.
+
+ @warning This API will soon be deprecated. Please consider using MDCSnackbarTypographyThemer
+ instead.
 
  @param fontScheme The font scheme to apply to MDCSnackbarMessageView.
  */

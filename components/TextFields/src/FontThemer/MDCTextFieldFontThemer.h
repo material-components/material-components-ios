@@ -21,8 +21,13 @@
 @protocol MDCFontScheme;
 @protocol MDCTextInputController;
 
+#pragma mark - Soon to be deprecated
+
 /**
  Used to apply a font scheme to theme a MDCTextField/MDCTextInputController.
+
+ @warning This class will soon be deprecated. Please consider using
+ MDCTextFieldTypographyThemer instead.
  */
 @interface MDCTextFieldFontThemer : NSObject
 

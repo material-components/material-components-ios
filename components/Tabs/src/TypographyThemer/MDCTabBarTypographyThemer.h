@@ -18,15 +18,15 @@ limitations under the License.
 #import "MaterialTypographyScheme.h"
 
 /**
- Used to apply a typography scheme to theme MDCTabBar.
+ The Material Design typography system's themer for instances of MDCTabBar.
  */
 @interface MDCTabBarTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme a MDCTabBar.
+ Applies a typography scheme's properties to an MDCTabBar.
 
- @param typographyScheme The typography scheme to apply to MDCTabBar.
- @param tabBar A MDCTabBar instance to apply a color scheme.
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param tabBar A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                      toTabBar:(nonnull MDCTabBar *)tabBar;

@@ -20,18 +20,15 @@
 #import "MaterialTextFields.h"
 
 /**
- Used to apply a color scheme to theme MDCTextField within MDCTextInputControllerOutlined.
+ The Material Design color system's outlined text field themer.
  */
 @interface MDCOutlinedTextFieldColorThemer : NSObject
 
 /**
- Applies a color scheme to theme MDCTextField in MDCTextInputControllerOutlined.
+ Applies a color scheme's properties to a text field using the outlined style.
 
- Performs introspection to determine if class passed conforms to
- MDCTextInputControllerFloatingPlaceholder to set properties like .floatingPlaceholderNormalColor.
-
- @param colorScheme The color scheme to apply.
- @param textInputController A MDCTextInputController instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param textInputController A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
            toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
