@@ -141,13 +141,13 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     <ul class="icon-list">
       <li class="icon-list-item icon-list-item--guide">
-        <a href="../howto">Read the Development Guide</a>
+        <a href="README.md">Read the Development Guide</a>
       </li>
       <li class="icon-list-item icon-list-item--components">
         <a href="../components">View the Component Documentation</a>
       </li>
       <li class="icon-list-item icon-list-item--code">
-        <a href="../howto/tutorial/#sample-code">Explore our Code Samples</a>
+        <a href="tutorial/#sample-code">Explore our Code Samples</a>
       </li>
       <li class="icon-list-item icon-list-item--github">
         <a href="https://github.com/material-components/material-components-ios/">View the project on GitHub</a>

@@ -17,15 +17,21 @@ limitations under the License.
 #import "MaterialTabs.h"
 #import "MaterialThemes.h"
 
+#pragma mark - Soon to be deprecated
+
 /**
  Used to apply a font scheme to theme MDCTabBar.
- This Class will be deprecated soon please use MDCTabBarTypographyThemer instead.
+
+ @warning This class will soon be deprecated. Please consider using MDCTabBarTypographyThemer
+ instead.
  */
 @interface MDCTabBarFontThemer : NSObject
 
 /**
- Applies a font scheme to theme a MDCTabBar. Use a UIAppearance proxy to apply a font scheme to
- all instances of MDCTabBar.
+ Applies a font scheme to theme a MDCTabBar.
+
+ @warning This API will soon be deprecated. Please consider using MDCTabBarTypographyThemer
+ instead.
 
  @param fontScheme The font scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme.

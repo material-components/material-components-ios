@@ -15,7 +15,7 @@
  */
 
 #import "MaterialTabs.h"
-#import "MDCTabBarTypographyThemer.h"
+#import "MaterialTabs+TypographyThemer.h"
 
 #import <XCTest/XCTest.h>
 

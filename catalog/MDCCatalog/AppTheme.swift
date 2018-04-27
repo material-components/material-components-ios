@@ -16,14 +16,20 @@
 
 import Foundation
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialTypographyScheme
 
 final class AppTheme {
   let colorScheme: MDCColorScheming
   let typographyScheme: MDCTypographyScheming
+  let buttonScheme: MDCButtonScheming
 
   init(colorScheme: MDCColorScheming, typographyScheme: MDCTypographyScheming) {
     self.colorScheme = colorScheme
     self.typographyScheme = typographyScheme
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    self.buttonScheme = buttonScheme
   }
 
   static let defaultTheme: AppTheme = {

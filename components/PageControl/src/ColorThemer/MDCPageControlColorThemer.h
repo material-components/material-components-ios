@@ -20,16 +20,23 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a color scheme to theme MDCSlider.
+ Used to apply a color scheme to theme MDCPageControl. This API does not yet implement the Material
+ Design color system.
+
+ @seealso https://www.pivotaltracker.com/story/show/157072365
  */
 @interface MDCPageControlColorThemer : NSObject
 
-/**
- Applies a color scheme to theme a MDCPageControl. Use a UIAppearance proxy to apply a color scheme
- to all instances of MDCPageControl.
+#pragma mark - Soon to be deprecated
 
- @param colorScheme The color scheme to apply to MDCPageControl.
- @param pageControl A MDCPageControl instance to apply a color scheme.
+/**
+ Applies a color scheme to theme a MDCPageControl.
+
+ @warning This method will soon be deprecated. There is no replacement yet.
+ @seealso https://www.pivotaltracker.com/story/show/157072365
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param pageControl A component instance to which the color scheme should be applied.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
            toPageControl:(nonnull MDCPageControl *)pageControl;

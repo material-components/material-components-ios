@@ -18,13 +18,14 @@
 #import "MaterialTypographyScheme.h"
 
 /**
- Used to apply a typography scheme to theme MDCSnackbarManager.
+ The Material Design typography system's themer for all snackbar messages.
  */
 @interface MDCSnackbarTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme a MDCSnackbarManager.
- @param typographyScheme The typography scheme to apply to MDCSnackbarManager.
+ Applies a typography scheme's properties to all snackbar messages.
+
+ @param typographyScheme The typography scheme to apply to all snackbar messages.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme;
 

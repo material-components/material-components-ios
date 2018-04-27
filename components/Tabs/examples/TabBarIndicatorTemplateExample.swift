@@ -20,7 +20,7 @@ import CoreGraphics
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MDCTabBarColorThemer
+import MaterialComponents.MaterialTabs_ColorThemer
 
 class TabBarIndicatorTemplateExample: UIViewController {
 
@@ -46,10 +46,11 @@ class TabBarIndicatorTemplateExample: UIViewController {
     }
   }
 
-  lazy var alignmentButton: MDCRaisedButton = self.makeAlignmentButton()
-  lazy var appearanceButton: MDCRaisedButton = self.makeAppearanceButton()
+  lazy var alignmentButton: MDCButton = self.makeAlignmentButton()
+  lazy var appearanceButton: MDCButton = self.makeAppearanceButton()
   lazy var appBar: MDCAppBar = self.makeAppBar()
   var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()

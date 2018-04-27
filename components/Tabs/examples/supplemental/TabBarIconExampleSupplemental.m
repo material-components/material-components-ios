@@ -20,8 +20,9 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialPalettes.h"
-#import "MDCTabBarTypographyThemer.h"
+#import "MaterialTabs+TypographyThemer.h"
 
 // Exposing selectors defined in the main example class
 @interface TabBarIconExample ()
@@ -43,7 +44,13 @@
 }
 
 - (void)setupAlignmentButton {
-  self.alignmentButton = [[MDCRaisedButton alloc] init];
+  self.alignmentButton = [[MDCButton alloc] init];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.alignmentButton];
+
   [self.view addSubview:self.alignmentButton];
 
   self.alignmentButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -65,8 +72,6 @@
       .active = YES;
 
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [self.alignmentButton setBackgroundColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [self.alignmentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.alignmentButton addTarget:self
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];

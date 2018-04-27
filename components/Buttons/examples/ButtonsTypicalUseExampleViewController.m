@@ -93,33 +93,6 @@
   [disabledTextButton setEnabled:NO];
   [self.view addSubview:disabledTextButton];
 
-  // Custom stroked button
-
-  MDCButton *strokedButton = [self buildCustomStrokedButton];
-  [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme toButton:strokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:strokedButton];
-  [strokedButton sizeToFit];
-  [strokedButton addTarget:self
-                    action:@selector(didTap:)
-          forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:strokedButton];
-
-  // Disabled custom stroked button
-
-  MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
-  [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toButton:disabledStrokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
-                                        toButton:disabledStrokedButton];
-  [disabledStrokedButton sizeToFit];
-  [disabledStrokedButton addTarget:self
-                            action:@selector(didTap:)
-                  forControlEvents:UIControlEventTouchUpInside];
-  [disabledStrokedButton setEnabled:NO];
-  [self.view addSubview:disabledStrokedButton];
-
   // Floating action button
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
@@ -137,8 +110,7 @@
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    containedButton, disabledContainedButton, textButton, disabledTextButton, strokedButton,
-    disabledStrokedButton, self.floatingButton
+    containedButton, disabledContainedButton, textButton, disabledTextButton, self.floatingButton
   ];
 
   [self setupExampleViews];
@@ -149,13 +121,11 @@
   UILabel *disabledContainedButtonLabel = [self addLabelWithText:@"Disabled Contained"];
   UILabel *textButtonLabel = [self addLabelWithText:@"Text button"];
   UILabel *disabledTextButtonLabel = [self addLabelWithText:@"Disabled text button"];
-  UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
-  UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Disabled Stroked"];
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
     containedButtonLabel, disabledContainedButtonLabel, textButtonLabel, disabledTextButtonLabel,
-    strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
+    floatingButtonLabel
   ];
 }
 

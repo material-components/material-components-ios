@@ -20,15 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a color scheme to theme MDCButton.
+ The Material Design color system's contained button themer for instances of MDCButton.
  */
 @interface MDCContainedButtonColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to a contained button.
+ Applies a color scheme's properties to an MDCButton using the contained button style.
 
- @param colorScheme The color scheme to apply to @c button.
- @param button A MDCButton instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param button A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button;

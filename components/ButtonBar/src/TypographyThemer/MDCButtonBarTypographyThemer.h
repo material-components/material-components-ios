@@ -18,16 +18,15 @@
 #import "MaterialTypographyScheme.h"
 
 /**
- A typography themer for MDCButtonBar that implements the Material design typography system
- mappings.
+ The Material Design typography system's themer for instances of MDCButtonBar.
  */
 @interface MDCButtonBarTypographyThemer : NSObject
 
 /**
  Applies a typography scheme's properties to an MDCButtonBar.
 
- @param typographyScheme The typography scheme to apply to MDCButtonBar.
- @param buttonBar An MDCButtonBar instance to which the typography scheme should be applied.
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param buttonBar A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                   toButtonBar:(nonnull MDCButtonBar *)buttonBar;
