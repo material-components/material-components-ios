@@ -9,8 +9,7 @@ path: <#root_path#>/TypographyTheming/
 
 # <#component_name#> Typography Theming
 
-You can theme <#a_component_name#> with your app's typography scheme using the TypographyThemer
-extension.
+You can theme <#a_component_name#> with your app's typography scheme using the TypographyThemer extension.
 
 You must first add the Typography Themer extension to your project:
 
@@ -29,8 +28,8 @@ import MaterialComponents.Material<#component#>_TypographyThemer
 // Step 2: Create or get a typography scheme
 let typographyScheme = MDCTypographyScheme()
 
-// Step 3: Apply the color scheme to your component
-<#themer_api#>.applyTypographyScheme(typographyScheme, to: component)
+// Step 3: Apply the typography scheme to your component
+<#typography_themer_api#>.applyTypographyScheme(typographyScheme, to: component)
 ```
 
 #### Objective-C
@@ -42,8 +41,8 @@ let typographyScheme = MDCTypographyScheme()
 // Step 2: Create or get a typography scheme
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
-// Step 3: Apply the color scheme to your component
-[<#themer_api#> applyTypographyScheme:colorScheme
-                  to<#component_parameter#>:component];
+// Step 3: Apply the typography scheme to your component
+[<#typography_themer_api#> applyTypographyScheme:colorScheme
+     to<#themer_parameter_name#>:component];
 ```
 <!--</div>-->

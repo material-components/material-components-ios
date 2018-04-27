@@ -17,8 +17,7 @@ You must first add the Color Themer extension to your project:
 pod 'MaterialComponents/<#component#>+Extensions/ColorThemer'
 ```
 
-<#themer_api#> allows you to theme <#a_component_name#> with your app's color
-scheme.
+## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -30,7 +29,7 @@ import MaterialComponents.Material<#component#>_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-<#themer_api#>.applySemanticColorScheme(colorScheme, to: component)
+<#color_themer_api#>.applySemanticColorScheme(colorScheme, to: component)
 ```
 
 #### Objective-C
@@ -43,7 +42,7 @@ let colorScheme = MDCSemanticColorScheme()
 id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
-[<#themer_api#> applySemanticColorScheme:colorScheme
-                              to<#component_parameter#>:component];
+[<#color_themer_api#> applySemanticColorScheme:colorScheme
+     to<#themer_parameter_name#>:component];
 ```
 <!--</div>-->
