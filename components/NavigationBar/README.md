@@ -127,8 +127,8 @@ MDCNavigationBarTypographyThemer allows you to theme a navigation bar with your 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let colorScheme: MDCSemanticColorScheme()
-let typographyScheme: MDCTypographycheme()
+let colorScheme = MDCSemanticColorScheme()
+let typographyScheme = MDCTypographycheme()
 
 let navigationBar = MDCNavigationBar()
 MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: navigationBar)
