@@ -1,4 +1,4 @@
 # Menus
 
-The [Menus component](https://material.io/go/design-menus) is yet to be completed, please follow the [tracking issue](https://github.com/material-components/material-components-ios/issues/3551) for more information.
+The [Menus component](https://material.io/go/design-menus) is yet to be completed, please follow the [tracking issue](https://www.pivotaltracker.com/epic/show/3954820) for more information.
 

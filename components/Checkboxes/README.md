@@ -1,4 +1,4 @@
 # Checkboxes
 
-The [Checkboxes component](https://material.io/go/design-checkboxes) is yet to be completed, please follow the [tracking issue](https://github.com/material-components/material-components-ios/issues/3547) for more information.
+The [Checkboxes component](https://material.io/go/design-checkboxes) is yet to be completed, please follow the [tracking issue](https://www.pivotaltracker.com/epic/show/3954817) for more information.
 
