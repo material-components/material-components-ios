@@ -7,13 +7,10 @@ path: /docs/theming/
 
 # Theming Material Components
 
-Material Theming is a consistent way to apply a uniform design across your app when using Material Components for iOS.
+Material Theming is a consistent way to apply a uniform design across your app when using Material Components for iOS. Material Theming on iOS consists of two primary patterns: schemes and themers.
 
-Material Theming on iOS consists of two primary patterns: schemes and themers.
-
-**Schemes** represent your design as systemized symbols.
-
-**Themers** are the glue that apply scheme symbols to components.
+- **Schemes** represent your design as systemized symbols.
+- **Themers** are the glue that apply scheme symbols to components.
 
 For example, there is a scheme for both the Material Design typography system and the Material
 Design color system. Most components have a themer for at least one of these systems.
