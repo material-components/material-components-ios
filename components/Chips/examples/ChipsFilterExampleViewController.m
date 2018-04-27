@@ -17,7 +17,7 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
-#import "MaterialChips+ColorThemer.h"
+#import "MaterialChips+ChipThemer.h"
 
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
@@ -106,12 +106,13 @@
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
  
+  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  
   if (_isStroked) {
-    [chipView setBorderWidth:1 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:chipView];
+    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
   } else {
-    [chipView setBorderWidth:0 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:chipView];
+    [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
   }
 
   return cell;

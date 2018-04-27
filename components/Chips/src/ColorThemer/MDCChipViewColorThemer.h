@@ -34,8 +34,22 @@
                       toChipView:(nonnull MDCChipView *)chipView;
 
 /**
+ Applies a color scheme's properties to the component instance with the outlined style.
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param chipView @c A component instance to which the color scheme should be applied.
+ */
++ (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                                 toChipView:(nonnull MDCChipView *)chipView;
+
+#pragma mark - Soon to be deprecated
+
+/**
  Applies a color scheme's properties to a stroked MDCChipView.
 
+ @warning This method will soon be deprecated. Consider using
+ @c +applyOutlinedVariantWithColorScheme:toChipView: instead.
+ 
  @param colorScheme The color scheme to apply to the component instance.
  @param strokedChipView A component instance to which the color scheme should be applied.
  */
