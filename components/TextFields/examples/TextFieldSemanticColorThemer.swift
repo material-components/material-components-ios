@@ -232,8 +232,4 @@ extension TextFieldSemanticColorThemer {
     return ["Text Field", "Theming Text Fields"]
   }
 
-  @objc class func catalogIsDebug() -> Bool {
-    return true
-  }
-
 }
