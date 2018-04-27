@@ -20,16 +20,16 @@
 #import "MaterialTypographyScheme.h"
 
 /**
- Used to apply a typography scheme to theme an MDCFeatureHighlightViewController.
+ The Material Design typography system's themer for instances of MDCFeatureHighlightViewController.
  */
 @interface MDCFeatureHighlightTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme to an MDCFeatureHighlightViewController.
- 
- @param typographyScheme The typography scheme to apply to an MDCFeatureHighlightViewController.
- @param featureHighlightViewController An MDCFeatureHighlightViewController instance to apply a
- typography scheme.
+ Applies a typography scheme's properties to an MDCFeatureHighlightViewController.
+
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param featureHighlightViewController A component instance to which the typography scheme should be
+ applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
     toFeatureHighlightViewController:

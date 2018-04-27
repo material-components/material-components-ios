@@ -20,15 +20,15 @@
 #import "MaterialColorScheme.h"
 
 /**
- Used to apply a color scheme to theme to MDCCard and MDCCardCollectionCell.
+ The Material Design color system's themer for instances of MDCCard and MDCCardCollectionCell.
  */
 @interface MDCCardsColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCCard.
 
- @param colorScheme The color scheme to apply to MDCCard.
- @param card An MDCCard instance to which the color scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param card A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toCard:(nonnull MDCCard *)card;
@@ -36,8 +36,8 @@
 /**
  Applies a color scheme's properties to an MDCCardCollectionCell.
 
- @param colorScheme The color scheme to apply to MDCCardCollectionCell.
- @param cardCell An MDCCardCollectionCell instance to which the color scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param cardCell A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell;

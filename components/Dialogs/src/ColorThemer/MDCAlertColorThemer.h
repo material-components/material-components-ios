@@ -20,22 +20,27 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
+ The Material Design color system's themer for instances of MDCAlertController.
  */
 @interface MDCAlertColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
+ Applies a color scheme's properties to an MDCAlertController.
 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
- @param alertController An MDCAlertController instance to which the color scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param alertController A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                toAlertController:(nonnull MDCAlertController *)alertController;
 
+#pragma mark - Soon to be deprecated
+
 /**
  Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
+
+ @warning This method will soon be deprecated. There is no direct replacement. Consider using
+ @c applySemanticColorScheme:toAlertController: instead.
+
  @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme;
