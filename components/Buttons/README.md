@@ -2,7 +2,7 @@
 title: "Buttons"
 layout: detail
 section: components
-excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
+excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a contained button and a floating action button."
 iconId: button
 path: /catalog/buttons/
 api_doc_root: true
@@ -14,7 +14,7 @@ api_doc_root: true
   <img src="docs/assets/buttons.png" alt="Buttons" width="375">
 </div>
 
-Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
+Buttons is a collection of Material Design buttons, including a flat button, a contained button and a
 floating action button.
 
 ## Design & API Documentation
@@ -42,9 +42,9 @@ floating action button.
 The _flat button_ does not have its own background color and does not raise when touched. Use a flat
 button in most situations requiring a button.
 
-### Raised Button
-The _raised button_ has its own background color. It floats above its parent slightly, and raises
-briefly when touched. A raised button should be used when a flat button would get lost among other
+### Contained Button
+The _contained button_ has its own background color. It floats above its parent slightly, and raises
+briefly when touched. A contained button should be used when a flat button would get lost among other
 UI elements on the screen.
 
 ### Floating Action Button
@@ -52,7 +52,7 @@ The _floating action_ button is circular, floats a considerable amount above its
 background color, and also raises briefly when touched. Only use a floating action button for the
 main action of a screen.
 
-Flat button, raised button and floating action buttons all inherit from the same MDCButton class.
+Flat button, contained button and floating action buttons all inherit from the same MDCButton class.
 You should not directly instantiate an MDCButton object.
 
 - - -
@@ -157,35 +157,35 @@ MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
 
 
 
-### Create a Raised Button
+### Create a Contained Button
 
-Create a Raised button and change its default elevation.
-The default elevation for _raised buttons_ in resting state is 2 dp.
+Create a contained button and change its default elevation.
+The default elevation for _contained buttons_ in resting state is 2 dp.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-let raisedButton = MDCRaisedButton()
+let containedButton = MDCRaisedButton()
 // See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
-raisedButton.setElevation(4, for: .normal)
-raisedButton.setTitle("Tap Me Too", for: .normal)
-raisedButton.sizeToFit()
-raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-self.view.addSubview(raisedButton)
+containedButton.setElevation(4, for: .normal)
+containedButton.setTitle("Tap Me Too", for: .normal)
+containedButton.sizeToFit()
+containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+self.view.addSubview(containedButton)
 ```
 
 #### Objective-C
 
 ``` objc
-MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
+MDCRaisedButton *containedButton = [[MDCRaisedButton alloc] init];
 // See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
-[raisedButton setElevation:4.0f forState:UIControlStateNormal];
-[raisedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];
-[raisedButton sizeToFit];
-[raisedButton addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
-[self.view addSubview:raisedButton];
+[containedButton setElevation:4.0f forState:UIControlStateNormal];
+[containedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];
+[containedButton sizeToFit];
+[containedButton addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
+[self.view addSubview:containedButton];
 ```
 <!--</div>-->
 
