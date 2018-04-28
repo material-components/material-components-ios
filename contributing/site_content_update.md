@@ -1,10 +1,10 @@
 # Site Content Update
 
 ## Overview
-Material Components for iOS site consists of 2 parts: [document site](https
-://material-ext.appspot.com/mdc-ios-preview/) and API reference site of each
+Material Components for iOS site consists of 2 parts:
+[document site](https://material.io/components/ios/) and API reference site of each
 components (e.g,
-[AppBar API](https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html), etc...)
+[AppBar API](https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html), etc...)
 
 This document will walk you through the process for updating the contents on
 document site and API reference, or adding new sections to the document site.
@@ -87,4 +87,5 @@ gcloud init
 scripts/build_site.sh --deploy production
 ```
 
-Open the [Material Components for iOS](https://material-ext.appspot.com/mdc-ios-preview) site and make sure your modification is there.
+Open the [Material Components for iOS](https://material.io/components/ios/) site
+and make sure your modification is there.
