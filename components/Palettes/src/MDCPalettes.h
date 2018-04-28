@@ -71,7 +71,7 @@ CG_EXTERN const MDCPaletteAccent _Nonnull MDCPaletteAccent700Name;
  class provides access to the pre-defined set of Material palettes. MDCPalette objects are
  immutable; it is safe to use them from multiple threads in your app.
 
- @see https://material.io/guidelines/style/color.html#color-color-palette
+ @see https://material.io/go/design-theming#color-color-palette
  */
 @interface MDCPalette : NSObject
 

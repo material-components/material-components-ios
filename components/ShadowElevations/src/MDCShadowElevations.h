@@ -27,7 +27,7 @@
 
 /**
  Constants for elevation: the relative depth, or distance, between two surfaces along the z-axis.
- https://material.io/guidelines/material-design/elevation-shadows.html
+ https://material.io/go/design-elevation
  */
 NS_SWIFT_NAME(ShadowElevation)
 typedef CGFloat MDCShadowElevation MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM;

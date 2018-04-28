@@ -22,7 +22,7 @@
  The spec defines the Roboto font family and uses three fonts in the named styles. Use this
  protocol to define your own fonts if there is a brand need.
 
- @see https://material.io/guidelines/style/typography.html#typography-styles
+ @see https://material.io/go/design-typography#typography-styles
  */
 @protocol MDCTypographyFontLoading <NSObject>
 @required
@@ -71,7 +71,7 @@
 
  To use these fonts, you must add MaterialTypography.bundle to your target.
 
- @see https://material.io/guidelines/style/typography.html#typography-styles
+ @see https://material.io/go/design-typography#typography-styles
  */
 @interface MDCTypography : NSObject
 

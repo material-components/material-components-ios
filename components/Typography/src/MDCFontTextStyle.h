@@ -17,7 +17,7 @@
  Material font text styles
 
  These styles are defined in:
- https://material.io/guidelines/style/typography.html
+ https://material.io/go/design-typography
  This enumeration is a set of semantic descriptions intended to describe the fonts returned by
  + [UIFont mdc_preferredFontForMaterialTextStyle:]
  + [UIFontDescriptor mdc_preferredFontDescriptorForMaterialTextStyle:]
