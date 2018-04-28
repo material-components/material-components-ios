@@ -25,7 +25,7 @@ Cards adhere to Material Design layout and styling.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec">
-    <a href="https://material.io/guidelines/components/cards.html">Material Design guidelines: Cards</a>
+    <a href="https://material.io/go/design-cards">Material Design guidelines: Cards</a>
   </li>
 </ul>
 

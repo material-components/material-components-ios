@@ -18,7 +18,7 @@
 
 /**
  Material Design compliant text field for full width applications like email forms.
- https://material.io/guidelines/components/text-fields.html#text-fields-field-variations
+ https://material.io/go/design-text-fields#text-fields-field-variations
 
  NOTE: This class does not inherit from MDCTextInputControllerBase. It does not have a floating
  placeholder.

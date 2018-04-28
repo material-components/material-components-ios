@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorMode) {
  a standard UIActivityIndicator, MDCActivityIndicator supports showing determinate progress and uses
  custom Material Design animation for indeterminate progress.
 
- See https://material.io/guidelines/components/progress-activity.html
+ See https://material.io/go/design-progress-indicators
  */
 IB_DESIGNABLE
 @interface MDCActivityIndicator : UIView

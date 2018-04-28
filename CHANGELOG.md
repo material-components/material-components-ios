@@ -4804,7 +4804,7 @@ It's now possible to customize fonts on Tabs.
 
 ### Chips (new)
 
-* Added [Chips](https://material.io/guidelines/components/chips.html).
+* Added [Chips](https://material.io/go/design-chips).
 
 ### LibraryInfo (new)
 
@@ -8740,7 +8740,7 @@ Given the usage of clients on versions of iOS below 8.0 and the increased power 
 
 ## New component: Tabs
 
-[Tab component with MDCTabBar (#1164)](https://github.com/material-components/material-components-ios/tree/develop/components/Tabs) is an implementation of the [Material tabs](https://material.io/guidelines/components/tabs.html) used to explore and switch between different views. Try tabs out! (Brian Moore with Will Larche)
+[Tab component with MDCTabBar (#1164)](https://github.com/material-components/material-components-ios/tree/develop/components/Tabs) is an implementation of the [Material tabs](https://material.io/go/design-tabs) used to explore and switch between different views. Try tabs out! (Brian Moore with Will Larche)
 
 ## Typography
 
@@ -9876,7 +9876,7 @@ No public API changes in this release. Note that the 17.0.0 release was not publ
 
 ### Behavior changes in MDCSnackbar
 
-The behavior of MDCSnackbar has been changed to better match [the spec](https://material.io/guidelines/components/snackbars-toasts.html#snackbars-toasts-specs):
+The behavior of MDCSnackbar has been changed to better match [the spec](https://material.io/go/design-snackbars#snackbars-toasts-specs):
 * Animation duration increased from 0.15s to 0.5s.
 * The snackbar no longer fades out, but translates down off screen.
 * The snackbar's text and button (but not the background) fade out during the animation.

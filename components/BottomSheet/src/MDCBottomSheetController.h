@@ -21,7 +21,7 @@
 /**
  A view controller for presenting other view controllers as bottom sheets.
 
- https://material.io/guidelines/components/bottom-sheets.html
+ https://material.io/go/design-sheets-bottom
 
  Show a bottom sheet by creating an MDCBottomSheetController instance with a contentViewController
  and presenting it with -[UIViewController presentViewController:animated:completion].
