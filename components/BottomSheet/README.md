@@ -20,7 +20,7 @@ Bottom sheets slide up from the bottom of the screen to reveal more content. Bot
 ## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/bottom-sheets.html">Material Design guidelines: Bottom Sheet</a></li>
+<li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-sheets-bottom">Material Design guidelines: Bottom Sheet</a></li>
 </ul>
 
 - - -

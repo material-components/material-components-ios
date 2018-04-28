@@ -22,7 +22,7 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
-// https://material.io/guidelines/components/dialogs.html#dialogs-specs
+// https://material.io/go/design-dialogs#dialogs-specs
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
