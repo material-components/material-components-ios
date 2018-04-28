@@ -33,7 +33,7 @@ extern const CGFloat MDCCellDefaultThreeLineHeight;
  supports Material Design layout and styling. It provides two labels for text as well as an
  image view. The default layout specifications can be found at the following link.
 
- @see https://material.io/guidelines/components/lists.html#lists-specs
+ @see https://material.io/go/design-lists#lists-specs
  */
 @interface MDCCollectionViewTextCell : MDCCollectionViewCell
 

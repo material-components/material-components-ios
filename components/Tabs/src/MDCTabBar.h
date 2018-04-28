@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, MDCTabBarItemState) {
 
  Note: This class is not intended to be subclassed.
 
- @see https://material.io/guidelines/components/tabs.html
+ @see https://material.io/go/design-tabs
  */
 IB_DESIGNABLE
 @interface MDCTabBar : UIView <UIBarPositioning>

@@ -24,7 +24,7 @@ For more information on text field styles, and animated images of each style in 
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec">
-    <a href="https://material.io/guidelines/components/text-fields.html">Material Design guidelines: Text Fields</a>
+    <a href="https://material.io/go/design-text-fields">Material Design guidelines: Text Fields</a>
   </li>
   <li class="icon-list-item icon-list-item--link">
     <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html">API: MDCTextField</a>
