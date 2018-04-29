@@ -13,7 +13,7 @@ You can theme a navigation bar with your app's typography scheme using the Typog
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/NavigationBar+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/NavigationBar+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialNavigationBar_TypographyThemer
 
@@ -34,7 +34,7 @@ MDCNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme, to: com
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialNavigationBar+TypographyThemer.h"
 

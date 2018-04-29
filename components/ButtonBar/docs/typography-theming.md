@@ -13,7 +13,7 @@ You can theme a button bar with your app's typography scheme using the Typograph
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/ButtonBar+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/ButtonBar+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialButtonBar_TypographyThemer
 
@@ -34,7 +34,7 @@ MDCButtonBarTypographyThemer.applyTypographyScheme(typographyScheme, to: compone
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialButtonBar+TypographyThemer.h"
 

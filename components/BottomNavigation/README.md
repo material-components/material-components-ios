@@ -45,7 +45,7 @@ pod 'MaterialComponents/BottomNavigation'
 ~~~
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/BottomNavigation+Extensions'
 ```
 
@@ -76,13 +76,13 @@ Before using Bottom Navigation, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents.MaterialBottomNavigation
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialBottomNavigation.h"
 ```
 <!--</div>-->
@@ -92,7 +92,7 @@ import MaterialComponents.MaterialBottomNavigation
 
 Define a MDCBottomNavigationBar.
 
-``` swift
+```swift
 // Create a bottom navigation bar to add to a view.
 let bottomNavBar = MDCBottomNavigationBar()
 ```
@@ -136,7 +136,7 @@ override func viewWillLayoutSubviews() {
 #### Objective-C
 Define a MDCBottomNavigationBar.
 
-``` objc
+```objc
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 ```
 Add the bottom navigation to the parent view and populate its contents.

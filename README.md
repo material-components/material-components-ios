@@ -27,13 +27,13 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 
 Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
 
-``` bash
+```bash
 pod try MaterialComponents
 ```
 
 In case you have already checked out the repo, run the following command:
 
-``` bash
+```bash
 pod install --project-directory=catalog/
 ```
 
@@ -59,13 +59,13 @@ check out their [getting started documentation](https://guides.cocoapods.org/usi
 
 To install CocoaPods, run the following commands:
 
-``` bash
+```bash
 sudo gem install cocoapods
 ```
 
 To integrate Material Components in your existing application, first create a new Podfile:
 
-``` bash
+```bash
 cd your-project-directory
 pod init
 ```
@@ -74,7 +74,7 @@ Next, add the
 [Material Components for iOS pod](https://cocoapods.org/pods/MaterialComponents)
 to your target in your Podfile:
 
-``` ruby
+```ruby
 target "MyApp" do
   ...
   pod 'MaterialComponents'
@@ -86,13 +86,13 @@ at the top of your Podfile.
 
 Then run the command:
 
-``` bash
+```bash
 pod install
 ```
 
 Now you're ready to get started in Xcode. Don't forget to open the workspace Cocoapods created for you instead of the original project:
 
-``` bash
+```bash
 open your-project.xcworkspace
 ```
 
@@ -102,7 +102,7 @@ The components are built upon familiar UIKit classes and can be added to a view 
 
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents.MaterialButtons
 
 class ViewController: UIViewController {
@@ -125,7 +125,7 @@ class ViewController: UIViewController {
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialButtons.h"
 
 @implementation ViewController

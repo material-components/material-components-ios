@@ -75,7 +75,7 @@ pod 'MaterialComponents/Buttons'
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -91,13 +91,13 @@ Before using a Button, you'll need to import the button you want to use:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialButtons.h"
 ```
 <!--</div>-->
@@ -132,7 +132,7 @@ simultaneously interacting with a button and other UI elements.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let flatButton = MDCFlatButton()
 flatButton.customTitleColor = UIColor.gray
 flatButton.setTitle("Tap me", for: .normal)
@@ -143,7 +143,7 @@ self.view.addSubview(flatButton)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
 [flatButton setTitle:@"Tap Me" forState:UIControlStateNormal];
 [flatButton setCustomTitleColor:[UIColor grayColor]];
@@ -164,7 +164,7 @@ The default elevation for _raised buttons_ in resting state is 2 dp.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let raisedButton = MDCRaisedButton()
 // See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
@@ -177,7 +177,7 @@ self.view.addSubview(raisedButton)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
 // See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
@@ -196,7 +196,7 @@ MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let floatingButton = MDCFloatingButton()
 floatingButton.setTitle("+", for: .normal)
 floatingButton.sizeToFit()
@@ -206,7 +206,7 @@ self.view.addSubview(floatingButton)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
 [floatingButton setTitle:@"+" forState:UIControlStateNormal];
 [floatingButton sizeToFit];

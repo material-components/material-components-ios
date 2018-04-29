@@ -13,7 +13,7 @@ You can theme a chip with your app's color scheme using the ColorThemer extensio
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Chips+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Chips+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialChips_ColorThemer
 
@@ -34,7 +34,7 @@ MDCChipViewColorThemer.applySemanticColorScheme(colorScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialChips+ColorThemer.h"
 

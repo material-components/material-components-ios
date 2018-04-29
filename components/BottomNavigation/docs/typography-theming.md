@@ -13,7 +13,7 @@ You can theme a bottom navigation with your app's typography scheme using the Ty
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/BottomNavigation+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/BottomNavigation+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialBottomNavigation_TypographyThemer
 
@@ -34,7 +34,7 @@ MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme, t
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialBottomNavigation+TypographyThemer.h"
 

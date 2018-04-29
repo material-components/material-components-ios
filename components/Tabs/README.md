@@ -43,13 +43,13 @@ pod 'MaterialComponents/Tabs'
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/Tabs+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -75,13 +75,13 @@ To use the tab bar in your code, import the MaterialTabs umbrella header (Object
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialTabs.h"
 ```
 
@@ -130,7 +130,7 @@ navigation bar. The bar will automatically update with the appropriate styling.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let tabBar = MDCTabBar(frame: view.bounds)
 tabBar.items = [
 UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
@@ -144,7 +144,7 @@ view.addSubview(tabBar)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:self.view.bounds];
 tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],

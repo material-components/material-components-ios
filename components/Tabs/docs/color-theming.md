@@ -13,7 +13,7 @@ You can theme a tab bar with your app's color scheme using the ColorThemer exten
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Tabs+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Tabs+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialTabs_ColorThemer
 
@@ -37,7 +37,7 @@ MDCTabBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, toTabs: c
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialTabs+ColorThemer.h"
 
