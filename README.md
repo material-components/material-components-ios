@@ -109,11 +109,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let raiseButton = MDCRaisedButton()
-        raiseButton.setTitle("Raised Button", for: .normal)
-        raiseButton.sizeToFit()
-        raiseButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
-        view.addSubview(raiseButton)
+        let raisedButton = MDCRaisedButton()
+        raisedButton.setTitle("Raised Button", for: .normal)
+        raisedButton.sizeToFit()
+        raisedButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        view.addSubview(raisedButton)
     }
 
     @objc func tapped(sender: UIButton){
