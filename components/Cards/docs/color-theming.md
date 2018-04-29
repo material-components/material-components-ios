@@ -13,7 +13,7 @@ You can theme a card with your app's color scheme using the ColorThemer extensio
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Cards+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Cards+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialCards_ColorThemer
 
@@ -34,7 +34,7 @@ MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialCards+ColorThemer.h"
 

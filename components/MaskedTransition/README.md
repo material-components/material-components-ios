@@ -34,7 +34,7 @@ pod 'MaterialComponents/MaskedTransition'
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -57,13 +57,13 @@ Before using Masked Transition, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialMaskedTransition
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialMaskedTransition.h"
 ```
 <!--</div>-->
@@ -75,14 +75,14 @@ Create an instance of MDCMaskedTransition and assign it to the view controller's
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 vc.transitionController.transition = MDCMaskedTransition(sourceView: button)
 present(vc, animated: true)
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 vc.mdm_transitionController.transition = [[MDCMaskedTransition alloc] initWithSourceView:button];
 [self presentViewController:vc animated:YES completion:nil];
 ```
@@ -96,7 +96,7 @@ dialog centered in the screen you can use the following examples:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let transition = MDCMaskedTransition(sourceView: button)
 transition.calculateFrameOfPresentedView = { info in
   let size = CGSize(width: 200, height: 200)
@@ -111,7 +111,7 @@ present(vc, animated: true)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCMaskedTransition *transition = [[MDCMaskedTransition alloc] initWithSourceView:button];
 transition.calculateFrameOfPresentedView = ^(UIPresentationController *info) {
   CGSize size = CGSizeMake(200, 200);

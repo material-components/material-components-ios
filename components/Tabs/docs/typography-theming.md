@@ -13,7 +13,7 @@ You can theme a tab bar with your app's typography scheme using the TypographyTh
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Tabs+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Tabs+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialTabs_TypographyThemer
 
@@ -34,7 +34,7 @@ MDCTabBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialTabs+TypographyThemer.h"
 

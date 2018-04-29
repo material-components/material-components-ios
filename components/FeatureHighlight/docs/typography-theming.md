@@ -13,7 +13,7 @@ You can theme feature highlight with your app's typography scheme using the Typo
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/FeatureHighlight+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/FeatureHighlight+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialFeatureHighlight_TypographyThemer
 
@@ -34,7 +34,7 @@ MDCFeatureHighlightTypographyThemer.applyTypographyScheme(typographyScheme, to: 
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialFeatureHighlight+TypographyThemer.h"
 

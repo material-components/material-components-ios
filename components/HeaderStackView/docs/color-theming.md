@@ -13,7 +13,7 @@ You can theme a header stack view with your app's color scheme using the ColorTh
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/HeaderStackView+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/HeaderStackView+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialHeaderStackView_ColorThemer
 
@@ -34,7 +34,7 @@ MDCHeaderStackViewColorThemer.applySemanticColorScheme(colorScheme, to: componen
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialHeaderStackView+ColorThemer.h"
 

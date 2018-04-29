@@ -47,14 +47,14 @@ the linear implementation.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/ActivityIndicator'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -64,13 +64,13 @@ To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialActivityIndicator
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialActivityIndicator.h"
 ```
 <!--</div>-->
@@ -91,7 +91,7 @@ MDCActivityIndicator instances are indeterminate by default.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let activityIndicator = MDCActivityIndicator()
 activityIndicator.sizeToFit()
 view.addSubview(activityIndicator)
@@ -105,7 +105,7 @@ activityIndicator.stopAnimating()
 
 #### Objective-C
 
-``` objc
+```objc
 MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
 [activityIndicator sizeToFit];
 [view addSubview:activityIndicator];
@@ -130,7 +130,7 @@ progress.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let activityIndicator = MDCActivityIndicator()
 activityIndicator.sizeToFit()
 activityIndicator.indicatorMode = .determinate
@@ -146,7 +146,7 @@ activityIndicator.stopAnimating()
 
 #### Objective-C
 
-``` objc
+```objc
 MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
 [activityIndicator sizeToFit];
 activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
@@ -168,14 +168,14 @@ Consider using this property if your brand consists of more than one primary col
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let activityIndicator = MDCActivityIndicator()
 activityIndicator.cycleColors = [.blue, .red, .green, .yellow]
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
 activityIndicator.cycleColors =  @[ UIColor.blueColor,
                                     UIColor.redColor,

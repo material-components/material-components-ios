@@ -13,7 +13,7 @@ You can theme a dialog with your app's color scheme using the ColorThemer extens
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Dialogs+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Dialogs+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialDialogs_ColorThemer
 
@@ -34,7 +34,7 @@ MDCAlertColorThemer.applySemanticColorScheme(colorScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialDialogs+ColorThemer.h"
 

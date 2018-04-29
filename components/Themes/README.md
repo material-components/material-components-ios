@@ -56,13 +56,13 @@ Before using a themer, you'll need to import MaterialThemes to make use of color
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents.MaterialThemes
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialThemes.h"
 ```
 <!--</div>-->
@@ -74,7 +74,7 @@ import MaterialComponents.MaterialThemes
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 // Define a color scheme.
 let colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
                                       primaryLightColor: .init(white: 0.7, alpha: 1),
@@ -89,7 +89,7 @@ MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
 
 #### Objective-C
 
-``` objc
+```objc
 MDCBasicColorScheme *colorScheme =
           [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor colorWithWhite:0.2 alpha:1]
                                           primaryLightColor:[UIColor colorWithWhite:0.7 alpha:1]

@@ -76,7 +76,7 @@ You need to be one of the Material Components for iOS core members in order to d
 
 If you are able to deploy the site, run
 
-``` bash
+```bash
 # Run these to install gsutil for the first time
 curl https://sdk.cloud.google.com | bash
 exec -l $SHELL

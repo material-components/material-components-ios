@@ -27,7 +27,7 @@ secondary colors to match your brand colors.
 
 In order to access the scheme APIs you'll first need to add the scheme target to your Podfile:
 
-``` bash
+```bash
 pod 'MaterialComponents/schemes/Color'
 pod 'MaterialComponents/schemes/Typography'
 ```
@@ -39,7 +39,7 @@ the MDCCatalog, but the approach you take should be influenced by your app's arc
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialColorScheme
 import MaterialTypographyScheme
 
@@ -49,7 +49,7 @@ let typographyScheme = MDCTypographyScheme()
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
@@ -64,7 +64,7 @@ To apply a scheme to a component you must first add the component's themers to y
 Podfile. You can see which themers a given component supports by looking at the component's src/
 directory.
 
-``` bash
+```bash
 pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
 pod 'MaterialComponents/AppBar+Extensions/TypographyThemer'
 ```
@@ -74,7 +74,7 @@ You can now access the AppBar themers.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents.MaterialAppBar_ColorThemer
 import MaterialComponents.MaterialAppBar_TypographyThemer
 
@@ -86,7 +86,7 @@ func applyGlobalTheme(to appBar: MDCAppBar) {
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 

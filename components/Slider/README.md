@@ -38,19 +38,19 @@ or discrete set of values.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/Slider'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/Slider+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -66,13 +66,13 @@ Before using Slider, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialSlider
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialSlider.h"
 ```
 <!--</div>-->
@@ -84,7 +84,7 @@ MDCSlider can be be used like a standard `UIControl`.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -102,7 +102,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 
 #### Objective C
 
-``` objc
+```objc
 - (void)viewDidLoad {
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(50, 50, 100, 27)];
   [slider addTarget:self
@@ -124,7 +124,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
  let slider = MDCSlider()
  slider.isStatefulAPIEnabled = true
 
@@ -134,7 +134,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 
 #### Objective C
 
-``` objc
+```objc
  MDCSlider *slider = [[MDCSlider alloc] init];
  slider.statefulAPIEnabled = YES;
  

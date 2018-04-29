@@ -13,7 +13,7 @@ You can theme a flexible header with your app's color scheme using the ColorThem
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/FlexibleHeader+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/FlexibleHeader+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialFlexibleHeader_ColorThemer
 
@@ -34,7 +34,7 @@ MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: component
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialFlexibleHeader+ColorThemer.h"
 

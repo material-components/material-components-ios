@@ -13,7 +13,7 @@ You can theme an activity indicator with your app's color scheme using the Color
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/ActivityIndicator+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/ActivityIndicator+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialActivityIndicator_ColorThemer
 
@@ -34,7 +34,7 @@ MDCActivityIndicatorColorThemer.applySemanticColorScheme(colorScheme, to: compon
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialActivityIndicator+ColorThemer.h"
 

@@ -38,19 +38,19 @@ desired animation of the control.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/PageControl'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/PageControl+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -96,13 +96,13 @@ Before using Page Control, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialPageControl
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialPageControl.h"
 ```
 <!--</div>-->
@@ -120,7 +120,7 @@ notified of page changes.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let pageControl = MDCPageControl()
 let scrollView = UIScrollView()
 let pages = NSMutableArray()
@@ -150,7 +150,7 @@ func didChangePage(sender: MDCPageControl){
 
 #### Objective-C
 
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -187,7 +187,7 @@ scrolling movement of the designated scroll view.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 func scrollViewDidScroll(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidScroll(scrollView)
 }
@@ -203,7 +203,7 @@ func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
 
 #### Objective-C
 
-``` objc
+```objc
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   [self.pageControl scrollViewDidScroll:scrollView];
 }

@@ -13,7 +13,7 @@ You can theme a card with your app's schemes using the CardThemer extension.
 
 You must first add the Card Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Cards+Extensions/CardThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Cards+Extensions/CardThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the CardThemer extension
 import MaterialComponents.MaterialCards_CardThemer
 
@@ -34,7 +34,7 @@ MDCCardThemer.applyScheme(cardScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the CardThemer extension
 #import "MaterialCards+CardThemer.h"
 

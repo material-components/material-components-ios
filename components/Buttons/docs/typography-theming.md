@@ -13,7 +13,7 @@ You can theme buttons with your app's typography scheme using the TypographyThem
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Buttons+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Buttons+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialButtons_TypographyThemer
 
@@ -34,7 +34,7 @@ MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialButtons+TypographyThemer.h"
 

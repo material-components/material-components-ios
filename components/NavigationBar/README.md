@@ -41,19 +41,19 @@ Consistent with iOS design guidelines, the title in the navigation bar is center
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/NavigationBar'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/NavigationBar+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -88,13 +88,13 @@ Before using Navigation Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialNavigationBar
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialNavigationBar.h"
 ```
 <!--</div>-->
@@ -116,12 +116,12 @@ To begin observing a UINavigationItem instance you must call `observeNavigationI
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 navigationBar.observe(navigationItem)
 ```
 
 #### Objective-C
-``` objc
+```objc
 [navigationBar observeNavigationItem:self.navigationItem];
 ```
 <!--</div>-->
@@ -130,12 +130,12 @@ navigationBar.observe(navigationItem)
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 navigationBar.unobserveNavigationItem()
 ```
 
 #### Objective-C
-``` objc
+```objc
 [navigationBar unobserveNavigationItem];
 ```
 <!--</div>-->

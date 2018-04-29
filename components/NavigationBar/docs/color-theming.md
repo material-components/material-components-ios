@@ -13,7 +13,7 @@ You can theme a navigation bar with your app's color scheme using the ColorTheme
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/NavigationBar+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/NavigationBar+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialNavigationBar_ColorThemer
 
@@ -34,7 +34,7 @@ MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialNavigationBar+ColorThemer.h"
 

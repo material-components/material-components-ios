@@ -13,7 +13,7 @@ You can theme an snackbar with your app's color scheme using the ColorThemer ext
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Snackbar+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Snackbar+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialSnackbar_ColorThemer
 
@@ -34,7 +34,7 @@ MDCSnackbarColorThemer.applySemanticColorScheme(colorScheme)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialSnackbar+ColorThemer.h"
 
