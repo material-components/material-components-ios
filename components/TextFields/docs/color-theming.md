@@ -13,7 +13,7 @@ You can theme a text field with your app's color scheme using the ColorThemer ex
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/TextFields+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/TextFields+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialTextFields_ColorThemer
 
@@ -43,7 +43,7 @@ MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme,
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialTextFields+ColorThemer.h"
 

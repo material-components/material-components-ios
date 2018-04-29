@@ -33,7 +33,7 @@ selection for deletion.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
-``` objc
+```objc
 // Enable editing.
 [self.editor setEditing:YES animated:YES];
 
@@ -45,7 +45,7 @@ selection for deletion.
 ```
 
 #### Swift
-``` swift
+```swift
 // Enable editing.
 self.editor.setEditing(true, animated: true)
 
@@ -62,7 +62,7 @@ override func collectionView(collectionView: UICollectionView,
 > **collectionView:viewForSupplementaryElementOfKind:atIndexPath:** method as shown below.
 > <!--<div class="material-code-render" markdown="1">-->
 > #### Objective-C
-> ``` objc
+> ```objc
 > - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
 >            viewForSupplementaryElementOfKind:(NSString *)kind
 >                                  atIndexPath:(NSIndexPath *)indexPath
@@ -79,7 +79,7 @@ override func collectionView(collectionView: UICollectionView,
 > ```
 >
 > #### Swift
-> ``` swift
+> ```swift
 > override func collectionView(_ collectionView: UICollectionView,
 >        viewForSupplementaryElementOfKind kind: String,
 >                                  at indexPath: IndexPath) -> UICollectionReusableView
@@ -116,7 +116,7 @@ The following illustrates a simple cell deletion example.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
-``` objc
+```objc
 // Enable editing.
 [self.editor setEditing:YES animated:YES];
 
@@ -139,7 +139,7 @@ The following illustrates a simple cell deletion example.
 ```
 
 #### Swift
-``` swift
+```swift
 // Enable editing.
 self.editor.setEditing(true, animated: true)
 
@@ -179,7 +179,7 @@ The following illustrates a simple cell reorder example.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
-``` objc
+```objc
 // Enable editing.
 [self.editor setEditing:YES animated:YES];
 
@@ -197,7 +197,7 @@ The following illustrates a simple cell reorder example.
 ```
 
 #### Swift
-``` swift
+```swift
 // Enable editing.
 self.editor.setEditing(true, animated: true)
 
@@ -226,7 +226,7 @@ at the specified index paths from your `UICollectionViewDataSource`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
-``` objc
+```objc
 // Enable swipe-to-dismiss items.
 - (BOOL)collectionViewAllowsSwipeToDismissItem:(UICollectionView *)collectionView {
   return YES;
@@ -249,7 +249,7 @@ at the specified index paths from your `UICollectionViewDataSource`.
 ```
 
 #### Swift
-``` swift
+```swift
 // Enable swipe-to-dismiss items.
 override func collectionViewAllowsSwipeToDismissItem(collectionView: UICollectionView) -> Bool {
   return true
@@ -283,7 +283,7 @@ to remove the appropriate data at the specified section from your `UICollectionV
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
-``` objc
+```objc
 // Enable swipe-to-dismiss sections.
 - (BOOL)collectionViewAllowsSwipeToDismissSection:(UICollectionView *)collectionView {
   return YES;
@@ -304,7 +304,7 @@ to remove the appropriate data at the specified section from your `UICollectionV
 ```
 
 #### Swift
-``` swift
+```swift
 // Enable swipe-to-dismiss sections.
 override func collectionViewAllowsSwipeToDismissItem(collectionView: UICollectionView) -> Bool {
   return true

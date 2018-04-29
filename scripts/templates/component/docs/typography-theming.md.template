@@ -13,7 +13,7 @@ You can theme <#a_component_name#> with your app's typography scheme using the T
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/<#component#>+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/<#component#>+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.Material<#component#>_TypographyThemer
 
@@ -34,7 +34,7 @@ let typographyScheme = MDCTypographyScheme()
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "Material<#component#>+TypographyThemer.h"
 

@@ -41,19 +41,19 @@ navigation experience.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/AppBar'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/AppBar+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -97,13 +97,13 @@ Before using App Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialAppBar.h"
 ```
 <!--</div>-->
@@ -128,7 +128,7 @@ You must also add the `headerViewController` as a child view controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let appBar = MDCAppBar()
 
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -140,7 +140,7 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 
 #### Objective-C
 
-``` objc
+```objc
 @interface ObjcViewController ()
 @property(nonatomic, strong, nonnull) MDCAppBar *appBar;
 @end
@@ -168,7 +168,7 @@ ensure that the App Bar's Flexible Header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -178,7 +178,7 @@ override func viewDidLoad() {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 

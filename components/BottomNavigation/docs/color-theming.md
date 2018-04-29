@@ -13,7 +13,7 @@ You can theme a bottom navigation with your app's color scheme using the ColorTh
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/BottomNavigation+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/BottomNavigation+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
@@ -34,7 +34,7 @@ MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: comp
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialBottomNavigation+ColorThemer.h"
 

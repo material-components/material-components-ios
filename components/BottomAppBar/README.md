@@ -70,13 +70,13 @@ Before using Bottom App Bar, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents.MaterialBottomAppBar
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialBottomAppBar.h"
 ```
 <!--</div>-->
@@ -88,7 +88,7 @@ import MaterialComponents.MaterialBottomAppBar
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let bottomBarView = MDCBottomAppBarView(frame: frame)
 view.addSubview(bottomBarView)
 
@@ -120,7 +120,7 @@ bottomBarView.trailingBarButtonItems = [ barButtonTrailingItem ]
 
 #### Objective-C
 
-``` objc
+```objc
 MDCBottomAppBarView *bottomBarView = [[MDCBottomAppBarView alloc] initWithFrame:frame];
 [view addSubview:bottomBarView];
 

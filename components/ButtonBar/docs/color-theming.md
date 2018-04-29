@@ -13,7 +13,7 @@ You can theme a button bar with your app's color scheme using the ColorThemer ex
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/ButtonBar+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/ButtonBar+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialButtonBar_ColorThemer
 
@@ -34,7 +34,7 @@ MDCButtonBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialButtonBar+ColorThemer.h"
 

@@ -13,7 +13,7 @@ You can theme feature highlight with your app's color scheme using the ColorThem
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/FeatureHighlight+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/FeatureHighlight+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialFeatureHighlight_ColorThemer
 
@@ -34,7 +34,7 @@ MDCFeatureHighlightColorThemer.applySemanticColorScheme(colorScheme, to: compone
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialFeatureHighlight+ColorThemer.h"
 

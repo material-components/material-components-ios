@@ -31,14 +31,14 @@ Bottom sheets slide up from the bottom of the screen to reveal more content. Bot
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/BottomSheet'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -52,13 +52,13 @@ Before using Bottom Sheet, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialBottomSheet
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialBottomSheet.h"
 ```
 <!--</div>-->
@@ -69,7 +69,7 @@ Create a view controller that the bottom sheet will hold and initialize the bott
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // View controller the bottom sheet will hold
 let viewController: ViewController = ViewController()
 // Initialize the bottom sheet with the view controller just created
@@ -79,7 +79,7 @@ present(bottomSheet, animated: true, completion: nil)
 ```
 
 #### Objective-C
-``` objc
+```objc
 // View controller the bottom sheet will hold
 ViewController *viewController = [[ViewController alloc] init];
 // Initialize the bottom sheet with the view controller just created
@@ -91,13 +91,13 @@ MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] initWi
 Create a button that will call the code above.
 
 #### Swift
-``` swift
+```swift
 let button = UIButton(frame: .zero)
 button.addTarget(self, action: #selector(presentBottomSheet), for: .touchUpInside)
 ```
 
 #### Objective-C
-``` objc
+```objc
 _button = [[UIButton alloc] initWithFrame:CGRectZero];
 [_button addTarget:self action:@selector(presentBottomSheet) forControlEvents:UIControlEventTouchUpInside];
 

@@ -13,7 +13,7 @@ You can theme a dialog with your app's typography scheme using the TypographyThe
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Dialogs+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Dialogs+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialDialogs_TypographyThemer
 
@@ -34,7 +34,7 @@ MDCAlertTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialDialogs+TypographyThemer.h"
 

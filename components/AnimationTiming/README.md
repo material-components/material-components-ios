@@ -37,7 +37,7 @@ pod 'MaterialComponents/AnimationTiming'
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -52,13 +52,13 @@ Before using animation timing, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialAnimationTiming.h"
 ```
 <!--</div>-->
@@ -74,7 +74,7 @@ be used in an animation.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let materialCurve = MDCAnimationTimingFunction.deceleration
 let timingFunction = CAMediaTimingFunction.mdc_function(withType: materialCurve)
 
@@ -84,7 +84,7 @@ animation.timingFunction = timingFunction
 
 #### Objc
 
-``` objc
+```objc
 MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionDeceleration;
 CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
 

@@ -13,7 +13,7 @@ You can theme <#a_component_name#> with your app's color scheme using the ColorT
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/<#component#>+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/<#component#>+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.Material<#component#>_ColorThemer
 
@@ -34,7 +34,7 @@ let colorScheme = MDCSemanticColorScheme()
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "Material<#component#>+ColorThemer.h"
 

@@ -13,7 +13,7 @@ You can theme a chip with your app's typography scheme using the TypographyTheme
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Chips+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Chips+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialChips_TypographyThemer
 
@@ -34,7 +34,7 @@ MDCChipViewTypographyThemer.applyTypographyScheme(typographyScheme, to: componen
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialChips+TypographyThemer.h"
 

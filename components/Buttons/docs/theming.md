@@ -13,7 +13,7 @@ You can theme buttons with your app's schemes using the ButtonThemer extension.
 
 You must first add the Button Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Buttons+Extensions/ButtonThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Buttons+Extensions/ButtonThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ButtonThemer extension
 import MaterialComponents.MaterialButtons_ButtonThemer
 
@@ -35,7 +35,7 @@ MDCTextButtonThemer.applyScheme(buttonScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ButtonThemer extension
 #import "MaterialButtons+ButtonThemer.h"
 

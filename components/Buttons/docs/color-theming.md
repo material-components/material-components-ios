@@ -13,7 +13,7 @@ You can theme buttons with your app's color scheme using the ColorThemer extensi
 
 You must first add the Color Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/Buttons+Extensions/ColorThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/Buttons+Extensions/ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialButtons_ColorThemer
 
@@ -36,7 +36,7 @@ MDCTextButtonColorThemer.applySemanticColorScheme(colorScheme, to: component)
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the ColorThemer extension
 #import "MaterialButtons+ColorThemer.h"
 

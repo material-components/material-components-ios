@@ -60,7 +60,7 @@ Add the `Material Components` pod to the `Podfile` by copying:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 target 'MDC-Tutorial' do
   use_frameworks!
 
@@ -72,7 +72,7 @@ end
 ```
 
 #### Objective-C
-``` objc
+```objc
 target 'MDC-Tutorial' do
   #use_frameworks!
 
@@ -109,7 +109,7 @@ Then import Material Collections and set `ViewController`’s superclass to `MDC
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift (ViewController.swift)
-``` swift
+```swift
 import UIKit
 import MaterialComponents.MaterialCollections
 
@@ -121,7 +121,7 @@ class ViewController: MDCCollectionViewController {
 ```
 
 #### Objective-C (ViewController.h)
-``` objc
+```objc
 #import <UIKit/UIKit.h>
 #import "MaterialCollections.h"
 
@@ -152,7 +152,7 @@ In `viewDidLoad`, configure the collection view’s appearance:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
   styler.cellStyle = .card
@@ -160,7 +160,7 @@ override func viewDidLoad() {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
@@ -174,7 +174,7 @@ Below `viewDidLoad`, add a mock datasource:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // MARK: UICollectionViewDataSource
 
 override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -199,7 +199,7 @@ override func collectionView(_ collectionView: UICollectionView, cellForItemAt i
 ```
 
 #### Objective-C
-``` objc
+```objc
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -229,7 +229,7 @@ Add the app bar property declaration to the top of the class:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import UIKit
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialCollections
@@ -240,7 +240,7 @@ class ViewController: MDCCollectionViewController {
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "ViewController.h"
 #import "MaterialAppBar.h"
 #import "MaterialCollections.h"
@@ -257,7 +257,7 @@ Configure the app bar in `viewDidLoad`:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
   styler.cellStyle = .card
@@ -273,7 +273,7 @@ override func viewDidLoad() {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
@@ -301,7 +301,7 @@ Implement the UIScrollViewDelegate methods in your ViewController:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // MARK: UIScrollViewDelegate
 
 override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -332,7 +332,7 @@ override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity
 ```
 
 #### Objective-C
-``` objc
+```objc
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -373,7 +373,7 @@ First, add a function to ViewController that will be called when the button is t
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 @objc func barButtonDidTap(_ sender: UIBarButtonItem) {
   editor.isEditing = !editor.isEditing
 
@@ -386,7 +386,7 @@ First, add a function to ViewController that will be called when the button is t
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)barButtonDidTap:(id)sender {
   self.editor.editing = !self.editor.editing;
   NSString *buttonTitle = self.editor.editing ? @"Cancel" : @"Edit";
@@ -404,7 +404,7 @@ Now let's add a bar button to the right side of the app bar by modifying ViewCon
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewDidLoad() {
   ...
   navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit",
@@ -415,7 +415,7 @@ override func viewDidLoad() {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewDidLoad {
   ...
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
@@ -442,7 +442,7 @@ Add a property for the fab and make a new function that will toggle the selected
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import UIKit
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
@@ -460,7 +460,7 @@ class ViewController: MDCCollectionViewController {
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "ViewController.h"
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"
@@ -484,7 +484,7 @@ We want the fab to float above the bottom right corner, so we'll add it as a sub
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -498,7 +498,7 @@ override func viewDidLoad() {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -522,7 +522,7 @@ Add target / action for the button and titles for selected and unselected states
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -535,7 +535,7 @@ override func viewDidLoad() {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -560,7 +560,7 @@ If you've been following along with the above steps, your ViewController impleme
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import UIKit
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
@@ -660,7 +660,7 @@ class ViewController: MDCCollectionViewController {
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "ViewController.h"
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"

@@ -13,7 +13,7 @@ You can theme a text field with your app's typography scheme using the Typograph
 
 You must first add the Typography Themer extension to your project:
 
-``` bash
+```bash
 pod 'MaterialComponents/TextFields+Extensions/TypographyThemer'
 ```
 
@@ -21,7 +21,7 @@ pod 'MaterialComponents/TextFields+Extensions/TypographyThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialTextFields_TypographyThemer
 
@@ -43,7 +43,7 @@ MDCTextFieldTypographyThemer.apply(typographyScheme,
 
 #### Objective-C
 
-``` objc
+```objc
 // Step 1: Import the TypographyThemer extension
 #import "MaterialTextFields+TypographyThemer.h"
 

@@ -38,14 +38,14 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/ButtonBar'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -75,13 +75,13 @@ Before using Button Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialButtonBar.h"
 ```
 <!--</div>-->
@@ -91,7 +91,7 @@ Create an instance of MDCButtonBar and provide it with an array of UIBarButtonIt
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let buttonBar = MDCButtonBar()
 
 let actionItem = UIBarButtonItem(
@@ -110,7 +110,7 @@ self.view.addSubview(buttonBar)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
 
 UIBarButtonItem *actionItem =
@@ -153,7 +153,7 @@ MDCButtonBar instance's `items` property and reset it, like so:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 actionItem.target = <some other target>
 
 let items = buttonBar.items
@@ -163,7 +163,7 @@ buttonBar.items = items
 
 #### Objective-C
 
-``` objc
+```objc
 actionItem.target = <some other target>;
 
 NSArray *items = buttonBar.items;
