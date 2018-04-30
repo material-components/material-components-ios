@@ -16,8 +16,6 @@
 
 #import "MDCOutlinedButtonColorThemer.h"
 
-#import "MDCPalettes.h"
-
 @implementation MDCOutlinedButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
