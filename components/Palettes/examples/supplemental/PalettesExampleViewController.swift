@@ -16,6 +16,16 @@ limitations under the License.
 
 import MaterialComponents
 
+func TextColorFor(backgroundColor: UIColor) -> UIColor {
+  let textAccessibilityOptions : MDFTextAccessibilityOptions = [ .enhancedContrast, .preferDarker ]
+  if let safeColor = MDFTextAccessibility.textColor(fromChoices: [.black, .white],
+                                                    onBackgroundColor: backgroundColor,
+                                                    options: textAccessibilityOptions) {
+    return safeColor
+  }
+  return .black
+}
+
 typealias ExampleTone = (name: String, tone: UIColor)
 
 func ExampleTonesForPalette(_ palette: MDCPalette) -> [ExampleTone] {
@@ -62,9 +72,21 @@ class PalettesExampleViewController: UITableViewController {
     let tones = ExampleTonesForPalette(paletteInfo.palette)
     cell!.textLabel!.text = tones[indexPath.row].name
     cell!.backgroundColor = tones[indexPath.row].tone
+    cell!.textLabel!.textColor = TextColorFor(backgroundColor: cell!.backgroundColor!)
     cell!.selectionStyle = .none
 
     return cell!
+  }
+  override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView,
+                          forSection section: Int) {
+    if let headerView = view as? UITableViewHeaderFooterView {
+      if let backgroundColor = headerView.backgroundColor != nil ? headerView.backgroundColor
+                                                                 : tableView.backgroundColor {
+        headerView.textLabel?.textColor = TextColorFor(backgroundColor: backgroundColor)
+      } else {
+        headerView.textLabel?.textColor = .black
+      }
+    }
   }
 
   override func tableView(_ tableView: UITableView,
