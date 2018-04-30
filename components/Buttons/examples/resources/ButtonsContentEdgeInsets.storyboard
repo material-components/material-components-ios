@@ -21,23 +21,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvE-5P-0PG" customClass="MDCFlatButton">
-                                <rect key="frame" x="115.5" y="83" width="144" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvE-5P-0PG" customClass="MDCButton">
+                                <rect key="frame" x="104.5" y="83" width="166" height="38"/>
                                 <color key="tintColor" red="0.19254023644059035" green="0.53181806153905575" blue="0.91669365284974091" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="16"/>
-                                <state key="normal" title="Flat Button">
+                                <state key="normal" title="Text Button">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-nu-adB" customClass="MDCRaisedButton">
-                                <rect key="frame" x="115" y="133" width="144" height="18"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-nu-adB" customClass="MDCRaisedButton">
+                                <rect key="frame" x="104" y="137" width="166" height="22"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="24" maxY="0.0"/>
                                 <state key="normal" title="Contained Button">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCS-6P-hwz" customClass="MDCFloatingButton">
-                                <rect key="frame" x="161" y="167" width="52" height="52"/>
+                                <rect key="frame" x="161" y="175" width="52" height="52"/>
                                 <inset key="contentEdgeInsets" minX="16" minY="16" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" image="plus_white_36">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -85,9 +85,9 @@
                     </view>
                     <connections>
                         <outlet property="containedButton" destination="Dqo-nu-adB" id="wM8-hW-eZt"/>
-                        <outlet property="flatButton" destination="bvE-5P-0PG" id="8px-6Z-f5o"/>
                         <outlet property="floatingActionButton" destination="YCS-6P-hwz" id="Mw6-3r-5YL"/>
                         <outlet property="inkBoundingSwitch" destination="2pb-ML-fiY" id="LUP-MI-2Lq"/>
+                        <outlet property="textButton" destination="bvE-5P-0PG" id="8px-6Z-f5o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z12-Wq-Srl" userLabel="First Responder" sceneMemberID="firstResponder"/>
