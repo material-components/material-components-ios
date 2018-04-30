@@ -36,7 +36,7 @@
 /**
  Applies a color scheme's properties to an MDCButtonBar.
 
- @arning This method will soon be deprecated. Consider using
+ @warning This method will soon be deprecated. Consider using
  @c +applySemanticColorScheme:toButtonBar: instead.
 
  @param colorScheme The color scheme to apply to the component instance.
