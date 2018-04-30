@@ -108,10 +108,11 @@ MDCButton *button = [[MDCButton alloc] init];
 ```
 <!--</div>-->
 
-### Typical usage: Floating Action Buttons
+### Typical usage: floating action buttons
 
-MDCFloatingButton is a subclass of MDCButton that implements the floating action button style.
-Floating action buttons should be provided with a templated image for their normal state.
+MDCFloatingButton is a subclass of MDCButton that implements the Material Design floating action
+button style and behavior. Floating action buttons should be provided with a templated image for
+their normal state.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
