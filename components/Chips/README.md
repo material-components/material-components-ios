@@ -261,6 +261,13 @@ the others (`contentPadding`). This is useful so that you can set each of the pa
 ensure your chips look correct whether or not they have an image and/or accessory view. The chip
 uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
+### Style Variants
+MDCChipViewThemer exposes apis to theme MDCChipView instances as either a default or outlined 
+variant. An outlined variant behaves identically to a default styled chipview, but differs in its 
+coloring and in that it has a stroked border. Use 'applyScheme:toChipView:' to style an instance
+with default values and 'applyOutlinedVariantWithScheme:toChipView:' to style an instance with
+the outlined values.
+
 - - -
 
 ## Examples
