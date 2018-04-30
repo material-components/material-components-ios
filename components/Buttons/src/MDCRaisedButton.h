@@ -23,6 +23,9 @@
  briefly when touched. Raised buttons should be used when flat buttons would get lost among other
  UI elements on the screen.
 
+ @warning This class will be deprecated soon. Consider using @c MDCContainedButtonThemer with an
+ @c MDCButton instead.
+
  @see https://material.io/go/design-buttons#buttons-raised-buttons
  */
 @interface MDCRaisedButton : MDCButton

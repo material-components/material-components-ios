@@ -18,6 +18,8 @@
 
 #import "MDCButton.h"
 
+#pragma mark - Soon to be deprecated
+
 /**
  A "flat" MDCButton.
 
@@ -25,6 +27,9 @@
  do not raise when touched, and have uppercased text to indicate to the user that they are buttons.
  Flat buttons should be used in most situations requiring a button. For layouts with many UI
  elements in which a flat button might get visually lost, consider using a MDCRaisedButton instead.
+
+ @warning This class will be deprecated soon. Consider using @c MDCTextButtonThemer with an
+ @c MDCButton instead.
 
  @see https://material.io/go/design-buttons#buttons-flat-buttons
  */
