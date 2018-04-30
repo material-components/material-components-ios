@@ -124,7 +124,7 @@ mdc_objc_library(
         ":ButtonThemer",
         ":TitleColorAccessibilityMutator",
         ":TypographyThemer",
-        "//components/Palette",
+        "//components/Palettes",
     ],
     visibility = ["//visibility:private"],
     xibs = native.glob(["tests/unit/resources/*.xib"]),
