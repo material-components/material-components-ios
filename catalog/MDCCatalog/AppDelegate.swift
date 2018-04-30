@@ -17,7 +17,7 @@ limitations under the License.
 import UIKit
 
 import CatalogByConvention
-import MaterialComponents.MDCBottomSheetController
+import MaterialComponents.MaterialBottomSheet
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
