@@ -71,16 +71,16 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
                         [UIColor clearColor]);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
-                        [UIColor clearColor]);
+                        nil);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
                         scheme.colorScheme.primaryColor);
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.inkColor,
                         [scheme.colorScheme.primaryColor colorWithAlphaComponent:0.16f]);
   XCTAssertEqualObjects([button borderColorForState:UIControlStateNormal],
-                        MDCPalette.greyPalette.tint300);
+                        [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
   XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled],
-                        MDCPalette.greyPalette.tint100);
+                        nil);
 
   // Typography
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal],
