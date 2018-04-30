@@ -71,7 +71,8 @@
 }
 
 - (void)testStrokedChipViewColorThemer {
-  [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:self.chip];
+  [MDCChipViewColorThemer applyOutlinedVariantWithColorScheme:self.colorScheme
+                                                   toChipView:self.chip];
   UIColor *onSurface12Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
   UIColor *onSurface87Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
   UIColor *onSurface16Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f];

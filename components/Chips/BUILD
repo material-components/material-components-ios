@@ -40,6 +40,19 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "ChipThemer",
+    srcs = native.glob(["src/ChipThemer/*.m"]),
+    hdrs = native.glob(["src/ChipThemer/*.h"]),
+    includes = ["src/ChipThemer"],
+    deps = [
+        ":Chips",
+        ":ColorThemer",
+        ":TypographyThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "FontThemer",
     srcs = native.glob(["src/FontThemer/*.m"]),
     hdrs = native.glob(["src/FontThemer/*.h"]),

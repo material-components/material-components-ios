@@ -313,6 +313,15 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/Chips"
       extension.dependency "MaterialComponents/schemes/Typography"
     end
+    component.subspec "ChipThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Chips/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Chips/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Chips"
+      extension.dependency "MaterialComponents/Chips+Extensions/ColorThemer"
+      extension.dependency "MaterialComponents/Chips+Extensions/TypographyThemer"
+    end
   end
 
   mdc.subspec "CollectionCells" do |component|
