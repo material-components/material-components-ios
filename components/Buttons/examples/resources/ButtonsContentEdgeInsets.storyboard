@@ -25,7 +25,7 @@
                                 <rect key="frame" x="104.5" y="83" width="166" height="38"/>
                                 <color key="tintColor" red="0.19254023644059035" green="0.53181806153905575" blue="0.91669365284974091" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="16"/>
-                                <state key="normal" title="Flat Button">
+                                <state key="normal" title="Text Button">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </state>
                             </button>
