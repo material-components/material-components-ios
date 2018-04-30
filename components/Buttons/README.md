@@ -84,27 +84,28 @@ elevation, Material Design ripples, and other stateful design APIs.
 ### Typical usage: themed buttons
 
 Create an instance of `MDCButton` and theme it with as one of the Material Design button styles
-using the [ButtonThemer extension](docs/theming.md). Once themed, use the button like you would use
-a typical UIButton instance.
+using the ButtonThemer extension. Once themed, use the button like you would use a typical UIButton
+instance.
+
+See the [ButtonThemer documentation](docs/theming.md) for a full list of supported Material Design
+button styles.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 let button = MDCButton()
-MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 
-// add targets
-// add the button to a view hierarchy
+// Themed as a text button:
+MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
 
 ```objc
 MDCButton *button = [[MDCButton alloc] init];
-[MDCTextButtonThemer applyScheme:buttonScheme toButton:button];
 
-// add targets
-// add the button to a view hierarchy
+// Themed as a text button:
+[MDCTextButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
