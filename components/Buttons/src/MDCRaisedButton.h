@@ -16,6 +16,8 @@
 
 #import "MDCButton.h"
 
+#pragma mark - Soon to be deprecated
+
 /**
  A "raised" MDCButton.
 
