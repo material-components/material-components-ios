@@ -13,7 +13,7 @@ api_doc_root: true
 Material design buttons allow users to take actions, and make choices, with a single tap. There are
 many distinct button styles including text buttons, contained buttons, and floating action buttons.
 
-<img src="docs/assets/text.gif" alt="An animation showing a Material Design text button." width="128"> <img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
+<img src="docs/assets/text.gif" alt="An animation showing a Material Design text button." width="115"> <img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="115"> <img src="docs/assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
 ## Design & API Documentation
 
@@ -87,9 +87,6 @@ Create an instance of `MDCButton` and theme it with as one of the Material Desig
 using the ButtonThemer extension. Once themed, use the button like you would use a typical UIButton
 instance.
 
-See the [ButtonThemer documentation](docs/theming.md) for a full list of supported Material Design
-button styles.
-
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
@@ -109,6 +106,9 @@ MDCButton *button = [[MDCButton alloc] init];
 ```
 <!--</div>-->
 
+See the [ButtonThemer documentation](docs/theming.md) for a full list of supported Material Design
+button styles.
+
 ### Typical usage: floating action buttons
 
 MDCFloatingButton is a subclass of MDCButton that implements the Material Design floating action
@@ -123,6 +123,7 @@ their normal state.
 let plusImage = UIImage(named: "plus").withRenderingMode(.alwaysTemplate)
 let button = MDCFloatingButton()
 button.setImage(plusImage, forState: .normal)
+MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
@@ -133,6 +134,7 @@ UIImage *plusImage =
     [[UIImage imageNamed:@"plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
 [button setImage:plusImage forState:UIControlStateNormal];
+[MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
