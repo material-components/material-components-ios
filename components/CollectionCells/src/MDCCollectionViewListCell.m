@@ -242,7 +242,7 @@
 }
 
 - (void)prepareForReuse {
-  self.imageView.image = nil;
+  [self setImage:nil];
   self.textLabel.text = nil;
   self.detailTextLabel.text = nil;
 
