@@ -16,6 +16,7 @@
 
 #import "MaterialTypography.h"
 #import "supplemental/CollectionCellsTextExampleVanilla.h"
+#import "MaterialIcons+ic_info.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
@@ -35,6 +36,7 @@ static NSString *const kExampleDetailText =
   defaultLayout.minimumInteritemSpacing = 0;
   defaultLayout.minimumLineSpacing = 1;
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+  defaultLayout.estimatedItemSize = CGSizeMake(1.f, 1.f);
   return [self initWithCollectionViewLayout:defaultLayout];
 }
 
@@ -108,33 +110,18 @@ static NSString *const kExampleDetailText =
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewTextCell *cell =
+  MDCCollectionViewListCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
+  [cell setCellWidth:CGRectGetWidth(collectionView.bounds)];
   cell.textLabel.text = _content[indexPath.item][0];
   cell.textLabel.textAlignment = [_content[indexPath.item][1] integerValue];
   cell.detailTextLabel.text = _content[indexPath.item][2];
   cell.detailTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
-  cell.detailTextLabel.numberOfLines = 0;
-//  if (indexPath.item % 5 == 4) {
-//    cell.detailTextLabel.numberOfLines = 2;
-//  }
+  if (indexPath.item % 3 == 0) {
+    [cell setImage:[MDCIcons imageFor_ic_info]];
+  }
   return cell;
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  return CGSizeMake(self.collectionView.frame.size.width-16,
-                    [_content[indexPath.item][4] floatValue]);
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
-                        layout:(UICollectionViewLayout *)collectionViewLayout
-        insetForSectionAtIndex:(NSInteger)section {
-  return UIEdgeInsetsMake(8, 8, 0, 8);
 }
 
 #pragma mark - CatalogByConvention

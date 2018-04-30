@@ -26,4 +26,8 @@
  */
 @property(nonatomic, readonly, strong, nullable) UIImageView *imageView;
 
+- (void)setCellWidth:(CGFloat)width;
+
+- (void)setImage:(nullable UIImage *)image;
+
 @end
