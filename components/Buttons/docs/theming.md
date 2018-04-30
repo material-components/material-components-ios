@@ -86,7 +86,7 @@ MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
 
 ## Floating action buttons
 
-<img src="docs/assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
+<img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
 To theme a button as a Material Design floating action button, use `MDCFloatingActionButtonThemer`
 with an `MDCRaisedButton`.
