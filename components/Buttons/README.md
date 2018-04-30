@@ -156,8 +156,8 @@ button.setElevation(12, for: .highlighted)
 #### Objective-C
 
 ```objc
-[raisedButton setElevation:6.0f forState:UIControlStateNormal];
-[raisedButton setElevation:12.0f forState:UIControlStateNormal];
+[button setElevation:6.0f forState:UIControlStateNormal];
+[button setElevation:12.0f forState:UIControlStateNormal];
 ```
 <!--</div>-->
 
