@@ -19,8 +19,7 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
-#import "MDCTextButtonThemer.h"
-#import "MDCContainedButtonThemer.h"
+#import "MaterialButtons+ButtonThemer.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
@@ -88,6 +87,28 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled], [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+}
+
+- (void)testFloatingButtonThemer {
+  // Given
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
+  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
+
+  // When
+  [MDCFloatingActionButtonThemer applyScheme:scheme toButton:button];
+
+  // Then
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  XCTAssertEqualObjects(button.backgroundColor, colorScheme.secondaryColor);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal],
+                        colorScheme.onSecondaryColor);
+  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, button.frame.size.height / 2,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateNormal], 6, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateHighlighted], 12,
+                             kEpsilonAccuracy);
+  XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
 }
 
 @end
