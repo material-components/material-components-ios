@@ -14,7 +14,20 @@
  limitations under the License.
  */
 
-#import "MDCButtonScheme.h"
-#import "MDCContainedButtonThemer.h"
 #import "MDCFloatingActionButtonThemer.h"
-#import "MDCTextButtonThemer.h"
+
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+TypographyThemer.h"
+
+@implementation MDCFloatingActionButtonThemer
+
++ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
+           toButton:(nonnull MDCFloatingButton *)button {
+  [MDCFloatingButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
+  [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
+  [button setElevation:(CGFloat)6 forState:UIControlStateNormal];
+  [button setElevation:(CGFloat)12 forState:UIControlStateHighlighted];
+  [button setElevation:(CGFloat)0 forState:UIControlStateDisabled];
+}
+
+@end

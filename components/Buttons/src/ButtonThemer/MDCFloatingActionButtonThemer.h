@@ -15,6 +15,23 @@
  */
 
 #import "MDCButtonScheme.h"
-#import "MDCContainedButtonThemer.h"
-#import "MDCFloatingActionButtonThemer.h"
-#import "MDCTextButtonThemer.h"
+
+#import "MaterialButtons.h"
+
+#import <Foundation/Foundation.h>
+
+/**
+ The Material Design floating button themer for instances of MDCRaisedButton.
+ */
+@interface MDCFloatingActionButtonThemer : NSObject
+
+/**
+ Applies a button scheme's properties to an MDCRaisedButton using the floating button style.
+
+ @param scheme The button scheme to apply to the component instance.
+ @param button A component instance to which the scheme should be applied.
+ */
++ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
+           toButton:(nonnull MDCFloatingButton *)button;
+
+@end

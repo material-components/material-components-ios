@@ -43,9 +43,10 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+
   self.view.backgroundColor = [UIColor whiteColor];
-  UIColor *titleColor = [UIColor whiteColor];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
 
   // Contained button
 
@@ -96,7 +97,6 @@
   // Floating action button
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   [self.floatingButton addTarget:self
                           action:@selector(didTap:)
@@ -105,8 +105,7 @@
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
-                                                toButton:self.floatingButton];
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
