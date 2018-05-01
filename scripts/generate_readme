@@ -89,7 +89,7 @@ cat "$TMP_EXPANDED_README_PATH" | while read line; do
     echo "" >> "$TMP_README_PATH"
     grep -e "^#" -e "^$TOC_STRING" "$TMP_EXPANDED_README_PATH" \
       | grep -v "####" \
-      | grep -v "#import" \
+      | grep -v "#\w" \
       | sed -n '/ toc /,$p' \
       | tail -n +2  > "$TMP_TOC_PATH"
 
