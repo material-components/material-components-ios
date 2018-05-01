@@ -29,11 +29,11 @@ Tabs can also show a badge (usually a number) like UITabBar.
 
 ## Usage
 
-- [Usage](Usage.md)
+- [Usage](usage.md)
 
 ## Examples
 
-- [Examples](Examples.md)
+- [Examples](examples.md)
 
 ## Extensions
 
