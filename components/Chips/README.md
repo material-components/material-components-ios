@@ -1,44 +1,71 @@
 <!--docs:
-title: "Chips"
+title: "Chip"
 layout: detail
 section: components
-excerpt: "Chips represent complex entities in small blocks, such as a contact."
+excerpt: "<#short_description#>"
 iconId: chip
 path: /catalog/chips/
 api_doc_root: true
 -->
 
-# Chips
+<!-- This file was auto-generated using ./scripts/generate_readme Chips -->
 
-Chips represent complex entities, such as a contact, in small blocks.
+# Tabs
 
-## Design & API Documentation
+<div class="article__asset article__asset--screenshot">
+    <img src="docs/assets/tabs.png" alt="Tabs" width="375">
+</div>
+
+Tabs are bars of buttons used to navigate between groups of content.
+
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-chips">Material Design guidelines: Chips</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-tabs">Material Design guidelines: Tabs</a></li>
 </ul>
 
-## Extensions
+## Table of contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
-</ul>
+- [Overview](#overview)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Chips Collections](#chips-collections)
+  - [Input Chips](#input-chips)
+  - [Choice Chips](#choice-chips)
+  - [Filter Chips](#filter-chips)
+  - [Action Chips](#action-chips)
+- [Tips](#tips)
+  - [Ink ripple animation](#ink-ripple-animation)
+  - [Stateful properties](#stateful-properties)
+  - [Selected Image View](#selected-image-view)
+  - [Padding](#padding)
+- [Examples](#examples)
+  - [Create a single Chip](#create-a-single-chip)
+- [Extensions](#extensions)
+  - [Chip Color Theming](#chip-color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
+## Overview
+
+When a user taps a tab, the content changes to match the selected subject in the tabs.
+
+We provide this functionality through MDCTabBar which communicates via a delegate as well as
+MDCTabBarViewController which provides a view containment model similar to UITabViewController.
+
+Tabs can also show a badge (usually a number) like UITabBar.
+
 ## Installation
 
-### Requirements
-
-- Xcode 8.0 or higher.
-- iOS SDK version 7.0 or higher.
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+Add the following to your `Podfile`:
 
-```
+```bash
 pod 'MaterialComponents/Chips'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
@@ -49,28 +76,28 @@ Then, run the following command:
 pod install
 ```
 
-- - -
+### Importing
 
-## Importing
-
-Before using Chips, you'll need to import them:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Swift
+#### Swift
 ```swift
 import MaterialComponents.MaterialChips
 ```
 
-### Objective-C
+#### Objective-C
 
 ```objc
 #import "MaterialChips.h"
 ```
 <!--</div>-->
 
-- - -
 
 ## Chips Collections
+
+<!-- Extracted from docs/chips-collections.md -->
+
 Material design suggest the usage of chips collection in four context: Input Chips, Choice Chips, Filter Chips, and Action Chips.
 
 ### Input Chips
@@ -235,7 +262,10 @@ It is easiest to create action Chips using a `UICollectionView`:
 
 - - -
 
-## How to use a chip
+
+## Tips
+
+<!-- Extracted from docs/tips.md -->
 
 ### Ink ripple animation
 Chips display animated ink splashes when the user presses the chip. Keep in mind this will appear on
@@ -261,16 +291,12 @@ the others (`contentPadding`). This is useful so that you can set each of the pa
 ensure your chips look correct whether or not they have an image and/or accessory view. The chip
 uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
-### Style Variants
-MDCChipViewThemer exposes apis to theme MDCChipView instances as either a default or outlined 
-variant. An outlined variant behaves identically to a default styled chipview, but differs in its 
-coloring and in that it has a stroked border. Use 'applyScheme:toChipView:' to style an instance
-with default values and 'applyOutlinedVariantWithScheme:toChipView:' to style an instance with
-the outlined values.
-
 - - -
 
+
 ## Examples
+
+<!-- Extracted from docs/Examples.md -->
 
 ### Create a single Chip
 
@@ -298,3 +324,88 @@ chipView.titleLabel.text = @"Tap me";
 [self.view addSubview:chipView];
 ```
 <!--</div>-->
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Chip Color Theming
+
+You can theme a chip with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Chips+Extensions/ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialChips_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCChipViewColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialChips+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCChipViewColorThemer applySemanticColorScheme:colorScheme
+     toChipView:component];
+```
+<!--</div>-->
+
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme a chip with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Chips+Extensions/TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialChips_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCChipViewTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialChips+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCChipViewTypographyThemer applyTypographyScheme:colorScheme
+     toChipView:component];
+```
+<!--</div>-->
+
