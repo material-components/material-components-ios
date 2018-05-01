@@ -562,9 +562,8 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
       row++;
       currentOriginX = self.contentEdgeInsets.left;
     }
-    CGFloat chipCenteringOffset = (self.chipHeight - chipSize.height) / 2;
-    CGFloat currentOriginY = self.contentEdgeInsets.top +
-        (row * (self.chipHeight + MDCChipFieldVerticalMargin)) + chipCenteringOffset;
+    CGFloat currentOriginY =
+        self.contentEdgeInsets.top + (row * (self.chipHeight + MDCChipFieldVerticalMargin));
     CGRect chipFrame =
         CGRectMake(currentOriginX, currentOriginY, chipSize.width, chipSize.height);
     [chipFrames addObject:[NSValue valueWithCGRect:chipFrame]];
@@ -578,11 +577,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   CGFloat textFieldWidth =
       chipFieldSize.width - self.contentEdgeInsets.left - self.contentEdgeInsets.right;
   CGFloat textFieldHeight = [self.textField sizeThatFits:chipFieldSize].height;
-  CGFloat textFieldCenterOffset = 0;
-  if (!CGRectIsEmpty(lastChipFrame)) {
-    textFieldCenterOffset = (CGRectGetHeight(lastChipFrame) - textFieldHeight) / 2;
-  }
-  CGFloat originY = lastChipFrame.origin.y + (self.chipHeight - textFieldHeight) / 2.f + textFieldCenterOffset;
+  CGFloat originY = lastChipFrame.origin.y + (self.chipHeight - textFieldHeight) / 2.f;
 
   // If no chip exists, make the text field the full width minus padding.
   if (CGRectIsEmpty(lastChipFrame)) {
