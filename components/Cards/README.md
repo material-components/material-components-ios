@@ -1,5 +1,5 @@
 <!--docs:
-title: "Cards"
+title: "Card"
 layout: detail
 section: components
 excerpt: "Cards are contained surfaces that serve as an entry point to more detailed information, with flexible visual parameters."
@@ -7,6 +7,8 @@ iconId: list
 path: /catalog/cards/
 api_doc_root: true
 -->
+
+<!-- This file was auto-generated using ./scripts/generate_readme Cards -->
 
 # Cards
 
@@ -21,42 +23,28 @@ Cards are meant to be interactive, and shouldn't be used solely for displaying p
 
 Cards adhere to Material Design layout and styling.
 
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec">
-    <a href="https://material.io/go/design-cards">Material Design guidelines: Cards</a>
-  </li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-cards">Material Design guidelines: Cards</a></li>
 </ul>
 
-## Extensions
+## Table of contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/theming.md">Theming</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
-</ul>
+- [Overview](#overview)
+  - [Cards Classes](#cards-classes)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use: as a view](#typical-use-as-a-view)
+  - [Typical use: in a collection view](#typical-use-in-a-collection-view)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
 
 - - -
 
-## Installation
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-```
-pod 'MaterialComponents/Cards'
-```
-
-Then run the following command:
-
-```bash
-pod install
-```
-
-- - -
-
-### Overview
+## Overview
 
 Cards provides two different versions, `MDCCard` inheriting from `UIControl` and `MDCCardCollectionCell` inheriting from `UICollectionViewCell`.
 
@@ -67,16 +55,23 @@ When treated as a `UIControl` (`MDCCard`), it has a default styling (`UIControlS
 When treated as a `UICollectionViewCell` (`MDCCardCollectionCell`), it has a default styling (`MDCCardCellStateNormal`), a highlighted styling (`MDCCardCellStateHighlighted`), and lastly a selected styling (`MDCCardCellStateSelected`).
 
 Customization to the card is exposed via its API either in `MDCCard` or `MDCCardCollectionCell`. Currently the card consists of these customizations:
-* The border width for a specific state
-* The border color for a specific state
-* The shadow elevation for a specific state
-* The shadow color for a specific state
-* The corner radius for the card
+  <li class="icon-list-item icon-list-item--spec">The border width for a specific state</li>
+  <li class="icon-list-item icon-list-item--spec">The border color for a specific state</li>
+  <li class="icon-list-item icon-list-item--spec">The shadow elevation for a specific state</li>
+  <li class="icon-list-item icon-list-item--spec">The shadow color for a specific state</li>
+  <li class="icon-list-item icon-list-item--spec">The corner radius for the card</li>
+</ul>
 
 (`MDCCardCollectionCell` customization only):
-* Changing the image that appears in the Selected state.
-* Changing the image tint color that appears in the Selected state.
+  <li class="icon-list-item icon-list-item--spec">Changing the image that appears in the Selected state.</li>
+  <li class="icon-list-item icon-list-item--spec">Changing the image tint color that appears in the Selected state.</li>
+</ul>
 
+An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`, if manually in code, or through Interface Builder.
+
+An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionViewCell`, if manually in code, or through Interface Builder.
+
+MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances as either a default or outlined variant. An outlined variant behaves identically to a default styled card, but differs in its coloring and in that it has a stroked border. Use 'applyScheme:toCard:' to style an instance with default values and 'applyOutlinedVariantWithScheme:toCard:' to style an instance with the outlined values.
 ### Cards Classes
 
 #### MDCCard
@@ -93,12 +88,14 @@ Customization to the card is exposed via its API either in `MDCCard` or `MDCCard
 
 ## Installation
 
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+Add the following to your `Podfile`:
 
-```
-pod 'MaterialComponents/Collections'
+```bash
+pod 'MaterialComponents/Cards'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -108,20 +105,9 @@ Then, run the following command:
 pod install
 ```
 
-- - -
-
-## Usage
-
-An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`, if manually in code, or through the interface builder.
-
-An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionViewCell`, if manually in code, or through the interface builder.
-
-### Style Variants
-MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances as either a default or outlined variant. An outlined variant behaves identically to a default styled card, but differs in its coloring and in that it has a stroked border. Use 'applyScheme:toCard:' to style an instance with default values and 'applyOutlinedVariantWithScheme:toCard:' to style an instance with the outlined values.
-
 ### Importing
 
-Before using Cards, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -130,14 +116,20 @@ import MaterialComponents.MaterialCards
 ```
 
 #### Objective-C
+
 ```objc
 #import "MaterialCards.h"
 ```
 <!--</div>-->
 
-## Examples
 
-### Use `MDCCard` as a base class for your custom card
+## Usage
+
+<!-- Extracted from docs/typical-use-view.md -->
+
+### Typical use: as a view
+
+`MDCCard` can be used like a regular UIView.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -145,17 +137,9 @@ import MaterialComponents.MaterialCards
 ```swift
 let card = MDCCard()
 
-// Customization (optional)
-card.cornerRadius = 8
-card.setShadowElevation(6, for: .highlighted)
-card.setBorderWidth(1, for: .normal)
-card.setBorderColor(UIColor.brown, for: .normal)
-
-// Adding content inside a card (optional)
+// Create, position, and add content views:
 let imageView = UIImageView()
 card.addSubview(imageView)
-
-view.addSubview(card)
 ```
 
 #### Objective-C
@@ -163,21 +147,17 @@ view.addSubview(card)
 ```objc
 MDCCard *card = [[MDCCard alloc] init];
 
-// Customization (optional)
-[card setCornerRadius:8.f];
-[card setShadowElevation:6.f forState:UIControlStateHighlighted];
-[card setBorderWidth:1.f forState:UIControlStateNormal];
-[card setBorderColor:[UIColor brownColor] forState:UIControlStateNormal];
-
-// Adding content inside a card (optional)
+// Create, position, and add content views:
 UIImageView *imageView = [[UIImageView alloc] init];
 [card addSubview:imageView];
-
-[self.view addSubview:card];
 ```
 <!--</div>-->
 
-### Use `MDCCardCollectionCell` as a base class for your custom collection view cell
+<!-- Extracted from docs/typical-use-collections.md -->
+
+### Typical use: in a collection view
+
+Use `MDCCardCollectionCell` as a base class for your custom collection view cell
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -224,11 +204,46 @@ func collectionView(_ collectionView: UICollectionView,
 ```
 <!--</div>-->
 
-- - -
 
-## Related Components
+## Extensions
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--components"><a href="../CollectionCells">Collection Cells</a></li>
-</ul>
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme a card with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Cards+Extensions/ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialCards_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialCards+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCCardsColorThemer applySemanticColorScheme:colorScheme
+     toCard:component];
+```
+<!--</div>-->
 
