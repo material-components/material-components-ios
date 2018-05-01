@@ -7,7 +7,7 @@
 
 #import "MDCCollectionViewListCell.h"
 #import <MDFInternationalization/MDFInternationalization.h>
-#import "MDCTypography.h"
+#import "MaterialTypography.h"
 
 @implementation MDCCollectionViewListCell {
   CGPoint _lastTouch;
@@ -17,6 +17,7 @@
   NSLayoutConstraint *_imageRightPaddingConstraint;
   NSLayoutConstraint *_imageWidthConstraint;
   NSLayoutConstraint *_imageHeightConstraint;
+  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 + (Class)layerClass {
@@ -48,17 +49,17 @@
   [self.contentView addSubview:_contentWrapper];
 
   // Text label.
-  _textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _textLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
+  _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _titleLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
 
   // Detail text label.
-  _detailTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _detailTextLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
+  _detailsTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _detailsTextLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
 
   [self resetMDCCollectionViewListCell];
 
-  [_contentWrapper addSubview:_textLabel];
-  [_contentWrapper addSubview:_detailTextLabel];
+  [_contentWrapper addSubview:_titleLabel];
+  [_contentWrapper addSubview:_detailsTextLabel];
 
   // Image view.
   _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -69,17 +70,17 @@
 }
 
 - (void)resetMDCCollectionViewListCell {
-  _textLabel.font = CellDefaultTextFont();
-  _textLabel.textColor = [UIColor colorWithWhite:0 alpha:CellDefaultTextOpacity()];
-  _textLabel.textAlignment = NSTextAlignmentNatural;
-  _textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-  _textLabel.numberOfLines = 1;
+  [self updateTitleFont];
+  _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:defaultTitleOpacity()];
+  _titleLabel.textAlignment = NSTextAlignmentNatural;
+  _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  _titleLabel.numberOfLines = 1;
 
-  _detailTextLabel.font = CellDefaultDetailTextFont();
-  _detailTextLabel.textColor = [UIColor colorWithWhite:0 alpha:CellDefaultDetailTextFontOpacity()];
-  _detailTextLabel.textAlignment = NSTextAlignmentNatural;
-  _detailTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-  _detailTextLabel.numberOfLines = 3;
+  [self updateDetailsFont];
+  _detailsTextLabel.textColor = [UIColor colorWithWhite:0 alpha:defaultDetailsOpacity()];
+  _detailsTextLabel.textAlignment = NSTextAlignmentNatural;
+  _detailsTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  _detailsTextLabel.numberOfLines = 3;
 }
 
 - (void)setupConstraints {
@@ -108,14 +109,14 @@
                                 constant:1].active = YES;
 
   _contentWrapper.translatesAutoresizingMaskIntoConstraints = NO;
-  _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _detailTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _detailsTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _imageView.translatesAutoresizingMaskIntoConstraints = NO;
 
   NSDictionary *views =
       @{@"contentWrapper": _contentWrapper,
-        @"textLabel": _textLabel,
-        @"detailTextLabel": _detailTextLabel,
+        @"titleLabel": _titleLabel,
+        @"detailsTextLabel": _detailsTextLabel,
         @"imageView": _imageView
         };
 
@@ -155,19 +156,19 @@
                                                 views:views]];
 
   [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"|[textLabel]|"
+   [NSLayoutConstraint constraintsWithVisualFormat:@"|[titleLabel]|"
                                            options:0
                                            metrics:nil
                                              views:views]];
 
   [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"|[detailTextLabel]|"
+   [NSLayoutConstraint constraintsWithVisualFormat:@"|[detailsTextLabel]|"
                                            options:0
                                            metrics:nil
                                              views:views]];
 
   [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(12)-[textLabel][detailTextLabel]-(12)-|"
+   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(12)-[titleLabel][detailsTextLabel]-(12)-|"
                                            options:0
                                            metrics:nil
                                              views:views]];
@@ -180,24 +181,6 @@
                                attribute:NSLayoutAttributeCenterY
                               multiplier:1
                                 constant:0]];
-
-//  [constraints addObject:
-//   [NSLayoutConstraint constraintWithItem:_imageView
-//                                attribute:NSLayoutAttributeTop
-//                                relatedBy:NSLayoutRelationLessThanOrEqual
-//                                   toItem:self.contentView
-//                                attribute:NSLayoutAttributeTop
-//                               multiplier:1
-//                                 constant:0]];
-//
-//  [constraints addObject:
-//   [NSLayoutConstraint constraintWithItem:_imageView
-//                                attribute:NSLayoutAttributeBottom
-//                                relatedBy:NSLayoutRelationLessThanOrEqual
-//                                   toItem:self.contentView
-//                                attribute:NSLayoutAttributeBottom
-//                               multiplier:1
-//                                 constant:0]];
 
   [NSLayoutConstraint activateConstraints:constraints];
 
@@ -243,30 +226,12 @@
 
 - (void)prepareForReuse {
   [self setImage:nil];
-  self.textLabel.text = nil;
-  self.detailTextLabel.text = nil;
+  self.titleLabel.text = nil;
+  self.detailsTextLabel.text = nil;
 
   [self resetMDCCollectionViewListCell];
 
   [super prepareForReuse];
-}
-
-// Default cell fonts.
-static inline UIFont *CellDefaultTextFont(void) {
-  return [MDCTypography subheadFont];
-}
-
-static inline UIFont *CellDefaultDetailTextFont(void) {
-  return [MDCTypography body1Font];
-}
-
-// Default cell font opacity.
-static inline CGFloat CellDefaultTextOpacity(void) {
-  return [MDCTypography subheadFontOpacity];
-}
-
-static inline CGFloat CellDefaultDetailTextFontOpacity(void) {
-  return [MDCTypography captionFontOpacity];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -288,5 +253,89 @@ static inline CGFloat CellDefaultDetailTextFontOpacity(void) {
   [super touchesBegan:touches withEvent:event];
 }
 
+#pragma mark - Dynamic Type Support
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+
+  [self updateTitleFont];
+  [self updateDetailsFont];
+}
+
+// Handles UIContentSizeCategoryDidChangeNotifications
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
+  [self updateTitleFont];
+  [self updateDetailsFont];
+
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+  _titleFont = titleFont;
+  [self updateTitleFont];
+}
+
+- (void)updateTitleFont {
+  if (!_titleFont) {
+    _titleFont = defaultTitleFont();
+  }
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    _titleLabel.font =
+    [_titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  } else {
+    _titleLabel.font = _titleFont;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)setDetailsFont:(UIFont *)detailsFont {
+  _detailsFont = detailsFont;
+  [self updateDetailsFont];
+}
+
+- (void)updateDetailsFont {
+  if (!_detailsFont) {
+    _detailsFont = defaultDetailsFont();
+  }
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    _detailsTextLabel.font =
+    [_detailsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  } else {
+    _detailsTextLabel.font = _detailsFont;
+  }
+  [self setNeedsLayout];
+}
+
+static inline UIFont *defaultTitleFont(void) {
+  return [MDCTypography subheadFont];
+}
+
+static inline UIFont *defaultDetailsFont(void) {
+  return [MDCTypography body1Font];
+}
+
+static inline CGFloat defaultTitleOpacity(void) {
+  return [MDCTypography subheadFontOpacity];
+}
+
+static inline CGFloat defaultDetailsOpacity(void) {
+  return [MDCTypography captionFontOpacity];
+}
 
 @end

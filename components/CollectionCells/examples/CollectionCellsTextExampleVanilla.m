@@ -99,6 +99,16 @@ static NSString *const kExampleDetailText =
       alignmentValues[alignmentKey], @(MDCCellDefaultThreeLineHeight)
     ]];
   }
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+// Handles UIContentSizeCategoryDidChangeNotifications
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
+  [self.collectionView reloadData];
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -113,11 +123,12 @@ static NSString *const kExampleDetailText =
   MDCCollectionViewListCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
+  cell.mdc_adjustsFontForContentSizeCategory = YES;
   [cell setCellWidth:CGRectGetWidth(collectionView.bounds)];
-  cell.textLabel.text = _content[indexPath.item][0];
-  cell.textLabel.textAlignment = [_content[indexPath.item][1] integerValue];
-  cell.detailTextLabel.text = _content[indexPath.item][2];
-  cell.detailTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
+  cell.titleLabel.text = _content[indexPath.item][0];
+  cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
+  cell.detailsTextLabel.text = _content[indexPath.item][2];
+  cell.detailsTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
   if (indexPath.item % 3 == 0) {
     [cell setImage:[MDCIcons imageFor_ic_info]];
   }
