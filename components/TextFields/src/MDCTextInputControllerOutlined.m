@@ -178,26 +178,26 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   [path addLineToPoint:CGPointMake(f.size.width - radius + xOffset, yOffset)];
   [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, radius + yOffset)
                   radius:radius
-              startAngle:- (M_PI / 2)
+              startAngle:- (CGFloat)(M_PI / 2)
                 endAngle:0
                clockwise:YES];
   [path addLineToPoint:CGPointMake(f.size.width + xOffset, f.size.height - radius + yOffset)];
   [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, f.size.height - radius + yOffset)
                   radius:radius
               startAngle:0
-                endAngle:- ((M_PI * 3) / 2)
+                endAngle:- (CGFloat)((M_PI * 3) / 2)
                clockwise:YES];
   [path addLineToPoint:CGPointMake(radius + xOffset, f.size.height + yOffset)];
   [path addArcWithCenter:CGPointMake(radius + xOffset, f.size.height - radius + yOffset)
                   radius:radius
-              startAngle:- ((M_PI * 3) / 2)
-                endAngle:- M_PI
+              startAngle:- (CGFloat)((M_PI * 3) / 2)
+                endAngle:- (CGFloat)M_PI
                clockwise:YES];
   [path addLineToPoint:CGPointMake(xOffset, radius + yOffset)];
   [path addArcWithCenter:CGPointMake(radius + xOffset, radius + yOffset)
                   radius:radius
-              startAngle:- M_PI
-                endAngle:- (M_PI / 2)
+              startAngle:- (CGFloat)M_PI
+                endAngle:- (CGFloat)(M_PI / 2)
                clockwise:YES];
 
   return path;
