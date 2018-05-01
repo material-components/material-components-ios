@@ -58,7 +58,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0x6200EE));
   XCTAssertEqualObjects(colorScheme.primaryColorVariant, ColorFromRGB(0x3700B3));
   XCTAssertEqualObjects(colorScheme.secondaryColor, ColorFromRGB(0x03DAC6));
-  XCTAssertEqualObjects(colorScheme.errorColor, ColorFromRGB(0xFF1744));
+  XCTAssertEqualObjects(colorScheme.errorColor, ColorFromRGB(0xB00020));
   XCTAssertEqualObjects(colorScheme.surfaceColor, ColorFromRGB(0xFFFFFF));
   XCTAssertEqualObjects(colorScheme.backgroundColor, ColorFromRGB(0xFFFFFF));
   XCTAssertEqualObjects(colorScheme.onPrimaryColor, ColorFromRGB(0xFFFFFF));

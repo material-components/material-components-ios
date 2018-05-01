@@ -50,7 +50,7 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
         _primaryColor = ColorFromRGB(0x6200EE);
         _primaryColorVariant = ColorFromRGB(0x3700B3);
         _secondaryColor = ColorFromRGB(0x03DAC6);
-        _errorColor = ColorFromRGB(0xFF1744);
+        _errorColor = ColorFromRGB(0xB00020);
         _surfaceColor = ColorFromRGB(0xFFFFFF);
         _backgroundColor = ColorFromRGB(0xFFFFFF);
         _onPrimaryColor = ColorFromRGB(0xFFFFFF);
