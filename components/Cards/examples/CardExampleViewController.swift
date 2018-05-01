@@ -15,12 +15,16 @@
  */
 
 import UIKit
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 class CardExampleViewController: UIViewController {
   @IBOutlet var contentView: UIView!
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var card: MDCCard!
+  @IBOutlet weak var button: MDCButton!
+
   var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,7 +45,14 @@ class CardExampleViewController: UIViewController {
     shapeLayer.path = bezierPath.cgPath
     imageView.layer.mask = shapeLayer
 
-    MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: card)
+    let buttonScheme = MDCButtonScheme();
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
+
+    let cardScheme = MDCCardScheme();
+    cardScheme.colorScheme = colorScheme
+    MDCCardThemer.applyScheme(cardScheme, to: card)
   }
 
   override func didReceiveMemoryWarning() {

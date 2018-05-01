@@ -29,23 +29,12 @@
 
 @implementation ButtonsTypicalUseExampleViewController
 
-- (MDCButton *)buildCustomStrokedButton {
-  MDCButton *button = [[MDCButton alloc] init];
-  [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
-  [button setTitleColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
-  button.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
-
-  [button setBorderWidth:1.0 forState:UIControlStateNormal];
-  [button setBorderColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
-
-  return button;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+
   self.view.backgroundColor = [UIColor whiteColor];
-  UIColor *titleColor = [UIColor whiteColor];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
 
   // Contained button
 
@@ -93,37 +82,32 @@
   [disabledTextButton setEnabled:NO];
   [self.view addSubview:disabledTextButton];
 
-  // Custom stroked button
+  // Outlined button
 
-  MDCButton *strokedButton = [self buildCustomStrokedButton];
-  [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme toButton:strokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:strokedButton];
-  [strokedButton sizeToFit];
-  [strokedButton addTarget:self
+  MDCButton *outlinedButton = [[MDCButton alloc] init];
+  [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:outlinedButton];
+  [outlinedButton sizeToFit];
+  [outlinedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:strokedButton];
+  [self.view addSubview:outlinedButton];
 
-  // Disabled custom stroked button
+  // Disabled outlined button
 
-  MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
-  [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toButton:disabledStrokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
-                                        toButton:disabledStrokedButton];
-  [disabledStrokedButton sizeToFit];
-  [disabledStrokedButton addTarget:self
-                            action:@selector(didTap:)
-                  forControlEvents:UIControlEventTouchUpInside];
-  [disabledStrokedButton setEnabled:NO];
-  [self.view addSubview:disabledStrokedButton];
+  MDCButton *disabledOutlinedButton = [[MDCButton alloc] init];
+  [disabledOutlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:disabledOutlinedButton];
+  [disabledOutlinedButton sizeToFit];
+  [disabledOutlinedButton addTarget:self
+                             action:@selector(didTap:)
+                   forControlEvents:UIControlEventTouchUpInside];
+  [disabledOutlinedButton setEnabled:NO];
+  [self.view addSubview:disabledOutlinedButton];
 
   // Floating action button
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   [self.floatingButton addTarget:self
                           action:@selector(didTap:)
@@ -132,13 +116,12 @@
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
-                                                toButton:self.floatingButton];
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    containedButton, disabledContainedButton, textButton, disabledTextButton, strokedButton,
-    disabledStrokedButton, self.floatingButton
+    containedButton, disabledContainedButton, textButton, disabledTextButton, outlinedButton,
+    disabledOutlinedButton,self.floatingButton
   ];
 
   [self setupExampleViews];
@@ -149,13 +132,13 @@
   UILabel *disabledContainedButtonLabel = [self addLabelWithText:@"Disabled Contained"];
   UILabel *textButtonLabel = [self addLabelWithText:@"Text button"];
   UILabel *disabledTextButtonLabel = [self addLabelWithText:@"Disabled text button"];
-  UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
-  UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Disabled Stroked"];
+  UILabel *outlinedButtonLabel = [self addLabelWithText:@"Outlined"];
+  UILabel *disabledOutlinedButtonLabel = [self addLabelWithText:@"Disabled Outlined"];
   UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
 
   self.labels = @[
     containedButtonLabel, disabledContainedButtonLabel, textButtonLabel, disabledTextButtonLabel,
-    strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
+    outlinedButtonLabel, disabledOutlinedButtonLabel, floatingButtonLabel
   ];
 }
 

@@ -20,14 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a typography scheme to theme a MDCAlertController alert dialogs.
+ The Material Design typography system's themer for instances of MDCAlertController.
  */
 @interface MDCAlertTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme a MDCAlertController alert dialogs.
- 
- @param typographyScheme The typography scheme to apply to a MDCAlertController alert dialogs.
+ Applies a typography scheme's properties to an MDCAlertController.
+
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param alertController A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
             toAlertController:(nonnull MDCAlertController *)alertController;

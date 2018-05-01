@@ -20,25 +20,38 @@
 #import <Foundation/Foundation.h>
 
 /**
- Themes @c MDCChipView objects to set their color properties to the appropriate color trait given a
- color scheme.
+ The Material Design color system's themer for instances of MDCChipView.
  */
 @interface MDCChipViewColorThemer : NSObject
 
 /**
- Applies a color scheme's properties to @c MDCChipView.
+ Applies a color scheme's properties to an MDCChipView.
 
- @param colorScheme The color scheme to apply to @c MDCChipView.
- @param chipView @c MDCChipView to which the color scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param chipView A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toChipView:(nonnull MDCChipView *)chipView;
 
 /**
- Applies a color scheme's properties to @c MDCChipView.
+ Applies a color scheme's properties to the component instance with the outlined style.
 
- @param colorScheme The color scheme to apply to @c MDCChipView.
- @param strokedChipView @c MDCChipView to which the color scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param chipView @c A component instance to which the color scheme should be applied.
+ */
++ (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                                 toChipView:(nonnull MDCChipView *)chipView;
+
+#pragma mark - Soon to be deprecated
+
+/**
+ Applies a color scheme's properties to a stroked MDCChipView.
+
+ @warning This method will soon be deprecated. Consider using
+ @c +applyOutlinedVariantWithColorScheme:toChipView: instead.
+ 
+ @param colorScheme The color scheme to apply to the component instance.
+ @param strokedChipView A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                toStrokedChipView:(nonnull MDCChipView *)strokedChipView;

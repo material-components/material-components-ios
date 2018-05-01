@@ -38,6 +38,18 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "CardThemer",
+    srcs = native.glob(["src/CardThemer/*.m"]),
+    hdrs = native.glob(["src/CardThemer/*.h"]),
+    includes = ["src/CardThemer"],
+    deps = [
+        ":Cards",
+        ":ColorThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "ColorThemer",
     srcs = native.glob(["src/ColorThemer/*.m"]),
     hdrs = native.glob(["src/ColorThemer/*.h"]),

@@ -20,21 +20,17 @@
 #import "MaterialTextFields.h"
 
 /**
- Used to apply a color scheme to theme MDCTextField within MDCTextInputControllerFilled.
+ The Material Design color system's filled text field themer.
  */
 @interface MDCFilledTextFieldColorThemer : NSObject
 
 /**
- Applies a color scheme to theme MDCTextField in MDCTextInputControllerFilled.
+ Applies a color scheme's properties to a text field using the filled style.
 
- Performs introspection to determine if class passed conforms to
- MDCTextInputControllerFloatingPlaceholder to set properties like .floatingPlaceholderNormalColor.
-
- @param colorScheme The color scheme to apply.
- @param textInputControllerFilled A MDCTextInputControllerFilled instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param textInputControllerFilled A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
      toTextInputControllerFilled:(nonnull MDCTextInputControllerFilled *)textInputControllerFilled;
 
 @end
-

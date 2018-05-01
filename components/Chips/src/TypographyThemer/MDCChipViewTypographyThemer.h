@@ -20,15 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a typography scheme to theme MDCChipView.
+ The Material Design typography system's themer for instances of MDCChipView.
  */
 @interface MDCChipViewTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme an MDCChipView.
+ Applies a typography scheme's properties to an MDCChipView.
 
- @param typographyScheme The typography scheme to apply to an MDCChipView.
- @param chipView An MDCChipView instance to apply a typography scheme.
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param chipView A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                    toChipView:(nonnull MDCChipView *)chipView;

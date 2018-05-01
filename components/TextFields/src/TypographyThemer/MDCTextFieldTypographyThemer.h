@@ -17,18 +17,16 @@
 #import "MaterialTextFields.h"
 #import "MaterialTypographyScheme.h"
 
-
 /**
- Used to apply a typography scheme to theme an MDCTextField/MDCTextInputController.
+ The Material Design typography system's text field themer.
  */
 @interface MDCTextFieldTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme an MDCTextInputController instance.
+ Applies a typography scheme's properties to a text input controller.
 
- @param typographyScheme The typography scheme that applies to a MDCTextInputController.
- @param textInputController A MDCTextInputController instance that typography scheme will be applied
- to.
+ @param typographyScheme The color scheme to apply to the component instance.
+ @param textInputController A component instance to which the color scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
         toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
@@ -46,10 +44,10 @@
   NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
 /**
- Applies a typography scheme to a MDCTextField instance.
+ Applies a typography scheme's properties to a text input.
 
- @param typographyScheme The typography scheme that applies to an MDCTextField.
- @param textInput An MDCTextInput instance that typography scheme will be applied to.
+ @param typographyScheme The color scheme to apply to the component instance.
+ @param textInput A component instance to which the color scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                   toTextInput:(nonnull id<MDCTextInput>)textInput;

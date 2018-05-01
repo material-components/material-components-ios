@@ -2,7 +2,7 @@
 title: "Buttons"
 layout: detail
 section: components
-excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
+excerpt: "Material design buttons allow users to take actions, and make choices, with a single tap."
 iconId: button
 path: /catalog/buttons/
 api_doc_root: true
@@ -10,42 +10,26 @@ api_doc_root: true
 
 # Buttons
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/buttons.png" alt="Buttons" width="375">
-</div>
+Material design buttons allow users to take actions, and make choices, with a single tap. There are
+many distinct button styles including text buttons, contained buttons, and floating action buttons.
 
-Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
-floating action button.
+<img src="docs/assets/text.gif" alt="An animation showing a Material Design text button." width="115"> <img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="115"> <img src="docs/assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/buttons.html">Material Design guidelines: Buttons</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-buttons">Material Design guidelines: Buttons</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCButton.html">API: MDCButton</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFlatButton.html">API: MDCFlatButton</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">API: MDCFloatingButton</a></li>
 </ul>
 
-- - -
+## Extensions
 
-## Button Types
-
-### Flat Button
-The _flat button_ does not have its own background color and does not raise when touched. Use a flat
-button in most situations requiring a button.
-
-### Raised Button
-The _raised button_ has its own background color. It floats above its parent slightly, and raises
-briefly when touched. A raised button should be used when a flat button would get lost among other
-UI elements on the screen.
-
-### Floating Action Button
-The _floating action_ button is circular, floats a considerable amount above its parent, has its own
-background color, and also raises briefly when touched. Only use a floating action button for the
-main action of a screen.
-
-Flat button, raised button and floating action buttons all inherit from the same MDCButton class.
-You should not directly instantiate an MDCButton object.
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/theming.md">Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
 
 - - -
 
@@ -65,158 +49,124 @@ pod 'MaterialComponents/Buttons'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
-pod 'MaterialComponents/Buttons+Extensions'
-```
-
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
-- - -
-
-
-
-## Usage
-
 ### Importing
 
-Before using a Button, you'll need to import the button you want to use:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
-import MaterialComponents
+```swift
+import MaterialComponents.MaterialButtons
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialButtons.h"
 ```
 <!--</div>-->
 
-### Ink splash animation
-All buttons display animated ink splashes when the user interacts with the button.
-
-### Background color
-For non-flat buttons, the background color is determined from the UIControlState. Changing the
-background color can be accomplished by calling `-setBackgroundColor:forState:`. Flat buttons have a
-transparent background.
-
-### Disabled state
-When disabled, Material buttons take on a specific semi-transparent appearance which depends on
-whether the button is on a light background or a dark background.
-
-### Title and title color
-Set the title color of the button to have an accessible contrast ratio with the button's background
-color. The caller is responsible for setting (and updating, if necessary) the button's
-`underlyingColor` property for flat buttons.
-
-### Touch exclusivity and simultaneous UI interaction
-All buttons set the `exclusiveTouch` property to YES by default, which prevents users from
-simultaneously interacting with a button and other UI elements.
-
 - - -
 
+## Overview
 
-## Examples
+`MDCButton` is a highly-configurable UIButton implementation that provides support for shadow
+elevation, Material Design ripples, and other stateful design APIs.
 
-### Create a Flat Button
+## Usage
+
+### Typical usage: themed buttons
+
+Create an instance of `MDCButton` and theme it with as one of the Material Design button styles
+using the ButtonThemer extension. Once themed, use the button like you would use a typical UIButton
+instance.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
-let flatButton = MDCFlatButton()
-flatButton.customTitleColor = UIColor.gray
-flatButton.setTitle("Tap me", for: .normal)
-flatButton.sizeToFit()
-flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-self.view.addSubview(flatButton)
+```swift
+let button = MDCButton()
+
+// Themed as a text button:
+MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
 
-``` objc
-MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
-[flatButton setTitle:@"Tap Me" forState:UIControlStateNormal];
-[flatButton setCustomTitleColor:[UIColor grayColor]];
-[flatButton sizeToFit];
-[flatButton addTarget:self
-               action:@selector(tap:)
-     forControlEvents:UIControlEventTouchUpInside];
-[self.view addSubview:flatButton];
+```objc
+MDCButton *button = [[MDCButton alloc] init];
+
+// Themed as a text button:
+[MDCTextButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
+See the [ButtonThemer documentation](docs/theming.md) for a full list of supported Material Design
+button styles.
 
+### Typical usage: floating action buttons
 
-### Create a Raised Button
-
-Create a Raised button and change its default elevation.
-The default elevation for _raised buttons_ in resting state is 2 dp.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-let raisedButton = MDCRaisedButton()
-// See https://material.io/guidelines/what-is-material/elevation-shadows.html
-
-raisedButton.setElevation(4, for: .normal)
-raisedButton.setTitle("Tap Me Too", for: .normal)
-raisedButton.sizeToFit()
-raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-self.view.addSubview(raisedButton)
-```
-
-#### Objective-C
-
-``` objc
-MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
-// See https://material.io/guidelines/what-is-material/elevation-shadows.html
-
-[raisedButton setElevation:4.0f forState:UIControlStateNormal];
-[raisedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];
-[raisedButton sizeToFit];
-[raisedButton addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
-[self.view addSubview:raisedButton];
-```
-<!--</div>-->
-
-
-
-### Create a Floating Action Button
+MDCFloatingButton is a subclass of MDCButton that implements the Material Design floating action
+button style and behavior. Floating action buttons should be provided with a templated image for
+their normal state.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
-let floatingButton = MDCFloatingButton()
-floatingButton.setTitle("+", for: .normal)
-floatingButton.sizeToFit()
-floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-self.view.addSubview(floatingButton)
+```swift
+// Note: you'll need to provide your own image - the following is just an example.
+let plusImage = UIImage(named: "plus").withRenderingMode(.alwaysTemplate)
+let button = MDCFloatingButton()
+button.setImage(plusImage, forState: .normal)
+MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
 
-``` objc
-MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
-[floatingButton setTitle:@"+" forState:UIControlStateNormal];
-[floatingButton sizeToFit];
-[floatingButton addTarget:self
-                   action:@selector(didTap:)
-         forControlEvents:UIControlEventTouchUpInside];
-[self.view addSubview:floatingButton];
+```objc
+// Note: you'll need to provide your own image - the following is just an example.
+UIImage *plusImage =
+    [[UIImage imageNamed:@"plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
+[button setImage:plusImage forState:UIControlStateNormal];
+[MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
+### Customizing a button's design
 
-### Configuring a Floating Action Button
-The floating action button can be configured with a combination of `shape` and `mode`. The 
+#### Changing the elevation of a button
+
+The elevation of a button can be changed for a given control state using `setElevation:forState:`.
+
+See the [Material Design shadow guidelines](https://material.io/guidelines/what-is-material/elevation-shadows.html) for a detailed
+overview of different shadow elevations.
+
+For example, to make a button elevate on tap like a floating action button:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+button.setElevation(6, for: .normal)
+button.setElevation(12, for: .highlighted)
+```
+
+#### Objective-C
+
+```objc
+[button setElevation:6.0f forState:UIControlStateNormal];
+[button setElevation:12.0f forState:UIControlStateNormal];
+```
+<!--</div>-->
+
+### Customizing floating action buttons
+
+A floating action button can be configured with a combination of `shape` and `mode`. The 
 `.default` shape is a 56-point circle containing a single image or short title. The `.mini` shape
 is a smaller, 40-point circle.  The `.normal` mode is a circle containing an image or short title.
 The `.expanded` mode is a "pill shape" and should include both an image and a single-word title. The
@@ -227,11 +177,15 @@ or trailing side of the title by setting the `imageLocation` property.
 
 Because of the combination of shapes and modes available to the floating action button, some
 UIButton property setters have been made unavailable and replaced with methods to set them for a 
-specific mode and shape combination.  Although the `shape` value of a floating button cannot change,
-supporting UIAppearance requires providing the `shape` as an argument. Getters for these values are
-not available, and the normal getter will return the current value of the property.
+specific mode and shape combination. Getters for these values are not available, and the normal
+getter will return the current value of the property.
 
 * `-setContentEdgeInsets` is replaced with `-setContentEdgeInsets:forShape:inMode:`
 * `-setHitAreaInsets` is replaced with `-setHitAreaInsets:forShape:inMode:`
 * `-setMinimumSize` is replaced with `-setMinimumSize:forShape:inMode:`
 * `-setMaximumSize` is replaced with `-setMaximumSize:forShape:inMode:`
+
+### Interface Builder support
+
+MDCButton and its subclasses can be used in Interface Builder, but the button type **must** be set
+to "custom" in order for the button's highlight states to work as expected.

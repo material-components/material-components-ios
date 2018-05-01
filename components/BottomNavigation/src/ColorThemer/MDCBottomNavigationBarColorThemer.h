@@ -18,17 +18,15 @@
 #import "MaterialBottomNavigation.h"
 
 /**
- Used to apply a color scheme to theme MDCBottomNavigationBar. Affects item selected and unselected
- tint colors as well as the background color of the bottom navigation bar.
+ The Material Design color system's themer for instances of MDCBottomNavigationBar.
  */
 @interface MDCBottomNavigationBarColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCBottomNavigationBar.
 
- @param colorScheme The color scheme to apply to MDCBottomNavigationBar.
- @param bottomNavigation An MDCBottomNavigationBar instance to which the color scheme should be
- applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param bottomNavigation A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
               toBottomNavigation:(nonnull MDCBottomNavigationBar *)bottomNavigation;
@@ -36,11 +34,10 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCBottomNavigationBar. Use a UIAppearance proxy to apply a color
- scheme to all instances of MDCBottomNavigationBar.
+ Applies a color scheme to theme a MDCBottomNavigationBar.
 
- This method will soon be deprecated. Consider using +applySemanticColorScheme:toBottomNavigation:
- instead.
+ @warning This method will soon be deprecated. Consider using
+ @c +applySemanticColorScheme:toBottomNavigation: instead.
 
  @param colorScheme The color scheme to apply to MDCBottomNavigationBar.
  @param bottomNavigationBar A MDCBottomNavigationBar instance to apply a color scheme.

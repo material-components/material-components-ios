@@ -25,9 +25,18 @@ Cards adhere to Material Design layout and styling.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec">
-    <a href="https://material.io/guidelines/components/cards.html">Material Design guidelines: Cards</a>
+    <a href="https://material.io/go/design-cards">Material Design guidelines: Cards</a>
   </li>
 </ul>
+
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/theming.md">Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+</ul>
+
+- - -
 
 ## Installation
 
@@ -41,7 +50,7 @@ pod 'MaterialComponents/Cards'
 
 Then run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -95,7 +104,7 @@ pod 'MaterialComponents/Collections'
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -113,12 +122,12 @@ Before using Cards, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialCards
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "MaterialCards.h"
 ```
 <!--</div>-->
@@ -130,7 +139,7 @@ import MaterialComponents.MaterialCards
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let card = MDCCard()
 
 // Customization (optional)
@@ -148,7 +157,7 @@ view.addSubview(card)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCCard *card = [[MDCCard alloc] init];
 
 // Customization (optional)
@@ -170,7 +179,7 @@ UIImageView *imageView = [[UIImageView alloc] init];
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 collectionView.register(MDCCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
 
 func collectionView(_ collectionView: UICollectionView,
@@ -191,7 +200,7 @@ func collectionView(_ collectionView: UICollectionView,
 
 #### Objective-C
 
-``` objc
+```objc
 [self.collectionView registerClass:[MDCCardCollectionCell class]
         forCellWithReuseIdentifier:@"Cell"];
 

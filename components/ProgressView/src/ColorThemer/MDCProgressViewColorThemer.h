@@ -20,16 +20,23 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a color scheme to theme MDCProgressView.
+ Used to apply a color scheme to theme MDCProgressView. This API does not yet implement the Material
+ Design color system.
+
+ @seealso https://www.pivotaltracker.com/story/show/157095443
  */
 @interface MDCProgressViewColorThemer : NSObject
 
-/**
- Applies a color scheme to theme a MDCProgressView. Use a UIAppearance proxy to apply a color scheme
- to all instances of MDCProgressView.
+#pragma mark - Soon to be deprecated
 
- @param colorScheme The color scheme to apply to MDCProgressView.
- @param progressView A MDCProgressView instance to apply a color scheme.
+/**
+ Applies a color scheme to theme a MDCProgressView.
+
+ @warning This method will soon be deprecated. There is no replacement yet.
+ @seealso https://www.pivotaltracker.com/story/show/157095443
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param progressView A component instance to which the color scheme should be applied.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
           toProgressView:(nonnull MDCProgressView *)progressView;

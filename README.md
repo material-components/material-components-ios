@@ -6,24 +6,34 @@
 [![Code coverage](https://img.shields.io/codecov/c/github/material-components/material-components-ios/develop.svg)](https://codecov.io/gh/material-components/material-components-ios/branch/develop)
 [![Chat](https://img.shields.io/discord/259087343246508035.svg)](https://discord.gg/material-components)
 
-Material Components for iOS (MDC-iOS) helps developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps. Learn more about how Material Components for iOS supports design and usability best practices across platforms in the  [Material Design Platform Adaptation guidelines](https://material.io/guidelines/platforms/platform-adaptation.html).
+Material Components for iOS (MDC-iOS) helps developers execute [Material Design](https://material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps. Learn more about how Material Components for iOS supports design and usability best practices across platforms in the  [Material Design Platform Adaptation guidelines](https://material.io/guidelines/platforms/platform-adaptation.html).
 
 Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
 
 ## Useful Links
 
-- [How To Use MDC-iOS](howto/)
+- [Documentation](https://material.io/components/ios/) (external site)
+- [How To Use MDC-iOS](docs/)
 - [All Components](components/)
 - [Demo Apps](demos/)
+- [Tutorial](docs/tutorial)
 - [Contributing](contributing/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
-- [Material.io](https://www.material.io) (external site)
+- [Material.io](https://material.io) (external site)
 - [Material Design Guidelines](https://material.io/guidelines) (external site)
 - [Checklist status spreadsheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vRQLFMuo0Q3xsJp1_TdWvImtfdc8dU0lqX2DTct5pOPAEUIrN9OsuPquvv4aKRAwKK_KItpGs7c4Fok/pubhtml)
 - [Discord Chat Room](https://discord.gg/material-components)
 
-
 ## Trying out Material Components
+
+[CocoaPods](https://cocoapods.org/) is the easiest way to get started (if you're new to CocoaPods,
+check out their [getting started documentation](https://guides.cocoapods.org/using/getting-started.html).)
+
+To install CocoaPods, run the following commands:
+
+```bash
+sudo gem install cocoapods
+```
 
 Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
 
@@ -37,118 +47,13 @@ In case you have already checked out the repo, run the following command:
 pod install --project-directory=catalog/
 ```
 
-If you want to take a look at the implementation of the components, you can find the code inside the `Development Pods` folder.
-Use `cmd-1` to open the project navigator within Xcode. Peal open the `Pods` project and inside the `Development Pods` folder you will find the component source code.
+The component implementations can be found in Xcode within `Pods > Development Pods > MaterialComponents`.
 
-## Installation
+## Requirements
 
-### Requirements
-
-- Xcode 8.0 or higher.
+- Xcode 8.3.3 or higher.
 - Minimum iOS deployment target of 8.0 or higher
-- Cocoapods
-
-### Getting Started with a New Project
-
-Check out our [tutorial](howto/tutorial) for a step-by-step guide to setting up a new project using Material Components.
-
-### Adding Material Components to an Existing Project
-
-[CocoaPods](https://cocoapods.org/) is the easiest way to get started (if you're new to CocoaPods,
-check out their [getting started documentation](https://guides.cocoapods.org/using/getting-started.html).)
-
-To install CocoaPods, run the following commands:
-
-``` bash
-sudo gem install cocoapods
-```
-
-To integrate Material Components in your existing application, first create a new Podfile:
-
-``` bash
-cd your-project-directory
-pod init
-```
-
-Next, add the
-[Material Components for iOS pod](https://cocoapods.org/pods/MaterialComponents)
-to your target in your Podfile:
-
-``` ruby
-target "MyApp" do
-  ...
-  pod 'MaterialComponents'
-end
-```
-
-If you are using Swift, don’t forget to uncomment the `use_frameworks!` line
-at the top of your Podfile.
-
-Then run the command:
-
-``` bash
-pod install
-```
-
-Now you're ready to get started in Xcode. Don't forget to open the workspace Cocoapods created for you instead of the original project:
-
-``` bash
-open your-project.xcworkspace
-```
-
-### Usage
-
-The components are built upon familiar UIKit classes and can be added to a view with just a couple of lines. Simply import the Material Components header for the component you're interested in, and add it to your view.
-
-#### Swift
-
-``` swift
-import MaterialComponents.MaterialButtons
-
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let raiseButton = MDCRaisedButton()
-        raiseButton.setTitle("Raised Button", for: .normal)
-        raiseButton.sizeToFit()
-        raiseButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
-        view.addSubview(raiseButton)
-    }
-
-    @objc func tapped(sender: UIButton){
-        print("Button was tapped!")
-    }
-
-}
-```
-
-#### Objective-C
-
-``` objc
-#import "MaterialButtons.h"
-
-@implementation ViewController
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
-  [raisedButton setTitle:@"Raised Button" forState:UIControlStateNormal];
-  [raisedButton sizeToFit];
-  [raisedButton addTarget:self
-                   action:@selector(tapped:)
-         forControlEvents:UIControlEventTouchUpInside];
-
-  [self.view addSubview:raisedButton];
-}
-
-- (void)tapped:(id)sender {
-  NSLog(@"Button was tapped!");
-}
-
-@end
-```
+- CocoaPods
 
 ## Attributions
 

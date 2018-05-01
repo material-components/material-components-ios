@@ -16,4 +16,6 @@
 
 #import "MDCButtonScheme.h"
 #import "MDCContainedButtonThemer.h"
+#import "MDCFloatingActionButtonThemer.h"
 #import "MDCTextButtonThemer.h"
+#import "MDCOutlinedButtonThemer.h"

@@ -21,7 +21,7 @@
  UICollectionViewFlowLayout layout.
 
  Learn more at the
- [Material spec](https://material.io/guidelines/components/lists.html#lists-specs)
+ [Material spec](https://material.io/go/design-lists#lists-specs)
  */
 @interface MDCCollectionViewFlowLayout : UICollectionViewFlowLayout
 

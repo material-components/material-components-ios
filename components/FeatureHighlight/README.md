@@ -21,6 +21,13 @@ The Feature Highlight component is a way to visually highlight a part of the scr
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/growth-communications/feature-discovery.html">Material Design guidelines: Feature Discovery</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation
@@ -35,13 +42,13 @@ pod 'MaterialComponents/FeatureHighlight'
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/FeatureHighlight+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -55,12 +62,12 @@ Before using Feature Highlight, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialFeatureHighlight
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "MaterialFeatureHighlight.h"
 ```
 <!--</div>-->
@@ -69,7 +76,7 @@ import MaterialComponents.MaterialFeatureHighlight
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let completion = {(accepted: Bool) in
   // perform analytics here
   // and record whether the highlight was accepted
@@ -85,7 +92,7 @@ present(highlightController, animated: true, completion:nil)
 ```
 
 #### Objective-C
-``` objc
+```objc
 MDCFeatureHighlightCompletion completion = ^(BOOL accepted) {
   // perform analytics here
   // and record whether the highlight was accepted
@@ -106,7 +113,7 @@ Often when highlighting a view you will want to display a different view to the 
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let displayedButton = UIButton(type: .system)
 displayedButton.setTitle(highlightedButton.title(for: .normal), for: .normal)
 displayedButton.setTitleColor(highlightedButton.backgroundColor, for: .normal)
@@ -116,7 +123,7 @@ let highlightController = MDCFeatureHighlightViewController(highlightedView: hig
 ```
 
 #### Objective-C
-``` objc
+```objc
 UIButton *displayedButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal]
                  forState:UIControlStateNormal];

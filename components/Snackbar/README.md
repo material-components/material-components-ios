@@ -20,7 +20,14 @@ contain a text action, but no icons.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/snackbars-toasts.html">Material Design guidelines: Snackbars</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-snackbars">Material Design guidelines: Snackbars</a></li>
+</ul>
+
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
 </ul>
 
 - - -
@@ -38,7 +45,7 @@ pod 'MaterialComponents/Snackbar'
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -75,12 +82,12 @@ Before using Snackbar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialSnackbar
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "MaterialSnackbar.h"
 ```
 <!--</div>-->
@@ -94,7 +101,7 @@ import MaterialComponents.MaterialSnackbar
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let message = MDCSnackbarMessage()
 message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
 MDCSnackbarManager.show(message)
@@ -102,7 +109,7 @@ MDCSnackbarManager.show(message)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
 message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
 [MDCSnackbarManager showMessage:message];
@@ -114,7 +121,7 @@ message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuc
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let action = MDCSnackbarMessageAction()
 let actionHandler = {() in
   let answerMessage = MDCSnackbarMessage()
@@ -128,7 +135,7 @@ message.action = action
 
 #### Objective-C
 
-``` objc
+```objc
 MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
 void (^actionHandler)() = ^() {
   MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];

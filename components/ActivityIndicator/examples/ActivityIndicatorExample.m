@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialActivityIndicator.h"
+#import "MaterialActivityIndicator+ColorThemer.h"
 #import "MaterialPalettes.h"
 #import "supplemental/ActivityIndicatorExampleSupplemental.h"
 
@@ -25,6 +26,7 @@
 #define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1]
 
 @interface ActivityIndicatorExample ()
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation ActivityIndicatorExample
@@ -45,30 +47,31 @@
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
 
-  // Initialize single color progress indicator
-  CGRect defaultRect = CGRectMake(0, 0, 32, 32);
-  self.activityIndicator1 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
+  // Themed determinate activity indicator
+  self.activityIndicator1 = [[MDCActivityIndicator alloc] init];
+  [MDCActivityIndicatorColorThemer applySemanticColorScheme:self.colorScheme
+                                        toActivityIndicator:self.activityIndicator1];
   self.activityIndicator1.delegate = self;
   self.activityIndicator1.progress = 0.6f;
   self.activityIndicator1.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [self.activityIndicator1 sizeToFit];
   [self.activityIndicator1 startAnimating];
 
-  // Initialize indeterminate indicator.
-  self.activityIndicator2 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
+  // Themed indeterminate activity indicator
+  self.activityIndicator2 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator2.delegate = self;
-  self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeIndeterminate;
+  [MDCActivityIndicatorColorThemer applySemanticColorScheme:self.colorScheme
+                                        toActivityIndicator:self.activityIndicator2];
   [self.activityIndicator2 sizeToFit];
   [self.activityIndicator2 startAnimating];
 
-  // Initiatlize multiple color indicator
-  self.activityIndicator3 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
+  // Indeterminate activity indicator with custom colors.
+  self.activityIndicator3 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator3.delegate = self;
   self.activityIndicator3.cycleColors =  @[ [MDCPalette bluePalette].tint500,
                                             [MDCPalette redPalette].tint500,
                                             [MDCPalette greenPalette].tint500,
                                             [MDCPalette yellowPalette].tint500 ];
-  self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeIndeterminate;
   [self.activityIndicator3 sizeToFit];
   [self.activityIndicator3 startAnimating];
 

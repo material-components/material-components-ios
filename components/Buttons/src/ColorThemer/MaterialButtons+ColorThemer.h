@@ -18,3 +18,4 @@
 #import "MDCContainedButtonColorThemer.h"
 #import "MDCFloatingButtonColorThemer.h"
 #import "MDCTextButtonColorThemer.h"
+#import "MDCOutlinedButtonColorThemer.h"

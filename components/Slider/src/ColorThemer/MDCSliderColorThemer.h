@@ -20,15 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a color scheme to theme MDCSlider.
+ The Material Design color system's themer for instances of MDCSlider.
  */
 @interface MDCSliderColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCSlider.
 
- @param colorScheme The color scheme to apply to MDCSlider.
- @param slider An MDCSlider instance to which the color scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param slider A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toSlider:(nonnull MDCSlider *)slider;
@@ -36,10 +36,10 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCSlider. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCSlider.
+ Applies a color scheme to theme a MDCSlider.
 
- This method will soon be deprecated. Consider using +applySemanticColorScheme:toSlider: instead.
+ @warning This method will soon be deprecated. Consider using @c +applySemanticColorScheme:toSlider:
+ instead.
 
  @param colorScheme The color scheme to apply to MDCSlider.
  @param slider A MDCSlider instance to apply a color scheme.
@@ -48,14 +48,18 @@
                 toSlider:(nonnull MDCSlider *)slider;
 
 /**
- * A default color scheme for sliders displayed on light backgrounds. The primary color is blue and
- * the primary light and primary dark are gray.
+ A default color scheme for sliders displayed on light backgrounds. The primary color is blue and
+ the primary light and primary dark are gray.
+
+ @warning This method will soon be deprecated. Consider using MDCSemanticColorScheme instead.
  */
 + (nonnull MDCBasicColorScheme *)defaultSliderLightColorScheme;
 
 /**
- * A default color scheme for sliders displayed on dark backgrounds. The primary color is blue and
- * the primary light and primary dark are white.
+ A default color scheme for sliders displayed on dark backgrounds. The primary color is blue and
+ the primary light and primary dark are white.
+
+ @warning This method will soon be deprecated. Consider using MDCSemanticColorScheme instead.
  */
 + (nonnull MDCBasicColorScheme *)defaultSliderDarkColorScheme;
 

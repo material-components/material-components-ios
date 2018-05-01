@@ -21,7 +21,7 @@
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
 
- https://material.io/guidelines/components/dialogs.html
+ https://material.io/go/design-dialogs
 
  MDCAlertController class is intended to be used as-is and does not support subclassing. The view
  hierarchy for this class is private and must not be modified.

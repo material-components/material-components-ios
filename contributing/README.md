@@ -63,9 +63,9 @@ Contributions made by corporations are covered by a different agreement than the
 
 ## Useful Links
 
-- [How To Use MDC-iOS](../howto/)
+- [How To Use MDC-iOS](../docs/)
 - [All Components](../components/)
 - [Demo Apps](../demos/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
-- [Material.io](https://www.material.io) (external site)
+- [Material.io](https://material.io) (external site)
 - [Material Design Guidelines](https://material.io/guidelines) (external site)

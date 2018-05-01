@@ -15,15 +15,21 @@ api_doc_root: true
 </div>
 
 This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
-influenced by [Material Design specifications](https://material.io/guidelines/components/progress-activity.html#)
+influenced by [Material Design specifications](https://material.io/go/design-progress-indicators#)
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/progress-activity.html">Material Design guidelines: Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-progress-indicators">Material Design guidelines: Progress & activity</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Classes/MDCProgressView.html">API: MDCProgressView</a></li>
+</ul>
+
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
 </ul>
 
 - - -
@@ -34,19 +40,19 @@ few key methods required to achieve the desired animation of the control.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/ProgressView'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/ProgressView+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 $ pod install
 ```
 
@@ -68,13 +74,13 @@ Before using Progress View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialProgressView
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialProgressView.h"
 ```
 <!--</div>-->
@@ -90,7 +96,7 @@ Add the progress view to a view and set the desired progress and hidden state.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let progressView = MDCProgressView()
 progressView.progress = 0
 
@@ -101,7 +107,7 @@ view.addSubview(progressView)
 
 #### Objective-C
 
-``` objc
+```objc
 @property(nonatomic) MDCProgressView *progressView;
 ...
 
@@ -119,7 +125,7 @@ Both the progress and the hidden state can be animated, with a completion block.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 func startAndShowProgressView() {
   progressView.progress = 0
   progressView.setHidden(false, animated: true)
@@ -134,7 +140,7 @@ func completeAndHideProgressView() {
 
 #### Objective-C
 
-``` objc
+```objc
 - (void)startAndShowProgressView {
   self.progressView.progress = 0;
   [self.progressView setHidden:NO animated:YES completion:nil];
