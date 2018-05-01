@@ -1,4 +1,4 @@
-### Creating a tab bar
+### Creating a tab-bar
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
